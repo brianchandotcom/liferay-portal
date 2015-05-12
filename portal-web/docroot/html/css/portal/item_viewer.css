@@ -1,0 +1,53 @@
+.lfr-item-viewer {
+	.image-viewer-base-image-list {
+		padding-top: 30px;
+	}
+
+	.image-viewer-footer-content {
+		min-height: 30px;
+		padding: 5px 20px;
+		text-align: center;
+		width: 100%;
+
+		.image-viewer-caption {
+			position: absolute;
+		}
+
+		.image-viewer-footer-control {
+			margin: 0 10px;
+			position: relative;
+		}
+
+		.image-viewer-thumbnails {
+			display: none;
+		}
+	}
+}
+
+.lfr-item-viewer-close {
+	font-size: 24px;
+	left: 20px;
+	margin-top: 5px;
+	text-shadow: none;
+
+	.glyphicon {
+		font-size: 0.8em;
+		margin-right: 5px;
+	}
+}
+
+/* Skin */
+
+.lfr-item-viewer {
+	.image-viewer-base {
+		outline: none;
+	}
+
+	.image-viewer-footer-content .image-viewer-footer-control {
+		color: #777;
+	}
+}
+
+.lfr-item-viewer-close {
+	color: #FFF;
+}

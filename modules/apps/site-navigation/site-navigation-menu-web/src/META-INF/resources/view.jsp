@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:navigation
-	bulletStyle="<%= bulletStyle %>"
-	displayStyleDefinition='<%= NavigationMenuWebConfigurationUtil.getArray("display.style", new Filter(displayStyle)) %>'
-	headerType="<%= headerType %>"
-	includedLayouts="<%= includedLayouts %>"
-	nestedChildren="<%= nestedChildren %>"
-	preview="<%= preview %>"
-	rootLayoutLevel="<%= rootLayoutLevel %>"
-	rootLayoutType="<%= rootLayoutType %>"
+	bulletStyle="<%= navigationMenuDisplayContext.getBulletStyle() %>"
+	displayStyleDefinition='<%= NavigationMenuWebConfigurationUtil.getArray("display.style", new Filter(navigationMenuDisplayContext.getDisplayStyle())) %>'
+	headerType="<%= navigationMenuDisplayContext.getHeaderType() %>"
+	includedLayouts="<%= navigationMenuDisplayContext.getIncludedLayouts() %>"
+	nestedChildren="<%= navigationMenuDisplayContext.isNestedChildren() %>"
+	preview="<%= navigationMenuDisplayContext.isPreview() %>"
+	rootLayoutLevel="<%= navigationMenuDisplayContext.getRootLayoutLevel() %>"
+	rootLayoutType="<%= navigationMenuDisplayContext.getRootLayoutType() %>"
 />

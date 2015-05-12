@@ -14,19 +14,33 @@
 
 package com.liferay.site.navigation.menu.web.portlet;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
 import com.liferay.site.navigation.menu.web.upgrade.NavigationMenuWebUpgrade;
 
-import javax.portlet.Portlet;
+import java.io.IOException;
 
+import java.util.Map;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-navigation",
@@ -52,9 +66,31 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class NavigationMenuPortlet extends MVCPortlet {
 
+	@Override
+	public void doView(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		renderRequest.setAttribute(
+			NavigationMenuWebConfiguration.class.getName(),
+			_navigationMenuWebConfiguration);
+
+		super.doView(renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_navigationMenuWebConfiguration = Configurable.createConfigurable(
+			NavigationMenuWebConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
 	protected void setNavigationWebUpgrade(
 		NavigationMenuWebUpgrade navigationWebUpgrade) {
 	}
+
+	private volatile NavigationMenuWebConfiguration
+		_navigationMenuWebConfiguration;
 
 }

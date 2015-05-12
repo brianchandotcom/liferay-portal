@@ -26,27 +26,22 @@
 <%@ page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration" %><%@
 page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfigurationUtil" %><%@
-page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfigurationValues" %>
+page import="com.liferay.site.navigation.menu.web.display.context.NavigationMenuDisplayContext" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
+NavigationMenuWebConfiguration navigationMenuWebConfiguration = (NavigationMenuWebConfiguration)renderRequest.getAttribute(NavigationMenuWebConfiguration.class.getName());
 
-String bulletStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "bulletStyle", GetterUtil.getString(themeDisplay.getThemeSetting("bullet-style"), "dots"));
-String displayStyle = PrefsParamUtil.getString(portletPreferences, renderRequest, "displayStyle", NavigationMenuWebConfigurationValues.DISPLAY_STYLE_DEFAULT);
-String headerType = PrefsParamUtil.getString(portletPreferences, renderRequest, "headerType", "root-layout");
-String includedLayouts = PrefsParamUtil.getString(portletPreferences, renderRequest, "includedLayouts", "current");
-boolean nestedChildren = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "nestedChildren", true);
-boolean preview = PrefsParamUtil.getBoolean(portletPreferences, renderRequest, "preview");
-int rootLayoutLevel = PrefsParamUtil.getInteger(portletPreferences, renderRequest, "rootLayoutLevel", 1);
-String rootLayoutType = PrefsParamUtil.getString(portletPreferences, renderRequest, "rootLayoutType", "absolute");
+NavigationMenuDisplayContext navigationMenuDisplayContext = new NavigationMenuDisplayContext(request, navigationMenuWebConfiguration);
+
+String portletResource = ParamUtil.getString(request, "portletResource");
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -14,11 +14,23 @@
 
 package com.liferay.site.navigation.menu.web.portlet.action;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration;
 import com.liferay.site.navigation.menu.web.constants.NavigationMenuPortletKeys;
 
+import java.util.Map;
+
+import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Brian Wing Shun Chan
@@ -26,10 +38,35 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  */
 @Component(
-	immediate = true,
+	configurationPid = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {"javax.portlet.name=" + NavigationMenuPortletKeys.NAVIGATION},
 	service = ConfigurationAction.class
 )
 public class NavigationMenuConfigurationAction
 	extends DefaultConfigurationAction {
+
+	@Override
+	public String render(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			NavigationMenuWebConfiguration.class.getName(),
+			_navigationMenuWebConfiguration);
+
+		return super.render(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_navigationMenuWebConfiguration = Configurable.createConfigurable(
+			NavigationMenuWebConfiguration.class, properties);
+	}
+
+	private volatile NavigationMenuWebConfiguration
+		_navigationMenuWebConfiguration;
+
 }

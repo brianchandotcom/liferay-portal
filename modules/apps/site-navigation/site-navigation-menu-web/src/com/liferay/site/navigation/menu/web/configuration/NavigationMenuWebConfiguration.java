@@ -14,17 +14,26 @@
 
 package com.liferay.site.navigation.menu.web.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class NavigationMenuWebConfigurationValues {
+@Meta.OCD(
+	id = "com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration"
+)
+public interface NavigationMenuWebConfiguration {
 
-	public static final String DISPLAY_STYLE_DEFAULT = GetterUtil.getString(
-		NavigationMenuWebConfigurationUtil.get("display.style.default"));
+	@Meta.AD(deflt = "dots", required = false)
+	public String defaultBulletStyle();
 
-	public static final String[] DISPLAY_STYLE_OPTIONS =
-		NavigationMenuWebConfigurationUtil.getArray("display.style.options");
+	@Meta.AD(deflt = "relative-with-breadcrumb", required = false)
+	public String defaultDisplayStyle();
+
+	@Meta.AD(
+		deflt = "relative-with-breadcrumb,from-level-2-with-title,from-level-1-with-title,from-level-1,from-level-1-to-all-sublevels,from-level-0",
+		required = false
+	)
+	public String[] displayStyleOptions();
 
 }

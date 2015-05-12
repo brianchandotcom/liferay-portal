@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
@@ -31,6 +32,7 @@ import com.liferay.site.navigation.language.web.configuration.LanguagePortletIns
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,16 +45,14 @@ public class LanguageDisplayContext {
 	public LanguageDisplayContext(HttpServletRequest request)
 		throws SettingsException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+		_themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
 
 		_languagePortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				LanguagePortletInstanceConfiguration.class);
-
-		_themeDisplay = themeDisplay;
 	}
 
 	public String[] getAvailableLanguageIds() {
@@ -78,12 +78,12 @@ public class LanguageDisplayContext {
 
 		for (String languageId : availableLanguageIdsSet) {
 			if (Arrays.binarySearch(languageIds, languageId) < 0) {
+				Locale locale = LocaleUtil.fromLanguageId(languageId);
+
 				availableLanguageList.add(
 					new KeyValuePair(
 						languageId,
-						LocaleUtil.fromLanguageId(
-							languageId).getDisplayName(
-								_themeDisplay.getLocale())));
+						locale.getDisplayName(_themeDisplay.getLocale())));
 			}
 		}
 
@@ -99,11 +99,12 @@ public class LanguageDisplayContext {
 		String[] languageIds = getLanguageIds();
 
 		for (String languageId : languageIds) {
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
 			currentLanguageList.add(
 				new KeyValuePair(
 					languageId,
-					LocaleUtil.fromLanguageId(
-						languageId).getDisplayName(_themeDisplay.getLocale())));
+					locale.getDisplayName(_themeDisplay.getLocale())));
 		}
 
 		return currentLanguageList;

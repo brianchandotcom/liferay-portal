@@ -631,6 +631,8 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertFalse(store.hasFile(companyId, repositoryId, fileName));
 		Assert.assertTrue(store.hasFile(companyId, newRepositoryId, fileName));
+
+		store.deleteDirectory(companyId, newRepositoryId, StringPool.SLASH);
 	}
 
 	@Test(expected = DuplicateFileException.class)

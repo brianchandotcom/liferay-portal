@@ -104,7 +104,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command known-issues="LPS-55440" name="AddWebContentNoWorkflowCP" priority="5">
+	<command known-issues="LPS-55550" name="AddWebContentNoWorkflowCP" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -222,7 +222,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55440" name="ApproveInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
+	<command known-issues="LPS-55550" name="ApproveInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">

@@ -264,7 +264,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiPageAsSiteUser" priority="4">
+	<command known-issues="LPS-55550" name="AddWikiPageAsSiteUser" priority="4">
 		<var name="pageName" value="Wiki Page" />
 		<var name="portletName" value="Wiki" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

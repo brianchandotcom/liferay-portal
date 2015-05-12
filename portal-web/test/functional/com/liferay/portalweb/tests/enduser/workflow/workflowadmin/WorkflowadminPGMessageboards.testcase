@@ -43,7 +43,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-55440" name="ApproveMessageBoardsThreadPG" priority="5">
+	<command known-issues="LPS-55550" name="ApproveMessageBoardsThreadPG" priority="5">
 		<var name="threadBody" value="MB Thread Body" />
 		<var name="threadSubject" value="MB Thread Subject" />
 
@@ -115,7 +115,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55440" name="RejectMessageBoardsThreadPG" priority="5">
+	<command known-issues="LPS-55550" name="RejectMessageBoardsThreadPG" priority="5">
 		<var name="threadBody" value="MB Thread Body" />
 		<var name="threadSubject" value="MB Thread Subject" />
 

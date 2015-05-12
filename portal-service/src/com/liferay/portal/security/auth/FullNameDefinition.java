@@ -26,10 +26,19 @@ public class FullNameDefinition {
 		_fullNameFields.add(fullNameField);
 	}
 
+	public void addRequiredField(String requiredFields) {
+		_requiredFields.add(requiredFields);
+	}
+
 	public List<FullNameField> getFullNameFields() {
 		return _fullNameFields;
 	}
 
+	public boolean isFieldRequired(String fieldName) {
+		return _requiredFields.contains(fieldName);
+	}
+
 	private final List<FullNameField> _fullNameFields = new ArrayList<>();
+	private final List<String> _requiredFields = new ArrayList<>();
 
 }

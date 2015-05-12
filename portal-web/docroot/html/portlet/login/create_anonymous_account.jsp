@@ -54,7 +54,11 @@
 		<aui:col width="<%= 50 %>">
 			<aui:input model="<%= User.class %>" name="firstName" />
 
-			<c:if test="<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.USERS_LAST_NAME_REQUIRED, PropsValues.USERS_LAST_NAME_REQUIRED) %>">
+			<%
+			FullNameDefinition fullNameDefinition = FullNameDefinitionFactory.getInstance(locale);
+			%>
+
+			<c:if test='<%= fullNameDefinition.isFieldRequired("last-name") %>'>
 				<aui:input model="<%= User.class %>" name="lastName">
 					<aui:validator name="required" />
 				</aui:input>

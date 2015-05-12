@@ -2601,8 +2601,6 @@ public interface PropsKeys {
 
 	public static final String USERS_INDEXER_ENABLED = "users.indexer.enabled";
 
-	public static final String USERS_LAST_NAME_REQUIRED = "users.last.name.required";
-
 	public static final String USERS_LIST_VIEWS = "users.list.views";
 
 	public static final String USERS_PROFILE_FRIENDLY_URL = "users.profile.friendly.url";

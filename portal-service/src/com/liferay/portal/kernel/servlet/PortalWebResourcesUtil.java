@@ -45,7 +45,15 @@ public class PortalWebResourcesUtil {
 	public static PortalWebResources getPortalWebResources(
 		String resourceType) {
 
-		return _instance._portalWebResourcesMap.get(resourceType);
+		for (PortalWebResources portalWebResources :
+				_instance._getPortalWebResourcesList()) {
+
+			if (resourceType.equals(portalWebResources.getResourceType())) {
+				return portalWebResources;
+			}
+		}
+
+		return null;
 	}
 
 	public static ServletContext getServletContext(String resourceType) {
@@ -118,8 +126,8 @@ public class PortalWebResourcesUtil {
 	private static final PortalWebResourcesUtil _instance =
 		new PortalWebResourcesUtil();
 
-	private final Map<String, PortalWebResources> _portalWebResourcesMap =
-		new ConcurrentHashMap<>();
+	private final Map<ServiceReference<PortalWebResources>, PortalWebResources>
+		_portalWebResourcesMap = new ConcurrentHashMap<>();
 	private final ServiceTracker<PortalWebResources, PortalWebResources>
 		_serviceTracker;
 
@@ -136,9 +144,7 @@ public class PortalWebResourcesUtil {
 			PortalWebResources portalWebResources = registry.getService(
 				serviceReference);
 
-			String resourceType = portalWebResources.getResourceType();
-
-			_portalWebResourcesMap.put(resourceType, portalWebResources);
+			_portalWebResourcesMap.put(serviceReference, portalWebResources);
 
 			return portalWebResources;
 		}
@@ -158,7 +164,7 @@ public class PortalWebResourcesUtil {
 
 			registry.ungetService(serviceReference);
 
-			_portalWebResourcesMap.remove(portalWebResources.getResourceType());
+			_portalWebResourcesMap.remove(serviceReference);
 		}
 
 	}

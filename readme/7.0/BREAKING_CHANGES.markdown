@@ -1412,6 +1412,8 @@ The following portal properties (and the equivalent `PropsKeys` and
 `PropsValues`) that were used to decide what sections would be displayed in the
 `form-navigator` have been removed:
 
+- `layout.form.add`
+- `layout.form.update`
 - `layout.set.form.update`
 - `sites.form.add.advanced`
 - `sites.form.add.main`

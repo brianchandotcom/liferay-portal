@@ -69,8 +69,6 @@ if (layoutRevision != null) {
 	}
 }
 
-String[] mainSections = PropsValues.LAYOUT_FORM_UPDATE;
-
 if (selLayout.isSupportsEmbeddedPortlets()) {
 	List<Portlet> embeddedPortlets = new ArrayList<Portlet>();
 
@@ -86,16 +84,8 @@ if (selLayout.isSupportsEmbeddedPortlets()) {
 
 	if (!embeddedPortlets.isEmpty()) {
 		request.setAttribute("edit_pages.jsp-embeddedPortlets", embeddedPortlets);
-
-		mainSections = ArrayUtil.append(mainSections, "embedded-portlets");
 	}
 }
-
-if (!group.isUser() && selLayout.isTypePortlet()) {
-	mainSections = ArrayUtil.append(mainSections, "customization-settings");
-}
-
-String[][] categorySections = {mainSections};
 
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
@@ -271,11 +261,9 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 			<c:if test="<%= !selGroup.hasLocalOrRemoteStagingGroup() || selGroup.isStagingGroup() %>">
 				<liferay-ui:form-navigator
-					categorySections="<%= categorySections %>"
 					displayStyle="<%= displayStyle %>"
 					formModelBean="<%= selLayout %>"
 					id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT %>"
-					jspPath="/html/portlet/layouts_admin/layout/"
 					showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 				/>
 			</c:if>

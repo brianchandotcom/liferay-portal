@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet.bundle.friendlyurlmappertrackerimpl;
 
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
@@ -25,10 +26,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Philip Jones
  */
 @Component(
-		immediate = true,
-		property = {"javax.portlet.name=FriendlyURLMapperTrackerImplTest",
-				"service.ranking:Integer="+ Integer.MAX_VALUE
-		}
+	immediate = true,
+	property = {
+		"javax.portlet.name=FriendlyURLMapperTrackerImplTest",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
 )
 public class TestFriendlyURLMapper implements FriendlyURLMapper {
 

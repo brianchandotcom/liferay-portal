@@ -28,6 +28,9 @@ import java.util.Map;
  */
 public interface StagedModelDataHandler<T extends StagedModel> {
 
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException;
+
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException;

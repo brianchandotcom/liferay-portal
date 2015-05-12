@@ -71,7 +71,7 @@ public class FullNameDefinitionFactory {
 		String[] requiredFieldNames = _getRequiredFieldNames(locale);
 
 		fieldNames = _prependMissingRequiredFieldNames(
-				fieldNames, requiredFieldNames);
+			fieldNames, requiredFieldNames);
 
 		for (String requiredFieldName : requiredFieldNames) {
 			fullNameDefinition.addRequiredField(requiredFieldName);
@@ -83,9 +83,9 @@ public class FullNameDefinitionFactory {
 			fullNameField.setName(userNameField);
 
 			String[] values = StringUtil.split(
-					LanguageUtil.get(
-							locale, "lang.user.name." + userNameField + ".values",
-							StringPool.BLANK));
+				LanguageUtil.get(
+					locale, "lang.user.name." + userNameField + ".values",
+					StringPool.BLANK));
 
 			fullNameField.setValues(values);
 
@@ -106,7 +106,7 @@ public class FullNameDefinitionFactory {
 
 		if (!ArrayUtil.contains(requiredFieldNames, "first-name")) {
 			requiredFieldNames = ArrayUtil.append(
-				new String[]{"first-name"}, requiredFieldNames);
+				new String[] {"first-name"}, requiredFieldNames);
 		}
 
 		return requiredFieldNames;

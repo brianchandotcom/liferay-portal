@@ -2,8 +2,8 @@
 	var A = AUI();
 
 	var AArray = A.Array;
-	var Lang = A.Lang;
 	var KeyMap = A.Event.KeyMap;
+	var Lang = A.Lang;
 
 	var STR_EDITOR = 'editor';
 
@@ -192,7 +192,7 @@
 							}
 						);
 
-						hasTrigger = (triggerIndex !== -1);
+						hasTrigger = triggerIndex !== -1;
 
 						if (hasTrigger) {
 							query = nodeText.substring(triggerIndex) + query;
@@ -226,15 +226,17 @@
 
 			var prevTriggerPosition = instance._getPrevTriggerPosition();
 
-			var trigger = prevTriggerPosition.value;
 			var query = prevTriggerPosition.query;
+			var trigger = prevTriggerPosition.value;
 
 			var res = instance._getRegExp().exec(query);
 
 			var result;
 
-			if (res && ((res.index + res[1].length + trigger.length) === query.length)) {
-				result = query;
+			if (res) {
+				if (res.index + res[1].length + trigger.length === query.length) {
+					result = query;
+				}
 			}
 
 			return result;
@@ -266,7 +268,9 @@
 
 			var ranges = selection.getRanges();
 
-			return (selection.getType() === CKEDITOR.SELECTION_NONE || (ranges.length === 1 && ranges[0].collapsed));
+			var collapsedRange = ranges.length === 1 && ranges[0].collapsed;
+
+			return selection.getType() === CKEDITOR.SELECTION_NONE || collapsedRange;
 		},
 
 		_normalizeCKEditorKeyEvent: function(event) {
@@ -288,7 +292,7 @@
 
 				var acVisible = instance.get('visible');
 
-				if (acVisible && (KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up'))) {
+				if (acVisible && KeyMap.isKeyInSet(event.keyCode, 'down', 'enter', 'up')) {
 					var editor = instance.get(STR_EDITOR);
 
 					var inlineEditor = editor.editable().isInline();

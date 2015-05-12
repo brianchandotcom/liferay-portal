@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.IOException;
@@ -149,7 +150,14 @@ public class I18nServlet extends HttpServlet {
 
 		String i18nPath = StringPool.SLASH + i18nLanguageId;
 
-		Locale locale = LocaleUtil.fromLanguageId(i18nLanguageId);
+		boolean useDefault = PropsValues.LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE;
+
+		Locale locale = LocaleUtil.fromLanguageId(
+			i18nLanguageId, true, useDefault);
+
+		if (locale == null) {
+			return null;
+		}
 
 		if (Validator.isNull(locale.getCountry())) {
 

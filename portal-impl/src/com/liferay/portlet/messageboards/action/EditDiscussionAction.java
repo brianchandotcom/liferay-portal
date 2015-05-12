@@ -102,22 +102,15 @@ public class EditDiscussionAction extends PortletAction {
 
 			sendRedirect(actionRequest, actionResponse, redirect);
 		}
-		catch (Exception e) {
-			if (e instanceof DiscussionMaxCommentsException ||
-				e instanceof MessageBodyException ||
-				e instanceof NoSuchMessageException ||
-				e instanceof PrincipalException ||
-				e instanceof RequiredMessageException) {
+		catch (DiscussionMaxCommentsException | MessageBodyException |
+				NoSuchMessageException | PrincipalException |
+				RequiredMessageException e) {
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 				jsonObject.putException(e);
 
 				writeJSON(actionRequest, actionResponse, jsonObject);
-			}
-			else {
-				throw e;
-			}
 		}
 	}
 

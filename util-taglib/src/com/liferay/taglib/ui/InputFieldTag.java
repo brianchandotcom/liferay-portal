@@ -19,8 +19,6 @@ import com.liferay.taglib.util.IncludeTag;
 
 import java.text.Format;
 
-import java.util.Calendar;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -72,10 +70,6 @@ public class InputFieldTag extends IncludeTag {
 		_fieldParam = fieldParam;
 	}
 
-	public void setFirstDayOfWeek(int firstDayOfWeek) {
-		_firstDayOfWeek = firstDayOfWeek;
-	}
-
 	public void setFormat(Format format) {
 		_format = format;
 	}
@@ -117,7 +111,6 @@ public class InputFieldTag extends IncludeTag {
 		_disabled = false;
 		_field = null;
 		_fieldParam = null;
-		_firstDayOfWeek = Calendar.SUNDAY - 2;
 		_format = null;
 		_formName = "fm";
 		_id = null;
@@ -167,9 +160,6 @@ public class InputFieldTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-field:field", _field);
 		request.setAttribute("liferay-ui:input-field:fieldParam", fieldParam);
 		request.setAttribute("liferay-ui:input-field:id", id);
-		request.setAttribute(
-			"liferay-ui:input-field:firstDayOfWeek",
-			String.valueOf(_firstDayOfWeek));
 		request.setAttribute("liferay-ui:input-field:format", _format);
 		request.setAttribute("liferay-ui:input-field:formName", _formName);
 		request.setAttribute(
@@ -194,7 +184,6 @@ public class InputFieldTag extends IncludeTag {
 	private boolean _disabled;
 	private String _field;
 	private String _fieldParam;
-	private int _firstDayOfWeek = Calendar.SUNDAY - 2;
 	private Format _format;
 	private String _formName = "fm";
 	private String _id;

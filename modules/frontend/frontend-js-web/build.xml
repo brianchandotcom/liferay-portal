@@ -7,7 +7,7 @@
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
 	<property name="alloy.version" value="3.0.1" />
-	<property name="alloyeditor.version" value="0.2.6" />
+	<property name="alloyeditor.version" value="0.2.7" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
 	<property name="html.js.dir" value="src/META-INF/resources/html/js" />
 	<property name="scayt.file" value="scayt_4.4.5.zip" />

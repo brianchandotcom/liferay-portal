@@ -140,7 +140,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 1);
+		addVersions(fileName, 1);
 
 		store.copyFileVersion(companyId, repositoryId, fileName, "1.0", "1.1");
 	}
@@ -200,7 +200,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 1);
+		addVersions(fileName, 1);
 
 		store.deleteFile(companyId, repositoryId, fileName);
 
@@ -220,7 +220,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 1);
+		addVersions(fileName, 1);
 
 		store.deleteFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
@@ -250,7 +250,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 1);
+		addVersions(fileName, 1);
 
 		try (InputStream inputStream = store.getFileAsStream(
 			companyId, repositoryId, fileName)) {
@@ -270,7 +270,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 5);
+		addVersions(fileName, 5);
 
 		try (InputStream inputStream = store.getFileAsStream(
 			companyId, repositoryId, fileName, "1.5")) {
@@ -424,7 +424,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 5);
+		addVersions(fileName, 5);
 
 		String versionLabel = "1.";
 
@@ -564,7 +564,7 @@ public abstract class BaseStoreTestCase {
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
-		addFile(fileName, 2);
+		addVersions(fileName, 2);
 
 		String newFileName = RandomTestUtil.randomString();
 
@@ -637,7 +637,7 @@ public abstract class BaseStoreTestCase {
 		store.updateFile(companyId, repositoryId, fileName1, fileName2);
 	}
 
-	protected String addFile(String fileName, int newVersionCount)
+	protected String addVersions(String fileName, int newVersionCount)
 		throws Exception {
 
 		Assert.assertTrue(

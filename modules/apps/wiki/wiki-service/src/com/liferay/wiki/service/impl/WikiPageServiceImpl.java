@@ -300,10 +300,14 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 	public WikiPage fetchPage(long nodeId, String title, double version)
 		throws PortalException {
 
-		WikiPagePermissionChecker.check(
-			getPermissionChecker(), nodeId, title, version, ActionKeys.VIEW);
+		WikiPage page = wikiPageLocalService.fetchPage(nodeId, title, version);
 
-		return wikiPageLocalService.fetchPage(nodeId, title, version);
+		if (page != null) {
+			WikiPagePermissionChecker.check(
+				getPermissionChecker(), page, ActionKeys.VIEW);
+		}
+
+		return page;
 	}
 
 	@Override

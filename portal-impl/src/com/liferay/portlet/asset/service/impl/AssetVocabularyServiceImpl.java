@@ -141,10 +141,15 @@ public class AssetVocabularyServiceImpl extends AssetVocabularyServiceBaseImpl {
 	public AssetVocabulary fetchVocabulary(long vocabularyId)
 		throws PortalException {
 
-		AssetVocabularyPermission.check(
-			getPermissionChecker(), vocabularyId, ActionKeys.VIEW);
+		AssetVocabulary vocabulary =
+			assetVocabularyLocalService.fetchAssetVocabulary(vocabularyId);
 
-		return assetVocabularyLocalService.fetchAssetVocabulary(vocabularyId);
+		if (vocabulary != null) {
+			AssetVocabularyPermission.check(
+				getPermissionChecker(), vocabulary, ActionKeys.VIEW);
+		}
+
+		return vocabulary;
 	}
 
 	/**

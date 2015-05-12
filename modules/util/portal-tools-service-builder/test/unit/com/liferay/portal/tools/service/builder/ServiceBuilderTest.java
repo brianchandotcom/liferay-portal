@@ -246,7 +246,7 @@ public class ServiceBuilderTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testMainNoArgs() throws Exception {
-		call(new Quietly() {
+		_call(new Quietly() {
 
 			@Override
 			public void call() throws Exception {
@@ -258,7 +258,7 @@ public class ServiceBuilderTest {
 
 	@Test
 	public void testMainThrowMainExceptionFalse() throws Exception {
-		call(new Quietly() {
+		_call(new Quietly() {
 
 			@Override
 			public void call() throws Exception {
@@ -286,7 +286,7 @@ public class ServiceBuilderTest {
 
 		Path basePath = baseDir.toPath();
 
-		String[] args = getBaseArgs(baseUrl);
+		String[] args = _getBaseArgs(baseUrl);
 
 		args = ArrayUtil.append(
 			args,
@@ -346,7 +346,7 @@ public class ServiceBuilderTest {
 
 		String synopsis = IOUtils.toString(synopsisUrl.openStream());
 
-		UnsyncByteArrayOutputStream ubaos = call(new Quietly() {
+		UnsyncByteArrayOutputStream ubaos = _call(new Quietly() {
 
 			@Override
 			public void call() throws Exception {
@@ -372,7 +372,7 @@ public class ServiceBuilderTest {
 	@Rule
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
-	private UnsyncByteArrayOutputStream call(Quietly call) throws Exception {
+	private UnsyncByteArrayOutputStream _call(Quietly call) throws Exception {
 		PrintStream originalErr = System.err;
 		PrintStream originalOut = System.out;
 
@@ -402,8 +402,8 @@ public class ServiceBuilderTest {
 		}
 	}
 
-	private String[] getBaseArgs(URL baseUrl) {
-		String classpath = getClasspath(baseUrl);
+	private String[] _getBaseArgs(URL baseUrl) {
+		String classpath = _getClasspath(baseUrl);
 
 		String debug1 = "-D1";
 		String debug2 = "-D2";
@@ -421,11 +421,11 @@ public class ServiceBuilderTest {
 		};
 	}
 
-	private String getClasspath(URL baseUrl) {
+	private String _getClasspath(URL baseUrl) {
 		File file = new File(baseUrl.getFile());
 		File libDir = new File(file.getParentFile(), "lib");
 
-		file = getServiceBuilderLibrary();
+		file = _getServiceBuilderLibrary();
 
 		List<String> classpath = new ArrayList<>();
 
@@ -440,7 +440,7 @@ public class ServiceBuilderTest {
 		return StringUtil.merge(classpath.toArray(), File.pathSeparator);
 	}
 
-	private File getServiceBuilderLibrary() {
+	private File _getServiceBuilderLibrary() {
 		File distDir = new File(System.getProperty("sdk.dir"), "dist");
 
 		if (!distDir.exists()) {

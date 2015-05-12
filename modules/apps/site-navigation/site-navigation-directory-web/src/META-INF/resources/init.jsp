@@ -24,7 +24,7 @@
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.site.navigation.directory.web.configuration.SitesDirectoryPortletInstanceConfiguration" %><%@
+page import="com.liferay.site.navigation.directory.web.display.context.SitesDirectoryDisplayContext" %><%@
 page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
 
 <liferay-theme:defineObjects />
@@ -33,10 +33,7 @@ page import="com.liferay.taglib.ui.SitesDirectoryTag" %>
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-SitesDirectoryPortletInstanceConfiguration sitesDirectoryPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(SitesDirectoryPortletInstanceConfiguration.class);
-
-String displayStyle = ParamUtil.getString(renderRequest, "displayStyle", sitesDirectoryPortletInstanceConfiguration.displayStyle());
-String sites = ParamUtil.getString(renderRequest, "sites", sitesDirectoryPortletInstanceConfiguration.sites());
+SitesDirectoryDisplayContext sitesDirectoryDisplayContext = new SitesDirectoryDisplayContext(request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

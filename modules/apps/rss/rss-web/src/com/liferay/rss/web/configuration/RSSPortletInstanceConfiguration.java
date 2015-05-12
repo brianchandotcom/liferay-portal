@@ -37,7 +37,7 @@ public interface RSSPortletInstanceConfiguration {
 	@Meta.AD(
 		deflt = "0", required = false
 	)
-	public long displayStyleGroupId(long defaultDisplayStyleGroupId);
+	public long displayStyleGroupId();
 
 	@Meta.AD(
 		deflt = "4", required = false

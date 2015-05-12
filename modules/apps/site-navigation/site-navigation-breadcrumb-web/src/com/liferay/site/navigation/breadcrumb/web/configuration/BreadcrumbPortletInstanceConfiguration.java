@@ -33,7 +33,7 @@ public interface BreadcrumbPortletInstanceConfiguration {
 	public String displayStyle();
 
 	@Meta.AD(deflt = "0", required = false)
-	public long displayStyleGroupId(long defaultDisplayStyleGroupId);
+	public long displayStyleGroupId();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean showCurrentGroup();

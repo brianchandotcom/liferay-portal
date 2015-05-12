@@ -20,7 +20,7 @@
 List<RSSFeed> rssFeeds = rssDisplayContext.getRSSFeeds();
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= RSSFeed.class.getName() %>" displayStyle="<%= rssPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= rssPortletInstanceConfiguration.displayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= rssFeeds %>">
+<liferay-ui:ddm-template-renderer className="<%= RSSFeed.class.getName() %>" displayStyle="<%= rssDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= rssDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rssFeeds %>">
 
 	<%
 	for (int i = 0; i < rssFeeds.size(); i++) {

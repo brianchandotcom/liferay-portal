@@ -22,19 +22,19 @@
 			SyndImage syndImage = syndFeed.getImage();
 			%>
 
-			<c:if test="<%= (syndImage != null) && rssPortletInstanceConfiguration.showFeedImage() %>">
+			<c:if test="<%= (syndImage != null) && rssDisplayContext.isShowFeedImage() %>">
 				<div class="feed-image">
 					<img alt="<%= HtmlUtil.escapeAttribute(syndImage.getDescription()) %>" src="<%= HtmlUtil.escapeHREF(rssFeed.getSyndFeedImageURL()) %>" />
 				</div>
 			</c:if>
 
-			<c:if test="<%= rssPortletInstanceConfiguration.showFeedTitle() %>">
+			<c:if test="<%= rssDisplayContext.isShowFeedTitle() %>">
 				<div class="feed-title">
 					<aui:a href="<%= HtmlUtil.escapeJSLink(rssFeed.getSyndFeedLink()) %>" target="_blank"><%= HtmlUtil.escape(rssFeed.getTitle()) %></aui:a>
 				</div>
 			</c:if>
 
-			<c:if test="<%= (syndFeed.getPublishedDate() != null) && rssPortletInstanceConfiguration.showFeedDescription() %>">
+			<c:if test="<%= (syndFeed.getPublishedDate() != null) && rssDisplayContext.isShowFeedDescription() %>">
 				<div class="feed-date feed-published-date">
 					<liferay-ui:icon
 						iconCssClass="icon-calendar"
@@ -44,7 +44,7 @@
 				</div>
 			</c:if>
 
-			<c:if test="<%= Validator.isNotNull(syndFeed.getDescription()) && rssPortletInstanceConfiguration.showFeedDescription() %>">
+			<c:if test="<%= Validator.isNotNull(syndFeed.getDescription()) && rssDisplayContext.isShowFeedDescription() %>">
 				<div class="feed-description">
 					<%= HtmlUtil.escape(syndFeed.getDescription()) %>
 				</div>
@@ -58,15 +58,15 @@
 				<liferay-ui:panel-container cssClass="feed-entries" extended="<%= false %>" id="rssFeedsPanelContainer" persistState="<%= false %>">
 
 					<%
-					for (int j = 0; (j < rssFeedEntryDisplayContexts.size()) && (j < rssPortletInstanceConfiguration.entriesPerFeed()); j++) {
+					for (int j = 0; (j < rssFeedEntryDisplayContexts.size()) && (j < rssDisplayContext.getEntriesPerFeed()); j++) {
 						RSSFeedEntry rssFeedEntry = rssFeedEntryDisplayContexts.get(j);
 
 						SyndEntry syndEntry = rssFeedEntry.getSyndEntry();
 					%>
 
-						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssPortletInstanceConfiguration.expandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
+						<liferay-ui:panel cssClass="feed-entry" defaultState='<%= (themeDisplay.isStateMaximized() || (j < rssDisplayContext.getExpandedEntriesPerFeed())) ? "open" : "closed" %>' extended="<%= false%>" title="<%= HtmlUtil.escape(syndEntry.getTitle()) %>">
 							<div class="feed-entry-content">
-								<c:if test="<%= rssPortletInstanceConfiguration.showFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
+								<c:if test="<%= rssDisplayContext.isShowFeedItemAuthor() && Validator.isNotNull(syndEntry.getAuthor()) %>">
 									<div class="feed-entry-author">
 										<%= HtmlUtil.escape(syndEntry.getAuthor()) %>
 									</div>

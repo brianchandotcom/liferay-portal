@@ -34,6 +34,6 @@ public interface AssetCategoriesNavigationPortletInstanceConfiguration {
 	public String displayStyle();
 
 	@Meta.AD(deflt = "0", required = false)
-	public long displayStyleGroupId(long defaultDisplayStyleGroupId);
+	public long displayStyleGroupId();
 
 }

@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.asset.categories.navigation.web.context;
+package com.liferay.asset.categories.navigation.web.display.context;
 
 import com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -41,14 +43,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetCategoriesNavigationDisplayContext {
 
-	public AssetCategoriesNavigationDisplayContext(
-		HttpServletRequest request,
-		AssetCategoriesNavigationPortletInstanceConfiguration
-			assetCategoriesNavigationPortletInstanceConfiguration) {
+	public AssetCategoriesNavigationDisplayContext(HttpServletRequest request)
+		throws SettingsException {
 
 		_request = request;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		_assetCategoriesNavigationPortletInstanceConfiguration =
-			assetCategoriesNavigationPortletInstanceConfiguration;
+			portletDisplay.getPortletInstanceConfiguration(
+				AssetCategoriesNavigationPortletInstanceConfiguration.class);
 	}
 
 	public List<AssetVocabulary> getAssetVocabularies() throws PortalException {
@@ -80,10 +87,11 @@ public class AssetCategoriesNavigationDisplayContext {
 			(_assetCategoriesNavigationPortletInstanceConfiguration.
 				assetVocabularyIds() != null)) {
 
-			_assetVocabularyIds = ArrayUtil.toArray(
-				ArrayUtil.toLongArray(
-					_assetCategoriesNavigationPortletInstanceConfiguration.
-						assetVocabularyIds()));
+			String assetVocabularyIds = StringUtil.merge(
+				_assetCategoriesNavigationPortletInstanceConfiguration.
+					assetVocabularyIds());
+
+			_assetVocabularyIds = StringUtil.split(assetVocabularyIds, 0L);
 		}
 
 		return _assetVocabularyIds;
@@ -186,6 +194,49 @@ public class AssetCategoriesNavigationDisplayContext {
 		return _ddmTemplateAssetVocabularies;
 	}
 
+	public String getDisplayStyle() {
+		if (_displayStyle != null) {
+			return _displayStyle;
+		}
+
+		_displayStyle =
+			_assetCategoriesNavigationPortletInstanceConfiguration.
+				displayStyle();
+
+		return _displayStyle;
+	}
+
+	public long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId != 0) {
+			return _displayStyleGroupId;
+		}
+
+		_displayStyleGroupId =
+			_assetCategoriesNavigationPortletInstanceConfiguration.
+				displayStyleGroupId();
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		return _displayStyleGroupId;
+	}
+
+	public boolean isAllAssetVocabularies() {
+		if (_allAssetVocabularies != null) {
+			return _allAssetVocabularies;
+		}
+
+		_allAssetVocabularies =
+			_assetCategoriesNavigationPortletInstanceConfiguration.
+				allAssetVocabularies();
+
+		return _allAssetVocabularies;
+	}
+
 	protected String getTitle(AssetVocabulary assetVocabulary) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -199,12 +250,15 @@ public class AssetCategoriesNavigationDisplayContext {
 		return title;
 	}
 
+	private Boolean _allAssetVocabularies;
 	private final AssetCategoriesNavigationPortletInstanceConfiguration
 		_assetCategoriesNavigationPortletInstanceConfiguration;
 	private List<AssetVocabulary> _assetVocabularies;
 	private long[] _assetVocabularyIds;
 	private long[] _availableAssetVocabularyIds;
 	private List<AssetVocabulary> _ddmTemplateAssetVocabularies;
+	private String _displayStyle;
+	private long _displayStyleGroupId;
 	private final HttpServletRequest _request;
 
 }

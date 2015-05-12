@@ -17,6 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:sites-directory
-	displayStyle="<%= displayStyle %>"
-	sites="<%= sites %>"
+	displayStyle="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>"
+	sites="<%= sitesDirectoryDisplayContext.getSites() %>"
 />

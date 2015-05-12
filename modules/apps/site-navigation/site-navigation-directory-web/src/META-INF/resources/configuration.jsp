@@ -27,14 +27,14 @@
 			<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 
 			<aui:fieldset column="<%= true %>">
-				<aui:select name="preferences--sites--" value="<%= sites %>">
+				<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
 					<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
 					<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
 					<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
 					<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
 				</aui:select>
 
-				<aui:select name="preferences--displayStyle--" value="<%= displayStyle %>">
+				<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
 					<aui:option label="icon" />
 					<aui:option label="descriptive" />
 					<aui:option label="list" />

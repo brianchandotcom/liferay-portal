@@ -16,8 +16,10 @@ package com.liferay.site.navigation.breadcrumb.web.context;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.site.navigation.breadcrumb.web.configuration.BreadcrumbPortletInstanceConfiguration;
@@ -29,13 +31,19 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class BreadcrumbDisplayContext {
 
-	public BreadcrumbDisplayContext(
-		HttpServletRequest request, BreadcrumbPortletInstanceConfiguration
-			breadcrumbPortletInstanceConfiguration) {
+	public BreadcrumbDisplayContext(HttpServletRequest request)
+		throws SettingsException {
 
 		_request = request;
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			com.liferay.portal.util.WebKeys.THEME_DISPLAY);
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
 		_breadcrumbPortletInstanceConfiguration =
-			breadcrumbPortletInstanceConfiguration;
+			portletDisplay.getPortletInstanceConfiguration(
+				BreadcrumbPortletInstanceConfiguration.class);
 	}
 
 	public String getDDMTemplateKey() {
@@ -70,13 +78,19 @@ public class BreadcrumbDisplayContext {
 			return _displayStyleGroupId;
 		}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_displayStyleGroupId =
+			_breadcrumbPortletInstanceConfiguration.displayStyleGroupId();
 
 		_displayStyleGroupId = ParamUtil.getLong(
 			_request, "displayStyleGroupId",
-			_breadcrumbPortletInstanceConfiguration.displayStyleGroupId(
-				themeDisplay.getSiteGroupId()));
+			_breadcrumbPortletInstanceConfiguration.displayStyleGroupId());
+
+		if (_displayStyleGroupId <= 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay) _request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getSiteGroupId();
+		}
 
 		return _displayStyleGroupId;
 	}

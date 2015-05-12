@@ -28,7 +28,6 @@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
-page import="com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration" %><%@
 page import="com.liferay.rss.web.configuration.RSSWebConfiguration" %><%@
 page import="com.liferay.rss.web.display.context.RSSDisplayContext" %><%@
 page import="com.liferay.rss.web.util.RSSFeed" %><%@
@@ -49,10 +48,9 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-RSSPortletInstanceConfiguration rssPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(RSSPortletInstanceConfiguration.class);
 RSSWebConfiguration rssWebConfiguration = (RSSWebConfiguration)renderRequest.getAttribute(RSSWebConfiguration.class.getName());
 
-RSSDisplayContext rssDisplayContext = new RSSDisplayContext(rssPortletInstanceConfiguration, rssWebConfiguration);
+RSSDisplayContext rssDisplayContext = new RSSDisplayContext(request, rssWebConfiguration);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

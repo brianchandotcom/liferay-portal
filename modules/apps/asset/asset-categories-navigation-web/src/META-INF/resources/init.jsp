@@ -23,8 +23,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.asset.categories.navigation.web.configuration.AssetCategoriesNavigationPortletInstanceConfiguration" %><%@
-page import="com.liferay.asset.categories.navigation.web.context.AssetCategoriesNavigationDisplayContext" %><%@
+<%@ page import="com.liferay.asset.categories.navigation.web.display.context.AssetCategoriesNavigationDisplayContext" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portlet.asset.model.AssetCategory" %>
 
@@ -32,9 +31,7 @@ page import="com.liferay.portlet.asset.model.AssetCategory" %>
 <portlet:defineObjects />
 
 <%
-AssetCategoriesNavigationPortletInstanceConfiguration assetCategoriesNavigationPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(AssetCategoriesNavigationPortletInstanceConfiguration.class);
-
-AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request, assetCategoriesNavigationPortletInstanceConfiguration);
+AssetCategoriesNavigationDisplayContext assetCategoriesNavigationDisplayContext = new AssetCategoriesNavigationDisplayContext(request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

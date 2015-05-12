@@ -362,7 +362,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testGetFileSize() throws Exception {
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		long size = store.getFileSize(companyId, repositoryId, fileName);
 
@@ -380,7 +382,9 @@ public abstract class BaseStoreTestCase {
 	public void testGetFileVersionAsBytesNoSuchFileException()
 		throws Exception {
 
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		store.getFileAsBytes(companyId, repositoryId, fileName, "1.1");
 	}
@@ -440,7 +444,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test(expected = DuplicateFileException.class)
 	public void testUpdateFileVersionDuplicateFileException() throws Exception {
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		store.updateFileVersion(
 			companyId, repositoryId, fileName, "1.0", "1.0");
@@ -456,7 +462,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testUpdateFileWithByteArray() throws Exception {
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		store.updateFile(
 			companyId, repositoryId, fileName, "1.1", _DATA_VERSION_2);
@@ -478,7 +486,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testUpdateFileWithFile() throws Exception {
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		File file = createFile(_DATA_VERSION_2);
 
@@ -501,7 +511,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testUpdateFileWithInputStream() throws Exception {
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		store.updateFile(
 			companyId, repositoryId, fileName, "1.1",
@@ -545,7 +557,9 @@ public abstract class BaseStoreTestCase {
 	public void testUpdateFileWithNewFileNameDuplicateFileException()
 		throws Exception {
 
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		store.updateFile(companyId, repositoryId, fileName, fileName);
 	}
@@ -562,7 +576,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testUpdateFileWithNewRepositoryId() throws Exception {
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		long newRepositoryId = RandomTestUtil.nextLong();
 
@@ -576,7 +592,9 @@ public abstract class BaseStoreTestCase {
 	public void testUpdateFileWithNewRepositoryIdDuplicateFileException()
 		throws Exception {
 
-		String fileName = addFile(0);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
 
 		store.updateFile(companyId, repositoryId, repositoryId, fileName);
 	}

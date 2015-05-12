@@ -1413,6 +1413,12 @@ The following portal properties (and the equivalent `PropsKeys` and
 `form-navigator` have been removed:
 
 - `layout.set.form.update`
+- `organizations.form.add.identification`
+- `organizations.form.add.main`
+- `organizations.form.add.miscellaneous`
+- `organizations.form.update.identification`
+- `organizations.form.update.main`
+- `organizations.form.update.miscellaneous`
 - `sites.form.add.advanced`
 - `sites.form.add.main`
 - `sites.form.add.miscellaneous`

@@ -1208,12 +1208,6 @@ public class PropsValues {
 
 	public static final boolean ORGANIZATIONS_ASSIGNMENT_STRICT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_ASSIGNMENT_STRICT));
 
-	public static String[] ORGANIZATIONS_FORM_ADD_IDENTIFICATION = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_FORM_ADD_IDENTIFICATION);
-
-	public static String[] ORGANIZATIONS_FORM_ADD_MAIN = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_FORM_ADD_MAIN);
-
-	public static String[] ORGANIZATIONS_FORM_ADD_MISCELLANEOUS = PropsUtil.getArray(PropsKeys.ORGANIZATIONS_FORM_ADD_MISCELLANEOUS);
-
 	public static final boolean ORGANIZATIONS_INDEXER_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_INDEXER_ENABLED));
 
 	public static final boolean ORGANIZATIONS_MEMBERSHIP_STRICT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_MEMBERSHIP_STRICT));

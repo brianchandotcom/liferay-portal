@@ -178,8 +178,11 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 		// Dynamic data mapping structure link
 
-		ddmStructureLinkLocalService.deleteClassStructureLink(
-			fileEntryMetadata.getFileEntryMetadataId());
+		long classNameId = classNameLocalService.getClassNameId(
+			DLFileEntryMetadata.class);
+
+		ddmStructureLinkLocalService.deleteStructureLinks(
+			classNameId, fileEntryMetadata.getFileEntryMetadataId());
 	}
 
 	protected void updateFileEntryMetadata(
@@ -225,7 +228,7 @@ public class DLFileEntryMetadataLocalServiceImpl
 
 			ddmStructureLinkLocalService.addStructureLink(
 				classNameId, fileEntryMetadata.getFileEntryMetadataId(),
-				ddmStructure.getStructureId(), serviceContext);
+				ddmStructure.getStructureId());
 		}
 	}
 

@@ -59,8 +59,7 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink ddmStructureLink);
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink addStructureLink(
-		long classNameId, long classPK, long structureId,
-		com.liferay.portal.service.ServiceContext serviceContext);
+		long classNameId, long classPK, long structureId);
 
 	/**
 	* Creates a new d d m structure link with the primary key. Does not add the d d m structure link to the database.
@@ -70,9 +69,6 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 	*/
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink createDDMStructureLink(
 		long structureLinkId);
-
-	public void deleteClassStructureLink(long classPK)
-		throws PortalException;
 
 	/**
 	* Deletes the d d m structure link from the database. Also notifies the appropriate model listeners.
@@ -103,11 +99,16 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 		com.liferay.portal.model.PersistedModel persistedModel)
 		throws PortalException;
 
+	public void deleteStructureLink(long classNameId, long classPK,
+		long structureId) throws PortalException;
+
 	public void deleteStructureLink(
 		com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink structureLink);
 
 	public void deleteStructureLink(long structureLinkId)
 		throws PortalException;
+
+	public void deleteStructureLinks(long classNameId, long classPK);
 
 	public void deleteStructureStructureLinks(long structureId);
 
@@ -190,14 +191,6 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getClassStructureLink(
-		long classPK) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getClassStructureLinks(
-		long classNameId);
-
 	/**
 	* Returns the d d m structure link with the primary key.
 	*
@@ -242,8 +235,24 @@ public interface DDMStructureLinkLocalService extends BaseLocalService,
 		long structureLinkId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getStructureLinkStructures(
+		long classNameId, long classPK) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getStructureLinks(
+		long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getStructureLinks(
+		long structureId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink> getStructureLinks(
 		long structureId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink getUniqueStructureLink(
+		long classNameId, long classPK) throws PortalException;
 
 	/**
 	* Sets the Spring bean ID for this bean.

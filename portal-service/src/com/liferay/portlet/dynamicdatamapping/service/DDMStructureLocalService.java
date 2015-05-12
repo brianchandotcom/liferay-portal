@@ -71,16 +71,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public void addDLFileEntryTypeDDMStructures(long fileEntryTypeId,
 		long[] structureIds);
 
-	public void addJournalFolderDDMStructure(long folderId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
-
-	public void addJournalFolderDDMStructure(long folderId, long structureId);
-
-	public void addJournalFolderDDMStructures(long folderId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
-
-	public void addJournalFolderDDMStructures(long folderId, long[] structureIds);
-
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure addStructure(
 		long userId, long groupId, long classNameId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -256,8 +246,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 
 	public void clearDLFileEntryTypeDDMStructures(long fileEntryTypeId);
 
-	public void clearJournalFolderDDMStructures(long folderId);
-
 	/**
 	* Copies a structure, creating a new structure with all the values
 	* extracted from the original one. The new structure supports a new name
@@ -326,17 +314,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
 
 	public void deleteDLFileEntryTypeDDMStructures(long fileEntryTypeId,
-		long[] structureIds);
-
-	public void deleteJournalFolderDDMStructure(long folderId,
-		com.liferay.portlet.dynamicdatamapping.model.DDMStructure ddmStructure);
-
-	public void deleteJournalFolderDDMStructure(long folderId, long structureId);
-
-	public void deleteJournalFolderDDMStructures(long folderId,
-		java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> DDMStructures);
-
-	public void deleteJournalFolderDDMStructures(long folderId,
 		long[] structureIds);
 
 	/**
@@ -719,31 +696,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getJournalFolderDDMStructures(
-		long folderId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getJournalFolderDDMStructuresCount(long folderId);
-
-	/**
-	* Returns the folderIds of the journal folders associated with the d d m structure.
-	*
-	* @param structureId the structureId of the d d m structure
-	* @return long[] the folderIds of journal folders associated with the d d m structure
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getJournalFolderPrimaryKeys(long structureId);
-
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
@@ -1015,12 +967,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasDLFileEntryTypeDDMStructures(long fileEntryTypeId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasJournalFolderDDMStructure(long folderId, long structureId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasJournalFolderDDMStructures(long folderId);
-
 	/**
 	* Returns an ordered range of all the structures matching the groups and
 	* class name IDs, and matching the keywords in the structure names and
@@ -1144,8 +1090,6 @@ public interface DDMStructureLocalService extends BaseLocalService,
 
 	public void setDLFileEntryTypeDDMStructures(long fileEntryTypeId,
 		long[] structureIds);
-
-	public void setJournalFolderDDMStructures(long folderId, long[] structureIds);
 
 	/**
 	* Updates the d d m structure in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

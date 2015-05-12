@@ -459,10 +459,6 @@
 		<column name="statusByUserName" type="String" />
 		<column name="statusDate" type="Date" />
 
-		<!-- Relationships -->
-
-		<column name="ddmStructure" type="Collection" entity="com.liferay.portlet.dynamicdatamapping.DDMStructure" mapping-table="JournalFolders_DDMStructures" />
-
 		<!-- Order -->
 
 		<order by="asc">
@@ -524,6 +520,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />

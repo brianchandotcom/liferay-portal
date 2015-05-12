@@ -62,8 +62,6 @@ import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePe
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureVersionPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplatePersistence;
-import com.liferay.portlet.journal.service.persistence.JournalFolderFinder;
-import com.liferay.portlet.journal.service.persistence.JournalFolderPersistence;
 
 import java.io.Serializable;
 
@@ -591,138 +589,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 */
-	@Override
-	public void addJournalFolderDDMStructure(long folderId, long structureId) {
-		journalFolderPersistence.addDDMStructure(folderId, structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public void addJournalFolderDDMStructure(long folderId,
-		DDMStructure ddmStructure) {
-		journalFolderPersistence.addDDMStructure(folderId, ddmStructure);
-	}
-
-	/**
-	 */
-	@Override
-	public void addJournalFolderDDMStructures(long folderId, long[] structureIds) {
-		journalFolderPersistence.addDDMStructures(folderId, structureIds);
-	}
-
-	/**
-	 */
-	@Override
-	public void addJournalFolderDDMStructures(long folderId,
-		List<DDMStructure> DDMStructures) {
-		journalFolderPersistence.addDDMStructures(folderId, DDMStructures);
-	}
-
-	/**
-	 */
-	@Override
-	public void clearJournalFolderDDMStructures(long folderId) {
-		journalFolderPersistence.clearDDMStructures(folderId);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteJournalFolderDDMStructure(long folderId, long structureId) {
-		journalFolderPersistence.removeDDMStructure(folderId, structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteJournalFolderDDMStructure(long folderId,
-		DDMStructure ddmStructure) {
-		journalFolderPersistence.removeDDMStructure(folderId, ddmStructure);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteJournalFolderDDMStructures(long folderId,
-		long[] structureIds) {
-		journalFolderPersistence.removeDDMStructures(folderId, structureIds);
-	}
-
-	/**
-	 */
-	@Override
-	public void deleteJournalFolderDDMStructures(long folderId,
-		List<DDMStructure> DDMStructures) {
-		journalFolderPersistence.removeDDMStructures(folderId, DDMStructures);
-	}
-
-	/**
-	 * Returns the folderIds of the journal folders associated with the d d m structure.
-	 *
-	 * @param structureId the structureId of the d d m structure
-	 * @return long[] the folderIds of journal folders associated with the d d m structure
-	 */
-	@Override
-	public long[] getJournalFolderPrimaryKeys(long structureId) {
-		return ddmStructurePersistence.getJournalFolderPrimaryKeys(structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public List<DDMStructure> getJournalFolderDDMStructures(long folderId) {
-		return journalFolderPersistence.getDDMStructures(folderId);
-	}
-
-	/**
-	 */
-	@Override
-	public List<DDMStructure> getJournalFolderDDMStructures(long folderId,
-		int start, int end) {
-		return journalFolderPersistence.getDDMStructures(folderId, start, end);
-	}
-
-	/**
-	 */
-	@Override
-	public List<DDMStructure> getJournalFolderDDMStructures(long folderId,
-		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
-		return journalFolderPersistence.getDDMStructures(folderId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	 */
-	@Override
-	public int getJournalFolderDDMStructuresCount(long folderId) {
-		return journalFolderPersistence.getDDMStructuresSize(folderId);
-	}
-
-	/**
-	 */
-	@Override
-	public boolean hasJournalFolderDDMStructure(long folderId, long structureId) {
-		return journalFolderPersistence.containsDDMStructure(folderId,
-			structureId);
-	}
-
-	/**
-	 */
-	@Override
-	public boolean hasJournalFolderDDMStructures(long folderId) {
-		return journalFolderPersistence.containsDDMStructures(folderId);
-	}
-
-	/**
-	 */
-	@Override
-	public void setJournalFolderDDMStructures(long folderId, long[] structureIds) {
-		journalFolderPersistence.setDDMStructures(folderId, structureIds);
-	}
-
-	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -1155,81 +1021,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the journal folder local service.
-	 *
-	 * @return the journal folder local service
-	 */
-	public com.liferay.portlet.journal.service.JournalFolderLocalService getJournalFolderLocalService() {
-		return journalFolderLocalService;
-	}
-
-	/**
-	 * Sets the journal folder local service.
-	 *
-	 * @param journalFolderLocalService the journal folder local service
-	 */
-	public void setJournalFolderLocalService(
-		com.liferay.portlet.journal.service.JournalFolderLocalService journalFolderLocalService) {
-		this.journalFolderLocalService = journalFolderLocalService;
-	}
-
-	/**
-	 * Returns the journal folder remote service.
-	 *
-	 * @return the journal folder remote service
-	 */
-	public com.liferay.portlet.journal.service.JournalFolderService getJournalFolderService() {
-		return journalFolderService;
-	}
-
-	/**
-	 * Sets the journal folder remote service.
-	 *
-	 * @param journalFolderService the journal folder remote service
-	 */
-	public void setJournalFolderService(
-		com.liferay.portlet.journal.service.JournalFolderService journalFolderService) {
-		this.journalFolderService = journalFolderService;
-	}
-
-	/**
-	 * Returns the journal folder persistence.
-	 *
-	 * @return the journal folder persistence
-	 */
-	public JournalFolderPersistence getJournalFolderPersistence() {
-		return journalFolderPersistence;
-	}
-
-	/**
-	 * Sets the journal folder persistence.
-	 *
-	 * @param journalFolderPersistence the journal folder persistence
-	 */
-	public void setJournalFolderPersistence(
-		JournalFolderPersistence journalFolderPersistence) {
-		this.journalFolderPersistence = journalFolderPersistence;
-	}
-
-	/**
-	 * Returns the journal folder finder.
-	 *
-	 * @return the journal folder finder
-	 */
-	public JournalFolderFinder getJournalFolderFinder() {
-		return journalFolderFinder;
-	}
-
-	/**
-	 * Sets the journal folder finder.
-	 *
-	 * @param journalFolderFinder the journal folder finder
-	 */
-	public void setJournalFolderFinder(JournalFolderFinder journalFolderFinder) {
-		this.journalFolderFinder = journalFolderFinder;
-	}
-
-	/**
 	 * Returns the d d m structure layout local service.
 	 *
 	 * @return the d d m structure layout local service
@@ -1545,14 +1336,6 @@ public abstract class DDMStructureLocalServiceBaseImpl
 	protected DLFileEntryTypePersistence dlFileEntryTypePersistence;
 	@BeanReference(type = DLFileEntryTypeFinder.class)
 	protected DLFileEntryTypeFinder dlFileEntryTypeFinder;
-	@BeanReference(type = com.liferay.portlet.journal.service.JournalFolderLocalService.class)
-	protected com.liferay.portlet.journal.service.JournalFolderLocalService journalFolderLocalService;
-	@BeanReference(type = com.liferay.portlet.journal.service.JournalFolderService.class)
-	protected com.liferay.portlet.journal.service.JournalFolderService journalFolderService;
-	@BeanReference(type = JournalFolderPersistence.class)
-	protected JournalFolderPersistence journalFolderPersistence;
-	@BeanReference(type = JournalFolderFinder.class)
-	protected JournalFolderFinder journalFolderFinder;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
 	@BeanReference(type = DDMStructureLayoutPersistence.class)

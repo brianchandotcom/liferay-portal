@@ -94,7 +94,6 @@
 		<!-- Relationships -->
 
 		<column name="dlFileEntryTypes" type="Collection" entity="com.liferay.portlet.documentlibrary.DLFileEntryType" mapping-table="DLFileEntryTypes_DDMStructures" />
-		<column name="journalFolders" type="Collection" entity="com.liferay.portlet.journal.JournalFolder" mapping-table="JournalFolders_DDMStructures" />
 
 		<!-- Finder methods -->
 
@@ -145,7 +144,6 @@
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureVersion" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
-		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
 	</entity>
 	<entity name="DDMStructureLayout" uuid="true" local-service="true" remote-service="false">
 
@@ -194,13 +192,16 @@
 
 		<!-- Finder methods -->
 
-		<finder name="ClassNameId" return-type="Collection">
-			<finder-column name="classNameId" />
+		<finder name="StructureId" return-type="Collection">
+			<finder-column name="structureId" />
 		</finder>
-		<finder name="ClassPK" return-type="DDMStorageLink" unique="true">
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="StructureId" return-type="Collection">
+		<finder name="C_C_S" return-type="DDMStructureLink" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 			<finder-column name="structureId" />
 		</finder>
 	</entity>

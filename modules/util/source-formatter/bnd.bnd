@@ -44,7 +44,7 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ArrayUtil.class,\
-	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ClassUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ClearThreadLocalUtil.class,\

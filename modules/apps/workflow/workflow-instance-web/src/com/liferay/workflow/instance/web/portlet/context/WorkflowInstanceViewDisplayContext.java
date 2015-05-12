@@ -144,7 +144,7 @@ public class WorkflowInstanceViewDisplayContext
 	}
 
 	public boolean isShowEntryAction() {
-		return false;
+		return !getTabs2Param().equals("completed");
 	}
 
 	protected WorkflowLog getLatestWorkflowLog(

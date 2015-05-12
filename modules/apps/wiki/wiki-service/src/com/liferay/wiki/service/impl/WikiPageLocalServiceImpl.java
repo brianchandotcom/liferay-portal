@@ -15,6 +15,8 @@
 package com.liferay.wiki.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactory;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -1001,6 +1003,12 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 			throw new NoSuchPageException(sb.toString());
 		}
+	}
+
+	@Override
+	public DynamicQuery getDynamicQuery() {
+		return _dynamicQueryFactory.forClass(
+			WikiPage.class, WikiPageLocalServiceImpl.class.getClassLoader());
 	}
 
 	@Override
@@ -3401,6 +3409,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		validate(nodeId, content, format);
 	}
+
+	@BeanReference(type = DynamicQueryFactory.class)
+	private DynamicQueryFactory _dynamicQueryFactory;
 
 	@BeanReference(type = SettingsFactory.class)
 	private SettingsFactory _settingsFactory;

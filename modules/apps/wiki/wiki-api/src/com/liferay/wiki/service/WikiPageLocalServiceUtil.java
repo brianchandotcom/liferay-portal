@@ -449,6 +449,10 @@ public class WikiPageLocalServiceUtil {
 		return getService().getDraftPage(nodeId, title);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery getDynamicQuery() {
+		return getService().getDynamicQuery();
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);

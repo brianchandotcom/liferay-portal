@@ -50,7 +50,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 <liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
 
 	<%
-		boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
+	boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
 	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 
 	LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(request, liferayPortletResponse);

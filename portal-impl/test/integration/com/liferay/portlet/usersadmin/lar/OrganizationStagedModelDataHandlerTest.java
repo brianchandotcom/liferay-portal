@@ -15,7 +15,6 @@
 package com.liferay.portlet.usersadmin.lar;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.OrganizationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -264,7 +263,6 @@ public class OrganizationStagedModelDataHandlerTest
 			organization.getOrganizationId(), importedWebsite.getClassPK());
 	}
 
-	@DeleteAfterTestRun
 	private Organization _organization;
 
 }

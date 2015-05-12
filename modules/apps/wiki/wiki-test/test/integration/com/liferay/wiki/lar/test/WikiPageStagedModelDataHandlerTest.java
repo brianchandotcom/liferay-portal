@@ -15,6 +15,10 @@
 package com.liferay.wiki.lar.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -32,6 +36,8 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.RepositoryUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.wiki.attachments.test.WikiAttachmentsTest;
@@ -160,6 +166,46 @@ public class WikiPageStagedModelDataHandlerTest
 		stagedModels.add(draftPage);
 
 		return stagedModels;
+	}
+
+	@Override
+	protected void deleteStagedModel(
+			StagedModel stagedModel,
+			Map<String, List<StagedModel>> dependentStagedModelsMap,
+			Group group)
+		throws Exception {
+
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				ExportImportClassedModelUtil.getClassName(stagedModel));
+
+		stagedModelDataHandler.deleteStagedModel(stagedModel);
+
+		for (List<StagedModel> dependentStagedModelList :
+				dependentStagedModelsMap.values()) {
+
+			for (StagedModel dependentStagedModel : dependentStagedModelList) {
+				try {
+					String className =
+						ExportImportClassedModelUtil.getClassName(
+							dependentStagedModel);
+
+					stagedModelDataHandler =
+						StagedModelDataHandlerRegistryUtil.
+							getStagedModelDataHandler(className);
+
+					stagedModelDataHandler.deleteStagedModel(
+						dependentStagedModel);
+				}
+				catch (NoSuchModelException nsme) {
+					if (!(nsme instanceof NoSuchFolderException) &&
+						!(nsme instanceof NoSuchFileEntryException)) {
+
+						throw nsme;
+					}
+				}
+			}
+		}
 	}
 
 	@Override

@@ -188,17 +188,11 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-		File fileNameDir = new File(
-			repositoryDir + StringPool.SLASH + sb.toString() +
-				StringPool.SLASH + fileNameFragment + ext);
+		String parentDir = repositoryDir + StringPool.SLASH + sb.toString();
 
-		File parentFile = fileNameDir.getParentFile();
+		FileUtil.mkdirs(parentDir);
 
-		if (!parentFile.exists()) {
-			parentFile.mkdirs();
-		}
-
-		return fileNameDir;
+		return new File(parentDir + StringPool.SLASH + fileNameFragment + ext);
 	}
 
 	@Override

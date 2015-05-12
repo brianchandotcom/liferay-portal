@@ -85,8 +85,6 @@ public class ZipWriterImpl implements ZipWriter {
 			_log.debug("Adding " + name);
 		}
 
-		FileUtil.mkdirs(getPath());
-
 		try (OutputStream outputStream = new FileOutputStream(
 				new File(getPath() + StringPool.SLASH + name))) {
 

@@ -673,7 +673,7 @@ public class S3Store extends BaseStore {
 		try {
 			File parentFile = tempFile.getParentFile();
 
-			parentFile.mkdirs();
+			FileUtil.mkdirs(parentFile);
 
 			outputStream = new FileOutputStream(tempFile);
 

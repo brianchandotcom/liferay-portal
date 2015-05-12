@@ -61,7 +61,7 @@ public interface File {
 
 	public String createTempFileName(String prefix, String extension);
 
-	public java.io.File createTempFolder();
+	public java.io.File createTempFolder() throws IOException;
 
 	public String decodeSafeFileName(String fileName);
 
@@ -121,6 +121,8 @@ public interface File {
 	public String[] listFiles(java.io.File file);
 
 	public String[] listFiles(String fileName);
+
+	public void mkdirs(java.io.File file) throws IOException;
 
 	public void mkdirs(String pathName);
 

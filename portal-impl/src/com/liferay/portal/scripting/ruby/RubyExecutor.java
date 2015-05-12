@@ -86,9 +86,9 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 			FileUtil.deltree(rubyDir);
 
-			rubyDir.mkdirs();
-
 			try {
+				FileUtil.mkdirs(rubyDir);
+
 				ZipUtil.unzip(rubyGemsJarFile, rubyDir);
 
 				rubyDir.setLastModified(rubyGemsJarFile.lastModified());

@@ -47,16 +47,16 @@ public class FullNameDefinitionFactory {
 
 		fullNameDefinition = new FullNameDefinition();
 
-		String[] fieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.field.names"));
-
 		String[] requiredFieldNames = _getRequiredFieldNames(locale);
-
-		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
 
 		for (String requiredFieldName : requiredFieldNames) {
 			fullNameDefinition.addRequiredField(requiredFieldName);
 		}
+
+		String[] fieldNames = StringUtil.split(
+			LanguageUtil.get(locale, "lang.user.name.field.names"));
+
+		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
 
 		for (String userNameField : fieldNames) {
 			FullNameField fullNameField = new FullNameField();

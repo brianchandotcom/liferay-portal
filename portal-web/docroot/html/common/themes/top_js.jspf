@@ -264,7 +264,7 @@
 		Liferay.AUI = {
 
 			<%
-			long javaScriptLastModified = PortalWebResourcesUtil.getLastModified();
+			long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_JS);
 			%>
 
 			getAvailableLangPath: function() {
@@ -275,6 +275,9 @@
 			},
 			getComboPath: function() {
 				return '<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/combo/", "minifierType=", javaScriptLastModified) %>&';
+			},
+			getEditorsPath: function() {
+				return '<%= themeDisplay.getPathEditors() %>';
 			},
 			getFilter: function() {
 				var filter = 'raw';

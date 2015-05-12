@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
@@ -47,6 +48,16 @@ public class BookmarksEntryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {BookmarksEntry.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof BookmarksEntry) {
+			BookmarksEntryLocalServiceUtil.deleteEntry(
+				(BookmarksEntry)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -54,7 +65,7 @@ public class BookmarksEntryStagedModelDataHandler
 		BookmarksEntry entry = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (entry != null) {
-			BookmarksEntryLocalServiceUtil.deleteEntry(entry);
+			deleteStagedModel(entry);
 		}
 	}
 

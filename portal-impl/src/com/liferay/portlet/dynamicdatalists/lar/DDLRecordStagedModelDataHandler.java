@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
@@ -48,6 +49,15 @@ public class DDLRecordStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof DDLRecord) {
+			DDLRecordLocalServiceUtil.deleteRecord((DDLRecord)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -55,7 +65,7 @@ public class DDLRecordStagedModelDataHandler
 		DDLRecord record = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (record != null) {
-			DDLRecordLocalServiceUtil.deleteRecord(record);
+			deleteStagedModel(record);
 		}
 	}
 

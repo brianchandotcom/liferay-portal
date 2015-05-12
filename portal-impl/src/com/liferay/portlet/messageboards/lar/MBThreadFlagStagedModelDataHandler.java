@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -24,6 +25,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -47,14 +49,25 @@ public class MBThreadFlagStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBThreadFlag.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof MBThreadFlag) {
+			MBThreadFlagLocalServiceUtil.deleteThreadFlag(
+				(MBThreadFlag)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		MBThreadFlag threadFlag = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
 		if (threadFlag != null) {
-			MBThreadFlagLocalServiceUtil.deleteThreadFlag(threadFlag);
+			deleteStagedModel(threadFlag);
 		}
 	}
 

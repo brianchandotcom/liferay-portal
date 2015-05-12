@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
@@ -54,6 +55,18 @@ public class FileShortcutStagedModelDataHandler
 	};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof FileShortcut) {
+			FileShortcut fileShortcut = (FileShortcut)stagedModel;
+
+			DLFileShortcutLocalServiceUtil.deleteFileShortcut(
+				fileShortcut.getFileShortcutId());
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -62,8 +75,7 @@ public class FileShortcutStagedModelDataHandler
 			uuid, groupId);
 
 		if (fileShortcut != null) {
-			DLFileShortcutLocalServiceUtil.deleteFileShortcut(
-				fileShortcut.getFileShortcutId());
+			deleteStagedModel(fileShortcut);
 		}
 	}
 

@@ -15,6 +15,7 @@
 package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.mobile.device.rulegroup.action.impl.SiteRedirectActionHandler;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
@@ -49,13 +51,23 @@ public class MDRActionStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MDRAction.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof MDRAction) {
+			MDRActionLocalServiceUtil.deleteAction((MDRAction)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		MDRAction action = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (action != null) {
-			MDRActionLocalServiceUtil.deleteAction(action);
+			deleteStagedModel(action);
 		}
 	}
 

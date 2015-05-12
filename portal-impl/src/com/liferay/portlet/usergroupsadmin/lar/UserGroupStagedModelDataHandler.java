@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -37,6 +38,15 @@ public class UserGroupStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {UserGroup.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof UserGroup) {
+			UserGroupLocalServiceUtil.deleteUserGroup((UserGroup)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -47,7 +57,7 @@ public class UserGroupStagedModelDataHandler
 			uuid, group.getCompanyId());
 
 		if (userGroup != null) {
-			UserGroupLocalServiceUtil.deleteUserGroup(userGroup);
+			deleteStagedModel(userGroup);
 		}
 	}
 

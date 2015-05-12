@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.repository.portletrepository.PortletRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
@@ -62,6 +63,17 @@ public class FolderStagedModelDataHandler
 	};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof Folder) {
+			Folder folder = (Folder)stagedModel;
+
+			DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -69,7 +81,7 @@ public class FolderStagedModelDataHandler
 		Folder folder = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (folder != null) {
-			DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+			deleteStagedModel(folder);
 		}
 	}
 

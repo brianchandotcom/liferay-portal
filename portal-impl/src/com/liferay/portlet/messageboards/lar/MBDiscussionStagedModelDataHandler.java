@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -23,6 +24,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -45,14 +47,25 @@ public class MBDiscussionStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBDiscussion.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof MBDiscussion) {
+			MBDiscussionLocalServiceUtil.deleteMBDiscussion(
+				(MBDiscussion)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		MBDiscussion discussion = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
 		if (discussion != null) {
-			MBDiscussionLocalServiceUtil.deleteMBDiscussion(discussion);
+			deleteStagedModel(discussion);
 		}
 	}
 

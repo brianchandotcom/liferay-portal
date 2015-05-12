@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -77,6 +78,16 @@ public class JournalArticleStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof JournalArticle) {
+			JournalArticleLocalServiceUtil.deleteArticle(
+				(JournalArticle)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -98,7 +109,7 @@ public class JournalArticleStagedModelDataHandler
 			JournalArticle article = fetchStagedModelByUuidAndGroupId(
 				articleUuid, groupId);
 
-			JournalArticleLocalServiceUtil.deleteArticle(article);
+			deleteStagedModel(article);
 		}
 		else {
 			JournalArticleLocalServiceUtil.deleteArticle(

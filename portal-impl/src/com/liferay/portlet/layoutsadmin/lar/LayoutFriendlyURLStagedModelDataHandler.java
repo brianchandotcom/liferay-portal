@@ -15,6 +15,7 @@
 package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutFriendlyURL;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -42,14 +44,24 @@ public class LayoutFriendlyURLStagedModelDataHandler
 		{LayoutFriendlyURL.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof LayoutFriendlyURL) {
+			LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
+				(LayoutFriendlyURL)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		LayoutFriendlyURL layoutFriendlyURL = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
-		LayoutFriendlyURLLocalServiceUtil.deleteLayoutFriendlyURL(
-			layoutFriendlyURL);
+		deleteStagedModel(layoutFriendlyURL);
 	}
 
 	@Override

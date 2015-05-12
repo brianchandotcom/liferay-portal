@@ -30,6 +30,7 @@ import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.PasswordPolicy;
 import com.liferay.portal.model.PasswordPolicyRel;
 import com.liferay.portal.model.Phone;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
@@ -58,6 +59,16 @@ public class OrganizationStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Organization.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof Organization) {
+			OrganizationLocalServiceUtil.deleteOrganization(
+				(Organization)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -69,7 +80,7 @@ public class OrganizationStagedModelDataHandler
 				uuid, group.getCompanyId());
 
 		if (organization != null) {
-			OrganizationLocalServiceUtil.deleteOrganization(organization);
+			deleteStagedModel(organization);
 		}
 	}
 

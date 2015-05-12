@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
@@ -56,6 +57,15 @@ public class WikiPageStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {WikiPage.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof WikiPage) {
+			WikiPageLocalServiceUtil.deletePage((WikiPage)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -63,7 +73,7 @@ public class WikiPageStagedModelDataHandler
 		WikiPage wikiPage = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (wikiPage != null) {
-			WikiPageLocalServiceUtil.deletePage(wikiPage);
+			deleteStagedModel(wikiPage);
 		}
 	}
 

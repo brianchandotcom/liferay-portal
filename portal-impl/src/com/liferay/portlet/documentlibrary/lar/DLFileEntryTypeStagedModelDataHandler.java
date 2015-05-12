@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -51,6 +52,16 @@ public class DLFileEntryTypeStagedModelDataHandler
 		{DLFileEntryType.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof DLFileEntryType) {
+			DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(
+				(DLFileEntryType)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -59,8 +70,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 			uuid, groupId);
 
 		if (dlFileEntryType != null) {
-			DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(
-				dlFileEntryType);
+			deleteStagedModel(dlFileEntryType);
 		}
 	}
 

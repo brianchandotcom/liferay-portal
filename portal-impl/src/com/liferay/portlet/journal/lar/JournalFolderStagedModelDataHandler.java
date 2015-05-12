@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
@@ -43,6 +44,16 @@ public class JournalFolderStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {JournalFolder.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof JournalFolder) {
+			JournalFolderLocalServiceUtil.deleteFolder(
+				(JournalFolder)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -50,7 +61,7 @@ public class JournalFolderStagedModelDataHandler
 		JournalFolder folder = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (folder != null) {
-			JournalFolderLocalServiceUtil.deleteFolder(folder);
+			deleteStagedModel(folder);
 		}
 	}
 

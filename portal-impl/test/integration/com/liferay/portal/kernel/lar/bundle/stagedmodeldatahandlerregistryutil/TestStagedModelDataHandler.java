@@ -14,9 +14,11 @@
 
 package com.liferay.portal.kernel.lar.bundle.stagedmodeldatahandlerregistryutil;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 
 import java.util.List;
@@ -37,6 +39,11 @@ public class TestStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES =
 		{TestStagedModelDataHandler.class.getName()};
+
+	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+	}
 
 	@Override
 	public void deleteStagedModel(

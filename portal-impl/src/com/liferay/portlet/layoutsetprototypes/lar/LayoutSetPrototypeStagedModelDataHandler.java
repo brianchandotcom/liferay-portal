@@ -35,6 +35,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
@@ -60,6 +61,16 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		{LayoutSetPrototype.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof LayoutSetPrototype) {
+			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+				(LayoutSetPrototype)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -70,8 +81,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			fetchStagedModelByUuidAndGroupId(uuid, group.getCompanyId());
 
 		if (layoutSetPrototype != null) {
-			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
-				layoutSetPrototype);
+			deleteStagedModel(layoutSetPrototype);
 		}
 	}
 

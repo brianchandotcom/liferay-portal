@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.AddressLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -37,6 +38,15 @@ public class AddressStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Address.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof Address) {
+			AddressLocalServiceUtil.deleteAddress((Address)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -48,7 +58,7 @@ public class AddressStagedModelDataHandler
 				uuid, group.getCompanyId());
 
 		if (address != null) {
-			AddressLocalServiceUtil.deleteAddress(address);
+			deleteStagedModel(address);
 		}
 	}
 

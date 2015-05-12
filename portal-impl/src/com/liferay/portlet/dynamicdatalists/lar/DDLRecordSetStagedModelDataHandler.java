@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
@@ -41,6 +42,16 @@ public class DDLRecordSetStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDLRecordSet.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof DDLRecordSet) {
+			DDLRecordSetLocalServiceUtil.deleteRecordSet(
+				(DDLRecordSet)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -49,7 +60,7 @@ public class DDLRecordSetStagedModelDataHandler
 			uuid, groupId);
 
 		if (ddlRecordSet != null) {
-			DDLRecordSetLocalServiceUtil.deleteRecordSet(ddlRecordSet);
+			deleteStagedModel(ddlRecordSet);
 		}
 	}
 

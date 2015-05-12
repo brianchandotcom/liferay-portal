@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -56,6 +57,16 @@ public class DDMTemplateStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDMTemplate.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof DDMTemplate) {
+			DDMTemplateLocalServiceUtil.deleteTemplate(
+				(DDMTemplate)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -64,7 +75,7 @@ public class DDMTemplateStagedModelDataHandler
 			uuid, groupId);
 
 		if (ddmTemplate != null) {
-			DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
+			deleteStagedModel(ddmTemplate);
 		}
 	}
 

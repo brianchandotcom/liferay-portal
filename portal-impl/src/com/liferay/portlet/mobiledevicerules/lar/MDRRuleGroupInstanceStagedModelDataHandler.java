@@ -15,6 +15,7 @@
 package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -28,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -49,15 +51,25 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		{MDRRuleGroupInstance.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		if (stagedModel instanceof MDRRuleGroupInstance) {
+			MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
+				(MDRRuleGroupInstance)stagedModel);
+		}
+	}
+
+	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		MDRRuleGroupInstance ruleGroupInstance =
 			fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (ruleGroupInstance != null) {
-			MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
-				ruleGroupInstance);
+			deleteStagedModel(ruleGroupInstance);
 		}
 	}
 

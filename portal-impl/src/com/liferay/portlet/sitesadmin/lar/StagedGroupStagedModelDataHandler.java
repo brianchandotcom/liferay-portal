@@ -14,12 +14,14 @@
 
 package com.liferay.portlet.sitesadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.adapter.StagedGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
@@ -35,6 +37,13 @@ public class StagedGroupStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedGroup> {
 
 	public static final String[] CLASS_NAMES = {StagedGroup.class.getName()};
+
+	@Override
+	public void deleteStagedModel(StagedModel stagedModel)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void deleteStagedModel(

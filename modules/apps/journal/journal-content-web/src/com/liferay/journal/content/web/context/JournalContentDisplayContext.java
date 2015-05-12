@@ -14,6 +14,10 @@
 
 package com.liferay.journal.content.web.context;
 
+import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntry;
+import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntryTracker;
+import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
+import com.liferay.journal.content.web.util.UserToolAssetAddonEntryTracker;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -23,6 +27,7 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -55,6 +60,7 @@ import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.util.PropertyComparator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -290,6 +296,45 @@ public class JournalContentDisplayContext {
 				WorkflowConstants.STATUS_APPROVED);
 
 		return _discussionMessagesCount;
+	}
+
+	public List<ContentMetadataAssetAddonEntry>
+	getEnabledContentMetadataAssetAddonEntries() {
+
+		List<ContentMetadataAssetAddonEntry> contentMetadataEntries =
+			ListUtil.filter(
+				ContentMetadataAssetAddonEntryTracker.
+					getContentMetadataAssetAddonEntries(),
+
+				new PredicateFilter<ContentMetadataAssetAddonEntry>() {
+
+					@Override
+					public boolean filter(
+						ContentMetadataAssetAddonEntry contentMetadataEntry) {
+							return contentMetadataEntry.isEnabled();
+					}
+
+				});
+
+		return ListUtil.sort(
+			contentMetadataEntries,
+			new PropertyComparator("weight", true, false));
+	}
+
+	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
+		List<UserToolAssetAddonEntry> userToolEntries = ListUtil.filter(
+			UserToolAssetAddonEntryTracker.getUserToolAddonEntries(),
+			new PredicateFilter<UserToolAssetAddonEntry>() {
+
+				@Override
+				public boolean filter(UserToolAssetAddonEntry userToolEntry) {
+					return userToolEntry.isEnabled();
+				}
+
+			});
+
+		return ListUtil.sort(
+			userToolEntries, new PropertyComparator("weight", true, false));
 	}
 
 	public String[] getExtensions() {

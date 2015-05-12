@@ -576,7 +576,8 @@ boolean hasUnlinkLayoutSetPrototypePermission = PortalPermissionUtil.contains(pe
 						PortletURL groupSelectorURL = PortletProviderUtil.getPortletURL(request, Group.class.getName(), PortletProvider.Action.BROWSE);
 
 						groupSelectorURL.setParameter("includeCurrentGroup", Boolean.FALSE.toString());
-						groupSelectorURL.setParameter("groupId", Boolean.FALSE.toString());
+						groupSelectorURL.setParameter("groupId", (group != null) ? String.valueOf(group.getGroupId()) : "0");
+						groupSelectorURL.setParameter("eventName", liferayPortletResponse.getNamespace() + "selectGroup");
 						groupSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 						%>
 

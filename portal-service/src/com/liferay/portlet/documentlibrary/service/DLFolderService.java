@@ -227,6 +227,13 @@ public interface DLFolderService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
 	public boolean verifyInheritableLock(long folderId,
 		java.lang.String lockUuid) throws PortalException;
 }

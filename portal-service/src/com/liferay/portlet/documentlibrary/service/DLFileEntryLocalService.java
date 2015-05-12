@@ -121,6 +121,12 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 	public void convertExtraSettings(java.lang.String[] keys)
 		throws PortalException;
 
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		long userId, long groupId, long repositoryId, long fileEntryId,
+		long destFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
 	public void copyFileEntryMetadata(long companyId, long fileEntryTypeId,
 		long fileEntryId, long fromFileVersionId, long toFileVersionId,
 		com.liferay.portal.service.ServiceContext serviceContext)

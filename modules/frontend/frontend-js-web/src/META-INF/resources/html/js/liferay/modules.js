@@ -1,6 +1,6 @@
 ;(function() {
-	var LiferayAUI = Liferay.AUI;
 	var Browser = Liferay.Browser;
+	var LiferayAUI = Liferay.AUI;
 
 	var COMBINE = LiferayAUI.getCombine();
 
@@ -10,17 +10,17 @@
 
 	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
-	var SUPPORTS_INPUT_SELECTION = ((typeof INPUT_EL.selectionStart === 'number') && (typeof INPUT_EL.selectionEnd === 'number'));
+	var SUPPORTS_INPUT_SELECTION = typeof INPUT_EL.selectionStart === 'number' && typeof INPUT_EL.selectionEnd === 'number';
 
 	var testHistory = function(A) {
 		var WIN = A.config.win;
 
 		var HISTORY = WIN.history;
 
-		return (HISTORY &&
+		return HISTORY &&
 				HISTORY.pushState &&
 				HISTORY.replaceState &&
-				('onpopstate' in WIN || A.UA.gecko >= 2));
+				('onpopstate' in WIN || A.UA.gecko >= 2);
 	};
 
 	var filterConfig = null;
@@ -199,7 +199,7 @@
 						condition: {
 							name: 'liferay-autocomplete-input-caretoffset-sel',
 							test: function(A) {
-								return (A.UA.ie && A.UA.ie < 9);
+								return A.UA.ie && A.UA.ie < 9;
 							},
 							trigger: 'liferay-autocomplete-textarea'
 						},
@@ -508,6 +508,20 @@
 							'aui-template-deprecated',
 							'liferay-input-move-boxes',
 							'sortable'
+						]
+					},
+					'liferay-item-selector-browser': {
+						path: 'item_selector_browser.js',
+						requires: [
+							'liferay-item-viewer',
+							'liferay-portlet-base'
+						]
+					},
+					'liferay-item-viewer': {
+						path: 'item_viewer.js',
+						requires: [
+							'aui-component',
+							'aui-image-viewer'
 						]
 					},
 					'liferay-language': {

@@ -62,8 +62,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	public static final String PARAMETER_CRITERIA = "criteria";
 
-	public static final String PARAMETER_ITEM_SELECTED_CALLBACK =
-		"itemSelectedCallback";
+	public static final String PARAMETER_ITEM_SELECTED_EVENT_NAME =
+		"itemSelectedEventName";
 
 	public static final String PARAMETER_SELECTED_TAB = "selectedTab";
 
@@ -73,8 +73,8 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
-		String itemSelectedCallback = getValue(
-			parameters, PARAMETER_ITEM_SELECTED_CALLBACK);
+		String itemSelectedEventName = getValue(
+			parameters, PARAMETER_ITEM_SELECTED_EVENT_NAME);
 
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers =
 			new ArrayList<>();
@@ -106,7 +106,7 @@ public class ItemSelectorImpl implements ItemSelector {
 					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
-					portletRequest, itemSelectedCallback,
+					portletRequest, itemSelectedEventName,
 					itemSelectorCriteriaArray);
 
 				portletURL.setParameter(
@@ -116,22 +116,22 @@ public class ItemSelectorImpl implements ItemSelector {
 				itemSelectorViewRenderers.add(
 					new ItemSelectorViewRendererImpl(
 						itemSelectorView, itemSelectorCriterion, portletURL,
-						itemSelectedCallback));
+						itemSelectedEventName));
 			}
 		}
 
 		return new ItemSelectorRenderingImpl(
-			itemSelectedCallback, getValue(parameters, PARAMETER_SELECTED_TAB),
+			itemSelectedEventName, getValue(parameters, PARAMETER_SELECTED_TAB),
 			itemSelectorViewRenderers);
 	}
 
 	@Override
 	public PortletURL getItemSelectorURL(
-		PortletRequest portletRequest, String itemSelectedCallback,
+		PortletRequest portletRequest, String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		Map<String, String[]> parameters = getItemSelectorParameters(
-			itemSelectedCallback, itemSelectorCriteria);
+			itemSelectedEventName, itemSelectorCriteria);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -239,14 +239,14 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	protected Map<String, String[]> getItemSelectorParameters(
-		String itemSelectedCallback,
+		String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		Map<String, String[]> parameters = new HashMap<>();
 
 		parameters.put(
-			PARAMETER_ITEM_SELECTED_CALLBACK,
-			new String[] {itemSelectedCallback});
+			PARAMETER_ITEM_SELECTED_EVENT_NAME,
+			new String[] {itemSelectedEventName});
 
 		populateCriteria(parameters, itemSelectorCriteria);
 

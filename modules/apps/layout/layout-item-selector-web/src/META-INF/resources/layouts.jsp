@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String itemSelectedCallback = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_CALLBACK);
+String itemSelectedEventName = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_EVENT_NAME);
 LayoutItemSelectorCriterion layoutItemSelectorCriterion = (LayoutItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
 
 long groupId = layoutItemSelectorCriterion.getGroupId();
@@ -27,6 +27,8 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 request.setAttribute(WebKeys.GROUP, group);
 
 boolean showGroupsSelector = ParamUtil.getBoolean(request, "showGroupsSelector");
+
+String ckeditorfuncnum = ParamUtil.getString(request, "CKEditorFuncNum");
 %>
 
 <c:if test="<%= showGroupsSelector %>">
@@ -149,9 +151,17 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	button.on(
 		'click',
 		function() {
-			var url = event.target.getAttribute('data-url');
+			Util.getOpener().Liferay.fire(
+				'<%= itemSelectedEventName %>',
+				{
+					ckeditorfuncnum: <%= ckeditorfuncnum %>,
+					layoutpath: event.target.getAttribute('data-layoutpath'),
+					returnType : event.target.getAttribute('data-returnType'),
+					value : event.target.getAttribute('data-value')
+				}
+			);
 
-			<%= itemSelectedCallback %>('<%= URL.class.getName() %>', url);
+			Util.getWindow().destroy();
 		}
 	);
 

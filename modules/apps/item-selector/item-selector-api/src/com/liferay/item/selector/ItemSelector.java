@@ -26,7 +26,7 @@ public interface ItemSelector {
 		PortletRequest portletRequest);
 
 	public PortletURL getItemSelectorURL(
-		PortletRequest portletRequest, String itemSelectedCallback,
+		PortletRequest portletRequest, String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria);
 
 }

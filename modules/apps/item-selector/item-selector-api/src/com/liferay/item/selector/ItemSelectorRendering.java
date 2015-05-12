@@ -21,7 +21,7 @@ import java.util.List;
  */
 public interface ItemSelectorRendering {
 
-	public String getItemSelectedCallback();
+	public String getItemSelectedEventName();
 
 	public List<ItemSelectorViewRenderer> getItemSelectorViewRenderers();
 

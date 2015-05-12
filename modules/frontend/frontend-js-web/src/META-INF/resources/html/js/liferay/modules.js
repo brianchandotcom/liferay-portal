@@ -220,16 +220,6 @@
 						path: 'browser_selectors.js',
 						requires: ['yui-base']
 					},
-					'liferay-cover-cropper': {
-						path: 'cover_cropper.js',
-						requires: [
-							'aui-base',
-							'dd-constrain',
-							'dd-drag',
-							'liferay-crop-region',
-							'plugin'
-						]
-					},
 					'liferay-control-panel': {
 						path: 'control_panel.js',
 						requires: [
@@ -242,6 +232,16 @@
 							'liferay-store',
 							'node-focusmanager',
 							'transition'
+						]
+					},
+					'liferay-cover-cropper': {
+						path: 'cover_cropper.js',
+						requires: [
+							'aui-base',
+							'dd-constrain',
+							'dd-drag',
+							'liferay-crop-region',
+							'plugin'
 						]
 					},
 					'liferay-crop-region': {

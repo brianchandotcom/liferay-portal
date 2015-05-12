@@ -1435,6 +1435,8 @@ public interface PropsKeys {
 
 	public static final String LOCALE_PREPEND_FRIENDLY_URL_STYLE = "locale.prepend.friendly.url.style";
 
+	public static final String LOCALE_USE_DEFAULT_IF_NOT_AVAILABLE = "locale.use.default.if.not.available";
+
 	public static final String LOCALES = "locales";
 
 	public static final String LOCALES_BETA = "locales.beta";

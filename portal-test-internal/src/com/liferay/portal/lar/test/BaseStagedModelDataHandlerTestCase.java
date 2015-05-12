@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -100,6 +102,49 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	@Test
+	public void testCleanStagedModelDataHandler() throws Exception {
+
+		// Export
+
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		// Comments
+
+		addComments(stagedModel);
+
+		// Ratings
+
+		addRatings(stagedModel);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, dependentStagedModelsMap);
+
+		// Import
+
+		initImport();
+
+		deleteStagedModel(stagedModel, dependentStagedModelsMap, stagingGroup);
+
+		// Reread the staged model for import from ZIP for true testing
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
+	}
+
+	@Test
 	public void testStagedModelDataHandler() throws Exception {
 
 		// Export
@@ -134,8 +179,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		// Import
 
 		initImport();
-
-		deleteStagedModel(stagedModel, dependentStagedModelsMap, stagingGroup);
 
 		// Reread the staged model for import from ZIP for true testing
 
@@ -221,6 +264,27 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
+
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				ExportImportClassedModelUtil.getClassName(stagedModel));
+
+		stagedModelDataHandler.deleteStagedModel(stagedModel);
+
+		for (List<StagedModel> dependentStagedModelList :
+				dependentStagedModelsMap.values()) {
+
+			for (StagedModel dependentStagedModel : dependentStagedModelList) {
+				String className = ExportImportClassedModelUtil.getClassName(
+					dependentStagedModel);
+
+				stagedModelDataHandler =
+					StagedModelDataHandlerRegistryUtil.
+						getStagedModelDataHandler(className);
+
+				stagedModelDataHandler.deleteStagedModel(dependentStagedModel);
+			}
+		}
 	}
 
 	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)

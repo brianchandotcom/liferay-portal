@@ -28,18 +28,20 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-		immediate = true,
-		property = {
-			"model.class.name=PermissionServiceImplTest",
-			"service.ranking:Integer=" + Integer.MAX_VALUE
-		}
-	)
+	immediate = true,
+	property = {
+		"model.class.name=PermissionServiceImplTest",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
+)
 public class TestBaseModelPermissionChecker
 	implements BaseModelPermissionChecker {
 
 	@Override
-	public void checkBaseModel(PermissionChecker permissionChecker, long
-		groupId, long primaryKey, String actionId) throws PortalException {
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
 
 		_atomicReference.set(StackTraceUtil.getCallerKey());
 

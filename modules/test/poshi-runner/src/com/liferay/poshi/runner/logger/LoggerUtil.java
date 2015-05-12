@@ -346,6 +346,22 @@ public final class LoggerUtil {
 			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\" />",
 			XMLLoggerHandler.getXMLLogText());
 
+		if (!PropsValues.TEST_RUN_LOCALLY) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("http://rawgit.com/liferay/liferay-portal/master/");
+			sb.append("modules/test/poshi-runner/src/META-INF/resources");
+
+			htmlContent = StringUtil.replace(
+				htmlContent, "<link href=\"../css/main.css\"",
+				"<link href=\"" + sb.toString() + "/css/.sass-cache/" +
+					"main.css\"");
+
+			htmlContent = StringUtil.replace(
+				htmlContent, "<script src=\"../js/main.js\"",
+				"<script src=\"" + sb.toString() + "/js/main.js\"");
+		}
+
 		FileUtil.write(_getHtmlFilePath(), htmlContent);
 
 		if (isLoggerStarted()) {

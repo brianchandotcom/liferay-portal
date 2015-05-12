@@ -34,24 +34,6 @@ public class FullNameDefinitionFactory {
 		return _instance._getInstance(locale);
 	}
 
-	private static String[] _prependMissingRequiredFieldNames(
-		String[] fieldNames, String[] requiredFieldNames) {
-
-		List<String> fieldNamesList = ListUtil.toList(fieldNames);
-
-		int i;
-
-		for (i = 0; i < ArrayUtil.getLength(requiredFieldNames); i++) {
-			String requiredFieldName = requiredFieldNames[i];
-
-			if (!fieldNamesList.contains(requiredFieldName)) {
-				fieldNamesList.add(i, requiredFieldName);
-			}
-		}
-
-		return fieldNamesList.toArray(new String[fieldNamesList.size()]);
-	}
-
 	private FullNameDefinitionFactory() {
 	}
 
@@ -70,8 +52,7 @@ public class FullNameDefinitionFactory {
 
 		String[] requiredFieldNames = _getRequiredFieldNames(locale);
 
-		fieldNames = _prependMissingRequiredFieldNames(
-			fieldNames, requiredFieldNames);
+		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
 
 		for (String requiredFieldName : requiredFieldNames) {
 			fullNameDefinition.addRequiredField(requiredFieldName);

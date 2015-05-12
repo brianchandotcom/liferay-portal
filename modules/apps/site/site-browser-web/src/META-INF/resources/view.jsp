@@ -64,7 +64,7 @@ portletURL.setParameter("eventName", eventName);
 portletURL.setParameter("target", target);
 %>
 
-<aui:form action="<%= portletURL.toString() %>" method="post" name="selectSiteFm">
+<aui:form action="<%= portletURL.toString() %>" method="post" name="selectGroupFm">
 	<liferay-ui:search-container
 		searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 	>

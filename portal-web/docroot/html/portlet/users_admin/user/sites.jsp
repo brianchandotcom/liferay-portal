@@ -114,8 +114,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 					{
 						dialog: {
 							constrain: true,
-							modal: true,
-							width: 600
+							modal: true
 						},
 						id: '<portlet:namespace />selectGroup',
 						title: '<liferay-ui:message arguments="site" key="select-x" />',
@@ -158,8 +157,8 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 			function(event) {
 				var link = event.currentTarget;
 
-				var tr = link.ancestor('tr');
 				var rowId = link.attr('data-rowId');
+				var tr = link.ancestor('tr');
 
 				var selectGroup = Util.getWindow('<portlet:namespace />selectGroup');
 

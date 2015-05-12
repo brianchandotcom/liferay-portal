@@ -149,7 +149,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	button.on(
 		'click',
 		function() {
-			var url = event.target.getAttribute('data-url');
+			var url = event.currentTarget.attr('data-url');
 
 			<%= itemSelectedCallback %>('<%= URL.class.getName() %>', url);
 		}

@@ -291,6 +291,16 @@
 		</if>
 	</target>
 
+	<target name="deploy-static-files">
+		<delete file="${liferay.home}/osgi/portal/${plugin.name}.${plugin.packaging}" />
+		<delete file="${liferay.home}/osgi/portal/${plugin.name}-wsdd.jar" />
+		<delete dir="classes" />
+
+		<deploy
+			module.dir="${basedir}"
+		/>
+	</target>
+
 	<target name="jar" depends="build-common.compile,build-alloy,build-alloy-editor,build-ckeditor,build-tinymce">
 		<jar-macro
 			module.dir="${basedir}"

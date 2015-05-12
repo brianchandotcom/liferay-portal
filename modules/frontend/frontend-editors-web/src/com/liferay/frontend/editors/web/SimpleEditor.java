@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+package com.liferay.frontend.editors.web;
 
-<%@ page import="com.liferay.portal.kernel.servlet.PortalWebResourcesUtil" %>
+import org.osgi.service.component.annotations.Component;
 
-<liferay-util:include page='<%= PortalWebResourcesUtil.getContextPath() + "/html/js/editor/ckeditor.jsp" %>'>
-	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_bbcode.jsp" />
-</liferay-util:include>
+/**
+ * @author Raymond Augé
+ */
+@Component(property = {"editor.wysiwyg=simple"}, service = Object.class)
+public class SimpleEditor {
+}

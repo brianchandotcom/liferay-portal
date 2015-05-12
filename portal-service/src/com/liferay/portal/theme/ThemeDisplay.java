@@ -483,6 +483,10 @@ public class ThemeDisplay
 		return _pathContext;
 	}
 
+	public String getPathEditors() {
+		return _pathEditors;
+	}
+
 	public String getPathFlash() {
 		return _pathFlash;
 	}
@@ -1414,6 +1418,10 @@ public class ThemeDisplay
 		_pathContext = pathContext;
 	}
 
+	public void setPathEditors(String pathEditors) {
+		_pathEditors = pathEditors;
+	}
+
 	public void setPathFlash(String pathFlash) {
 		_pathFlash = pathFlash;
 	}
@@ -1810,6 +1818,7 @@ public class ThemeDisplay
 	private String _pathCms = StringPool.BLANK;
 	private String _pathColorSchemeImages = StringPool.BLANK;
 	private String _pathContext = StringPool.BLANK;
+	private String _pathEditors = StringPool.BLANK;
 	private String _pathFlash = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateGroup = StringPool.BLANK;
 	private String _pathFriendlyURLPrivateUser = StringPool.BLANK;

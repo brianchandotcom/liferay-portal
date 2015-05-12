@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.js.web;
+package com.liferay.frontend.editors.web;
 
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResources;
 
 import javax.servlet.ServletContext;
@@ -25,10 +26,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Peter Fellwock
+ * @author Michael Bradford
  */
 @Component(immediate = true, service = PortalWebResources.class)
-public class DefaultPortalWebResources implements PortalWebResources {
+public class EditorsPortalWebResources implements PortalWebResources {
 
 	@Override
 	public String getContextPath() {
@@ -38,6 +39,11 @@ public class DefaultPortalWebResources implements PortalWebResources {
 	@Override
 	public long getLastModified() {
 		return _bundle.getLastModified();
+	}
+
+	@Override
+	public String getResourceType() {
+		return PortalWebResourceConstants.RESOURCE_TYPE_EDITOR;
 	}
 
 	@Override
@@ -51,7 +57,7 @@ public class DefaultPortalWebResources implements PortalWebResources {
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.frontend.js.web)"
+		target = "(osgi.web.symbolicname=com.liferay.frontend.editors.web)"
 	)
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;

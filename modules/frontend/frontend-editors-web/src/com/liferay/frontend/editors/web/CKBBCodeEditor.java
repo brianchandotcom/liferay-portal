@@ -12,21 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.kernel.servlet;
+package com.liferay.frontend.editors.web;
 
-import javax.servlet.ServletContext;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Peter Fellwock
+ * @author Raymond Augé
  */
-public interface PortalWebResources {
-
-	public String getContextPath();
-
-	public long getLastModified();
-
-	public String getResourceType();
-
-	public ServletContext getServletContext();
-
+@Component(
+	property = {"editor.wysiwyg=ckeditor_bbcode"}, service = Object.class
+)
+public class CKBBCodeEditor {
 }

@@ -13,5 +13,6 @@
 	</bean>
 	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl">
 		<property name="MBMessageLocalService" ref="com.liferay.portlet.messageboards.service.MBMessageLocalService" />
+		<property name="MBMessageService" ref="com.liferay.portlet.messageboards.service.MBMessageService" />
 	</bean>
 </beans>

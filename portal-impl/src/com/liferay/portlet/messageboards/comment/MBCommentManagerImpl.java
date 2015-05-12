@@ -34,6 +34,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -123,6 +124,18 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public void deleteComment(
+			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long commentId)
+		throws PortalException {
+
+		_mbMessageService.deleteDiscussionMessage(
+			groupId, className, classPK, permissionClassName, permissionClassPK,
+			permissionOwnerId, commentId);
+	}
+
+	@Override
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 
@@ -193,6 +206,11 @@ public class MBCommentManagerImpl implements CommentManager {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
+	public void setMBMessageService(MBMessageService mbMessageService) {
+		_mbMessageService = mbMessageService;
+	}
+
 	private MBMessageLocalService _mbMessageLocalService;
+	private MBMessageService _mbMessageService;
 
 }

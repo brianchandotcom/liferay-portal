@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -235,7 +236,7 @@ public class EditDiscussionAction extends PortletAction {
 
 		long messageId = ParamUtil.getLong(actionRequest, "messageId");
 
-		MBMessageServiceUtil.deleteDiscussionMessage(
+		CommentManagerUtil.deleteComment(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
 			permissionOwnerId, messageId);
 	}

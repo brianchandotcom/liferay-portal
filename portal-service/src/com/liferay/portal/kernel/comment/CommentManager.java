@@ -42,6 +42,12 @@ public interface CommentManager {
 
 	public void deleteComment(long commentId) throws PortalException;
 
+	public void deleteComment(
+			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long commentId)
+		throws PortalException;
+
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException;
 

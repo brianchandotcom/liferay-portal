@@ -82,6 +82,9 @@ public class UserFinderImpl
 	public static final String FIND_BY_C_FN_MN_LN_SN_EA_S =
 		UserFinder.class.getName() + ".findByC_FN_MN_LN_SN_EA_S";
 
+	public static final String COUNT_BY_C_FN_MN_LN_SN_EA_S =
+		UserFinder.class.getName() + ".countByC_FN_MN_LN_SN_EA_S";
+
 	public static final String JOIN_BY_CONTACT_TWITTER_SN =
 		UserFinder.class.getName() + ".joinByContactTwitterSN";
 
@@ -288,12 +291,9 @@ public class UserFinderImpl
 		String[] lastNames, String[] screenNames, String[] emailAddresses,
 		int status, LinkedHashMap<String, Object> params, boolean andOperator) {
 
-		List<Long> userIds = doFindByC_FN_MN_LN_SN_EA_S(
+		return doCountByC_FN_MN_LN_SN_EA_S(
 			companyId, firstNames, middleNames, lastNames, screenNames,
-			emailAddresses, status, params, andOperator, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-
-		return userIds.size();
+			emailAddresses, status, params, andOperator);
 	}
 
 	@Override
@@ -506,6 +506,75 @@ public class UserFinderImpl
 		}
 	}
 
+	protected int doCountByC_FN_MN_LN_SN_EA_S(
+		long companyId, String[] firstNames, String[] middleNames,
+		String[] lastNames, String[] screenNames, String[] emailAddresses,
+		int status, LinkedHashMap<String, Object> params, boolean andOperator) {
+
+		firstNames = CustomSQLUtil.keywords(firstNames);
+		middleNames = CustomSQLUtil.keywords(middleNames);
+		lastNames = CustomSQLUtil.keywords(lastNames);
+		screenNames = CustomSQLUtil.keywords(screenNames);
+		emailAddresses = CustomSQLUtil.keywords(emailAddresses);
+
+		if (params == null) {
+			params = _emptyLinkedHashMap;
+		}
+
+		LinkedHashMap<String, Object> params1 = params;
+
+		LinkedHashMap<String, Object> params2 = null;
+
+		LinkedHashMap<String, Object> params3 = null;
+
+		LinkedHashMap<String, Object> params4 = null;
+
+		LinkedHashMap<String, Object> params5 = null;
+
+		LinkedHashMap<String, Object> params6 = null;
+
+		setParametersByC_FN_MN_LN_SN_EA_S(
+			params, params1, params2, params3, params4, params5, params6);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = getSQLByC_FN_MN_LN_SN_EA_S(
+				COUNT_BY_C_FN_MN_LN_SN_EA_S, firstNames, middleNames, lastNames,
+				screenNames, emailAddresses, status, params1, params2, params3,
+				params4, params5, params6, andOperator, null);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
+
+			setParametersValuesByC_FN_MN_LN_SN_EA_S(
+				q, companyId, firstNames, middleNames, lastNames, screenNames,
+				emailAddresses, status, params1, params2, params3, params4,
+				params5, params6);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count.intValue();
+				}
+			}
+
+			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
 	protected List<Long> doFindByC_FN_MN_LN_SN_EA_S(
 		long companyId, String[] firstNames, String[] middleNames,
 		String[] lastNames, String[] screenNames, String[] emailAddresses,
@@ -534,371 +603,27 @@ public class UserFinderImpl
 
 		LinkedHashMap<String, Object> params6 = null;
 
-		Long[] groupIds = null;
-
-		if (params.get("usersGroups") instanceof Long) {
-			Long groupId = (Long)params.get("usersGroups");
-
-			if (groupId > 0) {
-				groupIds = new Long[] {groupId};
-			}
-		}
-		else {
-			groupIds = (Long[])params.get("usersGroups");
-		}
-
-		Long[] roleIds = null;
-
-		if (params.get("usersRoles") instanceof Long) {
-			Long roleId = (Long)params.get("usersRoles");
-
-			if (roleId > 0) {
-				roleIds = new Long[] {roleId};
-			}
-		}
-		else {
-			roleIds = (Long[])params.get("usersRoles");
-		}
-
-		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
-		boolean socialRelationTypeUnionUserGroups = GetterUtil.getBoolean(
-			params.get("socialRelationTypeUnionUserGroups"));
-
-		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
-			!socialRelationTypeUnionUserGroups) {
-
-			List<Long> organizationIds = new ArrayList<>();
-			List<Long> siteGroupIds = new ArrayList<>();
-			List<Long> userGroupIds = new ArrayList<>();
-
-			for (long groupId : groupIds) {
-				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
-
-				if (group == null) {
-					continue;
-				}
-
-				if (group.isOrganization()) {
-					organizationIds.add(group.getOrganizationId());
-				}
-				else if (group.isUserGroup()) {
-					userGroupIds.add(group.getClassPK());
-				}
-				else {
-					siteGroupIds.add(groupId);
-				}
-			}
-
-			if (!organizationIds.isEmpty()) {
-				params2 = new LinkedHashMap<>(params1);
-
-				params2.remove("usersGroups");
-
-				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					params2.put("usersOrgs", organizationIds);
-				}
-				else {
-					Map<Serializable, Organization> organizations =
-						OrganizationUtil.fetchByPrimaryKeys(
-							new HashSet<Serializable>(organizationIds));
-
-					params2.put(
-						"usersOrgsTree",
-						new ArrayList<Organization>(organizations.values()));
-				}
-			}
-
-			if (!siteGroupIds.isEmpty()) {
-				Long[] siteGroupIdsArray = siteGroupIds.toArray(
-					new Long[siteGroupIds.size()]);
-
-				params3 = new LinkedHashMap<>(params1);
-
-				params3.remove("usersGroups");
-
-				params3.put("groupsOrgs", siteGroupIdsArray);
-
-				params4 = new LinkedHashMap<>(params1);
-
-				params4.remove("usersGroups");
-
-				params4.put("groupsUserGroups", siteGroupIdsArray);
-			}
-
-			if (!userGroupIds.isEmpty()) {
-				params5 = new LinkedHashMap<>(params1);
-
-				params5.remove("usersGroups");
-
-				params5.put(
-					"usersUserGroups",
-					userGroupIds.toArray(new Long[userGroupIds.size()]));
-			}
-		}
-
-		if (ArrayUtil.isNotEmpty(roleIds) && inherit &&
-			!socialRelationTypeUnionUserGroups) {
-
-			List<Long> organizationIds = new ArrayList<>();
-			List<Long> siteGroupIds = new ArrayList<>();
-			List<Long> userGroupIds = new ArrayList<>();
-
-			for (long roleId : roleIds) {
-				List<Group> groups = RoleUtil.getGroups(roleId);
-
-				for (Group group : groups) {
-					if (group.isOrganization()) {
-						organizationIds.add(group.getOrganizationId());
-					}
-					else if (group.isUserGroup()) {
-						userGroupIds.add(group.getClassPK());
-					}
-					else {
-						siteGroupIds.add(group.getGroupId());
-					}
-				}
-			}
-
-			if (!organizationIds.isEmpty()) {
-				params2 = new LinkedHashMap<>(params1);
-
-				params2.remove("usersRoles");
-
-				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
-					params2.put(
-						"usersOrgs",
-						organizationIds.toArray(
-							new Long[organizationIds.size()]));
-				}
-				else {
-					Map<Serializable, Organization> organizations =
-						OrganizationUtil.fetchByPrimaryKeys(
-							new HashSet<Serializable>(organizationIds));
-
-					params2.put(
-						"usersOrgsTree",
-						new ArrayList<Organization>(organizations.values()));
-				}
-			}
-
-			if (!siteGroupIds.isEmpty()) {
-				Long[] siteGroupIdsArray = siteGroupIds.toArray(
-					new Long[siteGroupIds.size()]);
-
-				params3 = new LinkedHashMap<>(params1);
-
-				params3.remove("usersRoles");
-
-				params3.put("usersGroups", siteGroupIdsArray);
-
-				params4 = new LinkedHashMap<>(params1);
-
-				params4.remove("usersRoles");
-
-				params4.put("groupsOrgs", siteGroupIdsArray);
-
-				params5 = new LinkedHashMap<>(params1);
-
-				params5.remove("usersRoles");
-
-				params5.put("groupsUserGroups", siteGroupIdsArray);
-			}
-
-			if (!userGroupIds.isEmpty()) {
-				params6 = new LinkedHashMap<>(params1);
-
-				params6.remove("usersRoles");
-
-				params6.put(
-					"usersUserGroups",
-					userGroupIds.toArray(new Long[userGroupIds.size()]));
-			}
-		}
-
-		if (socialRelationTypeUnionUserGroups) {
-			boolean hasSocialRelationTypes = Validator.isNotNull(
-				params.get("socialRelationType"));
-
-			if (hasSocialRelationTypes && ArrayUtil.isNotEmpty(groupIds)) {
-				params2 = new LinkedHashMap<>(params1);
-
-				params1.remove("socialRelationType");
-
-				params2.remove("usersGroups");
-			}
-		}
+		setParametersByC_FN_MN_LN_SN_EA_S(
+			params, params1, params2, params3, params4, params5, params6);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_C_FN_MN_LN_SN_EA_S);
-
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.firstName)", StringPool.LIKE, false,
-				firstNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.middleName)", StringPool.LIKE, false,
-				middleNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.lastName)", StringPool.LIKE, false,
-				lastNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.screenName)", StringPool.LIKE, false,
-				screenNames);
-			sql = CustomSQLUtil.replaceKeywords(
-				sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
-				emailAddresses);
-
-			if (status == WorkflowConstants.STATUS_ANY) {
-				sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
-			}
-
-			StringBundler sb = new StringBundler(14);
-
-			sb.append(StringPool.OPEN_PARENTHESIS);
-			sb.append(replaceJoinAndWhere(sql, params1));
-			sb.append(StringPool.CLOSE_PARENTHESIS);
-
-			if (params2 != null) {
-				sb.append(" UNION (");
-				sb.append(replaceJoinAndWhere(sql, params2));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if (params3 != null) {
-				sb.append(" UNION (");
-				sb.append(replaceJoinAndWhere(sql, params3));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if (params4 != null) {
-				sb.append(" UNION (");
-				sb.append(replaceJoinAndWhere(sql, params4));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if (params5 != null) {
-				sb.append(" UNION (");
-				sb.append(replaceJoinAndWhere(sql, params5));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if (params6 != null) {
-				sb.append(" UNION (");
-				sb.append(replaceJoinAndWhere(sql, params6));
-				sb.append(StringPool.CLOSE_PARENTHESIS);
-			}
-
-			if (obc != null) {
-				sb.append(" ORDER BY ");
-				sb.append(obc.toString());
-			}
-
-			sql = sb.toString();
-
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			String sql = getSQLByC_FN_MN_LN_SN_EA_S(
+				FIND_BY_C_FN_MN_LN_SN_EA_S, firstNames, middleNames, lastNames,
+				screenNames, emailAddresses, status, params1, params2, params3,
+				params4, params5, params6, andOperator, obc);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("userId", Type.LONG);
 
-			QueryPos qPos = QueryPos.getInstance(q);
-
-			setJoin(qPos, params1);
-
-			qPos.add(companyId);
-			qPos.add(false);
-			qPos.add(firstNames, 2);
-			qPos.add(middleNames, 2);
-			qPos.add(lastNames, 2);
-			qPos.add(screenNames, 2);
-			qPos.add(emailAddresses, 2);
-
-			if (status != WorkflowConstants.STATUS_ANY) {
-				qPos.add(status);
-			}
-
-			if (params2 != null) {
-				setJoin(qPos, params2);
-
-				qPos.add(companyId);
-				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					qPos.add(status);
-				}
-			}
-
-			if (params3 != null) {
-				setJoin(qPos, params3);
-
-				qPos.add(companyId);
-				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					qPos.add(status);
-				}
-			}
-
-			if (params4 != null) {
-				setJoin(qPos, params4);
-
-				qPos.add(companyId);
-				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					qPos.add(status);
-				}
-			}
-
-			if (params5 != null) {
-				setJoin(qPos, params5);
-
-				qPos.add(companyId);
-				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					qPos.add(status);
-				}
-			}
-
-			if (params6 != null) {
-				setJoin(qPos, params6);
-
-				qPos.add(companyId);
-				qPos.add(false);
-				qPos.add(firstNames, 2);
-				qPos.add(middleNames, 2);
-				qPos.add(lastNames, 2);
-				qPos.add(screenNames, 2);
-				qPos.add(emailAddresses, 2);
-
-				if (status != WorkflowConstants.STATUS_ANY) {
-					qPos.add(status);
-				}
-			}
+			setParametersValuesByC_FN_MN_LN_SN_EA_S(
+				q, companyId, firstNames, middleNames, lastNames, screenNames,
+				emailAddresses, status, params1, params2, params3, params4,
+				params5, params6);
 
 			return (List<Long>)QueryUtil.list(q, getDialect(), start, end);
 		}
@@ -1004,6 +729,81 @@ public class UserFinderImpl
 		}
 
 		return join;
+	}
+
+	protected String getSQLByC_FN_MN_LN_SN_EA_S(
+		String srcSQL, String[] firstNames, String[] middleNames,
+		String[] lastNames, String[] screenNames, String[] emailAddresses,
+		int status, LinkedHashMap<String, Object> params1,
+		LinkedHashMap<String, Object> params2,
+		LinkedHashMap<String, Object> params3,
+		LinkedHashMap<String, Object> params4,
+		LinkedHashMap<String, Object> params5,
+		LinkedHashMap<String, Object> params6, boolean andOperator,
+		OrderByComparator<User> obc) {
+
+		String sql = CustomSQLUtil.get(srcSQL);
+
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.firstName)", StringPool.LIKE, false, firstNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.middleName)", StringPool.LIKE, false,
+			middleNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.lastName)", StringPool.LIKE, false, lastNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.screenName)", StringPool.LIKE, false,
+			screenNames);
+		sql = CustomSQLUtil.replaceKeywords(
+			sql, "lower(User_.emailAddress)", StringPool.LIKE, true,
+			emailAddresses);
+
+		if (status == WorkflowConstants.STATUS_ANY) {
+			sql = StringUtil.replace(sql, _STATUS_SQL, StringPool.BLANK);
+		}
+
+		StringBundler sb = new StringBundler(14);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(replaceJoinAndWhere(sql, params1));
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+
+		if (params2 != null) {
+			sb.append(" UNION (");
+			sb.append(replaceJoinAndWhere(sql, params2));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (params3 != null) {
+			sb.append(" UNION (");
+			sb.append(replaceJoinAndWhere(sql, params3));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (params4 != null) {
+			sb.append(" UNION (");
+			sb.append(replaceJoinAndWhere(sql, params4));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (params5 != null) {
+			sb.append(" UNION (");
+			sb.append(replaceJoinAndWhere(sql, params5));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (params6 != null) {
+			sb.append(" UNION (");
+			sb.append(replaceJoinAndWhere(sql, params6));
+			sb.append(StringPool.CLOSE_PARENTHESIS);
+		}
+
+		if (obc != null) {
+			sb.append(" ORDER BY ");
+			sb.append(obc.toString());
+		}
+
+		return CustomSQLUtil.replaceAndOperator(sb.toString(), andOperator);
 	}
 
 	protected String getWhere(LinkedHashMap<String, Object> params) {
@@ -1372,6 +1172,320 @@ public class UserFinderImpl
 				CustomSQLParam customSQLParam = (CustomSQLParam)value;
 
 				customSQLParam.process(qPos);
+			}
+		}
+	}
+
+	protected void setParametersByC_FN_MN_LN_SN_EA_S(
+		LinkedHashMap<String, Object> params,
+		LinkedHashMap<String, Object> params1,
+		LinkedHashMap<String, Object> params2,
+		LinkedHashMap<String, Object> params3,
+		LinkedHashMap<String, Object> params4,
+		LinkedHashMap<String, Object> params5,
+		LinkedHashMap<String, Object> params6) {
+
+		Long[] groupIds = null;
+
+		if (params.get("usersGroups") instanceof Long) {
+			Long groupId = (Long)params.get("usersGroups");
+
+			if (groupId > 0) {
+				groupIds = new Long[] {groupId};
+			}
+		}
+		else {
+			groupIds = (Long[])params.get("usersGroups");
+		}
+
+		Long[] roleIds = null;
+
+		if (params.get("usersRoles") instanceof Long) {
+			Long roleId = (Long)params.get("usersRoles");
+
+			if (roleId > 0) {
+				roleIds = new Long[] {roleId};
+			}
+		}
+		else {
+			roleIds = (Long[])params.get("usersRoles");
+		}
+
+		boolean inherit = GetterUtil.getBoolean(params.get("inherit"));
+		boolean socialRelationTypeUnionUserGroups = GetterUtil.getBoolean(
+			params.get("socialRelationTypeUnionUserGroups"));
+
+		if (ArrayUtil.isNotEmpty(groupIds) && inherit &&
+			!socialRelationTypeUnionUserGroups) {
+
+			List<Long> organizationIds = new ArrayList<>();
+			List<Long> siteGroupIds = new ArrayList<>();
+			List<Long> userGroupIds = new ArrayList<>();
+
+			for (long groupId : groupIds) {
+				Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+				if (group == null) {
+					continue;
+				}
+
+				if (group.isOrganization()) {
+					organizationIds.add(group.getOrganizationId());
+				}
+				else if (group.isUserGroup()) {
+					userGroupIds.add(group.getClassPK());
+				}
+				else {
+					siteGroupIds.add(groupId);
+				}
+			}
+
+			if (!organizationIds.isEmpty()) {
+				params2 = new LinkedHashMap<>(params1);
+
+				params2.remove("usersGroups");
+
+				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+					params2.put("usersOrgs", organizationIds);
+				}
+				else {
+					Map<Serializable, Organization> organizations =
+						OrganizationUtil.fetchByPrimaryKeys(
+							new HashSet<Serializable>(organizationIds));
+
+					params2.put(
+						"usersOrgsTree",
+						new ArrayList<Organization>(organizations.values()));
+				}
+			}
+
+			if (!siteGroupIds.isEmpty()) {
+				Long[] siteGroupIdsArray = siteGroupIds.toArray(
+					new Long[siteGroupIds.size()]);
+
+				params3 = new LinkedHashMap<>(params1);
+
+				params3.remove("usersGroups");
+
+				params3.put("groupsOrgs", siteGroupIdsArray);
+
+				params4 = new LinkedHashMap<>(params1);
+
+				params4.remove("usersGroups");
+
+				params4.put("groupsUserGroups", siteGroupIdsArray);
+			}
+
+			if (!userGroupIds.isEmpty()) {
+				params5 = new LinkedHashMap<>(params1);
+
+				params5.remove("usersGroups");
+
+				params5.put(
+					"usersUserGroups",
+					userGroupIds.toArray(new Long[userGroupIds.size()]));
+			}
+		}
+
+		if (ArrayUtil.isNotEmpty(roleIds) && inherit &&
+			!socialRelationTypeUnionUserGroups) {
+
+			List<Long> organizationIds = new ArrayList<>();
+			List<Long> siteGroupIds = new ArrayList<>();
+			List<Long> userGroupIds = new ArrayList<>();
+
+			for (long roleId : roleIds) {
+				List<Group> groups = RoleUtil.getGroups(roleId);
+
+				for (Group group : groups) {
+					if (group.isOrganization()) {
+						organizationIds.add(group.getOrganizationId());
+					}
+					else if (group.isUserGroup()) {
+						userGroupIds.add(group.getClassPK());
+					}
+					else {
+						siteGroupIds.add(group.getGroupId());
+					}
+				}
+			}
+
+			if (!organizationIds.isEmpty()) {
+				params2 = new LinkedHashMap<>(params1);
+
+				params2.remove("usersRoles");
+
+				if (PropsValues.ORGANIZATIONS_MEMBERSHIP_STRICT) {
+					params2.put(
+						"usersOrgs",
+						organizationIds.toArray(
+							new Long[organizationIds.size()]));
+				}
+				else {
+					Map<Serializable, Organization> organizations =
+						OrganizationUtil.fetchByPrimaryKeys(
+							new HashSet<Serializable>(organizationIds));
+
+					params2.put(
+						"usersOrgsTree",
+						new ArrayList<Organization>(organizations.values()));
+				}
+			}
+
+			if (!siteGroupIds.isEmpty()) {
+				Long[] siteGroupIdsArray = siteGroupIds.toArray(
+					new Long[siteGroupIds.size()]);
+
+				params3 = new LinkedHashMap<>(params1);
+
+				params3.remove("usersRoles");
+
+				params3.put("usersGroups", siteGroupIdsArray);
+
+				params4 = new LinkedHashMap<>(params1);
+
+				params4.remove("usersRoles");
+
+				params4.put("groupsOrgs", siteGroupIdsArray);
+
+				params5 = new LinkedHashMap<>(params1);
+
+				params5.remove("usersRoles");
+
+				params5.put("groupsUserGroups", siteGroupIdsArray);
+			}
+
+			if (!userGroupIds.isEmpty()) {
+				params6 = new LinkedHashMap<>(params1);
+
+				params6.remove("usersRoles");
+
+				params6.put(
+					"usersUserGroups",
+					userGroupIds.toArray(new Long[userGroupIds.size()]));
+			}
+		}
+
+		if (socialRelationTypeUnionUserGroups) {
+			boolean hasSocialRelationTypes = Validator.isNotNull(
+				params.get("socialRelationType"));
+
+			if (hasSocialRelationTypes && ArrayUtil.isNotEmpty(groupIds)) {
+				params2 = new LinkedHashMap<>(params1);
+
+				params1.remove("socialRelationType");
+
+				params2.remove("usersGroups");
+			}
+		}
+	}
+
+	protected void setParametersValuesByC_FN_MN_LN_SN_EA_S(
+		SQLQuery sqlQuery, long companyId, String[] firstNames,
+		String[] middleNames, String[] lastNames, String[] screenNames,
+		String[] emailAddresses, int status,
+		LinkedHashMap<String, Object> params1,
+		LinkedHashMap<String, Object> params2,
+		LinkedHashMap<String, Object> params3,
+		LinkedHashMap<String, Object> params4,
+		LinkedHashMap<String, Object> params5,
+		LinkedHashMap<String, Object> params6) {
+
+		QueryPos qPos = QueryPos.getInstance(sqlQuery);
+
+		setJoin(qPos, params1);
+
+		boolean isDefaultUser = false;
+
+		qPos.add(companyId);
+		qPos.add(isDefaultUser);
+		qPos.add(firstNames, 2);
+		qPos.add(middleNames, 2);
+		qPos.add(lastNames, 2);
+		qPos.add(screenNames, 2);
+		qPos.add(emailAddresses, 2);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			qPos.add(status);
+		}
+
+		if (params2 != null) {
+			setJoin(qPos, params2);
+
+			qPos.add(companyId);
+			qPos.add(isDefaultUser);
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+		}
+
+		if (params3 != null) {
+			setJoin(qPos, params3);
+
+			qPos.add(companyId);
+			qPos.add(isDefaultUser);
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+		}
+
+		if (params4 != null) {
+			setJoin(qPos, params4);
+
+			qPos.add(companyId);
+			qPos.add(isDefaultUser);
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+		}
+
+		if (params5 != null) {
+			setJoin(qPos, params5);
+
+			qPos.add(companyId);
+			qPos.add(isDefaultUser);
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
+			}
+		}
+
+		if (params6 != null) {
+			setJoin(qPos, params6);
+
+			qPos.add(companyId);
+			qPos.add(isDefaultUser);
+			qPos.add(firstNames, 2);
+			qPos.add(middleNames, 2);
+			qPos.add(lastNames, 2);
+			qPos.add(screenNames, 2);
+			qPos.add(emailAddresses, 2);
+
+			if (status != WorkflowConstants.STATUS_ANY) {
+				qPos.add(status);
 			}
 		}
 	}

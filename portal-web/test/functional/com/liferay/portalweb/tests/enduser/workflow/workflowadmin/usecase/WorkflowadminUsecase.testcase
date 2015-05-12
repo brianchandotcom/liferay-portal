@@ -360,8 +360,6 @@
 			<var name="portletName" value="My Submissions" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${wikiPageTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_DEFINITION" value1="Single Approver" />
@@ -370,8 +368,6 @@
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_STATUS" value1="Review" />
 		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_END_DATE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="User#logoutPG" />
 
@@ -654,11 +650,7 @@
 			<var name="workflowTask" value="Review" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="//div[@id='workflowMyRolesTasksPanelContent']//tr[3]/td" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="ViewWebContentConfigurationCP" priority="4">

@@ -1171,8 +1171,6 @@
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertClick" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_ASSET_TITLE" value1="New To Do for List: DDL List" />
@@ -1181,7 +1179,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="MyaccountMyworkflowtasks#MY_ACCOUNT_IFRAME" />
 		<execute function="AssertTextEquals" locator1="MyaccountMyworkflowtasks#VIEW_HISTORY_BUTTON" value1="View History" />
-		<execute function="SelectFrame" value1="relative=top" />
 
 		<execute macro="User#logoutPG" />
 

@@ -261,8 +261,6 @@
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="Open" locator1="${maliciousURL3}" />
 		<execute function="AssertAlertNotPresent" />
 

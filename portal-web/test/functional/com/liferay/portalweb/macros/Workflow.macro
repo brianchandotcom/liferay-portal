@@ -1,7 +1,5 @@
 <definition>
 	<command name="approveTaskByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -38,8 +36,6 @@
 
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -56,13 +52,9 @@
 				<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#PREVIEW_ACTIVITY_ENTRY" value1="${workflowActivityComment}" />
 			</then>
 		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="approveTaskByDetails">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -82,15 +74,11 @@
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="CPMyworkflowtasksTask#BACK" value1="Back" />
 
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="approveTaskByNotifications">
@@ -105,8 +93,6 @@
 	</command>
 
 	<command name="assignToMeTaskByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -143,13 +129,9 @@
 				<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#PREVIEW_ACTIVITY_ENTRY" value1="${workflowActivityComment}" />
 			</then>
 		</if>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="assignToMeTaskByDetails">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -184,8 +166,6 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="assignToMeTaskByNotifications">
@@ -314,8 +294,6 @@
 	</command>
 
 	<command name="rejectTaskByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -338,13 +316,9 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="rejectTaskByDetails">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -371,13 +345,9 @@
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="resubmitTaskByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -393,20 +363,14 @@
 
 		<execute macro="Workflow#confirmAndViewSucessMessageViaActions" />
 
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="resubmitTaskByDetails">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMe">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -426,15 +390,11 @@
 
 		<execute function="AssertClick#assertPartialTextClickAtAndWait" locator1="CPMyworkflowtasksTask#BACK" value1="Back" />
 
-		<execute function="SelectFrame" value1="relative=top" />
-
 		<execute macro="Workflow#viewCompletedTask">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="${workflowTask}" />
 		</execute>
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="tearDownPortalWorkflow">
@@ -531,8 +491,6 @@
 	</command>
 
 	<command name="updateDueDateTaskByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -562,8 +520,6 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" value1="${workflowDueDateFormatted} ${workflowDueDateTime}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="uploadDefinition">
@@ -577,8 +533,6 @@
 	</command>
 
 	<command name="viewAssignedToMyRolesTasksCP">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_TASK" value1="${workflowTask}" />
@@ -587,13 +541,9 @@
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_DUE_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCompletedTask">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="Click" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
@@ -611,13 +561,9 @@
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasksCompleted#COMPLETED_TABLE_DUE_DATE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCompletedTasks">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertClick" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -625,13 +571,9 @@
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#COMPLETED_TABLE_TASK" value1="${workflowTask}" />
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCompletedTasksTaskNotPresentCP">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertClick" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -639,31 +581,21 @@
 		<execute function="AssertElementNotPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_TASK" />
 		<execute function="AssertElementNotPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TITLE" />
 		<execute function="AssertElementNotPresent" locator1="CPMyworkflowtasks#COMPLETED_TABLE_ASSET_TYPE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultMySubmissionsCP">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#INFO_MESSAGE" value1="There are no pending publications requested by me." />
 		<execute function="AssertClick" locator1="CPMysubmissions#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#INFO_MESSAGE" value1="There are no completed publications requested by me." />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefaultMyWorkflowTasksCP">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_INFO_MESSAGE" value1="There are no pending tasks assigned to you." />
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_INFO_MESSAGE" value1="There are no pending tasks assigned to your roles." />
 		<execute function="AssertClick" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksCompleted#INFO_MESSAGE" value1="There are no completed tasks." />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewDefinition">
@@ -685,8 +617,6 @@
 	</command>
 
 	<command name="viewMySubmissions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_DEFINITION" value1="${workflowDefinition}" />
@@ -695,8 +625,6 @@
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_STATUS" value1="${workflowTask}" />
 		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMysubmissions#PENDING_TABLE_END_DATE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewMySubmissionsTaskPreview">
@@ -707,8 +635,6 @@
 	</command>
 
 	<command name="viewRejectedTask">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowTask" value="Update" />
 
@@ -727,8 +653,6 @@
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_LAST_ACTIVITY_DATE" />
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_TABLE_DUE_DATE" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewTaskAssignedToMe">
@@ -796,8 +720,6 @@
 	</command>
 
 	<command name="withdrawTaskByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -810,13 +732,9 @@
 		<execute function="AssertClick" locator1="CPMysubmissions#PENDING_TABLE_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskByDetails">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="${workflowAssetTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
@@ -839,13 +757,9 @@
 		<execute function="AssertClick" locator1="CPMysubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByActions">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -858,13 +772,9 @@
 		<execute function="AssertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_END_DATE" />
 		<execute function="AssertElementNotPresent" locator1="//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span" />
 		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
@@ -886,7 +796,5 @@
 
 		<execute function="AssertElementNotPresent" locator1="CPMysubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

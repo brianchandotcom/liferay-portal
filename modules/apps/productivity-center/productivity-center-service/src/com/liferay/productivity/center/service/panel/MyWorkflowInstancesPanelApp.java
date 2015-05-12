@@ -54,7 +54,7 @@ public class MyWorkflowInstancesPanelApp implements PanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_WORKFLOW_INSTANCES;
+		return PortletKeys.MY_WORKFLOW_INSTANCE;
 	}
 
 	@Override

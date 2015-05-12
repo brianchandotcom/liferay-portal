@@ -101,11 +101,12 @@ public class PortletStagingBackgroundTaskExecutor
 				_log.warn("Unable to publish portlet: " + t.getMessage());
 			}
 
+			deleteTempLarOnFailure(file);
+
 			throw new SystemException(t);
 		}
-		finally {
-			file.delete();
-		}
+
+		deleteTempLarOnSuccess(file);
 
 		return processMissingReferences(
 			backgroundTask.getBackgroundTaskId(), missingReferences);

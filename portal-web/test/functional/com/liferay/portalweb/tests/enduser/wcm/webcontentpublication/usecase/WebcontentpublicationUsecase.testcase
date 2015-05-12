@@ -129,6 +129,13 @@
 			<execute function="AssertElementPresent" locator1="Home#PAGE" value1="Asset Publisher Page" />
 		</for>
 
+		<execute macro="User#firstLoginPG">
+			<var name="loginViaDockbar" value="true" />
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Page" />
 		</execute>

@@ -337,7 +337,7 @@
 	</command>
 
 	<command name="waitForNavigationInteractionTouchScriptTap">
-		<execute argument1="//script[contains(@src,'html/js/liferay/navigation_interaction_touch.js')]" selenium="waitForElementPresent" />
+		<execute argument1="//script[contains(@src,'html/js/liferay/dockbar_keyboard_interaction.js')]" selenium="waitForElementPresent" />
 
 		<execute function="Click#clickAt" />
 

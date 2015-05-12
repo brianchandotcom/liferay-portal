@@ -1223,11 +1223,14 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content 3 Title" />
+		</execute>
+
 		<execute macro="WebContent#addExistingRelatedAssetCP">
 			<var name="assetTitle" value="WC WebContent 5 Title" />
 			<var name="assetType" value="Basic Web Content" />
 			<var name="siteName" value="Liferay" />
-			<var name="webContentTitle" value="WC WebContent 3 Title" />
 		</execute>
 
 		<execute macro="Page#addPG">

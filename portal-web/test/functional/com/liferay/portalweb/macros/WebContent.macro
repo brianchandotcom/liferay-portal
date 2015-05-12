@@ -1183,7 +1183,7 @@
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="AssertTextEquals" locator1="//input[contains(@id,'_15_Text') and @type='text']" value1="${webContentText}" />
+		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TEXT_FIELD" value1="${webContentText}" />
 		<execute function="AssertClick" locator1="CPWebcontentEditwebcontent#BASIC_PREVIEW_BUTTON" value1="Basic Preview" />
 
 		<execute function="SelectFrame" locator1="CPWebcontentPreview#PREVIEW_IFRAME" />

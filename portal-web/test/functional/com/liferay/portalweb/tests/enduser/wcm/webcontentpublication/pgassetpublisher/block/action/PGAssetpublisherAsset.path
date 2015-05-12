@@ -56,7 +56,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONVERSION_DOC_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]/../img</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'DOC')]/../i</td>
 	<td></td>
 </tr>
 <tr>
@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONVERSION_ODT_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]/../img</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'ODT')]/../i</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,7 +76,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONVERSION_PDF_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]/../img</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'PDF')]/../i</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONVERSION_RTF_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]/../img</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'RTF')]/../i</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,7 +96,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONVERSION_SXW_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]/../img</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'SXW')]/../i</td>
 	<td></td>
 </tr>
 <tr>
@@ -106,7 +106,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_CONVERSION_TXT_ICON</td>
-	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]/../img</td>
+	<td>//span[contains(@class,'taglib-text') and contains (.,'TXT')]/../i</td>
 	<td></td>
 </tr>
 </tbody>

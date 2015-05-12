@@ -276,6 +276,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
 		<execute function="Type" locator1="CPWebcontentStructures#SEARCH_FIELD" value1="2" />
 		<execute function="AssertClick" locator1="CPWebcontentStructures#SEARCH_BUTTON" value1="Search" />
 

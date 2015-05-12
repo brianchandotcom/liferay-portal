@@ -331,6 +331,8 @@
 			<var name="dmDocumentTitleEdit" value="Document Title 2 Edit" />
 		</execute>
 
+		<execute macro="Page#openURL" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -341,6 +343,8 @@
 			<var name="dmDocumentTitle" value="Document Title 2 Edit" />
 			<var name="dmDocumentVersionNumber" value="1.1" />
 		</execute>
+
+		<execute macro="Page#openURL" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
@@ -651,6 +655,8 @@
 			<var name="dmDocumentTitle" value="DM Document Title 1" />
 		</execute>
 
+		<execute macro="Page#openURL" />
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -666,6 +672,8 @@
 			<var name="dmDocumentFile" value="Document_2.doc" />
 			<var name="dmDocumentTitle" value="DM Document Title 2" />
 		</execute>
+
+		<execute macro="Page#openURL" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />

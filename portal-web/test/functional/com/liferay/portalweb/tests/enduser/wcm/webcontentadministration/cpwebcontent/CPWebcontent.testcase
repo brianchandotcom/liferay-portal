@@ -317,8 +317,8 @@
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">
-			<var name="structureDescription" value="Structure Description" />
-			<var name="structureName" value="Structure Name" />
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
 		<for list="Text,Text Box" param="structureFieldName">

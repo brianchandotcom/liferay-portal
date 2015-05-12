@@ -15,17 +15,17 @@
 </tr>
 <tr>
 	<td>MEMBERSHIP_TYPE</td>
-	<td>//select[@name='_134_type']</td>
+	<td>//select[contains(@name,'SiteAdminPortlet_type')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MANUAL_MEMBERSHIP_MANAGEMENT_CHECKBOX</td>
-	<td>//input[@id='_165_manualMembership']</td>
+	<td>//input[contains(@id,'manualMembership')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENABLE_PROPAGATION_CHECKBOX</td>
-	<td>//input[@id='_134_layoutSetPrototypeLinkEnabled']</td>
+	<td>//input[contains(@id,'layoutSetPrototypeLinkEnabled')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_CHECKBOX</td>
-	<td>//input[@id='_134_active']</td>
+	<td>//input[contains(@id,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -51,7 +51,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_NAME</td>
-	<td>//input[@id='_134_name']</td>
+	<td>//input[contains(@id,'SiteAdminPortlet_name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 </tr>
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_134_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -83,7 +83,7 @@
 <!--PARENT_SITE-->
 <tr>
 	<td>PARENT_SITE_SELECT</td>
-	<td>//a[@id='_134_selectParentSiteLink']/span</td>
+	<td>//a[contains(@id,'selectParentSiteLink')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,7 +94,7 @@
 <!--PARENT_SITE_TABLE-->
 <tr>
 	<td>PARENT_SITE_TABLE_NAME</td>
-	<td>//div[@id='_134_parentGroupSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
+	<td>//div[contains(@id,'parentGroupSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
 	<td></td>
 </tr>
 <tr>

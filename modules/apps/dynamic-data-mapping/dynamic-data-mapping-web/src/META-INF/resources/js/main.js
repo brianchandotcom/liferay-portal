@@ -15,9 +15,9 @@ AUI.add(
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var MAP_HIDDEN_FIELD_ATTRS = {
-			checkbox: ['readOnly', 'required'],
+			checkbox: ['required'],
 
-			DEFAULT: ['readOnly', 'width'],
+			DEFAULT: ['width'],
 
 			separator: ['indexType', 'localizable', 'predefinedValue', 'readOnly', 'required']
 		};
@@ -108,6 +108,7 @@ AUI.add(
 							tip: Liferay.Language.get('tip'),
 							type: Liferay.Language.get('type'),
 							value: Liferay.Language.get('value'),
+							visibilityExpression: Liferay.Language.get('visibility'),
 							width: Liferay.Language.get('width'),
 							yes: Liferay.Language.get('yes')
 						}
@@ -153,7 +154,7 @@ AUI.add(
 
 				UNIQUE_FIELD_NAMES_MAP: new A.Map(),
 
-				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type'],
+				UNLOCALIZABLE_FIELD_ATTRS: ['dataType', 'fieldNamespace', 'indexType', 'localizable', 'multiple', 'name', 'readOnly', 'repeatable', 'required', 'showLabel', 'type', 'visibilityExpression'],
 
 				prototype: {
 					initializer: function() {

@@ -446,6 +446,11 @@ AUI.add(
 			repeatable: {
 				setter: booleanParse,
 				value: false
+			},
+
+			visibilityExpression: {
+				setter: booleanParse,
+				value: true
 			}
 		};
 
@@ -866,6 +871,18 @@ AUI.add(
 							return booleanOptions[val.data.value];
 						},
 						name: Liferay.Language.get('repeatable')
+					},
+					{
+						attributeName: 'visibilityExpression',
+						editor: new A.RadioCellEditor(
+							{
+								options: booleanOptions
+							}
+						),
+						formatter: function(val) {
+							return booleanOptions[val.data.value];
+						},
+						name: Liferay.Language.get('visible')
 					}
 				]
 			);

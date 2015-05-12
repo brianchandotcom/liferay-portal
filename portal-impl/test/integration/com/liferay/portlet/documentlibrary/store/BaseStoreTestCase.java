@@ -650,10 +650,10 @@ public abstract class BaseStoreTestCase {
 	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
 		throws Exception {
 
-		String fileName1 = RandomTestUtil.randomString();
+		String newRepositoryId = RandomTestUtil.randomString();
 		String fileName2 = RandomTestUtil.randomString();
 
-		store.updateFile(companyId, repositoryId, fileName1, fileName2);
+		store.updateFile(companyId, repositoryId, newRepositoryId, fileName2);
 	}
 
 	protected void addVersions(String fileName, int newVersionCount)

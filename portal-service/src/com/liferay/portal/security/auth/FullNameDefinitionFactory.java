@@ -49,10 +49,6 @@ public class FullNameDefinitionFactory {
 			}
 		}
 
-		if (!fieldNamesList.contains("first-name")) {
-			fieldNamesList.add(0, "first-name");
-		}
-
 		return fieldNamesList.toArray(new String[fieldNamesList.size()]);
 	}
 
@@ -72,8 +68,7 @@ public class FullNameDefinitionFactory {
 		String[] fieldNames = StringUtil.split(
 			LanguageUtil.get(locale, "lang.user.name.field.names"));
 
-		String[] requiredFieldNames = StringUtil.split(
-			LanguageUtil.get(locale, "lang.user.name.required.field.names"));
+		String[] requiredFieldNames = _getRequiredFieldNames(locale);
 
 		fieldNames = _prependMissingRequiredFieldNames(
 				fieldNames, requiredFieldNames);
@@ -103,6 +98,18 @@ public class FullNameDefinitionFactory {
 		_fullNameDefinitions.put(locale, fullNameDefinition);
 
 		return fullNameDefinition;
+	}
+
+	private String[] _getRequiredFieldNames(Locale locale) {
+		String[] requiredFieldNames = StringUtil.split(
+			LanguageUtil.get(locale, "lang.user.name.required.field.names"));
+
+		if (!ArrayUtil.contains(requiredFieldNames, "first-name")) {
+			requiredFieldNames = ArrayUtil.append(
+				new String[]{"first-name"}, requiredFieldNames);
+		}
+
+		return requiredFieldNames;
 	}
 
 	private static final FullNameDefinitionFactory _instance =

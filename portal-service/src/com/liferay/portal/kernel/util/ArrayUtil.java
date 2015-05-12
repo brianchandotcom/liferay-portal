@@ -1694,6 +1694,16 @@ public class ArrayUtil {
 		return newArray;
 	}
 
+	public static String[] toArray(String[] array) {
+		String[] newArray = new String[array.length];
+
+		for (int i = 0; i < array.length; i++) {
+			newArray[i] = array[i].toString();
+		}
+
+		return newArray;
+	}
+
 	public static <T, A> A[] toArray(T[] list, Accessor<T, A> accessor) {
 		A[] aArray = (A[])Array.newInstance(
 			accessor.getAttributeClass(), list.length);
@@ -2153,6 +2163,16 @@ public class ArrayUtil {
 		}
 
 		return toArray(set.toArray(new Long[set.size()]));
+	}
+
+	public static String[] unique(String[] array) {
+		Set<String> set = new LinkedHashSet<>();
+
+		for (int i = 0; i < array.length; i++) {
+			set.add(array[i]);
+		}
+
+		return toArray(set.toArray(new String[set.size()]));
 	}
 
 	public static short[] unique(short[] array) {

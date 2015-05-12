@@ -28,8 +28,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
@@ -109,7 +107,6 @@ import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
-import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
 
 import java.io.File;
 
@@ -1148,13 +1145,6 @@ public class ServicePreAction extends Action {
 					themeDisplay.setURLPublishToLive(publishToLiveURL);
 				}
 			}
-
-			PortletURL myAccountURL = PortletProviderUtil.getPortletURL(
-				request,
-				PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME,
-				PortletProvider.Action.VIEW);
-
-			themeDisplay.setURLMyAccount(myAccountURL);
 		}
 
 		if (!user.isActive() ||

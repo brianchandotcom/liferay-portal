@@ -329,12 +329,10 @@ public class EditDiscussionAction extends PortletAction {
 
 			// Update message
 
-			long commentId = CommentManagerUtil.updateComment(
+			messageId = CommentManagerUtil.updateComment(
 				className, classPK, permissionClassName, permissionClassPK,
 				permissionOwnerId, messageId, subject, body,
 				serviceContextFunction);
-
-			messageId = commentId;
 		}
 
 		// Subscription

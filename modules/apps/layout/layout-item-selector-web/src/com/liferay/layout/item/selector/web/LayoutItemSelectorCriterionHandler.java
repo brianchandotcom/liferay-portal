@@ -37,7 +37,7 @@ public class LayoutItemSelectorCriterionHandler
 	@Override
 	public List<ItemSelectorView<LayoutItemSelectorCriterion>>
 		getItemSelectorViews(
-			LayoutItemSelectorCriterion itemSelectorCriterion) {
+			LayoutItemSelectorCriterion layoutItemSelectorCriterion) {
 
 		List<ItemSelectorView<LayoutItemSelectorCriterion>> itemSelectorViews =
 			new ArrayList<>();

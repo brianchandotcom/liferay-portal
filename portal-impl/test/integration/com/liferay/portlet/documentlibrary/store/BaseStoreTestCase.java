@@ -136,7 +136,11 @@ public abstract class BaseStoreTestCase {
 
 	@Test(expected = DuplicateFileException.class)
 	public void testCopyFileVersionDuplicateFileException() throws Exception {
-		String fileName = addFile(1);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 1);
 
 		store.copyFileVersion(companyId, repositoryId, fileName, "1.0", "1.1");
 	}
@@ -192,7 +196,11 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testDeleteFile() throws Exception {
-		String fileName = addFile(1);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 1);
 
 		store.deleteFile(companyId, repositoryId, fileName);
 
@@ -208,7 +216,11 @@ public abstract class BaseStoreTestCase {
 
 		// 1.0
 
-		String fileName = addFile(1);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 1);
 
 		store.deleteFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT);
@@ -234,7 +246,11 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testGetFileAsStream() throws Exception {
-		String fileName = addFile(1);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 1);
 
 		try (InputStream inputStream = store.getFileAsStream(
 			companyId, repositoryId, fileName)) {
@@ -250,7 +266,11 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testGetFileAsStreamWithVersion() throws Exception {
-		String fileName = addFile(5);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 5);
 
 		try (InputStream inputStream = store.getFileAsStream(
 			companyId, repositoryId, fileName, "1.5")) {
@@ -400,7 +420,11 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testHasFileWithVersion() throws Exception {
-		String fileName = addFile(5);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 5);
 
 		String versionLabel = "1.";
 
@@ -536,7 +560,11 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testUpdateFileWithNewFileName() throws Exception {
-		String fileName = addFile(2);
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addFile(fileName, 2);
 
 		String newFileName = RandomTestUtil.randomString();
 
@@ -609,10 +637,12 @@ public abstract class BaseStoreTestCase {
 		store.updateFile(companyId, repositoryId, fileName1, fileName2);
 	}
 
-	protected String addFile(int newVersionCount) throws Exception {
-		String fileName = RandomTestUtil.randomString();
+	protected String addFile(String fileName, int newVersionCount)
+		throws Exception {
 
-		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+		Assert.assertTrue(
+			store.hasFile(
+				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		String versionLabel = "1.";
 
@@ -621,10 +651,6 @@ public abstract class BaseStoreTestCase {
 				companyId, repositoryId, fileName, versionLabel + i,
 				_DATA_VERSION_1);
 		}
-
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
 		for (int i = 1; i <= newVersionCount; i++) {
 			Assert.assertTrue(

@@ -28,6 +28,7 @@ page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfiguration" %><%@
 page import="com.liferay.site.navigation.menu.web.configuration.NavigationMenuWebConfigurationUtil" %><%@
 page import="com.liferay.site.navigation.menu.web.display.context.NavigationMenuDisplayContext" %>

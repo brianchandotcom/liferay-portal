@@ -28,7 +28,7 @@
 
 			<aui:fieldset column="<%= true %>">
 				<aui:select name="preferences--displayStyle--">
-					<aui:option label="custom" selected='<%= (navigationMenuDisplayContext.getDisplayStyle()).equals("[custom]") %>' value="[custom]" />
+					<aui:option label="custom" selected='<%= Validator.equals(navigationMenuDisplayContext.getDisplayStyle(), "[custom]") %>' value="[custom]" />
 
 					<optgroup label="<liferay-ui:message key="predefined" />">
 
@@ -36,7 +36,7 @@
 						for (String displayStyleOption : navigationMenuWebConfiguration.displayStyleOptions()) {
 						%>
 
-							<aui:option label="<%= displayStyleOption %>" selected="<%= (navigationMenuDisplayContext.getDisplayStyle()).equals(displayStyleOption) %>" />
+							<aui:option label="<%= displayStyleOption %>" selected="<%= Validator.equals(navigationMenuDisplayContext.getDisplayStyle(), displayStyleOption) %>" />
 
 						<%
 						}
@@ -61,7 +61,7 @@
 							for (String bulletStyleOption : bulletStyleOptions) {
 							%>
 
-								<aui:option label="<%= bulletStyleOption %>" selected="<%= (navigationMenuDisplayContext.getBulletStyle()).equals(bulletStyleOption) %>" />
+								<aui:option label="<%= bulletStyleOption %>" selected="<%= Validator.equals(navigationMenuDisplayContext.getBulletStyle(), bulletStyleOption) %>" />
 
 							<%
 							}

@@ -61,4 +61,8 @@ public interface CommentManager {
 	public DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker);
 
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException;
+
 }

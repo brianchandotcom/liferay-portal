@@ -100,6 +100,14 @@ public class CommentManagerUtil {
 		return getCommentManager().getDiscussionPermission(permissionChecker);
 	}
 
+	public static void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		getCommentManager().subscribeDiscussion(
+			userId, groupId, className, classPK);
+	}
+
 	public void setCommentManager(CommentManager commentManager) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

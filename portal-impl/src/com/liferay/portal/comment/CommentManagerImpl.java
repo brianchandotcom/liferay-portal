@@ -151,6 +151,16 @@ public class CommentManagerImpl implements CommentManager {
 		return commentManager.getDiscussionPermission(permissionChecker);
 	}
 
+	@Override
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.subscribeDiscussion(userId, groupId, className, classPK);
+	}
+
 	protected CommentManager getCommentManager() {
 		if (_serviceTracker.isEmpty()) {
 			return _defaultCommentManager;

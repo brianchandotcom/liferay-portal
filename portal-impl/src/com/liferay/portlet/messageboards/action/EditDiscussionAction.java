@@ -36,7 +36,6 @@ import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
@@ -257,7 +256,7 @@ public class EditDiscussionAction extends PortletAction {
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		if (subscribe) {
-			MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			CommentManagerUtil.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
 		}
@@ -354,7 +353,7 @@ public class EditDiscussionAction extends PortletAction {
 		boolean subscribe = ParamUtil.getBoolean(actionRequest, "subscribe");
 
 		if (subscribe) {
-			MBDiscussionLocalServiceUtil.subscribeDiscussion(
+			CommentManagerUtil.subscribeDiscussion(
 				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
 				className, classPK);
 		}

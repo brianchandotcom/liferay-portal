@@ -83,6 +83,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 		return _discussionPermission;
 	}
 
+	@Override
+	public void subscribeDiscussion(
+		long userId, long groupId, String className, long classPK) {
+	}
+
 	private static final Discussion _discussion = new Discussion() {
 
 		@Override

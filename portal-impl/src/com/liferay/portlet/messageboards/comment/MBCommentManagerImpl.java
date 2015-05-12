@@ -32,6 +32,7 @@ import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageService;
@@ -200,6 +201,12 @@ public class MBCommentManagerImpl implements CommentManager {
 		return new MBDiscussionPermissionImpl(permissionChecker);
 	}
 
+	public void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
 	public void setMBMessageLocalService(
 		MBMessageLocalService mbMessageLocalService) {
 
@@ -210,6 +217,16 @@ public class MBCommentManagerImpl implements CommentManager {
 		_mbMessageService = mbMessageService;
 	}
 
+	@Override
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		_mbDiscussionLocalService.subscribeDiscussion(
+			userId, groupId, className, classPK);
+	}
+
+	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;
 

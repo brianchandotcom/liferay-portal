@@ -14,19 +14,13 @@
 
 package com.liferay.portal.kernel.servlet;
 
-import javax.servlet.ServletContext;
-
 /**
  * @author Peter Fellwock
  */
-public interface PortalWebResources {
+public class PortalWebResourceConstants {
 
-	public String getContextPath();
+	public static final String RESOURCE_TYPE_EDITOR = "editor";
 
-	public long getLastModified();
-
-	public String getResourceType();
-
-	public ServletContext getServletContext();
+	public static final String RESOURCE_TYPE_JS = "js";
 
 }

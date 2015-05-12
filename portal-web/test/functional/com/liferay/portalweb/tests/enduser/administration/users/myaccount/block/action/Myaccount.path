@@ -53,6 +53,17 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_MY</td>
+	<td>//ul[@class='category-portlets list-unstyled']/li[contains(.,'${key_portletName}')]/span/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--MENU_USER_INFORMATION-->
 <tr>
 	<td>MENU_USER_INFORMATION_DETAILS</td>

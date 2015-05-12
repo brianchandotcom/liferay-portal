@@ -106,7 +106,9 @@ public class AuthPipelineTest {
 		try {
 			AuthPipeline.onFailureByScreenName(
 				key, companyId, screenName, null, null);
-		} catch (AuthException ae) {}
+		}
+		catch (AuthException ae) {
+		}
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
@@ -120,9 +122,10 @@ public class AuthPipelineTest {
 		_atomicState.reset();
 
 		try {
-			AuthPipeline.onFailureByUserId(
-				key, companyId, userId, null, null);
-		} catch (AuthException ae) {}
+			AuthPipeline.onFailureByUserId(key, companyId, userId, null, null);
+		}
+		catch (AuthException ae) {
+		}
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
@@ -132,13 +135,15 @@ public class AuthPipelineTest {
 		long companyId = 0;
 		String emailAddress = RandomTestUtil.randomString();
 		String key = "auth.max.failures";
-		
+
 		_atomicState.reset();
 
 		try {
 			AuthPipeline.onMaxFailuresByEmailAddress(
 				key, companyId, emailAddress, null, null);
-		} catch (AuthException ae) {}
+		}
+		catch (AuthException ae) {
+		}
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
@@ -154,7 +159,9 @@ public class AuthPipelineTest {
 		try {
 			AuthPipeline.onMaxFailuresByScreenName(
 				key, companyId, screenName, null, null);
-		} catch (AuthException ae) {}
+		}
+		catch (AuthException ae) {
+		}
 
 		Assert.assertTrue(_atomicState.isSet());
 	}
@@ -170,7 +177,9 @@ public class AuthPipelineTest {
 		try {
 			AuthPipeline.onMaxFailuresByUserId(
 				key, companyId, userId, null, null);
-		} catch (AuthException ae) {}
+		}
+		catch (AuthException ae) {
+		}
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

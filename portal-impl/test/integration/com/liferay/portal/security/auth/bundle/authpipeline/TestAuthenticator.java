@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"key=auth.pipeline.pre",
-				"service.ranking:Integer=" + Integer.MAX_VALUE
-			},
+	property = {
+		"key=auth.pipeline.pre", "service.ranking:Integer=" + Integer.MAX_VALUE
+	},
 	service = Authenticator.class
 )
 public class TestAuthenticator implements Authenticator {

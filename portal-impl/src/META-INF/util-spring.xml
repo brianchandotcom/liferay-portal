@@ -285,9 +285,6 @@
 	<bean id="com.liferay.portal.kernel.scripting.Scripting" class="com.liferay.portal.scripting.ScriptingImpl">
 		<property name="scriptingExecutors">
 			<map>
-				<entry key="beanshell">
-					<bean class="com.liferay.portal.scripting.beanshell.BeanShellExecutor" />
-				</entry>
 				<entry key="javascript">
 					<bean class="com.liferay.portal.scripting.javascript.JavaScriptExecutor" />
 				</entry>

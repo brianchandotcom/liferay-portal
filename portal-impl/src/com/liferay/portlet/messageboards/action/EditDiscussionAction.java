@@ -72,7 +72,7 @@ public class EditDiscussionAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				long commentId = updateMessage(actionRequest);
+				long commentId = updateComment(actionRequest);
 
 				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
@@ -91,7 +91,7 @@ public class EditDiscussionAction extends PortletAction {
 				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteMessage(actionRequest);
+				deleteComment(actionRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE_TO_COMMENTS)) {
 				subscribeToComments(actionRequest, true);
@@ -179,7 +179,7 @@ public class EditDiscussionAction extends PortletAction {
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	protected void deleteMessage(ActionRequest actionRequest) throws Exception {
+	protected void deleteComment(ActionRequest actionRequest) throws Exception {
 		long groupId = PortalUtil.getScopeGroupId(actionRequest);
 
 		String className = ParamUtil.getString(actionRequest, "className");
@@ -224,7 +224,7 @@ public class EditDiscussionAction extends PortletAction {
 		}
 	}
 
-	protected long updateMessage(ActionRequest actionRequest) throws Exception {
+	protected long updateComment(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 

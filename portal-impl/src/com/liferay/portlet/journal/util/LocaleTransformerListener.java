@@ -22,10 +22,8 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 
@@ -130,10 +128,14 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			DDMStructure ddmStructure =
 				DDMStructureLocalServiceUtil.fetchDDMStructure(ddmStructureId);
 
-			if (Validator.isNull(ddmStructure)) {
-				throw new NoSuchStructureException(
-					"Web content structure is not available. " +
-					"The content won't be checked against localizibilty.");
+			if (ddmStructure == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"DDM structure is not available. Not checking " +
+							"localizibilty.");
+				}
+
+				return;
 			}
 
 			Element rootElement = document.getRootElement();
@@ -148,7 +150,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 				rootElement, articleDefaultLanguageId, ddmStructure);
 		}
 		catch (PortalException pe) {
-			_log.error(pe.getMessage());
+			_log.error(pe);
 		}
 		catch (NullPointerException npe) {
 			_log.error(npe);

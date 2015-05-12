@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.TransformerListener;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -66,6 +65,12 @@ import java.util.Set;
 public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	public static String getContentByLocale(
+		Document document, String languageId) {
+
+		return getContentByLocale(document, languageId, null);
+	}
+
+	public static String getContentByLocale(
 		Document document, String languageId, Map<String, String> tokens) {
 
 		TransformerListener transformerListener =
@@ -73,18 +78,6 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 		document = transformerListener.onXml(
 			document.clone(), languageId, tokens);
-
-		return document.asXML();
-	}
-
-	public static String getContentByLocale(
-		Document document, String languageId) {
-
-		TransformerListener transformerListener =
-			new LocaleTransformerListener();
-
-		document = transformerListener.onXml(
-			document.clone(), languageId, null);
 
 		return document.asXML();
 	}
@@ -188,23 +181,19 @@ public class JournalArticleImpl extends JournalArticleBaseImpl {
 
 	@Override
 	public String getContentByLocale(String languageId) {
-		Map<String, String> tokens = new HashMap<String, String>();
+		Map<String, String> tokens = new HashMap<>();
 
 		try {
 			DDMStructure ddmStructure = getDDMStructure();
 
-			tokens.put("ddm_structure_id", String.valueOf(
-				ddmStructure.getStructureId()));
+			tokens.put(
+				"ddm_structure_id",
+				String.valueOf(ddmStructure.getStructureId()));
 		}
 		catch (PortalException pe) {
 		}
 
-		if(tokens.isEmpty()) {
-			return getContentByLocale(getDocument(), languageId);
-		}
-		else {
-			return getContentByLocale(getDocument(), languageId, tokens);
-		}
+		return getContentByLocale(getDocument(), languageId, tokens);
 	}
 
 	@Override

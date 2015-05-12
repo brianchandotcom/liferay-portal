@@ -79,9 +79,7 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
-	META-INF/resources/html/js=tmp/META-INF/resources/html/js,\
-	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
-	@../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class
+	META-INF/resources/html/js=tmp/META-INF/resources/html/js
 Web-ContextPath: /frontend-js-web
 
 -donotcopy: (\.touch|.*_diffs.*)

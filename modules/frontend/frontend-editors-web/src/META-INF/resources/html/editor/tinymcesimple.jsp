@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,22 +12,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.portal.kernel.servlet;
-
-import javax.servlet.ServletContext;
-
-/**
- * @author Peter Fellwock
- */
-public interface PortalWebResources {
-
-	public String getContextPath();
-
-	public long getLastModified();
-
-	public String getResourceType();
-
-	public ServletContext getServletContext();
-
-}
+<%@ include file="/html/editor/tinymce_simple.jsp" %>

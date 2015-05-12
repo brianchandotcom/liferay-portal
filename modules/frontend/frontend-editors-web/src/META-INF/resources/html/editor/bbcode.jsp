@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/js/editor/init.jsp" %>
+<%@ include file="/html/editor/init.jsp" %>
 
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));

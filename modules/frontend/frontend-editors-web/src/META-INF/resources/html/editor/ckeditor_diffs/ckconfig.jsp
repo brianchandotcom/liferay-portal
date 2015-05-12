@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/js/editor/ckeditor_init.jsp" %>
+<%@ include file="/html/editor/ckeditor_init.jsp" %>
 
 <%
 String contentsLanguageId = ParamUtil.getString(request, "contentsLanguageId");
@@ -262,7 +262,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		}
 	);
 
-	<%@ include file="/html/js/editor/ckeditor/ckconfig-ext.jsp" %>
+	<%@ include file="/html/editor/ckeditor/ckconfig-ext.jsp" %>
 };
 
 window['<%= HtmlUtil.escapeJS(name) %>Config']();

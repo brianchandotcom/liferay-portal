@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,6 +11,14 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/js/editor/tinymce_simple.jsp" %>
+package com.liferay.frontend.editors.web;
+
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Raymond Augé
+ */
+@Component(property = {"editor.wysiwyg=simple"}, service = Object.class)
+public class SimpleEditor {
+}

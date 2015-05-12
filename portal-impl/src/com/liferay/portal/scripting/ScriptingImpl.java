@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scripting;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -40,10 +39,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.time.StopWatch;
-
-import org.python.core.Py;
-import org.python.core.PyFile;
-import org.python.core.PySyntaxError;
 
 /**
  * @author Alberto Montero
@@ -157,30 +152,10 @@ public class ScriptingImpl implements Scripting {
 		return classLoaders;
 	}
 
-	protected String getErrorMessage(Exception e) {
-		String message = e.getMessage();
-
-		if (e instanceof PySyntaxError) {
-			PySyntaxError pySyntaxError = (PySyntaxError)e;
-
-			UnsyncByteArrayOutputStream unsyncByteArrayOutputStream =
-				new UnsyncByteArrayOutputStream();
-
-			Py.displayException(
-				pySyntaxError.type, pySyntaxError.value,
-				pySyntaxError.traceback,
-				new PyFile(unsyncByteArrayOutputStream));
-
-			message = unsyncByteArrayOutputStream.toString();
-		}
-
-		return message;
-	}
-
 	protected String getErrorMessage(String script, Exception e) {
 		StringBundler sb = new StringBundler();
 
-		sb.append(getErrorMessage(e));
+		sb.append(e.getMessage());
 		sb.append(StringPool.NEW_LINE);
 
 		try {
@@ -204,7 +179,7 @@ public class ScriptingImpl implements Scripting {
 		catch (IOException ioe) {
 			sb.setIndex(0);
 
-			sb.append(getErrorMessage(e));
+			sb.append(e.getMessage());
 			sb.append(StringPool.NEW_LINE);
 			sb.append(script);
 		}

@@ -460,7 +460,6 @@
 				<classpath mode="compile">lib/portal/juh.jar</classpath>
 				<classpath mode="compile">lib/portal/juniversalchardet.jar</classpath>
 				<classpath mode="compile">lib/portal/jurt.jar</classpath>
-				<classpath mode="compile">lib/portal/jython.jar</classpath>
 				<classpath mode="compile">lib/portal/kxml2.jar</classpath>
 				<classpath mode="compile">lib/portal/liferay-icu4j.jar</classpath>
 				<classpath mode="compile">lib/portal/liferay-yui-compressor.jar</classpath>

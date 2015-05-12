@@ -2560,21 +2560,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jython.jar</file-name>
-				<version>2.5.2</version>
-				<project-name>Jython</project-name>
-				<project-url>http://www.jython.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Python Software Foundation License 2</license-name>
-						<license-url>http://www.jython.org/license.html</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-24672.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/kxml2.jar</file-name>
 				<version>2.3.0</version>
 				<project-name>kXML 2</project-name>

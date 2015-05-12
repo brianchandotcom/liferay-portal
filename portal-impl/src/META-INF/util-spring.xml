@@ -291,9 +291,6 @@
 				<entry key="javascript">
 					<bean class="com.liferay.portal.scripting.javascript.JavaScriptExecutor" />
 				</entry>
-				<entry key="python">
-					<bean class="com.liferay.portal.scripting.python.PythonExecutor" />
-				</entry>
 				<entry key="ruby">
 					<bean class="com.liferay.portal.scripting.ruby.RubyExecutor" depends-on="com.liferay.portal.kernel.util.FileUtil" />
 				</entry>

@@ -109,7 +109,7 @@ public class TrackbackAction extends PortletAction {
 
 			_trackback.addTrackback(
 				entry, themeDisplay, excerpt, url, blogName, title,
-				new TrackbackServiceContextFunction(actionRequest));
+				new ServiceContextFunction(actionRequest));
 		}
 		catch (TrackbackValidationException tve) {
 			sendError(actionRequest, actionResponse, tve.getMessage());

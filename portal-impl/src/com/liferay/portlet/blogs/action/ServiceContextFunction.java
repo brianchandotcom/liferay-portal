@@ -24,10 +24,10 @@ import javax.portlet.PortletRequest;
 /**
  * @author André de Oliveira
  */
-public class TrackbackServiceContextFunction
+public class ServiceContextFunction
 	implements Function<String, ServiceContext> {
 
-	public TrackbackServiceContextFunction(PortletRequest portletRequest) {
+	public ServiceContextFunction(PortletRequest portletRequest) {
 		_portletRequest = portletRequest;
 	}
 

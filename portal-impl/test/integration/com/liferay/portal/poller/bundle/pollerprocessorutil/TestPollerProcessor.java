@@ -25,8 +25,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=PollerProcessorUtilTest",
-	    "service.ranking:Integer=" + Integer.MAX_VALUE}
+	property = {
+		"javax.portlet.name=PollerProcessorUtilTest",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
 )
 public class TestPollerProcessor implements PollerProcessor {
 
@@ -36,7 +38,7 @@ public class TestPollerProcessor implements PollerProcessor {
 	}
 
 	@Override
-	public void send(PollerRequest pollerRequest) {	
+	public void send(PollerRequest pollerRequest) {
 		return;
 	}
 

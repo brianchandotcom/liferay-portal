@@ -16,19 +16,14 @@ package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
-import com.liferay.registry.collections.ServiceRegistrationMap;
 import com.liferay.registry.util.StringPlus;
 
 import java.util.HashMap;
@@ -126,67 +121,7 @@ public class AuthPipeline {
 		onFailureByUserId(key, companyId, userId, headerMap, parameterMap);
 	}
 
-	public static void registerAuthenticator(
-		String key, Authenticator authenticator) {
-
-		_instance._registerAuthenticator(key, authenticator);
-	}
-
-	public static void registerAuthFailure(
-		String key, AuthFailure authFailure) {
-
-		_instance._registerAuthFailure(key, authFailure);
-	}
-
-	public static void unregisterAuthenticator(
-		String key, Authenticator authenticator) {
-
-		_instance._unregisterAuthenticator(authenticator);
-	}
-
-	public static void unregisterAuthFailure(
-		String key, AuthFailure authFailure) {
-
-		_instance._unregisterAuthFailure(authFailure);
-	}
-
 	private AuthPipeline() {
-		_authFailures.put(PropsKeys.AUTH_FAILURE, new AuthFailure[0]);
-
-		for (String authFailureClassName : PropsValues.AUTH_FAILURE) {
-			AuthFailure authFailure = (AuthFailure)InstancePool.get(
-				authFailureClassName);
-
-			_registerAuthFailure(PropsKeys.AUTH_FAILURE, authFailure);
-		}
-
-		_authFailures.put(PropsKeys.AUTH_MAX_FAILURES, new AuthFailure[0]);
-
-		for (String authFailureClassName : PropsValues.AUTH_MAX_FAILURES) {
-			AuthFailure authFailure = (AuthFailure)InstancePool.get(
-				authFailureClassName);
-
-			_registerAuthFailure(PropsKeys.AUTH_MAX_FAILURES, authFailure);
-		}
-
-		_authenticators.put(PropsKeys.AUTH_PIPELINE_POST, new Authenticator[0]);
-
-		for (String authenticatorClassName : PropsValues.AUTH_PIPELINE_POST) {
-			Authenticator authenticator = (Authenticator)InstancePool.get(
-				authenticatorClassName);
-
-			_registerAuthenticator(PropsKeys.AUTH_PIPELINE_POST, authenticator);
-		}
-
-		_authenticators.put(PropsKeys.AUTH_PIPELINE_PRE, new Authenticator[0]);
-
-		for (String authenticatorClassName : PropsValues.AUTH_PIPELINE_PRE) {
-			Authenticator authenticator = (Authenticator)InstancePool.get(
-				authenticatorClassName);
-
-			_registerAuthenticator(PropsKeys.AUTH_PIPELINE_PRE, authenticator);
-		}
-
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter authFailureFilter = registry.getFilter(
@@ -298,66 +233,13 @@ public class AuthPipeline {
 		}
 	}
 
-	private void _registerAuthenticator(
-		String key, Authenticator authenticator) {
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("key", key);
-
-		ServiceRegistration<Authenticator> serviceRegistration =
-			registry.registerService(
-				Authenticator.class, authenticator, properties);
-
-		_authenticatorServiceRegistrations.put(
-			authenticator, serviceRegistration);
-	}
-
-	private void _registerAuthFailure(String key, AuthFailure authFailure) {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("key", key);
-
-		ServiceRegistration<AuthFailure> serviceRegistration =
-			registry.registerService(
-				AuthFailure.class, authFailure, properties);
-
-		_authFailureServiceRegistrations.put(authFailure, serviceRegistration);
-	}
-
-	private void _unregisterAuthenticator(Authenticator authenticator) {
-		ServiceRegistration<Authenticator> serviceRegistration =
-			_authenticatorServiceRegistrations.remove(authenticator);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
-	private void _unregisterAuthFailure(AuthFailure authFailure) {
-		ServiceRegistration<AuthFailure> serviceRegistration =
-			_authFailureServiceRegistrations.remove(authFailure);
-
-		if (serviceRegistration != null) {
-			serviceRegistration.unregister();
-		}
-	}
-
 	private static final AuthPipeline _instance = new AuthPipeline();
 
 	private final Map<String, Authenticator[]> _authenticators =
 		new HashMap<>();
-	private final Map<Authenticator, ServiceRegistration<Authenticator>>
-		_authenticatorServiceRegistrations = new ServiceRegistrationMap<>();
 	private final ServiceTracker<Authenticator, Authenticator>
 		_authenticatorServiceTracker;
 	private final Map<String, AuthFailure[]> _authFailures = new HashMap<>();
-	private final Map<AuthFailure, ServiceRegistration<AuthFailure>>
-		_authFailureServiceRegistrations = new ServiceRegistrationMap<>();
 	private final ServiceTracker<AuthFailure, AuthFailure>
 		_authFailureServiceTracker;
 

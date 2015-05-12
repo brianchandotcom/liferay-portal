@@ -14,7 +14,6 @@
 
 package com.liferay.portal.kernel.increment;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import org.junit.Assert;
@@ -58,10 +57,6 @@ public class OverrideIncrementTest {
 
 		integerOverrideIncrement.setValue(2);
 
-		Assert.assertEquals(
-			Integer.valueOf(2),
-			ReflectionTestUtil.invokeBridge(
-				integerOverrideIncrement, "getValue", new Class<?>[0]));
 		Assert.assertEquals(
 			Integer.valueOf(2), integerOverrideIncrement.getValue());
 	}

@@ -14,10 +14,7 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
-
-import java.lang.reflect.InvocationTargetException;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
@@ -180,22 +177,6 @@ public class PortletSessionAttributeMapTest {
 			Assert.fail();
 		}
 		catch (UnsupportedOperationException uoe) {
-		}
-
-		try {
-			ReflectionTestUtil.invokeBridge(
-				portletSessionAttributeMap, "put",
-				new Class<?>[] {String.class, Object.class}, null, null);
-
-			Assert.fail();
-		}
-		catch (Exception e) {
-			Assert.assertSame(InvocationTargetException.class, e.getClass());
-
-			Throwable throwable = e.getCause();
-
-			Assert.assertSame(
-				UnsupportedOperationException.class, throwable.getClass());
 		}
 
 		try {

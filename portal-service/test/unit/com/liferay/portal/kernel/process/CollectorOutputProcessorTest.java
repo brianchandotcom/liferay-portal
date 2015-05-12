@@ -61,16 +61,6 @@ public class CollectorOutputProcessorTest extends BaseOutputProcessorTestCase {
 			stdOutData,
 			collectorOutputProcessor.processStdErr(
 				new UnsyncByteArrayInputStream(stdOutData)));
-		Assert.assertArrayEquals(
-			stdErrData,
-			invokeProcessStdErr(
-				collectorOutputProcessor,
-				new UnsyncByteArrayInputStream(stdErrData)));
-		Assert.assertArrayEquals(
-			stdOutData,
-			invokeProcessStdOut(
-				collectorOutputProcessor,
-				new UnsyncByteArrayInputStream(stdOutData)));
 	}
 
 }

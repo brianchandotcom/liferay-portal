@@ -20,6 +20,10 @@
 PanelAppContentHelper panelAppContentHelper = new PanelAppContentHelper(request, response);
 %>
 
+<form action="#" id="hrefFm" method="post" name="hrefFm">
+	<span></span>
+</form>
+
 <c:choose>
 	<c:when test="<%= panelAppContentHelper.isValidPortletSelected() %>">
 

@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.shopping.NoSuchCouponException;
@@ -42,6 +44,7 @@ import com.liferay.portlet.shopping.service.persistence.ShoppingCouponPersistenc
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1036,6 +1039,29 @@ public class ShoppingCouponPersistenceImpl extends BasePersistenceImpl<ShoppingC
 		boolean isNew = shoppingCoupon.isNew();
 
 		ShoppingCouponModelImpl shoppingCouponModelImpl = (ShoppingCouponModelImpl)shoppingCoupon;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (shoppingCoupon.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				shoppingCoupon.setCreateDate(now);
+			}
+			else {
+				shoppingCoupon.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!shoppingCouponModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				shoppingCoupon.setModifiedDate(now);
+			}
+			else {
+				shoppingCoupon.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 

@@ -356,8 +356,14 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -504,6 +510,8 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 		mbThreadFlagModelImpl._originalUserId = mbThreadFlagModelImpl._userId;
 
 		mbThreadFlagModelImpl._setOriginalUserId = false;
+
+		mbThreadFlagModelImpl._setModifiedDate = false;
 
 		mbThreadFlagModelImpl._originalThreadId = mbThreadFlagModelImpl._threadId;
 
@@ -659,6 +667,7 @@ public class MBThreadFlagModelImpl extends BaseModelImpl<MBThreadFlag>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _threadId;
 	private long _originalThreadId;
 	private boolean _setOriginalThreadId;

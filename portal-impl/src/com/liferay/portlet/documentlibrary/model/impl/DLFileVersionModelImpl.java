@@ -574,8 +574,14 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1167,6 +1173,8 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 
 		dlFileVersionModelImpl._setOriginalCompanyId = false;
 
+		dlFileVersionModelImpl._setModifiedDate = false;
+
 		dlFileVersionModelImpl._originalFolderId = dlFileVersionModelImpl._folderId;
 
 		dlFileVersionModelImpl._setOriginalFolderId = false;
@@ -1550,6 +1558,7 @@ public class DLFileVersionModelImpl extends BaseModelImpl<DLFileVersion>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _repositoryId;
 	private long _folderId;
 	private long _originalFolderId;

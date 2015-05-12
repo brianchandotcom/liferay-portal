@@ -724,8 +724,14 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
 
 		if (_originalModifiedDate == null) {
@@ -1483,6 +1489,8 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 
 		userModelImpl._originalModifiedDate = userModelImpl._modifiedDate;
 
+		userModelImpl._setModifiedDate = false;
+
 		userModelImpl._originalDefaultUser = userModelImpl._defaultUser;
 
 		userModelImpl._setOriginalDefaultUser = false;
@@ -2046,6 +2054,7 @@ public class UserModelImpl extends BaseModelImpl<User> implements UserModel {
 	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private Date _originalModifiedDate;
+	private boolean _setModifiedDate;
 	private boolean _defaultUser;
 	private boolean _originalDefaultUser;
 	private boolean _setOriginalDefaultUser;

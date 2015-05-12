@@ -408,8 +408,14 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -598,6 +604,8 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 
 		scFrameworkVersionModelImpl._setOriginalCompanyId = false;
 
+		scFrameworkVersionModelImpl._setModifiedDate = false;
+
 		scFrameworkVersionModelImpl._originalActive = scFrameworkVersionModelImpl._active;
 
 		scFrameworkVersionModelImpl._setOriginalActive = false;
@@ -771,6 +779,7 @@ public class SCFrameworkVersionModelImpl extends BaseModelImpl<SCFrameworkVersio
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _url;
 	private boolean _active;

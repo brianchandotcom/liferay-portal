@@ -611,8 +611,14 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1278,6 +1284,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		dlFileEntryModelImpl._setOriginalUserId = false;
 
+		dlFileEntryModelImpl._setModifiedDate = false;
+
 		dlFileEntryModelImpl._originalRepositoryId = dlFileEntryModelImpl._repositoryId;
 
 		dlFileEntryModelImpl._setOriginalRepositoryId = false;
@@ -1662,6 +1670,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
 	private long _repositoryId;

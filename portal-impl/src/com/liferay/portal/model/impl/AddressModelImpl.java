@@ -508,8 +508,14 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -875,6 +881,8 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 
 		addressModelImpl._setOriginalUserId = false;
 
+		addressModelImpl._setModifiedDate = false;
+
 		addressModelImpl._originalClassNameId = addressModelImpl._classNameId;
 
 		addressModelImpl._setOriginalClassNameId = false;
@@ -1157,6 +1165,7 @@ public class AddressModelImpl extends BaseModelImpl<Address>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

@@ -387,8 +387,14 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -613,6 +619,8 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 
 		layoutFriendlyURLModelImpl._setOriginalCompanyId = false;
 
+		layoutFriendlyURLModelImpl._setModifiedDate = false;
+
 		layoutFriendlyURLModelImpl._originalPlid = layoutFriendlyURLModelImpl._plid;
 
 		layoutFriendlyURLModelImpl._setOriginalPlid = false;
@@ -818,6 +826,7 @@ public class LayoutFriendlyURLModelImpl extends BaseModelImpl<LayoutFriendlyURL>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _plid;
 	private long _originalPlid;
 	private boolean _setOriginalPlid;

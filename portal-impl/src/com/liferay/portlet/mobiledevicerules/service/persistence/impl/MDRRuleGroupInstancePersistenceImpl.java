@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -34,6 +35,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.mobiledevicerules.NoSuchRuleGroupInstanceException;
@@ -45,6 +48,7 @@ import com.liferay.portlet.mobiledevicerules.service.persistence.MDRRuleGroupIns
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -4820,6 +4824,32 @@ public class MDRRuleGroupInstancePersistenceImpl extends BasePersistenceImpl<MDR
 			String uuid = PortalUUIDUtil.generate();
 
 			mdrRuleGroupInstance.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (mdrRuleGroupInstance.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					mdrRuleGroupInstance.setCreateDate(now);
+				}
+				else {
+					mdrRuleGroupInstance.setCreateDate(serviceContext.getCreateDate(
+							now));
+				}
+			}
+
+			if (!mdrRuleGroupInstanceModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					mdrRuleGroupInstance.setModifiedDate(now);
+				}
+				else {
+					mdrRuleGroupInstance.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
+			}
 		}
 
 		Session session = null;

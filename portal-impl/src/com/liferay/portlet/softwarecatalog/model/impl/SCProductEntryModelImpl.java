@@ -467,8 +467,14 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
@@ -770,6 +776,8 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 
 		scProductEntryModelImpl._setOriginalUserId = false;
 
+		scProductEntryModelImpl._setModifiedDate = false;
+
 		scProductEntryModelImpl._originalRepoGroupId = scProductEntryModelImpl._repoGroupId;
 
 		scProductEntryModelImpl._originalRepoArtifactId = scProductEntryModelImpl._repoArtifactId;
@@ -1026,6 +1034,7 @@ public class SCProductEntryModelImpl extends BaseModelImpl<SCProductEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _type;
 	private String _tags;

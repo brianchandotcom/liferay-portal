@@ -516,8 +516,14 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1088,6 +1094,8 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 
 		mbCategoryModelImpl._setOriginalCompanyId = false;
 
+		mbCategoryModelImpl._setModifiedDate = false;
+
 		mbCategoryModelImpl._originalParentCategoryId = mbCategoryModelImpl._parentCategoryId;
 
 		mbCategoryModelImpl._setOriginalParentCategoryId = false;
@@ -1364,6 +1372,7 @@ public class MBCategoryModelImpl extends BaseModelImpl<MBCategory>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _parentCategoryId;
 	private long _originalParentCategoryId;
 	private boolean _setOriginalParentCategoryId;

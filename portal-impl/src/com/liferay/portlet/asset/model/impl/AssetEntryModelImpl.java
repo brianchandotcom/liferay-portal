@@ -573,8 +573,14 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1423,6 +1429,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 		assetEntryModelImpl._setOriginalCompanyId = false;
 
+		assetEntryModelImpl._setModifiedDate = false;
+
 		assetEntryModelImpl._originalClassNameId = assetEntryModelImpl._classNameId;
 
 		assetEntryModelImpl._setOriginalClassNameId = false;
@@ -1797,6 +1805,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

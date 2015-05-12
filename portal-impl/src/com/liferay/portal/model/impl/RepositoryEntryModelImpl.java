@@ -378,8 +378,14 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -566,6 +572,8 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 
 		repositoryEntryModelImpl._setOriginalCompanyId = false;
 
+		repositoryEntryModelImpl._setModifiedDate = false;
+
 		repositoryEntryModelImpl._originalRepositoryId = repositoryEntryModelImpl._repositoryId;
 
 		repositoryEntryModelImpl._setOriginalRepositoryId = false;
@@ -751,6 +759,7 @@ public class RepositoryEntryModelImpl extends BaseModelImpl<RepositoryEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _repositoryId;
 	private long _originalRepositoryId;
 	private boolean _setOriginalRepositoryId;

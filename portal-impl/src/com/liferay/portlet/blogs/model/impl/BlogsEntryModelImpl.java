@@ -603,8 +603,14 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1305,6 +1311,8 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 
 		blogsEntryModelImpl._setOriginalUserId = false;
 
+		blogsEntryModelImpl._setModifiedDate = false;
+
 		blogsEntryModelImpl._originalUrlTitle = blogsEntryModelImpl._urlTitle;
 
 		blogsEntryModelImpl._originalDisplayDate = blogsEntryModelImpl._displayDate;
@@ -1689,6 +1697,7 @@ public class BlogsEntryModelImpl extends BaseModelImpl<BlogsEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _title;
 	private String _subtitle;
 	private String _urlTitle;

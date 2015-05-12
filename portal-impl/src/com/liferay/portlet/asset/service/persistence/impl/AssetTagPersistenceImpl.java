@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
@@ -51,6 +53,7 @@ import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -3329,6 +3332,28 @@ public class AssetTagPersistenceImpl extends BasePersistenceImpl<AssetTag>
 		boolean isNew = assetTag.isNew();
 
 		AssetTagModelImpl assetTagModelImpl = (AssetTagModelImpl)assetTag;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (assetTag.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				assetTag.setCreateDate(now);
+			}
+			else {
+				assetTag.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!assetTagModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				assetTag.setModifiedDate(now);
+			}
+			else {
+				assetTag.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

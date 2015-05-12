@@ -31,6 +31,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.asset.NoSuchCategoryPropertyException;
@@ -42,6 +44,7 @@ import com.liferay.portlet.asset.service.persistence.AssetCategoryPropertyPersis
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2141,6 +2144,30 @@ public class AssetCategoryPropertyPersistenceImpl extends BasePersistenceImpl<As
 		boolean isNew = assetCategoryProperty.isNew();
 
 		AssetCategoryPropertyModelImpl assetCategoryPropertyModelImpl = (AssetCategoryPropertyModelImpl)assetCategoryProperty;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (assetCategoryProperty.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				assetCategoryProperty.setCreateDate(now);
+			}
+			else {
+				assetCategoryProperty.setCreateDate(serviceContext.getCreateDate(
+						now));
+			}
+		}
+
+		if (!assetCategoryPropertyModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				assetCategoryProperty.setModifiedDate(now);
+			}
+			else {
+				assetCategoryProperty.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 

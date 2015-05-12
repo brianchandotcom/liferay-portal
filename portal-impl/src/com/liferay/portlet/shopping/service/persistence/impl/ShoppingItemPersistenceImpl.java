@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.shopping.NoSuchItemException;
@@ -45,6 +47,7 @@ import com.liferay.portlet.shopping.service.persistence.ShoppingItemPersistence;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2212,6 +2215,28 @@ public class ShoppingItemPersistenceImpl extends BasePersistenceImpl<ShoppingIte
 		boolean isNew = shoppingItem.isNew();
 
 		ShoppingItemModelImpl shoppingItemModelImpl = (ShoppingItemModelImpl)shoppingItem;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (shoppingItem.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				shoppingItem.setCreateDate(now);
+			}
+			else {
+				shoppingItem.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!shoppingItemModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				shoppingItem.setModifiedDate(now);
+			}
+			else {
+				shoppingItem.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

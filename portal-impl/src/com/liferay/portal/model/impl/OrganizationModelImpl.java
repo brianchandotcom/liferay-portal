@@ -500,8 +500,14 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -797,6 +803,8 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 
 		organizationModelImpl._setOriginalCompanyId = false;
 
+		organizationModelImpl._setModifiedDate = false;
+
 		organizationModelImpl._originalParentOrganizationId = organizationModelImpl._parentOrganizationId;
 
 		organizationModelImpl._setOriginalParentOrganizationId = false;
@@ -1049,6 +1057,7 @@ public class OrganizationModelImpl extends BaseModelImpl<Organization>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _parentOrganizationId;
 	private long _originalParentOrganizationId;
 	private boolean _setOriginalParentOrganizationId;

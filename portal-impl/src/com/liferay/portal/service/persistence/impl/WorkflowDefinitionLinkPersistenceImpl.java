@@ -36,11 +36,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkImpl;
 import com.liferay.portal.model.impl.WorkflowDefinitionLinkModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.WorkflowDefinitionLinkPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2349,6 +2352,30 @@ public class WorkflowDefinitionLinkPersistenceImpl extends BasePersistenceImpl<W
 		boolean isNew = workflowDefinitionLink.isNew();
 
 		WorkflowDefinitionLinkModelImpl workflowDefinitionLinkModelImpl = (WorkflowDefinitionLinkModelImpl)workflowDefinitionLink;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (workflowDefinitionLink.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				workflowDefinitionLink.setCreateDate(now);
+			}
+			else {
+				workflowDefinitionLink.setCreateDate(serviceContext.getCreateDate(
+						now));
+			}
+		}
+
+		if (!workflowDefinitionLinkModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				workflowDefinitionLink.setModifiedDate(now);
+			}
+			else {
+				workflowDefinitionLink.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 

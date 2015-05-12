@@ -371,8 +371,14 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -516,6 +522,8 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 		assetTagModelImpl._originalGroupId = assetTagModelImpl._groupId;
 
 		assetTagModelImpl._setOriginalGroupId = false;
+
+		assetTagModelImpl._setModifiedDate = false;
 
 		assetTagModelImpl._originalName = assetTagModelImpl._name;
 
@@ -663,6 +671,7 @@ public class AssetTagModelImpl extends BaseModelImpl<AssetTag>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
 	private int _assetCount;

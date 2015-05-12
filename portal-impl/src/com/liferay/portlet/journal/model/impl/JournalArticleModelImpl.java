@@ -687,8 +687,14 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1842,6 +1848,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 		journalArticleModelImpl._setOriginalUserId = false;
 
+		journalArticleModelImpl._setModifiedDate = false;
+
 		journalArticleModelImpl._originalFolderId = journalArticleModelImpl._folderId;
 
 		journalArticleModelImpl._setOriginalFolderId = false;
@@ -2329,6 +2337,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _folderId;
 	private long _originalFolderId;
 	private boolean _setOriginalFolderId;

@@ -469,6 +469,11 @@ public class LayoutPrototypeWrapper implements LayoutPrototype,
 	}
 
 	@Override
+	public boolean hasSetModifiedDate() {
+		return _layoutPrototype.hasSetModifiedDate();
+	}
+
+	@Override
 	public int hashCode() {
 		return _layoutPrototype.hashCode();
 	}

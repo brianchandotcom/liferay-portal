@@ -415,8 +415,14 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -581,6 +587,8 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 
 		mbBanModelImpl._setOriginalUserId = false;
 
+		mbBanModelImpl._setModifiedDate = false;
+
 		mbBanModelImpl._originalBanUserId = mbBanModelImpl._banUserId;
 
 		mbBanModelImpl._setOriginalBanUserId = false;
@@ -735,6 +743,7 @@ public class MBBanModelImpl extends BaseModelImpl<MBBan> implements MBBanModel {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _banUserId;
 	private long _originalBanUserId;
 	private boolean _setOriginalBanUserId;

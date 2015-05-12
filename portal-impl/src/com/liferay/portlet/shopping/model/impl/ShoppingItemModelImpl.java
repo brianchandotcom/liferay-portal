@@ -608,8 +608,14 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1194,6 +1200,8 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 
 		shoppingItemModelImpl._setOriginalCompanyId = false;
 
+		shoppingItemModelImpl._setModifiedDate = false;
+
 		shoppingItemModelImpl._originalCategoryId = shoppingItemModelImpl._categoryId;
 
 		shoppingItemModelImpl._setOriginalCategoryId = false;
@@ -1600,6 +1608,7 @@ public class ShoppingItemModelImpl extends BaseModelImpl<ShoppingItem>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _categoryId;
 	private long _originalCategoryId;
 	private boolean _setOriginalCategoryId;

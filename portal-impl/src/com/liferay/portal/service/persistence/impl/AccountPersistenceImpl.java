@@ -34,11 +34,14 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.AccountImpl;
 import com.liferay.portal.model.impl.AccountModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.AccountPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -264,6 +267,30 @@ public class AccountPersistenceImpl extends BasePersistenceImpl<Account>
 		account = toUnwrappedModel(account);
 
 		boolean isNew = account.isNew();
+
+		AccountModelImpl accountModelImpl = (AccountModelImpl)account;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (account.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				account.setCreateDate(now);
+			}
+			else {
+				account.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!accountModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				account.setModifiedDate(now);
+			}
+			else {
+				account.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -39,11 +40,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.LayoutSetPrototypeImpl;
 import com.liferay.portal.model.impl.LayoutSetPrototypeModelImpl;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutSetPrototypePersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -3950,6 +3954,32 @@ public class LayoutSetPrototypePersistenceImpl extends BasePersistenceImpl<Layou
 			String uuid = PortalUUIDUtil.generate();
 
 			layoutSetPrototype.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (layoutSetPrototype.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					layoutSetPrototype.setCreateDate(now);
+				}
+				else {
+					layoutSetPrototype.setCreateDate(serviceContext.getCreateDate(
+							now));
+				}
+			}
+
+			if (!layoutSetPrototypeModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					layoutSetPrototype.setModifiedDate(now);
+				}
+				else {
+					layoutSetPrototype.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
+			}
 		}
 
 		Session session = null;

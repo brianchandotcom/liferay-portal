@@ -36,11 +36,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.PortletItem;
 import com.liferay.portal.model.impl.PortletItemImpl;
 import com.liferay.portal.model.impl.PortletItemModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.PortletItemPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1794,6 +1797,28 @@ public class PortletItemPersistenceImpl extends BasePersistenceImpl<PortletItem>
 		boolean isNew = portletItem.isNew();
 
 		PortletItemModelImpl portletItemModelImpl = (PortletItemModelImpl)portletItem;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (portletItem.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				portletItem.setCreateDate(now);
+			}
+			else {
+				portletItem.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!portletItemModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				portletItem.setModifiedDate(now);
+			}
+			else {
+				portletItem.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

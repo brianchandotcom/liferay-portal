@@ -373,8 +373,14 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -562,6 +568,8 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 
 		shoppingCategoryModelImpl._setOriginalGroupId = false;
 
+		shoppingCategoryModelImpl._setModifiedDate = false;
+
 		shoppingCategoryModelImpl._originalParentCategoryId = shoppingCategoryModelImpl._parentCategoryId;
 
 		shoppingCategoryModelImpl._setOriginalParentCategoryId = false;
@@ -726,6 +734,7 @@ public class ShoppingCategoryModelImpl extends BaseModelImpl<ShoppingCategory>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _parentCategoryId;
 	private long _originalParentCategoryId;
 	private boolean _setOriginalParentCategoryId;

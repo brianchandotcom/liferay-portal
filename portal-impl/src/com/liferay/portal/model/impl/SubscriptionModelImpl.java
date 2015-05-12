@@ -358,8 +358,14 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -558,6 +564,8 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 
 		subscriptionModelImpl._setOriginalUserId = false;
 
+		subscriptionModelImpl._setModifiedDate = false;
+
 		subscriptionModelImpl._originalClassNameId = subscriptionModelImpl._classNameId;
 
 		subscriptionModelImpl._setOriginalClassNameId = false;
@@ -731,6 +739,7 @@ public class SubscriptionModelImpl extends BaseModelImpl<Subscription>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

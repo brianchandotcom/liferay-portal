@@ -440,8 +440,14 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -641,6 +647,8 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 
 		userGroupModelImpl._setOriginalCompanyId = false;
 
+		userGroupModelImpl._setModifiedDate = false;
+
 		userGroupModelImpl._originalParentUserGroupId = userGroupModelImpl._parentUserGroupId;
 
 		userGroupModelImpl._setOriginalParentUserGroupId = false;
@@ -829,6 +837,7 @@ public class UserGroupModelImpl extends BaseModelImpl<UserGroup>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _parentUserGroupId;
 	private long _originalParentUserGroupId;
 	private boolean _setOriginalParentUserGroupId;

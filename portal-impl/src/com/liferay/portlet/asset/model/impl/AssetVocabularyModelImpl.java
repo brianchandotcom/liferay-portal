@@ -437,8 +437,14 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -887,6 +893,8 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 
 		assetVocabularyModelImpl._setOriginalCompanyId = false;
 
+		assetVocabularyModelImpl._setModifiedDate = false;
+
 		assetVocabularyModelImpl._originalName = assetVocabularyModelImpl._name;
 
 		assetVocabularyModelImpl._columnBitmask = 0;
@@ -1085,6 +1093,7 @@ public class AssetVocabularyModelImpl extends BaseModelImpl<AssetVocabulary>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
 	private String _title;

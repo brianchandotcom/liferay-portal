@@ -521,8 +521,14 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -879,6 +885,8 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 
 		journalFeedModelImpl._setOriginalCompanyId = false;
 
+		journalFeedModelImpl._setModifiedDate = false;
+
 		journalFeedModelImpl._originalFeedId = journalFeedModelImpl._feedId;
 
 		journalFeedModelImpl._columnBitmask = 0;
@@ -1207,6 +1215,7 @@ public class JournalFeedModelImpl extends BaseModelImpl<JournalFeed>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _feedId;
 	private String _originalFeedId;
 	private String _name;

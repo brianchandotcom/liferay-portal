@@ -466,8 +466,14 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -950,6 +956,8 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 
 		exportImportConfigurationModelImpl._setOriginalCompanyId = false;
 
+		exportImportConfigurationModelImpl._setModifiedDate = false;
+
 		exportImportConfigurationModelImpl._originalType = exportImportConfigurationModelImpl._type;
 
 		exportImportConfigurationModelImpl._setOriginalType = false;
@@ -1186,6 +1194,7 @@ public class ExportImportConfigurationModelImpl extends BaseModelImpl<ExportImpo
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _description;
 	private int _type;

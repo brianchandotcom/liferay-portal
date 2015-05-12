@@ -417,8 +417,14 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -681,6 +687,9 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 
 	@Override
 	public void resetOriginalValues() {
+		AccountModelImpl accountModelImpl = this;
+
+		accountModelImpl._setModifiedDate = false;
 	}
 
 	@Override
@@ -934,6 +943,7 @@ public class AccountModelImpl extends BaseModelImpl<Account>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _parentAccountId;
 	private String _name;
 	private String _legalName;

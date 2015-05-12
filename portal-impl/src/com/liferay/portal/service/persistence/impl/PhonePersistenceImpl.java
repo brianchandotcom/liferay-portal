@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,11 +38,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.Phone;
 import com.liferay.portal.model.impl.PhoneImpl;
 import com.liferay.portal.model.impl.PhoneModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.PhonePersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -3951,6 +3955,30 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			String uuid = PortalUUIDUtil.generate();
 
 			phone.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (phone.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					phone.setCreateDate(now);
+				}
+				else {
+					phone.setCreateDate(serviceContext.getCreateDate(now));
+				}
+			}
+
+			if (!phoneModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					phone.setModifiedDate(now);
+				}
+				else {
+					phone.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
+			}
 		}
 
 		Session session = null;

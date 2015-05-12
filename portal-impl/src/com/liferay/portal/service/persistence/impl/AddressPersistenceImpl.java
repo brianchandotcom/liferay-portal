@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,11 +38,14 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.AddressImpl;
 import com.liferay.portal.model.impl.AddressModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.AddressPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -4573,6 +4577,30 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			String uuid = PortalUUIDUtil.generate();
 
 			address.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (address.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					address.setCreateDate(now);
+				}
+				else {
+					address.setCreateDate(serviceContext.getCreateDate(now));
+				}
+			}
+
+			if (!addressModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					address.setModifiedDate(now);
+				}
+				else {
+					address.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
+			}
 		}
 
 		Session session = null;

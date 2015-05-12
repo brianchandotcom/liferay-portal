@@ -349,8 +349,14 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -541,6 +547,8 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 
 		workflowInstanceLinkModelImpl._setOriginalCompanyId = false;
 
+		workflowInstanceLinkModelImpl._setModifiedDate = false;
+
 		workflowInstanceLinkModelImpl._originalClassNameId = workflowInstanceLinkModelImpl._classNameId;
 
 		workflowInstanceLinkModelImpl._setOriginalClassNameId = false;
@@ -706,6 +714,7 @@ public class WorkflowInstanceLinkModelImpl extends BaseModelImpl<WorkflowInstanc
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

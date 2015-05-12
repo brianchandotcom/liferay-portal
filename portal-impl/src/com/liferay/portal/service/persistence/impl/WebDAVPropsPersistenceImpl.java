@@ -34,11 +34,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.WebDAVProps;
 import com.liferay.portal.model.impl.WebDAVPropsImpl;
 import com.liferay.portal.model.impl.WebDAVPropsModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.WebDAVPropsPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -549,6 +552,30 @@ public class WebDAVPropsPersistenceImpl extends BasePersistenceImpl<WebDAVProps>
 		webDAVProps = toUnwrappedModel(webDAVProps);
 
 		boolean isNew = webDAVProps.isNew();
+
+		WebDAVPropsModelImpl webDAVPropsModelImpl = (WebDAVPropsModelImpl)webDAVProps;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (webDAVProps.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				webDAVProps.setCreateDate(now);
+			}
+			else {
+				webDAVProps.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!webDAVPropsModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				webDAVProps.setModifiedDate(now);
+			}
+			else {
+				webDAVProps.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

@@ -403,8 +403,14 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -726,6 +732,8 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 
 		layoutSetModelImpl._setOriginalGroupId = false;
 
+		layoutSetModelImpl._setModifiedDate = false;
+
 		layoutSetModelImpl._originalPrivateLayout = layoutSetModelImpl._privateLayout;
 
 		layoutSetModelImpl._setOriginalPrivateLayout = false;
@@ -978,6 +986,7 @@ public class LayoutSetModelImpl extends BaseModelImpl<LayoutSet>
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

@@ -581,8 +581,14 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1293,6 +1299,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 
 		mbMessageModelImpl._setOriginalUserId = false;
 
+		mbMessageModelImpl._setModifiedDate = false;
+
 		mbMessageModelImpl._originalClassNameId = mbMessageModelImpl._classNameId;
 
 		mbMessageModelImpl._setOriginalClassNameId = false;
@@ -1630,6 +1638,7 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

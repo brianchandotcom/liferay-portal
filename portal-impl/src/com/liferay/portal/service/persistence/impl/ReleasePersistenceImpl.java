@@ -37,11 +37,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.Release;
 import com.liferay.portal.model.impl.ReleaseImpl;
 import com.liferay.portal.model.impl.ReleaseModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.ReleasePersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -560,6 +563,30 @@ public class ReleasePersistenceImpl extends BasePersistenceImpl<Release>
 		release = toUnwrappedModel(release);
 
 		boolean isNew = release.isNew();
+
+		ReleaseModelImpl releaseModelImpl = (ReleaseModelImpl)release;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (release.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				release.setCreateDate(now);
+			}
+			else {
+				release.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!releaseModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				release.setModifiedDate(now);
+			}
+			else {
+				release.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

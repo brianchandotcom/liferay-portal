@@ -558,8 +558,14 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1220,6 +1226,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 
 		dlFolderModelImpl._setOriginalCompanyId = false;
 
+		dlFolderModelImpl._setModifiedDate = false;
+
 		dlFolderModelImpl._originalRepositoryId = dlFolderModelImpl._repositoryId;
 
 		dlFolderModelImpl._setOriginalRepositoryId = false;
@@ -1534,6 +1542,7 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _repositoryId;
 	private long _originalRepositoryId;
 	private boolean _setOriginalRepositoryId;

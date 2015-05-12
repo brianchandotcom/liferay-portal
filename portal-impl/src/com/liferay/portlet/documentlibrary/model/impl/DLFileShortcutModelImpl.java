@@ -487,8 +487,14 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1011,6 +1017,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 
 		dlFileShortcutModelImpl._setOriginalCompanyId = false;
 
+		dlFileShortcutModelImpl._setModifiedDate = false;
+
 		dlFileShortcutModelImpl._originalFolderId = dlFileShortcutModelImpl._folderId;
 
 		dlFileShortcutModelImpl._setOriginalFolderId = false;
@@ -1258,6 +1266,7 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _repositoryId;
 	private long _folderId;
 	private long _originalFolderId;

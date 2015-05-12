@@ -459,8 +459,14 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -828,6 +834,8 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 
 		calEventModelImpl._setOriginalCompanyId = false;
 
+		calEventModelImpl._setModifiedDate = false;
+
 		calEventModelImpl._originalType = calEventModelImpl._type;
 
 		calEventModelImpl._originalRepeating = calEventModelImpl._repeating;
@@ -1142,6 +1150,7 @@ public class CalEventModelImpl extends BaseModelImpl<CalEvent>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _title;
 	private String _description;
 	private String _location;

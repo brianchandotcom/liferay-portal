@@ -384,8 +384,14 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -608,6 +614,8 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	public void resetOriginalValues() {
 		SCProductVersionModelImpl scProductVersionModelImpl = this;
 
+		scProductVersionModelImpl._setModifiedDate = false;
+
 		scProductVersionModelImpl._originalProductEntryId = scProductVersionModelImpl._productEntryId;
 
 		scProductVersionModelImpl._setOriginalProductEntryId = false;
@@ -797,6 +805,7 @@ public class SCProductVersionModelImpl extends BaseModelImpl<SCProductVersion>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _productEntryId;
 	private long _originalProductEntryId;
 	private boolean _setOriginalProductEntryId;

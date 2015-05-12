@@ -35,6 +35,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
@@ -49,6 +51,7 @@ import com.liferay.portlet.softwarecatalog.service.persistence.SCProductEntryPer
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2863,6 +2866,29 @@ public class SCProductEntryPersistenceImpl extends BasePersistenceImpl<SCProduct
 		boolean isNew = scProductEntry.isNew();
 
 		SCProductEntryModelImpl scProductEntryModelImpl = (SCProductEntryModelImpl)scProductEntry;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (scProductEntry.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				scProductEntry.setCreateDate(now);
+			}
+			else {
+				scProductEntry.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!scProductEntryModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				scProductEntry.setModifiedDate(now);
+			}
+			else {
+				scProductEntry.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 

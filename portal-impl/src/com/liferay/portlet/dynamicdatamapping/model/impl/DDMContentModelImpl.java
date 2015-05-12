@@ -366,8 +366,14 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -680,6 +686,8 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 
 		ddmContentModelImpl._setOriginalCompanyId = false;
 
+		ddmContentModelImpl._setModifiedDate = false;
+
 		ddmContentModelImpl._columnBitmask = 0;
 	}
 
@@ -862,6 +870,7 @@ public class DDMContentModelImpl extends BaseModelImpl<DDMContent>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;

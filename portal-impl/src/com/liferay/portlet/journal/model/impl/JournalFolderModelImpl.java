@@ -498,8 +498,14 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1054,6 +1060,8 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 
 		journalFolderModelImpl._setOriginalCompanyId = false;
 
+		journalFolderModelImpl._setModifiedDate = false;
+
 		journalFolderModelImpl._originalParentFolderId = journalFolderModelImpl._parentFolderId;
 
 		journalFolderModelImpl._setOriginalParentFolderId = false;
@@ -1309,6 +1317,7 @@ public class JournalFolderModelImpl extends BaseModelImpl<JournalFolder>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _parentFolderId;
 	private long _originalParentFolderId;
 	private boolean _setOriginalParentFolderId;

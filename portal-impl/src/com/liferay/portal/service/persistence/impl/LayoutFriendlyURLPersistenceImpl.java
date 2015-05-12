@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -37,11 +38,14 @@ import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.LayoutFriendlyURLImpl;
 import com.liferay.portal.model.impl.LayoutFriendlyURLModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutFriendlyURLPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -5018,6 +5022,32 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			String uuid = PortalUUIDUtil.generate();
 
 			layoutFriendlyURL.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (layoutFriendlyURL.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					layoutFriendlyURL.setCreateDate(now);
+				}
+				else {
+					layoutFriendlyURL.setCreateDate(serviceContext.getCreateDate(
+							now));
+				}
+			}
+
+			if (!layoutFriendlyURLModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					layoutFriendlyURL.setModifiedDate(now);
+				}
+				else {
+					layoutFriendlyURL.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
+			}
 		}
 
 		Session session = null;

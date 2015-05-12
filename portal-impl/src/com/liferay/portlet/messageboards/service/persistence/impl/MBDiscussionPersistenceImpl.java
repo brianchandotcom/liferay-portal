@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.messageboards.NoSuchDiscussionException;
@@ -43,6 +46,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBDiscussionPersist
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2660,6 +2664,31 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			String uuid = PortalUUIDUtil.generate();
 
 			mbDiscussion.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (mbDiscussion.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					mbDiscussion.setCreateDate(now);
+				}
+				else {
+					mbDiscussion.setCreateDate(serviceContext.getCreateDate(now));
+				}
+			}
+
+			if (!mbDiscussionModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					mbDiscussion.setModifiedDate(now);
+				}
+				else {
+					mbDiscussion.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
+			}
 		}
 
 		Session session = null;

@@ -504,8 +504,14 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -696,6 +702,8 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 		ddlRecordModelImpl._originalUserId = ddlRecordModelImpl._userId;
 
 		ddlRecordModelImpl._setOriginalUserId = false;
+
+		ddlRecordModelImpl._setModifiedDate = false;
 
 		ddlRecordModelImpl._originalRecordSetId = ddlRecordModelImpl._recordSetId;
 
@@ -905,6 +913,7 @@ public class DDLRecordModelImpl extends BaseModelImpl<DDLRecord>
 	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _DDMStorageId;
 	private long _recordSetId;
 	private long _originalRecordSetId;

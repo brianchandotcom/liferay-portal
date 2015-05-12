@@ -324,8 +324,6 @@
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Export / Import" />
 		</execute>
-
-		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 	</command>
 
 	<command name="gotoExportSite">

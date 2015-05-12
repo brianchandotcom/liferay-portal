@@ -93,6 +93,15 @@ public class DummyCommentManagerImpl implements CommentManager {
 		long userId, String className, long classPK) {
 	}
 
+	@Override
+	public long updateComment(
+		String className, long classPK, String permissionClassName,
+		long permissionClassPK, long permissionOwnerId, long commentId,
+		String subject, String body, ServiceContext serviceContext) {
+
+		return 0;
+	}
+
 	private static final Discussion _discussion = new Discussion() {
 
 		@Override

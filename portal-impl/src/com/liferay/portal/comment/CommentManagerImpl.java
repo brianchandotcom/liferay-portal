@@ -171,6 +171,20 @@ public class CommentManagerImpl implements CommentManager {
 		commentManager.unsubscribeDiscussion(userId, className, classPK);
 	}
 
+	@Override
+	public long updateComment(
+			String className, long classPK, String permissionClassName,
+			long permissionClassPK, long permissionOwnerId, long commentId,
+			String subject, String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.updateComment(
+			className, classPK, permissionClassName, permissionClassPK,
+			permissionOwnerId, commentId, subject, body, serviceContext);
+	}
+
 	protected CommentManager getCommentManager() {
 		if (_serviceTracker.isEmpty()) {
 			return _defaultCommentManager;

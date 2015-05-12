@@ -235,6 +235,20 @@ public class MBCommentManagerImpl implements CommentManager {
 			userId, className, classPK);
 	}
 
+	@Override
+	public long updateComment(
+			String className, long classPK, String permissionClassName,
+			long permissionClassPK, long permissionOwnerId, long commentId,
+			String subject, String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessage message = _mbMessageService.updateDiscussionMessage(
+			className, classPK, permissionClassName, permissionClassPK,
+			permissionOwnerId, commentId, subject, body, serviceContext);
+
+		return message.getMessageId();
+	}
+
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;

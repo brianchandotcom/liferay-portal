@@ -115,6 +115,17 @@ public class CommentManagerUtil {
 		getCommentManager().unsubscribeDiscussion(userId, className, classPK);
 	}
 
+	public static long updateComment(
+			String className, long classPK, String permissionClassName,
+			long permissionClassPK, long permissionOwnerId, long commentId,
+			String subject, String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getCommentManager().updateComment(
+			className, classPK, permissionClassName, permissionClassPK,
+			permissionOwnerId, commentId, subject, body, serviceContext);
+	}
+
 	public void setCommentManager(CommentManager commentManager) {
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 

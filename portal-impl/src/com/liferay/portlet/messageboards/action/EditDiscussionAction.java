@@ -78,7 +78,7 @@ public class EditDiscussionAction extends PortletAction {
 				ParamUtil.getString(actionRequest, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				MBMessage message = updateMessage(actionRequest);
+				long messageId = updateMessage(actionRequest);
 
 				boolean ajax = ParamUtil.getBoolean(actionRequest, "ajax");
 
@@ -88,7 +88,7 @@ public class EditDiscussionAction extends PortletAction {
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-					jsonObject.put("messageId", message.getMessageId());
+					jsonObject.put("messageId", messageId);
 					jsonObject.put("randomNamespace", randomNamespace);
 
 					writeJSON(actionRequest, actionResponse, jsonObject);
@@ -266,9 +266,7 @@ public class EditDiscussionAction extends PortletAction {
 		}
 	}
 
-	protected MBMessage updateMessage(ActionRequest actionRequest)
-		throws Exception {
-
+	protected long updateMessage(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -300,8 +298,6 @@ public class EditDiscussionAction extends PortletAction {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			MBMessage.class.getName(), actionRequest);
 
-		MBMessage message = null;
-
 		if (messageId <= 0) {
 
 			// Add message
@@ -321,7 +317,7 @@ public class EditDiscussionAction extends PortletAction {
 				if ((user == null) ||
 					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
 
-					return null;
+					return 0;
 				}
 			}
 
@@ -330,10 +326,12 @@ public class EditDiscussionAction extends PortletAction {
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			try {
-				message = MBMessageServiceUtil.addDiscussionMessage(
+				MBMessage message = MBMessageServiceUtil.addDiscussionMessage(
 					serviceContext.getScopeGroupId(), className, classPK,
 					permissionClassName, permissionClassPK, permissionOwnerId,
 					threadId, parentMessageId, subject, body, serviceContext);
+
+				messageId = message.getMessageId();
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);
@@ -343,9 +341,11 @@ public class EditDiscussionAction extends PortletAction {
 
 			// Update message
 
-			message = MBMessageServiceUtil.updateDiscussionMessage(
+			long commentId = CommentManagerUtil.updateComment(
 				className, classPK, permissionClassName, permissionClassPK,
 				permissionOwnerId, messageId, subject, body, serviceContext);
+
+			messageId = commentId;
 		}
 
 		// Subscription
@@ -358,7 +358,7 @@ public class EditDiscussionAction extends PortletAction {
 				className, classPK);
 		}
 
-		return message;
+		return messageId;
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;

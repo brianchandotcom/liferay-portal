@@ -69,4 +69,10 @@ public interface CommentManager {
 			long userId, String className, long classPK)
 		throws PortalException;
 
+	public long updateComment(
+			String className, long classPK, String permissionClassName,
+			long permissionClassPK, long permissionOwnerId, long commentId,
+			String subject, String body, ServiceContext serviceContext)
+		throws PortalException;
+
 }

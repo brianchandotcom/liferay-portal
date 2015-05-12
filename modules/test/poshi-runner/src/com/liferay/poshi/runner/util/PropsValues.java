@@ -134,6 +134,9 @@ public class PropsValues {
 	public static final boolean TEST_DATABASE_MINIMAL = GetterUtil.getBoolean(
 		PropsUtil.get("test.database.minimal"));
 
+	public static final boolean TEST_RUN_LOCALLY = GetterUtil.getBoolean(
+		PropsUtil.get("test.run.locally"));
+
 	public static final String TEST_NAME = PropsUtil.get("test.name");
 
 	public static final boolean TEST_SKIP_TEAR_DOWN = GetterUtil.getBoolean(

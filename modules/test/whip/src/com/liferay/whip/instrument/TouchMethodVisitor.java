@@ -103,12 +103,12 @@ public class TouchMethodVisitor extends MethodVisitor {
 		if ((_currentLine != 0) && (opcode != Opcodes.GOTO) &&
 			(opcode != Opcodes.JSR)) {
 
-			_lastJump = new JumpHolder(_currentLine, _currentJump++);
-
 			mv.visitIntInsn(Opcodes.SIPUSH, _currentLine);
 			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex);
-			mv.visitIntInsn(Opcodes.SIPUSH, _lastJump.getJumpNumber());
+			mv.visitIntInsn(Opcodes.SIPUSH, _currentJump);
 			mv.visitVarInsn(Opcodes.ISTORE, _variableIndex + 1);
+
+			_lastJump = new JumpHolder(_currentLine, _currentJump++);
 		}
 
 		super.visitJumpInsn(opcode, label);

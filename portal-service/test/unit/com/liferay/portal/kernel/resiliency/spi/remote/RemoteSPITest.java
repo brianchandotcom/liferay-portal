@@ -165,8 +165,7 @@ public class RemoteSPITest {
 		ConcurrentMap<String, Object> attributes =
 			ProcessContext.getAttributes();
 
-		SPI spi = ReflectionTestUtil.invokeBridge(
-			_mockRemoteSPI, "call", new Class<?>[0]);
+		SPI spi = _mockRemoteSPI.call();
 
 		Assert.assertSame(spi, UnicastRemoteObject.toStub(_mockRemoteSPI));
 
@@ -318,11 +317,7 @@ public class RemoteSPITest {
 		RegisterCallback registerCallback = new RegisterCallback(
 			uuid, _mockRemoteSPI);
 
-		Assert.assertSame(
-			_mockRemoteSPI,
-			ReflectionTestUtil.invokeBridge(
-				registerCallback, "call", new Class<?>[0]));
-
+		Assert.assertSame(_mockRemoteSPI, registerCallback.call());
 		Assert.assertSame(_mockRemoteSPI, takeSPIFutureTask.get());
 
 		// Interrupted on notify waiting

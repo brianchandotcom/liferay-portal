@@ -66,8 +66,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			logRecords = captureHandler.resetLogLevel(Level.SEVERE);
 
 			Assert.assertNull(
-				invokeProcessStdErr(
-					loggingOutputProcessor,
+				loggingOutputProcessor.processStdErr(
 					new UnsyncByteArrayInputStream(stdErrBytes)));
 			Assert.assertEquals(1, logRecords.size());
 
@@ -91,8 +90,7 @@ public class LoggingOutputProcessorTest extends BaseOutputProcessorTestCase {
 			logRecords = captureHandler.resetLogLevel(Level.INFO);
 
 			Assert.assertNull(
-				invokeProcessStdOut(
-					loggingOutputProcessor,
+				loggingOutputProcessor.processStdOut(
 					new UnsyncByteArrayInputStream(stdOutBytes)));
 			Assert.assertEquals(1, logRecords.size());
 

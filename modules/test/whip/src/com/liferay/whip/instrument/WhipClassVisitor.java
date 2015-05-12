@@ -61,7 +61,9 @@ public class WhipClassVisitor extends ClassVisitor {
 		MethodVisitor methodVisitor = cv.visitMethod(
 			access, name, desc, signature, exceptions);
 
-		if (!_instrument || (methodVisitor == null)) {
+		if (!_instrument || (methodVisitor == null) ||
+			((access & Opcodes.ACC_BRIDGE) != 0)) {
+
 			return methodVisitor;
 		}
 

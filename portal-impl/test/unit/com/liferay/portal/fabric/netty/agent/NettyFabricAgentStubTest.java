@@ -173,9 +173,7 @@ public class NettyFabricAgentStubTest {
 
 			}
 		);
-		FabricWorker<String> fabricWorker = ReflectionTestUtil.invokeBridge(
-			nettyFabricAgentStub, "execute",
-			new Class<?>[] {ProcessConfig.class, ProcessCallable.class},
+		FabricWorker<String> fabricWorker = nettyFabricAgentStub.execute(
 			processConfig, processCallable);
 
 		Queue<Object> messages = _embeddedChannel.outboundMessages();

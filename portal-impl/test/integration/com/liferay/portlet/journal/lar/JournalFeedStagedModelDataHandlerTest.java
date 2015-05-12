@@ -38,7 +38,7 @@ import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -83,13 +83,10 @@ public class JournalFeedStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), JournalArticle.class.getName());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		for (int i = 0; i < 2; i++) {
 			DDMTemplate ddmTemplate = DDMTemplateTestUtil.addTemplate(
@@ -98,6 +95,9 @@ public class JournalFeedStagedModelDataHandlerTest
 			addDependentStagedModel(
 				dependentStagedModelsMap, DDMTemplate.class, ddmTemplate);
 		}
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		return dependentStagedModelsMap;
 	}

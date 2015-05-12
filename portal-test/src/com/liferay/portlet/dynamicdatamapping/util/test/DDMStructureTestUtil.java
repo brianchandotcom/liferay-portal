@@ -189,12 +189,13 @@ public class DDMStructureTestUtil {
 		String name, Locale[] availableLocales, Locale defaultLocale) {
 
 		return getSampleDDMForm(
-			name, "string", true, "text", availableLocales, defaultLocale);
+			name, "string", "text", true, "text", availableLocales,
+			defaultLocale);
 	}
 
 	public static DDMForm getSampleDDMForm(
-		String name, String dataType, boolean repeatable, String type,
-		Locale[] availableLocales, Locale defaultLocale) {
+		String name, String dataType, String indexType, boolean repeatable,
+		String type, Locale[] availableLocales, Locale defaultLocale) {
 
 		DDMForm ddmForm = new DDMForm();
 
@@ -204,7 +205,7 @@ public class DDMStructureTestUtil {
 		DDMFormField ddmFormField = new DDMFormField(name, type);
 
 		ddmFormField.setDataType(dataType);
-		ddmFormField.setIndexType("text");
+		ddmFormField.setIndexType(indexType);
 		ddmFormField.setLocalizable(true);
 		ddmFormField.setRepeatable(repeatable);
 

@@ -137,11 +137,35 @@ public class DLFileEntrySearchTest extends BaseSearchTestCase {
 	}
 
 	@Test
+	public void testOrderByDDMRadioField() throws Exception {
+		TestOrderHelper testOrderHelper = new DLFileEntrySearchTestOrderHelper(
+			group);
+
+		testOrderHelper.testOrderByDDMRadioField();
+	}
+
+	@Test
+	public void testOrderByDDMRadioFieldKeyword() throws Exception {
+		TestOrderHelper testOrderHelper = new DLFileEntrySearchTestOrderHelper(
+			group);
+
+		testOrderHelper.testOrderByDDMRadioFieldKeyword();
+	}
+
+	@Test
 	public void testOrderByDDMTextField() throws Exception {
 		TestOrderHelper testOrderHelper = new DLFileEntrySearchTestOrderHelper(
 			group);
 
 		testOrderHelper.testOrderByDDMTextField();
+	}
+
+	@Test
+	public void testOrderByDDMTextFieldKeyword() throws Exception {
+		TestOrderHelper testOrderHelper = new DLFileEntrySearchTestOrderHelper(
+			group);
+
+		testOrderHelper.testOrderByDDMTextFieldKeyword();
 	}
 
 	@Test

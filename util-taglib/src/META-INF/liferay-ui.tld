@@ -1375,6 +1375,16 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>drop-here-info</name>
+		<tag-class>com.liferay.taglib.ui.DropHereInfoTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>message</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
 		<name>email-notification-settings</name>
 		<tag-class>com.liferay.taglib.ui.EmailNotificationSettingsTag</tag-class>
 		<body-content>JSP</body-content>
@@ -3124,6 +3134,36 @@
 		<attribute>
 			<description>The ID of a time zone to associate with the component. For example, setting the value to <![CDATA[<code>PST</code>]]> associates the component with the Pacific Standard Time zone.</description>
 			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>item-selector-browser</name>
+		<tag-class>com.liferay.taglib.ui.ItemSelectorBrowserTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>displayStyle</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>idPrefix</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>searchContainer</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>tabName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>uploadMessage</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

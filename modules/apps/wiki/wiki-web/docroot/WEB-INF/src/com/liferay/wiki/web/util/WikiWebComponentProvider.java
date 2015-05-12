@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.web.util;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.web.display.context.WikiDisplayContextProvider;
@@ -33,6 +34,10 @@ public class WikiWebComponentProvider {
 
 	public static WikiWebComponentProvider getWikiWebComponentProvider() {
 		return _wikiWebComponentProvider;
+	}
+
+	public ItemSelector getItemSelector() {
+		return _itemSelector;
 	}
 
 	public SettingsFactory getSettingsFactory() {
@@ -64,6 +69,11 @@ public class WikiWebComponentProvider {
 		_wikiWebComponentProvider = null;
 	}
 
+	@Reference
+	protected void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
@@ -84,6 +94,7 @@ public class WikiWebComponentProvider {
 
 	private static WikiWebComponentProvider _wikiWebComponentProvider;
 
+	private ItemSelector _itemSelector;
 	private SettingsFactory _settingsFactory;
 	private WikiDisplayContextProvider _wikiDisplayContextProvider;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;

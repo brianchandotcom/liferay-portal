@@ -1,3 +1,6 @@
+<%@ page import="com.liferay.item.selector.ItemSelector" %>
+<%@ page
+	import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorCriterion" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -124,6 +127,45 @@ if (wikiPage != null) {
 	request.setAttribute(WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
 }
 %>
+
+<%
+ItemSelector itemSelector = wikiWebComponentProvider.getItemSelector();
+
+WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(wikiPage.getResourcePrimKey());
+
+PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(renderRequest, "window.parent.itemSelectedCallback", wikiAttachmentItemSelectorCriterion);
+%>
+
+<script>
+	window.itemSelectedCallback = function(type, value) {
+		var dialog = Liferay.Util.getWindow('<portlet:namespace />openFileEntryTypeView');
+		dialog.hide();
+
+		alert("selected: "+type+" : "+value);
+	}
+
+	window.selectNumber = function() {
+		Liferay.Util.openWindow(
+			{
+				dialog: {
+					destroyOnHide: true,
+					on: {
+						visibleChange: function(event) {
+							if (!event.newVal) {
+								Liferay.Portlet.refresh('#p_p_id_<%= portletDisplay.getId() %>_');
+							}
+						}
+					}
+				},
+				id: '<portlet:namespace />openFileEntryTypeView',
+				title: 'Select an item',
+				uri: '<%= itemSelectorURL %>'
+			}
+		);
+	}
+</script>
+<input onclick="window.selectNumber()" type="button" value="SELECT NUMBER!">
+</input>
 
 <c:choose>
 	<c:when test="<%= print %>">

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
@@ -58,6 +60,10 @@ public class LinkToPageDDMFormFieldValueRenderer
 						LanguageUtil.getLanguageId(locale));
 				}
 				catch (PortalException pe) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(pe, pe);
+					}
+
 					return LanguageUtil.format(
 						locale, "is-temporarily-unavailable", "content");
 				}
@@ -74,5 +80,8 @@ public class LinkToPageDDMFormFieldValueRenderer
 
 		};
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		LinkToPageDDMFormFieldValueRenderer.class);
 
 }

@@ -15,6 +15,8 @@
 package com.liferay.portlet.dynamicdatamapping.action;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.Constants;
@@ -163,19 +165,15 @@ public class EditStructureAction extends PortletAction {
 			// Let this slide because the user can manually input a structure
 			// key for a new structure that does not yet exist
 
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsse, nsse);
+			}
 		}
-		catch (Exception e) {
-			if (//e instanceof NoSuchStructureException ||
-				e instanceof PrincipalException) {
+		catch (PrincipalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.dynamic_data_mapping.error");
-			}
-			else {
-				throw e;
-			}
+			return actionMapping.findForward(
+				"portlet.dynamic_data_mapping.error");
 		}
 
 		return actionMapping.findForward(
@@ -282,5 +280,8 @@ public class EditStructureAction extends PortletAction {
 
 		return structure;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		EditStructureAction.class);
 
 }

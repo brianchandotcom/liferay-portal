@@ -47,7 +47,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONDeserializerUtil;
@@ -206,6 +205,10 @@ public class DDMImpl implements DDM {
 					ddmForm.getDefaultLocale());
 			}
 			catch (PortalException pe) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to deserialize script", pe);
+				}
+
 				return null;
 			}
 		}
@@ -218,6 +221,10 @@ public class DDMImpl implements DDM {
 				ddmForm.getDefaultLocale());
 		}
 		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to deserialize script", pe);
+			}
+
 			DDMForm ddmForm = ddmStructure.getDDMForm();
 
 			return getDDMFormFieldsJSONArray(
@@ -768,17 +775,16 @@ public class DDMImpl implements DDM {
 		DDMStructure ddmStructure = DDMStructureLocalServiceUtil.getStructure(
 			ddmStructureId);
 
-		try {
-			DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.getTemplate(
-				ddmTemplateId);
+		DDMTemplate ddmTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+			ddmTemplateId);
+
+		if (ddmTemplate != null) {
 
 			// Clone ddmStructure to make sure changes are never persisted
 
 			ddmStructure = (DDMStructure)ddmStructure.clone();
 
 			ddmStructure.setDefinition(ddmTemplate.getScript());
-		}
-		catch (NoSuchTemplateException nste) {
 		}
 
 		return ddmStructure;

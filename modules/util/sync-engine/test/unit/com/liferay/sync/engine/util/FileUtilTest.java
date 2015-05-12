@@ -147,6 +147,28 @@ public class FileUtilTest {
 	}
 
 	@Test
+	public void testRenameFile() throws Exception {
+		Path sourceFilePath = Files.createTempFile("test", null);
+
+		Path parentFilePath = sourceFilePath.getParent();
+
+		String sourceFilePathFileName = String.valueOf(
+			sourceFilePath.getFileName());
+
+		Path targetFilePath = parentFilePath.resolve(
+			sourceFilePathFileName.toUpperCase());
+
+		FileUtil.moveFile(sourceFilePath, targetFilePath);
+
+		Path realFilePath = targetFilePath.toRealPath();
+
+		Path realFilePathFileName = realFilePath.getFileName();
+
+		Assert.assertFalse(sourceFilePath.endsWith(realFilePathFileName));
+		Assert.assertTrue(targetFilePath.endsWith(realFilePathFileName));
+	}
+
+	@Test
 	public void testSetModifiedTime() throws Exception {
 		Path filePath = Files.createTempFile("test", "test");
 

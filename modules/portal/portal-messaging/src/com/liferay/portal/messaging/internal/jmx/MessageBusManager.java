@@ -22,7 +22,9 @@ import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.management.DynamicMBean;
 import javax.management.MBeanServer;
@@ -75,8 +77,14 @@ public class MessageBusManager
 	}
 
 	@Activate
-	protected void activate(BundleContext bundleContext) {
+	protected synchronized void activate(BundleContext bundleContext) {
 		_bundleContext = bundleContext;
+
+		for (Destination destination : _queuedDestinations) {
+			addDestination(destination);
+		}
+
+		_queuedDestinations.clear();
 	}
 
 	@Reference(
@@ -86,6 +94,12 @@ public class MessageBusManager
 		target = "(destination.name=*)"
 	)
 	protected synchronized void addDestination(Destination destination) {
+		if (_bundleContext == null) {
+			_queuedDestinations.add(destination);
+
+			return;
+		}
+
 		ServiceRegistration<DynamicMBean> serviceRegistration =
 			_mbeanServiceRegistrations.remove(destination.getName());
 
@@ -156,5 +170,6 @@ public class MessageBusManager
 	private final Map<String, ServiceRegistration<DynamicMBean>>
 		_mbeanServiceRegistrations = new HashMap<>();
 	private MessageBus _messageBus;
+	private final Set<Destination> _queuedDestinations = new HashSet<>();
 
 }

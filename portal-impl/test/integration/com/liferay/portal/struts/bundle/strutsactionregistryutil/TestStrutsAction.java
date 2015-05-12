@@ -29,24 +29,25 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-		immediate = true,
-		property = {
-			"path=StrutsActionRegistryUtilTest1",
-			"service.ranking:Integer=" + Integer.MAX_VALUE
-		}
+	immediate = true,
+	property = {
+		"path=StrutsActionRegistryUtilTest1",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
 )
 public class TestStrutsAction implements StrutsAction {
 
 	@Override
-	public String execute(HttpServletRequest request, HttpServletResponse
-		response) {
+	public String execute(
+		HttpServletRequest request, HttpServletResponse response) {
 
 		return null;
 	}
 
 	@Override
-	public String execute(StrutsAction originalStrutsAction, HttpServletRequest
-		request, HttpServletResponse response) {
+	public String execute(
+		StrutsAction originalStrutsAction, HttpServletRequest request,
+		HttpServletResponse response) {
 
 		_atomicReference.set(StackTraceUtil.getCallerKey());
 

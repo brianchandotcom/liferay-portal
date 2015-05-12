@@ -34,11 +34,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Philip Jones
  */
 @Component(
-		immediate = true,
-		property = {
-			"path=StrutsActionRegistryUtilTest2",
-			"service.ranking:Integer=" + Integer.MAX_VALUE
-		}
+	immediate = true,
+	property = {
+		"path=StrutsActionRegistryUtilTest2",
+		"service.ranking:Integer=" + Integer.MAX_VALUE
+	}
 )
 public class TestStrutsPortletAction implements StrutsPortletAction {
 
@@ -50,49 +50,52 @@ public class TestStrutsPortletAction implements StrutsPortletAction {
 	}
 
 	@Override
-	public void processAction(PortletConfig portletConfig, ActionRequest
-		actionRequest, ActionResponse actionResponse) {
+	public void processAction(
+		PortletConfig portletConfig, ActionRequest actionRequest,
+		ActionResponse actionResponse) {
 
 		return;
 	}
 
 	@Override
 	public void processAction(
-		StrutsPortletAction originalStrutsPortletAction, PortletConfig
-			portletConfig, ActionRequest actionRequest, ActionResponse
-				actionResponse) {
+		StrutsPortletAction originalStrutsPortletAction,
+		PortletConfig portletConfig, ActionRequest actionRequest,
+		ActionResponse actionResponse) {
 
 		return;
 	}
 
 	@Override
-	public String render(PortletConfig portletConfig, RenderRequest
-		renderRequest, RenderResponse renderResponse) {
+	public String render(
+		PortletConfig portletConfig, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		return null;
 	}
 
 	@Override
 	public String render(
-		StrutsPortletAction originalStrutsPortletAction, PortletConfig
-			portletConfig, RenderRequest renderRequest, RenderResponse
-				renderResponse) {
+		StrutsPortletAction originalStrutsPortletAction,
+		PortletConfig portletConfig, RenderRequest renderRequest,
+		RenderResponse renderResponse) {
 
 		return null;
 	}
 
 	@Override
-	public void serveResource(PortletConfig portletConfig, ResourceRequest
-		resourceRequest, ResourceResponse resourceResponse) {
+	public void serveResource(
+		PortletConfig portletConfig, ResourceRequest resourceRequest,
+		ResourceResponse resourceResponse) {
 
 		return;
 	}
 
 	@Override
 	public void serveResource(
-		StrutsPortletAction originalStrutsPortletAction, PortletConfig
-			portletConfig, ResourceRequest resourceRequest, ResourceResponse
-				resourceResponse) {
+		StrutsPortletAction originalStrutsPortletAction,
+		PortletConfig portletConfig, ResourceRequest resourceRequest,
+		ResourceResponse resourceResponse) {
 
 		return;
 	}

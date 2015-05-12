@@ -150,6 +150,16 @@
 		</operation>
 		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="updateFolder" qname="operNS:updateFolder" returnQName="updateFolderReturn" returnType="rtns:DLFolderSoap" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="parentFolderId" type="tns:long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="defaultFileEntryTypeId" type="tns:long"></parameter>
+			<parameter xmlns:tns="urn:http.service.documentlibrary.portlet.liferay.com" qname="fileEntryTypeIds" type="tns:ArrayOf_xsd_long"></parameter>
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="restrictionType" type="tns:int"></parameter>
+			<parameter xmlns:tns="http://service.portal.liferay.com" qname="serviceContext" type="tns:ServiceContext"></parameter>
+		</operation>
+		<operation xmlns:operNS="urn:http.service.documentlibrary.portlet.liferay.com" xmlns:rtns="http://model.documentlibrary.portlet.liferay.com" name="updateFolder" qname="operNS:updateFolder" returnQName="updateFolderReturn" returnType="rtns:DLFolderSoap" soapAction="">
+			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="folderId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="name" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="description" type="tns:string"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="defaultFileEntryTypeId" type="tns:long"></parameter>

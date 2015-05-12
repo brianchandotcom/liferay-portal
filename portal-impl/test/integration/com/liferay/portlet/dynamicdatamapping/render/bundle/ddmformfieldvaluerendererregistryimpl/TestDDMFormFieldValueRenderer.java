@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.portlet.dynamicdatamapping.render.bundle.ddmformfieldvaluerendererregistryimpl;
 
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldValueRenderer;
@@ -31,9 +32,9 @@ import org.osgi.service.component.annotations.Component;
 		"service.ranking:Integer=" + Integer.MAX_VALUE
 	}
 )
-public class TestDDMFormFieldValueRenderer implements DDMFormFieldValueRenderer
-{
-	
+public class TestDDMFormFieldValueRenderer
+	implements DDMFormFieldValueRenderer {
+
 	public static final String DDM_FORM_FIELD_TYPE = "checkbox";
 
 	@Override

@@ -46,6 +46,12 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistry;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
+import com.liferay.portlet.dynamicdatamapping.registry.settings.MultipleDDMFormFieldTypeSetting;
+import com.liferay.portlet.dynamicdatamapping.registry.settings.OptionsDDMFormFieldTypeSetting;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
@@ -427,6 +433,18 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return StringUtil.read(inputStream);
 	}
 
+	protected void setUpDDMFormFieldTypeRegistryUtil() {
+		setUpDefaultDDMFormFieldType();
+		setUpSelectDDMFormFieldType();
+		setUpRadioDDMFormFieldType();
+
+		DDMFormFieldTypeRegistryUtil ddmFormFieldTypeRegistryUtil =
+			new DDMFormFieldTypeRegistryUtil();
+
+		ddmFormFieldTypeRegistryUtil.setDDMFormFieldTypeRegistry(
+			_ddmFormFieldTypeRegistry);
+	}
+
 	protected void setUpDDMFormJSONDeserializerUtil() {
 		DDMFormJSONDeserializerUtil ddmFormJSONDeserializerUtil =
 			new DDMFormJSONDeserializerUtil();
@@ -486,6 +504,20 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 				}
 
 			}
+		);
+	}
+
+	protected void setUpDefaultDDMFormFieldType() {
+		when(
+			_defaultDDMFormFieldType.getOptionalSettings()
+		).thenReturn(
+			new DDMFormFieldTypeSetting[] {}
+		);
+
+		when(
+			_ddmFormFieldTypeRegistry.getDDMFormFieldType(Matchers.anyString())
+		).thenReturn(
+			_defaultDDMFormFieldType
 		);
 	}
 
@@ -623,6 +655,20 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		PropsUtil.setProps(props);
 	}
 
+	protected void setUpRadioDDMFormFieldType() {
+		when(
+			_radioDDMFormFieldType.getOptionalSettings()
+		).thenReturn(
+			new DDMFormFieldTypeSetting[] {new OptionsDDMFormFieldTypeSetting()}
+		);
+
+		when(
+			_ddmFormFieldTypeRegistry.getDDMFormFieldType(Matchers.eq("radio"))
+		).thenReturn(
+			_radioDDMFormFieldType
+		);
+	}
+
 	protected void setUpSAXReaderUtil() {
 		SAXReaderUtil saxReaderUtil = new SAXReaderUtil();
 
@@ -633,6 +679,23 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		saxReaderUtil.setSecureSAXReader(secureSAXReader);
 
 		saxReaderUtil.setUnsecureSAXReader(new SAXReaderImpl());
+	}
+
+	protected void setUpSelectDDMFormFieldType() {
+		when(
+			_selectDDMFormFieldType.getOptionalSettings()
+		).thenReturn(
+			new DDMFormFieldTypeSetting[] {
+				new OptionsDDMFormFieldTypeSetting(),
+				new MultipleDDMFormFieldTypeSetting()
+			}
+		);
+
+		when(
+			_ddmFormFieldTypeRegistry.getDDMFormFieldType(Matchers.eq("select"))
+		).thenReturn(
+			_selectDDMFormFieldType
+		);
 	}
 
 	protected void whenLanguageGet(
@@ -693,5 +756,17 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		private static final long serialVersionUID = 1L;
 
 	}
+
+	@Mock
+	private DDMFormFieldTypeRegistry _ddmFormFieldTypeRegistry;
+
+	@Mock
+	private DDMFormFieldType _defaultDDMFormFieldType;
+
+	@Mock
+	private DDMFormFieldType _radioDDMFormFieldType;
+
+	@Mock
+	private DDMFormFieldType _selectDDMFormFieldType;
 
 }

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `205a27d`.*
+*This document has been reviewed through commit `ef6867d`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1508,24 +1508,32 @@ change is used for the blog abstract field.
 
 ---------------------------------------
 
-### Moved Contact*NameException classes to inner classes of ContactNameException
+### Moved the Contact Name Exception Classes to Inner classes of ContactNameException
 - **Date:** 2015-May-5
 - **JIRA Ticket:** LPS-55364
 
 #### What changed?
 
-The use of ContactFirstNameException, ContactFullNameException, and ContactLastNameException has been moved to inner classes in a new class called ContactNameException.
+The use of classes `ContactFirstNameException`, `ContactFullNameException`, and
+`ContactLastNameException` has been moved to inner classes in a new class called
+`ContactNameException`.
 
 #### Who is affected?
 
-This affects developers who may have included one of the three classes above in their code.
+This affects developers who may have included one of the three classes above in
+their code.
 
 #### How should I update my code?
 
-While the old classes have been kept for backwards-compatibility, they are being deprecated.  You are encouraged to use the new pattern of inner classes for exceptions wherever possible (example: ContactFirstNameExeception now becomes ContactNameException.MustHaveFirstName).
+While the old classes remain for backwards-compatibility, they are being
+deprecated. You're encouraged to use the new pattern of inner classes for
+exceptions wherever possible. For example, instead of using
+`ContactFirstNameExeception`, use `ContactNameException.MustHaveFirstName`. 
 
 #### Why was this change made?
 
-This change was made in accordance with the new exceptions pattern being applied throughout portal. It also allows the new localized user name configuration feature to be thoroughly covered by exceptions for different configurations. 
+This change was made in accordance with the new exceptions pattern being applied
+throughout Portal. It also allows the new localized user name configuration
+feature to be thoroughly covered by exceptions for different configurations.  
 
 ---------------------------------------

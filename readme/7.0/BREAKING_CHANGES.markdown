@@ -1412,6 +1412,10 @@ The following portal properties (and the equivalent `PropsKeys` and
 `PropsValues`) that were used to decide what sections would be displayed in the
 `form-navigator` have been removed:
 
+- `company.settings.form.configuration`
+- `company.settings.form.identification`
+- `company.settings.form.miscellaneous`
+- `company.settings.form.social`
 - `layout.set.form.update`
 - `organizations.form.add.identification`
 - `organizations.form.add.main`

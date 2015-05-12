@@ -28,7 +28,6 @@ page import="com.liferay.portal.security.ldap.LDAPSettingsUtil" %><%@
 page import="com.liferay.portal.security.ldap.PortalLDAPUtil" %><%@
 page import="com.liferay.portal.security.sso.OpenSSOUtil" %><%@
 page import="com.liferay.portlet.ratings.display.context.CompanyPortletRatingsDefinitionDisplayContext" %><%@
-page import="com.liferay.portlet.ratings.display.context.PortletRatingsDefinitionDisplayContextHelper" %><%@
 page import="com.liferay.portlet.social.util.SocialInteractionsConfiguration" %><%@
 page import="com.liferay.portlet.social.util.SocialInteractionsConfigurationUtil" %><%@
 page import="com.liferay.portlet.social.util.SocialRelationTypesUtil" %>

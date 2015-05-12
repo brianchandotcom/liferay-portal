@@ -12,24 +12,37 @@
  * details.
  */
 
-package com.liferay.portlet.ratings.display.context;
+package com.liferay.portal.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.User;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionUtil;
 import com.liferay.portlet.ratings.definition.PortletRatingsDefinitionValues;
 
 import java.util.Map;
 
 /**
- * @author Roberto Díaz
+ * @author Pei-Jung Lan
  */
-public class PortletRatingsDefinitionDisplayContextHelper {
+@OSGiBeanProperties(property = {"service.ranking:Integer=10"})
+public class CompanySettingsRatingsFormNavigatorEntry
+	extends BaseCompanySettingsFormNavigatorEntry {
 
-	public boolean showRatingsSection(String[] sections) {
-		if (!ArrayUtil.contains(sections, "ratings")) {
-			return false;
-		}
+	@Override
+	public String getCategoryKey() {
+		return
+			FormNavigatorConstants.CATEGORY_KEY_COMPANY_SETTINGS_MISCELLANEOUS;
+	}
 
+	@Override
+	public String getKey() {
+		return "ratings";
+	}
+
+	@Override
+	public boolean isVisible(User user, Company company) {
 		Map<String, PortletRatingsDefinitionValues>
 			portletRatingsDefinitionValuesMap =
 				PortletRatingsDefinitionUtil.
@@ -40,6 +53,11 @@ public class PortletRatingsDefinitionDisplayContextHelper {
 		}
 
 		return true;
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/html/portlet/portal_settings/ratings.jsp";
 	}
 
 }

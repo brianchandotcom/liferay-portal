@@ -17,20 +17,6 @@
 <%@ include file="/html/portlet/portal_settings/init.jsp" %>
 
 <%
-String[] configurationSections = PropsValues.COMPANY_SETTINGS_FORM_CONFIGURATION;
-String[] identificationSections = PropsValues.COMPANY_SETTINGS_FORM_IDENTIFICATION;
-String[] miscellaneousSections = PropsValues.COMPANY_SETTINGS_FORM_MISCELLANEOUS;
-
-PortletRatingsDefinitionDisplayContextHelper portletRatingsDefinitionDisplayContextHelper = new PortletRatingsDefinitionDisplayContextHelper();
-
-if (!portletRatingsDefinitionDisplayContextHelper.showRatingsSection(miscellaneousSections)) {
-	miscellaneousSections = ArrayUtil.remove(miscellaneousSections, "ratings");
-}
-
-String[] socialSections = PropsValues.COMPANY_SETTINGS_FORM_SOCIAL;
-
-String[][] categorySections = {configurationSections, identificationSections, miscellaneousSections, socialSections};
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("struts_action", "/portal_settings/view");
@@ -65,11 +51,9 @@ request.setAttribute("websites.classPK", company.getAccountId());
 	</liferay-util:buffer>
 
 	<liferay-ui:form-navigator
-		categorySections="<%= categorySections %>"
 		formModelBean="<%= company %>"
 		htmlTop="<%= htmlTop %>"
 		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_COMPANY_SETTINGS %>"
-		jspPath="/html/portlet/portal_settings/"
 		showButtons="<%= RoleLocalServiceUtil.hasUserRole(user.getUserId(), company.getCompanyId(), RoleConstants.ADMINISTRATOR, true) %>"
 	/>
 </aui:form>

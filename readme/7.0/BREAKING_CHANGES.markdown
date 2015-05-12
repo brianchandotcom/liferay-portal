@@ -73,7 +73,7 @@ in ascending chronological order.
 
 ## Breaking Changes List
 
-### The `liferay-ui:logo-selector` Tag Requires Parameter Changes
+### The liferay-ui:logo-selector Tag Requires Parameter Changes
 - **Date:** 2013-Dec-05
 - **JIRA Ticket:** LPS-42645
 
@@ -185,7 +185,7 @@ body fields separate.
 
 ---------------------------------------
 
-### Removed `get` and `format` Methods That Used `PortletConfig` Parameters
+### Removed get and format Methods that Used PortletConfig Parameters
 - **Date:** 2014-Mar-07
 - **JIRA Ticket:** LPS-44342
 
@@ -247,7 +247,7 @@ template.
 
 ---------------------------------------
 
-### Changed the AssetRenderer and Indexer APIs to Include the `PortletRequest` and `PortletResponse` Parameters
+### Changed the AssetRenderer and Indexer APIs to Include the PortletRequest and PortletResponse Parameters
 - **Date:** 2014-May-07
 - **JIRA Ticket:** LPS-44639 and LPS-44894
 
@@ -332,7 +332,7 @@ Unifying portlet and service configuration facilitates managing them.
 
 ---------------------------------------
 
-### DDM Structure Local Service API No Longer Has the `updateXSDFieldMetadata()` operation
+### DDM Structure Local Service API No Longer Has the updateXSDFieldMetadata operation
 - **Date:** 2014-Jun-11
 - **JIRA Ticket:** LPS-47559
 
@@ -359,7 +359,7 @@ of data.
 
 ---------------------------------------
 
-### The `aui:input` Tag for Type `checkbox` No Longer Creates a Hidden Input
+### The aui:input Tag for Type checkbox No Longer Creates a Hidden Input
 - **Date:** 2014-Jun-16
 - **JIRA Ticket:** LPS-44228
 
@@ -388,7 +388,7 @@ properly even when JavaScript is disabled.
 
 ---------------------------------------
 
-### Using `util-taglib` No Longer Binds You to Using `portal-service`'s `javax.servlet.jsp` Implementation
+### Using util-taglib No Longer Binds You to Using portal-service's javax.servlet.jsp Implementation
 - **Date:** 2014-Jun-19
 - **JIRA Ticket:** LPS-47682
 
@@ -458,7 +458,7 @@ and it allows for easier recovery, when possible.
 
 ---------------------------------------
 
-### Removed Trash Logic from `DLAppHelperLocalService` Methods
+### Removed Trash Logic from DLAppHelperLocalService Methods
 - **Date:** 2014-Jul-22
 - **JIRA Ticket:** LPS-47508
 
@@ -499,7 +499,7 @@ operations in a uniform way.
 
 ---------------------------------------
 
-### Removed Sync Logic from `DLAppHelperLocalService` Methods
+### Removed Sync Logic from DLAppHelperLocalService Methods
 - **Date:** 2014-Sep-05
 - **JIRA Ticket:** LPS-48895
 
@@ -533,7 +533,7 @@ There are repositories that don't support Liferay Sync operations.
 
 ---------------------------------------
 
-### Removed the `.aui` Namespace from Bootstrap
+### Removed the .aui Namespace from Bootstrap
 - **Date:** 2014-Sep-26
 - **JIRA Ticket:** LPS-50348
 
@@ -561,7 +561,7 @@ minor benefit.
 
 ---------------------------------------
 
-### Moved `MVCPortlet`, `ActionCommand` and `ActionCommandCache` from `util-bridges.jar` to `portal-service.jar`
+### Moved MVCPortlet, ActionCommand and ActionCommandCache from util-bridges.jar to portal-service.jar
 - **Date:** 2014-Sep-26
 - **JIRA Ticket:** LPS-50156
 
@@ -606,7 +606,7 @@ system. Duplication can cause `ClassCastException`s.
 
 ---------------------------------------
 
-### Convert Process Classes Are No Longer Specified via the `convert.processes` Portal Property, but Are Contributed as OSGi Modules
+### Convert Process Classes Are No Longer Specified via the convert.processes Portal Property, but Are Contributed as OSGi Modules
 - **Date:** 2014-Oct-09
 - **JIRA Ticket:** LPS-50604
 
@@ -643,7 +643,7 @@ Portal by means of an OSGi container.
 
 ---------------------------------------
 
-### Migration of the Field *Type* from the Journal Article API into a Vocabulary
+### Migration of the Field Type from the Journal Article API into a Vocabulary
 - **Date:** 2014-Oct-13
 - **JIRA Ticket:** LPS-50764
 
@@ -677,7 +677,7 @@ be used now in asset publishers and faceted search.
 
 ---------------------------------------
 
-### Removed the `getClassNamePortletId(String)` Method from `PortalUtil` Class
+### Removed the getClassNamePortletId(String) Method from PortalUtil Class
 - **Date:** 2014-Nov-11
 - **JIRA Ticket:** LPS-50604
 
@@ -702,7 +702,7 @@ longer being used inside Liferay Portal.
 
 ---------------------------------------
 
-### Removed the *Header Web Content* and *Footer Web Content* Preferences from the RSS Portlet
+### Removed the Header Web Content and Footer Web Content Preferences from the RSS Portlet
 - **Date:** 2014-Nov-12
 - **JIRA Ticket:** LPS-46984
 
@@ -732,7 +732,7 @@ preferences.
 
 ---------------------------------------
 
-### Removed the `createFlyouts` Method from `liferay/util.js` and Related Resources
+### Removed the createFlyouts Method from liferay/util.js and Related Resources
 - **Date:** 2014-Dec-18
 - **JIRA Ticket:** LPS-52275
 
@@ -758,7 +758,7 @@ its overall lack of functionality.
 
 ---------------------------------------
 
-### Removed Support for *Flat* Thread View in Discussion Comments
+### Removed Support for Flat Thread View in Discussion Comments
 - **Date:** 2014-Dec-30
 - **JIRA Ticket:** LPS-51876
 
@@ -788,7 +788,7 @@ history. Therefore, the `flat` thread view is no longer needed.
 
 ---------------------------------------
 
-### Removed *Asset Tag Properties*
+### Removed Asset Tag Properties
 - **Date:** 2015-Jan-13
 - **JIRA Ticket:** LPS-52588
 
@@ -815,7 +815,7 @@ The Asset Tag Properties were deprecated for the 6.2 version of Liferay Portal.
 
 ---------------------------------------
 
-### Removed the `asset.publisher.asset.entry.query.processors` Property
+### Removed the asset.publisher.asset.entry.query.processors Property
 - **Date:** 2015-Jan-22
 - **JIRA Ticket:** LPS-52966
 
@@ -844,7 +844,7 @@ Portal.
 
 ---------------------------------------
 
-### Replaced the `ReservedUserScreenNameException` with `UserScreenNameException.MustNotBeReserved` in `UserLocalService`
+### Replaced the ReservedUserScreenNameException with UserScreenNameException.MustNotBeReserved in UserLocalService
 - **Date:** 2015-Jan-29
 - **JIRA Ticket:** LPS-53113
 
@@ -877,7 +877,7 @@ of reserved screen names.
 
 ---------------------------------------
 
-### Replaced the `ReservedUserEmailAddressException` with `UserEmailAddressException` Inner Classes in User Services
+### Replaced the ReservedUserEmailAddressException with UserEmailAddressException Inner Classes in User Services
 - **Date:** 2015-Feb-03
 - **JIRA Ticket:** LPS-53279
 
@@ -916,7 +916,7 @@ email address and the list of reserved email addresses.
 
 ---------------------------------------
 
-### Added Required Attribute `paginationURL` to the Tag `liferay-ui:discussion`
+### Added Required Attribute paginationURL to the Tag liferay-ui:discussion
 - **Date:** 2015-Feb-05
 - **JIRA Ticket:** LPS-53313
 
@@ -948,7 +948,7 @@ This change was made to support comment pagination.
 
 ---------------------------------------
 
-### Replaced `ReservedUserIdException` with `UserIdException` Inner Classes
+### Replaced ReservedUserIdException with UserIdException Inner Classes
 - **Date:** 2015-Feb-10
 - **JIRA Ticket:** LPS-53487
 
@@ -979,7 +979,7 @@ IDs.
 
 ------------------------------------------------------------------------------
 
-### Moved the `AssetPublisherUtil` Class and Removed It from the Public API
+### Moved the AssetPublisherUtil Class and Removed It from the Public API
 - **Date:** 2015-Feb-11
 - **JIRA Ticket:** LPS-52744
 
@@ -1007,7 +1007,7 @@ different parts of the portal.
 
 ---------------------------------------
 
-### Removed Operations That Used the `Fields` Class from the `StorageAdapter` Interface
+### Removed Operations That Used the Fields Class from the StorageAdapter Interface
 - **Date:** 2015-Feb-11
 - **JIRA Ticket:** LPS-53021
 
@@ -1032,7 +1032,7 @@ This change has been made due to the deprecation of the `Fields` class.
 
 ---------------------------------------
 
-### Created a New `getType()` Method That is Implemented in `DLProcessor`
+### Created a New getType Method That is Implemented in DLProcessor
 - **Date:** 2015-Feb-17
 - **JIRA Ticket:** LPS-53574
 
@@ -1061,7 +1061,7 @@ specified by a constant from the class `DLProcessorConstants`.
 
 ---------------------------------------
 
-### Changed the Usage of the `liferay-ui:restore-entry` Tag
+### Changed the Usage of the liferay-ui:restore-entry Tag
 - **Date:** 2015-Mar-01
 - **JIRA Ticket:** LPS-54106
 
@@ -1103,7 +1103,7 @@ each plugin.
 
 ---------------------------------------
 
-### Added Required Parameter `resourceClassNameId` for DDM Template Search Operations
+### Added Required Parameter resourceClassNameId for DDM Template Search Operations
 - **Date:** 2015-Mar-03
 - **JIRA Ticket:** LPS-52990
 
@@ -1165,7 +1165,7 @@ code.
 
 ---------------------------------------
 
-### Changed Usage of the `liferay-ui:ddm-template-selector` Tag
+### Changed Usage of the liferay-ui:ddm-template-selector Tag
 - **Date:** 2015-Mar-16
 - **JIRA Ticket:** LPS-53790
 
@@ -1231,7 +1231,7 @@ This change simplifies using asset previews.
 
 ---------------------------------------
 
-### Added New Methods in the `ScreenNameValidator` Interface
+### Added New Methods in the ScreenNameValidator Interface
 - **Date:** 2015-Mar-17
 - **JIRA Ticket:** LPS-53409
 
@@ -1299,7 +1299,7 @@ code.
 
 ---------------------------------------
 
-### Added Required Parameter `groupId` for Adding Tags, Categories, and Vocabularies
+### Added Required Parameter groupId for Adding Tags, Categories, and Vocabularies
 - **Date:** 2015-Mar-31
 - **JIRA Ticket:** LPS-54570
 
@@ -1333,7 +1333,7 @@ always required, but it was hidden by the `ServiceContext` object.
 
 ---------------------------------------
 
-### Removed the Tags `portlet:icon-*`
+### Removed the Tags that Start with portlet:icon-
 - **Date:** 2015-Mar-31
 - **JIRA Ticket:** LPS-54620
 
@@ -1375,7 +1375,7 @@ modules provide more flexibility and can be included in any app.
 
 ---------------------------------------
 
-### Changed the Default Value of the `copy-request-parameters` Init Parameter for MVC Portlets
+### Changed the Default Value of the copy-request-parameters Init Parameter for MVC Portlets
 - **Date:** 2015-Apr-15
 - **JIRA Ticket:** LPS-54798
 
@@ -1455,7 +1455,7 @@ sections to access to their own utils and services.
 
 ---------------------------------------
 
-### Removed the Type Setting `breadcrumbShowParentGroups` from Groups
+### Removed the Type Setting breadcrumbShowParentGroups from Groups
 - **Date:** 2015-Apr-21
 - **JIRA Ticket:** LPS-54791
 
@@ -1481,7 +1481,7 @@ This change was introduced to support the new Settings API.
 
 ---------------------------------------
 
-### Changed Return Value of the Method `getText` of the Editor's Window API
+### Changed Return Value of the Method getText of the Editor's Window API
 - **Date:** 2015-Apr-28
 - **JIRA Ticket:** LPS-52698
 

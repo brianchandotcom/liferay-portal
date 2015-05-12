@@ -54,7 +54,7 @@ String newTitle = ParamUtil.get(request, "newTitle", StringPool.BLANK);
 	<portlet:param name="struts_action" value="/wiki/move_page" />
 </portlet:actionURL>
 
-<aui:form action="<%= movePageURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "changeParent();" %>'>
+<aui:form action="<%= movePageURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "changeParent();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 	<aui:input name="title" type="hidden" value="<%= title %>" />

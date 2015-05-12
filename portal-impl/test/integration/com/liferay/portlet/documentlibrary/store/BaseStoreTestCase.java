@@ -637,7 +637,7 @@ public abstract class BaseStoreTestCase {
 		store.updateFile(companyId, repositoryId, fileName1, fileName2);
 	}
 
-	protected String addVersions(String fileName, int newVersionCount)
+	protected void addVersions(String fileName, int newVersionCount)
 		throws Exception {
 
 		String versionLabel = "1.";
@@ -647,8 +647,6 @@ public abstract class BaseStoreTestCase {
 				companyId, repositoryId, fileName, versionLabel + i,
 				_DATA_VERSION_1);
 		}
-
-		return fileName;
 	}
 
 	protected File createFile(byte[] fileData) throws IOException {

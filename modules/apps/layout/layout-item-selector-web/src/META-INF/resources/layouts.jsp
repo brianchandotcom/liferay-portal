@@ -17,7 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+String itemSelectedCallback = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_CALLBACK);
+LayoutItemSelectorCriterion layoutItemSelectorCriterion = (LayoutItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
+
+long groupId = layoutItemSelectorCriterion.getGroupId();
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
@@ -47,7 +50,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 <liferay-ui:tabs names="<%= tabs1Names %>" refresh="<%= false %>">
 
 	<%
-	boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
+		boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
 	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
 
 	LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(request, liferayPortletResponse);
@@ -93,15 +96,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 <div class="alert" id="<portlet:namespace />selectPageMessage">
 
-	<%
-	String ckEditorFuncNum = ItemSelectorUtil.getCKEditorFuncNum(request);
-
-	Map<String, String> params = new HashMap<String, String>();
-
-	params.put("ckeditorfuncnum", ckEditorFuncNum);
-	%>
-
-	<aui:button cssClass="selector-button" data="<%= params %>" disabled="<%= true %>" value="choose" />
+	<aui:button cssClass="selector-button" disabled="<%= true %>" value="choose" />
 
 	<span class="selected-page-message">
 		<liferay-ui:message key="there-is-no-selected-page" />
@@ -148,6 +143,19 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		return buffer.join(' > ');
 	};
 
+	var selectPageMessage = A.one('#<portlet:namespace />selectPageMessage');
+
+	var button = selectPageMessage.one('.selector-button');
+
+	button.on(
+		'click',
+		function() {
+			var url = event.target.getAttribute('data-url');
+
+			<%= itemSelectedCallback %>('<%= URL.class.getName() %>', url);
+		}
+	);
+
 	var setSelectedPage = function(event) {
 		var disabled = true;
 
@@ -164,10 +172,6 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		var url = link.attr('data-url');
 
 		var uuid = link.attr('data-uuid');
-
-		var selectPageMessage = A.one('#<portlet:namespace />selectPageMessage');
-
-		var button = selectPageMessage.one('.selector-button');
 
 		if (link && url) {
 			disabled = false;
@@ -197,10 +201,4 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
 		bindTreeUI('treeContainerPrivatePagesOutput');
 	</c:if>
-
-	<%
-	String eventName = ParamUtil.getString(request, "eventName");
-	%>
-
-	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectPageMessage', '<%= HtmlUtil.escapeJS(eventName) %>');
 </aui:script>

@@ -587,8 +587,14 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1302,6 +1308,8 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 
 		wikiPageModelImpl._setOriginalUserId = false;
 
+		wikiPageModelImpl._setModifiedDate = false;
+
 		wikiPageModelImpl._originalNodeId = wikiPageModelImpl._nodeId;
 
 		wikiPageModelImpl._setOriginalNodeId = false;
@@ -1640,6 +1648,7 @@ public class WikiPageModelImpl extends BaseModelImpl<WikiPage>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _nodeId;
 	private long _originalNodeId;
 	private boolean _setOriginalNodeId;

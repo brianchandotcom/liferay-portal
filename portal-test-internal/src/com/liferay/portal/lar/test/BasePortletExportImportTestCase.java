@@ -18,6 +18,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
@@ -313,34 +314,42 @@ public abstract class BasePortletExportImportTestCase
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
-			exportImportConfiguration);
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
 
-		importedLayout = LayoutTestUtil.addLayout(importedGroup);
+		try {
+			larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
+				exportImportConfiguration);
 
-		MapUtil.merge(getImportParameterMap(), importParameterMap);
+			importedLayout = LayoutTestUtil.addLayout(importedGroup);
 
-		settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				user.getUserId(), importedLayout.getPlid(),
-				importedGroup.getGroupId(), portletId, importParameterMap,
-				StringPool.BLANK, user.getLocale(), user.getTimeZone(),
-				StringPool.BLANK);
+			MapUtil.merge(getImportParameterMap(), importParameterMap);
 
-		exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				addExportImportConfiguration(
-					user.getUserId(), importedGroup.getGroupId(),
-					StringPool.BLANK, StringPool.BLANK,
-					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
-					new ServiceContext());
+			settingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildImportSettingsMap(
+						user.getUserId(), importedLayout.getPlid(),
+						importedGroup.getGroupId(), portletId,
+						importParameterMap, StringPool.BLANK, user.getLocale(),
+						user.getTimeZone(), StringPool.BLANK);
 
-		LayoutLocalServiceUtil.importPortletDataDeletions(
-			exportImportConfiguration, larFile);
+			exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addExportImportConfiguration(
+						user.getUserId(), importedGroup.getGroupId(),
+						StringPool.BLANK, StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
 
-		LayoutLocalServiceUtil.importPortletInfo(
-			exportImportConfiguration, larFile);
+			LayoutLocalServiceUtil.importPortletDataDeletions(
+				exportImportConfiguration, larFile);
+
+			LayoutLocalServiceUtil.importPortletInfo(
+				exportImportConfiguration, larFile);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
 	}
 
 	protected AssetEntry getAssetEntry(StagedModel stagedModel)

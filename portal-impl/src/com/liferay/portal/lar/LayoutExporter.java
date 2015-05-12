@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.ExportImportProcessCallbackRegistryUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.staging.LayoutStagingUtil;
-import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
@@ -621,8 +621,10 @@ public class LayoutExporter {
 			portletDataContext.getParameterMap(),
 			PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
 
-		if (updateLastPublishDate) {
-			TransactionCommitCallbackRegistryUtil.registerCallback(
+		if (ExportImportThreadLocal.isStagingInProcess() &&
+			updateLastPublishDate) {
+
+			ExportImportProcessCallbackRegistryUtil.registerCallback(
 				new UpdateLayoutSetLastPublishDateCallable(
 					portletDataContext.getDateRange(),
 					portletDataContext.getGroupId(),
@@ -812,9 +814,7 @@ public class LayoutExporter {
 				endDate = _dateRange.getEndDate();
 			}
 
-			if (ExportImportThreadLocal.isStagingInProcess() &&
-				group.hasStagingGroup()) {
-
+			if (group.hasStagingGroup()) {
 				Group stagingGroup = group.getStagingGroup();
 
 				ExportImportDateUtil.updateLastPublishDate(

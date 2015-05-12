@@ -56,7 +56,6 @@ import com.liferay.portal.model.StagedModel;
 import java.io.Serializable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Daniel Kocsis
@@ -170,15 +169,16 @@ public abstract class BaseExportImportLifecycleListener
 		}
 		else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_FAILED) {
 			onPortletPublicationFailed(
-				getTaskContextMapAttribute(attributes),
+				getExportImportConfigurationAttribute(attributes),
 				getThrowableAttribute(attributes));
 		}
 		else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_STARTED) {
-			onPortletPublicationStarted(getTaskContextMapAttribute(attributes));
+			onPortletPublicationStarted(
+				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code == EVENT_PUBLICATION_PORTLET_LOCAL_SUCCEEDED) {
 			onPortletPublicationSucceeded(
-				getTaskContextMapAttribute(attributes));
+				getExportImportConfigurationAttribute(attributes));
 		}
 		else if (code == EVENT_STAGED_MODEL_EXPORT_FAILED) {
 			onStagedModelExportFailed(
@@ -251,12 +251,6 @@ public abstract class BaseExportImportLifecycleListener
 		}
 
 		return null;
-	}
-
-	protected Map<String, Serializable> getTaskContextMapAttribute(
-		List<Serializable> attributes) {
-
-		return getAttributeByType(attributes, Map.class);
 	}
 
 	protected Throwable getThrowableAttribute(List<Serializable> attributes) {
@@ -362,17 +356,18 @@ public abstract class BaseExportImportLifecycleListener
 	}
 
 	protected void onPortletPublicationFailed(
-			Map<String, Serializable> taskContextMap, Throwable throwable)
+			ExportImportConfiguration exportImportConfiguration,
+			Throwable throwable)
 		throws Exception {
 	}
 
 	protected void onPortletPublicationStarted(
-			Map<String, Serializable> taskContextMap)
+			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 	}
 
 	protected void onPortletPublicationSucceeded(
-			Map<String, Serializable> taskContextMap)
+			ExportImportConfiguration exportImportConfiguration)
 		throws Exception {
 	}
 

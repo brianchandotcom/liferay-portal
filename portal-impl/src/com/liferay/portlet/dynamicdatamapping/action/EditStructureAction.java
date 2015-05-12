@@ -169,18 +169,11 @@ public class EditStructureAction extends PortletAction {
 				_log.debug(nsse, nsse);
 			}
 		}
-		catch (Exception e) {
-			if (//e instanceof NoSuchStructureException ||
-				e instanceof PrincipalException) {
+		catch (PrincipalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
 
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.dynamic_data_mapping.error");
-			}
-			else {
-				throw e;
-			}
+			return actionMapping.findForward(
+				"portlet.dynamic_data_mapping.error");
 		}
 
 		return actionMapping.findForward(

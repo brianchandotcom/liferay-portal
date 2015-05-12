@@ -23,23 +23,13 @@
 
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
-page import="com.liferay.portal.kernel.util.KeyValuePairComparator" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
-page import="com.liferay.portal.kernel.util.SetUtil" %><%@
-page import="com.liferay.site.navigation.language.web.context.LanguageDisplayContext" %>
-
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Arrays" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Set" %>
+page import="com.liferay.site.navigation.language.web.display.context.LanguageDisplayContext" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request, portletPreferences);
+LanguageDisplayContext languageDisplayContext = new LanguageDisplayContext(request);
 %>
 
 <%@ include file="/init-ext.jsp" %>

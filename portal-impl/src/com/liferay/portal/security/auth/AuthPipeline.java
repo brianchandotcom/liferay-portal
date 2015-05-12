@@ -151,16 +151,6 @@ public class AuthPipeline {
 	}
 
 	private AuthPipeline() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter authFailureFilter = registry.getFilter(
-			"(&(key=*)(objectClass=" + AuthFailure.class.getName() + "))");
-
-		_authFailureServiceTracker = registry.trackServices(
-			authFailureFilter, new AuthFailureServiceTrackerCustomizer());
-
-		_authFailureServiceTracker.open();
-
 		_authFailures.put(PropsKeys.AUTH_FAILURE, new AuthFailure[0]);
 
 		for (String authFailureClassName : PropsValues.AUTH_FAILURE) {
@@ -179,13 +169,15 @@ public class AuthPipeline {
 			_registerAuthFailure(PropsKeys.AUTH_MAX_FAILURES, authFailure);
 		}
 
-		Filter authenticatorFilter = registry.getFilter(
-			"(&(key=*)(objectClass=" + Authenticator.class.getName() + "))");
+		Registry registry = RegistryUtil.getRegistry();
 
-		_authenticatorServiceTracker = registry.trackServices(
-			authenticatorFilter, new AuthenticatorServiceTrackerCustomizer());
+		Filter authFailureFilter = registry.getFilter(
+			"(&(key=*)(objectClass=" + AuthFailure.class.getName() + "))");
 
-		_authenticatorServiceTracker.open();
+		_authFailureServiceTracker = registry.trackServices(
+			authFailureFilter, new AuthFailureServiceTrackerCustomizer());
+
+		_authFailureServiceTracker.open();
 
 		_authenticators.put(PropsKeys.AUTH_PIPELINE_POST, new Authenticator[0]);
 
@@ -204,6 +196,14 @@ public class AuthPipeline {
 
 			_registerAuthenticator(PropsKeys.AUTH_PIPELINE_PRE, authenticator);
 		}
+
+		Filter authenticatorFilter = registry.getFilter(
+			"(&(key=*)(objectClass=" + Authenticator.class.getName() + "))");
+
+		_authenticatorServiceTracker = registry.trackServices(
+			authenticatorFilter, new AuthenticatorServiceTrackerCustomizer());
+
+		_authenticatorServiceTracker.open();
 	}
 
 	private int _authenticate(

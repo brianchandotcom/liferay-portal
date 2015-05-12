@@ -36,8 +36,8 @@ page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
-page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
-page import="com.liferay.portlet.PortletConfigFactoryUtil" %>
+page import="com.liferay.portlet.PortletConfigFactoryUtil" %><%@
+page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

@@ -14,11 +14,11 @@
 
 package com.liferay.portal.sso.token.internal.security.auth;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -30,7 +30,7 @@ import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.sso.token.internal.configuration.TokenConfiguration;
-import com.liferay.portal.sso.token.internal.constants.TokenPropsKeys;
+import com.liferay.portal.sso.token.internal.constants.TokenConstants;
 import com.liferay.portal.sso.token.security.auth.TokenLocation;
 import com.liferay.portal.sso.token.security.auth.TokenRetriever;
 import com.liferay.portal.util.PortalUtil;
@@ -42,10 +42,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -61,13 +59,6 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class TokenAutoLogin extends BaseAutoLogin {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_tokenConfiguration = Configurable.createConfigurable(
-			TokenConfiguration.class, properties);
-	}
-
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest request, HttpServletResponse response)
@@ -75,19 +66,20 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (!PrefsPropsUtil.getBoolean(
-				companyId, TokenPropsKeys.ENABLED,
-				_tokenConfiguration.enabled())) {
+		TokenConfiguration tokenCompanyServiceSettings =
+			_settingsFactory.getSettings(
+				TokenConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, TokenConstants.SERVICE_NAME));
 
+		if (!tokenCompanyServiceSettings.enabled()) {
 			return null;
 		}
 
-		String userTokenName = PrefsPropsUtil.getString(
-			companyId, TokenPropsKeys.USER_TOKEN_NAME,
-			_tokenConfiguration.userTokenName());
+		String userTokenName = tokenCompanyServiceSettings.userTokenName();
 
-		TokenLocation tokenLocation = TokenLocation.valueOf(
-			_tokenConfiguration.tokenLocation());
+		TokenLocation tokenLocation =
+			tokenCompanyServiceSettings.tokenLocation();
 
 		TokenRetriever tokenRetriever = _tokenRetrievers.get(tokenLocation);
 
@@ -101,7 +93,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 		String login = tokenRetriever.getLoginToken(request, userTokenName);
 
-		User user = getUser(companyId, login);
+		User user = getUser(companyId, login, tokenCompanyServiceSettings);
 
 		addRedirect(request);
 
@@ -114,7 +106,9 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected User getUser(long companyId, String login)
+	protected User getUser(
+			long companyId, String login,
+			TokenConfiguration tokenCompanyServiceSettings)
 		throws PortalException {
 
 		User user = null;
@@ -123,10 +117,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 			companyId, PropsKeys.COMPANY_SECURITY_AUTH_TYPE,
 			PropsValues.COMPANY_SECURITY_AUTH_TYPE);
 
-		if (PrefsPropsUtil.getBoolean(
-				companyId, TokenPropsKeys.IMPORT_FROM_LDAP,
-				_tokenConfiguration.importFromLDAP())) {
-
+		if (tokenCompanyServiceSettings.importFromLDAP()) {
 			try {
 				if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
 					user = UserImporterUtil.importUser(
@@ -183,6 +174,11 @@ public class TokenAutoLogin extends BaseAutoLogin {
 		return user;
 	}
 
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.AT_LEAST_ONE,
 		policy = ReferencePolicy.DYNAMIC,
@@ -198,7 +194,7 @@ public class TokenAutoLogin extends BaseAutoLogin {
 
 	private static final Log _log = LogFactoryUtil.getLog(TokenAutoLogin.class);
 
-	private volatile TokenConfiguration _tokenConfiguration;
+	private volatile SettingsFactory _settingsFactory;
 	private final Map<TokenLocation, TokenRetriever> _tokenRetrievers =
 		new ConcurrentHashMap<>();
 

@@ -16,30 +16,51 @@ package com.liferay.portal.sso.token.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.portal.sso.token.security.auth.TokenLocation;
+
 /**
  * @author Michael C. Han
+ * @author Mika Koivisto
  */
 @Meta.OCD(
 	id = "com.liferay.portal.sso.token.internal.configuration.TokenConfiguration"
 )
 public interface TokenConfiguration {
 
-	@Meta.AD(deflt ="SMIDENTITY,SMSESSION", required = false)
-	public String authenticationCookies();
+	@Meta.AD(
+		deflt ="SMIDENTITY|SMSESSION", description =
+			"Set this to cookie names that must be removed after logout.",
+		required = false
+	)
+	public String[] authenticationCookies();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean enabled();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false", description =
+			"Set this to true to automatically import users from LDAP if they" +
+			" do not exist in the portal.",
+		required = false
+	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(deflt ="", required = false)
 	public String logoutRedirectURL();
 
-	@Meta.AD(deflt = "REQUEST_HEADER", required = false)
-	public String tokenLocation();
+	@Meta.AD(
+		deflt = "REQUEST_HEADER",
+		description = "Set this to the location of the user token.",
+		required = false
+	)
+	public TokenLocation tokenLocation();
 
-	@Meta.AD(deflt = "SM_USER", required = false)
+	@Meta.AD(
+		deflt = "SM_USER", description =
+			"Set this to the name of the user token that authenticator passes" +
+			" to the portal.",
+		required = false
+	)
 	public String userTokenName();
 
 }

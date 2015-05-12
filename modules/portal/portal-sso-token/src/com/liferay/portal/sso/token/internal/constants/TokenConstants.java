@@ -15,14 +15,10 @@
 package com.liferay.portal.sso.token.internal.constants;
 
 /**
- * @author Michael C. Han
+ * @author Mika Koivisto
  */
-public class TokenPropsKeys {
+public class TokenConstants {
 
-	public static final String ENABLED = "enabled";
-
-	public static final String IMPORT_FROM_LDAP = "import.from.ldap";
-
-	public static final String USER_TOKEN_NAME = "user.token.name";
+	public static final String SERVICE_NAME = "com.liferay.portal.sso.token";
 
 }

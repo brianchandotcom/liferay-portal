@@ -35,6 +35,13 @@ public interface CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
+	public long addComment(
+			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long parentMessageId, String subject,
+			String body, ServiceContext serviceContext)
+		throws PortalException;
+
 	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)

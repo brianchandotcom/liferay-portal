@@ -45,6 +45,18 @@ public class CommentManagerUtil {
 			serviceContextFunction);
 	}
 
+	public static long addComment(
+			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long parentMessageId, String subject,
+			String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		return getCommentManager().addComment(
+			groupId, className, classPK, permissionClassName, permissionClassPK,
+			permissionOwnerId, parentMessageId, subject, body, serviceContext);
+	}
+
 	public static void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)

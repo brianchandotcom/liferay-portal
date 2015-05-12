@@ -82,6 +82,21 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public long addComment(
+			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long parentMessageId, String subject,
+			String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.addComment(
+			groupId, className, classPK, permissionClassName, permissionClassPK,
+			permissionOwnerId, parentMessageId, subject, body, serviceContext);
+	}
+
+	@Override
 	public void addDiscussion(
 			long userId, long groupId, String className, long classPK,
 			String userName)

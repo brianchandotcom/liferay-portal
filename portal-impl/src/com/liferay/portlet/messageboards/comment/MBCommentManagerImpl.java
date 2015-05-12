@@ -36,6 +36,7 @@ import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageService;
+import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -106,6 +107,27 @@ public class MBCommentManagerImpl implements CommentManager {
 			serviceContext);
 
 		return mbMessage.getMessageId();
+	}
+
+	@Override
+	public long addComment(
+			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long parentMessageId, String subject,
+			String body, ServiceContext serviceContext)
+		throws PortalException {
+
+		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
+			parentMessageId);
+
+		long threadId = parentMessage.getThreadId();
+
+		MBMessage message = MBMessageServiceUtil.addDiscussionMessage(
+			serviceContext.getScopeGroupId(), className, classPK,
+			permissionClassName, permissionClassPK, permissionOwnerId, threadId,
+			parentMessageId, subject, body, serviceContext);
+
+		return message.getMessageId();
 	}
 
 	@Override

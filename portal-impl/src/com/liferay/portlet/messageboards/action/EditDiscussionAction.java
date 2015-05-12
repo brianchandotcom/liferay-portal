@@ -37,7 +37,6 @@ import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 
 import java.io.IOException;
 
@@ -326,12 +325,10 @@ public class EditDiscussionAction extends PortletAction {
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			try {
-				MBMessage message = MBMessageServiceUtil.addDiscussionMessage(
+				messageId = CommentManagerUtil.addComment(
 					serviceContext.getScopeGroupId(), className, classPK,
 					permissionClassName, permissionClassPK, permissionOwnerId,
-					threadId, parentMessageId, subject, body, serviceContext);
-
-				messageId = message.getMessageId();
+					parentMessageId, subject, body, serviceContext);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);

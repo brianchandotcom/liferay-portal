@@ -134,6 +134,21 @@ public abstract class BaseStoreTestCase {
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 	}
 
+	@Test
+	public void testCopyFileVersion() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		addVersions(fileName, 1);
+
+		store.copyFileVersion(companyId, repositoryId, fileName, "1.0", "1.2");
+
+		Assert.assertTrue(
+			store.hasFile(companyId, repositoryId, fileName, "1.2"));
+
+	}
+
 	@Test(expected = DuplicateFileException.class)
 	public void testCopyFileVersionDuplicateFileException() throws Exception {
 		String fileName = RandomTestUtil.randomString();

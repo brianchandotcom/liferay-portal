@@ -640,22 +640,12 @@ public abstract class BaseStoreTestCase {
 	protected String addVersions(String fileName, int newVersionCount)
 		throws Exception {
 
-		Assert.assertTrue(
-			store.hasFile(
-				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
-
 		String versionLabel = "1.";
 
 		for (int i = 1; i <= newVersionCount; i++) {
 			store.updateFile(
 				companyId, repositoryId, fileName, versionLabel + i,
 				_DATA_VERSION_1);
-		}
-
-		for (int i = 1; i <= newVersionCount; i++) {
-			Assert.assertTrue(
-				store.hasFile(
-					companyId, repositoryId, fileName, versionLabel + i));
 		}
 
 		return fileName;

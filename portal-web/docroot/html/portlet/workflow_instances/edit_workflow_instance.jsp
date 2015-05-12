@@ -140,7 +140,7 @@ if (assetEntry != null) {
 			<%
 			List<WorkflowTask> workflowTasks = null;
 
-			if (portletName.equals(PortletKeys.WORKFLOW_DEFINITIONS)) {
+			if (portletName.equals(PortletKeys.WORKFLOW_DEFINITION)) {
 				workflowTasks = WorkflowTaskManagerUtil.getWorkflowTasksByWorkflowInstance(company.getCompanyId(), null, workflowInstance.getWorkflowInstanceId(), null, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 			}
 			else {

@@ -14,15 +14,19 @@
  */
 --%>
 
-<%
-List<WorkflowDefinition> workflowDefinitions = WorkflowDefinitionManagerUtil.getWorkflowDefinitions(company.getCompanyId(), 0, 100, null);
+<%@ include file="/init.jsp" %>
 
-portletURL.setParameter("struts_action", "/workflow_definitions/view");
+<%
+List<WorkflowDefinition> workflowDefinitions = (List<WorkflowDefinition>)request.getAttribute(WebKeys.WORKFLOW_DEFINITIONS);
+
+PortletURL portletURL = renderResponse.createRenderURL();
+
+portletURL.setParameter("mvcPath", "/view.jsp");
 %>
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
 
-<liferay-util:include page="/html/portlet/workflow_definitions/toolbar.jsp" />
+<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 <liferay-ui:search-container
 	emptyResultsMessage="no-workflow-definitions-are-defined"
@@ -55,13 +59,13 @@ portletURL.setParameter("struts_action", "/workflow_definitions/view");
 
 		<liferay-ui:search-container-column-text
 			name="active"
-			value='<%= workflowDefinition.isActive() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
+			value='<%= workflowDefinition.isActive() ? LanguageUtil.get(locale, "yes") : LanguageUtil.get(locale, "no") %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp
 			align="right"
 			cssClass="entry-action"
-			path="/html/portlet/workflow_definitions/workflow_definition_action.jsp"
+			path="/workflow_definition_action.jsp"
 		/>
 	</liferay-ui:search-container-row>
 

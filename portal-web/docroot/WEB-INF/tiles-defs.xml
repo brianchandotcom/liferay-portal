@@ -1140,22 +1140,6 @@
 		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
 	</definition>
 
-	<!-- Workflow Definitions -->
-
-	<definition name="portlet.workflow_definitions" extends="portlet" />
-
-	<definition name="portlet.workflow_definitions.edit_workflow_definition" extends="portlet.workflow_definitions">
-		<put name="portlet_content" value="/portlet/workflow_definitions/edit_workflow_definition.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_definitions.error" extends="portlet.workflow_definitions">
-		<put name="portlet_content" value="/portlet/workflow_definitions/error.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_definitions.view" extends="portlet.workflow_definitions">
-		<put name="portlet_content" value="/portlet/workflow_definitions/view.jsp" />
-	</definition>
-
 	<!-- Workflow Instances -->
 
 	<definition name="portlet.workflow_instances" extends="portlet" />

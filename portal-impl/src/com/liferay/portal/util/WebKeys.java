@@ -434,6 +434,8 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 
 	public static final String WORKFLOW_DEFINITION = "WORKFLOW_DEFINITION";
 
+	public static final String WORKFLOW_DEFINITIONS = "WORKFLOW_DEFINITIONS";
+
 	public static final String WORKFLOW_INSTANCE = "WORKFLOW_INSTANCE";
 
 	public static final String WORKFLOW_TASK = "WORKFLOW_TASK";

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,25 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.workflow.definition.web.portlet.action;
 
-<%@ page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
-page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.util.PortletKeys;
 
-<%@ include file="/html/portlet/workflow_definitions/init-ext.jsp" %>
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Leonardo Barros
+ */
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=addWorkflowDefinition",
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
+	},
+	service = ActionCommand.class
+)
+public class AddWorkflowDefinitionActionCommand
+	extends UpdateWorkflowDefitionActionCommand {
+}

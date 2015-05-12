@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/workflow_definitions/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -24,8 +24,7 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+		<portlet:param name="mvcPath" value="/edit_workflow_definition.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
@@ -48,16 +47,15 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 			message="edit"
 			url="<%= taglibOnClick %>"
 		/>
+
 	</c:if>
 
 	<c:if test="<%= !workflowDefinition.isActive() %>">
-		<portlet:actionURL var="restoreWorkflowDefinitionURL">
-			<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+		<liferay-portlet:actionURL name="restoreWorkflowDefinition" var="restoreWorkflowDefinitionURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-		</portlet:actionURL>
+		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
 			iconCssClass="icon-ok-sign"
@@ -66,13 +64,11 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		/>
 	</c:if>
 
-	<portlet:actionURL var="deleteURL">
-		<portlet:param name="struts_action" value="/workflow_definitions/edit_workflow_definition" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= workflowDefinition.isActive() ? Constants.DEACTIVATE : Constants.DELETE %>" />
+	<liferay-portlet:actionURL name='<%= workflowDefinition.isActive() ? "deactivateWorkflowDefinition" : "deleteWorkflowDefinition" %>' var="deleteURL">
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-	</portlet:actionURL>
+	</liferay-portlet:actionURL>
 
 	<c:choose>
 		<c:when test="<%= workflowDefinition.isActive() %>">

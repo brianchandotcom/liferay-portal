@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,23 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/workflow_definitions/init.jsp" %>
+package com.liferay.workflow.definition.web.portlet;
 
-<liferay-ui:error-header />
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.workflow.WorkflowControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
-<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />
+import org.osgi.service.component.annotations.Component;
+
+/**
+ * @author Leonardo Barros
+ */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION},
+	service = ControlPanelEntry.class
+)
+public class WorkflowDefintionControlPanelEntry
+	extends WorkflowControlPanelEntry {
+}

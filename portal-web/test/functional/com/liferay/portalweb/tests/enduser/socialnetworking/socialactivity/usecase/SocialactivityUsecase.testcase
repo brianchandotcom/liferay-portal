@@ -363,7 +363,7 @@
 		<execute macro="Page#gotoSALocalizedCP">
 			<var name="adminLocalized" value="Administração" />
 			<var name="portletCategoryName" value="Configurar" />
-			<var name="portletName" value="Atividade social" />
+			<var name="portletName" value="Atividade Social" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -382,7 +382,6 @@
 			<var name="portletName" value="Account Settings" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Myaccount#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
 		<execute function="AssertSelectedLabel" locator1="Myaccount#LANGUAGE_SELECT" value1="English (United States)" />
 	</command>
 

@@ -26,7 +26,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.framework.BundleContext;
@@ -82,7 +84,17 @@ public class DefaultDestinationFactory implements DestinationFactory {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		_bundleContext = bundleContext;
+		synchronized (_serviceRegistrations) {
+			_bundleContext = bundleContext;
+
+			for (DestinationConfiguration destinationConfiguration :
+					_queuedDestinationConfigurations) {
+
+				addDestinationConfiguration(destinationConfiguration);
+			}
+
+			_queuedDestinationConfigurations.clear();
+		}
 	}
 
 	@Reference(
@@ -91,10 +103,15 @@ public class DefaultDestinationFactory implements DestinationFactory {
 		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void addDestinationConfiguration(
-		DestinationConfiguration destinationConfiguration,
-		Map<String, Object> properties) {
+		DestinationConfiguration destinationConfiguration) {
 
 		synchronized (_serviceRegistrations) {
+			if (_bundleContext == null) {
+				_queuedDestinationConfigurations.add(destinationConfiguration);
+
+				return;
+			}
+
 			Destination destination = createDestination(
 				destinationConfiguration);
 
@@ -145,8 +162,7 @@ public class DefaultDestinationFactory implements DestinationFactory {
 	}
 
 	protected void removeDestinationConfiguration(
-		DestinationConfiguration destinationConfiguration,
-		Map<String, Object> properties) {
+		DestinationConfiguration destinationConfiguration) {
 
 		synchronized (_serviceRegistrations) {
 			if (_serviceRegistrations.containsKey(
@@ -181,6 +197,8 @@ public class DefaultDestinationFactory implements DestinationFactory {
 	private BundleContext _bundleContext;
 	private final Map<String, DestinationPrototype> _destinationPrototypes =
 		new ConcurrentHashMap<>();
+	private final Set<DestinationConfiguration>
+		_queuedDestinationConfigurations = new HashSet<>();
 	private final Map<String, ServiceRegistration<Destination>>
 		_serviceRegistrations = new HashMap<>();
 

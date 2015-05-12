@@ -58,6 +58,12 @@ public class FullNameDefinitionFactory {
 
 		fieldNames = ArrayUtil.append(requiredFieldNames, fieldNames);
 
+		ArrayUtil.reverse(fieldNames);
+
+		fieldNames = ArrayUtil.unique(fieldNames);
+
+		ArrayUtil.reverse(fieldNames);
+
 		for (String userNameField : fieldNames) {
 			FullNameField fullNameField = new FullNameField();
 

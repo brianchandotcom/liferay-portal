@@ -16,6 +16,7 @@ package com.liferay.wiki.web.util;
 
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
+import com.liferay.wiki.web.display.context.WikiDisplayContextProvider;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -38,8 +39,19 @@ public class WikiWebComponentProvider {
 		return _settingsFactory;
 	}
 
+	public WikiDisplayContextProvider getWikiDisplayContextProvider() {
+		return _wikiDisplayContextProvider;
+	}
+
 	public WikiGroupServiceConfiguration getWikiGroupServiceConfiguration() {
 		return _wikiGroupServiceConfiguration;
+	}
+
+	@Reference(unbind = "-")
+	public void setWikiDisplayContextProvider(
+		WikiDisplayContextProvider wikiDisplayContextProvider) {
+
+		_wikiDisplayContextProvider = wikiDisplayContextProvider;
 	}
 
 	@Activate
@@ -73,6 +85,7 @@ public class WikiWebComponentProvider {
 	private static WikiWebComponentProvider _wikiWebComponentProvider;
 
 	private SettingsFactory _settingsFactory;
+	private WikiDisplayContextProvider _wikiDisplayContextProvider;
 	private WikiGroupServiceConfiguration _wikiGroupServiceConfiguration;
 
 }

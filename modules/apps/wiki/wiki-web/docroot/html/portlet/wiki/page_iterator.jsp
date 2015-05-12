@@ -20,6 +20,8 @@
 WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
 WikiPage wikiPage = (WikiPage)request.getAttribute(WikiWebKeys.WIKI_PAGE);
 
+WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, node);
+
 String type = ParamUtil.getString(request, "type");
 long categoryId = ParamUtil.getLong(request, "categoryId");
 String tagName = ParamUtil.getString(request, "tag");
@@ -380,17 +382,34 @@ for (int i = 0; i < results.size(); i++) {
 </c:if>
 
 <c:if test='<%= type.equals("all_pages") && WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_PAGE) %>'>
-	<aui:button-row>
-		<liferay-portlet:renderURL allowEmptyParam="<%= true %>" var="addPageURL">
-			<liferay-portlet:param name="struts_action" value="/wiki/edit_page" />
-			<liferay-portlet:param name="redirect" value="<%= currentURL %>" />
-			<liferay-portlet:param name="nodeId" value="<%= String.valueOf(node.getNodeId()) %>" />
-			<liferay-portlet:param name="title" value="<%= StringPool.BLANK %>" />
-			<liferay-portlet:param name="editTitle" value="1" />
-		</liferay-portlet:renderURL>
+	<liferay-ui:app-view-toolbar>
+		<aui:button-row cssClass="wiki-page-toolbar" id='<%= renderResponse.getNamespace() + "wikiPageToolbar" %>' />
+	</liferay-ui:app-view-toolbar>
 
-		<aui:button href="<%= addPageURL %>" name="addPageButton" value="add-page" />
-	</aui:button-row>
+	<aui:script use="aui-toolbar">
+		var buttonRow = A.one('#<portlet:namespace />wikiPageToolbar');
+
+		var wikiPageButtonGroup = [];
+
+		<%
+		for (ToolbarItem toolbarItem : wikiListPagesDisplayContext.getToolbarItems()) {
+		%>
+
+			<liferay-ui:toolbar-item toolbarItem="<%= toolbarItem %>" var="wikiPageButtonGroup" />
+
+		<%
+		}
+		%>
+
+		var wikiPageToolbar = new A.Toolbar(
+			{
+				boundingBox: buttonRow,
+				children: [wikiPageButtonGroup]
+			}
+		).render();
+
+		buttonRow.setData('wikiPageToolbar', wikiPageToolbar);
+	</aui:script>
 </c:if>
 
 <liferay-ui:categorization-filter
@@ -450,12 +469,12 @@ for (int i = 0; i < results.size(); i++) {
 
 					var rowIdsSize = rowIds.length;
 
-					if ((rowIdsSize == 0) || (rowIdsSize == 2)) {
-						if (rowIdsSize == 0) {
+					if (rowIdsSize === 0 || rowIdsSize === 2) {
+						if (rowIdsSize === 0) {
 							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=<%= latestWikiPage.getVersion() %>', uri);
 							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=<%= wikiPage.getVersion() %>', uri);
 						}
-						else if (rowIdsSize == 2) {
+						else if (rowIdsSize === 2) {
 							uri = Liferay.Util.addParams('<portlet:namespace />sourceVersion=' + rowIds.eq(1).val(), uri);
 							uri = Liferay.Util.addParams('<portlet:namespace />targetVersion=' + rowIds.eq(0).val(), uri);
 						}

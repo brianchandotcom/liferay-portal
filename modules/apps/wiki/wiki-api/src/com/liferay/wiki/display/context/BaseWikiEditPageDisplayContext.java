@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,26 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+package com.liferay.wiki.display.context;
 
-<%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+import java.util.UUID;
 
-WikiPage wikiPage = (WikiPage)row.getObject();
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, wikiPage.getNode());
-%>
+/**
+ * @author Iván Zaera
+ */
+public abstract class BaseWikiEditPageDisplayContext
+	extends BaseWikiDisplayContext<WikiEditPageDisplayContext>
+	implements WikiEditPageDisplayContext {
 
-<liferay-ui:menu menu="<%= wikiListPagesDisplayContext.getMenu(wikiPage) %>" />
+	public BaseWikiEditPageDisplayContext(
+		UUID uuid, WikiEditPageDisplayContext parentDisplayContext,
+		HttpServletRequest request, HttpServletResponse response) {
+
+		super(uuid, parentDisplayContext, request, response);
+	}
+
+}

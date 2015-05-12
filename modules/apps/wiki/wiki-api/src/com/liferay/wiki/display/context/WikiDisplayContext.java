@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,16 +11,13 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/wiki/init.jsp" %>
+package com.liferay.wiki.display.context;
 
-<%
-ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+import com.liferay.portal.kernel.display.context.DisplayContext;
 
-WikiPage wikiPage = (WikiPage)row.getObject();
-
-WikiListPagesDisplayContext wikiListPagesDisplayContext = wikiDisplayContextProvider.getWikiListPagesDisplayContext(request, response, wikiPage.getNode());
-%>
-
-<liferay-ui:menu menu="<%= wikiListPagesDisplayContext.getMenu(wikiPage) %>" />
+/**
+ * @author Iván Zaera
+ */
+public interface WikiDisplayContext extends DisplayContext {
+}

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/editor/init.jsp" %>
+<%@ include file="/html/editors/init.jsp" %>
 
 <%
 String portletId = portletDisplay.getRootPortletId();

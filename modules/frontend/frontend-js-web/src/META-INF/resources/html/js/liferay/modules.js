@@ -41,14 +41,14 @@
 		filter: Liferay.AUI.getFilter(),
 		groups: {
 			editor: {
-				base: PATH_EDITORS + '/editor/',
+				base: PATH_EDITORS + '/editors/',
 				combine: COMBINE,
 				modules: {
 					'inline-editor-ckeditor': {
 						path: 'ckeditor/main.js'
 					}
 				},
-				root: PATH_EDITORS + '/editor/'
+				root: PATH_EDITORS + '/editors/'
 			},
 
 			liferay: {

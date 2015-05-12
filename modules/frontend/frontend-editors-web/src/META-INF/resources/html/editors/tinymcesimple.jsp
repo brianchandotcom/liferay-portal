@@ -14,4 +14,4 @@
  */
 --%>
 
-<%@ include file="/html/editor/tinymce_simple.jsp" %>
+<%@ include file="/html/editors/tinymce_simple.jsp" %>

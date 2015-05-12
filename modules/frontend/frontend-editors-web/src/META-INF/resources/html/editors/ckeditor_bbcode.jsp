@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/editor/init.jsp" %>
+<%@ include file="/html/editors/init.jsp" %>
 
 <liferay-util:include page='<%= themeDisplay.getPathEditors() + "/editor/ckeditor.jsp" %>'>
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_bbcode.jsp" />

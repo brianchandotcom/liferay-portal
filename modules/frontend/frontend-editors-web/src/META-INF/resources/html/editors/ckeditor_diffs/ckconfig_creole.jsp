@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/editor/ckeditor_init.jsp" %>
+<%@ include file="/html/editors/ckeditor_init.jsp" %>
 
 <%
 String attachmentURLPrefix = ParamUtil.getString(request, "attachmentURLPrefix");
@@ -204,7 +204,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		}
 	);
 
-	<%@ include file="/html/editor/ckeditor/ckconfig_creole-ext.jsp" %>
+	<%@ include file="/html/editors/ckeditor/ckconfig_creole-ext.jsp" %>
 };
 
 window['<%= HtmlUtil.escapeJS(name) %>Config']();

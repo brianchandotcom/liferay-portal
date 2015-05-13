@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.input.editor.common.BaseInputEditorWikiEngine;
@@ -38,6 +39,7 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.ServletContext;
 
+import org.jamwiki.Environment;
 import org.jamwiki.model.WikiUser;
 import org.jamwiki.parser.ParserException;
 import org.jamwiki.parser.ParserInput;
@@ -45,6 +47,7 @@ import org.jamwiki.parser.ParserOutput;
 import org.jamwiki.parser.ParserUtil;
 import org.jamwiki.parser.TableOfContents;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -125,6 +128,13 @@ public class MediaWikiEngine extends BaseInputEditorWikiEngine {
 		}
 
 		return outgoingLinks;
+	}
+
+	@Activate
+	protected void activate() {
+		String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
+
+		Environment.setValue(Environment.PROP_BASE_FILE_DIR, tmpDir);
 	}
 
 	protected ClassLoader getClassLoader() {

@@ -44,19 +44,24 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$NoPACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/security/pacl/permission/PortalRuntimePermission$PACL.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ArrayUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/AutoResetThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ClassUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ClearThreadLocalUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/InitialThreadLocal.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/KeyValuePair.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ListUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/LocaleThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/LocaleUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/NaturalOrderStringComparator.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropsKeys.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReflectionUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReleaseInfo.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SetUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StreamUtil*,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringBundler.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringPool.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringUtil.class,\

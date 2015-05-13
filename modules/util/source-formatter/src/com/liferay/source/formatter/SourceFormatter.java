@@ -124,8 +124,8 @@ public class SourceFormatter {
 						try {
 							_runSourceProcessor(sourceProcessor);
 						}
-						catch (Exception e) {
-							e.printStackTrace();
+						catch (Throwable t) {
+							t.printStackTrace();
 						}
 
 						return null;

@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.trash;
 import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -371,8 +371,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	protected DLFileEntry fetchDLFileEntry(long classPK)
 		throws PortalException {
 
-		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0, 0);
+		Repository repository =
+			RepositoryProviderUtil.getRepositoryByFileEntryId(classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			return null;
@@ -384,8 +384,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	protected DLFileEntry getDLFileEntry(long classPK) throws PortalException {
-		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0, 0);
+		Repository repository =
+			RepositoryProviderUtil.getRepositoryByFileEntryId(classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(
@@ -400,8 +400,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 	@Override
 	protected Repository getRepository(long classPK) throws PortalException {
-		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			0, classPK, 0, 0);
+		Repository repository =
+			RepositoryProviderUtil.getRepositoryByFileEntryId(classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(

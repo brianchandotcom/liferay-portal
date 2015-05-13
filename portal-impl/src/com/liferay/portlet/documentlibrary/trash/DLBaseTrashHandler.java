@@ -18,6 +18,7 @@ import com.liferay.portal.InvalidRepositoryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ContainerModel;
-import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcutConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
@@ -243,8 +243,8 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	protected DLFolder fetchDLFolder(long classPK) throws PortalException {
-		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			classPK, 0, 0, 0);
+		Repository repository = RepositoryProviderUtil.getRepositoryByFolderId(
+			classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			return null;
@@ -256,8 +256,8 @@ public abstract class DLBaseTrashHandler extends BaseTrashHandler {
 	}
 
 	protected DLFolder getDLFolder(long classPK) throws PortalException {
-		Repository repository = RepositoryServiceUtil.getRepositoryImpl(
-			classPK, 0, 0, 0);
+		Repository repository = RepositoryProviderUtil.getRepositoryByFolderId(
+			classPK);
 
 		if (!repository.isCapabilityProvided(TrashCapability.class)) {
 			throw new InvalidRepositoryException(

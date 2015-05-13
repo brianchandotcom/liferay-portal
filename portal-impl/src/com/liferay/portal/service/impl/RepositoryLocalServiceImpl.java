@@ -191,6 +191,10 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 		return repositoryPersistence.fetchByG_N_P(groupId, name, portletId);
 	}
 
+	public List<Repository> getRepositoriesByGroupId(long groupId) {
+		return repositoryPersistence.findByGroupId(groupId);
+	}
+
 	@Override
 	public Repository getRepository(long groupId, String portletId)
 		throws PortalException {

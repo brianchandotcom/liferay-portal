@@ -342,6 +342,8 @@ public class PoshiRunnerExecutor {
 	public static void runIfElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		List<Element> ifChildElements = element.elements();
 
 		Element ifConditionElement = ifChildElements.get(0);
@@ -353,13 +355,19 @@ public class PoshiRunnerExecutor {
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(ifThenElement);
 
+			XMLLoggerHandler.updateStatus(ifThenElement, "pending");
+
 			parseElement(ifThenElement);
+
+			XMLLoggerHandler.updateStatus(ifThenElement, "pass");
 		}
 		else if (element.element("elseif") != null) {
 			List<Element> elseIfElements = element.elements("elseif");
 
 			for (Element elseIfElement : elseIfElements) {
 				PoshiRunnerStackTraceUtil.setCurrentElement(elseIfElement);
+
+				XMLLoggerHandler.updateStatus(elseIfElement, "pending");
 
 				List<Element> elseIfChildElements = elseIfElement.elements();
 
@@ -373,9 +381,18 @@ public class PoshiRunnerExecutor {
 					PoshiRunnerStackTraceUtil.setCurrentElement(
 						elseIfThenElement);
 
+					XMLLoggerHandler.updateStatus(elseIfThenElement, "pending");
+
 					parseElement(elseIfThenElement);
 
+					XMLLoggerHandler.updateStatus(elseIfThenElement, "pass");
+					XMLLoggerHandler.updateStatus(elseIfElement, "pass");
+
 					break;
+				}
+				else {
+					XMLLoggerHandler.updateStatus(
+						elseIfElement, "conditional-fail");
 				}
 			}
 		}
@@ -385,7 +402,18 @@ public class PoshiRunnerExecutor {
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(elseElement);
 
+			XMLLoggerHandler.updateStatus(elseElement, "pending");
+
 			parseElement(elseElement);
+
+			XMLLoggerHandler.updateStatus(elseElement, "pass");
+		}
+
+		if ((element.element("else") == null) && !condition) {
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
+		}
+		else {
+			XMLLoggerHandler.updateStatus(element, "pass");
 		}
 	}
 

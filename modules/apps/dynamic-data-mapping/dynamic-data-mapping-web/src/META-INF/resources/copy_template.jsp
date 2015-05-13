@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
@@ -24,12 +24,11 @@ DDMTemplate template = (DDMTemplate)request.getAttribute(WebKeys.DYNAMIC_DATA_MA
 long templateId = BeanParamUtil.getLong(template, request, "templateId");
 %>
 
-<portlet:actionURL var="copyTemplateURL">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/copy_template" />
+<portlet:actionURL var="copyTemplateURL" name="ddmCopyTemplate">
+	<portlet:param name="mvcPath" value="/copy_template.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= copyTemplateURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.COPY %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />

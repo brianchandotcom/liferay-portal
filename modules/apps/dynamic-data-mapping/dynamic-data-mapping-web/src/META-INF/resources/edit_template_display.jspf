@@ -455,8 +455,6 @@ if (Validator.isNotNull(scriptContent)) {
 		function(event) {
 			var form = A.one('#<portlet:namespace />fm');
 
-			form.one('#<portlet:namespace />cmd').val(STR_EMPTY);
-
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}
@@ -683,5 +681,5 @@ private String _getVariableReferenceCode(String variableName, String accessor, S
 %>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dynamic_data_mapping.edit_template_display_jspf");
+private static Log _log = LogFactoryUtil.getLog("com.liferay.dynamic.data.mapping.web.portlet.edit_template_display_jspf");
 %>

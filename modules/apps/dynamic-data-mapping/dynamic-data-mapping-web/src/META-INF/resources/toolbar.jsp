@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
@@ -22,25 +22,29 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
+
 %>
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmPermissionHandler.getResourceName(scopeClassNameId), ddmPermissionHandler.getAddStructureActionId()) %>">
-			<portlet:renderURL var="viewStructuresURL">
-				<portlet:param name="struts_action" value="/dynamic_data_mapping/view" />
+			<liferay-portlet:renderURL var="viewStructuresURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</portlet:renderURL>
+			</liferay-portlet:renderURL>
 
-			<portlet:renderURL var="addStructureURL">
-				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+			<liferay-portlet:renderURL var="addStructureURL">
+				<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 				<portlet:param name="redirect" value="<%= viewStructuresURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</portlet:renderURL>
+			</liferay-portlet:renderURL>
 
 			<aui:nav-item href="<%= addStructureURL %>" iconCssClass="icon-plus" label="add" selected='<%= toolbarItem.equals("add") %>' />
 		</c:if>
 	</aui:nav>
 
-	<aui:nav-bar-search file="/html/portlet/dynamic_data_mapping/structure_search.jsp" searchContainer="<%= searchContainer %>" />
+	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
+	</aui:nav-bar-search>
+	
 </aui:nav-bar>

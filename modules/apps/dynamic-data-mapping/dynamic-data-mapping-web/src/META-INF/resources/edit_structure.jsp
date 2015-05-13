@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -48,9 +48,14 @@ String script = BeanParamUtil.getString(structure, request, "definition");
 JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
 %>
 
-<portlet:actionURL var="editStructureURL">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+<portlet:actionURL var="editStructureURL" name="ddmUpdateStructure">
+	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 </portlet:actionURL>
+
+<portlet:actionURL var="addStructureURL" name="ddmAddStructure">
+	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+</portlet:actionURL>
+
 
 <%
 String requestEditStructureURL = ParamUtil.getString(request, "editStructureURL");
@@ -60,8 +65,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 }
 %>
 
-<aui:form action="<%= editStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (structure != null) ? Constants.UPDATE : Constants.ADD %>" />
+<aui:form action="<%= (structure != null) ? editStructureURL : addStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -185,7 +189,11 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				</aui:field-wrapper>
 
 				<c:if test="<%= structure != null %>">
-					<aui:input name="url" type="resource" value='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_structure?structureId=" + classPK %>' />
+					<portlet:actionURL var="getStructureURL" name="ddmGetStructure">
+						<portlet:param name="structureId" value="<%= String.valueOf(classPK) %>" />
+					</portlet:actionURL>
+					
+					<aui:input name="url" type="resource" value='<%= getStructureURL.toString() %>' />
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
 						<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
@@ -196,7 +204,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 	</aui:fieldset>
 </aui:form>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
+<%@ include file="/form_builder.jspf" %>
 
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
@@ -216,7 +224,7 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				eventName: '<portlet:namespace />selectParentStructure',
 				showAncestorScopes: true,
 				showManageTemplates: false,
-				struts_action: '/dynamic_data_mapping/select_structure',
+				mvcPath: '/select_structure.jsp',
 				title: '<%= HtmlUtil.escapeJS(scopeTitle) %>'
 			},
 			function(event) {

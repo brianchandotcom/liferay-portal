@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
@@ -47,7 +47,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 					%>
 
 					<portlet:renderURL var="addTemplateURL">
-						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+						<portlet:param name="mvcPath" value="/edit_template.jsp" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
@@ -68,7 +68,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 					%>
 
 					<portlet:renderURL var="addTemplateURL">
-						<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+						<portlet:param name="mvcPath" value="/edit_template.jsp" />
 						<portlet:param name="redirect" value="<%= redirect %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 						<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
@@ -112,7 +112,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 
 					<aui:nav-item dropdown="<%= true %>" iconCssClass="icon-plus" label="add">
 						<liferay-portlet:renderURL varImpl="addPortletDisplayTemplateURL">
-							<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+							<portlet:param name="mvcPath" value="/edit_template.jsp" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
 							<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 							<portlet:param name="type" value="<%= DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY %>" />
@@ -145,5 +145,7 @@ long resourceClassNameId = ParamUtil.getLong(request, "resourceClassNameId");
 		</c:choose>
 	</aui:nav>
 
-	<aui:nav-bar-search file="/html/portlet/dynamic_data_mapping/template_search.jsp" searchContainer="<%= searchContainer %>" />
+	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+		<liferay-util:include page="/template_search.jsp" servletContext="<%= application %>" />
+	</aui:nav-bar-search>
 </aui:nav-bar>

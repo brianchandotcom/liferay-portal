@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String tabs1 = ParamUtil.getString(request, "tabs1", "structures");
@@ -23,9 +23,11 @@ long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getSiteGroupId
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("tabs1", tabs1);
+portletURL.setParameter(ActionRequest.ACTION_NAME, "ddmDeleteStructure");
+
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
@@ -33,7 +35,6 @@ portletURL.setParameter("tabs1", tabs1);
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureThatHasChild.class %>" message="the-structure-cannot-be-deleted-because-it-has-one-or-more-substructures" />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 	<aui:input name="deleteStructureIds" type="hidden" />
 
@@ -67,13 +68,13 @@ portletURL.setParameter("tabs1", tabs1);
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
 
-			<liferay-util:include page="/html/portlet/dynamic_data_mapping/toolbar.jsp">
+			<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-util:include>
 		</c:if>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/dynamic_data_mapping/structure_search_results.jspf" %>
+			<%@ include file="/structure_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -85,11 +86,11 @@ portletURL.setParameter("tabs1", tabs1);
 			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/dynamic_data_mapping/edit_structure");
+			rowURL.setParameter("mvcPath", "/edit_structure.jsp");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
 			rowURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
-
+			
 			String rowHREF = rowURL.toString();
 			%>
 
@@ -149,7 +150,7 @@ portletURL.setParameter("tabs1", tabs1);
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/dynamic_data_mapping/structure_action.jsp"
+				path="/structure_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -184,10 +185,9 @@ portletURL.setParameter("tabs1", tabs1);
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="ddmDeleteStructure"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

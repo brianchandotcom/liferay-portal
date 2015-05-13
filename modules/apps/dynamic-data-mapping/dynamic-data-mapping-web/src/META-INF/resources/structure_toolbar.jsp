@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
@@ -30,13 +30,13 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 		<c:if test="<%= ddmDisplay.isShowAddStructureButton() && DDMPermission.contains(permissionChecker, groupId, ddmPermissionHandler.getResourceName(scopeClassNameId), ddmPermissionHandler.getAddStructureActionId()) %>">
 			<portlet:renderURL var="viewStructureURL">
-				<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
+				<portlet:param name="mvcPath" value="/select_structure.jsp" />
 				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 				<portlet:param name="eventName" value="<%= eventName %>" />
 			</portlet:renderURL>
 
 			<portlet:renderURL var="addStructureURL">
-				<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+				<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 				<portlet:param name="redirect" value="<%= viewStructureURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</portlet:renderURL>
@@ -45,5 +45,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 		</c:if>
 	</aui:nav>
 
-	<aui:nav-bar-search file="/html/portlet/dynamic_data_mapping/structure_search.jsp" searchContainer="<%= searchContainer %>" />
+	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
+	</aui:nav-bar-search>
 </aui:nav-bar>

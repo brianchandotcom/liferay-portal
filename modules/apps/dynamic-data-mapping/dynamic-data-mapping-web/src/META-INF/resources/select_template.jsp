@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long templateId = ParamUtil.getLong(request, "templateId");
@@ -36,7 +36,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/select_template" />
+	<portlet:param name="mvcPath" value="/select_template.jsp" />
 	<portlet:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	<portlet:param name="resourceClassNameId" value="<%= String.valueOf(resourceClassNameId) %>" />
@@ -60,7 +60,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
 
-			<liferay-util:include page="/html/portlet/dynamic_data_mapping/template_toolbar.jsp">
+			<liferay-util:include page="/template_toolbar.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="redirect" value="<%= currentURL %>" />
 				<liferay-util:param name="classNameId" value="<%= String.valueOf(classNameId) %>" />
 				<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />
@@ -70,7 +70,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, locale);
 		<div class="separator"><!-- --></div>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/dynamic_data_mapping/template_search_results.jspf" %>
+			<%@ include file="/template_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

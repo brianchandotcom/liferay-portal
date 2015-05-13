@@ -60,15 +60,14 @@ public class LangBuilder {
 
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 
-		String langDir = arguments.get("lang.dir");
-		String langFile = arguments.get("lang.file");
-		boolean langPlugin = GetterUtil.getBoolean(
-			arguments.get("lang.plugin"));
-		boolean langTranslate = GetterUtil.getBoolean(
+		String langDirName = arguments.get("lang.dir");
+		String langFileName = arguments.get("lang.file");
+		boolean plugin = GetterUtil.getBoolean(arguments.get("lang.plugin"));
+		boolean translate = GetterUtil.getBoolean(
 			arguments.get("lang.translate"), true);
 
 		try {
-			new LangBuilder(langDir, langFile, langPlugin, langTranslate);
+			new LangBuilder(langDirName, langFileName, plugin, translate);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -76,17 +75,17 @@ public class LangBuilder {
 	}
 
 	public LangBuilder(
-			String langDir, String langFile, boolean langPlugin,
-			boolean langTranslate)
+			String langDirName, String langFileName, boolean plugin,
+			boolean translate)
 		throws Exception {
 
-		_langDir = langDir;
-		_langFile = langFile;
-		_langTranslate = langTranslate;
+		_langDirName = langDirName;
+		_langFileName = langFileName;
+		_translate = translate;
 
 		_initKeysWithUpdatedValues();
 
-		if (langPlugin) {
+		if (plugin) {
 			_portalLanguageProperties = new Properties();
 
 			Class<?> clazz = getClass();
@@ -102,7 +101,7 @@ public class LangBuilder {
 			_portalLanguageProperties = null;
 		}
 
-		File renameKeysFile = new File(_langDir + "/rename.properties");
+		File renameKeysFile = new File(_langDirName + "/rename.properties");
 
 		if (renameKeysFile.exists()) {
 			_renameKeys = PropertiesUtil.load(FileUtil.read(renameKeysFile));
@@ -112,17 +111,17 @@ public class LangBuilder {
 		}
 
 		String content = _orderProperties(
-			new File(_langDir + "/" + _langFile + ".properties"));
+			new File(_langDirName + "/" + _langFileName + ".properties"));
 
 		// Locales that are not invoked by _createProperties should still be
 		// rewritten to use the right line separator
 
 		_orderProperties(
-			new File(_langDir + "/" + _langFile + "_en_AU.properties"));
+			new File(_langDirName + "/" + _langFileName + "_en_AU.properties"));
 		_orderProperties(
-			new File(_langDir + "/" + _langFile + "_en_GB.properties"));
+			new File(_langDirName + "/" + _langFileName + "_en_GB.properties"));
 		_orderProperties(
-			new File(_langDir + "/" + _langFile + "_fr_CA.properties"));
+			new File(_langDirName + "/" + _langFileName + "_fr_CA.properties"));
 
 		_createProperties(content, "ar"); // Arabic
 		_createProperties(content, "eu"); // Basque
@@ -179,7 +178,7 @@ public class LangBuilder {
 		throws IOException {
 
 		File propertiesFile = new File(
-			_langDir + "/" + _langFile + "_" + languageId + ".properties");
+			_langDirName + "/" + _langFileName + "_" + languageId + ".properties");
 
 		Properties properties = new Properties();
 
@@ -192,7 +191,7 @@ public class LangBuilder {
 
 		if (parentLanguageId != null) {
 			File parentPropertiesFile = new File(
-				_langDir + "/" + _langFile + "_" + parentLanguageId +
+				_langDirName + "/" + _langFileName + "_" + parentLanguageId +
 					".properties");
 
 			if (parentPropertiesFile.exists()) {
@@ -466,7 +465,8 @@ public class LangBuilder {
 		if (value.contains(" this ")) {
 			if (value.contains(".") || value.contains("?") ||
 				value.contains(":") ||
-				key.equals("the-url-of-the-page-comparing-this-page-content-with-the-previous-version")) {
+				key.equals(
+					"the-url-of-the-page-comparing-this-page-content-with-the-previous-version")) {
 			}
 			else {
 				value = StringUtil.replace(value, " this ", " This ");
@@ -496,7 +496,7 @@ public class LangBuilder {
 
 	private void _initKeysWithUpdatedValues() throws Exception {
 		File backupLanguageFile = new File(
-			_langDir + "/" + _langFile + "_en.properties");
+			_langDirName + "/" + _langFileName + "_en.properties");
 
 		if (!backupLanguageFile.exists()) {
 			return;
@@ -506,7 +506,7 @@ public class LangBuilder {
 			FileUtil.read(backupLanguageFile));
 
 		File languageFile = new File(
-			_langDir + "/" + _langFile + ".properties");
+			_langDirName + "/" + _langFileName + ".properties");
 
 		Properties languageProperties = PropertiesUtil.load(
 			FileUtil.read(languageFile));
@@ -667,7 +667,7 @@ public class LangBuilder {
 			return null;
 		}
 
-		if (!_langTranslate) {
+		if (!_translate) {
 			return null;
 		}
 
@@ -722,10 +722,10 @@ public class LangBuilder {
 	}
 
 	private final Set<String> _keysWithUpdatedValues = new HashSet<>();
-	private final String _langDir;
-	private final String _langFile;
-	private final boolean _langTranslate;
+	private final String _langDirName;
+	private final String _langFileName;
 	private final Properties _portalLanguageProperties;
 	private final Properties _renameKeys;
+	private final boolean _translate;
 
 }

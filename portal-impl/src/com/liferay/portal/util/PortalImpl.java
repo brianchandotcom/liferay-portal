@@ -2714,9 +2714,6 @@ public class PortalImpl implements Portal {
 				host = host.substring(0, pos);
 			}
 		}
-		else {
-			host = null;
-		}
 
 		return host;
 	}

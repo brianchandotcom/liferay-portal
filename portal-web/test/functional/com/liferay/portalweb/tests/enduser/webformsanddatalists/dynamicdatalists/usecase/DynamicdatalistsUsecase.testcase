@@ -1165,7 +1165,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="ddlDataDefinitionName" value="To Do" />
 			<var name="workflowAssetTitle" value="DDL List" />
 			<var name="workflowAssetType" value="Dynamic Data Lists Record" />

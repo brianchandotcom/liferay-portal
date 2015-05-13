@@ -47,7 +47,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewAssignedToMyRolesTasksCP">
+		<execute macro="Workflow#viewTaskAssignedToMyRoles">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -57,7 +57,7 @@
 			<var name="portletName" value="My Submissions" />
 		</execute>
 
-		<execute macro="Workflow#viewMySubmissionsCP">
+		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowDefinition" value="Single Approver" />
@@ -751,7 +751,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="WC WebContent Title" />
 			<var name="workflowAssetType" value="Web Content Article" />
 		</execute>
@@ -904,7 +904,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="WC Folder WebContent Structure Title" />
 			<var name="workflowAssetType" value="Web Content Article" />
 		</execute>
@@ -1009,7 +1009,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="WC Folder WebContent Title" />
 			<var name="workflowAssetType" value="Web Content Article" />
 		</execute>
@@ -1145,7 +1145,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="WC Folder WebContent Title" />
 			<var name="workflowAssetType" value="Web Content Article" />
 		</execute>
@@ -1154,7 +1154,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="WC WebContent Title" />
 			<var name="workflowAssetType" value="Web Content Article" />
 		</execute>
@@ -1226,7 +1226,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>

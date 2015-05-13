@@ -139,7 +139,6 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -226,7 +225,6 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />
@@ -358,7 +356,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
@@ -649,7 +647,6 @@
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetContent" value="${entryContent}" />
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 			<var name="workflowTask" value="Review" />

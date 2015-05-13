@@ -259,7 +259,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${entryTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
@@ -319,7 +319,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${threadSubject}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>
@@ -379,7 +379,7 @@
 			<var name="portletName" value="My Workflow Tasks" />
 		</execute>
 
-		<execute macro="Workflow#viewRejectTask">
+		<execute macro="Workflow#viewRejectedTask">
 			<var name="workflowAssetTitle" value="${webContentTitle}" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
 		</execute>

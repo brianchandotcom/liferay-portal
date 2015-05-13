@@ -674,7 +674,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="ViewEmailRecipientDelivery" priority="5">
+	<command known-issues="LRQA-13709" name="ViewEmailRecipientDelivery" priority="5">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />

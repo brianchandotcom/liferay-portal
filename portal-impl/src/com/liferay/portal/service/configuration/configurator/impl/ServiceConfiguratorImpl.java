@@ -14,8 +14,8 @@
 
 package com.liferay.portal.service.configuration.configurator.impl;
 
-import com.liferay.portal.cache.configurator.PortalCacheConfigurator;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,17 +30,28 @@ import com.liferay.portal.service.ResourceActionLocalServiceUtil;
 import com.liferay.portal.service.ServiceComponentLocalService;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistrar;
 import com.liferay.util.log4j.Log4JUtil;
 
 import java.net.URL;
+import java.util.HashMap;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
  * @author Miguel Pastor
  */
 public class ServiceConfiguratorImpl implements ServiceConfigurator {
+	
+	public void destory() {
+		if (_serviceRegistrar != null) {
+			_serviceRegistrar.destroy();
+		}
+	}
 
 	@Override
 	public void destroyServices(
@@ -64,12 +75,6 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		reconfigureCaches(classLoader);
 
 		readResourceActions(classLoader);
-	}
-
-	public void setPortalCacheConfigurator(
-		PortalCacheConfigurator portalCacheConfigurator) {
-
-		_portalCacheConfigurator = portalCacheConfigurator;
 	}
 
 	public void setServiceComponentLocalService(
@@ -211,24 +216,44 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 
 			return;
 		}
+		
+		if (_serviceRegistrar == null) {
+			Registry registry = RegistryUtil.getRegistry();
 
-		_portalCacheConfigurator.reconfigureCaches(
-			PortalCacheManagerNames.SINGLE_VM, classLoader,
-			getPortalCacheConfigurationURL(
-				configuration, classLoader,
-				PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
+			_serviceRegistrar = registry.getServiceRegistrar(
+				PortalCacheConfiguratorSettings.class);
+		}
 
-		_portalCacheConfigurator.reconfigureCaches(
-			PortalCacheManagerNames.MULTI_VM, classLoader,
-			getPortalCacheConfigurationURL(
-				configuration, classLoader,
-				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(
+			"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
+
+		_serviceRegistrar.registerService(
+			PortalCacheConfiguratorSettings.class,
+			new PortalCacheConfiguratorSettings(
+				configuration.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION),
+				classLoader),
+			properties);
+		
+		properties = new HashMap<>();
+
+		properties.put(
+			"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
+		
+		_serviceRegistrar.registerService(
+			PortalCacheConfiguratorSettings.class,
+			new PortalCacheConfiguratorSettings(
+				configuration.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION),
+				classLoader),
+			properties);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ServiceConfiguratorImpl.class);
 
-	private PortalCacheConfigurator _portalCacheConfigurator;
 	private ServiceComponentLocalService _serviceComponentLocalService;
+	private volatile ServiceRegistrar<PortalCacheConfiguratorSettings>
+		_serviceRegistrar;
 
 }

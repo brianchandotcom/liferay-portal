@@ -14,8 +14,8 @@
 
 package com.liferay.portal.deploy.hot;
 
-import com.liferay.portal.cache.configurator.util.PortalCacheConfiguratorUtil;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
+import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
@@ -32,6 +32,9 @@ import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.service.ServiceComponentLocalServiceUtil;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.servlet.ServletServiceContextComponentConfiguration;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistrar;
 import com.liferay.util.log4j.Log4JUtil;
 import com.liferay.util.portlet.PortletProps;
 
@@ -39,6 +42,8 @@ import java.lang.reflect.Method;
 
 import java.net.URL;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
@@ -126,7 +131,7 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 
 		registerClpMessageListeners(servletContext, classLoader);
 
-		reconfigureCaches(classLoader);
+		reconfigureCaches(servletContext, classLoader);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -164,6 +169,15 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			hotDeployEvent.getContextClassLoader());
 
 		unregisterClpMessageListeners(servletContext);
+
+		ServiceRegistrar<PortalCacheConfiguratorSettings> serviceRegistrar =
+			(ServiceRegistrar<PortalCacheConfiguratorSettings>)
+				servletContext.getAttribute(
+					_PORTAL_CACHE_CONFIGURATOR_SETTINGS_SERVICE_REGISTAR);
+
+		if (serviceRegistrar != null) {
+			serviceRegistrar.destroy();
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -257,7 +271,10 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			buildAutoUpgrade);
 	}
 
-	protected void reconfigureCaches(ClassLoader classLoader) throws Exception {
+	protected void reconfigureCaches(
+			ServletContext servletContext, ClassLoader classLoader)
+		throws Exception {
+
 		Configuration portletPropertiesConfiguration = null;
 
 		try {
@@ -273,18 +290,45 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 			return;
 		}
 
-		PortalCacheConfiguratorUtil.reconfigureCaches(
-			PortalCacheManagerNames.SINGLE_VM, classLoader,
-			getPortalCacheConfigurationURL(
-				portletPropertiesConfiguration, classLoader,
-				PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalCacheConfiguratorUtil.reconfigureCaches(
-			PortalCacheManagerNames.MULTI_VM, classLoader,
-			getPortalCacheConfigurationURL(
-				portletPropertiesConfiguration, classLoader,
-				PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
+		ServiceRegistrar<PortalCacheConfiguratorSettings> serviceRegistrar =
+			registry.getServiceRegistrar(PortalCacheConfiguratorSettings.class);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put(
+			"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
+
+		serviceRegistrar.registerService(
+			PortalCacheConfiguratorSettings.class,
+			new PortalCacheConfiguratorSettings(
+				portletPropertiesConfiguration.get(
+					PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION),
+				classLoader),
+			properties);
+
+		properties = new HashMap<>();
+
+		properties.put(
+			"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
+
+		serviceRegistrar.registerService(
+			PortalCacheConfiguratorSettings.class,
+			new PortalCacheConfiguratorSettings(
+				portletPropertiesConfiguration.get(
+					PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION),
+				classLoader),
+			properties);
+
+		servletContext.setAttribute(
+			_PORTAL_CACHE_CONFIGURATOR_SETTINGS_SERVICE_REGISTAR,
+			serviceRegistrar);
 	}
+
+	private static final String
+		_PORTAL_CACHE_CONFIGURATOR_SETTINGS_SERVICE_REGISTAR =
+			"PORTAL_CACHE_CONFIGURATOR_SETTINGS_SERVICE_REGISTAR";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		PluginPackageHotDeployListener.class);

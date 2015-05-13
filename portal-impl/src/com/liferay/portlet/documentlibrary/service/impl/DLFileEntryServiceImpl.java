@@ -201,6 +201,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			long destFolderId, ServiceContext serviceContext)
 		throws PortalException {
 
+		DLFileEntryPermission.check(
+			getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+
 		DLFolderPermission.check(
 			getPermissionChecker(), groupId, destFolderId,
 			ActionKeys.ADD_DOCUMENT);

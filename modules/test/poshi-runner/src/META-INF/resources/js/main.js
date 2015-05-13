@@ -778,7 +778,7 @@ YUI.add(
 						node.removeClass(status[i]);
 					}
 
-					var selector = 'data-status' + instance.get(STR_COMMAND_LOG_ID);
+					var selector = 'status' + instance.get(STR_COMMAND_LOG_ID);
 
 					var currentStatus = node.getData(selector);
 

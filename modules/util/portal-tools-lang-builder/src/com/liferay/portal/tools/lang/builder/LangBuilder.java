@@ -104,7 +104,7 @@ public class LangBuilder {
 		File renameKeysFile = new File(_langDirName + "/rename.properties");
 
 		if (renameKeysFile.exists()) {
-			_renameKeys = PropertiesUtil.load(FileUtil.read(renameKeysFile));
+			_renameKeys = _readProperties(renameKeysFile);
 		}
 		else {
 			_renameKeys = null;
@@ -183,8 +183,7 @@ public class LangBuilder {
 		Properties properties = new Properties();
 
 		if (propertiesFile.exists()) {
-			properties = PropertiesUtil.load(
-				new FileInputStream(propertiesFile), StringPool.UTF8);
+			properties = _readProperties(propertiesFile);
 		}
 
 		Properties parentProperties = null;
@@ -195,10 +194,7 @@ public class LangBuilder {
 					".properties");
 
 			if (parentPropertiesFile.exists()) {
-				parentProperties = new Properties();
-
-				parentProperties = PropertiesUtil.load(
-					new FileInputStream(parentPropertiesFile), StringPool.UTF8);
+				parentProperties = _readProperties(parentPropertiesFile);
 			}
 		}
 
@@ -502,14 +498,13 @@ public class LangBuilder {
 			return;
 		}
 
-		Properties backupLanguageProperties = PropertiesUtil.load(
-			FileUtil.read(backupLanguageFile));
+		Properties backupLanguageProperties = _readProperties(
+			backupLanguageFile);
 
 		File languageFile = new File(
 			_langDirName + "/" + _langFileName + ".properties");
 
-		Properties languageProperties = PropertiesUtil.load(
-			FileUtil.read(languageFile));
+		Properties languageProperties = _readProperties(languageFile);
 
 		Set<Map.Entry<Object, Object>> set = languageProperties.entrySet();
 
@@ -597,6 +592,12 @@ public class LangBuilder {
 		}
 
 		return FileUtil.read(propertiesFile);
+	}
+
+	private Properties _readProperties(File file) throws IOException {
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			return PropertiesUtil.load(fileInputStream, StringPool.UTF8);
+		}
 	}
 
 	private void _sortAndWrite(

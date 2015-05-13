@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -23,7 +23,7 @@ import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermissi
 /**
  * @author Adolfo Pérez
  */
-public class MBDiscussionPermissionImpl implements DiscussionPermission {
+public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 
 	public MBDiscussionPermissionImpl(PermissionChecker permissionChecker) {
 		_permissionChecker = permissionChecker;

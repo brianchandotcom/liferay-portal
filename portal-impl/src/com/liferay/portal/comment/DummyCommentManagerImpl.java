@@ -14,6 +14,7 @@
 
 package com.liferay.portal.comment;
 
+import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
@@ -129,7 +130,7 @@ public class DummyCommentManagerImpl implements CommentManager {
 	};
 
 	private static final DiscussionPermission _discussionPermission =
-		new DiscussionPermission() {
+		new BaseDiscussionPermission() {
 
 			@Override
 			public boolean hasAddPermission(

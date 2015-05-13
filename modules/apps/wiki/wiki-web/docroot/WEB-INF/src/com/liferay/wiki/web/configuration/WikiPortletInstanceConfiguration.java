@@ -29,53 +29,37 @@ public interface WikiPortletInstanceConfiguration {
 	 * ddmTemplate_06cd7b42-e8a4-4b5e-8d5a-b4f4dbba5618) to use as the display
 	 * style.
 	 */
-	@Meta.AD(
-		deflt = "", required = false
-	)
+	@Meta.AD(deflt = "", required = false)
 	public String displayStyle();
 
-	@Meta.AD(
-		deflt = "0", required = false
-	)
-	public long displayStyleGroupId(long defaultDisplayStyleGroupId);
+	@Meta.AD(deflt = "0", required = false)
+	public long displayStyleGroupId();
 
 	/**
 	 * Set this to <code>true</code> to enable ratings in Wiki comments.
 	 */
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean enableCommentRatings();
 
 	/**
 	 * Set this to <code>true</code> to enable comments for Wiki pages.
 	 */
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean enableComments();
 
 	/**
 	 * Set this to <code>true</code> to enable ratings for Wiki pages.
 	 */
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean enablePageRatings();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean enableRelatedAssets();
 
-	@Meta.AD(
-		deflt = "", required = false
-	)
+	@Meta.AD(deflt = "", required = false)
 	public String[] hiddenNodes();
 
-	@Meta.AD(
-		deflt = "", required = false
-	)
+	@Meta.AD(deflt = "", required = false)
 	public String[] visibleNodes();
 
 }

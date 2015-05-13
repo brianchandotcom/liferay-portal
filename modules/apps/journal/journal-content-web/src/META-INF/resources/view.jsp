@@ -84,22 +84,6 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 									</div>
 								</c:if>
 
-								<c:if test="<%= journalContentDisplayContext.isShowAvailableLocales() && !journalContentDisplayContext.isPrint() %>">
-
-									<%
-									String[] availableLocales = articleDisplay.getAvailableLocales();
-									%>
-
-									<c:if test="<%= availableLocales.length > 1 %>">
-										<c:if test="<%= journalContentDisplayContext.isEnableConversions() || journalContentDisplayContext.isEnablePrint() %>">
-											<div class="locale-separator"> </div>
-										</c:if>
-
-										<div class="locale-actions">
-											<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= LanguageUtil.getLanguageId(request) %>" languageIds="<%= availableLocales %>" />
-										</div>
-									</c:if>
-								</c:if>
 							</div>
 
 						<div class="journal-content-article">

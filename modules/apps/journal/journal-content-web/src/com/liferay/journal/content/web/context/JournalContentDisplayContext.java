@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -640,18 +639,6 @@ public class JournalContentDisplayContext {
 		return _showAddArticleIcon;
 	}
 
-	public boolean isShowAvailableLocales() {
-		if (_showAvailableLocales != null) {
-			return _showAvailableLocales;
-		}
-
-		_showAvailableLocales = GetterUtil.getBoolean(
-			_portletPreferences.getValue(
-				"showAvailableLocales", StringPool.BLANK));
-
-		return _showAvailableLocales;
-	}
-
 	public boolean isShowEditArticleIcon() throws PortalException {
 		if (_showEditArticleIcon != null) {
 			return _showEditArticleIcon;
@@ -779,7 +766,6 @@ public class JournalContentDisplayContext {
 	private Boolean _print;
 	private final HttpServletRequest _request;
 	private Boolean _showAddArticleIcon;
-	private Boolean _showAvailableLocales;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showIconsActions;

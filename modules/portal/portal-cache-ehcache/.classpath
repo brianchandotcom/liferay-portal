@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="src" />
+	<classpathentry kind="src" path="/portal-master" />
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
+	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
+	<classpathentry kind="lib" path="lib/ehcache.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="output" path="bin" />
+</classpath>

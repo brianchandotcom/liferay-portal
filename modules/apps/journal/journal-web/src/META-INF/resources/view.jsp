@@ -113,7 +113,7 @@ String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(PortalAdmini
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var hide = (Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+		var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
 
 		AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 	}

@@ -20,17 +20,12 @@ import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
 import com.liferay.journal.content.web.util.UserToolAssetAddonEntryTracker;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -47,7 +42,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -62,7 +56,6 @@ import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.util.PropertyComparator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -168,52 +161,6 @@ public class JournalContentDisplayContext {
 			JournalArticle.class.getName(), classPK);
 
 		return assetEntry.getEntryId();
-	}
-
-	public List<KeyValuePair> getAvailableExtensions() {
-		String[] extensions = getExtensions();
-
-		Arrays.sort(extensions);
-
-		List<KeyValuePair> availableExtensions = new ArrayList<>();
-
-		for (String conversion : getConversions()) {
-			if (Arrays.binarySearch(extensions, conversion) < 0) {
-				availableExtensions.add(
-					new KeyValuePair(
-						conversion, StringUtil.toUpperCase(conversion)));
-			}
-		}
-
-		return ListUtil.sort(
-			availableExtensions, new KeyValuePairComparator(false, true));
-	}
-
-	public String[] getConversions() {
-		if (_conversions != null) {
-			return _conversions;
-		}
-
-		_conversions = DocumentConversionUtil.getConversions("html");
-
-		return _conversions;
-	}
-
-	public List<KeyValuePair> getCurrentExtensions() {
-		String[] extensions = getExtensions();
-
-		List<KeyValuePair> currentExtensions = new ArrayList<>();
-
-		if (extensions == null) {
-			extensions = new String[0];
-		}
-
-		for (String extension : extensions) {
-			currentExtensions.add(
-				new KeyValuePair(extension, StringUtil.toUpperCase(extension)));
-		}
-
-		return currentExtensions;
 	}
 
 	public DDMTemplate getDDMTemplate() throws PortalException {
@@ -334,18 +281,6 @@ public class JournalContentDisplayContext {
 
 		return ListUtil.sort(
 			userToolEntries, new PropertyComparator("weight", true, false));
-	}
-
-	public String[] getExtensions() {
-		if (_extensions != null) {
-			return _extensions;
-		}
-
-		_extensions = StringUtil.split(
-			PrefsParamUtil.getString(
-				_portletPreferences, _request, "extensions"));
-
-		return _extensions;
 	}
 
 	public JournalArticle getLatestArticle() {
@@ -520,22 +455,6 @@ public class JournalContentDisplayContext {
 		return _enableComments;
 	}
 
-	public boolean isEnableConversions() {
-		if (_enableConversions != null) {
-			return _enableConversions;
-		}
-
-		String[] extensions = getExtensions();
-
-		_enableConversions = false;
-
-		if (isOpenOfficeServerEnabled() && ArrayUtil.isNotEmpty(extensions)) {
-			_enableConversions = true;
-		}
-
-		return _enableConversions;
-	}
-
 	public boolean isEnableRatings() {
 		if (_enableRatings != null) {
 			return _enableRatings;
@@ -588,18 +507,6 @@ public class JournalContentDisplayContext {
 		}
 
 		return _expired;
-	}
-
-	public boolean isOpenOfficeServerEnabled() {
-		if (_openOfficeServerEnabled != null) {
-			return _openOfficeServerEnabled;
-		}
-
-		_openOfficeServerEnabled = PrefsPropsUtil.getBoolean(
-			PropsKeys.OPENOFFICE_SERVER_ENABLED,
-			PropsValues.OPENOFFICE_SERVER_ENABLED);
-
-		return _openOfficeServerEnabled;
 	}
 
 	public boolean isPrint() {
@@ -745,22 +652,18 @@ public class JournalContentDisplayContext {
 	private String _articleId;
 	private List<ContentMetadataAssetAddonEntry>
 		_contentMetadataAssetAddonEntries;
-	private String[] _conversions;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
 	private List<DDMTemplate> _ddmTemplates;
 	private Integer _discussionMessagesCount;
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
-	private Boolean _enableConversions;
 	private Boolean _enableRatings;
 	private Boolean _enableRelatedAssets;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _expired;
-	private String[] _extensions;
 	private Boolean _hasViewPermission;
 	private JournalArticle _latestArticle;
-	private Boolean _openOfficeServerEnabled;
 	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
 	private Boolean _print;

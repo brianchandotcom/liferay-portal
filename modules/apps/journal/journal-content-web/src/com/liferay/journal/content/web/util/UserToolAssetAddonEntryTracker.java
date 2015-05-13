@@ -33,11 +33,11 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 )
 public class UserToolAssetAddonEntryTracker {
 
-	public static List<UserToolAssetAddonEntry> getUserToolAddonEntries() {
+	public static List<UserToolAssetAddonEntry> getUserToolAssetAddonEntries() {
 		return new ArrayList<>(_userToolAssetAddonEntries.values());
 	}
 
-	public static UserToolAssetAddonEntry getUserToolAddonEntry(String key) {
+	public static UserToolAssetAddonEntry getUserToolAssetAddonEntry(String key) {
 		return _userToolAssetAddonEntries.get(key);
 	}
 

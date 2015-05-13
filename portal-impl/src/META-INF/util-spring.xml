@@ -219,6 +219,10 @@
 			<bean class="com.liferay.portal.repository.RepositoryFactoryImpl" depends-on="com.liferay.portal.model.ModelHintsUtil" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.repository.RepositoryProvider" class="com.liferay.portal.repository.RepositoryProviderImpl" />
+	<bean id="com.liferay.portal.kernel.repository.RepositoryProviderUtil" class="com.liferay.portal.kernel.repository.RepositoryProviderUtil" >
+		<property name="repositoryProvider" ref="com.liferay.portal.kernel.repository.RepositoryProvider" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.repository.util.RepositoryTrashUtil" class="com.liferay.portal.kernel.repository.util.RepositoryTrashUtil">
 		<property name="repositoryTrash">
 			<bean class="com.liferay.portal.repository.util.RepositoryTrashImpl" />

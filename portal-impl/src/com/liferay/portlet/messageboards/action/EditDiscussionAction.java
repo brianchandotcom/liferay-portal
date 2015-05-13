@@ -15,6 +15,7 @@
 package com.liferay.portlet.messageboards.action;
 
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.Constants;
@@ -193,6 +194,18 @@ public class EditDiscussionAction extends PortletAction {
 
 		long commentId = ParamUtil.getLong(actionRequest, "commentId");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(
+				themeDisplay.getPermissionChecker());
+
+		discussionPermission.checkDeletePermission(
+			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+			permissionClassName, permissionClassPK, commentId,
+			permissionOwnerId);
+
 		CommentManagerUtil.deleteComment(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
 			permissionOwnerId, commentId);
@@ -248,6 +261,10 @@ public class EditDiscussionAction extends PortletAction {
 		Function<String, ServiceContext> serviceContextFunction =
 			new ServiceContextFunction(actionRequest);
 
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(
+				themeDisplay.getPermissionChecker());
+
 		if (commentId <= 0) {
 
 			// Add message
@@ -276,6 +293,10 @@ public class EditDiscussionAction extends PortletAction {
 			PrincipalThreadLocal.setName(user.getUserId());
 
 			try {
+				discussionPermission.checkAddPermission(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					permissionClassName, permissionClassPK, permissionOwnerId);
+
 				commentId = CommentManagerUtil.addComment(
 					themeDisplay.getScopeGroupId(), className, classPK,
 					permissionClassName, permissionClassPK, permissionOwnerId,
@@ -288,6 +309,11 @@ public class EditDiscussionAction extends PortletAction {
 		else {
 
 			// Update message
+
+			discussionPermission.checkUpdatePermission(
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				permissionClassName, permissionClassPK, commentId,
+				permissionOwnerId);
 
 			commentId = CommentManagerUtil.updateComment(
 				className, classPK, permissionClassName, permissionClassPK,

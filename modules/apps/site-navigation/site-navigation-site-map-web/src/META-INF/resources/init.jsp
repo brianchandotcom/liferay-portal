@@ -22,20 +22,11 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringBundler" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.Layout" %><%@
-page import="com.liferay.portal.model.LayoutConstants" %><%@
 page import="com.liferay.portal.model.LayoutSet" %><%@
-page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
-page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
-page import="com.liferay.portal.theme.ThemeDisplay" %><%@
 page import="com.liferay.portal.util.LayoutDescription" %><%@
-page import="com.liferay.portal.util.LayoutListUtil" %><%@
-page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.site.navigation.site.map.web.display.context.SitesMapDisplayContext" %>
 
 <%@ page import="java.util.List" %>
@@ -45,28 +36,6 @@ page import="com.liferay.site.navigation.site.map.web.display.context.SitesMapDi
 
 <%
 SitesMapDisplayContext sitesMapDisplayContext = new SitesMapDisplayContext(request);
-
-boolean includeRootInTree = siteMapPortletInstanceConfiguration.includeRootInTree();
-String rootLayoutUuid = siteMapPortletInstanceConfiguration.rootLayoutUuid();
-
-Layout rootLayout = null;
-
-long rootLayoutId = LayoutConstants.DEFAULT_PARENT_LAYOUT_ID;
-
-if (Validator.isNotNull(rootLayoutUuid)) {
-	rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(rootLayoutUuid, scopeGroupId, layout.isPrivateLayout());
-
-	if (rootLayout != null) {
-		rootLayoutId = rootLayout.getLayoutId();
-	}
-}
-else {
-	includeRootInTree = false;
-}
-
-if (rootLayoutId == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
-	includeRootInTree = false;
-}
 %>
 
 <%@ include file="/init-ext.jsp" %>

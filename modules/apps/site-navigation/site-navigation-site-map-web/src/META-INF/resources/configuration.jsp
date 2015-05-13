@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String rootNodeName = StringPool.BLANK;
-
-List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = sitesMapDisplayContext.getLayoutDescriptions();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -41,7 +39,7 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 				if (layoutDescriptionLayout != null) {
 			%>
 
-				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= layoutDescriptionLayout.getUuid().equals(rootLayoutUuid) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), sitesMapDisplayContext.getRootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
 			<%
 				}

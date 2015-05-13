@@ -349,9 +349,12 @@ public abstract class BaseStoreTestCase {
 
 		String fileName1 = directory + "/" + RandomTestUtil.randomString();
 		String fileName2 = subdirectory + "/" + RandomTestUtil.randomString();
+		String fileName3 =
+			RandomTestUtil.randomString() + "/" + RandomTestUtil.randomString();
 
 		store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
+		store.addFile(companyId, repositoryId, fileName3, _DATA_VERSION_1);
 
 		String[] fileNames = store.getFileNames(
 			companyId, repositoryId, directory);

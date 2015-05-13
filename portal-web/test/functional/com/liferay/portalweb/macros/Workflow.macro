@@ -16,9 +16,9 @@
 		<if>
 			<equals arg1="${workflowDefinitionTitle}" arg2="Join Xor" />
 			<then>
-				<var name="key_menuListOption" value="Join XOR" />
+				<var name="key_menuListOption" value="join-xor" />
 
-				<execute function="AssertClick#pauseAssertTextClickAt" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="Join XOR" />
+				<execute function="AssertClick#pauseAssertTextClickAt" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_MENULIST_OPTION" value1="join-xor" />
 			</then>
 			<else>
 				<execute function="AssertClick#pauseAssertTextClickAt" locator1="CPMyworkflowtasks#ASSIGNED_TO_ME_MENULIST_APPROVE" value1="Approve" />

@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ADD_PAGE_BUTTON</td>
-	<td>//a[contains(@id,'addPageButton')]</td>
+	<td>//button[@type='button' and contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.aop.MethodInterceptorInvocationHandler;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +40,7 @@ import org.aopalliance.intercept.MethodInterceptor;
 /**
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
+ * @author Manuel de la Peña
  */
 public class StoreFactory {
 
@@ -179,5 +182,12 @@ public class StoreFactory {
 
 	private static Store _store;
 	private static boolean _warned;
+
+	private static final ServiceTrackerMap<String, Store> _serviceTrackerMap =
+		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
+
+	static {
+		_serviceTrackerMap.open();
+	}
 
 }

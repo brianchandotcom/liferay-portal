@@ -71,38 +71,10 @@ public class RepositoryServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long folderId, long fileEntryId, long fileVersionId, long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getLocalRepositoryImpl(folderId, fileEntryId,
-			fileVersionId, fileShortcutId);
-	}
-
-	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLocalRepositoryImpl(repositoryId);
-	}
-
 	public static com.liferay.portal.model.Repository getRepository(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRepository(repositoryId);
-	}
-
-	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long folderId, long fileEntryId, long fileVersionId, long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getRepositoryImpl(folderId, fileEntryId, fileVersionId,
-			fileShortcutId);
-	}
-
-	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRepositoryImpl(repositoryId);
 	}
 
 	public static java.lang.String[] getSupportedConfigurations(

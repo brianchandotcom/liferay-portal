@@ -258,34 +258,10 @@ public class RepositoryLocalServiceUtil {
 		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static java.util.List<com.liferay.portal.kernel.repository.LocalRepository> getGroupLocalRepositoryImpl(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getGroupLocalRepositoryImpl(groupId);
-	}
-
-	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long folderId, long fileEntryId, long fileVersionId, long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getLocalRepositoryImpl(folderId, fileEntryId,
-			fileVersionId, fileShortcutId);
-	}
-
-	public static com.liferay.portal.kernel.repository.LocalRepository getLocalRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getLocalRepositoryImpl(repositoryId);
-	}
-
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	public static java.lang.String getRegistryName() {
-		return getService().getRegistryName();
 	}
 
 	/**
@@ -302,6 +278,11 @@ public class RepositoryLocalServiceUtil {
 	public static java.util.List<com.liferay.portal.model.Repository> getRepositories(
 		int start, int end) {
 		return getService().getRepositories(start, end);
+	}
+
+	public static java.util.List<com.liferay.portal.model.Repository> getRepositoriesByGroupId(
+		long groupId) {
+		return getService().getRepositoriesByGroupId(groupId);
 	}
 
 	/**
@@ -382,28 +363,10 @@ public class RepositoryLocalServiceUtil {
 		return getService().getRepositoryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long folderId, long fileEntryId, long fileVersionId, long fileShortcutId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getRepositoryImpl(folderId, fileEntryId, fileVersionId,
-			fileShortcutId);
-	}
-
-	public static com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-		long repositoryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getRepositoryImpl(repositoryId);
-	}
-
 	public static com.liferay.portal.kernel.util.UnicodeProperties getTypeSettingsProperties(
 		long repositoryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTypeSettingsProperties(repositoryId);
-	}
-
-	public static void invalidate() {
-		getService().invalidate();
 	}
 
 	/**

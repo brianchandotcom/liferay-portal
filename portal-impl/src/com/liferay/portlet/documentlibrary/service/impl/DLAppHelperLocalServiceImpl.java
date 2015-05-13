@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.RepositoryEventTriggerCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.event.TrashRepositoryEventType;
@@ -260,7 +261,7 @@ public class DLAppHelperLocalServiceImpl
 		throws PortalException {
 
 		LocalRepository localRepository =
-			repositoryLocalService.getLocalRepositoryImpl(repositoryId);
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
 
 		List<FileEntry> fileEntries = localRepository.getRepositoryFileEntries(
 			UserConstants.USER_ID_DEFAULT,
@@ -1977,7 +1978,7 @@ public class DLAppHelperLocalServiceImpl
 			Class<T> modelClass, T target)
 		throws PortalException {
 
-		Repository repository = repositoryLocalService.getRepositoryImpl(
+		Repository repository = RepositoryProviderUtil.getRepository(
 			repositoryId);
 
 		if (repository.isCapabilityProvided(

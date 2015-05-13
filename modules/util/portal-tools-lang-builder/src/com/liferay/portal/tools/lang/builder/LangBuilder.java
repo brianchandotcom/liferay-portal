@@ -18,9 +18,6 @@ import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
-import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
-import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -29,6 +26,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
+
+import com.memetix.mst.language.Language;
+import com.memetix.mst.translate.Translate;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,11 +69,15 @@ public class LangBuilder {
 			"lang.portal.language.properties.file");
 		boolean translate = GetterUtil.getBoolean(
 			arguments.get("lang.translate"), true);
+		String translateClientId = arguments.get("lang.translate.client.id");
+		String translateClientSecret = arguments.get(
+			"lang.translate.client.secret");
 
 		try {
 			new LangBuilder(
 				langDirName, langFileName, plugin,
-				portalLanguagePropertiesFileName, translate);
+				portalLanguagePropertiesFileName, translate, translateClientId,
+				translateClientSecret);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -82,12 +86,16 @@ public class LangBuilder {
 
 	public LangBuilder(
 			String langDirName, String langFileName, boolean plugin,
-			String portalLanguagePropertiesFileName, boolean translate)
+			String portalLanguagePropertiesFileName, boolean translate,
+			String translateClientId, String translateClientSecret)
 		throws Exception {
 
 		_langDirName = langDirName;
 		_langFileName = langFileName;
 		_translate = translate;
+
+		Translate.setClientId(translateClientId);
+		Translate.setClientSecret(translateClientSecret);
 
 		_initKeysWithUpdatedValues();
 
@@ -512,6 +520,32 @@ public class LangBuilder {
 		return value;
 	}
 
+	private String _getMicrosoftLanguageId(String languageId) {
+		if (languageId.equals("pt_BR") || languageId.equals("pt_PT")) {
+			return "pt";
+		}
+		else if (languageId.equals("hi_IN")) {
+			return "hi";
+		}
+		else if (languageId.equals("in")) {
+			return "id";
+		}
+		else if (languageId.equals("iw")) {
+			return "he";
+		}
+		else if (languageId.equals("nb")) {
+			return "no";
+		}
+		else if (languageId.equals("zh_CN")) {
+			return "zh-CHS";
+		}
+		else if (languageId.equals("zh_TW")) {
+			return "zh-CHT";
+		}
+
+		return languageId;
+	}
+
 	private void _initKeysWithUpdatedValues() throws Exception {
 		File backupLanguageFile = new File(
 			_langDirName + "/" + _langFileName + "_en.properties");
@@ -654,57 +688,29 @@ public class LangBuilder {
 		String fromLanguageId, String toLanguageId, String key, String fromText,
 		int limit) {
 
-		if (toLanguageId.equals("ar") ||
-			toLanguageId.equals("eu") ||
-			toLanguageId.equals("bg") ||
-			toLanguageId.equals("ca") ||
-			toLanguageId.equals("hr") ||
-			toLanguageId.equals("cs") ||
-			toLanguageId.equals("da") ||
-			toLanguageId.equals("et") ||
-			toLanguageId.equals("fi") ||
-			toLanguageId.equals("gl") ||
-
-			// LPS-26741
-
-			toLanguageId.equals("de") ||
-
-			toLanguageId.equals("iw") ||
-			toLanguageId.equals("hi") ||
-			toLanguageId.equals("hu") ||
-			toLanguageId.equals("in") ||
-			toLanguageId.equals("lo") ||
-			toLanguageId.equals("lt") ||
-			toLanguageId.equals("nb") ||
-			toLanguageId.equals("fa") ||
-			toLanguageId.equals("pl") ||
-			toLanguageId.equals("ro") ||
-			toLanguageId.equals("ru") ||
-			toLanguageId.equals("sr_RS") ||
-			toLanguageId.equals("sr_RS_latin") ||
-			toLanguageId.equals("sk") ||
-			toLanguageId.equals("sl") ||
-			toLanguageId.equals("sv") ||
-			toLanguageId.equals("tr") ||
-			toLanguageId.equals("uk") ||
-			toLanguageId.equals("vi")) {
-
-			// Automatic translator does not support Arabic, Basque, Bulgarian,
-			// Catalan, Croatian, Czech, Danish, Estonian, Finnish, Galician,
-			// German, Hebrew, Hindi, Hungarian, Indonesian, Lao, Norwegian
-			// Bokmål, Persian, Polish, Romanian, Russian, Serbian, Slovak,
-			// Slovene, Swedish, Turkish, Ukrainian, or Vietnamese
-
+		if (!_translate) {
 			return null;
 		}
 
-		if (!_translate) {
+		// LPS-26741
+
+		if (toLanguageId.equals("de")) {
 			return null;
 		}
 
 		// Limit the number of retries to 3
 
 		if (limit == 3) {
+			return null;
+		}
+
+		Language fromLanguage = Language.fromString(
+			_getMicrosoftLanguageId(fromLanguageId));
+
+		Language toLanguage = Language.fromString(
+			_getMicrosoftLanguageId(toLanguageId));
+
+		if (toLanguage == null) {
 			return null;
 		}
 
@@ -724,22 +730,10 @@ public class LangBuilder {
 
 			System.out.println(sb.toString());
 
-			MicrosoftTranslator microsoftTranslator =
-				MicrosoftTranslatorFactoryUtil.getMicrosoftTranslator();
-
-			toText = microsoftTranslator.translate(
-				fromLanguageId, toLanguageId, fromText);
+			toText = Translate.execute(fromText, fromLanguage, toLanguage);
 		}
 		catch (Exception e) {
-			Throwable cause = e.getCause();
-
-			if (cause instanceof MicrosoftTranslatorException) {
-				System.out.println(
-					cause.getClass().getName() + ": " + cause.getMessage());
-			}
-			else {
-				e.printStackTrace();
-			}
+			e.printStackTrace();
 		}
 
 		// Keep trying

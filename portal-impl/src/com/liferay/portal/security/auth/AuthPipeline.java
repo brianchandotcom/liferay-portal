@@ -119,46 +119,12 @@ public class AuthPipeline {
 
 	private AuthPipeline() {
 		_authFailures = ServiceTrackerCollections.multiValueMap(
-			AuthFailure.class, "(key=*)",
-			new ServiceReferenceMapper<String, AuthFailure>() {
-
-				@Override
-				public void map(
-					ServiceReference<AuthFailure> serviceReference,
-					ServiceReferenceMapper.Emitter<String> emitter) {
-
-					List<String> keys = StringPlus.asList(
-						serviceReference.getProperty("key"));
-
-					for (String key : keys) {
-						emitter.emit(key);
-					}
-				}
-
-			}
-		);
+			AuthFailure.class, "key");
 
 		_authFailures.open();
 
 		_authenticators = ServiceTrackerCollections.multiValueMap(
-			Authenticator.class, "(key=*)",
-			new ServiceReferenceMapper<String, Authenticator>() {
-
-				@Override
-				public void map(
-					ServiceReference<Authenticator> serviceReference,
-					ServiceReferenceMapper.Emitter<String> emitter) {
-
-					List<String> keys = StringPlus.asList(
-						serviceReference.getProperty("key"));
-
-					for (String key : keys) {
-						emitter.emit(key);
-					}
-				}
-
-			}
-		);
+			Authenticator.class, "key");
 
 		_authenticators.open();
 	}

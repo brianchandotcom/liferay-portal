@@ -172,7 +172,7 @@ contextObjects.put("formattedContent", formattedContent);
 contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettings.displayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettings.displayStyleGroupId(themeDisplay.getScopeGroupId()) %>" entries="<%= entries %>">
+<liferay-ui:ddm-template-renderer className="<%= WikiPage.class.getName() %>" contextObjects="<%= contextObjects %>" displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>" displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>" entries="<%= entries %>">
 	<liferay-ui:header
 		backLabel="<%= parentTitle %>"
 		backURL="<%= (viewParentPageURL != null) ? viewParentPageURL.toString() : null %>"
@@ -337,7 +337,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 			</div>
 		</div>
 
-		<c:if test="<%= wikiPortletInstanceSettings.enableRelatedAssets() %>">
+		<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>">
 			<div class="entry-links">
 				<liferay-ui:asset-links
 					assetEntryId="<%= assetEntry.getEntryId() %>"
@@ -345,7 +345,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 			</div>
 		</c:if>
 
-		<c:if test="<%= wikiPortletInstanceSettings.enablePageRatings() %>">
+		<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>">
 			<div class="page-ratings">
 				<liferay-ui:ratings
 					className="<%= WikiPage.class.getName() %>"
@@ -354,7 +354,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 			</div>
 		</c:if>
 
-		<c:if test="<%= wikiPortletInstanceSettings.enableComments() %>">
+		<c:if test="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="wikiCommentsPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="wikiCommentsPanel" persistState="<%= true %>" title="comments">
 					<portlet:actionURL var="discussionURL">
@@ -371,7 +371,7 @@ contextObjects.put("wikiPortletInstanceSettings", wikiPortletInstanceSettings);
 						formAction="<%= discussionURL %>"
 						formName="fm2"
 						paginationURL="<%= discussionPaginationURL %>"
-						ratingsEnabled="<%= wikiPortletInstanceSettings.enableCommentRatings() %>"
+						ratingsEnabled="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>"
 						redirect="<%= currentURL %>"
 						userId="<%= wikiPage.getUserId() %>"
 					/>

@@ -15,21 +15,21 @@
 --%>
 
 <aui:fieldset>
-	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= wikiPortletInstanceSettings.enableRelatedAssets() %>" />
+	<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableRelatedAssets() %>" />
 
-	<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.enablePageRatings() %>" />
+	<aui:input name="preferences--enablePageRatings--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnablePageRatings() %>" />
 
-	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= wikiPortletInstanceSettings.enableComments() %>" />
+	<aui:input name="preferences--enableComments--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableComments() %>" />
 
-	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettings.enableCommentRatings() %>" />
+	<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= wikiPortletInstanceSettingsHelper.isEnableCommentRatings() %>" />
 </aui:fieldset>
 
 <aui:fieldset>
 	<div class="display-template">
 		<liferay-ui:ddm-template-selector
 			className="<%= WikiPage.class.getName() %>"
-			displayStyle="<%= wikiPortletInstanceSettings.displayStyle() %>"
-			displayStyleGroupId="<%= wikiPortletInstanceSettings.displayStyleGroupId(themeDisplay.getScopeGroupId()) %>"
+			displayStyle="<%= wikiPortletInstanceSettingsHelper.getDisplayStyle() %>"
+			displayStyleGroupId="<%= wikiPortletInstanceSettingsHelper.getDisplayStyleGroupId() %>"
 			refreshURL="<%= configurationRenderURL %>"
 			showEmptyOption="<%= true %>"
 		/>
@@ -57,7 +57,7 @@
 
 	Arrays.sort(visibleNodeNames);
 
-	String[] hiddenNodes = wikiPortletInstanceSettings.hiddenNodes();
+	String[] hiddenNodes = wikiPortletInstanceSettingsHelper.getHiddenNodes();
 
 	Arrays.sort(hiddenNodes);
 

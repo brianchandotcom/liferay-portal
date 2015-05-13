@@ -14,19 +14,18 @@
 
 package com.liferay.journal.content.web.context;
 
+import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntry;
+import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntryTracker;
+import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
+import com.liferay.journal.content.web.util.UserToolAssetAddonEntryTracker;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.KeyValuePair;
-import com.liferay.portal.kernel.util.KeyValuePairComparator;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -43,7 +42,6 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
-import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -54,10 +52,9 @@ import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
 import com.liferay.portlet.journal.service.permission.JournalPermission;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.util.PropertyComparator;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -165,52 +162,6 @@ public class JournalContentDisplayContext {
 		return assetEntry.getEntryId();
 	}
 
-	public List<KeyValuePair> getAvailableExtensions() {
-		String[] extensions = getExtensions();
-
-		Arrays.sort(extensions);
-
-		List<KeyValuePair> availableExtensions = new ArrayList<>();
-
-		for (String conversion : getConversions()) {
-			if (Arrays.binarySearch(extensions, conversion) < 0) {
-				availableExtensions.add(
-					new KeyValuePair(
-						conversion, StringUtil.toUpperCase(conversion)));
-			}
-		}
-
-		return ListUtil.sort(
-			availableExtensions, new KeyValuePairComparator(false, true));
-	}
-
-	public String[] getConversions() {
-		if (_conversions != null) {
-			return _conversions;
-		}
-
-		_conversions = DocumentConversionUtil.getConversions("html");
-
-		return _conversions;
-	}
-
-	public List<KeyValuePair> getCurrentExtensions() {
-		String[] extensions = getExtensions();
-
-		List<KeyValuePair> currentExtensions = new ArrayList<>();
-
-		if (extensions == null) {
-			extensions = new String[0];
-		}
-
-		for (String extension : extensions) {
-			currentExtensions.add(
-				new KeyValuePair(extension, StringUtil.toUpperCase(extension)));
-		}
-
-		return currentExtensions;
-	}
-
 	public DDMTemplate getDDMTemplate() throws PortalException {
 		if (_ddmTemplate != null) {
 			return _ddmTemplate;
@@ -276,32 +227,43 @@ public class JournalContentDisplayContext {
 		return _ddmTemplates;
 	}
 
-	public int getDiscussionMessagesCount() {
-		if (_discussionMessagesCount != null) {
-			return _discussionMessagesCount;
-		}
+	public List<ContentMetadataAssetAddonEntry>
+	getEnabledContentMetadataAssetAddonEntries() {
 
-		JournalArticleDisplay articleDisplay = getArticleDisplay();
+		List<ContentMetadataAssetAddonEntry> contentMetadataEntries =
+			ListUtil.filter(
+				ContentMetadataAssetAddonEntryTracker.
+					getContentMetadataAssetAddonEntries(),
 
-		_discussionMessagesCount =
-			MBMessageLocalServiceUtil.getDiscussionMessagesCount(
-				PortalUtil.getClassNameId(JournalArticle.class.getName()),
-				articleDisplay.getResourcePrimKey(),
-				WorkflowConstants.STATUS_APPROVED);
+				new PredicateFilter<ContentMetadataAssetAddonEntry>() {
 
-		return _discussionMessagesCount;
+					@Override
+					public boolean filter(
+						ContentMetadataAssetAddonEntry contentMetadataEntry) {
+							return contentMetadataEntry.isEnabled();
+					}
+
+				});
+
+		return ListUtil.sort(
+			contentMetadataEntries,
+			new PropertyComparator("weight", true, false));
 	}
 
-	public String[] getExtensions() {
-		if (_extensions != null) {
-			return _extensions;
-		}
+	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
+		List<UserToolAssetAddonEntry> userToolEntries = ListUtil.filter(
+			UserToolAssetAddonEntryTracker.getUserToolAddonEntries(),
+			new PredicateFilter<UserToolAssetAddonEntry>() {
 
-		_extensions = StringUtil.split(
-			PrefsParamUtil.getString(
-				_portletPreferences, _request, "extensions"));
+				@Override
+				public boolean filter(UserToolAssetAddonEntry userToolEntry) {
+					return userToolEntry.isEnabled();
+				}
 
-		return _extensions;
+			});
+
+		return ListUtil.sort(
+			userToolEntries, new PropertyComparator("weight", true, false));
 	}
 
 	public JournalArticle getLatestArticle() {
@@ -330,6 +292,81 @@ public class JournalContentDisplayContext {
 		_portletResource = ParamUtil.getString(_request, "portletResource");
 
 		return _portletResource;
+	}
+
+	public List<ContentMetadataAssetAddonEntry>
+	getSelectedContentMetadataAssetAddonEntries() {
+
+		if (_contentMetadataAssetAddonEntries != null) {
+			return _contentMetadataAssetAddonEntries;
+		}
+
+		_contentMetadataAssetAddonEntries = new ArrayList<>();
+
+		String contentMetadataAssetAddonEntriesPref =
+			_portletPreferences.getValue(
+				"contentMetadataAssetAddonEntries", null);
+
+		if (Validator.isNull(contentMetadataAssetAddonEntriesPref)) {
+			return _contentMetadataAssetAddonEntries;
+		}
+
+		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
+			contentMetadataAssetAddonEntriesPref);
+
+		for (String contentMetadataEntryKey :
+				contentMetadataAssetAddonEntryKeys) {
+
+			ContentMetadataAssetAddonEntry contentMetadataEntry =
+				ContentMetadataAssetAddonEntryTracker.
+					getContentMetadataAssetAddonEntry(contentMetadataEntryKey);
+
+			if (contentMetadataEntry != null) {
+				_contentMetadataAssetAddonEntries.add(contentMetadataEntry);
+			}
+		}
+
+		_request.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
+		_request.setAttribute(
+			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
+
+		return _contentMetadataAssetAddonEntries;
+	}
+
+	public List<UserToolAssetAddonEntry>
+	getSelectedUserToolAssetAddonEntries() {
+
+		if (_userToolAssetAddonEntries != null) {
+			return _userToolAssetAddonEntries;
+		}
+
+		_userToolAssetAddonEntries = new ArrayList<>();
+
+		String userToolAssetAddonEntriesPref = _portletPreferences.getValue(
+			"userToolAssetAddonEntries", null);
+
+		if (Validator.isNull(userToolAssetAddonEntriesPref)) {
+			return _userToolAssetAddonEntries;
+		}
+
+		String[] userToolEntryKeys = StringUtil.split(
+			userToolAssetAddonEntriesPref);
+
+		for (String userToolEntryKey : userToolEntryKeys) {
+			UserToolAssetAddonEntry userToolEntry =
+				UserToolAssetAddonEntryTracker.getUserToolAddonEntry(
+					userToolEntryKey);
+
+			if (userToolEntry != null) {
+				_userToolAssetAddonEntries.add(userToolEntry);
+			}
+		}
+
+		_request.setAttribute(WebKeys.JOURNAL_ARTICLE, getArticle());
+		_request.setAttribute(
+			WebKeys.JOURNAL_ARTICLE_DISPLAY, getArticleDisplay());
+
+		return _userToolAssetAddonEntries;
 	}
 
 	public boolean hasViewPermission() throws PortalException {
@@ -369,87 +406,6 @@ public class JournalContentDisplayContext {
 			articleDisplay.getResourcePrimKey());
 	}
 
-	public boolean isCommentsEnabled() {
-		return PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED;
-	}
-
-	public boolean isEnableCommentRatings() {
-		if (_enableCommentRatings != null) {
-			return _enableCommentRatings;
-		}
-
-		_enableCommentRatings = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableCommentRatings", null));
-
-		return _enableCommentRatings;
-	}
-
-	public boolean isEnableComments() {
-		if (_enableComments != null) {
-			return _enableComments;
-		}
-
-		_enableComments = false;
-
-		if (PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED &&
-			GetterUtil.getBoolean(
-				_portletPreferences.getValue("enableComments", null))) {
-
-			_enableComments = true;
-		}
-
-		return _enableComments;
-	}
-
-	public boolean isEnableConversions() {
-		if (_enableConversions != null) {
-			return _enableConversions;
-		}
-
-		String[] extensions = getExtensions();
-
-		_enableConversions = false;
-
-		if (isOpenOfficeServerEnabled() && ArrayUtil.isNotEmpty(extensions)) {
-			_enableConversions = true;
-		}
-
-		return _enableConversions;
-	}
-
-	public boolean isEnablePrint() {
-		if (_enablePrint != null) {
-			return _enablePrint;
-		}
-
-		_enablePrint = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enablePrint", null));
-
-		return _enablePrint;
-	}
-
-	public boolean isEnableRatings() {
-		if (_enableRatings != null) {
-			return _enableRatings;
-		}
-
-		_enableRatings = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableRatings", null));
-
-		return _enableRatings;
-	}
-
-	public boolean isEnableRelatedAssets() {
-		if (_enableRelatedAssets != null) {
-			return _enableRelatedAssets;
-		}
-
-		_enableRelatedAssets = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableRelatedAssets", null), true);
-
-		return _enableRelatedAssets;
-	}
-
 	public boolean isEnableViewCountIncrement() {
 		if (_enableViewCountIncrement != null) {
 			return _enableViewCountIncrement;
@@ -480,18 +436,6 @@ public class JournalContentDisplayContext {
 		}
 
 		return _expired;
-	}
-
-	public boolean isOpenOfficeServerEnabled() {
-		if (_openOfficeServerEnabled != null) {
-			return _openOfficeServerEnabled;
-		}
-
-		_openOfficeServerEnabled = PrefsPropsUtil.getBoolean(
-			PropsKeys.OPENOFFICE_SERVER_ENABLED,
-			PropsValues.OPENOFFICE_SERVER_ENABLED);
-
-		return _openOfficeServerEnabled;
 	}
 
 	public boolean isPrint() {
@@ -529,18 +473,6 @@ public class JournalContentDisplayContext {
 			ActionKeys.ADD_ARTICLE);
 
 		return _showAddArticleIcon;
-	}
-
-	public boolean isShowAvailableLocales() {
-		if (_showAvailableLocales != null) {
-			return _showAvailableLocales;
-		}
-
-		_showAvailableLocales = GetterUtil.getBoolean(
-			_portletPreferences.getValue(
-				"showAvailableLocales", StringPool.BLANK));
-
-		return _showAvailableLocales;
 	}
 
 	public boolean isShowEditArticleIcon() throws PortalException {
@@ -647,32 +579,24 @@ public class JournalContentDisplayContext {
 	private JournalArticleDisplay _articleDisplay;
 	private Long _articleGroupId;
 	private String _articleId;
-	private String[] _conversions;
+	private List<ContentMetadataAssetAddonEntry>
+		_contentMetadataAssetAddonEntries;
 	private DDMTemplate _ddmTemplate;
 	private String _ddmTemplateKey;
 	private List<DDMTemplate> _ddmTemplates;
-	private Integer _discussionMessagesCount;
-	private Boolean _enableCommentRatings;
-	private Boolean _enableComments;
-	private Boolean _enableConversions;
-	private Boolean _enablePrint;
-	private Boolean _enableRatings;
-	private Boolean _enableRelatedAssets;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _expired;
-	private String[] _extensions;
 	private Boolean _hasViewPermission;
 	private JournalArticle _latestArticle;
-	private Boolean _openOfficeServerEnabled;
 	private final PortletPreferences _portletPreferences;
 	private String _portletResource;
 	private Boolean _print;
 	private final HttpServletRequest _request;
 	private Boolean _showAddArticleIcon;
-	private Boolean _showAvailableLocales;
 	private Boolean _showEditArticleIcon;
 	private Boolean _showEditTemplateIcon;
 	private Boolean _showIconsActions;
 	private Boolean _showSelectArticleIcon;
+	private List<UserToolAssetAddonEntry> _userToolAssetAddonEntries;
 
 }

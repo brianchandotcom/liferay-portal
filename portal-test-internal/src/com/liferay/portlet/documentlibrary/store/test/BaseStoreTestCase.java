@@ -192,10 +192,10 @@ public abstract class BaseStoreTestCase {
 	public void testDeleteDirectoryWithTwoLevelDeep() throws Exception {
 		String directory = RandomTestUtil.randomString();
 
+		String subdirectory = directory + "/" + RandomTestUtil.randomString();
+
 		String fileName1 = directory + "/" + RandomTestUtil.randomString();
-		String fileName2 =
-			directory + "/" + RandomTestUtil.randomString() + "/" +
-				RandomTestUtil.randomString();
+		String fileName2 = subdirectory + "/" + RandomTestUtil.randomString();
 
 		store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -229,9 +229,6 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testDeleteFileWithVersion() throws Exception {
-
-		// 1.0
-
 		String fileName = RandomTestUtil.randomString();
 
 		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
@@ -245,19 +242,14 @@ public abstract class BaseStoreTestCase {
 			store.hasFile(
 				companyId, repositoryId, fileName, Store.VERSION_DEFAULT));
 
-		// 1.1
-
-		store.deleteFile(companyId, repositoryId, fileName, "1.1");
-
-		Assert.assertFalse(
+		Assert.assertTrue(
 			store.hasFile(companyId, repositoryId, fileName, "1.1"));
 	}
 
 	@Test(expected = NoSuchFileException.class)
 	public void testGetFileAsBytesNoSuchFileException() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.getFileAsBytes(companyId, repositoryId, fileName);
+		store.getFileAsBytes(
+			companyId, repositoryId, RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -302,10 +294,8 @@ public abstract class BaseStoreTestCase {
 
 	@Test
 	public void testGetFileNames() throws Exception {
-		String directory = RandomTestUtil.randomString();
-
-		String fileName1 = directory + "/" + RandomTestUtil.randomString();
-		String fileName2 = directory + "/" + RandomTestUtil.randomString();
+		String fileName1 = RandomTestUtil.randomString();
+		String fileName2 = RandomTestUtil.randomString();
 
 		store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
@@ -393,28 +383,22 @@ public abstract class BaseStoreTestCase {
 	public void testGetFileNamesWithTwoLevelDeep() throws Exception {
 		String directory = RandomTestUtil.randomString();
 
+		String subdirectory = directory + "/" + RandomTestUtil.randomString();
+
 		String fileName1 = directory + "/" + RandomTestUtil.randomString();
-		String fileName2 = directory + "/" + RandomTestUtil.randomString();
-		String fileName3 = directory + "/" + RandomTestUtil.randomString();
-		String fileName4 =
-			directory + "/" + RandomTestUtil.randomString() + "/" +
-				RandomTestUtil.randomString();
+		String fileName2 = subdirectory + "/" + RandomTestUtil.randomString();
 
 		store.addFile(companyId, repositoryId, fileName1, _DATA_VERSION_1);
 		store.addFile(companyId, repositoryId, fileName2, _DATA_VERSION_1);
-		store.addFile(companyId, repositoryId, fileName3, _DATA_VERSION_1);
-		store.addFile(companyId, repositoryId, fileName4, _DATA_VERSION_1);
 
 		String[] fileNames = store.getFileNames(companyId, repositoryId);
 
-		Assert.assertEquals(4, fileNames.length);
+		Assert.assertEquals(2, fileNames.length);
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
 		Assert.assertTrue(fileNamesSet.contains(fileName1));
 		Assert.assertTrue(fileNamesSet.contains(fileName2));
-		Assert.assertTrue(fileNamesSet.contains(fileName3));
-		Assert.assertTrue(fileNamesSet.contains(fileName4));
 	}
 
 	@Test
@@ -430,9 +414,8 @@ public abstract class BaseStoreTestCase {
 
 	@Test(expected = NoSuchFileException.class)
 	public void testGetFileSizeNoSuchFileException() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
-		store.getFileSize(companyId, repositoryId, fileName);
+		store.getFileSize(
+			companyId, repositoryId, RandomTestUtil.randomString());
 	}
 
 	@Test(expected = NoSuchFileException.class)
@@ -515,10 +498,9 @@ public abstract class BaseStoreTestCase {
 
 	@Test(expected = NoSuchFileException.class)
 	public void testUpdateFileVersionNoSuchFileException() throws Exception {
-		String fileName = RandomTestUtil.randomString();
-
 		store.updateFileVersion(
-			companyId, repositoryId, fileName, "1.0", "1.1");
+			companyId, repositoryId, RandomTestUtil.randomString(),
+			Store.VERSION_DEFAULT, Store.VERSION_DEFAULT);
 	}
 
 	@Test
@@ -650,10 +632,9 @@ public abstract class BaseStoreTestCase {
 	public void testUpdateFileWithNewFileNameNoSuchFileException()
 		throws Exception {
 
-		String fileName1 = RandomTestUtil.randomString();
-		String fileName2 = RandomTestUtil.randomString();
-
-		store.updateFile(companyId, repositoryId, fileName1, fileName2);
+		store.updateFile(
+			companyId, repositoryId, RandomTestUtil.randomString(),
+			RandomTestUtil.randomString());
 	}
 
 	@Test
@@ -687,10 +668,9 @@ public abstract class BaseStoreTestCase {
 	public void testUpdateFileWithNewRepositoryIdNoSuchFileException()
 		throws Exception {
 
-		long newRepositoryId = RandomTestUtil.nextLong();
-		String fileName2 = RandomTestUtil.randomString();
-
-		store.updateFile(companyId, repositoryId, newRepositoryId, fileName2);
+		store.updateFile(
+			companyId, repositoryId, RandomTestUtil.nextLong(),
+			RandomTestUtil.randomString());
 	}
 
 	protected void addVersions(String fileName, int newVersionCount)

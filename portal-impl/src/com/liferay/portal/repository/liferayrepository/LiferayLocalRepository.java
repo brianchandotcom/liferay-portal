@@ -194,8 +194,9 @@ public class LiferayLocalRepository
 
 	@Override
 	public FileEntry copyFileEntry(
-		long userId, long groupId, long fileEntryId, long destFolderId,
-		ServiceContext serviceContext) throws PortalException {
+			long userId, long groupId, long fileEntryId, long destFolderId,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.copyFileEntry(
 			userId, groupId, getRepositoryId(), fileEntryId, destFolderId,

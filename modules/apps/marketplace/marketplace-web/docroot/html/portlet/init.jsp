@@ -26,8 +26,8 @@
 <%@ page import="com.liferay.marketplace.model.App" %><%@
 page import="com.liferay.marketplace.service.AppLocalServiceUtil" %><%@
 page import="com.liferay.marketplace.util.comparator.PluginComparator" %><%@
+page import="com.liferay.marketplace.web.constants.MarketplacePortletKeys" %><%@
 page import="com.liferay.marketplace.web.util.MarketplaceConstants" %><%@
-page import="com.liferay.marketplace.web.util.PortletKeys" %><%@
 page import="com.liferay.portal.kernel.deploy.DeployManagerUtil" %><%@
 page import="com.liferay.portal.kernel.plugin.RequiredPluginPackageException" %><%@
 page import="com.liferay.portal.kernel.servlet.ServletContextPool" %><%@
@@ -48,7 +48,8 @@ page import="com.liferay.portal.service.CompanyLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PluginSettingLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
-page import="com.liferay.portal.util.PortletCategoryKeys" %>
+page import="com.liferay.portal.util.PortletCategoryKeys" %><%@
+page import="com.liferay.portal.util.PortletKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Iterator" %><%@
@@ -72,10 +73,10 @@ String iFrameURL = MarketplaceConstants.MARKETPLACE_URL_LOGOUT;
 
 String referer = StringPool.BLANK;
 
-if (portletId.equals(PortletKeys.MY_MARKETPLACE)) {
+if (portletId.equals(MarketplacePortletKeys.MY_MARKETPLACE)) {
 	referer = MarketplaceConstants.getPathPurchased();
 }
-else if (portletId.equals(PortletKeys.STORE) && (appId > 0)) {
+else if (portletId.equals(MarketplacePortletKeys.STORE) && (appId > 0)) {
 	referer = MarketplaceConstants.getPathStore() + "/application/" + appId;
 }
 else {

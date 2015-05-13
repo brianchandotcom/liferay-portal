@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.marketplace.web.util;
+package com.liferay.marketplace.web.constants;
 
 /**
  * @author Ryan Park
+ * @author Joan Kim
  */
-public class PortletKeys extends com.liferay.portal.util.PortletKeys {
+public class MarketplacePortletKeys {
 
 	public static final String MY_MARKETPLACE = "2_WAR_marketplaceweb";
 

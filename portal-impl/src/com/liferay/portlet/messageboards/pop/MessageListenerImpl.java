@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -206,17 +207,23 @@ public class MessageListenerImpl implements MessageListener {
 						Http.HTTPS, PropsValues.WEB_SERVER_PROTOCOL)));
 			serviceContext.setScopeGroupId(groupId);
 
+			String body = mbMailMessage.getBody();
+
+			if (MBMessageConstants.DEFAULT_FORMAT.equals("html") &&
+				Validator.isNotNull(mbMailMessage.getHtmlBody())) {
+
+				body = mbMailMessage.getHtmlBody();
+			}
+
 			if (parentMessage == null) {
 				MBMessageServiceUtil.addMessage(
-					groupId, categoryId, subject,
-					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
+					groupId, categoryId, subject, body,
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
 					0.0, true, serviceContext);
 			}
 			else {
 				MBMessageServiceUtil.addMessage(
-					parentMessage.getMessageId(), subject,
-					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
+					parentMessage.getMessageId(), subject, body,
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
 					0.0, true, serviceContext);
 			}

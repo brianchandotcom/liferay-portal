@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -231,17 +232,23 @@ public class MailingListMessageListener extends BaseMessageListener {
 			mbMailMessage.getInputStreamOVPs();
 
 		try {
+			String body = mbMailMessage.getBody();
+
+			if (MBMessageConstants.DEFAULT_FORMAT.equals("html") &&
+				Validator.isNotNull(mbMailMessage.getHtmlBody())) {
+
+				body = mbMailMessage.getHtmlBody();
+			}
+
 			if (parentMessage == null) {
 				MBMessageServiceUtil.addMessage(
-					groupId, categoryId, subject,
-					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
+					groupId, categoryId, subject, body,
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
 					anonymous, 0.0, true, serviceContext);
 			}
 			else {
 				MBMessageServiceUtil.addMessage(
-					parentMessage.getMessageId(), subject,
-					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
+					parentMessage.getMessageId(), subject, body,
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
 					anonymous, 0.0, true, serviceContext);
 			}

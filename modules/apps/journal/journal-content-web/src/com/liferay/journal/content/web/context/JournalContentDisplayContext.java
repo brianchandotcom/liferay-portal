@@ -252,7 +252,7 @@ public class JournalContentDisplayContext {
 
 	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
 		List<UserToolAssetAddonEntry> userToolEntries = ListUtil.filter(
-			UserToolAssetAddonEntryTracker.getUserToolAddonEntries(),
+			UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntries(),
 			new PredicateFilter<UserToolAssetAddonEntry>() {
 
 				@Override
@@ -354,7 +354,7 @@ public class JournalContentDisplayContext {
 
 		for (String userToolEntryKey : userToolEntryKeys) {
 			UserToolAssetAddonEntry userToolEntry =
-				UserToolAssetAddonEntryTracker.getUserToolAddonEntry(
+				UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntry(
 					userToolEntryKey);
 
 			if (userToolEntry != null) {

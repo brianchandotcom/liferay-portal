@@ -239,30 +239,5 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 <c:if test="<%= (articleDisplay != null) && journalContentDisplayContext.hasViewPermission() %>">
 	<div class="content-metadata-asset-addon-entries">
 		<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>" />
-
-	<c:if test="<%= journalContentDisplayContext.isEnableComments() %>">
-		<c:if test="<%= journalContentDisplayContext.getDiscussionMessagesCount() > 0 %>">
-			<liferay-ui:header
-				title="comments"
-			/>
-		</c:if>
-
-		<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-		<portlet:resourceURL var="discussionPaginationURL">
-			<portlet:param name="invokeTaglibDiscussion" value="<%= Boolean.TRUE.toString() %>" />
-		</portlet:resourceURL>
-
-		<liferay-ui:discussion
-			className="<%= JournalArticle.class.getName() %>"
-			classPK="<%= articleDisplay.getResourcePrimKey() %>"
-			formAction="<%= discussionURL %>"
-			hideControls="<%= journalContentDisplayContext.isPrint() %>"
-			paginationURL="<%= discussionPaginationURL %>"
-			ratingsEnabled="<%= journalContentDisplayContext.isEnableCommentRatings() && !journalContentDisplayContext.isPrint() %>"
-			redirect="<%= currentURL %>"
-			userId="<%= articleDisplay.getUserId() %>"
-		/>
-	</c:if>
 	</div>
 </c:if>

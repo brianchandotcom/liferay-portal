@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.servlet.JspWriterHttpServletResponse;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -24,6 +25,7 @@ import java.io.IOException;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.jsp.JspException;
 
@@ -59,6 +61,11 @@ public class AssetAddonEntryDisplayTag extends IncludeTag {
 
 	protected HttpServletResponse getResponse() {
 		return new JspWriterHttpServletResponse(pageContext);
+	}
+
+	@Override
+	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute(WebKeys.ASSET_ADDON_ENTRIES, _assetAddonEntries);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

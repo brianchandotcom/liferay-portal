@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry" %>
 
 <%
-List<AssetAddonEntry> assetAddonEntries = (List<AssetAddonEntry>)request.getAttribute("liferay-ui:asset-addon-entry-selector:assetAddonEntries");
+List<AssetAddonEntry> assetAddonEntries = (List<AssetAddonEntry>)request.getAttribute(WebKeys.ASSET_ADDON_ENTRIES);
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-addon-entry-selector:hiddenInput");
 String id = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-addon-entry-selector:id"));
 List<AssetAddonEntry> selectedAssetAddonEntries = (List<AssetAddonEntry>)request.getAttribute("liferay-ui:asset-addon-entry-selector:selectedAssetAddonEntries");

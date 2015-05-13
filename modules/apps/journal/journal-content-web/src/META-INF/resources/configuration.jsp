@@ -126,12 +126,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			/>
 		</aui:field-wrapper>
 
-		<c:if test="<%= journalContentDisplayContext.isCommentsEnabled() %>">
-			<aui:input name="preferences--enableComments--" type="checkbox" value="<%= journalContentDisplayContext.isEnableComments() %>" />
-
-			<aui:input name="preferences--enableCommentRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableCommentRatings() %>" />
-		</c:if>
-
 		<aui:input name="preferences--enableViewCountIncrement--" type="checkbox" value="<%= journalContentDisplayContext.isEnableViewCountIncrement() %>" />
 	</aui:fieldset>
 

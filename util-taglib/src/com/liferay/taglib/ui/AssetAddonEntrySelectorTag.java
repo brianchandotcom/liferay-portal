@@ -17,6 +17,7 @@ package com.liferay.taglib.ui;
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -29,9 +30,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AssetAddonEntrySelectorTag extends IncludeTag {
 
-	public void setAssetAddonEntries(
-		List<AssetAddonEntry> assetAddonEntries) {
-
+	public void setAssetAddonEntries(List<AssetAddonEntry> assetAddonEntries) {
 		_assetAddonEntries = assetAddonEntries;
 	}
 
@@ -80,9 +79,7 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"liferay-ui:asset-addon-entry-selector:assetAddonEntries",
-			_assetAddonEntries);
+		request.setAttribute(WebKeys.ASSET_ADDON_ENTRIES, _assetAddonEntries);
 		request.setAttribute(
 			"liferay-ui:asset-addon-entry-selector:hiddenInput", _hiddenInput);
 		request.setAttribute(

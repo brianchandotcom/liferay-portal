@@ -150,18 +150,6 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void deleteComment(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long commentId)
-		throws PortalException {
-
-		_mbMessageService.deleteDiscussionMessage(
-			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId);
-	}
-
-	@Override
 	public void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 

@@ -63,13 +63,6 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public void deleteComment(
-		long groupId, String className, long classPK,
-		String permissionClassName, long permissionClassPK,
-		long permissionOwnerId, long commentId) {
-	}
-
-	@Override
 	public void deleteDiscussion(String className, long classPK) {
 	}
 

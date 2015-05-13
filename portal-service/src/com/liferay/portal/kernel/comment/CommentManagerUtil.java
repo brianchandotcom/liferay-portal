@@ -70,17 +70,6 @@ public class CommentManagerUtil {
 		getCommentManager().deleteComment(commentId);
 	}
 
-	public static void deleteComment(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long commentId)
-		throws PortalException {
-
-		getCommentManager().deleteComment(
-			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId);
-	}
-
 	public static void deleteDiscussion(String className, long classPK)
 		throws PortalException {
 

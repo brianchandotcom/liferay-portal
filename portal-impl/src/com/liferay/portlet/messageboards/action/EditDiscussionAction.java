@@ -181,10 +181,6 @@ public class EditDiscussionAction extends PortletAction {
 	}
 
 	protected void deleteComment(ActionRequest actionRequest) throws Exception {
-		long groupId = PortalUtil.getScopeGroupId(actionRequest);
-
-		String className = ParamUtil.getString(actionRequest, "className");
-		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		String permissionClassName = ParamUtil.getString(
 			actionRequest, "permissionClassName");
 		long permissionClassPK = ParamUtil.getLong(
@@ -206,9 +202,7 @@ public class EditDiscussionAction extends PortletAction {
 			permissionClassName, permissionClassPK, commentId,
 			permissionOwnerId);
 
-		CommentManagerUtil.deleteComment(
-			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId);
+		CommentManagerUtil.deleteComment(commentId);
 	}
 
 	@Override

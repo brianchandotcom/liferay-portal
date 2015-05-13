@@ -20,12 +20,12 @@
 List<Layout> rootLayouts = LayoutLocalServiceUtil.getLayouts(layout.getGroupId(), layout.isPrivateLayout(), rootLayoutId);
 %>
 
-<liferay-ui:ddm-template-renderer className="<%= LayoutSet.class.getName() %>" displayStyle="<%= displayStyle %>" displayStyleGroupId="<%= displayStyleGroupId %>" entries="<%= rootLayouts %>">
+<liferay-ui:ddm-template-renderer className="<%= LayoutSet.class.getName() %>" displayStyle="<%= sitesMapDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= sitesMapDisplayContext.getDisplayStyleGroupId() %>" entries="<%= rootLayouts %>">
 
 	<%
 	StringBundler sb = new StringBundler();
 
-	_buildSiteMap(layout, rootLayouts, rootLayout, includeRootInTree, displayDepth, showCurrentPage, useHtmlTitle, showHiddenPages, 1, themeDisplay, sb);
+	_buildSiteMap(layout, rootLayouts, rootLayout, sitesMapDisplayContext.isIncludeRootInTree(), sitesMapDisplayContext.getDisplayDepth(), sitesMapDisplayContext.isShowCurrentPage(), sitesMapDisplayContext.isUseHtmlTitle(), sitesMapDisplayContext.isShowHiddenPages(), 1, themeDisplay, sb);
 	%>
 
 	<%= sb.toString() %>

@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.asset.addon.entry.print;
 
 import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseAssetAddonEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -29,11 +32,16 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = UserToolAssetAddonEntry.class
 )
 public class PrintUserToolAssetAddonEntry
-	extends BaseAssetAddonEntry implements UserToolAssetAddonEntry {
+	extends BaseJSPAssetAddonEntry implements UserToolAssetAddonEntry {
 
 	@Override
 	public String getIcon() {
 		return "print";
+	}
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
 	}
 
 	@Override
@@ -48,7 +56,17 @@ public class PrintUserToolAssetAddonEntry
 
 	@Override
 	public Double getWeight() {
-		return 1.0;
+		return 2.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.print)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH = "/META-INF/resources/print.jsp";
 
 }

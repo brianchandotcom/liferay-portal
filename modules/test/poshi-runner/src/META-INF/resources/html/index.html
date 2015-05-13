@@ -62,14 +62,8 @@
 					);
 
 					Y.on(
-						'line-started',
-						logger.handleLineStarted,
-						logger
-					);
-
-					Y.on(
-						'line-complete',
-						logger.handleLineCompleted,
+						'line-trigger',
+						logger.handleLineTrigger,
 						logger
 					);
 				}

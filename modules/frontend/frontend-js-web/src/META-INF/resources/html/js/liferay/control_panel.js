@@ -1,8 +1,6 @@
 AUI.add(
 	'liferay-control-panel',
 	function(A) {
-		var Lang = A.Lang;
-
 		var body = A.getBody();
 
 		var CSS_PANELS_MINIMIZED = 'panels-minimized';
@@ -203,28 +201,26 @@ AUI.add(
 					_renderUI: function() {
 						var instance = this;
 
-						var controlPanelTools = A.one('.control-panel-tools');
-
-						var togglePanels = A.Node.create(TPL_TOGGLE_PANELS_BUTTON);
-
 						var panelHolder = A.one('.panel-page-menu');
-
-						var panelToggleButton = togglePanels.one('a');
-
-						var searchPanelHolder = A.one('.search-panels');
 
 						if (panelHolder) {
 							var panelPageBody = panelHolder.ancestor().one('.panel-page-body');
 
+							var togglePanels = A.Node.create(TPL_TOGGLE_PANELS_BUTTON);
+
+							var panelToggleButton = togglePanels.one('a');
+
 							panelHolder.append(togglePanels);
 
-							instance._controlPanelTools = controlPanelTools;
+							instance._controlPanelTools = A.one('.control-panel-tools');
 							instance._panelHolderAccordionHandle = null;
 							instance._panelHolder = panelHolder;
 							instance._panelPageBody = panelPageBody;
 							instance._panelToggleButton = panelToggleButton;
 							instance._togglePanels = togglePanels;
 						}
+
+						var searchPanelHolder = A.one('.search-panels');
 
 						if (searchPanelHolder) {
 							var searchPanelInput = instance.one('#searchPanel');

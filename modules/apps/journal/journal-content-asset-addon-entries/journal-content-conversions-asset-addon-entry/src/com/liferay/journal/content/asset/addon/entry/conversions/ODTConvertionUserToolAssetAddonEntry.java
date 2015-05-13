@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.asset.addon.entry.conversions;
 
 import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -24,13 +27,13 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = UserToolAssetAddonEntry.class
 )
-public class DocConvertionUserToolAssetAddonEntry
+public class ODTConvertionUserToolAssetAddonEntry
 	extends BaseConvertionUserToolAssetAddonEntry
 	implements UserToolAssetAddonEntry {
 
 	@Override
 	public String getExtension() {
-		return "doc";
+		return "odt";
 	}
 
 	@Override
@@ -40,12 +43,20 @@ public class DocConvertionUserToolAssetAddonEntry
 
 	@Override
 	public String getKey() {
-		return "enableDOC";
+		return "enableODT";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 4.0;
+		return 5.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.conversions)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

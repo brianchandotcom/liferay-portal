@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.asset.addon.entry.ratings;
 
 import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseAssetAddonEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -29,11 +32,16 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = ContentMetadataAssetAddonEntry.class
 )
 public class RatingsContentMetadataAssetAddonEntry
-	extends BaseAssetAddonEntry implements ContentMetadataAssetAddonEntry {
+	extends BaseJSPAssetAddonEntry implements ContentMetadataAssetAddonEntry {
 
 	@Override
 	public String getIcon() {
-		return "star-half-full";
+		return "comments";
+	}
+
+	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
 	}
 
 	@Override
@@ -50,5 +58,15 @@ public class RatingsContentMetadataAssetAddonEntry
 	public Double getWeight() {
 		return 2.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.ratings)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH = "/META-INF/resources/ratings.jsp";
 
 }

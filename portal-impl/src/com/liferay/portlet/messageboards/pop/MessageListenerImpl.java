@@ -208,17 +208,15 @@ public class MessageListenerImpl implements MessageListener {
 
 			if (parentMessage == null) {
 				MBMessageServiceUtil.addMessage(
-					groupId, categoryId, subject,
-					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
+					groupId, categoryId, subject, mbMailMessage.getBody(),
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
 					0.0, true, serviceContext);
 			}
 			else {
 				MBMessageServiceUtil.addMessage(
 					parentMessage.getMessageId(), subject,
-					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
-					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false,
-					0.0, true, serviceContext);
+					mbMailMessage.getBody(), MBMessageConstants.DEFAULT_FORMAT,
+					inputStreamOVPs, false, 0.0, true, serviceContext);
 			}
 
 			if (_log.isDebugEnabled()) {

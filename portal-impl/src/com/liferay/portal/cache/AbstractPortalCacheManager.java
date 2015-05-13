@@ -63,10 +63,6 @@ import java.util.concurrent.ConcurrentMap;
 public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
-	public void afterPropertiesSet() {
-		initialize();
-	}
-
 	@Override
 	public void clearAll() throws PortalCacheException {
 		doClearAll();

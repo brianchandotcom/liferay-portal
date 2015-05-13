@@ -466,17 +466,6 @@ public class JournalContentDisplayContext {
 		return _enableRatings;
 	}
 
-	public boolean isEnableRelatedAssets() {
-		if (_enableRelatedAssets != null) {
-			return _enableRelatedAssets;
-		}
-
-		_enableRelatedAssets = GetterUtil.getBoolean(
-			_portletPreferences.getValue("enableRelatedAssets", null), true);
-
-		return _enableRelatedAssets;
-	}
-
 	public boolean isEnableViewCountIncrement() {
 		if (_enableViewCountIncrement != null) {
 			return _enableViewCountIncrement;
@@ -659,7 +648,6 @@ public class JournalContentDisplayContext {
 	private Boolean _enableCommentRatings;
 	private Boolean _enableComments;
 	private Boolean _enableRatings;
-	private Boolean _enableRelatedAssets;
 	private Boolean _enableViewCountIncrement;
 	private Boolean _expired;
 	private Boolean _hasViewPermission;

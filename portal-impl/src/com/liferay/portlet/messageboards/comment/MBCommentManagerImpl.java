@@ -89,6 +89,28 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
+			String userName, long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		MBMessage parentMessage = _mbMessageLocalService.getMessage(
+			parentCommentId);
+
+		long threadId = parentMessage.getThreadId();
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
+
+		MBMessage message = _mbMessageLocalService.addDiscussionMessage(
+			userId, userName, groupId, className, classPK, threadId,
+			parentCommentId, subject, body, serviceContext);
+
+		return message.getMessageId();
+	}
+
+	@Override
+	public long addComment(
+			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -109,31 +131,6 @@ public class MBCommentManagerImpl implements CommentManager {
 			serviceContext);
 
 		return mbMessage.getMessageId();
-	}
-
-	@Override
-	public long addComment(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long parentCommentId, String subject,
-			String body,
-			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException {
-
-		MBMessage parentMessage = _mbMessageLocalService.getMessage(
-			parentCommentId);
-
-		long threadId = parentMessage.getThreadId();
-
-		ServiceContext serviceContext = serviceContextFunction.apply(
-			MBMessage.class.getName());
-
-		MBMessage message = _mbMessageService.addDiscussionMessage(
-			serviceContext.getScopeGroupId(), className, classPK,
-			permissionClassName, permissionClassPK, permissionOwnerId, threadId,
-			parentCommentId, subject, body, serviceContext);
-
-		return message.getMessageId();
 	}
 
 	@Override

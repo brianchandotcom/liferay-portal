@@ -37,26 +37,23 @@ public class CommentManagerUtil {
 
 	public static long addComment(
 			long userId, long groupId, String className, long classPK,
+			String userName, long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		return getCommentManager().addComment(
+			userId, groupId, className, classPK, userName, parentCommentId,
+			subject, body, serviceContextFunction);
+	}
+
+	public static long addComment(
+			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		return getCommentManager().addComment(
 			userId, groupId, className, classPK, userName, subject, body,
-			serviceContextFunction);
-	}
-
-	public static long addComment(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long parentCommentId, String subject,
-			String body,
-			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException {
-
-		return getCommentManager().addComment(
-			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, parentCommentId, subject, body,
 			serviceContextFunction);
 	}
 

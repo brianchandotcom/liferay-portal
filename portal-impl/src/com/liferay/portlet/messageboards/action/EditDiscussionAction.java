@@ -298,9 +298,9 @@ public class EditDiscussionAction extends PortletAction {
 					permissionClassName, permissionClassPK, permissionOwnerId);
 
 				commentId = CommentManagerUtil.addComment(
-					themeDisplay.getScopeGroupId(), className, classPK,
-					permissionClassName, permissionClassPK, permissionOwnerId,
-					parentCommentId, subject, body, serviceContextFunction);
+					user.getUserId(), themeDisplay.getScopeGroupId(), className,
+					classPK, user.getFullName(), parentCommentId, subject, body,
+					serviceContextFunction);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);

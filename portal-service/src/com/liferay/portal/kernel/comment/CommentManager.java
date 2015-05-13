@@ -32,15 +32,13 @@ public interface CommentManager {
 
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
-			String userName, String subject, String body,
+			String userName, long parentCommentId, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
 	public long addComment(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long parentCommentId, String subject,
-			String body,
+			long userId, long groupId, String className, long classPK,
+			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 

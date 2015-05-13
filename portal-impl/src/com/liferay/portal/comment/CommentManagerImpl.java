@@ -71,6 +71,20 @@ public class CommentManagerImpl implements CommentManager {
 	@Override
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
+			String userName, long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.addComment(
+			userId, groupId, className, classPK, userName, parentCommentId,
+			subject, body, serviceContextFunction);
+	}
+
+	@Override
+	public long addComment(
+			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -79,23 +93,6 @@ public class CommentManagerImpl implements CommentManager {
 
 		return commentManager.addComment(
 			userId, groupId, className, classPK, userName, subject, body,
-			serviceContextFunction);
-	}
-
-	@Override
-	public long addComment(
-			long groupId, String className, long classPK,
-			String permissionClassName, long permissionClassPK,
-			long permissionOwnerId, long parentCommentId, String subject,
-			String body,
-			Function<String, ServiceContext> serviceContextFunction)
-		throws PortalException {
-
-		CommentManager commentManager = getCommentManager();
-
-		return commentManager.addComment(
-			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, parentCommentId, subject, body,
 			serviceContextFunction);
 	}
 

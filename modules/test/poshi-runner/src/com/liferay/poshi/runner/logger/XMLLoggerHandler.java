@@ -118,6 +118,27 @@ public final class XMLLoggerHandler {
 		return _xmlLogLoggerElement.toString();
 	}
 
+	public static void updateStatus(Element element, String status) {
+		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
+		String stackTrace = PoshiRunnerStackTraceUtil.getSimpleStackTrace();
+
+		LoggerElement loggerElement = _loggerElements.get(stackTrace);
+
+		loggerElement.setAttribute("data-status01", status);
+
+		if (status.equals("pending")) {
+			LoggerUtil.executeJavaScript(
+				"loggerInterface.fire('line-trigger', '" +
+					loggerElement.getID() + "', " + true + ")");
+		}
+		else if (status.equals("pass") || status.equals("conditional-fail")) {
+			LoggerUtil.executeJavaScript(
+				"loggerInterface.fire('line-trigger', '" +
+					loggerElement.getID() + "', " + false + ")");
+		}
+	}
+
 	private static LoggerElement _getBtnContainerLoggerElement(
 		Element element) {
 

@@ -15,8 +15,6 @@
 package com.liferay.journal.content.web.upgrade.v1_0_0;
 
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -143,8 +141,5 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		portletPreferences.setValue(
 			"userToolEntries", StringUtil.merge(userToolEntries));
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpgradePortletPreferences.class);
 
 }

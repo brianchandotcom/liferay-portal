@@ -555,6 +555,8 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		String varName = element.attributeValue("name");
 		String varValue = element.attributeValue("value");
 
@@ -626,6 +628,8 @@ public class PoshiRunnerExecutor {
 		Matcher matcher = _variablePattern.matcher(replacedVarValue);
 
 		if (matcher.matches() && replacedVarValue.equals(varValue)) {
+			XMLLoggerHandler.updateStatus(element, "pass");
+
 			return;
 		}
 
@@ -637,6 +641,8 @@ public class PoshiRunnerExecutor {
 			PoshiRunnerVariablesUtil.putIntoExecuteMap(
 				varName, replacedVarValue);
 		}
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runWhileElement(Element element) throws Exception {

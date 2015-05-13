@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>PortalInstances</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PortalInstances</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>HEADER_TITLE</td>
+	<td>//h3[@class='header-title']/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD</td>
+	<td>//button[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--INSTANCE_TABLE-->
+<tr>
+	<td>INSTANCE_TABLE_INSTANCE_ID</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[1]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_WEB_ID</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[2]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_VIRTUAL_HOST</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[3]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_MAIL_DOMAIN</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[4]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_NUMBER_OF_USERS</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[5]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_MAX_NUMBER_OF_USERS</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[6]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_ACTIVE</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[7]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_ACTIONS</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[8]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_ACTIONS_EDIT</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[8]/span/a[contains(@id,'menu_edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_ACTIONS_GENERIC</td>
+	<td>//tr/td[8]/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INSTANCE_TABLE_EDIT</td>
+	<td>//tr[contains(.,'${key_virtualHost}')]/td[8]/span/a/span[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

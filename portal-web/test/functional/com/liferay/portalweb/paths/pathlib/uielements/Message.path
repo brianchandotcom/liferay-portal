@@ -94,6 +94,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOGIN_URL_SUCCESS</td>
+	<td>//tr[contains(.,'Login URL')]/td/span[contains(@class,'lfr-status-success')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGOUT_URL_SUCCESS</td>
+	<td>//tr[contains(.,'Logout URL')]/td/span[contains(@class,'lfr-status-success')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NO_COMMENTS</td>
 	<td>//div[contains(.,'No comments yet')]</td>
 	<td></td>
@@ -106,6 +116,11 @@
 <tr>
 	<td>REQUIRED_INFO</td>
 	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SERVER_URL_SUCCESS</td>
+	<td>//tr[contains(.,'Server URL')]/td/span[contains(@class,'lfr-status-success')]</td>
 	<td></td>
 </tr>
 <tr>

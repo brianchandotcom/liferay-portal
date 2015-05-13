@@ -133,6 +133,58 @@
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_CONFIGURATION-->
+<tr>
+	<td>CONFIGURATION_GENERAL</td>
+	<td>//a[contains(@id,'generalLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_AUTHENTICATION</td>
+	<td>//a[contains(@id,'authenticationLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_USERS</td>
+	<td>//a[contains(@id,'usersLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_MAIL_HOST_NAMES</td>
+	<td>//a[contains(@id,'mailHostNamesLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_EMAIL_NOTIFICATIONS</td>
+	<td>//a[contains(@id,'emailNotificationsLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_CONTENT_SHARING</td>
+	<td>//a[contains(@id,'contentSharingLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONFIGURATION_RECYCLE_BIN</td>
+	<td>//a[contains(@id,'recycleBinLink')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MENU_MISCELLANEOUS-->
+<tr>
+	<td>DISPLAY_SETTINGS</td>
+	<td>//a[contains(@id,'displaySettingsLink')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

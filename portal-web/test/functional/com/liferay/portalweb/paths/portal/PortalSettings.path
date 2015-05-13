@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>PortalSettings</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PortalSettings</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIL_DOMAIN_FIELD</td>
+	<td>//input[contains(@id,'mx')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_HOST_FIELD</td>
+	<td>//input[contains(@id,'virtualHostname')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CDN_HOST_HTTP_FIELD</td>
+	<td>//input[contains(@id,'cdn-host-http')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CDN_HOST_HTTPS_FIELD</td>
+	<td>//input[contains(@id,'cdn-host-https')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CDN_DYNAMIC_RESOURCES_ENABLE_CHECKBOX</td>
+	<td>//input[contains(@id,'cdn-dynamic-resources-enabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HOME_URL_FIELD</td>
+	<td>//input[contains(@id,'homeURL')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LANDING_PAGE_FIELD</td>
+	<td>//input[contains(@id,'settings--default.landing.page.path--')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGOUT_PAGE_FIELD</td>
+	<td>//input[contains(@id,'settings--default.logout.page.path--')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEGAL_NAME_FIELD</td>
+	<td>//input[contains(@id,'legalName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEGAL_ID_FIELD</td>
+	<td>//input[contains(@id,'legalId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LEGAL_TYPE_FIELD</td>
+	<td>//input[contains(@id,'legalType')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIC_CODE_FIELD</td>
+	<td>//input[contains(@id,'sicCode')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TICKER_SYMBOL_FIELD</td>
+	<td>//input[@contains(@id,'tickerSymbol')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INDUSTRY_FIELD</td>
+	<td>//input[contains(@id,'industry')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE_FIELD</td>
+	<td>//input[contains(@id,'type')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

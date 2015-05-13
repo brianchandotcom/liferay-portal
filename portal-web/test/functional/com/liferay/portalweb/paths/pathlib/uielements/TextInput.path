@@ -79,6 +79,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAIL_DOMAIN_FIELD</td>
+	<td>//input[contains(@id,'mx') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAX_USERS_FIELD</td>
+	<td>//input[contains(@id,'maxUsers') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME</td>
 	<td>//div[label[contains(.,'Name')]]//input[@type='text']</td>
 	<td></td>
@@ -171,6 +181,16 @@
 <tr>
 	<td>URL_FIELD_REQUIRED</td>
 	<td>//div[contains(@class,'error')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VIRTUAL_HOST</td>
+	<td>//input[contains(@id,'virtualHostname') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_ID</td>
+	<td>//input[contains(@id,'webId') and contains(@class,'input-text')]</td>
 	<td></td>
 </tr>
 </tbody>

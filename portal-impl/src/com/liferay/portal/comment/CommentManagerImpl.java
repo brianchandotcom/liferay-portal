@@ -174,8 +174,7 @@ public class CommentManagerImpl implements CommentManager {
 
 	@Override
 	public long updateComment(
-			String className, long classPK, String permissionClassName,
-			long permissionClassPK, long permissionOwnerId, long commentId,
+			long userId, String className, long classPK, long commentId,
 			String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -183,8 +182,7 @@ public class CommentManagerImpl implements CommentManager {
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.updateComment(
-			className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId, subject, body,
+			userId, className, classPK, commentId, subject, body,
 			serviceContextFunction);
 	}
 

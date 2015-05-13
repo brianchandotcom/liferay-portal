@@ -265,8 +265,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public long updateComment(
-			String className, long classPK, String permissionClassName,
-			long permissionClassPK, long permissionOwnerId, long commentId,
+			long userId, String className, long classPK, long commentId,
 			String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -274,9 +273,9 @@ public class MBCommentManagerImpl implements CommentManager {
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		MBMessage message = _mbMessageService.updateDiscussionMessage(
-			className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId, subject, body, serviceContext);
+		MBMessage message = _mbMessageLocalService.updateDiscussionMessage(
+			userId, commentId, className, classPK, subject, body,
+			serviceContext);
 
 		return message.getMessageId();
 	}

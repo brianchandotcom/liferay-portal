@@ -310,9 +310,8 @@ public class EditDiscussionAction extends PortletAction {
 				permissionOwnerId);
 
 			commentId = CommentManagerUtil.updateComment(
-				className, classPK, permissionClassName, permissionClassPK,
-				permissionOwnerId, commentId, subject, body,
-				serviceContextFunction);
+				themeDisplay.getUserId(), className, classPK, commentId,
+				subject, body, serviceContextFunction);
 		}
 
 		// Subscription

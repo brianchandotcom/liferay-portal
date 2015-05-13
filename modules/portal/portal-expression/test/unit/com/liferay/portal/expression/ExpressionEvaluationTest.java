@@ -25,6 +25,26 @@ import org.junit.Test;
  */
 public class ExpressionEvaluationTest {
 
+	@Test
+	public void testEvaluateBasicBooleanEqualsExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("var1 == true");
+
+		expression.setBooleanVariableValue("var1", true);
+
+		Assert.assertTrue(expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateBasicBooleanUnequalsExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("var1 != true");
+
+		expression.setBooleanVariableValue("var1", true);
+
+		Assert.assertFalse(expression.evaluate());
+	}
+
 	@Test(expected = ExpressionEvaluationException.class)
 	public void testEvaluateBlankExpression() throws Exception {
 		Expression<Boolean> expression =
@@ -62,10 +82,18 @@ public class ExpressionEvaluationTest {
 	@Test
 	public void testEvaluateEqualsExpression() throws Exception {
 		Expression<Boolean> expression =
-			_expressionFactory.createBooleanExpression("var1 = var2");
+			_expressionFactory.createBooleanExpression("var1 == var2");
 
 		expression.setBooleanVariableValue("var1", true);
 		expression.setBooleanVariableValue("var2", false);
+
+		Assert.assertFalse(expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateFalseConstantExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("false");
 
 		Assert.assertFalse(expression.evaluate());
 	}
@@ -178,6 +206,14 @@ public class ExpressionEvaluationTest {
 		expression.setStringVariableValue("var2", "ray");
 
 		Assert.assertEquals("Liferay", expression.evaluate());
+	}
+
+	@Test
+	public void testEvaluateTrueConstantExpression() throws Exception {
+		Expression<Boolean> expression =
+			_expressionFactory.createBooleanExpression("true");
+
+		Assert.assertTrue(expression.evaluate());
 	}
 
 	@Test

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.expression.internal;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +37,11 @@ public class VariableNamesExtractor {
 		Matcher matcher = _pattern.matcher(expressionString);
 
 		while (matcher.find()) {
-			variableNames.add(matcher.group(1));
+			String match = matcher.group(1);
+
+			if (!ArrayUtil.contains(_reservedWords, match)) {
+				variableNames.add(matcher.group(1));
+			}
 		}
 
 		return variableNames;
@@ -43,5 +49,6 @@ public class VariableNamesExtractor {
 
 	private static final Pattern _pattern = Pattern.compile(
 		"\\b([a-zA-Z]+[\\w\\._]*)(?!\\()\\b", Pattern.MULTILINE);
+	private static final String[] _reservedWords = {"false", "true"};
 
 }

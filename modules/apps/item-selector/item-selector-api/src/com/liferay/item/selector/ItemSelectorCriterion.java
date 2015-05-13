@@ -25,6 +25,6 @@ public interface ItemSelectorCriterion {
 
 	public Set<Class<?>> getDesiredReturnTypes();
 
-	public void setDesiredReturnTypes(Class<?>... desiredReturnTypes);
+	public void setDesiredReturnTypes(Set<Class<?>> desiredReturnTypes);
 
 }

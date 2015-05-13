@@ -16,6 +16,7 @@ package com.liferay.item.selector;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -35,18 +36,14 @@ public abstract class BaseItemSelectorCriterion
 	}
 
 	@Override
-	public void setDesiredReturnTypes(Class<?>... desiredReturnTypes) {
-		Set<Class<?>> desiredReturnTypesSet = new HashSet<>();
-
-		Collections.addAll(desiredReturnTypesSet, desiredReturnTypes);
-
-		if (!_availableReturnTypes.containsAll(desiredReturnTypesSet)) {
+	public void setDesiredReturnTypes(Set<Class<?>> desiredReturnTypes) {
+		if (!_availableReturnTypes.containsAll(desiredReturnTypes)) {
 			throw new IllegalArgumentException(
 				"Desired return types must be a subset of available return " +
 					"types");
 		}
 
-		_desiredReturnTypes = desiredReturnTypesSet;
+		_desiredReturnTypes = desiredReturnTypes;
 	}
 
 	protected static Set<Class<?>> getInmutableSet(Class<?>... classes) {

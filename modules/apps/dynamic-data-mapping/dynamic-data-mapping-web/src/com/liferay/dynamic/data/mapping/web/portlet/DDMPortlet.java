@@ -78,6 +78,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 		"com.liferay.portlet.autopropagated-parameters=showManageTemplates",
 		"com.liferay.portlet.autopropagated-parameters=showToolbar",
 		"javax.portlet.display-name=Dynamic Data Mapping Web",
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",

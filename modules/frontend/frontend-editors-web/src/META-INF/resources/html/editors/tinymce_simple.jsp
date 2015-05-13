@@ -175,29 +175,23 @@ JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("edito
 		initEditor: function() {
 			var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
 
-			var config = A.merge(
-				editorConfig,
-				{
-					file_browser_callback: window['<%= name %>'].fileBrowserCallback,
-					init_instance_callback: window['<%= name %>'].initInstanceCallback,
-					<%
-					if (Validator.isNotNull(onChangeMethod)) {
-					%>
+			var defaultconfig = {
+				file_browser_callback: window['<%= name %>'].fileBrowserCallback,
+				init_instance_callback: window['<%= name %>'].initInstanceCallback
+			};
 
-						setup: function(editor) {
-							editor.on(
-								'keyup',
-								function() {
-									<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
-								}
-							);
+			<c:if test="<%= Validator.isNotNul(onChangeMethod) %>">
+				defaultConfig.setup = function(editor) {
+					editor.on(
+						'keyup',
+						function() {
+							<%= HtmlUtil.escapeJS(onChangeMethod) %>(window['<%= name %>'].getHTML());
 						}
+					);
+				};
+			</c:if>
 
-					<%
-					}
-					%>
-				}
-			);
+			var config = A.merge(editorConfig, defaultconfig);
 
 			tinyMCE.init(config);
 		},

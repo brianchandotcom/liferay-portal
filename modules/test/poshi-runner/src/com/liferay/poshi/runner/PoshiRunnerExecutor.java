@@ -199,6 +199,8 @@ public class PoshiRunnerExecutor {
 	public static void runFailElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		String message = element.attributeValue("message");
 
 		if (Validator.isNotNull(message)) {

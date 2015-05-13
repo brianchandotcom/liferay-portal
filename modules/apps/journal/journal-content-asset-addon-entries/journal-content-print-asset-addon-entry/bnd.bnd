@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Journal Content Print Asset Addon Entry
+Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.print
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /journal-content-print-asset-addon-entry

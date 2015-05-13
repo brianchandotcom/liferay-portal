@@ -16,9 +16,11 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesCapability;
 import com.liferay.portal.kernel.repository.capabilities.TemporaryFileEntriesScope;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.User;
@@ -27,10 +29,7 @@ import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLAppHelperThreadLocal;
 
 import java.io.File;
@@ -87,14 +86,16 @@ public class TempFileEntryUtil {
 	public static void deleteTempFileEntry(long fileEntryId)
 		throws PortalException {
 
-		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
-			fileEntryId);
+		LocalRepository localRepository =
+			RepositoryProviderUtil.getLocalRepositoryByFileEntryId(fileEntryId);
 
-		DLFolder dlFolder = dlFileEntry.getFolder();
+		FileEntry fileEntry = localRepository.getFileEntry(fileEntryId);
+
+		Folder folder = fileEntry.getFolder();
 
 		deleteTempFileEntry(
-			dlFileEntry.getGroupId(), dlFileEntry.getUserId(),
-			dlFolder.getName(), dlFileEntry.getTitle());
+			fileEntry.getGroupId(), fileEntry.getUserId(), folder.getName(),
+			fileEntry.getTitle());
 	}
 
 	public static void deleteTempFileEntry(
@@ -147,7 +148,7 @@ public class TempFileEntryUtil {
 			groupId, TempFileEntryUtil.class.getName(), StringPool.BLANK);
 
 		if (repository != null) {
-			return RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+			return RepositoryProviderUtil.getLocalRepository(
 				repository.getRepositoryId());
 		}
 
@@ -172,7 +173,7 @@ public class TempFileEntryUtil {
 				TempFileEntryUtil.class.getName(), StringPool.BLANK,
 				StringPool.BLANK, typeSettingsProperties, true, serviceContext);
 
-			return RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+			return RepositoryProviderUtil.getLocalRepository(
 				repository.getRepositoryId());
 		}
 		finally {

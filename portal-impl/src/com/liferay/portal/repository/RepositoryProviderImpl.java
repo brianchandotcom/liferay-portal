@@ -15,6 +15,7 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.NoSuchRepositoryException;
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryItem;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -22,26 +23,19 @@ import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
-import com.liferay.portal.kernel.repository.RepositoryFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalService;
-import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileShortcut;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -313,23 +307,30 @@ public class RepositoryProviderImpl
 		return repositoryIds;
 	}
 
-	private final DLFileEntryLocalService _dlFileEntryLocalService =
-		DLFileEntryLocalServiceUtil.getService();
-	private final DLFileShortcutLocalService _dlFileShortcutLocalService =
-		DLFileShortcutLocalServiceUtil.getService();
-	private final DLFileVersionLocalService _dlFileVersionLocalService =
-		DLFileVersionLocalServiceUtil.getService();
-	private final DLFolderLocalService _dlFolderLocalService =
-		DLFolderLocalServiceUtil.getService();
-	private final GroupLocalService _groupLocalService =
-		GroupLocalServiceUtil.getService();
+	@BeanReference(type = DLFileEntryLocalService.class)
+	protected DLFileEntryLocalService _dlFileEntryLocalService;
+
+	@BeanReference(type = DLFileShortcutLocalService.class)
+	protected DLFileShortcutLocalService _dlFileShortcutLocalService;
+
+	@BeanReference(type = DLFileVersionLocalService.class)
+	protected DLFileVersionLocalService _dlFileVersionLocalService;
+
+	@BeanReference(type = DLFolderLocalService.class)
+	protected DLFolderLocalService _dlFolderLocalService;
+
+	@BeanReference(type = GroupLocalService.class)
+	protected GroupLocalService _groupLocalService;
+
+	@BeanReference(type = RepositoryFactory.class)
+	protected RepositoryFactory _repositoryFactory;
+
+	@BeanReference(type = RepositoryLocalService.class)
+	protected RepositoryLocalService _repositoryLocalService;
+
 	private final Map<Long, LocalRepository> _localRepositoriesByRepositoryId =
 		new ConcurrentHashMap<>();
 	private final Map<Long, com.liferay.portal.kernel.repository.Repository>
 		_repositoriesByRepositoryId = new ConcurrentHashMap<>();
-	private final RepositoryFactory _repositoryFactory =
-		RepositoryFactoryUtil.getRepositoryFactory();
-	private final RepositoryLocalService _repositoryLocalService =
-		RepositoryLocalServiceUtil.getService();
 
 }

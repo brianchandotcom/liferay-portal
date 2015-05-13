@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -3354,7 +3355,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(0, fileEntryId, 0, 0);
+			return RepositoryProviderUtil.getRepositoryByFileEntryId(
+				fileEntryId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3371,7 +3373,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(0, 0, 0, fileShortcutId);
+			return RepositoryProviderUtil.getRepositoryByFileShortcutId(
+				fileShortcutId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3388,7 +3391,8 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(0, 0, fileVersionId, 0);
+			return RepositoryProviderUtil.getRepositoryByFileVersionId(
+				fileVersionId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3405,7 +3409,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(folderId, 0, 0, 0);
+			return RepositoryProviderUtil.getRepositoryByFolderId(folderId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -3432,7 +3436,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryService.getRepositoryImpl(repositoryId);
+			return RepositoryProviderUtil.getRepository(repositoryId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);

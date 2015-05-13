@@ -810,7 +810,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-	<portlet>
 		<portlet-name>161</portlet-name>
 		<icon>/html/icons/blogs.png</icon>
 		<struts-path>blogs_admin</struts-path>

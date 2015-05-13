@@ -59,44 +59,6 @@
 			<copy file="${project.dir}/classes/log4j.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
 			<copy file="${project.dir}/classes/logging.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
 
-			<if>
-				<not>
-					<available file="${portal-impl.classes.dir}/jamwiki.properties" />
-				</not>
-				<then>
-					<unzip
-						dest="${portal-impl.classes.dir}"
-						src="${project.dir}/tools/jamwiki-0.9.3-src.zip"
-					>
-						<patternset
-							includes="**/main/resources/ApplicationResources.properties,**/main/resources/jamwiki-configuration.xml,**/main/resources/logging.properties,**/main/resources/interwiki.properties"
-						/>
-					</unzip>
-
-					<move todir="${portal-impl.classes.dir}">
-						<fileset
-							dir="${portal-impl.classes.dir}/jamwiki-0.9.3/main/resources"
-							excludes="logging.properties"
-						/>
-					</move>
-
-					<concat destfile="${portal-impl.classes.dir}/logging.properties.new">
-						<fileset file="${portal-impl.classes.dir}/logging.properties" />
-						<fileset file="${portal-impl.classes.dir}/jamwiki-0.9.3/main/resources/logging.properties" />
-					</concat>
-
-					<move file="${portal-impl.classes.dir}/logging.properties.new" tofile="${portal-impl.classes.dir}/logging.properties" />
-
-					<delete dir="${portal-impl.classes.dir}/jamwiki-0.9.3" />
-
-					<echo file="${portal-impl.classes.dir}/jamwiki.properties">
-						database-type=com.liferay.wiki.engine.mediawiki.LiferayDataHandler
-						props-initialized=true
-						search-engine=com.liferay.wiki.engine.mediawiki.LiferaySearchEngine
-					</echo>
-				</then>
-			</if>
-
 			<copy todir="${portal-impl.classes.dir}" preservelastmodified="true">
 				<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
 			</copy>

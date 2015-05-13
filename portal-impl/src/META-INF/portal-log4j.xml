@@ -1244,10 +1244,6 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="org.jamwiki.Environment">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="org.jgroups">
 		<priority value="ERROR" />
 	</category>

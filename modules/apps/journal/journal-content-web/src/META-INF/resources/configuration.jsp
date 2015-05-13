@@ -127,10 +127,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			/>
 		</aui:field-wrapper>
 
-		<aui:field-wrapper>
-			<aui:input name="preferences--showAvailableLocales--" type="checkbox" value="<%= journalContentDisplayContext.isShowAvailableLocales() %>" />
-		</aui:field-wrapper>
-
 		<aui:field-wrapper helpMessage='<%= !journalContentDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
 			<liferay-ui:input-move-boxes
 				leftBoxName="currentExtensions"

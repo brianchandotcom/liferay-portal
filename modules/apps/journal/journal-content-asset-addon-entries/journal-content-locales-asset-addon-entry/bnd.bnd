@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Journal Content Locales Asset Addon Entry
+Bundle-SymbolicName: com.liferay.journal.content.asset.addon.entry.locales
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /journal-content-locales-asset-addon-entry

@@ -63,11 +63,15 @@ public class LangBuilder {
 		String langDirName = arguments.get("lang.dir");
 		String langFileName = arguments.get("lang.file");
 		boolean plugin = GetterUtil.getBoolean(arguments.get("lang.plugin"));
+		String portalLanguagePropertiesFileName = arguments.get(
+			"lang.portal.language.properties.file");
 		boolean translate = GetterUtil.getBoolean(
 			arguments.get("lang.translate"), true);
 
 		try {
-			new LangBuilder(langDirName, langFileName, plugin, translate);
+			new LangBuilder(
+				langDirName, langFileName, plugin,
+				portalLanguagePropertiesFileName, translate);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -76,7 +80,7 @@ public class LangBuilder {
 
 	public LangBuilder(
 			String langDirName, String langFileName, boolean plugin,
-			boolean translate)
+			String portalLanguagePropertiesFileName, boolean translate)
 		throws Exception {
 
 		_langDirName = langDirName;
@@ -86,8 +90,6 @@ public class LangBuilder {
 		_initKeysWithUpdatedValues();
 
 		if (plugin) {
-			_portalLanguageProperties = new Properties();
-
 			Class<?> clazz = getClass();
 
 			ClassLoader classLoader = clazz.getClassLoader();
@@ -95,7 +97,25 @@ public class LangBuilder {
 			InputStream inputStream = classLoader.getResourceAsStream(
 				"content/Language.properties");
 
-			_portalLanguageProperties.load(inputStream);
+			if ((inputStream == null) &&
+				Validator.isNotNull(portalLanguagePropertiesFileName)) {
+
+				inputStream = new FileInputStream(
+					portalLanguagePropertiesFileName);
+			}
+
+			if (inputStream != null) {
+				try {
+					_portalLanguageProperties = PropertiesUtil.load(
+						inputStream, StringPool.UTF8);
+				}
+				finally {
+					inputStream.close();
+				}
+			}
+			else {
+				_portalLanguageProperties = null;
+			}
 		}
 		else {
 			_portalLanguageProperties = null;

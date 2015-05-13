@@ -64,11 +64,10 @@ public class BaseTinymceEditorConfigConfigurator extends BaseEditorConfigContrib
 
         contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
 
-        String tinyMCELanguage = languagesJSONObject.getString(
-                HtmlUtil.escape(contentsLanguageId));
+        String tinyMCELanguage = _tinyMCELanguages.get(contentsLanguageId);
 
         if (Validator.isNull(tinyMCELanguage)) {
-            tinyMCELanguage = languagesJSONObject.getString("en_US");
+            tinyMCELanguage = _tinyMCELanguages.get("en_US");
         }
 
         jsonObject.put("language", tinyMCELanguage);
@@ -102,26 +101,48 @@ public class BaseTinymceEditorConfigConfigurator extends BaseEditorConfigContrib
         LiferayPortletResponse liferayPortletResponse) {
     }
 
-    protected JSONObject getLanguagesJSONObject() {
-        JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+    private static Map<String, String> _tinyMCELanguages = new HashMap<>();
 
-        StringBundler sb = new StringBundler(9);
-
-        sb.append("{'ar_SA': 'ar', 'bg_BG': 'bg_BG', 'ca_ES': 'ca', 'cs_CZ': 'cs',");
-        sb.append("'de_DE': 'de', 'el_GR': 'el', 'en_AU': 'en_GB', 'en_GB': 'en_GB','en_US': 'en_GB',");
-        sb.append("'es_ES': 'es', 'et_EE': 'et', 'eu_ES': 'eu', 'fa_IR': 'fa', 'fi_FI': 'fi',");
-        sb.append("'fr_FR': 'fr_FR', 'gl_ES': 'gl', 'hr_HR': 'hr', 'hu_HU': 'hu_HU','in_ID': 'id',");
-        sb.append("'it_IT': 'it', 'iw_IL': 'he_IL', 'ja_JP': 'ja', 'ko_KR': 'ko_KR', 'lt_LT': 'lt',");
-        sb.append("'nb_NO': 'nb_NO', 'nl_NL': 'nl', 'pl_PL': 'pl', 'pt_BR': 'pt_BR', 'pt_PT': 'pt_PT',");
-        sb.append("'ro_RO': 'ro', 'ru_RU': 'ru', 'sk_SK': 'sk', 'sl_SI': 'sl_SI', 'sr_RS': 'sr',");
-        sb.append("'sv_SE': 'sv_SE', 'tr_TR': 'tr_TR', 'uk_UA': 'uk','vi_VN': 'vi', 'zh_CN': 'zh_CN',");
-        sb.append("'zh_TW': 'zh_TW'}");
-
-        try {
-            jsonObject = JSONFactoryUtil.createJSONObject(sb.toString());
-        } catch (JSONException e) {
-        }
-
-        return jsonObject;
+    static {
+        _tinyMCELanguages.put("ar_SA", "ar");
+        _tinyMCELanguages.put("bg_BG", "bg_BG");
+        _tinyMCELanguages.put("ca_ES", "ca");
+        _tinyMCELanguages.put("cs_CZ", "cs");
+        _tinyMCELanguages.put("de_DE", "de");
+        _tinyMCELanguages.put("el_GR", "el");
+        _tinyMCELanguages.put("en_AU", "en_GB");
+        _tinyMCELanguages.put("en_GB", "en_GB");
+        _tinyMCELanguages.put("en_US", "en_GB");
+        _tinyMCELanguages.put("es_ES", "es");
+        _tinyMCELanguages.put("et_EE", "et");
+        _tinyMCELanguages.put("eu_ES", "eu");
+        _tinyMCELanguages.put("fa_IR", "fa");
+        _tinyMCELanguages.put("fi_FI", "fi");
+        _tinyMCELanguages.put("fr_FR", "fr_FR");
+        _tinyMCELanguages.put("gl_ES", "gl");
+        _tinyMCELanguages.put("hr_HR", "hr");
+        _tinyMCELanguages.put("hu_HU", "hu_HU");
+        _tinyMCELanguages.put("in_ID", "id");
+        _tinyMCELanguages.put("it_IT", "it");
+        _tinyMCELanguages.put("iw_IL", "he_IL");
+        _tinyMCELanguages.put("ja_JP", "ja");
+        _tinyMCELanguages.put("ko_KR", "ko_KR");
+        _tinyMCELanguages.put("lt_LT", "lt");
+        _tinyMCELanguages.put("nb_NO", "nb_NO");
+        _tinyMCELanguages.put("nl_NL", "nl");
+        _tinyMCELanguages.put("pl_PL", "pl");
+        _tinyMCELanguages.put("pt_BR", "pt_BR");
+        _tinyMCELanguages.put("pt_PT", "pt_PT");
+        _tinyMCELanguages.put("ro_RO", "ro");
+        _tinyMCELanguages.put("ru_RU", "ru");
+        _tinyMCELanguages.put("sk_SK", "sk");
+        _tinyMCELanguages.put("sl_SI", "sl_SI");
+        _tinyMCELanguages.put("sr_RS", "sr");
+        _tinyMCELanguages.put("sv_SE", "sv_SE");
+        _tinyMCELanguages.put("tr_TR", "tr_TR");
+        _tinyMCELanguages.put("uk_UA", "uk");
+        _tinyMCELanguages.put("vi_VN", "vi");
+        _tinyMCELanguages.put("zh_CN", "zh_CN");
+        _tinyMCELanguages.put("zh_TW", "zh_TW");
     }
 }

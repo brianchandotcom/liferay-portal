@@ -886,7 +886,7 @@ Please set the property "jdk.7.home" in build.properties.
 		>
 			<exclude name="**/aui/**" />
 			<exclude name="**/dynamiccss/dependencies/r2*.js" />
-			<exclude name="**/editor/**" />
+			<exclude name="**/editors/**" />
 			<exclude name="**/misc/**" />
 			<exclude name="**/selenium/**" />
 			<exclude name="**/VAADIN/**" />

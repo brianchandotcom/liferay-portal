@@ -844,9 +844,11 @@ public class JournalArticleFinderImpl
 			String sql = CustomSQLUtil.get(
 				COUNT_BY_G_C_S, queryDefinition, "JournalArticle");
 
+			sql = replaceStatusJoin(sql, queryDefinition);
+
 			if (groupId <= 0) {
 				sql = StringUtil.replace(
-					sql, "(groupId = ?) AND", StringPool.BLANK);
+					sql, "(JournalArticle.groupId = ?) AND", StringPool.BLANK);
 			}
 
 			sql = StringUtil.replace(

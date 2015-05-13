@@ -3,7 +3,6 @@
 
 <project>
 	<property name="import.shared" value="wiki-api,wiki-engine-input-editor-common" />
-	<property name="osgi.ide.dependencies" value="jamwiki-core.jar" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

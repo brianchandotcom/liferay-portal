@@ -14,7 +14,6 @@
 	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-lang.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
-	<classpathentry kind="lib" path="/portal-master/lib/portal/jamwiki-core.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/jericho-html.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/jspwiki.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />

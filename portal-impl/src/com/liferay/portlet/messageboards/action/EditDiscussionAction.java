@@ -19,13 +19,14 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ServiceContextFunction;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -35,7 +36,6 @@ import com.liferay.portlet.messageboards.DiscussionMaxCommentsException;
 import com.liferay.portlet.messageboards.MessageBodyException;
 import com.liferay.portlet.messageboards.NoSuchMessageException;
 import com.liferay.portlet.messageboards.RequiredMessageException;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.io.IOException;
 
@@ -285,8 +285,8 @@ public class EditDiscussionAction extends PortletAction {
 		String subject = ParamUtil.getString(actionRequest, "subject");
 		String body = ParamUtil.getString(actionRequest, "body");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			MBMessage.class.getName(), actionRequest);
+		Function<String, ServiceContext> serviceContextFunction =
+			new ServiceContextFunction(actionRequest);
 
 		if (messageId <= 0) {
 
@@ -317,9 +317,9 @@ public class EditDiscussionAction extends PortletAction {
 
 			try {
 				messageId = CommentManagerUtil.addComment(
-					serviceContext.getScopeGroupId(), className, classPK,
+					themeDisplay.getScopeGroupId(), className, classPK,
 					permissionClassName, permissionClassPK, permissionOwnerId,
-					parentMessageId, subject, body, serviceContext);
+					parentMessageId, subject, body, serviceContextFunction);
 			}
 			finally {
 				PrincipalThreadLocal.setName(name);
@@ -331,7 +331,8 @@ public class EditDiscussionAction extends PortletAction {
 
 			long commentId = CommentManagerUtil.updateComment(
 				className, classPK, permissionClassName, permissionClassPK,
-				permissionOwnerId, messageId, subject, body, serviceContext);
+				permissionOwnerId, messageId, subject, body,
+				serviceContextFunction);
 
 			messageId = commentId;
 		}

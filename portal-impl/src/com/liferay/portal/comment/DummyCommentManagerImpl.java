@@ -30,7 +30,7 @@ public class DummyCommentManagerImpl implements CommentManager {
 	@Override
 	public void addComment(
 		long userId, long groupId, String className, long classPK, String body,
-		ServiceContext serviceContext) {
+		Function<String, ServiceContext> serviceContextFunction) {
 	}
 
 	@Override
@@ -47,7 +47,8 @@ public class DummyCommentManagerImpl implements CommentManager {
 		long groupId, String className, long classPK,
 		String permissionClassName, long permissionClassPK,
 		long permissionOwnerId, long parentMessageId, String subject,
-		String body, ServiceContext serviceContext) {
+		String body,
+		Function<String, ServiceContext> serviceContextFunction) {
 
 		return 0;
 	}
@@ -81,7 +82,7 @@ public class DummyCommentManagerImpl implements CommentManager {
 	@Override
 	public Discussion getDiscussion(
 		long userId, long groupId, String className, long classPK,
-		ServiceContext serviceContext) {
+		Function<String, ServiceContext> serviceContextFunction) {
 
 		return _discussion;
 	}
@@ -107,7 +108,8 @@ public class DummyCommentManagerImpl implements CommentManager {
 	public long updateComment(
 		String className, long classPK, String permissionClassName,
 		long permissionClassPK, long permissionOwnerId, long commentId,
-		String subject, String body, ServiceContext serviceContext) {
+		String subject, String body,
+		Function<String, ServiceContext> serviceContextFunction) {
 
 		return 0;
 	}

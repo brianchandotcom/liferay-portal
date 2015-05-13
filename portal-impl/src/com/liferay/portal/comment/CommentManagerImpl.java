@@ -58,13 +58,14 @@ public class CommentManagerImpl implements CommentManager {
 	@Override
 	public void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		commentManager.addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 
 	@Override
@@ -86,14 +87,16 @@ public class CommentManagerImpl implements CommentManager {
 			long groupId, String className, long classPK,
 			String permissionClassName, long permissionClassPK,
 			long permissionOwnerId, long parentMessageId, String subject,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.addComment(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, parentMessageId, subject, body, serviceContext);
+			permissionOwnerId, parentMessageId, subject, body,
+			serviceContextFunction);
 	}
 
 	@Override
@@ -148,13 +151,13 @@ public class CommentManagerImpl implements CommentManager {
 	@Override
 	public Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.getDiscussion(
-			userId, groupId, className, classPK, serviceContext);
+			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
 	@Override
@@ -190,14 +193,16 @@ public class CommentManagerImpl implements CommentManager {
 	public long updateComment(
 			String className, long classPK, String permissionClassName,
 			long permissionClassPK, long permissionOwnerId, long commentId,
-			String subject, String body, ServiceContext serviceContext)
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.updateComment(
 			className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId, subject, body, serviceContext);
+			permissionOwnerId, commentId, subject, body,
+			serviceContextFunction);
 	}
 
 	protected CommentManager getCommentManager() {

@@ -27,11 +27,12 @@ public class CommentManagerUtil {
 
 	public static void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		getCommentManager().addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 
 	public static long addComment(
@@ -49,12 +50,14 @@ public class CommentManagerUtil {
 			long groupId, String className, long classPK,
 			String permissionClassName, long permissionClassPK,
 			long permissionOwnerId, long parentMessageId, String subject,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		return getCommentManager().addComment(
 			groupId, className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, parentMessageId, subject, body, serviceContext);
+			permissionOwnerId, parentMessageId, subject, body,
+			serviceContextFunction);
 	}
 
 	public static void addDiscussion(
@@ -99,11 +102,11 @@ public class CommentManagerUtil {
 
 	public static Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		return getCommentManager().getDiscussion(
-			userId, groupId, className, classPK, serviceContext);
+			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
 	public static DiscussionPermission getDiscussionPermission(
@@ -130,12 +133,14 @@ public class CommentManagerUtil {
 	public static long updateComment(
 			String className, long classPK, String permissionClassName,
 			long permissionClassPK, long permissionOwnerId, long commentId,
-			String subject, String body, ServiceContext serviceContext)
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		return getCommentManager().updateComment(
 			className, classPK, permissionClassName, permissionClassPK,
-			permissionOwnerId, commentId, subject, body, serviceContext);
+			permissionOwnerId, commentId, subject, body,
+			serviceContextFunction);
 	}
 
 	public void setCommentManager(CommentManager commentManager) {

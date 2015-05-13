@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.FriendlyURLMapperThreadLocal;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -173,7 +174,8 @@ public class PingbackMethodImpl implements Method {
 			companyId, groupId, entry.getUrlTitle());
 
 		_commentManager.addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body,
+			new IdentityServiceContextFunction(serviceContext));
 	}
 
 	protected ServiceContext buildServiceContext(
@@ -361,5 +363,21 @@ public class PingbackMethodImpl implements Method {
 		CommentManagerUtil.getCommentManager();
 	private String _sourceURI;
 	private String _targetURI;
+
+	private static class IdentityServiceContextFunction
+		implements Function<String, ServiceContext> {
+
+		public IdentityServiceContextFunction(ServiceContext serviceContext) {
+			_serviceContext = serviceContext;
+		}
+
+		@Override
+		public ServiceContext apply(String s) {
+			return _serviceContext;
+		}
+
+		private final ServiceContext _serviceContext;
+
+	}
 
 }

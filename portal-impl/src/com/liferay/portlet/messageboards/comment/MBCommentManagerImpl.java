@@ -57,7 +57,8 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
@@ -77,6 +78,9 @@ public class MBCommentManagerImpl implements CommentManager {
 				throw new DuplicateCommentException();
 			}
 		}
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
 
 		_mbMessageLocalService.addDiscussionMessage(
 			userId, StringPool.BLANK, groupId, className, classPK,
@@ -114,13 +118,17 @@ public class MBCommentManagerImpl implements CommentManager {
 			long groupId, String className, long classPK,
 			String permissionClassName, long permissionClassPK,
 			long permissionOwnerId, long parentMessageId, String subject,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 			parentMessageId);
 
 		long threadId = parentMessage.getThreadId();
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
 
 		MBMessage message = MBMessageServiceUtil.addDiscussionMessage(
 			serviceContext.getScopeGroupId(), className, classPK,
@@ -176,7 +184,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	@Override
 	public Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
@@ -205,6 +213,9 @@ public class MBCommentManagerImpl implements CommentManager {
 			ratingsStats = RatingsStatsLocalServiceUtil.getStats(
 				CommentConstants.getDiscussionClassName(), classPKs);
 		}
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
@@ -261,8 +272,12 @@ public class MBCommentManagerImpl implements CommentManager {
 	public long updateComment(
 			String className, long classPK, String permissionClassName,
 			long permissionClassPK, long permissionOwnerId, long commentId,
-			String subject, String body, ServiceContext serviceContext)
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
+
+		ServiceContext serviceContext = serviceContextFunction.apply(
+			MBMessage.class.getName());
 
 		MBMessage message = _mbMessageService.updateDiscussionMessage(
 			className, classPK, permissionClassName, permissionClassPK,

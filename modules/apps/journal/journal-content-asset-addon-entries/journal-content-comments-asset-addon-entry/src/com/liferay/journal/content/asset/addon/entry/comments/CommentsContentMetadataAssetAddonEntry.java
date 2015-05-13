@@ -83,7 +83,8 @@ public class CommentsContentMetadataAssetAddonEntry
 				(List<AssetAddonEntry>)request.getAttribute(
 					WebKeys.ASSET_ADDON_ENTRIES);
 
-			if ((selectedEntries != null) && selectedEntries.contains(
+			if ((selectedEntries != null) &&
+				selectedEntries.contains(
 					_commentRatingsContentMetadataAssetAddonEntry)) {
 
 				return true;

@@ -366,8 +366,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private ServiceRegistrar<PortalCacheManager<K, V>> _serviceRegistrar;
 
 	private class PortalCacheConfiguratorSettingsServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<
-			PortalCacheConfiguratorSettings, PortalCacheConfiguratorSettings> {
+		implements ServiceTrackerCustomizer
+			<PortalCacheConfiguratorSettings, PortalCacheConfiguratorSettings> {
 
 		@Override
 		public PortalCacheConfiguratorSettings addingService(

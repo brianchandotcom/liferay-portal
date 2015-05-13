@@ -426,11 +426,15 @@ public class PoshiRunnerExecutor {
 			runVarElement(rootVarElement, false, true);
 		}
 
+		PoshiRunnerStackTraceUtil.popStackTrace();
+
 		List<Element> executeVarElements = executeElement.elements("var");
 
 		for (Element executeVarElement : executeVarElements) {
 			runVarElement(executeVarElement, false, false);
 		}
+
+		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		SummaryLoggerHandler.startSummary(executeElement);
 

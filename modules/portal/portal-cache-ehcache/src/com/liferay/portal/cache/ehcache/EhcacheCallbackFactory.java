@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
@@ -55,7 +54,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 		try {
 			BootstrapCacheLoaderFactory<?> bootstrapCacheLoaderFactory =
 				(BootstrapCacheLoaderFactory<?>)InstanceFactory.newInstance(
-					ClassLoaderUtil.getPortalClassLoader(), className);
+					getClass().getClassLoader(), className);
 
 			return new EhcacheBootstrapLoaderAdapter(
 				bootstrapCacheLoaderFactory.createBootstrapCacheLoader(
@@ -85,7 +84,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 		try {
 			CacheEventListenerFactory cacheEventListenerFactory =
 				(CacheEventListenerFactory)InstanceFactory.newInstance(
-					ClassLoaderUtil.getPortalClassLoader(), className);
+					getClass().getClassLoader(), className);
 
 			CacheEventListener cacheEventListener =
 				cacheEventListenerFactory.createCacheEventListener(properties);
@@ -142,7 +141,7 @@ public class EhcacheCallbackFactory implements CallbackFactory {
 			CacheManagerEventListenerFactory cacheManagerEventListenerFactory =
 				(CacheManagerEventListenerFactory)
 					InstanceFactory.newInstance(
-						ClassLoaderUtil.getPortalClassLoader(), className);
+						getClass().getClassLoader(), className);
 
 			return new EhcacheCacheManagerListenerAdapter(
 				cacheManagerEventListenerFactory.

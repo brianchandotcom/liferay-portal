@@ -1,5 +1,29 @@
 Bundle-Name: Liferay Portal Tools Lang Builder
 Bundle-SymbolicName: com.liferay.portal.tools.lang.builder
 Bundle-Version: 1.0.0
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedReader.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncBufferedWriter.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayInputStream.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncByteArrayOutputStream.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringReader.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/unsync/UnsyncStringWriter.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/log/*,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/memory/SoftReferenceThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/nio/charset/CharsetEncoderUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CentralizedThreadLocal.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/NaturalOrderStringComparator.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/PropertiesUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringBundler.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringPool.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/StringUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
 Main-Class: com.liferay.portal.tools.lang.builder.LangBuilder

@@ -17,17 +17,17 @@ package com.liferay.portlet.dynamicdatamapping.registry;
 /**
  * @author Marcellus Tavares
  */
-public class StringDDMFormFieldTypeSettingJSONConverter
-	implements DDMFormFieldTypeSettingJSONConverter <String, String> {
+public interface DDMFormFieldTypeProperty {
 
-	@Override
-	public String fromJSON(String serializedSetting) {
-		return serializedSetting;
-	}
+	public DDMFormFieldTypePropertyEditor getDDMFormFieldTypePropertyEditor();
 
-	@Override
-	public String toJSON(Object setting) {
-		return String.valueOf(setting);
-	}
+	public DDMFormFieldTypePropertyJSONTransformer
+		getDDMFormFieldTypePropertyJSONTransformer();
+
+	public String getName();
+
+	public boolean isAdvanced();
+
+	public boolean isVisible();
 
 }

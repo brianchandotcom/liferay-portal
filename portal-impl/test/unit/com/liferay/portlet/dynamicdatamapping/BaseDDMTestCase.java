@@ -47,11 +47,11 @@ import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMStructureImpl;
 import com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateImpl;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistry;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.MultipleDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.OptionsDDMFormFieldTypeSetting;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.MultipleDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.OptionsDDMFormFieldTypeProperty;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
@@ -509,9 +509,9 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void setUpDefaultDDMFormFieldType() {
 		when(
-			_defaultDDMFormFieldType.getOptionalSettings()
+			_defaultDDMFormFieldType.getOptionalProperties()
 		).thenReturn(
-			new DDMFormFieldTypeSetting[] {}
+			new DDMFormFieldTypeProperty[] {}
 		);
 
 		when(
@@ -657,9 +657,11 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void setUpRadioDDMFormFieldType() {
 		when(
-			_radioDDMFormFieldType.getOptionalSettings()
+			_radioDDMFormFieldType.getOptionalProperties()
 		).thenReturn(
-			new DDMFormFieldTypeSetting[] {new OptionsDDMFormFieldTypeSetting()}
+			new DDMFormFieldTypeProperty[] {
+				new OptionsDDMFormFieldTypeProperty()
+			}
 		);
 
 		when(
@@ -683,11 +685,11 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void setUpSelectDDMFormFieldType() {
 		when(
-			_selectDDMFormFieldType.getOptionalSettings()
+			_selectDDMFormFieldType.getOptionalProperties()
 		).thenReturn(
-			new DDMFormFieldTypeSetting[] {
-				new OptionsDDMFormFieldTypeSetting(),
-				new MultipleDDMFormFieldTypeSetting()
+			new DDMFormFieldTypeProperty[] {
+				new OptionsDDMFormFieldTypeProperty(),
+				new MultipleDDMFormFieldTypeProperty()
 			}
 		);
 

@@ -21,12 +21,12 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.dynamicdatamapping.registry.BaseDDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.MultipleDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.OptionsDDMFormFieldTypeSetting;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.MultipleDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.OptionsDDMFormFieldTypeProperty;
 
 import java.util.Locale;
 
@@ -89,8 +89,8 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
-	public DDMFormFieldTypeSetting[] getOptionalSettings() {
-		return _optionalSetttings;
+	public DDMFormFieldTypeProperty[] getOptionalProperties() {
+		return _optionalProperties;
 	}
 
 	@Reference(service = SelectDDMFormFieldRenderer.class, unbind = "-")
@@ -100,9 +100,9 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 		_ddmFormFieldRenderer = ddmFormFieldRenderer;
 	}
 
-	private static final DDMFormFieldTypeSetting[] _optionalSetttings = {
-		new OptionsDDMFormFieldTypeSetting(),
-		new MultipleDDMFormFieldTypeSetting()
+	private static final DDMFormFieldTypeProperty[] _optionalProperties = {
+		new OptionsDDMFormFieldTypeProperty(),
+		new MultipleDDMFormFieldTypeProperty()
 	};
 
 	private DDMFormFieldRenderer _ddmFormFieldRenderer;

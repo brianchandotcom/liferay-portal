@@ -14,18 +14,18 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
-import com.liferay.portlet.dynamicdatamapping.registry.settings.DataTypeDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.IndexTypeDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.LabelDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.LocalizableDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.NameDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.PredefinedValueDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.ReadOnlyDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.RepeatableDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.RequiredDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.ShowLabelDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.TipDDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.settings.TypeDDMFormFieldTypeSetting;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.DataTypeDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.IndexTypeDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.LabelDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.LocalizableDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.NameDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.PredefinedValueDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.ReadOnlyDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.RepeatableDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.RequiredDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.ShowLabelDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.TipDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.TypeDDMFormFieldTypeProperty;
 
 import java.util.Locale;
 
@@ -34,18 +34,18 @@ import java.util.Locale;
  */
 public interface DDMFormFieldType {
 
-	public static final DDMFormFieldTypeSetting[] REQUIRED_PROPERTIES = {
-		new DataTypeDDMFormFieldTypeSetting(),
-		new IndexTypeDDMFormFieldTypeSetting(),
-		new LabelDDMFormFieldTypeSetting(),
-		new LocalizableDDMFormFieldTypeSetting(),
-		new NameDDMFormFieldTypeSetting(),
-		new PredefinedValueDDMFormFieldTypeSetting(),
-		new ReadOnlyDDMFormFieldTypeSetting(),
-		new RepeatableDDMFormFieldTypeSetting(),
-		new RequiredDDMFormFieldTypeSetting(),
-		new ShowLabelDDMFormFieldTypeSetting(),
-		new TipDDMFormFieldTypeSetting(), new TypeDDMFormFieldTypeSetting()
+	public static final DDMFormFieldTypeProperty[] REQUIRED_PROPERTIES = {
+		new DataTypeDDMFormFieldTypeProperty(),
+		new IndexTypeDDMFormFieldTypeProperty(),
+		new LabelDDMFormFieldTypeProperty(),
+		new LocalizableDDMFormFieldTypeProperty(),
+		new NameDDMFormFieldTypeProperty(),
+		new PredefinedValueDDMFormFieldTypeProperty(),
+		new ReadOnlyDDMFormFieldTypeProperty(),
+		new RepeatableDDMFormFieldTypeProperty(),
+		new RequiredDDMFormFieldTypeProperty(),
+		new ShowLabelDDMFormFieldTypeProperty(),
+		new TipDDMFormFieldTypeProperty(), new TypeDDMFormFieldTypeProperty()
 	};
 
 	public DDMFormFieldRenderer getDDMFormFieldRenderer();
@@ -61,6 +61,6 @@ public interface DDMFormFieldType {
 
 	public String getName();
 
-	public DDMFormFieldTypeSetting[] getOptionalSettings();
+	public DDMFormFieldTypeProperty[] getOptionalProperties();
 
 }

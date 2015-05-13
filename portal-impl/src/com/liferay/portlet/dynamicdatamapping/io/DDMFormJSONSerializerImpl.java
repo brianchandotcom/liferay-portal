@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyJSONTransformer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingJSONConverter;
 
 import java.util.List;
 import java.util.Locale;
@@ -87,32 +87,32 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
 				ddmFormField.getType());
 
-		for (DDMFormFieldTypeSetting ddmFormFieldTypeSetting :
-				ddmFormFieldType.getOptionalSettings()) {
+		for (DDMFormFieldTypeProperty ddmFormFieldTypeProperty :
+				ddmFormFieldType.getOptionalProperties()) {
 
-			addProperty(jsonObject, ddmFormField, ddmFormFieldTypeSetting);
+			addProperty(jsonObject, ddmFormField, ddmFormFieldTypeProperty);
 		}
 	}
 
 	protected void addProperty(
 		JSONObject jsonObject, DDMFormField ddmFormField,
-		DDMFormFieldTypeSetting ddmFormFieldTypeSetting) {
+		DDMFormFieldTypeProperty ddmFormFieldTypeProperty) {
 
 		Object property = ddmFormField.getProperty(
-			ddmFormFieldTypeSetting.getName());
+			ddmFormFieldTypeProperty.getName());
 
 		if (property == null) {
 			return;
 		}
 
-		DDMFormFieldTypeSettingJSONConverter<?, ?>
-			ddmFormFieldTypeSettingJSONConverter =
-				ddmFormFieldTypeSetting.
-					getDDMFormFieldTypeSettingJSONConverter();
+		DDMFormFieldTypePropertyJSONTransformer
+			ddmFormFieldTypePropertyJSONTransformer =
+				ddmFormFieldTypeProperty.
+					getDDMFormFieldTypePropertyJSONTransformer();
 
 		addProperty(
-			jsonObject, ddmFormFieldTypeSetting.getName(),
-			ddmFormFieldTypeSettingJSONConverter.toJSON(property));
+			jsonObject, ddmFormFieldTypeProperty.getName(),
+			ddmFormFieldTypePropertyJSONTransformer.toJSON(property));
 	}
 
 	protected void addProperty(
@@ -132,10 +132,10 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 	protected void addRequiredProperties(
 		JSONObject jsonObject, DDMFormField ddmFormField) {
 
-		for (DDMFormFieldTypeSetting ddmFormFieldTypeSetting :
+		for (DDMFormFieldTypeProperty ddmFormFieldTypeProperty :
 				DDMFormFieldType.REQUIRED_PROPERTIES) {
 
-			addProperty(jsonObject, ddmFormField, ddmFormFieldTypeSetting);
+			addProperty(jsonObject, ddmFormField, ddmFormFieldTypeProperty);
 		}
 	}
 

@@ -27,10 +27,11 @@ public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
 	}
 
 	@Override
-	public DDMFormFieldTypeSetting[] getOptionalSettings() {
-		return _emptyOptionalSettings;
+	public DDMFormFieldTypeProperty[] getOptionalProperties() {
+		return _emptyOptionalProperties;
 	}
 
-	private static final DDMFormFieldTypeSetting[] _emptyOptionalSettings = {};
+	private static final DDMFormFieldTypeProperty[] _emptyOptionalProperties = {
+	};
 
 }

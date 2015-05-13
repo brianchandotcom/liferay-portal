@@ -12,29 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry.settings;
+package com.liferay.portlet.dynamicdatamapping.registry.properties;
 
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingEditor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingJSONConverter;
-import com.liferay.portlet.dynamicdatamapping.registry.StringDDMFormFieldTypeSettingJSONConverter;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyEditor;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyJSONTransformer;
+import com.liferay.portlet.dynamicdatamapping.registry.StringDDMFormFieldTypePropertyJSONTransformer;
 
 /**
  * @author Marcellus Tavares
  */
-public class DataTypeDDMFormFieldTypeSetting
-	implements DDMFormFieldTypeSetting {
+public class DataTypeDDMFormFieldTypeProperty
+	implements DDMFormFieldTypeProperty {
 
 	@Override
-	public DDMFormFieldTypeSettingEditor getDDMFormFieldTypeSettingEditor() {
+	public DDMFormFieldTypePropertyEditor getDDMFormFieldTypePropertyEditor() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public DDMFormFieldTypeSettingJSONConverter<String, String>
-		getDDMFormFieldTypeSettingJSONConverter() {
+	public DDMFormFieldTypePropertyJSONTransformer
+		getDDMFormFieldTypePropertyJSONTransformer() {
 
-		return new StringDDMFormFieldTypeSettingJSONConverter();
+		return new StringDDMFormFieldTypePropertyJSONTransformer();
 	}
 
 	@Override

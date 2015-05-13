@@ -12,35 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry.settings;
+package com.liferay.portlet.dynamicdatamapping.registry.properties;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingEditor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingJSONConverter;
-import com.liferay.portlet.dynamicdatamapping.registry.StringDDMFormFieldTypeSettingJSONConverter;
+import com.liferay.portlet.dynamicdatamapping.registry.BooleanDDMFormFieldTypePropertyJSONTransformer;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyEditor;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyJSONTransformer;
 
 /**
  * @author Marcellus Tavares
  */
-public class NameDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
+public class MultipleDDMFormFieldTypeProperty
+	implements DDMFormFieldTypeProperty {
 
 	@Override
-	public DDMFormFieldTypeSettingEditor getDDMFormFieldTypeSettingEditor() {
-		return new DDMFormFieldTypeSettingEditor() {
+	public DDMFormFieldTypePropertyEditor getDDMFormFieldTypePropertyEditor() {
+		return new DDMFormFieldTypePropertyEditor() {
 
 			@Override
 			public String getEditorType() {
-				return "Text";
+				return "Boolean";
 			}
 
 			@Override
 			public JSONObject getOptions() {
 				JSONObject options = JSONFactoryUtil.createJSONObject();
 
-				options.put("required", true);
-				options.put("label", "name");
+				options.put("label", "multiple");
 
 				return options;
 			}
@@ -49,15 +49,15 @@ public class NameDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
 	}
 
 	@Override
-	public DDMFormFieldTypeSettingJSONConverter<String, String>
-		getDDMFormFieldTypeSettingJSONConverter() {
+	public DDMFormFieldTypePropertyJSONTransformer
+		getDDMFormFieldTypePropertyJSONTransformer() {
 
-		return new StringDDMFormFieldTypeSettingJSONConverter();
+		return new BooleanDDMFormFieldTypePropertyJSONTransformer();
 	}
 
 	@Override
 	public String getName() {
-		return "name";
+		return "multiple";
 	}
 
 	@Override

@@ -12,26 +12,26 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry.settings;
+package com.liferay.portlet.dynamicdatamapping.registry.properties;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingEditor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingJSONConverter;
-import com.liferay.portlet.dynamicdatamapping.registry.StringDDMFormFieldTypeSettingJSONConverter;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyEditor;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyJSONTransformer;
+import com.liferay.portlet.dynamicdatamapping.registry.StringDDMFormFieldTypePropertyJSONTransformer;
 
 /**
  * @author Marcellus Tavares
  */
-public class IndexTypeDDMFormFieldTypeSetting
-	implements DDMFormFieldTypeSetting {
+public class IndexTypeDDMFormFieldTypeProperty
+	implements DDMFormFieldTypeProperty {
 
 	@Override
-	public DDMFormFieldTypeSettingEditor getDDMFormFieldTypeSettingEditor() {
-		return new DDMFormFieldTypeSettingEditor() {
+	public DDMFormFieldTypePropertyEditor getDDMFormFieldTypePropertyEditor() {
+		return new DDMFormFieldTypePropertyEditor() {
 
 			@Override
 			public String getEditorType() {
@@ -62,10 +62,10 @@ public class IndexTypeDDMFormFieldTypeSetting
 	}
 
 	@Override
-	public DDMFormFieldTypeSettingJSONConverter<String, String>
-		getDDMFormFieldTypeSettingJSONConverter() {
+	public DDMFormFieldTypePropertyJSONTransformer
+		getDDMFormFieldTypePropertyJSONTransformer() {
 
-		return new StringDDMFormFieldTypeSettingJSONConverter();
+		return new StringDDMFormFieldTypePropertyJSONTransformer();
 	}
 
 	@Override

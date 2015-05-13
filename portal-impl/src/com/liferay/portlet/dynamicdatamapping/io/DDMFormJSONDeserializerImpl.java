@@ -25,9 +25,9 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyJSONTransformer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingJSONConverter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,17 +64,13 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 		}
 	}
 
-	protected Object deserialize(
-		String propertyName, String serializedPropertyValue,
-		DDMFormFieldTypeSetting ddmFormFieldTypeSetting) {
+	protected Object fromJSON(
+		String serializedDDMFormFieldPropertyValue,
+		DDMFormFieldTypePropertyJSONTransformer
+			ddmFormFieldTypePropertyJSONTransformer) {
 
-		DDMFormFieldTypeSettingJSONConverter<?, ?>
-			ddmFormFieldTypeSettingJSONConverter =
-				ddmFormFieldTypeSetting.
-					getDDMFormFieldTypeSettingJSONConverter();
-
-		return ddmFormFieldTypeSettingJSONConverter.fromJSON(
-			serializedPropertyValue);
+		return ddmFormFieldTypePropertyJSONTransformer.fromJSON(
+			serializedDDMFormFieldPropertyValue);
 	}
 
 	protected Set<Locale> getAvailableLocales(JSONArray jsonArray) {
@@ -181,51 +177,61 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
 				ddmFormField.getType());
 
-		for (DDMFormFieldTypeSetting ddmFormFieldTypeSetting :
-				ddmFormFieldType.getOptionalSettings()) {
+		for (DDMFormFieldTypeProperty ddmFormFieldTypeProperty :
+				ddmFormFieldType.getOptionalProperties()) {
 
 			setDDMFormFieldOptionalProperty(
-				jsonObject, ddmFormField, ddmFormFieldTypeSetting);
+				jsonObject, ddmFormField, ddmFormFieldTypeProperty);
 		}
 	}
 
 	protected void setDDMFormFieldOptionalProperty(
 		JSONObject jsonObject, DDMFormField ddmFormField,
-		DDMFormFieldTypeSetting ddmFormFieldTypeSetting) {
+		DDMFormFieldTypeProperty ddmFormFieldTypeProperty) {
 
-		String settingName = ddmFormFieldTypeSetting.getName();
+		String propertyName = ddmFormFieldTypeProperty.getName();
 
-		Object deserializedDDMFormFieldSetting = deserialize(
-			settingName, jsonObject.getString(settingName),
-			ddmFormFieldTypeSetting);
+		Object ddmFormFieldPropertyValue = fromJSON(
+			jsonObject.getString(propertyName),
+			ddmFormFieldTypeProperty.
+				getDDMFormFieldTypePropertyJSONTransformer());
+
+		if (ddmFormFieldPropertyValue == null) {
+			return;
+		}
 
 		ddmFormField.setOptionalProperty(
-			settingName, deserializedDDMFormFieldSetting);
+			propertyName, ddmFormFieldPropertyValue);
 	}
 
 	protected void setDDMFormFieldRequiredProperties(
 		JSONObject jsonObject, DDMFormField ddmFormField) {
 
-		for (DDMFormFieldTypeSetting ddmFormFieldTypeSetting :
+		for (DDMFormFieldTypeProperty ddmFormFieldTypeProperty :
 				DDMFormFieldType.REQUIRED_PROPERTIES) {
 
 			setDDMFormFieldRequiredProperty(
-				jsonObject, ddmFormField, ddmFormFieldTypeSetting);
+				jsonObject, ddmFormField, ddmFormFieldTypeProperty);
 		}
 	}
 
 	protected void setDDMFormFieldRequiredProperty(
 		JSONObject jsonObject, DDMFormField ddmFormField,
-		DDMFormFieldTypeSetting ddmFormFieldTypeSetting) {
+		DDMFormFieldTypeProperty ddmFormFieldTypeProperty) {
 
-		String settingName = ddmFormFieldTypeSetting.getName();
+		String propertyName = ddmFormFieldTypeProperty.getName();
 
-		Object deserializedDDMFormFieldSetting = deserialize(
-			settingName, jsonObject.getString(settingName),
-			ddmFormFieldTypeSetting);
+		Object ddmFormFieldPropertyValue = fromJSON(
+			jsonObject.getString(propertyName),
+			ddmFormFieldTypeProperty.
+				getDDMFormFieldTypePropertyJSONTransformer());
+
+		if (ddmFormFieldPropertyValue == null) {
+			return;
+		}
 
 		ddmFormField.setRequiredProperty(
-			settingName, deserializedDDMFormFieldSetting);
+			propertyName, ddmFormFieldPropertyValue);
 	}
 
 	protected void setDDMFormFields(JSONArray jsonArray, DDMForm ddmForm) {

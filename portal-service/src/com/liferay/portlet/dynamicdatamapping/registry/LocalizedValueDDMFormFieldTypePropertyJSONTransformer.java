@@ -29,19 +29,18 @@ import java.util.Locale;
 /**
  * @author Marcellus Tavares
  */
-public class LocalizedValueDDMFormFieldTypeSettingJSONConverter
-	implements DDMFormFieldTypeSettingJSONConverter
-		<LocalizedValue, JSONObject> {
+public class LocalizedValueDDMFormFieldTypePropertyJSONTransformer
+	implements DDMFormFieldTypePropertyJSONTransformer {
 
 	@Override
-	public LocalizedValue fromJSON(String serializedSetting) {
-		if (Validator.isNull(serializedSetting)) {
+	public Object fromJSON(String serialiazedDDMFormFieldPropertyValue) {
+		if (Validator.isNull(serialiazedDDMFormFieldPropertyValue)) {
 			return null;
 		}
 
 		try {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
-				serializedSetting);
+				serialiazedDDMFormFieldPropertyValue);
 
 			LocalizedValue localizedValue = new LocalizedValue();
 
@@ -65,10 +64,11 @@ public class LocalizedValueDDMFormFieldTypeSettingJSONConverter
 	}
 
 	@Override
-	public JSONObject toJSON(Object setting) {
+	public Object toJSON(Object ddmFormFieldPropertyValue) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		LocalizedValue localizedValue = (LocalizedValue)setting;
+		LocalizedValue localizedValue =
+			(LocalizedValue)ddmFormFieldPropertyValue;
 
 		for (Locale availableLocale : localizedValue.getAvailableLocales()) {
 			jsonObject.put(
@@ -80,6 +80,6 @@ public class LocalizedValueDDMFormFieldTypeSettingJSONConverter
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LocalizedValueDDMFormFieldTypeSettingJSONConverter.class);
+		LocalizedValueDDMFormFieldTypePropertyJSONTransformer.class);
 
 }

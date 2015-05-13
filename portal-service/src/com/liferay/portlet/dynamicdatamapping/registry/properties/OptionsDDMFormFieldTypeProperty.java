@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry.settings;
+package com.liferay.portlet.dynamicdatamapping.registry.properties;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
@@ -21,11 +21,12 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSetting;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingEditor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettingJSONConverter;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyEditor;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypePropertyJSONTransformer;
 
 import java.util.Iterator;
 import java.util.Locale;
@@ -33,11 +34,12 @@ import java.util.Locale;
 /**
  * @author Marcellus Tavares
  */
-public class OptionsDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
+public class OptionsDDMFormFieldTypeProperty
+	implements DDMFormFieldTypeProperty {
 
 	@Override
-	public DDMFormFieldTypeSettingEditor getDDMFormFieldTypeSettingEditor() {
-		return new DDMFormFieldTypeSettingEditor() {
+	public DDMFormFieldTypePropertyEditor getDDMFormFieldTypePropertyEditor() {
+		return new DDMFormFieldTypePropertyEditor() {
 
 			@Override
 			public String getEditorType() {
@@ -57,10 +59,10 @@ public class OptionsDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
 	}
 
 	@Override
-	public DDMFormFieldTypeSettingJSONConverter<DDMFormFieldOptions, JSONArray>
-		getDDMFormFieldTypeSettingJSONConverter() {
+	public DDMFormFieldTypePropertyJSONTransformer
+		getDDMFormFieldTypePropertyJSONTransformer() {
 
-		return new OptionsDDMFormFieldTypeSettingJSONConverter();
+		return new OptionsDDMFormFieldTypePropertyJSONTransformer();
 	}
 
 	@Override
@@ -78,15 +80,18 @@ public class OptionsDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
 		return true;
 	}
 
-	private static class OptionsDDMFormFieldTypeSettingJSONConverter
-		implements DDMFormFieldTypeSettingJSONConverter
-			<DDMFormFieldOptions, JSONArray> {
+	private static class OptionsDDMFormFieldTypePropertyJSONTransformer
+		implements DDMFormFieldTypePropertyJSONTransformer {
 
 		@Override
-		public DDMFormFieldOptions fromJSON(String serializedSetting) {
+		public Object fromJSON(String serialiazedDDMFormFieldPropertyValue) {
+			if (Validator.isNull(serialiazedDDMFormFieldPropertyValue)) {
+				return null;
+			}
+
 			try {
 				JSONArray jsonArray = JSONFactoryUtil.createJSONArray(
-					serializedSetting);
+					serialiazedDDMFormFieldPropertyValue);
 
 				return getDDMFormFieldOptions(jsonArray);
 			}
@@ -98,8 +103,9 @@ public class OptionsDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
 		}
 
 		@Override
-		public JSONArray toJSON(Object setting) {
-			JSONArray jsonArray = toJSONArray((DDMFormFieldOptions)setting);
+		public Object toJSON(Object ddmFormFieldPropertyValue) {
+			JSONArray jsonArray = toJSONArray(
+				(DDMFormFieldOptions)ddmFormFieldPropertyValue);
 
 			return jsonArray;
 		}
@@ -174,7 +180,7 @@ public class OptionsDDMFormFieldTypeSetting implements DDMFormFieldTypeSetting {
 		}
 
 		private static final Log _log = LogFactoryUtil.getLog(
-			OptionsDDMFormFieldTypeSettingJSONConverter.class);
+			OptionsDDMFormFieldTypePropertyJSONTransformer.class);
 
 	}
 

@@ -14,13 +14,22 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
+import com.liferay.portal.kernel.util.GetterUtil;
+
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldTypeSettingJSONConverter<T, A> {
+public class BooleanDDMFormFieldTypePropertyJSONTransformer
+	implements DDMFormFieldTypePropertyJSONTransformer {
 
-	public T fromJSON(String serializedSetting);
+	@Override
+	public Object fromJSON(String serialiazedDDMFormFieldPropertyValue) {
+		return Boolean.valueOf(serialiazedDDMFormFieldPropertyValue);
+	}
 
-	public A toJSON(Object setting);
+	@Override
+	public Object toJSON(Object ddmFormFieldPropertyValue) {
+		return GetterUtil.getBoolean(ddmFormFieldPropertyValue);
+	}
 
 }

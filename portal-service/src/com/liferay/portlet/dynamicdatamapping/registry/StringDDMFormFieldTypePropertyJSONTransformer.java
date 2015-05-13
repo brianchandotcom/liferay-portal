@@ -14,15 +14,20 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
-import com.liferay.portal.kernel.json.JSONObject;
-
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldTypeSettingEditor {
+public class StringDDMFormFieldTypePropertyJSONTransformer
+	implements DDMFormFieldTypePropertyJSONTransformer {
 
-	public String getEditorType();
+	@Override
+	public Object fromJSON(String serialiazedDDMFormFieldPropertyValue) {
+		return serialiazedDDMFormFieldPropertyValue;
+	}
 
-	public JSONObject getOptions();
+	@Override
+	public Object toJSON(Object ddmFormFieldPropertyValue) {
+		return String.valueOf(ddmFormFieldPropertyValue);
+	}
 
 }

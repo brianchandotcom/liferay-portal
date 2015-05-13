@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 public class ContentMetadataAssetAddonEntryTracker {
 
 	public static List<ContentMetadataAssetAddonEntry>
-	getContentMetadataAssetAddonEntries() {
+		getContentMetadataAssetAddonEntries() {
 
 		return new ArrayList<>(_contentMetadataAssetAddonEntries.values());
 	}

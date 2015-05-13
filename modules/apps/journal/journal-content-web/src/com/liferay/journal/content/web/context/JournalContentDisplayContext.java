@@ -228,7 +228,7 @@ public class JournalContentDisplayContext {
 	}
 
 	public List<ContentMetadataAssetAddonEntry>
-	getEnabledContentMetadataAssetAddonEntries() {
+		getEnabledContentMetadataAssetAddonEntries() {
 
 		List<ContentMetadataAssetAddonEntry> contentMetadataEntries =
 			ListUtil.filter(
@@ -295,7 +295,7 @@ public class JournalContentDisplayContext {
 	}
 
 	public List<ContentMetadataAssetAddonEntry>
-	getSelectedContentMetadataAssetAddonEntries() {
+		getSelectedContentMetadataAssetAddonEntries() {
 
 		if (_contentMetadataAssetAddonEntries != null) {
 			return _contentMetadataAssetAddonEntries;
@@ -334,7 +334,7 @@ public class JournalContentDisplayContext {
 	}
 
 	public List<UserToolAssetAddonEntry>
-	getSelectedUserToolAssetAddonEntries() {
+		getSelectedUserToolAssetAddonEntries() {
 
 		if (_userToolAssetAddonEntries != null) {
 			return _userToolAssetAddonEntries;

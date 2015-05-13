@@ -622,6 +622,46 @@ public class DLFileEntryLocalServiceImpl
 	}
 
 	@Override
+	public DLFileEntry copyFileEntry(
+			long userId, long groupId, long repositoryId, long fileEntryId,
+			long destFolderId, ServiceContext serviceContext)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = getFileEntry(fileEntryId);
+
+		String sourceFileName = "A";
+
+		String extension = dlFileEntry.getExtension();
+
+		if (Validator.isNotNull(extension)) {
+			sourceFileName = sourceFileName.concat(StringPool.PERIOD).concat(
+				extension);
+		}
+
+		InputStream inputStream = DLStoreUtil.getFileAsStream(
+			dlFileEntry.getCompanyId(), dlFileEntry.getDataRepositoryId(),
+			dlFileEntry.getName());
+
+		DLFileEntry newDlFileEntry = addFileEntry(
+			userId, groupId, repositoryId, destFolderId, sourceFileName,
+			dlFileEntry.getMimeType(), dlFileEntry.getTitle(),
+			dlFileEntry.getDescription(), null,
+			dlFileEntry.getFileEntryTypeId(), null, null, inputStream,
+			dlFileEntry.getSize(), serviceContext);
+
+		DLFileVersion dlFileVersion = dlFileEntry.getFileVersion();
+
+		DLFileVersion newDlFileVersion = newDlFileEntry.getFileVersion();
+
+		copyFileEntryMetadata(
+			dlFileVersion.getCompanyId(), dlFileVersion.getFileEntryTypeId(),
+			fileEntryId, newDlFileVersion.getFileVersionId(),
+			dlFileVersion.getFileVersionId(), serviceContext);
+
+		return newDlFileEntry;
+	}
+
+	@Override
 	public void copyFileEntryMetadata(
 			long companyId, long fileEntryTypeId, long fileEntryId,
 			long fromFileVersionId, long toFileVersionId,

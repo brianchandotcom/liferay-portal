@@ -150,6 +150,16 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		long userId, long groupId, long repositoryId, long fileEntryId,
+		long destFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFileEntryLocalService.copyFileEntry(userId, groupId,
+			repositoryId, fileEntryId, destFolderId, serviceContext);
+	}
+
+	@Override
 	public void copyFileEntryMetadata(long companyId, long fileEntryTypeId,
 		long fileEntryId, long fromFileVersionId, long toFileVersionId,
 		com.liferay.portal.service.ServiceContext serviceContext)

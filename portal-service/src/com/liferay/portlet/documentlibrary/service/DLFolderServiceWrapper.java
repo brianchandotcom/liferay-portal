@@ -330,6 +330,18 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	@Override
+	public com.liferay.portlet.documentlibrary.model.DLFolder updateFolder(
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long defaultFileEntryTypeId,
+		java.util.List<java.lang.Long> fileEntryTypeIds, int restrictionType,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _dlFolderService.updateFolder(folderId, parentFolderId, name,
+			description, defaultFileEntryTypeId, fileEntryTypeIds,
+			restrictionType, serviceContext);
+	}
+
+	@Override
 	public boolean verifyInheritableLock(long folderId,
 		java.lang.String lockUuid)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -148,6 +148,16 @@ public class DLFileEntryLocalServiceUtil {
 		getService().convertExtraSettings(keys);
 	}
 
+	public static com.liferay.portlet.documentlibrary.model.DLFileEntry copyFileEntry(
+		long userId, long groupId, long repositoryId, long fileEntryId,
+		long destFolderId,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .copyFileEntry(userId, groupId, repositoryId, fileEntryId,
+			destFolderId, serviceContext);
+	}
+
 	public static void copyFileEntryMetadata(long companyId,
 		long fileEntryTypeId, long fileEntryId, long fromFileVersionId,
 		long toFileVersionId,

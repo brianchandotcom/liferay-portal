@@ -199,8 +199,8 @@ public class LiferayLocalRepository
 		throws PortalException {
 
 		DLFileEntry dlFileEntry = dlFileEntryLocalService.copyFileEntry(
-			userId, groupId, getRepositoryId(), fileEntryId, destFolderId,
-			serviceContext);
+			userId, groupId, getRepositoryId(), fileEntryId,
+			toFolderId(destFolderId), serviceContext);
 
 		return new LiferayFileEntry(dlFileEntry);
 	}

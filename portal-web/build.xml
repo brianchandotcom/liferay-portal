@@ -51,7 +51,9 @@
 	<target name="build-alloy-bootstrap">
 		<property name="alloy.bootstrap.version" value="3.2.0-2" />
 
-		<property name="alloy.bootstrap.deploy" value="docroot/html/themes/_unstyled/css/aui" />
+		<property name="alloy.bootstrap.deploy.theme.dir" value="docroot/html/themes/_unstyled/css/aui" />
+
+		<property name="alloy.bootstrap.deploy.js.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/js/bootstrap" />
 
 		<path id="alloy.bootstrap.zip.path">
 			<fileset dir="third-party">
@@ -69,7 +71,7 @@
 			<not>
 				<uptodate
 					srcfile="third-party/${alloy.bootstrap.file}"
-					targetfile="${alloy.bootstrap.deploy}"
+					targetfile="${alloy.bootstrap.deploy.theme.dir}"
 				/>
 			</not>
 			<then>
@@ -77,31 +79,48 @@
 				<!-- Prepare -->
 
 				<delete dir="${alloy.bootstrap.tmp.dir}" />
-				<delete dir="${alloy.bootstrap.deploy}" />
+				<delete dir="${alloy.bootstrap.deploy.theme.dir}" />
 
 				<unzip src="third-party/${alloy.bootstrap.file}" dest="${alloy.bootstrap.tmp.dir}" />
 
+				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets" />
+
 				<!-- CSS -->
 
-				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets/stylesheets" />
+				<property name="alloy.bootstrap.css.lib.dir" value="${alloy.bootstrap.lib.dir}/stylesheets" />
 
 				<delete failonerror="false" includeemptydirs="true" quiet="true">
 					<fileset
-						dir="${alloy.bootstrap.lib.dir}"
+						dir="${alloy.bootstrap.css.lib.dir}"
 						includes="_bootstrap-*.scss"
 					/>
 				</delete>
 
-				<copy todir="${alloy.bootstrap.deploy}" overwrite="true" preservelastmodified="true">
-					<fileset dir="${alloy.bootstrap.lib.dir}/" />
+				<copy todir="${alloy.bootstrap.deploy.theme.dir}" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.bootstrap.css.lib.dir}/" />
 				</copy>
 
 				<!-- Glyphicons font -->
 
-				<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets/fonts/bootstrap" />
+				<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.lib.dir}/fonts/bootstrap" />
 
-				<copy todir="${alloy.bootstrap.deploy}/glyphicons/font" overwrite="true" preservelastmodified="true">
+				<copy todir="${alloy.bootstrap.deploy.theme.dir}/glyphicons/font" overwrite="true" preservelastmodified="true">
 					<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />
+				</copy>
+
+				<!-- JavaScript -->
+
+				<property name="alloy.bootstrap.js.lib.dir" value="${alloy.bootstrap.lib.dir}/javascripts/" />
+
+				<delete failonerror="false" includeemptydirs="true" quiet="true">
+					<fileset
+						dir="${alloy.bootstrap.js.lib.dir}"
+						includes="_bootstrap-*.scss"
+					/>
+				</delete>
+
+				<copy todir="${alloy.bootstrap.deploy.js.dir}" overwrite="true" preservelastmodified="true">
+					<fileset dir="${alloy.bootstrap.js.lib.dir}/" />
 				</copy>
 
 				<!-- Clean up -->
@@ -126,16 +145,16 @@
 			<not>
 				<uptodate
 					srcfile="third-party/${alloy-font-awesome.file}"
-					targetfile="${alloy.bootstrap.deploy}/alloy-font-awesome"
+					targetfile="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome"
 				/>
 			</not>
 			<then>
-				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome" />
+				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome" />
 
-				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy}" />
+				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy.theme.dir}" />
 
-				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/css" />
-				<delete dir="${alloy.bootstrap.deploy}/alloy-font-awesome/less" />
+				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome/css" />
+				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome/less" />
 			</then>
 		</if>
 	</target>

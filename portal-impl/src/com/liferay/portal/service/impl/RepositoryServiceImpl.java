@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
-import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.ClassName;
@@ -78,59 +77,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 	}
 
 	@Override
-	public LocalRepository getLocalRepositoryImpl(long repositoryId)
-		throws PortalException {
-
-		checkRepository(repositoryId);
-
-		return repositoryLocalService.getLocalRepositoryImpl(repositoryId);
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryImpl(
-			long folderId, long fileEntryId, long fileVersionId,
-			long fileShortcutId)
-		throws PortalException {
-
-		LocalRepository localRepositoryImpl =
-			repositoryLocalService.getLocalRepositoryImpl(
-				folderId, fileEntryId, fileVersionId, fileShortcutId);
-
-		checkRepository(localRepositoryImpl.getRepositoryId());
-
-		return localRepositoryImpl;
-	}
-
-	@Override
 	public Repository getRepository(long repositoryId) throws PortalException {
 		return repositoryPersistence.findByPrimaryKey(repositoryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-			long repositoryId)
-		throws PortalException {
-
-		checkRepository(repositoryId);
-
-		return repositoryLocalService.getRepositoryImpl(repositoryId);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.repository.Repository getRepositoryImpl(
-			long folderId, long fileEntryId, long fileVersionId,
-			long fileShortcutId)
-		throws PortalException {
-
-		com.liferay.portal.kernel.repository.Repository repositoryImpl =
-			repositoryLocalService.getRepositoryImpl(
-				folderId, fileEntryId, fileVersionId, fileShortcutId);
-
-		checkRepository(
-			repositoryImpl.getRepositoryId(), folderId, fileEntryId,
-			fileVersionId);
-
-		return repositoryImpl;
 	}
 
 	@Override

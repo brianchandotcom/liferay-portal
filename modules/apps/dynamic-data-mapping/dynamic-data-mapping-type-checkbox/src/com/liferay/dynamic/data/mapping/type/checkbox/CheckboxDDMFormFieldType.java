@@ -14,12 +14,11 @@
 
 package com.liferay.dynamic.data.mapping.type.checkbox;
 
+import com.liferay.portlet.dynamicdatamapping.registry.BaseDDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueParameterSerializer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
-import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldValueParameterSerializer;
 
 import java.util.Locale;
 
@@ -30,7 +29,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Renato Rego
  */
 @Component(immediate = true, service = DDMFormFieldType.class)
-public class CheckboxDDMFormFieldType implements DDMFormFieldType {
+public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer() {
@@ -42,13 +41,6 @@ public class CheckboxDDMFormFieldType implements DDMFormFieldType {
 		Locale locale) {
 
 		return new CheckboxDDMFormFieldValueAccessor(locale);
-	}
-
-	@Override
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer() {
-
-		return new DefaultDDMFormFieldValueParameterSerializer();
 	}
 
 	@Override

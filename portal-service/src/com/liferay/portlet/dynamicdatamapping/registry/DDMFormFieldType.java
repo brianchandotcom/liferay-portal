@@ -14,12 +14,39 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
+import com.liferay.portlet.dynamicdatamapping.registry.properties.DataTypeDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.IndexTypeDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.LabelDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.LocalizableDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.NameDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.PredefinedValueDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.ReadOnlyDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.RepeatableDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.RequiredDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.ShowLabelDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.TipDDMFormFieldTypeProperty;
+import com.liferay.portlet.dynamicdatamapping.registry.properties.TypeDDMFormFieldTypeProperty;
+
 import java.util.Locale;
 
 /**
  * @author Marcellus Tavares
  */
 public interface DDMFormFieldType {
+
+	public static final DDMFormFieldTypeProperty[] REQUIRED_PROPERTIES = {
+		new DataTypeDDMFormFieldTypeProperty(),
+		new IndexTypeDDMFormFieldTypeProperty(),
+		new LabelDDMFormFieldTypeProperty(),
+		new LocalizableDDMFormFieldTypeProperty(),
+		new NameDDMFormFieldTypeProperty(),
+		new PredefinedValueDDMFormFieldTypeProperty(),
+		new ReadOnlyDDMFormFieldTypeProperty(),
+		new RepeatableDDMFormFieldTypeProperty(),
+		new RequiredDDMFormFieldTypeProperty(),
+		new ShowLabelDDMFormFieldTypeProperty(),
+		new TipDDMFormFieldTypeProperty(), new TypeDDMFormFieldTypeProperty()
+	};
 
 	public DDMFormFieldRenderer getDDMFormFieldRenderer();
 
@@ -33,5 +60,7 @@ public interface DDMFormFieldType {
 		getDDMFormFieldValueRendererAccessor(Locale locale);
 
 	public String getName();
+
+	public DDMFormFieldTypeProperty[] getOptionalProperties();
 
 }

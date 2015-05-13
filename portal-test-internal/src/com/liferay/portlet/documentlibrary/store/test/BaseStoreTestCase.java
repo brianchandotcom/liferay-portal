@@ -370,6 +370,23 @@ public abstract class BaseStoreTestCase {
 	}
 
 	@Test
+	public void testGetFileNamesWithInvalidDirectory() {
+		String directory = RandomTestUtil.randomString();
+
+		String[] fileNames = store.getFileNames(
+			companyId, repositoryId, directory);
+
+		Assert.assertEquals(0, fileNames.length);
+	}
+
+	@Test
+	public void testGetFileNamesWithInvalidRepository() throws Exception {
+		String[] fileNames = store.getFileNames(companyId, repositoryId);
+
+		Assert.assertEquals(0, fileNames.length);
+	}
+
+	@Test
 	public void testGetFileNamesWithTwoLevelDeep() throws Exception {
 		String directory = RandomTestUtil.randomString();
 

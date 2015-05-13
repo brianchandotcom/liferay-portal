@@ -46,11 +46,28 @@ public class MBMailMessage {
 		}
 	}
 
-	public String getBody(String format) {
-		String body = _htmlBody;
+	public String getBody(String preferredFormat) {
+		String body = null;
 
-		if (Validator.isNull(body) || !format.equals("html")) {
-			body = getBody();
+		if (preferredFormat.equals("html")) {
+			if (Validator.isNotNull(_htmlBody)) {
+				body = GetterUtil.getString(_htmlBody);
+			}
+			else if (Validator.isNotNull(_plainBody)) {
+				body = GetterUtil.getString(_plainBody);
+			}
+		}
+		else if (preferredFormat.equals("text")) {
+			if (Validator.isNotNull(_plainBody)) {
+				body = GetterUtil.getString(_plainBody);
+			}
+			else if (Validator.isNotNull(_htmlBody)) {
+				body = HtmlUtil.extractText(_htmlBody);
+			}
+		}
+
+		if (Validator.isNull(body)) {
+			body = "-";
 		}
 
 		return body;

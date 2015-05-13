@@ -17,7 +17,6 @@ package com.liferay.journal.content.web.portlet;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.asset.JournalArticleAssetRendererFactory;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.AddPortletProvider;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.model.Layout;
@@ -84,7 +83,7 @@ public class JournalContentAddPortletProvider
 	}
 
 	@Override
-	protected long getPlid(ThemeDisplay themeDisplay) throws PortalException {
+	protected long getPlid(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPlid();
 	}
 

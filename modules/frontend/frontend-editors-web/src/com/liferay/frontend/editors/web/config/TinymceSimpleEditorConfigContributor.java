@@ -18,53 +18,55 @@ import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import org.osgi.service.component.annotations.Component;
-
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrin Chaudhary
  */
 @Component(
-        property = {"editor.name=tinymce_simple"},
-        service = EditorConfigContributor.class
+	property = {"editor.name=tinymce_simple"},
+	service = EditorConfigContributor.class
 )
-public class TinymceSimpleEditorConfigContributor extends BaseTinymceEditorConfigConfigurator {
+public class TinymceSimpleEditorConfigContributor
+	extends BaseTinymceEditorConfigConfigurator {
 
-    @Override
-    public void populateConfigJSONObject(
-            JSONObject jsonObject,
-            Map<String, Object> inputEditorTaglibAttributes,
-            ThemeDisplay themeDisplay,
-            LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        super.populateConfigJSONObject(jsonObject, inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+		super.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			liferayPortletResponse);
 
-        boolean showSource = GetterUtil.getBoolean(
-                (String) inputEditorTaglibAttributes.get(
-                        "liferay-ui:input-editor:showSource"));
+		boolean showSource = GetterUtil.getBoolean(
+			(String)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:showSource"));
 
-        String plugins = "contextmenu preview print";
+		String plugins = "contextmenu preview print";
 
-        if (showSource) {
-            plugins+= " code";
-        }
+		if (showSource) {
+			plugins+= " code";
+		}
 
-        jsonObject.put("plugins", plugins);
+		jsonObject.put("plugins", plugins);
 
-        StringBundler sb = new StringBundler(3);
+		String rowButtons =
+			"bold italic underline | " +
+				"alignleft aligncenter alignright alignjustify | ";
 
-        sb.append("bold italic underline | alignleft aligncenter alignright alignjustify | ");
+		if (showSource) {
+			rowButtons += "code ";
+		}
 
-        if (showSource) {
-            sb.append("code ");
-        }
+		rowButtons += "preview print";
 
-        sb.append("preview print");
+		jsonObject.put("toolbar", rowButtons);
+	}
 
-        jsonObject.put("toolbar", sb.toString());
-    }
 }

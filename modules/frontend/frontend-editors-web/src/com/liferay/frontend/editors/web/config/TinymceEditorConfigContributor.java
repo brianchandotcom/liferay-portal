@@ -19,221 +19,239 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.util.*;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import org.osgi.service.component.annotations.Component;
-
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Ambrin Chaudhary
  */
 @Component(
-        property = {"editor.name=tinymce"},
-        service = EditorConfigContributor.class
+	property = {"editor.name=tinymce"}, service = EditorConfigContributor.class
 )
-public class TinymceEditorConfigContributor extends BaseTinymceEditorConfigConfigurator {
+public class TinymceEditorConfigContributor
+	extends BaseTinymceEditorConfigConfigurator {
 
-    @Override
-    public void populateConfigJSONObject(
-        JSONObject jsonObject,
-        Map<String, Object> inputEditorTaglibAttributes,
-        ThemeDisplay themeDisplay,
-        LiferayPortletResponse liferayPortletResponse) {
+	@Override
+	public void populateConfigJSONObject(
+		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse) {
 
-        super.populateConfigJSONObject(jsonObject, inputEditorTaglibAttributes, themeDisplay, liferayPortletResponse);
+		super.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			liferayPortletResponse);
 
-        jsonObject.put("mode", "exact");
+		jsonObject.put("mode", "exact");
 
-        boolean showSource = GetterUtil.getBoolean(
-            (String) inputEditorTaglibAttributes.get(
-                    "liferay-ui:input-editor:showSource"));
+		boolean showSource = GetterUtil.getBoolean(
+			(String)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:showSource"));
 
-        jsonObject.put("plugins", getPluginsJSONArray(showSource));
+		jsonObject.put("plugins", getPluginsJSONArray(showSource));
+		jsonObject.put("style_formats", getStyleFormatsJSONArray());
+		jsonObject.put(
+			"toolbar",
+			getToolbarJSONArray(
+				inputEditorTaglibAttributes, themeDisplay, showSource));
+	}
 
-        jsonObject.put("style_formats", getStyleFormatsJSONArray());
+	protected JSONArray getPluginsJSONArray(boolean showSource) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        JSONObject toolbarsJSONObject = getToolbarsJSONObject(showSource);
+		jsonArray.put(
+			"advlist autolink autosave link image lists charmap print " +
+				"preview hr anchor");
 
-        String toolbarSet = (String)inputEditorTaglibAttributes.get(
-                "liferay-ui:input-editor:toolbarSet");
+		jsonArray.put("searchreplace wordcount fullscreen media");
 
-        String currentToolbarSet = TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M);
+		if (showSource) {
+			jsonArray.put("code");
+		}
 
-        if (BrowserSnifferUtil.isMobile(themeDisplay.getRequest())) {
-            currentToolbarSet = "phone";
-        }
+		jsonArray.put(
+			"table contextmenu emoticons textcolor paste fullpage textcolor " +
+				"colorpicker textpattern");
 
-        JSONArray currentToolbar = toolbarsJSONObject.getJSONArray(currentToolbarSet);
+		return jsonArray;
+	}
 
-        if (Validator.isNull(currentToolbar)) {
-            currentToolbar = toolbarsJSONObject.getJSONArray("liferay");
-        }
+	protected JSONArray getStyleFormatsJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonObject.put("toolbar", currentToolbar);
-    }
+		String styleFormats[] = new String[] {
+			"{inline: 'p', title: 'Normal'}",
+			"{block: 'h1', title: 'Heading 1'}",
+			"{block: 'h2', title: 'Heading 2'}",
+			"{block: 'h3', title: 'Heading 3'}",
+			"{block: 'h4', title: 'Heading 4'}",
+			"{block: 'pre', title: 'Preformatted Text'}",
+			"{inline: 'cite', title: 'Cited Work'}",
+			"{inline: 'code', title: 'Computer Code'}",
+			"{block: 'div', classes: 'portlet-msg-info', " +
+				"title: 'Info Message'}",
+			"{block: 'div', classes: 'portlet-msg-alert', " +
+				"title: 'Alert Message'}",
+			"{block: 'div', classes: 'portlet-msg-error', " +
+				"title: 'Error Message'}"
+		};
 
-    protected JSONArray getPluginsJSONArray(boolean showSource) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		for (String styleFormat : styleFormats) {
+			try {
+				jsonArray.put(JSONFactoryUtil.createJSONObject(styleFormat));
+			}
+			catch (JSONException jsone) {
+				_log.error(
+					"Unable to create a JSON object from: " + styleFormat,
+					jsone);
+			}
+		}
 
-        jsonArray.put("advlist autolink autosave link image lists charmap print preview hr anchor");
+		return jsonArray;
+	}
 
-        jsonArray.put("searchreplace wordcount fullscreen media");
+	protected JSONArray getToolbarJSONArray(
+		Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay, boolean showSource) {
 
-        if (showSource) {
-            jsonArray.put("code");
-        }
+		JSONObject toolbarsJSONObject = getToolbarsJSONObject(showSource);
 
-        jsonArray.put("table contextmenu emoticons textcolor paste fullpage textcolor colorpicker textpattern");
+		String toolbarSet = (String)inputEditorTaglibAttributes.get(
+			"liferay-ui:input-editor:toolbarSet");
 
-        return jsonArray;
-    }
+		String currentToolbarSet = TextFormatter.format(
+			HtmlUtil.escapeJS(toolbarSet), TextFormatter.M);
 
-    protected JSONArray getStyleFormatsJSONArray() {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		if (BrowserSnifferUtil.isMobile(themeDisplay.getRequest())) {
+			currentToolbarSet = "phone";
+		}
 
-        try {
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{inline: 'p', title: 'Normal'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'h1', title: 'Heading 1'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'h2', title: 'Heading 2'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'h3', title: 'Heading 3'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'h4', title: 'Heading 4'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'pre', title: 'Preformatted Text'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{inline: 'cite', title: 'Cited Work'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{inline: 'code', title: 'Computer Code'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'div', classes: 'portlet-msg-info', title: 'Info Message'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'div', classes: 'portlet-msg-alert', title: 'Alert Message'}"));
-            jsonArray.put(JSONFactoryUtil.createJSONObject(
-                "{block: 'div', classes: 'portlet-msg-error', title: 'Error Message'}"));
+		JSONArray currentToolbar = toolbarsJSONObject.getJSONArray(
+			currentToolbarSet);
 
-        } catch (JSONException e) {
-        }
+		if (currentToolbar == null) {
+			currentToolbar = toolbarsJSONObject.getJSONArray("liferay");
+		}
 
-        return jsonArray;
-    }
+		return currentToolbar;
+	}
 
-    protected JSONObject getToolbarsJSONObject(boolean showSource) {
-        JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+	protected JSONArray getToolbarsEmailJSONArray(boolean showSource) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonObject.put("email", getToolbarsEmailJSONArray(showSource));
-        jsonObject.put("liferay", getToolbarsLiferayJSONArray(showSource));
-        jsonObject.put("phone", getToolbarsPhoneJSONArray());
-        jsonObject.put("simple", getToolbarsSimpleJSONArray(showSource));
-        jsonObject.put("tablet", getToolbarsTabletJSONArray(showSource));
+		String firstRowButtons =
+			"fontselect fontsizeselect | forecolor backcolor | " +
+				"bold italic underline strikethrough | " +
+					"alignleft aligncenter alignright alignjustify";
 
-        return jsonObject;
-    }
+		jsonArray.put(firstRowButtons);
 
-    protected JSONArray getToolbarsEmailJSONArray(boolean showSource) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		String secondRowButtons =
+			"cut copy paste bullist numlist | blockquote | undo redo | " +
+				"link unlink image ";
 
-        String firstRowButtons =
-            "fontselect fontsizeselect | forecolor backcolor | bold italic underline strikethrough | " +
-            "alignleft aligncenter alignright alignjustify";
+		if (showSource) {
+			secondRowButtons += "code ";
+		}
 
-        jsonArray.put(firstRowButtons);
+		secondRowButtons += "| hr removeformat | preview print fullscreen";
 
-        StringBundler sb = new StringBundler(3);
+		jsonArray.put(secondRowButtons);
 
-        sb.append("cut copy paste bullist numlist | blockquote | undo redo | link unlink image ");
+		return jsonArray;
+	}
 
-        if (showSource) {
-            sb.append("code ");
-        }
+	protected JSONObject getToolbarsJSONObject(boolean showSource) {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-        sb.append("| hr removeformat | preview print fullscreen");
+		jsonObject.put("email", getToolbarsEmailJSONArray(showSource));
+		jsonObject.put("liferay", getToolbarsLiferayJSONArray(showSource));
+		jsonObject.put("phone", getToolbarsPhoneJSONArray());
+		jsonObject.put("simple", getToolbarsSimpleJSONArray(showSource));
+		jsonObject.put("tablet", getToolbarsTabletJSONArray(showSource));
 
-        jsonArray.put(sb.toString());
+		return jsonObject;
+	}
 
-        return jsonArray;
-    }
+	protected JSONArray getToolbarsLiferayJSONArray(boolean showSource) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-    protected JSONArray getToolbarsLiferayJSONArray(boolean showSource) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		jsonArray.put(
+			"styleselect fontselect fontsizeselect | forecolor backcolor | " +
+				"bold italic underline strikethrough | " +
+					"alignleft aligncenter alignright alignjustify");
 
-        StringBundler sbFirstRow = new StringBundler(3);
+		String secondRowButtons =
+			"cut copy paste searchreplace bullist numlist | " +
+				"outdent indent blockquote | undo redo | " +
+					"link unlink anchor image media ";
 
-        sbFirstRow.append("styleselect fontselect fontsizeselect | forecolor backcolor | ");
-        sbFirstRow.append("bold italic underline strikethrough | ");
-        sbFirstRow.append("alignleft aligncenter alignright alignjustify");
+		if (showSource) {
+			secondRowButtons += "code";
+		}
 
-        jsonArray.put(sbFirstRow.toString());
+		jsonArray.put(secondRowButtons);
+		jsonArray.put(
+			"table | hr removeformat | subscript superscript | " +
+			"charmap emoticons | preview print fullscreen");
 
-        StringBundler sbSecondRow = new StringBundler(3);
+		return jsonArray;
+	}
 
-        sbSecondRow.append("cut copy paste searchreplace bullist numlist | outdent indent blockquote | ");
-        sbSecondRow.append("undo redo | link unlink anchor image media ");
+	protected JSONArray getToolbarsPhoneJSONArray() {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        if (showSource) {
-            sbSecondRow.append("code");
-        }
+		jsonArray.put("bold italic underline | bullist numlist");
+		jsonArray.put("link unlink image");
 
-        jsonArray.put(sbSecondRow.toString());
+		return jsonArray;
+	}
 
-        String thirdRowButtons =
-            "table | hr removeformat | subscript superscript | " +
-            "charmap emoticons | preview print fullscreen";
+	protected JSONArray getToolbarsSimpleJSONArray(boolean showSource) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        jsonArray.put(thirdRowButtons);
+		String firstRowButtons =
+			"bold italic underline strikethrough | bullist numlist | table | " +
+				"link unlink image";
 
-        return jsonArray;
-    }
+		if (showSource) {
+			firstRowButtons += " code";
+		}
 
-    protected JSONArray getToolbarsPhoneJSONArray() {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		jsonArray.put(firstRowButtons);
 
-        jsonArray.put("bold italic underline | bullist numlist");
+		return jsonArray;
+	}
 
-        jsonArray.put("link unlink image");
+	protected JSONArray getToolbarsTabletJSONArray(boolean showSource) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-        return jsonArray;
-    }
+		jsonArray.put(
+			"styleselect fontselect fontsizeselect | " +
+				"bold italic underline strikethrough | " +
+					"alignleft aligncenter alignright alignjustify");
 
-    protected JSONArray getToolbarsSimpleJSONArray(boolean showSource) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		String secondRowButtons = "bullist numlist | link unlink image";
 
-        String firstRowButtons =
-            "bold italic underline strikethrough | bullist numlist | table | link unlink image";
+		if (showSource) {
+			secondRowButtons += " code";
+		}
 
-        if (showSource) {
-            firstRowButtons += " code";
-        }
+		jsonArray.put(secondRowButtons);
 
-        jsonArray.put(firstRowButtons);
+		return jsonArray;
+	}
 
-        return jsonArray;
-    }
+	private static final Log _log = LogFactoryUtil.getLog(
+		TinymceEditorConfigContributor.class);
 
-    protected JSONArray getToolbarsTabletJSONArray(boolean showSource) {
-        JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-        String firstRowButtons =
-            "styleselect fontselect fontsizeselect | bold italic underline strikethrough | " +
-            "alignleft aligncenter alignright alignjustify";
-
-        jsonArray.put(firstRowButtons);
-
-        String secondRowButtons = "bullist numlist | link unlink image";
-
-        if (showSource) {
-            secondRowButtons += " code";
-        }
-
-        jsonArray.put(secondRowButtons);
-
-        return jsonArray;
-    }
 }

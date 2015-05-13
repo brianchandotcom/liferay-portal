@@ -51,8 +51,12 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
-JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("editorConfig") : null;
 
+JSONObject editorConfigJSONObject = null;
+
+if (data != null) {
+	editorConfigJSONObject = (JSONObject)data.get("editorConfig");
+}
 %>
 
 <liferay-util:buffer var="editor">
@@ -88,7 +92,7 @@ JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("edito
 			data = <%= HtmlUtil.escape(namespace + initMethod) %>();
 		}
 		else {
-			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
+			data = '<%= (contents != null) ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
 
 		return data;
@@ -175,7 +179,7 @@ JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("edito
 		},
 
 		initEditor: function() {
-			var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
+			var editorConfig = <%= (editorConfigJSONObject != null) ? editorConfigJSONObject.toString() : "{}" %>;
 
 			var defaultConfig = {
 				file_browser_callback: window['<%= name %>'].fileBrowserCallback,

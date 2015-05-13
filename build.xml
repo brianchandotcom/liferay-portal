@@ -353,15 +353,7 @@
 			</then>
 		</if>
 
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="deploy"
-		/>
-
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="deploy"
-		/>
+		<antcall target="deploy-modules" />
 
 		<if>
 			<and>
@@ -600,6 +592,34 @@
 
 				<ant dir="support-websphere" target="deploy" inheritAll="false" />
 			</then>
+		</if>
+	</target>
+
+	<target name="deploy-modules">
+		<delete dir="${liferay.home}/osgi" />
+
+		<if>
+			<uptodate targetfile="${liferay.home}/osgi.zip">
+				<srcfiles dir="${project.dir}/modules" includes="**/*.*" />
+			</uptodate>
+			<then>
+				<unzip dest="${liferay.home}/osgi" src="${liferay.home}/osgi.zip" />
+			</then>
+			<else>
+				<delete file="${liferay.home}/osgi.zip" />
+
+				<ant-execute
+					ant.dir="${project.dir}/modules/core/registry-api"
+					ant.target="deploy"
+				/>
+
+				<ant-execute
+					ant.dir="${project.dir}/modules"
+					ant.target="deploy"
+				/>
+
+				<zip basedir="${liferay.home}/osgi" destfile="${liferay.home}/osgi.zip" />
+			</else>
 		</if>
 	</target>
 

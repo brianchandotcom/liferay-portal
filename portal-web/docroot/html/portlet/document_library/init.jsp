@@ -26,6 +26,7 @@ page import="com.liferay.portal.kernel.search.SearchResult" %><%@
 page import="com.liferay.portal.kernel.servlet.taglib.ui.ToolbarItem" %><%@
 page import="com.liferay.portal.repository.registry.RepositoryClassDefinition" %><%@
 page import="com.liferay.portal.repository.registry.RepositoryClassDefinitionCatalogUtil" %><%@
+page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
 page import="com.liferay.portlet.documentlibrary.DLGroupServiceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DLPortletInstanceSettings" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileEntryTypeException" %><%@

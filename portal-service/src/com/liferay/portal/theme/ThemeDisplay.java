@@ -17,11 +17,14 @@ package com.liferay.portal.theme;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.Device;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -45,6 +48,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
 
 import java.io.Serializable;
@@ -909,7 +913,19 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLMyAccount() {
-		return _urlMyAccount;
+		try {
+			if (_urlMyAccount == null) {
+				_urlMyAccount = PortletProviderUtil.getPortletURL(
+					getRequest(),
+					PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME,
+					PortletProvider.Action.VIEW);
+			}
+
+			return _urlMyAccount;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	@JSON(include = false)
@@ -1722,6 +1738,10 @@ public class ThemeDisplay
 		_urlLayoutTemplates = urlLayoutTemplates;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 Since 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setURLMyAccount(PortletURL urlMyAccount) {
 		_urlMyAccount = urlMyAccount;
 	}

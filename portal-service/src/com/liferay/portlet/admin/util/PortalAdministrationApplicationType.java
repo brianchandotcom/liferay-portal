@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,8 +11,20 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+package com.liferay.portlet.admin.util;
 
-<%@ include file="/html/portlet/control_panel_menu/init-ext.jsp" %>
+/**
+ * @author Adolfo Pérez
+ */
+public class PortalAdministrationApplicationType {
+
+	public interface SiteAdmin {
+
+		public static final String CLASS_NAME =
+			"com.liferay.portlet.admin.util." +
+				"PortalAdministrationApplicationType$SiteAdmin";
+
+	}
+
+}

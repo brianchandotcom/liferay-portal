@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/control_panel_menu/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <div class="portal-add-content">
 	<div class="control-panel-tools">
@@ -61,7 +61,7 @@
 			}
 		%>
 
-			<liferay-ui:panel collapsible="<%= true %>" cssClass="list-unstyled panel-page-category" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(request, "category." + siteAdministrationCategory) %>'>
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="list-unstyled panel-page-category" extended="<%= true %>" iconCssClass="<%= iconCssClass %>" id="<%= panelPageCategoryId %>" parentId="controlPanelMenuAddContentPanelContainer" persistState="<%= true %>" state='<%= siteAdministrationCategory.equals(portletCategory) ? "open" : "closed" %>' title='<%= LanguageUtil.get(request, "category." + siteAdministrationCategory) %>'>
 				<c:if test="<%= siteAdministrationCategory.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) %>">
 
 					<%
@@ -189,4 +189,19 @@
 		%>
 
 	</liferay-ui:panel-container>
+
+	<c:if test="<%= !themeDisplay.isStatePopUp() %>">
+		<aui:script use="liferay-control-panel">
+
+			<%
+			String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME, PortletProvider.Action.VIEW);
+			%>
+
+			new Liferay.ControlPanel(
+				{
+					namespace: '_<%= controlPanelMenuPortletId %>_'
+				}
+			);
+		</aui:script>
+	</c:if>
 </div>

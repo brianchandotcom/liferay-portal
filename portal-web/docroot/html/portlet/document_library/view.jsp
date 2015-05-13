@@ -95,6 +95,8 @@ request.setAttribute("view.jsp-repositoryId", String.valueOf(repositoryId));
 request.setAttribute("view.jsp-displayStyle", displayStyle);
 request.setAttribute("view.jsp-orderByCol", orderByCol);
 request.setAttribute("view.jsp-orderByType", orderByType);
+
+String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME, PortletProvider.Action.VIEW);
 %>
 
 <liferay-util:buffer var="uploadURL"><liferay-portlet:actionURL><portlet:param name="struts_action" value="/document_library/view_file_entry" /><portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD_DYNAMIC %>" /><portlet:param name="folderId" value="{folderId}" /><portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" /></liferay-portlet:actionURL></liferay-util:buffer>
@@ -173,7 +175,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm2);
 
-		var hide = (Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+		var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
 
 		$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 	}
@@ -227,7 +229,7 @@ if (!defaultFolderView && (folder != null) && (portletName.equals(PortletKeys.DO
 					node: A.one(document.<portlet:namespace />fm2)
 				},
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="struts_action" value="/document_library/move_entry" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + PortletKeys.CONTROL_PANEL_MENU + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW) : StringPool.BLANK %>',
+				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + controlPanelMenuPortletId + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW) : StringPool.BLANK %>',
 				updateable: <%= DLFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.UPDATE) %>
 			},
 			namespace: '<portlet:namespace />',

@@ -43,6 +43,8 @@ if (total > 0) {
 request.setAttribute("view.jsp-folder", folder);
 
 request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
+
+String controlPanelMenuPortletId = PortletProviderUtil.getPortletId(PortalAdministrationApplicationType.SiteAdmin.CLASS_NAME, PortletProvider.Action.VIEW);
 %>
 
 <portlet:actionURL name="restoreTrashEntries" var="restoreTrashEntriesURL" />
@@ -111,7 +113,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 	function <portlet:namespace />toggleActionsButton() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		var hide = (Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0);
+		var hide = Liferay.Util.listCheckedExcept(form, '<portlet:namespace /><%= RowChecker.ALL_ROW_IDS %>').length == 0;
 
 		AUI.$('#<portlet:namespace />actionsButtonContainer').toggleClass('hide', hide);
 	}
@@ -134,7 +136,7 @@ request.setAttribute("view.jsp-folderId", String.valueOf(folderId));
 					node: A.one(document.<portlet:namespace />fm)
 				},
 				moveEntryRenderUrl: '<portlet:renderURL><portlet:param name="mvcPath" value="/move_entries.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:renderURL>',
-				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + PortletKeys.CONTROL_PANEL_MENU + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW) : StringPool.BLANK %>',
+				trashLinkId: '<%= TrashUtil.isTrashEnabled(scopeGroupId) ? "_" + controlPanelMenuPortletId + "_portlet_" + PortletProviderUtil.getPortletId(TrashEntry.class.getName(), PortletProvider.Action.VIEW) : StringPool.BLANK %>',
 				updateable: true
 			},
 			namespace: '<portlet:namespace />',

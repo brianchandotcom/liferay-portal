@@ -14,7 +14,6 @@
 	<bean id="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl" class="com.liferay.portlet.messageboards.comment.MBCommentManagerImpl">
 		<property name="MBDiscussionLocalService" ref="com.liferay.portlet.messageboards.service.MBDiscussionLocalService" />
 		<property name="MBMessageLocalService" ref="com.liferay.portlet.messageboards.service.MBMessageLocalService" />
-		<property name="MBMessageService" ref="com.liferay.portlet.messageboards.service.MBMessageService" />
 		<property name="ratingsEntryLocalService" ref="com.liferay.portlet.ratings.service.RatingsEntryLocalService" />
 		<property name="ratingsStatsLocalService" ref="com.liferay.portlet.ratings.service.RatingsStatsLocalService" />
 	</bean>

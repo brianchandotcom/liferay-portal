@@ -34,7 +34,6 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageService;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -229,10 +228,6 @@ public class MBCommentManagerImpl implements CommentManager {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	public void setMBMessageService(MBMessageService mbMessageService) {
-		_mbMessageService = mbMessageService;
-	}
-
 	public void setRatingsEntryLocalService(
 		RatingsEntryLocalService ratingsEntryLocalService) {
 
@@ -282,7 +277,6 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
-	private MBMessageService _mbMessageService;
 	private RatingsEntryLocalService _ratingsEntryLocalService;
 	private RatingsStatsLocalService _ratingsStatsLocalService;
 

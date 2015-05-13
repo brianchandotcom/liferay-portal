@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.lar;
+package com.liferay.dynamic.data.mapping.web.lar;
 
 /**
  * @author Marcellus Tavares

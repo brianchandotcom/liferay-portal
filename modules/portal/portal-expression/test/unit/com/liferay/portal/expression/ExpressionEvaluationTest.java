@@ -29,6 +29,7 @@ public class ExpressionEvaluationTest {
 	public void testEvaluateBasicBooleanEqualsExpression() throws Exception {
 		Expression<Boolean> expression =
 			_expressionFactory.createBooleanExpression("var1 == true");
+
 		expression.setBooleanVariableValue("var1", true);
 
 		Assert.assertTrue(expression.evaluate());
@@ -38,6 +39,7 @@ public class ExpressionEvaluationTest {
 	public void testEvaluateBasicBooleanUnequalsExpression() throws Exception {
 		Expression<Boolean> expression =
 			_expressionFactory.createBooleanExpression("var1 != true");
+
 		expression.setBooleanVariableValue("var1", true);
 
 		Assert.assertFalse(expression.evaluate());

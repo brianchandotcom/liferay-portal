@@ -14,11 +14,11 @@
 
 package com.liferay.portal.expression.internal;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,10 +26,6 @@ import java.util.regex.Pattern;
  * @author Marcellus Tavares
  */
 public class VariableNamesExtractor {
-
-	public VariableNamesExtractor() {
-		populateReservedWords();
-	}
 
 	public List<String> extract(String expressionString) {
 		if (expressionString == null) {
@@ -43,7 +39,7 @@ public class VariableNamesExtractor {
 		while (matcher.find()) {
 			String match = matcher.group(1);
 
-			if (!_reservedWords.contains(match)) {
+			if (!ArrayUtil.contains(_reservedWords, match)) {
 				variableNames.add(matcher.group(1));
 			}
 		}
@@ -51,13 +47,8 @@ public class VariableNamesExtractor {
 		return variableNames;
 	}
 
-	protected void populateReservedWords() {
-		_reservedWords.add("true");
-		_reservedWords.add("false");
-	}
-
 	private static final Pattern _pattern = Pattern.compile(
 		"\\b([a-zA-Z]+[\\w\\._]*)(?!\\()\\b", Pattern.MULTILINE);
-	private static final Set<String> _reservedWords = new HashSet<>();
+	private static final String[] _reservedWords = {"false", "true"};
 
 }

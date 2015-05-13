@@ -1097,7 +1097,7 @@ public class LiferayRepository
 		int restrictionType = ParamUtil.getInteger(
 			serviceContext, "restrictionType");
 
-		DLFolder dlFolder = dlFolderLocalService.updateFolder(
+		DLFolder dlFolder = dlFolderService.updateFolder(
 			toFolderId(folderId), toFolderId(parentFolderId), name, description,
 			defaultFileEntryTypeId, fileEntryTypeIds, restrictionType,
 			serviceContext);

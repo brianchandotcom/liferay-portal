@@ -827,7 +827,7 @@
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#PENDING_TABLE_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="CPMysubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertClick" locator1="CPMysubmissions#PENDING_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
 
 		<execute macro="Workflow#viewMySubmissionsTaskPreview">
 			<var name="workflowAssetContent" value="${workflowAssetContent}" />
@@ -836,7 +836,7 @@
 			<var name="workflowDefinition" value="${workflowDefinition}" />
 		</execute>
 
-		<execute function="AssertClick#assertTextClickAtAndWait" locator1="CPMysubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
+		<execute function="AssertClick" locator1="CPMysubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 

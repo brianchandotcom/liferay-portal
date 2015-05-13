@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslator;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorException;
 import com.liferay.portal.kernel.microsofttranslator.MicrosoftTranslatorFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NaturalOrderStringComparator;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -37,6 +36,9 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -543,7 +545,7 @@ public class LangBuilder {
 			return null;
 		}
 
-		String content = FileUtil.read(propertiesFile);
+		String content = _read(propertiesFile);
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 			new UnsyncBufferedReader(new UnsyncStringReader(content));
@@ -611,7 +613,15 @@ public class LangBuilder {
 			}
 		}
 
-		return FileUtil.read(propertiesFile);
+		return _read(propertiesFile);
+	}
+
+	private String _read(File file) throws IOException {
+		String s = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private Properties _readProperties(File file) throws IOException {

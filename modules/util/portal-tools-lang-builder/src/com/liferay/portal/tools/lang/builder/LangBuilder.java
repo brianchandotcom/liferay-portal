@@ -208,7 +208,8 @@ public class LangBuilder {
 		throws IOException {
 
 		File propertiesFile = new File(
-			_langDirName + "/" + _langFileName + "_" + languageId + ".properties");
+			_langDirName + "/" + _langFileName + "_" + languageId +
+				".properties");
 
 		Properties properties = new Properties();
 

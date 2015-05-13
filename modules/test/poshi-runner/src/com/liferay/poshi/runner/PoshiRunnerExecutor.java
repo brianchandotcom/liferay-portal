@@ -532,6 +532,8 @@ public class PoshiRunnerExecutor {
 	public static void runTaskElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		try {
 			SummaryLoggerHandler.startSummary(element);
 
@@ -544,6 +546,8 @@ public class PoshiRunnerExecutor {
 		}
 
 		SummaryLoggerHandler.passSummary(element);
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runVarElement(Element element, boolean commandVar)

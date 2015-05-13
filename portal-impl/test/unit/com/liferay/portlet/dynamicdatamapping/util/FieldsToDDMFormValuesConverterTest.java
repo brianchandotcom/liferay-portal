@@ -42,6 +42,7 @@ public class FieldsToDDMFormValuesConverterTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormFieldTypeRegistryUtil();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMFormJSONSerializerUtil();
 		setUpDDMStructureLocalServiceUtil();

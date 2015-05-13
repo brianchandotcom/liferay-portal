@@ -52,6 +52,7 @@ public class DDMFormTemplateSynchonizerTest extends BaseDDMTestCase {
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormFieldTypeRegistryUtil();
 		setUpDDMFormJSONSerializerUtil();
 		setUpDDMFormJSONDeserializerUtil();
 		setUpDDMStructureLocalServiceUtil();

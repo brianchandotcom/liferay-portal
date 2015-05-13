@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 TemplateDisplayTerms displayTerms = new TemplateDisplayTerms(renderRequest);

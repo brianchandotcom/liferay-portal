@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
@@ -23,7 +23,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/select_structure" />
+	<portlet:param name="mvcPath" value="/select_structure.jsp" />
 	<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
 	<portlet:param name="eventName" value="<%= eventName %>" />
 </liferay-portlet:renderURL>
@@ -45,7 +45,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 			request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 			%>
 
-			<liferay-util:include page="/html/portlet/dynamic_data_mapping/structure_toolbar.jsp">
+			<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-util:include>
 		</c:if>
@@ -53,7 +53,7 @@ String eventName = ParamUtil.getString(request, "eventName", "selectStructure");
 		<div class="separator"><!-- --></div>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/dynamic_data_mapping/structure_search_results.jspf" %>
+			<%@ include file="/structure_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row

@@ -31,7 +31,7 @@ JSONArray fieldsJSONArray = _getFormTemplateFieldsJSONArray(structure, script);
 <aui:input name="language" type="hidden" value="json" />
 <aui:input name="scriptContent" type="hidden" />
 
-<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
+<%@ include file="/form_builder.jspf" %>
 
 <aui:script>
 	function <portlet:namespace />attachValueChange() {

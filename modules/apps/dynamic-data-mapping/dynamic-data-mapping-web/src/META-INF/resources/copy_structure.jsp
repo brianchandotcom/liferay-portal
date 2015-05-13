@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
@@ -28,12 +28,11 @@ boolean copyFormTemplates = ParamUtil.getBoolean(request, "copyFormTemplates");
 boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplates");
 %>
 
-<portlet:actionURL var="copyStructureURL">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/copy_structure" />
+<portlet:actionURL var="copyStructureURL" name="ddmCopyStructure">
+	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= copyStructureURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.COPY %>" />
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />

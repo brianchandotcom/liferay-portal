@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_mapping/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -73,12 +73,15 @@ if (Validator.isNotNull(structureAvailableFields)) {
 boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput");
 %>
 
-<portlet:actionURL var="editTemplateURL">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+<portlet:actionURL var="editTemplateURL" name="ddmUpdateTemplate">
+	<portlet:param name="mvcPath" value="/edit_template.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editTemplateURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveTemplate();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (template != null) ? Constants.UPDATE : Constants.ADD %>" />
+<portlet:actionURL var="addTemplateURL" name="ddmAddTemplate">
+	<portlet:param name="mvcPath" value="/edit_template.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= (template != null) ? editTemplateURL : addTemplateURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveTemplate();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
@@ -188,8 +191,12 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 				<c:if test="<%= template != null %>">
 					<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
+					
+					<portlet:actionURL var="getTemplateURL" name="ddmGetTemplate">
+						<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
+					</portlet:actionURL>
 
-					<aui:input name="url" type="resource" value='<%= themeDisplay.getPortalURL() + themeDisplay.getPathMain() + "/dynamic_data_mapping/get_template?templateId=" + templateId %>' />
+					<aui:input name="url" type="resource" value='<%= getTemplateURL.toString() %>' />
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
 						<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />
@@ -244,10 +251,10 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 		<c:choose>
 			<c:when test="<%= type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) %>">
-				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_form.jspf" %>
+				<%@ include file="/edit_template_form.jspf" %>
 			</c:when>
 			<c:otherwise>
-				<%@ include file="/html/portlet/dynamic_data_mapping/edit_template_display.jspf" %>
+				<%@ include file="/edit_template_display.jspf" %>
 			</c:otherwise>
 		</c:choose>
 	</aui:fieldset>
@@ -326,7 +333,7 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 					eventName: '<portlet:namespace />selectStructure',
 					groupId: <%= groupId %>,
 					showAncestorScopes: true,
-					struts_action: '/dynamic_data_mapping/select_structure',
+					mvcPath: '/select_structure.jsp',
 					title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 				},
 				function(event) {

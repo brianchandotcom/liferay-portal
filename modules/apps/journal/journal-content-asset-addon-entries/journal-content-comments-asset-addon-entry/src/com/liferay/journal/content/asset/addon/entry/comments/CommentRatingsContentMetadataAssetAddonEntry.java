@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.asset.addon.entry.comments;
 
 import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Julio Camarero
  */
 @Component(
-	immediate = true, service = ContentMetadataAssetAddonEntry.class
+	immediate = true, service = {ContentMetadataAssetAddonEntry.class, CommentRatingsContentMetadataAssetAddonEntry.class}
 )
 public class CommentRatingsContentMetadataAssetAddonEntry
 	extends BaseAssetAddonEntry implements ContentMetadataAssetAddonEntry {

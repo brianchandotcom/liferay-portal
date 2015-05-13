@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.asset.addon.entry.conversions;
 
 import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -24,28 +27,36 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true, service = UserToolAssetAddonEntry.class
 )
-public class PDFConvertionUserToolAssetAddonEntry
+public class TXTConvertionUserToolAssetAddonEntry
 	extends BaseConvertionUserToolAssetAddonEntry
 	implements UserToolAssetAddonEntry {
 
 	@Override
 	public String getExtension() {
-		return "pdf";
+		return "txt";
 	}
 
 	@Override
 	public String getIcon() {
-		return "file-text";
+		return "file-alt";
 	}
 
 	@Override
 	public String getKey() {
-		return "enablePDF";
+		return "enableTXT";
 	}
 
 	@Override
 	public Double getWeight() {
-		return 3.0;
+		return 6.0;
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.conversions)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

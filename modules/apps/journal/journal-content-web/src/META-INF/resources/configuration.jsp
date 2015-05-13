@@ -100,7 +100,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL %>" />
 	<aui:input name="preferences--assetEntryId--" type="hidden" value="<%= journalContentDisplayContext.getAssetEntryId() %>" />
 	<aui:input name="preferences--ddmTemplateKey--" type="hidden" value="<%= ddmTemplateKey %>" />
-	<aui:input name="preferences--extensions--" type="hidden" value="<%= journalContentDisplayContext.getExtensions() %>" />
 
 	<aui:fieldset>
 		<aui:input name="portletId" type="resource" value="<%= journalContentDisplayContext.getPortletResource() %>" />
@@ -124,18 +123,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 				id="contentMetadataAssetAddonEntriesSelector"
 				selectedAssetAddonEntries="<%= (List<AssetAddonEntry>)(List<?>)journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>"
 				title="select-content-metadata"
-			/>
-		</aui:field-wrapper>
-
-		<aui:field-wrapper helpMessage='<%= !journalContentDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentExtensions"
-				leftList="<%= journalContentDisplayContext.getCurrentExtensions() %>"
-				leftReorder="true"
-				leftTitle="current"
-				rightBoxName="availableExtensions"
-				rightList="<%= journalContentDisplayContext.getAvailableExtensions() %>"
-				rightTitle="available"
 			/>
 		</aui:field-wrapper>
 
@@ -201,17 +188,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 					displayArticleId.addClass('modified');
 				}
 			);
-		}
-	);
-
-	$('#<portlet:namespace />saveButton').on(
-		'click',
-		function(event) {
-			event.preventDefault();
-
-			form.fm('extensions').val(Liferay.Util.listSelect(form.fm('currentExtensions')));
-
-			submitForm(form);
 		}
 	);
 </aui:script>

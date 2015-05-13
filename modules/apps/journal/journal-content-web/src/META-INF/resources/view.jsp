@@ -52,39 +52,7 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 					<c:when test="<%= (articleDisplay != null) && !journalContentDisplayContext.isExpired() %>">
 						<div class="user-tool-asset-addon-entries">
 							<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedUserToolAssetAddonEntries() %>" />
-
-								<c:if test="<%= journalContentDisplayContext.isEnableConversions() && !journalContentDisplayContext.isPrint() %>">
-									<div class="export-actions">
-										<liferay-ui:icon-list>
-
-											<%
-											for (String extension : journalContentDisplayContext.getExtensions()) {
-											%>
-
-												<portlet:resourceURL id="exportArticle" var="exportArticleURL">
-													<portlet:param name="groupId" value="<%= String.valueOf(articleDisplay.getGroupId()) %>" />
-													<portlet:param name="articleId" value="<%= articleDisplay.getArticleId() %>" />
-													<portlet:param name="targetExtension" value="<%= extension %>" />
-												</portlet:resourceURL>
-
-												<liferay-ui:icon
-													iconCssClass="<%= DLUtil.getFileIconCssClass(extension) %>"
-													label="<%= true %>"
-													message='<%= LanguageUtil.format(request, "x-convert-x-to-x", new Object[] {"hide-accessible", HtmlUtil.escape(articleDisplay.getTitle()), StringUtil.toUpperCase(HtmlUtil.escape(extension))}) %>'
-													method="get"
-													target="_blank"
-													url="<%= exportArticleURL %>"
-												/>
-
-											<%
-											}
-											%>
-
-										</liferay-ui:icon-list>
-									</div>
-								</c:if>
-
-							</div>
+						</div>
 
 						<div class="journal-content-article">
 							<%= RuntimePageUtil.processXML(request, response, articleDisplay.getContent()) %>

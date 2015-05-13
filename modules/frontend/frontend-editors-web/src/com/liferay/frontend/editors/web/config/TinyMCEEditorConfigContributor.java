@@ -38,8 +38,8 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	property = {"editor.name=tinymce"}, service = EditorConfigContributor.class
 )
-public class TinymceEditorConfigContributor
-	extends BaseTinymceEditorConfigConfigurator {
+public class TinyMCEEditorConfigContributor
+	extends BaseTinyMCEEditorConfigConfigurator {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -252,6 +252,6 @@ public class TinymceEditorConfigContributor
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		TinymceEditorConfigContributor.class);
+		TinyMCEEditorConfigContributor.class);
 
 }

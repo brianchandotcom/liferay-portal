@@ -16,7 +16,7 @@
 
 <%@ include file="/html/editors/init.jsp" %>
 
-<liferay-util:include page='<%= themeDisplay.getPathEditors() + "/html/editors/ckeditor.jsp" %>'>
+<liferay-util:include page='<%= themeDisplay.getPathEditors() + "/editors/ckeditor.jsp" %>'>
 	<liferay-util:param name="ckEditorConfigFileName" value="ckconfig_creole.jsp" />
 	<liferay-util:param name="hideImageResizing" value="<%= Boolean.TRUE.toString() %>" />
 </liferay-util:include>

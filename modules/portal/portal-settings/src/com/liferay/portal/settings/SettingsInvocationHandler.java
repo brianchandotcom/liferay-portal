@@ -16,7 +16,6 @@ package com.liferay.portal.settings;
 
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.Constructor;
@@ -60,7 +59,7 @@ public class SettingsInvocationHandler<S> implements InvocationHandler {
 		}
 
 		try {
-			return _invokeTypedSettings(method, args);
+			return _invokeTypedSettings(method);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
@@ -78,96 +77,41 @@ public class SettingsInvocationHandler<S> implements InvocationHandler {
 		return method.invoke(_settingsOverrideInstance, args);
 	}
 
-	private Object _invokeTypedSettings(Method method, Object[] args)
+	private Object _invokeTypedSettings(Method method)
 		throws NoSuchMethodException, IllegalAccessException,
 			InvocationTargetException, InstantiationException {
 
 		Class<?> returnType = method.getReturnType();
 
-		Object defaultValue = null;
-
-		if (ArrayUtil.isNotEmpty(args)) {
-			defaultValue = args[0];
-		}
-
 		if (returnType.equals(boolean.class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getBooleanValue(method.getName());
-			}
-			else {
-				return _typedSettings.getBooleanValue(
-					method.getName(), (Boolean) defaultValue);
-			}
+			return _typedSettings.getBooleanValue(method.getName());
 		}
 		else if (returnType.equals(double.class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getDoubleValue(method.getName());
-			}
-			else {
-				return _typedSettings.getDoubleValue(
-					method.getName(), (Double) defaultValue);
-			}
+			return _typedSettings.getDoubleValue(method.getName());
 		}
 		else if (returnType.equals(float.class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getFloatValue(method.getName());
-			}
-			else {
-				return _typedSettings.getFloatValue(
-					method.getName(), (Float) defaultValue);
-			}
+			return _typedSettings.getFloatValue(method.getName());
 		}
 		else if (returnType.equals(int.class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getIntegerValue(method.getName());
-			}
-			else {
-				return _typedSettings.getIntegerValue(
-					method.getName(), (Integer) defaultValue);
-			}
+			return _typedSettings.getIntegerValue(method.getName());
 		}
 		else if (returnType.equals(LocalizedValuesMap.class)) {
 			return _typedSettings.getLocalizedValuesMap(method.getName());
 		}
 		else if (returnType.equals(long.class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getLongValue(method.getName());
-			}
-			else {
-				return _typedSettings.getLongValue(
-					method.getName(), (Long) defaultValue);
-			}
+			return _typedSettings.getLongValue(method.getName());
 		}
 		else if (returnType.equals(String.class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getValue(method.getName());
-			}
-			else {
-				return _typedSettings.getValue(
-					method.getName(), (String) defaultValue);
-			}
+			return _typedSettings.getValue(method.getName());
 		}
 		else if (returnType.equals(String[].class)) {
-			if (defaultValue == null) {
-				return _typedSettings.getValues(method.getName());
-			}
-			else {
-				return _typedSettings.getValues(
-					method.getName(), (String[]) defaultValue);
-			}
+			return _typedSettings.getValues(method.getName());
 		}
 
 		Constructor<?> constructor = returnType.getConstructor(String.class);
 
-		if (defaultValue == null) {
 			return constructor.newInstance(
 				_typedSettings.getValue(method.getName()));
-		}
-		else {
-			return constructor.newInstance(
-				_typedSettings.getValue(
-					method.getName(), (String) defaultValue));
-		}
 	}
 
 	private final Class<S> _clazz;

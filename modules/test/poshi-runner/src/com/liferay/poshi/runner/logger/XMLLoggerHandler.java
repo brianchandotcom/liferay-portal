@@ -472,6 +472,8 @@ public final class XMLLoggerHandler {
 		loggerElement.addChildLoggerElement(
 			_getLineContainerLoggerElement(element));
 
+		loggerElement.setWrittenToLogger(true);
+
 		_loggerElements.put(
 			PoshiRunnerStackTraceUtil.getSimpleStackTrace(), loggerElement);
 

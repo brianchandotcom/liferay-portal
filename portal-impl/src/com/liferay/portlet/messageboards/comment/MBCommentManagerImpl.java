@@ -34,14 +34,12 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBMessageService;
-import com.liferay.portlet.messageboards.service.MBMessageServiceUtil;
 import com.liferay.portlet.messageboards.util.comparator.MessageThreadComparator;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.model.RatingsStats;
-import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
-import com.liferay.portlet.ratings.service.RatingsStatsLocalServiceUtil;
+import com.liferay.portlet.ratings.service.RatingsEntryLocalService;
+import com.liferay.portlet.ratings.service.RatingsStatsLocalService;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,7 +120,7 @@ public class MBCommentManagerImpl implements CommentManager {
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
-		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
+		MBMessage parentMessage = _mbMessageLocalService.getMessage(
 			parentCommentId);
 
 		long threadId = parentMessage.getThreadId();
@@ -130,7 +128,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		MBMessage message = MBMessageServiceUtil.addDiscussionMessage(
+		MBMessage message = _mbMessageService.addDiscussionMessage(
 			serviceContext.getScopeGroupId(), className, classPK,
 			permissionClassName, permissionClassPK, permissionOwnerId, threadId,
 			parentCommentId, subject, body, serviceContext);
@@ -188,7 +186,7 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		MBMessageDisplay messageDisplay =
-			MBMessageLocalServiceUtil.getDiscussionMessageDisplay(
+			_mbMessageLocalService.getDiscussionMessageDisplay(
 				userId, groupId, className, classPK,
 				WorkflowConstants.STATUS_ANY, new MessageThreadComparator());
 
@@ -208,9 +206,9 @@ public class MBCommentManagerImpl implements CommentManager {
 				}
 			}
 
-			ratingsEntries = RatingsEntryLocalServiceUtil.getEntries(
+			ratingsEntries = _ratingsEntryLocalService.getEntries(
 				userId, CommentConstants.getDiscussionClassName(), classPKs);
-			ratingsStats = RatingsStatsLocalServiceUtil.getStats(
+			ratingsStats = _ratingsStatsLocalService.getStats(
 				CommentConstants.getDiscussionClassName(), classPKs);
 		}
 
@@ -248,6 +246,18 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	public void setMBMessageService(MBMessageService mbMessageService) {
 		_mbMessageService = mbMessageService;
+	}
+
+	public void setRatingsEntryLocalService(
+		RatingsEntryLocalService ratingsEntryLocalService) {
+
+		_ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	public void setRatingsStatsLocalService(
+		RatingsStatsLocalService ratingsStatsLocalService) {
+
+		_ratingsStatsLocalService = ratingsStatsLocalService;
 	}
 
 	@Override
@@ -289,5 +299,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private MBMessageService _mbMessageService;
+	private RatingsEntryLocalService _ratingsEntryLocalService;
+	private RatingsStatsLocalService _ratingsStatsLocalService;
 
 }

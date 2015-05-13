@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.lar;
+package com.liferay.dynamic.data.mapping.web.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -37,10 +39,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  * @author Daniel Kocsis
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
+	},
+	service = StagedModelDataHandler.class
+)
 public class DDMStructureStagedModelDataHandler
 	extends BaseStagedModelDataHandler<DDMStructure> {
 

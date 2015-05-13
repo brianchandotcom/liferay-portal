@@ -240,15 +240,6 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 	<div class="content-metadata-asset-addon-entries">
 		<liferay-ui:asset-addon-entry-display assetAddonEntries="<%= journalContentDisplayContext.getSelectedContentMetadataAssetAddonEntries() %>" />
 
-	<c:if test="<%= journalContentDisplayContext.isEnableRelatedAssets() %>">
-		<div class="entry-links">
-			<liferay-ui:asset-links
-				className="<%= JournalArticle.class.getName() %>"
-				classPK="<%= articleDisplay.getResourcePrimKey() %>"
-			/>
-		</div>
-	</c:if>
-
 	<c:if test="<%= journalContentDisplayContext.isEnableRatings() && !journalContentDisplayContext.isPrint() %>">
 		<div class="taglib-ratings-wrapper">
 			<liferay-ui:ratings

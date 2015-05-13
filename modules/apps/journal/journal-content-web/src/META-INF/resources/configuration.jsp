@@ -126,8 +126,6 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 			/>
 		</aui:field-wrapper>
 
-		<aui:input name="preferences--enableRelatedAssets--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRelatedAssets() %>" />
-
 		<aui:input name="preferences--enableRatings--" type="checkbox" value="<%= journalContentDisplayContext.isEnableRatings() %>" />
 
 		<c:if test="<%= journalContentDisplayContext.isCommentsEnabled() %>">

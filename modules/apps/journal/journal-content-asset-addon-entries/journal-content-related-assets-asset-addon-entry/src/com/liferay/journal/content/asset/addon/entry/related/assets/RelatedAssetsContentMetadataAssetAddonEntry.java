@@ -12,15 +12,18 @@
  * details.
  */
 
-package com.liferay.journal.content.web.entries;
+package com.liferay.journal.content.asset.addon.entry.related.assets;
 
 import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseAssetAddonEntry;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -29,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, service = ContentMetadataAssetAddonEntry.class
 )
 public class RelatedAssetsContentMetadataAssetAddonEntry
-	extends BaseAssetAddonEntry implements ContentMetadataAssetAddonEntry {
+	extends BaseJSPAssetAddonEntry implements ContentMetadataAssetAddonEntry {
 
 	@Override
 	public String getIcon() {
@@ -37,8 +40,13 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 	}
 
 	@Override
+	public String getJSPPath() {
+		return _JSP_PATH;
+	}
+
+	@Override
 	public String getKey() {
-		return "relatedAssets";
+		return "enableRelatedAssets";
 	}
 
 	@Override
@@ -50,5 +58,16 @@ public class RelatedAssetsContentMetadataAssetAddonEntry
 	public Double getWeight() {
 		return 1.0;
 	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.asset.addon.entry.related.assets)"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	private static final String _JSP_PATH =
+		"/META-INF/resources/related_assets.jsp";
 
 }

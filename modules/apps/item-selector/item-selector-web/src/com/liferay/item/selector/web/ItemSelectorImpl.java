@@ -23,13 +23,12 @@ import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
 import com.liferay.item.selector.web.util.ItemSelectorCriterionSerializer;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.PortletURLFactoryUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -46,6 +45,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowStateException;
 
@@ -69,7 +69,7 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public ItemSelectorRendering getItemSelectorRendering(
-		PortletRequest portletRequest) {
+		PortletRequest portletRequest, PortletResponse portletResponse) {
 
 		Map<String, String[]> parameters = portletRequest.getParameterMap();
 
@@ -106,7 +106,7 @@ public class ItemSelectorImpl implements ItemSelector {
 					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
-					portletRequest, itemSelectedEventName,
+					portletResponse, itemSelectedEventName,
 					itemSelectorCriteriaArray);
 
 				portletURL.setParameter(
@@ -127,18 +127,17 @@ public class ItemSelectorImpl implements ItemSelector {
 
 	@Override
 	public PortletURL getItemSelectorURL(
-		PortletRequest portletRequest, String itemSelectedEventName,
+		PortletResponse portletResponse, String itemSelectedEventName,
 		ItemSelectorCriterion... itemSelectorCriteria) {
 
 		Map<String, String[]> parameters = getItemSelectorParameters(
 			itemSelectedEventName, itemSelectorCriteria);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)portletResponse;
 
-		PortletURL portletURL = PortletURLFactoryUtil.create(
-			portletRequest, ItemSelectorPortletKeys.ITEM_SELECTOR,
-			themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+		LiferayPortletURL portletURL = liferayPortletResponse.createActionURL(
+			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
 		try {
 			portletURL.setPortletMode(PortletMode.VIEW);

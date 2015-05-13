@@ -44,29 +44,36 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
+		boolean conditionalValue = false;
+
 		String elementName = element.getName();
 
 		if (elementName.equals("and")) {
 			List<Element> andElements = element.elements();
 
+			conditionalValue = true;
+
 			for (Element andElement : andElements) {
-				if (!evaluateConditionalElement(andElement)) {
-					return false;
+				conditionalValue =
+					conditionalValue && evaluateConditionalElement(andElement);
+
+				if (!conditionalValue) {
+					break;
 				}
 			}
-
-			return true;
 		}
 		else if (elementName.equals("condition")) {
 			if (element.attributeValue("function") != null) {
 				runFunctionExecuteElement(element);
 
-				return (boolean)_returnObject;
+				conditionalValue = (boolean)_returnObject;
 			}
 			else if (element.attributeValue("selenium") != null) {
 				runSeleniumElement(element);
 
-				return (boolean)_returnObject;
+				conditionalValue = (boolean)_returnObject;
 			}
 		}
 		else if (elementName.equals("contains")) {
@@ -76,10 +83,11 @@ public class PoshiRunnerExecutor {
 				element.attributeValue("substring"));
 
 			if (string.contains(substring)) {
-				return true;
+				conditionalValue = true;
 			}
-
-			return false;
+			else {
+				conditionalValue = false;
+			}
 		}
 		else if (elementName.equals("equals")) {
 			String arg1 = PoshiRunnerVariablesUtil.replaceCommandVars(
@@ -88,40 +96,43 @@ public class PoshiRunnerExecutor {
 				element.attributeValue("arg2"));
 
 			if (arg1.equals(arg2)) {
-				return true;
+				conditionalValue = true;
 			}
-
-			return false;
+			else {
+				conditionalValue = false;
+			}
 		}
 		else if (elementName.equals("isset")) {
 			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
 					element.attributeValue("var"))) {
 
-				return true;
+				conditionalValue = true;
 			}
-
-			return false;
+			else {
+				conditionalValue = false;
+			}
 		}
 		else if (elementName.equals("or")) {
 			List<Element> orElements = element.elements();
 
 			for (Element orElement : orElements) {
-				if (evaluateConditionalElement(orElement)) {
-					return true;
+				conditionalValue =
+					conditionalValue || evaluateConditionalElement(orElement);
+
+				if (conditionalValue) {
+					break;
 				}
 			}
-
-			return false;
 		}
 		else if (elementName.equals("not")) {
 			List<Element> notElements = element.elements();
 
 			Element notElement = notElements.get(0);
 
-			return !evaluateConditionalElement(notElement);
+			conditionalValue = !evaluateConditionalElement(notElement);
 		}
 
-		return false;
+		return conditionalValue;
 	}
 
 	public static void parseElement(Element element) throws Exception {

@@ -1706,10 +1706,7 @@
 				<var name="pageName" value="${pageName}" />
 			</execute>
 
-			<execute macro="Portlet#gotoPortletOptions">
-				<var name="portletName" value="Calendar" />
-				<var name="portletOption" value="Configuration" />
-			</execute>
+			<execute macro="Calendar#gotoConfiguration" />
 
 			<execute macro="CalendarConfiguration#selectDefaultView">
 				<var name="defaultView" value="${defaultView}" />
@@ -2034,6 +2031,68 @@
 
 		<execute macro="CalendarResource#viewDefaultPG">
 			<var name="calendarResourceName" value="${calendarResourceName}" />
+		</execute>
+	</command>
+
+	<command name="DisableRSSFeedForSiteCalendar" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="11:59 PM" />
+			<var name="startDateTime" value="11:58 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<var method="selenium#getLocation()" name="rssURL" />
+
+		<execute macro="Calendar#gotoPageWindow">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#disableRSS" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#viewSiteCalendarNoMenulistOption">
+			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewNoRSS">
+			<var name="rssURL" value="${rssURL}" />
 		</execute>
 	</command>
 
@@ -3601,10 +3660,7 @@
 				<var name="pageName" value="${pageName}" />
 			</execute>
 
-			<execute macro="Portlet#gotoPortletOptions">
-				<var name="portletName" value="Calendar" />
-				<var name="portletOption" value="Configuration" />
-			</execute>
+			<execute macro="Calendar#gotoConfiguration" />
 
 			<execute macro="CalendarConfiguration#selectDefaultDuration">
 				<var name="defaultDuration" value="${minutes} Minutes" />

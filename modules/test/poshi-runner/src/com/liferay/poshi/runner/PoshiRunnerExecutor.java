@@ -655,6 +655,8 @@ public class PoshiRunnerExecutor {
 	public static void runWhileElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		int maxIterations = 15;
 
 		if (element.attributeValue("max-iterations") != null) {
@@ -667,14 +669,31 @@ public class PoshiRunnerExecutor {
 		Element conditionElement = whileChildElements.get(0);
 		Element thenElement = element.element("then");
 
+		boolean firstFailed = false;
+
 		for (int i = 0; i < maxIterations; i++) {
 			if (!evaluateConditionalElement(conditionElement)) {
+				if (i == 0) {
+					firstFailed = true;
+				}
+
 				break;
 			}
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(thenElement);
 
+			XMLLoggerHandler.updateStatus(thenElement, "pending");
+
 			parseElement(thenElement);
+
+			XMLLoggerHandler.updateStatus(thenElement, "pass");
+		}
+
+		if (firstFailed) {
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
+		}
+		else {
+			XMLLoggerHandler.updateStatus(element, "pass");
 		}
 	}
 

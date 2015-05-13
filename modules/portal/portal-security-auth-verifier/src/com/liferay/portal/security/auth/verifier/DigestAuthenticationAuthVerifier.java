@@ -17,7 +17,6 @@ package com.liferay.portal.security.auth.verifier;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.auth.AccessControlContext;
@@ -34,11 +33,17 @@ import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tomas Polesovsky
  */
-@OSGiBeanProperties(
-	portalPropertyPrefix = "auth.verifier.DigestAuthenticationAuthVerifier."
+@Component(
+	immediate = true,
+	property = {
+		"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed=",
+		"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes=N/A"
+	}
 )
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 

@@ -248,11 +248,20 @@ public abstract class BaseRequestHelper {
 	public User getUser() {
 		if (_user == null) {
 			ThemeDisplay themeDisplay = getThemeDisplay();
-
 			_user = themeDisplay.getUser();
 		}
 
 		return _user;
+	}
+
+	public long getUserId() {
+		if (_userId == null) {
+			ThemeDisplay themeDisplay = getThemeDisplay();
+
+			_userId = themeDisplay.getUserId();
+		}
+
+		return _userId;
 	}
 
 	private Company _company;
@@ -275,5 +284,6 @@ public abstract class BaseRequestHelper {
 	private Long _siteGroupId;
 	private ThemeDisplay _themeDisplay;
 	private User _user;
+	private Long _userId;
 
 }

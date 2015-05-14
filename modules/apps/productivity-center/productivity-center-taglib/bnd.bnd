@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Productivity Center Taglib
 Bundle-SymbolicName: com.liferay.productivity.center.taglib
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.productivity.center.taglib.constants
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources

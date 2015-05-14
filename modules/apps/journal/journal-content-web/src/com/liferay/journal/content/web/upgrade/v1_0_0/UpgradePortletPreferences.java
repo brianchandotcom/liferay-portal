@@ -59,23 +59,23 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		return selectableEntries;
 	}
 
-	protected void upgradeContentMetadataEntries(
+	protected void upgradeContentMetadataAssetAddonEntries(
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String[] contentMetadataEntries = new String[0];
+		String[] contentMetadataAssetAddonEntries = new String[0];
 
-		contentMetadataEntries = upgradeBooleanSelectableEntry(
-			contentMetadataEntries, portletPreferences, "enableCommentRatings");
-		contentMetadataEntries = upgradeBooleanSelectableEntry(
-			contentMetadataEntries, portletPreferences, "enableComments");
-		contentMetadataEntries = upgradeBooleanSelectableEntry(
-			contentMetadataEntries, portletPreferences, "enableRatings");
-		contentMetadataEntries = upgradeBooleanSelectableEntry(
-			contentMetadataEntries, portletPreferences, "enableRelatedAssets");
+		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+			contentMetadataAssetAddonEntries, portletPreferences, "enableCommentRatings");
+		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+			contentMetadataAssetAddonEntries, portletPreferences, "enableComments");
+		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+			contentMetadataAssetAddonEntries, portletPreferences, "enableRatings");
+		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+			contentMetadataAssetAddonEntries, portletPreferences, "enableRelatedAssets");
 
 		portletPreferences.setValue(
-			"contentMetadataEntries", StringUtil.merge(contentMetadataEntries));
+			"contentMetadataAssetAddonEntries", StringUtil.merge(contentMetadataAssetAddonEntries));
 	}
 
 	protected String[] upgradeMultiValueSelectableEntry(
@@ -114,7 +114,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
 		upgradeUserToolEntries(portletPreferences);
-		upgradeContentMetadataEntries(portletPreferences);
+		upgradeContentMetadataAssetAddonEntries(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}

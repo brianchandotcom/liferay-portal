@@ -230,7 +230,7 @@ public class JournalContentDisplayContext {
 	public List<ContentMetadataAssetAddonEntry>
 		getEnabledContentMetadataAssetAddonEntries() {
 
-		List<ContentMetadataAssetAddonEntry> contentMetadataEntries =
+		List<ContentMetadataAssetAddonEntry> contentMetadataAssetAddonEntries =
 			ListUtil.filter(
 				ContentMetadataAssetAddonEntryTracker.
 					getContentMetadataAssetAddonEntries(),
@@ -246,7 +246,7 @@ public class JournalContentDisplayContext {
 				});
 
 		return ListUtil.sort(
-			contentMetadataEntries,
+			contentMetadataAssetAddonEntries,
 			new PropertyComparator("weight", true, false));
 	}
 

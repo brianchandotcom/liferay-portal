@@ -5,6 +5,7 @@
 
 	<property name="war.file" value="${ant.project.name}" />
 
+	<property name="alloy.bootstrap.version" value="3.2.0-2" />
 	<property name="alloy.version" value="3.0.1" />
 	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="frontend.js.web.dir" value="../modules/frontend/frontend-js-web" />
@@ -48,12 +49,7 @@
 
 	<extension-point name="build-portal-web-dependencies" depends="build-bourbon,build-css,build-dtd,build-vaadin" />
 
-	<target name="build-alloy-bootstrap">
-		<property name="alloy.bootstrap.version" value="3.2.0-2" />
-
-		<property name="alloy.bootstrap.deploy.js.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/js/bootstrap" />
-		<property name="alloy.bootstrap.deploy.theme.dir" value="docroot/html/themes/_unstyled/css/aui" />
-
+	<target name="build-alloy-bootstrap-theme">
 		<path id="alloy.bootstrap.zip.path">
 			<fileset dir="third-party">
 				<include name="bootstrap-sass-${alloy.bootstrap.version}*.zip" />
@@ -64,72 +60,53 @@
 
 		<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
 
-		<property name="alloy.bootstrap.tmp.dir" value="docroot/html/ALLOY_BOOTSTRAP_ZIP" />
+		<property name="alloy.bootstrap.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/bootstrap-assets" />
 
 		<if>
 			<not>
 				<uptodate
 					srcfile="third-party/${alloy.bootstrap.file}"
-					targetfile="${alloy.bootstrap.deploy.theme.dir}"
+					targetfile="${alloy.bootstrap.assets.dir}"
 				/>
 			</not>
 			<then>
-
-				<!-- Prepare -->
-
-				<delete dir="${alloy.bootstrap.tmp.dir}" />
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}" />
-
-				<unzip src="third-party/${alloy.bootstrap.file}" dest="${alloy.bootstrap.tmp.dir}" />
-
-				<property name="alloy.bootstrap.lib.dir" value="${alloy.bootstrap.tmp.dir}/bootstrap-sass-${alloy.bootstrap.version}/assets" />
-
-				<!-- CSS -->
-
-				<property name="alloy.bootstrap.css.lib.dir" value="${alloy.bootstrap.lib.dir}/stylesheets" />
-
-				<delete failonerror="false" includeemptydirs="true" quiet="true">
-					<fileset
-						dir="${alloy.bootstrap.css.lib.dir}"
-						includes="_bootstrap-*.scss"
-					/>
-				</delete>
-
-				<copy todir="${alloy.bootstrap.deploy.theme.dir}" overwrite="true" preservelastmodified="true">
-					<fileset dir="${alloy.bootstrap.css.lib.dir}/" />
-				</copy>
-
-				<!-- Glyphicons font -->
-
-				<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.lib.dir}/fonts/bootstrap" />
-
-				<copy todir="${alloy.bootstrap.deploy.theme.dir}/glyphicons/font" overwrite="true" preservelastmodified="true">
-					<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />
-				</copy>
-
-				<!-- JavaScript -->
-
-				<property name="alloy.bootstrap.js.lib.dir" value="${alloy.bootstrap.lib.dir}/javascripts" />
-
-				<delete failonerror="false" includeemptydirs="true" quiet="true">
-					<fileset
-						dir="${alloy.bootstrap.js.lib.dir}"
-						includes="bootstrap-*.js"
-					/>
-				</delete>
-
-				<copy todir="${alloy.bootstrap.deploy.js.dir}" overwrite="true" preservelastmodified="true">
-					<fileset dir="${alloy.bootstrap.js.lib.dir}/" />
-				</copy>
-
-				<!-- Clean up -->
-
-				<delete dir="${alloy.bootstrap.tmp.dir}" />
+				<ant-execute
+					ant.build.file="build.xml"
+					ant.dir="${frontend.js.web.dir}"
+					ant.target="build-alloy-bootstrap"
+				/>
 			</then>
 		</if>
+
+		<property name="alloy.bootstrap.deploy.theme.dir" value="docroot/html/themes/_unstyled/css/aui" />
+
+		<delete dir="${alloy.bootstrap.deploy.theme.dir}" />
+
+		<!-- CSS -->
+
+		<property name="alloy.bootstrap.css.lib.dir" value="${alloy.bootstrap.assets.dir}/stylesheets" />
+
+		<delete failonerror="false" includeemptydirs="true" quiet="true">
+			<fileset
+				dir="${alloy.bootstrap.css.lib.dir}"
+				includes="_bootstrap-*.scss"
+			/>
+		</delete>
+
+		<copy todir="${alloy.bootstrap.deploy.theme.dir}" overwrite="true" preservelastmodified="true">
+			<fileset dir="${alloy.bootstrap.css.lib.dir}/" />
+		</copy>
+
+		<!-- Glyphicons font -->
+
+		<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.assets.dir}/fonts/bootstrap" />
+
+		<copy todir="${alloy.bootstrap.deploy.theme.dir}/glyphicons/font" overwrite="true" preservelastmodified="true">
+			<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />
+		</copy>
 	</target>
 
-	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap">
+	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap-theme">
 		<path id="alloy-font-awesome.zip.path">
 			<fileset dir="third-party">
 				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
@@ -409,7 +386,7 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-themes" depends="build-alloy-bootstrap,build-alloy-theme,build-alloy-font-awesome,build-bourbon">
+	<target name="build-themes" depends="build-alloy-bootstrap-theme,build-alloy-theme,build-alloy-font-awesome,build-bourbon">
 		<for param="module.name">
 			<path>
 				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />

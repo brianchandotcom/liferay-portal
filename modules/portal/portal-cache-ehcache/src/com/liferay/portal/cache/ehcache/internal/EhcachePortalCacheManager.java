@@ -20,10 +20,13 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
+import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
@@ -252,6 +255,50 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				}
 			}
 		}
+	}
+
+	protected boolean reconfigure(
+		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
+
+		String portalCacheConfigurationLocation =
+			portalCacheConfiguratorSettings.
+				getPortalCacheConfigrationLocation();
+
+		if (Validator.isNull(portalCacheConfigurationLocation)) {
+			return false;
+		}
+
+		ClassLoader classLoader =
+			portalCacheConfiguratorSettings.getClassLoader();
+
+		URL url = classLoader.getResource(portalCacheConfigurationLocation);
+
+		if (url == null) {
+			return false;
+		}
+
+		ClassLoader contextClassLoader =
+			Thread.currentThread().getContextClassLoader();
+
+		Thread.currentThread().setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				PortalClassLoaderUtil.getClassLoader(),
+				portalCacheConfiguratorSettings.getClassLoader()));
+
+		try {
+			if (_log.isInfoEnabled()) {
+				_log.info(
+					"Reconfiguring caches in cache manager " + getName() +
+						" using " + url);
+			}
+
+			reconfigureCaches(url);
+		}
+		finally {
+			Thread.currentThread().setContextClassLoader(contextClassLoader);
+		}
+
+		return true;
 	}
 
 	protected volatile Props props;

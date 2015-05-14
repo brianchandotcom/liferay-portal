@@ -17,6 +17,7 @@ package com.liferay.portal.cache.ehcache.internal;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
+import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 
@@ -29,6 +30,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tina Tian
@@ -62,9 +66,26 @@ public class MultiVMEhcachePortalCacheManager
 		destroy();
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY, target =
+			"(portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM +
+				")"
+	)
+	protected void setPortalCacheConfiguratorSettings(
+		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
+
+		reconfigure(portalCacheConfiguratorSettings);
+	}
+
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		this.props = props;
+	}
+
+	protected void unsetPortalCacheConfiguratorSettings(
+		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 	}
 
 }

@@ -66,11 +66,11 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		String[] contentMetadataEntries = new String[0];
 
 		contentMetadataEntries = upgradeBooleanSelectableEntry(
-			contentMetadataEntries, portletPreferences, "enableRatings");
+			contentMetadataEntries, portletPreferences, "enableCommentRatings");
 		contentMetadataEntries = upgradeBooleanSelectableEntry(
 			contentMetadataEntries, portletPreferences, "enableComments");
 		contentMetadataEntries = upgradeBooleanSelectableEntry(
-			contentMetadataEntries, portletPreferences, "enableCommentRatings");
+			contentMetadataEntries, portletPreferences, "enableRatings");
 		contentMetadataEntries = upgradeBooleanSelectableEntry(
 			contentMetadataEntries, portletPreferences, "enableRelatedAssets");
 

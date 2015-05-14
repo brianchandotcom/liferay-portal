@@ -54,6 +54,8 @@
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content 1" />
 			<var name="webContentTitle" value="Web Content Title 1" />
@@ -63,6 +65,8 @@
 			<var name="portletName" value="Web  Content" />
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Category Name" />

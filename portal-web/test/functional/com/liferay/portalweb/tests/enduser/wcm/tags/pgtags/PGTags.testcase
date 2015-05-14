@@ -390,6 +390,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
 		<execute macro="WebContent#addWithTagCP">
 			<var name="tagNameList" value="first tag,second tag" />
 			<var name="webContentContent" value="Web Content Content" />
@@ -473,6 +475,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithTagCP">
 			<var name="tagNameList" value="first tag,second tag" />
@@ -588,6 +592,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
 		<execute macro="WebContent#addWithTagCP">
 			<var name="tagNameList" value="tag name" />
 			<var name="webContentContent" value="Web Content Content" />
@@ -655,6 +661,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithTagCP">
 			<var name="tagNameList" value="first tag,second tag" />
@@ -987,6 +995,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
 		<execute macro="WebContent#addWithTagCP">
 			<var name="tagNameList" value="first tag,second tag" />
 			<var name="webContentContent" value="Web Content Content" />
@@ -1021,6 +1031,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute macro="WebContent#addWithTagCP">
 			<var name="tagNameList" value="first tag,second tag" />

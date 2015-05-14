@@ -55,11 +55,6 @@
 	<td>//ul[@role='menu']/li/a[contains(.,'${key_scopeName}')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>RelatedassetsConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RelatedassetsConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>FILTER_SELECT</td>
+	<td>//div/select[contains(.,'Tags') and contains(.,'Categories')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIES_WINDOW_CATEGORY_CHECKBOX</td>
+	<td>//div[contains(@class,'tree-node') and contains(.,'${key_categoryName}')]/span[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY</td>
+	<td>//div[contains(@class,'categoriesselector')]/ul/li/span[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

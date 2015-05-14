@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Akismet</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Akismet</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ENABLED_FOR_MESSAGE_BOARDS_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_akismetportlet_messageBoardsEnabled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLED_FOR_DISCUSSIONS_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_akismetportlet_discussionsEnabled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLED_FOR_WIKI_CHECKBOX</td>
+	<td>//input[@id='_1_WAR_akismetportlet_wikiEnabled']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>API_KEY_FIELD</td>
+	<td>//input[@id='_1_WAR_akismetportlet_apiKey']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REPORTABLE_TIME_FIELD</td>
+	<td>//input[@id='_1_WAR_akismetportlet_reportableTime']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHECK_THRESHOLD_FIELD</td>
+	<td>//input[@id='_1_WAR_akismetportlet_checkThreshold']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

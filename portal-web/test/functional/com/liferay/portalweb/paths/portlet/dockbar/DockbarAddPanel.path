@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>DockbarAddPanel</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">DockbarAddPanel</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADD_NEW_DROPDOWN</td>
+	<td>//a[contains(.,'Add New')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--CONTENT-->
+<tr>
+	<td>CONTENT_TITLE</td>
+	<td>//div[contains(@class,'add-content-details')]/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_NEW_MENULIST</td>
+	<td>//ul[@class='dropdown-menu']/li/a[contains(.,'${key_assetType}')]/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POPOVER_CONTENT_TITLE</td>
+	<td>//div[contains(@class,'popover-content')]/div/div/div[contains(.,'${key_assetTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--APPLICATIONS-->
+<tr>
+	<td>COLLAPSED_CATEGORY</td>
+	<td>//div[contains(@class,'toggler-header-collapsed')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PORTLET_LINK</td>
+	<td>//span[contains(@data-search,'-${portletName}') and contains(@class,'add-content-item')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD</td>
-	<td>//a[contains(.,'Add')]</td>
+	<td>//a[contains(.,'Add')]|//button[contains(.,'Add')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,6 +26,16 @@
 <tr>
 	<td>ADD_PAGE</td>
 	<td>//button[contains(.,'Add Page')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_PAGE_VARIATION</td>
+	<td>//button[contains(.,'Add Page Variation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_TAGS</td>
+	<td>//button[contains(.,'Add Tags')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,8 +89,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_PANEL</td>
+	<td>//button[contains(@id,'closePanelAdd')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMPARE_VERSIONS</td>
 	<td>//button[contains(@id,'compare')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTINUE</td>
+	<td>//button[contains(.,'Continue')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIELD_FILTER_APPLY</td>
+	<td>//tr[contains(.,'${key_fieldName}')]//button[contains(.,'Apply')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>
@@ -131,6 +156,21 @@
 <tr>
 	<td>MOVE_THREAD</td>
 	<td>//button[contains(.,'Move Thread')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_AVAILABLE_TO_CURRENT</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CURRENT_TO_AVAILABLE</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NEW_TEMPLATE</td>
+	<td>//a[@role='menuitem' and contains(.,'New')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -174,8 +214,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PUBLISH_LOCALIZED</td>
+	<td>//button[contains(@id,'publishButton')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPLY_BUTTON</td>
 	<td>//button[contains(.,'Reply')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESET_CHANGES</td>
+	<td>//button[contains(.,'Reset Changes')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -214,8 +264,28 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SELECT_FILE</td>
+	<td>//button[contains(.,'Select File')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_PAGES</td>
+	<td>//button[contains(.,'Select Pages')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_CATEGORIES</td>
+	<td>//button[contains(.,'Select Categories')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SELECT_SCOPE</td>
 	<td>//div[contains (@class,'btn-group')]/a[@title='Default']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SELECT_WEB_CONTENT</td>
+	<td>//button[contains(.,'Select Web Content')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -234,6 +304,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBMIT</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBMIT_FOR_PUBLICATION</td>
 	<td>//button[contains(.,'Submit for Publication')]</td>
 	<td></td>
@@ -244,6 +319,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UPDATE</td>
+	<td>//button[contains(.,'Update')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UPDATE_ASSOCIATIONS</td>
 	<td>//button[contains(.,'Update Associations')]</td>
 	<td></td>
@@ -251,6 +331,11 @@
 <tr>
 	<td>VIEW_HISTORY</td>
 	<td>//button[contains(.,'View History')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEB_CONTENT_CHOOSE</td>
+	<td>//tr[contains(.,'${key_webContentTitle}')]/td/button</td>
 	<td></td>
 </tr>
 </tbody>

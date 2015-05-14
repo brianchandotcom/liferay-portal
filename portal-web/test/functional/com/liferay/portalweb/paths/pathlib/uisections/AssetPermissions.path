@@ -104,6 +104,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GUEST_VIEW_CHECKBOX</td>
+	<td>//input[@id='guest_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>OWNER_VIEW_CHECKBOX</td>
+	<td>//input[@id='owner_ACTION_VIEW']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -156,6 +171,11 @@
 <tr>
 	<td>SITE_MEMBER_UPDATE_DISCUSSION_CHECKBOX</td>
 	<td>//tr[contains(.,'Site Member')]//input[@value='UPDATE_DISCUSSION']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_VIEW_CHECKBOX</td>
+	<td>//input[@id='site-member_ACTION_VIEW']</td>
 	<td></td>
 </tr>
 </tbody>

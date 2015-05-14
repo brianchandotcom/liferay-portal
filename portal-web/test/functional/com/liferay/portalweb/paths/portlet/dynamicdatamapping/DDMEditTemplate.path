@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>DDL_IFRAME</td>
-	<td>//iframe[contains(@src,'dynamic_data_lists')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>PORTLET_TITLE</td>
 	<td>//span[@class='portlet-title-text']</td>
 	<td></td>

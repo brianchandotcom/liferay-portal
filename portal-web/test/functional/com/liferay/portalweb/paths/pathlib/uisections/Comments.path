@@ -9,13 +9,28 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_COMMENT_LINK</td>
+	<td>link=Add Comment</td>
+	<td></td>
+</tr>
+<tr>
 	<td>BE_THE_FIRST_LINK</td>
 	<td>link=Be the first.</td>
 	<td></td>
 </tr>
 <tr>
-	<td>ADD_COMMENT_LINK</td>
-	<td>link=Add Comment</td>
+	<td>COMMENT_LABEL</td>
+	<td>//label[contains(.,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THUMBS_UP</td>
+	<td>//a[contains(@class,'thumbs-up')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>THUMBS_DOWN</td>
+	<td>//a[contains(@class,'thumbs-down')]</td>
 	<td></td>
 </tr>
 <tr>

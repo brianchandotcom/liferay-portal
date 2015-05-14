@@ -1,0 +1,34 @@
+<html>
+<head>
+<title>NavTab</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">NavTab</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ASSET_SELECTION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Asset Selection')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Dispaly Settings')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIPTIONS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Subscriptions')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUPPORTED_CLIENTS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Supported Clients')]/a</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -38,11 +38,6 @@
 	<td>//button[contains(.,'Test Database Connection')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

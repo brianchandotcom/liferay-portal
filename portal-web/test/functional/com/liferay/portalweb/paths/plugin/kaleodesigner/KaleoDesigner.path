@@ -75,11 +75,6 @@
 	<td>//ul[contains(@class,'dropdown-menu lfr-menu-list')]/li/a[contains(.,'Delete')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

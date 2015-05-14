@@ -286,11 +286,6 @@
 	<td>//div[contains(@id,'kaleoformsportlet_taskForm')]//tr[contains(.,'${key_workflowTask}')]/td[3]/button</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

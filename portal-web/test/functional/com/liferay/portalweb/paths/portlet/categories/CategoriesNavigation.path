@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>CategoriesNavigation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CategoriesNavigation</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CATEGORY_NAME</td>
+	<td>//ul[@class='categories']/li/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOCABULARY_NAME</td>
+	<td>//div[contains(@class,'asset-categories-navigation')]//div[contains(@class,'column-content')]//h3[contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ADT_MULTI_COLUMN-->
+<tr>
+	<td>ADT_MULTI_COLUMN_1</td>
+	<td>//div[@class='portlet-content']//div[contains(@class,'column')][1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_2</td>
+	<td>//div[@class='portlet-content']//div[contains(@class,'column')][2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_3</td>
+	<td>//div[@class='portlet-content']//div[contains(@class,'column')][3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_VOCABULARY_NAME</td>
+	<td>//div[@class='portlet-content']//div[contains(@class,'column')]//h3[contains(.,'${vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADT_MULTI_COLUMN_CATEGORY_NAME</td>
+	<td>//div[@class='portlet-content']//div[contains(@class,'column')]//ul[@class='categories']/li[contains(.,'${categoryName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>APConfigurationArchivedsetup</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">APConfigurationArchivedsetup</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ARCHIVED_SETUPS_TABLE_NAME</td>
+	<td>//tr[contains(.,'${key_archiveName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ARCHIVED_SETUPS_TABLE_DROPDOWN</td>
+	<td>//tr/td[4]/div/a[contains(@class,'dropdown-toggle')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

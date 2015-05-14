@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>CUSTOMIZED_PAGE_INFO</td>
+	<td>//div[@class='page-customization-bar']/div[contains(@class,'page-customization-bar-text')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR</td>
 	<td>//div[contains(@class,'alert') and (contains(@class,'alert-error') or contains(@class,'alert-danger'))]</td>
 	<td></td>
@@ -64,6 +69,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INFO_ARTICLE</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-info')]/span/span</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NO_COMMENTS</td>
+	<td>//div[contains(.,'No comments yet')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RECYCLE_BIN_SUCCESS</td>
 	<td>//div[contains(@class,'alert-success') and contains(@class,'trash')]</td>
 	<td></td>
@@ -71,6 +86,11 @@
 <tr>
 	<td>REQUIRED_INFO</td>
 	<td>//div[contains(@class,'required') and contains(@role,'alert')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STATUS</td>
+	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>
 </tr>
 <tr>
@@ -84,8 +104,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUCCESS_2</td>
+	<td>//span[contains(@class,'alert-success') and contains(@class,'message')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUCCESS_RECYCLE_BIN</td>
 	<td>//form[contains(@id,'undoForm')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_UNAPPROVED</td>
+	<td>//div[@class='portlet-body']/div[contains(@class,'alert-block')]</td>
 	<td></td>
 </tr>
 </tbody>

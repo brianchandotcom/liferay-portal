@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>NavListItem</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">NavListItem</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ADVANCED</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Advanced')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANNOUNCEMENTS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Announcements')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORIZATION</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Categorization')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENTS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOM_FIELDS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Custom Fields')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CUSTOMIZATION_SETTINGS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Customization Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Details')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_SETTINGS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Display Settings')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Javascript')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOOK_AND_FEEL</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Look and Feel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOBILE_DEVICE_RULES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mobile Device Rules')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATIONS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Organizations')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PASSWORD</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Password')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERSONAL_SITE</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Personal Site')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ROLES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Roles')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'SEO')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'User Groups')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

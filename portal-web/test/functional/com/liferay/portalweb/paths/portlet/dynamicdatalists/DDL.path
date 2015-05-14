@@ -224,11 +224,6 @@
 	<td>//label[contains(.,'More rows at bottom.')]/../select</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

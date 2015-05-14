@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>CategoriesEditSubcategory</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CategoriesEditSubcategory</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>VOCABULARY_SELECT</td>
+	<td>//div[contains(@class,'select-wrapper')]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY_SELECT_BUTTON</td>
+	<td>//button[contains(.,'Select ${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--MOVE_CATEGORIES_CATEGORY-->
+<tr>
+	<td>MOVE_CATEGORIES_CATEGORY_CHECK_ICON</td>
+	<td>//div[contains(.,'${key_categoryName}')]/span[contains(@class,'checkbox-container')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_CATEGORIES_CATEGORY_CLOSE_BUTTON</td>
+	<td>//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PROPERTIES-->
+<tr>
+	<td>PROPERTIES_BAR</td>
+	<td>//div[@class='panel-toggle' and contains(.,'Properties')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_BAR_COLLAPSED</td>
+	<td>//div[contains(@id,'assetCategoryPropertiesPanel')]//div[contains(@class,'panel-heading') and contains(@class,'toggler-header') and contains(@class,'toggler-header-collapsed')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_ADD_ROW_BUTTON</td>
+	<td>//button[contains(@class,'add-row btn-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_DELETE_ROW_BUTTON</td>
+	<td>//button[contains(@class,'delete-row btn-content')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_KEY_FIELD</td>
+	<td>//input[contains(@id,'key${key_pathNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_VALUE_FIELD</td>
+	<td>//input[contains(@id,'value${key_pathNumber}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_KEY_FIELD_DEFAULT</td>
+	<td>//input[contains(@id,'key0')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_VALUE_FIELD_DEFAULT</td>
+	<td>//input[contains(@id,'value0')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1362,6 +1362,45 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.rss.web"
 		},
 
+		// S3 Store
+
+		new String[] {
+			"dl.store.s3.access.key", "access.key",
+			"com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.bucket.name", "bucket.name",
+			"com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[httpclient.max-connections]",
+			"http.client.max.connections", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[s3service.default-bucket-location]",
+			"s3service.default.bucket.location", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[s3service.default-storage-class]",
+			"s3service.default.storage.class", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.jets3t[s3service.s3-endpoint]",
+			"s3service.s3.endpoint", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.secret.key", "secret.key",
+			"com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.temp.dir.clean.up.expunge",
+			"temp.dir.clean.up.expunge", "com.liferay.portal.store.s3"
+		},
+		new String[] {
+			"dl.store.s3.temp.dir.clean.up.frequency",
+			"temp.dir.clean.up.frequency", "com.liferay.portal.store.s3"
+		},
+
 		// Scripting
 
 		new String[] {

@@ -765,18 +765,6 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_JCR_MOVE_VERSION_LABELS = "dl.store.jcr.move.version.labels";
 
-	public static final String DL_STORE_S3_ACCESS_KEY = "dl.store.s3.access.key";
-
-	public static final String DL_STORE_S3_BUCKET_NAME = "dl.store.s3.bucket.name";
-
-	public static final String DL_STORE_S3_JETS3T = "dl.store.s3.jets3t";
-
-	public static final String DL_STORE_S3_SECRET_KEY = "dl.store.s3.secret.key";
-
-	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_EXPUNGE = "dl.store.s3.temp.dir.clean.up.expunge";
-
-	public static final String DL_STORE_S3_TEMP_DIR_CLEAN_UP_FREQUENCY = "dl.store.s3.temp.dir.clean.up.frequency";
-
 	public static final String DL_SUBFOLDERS_VISIBLE = "dl.subfolders.visible";
 
 	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";

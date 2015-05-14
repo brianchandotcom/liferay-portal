@@ -1166,7 +1166,7 @@
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
-		
+
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Female Users" />
 			<var name="vocabularyName" value="User Segment" />

@@ -23,7 +23,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	property = {
-		"editor.config.key=editor", "javax.portlet.name=19",
+		"editor.config.key=editor", "editor.name=alloyeditor",
+		"editor.name=ckeditor", "javax.portlet.name=19",
 		"javax.portlet.name=162", "service.ranking:Integer=10"
 	},
 	service = EditorConfigContributor.class

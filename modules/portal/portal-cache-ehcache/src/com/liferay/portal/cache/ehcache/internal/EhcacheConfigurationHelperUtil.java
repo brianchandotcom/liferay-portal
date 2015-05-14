@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.HtmlImpl;
 
 import java.io.IOException;
 
@@ -409,10 +408,14 @@ public class EhcacheConfigurationHelperUtil {
 				continue;
 			}
 
-			properties.put(valueParts[0], _htmlUtil.unescape(valueParts[1]));
+			properties.put(valueParts[0], _unescape(valueParts[1]));
 		}
 
 		return properties;
+	}
+
+	private static String _unescape(String text) {
+		return StringUtil.replace(text, "&", ";", _unescapeMap);
 	}
 
 	private static final String _PORTAL_PROPERTY_KEY = "portalPropertyKey";
@@ -422,7 +425,7 @@ public class EhcacheConfigurationHelperUtil {
 
 	private static final Map<NotificationScope, CacheListenerScope>
 		_cacheListenerScopes = new EnumMap<>(NotificationScope.class);
-	private static final HtmlImpl _htmlUtil = new HtmlImpl();
+	private static final Map<String, String> _unescapeMap = new HashMap<>();
 
 	static {
 		_cacheListenerScopes.put(NotificationScope.ALL, CacheListenerScope.ALL);
@@ -430,6 +433,22 @@ public class EhcacheConfigurationHelperUtil {
 			NotificationScope.LOCAL, CacheListenerScope.LOCAL);
 		_cacheListenerScopes.put(
 			NotificationScope.REMOTE, CacheListenerScope.REMOTE);
+
+		_unescapeMap.put("lt", "<");
+		_unescapeMap.put("gt", ">");
+		_unescapeMap.put("amp", "&");
+		_unescapeMap.put("rsquo", "\u2019");
+		_unescapeMap.put("#034", "\"");
+		_unescapeMap.put("#039", "'");
+		_unescapeMap.put("#040", "(");
+		_unescapeMap.put("#041", ")");
+		_unescapeMap.put("#044", ",");
+		_unescapeMap.put("#035", "#");
+		_unescapeMap.put("#037", "%");
+		_unescapeMap.put("#059", ";");
+		_unescapeMap.put("#061", "=");
+		_unescapeMap.put("#043", "+");
+		_unescapeMap.put("#045", "-");
 	}
 
 }

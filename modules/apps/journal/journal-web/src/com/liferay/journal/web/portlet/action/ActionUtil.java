@@ -386,11 +386,6 @@ public class ActionUtil {
 
 		String content = JournalConverterUtil.getContent(ddmStructure, fields);
 
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			content, LocaleUtil.getSiteDefault());
-
-		Locale locale = LanguageUtil.getLocale(defaultLanguageId);
-
 		Map<String, byte[]> images = getImages(content, fields);
 
 		return new Object[] {content, images};

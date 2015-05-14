@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -385,11 +384,6 @@ public class ActionUtil {
 			ddmStructure.getStructureId(), serviceContext);
 
 		String content = JournalConverterUtil.getContent(ddmStructure, fields);
-
-		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(
-			content, LocaleUtil.getSiteDefault());
-
-		Locale locale = LanguageUtil.getLocale(defaultLanguageId);
 
 		Map<String, byte[]> images = getImages(content, fields);
 

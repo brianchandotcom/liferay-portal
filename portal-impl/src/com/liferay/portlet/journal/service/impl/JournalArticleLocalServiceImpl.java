@@ -6763,8 +6763,17 @@ public class JournalArticleLocalServiceImpl
 			ddmTemplateKey = defaultDDMTemplateKey;
 		}
 
+		// This token is deprecated
+
 		tokens.put("structure_id", article.getDDMStructureKey());
-		tokens.put("template_id", ddmTemplateKey);
+
+		DDMStructure ddmStructure = article.getDDMStructure();
+
+		tokens.put(
+			"ddm_structure_key",
+			String.valueOf(ddmStructure.getStructureKey()));
+		tokens.put(
+			"ddm_structure_id", String.valueOf(ddmStructure.getStructureId()));
 
 		Document document = article.getDocument();
 
@@ -6868,6 +6877,16 @@ public class JournalArticleLocalServiceImpl
 					throw nste;
 				}
 			}
+
+			// This token is deprecated
+
+			tokens.put("template_id", ddmTemplateKey);
+
+			tokens.put(
+				"ddm_template_key",
+				String.valueOf(ddmTemplate.getTemplateKey()));
+			tokens.put(
+				"ddm_template_id", String.valueOf(ddmTemplate.getTemplateId()));
 
 			String script = ddmTemplate.getScript();
 			String langType = ddmTemplate.getLanguage();

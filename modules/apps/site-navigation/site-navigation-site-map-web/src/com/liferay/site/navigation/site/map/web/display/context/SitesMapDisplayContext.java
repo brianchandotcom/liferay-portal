@@ -336,7 +336,7 @@ public class SitesMapDisplayContext {
 	private Boolean _showHiddenPages;
 	private final SiteMapPortletInstanceConfiguration
 		_siteMapPortletInstanceConfiguration;
-	private ThemeDisplay _themeDisplay;
+	private final ThemeDisplay _themeDisplay;
 	private Boolean _useHtmlTitle;
 
 }

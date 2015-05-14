@@ -16,50 +16,20 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String iframeSrc = StringPool.BLANK;
-
-if (relative) {
-	iframeSrc = themeDisplay.getPathContext();
-}
-
-iframeSrc += (String)request.getAttribute(IFrameWebKeys.IFRAME_SRC);
-
-if (iframeSrc.contains(StringPool.QUESTION)) {
-	iframeSrc = iframeSrc.concat(StringPool.AMPERSAND).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
-}
-else if (!ListUtil.isEmpty(iframeVariables)) {
-	iframeSrc = iframeSrc.concat(StringPool.QUESTION).concat(StringUtil.merge(iframeVariables, StringPool.AMPERSAND));
-}
-
-String baseSrc = iframeSrc;
-int lastSlashPos = 0;
-
-if (iframeSrc.length() > 6) {
-	lastSlashPos = iframeSrc.substring(7).lastIndexOf(StringPool.SLASH);
-
-	if (lastSlashPos != -1) {
-		baseSrc = iframeSrc.substring(0, lastSlashPos + 8);
-	}
-}
-
-String iframeHeight = heightNormal;
-
-if (windowState.equals(WindowState.MAXIMIZED)) {
-	iframeHeight = heightMaximized;
-}
-%>
-
 <c:choose>
-	<c:when test="<%= auth && Validator.isNull(userName) && !themeDisplay.isSignedIn() %>">
+	<c:when test="<%= iFrameDisplayContext.isAuth() && Validator.isNull(iFrameDisplayContext.getUserName()) && !themeDisplay.isSignedIn() %>">
 		<div class="alert alert-info">
 			<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-access-this-application" /></a>
 		</div>
 	</c:when>
 	<c:otherwise>
-		<div>
-			<iframe alt="<%= HtmlUtil.escapeAttribute(alt) %>" border="<%= HtmlUtil.escapeAttribute(border) %>" bordercolor="<%= HtmlUtil.escapeAttribute(bordercolor) %>" frameborder="<%= HtmlUtil.escapeAttribute(frameborder) %>" height="<%= HtmlUtil.escapeAttribute(iframeHeight) %>" hspace="<%= HtmlUtil.escapeAttribute(hspace) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(longdesc) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(scrolling) %>" src="<%= HtmlUtil.escapeHREF(iframeSrc) %>" title="<%= HtmlUtil.escapeAttribute(title) %>" vspace="<%= HtmlUtil.escapeAttribute(vspace) %>" width="<%= HtmlUtil.escapeAttribute(width) %>">
-				<%= LanguageUtil.format(request, "your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x", HtmlUtil.escape(iframeSrc), false) %>
+		<div class="iframe-container">
+			<iframe alt="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getAlt()) %>" border="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getBorder()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getBordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFrameborder()) %>" height="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getLongdesc()) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getScrolling()) %>" src="<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>" title="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getTitle()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getVspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getWidth()) %>">
+				<liferay-ui:message
+					arguments="<%= HtmlUtil.escape(iFrameDisplayContext.getIframeSrc()) %>"
+					key="your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x"
+					translateArguments="<%= false %>"
+				/>
 			</iframe>
 		</div>
 	</c:otherwise>
@@ -80,8 +50,8 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 			return true;
 		}
 
-		var baseSrc = '<%= HtmlUtil.escapeJS(baseSrc) %>';
-		var iframeSrc = '<%= HtmlUtil.escapeJS(iframeSrc) %>';
+		var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+		var iframeSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeSrc()) %>';
 
 		if ((url == iframeSrc) || (url == (iframeSrc + '/'))) {
 		}
@@ -119,7 +89,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				var src = '';
 
 				if (!(/^https?\:\/\//.test(hash))) {
-					src = '<%= HtmlUtil.escapeJS(baseSrc) %>';
+					src = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 				}
 
 				src += hash;
@@ -185,7 +155,7 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 		iframe.plug(
 			A.Plugin.AutosizeIframe,
 			{
-				monitorHeight: <%= resizeAutomatically %>
+				monitorHeight: <%= iFrameDisplayContext.isResizeAutomatically() %>
 			}
 		);
 
@@ -195,10 +165,10 @@ if (windowState.equals(WindowState.MAXIMIZED)) {
 				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 				if (height == null) {
-					height = '<%= HtmlUtil.escapeJS(heightNormal) %>';
+					height = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getHeightNormal()) %>';
 
 					if (themeDisplay.isStateMaximized()) {
-						height = '<%= HtmlUtil.escapeJS(heightMaximized) %>';
+						height = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getHeightMaximized()) %>';
 					}
 
 					iframe.setStyle('height', height);

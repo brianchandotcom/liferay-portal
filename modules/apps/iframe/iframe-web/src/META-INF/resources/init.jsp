@@ -24,23 +24,15 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.iframe.web.configuration.IFrameConfiguration" %><%@
-page import="com.liferay.iframe.web.constants.IFrameWebKeys" %><%@
+page import="com.liferay.iframe.web.display.context.IFrameDisplayContext" %><%@
 page import="com.liferay.iframe.web.util.IFrameUtil" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.util.CharPool" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
-
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Enumeration" %><%@
-page import="java.util.List" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 
@@ -48,63 +40,9 @@ page import="java.util.List" %>
 <portlet:defineObjects />
 
 <%
-WindowState windowState = liferayPortletRequest.getWindowState();
-
 IFrameConfiguration iFrameConfiguration = (IFrameConfiguration)renderRequest.getAttribute(IFrameConfiguration.class.getName());
 
-String src = portletPreferences.getValue("src", StringPool.BLANK);
-
-boolean relative = GetterUtil.getBoolean(portletPreferences.getValue("relative", StringPool.BLANK));
-
-boolean auth = GetterUtil.getBoolean(portletPreferences.getValue("auth", null), iFrameConfiguration.auth());
-String authType = portletPreferences.getValue("authType", iFrameConfiguration.authType());
-String formMethod = portletPreferences.getValue("formMethod", iFrameConfiguration.formMethod());
-String userNameField = portletPreferences.getValue("userNameField", StringPool.BLANK);
-String passwordField = portletPreferences.getValue("passwordField", StringPool.BLANK);
-
-String userName = null;
-String password = null;
-
-if (authType.equals("basic")) {
-	userName = portletPreferences.getValue("basicUserName", StringPool.BLANK);
-	password = portletPreferences.getValue("basicPassword", StringPool.BLANK);
-}
-else {
-	userName = portletPreferences.getValue("formUserName", StringPool.BLANK);
-	password = portletPreferences.getValue("formPassword", StringPool.BLANK);
-}
-
-String hiddenVariables = portletPreferences.getValue("hiddenVariables", StringUtil.merge(iFrameConfiguration.hiddenVariables(), StringPool.SEMICOLON));
-boolean resizeAutomatically = GetterUtil.getBoolean(portletPreferences.getValue("resizeAutomatically", StringPool.TRUE));
-String heightMaximized = GetterUtil.getString(portletPreferences.getValue("heightMaximized", "600"));
-String heightNormal = GetterUtil.getString(portletPreferences.getValue("heightNormal", "600"));
-String width = GetterUtil.getString(portletPreferences.getValue("width", "100%"));
-
-String alt = portletPreferences.getValue("alt", StringPool.BLANK);
-String border = portletPreferences.getValue("border", "0");
-String bordercolor = portletPreferences.getValue("bordercolor", "#000000");
-String frameborder = portletPreferences.getValue("frameborder", "0");
-String hspace = portletPreferences.getValue("hspace", "0");
-String longdesc = portletPreferences.getValue("longdesc", StringPool.BLANK);
-String scrolling = portletPreferences.getValue("scrolling", "auto");
-String title = portletPreferences.getValue("title", StringPool.BLANK);
-String vspace = portletPreferences.getValue("vspace", "0");
-
-List<String> iframeVariables = new ArrayList<String>();
-
-Enumeration<String> enu = request.getParameterNames();
-
-while (enu.hasMoreElements()) {
-	String name = enu.nextElement();
-
-	if (name.startsWith(_IFRAME_PREFIX)) {
-		iframeVariables.add(name.substring(_IFRAME_PREFIX.length()).concat(StringPool.EQUAL).concat(request.getParameter(name)));
-	}
-}
+IFrameDisplayContext iFrameDisplayContext = new IFrameDisplayContext(iFrameConfiguration, renderRequest);
 %>
 
 <%@ include file="/init-ext.jsp" %>
-
-<%!
-private static final String _IFRAME_PREFIX = "iframe_";
-%>

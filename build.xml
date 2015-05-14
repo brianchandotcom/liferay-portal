@@ -214,10 +214,7 @@
 	<target name="compile" depends="setup-sdk">
 		<delete file="javac.output.txt" />
 
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="compile"
-		/>
+		<ant dir="modules/core/registry-api" target="compile" inheritAll="false" />
 
 		<ant dir="portal-service" target="compile" inheritAll="false" />
 

@@ -111,6 +111,11 @@ public class MBMessageServiceWrapper implements MBMessageService,
 			serviceContext);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
+	String, long, long, long)}
+	*/
+	@Deprecated
 	@Override
 	public void deleteDiscussionMessage(long groupId,
 		java.lang.String className, long classPK,
@@ -119,6 +124,14 @@ public class MBMessageServiceWrapper implements MBMessageService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageService.deleteDiscussionMessage(groupId, className, classPK,
 			permissionClassName, permissionClassPK, permissionOwnerId, messageId);
+	}
+
+	@Override
+	public void deleteDiscussionMessage(java.lang.String permissionClassName,
+		long permissionClassPK, long permissionOwnerId, long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageService.deleteDiscussionMessage(permissionClassName,
+			permissionClassPK, permissionOwnerId, messageId);
 	}
 
 	@Override

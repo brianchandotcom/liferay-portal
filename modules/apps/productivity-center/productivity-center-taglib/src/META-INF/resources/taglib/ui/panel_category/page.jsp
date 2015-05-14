@@ -46,7 +46,6 @@ String panelPageCategoryId = "panel-manage-" + panelCategory.getKey();
 				<productivity-center-ui:panel-app
 					panelApp="<%= panelApp %>"
 					panelCategory="<%= panelCategory %>"
-					servletContext="<%= application %>"
 				/>
 			</c:if>
 

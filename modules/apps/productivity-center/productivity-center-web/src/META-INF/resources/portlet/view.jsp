@@ -21,4 +21,4 @@ PanelCategoryRegistry panelCategoryRegistry = (PanelCategoryRegistry)request.get
 PanelCategory panelCategory = panelCategoryRegistry.getPanelCategory(PanelCategoryKeys.USER_PERSONAL_PANEL);
 %>
 
-<productivity-center-ui:panel panelCategory="<%= panelCategory %>" servletContext="<%= application %>" />
+<productivity-center-ui:panel panelCategory="<%= panelCategory %>" />

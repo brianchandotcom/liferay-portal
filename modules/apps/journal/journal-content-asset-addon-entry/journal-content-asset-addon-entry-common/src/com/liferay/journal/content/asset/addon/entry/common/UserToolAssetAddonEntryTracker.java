@@ -37,7 +37,9 @@ public class UserToolAssetAddonEntryTracker {
 		return new ArrayList<>(_userToolAssetAddonEntries.values());
 	}
 
-	public static UserToolAssetAddonEntry getUserToolAssetAddonEntry(String key) {
+	public static UserToolAssetAddonEntry getUserToolAssetAddonEntry(
+		String key) {
+
 		return _userToolAssetAddonEntries.get(key);
 	}
 

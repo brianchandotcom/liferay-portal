@@ -14,6 +14,10 @@
 
 package com.liferay.portal.cache.ehcache.internal;
 
+import com.liferay.portal.cache.ehcache.internal.bootstrap.EhcacheBootstrapLoaderAdapter;
+import com.liferay.portal.cache.ehcache.internal.distribution.EhcacheCacheReplicatorAdapter;
+import com.liferay.portal.cache.ehcache.internal.event.EhcacheCacheListenerAdapter;
+import com.liferay.portal.cache.ehcache.internal.event.EhcacheCacheManagerListenerAdapter;
 import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheManagerListener;

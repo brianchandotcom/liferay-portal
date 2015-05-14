@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.ehcache.internal;
+package com.liferay.portal.cache.ehcache.internal.distribution;
 
 import com.liferay.portal.kernel.cache.CacheReplicator;
 import com.liferay.portal.kernel.util.GetterUtil;

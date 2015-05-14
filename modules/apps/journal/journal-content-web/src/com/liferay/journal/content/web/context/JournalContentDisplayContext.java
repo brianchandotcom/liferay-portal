@@ -14,10 +14,10 @@
 
 package com.liferay.journal.content.web.context;
 
-import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntry;
-import com.liferay.journal.content.web.util.ContentMetadataAssetAddonEntryTracker;
-import com.liferay.journal.content.web.util.UserToolAssetAddonEntry;
-import com.liferay.journal.content.web.util.UserToolAssetAddonEntryTracker;
+import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntryTracker;
+import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntryTracker;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Constants;

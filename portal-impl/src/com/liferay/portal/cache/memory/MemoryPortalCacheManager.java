@@ -18,11 +18,15 @@ import com.liferay.portal.cache.AbstractPortalCacheManager;
 import com.liferay.portal.cache.cluster.ClusterLinkCallbackFactory;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistrar;
 
 import java.io.Serializable;
 
@@ -52,6 +56,15 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 		memoryPortalCacheManager.initialize();
 
 		return memoryPortalCacheManager;
+	}
+
+	@Override
+	public void destroy() {
+		if (_serviceRegistrar != null) {
+			_serviceRegistrar.destroy();
+		}
+
+		super.destroy();
 	}
 
 	@Override
@@ -160,6 +173,26 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
+	protected void initialize() {
+		super.initialize();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceRegistrar = registry.getServiceRegistrar(
+			(Class<PortalCacheManager<K, V>>)(Class<?>)
+				PortalCacheManager.class);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("portal.cache.manager.name", getName());
+		properties.put("portal.cache.manager.type", getType());
+
+		_serviceRegistrar.registerService(
+			(Class<PortalCacheManager<K, V>>) (Class<?>)
+				PortalCacheManager.class, this, properties);
+	}
+
+	@Override
 	protected void initPortalCacheManager() {
 		_memoryPortalCaches = new ConcurrentHashMap<>(
 			_cacheManagerInitialCapacity);
@@ -170,5 +203,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	private int _cacheInitialCapacity = 10000;
 	private int _cacheManagerInitialCapacity = 10000;
 	private ConcurrentMap<String, MemoryPortalCache<K, V>> _memoryPortalCaches;
+	private ServiceRegistrar<PortalCacheManager<K, V>> _serviceRegistrar;
 
 }

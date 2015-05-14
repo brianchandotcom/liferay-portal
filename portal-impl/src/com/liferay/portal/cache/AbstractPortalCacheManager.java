@@ -43,7 +43,6 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceRegistrar;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 
@@ -51,7 +50,6 @@ import java.io.Serializable;
 
 import java.net.URL;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -70,10 +68,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void destroy() {
-		if (_serviceRegistrar != null) {
-			_serviceRegistrar.destroy();
-		}
-
 		if (_serviceTracker != null) {
 			_serviceTracker.close();
 		}
@@ -253,19 +247,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		Registry registry = RegistryUtil.getRegistry();
 
-		_serviceRegistrar = registry.getServiceRegistrar(
-			(Class<PortalCacheManager<K, V>>)(Class<?>)
-				PortalCacheManager.class);
-
-		Map<String, Object> properties = new HashMap<>();
-
-		properties.put("portal.cache.manager.name", _name);
-		properties.put("portal.cache.manager.type", getType());
-
-		_serviceRegistrar.registerService(
-			(Class<PortalCacheManager<K, V>>)(Class<?>)PortalCacheManager.class,
-			this, properties);
-
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("(&(objectClass=");
@@ -363,7 +344,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private boolean _mpiOnly;
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
-	private ServiceRegistrar<PortalCacheManager<K, V>> _serviceRegistrar;
 	private ServiceTracker<PortalCacheConfiguratorSettings,
 		PortalCacheConfiguratorSettings> _serviceTracker;
 

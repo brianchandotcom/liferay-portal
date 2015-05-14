@@ -16,6 +16,9 @@ package com.liferay.portal.security.permission;
 
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.User;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Charles May
@@ -41,7 +44,7 @@ public class PermissionCheckerFactoryUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			PermissionCheckerFactoryUtil.class);
 
-		return _permissionCheckerFactory;
+		return _instance._serviceTracker.getService();
 	}
 
 	public void setPermissionCheckerFactory(
@@ -52,6 +55,20 @@ public class PermissionCheckerFactoryUtil {
 		_permissionCheckerFactory = permissionCheckerFactory;
 	}
 
+	private PermissionCheckerFactoryUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(
+			PermissionCheckerFactory.class);
+
+		_serviceTracker.open();
+	}
+
+	private static final PermissionCheckerFactoryUtil _instance =
+		new PermissionCheckerFactoryUtil();
+
 	private static PermissionCheckerFactory _permissionCheckerFactory;
+
+	private final ServiceTracker<?, PermissionCheckerFactory> _serviceTracker;
 
 }

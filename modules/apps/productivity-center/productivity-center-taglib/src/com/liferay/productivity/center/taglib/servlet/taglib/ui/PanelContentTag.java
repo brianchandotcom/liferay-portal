@@ -14,14 +14,12 @@
 
 package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
-import com.liferay.taglib.util.IncludeTag;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
  */
-public class PanelContentTag extends IncludeTag {
+public class PanelContentTag extends BasePanelTag {
 
 	@Override
 	public void setPortletId(String portletId) {

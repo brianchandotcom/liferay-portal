@@ -14,40 +14,21 @@
 
 package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
-import com.liferay.productivity.center.panel.PanelCategory;
+import com.liferay.productivity.center.taglib.util.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 
 /**
  * @author Adolfo Pérez
  */
-public class PanelCategoryTag extends BasePanelTag {
-
-	public void setPanelCategory(PanelCategory panelCategory) {
-		_panelCategory = panelCategory;
-	}
+public class BasePanelTag extends IncludeTag {
 
 	@Override
-	protected void cleanUp() {
-		super.cleanUp();
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
 
-		_panelCategory = null;
+		servletContext = ServletContextUtil.getServletContext();
 	}
-
-	@Override
-	protected String getPage() {
-		return _PAGE;
-	}
-
-	@Override
-	protected void setAttributes(HttpServletRequest request) {
-		request.setAttribute(
-			"productivity-center-ui:panel-category:panelCategory",
-			_panelCategory);
-	}
-
-	private static final String _PAGE = "/taglib/ui/panel_category/page.jsp";
-
-	private PanelCategory _panelCategory;
 
 }

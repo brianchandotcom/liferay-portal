@@ -16,14 +16,13 @@ package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.PanelCategory;
-import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Adolfo Pérez
  */
-public class PanelAppTag extends IncludeTag {
+public class PanelAppTag extends BasePanelTag {
 
 	public void setPanelApp(PanelApp panelApp) {
 		_panelApp = panelApp;

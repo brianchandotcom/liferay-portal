@@ -224,10 +224,6 @@ public class RepositoryLocalServiceImpl extends RepositoryLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void invalidate() {
-	}
-
-	@Override
 	public void updateRepository(
 			long repositoryId, String name, String description)
 		throws PortalException {

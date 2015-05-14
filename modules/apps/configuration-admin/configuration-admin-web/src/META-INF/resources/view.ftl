@@ -50,7 +50,6 @@
 
 		<@portlet["renderURL"] varImpl="viewFactoryInstancesURL">
 			<@portlet["param"] name="factoryPid" value="${configurationModel.getFactoryPid()}" />
-			<@portlet["param"] name="pid" value="${configurationModel.getID()}" />
 			<@portlet["param"] name="viewType" value="factoryInstances" />
 		</@>
 

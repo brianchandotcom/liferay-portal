@@ -9,11 +9,6 @@
 </thead>
 <tbody>
 <tr>
-	<td>MY_ACCOUNT_IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SUCCESS_MESSAGE</td>
 	<td>//div[contains(@class,'alert') and contains(@class,'alert-success')]</td>
 	<td></td>
@@ -46,6 +41,17 @@
 <tr>
 	<td>SAVE_BUTTON_LOCALIZED</td>
 	<td>//button[contains(.,'${key_saveButton}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_MY</td>
+	<td>//ul[@class='category-portlets list-unstyled']/li[contains(.,'${key_portletName}')]/span/a</td>
 	<td></td>
 </tr>
 <tr>

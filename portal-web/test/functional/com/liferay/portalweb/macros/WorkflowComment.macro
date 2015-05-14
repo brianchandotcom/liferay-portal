@@ -1,7 +1,5 @@
 <definition>
 	<command name="addCP">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowComment" value="${workflowComment}" />
 
@@ -35,13 +33,9 @@
 		<execute function="AssertClick" locator1="CPMyworkflowtasksTask#COMMENTS_REPLY_BUTTON" value1="Reply" />
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksTask#COMMENTS_SUCCESS_MESSAGE" value1="Your request processed successfully." />
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksTask#COMMENTS_COMMENT" value1="${workflowComment}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewCP">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
 		<var name="key_workflowComment" value="${workflowComment}" />
 
@@ -58,7 +52,5 @@
 		</if>
 
 		<execute function="AssertTextEquals" locator1="CPMyworkflowtasksTask#COMMENTS_COMMENT" value1="${workflowComment}" />
-
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

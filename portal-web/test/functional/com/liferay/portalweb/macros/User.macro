@@ -275,11 +275,9 @@
 		<execute function="Pause" locator1="1000" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="Click" locator1="Myaccount#SAVE_BUTTON" />
 		<execute function="AssertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="Pause" locator1="1000" />
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="addProjectViaMyAccount">
@@ -867,8 +865,6 @@
 		<if>
 			<equals arg1="${userPassword}" arg2="Invalid" />
 			<then>
-				<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 				<execute function="AssertClick" locator1="Myaccount#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 				<execute function="Type" locator1="Myaccount#PASSWORD_CURRENT_PASSWORD_FIELD" value1="" />
 				<execute function="Type" locator1="Myaccount#PASSWORD_NEW_PASSWORD_FIELD" value1="test1" />
@@ -877,7 +873,6 @@
 
 				<execute function="AssertTextEquals" locator1="Myaccount#ERROR_MESSAGE_1" value1="Your request failed to complete." />
 				<execute function="AssertTextEquals" locator1="Myaccount#ERROR_MESSAGE_2" value1="That password is invalid. Please enter in a different password." />
-				<execute function="SelectFrame" value1="relative=top" />
 
 				<execute macro="User#logoutPG" />
 
@@ -894,8 +889,6 @@
 				</execute>
 			</then>
 			<else>
-				<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-
 				<execute function="AssertClick" locator1="Myaccount#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 				<execute function="Type" locator1="Myaccount#PASSWORD_CURRENT_PASSWORD_FIELD" value1="test" />
 				<execute function="Type" locator1="Myaccount#PASSWORD_NEW_PASSWORD_FIELD" value1="test1" />
@@ -903,7 +896,6 @@
 				<execute function="AssertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 
 				<execute function="AssertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-				<execute function="SelectFrame" value1="relative=top" />
 
 				<execute macro="User#logoutPG" />
 
@@ -1030,7 +1022,6 @@
 	</command>
 
 	<command name="editDetailsViaMyAccount">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="AssertClick" locator1="Myaccount#MENU_USER_INFORMATION_DETAILS" value1="Details" />
 
 		<if>
@@ -1063,7 +1054,6 @@
 
 		<execute function="AssertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editDisplaySettingsCP">
@@ -1086,12 +1076,10 @@
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="Type" locator1="Myaccount#DETAILS_EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="AssertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 		<execute function="AssertTextEquals" locator1="Myaccount#ALERT_SUCCESS_MESSAGE" value1="Your email verification code has been sent and the new email address will be applied to your account once it is verified." />
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="editPasswordCP">
@@ -1175,14 +1163,12 @@
 	</command>
 
 	<command name="editPasswordViaMyAccount">
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
 		<execute function="AssertClick" locator1="Myaccount#MENU_USER_INFORMATION_PASSWORD" value1="Password" />
 		<execute function="Type" locator1="Myaccount#PASSWORD_CURRENT_PASSWORD_FIELD" value1="${currentPassword}" />
 		<execute function="Type" locator1="Myaccount#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="Type" locator1="Myaccount#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
 		<execute function="AssertClick" locator1="Myaccount#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="Myaccount#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->

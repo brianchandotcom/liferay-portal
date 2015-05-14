@@ -364,10 +364,9 @@
 		<execute function="Click" locator1="Dockbar#USER_NAME" />
 		<execute function="AssertClick" locator1="Dockbar#USER_MY_ACCOUNT" value1="My Account" />
 
-		<execute function="SelectFrame" locator1="Myaccount#MY_ACCOUNT_IFRAME" />
-		<execute function="AssertClick" locator1="//ul[@class='lfr-nav nav nav-pills']//a[contains(.,'${portletName}')]" value1="${portletName}" />
+		<var name="key_portletName" value="${portletName}" />
 
-		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="AssertClick" locator1="Myaccount#NAVIGATION_MY" value1="${portletName}" />
 	</command>
 
 	<command name="gotoMyDashboard">

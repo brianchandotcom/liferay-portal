@@ -68,13 +68,4 @@ public class MyWorkflowInstanceViewDisplayContext
 			isShowCompletedInstances());
 	}
 
-	@Override
-	public boolean isShowEntryAction() {
-		if (isShowCompletedInstances()) {
-			return false;
-		}
-
-		return true;
-	}
-
 }

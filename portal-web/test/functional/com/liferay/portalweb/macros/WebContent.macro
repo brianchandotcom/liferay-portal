@@ -16,8 +16,6 @@
 	</command>
 
 	<command name="addCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<if>
 			<isset var="expirationDate" />
 			<then>
@@ -196,8 +194,6 @@
 	</command>
 
 	<command name="addDraftCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SAVE_AS_DRAFT_BUTTON" value1="Save as Draft" />
@@ -234,8 +230,6 @@
 	</command>
 
 	<command name="addFailWithoutRequiredCategoryAssetTypeCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="Web Content Title" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="Web Content Content" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
@@ -247,8 +241,6 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<if>
 			<isset var="webContentContent" />
 			<then>
@@ -534,8 +526,6 @@
 	</command>
 
 	<command name="addWithCategorizationTypeCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
@@ -547,8 +537,6 @@
 	</command>
 
 	<command name="addWithCategoryCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
@@ -625,8 +613,6 @@
 	</command>
 
 	<command name="addWithMultipleCategories">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
@@ -821,8 +807,6 @@
 	</command>
 
 	<command name="addWithTagCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
@@ -853,8 +837,6 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute macro="WebContentNavigator#gotoAddCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
 		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#SUBMIT_FOR_PUBLICATION_BUTTON" value1="Submit for Publication" />

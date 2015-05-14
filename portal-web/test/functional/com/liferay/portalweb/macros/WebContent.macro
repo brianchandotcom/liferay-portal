@@ -520,17 +520,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addWithCategorizationTypeCP">
-		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#MENU_CATEGORIZATION" value1="Categorization" />
-
-		<execute function="Select" locator1="CPWebcontentCategorization#TYPE_SELECT" value1="${categorizationType}" />
-
-		<execute function="AssertClick" locator1="CPWebcontentAddwebcontent#PUBLISH_BUTTON" value1="Publish" />
-		<execute function="AssertTextEquals" locator1="CPWebcontent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="addWithCategoryCP">
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
@@ -1674,17 +1663,6 @@
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentAddwebcontent#WORKFLOW_STATUS" value1="Pending (${workflowTask})" />
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
-	</command>
-
-	<command name="viewTextFieldWidth">
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
-
-		<var name="key_widthSize" value="${widthSize}" />
-
-		<execute function="AssertElementPresent" locator1="CPWebcontentAddwebcontent#TEXT_FIELD_WIDTH" value1="${widthSize}" />
 	</command>
 
 	<command name="viewTranslationCmdCP">

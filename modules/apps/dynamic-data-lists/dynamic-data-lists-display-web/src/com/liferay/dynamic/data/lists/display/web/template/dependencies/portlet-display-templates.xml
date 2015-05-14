@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<root>
+	<template>
+		<template-key>dynamic-data-lists-display-default-ftl</template-key>
+		<name>portlet-display-template-name-default</name>
+		<description>portlet-display-template-description-default</description>
+		<language>ftl</language>
+		<script-file>com/liferay/dynamic/data/lists/display/web/template/dependencies/portlet_display_template_default.ftl</script-file>
+		<cacheable>false</cacheable>
+	</template>
+</root>

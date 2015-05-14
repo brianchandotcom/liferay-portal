@@ -47,14 +47,6 @@ public class PermissionCheckerFactoryUtil {
 		return _instance._serviceTracker.getService();
 	}
 
-	public void setPermissionCheckerFactory(
-		PermissionCheckerFactory permissionCheckerFactory) {
-
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_permissionCheckerFactory = permissionCheckerFactory;
-	}
-
 	private PermissionCheckerFactoryUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
@@ -66,8 +58,6 @@ public class PermissionCheckerFactoryUtil {
 
 	private static final PermissionCheckerFactoryUtil _instance =
 		new PermissionCheckerFactoryUtil();
-
-	private static PermissionCheckerFactory _permissionCheckerFactory;
 
 	private final ServiceTracker<?, PermissionCheckerFactory> _serviceTracker;
 

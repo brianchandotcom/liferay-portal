@@ -14,8 +14,12 @@
 		<fileset dir="${app.server.websphere.dir}/plugins" includes="com.ibm.ws.runtime.jar" />
 	</path>
 
-	<target name="clean" depends="build-common-java.clean">
-		<delete file="${deploy.dir}/${jar.file}.jar" />
+	<target name="clean">
+		<clean-common>
+			<clean-extra>
+				<delete file="${deploy.dir}/${jar.file}.jar" />
+			</clean-extra>
+		</clean-common>
 	</target>
 
 	<target name="deploy" depends="jar">

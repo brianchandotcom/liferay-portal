@@ -14,10 +14,10 @@
 
 package com.liferay.portal.cache.mvcc;
 
-import com.liferay.portal.cache.MockPortalCacheManager;
-import com.liferay.portal.cache.TestCacheListener;
-import com.liferay.portal.cache.TestCacheReplicator;
 import com.liferay.portal.cache.memory.MemoryPortalCache;
+import com.liferay.portal.cache.test.MockPortalCacheManager;
+import com.liferay.portal.cache.test.TestCacheListener;
+import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.kernel.cache.LowLevelCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;

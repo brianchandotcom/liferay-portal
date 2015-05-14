@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import com.liferay.portal.cache.MockPortalCacheManager;
 import com.liferay.portal.cache.memory.MemoryPortalCache;
+import com.liferay.portal.cache.test.MockPortalCacheManager;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.test.MappedMethodNameCallableInvocationHandler;

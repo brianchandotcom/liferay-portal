@@ -15,8 +15,8 @@
 package com.liferay.portal.service.persistence.impl;
 
 import com.liferay.portal.NoSuchModelException;
-import com.liferay.portal.cache.MockPortalCacheManager;
 import com.liferay.portal.cache.memory.MemoryPortalCache;
+import com.liferay.portal.cache.test.MockPortalCacheManager;
 import com.liferay.portal.kernel.cache.MultiVMPool;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;

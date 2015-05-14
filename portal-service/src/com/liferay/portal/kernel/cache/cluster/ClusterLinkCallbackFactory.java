@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster;
+package com.liferay.portal.kernel.cache.cluster;
 
-import com.liferay.portal.cache.bootstrap.ClusterLinkBootstrapLoader;
 import com.liferay.portal.kernel.cache.BootstrapLoader;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheManagerListener;
 import com.liferay.portal.kernel.cache.CallbackFactory;
+import com.liferay.portal.kernel.cache.bootstrap.ClusterLinkBootstrapLoader;
 
 import java.io.Serializable;
 

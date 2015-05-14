@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.cache.cluster;
+package com.liferay.portal.kernel.cache.cluster;
 
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.CacheReplicator;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheException;
 import com.liferay.portal.kernel.cache.PortalCacheManager;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEvent;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterEventType;
-import com.liferay.portal.kernel.cache.cluster.PortalCacheClusterLinkUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;

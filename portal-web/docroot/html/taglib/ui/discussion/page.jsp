@@ -198,7 +198,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 		<aui:script>
 			function <%= namespace + randomNamespace %>0ReplyOnChange(html) {
-				Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', html.trim() == '');
+				Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton0', html.trim() === '');
 			}
 
 			function <%= randomNamespace %>afterLogin(emailAddress, anonymousAccount) {

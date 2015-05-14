@@ -43,7 +43,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command name="ApproveFrontPageUserEdit" priority="5">
+	<command known-issues="LPS-55550" name="ApproveFrontPageUserEdit" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -229,7 +229,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectFrontPageUserEdit" priority="5">
+	<command known-issues="LPS-55550" name="RejectFrontPageUserEdit" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

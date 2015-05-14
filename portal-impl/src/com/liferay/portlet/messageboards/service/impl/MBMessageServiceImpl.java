@@ -242,9 +242,25 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
+	 *             String, long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public void deleteDiscussionMessage(
 			long groupId, String className, long classPK,
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long messageId)
+		throws PortalException {
+
+		deleteDiscussionMessage(
+			permissionClassName, permissionClassPK, permissionOwnerId,
+			messageId);
+	}
+
+	@Override
+	public void deleteDiscussionMessage(
 			String permissionClassName, long permissionClassPK,
 			long permissionOwnerId, long messageId)
 		throws PortalException {

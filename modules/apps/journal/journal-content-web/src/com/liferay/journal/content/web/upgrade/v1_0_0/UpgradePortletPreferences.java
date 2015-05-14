@@ -126,8 +126,6 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		userToolEntries = upgradeBooleanSelectableEntry(
 			userToolEntries, portletPreferences, "enablePrint");
-		userToolEntries = upgradeBooleanSelectableEntry(
-			userToolEntries, portletPreferences, "showAvailableLocales");
 
 		Map<String, String> extensions = new HashMap<>();
 
@@ -138,6 +136,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		userToolEntries = upgradeMultiValueSelectableEntry(
 			userToolEntries, portletPreferences, "extensions", extensions);
+
+		userToolEntries = upgradeBooleanSelectableEntry(
+			userToolEntries, portletPreferences, "showAvailableLocales");
 
 		portletPreferences.setValue(
 			"userToolEntries", StringUtil.merge(userToolEntries));

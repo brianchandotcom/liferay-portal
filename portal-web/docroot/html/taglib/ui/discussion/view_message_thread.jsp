@@ -155,7 +155,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 				<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= comment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>' showSource="<%= false %>" 			/>
+						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= comment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>' showSource="<%= false %>" />
 
 						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= comment.getBody() %>" />
 
@@ -284,7 +284,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 					<aui:script>
 						window['<%= namespace + randomNamespace + index %>ReplyOnChange'] = function(html) {
-							Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= index %>', html.trim() == '');
+							Liferay.Util.toggleDisabled('#<%= namespace + randomNamespace %>postReplyButton<%= index %>', html.trim() === '');
 						};
 					</aui:script>
 				</div>

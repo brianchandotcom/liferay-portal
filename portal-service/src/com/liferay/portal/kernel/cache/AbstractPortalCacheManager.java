@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache;
+package com.liferay.portal.kernel.cache;
 
 import com.liferay.portal.kernel.cache.AggregatedCacheManagerListener;
 import com.liferay.portal.kernel.cache.BlockingPortalCache;

@@ -20,10 +20,10 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.productivity.center.constants.ProductivityCenterWebKeys" %><%@
-page import="com.liferay.productivity.center.display.context.logic.PanelCategoryHelper" %><%@
-page import="com.liferay.productivity.center.panel.PanelApp" %><%@
+<%@ page import="com.liferay.productivity.center.panel.PanelApp" %><%@
 page import="com.liferay.productivity.center.panel.PanelAppRegistry" %><%@
-page import="com.liferay.productivity.center.panel.PanelCategory" %>
+page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
+page import="com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys" %><%@
+page import="com.liferay.productivity.center.taglib.servlet.taglib.display.context.logic.PanelCategoryHelper" %>
 
 <liferay-theme:defineObjects />

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.servlet.taglib.ui;
+package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.taglib.util.IncludeTag;

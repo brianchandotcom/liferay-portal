@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,17 +12,11 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.productivity.center.constants;
+<%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-/**
- * @author Adolfo Pérez
- */
-public class ProductivityCenterWebKeys {
-
-	public static final String PANEL_APP_REGISTRY = "PANEL_APP_REGISTRY";
-
-	public static final String PANEL_CATEGORY_REGISTRY =
-		"PANEL_CATEGORY_REGISTRY";
-
-}
+<%@ page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
+page import="com.liferay.productivity.center.panel.PanelCategoryRegistry" %><%@
+page import="com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys" %>

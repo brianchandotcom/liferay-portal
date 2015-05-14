@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.display.context.logic;
+package com.liferay.productivity.center.taglib.servlet.taglib.display.context.logic;
 
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.util.StringBundler;

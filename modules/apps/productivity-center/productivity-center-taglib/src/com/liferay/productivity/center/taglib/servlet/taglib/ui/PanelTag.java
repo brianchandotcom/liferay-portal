@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.productivity.center.servlet.taglib.ui;
+package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
+import com.liferay.productivity.center.panel.PanelCategory;
+import com.liferay.productivity.center.panel.RootPanelCategory;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,18 +23,17 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Adolfo Pérez
  */
-public class PanelContentTag extends IncludeTag {
+public class PanelTag extends IncludeTag {
 
-	@Override
-	public void setPortletId(String portletId) {
-		_portletId = portletId;
+	public void setPanelCategory(PanelCategory panelCategory) {
+		_panelCategory = panelCategory;
 	}
 
 	@Override
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_portletId = null;
+		_panelCategory = null;
 	}
 
 	@Override
@@ -42,12 +43,16 @@ public class PanelContentTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		if (_panelCategory == null) {
+			_panelCategory = RootPanelCategory.getInstance();
+		}
+
 		request.setAttribute(
-			"productivity-center-ui:panel-content:portletId", _portletId);
+			"productivity-center-ui:panel:panelCategory", _panelCategory);
 	}
 
-	private static final String _PAGE = "/taglib/ui/panel_content/page.jsp";
+	private static final String _PAGE = "/taglib/ui/panel/page.jsp";
 
-	private String _portletId;
+	private PanelCategory _panelCategory;
 
 }

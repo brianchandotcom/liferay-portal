@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
-import javax.portlet.ReadOnlyException;
 
 /**
  * @author Julio Camarero
@@ -43,8 +42,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	}
 
 	protected String[] upgradeBooleanSelectableEntry(
-		String[] selectableEntries, PortletPreferences portletPreferences,
-		String preferenceKey) throws ReadOnlyException {
+			String[] selectableEntries, PortletPreferences portletPreferences,
+			String preferenceKey)
+		throws Exception {
 
 		boolean preferenceValue = GetterUtil.getBoolean(
 			portletPreferences.getValue(preferenceKey, null));
@@ -61,7 +61,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	protected void upgradeContentMetadataEntries(
 			PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String[] contentMetadataEntries = new String[0];
 
@@ -81,7 +81,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	protected String[] upgradeMultiValueSelectableEntry(
 			String[] selectableEntries, PortletPreferences portletPreferences,
 			String preferenceKey, Map<String, String> conversionValues)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String[] preferenceValues = portletPreferences.getValues(
 			preferenceKey, null);
@@ -119,7 +119,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	}
 
 	protected void upgradeUserToolEntries(PortletPreferences portletPreferences)
-		throws ReadOnlyException {
+		throws Exception {
 
 		String[] userToolEntries = new String[0];
 

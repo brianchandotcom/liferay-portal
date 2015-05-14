@@ -141,9 +141,9 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 	protected void replace(Element root, long articleGroupId) throws Exception {
 		for (Element el : root.elements()) {
-			Element dynamicContent = el.element("dynamic-content");
+			List<Element> dynamicContents = el.elements("dynamic-content");
 
-			if (dynamicContent != null) {
+			for (Element dynamicContent : dynamicContents) {
 				String text = dynamicContent.getText();
 
 				text = HtmlUtil.stripComments(text);

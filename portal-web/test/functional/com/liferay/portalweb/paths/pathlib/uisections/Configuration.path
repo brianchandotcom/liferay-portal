@@ -63,6 +63,7 @@
 <tr>
 	<td>MAXIMUM_ITEMS_TO_DISPLAY_SELECT</td>
 	<td>//select[contains(@id,'pageDelta')]</td>
+	<td></td>
 </tr>
 <tr>
 	<td>SOURCE_SCOPE_SELECT</td>

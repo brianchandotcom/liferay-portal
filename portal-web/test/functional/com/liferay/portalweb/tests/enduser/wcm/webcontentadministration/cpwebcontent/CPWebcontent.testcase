@@ -271,6 +271,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
@@ -360,6 +362,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -739,6 +743,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
@@ -784,6 +790,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -1110,6 +1118,8 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
@@ -1217,6 +1227,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="linkedPageName" value="Test Page" />

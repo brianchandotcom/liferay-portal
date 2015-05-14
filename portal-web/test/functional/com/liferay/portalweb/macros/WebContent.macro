@@ -78,8 +78,6 @@
 	</command>
 
 	<command name="addCPwithStructure">
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
 		<if>
@@ -631,8 +629,6 @@
 	</command>
 
 	<command name="addWithStructureAndWorkflowCP">
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
 		<if>
@@ -657,8 +653,6 @@
 	</command>
 
 	<command name="addWithStructureCP">
-		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
-
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
 		<if>

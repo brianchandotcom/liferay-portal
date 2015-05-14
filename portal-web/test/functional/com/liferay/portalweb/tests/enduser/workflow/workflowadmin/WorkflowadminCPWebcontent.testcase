@@ -289,6 +289,8 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+
 		<execute macro="WebContent#addWithStructureAndWorkflowCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
@@ -325,6 +327,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
@@ -852,6 +856,8 @@
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+
 		<execute macro="WebContent#addWithStructureAndWorkflowCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
@@ -867,6 +873,8 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />

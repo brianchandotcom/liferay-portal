@@ -381,6 +381,8 @@
 			<var name="siteScopeName" value="Global" />
 		</execute>
 
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
+
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
@@ -473,6 +475,8 @@
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
 		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute macro="WebContent#addWithStructureCP">
 			<var name="structureName" value="WC Structure Name" />

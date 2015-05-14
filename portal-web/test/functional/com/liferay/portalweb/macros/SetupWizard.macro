@@ -17,6 +17,13 @@
 			</then>
 		</if>
 
+		<if>
+			<equals arg1="${databaseNameDefault}" arg2="false" />
+			<then>
+				<var method="StringUtil#replace('${jdbcURL}', 'lportal', 'lportal1')" name="jdbcURL" />
+			</then>
+		</if>
+
 		<execute function="Select" locator1="Setupwizard#DATABASE_CHANGE_DATABASE_TYPE_SELECT" value1="${databaseType}" />
 		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_JDBC_URL_FIELD" value1="${jdbcURL}" />
 		<execute function="Type" locator1="Setupwizard#DATABASE_CHANGE_JDBC_DRIVER_CLASS_NAME_FIELD" value1="${jdbcDriverClassName}" />

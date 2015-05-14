@@ -63,7 +63,7 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 	}
 
 	protected String getUploadMessage() {
-		if (Validator.isNull(_uploadMessage)) {
+		if (Validator.isNotNull(_uploadMessage)) {
 			return _uploadMessage;
 		}
 

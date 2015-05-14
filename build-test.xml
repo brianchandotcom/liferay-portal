@@ -3681,6 +3681,42 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<isset property="database.hsql.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.driver=${database.hsql.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.password=${database.hsql.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.url=${database.hsql.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.username=${database.hsql.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="database.mysql.driver" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">

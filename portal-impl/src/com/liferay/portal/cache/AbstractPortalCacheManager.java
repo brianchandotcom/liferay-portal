@@ -74,7 +74,13 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void destroy() {
-		_serviceRegistrar.destroy();
+		if (_serviceRegistrar != null) {
+			_serviceRegistrar.destroy();
+		}
+
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
 
 		portalCaches.clear();
 
@@ -274,13 +280,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		Filter filter = registry.getFilter(sb.toString());
 
-		ServiceTracker<PortalCacheConfiguratorSettings,
-			PortalCacheConfiguratorSettings> serviceTracker =
-				registry.trackServices(
-					filter,
-					new PortalCacheConfiguratorSettingsServiceTrackerCustomizer());
+		_serviceTracker = registry.trackServices(
+			filter,
+			new PortalCacheConfiguratorSettingsServiceTrackerCustomizer());
 
-		serviceTracker.open();
+		_serviceTracker.open();
 	}
 
 	protected abstract void initPortalCacheManager();
@@ -364,6 +368,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private ServiceRegistrar<PortalCacheManager<K, V>> _serviceRegistrar;
+	private ServiceTracker<PortalCacheConfiguratorSettings,
+		PortalCacheConfiguratorSettings> _serviceTracker;
 
 	private class PortalCacheConfiguratorSettingsServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer

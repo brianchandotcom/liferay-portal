@@ -171,7 +171,7 @@ public class PoshiRunnerExecutor {
 				runTaskElement(childElement);
 			}
 			else if (childElementName.equals("var")) {
-				runVarElement(childElement, true, false);
+				runVarElement(childElement, true, true);
 			}
 			else if (childElementName.equals("while")) {
 				runWhileElement(childElement);
@@ -254,7 +254,7 @@ public class PoshiRunnerExecutor {
 		List<Element> executeVarElements = executeElement.elements("var");
 
 		for (Element executeVarElement : executeVarElements) {
-			runVarElement(executeVarElement, false, true);
+			runVarElement(executeVarElement, false, false);
 		}
 
 		String classCommandName = executeElement.attributeValue("function");
@@ -421,13 +421,13 @@ public class PoshiRunnerExecutor {
 		List<Element> rootVarElements = rootElement.elements("var");
 
 		for (Element rootVarElement : rootVarElements) {
-			runVarElement(rootVarElement, false, false);
+			runVarElement(rootVarElement, false, true);
 		}
 
 		List<Element> executeVarElements = executeElement.elements("var");
 
 		for (Element executeVarElement : executeVarElements) {
-			runVarElement(executeVarElement, false, true);
+			runVarElement(executeVarElement, false, false);
 		}
 
 		SummaryLoggerHandler.startSummary(executeElement);
@@ -551,12 +551,12 @@ public class PoshiRunnerExecutor {
 	}
 
 	public static void runVarElement(
-			Element element, boolean commandVar, boolean paramVar)
+			Element element, boolean commandVar, boolean updateLoggerStatus)
 		throws Exception {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
-		if (!paramVar) {
+		if (updateLoggerStatus) {
 			XMLLoggerHandler.updateStatus(element, "pending");
 		}
 
@@ -631,7 +631,7 @@ public class PoshiRunnerExecutor {
 		Matcher matcher = _variablePattern.matcher(replacedVarValue);
 
 		if (matcher.matches() && replacedVarValue.equals(varValue)) {
-			if (!paramVar) {
+			if (updateLoggerStatus) {
 				XMLLoggerHandler.updateStatus(element, "pass");
 			}
 
@@ -647,7 +647,7 @@ public class PoshiRunnerExecutor {
 				varName, replacedVarValue);
 		}
 
-		if (!paramVar) {
+		if (updateLoggerStatus) {
 			XMLLoggerHandler.updateStatus(element, "pass");
 		}
 	}

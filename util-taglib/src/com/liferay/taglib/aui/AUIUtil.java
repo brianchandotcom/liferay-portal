@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.aui;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -22,6 +23,9 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -215,6 +219,27 @@ public class AUIUtil {
 		}
 
 		return null;
+	}
+
+	public static String getNamespace(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		String namespace = StringPool.BLANK;
+
+		if (portletRequest == null) {
+			return namespace;
+		}
+
+		boolean auiFormUseNamespace = GetterUtil.getBoolean(
+			(String)portletRequest.getAttribute("aui:form:useNamespace"), true);
+
+		if ((portletResponse != null) && auiFormUseNamespace) {
+			namespace = GetterUtil.getString(
+				portletRequest.getAttribute("aui:form:portletNamespace"),
+				portletResponse.getNamespace());
+		}
+
+		return namespace;
 	}
 
 	public static boolean isOpensNewWindow(String target) {

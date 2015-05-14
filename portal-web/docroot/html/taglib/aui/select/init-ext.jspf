@@ -16,7 +16,7 @@
 
 <%
 if (request.getAttribute("aui:select:useNamespace") == null) {
-	useNamespace = auiFormUseNamespace;
+	useNamespace = GetterUtil.getBoolean((String)request.getAttribute("aui:form:useNamespace"), true);
 }
 
 if (!useNamespace) {

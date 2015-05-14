@@ -18,12 +18,14 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
+import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.ArrayList;
@@ -35,6 +37,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -146,14 +151,23 @@ public class LanguageTag extends IncludeTag {
 			}
 		}
 
-		for (Locale locale : locales) {
-			String url = null;
+		Locale currentLocale = null;
 
+		if (Validator.isNotNull(_languageId)) {
+			currentLocale = LocaleUtil.fromLanguageId(_languageId);
+		}
+		else {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			if (!LocaleUtil.equals(locale, themeDisplay.getLocale())) {
-				url = HttpUtil.addParameter(
+			currentLocale = themeDisplay.getLocale();
+		}
+
+		for (Locale locale : locales) {
+			String url = null;
+
+			if (!LocaleUtil.equals(locale, currentLocale)) {
+				url = HttpUtil.setParameter(
 					formAction, parameterName, LocaleUtil.toLanguageId(locale));
 			}
 			else if (!displayCurrentLocale) {
@@ -162,7 +176,7 @@ public class LanguageTag extends IncludeTag {
 
 			languageEntries.add(
 				new LanguageEntry(
-					duplicateLanguages, themeDisplay.getLocale(), locale, url));
+					duplicateLanguages, currentLocale, locale, url));
 		}
 
 		return languageEntries;
@@ -177,6 +191,25 @@ public class LanguageTag extends IncludeTag {
 			WebKeys.THEME_DISPLAY);
 
 		return LanguageUtil.getAvailableLocales(themeDisplay.getSiteGroupId());
+	}
+
+	protected String getNamespacedName() {
+		String name = _name;
+
+		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+
+		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+
+		String namespace = AUIUtil.getNamespace(
+			portletRequest, portletResponse);
+
+		if (Validator.isNotNull(namespace)) {
+			name = namespace.concat(name);
+		}
+
+		return name;
 	}
 
 	@Override
@@ -198,7 +231,8 @@ public class LanguageTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:language:languageEntries",
 			getLanguageEntries(
-				getLocales(), _displayCurrentLocale, getFormAction(), _name));
+				getLocales(), _displayCurrentLocale, getFormAction(),
+				getNamespacedName()));
 		request.setAttribute("liferay-ui:language:languageId", _languageId);
 		request.setAttribute("liferay-ui:language:name", _name);
 	}

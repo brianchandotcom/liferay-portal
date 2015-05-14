@@ -13,7 +13,6 @@
 		<@aui["select"]
 			changesContext=true
 			label=""
-			id='${namespace + name}'
 			name=name
 			onChange='${namespace + "changeLanguage();"}'
 			title="language"

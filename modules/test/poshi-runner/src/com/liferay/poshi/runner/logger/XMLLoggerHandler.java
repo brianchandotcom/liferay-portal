@@ -123,6 +123,10 @@ public final class XMLLoggerHandler {
 
 		String stackTrace = PoshiRunnerStackTraceUtil.getSimpleStackTrace();
 
+		if (stackTrace.contains(".function")) {
+			return;
+		}
+
 		LoggerElement loggerElement = _loggerElements.get(stackTrace);
 
 		loggerElement.setAttribute("data-status01", status);

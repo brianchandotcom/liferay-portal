@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="journal-web" />
+	<property name="import.shared" value="journal-web,journal-content-asset-addon-entry/journal-content-asset-addon-entry-common" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

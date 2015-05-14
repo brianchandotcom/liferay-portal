@@ -25,8 +25,8 @@ import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.productivity.center.constants.ProductivityCenterWebKeys;
-import com.liferay.productivity.center.service.panel.PanelAppRegistry;
-import com.liferay.productivity.center.service.panel.PanelCategoryRegistry;
+import com.liferay.productivity.center.panel.PanelAppRegistry;
+import com.liferay.productivity.center.panel.PanelCategoryRegistry;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import java.util.Collection;

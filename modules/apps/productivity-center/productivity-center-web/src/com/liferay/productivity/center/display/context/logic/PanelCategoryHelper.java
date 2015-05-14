@@ -15,8 +15,8 @@
 package com.liferay.productivity.center.display.context.logic;
 
 import com.liferay.productivity.center.panel.PanelApp;
+import com.liferay.productivity.center.panel.PanelAppRegistry;
 import com.liferay.productivity.center.panel.PanelCategory;
-import com.liferay.productivity.center.service.panel.PanelAppRegistry;
 
 /**
  * @author Adolfo Pérez

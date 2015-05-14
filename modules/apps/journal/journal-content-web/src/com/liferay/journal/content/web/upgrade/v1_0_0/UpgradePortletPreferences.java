@@ -118,19 +118,19 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		upgradeUserToolEntries(portletPreferences);
+		upgradeUserToolAssetAddonEntries(portletPreferences);
 		upgradeContentMetadataAssetAddonEntries(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	protected void upgradeUserToolEntries(PortletPreferences portletPreferences)
+	protected void upgradeUserToolAssetAddonEntries(PortletPreferences portletPreferences)
 		throws Exception {
 
-		String[] userToolEntries = new String[0];
+		String[] userToolAssetAddonEntries = new String[0];
 
-		userToolEntries = upgradeBooleanSelectableEntry(
-			userToolEntries, portletPreferences, "enablePrint");
+		userToolAssetAddonEntries = upgradeBooleanSelectableEntry(
+			userToolAssetAddonEntries, portletPreferences, "enablePrint");
 
 		Map<String, String> extensions = new HashMap<>();
 
@@ -139,14 +139,14 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		extensions.put("pdf", "enablePDF");
 		extensions.put("txt", "enableTXT");
 
-		userToolEntries = upgradeMultiValueSelectableEntry(
-			userToolEntries, portletPreferences, "extensions", extensions);
+		userToolAssetAddonEntries = upgradeMultiValueSelectableEntry(
+			userToolAssetAddonEntries, portletPreferences, "extensions", extensions);
 
-		userToolEntries = upgradeBooleanSelectableEntry(
-			userToolEntries, portletPreferences, "showAvailableLocales");
+		userToolAssetAddonEntries = upgradeBooleanSelectableEntry(
+			userToolAssetAddonEntries, portletPreferences, "showAvailableLocales");
 
 		portletPreferences.setValue(
-			"userToolEntries", StringUtil.merge(userToolEntries));
+			"userToolAssetAddonEntries", StringUtil.merge(userToolAssetAddonEntries));
 	}
 
 }

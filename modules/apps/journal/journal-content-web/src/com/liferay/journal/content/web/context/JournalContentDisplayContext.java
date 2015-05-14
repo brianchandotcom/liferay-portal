@@ -251,19 +251,19 @@ public class JournalContentDisplayContext {
 	}
 
 	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
-		List<UserToolAssetAddonEntry> userToolEntries = ListUtil.filter(
+		List<UserToolAssetAddonEntry> userToolAssetAddonEntries = ListUtil.filter(
 			UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntries(),
 			new PredicateFilter<UserToolAssetAddonEntry>() {
 
 				@Override
-				public boolean filter(UserToolAssetAddonEntry userToolEntry) {
-					return userToolEntry.isEnabled();
+				public boolean filter(UserToolAssetAddonEntry userToolAssetAddonEntry) {
+					return userToolAssetAddonEntry.isEnabled();
 				}
 
 			});
 
 		return ListUtil.sort(
-			userToolEntries, new PropertyComparator("weight", true, false));
+			userToolAssetAddonEntries, new PropertyComparator("weight", true, false));
 	}
 
 	public JournalArticle getLatestArticle() {
@@ -349,16 +349,16 @@ public class JournalContentDisplayContext {
 			return _userToolAssetAddonEntries;
 		}
 
-		String[] userToolEntryKeys = StringUtil.split(
+		String[] userToolAssetAddonEntryKeys = StringUtil.split(
 			userToolAssetAddonEntriesPref);
 
-		for (String userToolEntryKey : userToolEntryKeys) {
-			UserToolAssetAddonEntry userToolEntry =
+		for (String userToolAssetAddonEntryKey : userToolAssetAddonEntryKeys) {
+			UserToolAssetAddonEntry userToolAssetAddonEntry =
 				UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntry(
-					userToolEntryKey);
+					userToolAssetAddonEntryKey);
 
-			if (userToolEntry != null) {
-				_userToolAssetAddonEntries.add(userToolEntry);
+			if (userToolAssetAddonEntry != null) {
+				_userToolAssetAddonEntries.add(userToolAssetAddonEntry);
 			}
 		}
 

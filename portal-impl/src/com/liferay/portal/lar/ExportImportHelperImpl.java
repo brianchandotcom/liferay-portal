@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -116,7 +115,6 @@ import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.io.File;
 import java.io.InputStream;
@@ -765,6 +763,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			boolean exportReferencedContent)
 		throws Exception {
 
+		return replaceExportContentReferences(
+			portletDataContext, entityStagedModel, content,
+			exportReferencedContent, true);
+	}
+
+	@Override
+	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean exportReferencedContent, boolean escapeContent)
+		throws Exception {
+
 		content = replaceExportDLReferences(
 			portletDataContext, entityStagedModel, content,
 			exportReferencedContent);
@@ -773,10 +783,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		content = replaceExportLinksToLayouts(
 			portletDataContext, entityStagedModel, content);
 
-		String className = ExportImportClassedModelUtil.getClassName(
-			entityStagedModel);
-
-		if (!className.equals(JournalArticle.class.getName())) {
+		if (escapeContent) {
 			content = StringUtil.replace(
 				content, StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
 		}

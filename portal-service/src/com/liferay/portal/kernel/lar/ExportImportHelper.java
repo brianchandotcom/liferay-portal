@@ -245,6 +245,12 @@ public interface ExportImportHelper {
 			boolean exportReferencedContent)
 		throws Exception;
 
+	public String replaceExportContentReferences(
+			PortletDataContext portletDataContext,
+			StagedModel entityStagedModel, String content,
+			boolean exportReferencedContent, boolean escapeContent)
+		throws Exception;
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #replaceExportDLReferences(PortletDataContext, StagedModel,

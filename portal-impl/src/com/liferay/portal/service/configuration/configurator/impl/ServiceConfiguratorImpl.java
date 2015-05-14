@@ -229,24 +229,30 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 		properties.put(
 			"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
 
+		PortalCacheConfiguratorSettings
+			singleVMPortalCacheConfigurationSettings =
+			new PortalCacheConfiguratorSettings(
+				classLoader,
+				configuration.get(
+					PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
+
 		_serviceRegistrar.registerService(
 			PortalCacheConfiguratorSettings.class,
-			new PortalCacheConfiguratorSettings(
-				configuration.get(PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION),
-				classLoader),
-			properties);
+			singleVMPortalCacheConfigurationSettings, properties);
 		
 		properties = new HashMap<>();
 
 		properties.put(
 			"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
 		
+		PortalCacheConfiguratorSettings multiVMPortalCacheConfiguratorSettings =
+			new PortalCacheConfiguratorSettings(
+				classLoader, configuration.get(
+					PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
+
 		_serviceRegistrar.registerService(
 			PortalCacheConfiguratorSettings.class,
-			new PortalCacheConfiguratorSettings(
-				configuration.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION),
-				classLoader),
-			properties);
+			multiVMPortalCacheConfiguratorSettings, properties);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

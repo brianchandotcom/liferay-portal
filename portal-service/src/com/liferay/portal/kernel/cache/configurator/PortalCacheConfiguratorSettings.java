@@ -20,10 +20,11 @@ package com.liferay.portal.kernel.cache.configurator;
 public class PortalCacheConfiguratorSettings {
 
 	public PortalCacheConfiguratorSettings(
-		String portalCacheConfigrationLocation, ClassLoader classLoader) {
+		ClassLoader classLoader, String portalCacheConfigrationLocation) {
+
+		_classLoader = classLoader;
 
 		_portalCacheConfigrationLocation = portalCacheConfigrationLocation;
-		_classLoader = classLoader;
 	}
 
 	public ClassLoader getClassLoader() {

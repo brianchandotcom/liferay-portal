@@ -300,26 +300,31 @@ public class PluginPackageHotDeployListener extends BaseHotDeployListener {
 		properties.put(
 			"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
 
+		PortalCacheConfiguratorSettings
+			singleVMPortalCacheConfigurationSettings =
+				new PortalCacheConfiguratorSettings(
+					classLoader,
+					portletPropertiesConfiguration.get(
+						PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
+
 		serviceRegistrar.registerService(
 			PortalCacheConfiguratorSettings.class,
-			new PortalCacheConfiguratorSettings(
-				portletPropertiesConfiguration.get(
-					PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION),
-				classLoader),
-			properties);
+			singleVMPortalCacheConfigurationSettings, properties);
 
 		properties = new HashMap<>();
 
 		properties.put(
 			"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
 
+		PortalCacheConfiguratorSettings multiVMPortalCacheConfiguratorSettings =
+			new PortalCacheConfiguratorSettings(
+				classLoader,
+				portletPropertiesConfiguration.get(
+					PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
+
 		serviceRegistrar.registerService(
 			PortalCacheConfiguratorSettings.class,
-			new PortalCacheConfiguratorSettings(
-				portletPropertiesConfiguration.get(
-					PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION),
-				classLoader),
-			properties);
+			multiVMPortalCacheConfiguratorSettings, properties);
 
 		servletContext.setAttribute(
 			_PORTAL_CACHE_CONFIGURATOR_SETTINGS_SERVICE_REGISTAR,

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -169,7 +170,7 @@ public class DLAppLocalServiceTest {
 			throws PortalException {
 
 			LocalRepository localRepository =
-				RepositoryLocalServiceUtil.getLocalRepositoryImpl(
+				RepositoryProviderUtil.getLocalRepository(
 					_repository.getRepositoryId());
 
 			ServiceContext serviceContext =

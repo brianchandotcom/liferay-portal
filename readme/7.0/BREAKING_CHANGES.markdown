@@ -1571,3 +1571,35 @@ If you need to require the last name, list it on the `lang.user.name.required.fi
 This change was made to account for different languages allowing for different user name fields, along with which of those fields are required (introduced as part of LPS-48406). That change was in conflict with the current USERS_LAST_NAME_REQUIRED property, so all control has been relegated to the language.properties files (with the exception of first-name, which is still always present and always required).
 
 ---------------------------------------
+
+### Removed methods getGroupLocalRepositoryImpl() and getLocalRepositoryImpl() from RepositoryLocalService and RepositoryService
+- **Date:** 2015-May-14
+- **JIRA Ticket:** LPS-55566
+
+#### What changed?
+
+The methods getGroupLocalRepositoryImpl() and getLocalRepositoryImpl() have been removed from RepositoryLocalService and RepositoryService because, although they are related to that service, they should be placed in a different level of abstraction.
+
+#### Who is affected?
+
+This affects anyone who uses those methods.
+
+#### How should I update my code?
+
+The removed methods where generic and had a long signature with optional parameters, now they have on specialized version per parameter and are placed in the RepositoryProvider service. For instance, if you called:
+
+```
+    RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0)
+```
+
+now you must call:
+
+```
+    RepositoryProviderUtil.getLocalRepositoryByFileEntryId(fileEntryId)
+```
+
+#### Why was this change made?
+
+This change was made to enhance the Repository API and make decoupling from Document Library easier when modularizing the portal.
+
+---------------------------------------

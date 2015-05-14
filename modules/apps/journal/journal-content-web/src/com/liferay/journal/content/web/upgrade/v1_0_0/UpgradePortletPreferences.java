@@ -124,7 +124,8 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	protected void upgradeUserToolAssetAddonEntries(PortletPreferences portletPreferences)
+	protected void upgradeUserToolAssetAddonEntries(
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		String[] userToolAssetAddonEntries = new String[0];
@@ -140,13 +141,16 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		extensions.put("txt", "enableTXT");
 
 		userToolAssetAddonEntries = upgradeMultiValueSelectableEntry(
-			userToolAssetAddonEntries, portletPreferences, "extensions", extensions);
+			userToolAssetAddonEntries, portletPreferences, "extensions",
+			extensions);
 
 		userToolAssetAddonEntries = upgradeBooleanSelectableEntry(
-			userToolAssetAddonEntries, portletPreferences, "showAvailableLocales");
+			userToolAssetAddonEntries, portletPreferences,
+			"showAvailableLocales");
 
 		portletPreferences.setValue(
-			"userToolAssetAddonEntries", StringUtil.merge(userToolAssetAddonEntries));
+			"userToolAssetAddonEntries",
+			StringUtil.merge(userToolAssetAddonEntries));
 	}
 
 }

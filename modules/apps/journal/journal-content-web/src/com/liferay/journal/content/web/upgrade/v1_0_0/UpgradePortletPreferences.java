@@ -80,17 +80,18 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 	protected String[] upgradeMultiValueSelectableEntry(
 			String[] selectableEntries, PortletPreferences portletPreferences,
-			String preferenceKey, Map<String, String> conversionValues)
+			String preferenceKey, Map<String, String> newPreferenceValues)
 		throws Exception {
 
 		String[] preferenceValues = portletPreferences.getValues(
 			preferenceKey, null);
 
 		if (preferenceValues != null) {
-			for (String value : preferenceValues) {
-				String convertedValue = conversionValues.get(value);
+			for (String preferenceValue : preferenceValues) {
+				String newPreferenceValue = newPreferenceValues.get(
+					preferenceValue);
 
-				if (Validator.isNotNull(convertedValue)) {
+				if (Validator.isNotNull(newPreferenceValue)) {
 					selectableEntries = ArrayUtil.append(
 						selectableEntries, preferenceKey);
 				}

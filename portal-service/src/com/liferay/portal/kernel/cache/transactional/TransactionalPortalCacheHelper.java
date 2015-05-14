@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cache.transactional;
+package com.liferay.portal.kernel.cache.transactional;
 
 import com.liferay.portal.kernel.cache.AggregatedCacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;

@@ -14,25 +14,15 @@
 
 package com.liferay.portal.kernel.cache;
 
-import com.liferay.portal.kernel.cache.AggregatedCacheManagerListener;
-import com.liferay.portal.kernel.cache.BlockingPortalCache;
-import com.liferay.portal.kernel.cache.BootstrapLoader;
-import com.liferay.portal.kernel.cache.CacheListener;
-import com.liferay.portal.kernel.cache.CacheListenerScope;
-import com.liferay.portal.kernel.cache.CacheManagerListener;
-import com.liferay.portal.kernel.cache.CallbackFactory;
-import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.PortalCacheException;
-import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.configuration.CallbackConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheConfiguration;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.cache.transactional.TransactionalPortalCache;
 import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.Serializable;
 
@@ -88,13 +78,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 
-		if (PropsValues.TRANSACTIONAL_CACHE_ENABLED &&
-			isTransactionalPortalCache(name)) {
-
+		if (isTransactionalCacheEnabled() && isTransactionalPortalCache(name)) {
 			portalCache = new TransactionalPortalCache<>(portalCache);
 		}
 
-		if (PropsValues.EHCACHE_BLOCKING_CACHE_ALLOWED && blocking) {
+		if (isBlockingCacheAllowed() && blocking) {
 			portalCache = new BlockingPortalCache<>(portalCache);
 		}
 
@@ -104,7 +92,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		if (previousPortalCache != null) {
 			portalCache = previousPortalCache;
 		}
-		else if (PropsValues.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED &&
+		else if (isBootstrapCacheLoaderEnabled() &&
 				 (portalCacheConfiguration != null)) {
 
 			CallbackConfiguration bootstrapLoaderConfiguration =
@@ -137,9 +125,25 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		return _name;
 	}
 
+	public String[] getTransactionalCacheNames() {
+		return _transactionalCacheNames;
+	}
+
+	public boolean isBlockingCacheAllowed() {
+		return _blockingCacheAllowed;
+	}
+
+	public boolean isBootstrapCacheLoaderEnabled() {
+		return _bootstrapCacheLoaderEnabled;
+	}
+
 	@Override
 	public boolean isClusterAware() {
 		return _clusterAware;
+	}
+
+	public boolean isTransactionalCacheEnabled() {
+		return _transactionalCacheEnabled;
 	}
 
 	@Override
@@ -157,6 +161,16 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		doRemoveCache(name);
 	}
 
+	public void setBlockingCacheAllowed(boolean blockingCacheAllowed) {
+		_blockingCacheAllowed = blockingCacheAllowed;
+	}
+
+	public void setBootstrapCacheLoaderEnabled(
+		boolean bootstrapCacheLoaderEnabled) {
+
+		_bootstrapCacheLoaderEnabled = bootstrapCacheLoaderEnabled;
+	}
+
 	public void setClusterAware(boolean clusterAware) {
 		this._clusterAware = clusterAware;
 	}
@@ -167,6 +181,16 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	public void setName(String name) {
 		_name = name;
+	}
+
+	public void setTransactionalCacheEnabled(
+		boolean transactionalCacheEnabled) {
+
+		_transactionalCacheEnabled = transactionalCacheEnabled;
+	}
+
+	public void setTransactionalCacheNames(String[] transactionalCacheNames) {
+		_transactionalCacheNames = transactionalCacheNames;
 	}
 
 	@Override
@@ -231,7 +255,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	protected abstract void initPortalCacheManager();
 
 	protected boolean isTransactionalPortalCache(String name) {
-		for (String namePattern : PropsValues.TRANSACTIONAL_CACHE_NAMES) {
+		for (String namePattern : getTransactionalCacheNames()) {
 			if (StringUtil.wildcardMatches(
 					name, namePattern, CharPool.QUESTION, CharPool.STAR,
 					CharPool.PERCENT, true)) {
@@ -301,9 +325,13 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		}
 	}
 
+	private boolean _blockingCacheAllowed;
+	private boolean _bootstrapCacheLoaderEnabled;
 	private boolean _clusterAware;
 	private boolean _mpiOnly;
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
+	private boolean _transactionalCacheEnabled;
+	private String[] _transactionalCacheNames = StringPool.EMPTY_ARRAY;
 
 }

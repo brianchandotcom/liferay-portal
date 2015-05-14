@@ -72,14 +72,24 @@ public class LayoutsAdminDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(tabs1)) {
-			tabs1 = "public-pages";
-
 			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
 
 			Group group = layoutSet.getGroup();
 
+			if (group.isUser()) {
+				tabs1 = "my-profile";
+			}
+			else {
+				tabs1 = "public-pages";
+			}
+
 			if (!group.isControlPanel() && layoutSet.isPrivateLayout()) {
-				tabs1 = "private-pages";
+				if (group.isUser()) {
+					tabs1 = "my-dashboard";
+				}
+				else {
+					tabs1 = "private-pages";
+				}
 			}
 		}
 

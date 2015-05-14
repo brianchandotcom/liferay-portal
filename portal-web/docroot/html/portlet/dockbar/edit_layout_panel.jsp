@@ -57,7 +57,7 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 				<c:if test="<%= themeDisplay.isShowSiteAdministrationIcon() %>">
 					<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="siteAdministrationURL" windowState="<%= WindowState.NORMAL.toString() %>">
 						<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
-						<portlet:param name="tabs1" value="public-pages" />
+						<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 						<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
 						<portlet:param name="selPlid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
 						<portlet:param name="treeId" value="layoutsTree" />

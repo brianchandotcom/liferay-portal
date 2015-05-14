@@ -1,0 +1,15 @@
+bundle {
+	instruction "Bundle-SymbolicName", project.name
+	instruction "Bundle-Vendor", "Liferay, Inc."
+
+	instruction "Git-Descriptor", '${system-allow-fail;git describe --dirty --always}'
+	instruction "Git-SHA", '${system-allow-fail;git rev-list -1 HEAD}'
+	instruction "Javac-Compiler", compileJava.toolChain.name
+	instruction "Javac-Debug", "${compileJava.options.debug}"
+	instruction "Javac-Deprecation", "${compileJava.options.deprecation}"
+	instruction "Javac-Encoding", (compileJava.options.encoding ?: System.properties["file.encoding"])
+
+	instruction "-donotcopy", "(.touch)"
+	instruction "-dsannotations", "*"
+	instruction "-sources", "false"
+}

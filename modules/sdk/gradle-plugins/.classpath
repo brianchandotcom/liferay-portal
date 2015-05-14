@@ -17,6 +17,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/bndlib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.javadoc.formatter.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.lang.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.service.builder.jar" />
@@ -27,6 +28,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.xml.formatter.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.xsd.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.util.jar" />
+	<classpathentry kind="lib" path="lib/gradle-bundle-plugin.jar" />
 	<classpathentry kind="lib" path="lib/groovy-all.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services-groovy.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services.jar" />
@@ -36,5 +38,6 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-model-core.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-platform-jvm.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
+	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

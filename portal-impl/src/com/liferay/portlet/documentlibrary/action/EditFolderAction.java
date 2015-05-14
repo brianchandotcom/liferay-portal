@@ -179,7 +179,7 @@ public class EditFolderAction extends PortletAction {
 		long repositoryId = ParamUtil.getLong(actionRequest, "repositoryId");
 
 		LocalRepository localRepository =
-			RepositoryProviderUtil.getLocalRepositoryByFolderId(repositoryId);
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
 
 		if (localRepository.isCapabilityProvided(
 				TemporaryFileEntriesCapability.class)) {

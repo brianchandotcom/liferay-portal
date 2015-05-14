@@ -129,9 +129,9 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		Map<String, String> extensions = new HashMap<>();
 
-		extensions.put("pdf", "enablePDF");
-		extensions.put("odt", "enableODT");
 		extensions.put("doc", "enableDOC");
+		extensions.put("odt", "enableODT");
+		extensions.put("pdf", "enablePDF");
 		extensions.put("txt", "enableTXT");
 
 		userToolEntries = upgradeMultiValueSelectableEntry(

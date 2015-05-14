@@ -70,18 +70,6 @@
 		<antcall target="deploy" />
 	</target>
 
-	<target name="build-registry-api" depends="setup-sdk">
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="clean"
-		/>
-
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="compile"
-		/>
-	</target>
-
 	<target name="check-sdk-uptodate">
 		<uptodate property="sdk.uptodate">
 			<mapper to="${project.dir}/tools/sdk" type="merge" />
@@ -109,7 +97,16 @@
 
 			<ant dir="sql" target="clean" inheritAll="false" />
 
-			<delete dir="tools/sdk" />
+			<sequential>
+				<delete dir="tools/sdk" />
+
+				<antcall target="setup-sdk" />
+
+				<ant-execute
+					ant.dir="${project.dir}/modules"
+					ant.target="clean"
+				/>
+			</sequential>
 
 			<delete dir="${doc.dir}" />
 
@@ -235,8 +232,13 @@
 		<antcall target="print-current-time" />
 	</target>
 
-	<target name="compile" depends="build-registry-api">
+	<target name="compile" depends="setup-sdk">
 		<delete file="javac.output.txt" />
+
+		<ant-execute
+			ant.dir="${project.dir}/modules/core/registry-api"
+			ant.target="compile"
+		/>
 
 		<ant dir="portal-service" target="compile" inheritAll="false" />
 

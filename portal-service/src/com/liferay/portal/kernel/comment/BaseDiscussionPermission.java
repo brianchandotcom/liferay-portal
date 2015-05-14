@@ -35,26 +35,20 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 
 	@Override
 	public void checkDeletePermission(
-			long companyId, long groupId, String className, long classPK,
-			long commentId, long userId)
+			String className, long classPK, long commentId, long userId)
 		throws PortalException {
 
-		if (!hasDeletePermission(
-				companyId, groupId, className, classPK, commentId, userId)) {
-
+		if (!hasDeletePermission(className, classPK, commentId, userId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	@Override
 	public void checkUpdatePermission(
-			long companyId, long groupId, String className, long classPK,
-			long commentId, long userId)
+			String className, long classPK, long commentId, long userId)
 		throws PortalException {
 
-		if (!hasUpdatePermission(
-				companyId, groupId, className, classPK, commentId, userId)) {
-
+		if (!hasUpdatePermission(className, classPK, commentId, userId)) {
 			throw new PrincipalException();
 		}
 	}

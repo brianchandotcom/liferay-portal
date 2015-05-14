@@ -198,7 +198,6 @@ public class EditDiscussionAction extends PortletAction {
 				themeDisplay.getPermissionChecker());
 
 		discussionPermission.checkDeletePermission(
-			themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 			permissionClassName, permissionClassPK, commentId,
 			permissionOwnerId);
 
@@ -305,7 +304,6 @@ public class EditDiscussionAction extends PortletAction {
 			// Update message
 
 			discussionPermission.checkUpdatePermission(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 				permissionClassName, permissionClassPK, commentId,
 				permissionOwnerId);
 

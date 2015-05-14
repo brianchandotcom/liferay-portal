@@ -249,12 +249,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long permissionOwnerId, long messageId)
 		throws PortalException {
 
-		User user = getUser();
-
 		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(), groupId,
-			permissionClassName, permissionClassPK, messageId,
-			permissionOwnerId, ActionKeys.DELETE_DISCUSSION);
+			getPermissionChecker(), permissionClassName, permissionClassPK,
+			messageId, permissionOwnerId, ActionKeys.DELETE_DISCUSSION);
 
 		mbMessageLocalService.deleteDiscussionMessage(messageId);
 	}
@@ -688,13 +685,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = getUser();
-
 		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(),
-			serviceContext.getScopeGroupId(), permissionClassName,
-			permissionClassPK, messageId, permissionOwnerId,
-			ActionKeys.UPDATE_DISCUSSION);
+			getPermissionChecker(), permissionClassName, permissionClassPK,
+			messageId, permissionOwnerId, ActionKeys.UPDATE_DISCUSSION);
 
 		return mbMessageLocalService.updateDiscussionMessage(
 			getUserId(), messageId, className, classPK, subject, body,

@@ -41,24 +41,22 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 
 	@Override
 	public boolean hasDeletePermission(
-			long companyId, long groupId, String className, long classPK,
-			long commentId, long userId)
+			String className, long classPK, long commentId, long userId)
 		throws PortalException {
 
 		return MBDiscussionPermission.contains(
-			_permissionChecker, companyId, groupId, className, classPK,
-			commentId, userId, ActionKeys.DELETE_DISCUSSION);
+			_permissionChecker, className, classPK, commentId, userId,
+			ActionKeys.DELETE_DISCUSSION);
 	}
 
 	@Override
 	public boolean hasUpdatePermission(
-			long companyId, long groupId, String className, long classPK,
-			long commentId, long userId)
+			String className, long classPK, long commentId, long userId)
 		throws PortalException {
 
 		return MBDiscussionPermission.contains(
-			_permissionChecker, companyId, groupId, className, classPK,
-			commentId, userId, ActionKeys.UPDATE_DISCUSSION);
+			_permissionChecker, className, classPK, commentId, userId,
+			ActionKeys.UPDATE_DISCUSSION);
 	}
 
 	@Override

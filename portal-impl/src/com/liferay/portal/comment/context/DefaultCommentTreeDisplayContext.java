@@ -85,8 +85,6 @@ public class DefaultCommentTreeDisplayContext
 	@Override
 	public boolean isDeleteActionControlVisible() throws PortalException {
 		return _discussionPermission.hasDeletePermission(
-			_discussionRequestHelper.getCompanyId(),
-			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
 			_comment.getCommentId(), _comment.getUserId());
@@ -104,8 +102,6 @@ public class DefaultCommentTreeDisplayContext
 	@Override
 	public boolean isEditActionControlVisible() throws PortalException {
 		return _discussionPermission.hasUpdatePermission(
-			_discussionRequestHelper.getCompanyId(),
-			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
 			_comment.getCommentId(), _comment.getUserId());
@@ -162,8 +158,6 @@ public class DefaultCommentTreeDisplayContext
 
 	protected boolean hasUpdatePermission() throws PortalException {
 		return _discussionPermission.hasUpdatePermission(
-			_discussionRequestHelper.getCompanyId(),
-			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
 			_comment.getCommentId(), _comment.getUserId());

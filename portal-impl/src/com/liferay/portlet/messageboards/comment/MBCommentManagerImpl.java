@@ -100,11 +100,11 @@ public class MBCommentManagerImpl implements CommentManager {
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
-		MBMessage message = _mbMessageLocalService.addDiscussionMessage(
+		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
 			userId, userName, groupId, className, classPK, threadId,
 			parentCommentId, subject, body, serviceContext);
 
-		return message.getMessageId();
+		return mbMessage.getMessageId();
 	}
 
 	@Override

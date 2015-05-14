@@ -132,16 +132,14 @@ public class DummyCommentManagerImpl implements CommentManager {
 
 			@Override
 			public boolean hasDeletePermission(
-				long companyId, long groupId, String className, long classPK,
-				long commentId, long userId) {
+				String className, long classPK, long commentId, long userId) {
 
 				return false;
 			}
 
 			@Override
 			public boolean hasUpdatePermission(
-				long companyId, long groupId, String className, long classPK,
-				long commentId, long userId) {
+				String className, long classPK, long commentId, long userId) {
 
 				return false;
 			}

@@ -25,8 +25,6 @@ PortletRequest portletRequest = (PortletRequest)request.getAttribute(JavaConstan
 
 PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-boolean auiFormUseNamespace = GetterUtil.getBoolean((String)request.getAttribute("aui:form:useNamespace"), true);
-
 String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
 
 String currentURL = null;

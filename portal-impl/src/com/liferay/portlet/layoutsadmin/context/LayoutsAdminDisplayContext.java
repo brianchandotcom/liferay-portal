@@ -76,17 +76,19 @@ public class LayoutsAdminDisplayContext {
 
 			Group group = layoutSet.getGroup();
 
-			tabs1 = "public-pages";
-
 			if (group.isUser()) {
 				tabs1 = "my-profile";
 			}
+			else {
+				tabs1 = "public-pages";
+			}
 
 			if (!group.isControlPanel() && layoutSet.isPrivateLayout()) {
-				tabs1 = "private-pages";
-
 				if (group.isUser()) {
 					tabs1 = "my-dashboard";
+				}
+				else {
+					tabs1 = "private-pages";
 				}
 			}
 		}

@@ -619,7 +619,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherFilterAndOrderByFieldType" priority="5">
+	<command known-issues="LPS-55464" name="AssetPublisherFilterAndOrderByFieldType" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

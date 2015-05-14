@@ -129,7 +129,7 @@
 		</execute>
 	</command>
 
-	<command name="PortletConfigurationChangesWithinCustomizableColumnShouldNotAffectAllUsers" priority="4">
+	<command known-issues="LPS-55444" name="PortletConfigurationChangesWithinCustomizableColumnShouldNotAffectAllUsers" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -365,7 +365,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteMemberWithCustomizablePagePermissionsWillOnlySeePortletsInCustomizableView" priority="4">
+	<command known-issues="LPS-55444" name="SiteMemberWithCustomizablePagePermissionsWillOnlySeePortletsInCustomizableView" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

@@ -19,7 +19,7 @@
 		<execute macro="UserGroup#tearDownCP" />
 	</tear-down>
 
-	<command name="AddOrganizationSitesAndDeactivate" priority="5">
+	<command known-issues="LPS-55444" name="AddOrganizationSitesAndDeactivate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="5">
+	<command known-issues="LPS-55444" name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -849,7 +849,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDeactivated" priority="3">
+	<command known-issues="LPS-55444" name="SitesDeactivated" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

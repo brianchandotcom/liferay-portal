@@ -16,6 +16,7 @@ package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.logger.CommandLoggerHandler;
 import com.liferay.poshi.runner.logger.SummaryLoggerHandler;
+import com.liferay.poshi.runner.logger.XMLLoggerHandler;
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
 import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.GetterUtil;
@@ -181,6 +182,8 @@ public class PoshiRunnerExecutor {
 	public static void runEchoElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		String message = element.attributeValue("message");
 
 		if (message == null) {
@@ -189,10 +192,14 @@ public class PoshiRunnerExecutor {
 
 		System.out.println(
 			PoshiRunnerVariablesUtil.replaceCommandVars(message));
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runFailElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
+
+		XMLLoggerHandler.updateStatus(element, "pending");
 
 		String message = element.attributeValue("message");
 
@@ -207,6 +214,8 @@ public class PoshiRunnerExecutor {
 	public static void runForElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		String list = PoshiRunnerVariablesUtil.replaceCommandVars(
 			element.attributeValue("list"));
 
@@ -220,6 +229,8 @@ public class PoshiRunnerExecutor {
 
 			parseElement(element);
 		}
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runFunctionCommandElement(
@@ -521,6 +532,8 @@ public class PoshiRunnerExecutor {
 	public static void runTaskElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		try {
 			SummaryLoggerHandler.startSummary(element);
 
@@ -533,6 +546,8 @@ public class PoshiRunnerExecutor {
 		}
 
 		SummaryLoggerHandler.passSummary(element);
+
+		XMLLoggerHandler.updateStatus(element, "pass");
 	}
 
 	public static void runVarElement(Element element, boolean commandVar)

@@ -12,16 +12,30 @@
  * details.
  */
 
-package com.liferay.portal.cache.configurator;
-
-import java.net.URL;
+package com.liferay.portal.kernel.cache.configurator;
 
 /**
- * @author Miguel Pastor
+ * @author Tina Tian
  */
-public interface PortalCacheConfigurator {
+public class PortalCacheConfiguratorSettings {
 
-	public void reconfigureCaches(
-		String portalCacheManagerName, ClassLoader classLoader, URL url);
+	public PortalCacheConfiguratorSettings(
+		ClassLoader classLoader, String portalCacheConfigrationLocation) {
+
+		_classLoader = classLoader;
+
+		_portalCacheConfigrationLocation = portalCacheConfigrationLocation;
+	}
+
+	public ClassLoader getClassLoader() {
+		return _classLoader;
+	}
+
+	public String getPortalCacheConfigrationLocation() {
+		return _portalCacheConfigrationLocation;
+	}
+
+	private final ClassLoader _classLoader;
+	private final String _portalCacheConfigrationLocation;
 
 }

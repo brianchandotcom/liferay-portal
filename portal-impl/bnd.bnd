@@ -2,7 +2,6 @@ Bundle-Version: 7.0.0
 Export-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache,\
-	com.liferay.portal.cache.configurator,\
 	com.liferay.portal.cluster,\
 	com.liferay.portal.increment,\
 	com.liferay.portal.dao.jdbc.aop,\

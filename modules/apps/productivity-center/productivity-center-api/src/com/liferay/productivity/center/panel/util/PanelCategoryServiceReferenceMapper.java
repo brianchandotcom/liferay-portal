@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.service.util;
+package com.liferay.productivity.center.panel.util;
 
 import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
 import com.liferay.portal.kernel.log.Log;

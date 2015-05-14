@@ -8,11 +8,6 @@
 <tr><td rowspan="1" colspan="3">BookmarksSearch</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--SEARCH_TABLE-->
 <tr>
 	<td>SEARCH_TABLE_ENTRY_NAME</td>

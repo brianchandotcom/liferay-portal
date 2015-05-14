@@ -1,18 +1,13 @@
 <html>
 <head>
-<title>BookmarksBookmark</title>
+<title>BookmarksEntry</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">BookmarksBookmark</td></tr>
+<tr><td rowspan="1" colspan="3">BookmarksEntry</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <tr>
 	<td>NAME</td>
 	<td>//h3[@class='header-title']</td>

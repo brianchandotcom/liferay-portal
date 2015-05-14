@@ -9,6 +9,21 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_BOOKMARK</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Bookmark')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Advanced')]</td>
 	<td></td>
@@ -49,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Javascript')]</td>
 	<td></td>
@@ -61,6 +81,11 @@
 <tr>
 	<td>MOBILE_DEVICE_RULES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mobile Device Rules')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Roles')]</td>
 	<td></td>
@@ -91,6 +121,11 @@
 <tr>
 	<td>SITES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Sites')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUBSCRIBE</td>
+	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>

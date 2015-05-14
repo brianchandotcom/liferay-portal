@@ -14,11 +14,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>HOME_HEADER</td>
-	<td>//li[@class='first']/a[contains(.,'Home')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

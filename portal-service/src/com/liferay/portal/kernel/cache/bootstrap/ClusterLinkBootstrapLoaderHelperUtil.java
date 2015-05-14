@@ -28,12 +28,14 @@ import com.liferay.portal.kernel.io.AnnotatedObjectInputStream;
 import com.liferay.portal.kernel.io.AnnotatedObjectOutputStream;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SocketUtil;
 import com.liferay.portal.kernel.util.SocketUtil.ServerSocketConfigurator;
-import com.liferay.portal.util.PropsValues;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -73,7 +75,8 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		ServerSocketChannel serverSocketChannel =
 			SocketUtil.createServerSocketChannel(
 				localClusterNode.getBindInetAddress(),
-				PropsValues.EHCACHE_SOCKET_START_PORT,
+				GetterUtil.getInteger(
+					PropsUtil.get(PropsKeys.EHCACHE_SOCKET_START_PORT), 32454),
 				_serverSocketConfigurator);
 
 		ServerSocket serverSocket = serverSocketChannel.socket();
@@ -153,7 +156,10 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 
 		try {
 			clusterNodeResponse = clusterNodeResponses.poll(
-				PropsValues.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT,
+				GetterUtil.getLong(
+					PropsUtil.get(
+						PropsKeys.CLUSTER_LINK_NODE_BOOTUP_RESPONSE_TIMEOUT),
+					10000),
 				TimeUnit.MILLISECONDS);
 		}
 		catch (InterruptedException ie) {
@@ -445,7 +451,9 @@ public class ClusterLinkBootstrapLoaderHelperUtil {
 		public void configure(ServerSocket serverSocket)
 			throws SocketException {
 
-			serverSocket.setSoTimeout(PropsValues.EHCACHE_SOCKET_SO_TIMEOUT);
+			serverSocket.setSoTimeout(
+				GetterUtil.getInteger(
+					PropsUtil.get(PropsKeys.EHCACHE_SOCKET_SO_TIMEOUT), 10000));
 		}
 
 	}

@@ -75,6 +75,15 @@ public class ScriptingImpl implements Scripting {
 		scriptingExecutor.clearCache();
 	}
 
+	@Override
+	public ScriptingExecutor createScriptingExecutor(
+		String language, boolean executeInSeparateThread) {
+
+		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
+
+		return scriptingExecutor.newInstance(executeInSeparateThread);
+	}
+
 	public void destroy() {
 		_serviceTracker.close();
 

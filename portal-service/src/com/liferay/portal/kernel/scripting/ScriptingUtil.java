@@ -34,6 +34,13 @@ public class ScriptingUtil {
 		getScripting().clearCache(language);
 	}
 
+	public static ScriptingExecutor createScriptingExecutor(
+		String language, boolean executeInSeparateThread) {
+
+		return getScripting().createScriptingExecutor(
+			language, executeInSeparateThread);
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #eval(Set, Map, Set, String,
 	 *             String, String...)}

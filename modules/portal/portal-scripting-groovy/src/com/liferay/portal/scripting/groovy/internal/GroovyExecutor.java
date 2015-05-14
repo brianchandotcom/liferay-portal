@@ -87,6 +87,11 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		return LANGUAGE;
 	}
 
+	@Override
+	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
+		return new GroovyExecutor();
+	}
+
 	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
 		if (ArrayUtil.isEmpty(classLoaders)) {
 			if (_groovyShell == null) {

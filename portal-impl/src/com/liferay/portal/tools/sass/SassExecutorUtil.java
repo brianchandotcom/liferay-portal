@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.sass;
 
+import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -28,12 +29,6 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import org.jruby.RubyArray;
-import org.jruby.RubyException;
-import org.jruby.embed.ScriptingContainer;
-import org.jruby.exceptions.RaiseException;
-import org.jruby.runtime.builtin.IRubyObject;
 
 /**
  * @author Minhchau Dang
@@ -132,7 +127,7 @@ public class SassExecutorUtil {
 		}
 		else {
 			try {
-				return _scriptingContainer.callMethod(
+				return (String)_scriptingContainer.callMethod(
 					_scriptObject, "process",
 					new Object[] {
 						content, _portalCommonDirName, filePath, cssThemePath,
@@ -141,29 +136,9 @@ public class SassExecutorUtil {
 					String.class);
 			}
 			catch (Exception e) {
-				if (e instanceof RaiseException) {
-					RaiseException raiseException = (RaiseException)e;
+				System.err.println(e.getMessage());
 
-					RubyException rubyException = raiseException.getException();
-
-					System.err.println(
-						String.valueOf(
-							rubyException.message.toJava(String.class)));
-
-					IRubyObject iRubyObject = rubyException.getBacktrace();
-
-					RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
-						RubyArray.class);
-
-					for (int i = 0; i < rubyArray.size(); i++) {
-						Object object = rubyArray.get(i);
-
-						System.err.println(String.valueOf(object));
-					}
-				}
-				else {
-					e.printStackTrace();
-				}
+				e.printStackTrace();
 
 				_exception = new Exception("Unable to parse " + fileName, e);
 

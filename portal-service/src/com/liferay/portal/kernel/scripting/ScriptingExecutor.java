@@ -40,4 +40,8 @@ public interface ScriptingExecutor {
 
 	public String getLanguage();
 
+	public ScriptingContainer getScriptingContainer();
+
+	public ScriptingExecutor newInstance(boolean executeInSeparateThread);
+
 }

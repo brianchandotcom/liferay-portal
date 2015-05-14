@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.ClassLoaderUtil;
@@ -110,6 +111,11 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 	@Override
 	public String getLanguage() {
 		return _LANGUAGE;
+	}
+
+	@Override
+	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
+		return new JavaScriptExecutor();
 	}
 
 	protected Script getCompiledScript(

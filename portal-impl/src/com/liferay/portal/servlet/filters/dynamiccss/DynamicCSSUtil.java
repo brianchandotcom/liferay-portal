@@ -16,6 +16,7 @@ package com.liferay.portal.servlet.filters.dynamiccss;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -54,12 +55,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.time.StopWatch;
-
-import org.jruby.RubyArray;
-import org.jruby.RubyException;
-import org.jruby.embed.ScriptingContainer;
-import org.jruby.exceptions.RaiseException;
-import org.jruby.runtime.builtin.IRubyObject;
 
 /**
  * @author Raymond Augé
@@ -565,31 +560,11 @@ public class DynamicCSSUtil {
 			};
 
 			try {
-				content = _scriptingContainer.callMethod(
+				content = (String)_scriptingContainer.callMethod(
 					_scriptObject, "process", arguments, String.class);
 			}
 			catch (Exception e) {
-				if (e instanceof RaiseException) {
-					RaiseException raiseException = (RaiseException)e;
-
-					RubyException rubyException = raiseException.getException();
-
-					_log.error(rubyException.message.toJava(String.class));
-
-					IRubyObject iRubyObject = rubyException.getBacktrace();
-
-					RubyArray rubyArray = (RubyArray)iRubyObject.toJava(
-						RubyArray.class);
-
-					for (int i = 0; i < rubyArray.size(); i++) {
-						Object object = rubyArray.get(i);
-
-						_log.error(object);
-					}
-				}
-				else {
-					_log.error(e, e);
-				}
+				_log.error(e, e);
 			}
 		}
 

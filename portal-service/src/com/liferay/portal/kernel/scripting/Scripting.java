@@ -26,6 +26,9 @@ public interface Scripting {
 
 	public void clearCache(String language) throws ScriptingException;
 
+	public ScriptingExecutor createScriptingExecutor(
+		String language, boolean executeInSeparateThread);
+
 	public Map<String, Object> eval(
 			Set<String> allowedClasses, Map<String, Object> inputObjects,
 			Set<String> outputNames, String language, String script,

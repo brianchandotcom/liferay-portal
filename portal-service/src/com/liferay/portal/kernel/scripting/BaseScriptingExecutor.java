@@ -51,4 +51,9 @@ public abstract class BaseScriptingExecutor implements ScriptingExecutor {
 		}
 	}
 
+	@Override
+	public ScriptingContainer getScriptingContainer() {
+		return null;
+	}
+
 }

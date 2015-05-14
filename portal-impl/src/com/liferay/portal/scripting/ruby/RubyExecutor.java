@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ExecutionException;
+import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;
+import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -53,7 +55,6 @@ import org.jruby.Ruby;
 import org.jruby.RubyInstanceConfig;
 import org.jruby.RubyInstanceConfig.CompileMode;
 import org.jruby.embed.LocalContextScope;
-import org.jruby.embed.ScriptingContainer;
 import org.jruby.embed.internal.LocalContextProvider;
 import org.jruby.exceptions.RaiseException;
 
@@ -102,11 +103,14 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	}
 
 	public RubyExecutor() {
-		_scriptingContainer = new ScriptingContainer(
-			LocalContextScope.THREADSAFE);
+		org.jruby.embed.ScriptingContainer scriptingContainer =
+			new org.jruby.embed.ScriptingContainer(
+				LocalContextScope.THREADSAFE);
+
+		_scriptingContainer = new RubyScriptingContainer(scriptingContainer);
 
 		LocalContextProvider localContextProvider =
-			_scriptingContainer.getProvider();
+			scriptingContainer.getProvider();
 
 		RubyInstanceConfig rubyInstanceConfig =
 			localContextProvider.getRubyInstanceConfig();
@@ -137,11 +141,11 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 
-		_scriptingContainer.setCurrentDirectory(_basePath);
+		scriptingContainer.setCurrentDirectory(_basePath);
 	}
 
 	public void destroy() {
-		_scriptingContainer.terminate();
+		_scriptingContainer.destroy();
 	}
 
 	@Override
@@ -176,6 +180,15 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		return _scriptingContainer;
 	}
 
+	@Override
+	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
+		RubyExecutor rubyExecutor = new RubyExecutor();
+
+		rubyExecutor.setExecuteInSeparateThread(executeInSeparateThread);
+
+		return rubyExecutor;
+	}
+
 	public void setExecuteInSeparateThread(boolean executeInSeparateThread) {
 		_executeInSeparateThread = executeInSeparateThread;
 	}
@@ -191,9 +204,12 @@ public class RubyExecutor extends BaseScriptingExecutor {
 				"Constrained execution not supported for Ruby");
 		}
 
+		org.jruby.embed.ScriptingContainer scriptingContainer =
+			_scriptingContainer.getRealScriptingContainer();
+
 		try {
 			LocalContextProvider localContextProvider =
-				_scriptingContainer.getProvider();
+				scriptingContainer.getProvider();
 
 			RubyInstanceConfig rubyInstanceConfig =
 				localContextProvider.getRubyInstanceConfig();
@@ -218,11 +234,11 @@ public class RubyExecutor extends BaseScriptingExecutor {
 					inputName = StringPool.DOLLAR + inputName;
 				}
 
-				_scriptingContainer.put(inputName, inputObject);
+				scriptingContainer.put(inputName, inputObject);
 			}
 
 			if (scriptFile != null) {
-				_scriptingContainer.runScriptlet(
+				scriptingContainer.runScriptlet(
 					new FileInputStream(scriptFile), scriptFile.toString());
 			}
 			else {
@@ -237,7 +253,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 
 			for (String outputName : outputNames) {
 				outputObjects.put(
-					outputName, _scriptingContainer.get(outputName));
+					outputName, scriptingContainer.get(outputName));
 			}
 
 			return outputObjects;
@@ -319,7 +335,8 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	private final String _basePath;
 	private boolean _executeInSeparateThread = true;
 	private final List<String> _loadPaths;
-	private final ScriptingContainer _scriptingContainer;
+	private final ScriptingContainer<org.jruby.embed.ScriptingContainer>
+		_scriptingContainer;
 
 	private class EvalCallable implements Callable<Map<String, Object>> {
 

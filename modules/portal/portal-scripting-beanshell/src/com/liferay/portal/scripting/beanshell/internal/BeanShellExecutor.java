@@ -92,4 +92,9 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 		return LANGUAGE;
 	}
 
+	@Override
+	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
+		return new BeanShellExecutor();
+	}
+
 }

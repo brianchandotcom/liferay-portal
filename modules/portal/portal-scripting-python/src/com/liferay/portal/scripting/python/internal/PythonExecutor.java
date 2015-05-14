@@ -116,6 +116,15 @@ public class PythonExecutor extends BaseScriptingExecutor {
 		return LANGUAGE;
 	}
 
+	@Override
+	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
+		PythonExecutor pythonExecutor = new PythonExecutor();
+
+		pythonExecutor._portalCache = _portalCache;
+
+		return pythonExecutor;
+	}
+
 	protected PyCode getCompiledScript(String script) {
 		if (!_initialized) {
 			synchronized (this) {

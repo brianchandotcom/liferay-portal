@@ -188,6 +188,14 @@
 		</if>
 	</target>
 
+	<target name="deploy-fast">
+		<delete dir="classes" />
+
+		<deploy
+			module.dir="${basedir}"
+		/>
+	</target>
+
 	<target name="jar" depends="build-common.compile,build-alloy-bootstrap,build-alloy">
 		<jar-macro
 			module.dir="${basedir}"

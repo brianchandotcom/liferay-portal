@@ -70,7 +70,7 @@ public class CommentManagerImpl implements CommentManager {
 
 	@Override
 	public long addComment(
-			long userId, long groupId, String className, long classPK,
+			long userId, String className, long classPK,
 			String userName, long parentCommentId, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -78,8 +78,8 @@ public class CommentManagerImpl implements CommentManager {
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.addComment(
-			userId, groupId, className, classPK, userName, parentCommentId,
-			subject, body, serviceContextFunction);
+			userId, className, classPK, userName, parentCommentId, subject,
+			body, serviceContextFunction);
 	}
 
 	@Override

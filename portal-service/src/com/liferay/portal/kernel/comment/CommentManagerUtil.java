@@ -36,14 +36,14 @@ public class CommentManagerUtil {
 	}
 
 	public static long addComment(
-			long userId, long groupId, String className, long classPK,
-			String userName, long parentCommentId, String subject, String body,
+			long userId, String className, long classPK, String userName,
+			long parentCommentId, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		return getCommentManager().addComment(
-			userId, groupId, className, classPK, userName, parentCommentId,
-			subject, body, serviceContextFunction);
+			userId, className, classPK, userName, parentCommentId, subject,
+			body, serviceContextFunction);
 	}
 
 	public static long addComment(

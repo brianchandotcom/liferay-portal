@@ -87,7 +87,7 @@ public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
 	public long addComment(
-			long userId, long groupId, String className, long classPK,
+			long userId, String className, long classPK,
 			String userName, long parentCommentId, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
@@ -95,14 +95,13 @@ public class MBCommentManagerImpl implements CommentManager {
 		MBMessage parentMessage = _mbMessageLocalService.getMessage(
 			parentCommentId);
 
-		long threadId = parentMessage.getThreadId();
-
 		ServiceContext serviceContext = serviceContextFunction.apply(
 			MBMessage.class.getName());
 
 		MBMessage mbMessage = _mbMessageLocalService.addDiscussionMessage(
-			userId, userName, groupId, className, classPK, threadId,
-			parentCommentId, subject, body, serviceContext);
+			userId, userName, parentMessage.getGroupId(), className, classPK,
+			parentMessage.getThreadId(), parentCommentId, subject, body,
+			serviceContext);
 
 		return mbMessage.getMessageId();
 	}

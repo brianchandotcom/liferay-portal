@@ -180,12 +180,12 @@ if (data != null) {
 		initEditor: function() {
 			var editorConfig = <%= (editorConfigJSONObject != null) ? editorConfigJSONObject.toString() : "{}" %>;
 
-			var defaultconfig = {
+			var defaultConfig = {
 				file_browser_callback: window['<%= name %>'].fileBrowserCallback,
 				init_instance_callback: window['<%= name %>'].initInstanceCallback
 			};
 
-			<c:if test="<%= Validator.isNotNul(onChangeMethod) %>">
+			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
 				defaultConfig.setup = function(editor) {
 					editor.on(
 						'keyup',
@@ -196,7 +196,7 @@ if (data != null) {
 				};
 			</c:if>
 
-			var config = A.merge(editorConfig, defaultconfig);
+			var config = A.merge(editorConfig, defaultConfig);
 
 			tinyMCE.init(config);
 		},

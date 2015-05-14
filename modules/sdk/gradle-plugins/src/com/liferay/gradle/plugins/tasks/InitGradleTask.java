@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
@@ -93,27 +94,23 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildDependenciesCompile() {
 		List<String> contents = new ArrayList<>();
 
-		if (_ivyXmlNode != null) {
-			Node dependenciesNode = getNode(_ivyXmlNode, "dependencies");
+		Iterator<Node> iterator = getIvyXmlDependenciesIterator();
 
-			if (dependenciesNode != null) {
-				Iterator<Node> iterator = dependenciesNode.iterator();
+		if (iterator != null) {
+			while (iterator.hasNext()) {
+				Node dependencyNode = iterator.next();
 
-				while (iterator.hasNext()) {
-					Node dependencyNode = iterator.next();
+				String conf = (String)dependencyNode.attribute("conf");
 
-					String conf = (String)dependencyNode.attribute("conf");
-
-					if (Validator.isNotNull(conf) && !conf.equals("default")) {
-						continue;
-					}
-
-					String group = (String)dependencyNode.attribute("org");
-					String name = (String)dependencyNode.attribute("name");
-					String version = (String)dependencyNode.attribute("rev");
-
-					contents.add(wrapDependency(group, name, version));
+				if (Validator.isNotNull(conf) && !conf.equals("default")) {
+					continue;
 				}
+
+				String group = (String)dependencyNode.attribute("org");
+				String name = (String)dependencyNode.attribute("name");
+				String version = (String)dependencyNode.attribute("rev");
+
+				contents.add(wrapDependency(group, name, version));
 			}
 		}
 
@@ -164,6 +161,34 @@ public class InitGradleTask extends DefaultTask {
 			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")", true);
 	}
 
+	protected List<String> getBuildDependenciesProvided() {
+		List<String> contents = new ArrayList<>();
+
+		Iterator<Node> iterator = getIvyXmlDependenciesIterator();
+
+		if (iterator != null) {
+			while (iterator.hasNext()) {
+				Node dependencyNode = iterator.next();
+
+				String conf = (String)dependencyNode.attribute("conf");
+
+				if (Validator.isNull(conf) || !conf.contains("provided")) {
+					continue;
+				}
+
+				String group = (String)dependencyNode.attribute("org");
+				String name = (String)dependencyNode.attribute("name");
+				String version = (String)dependencyNode.attribute("rev");
+
+				contents.add(wrapDependency(group, name, version));
+			}
+		}
+
+		return wrapContents(
+			contents, 1, "(", LiferayJavaPlugin.PROVIDED_CONFIGURATION_NAME,
+			")", true);
+	}
+
 	protected List<String> getBuildDependenciesProvidedCompile() {
 		List<String> contents = new ArrayList<>();
 
@@ -200,27 +225,23 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildDependenciesTestCompile() {
 		List<String> contents = new ArrayList<>();
 
-		if (_ivyXmlNode != null) {
-			Node dependenciesNode = getNode(_ivyXmlNode, "dependencies");
+		Iterator<Node> iterator = getIvyXmlDependenciesIterator();
 
-			if (dependenciesNode != null) {
-				Iterator<Node> iterator = dependenciesNode.iterator();
+		if (iterator != null) {
+			while (iterator.hasNext()) {
+				Node dependencyNode = iterator.next();
 
-				while (iterator.hasNext()) {
-					Node dependencyNode = iterator.next();
+				String conf = (String)dependencyNode.attribute("conf");
 
-					String conf = (String)dependencyNode.attribute("conf");
-
-					if (Validator.isNull(conf) || !conf.contains("test")) {
-						continue;
-					}
-
-					String group = (String)dependencyNode.attribute("org");
-					String name = (String)dependencyNode.attribute("name");
-					String version = (String)dependencyNode.attribute("rev");
-
-					contents.add(wrapDependency(group, name, version));
+				if (Validator.isNull(conf) || !conf.contains("test")) {
+					continue;
 				}
+
+				String group = (String)dependencyNode.attribute("org");
+				String name = (String)dependencyNode.attribute("name");
+				String version = (String)dependencyNode.attribute("rev");
+
+				contents.add(wrapDependency(group, name, version));
 			}
 		}
 
@@ -233,6 +254,7 @@ public class InitGradleTask extends DefaultTask {
 		List<String> contents = new ArrayList<>();
 
 		addContents(contents, getBuildDependenciesCompile());
+		addContents(contents, getBuildDependenciesProvided());
 		addContents(contents, getBuildDependenciesProvidedCompile());
 		addContents(contents, getBuildDependenciesTestCompile());
 
@@ -300,6 +322,20 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return defaultValue;
+	}
+
+	protected Iterator<Node> getIvyXmlDependenciesIterator() {
+		if (_ivyXmlNode == null) {
+			return null;
+		}
+
+		Node dependenciesNode = getNode(_ivyXmlNode, "dependencies");
+
+		if (dependenciesNode == null) {
+			return null;
+		}
+
+		return dependenciesNode.iterator();
 	}
 
 	protected Node getNode(Node parentNode, String name) {

@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Service Access Control Profile Web
+Bundle-SymbolicName: com.liferay.service.access.control.profile.web
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class

@@ -17,11 +17,16 @@ package com.liferay.service.access.control.profile.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.service.access.control.profile.constants.SACPConstants;
 import com.liferay.service.access.control.profile.exception.DuplicateSACPEntryNameException;
+import com.liferay.service.access.control.profile.exception.SACPEntryNameException;
+import com.liferay.service.access.control.profile.exception.SACPEntryTitleException;
 import com.liferay.service.access.control.profile.model.SACPEntry;
 import com.liferay.service.access.control.profile.service.base.SACPEntryLocalServiceBaseImpl;
 
@@ -38,17 +43,26 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 
 	@Override
 	public SACPEntry addSACPEntry(
-			long companyId, long userId, String allowedServices, String name,
+			long userId, String allowedServices, String name,
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
+		if (name != null) {
+			name = name.trim();
+		}
+
+		validate(name, titleMap);
+
 		// Service access control profile entry
+
+		User user = userLocalService.getUserById(userId);
+
+		long companyId = user.getCompanyId();
 
 		if (sacpEntryPersistence.fetchByC_N(companyId, name) != null) {
 			throw new DuplicateSACPEntryNameException();
 		}
 
-		User user = userLocalService.getUserById(userId);
 		Date now = new Date();
 
 		long sacpEntryId = counterLocalService.increment();
@@ -69,44 +83,11 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 
 		// Resources
 
-		if (serviceContext.isAddGroupPermissions() ||
-			serviceContext.isAddGuestPermissions()) {
-
-			addSACPEntryResources(
-				sacpEntry, serviceContext.isAddGroupPermissions(),
-				serviceContext.isAddGuestPermissions());
-		}
-		else {
-			addSACPEntryResources(
-				sacpEntry, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
-		}
+		resourceLocalService.addResources(
+			sacpEntry.getCompanyId(), 0, userId, SACPEntry.class.getName(),
+			sacpEntry.getSacpEntryId(), false, false, false);
 
 		return sacpEntry;
-	}
-
-	@Override
-	public void addSACPEntryResources(
-			SACPEntry sacpEntry, boolean addGroupPermissions,
-			boolean addGuestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addResources(
-			sacpEntry.getCompanyId(), 0, sacpEntry.getUserId(),
-			SACPEntry.class.getName(), sacpEntry.getSacpEntryId(), false,
-			addGroupPermissions, addGuestPermissions);
-	}
-
-	@Override
-	public void addSACPEntryResources(
-			SACPEntry sacpEntry, String[] groupPermissions,
-			String[] guestPermissions)
-		throws PortalException {
-
-		resourceLocalService.addModelResources(
-			sacpEntry.getCompanyId(), 0, sacpEntry.getUserId(),
-			SACPEntry.class.getName(), sacpEntry.getSacpEntryId(),
-			groupPermissions, guestPermissions);
 	}
 
 	@Override
@@ -164,37 +145,70 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 
 		// Service access control profile entry
 
+		if (name != null) {
+			name = name.trim();
+		}
+
+		validate(name, titleMap);
+
 		SACPEntry sacpEntry = sacpEntryPersistence.findByPrimaryKey(
 			sacpEntryId);
+
+		long companyId = sacpEntry.getCompanyId();
+
+		SACPEntry duplicateEntry = sacpEntryPersistence.fetchByC_N(
+			companyId, name);
+
+		if ((duplicateEntry != null) &&
+			(duplicateEntry.getSacpEntryId() != sacpEntryId)) {
+
+			throw new DuplicateSACPEntryNameException();
+		}
+
+		Date now = new Date();
 
 		sacpEntry.setAllowedServices(allowedServices);
 		sacpEntry.setName(name);
 		sacpEntry.setTitleMap(titleMap);
+		sacpEntry.setModifiedDate(now);
 
 		sacpEntry = sacpEntryPersistence.update(sacpEntry, serviceContext);
-
-		// Resources
-
-		if ((serviceContext.getGroupPermissions() != null) ||
-			(serviceContext.getGuestPermissions() != null)) {
-
-			updateSACPEntryResources(
-				sacpEntry, serviceContext.getGroupPermissions(),
-				serviceContext.getGuestPermissions());
-		}
 
 		return sacpEntry;
 	}
 
-	@Override
-	public void updateSACPEntryResources(
-			SACPEntry sacpEntry, String[] groupPermissions,
-			String[] guestPermissions)
+	protected void validate(String name, Map<Locale, String> titleMap)
 		throws PortalException {
 
-		resourceLocalService.updateResources(
-			sacpEntry.getCompanyId(), 0, SACPEntry.class.getName(),
-			sacpEntry.getSacpEntryId(), groupPermissions, guestPermissions);
+		if (Validator.isNull(name) || (name.trim().length() == 0)) {
+			throw new SACPEntryNameException("SACPEntry name is required");
+		}
+
+		for (int i = 0; i < name.length(); i++) {
+			char character = name.charAt(i);
+
+			if (SACPConstants.SACP_ENTRY_NAME_ALLOWED_CHARACTERS.indexOf(
+					character) < 0) {
+
+				throw new SACPEntryNameException(
+					"SACPEntry name contains disallowed character");
+			}
+		}
+
+		boolean titleExists = false;
+
+		if (titleMap != null) {
+			Locale defaultLocale = LocaleUtil.getDefault();
+			String defaultTitle = titleMap.get(defaultLocale);
+
+			if ((defaultTitle != null) && (defaultTitle.trim().length() > 0)) {
+				titleExists = true;
+			}
+		}
+
+		if (!titleExists) {
+			throw new SACPEntryTitleException("SACPEntry title is required");
+		}
 	}
 
 }

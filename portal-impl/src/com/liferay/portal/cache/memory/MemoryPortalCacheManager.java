@@ -14,8 +14,8 @@
 
 package com.liferay.portal.cache.memory;
 
-import com.liferay.portal.cache.AbstractPortalCacheManager;
 import com.liferay.portal.cache.cluster.ClusterLinkCallbackFactory;
+import com.liferay.portal.kernel.cache.AbstractPortalCacheManager;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheManager;

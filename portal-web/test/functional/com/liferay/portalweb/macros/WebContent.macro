@@ -16,8 +16,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<if>
 			<isset var="expirationDate" />
@@ -197,8 +196,7 @@
 	</command>
 
 	<command name="addDraftCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
@@ -236,8 +234,7 @@
 	</command>
 
 	<command name="addFailWithoutRequiredCategoryAssetTypeCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="Web Content Title" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="Web Content Content" />
@@ -250,8 +247,7 @@
 	</command>
 
 	<command name="addNullCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<if>
 			<isset var="webContentContent" />
@@ -538,8 +534,7 @@
 	</command>
 
 	<command name="addWithCategorizationTypeCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
@@ -552,8 +547,7 @@
 	</command>
 
 	<command name="addWithCategoryCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
@@ -631,8 +625,7 @@
 	</command>
 
 	<command name="addWithMultipleCategories">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
@@ -828,8 +821,7 @@
 	</command>
 
 	<command name="addWithTagCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add" />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />
@@ -861,8 +853,7 @@
 	</command>
 
 	<command name="addWithWorkflowCP">
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_BASIC_WEB_CONTENT" value1="Basic Web Content" />
+		<execute macro="WebContentNavigator#gotoAddCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 		<execute function="Type#typeFrame" locator1="CPWebcontentAddwebcontent#CONTENT_FIELD" value1="${webContentContent}" />

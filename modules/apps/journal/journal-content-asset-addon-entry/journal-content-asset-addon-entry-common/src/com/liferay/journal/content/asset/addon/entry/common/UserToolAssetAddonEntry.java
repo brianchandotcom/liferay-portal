@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.journal.content.web.util;
+package com.liferay.journal.content.asset.addon.entry.common;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 
 /**
  * @author Julio Camarero
  */
-public interface ContentMetadataAssetAddonEntry extends AssetAddonEntry {
+public interface UserToolAssetAddonEntry extends AssetAddonEntry {
 }

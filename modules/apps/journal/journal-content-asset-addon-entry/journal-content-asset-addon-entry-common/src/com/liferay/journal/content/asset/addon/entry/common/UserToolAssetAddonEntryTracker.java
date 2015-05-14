@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.web.util;
+package com.liferay.journal.content.asset.addon.entry.common;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -25,6 +25,8 @@ import java.io.Serializable;
 
 import java.util.Map;
 
+import javax.management.MBeanServer;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -64,6 +66,11 @@ public class MultiVMEhcachePortalCacheManager
 	@Deactivate
 	protected void deactivate() {
 		destroy();
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBeanServer(MBeanServer mBeanServer) {
+		this.mBeanServer = mBeanServer;
 	}
 
 	@Reference(

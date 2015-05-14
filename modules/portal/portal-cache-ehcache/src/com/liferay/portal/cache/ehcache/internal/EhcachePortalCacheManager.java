@@ -31,11 +31,6 @@ import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.Serializable;
 
@@ -148,11 +143,11 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void doDestroy() {
-		if (_serviceTracker != null) {
-			_serviceTracker.close();
-		}
-
 		_cacheManager.shutdown();
+
+		if (_managementService != null) {
+			_managementService.dispose();
+		}
 	}
 
 	@Override
@@ -231,12 +226,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 				props.get(
 					PropsKeys.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED))) {
 
-			Registry registry = RegistryUtil.getRegistry();
+			_managementService = new ManagementService(
+				_cacheManager, mBeanServer, _registerCacheManager,
+				_registerCaches, _registerCacheConfigurations,
+				_registerCacheStatistics);
 
-			_serviceTracker = registry.trackServices(
-				MBeanServer.class, new MBeanServerServiceTrackerCustomizer());
-
-			_serviceTracker.open();
+			_managementService.init();
 		}
 	}
 
@@ -317,6 +312,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		return true;
 	}
 
+	protected MBeanServer mBeanServer;
 	protected volatile Props props;
 
 	private EhcachePortalCache<K, V> _getEhcachePortalCache(
@@ -344,53 +340,12 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
 		_configurationPair;
 	private String _defaultConfigFile;
+	private ManagementService _managementService;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;
 	private boolean _registerCacheStatistics = true;
-	private ServiceTracker <MBeanServer, ManagementService> _serviceTracker;
 	private boolean _stopCacheManagerTimer = true;
 	private boolean _usingDefault;
-
-	private class MBeanServerServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<MBeanServer, ManagementService> {
-
-		@Override
-		public ManagementService addingService(
-			ServiceReference<MBeanServer> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			MBeanServer mBeanServer = registry.getService(serviceReference);
-
-			ManagementService managementService = new ManagementService(
-				_cacheManager, mBeanServer, _registerCacheManager,
-				_registerCaches, _registerCacheConfigurations,
-				_registerCacheStatistics);
-
-			managementService.init();
-
-			return managementService;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<MBeanServer> serviceReference,
-			ManagementService managementService) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<MBeanServer> serviceReference,
-			ManagementService managementService) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			managementService.dispose();
-		}
-
-	}
 
 }

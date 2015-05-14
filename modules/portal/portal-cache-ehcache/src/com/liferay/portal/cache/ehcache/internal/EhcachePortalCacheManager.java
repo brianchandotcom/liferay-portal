@@ -174,6 +174,22 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	protected void initPortalCacheManager() {
+		setBlockingCacheAllowed(
+			GetterUtil.getBoolean(
+				props.get(PropsKeys.EHCACHE_BLOCKING_CACHE_ALLOWED)));
+
+		setBootstrapCacheLoaderEnabled(
+			GetterUtil.getBoolean(
+				props.get(PropsKeys.EHCACHE_BOOTSTRAP_CACHE_LOADER_ENABLED)));
+
+		setTransactionalCacheEnabled(
+			GetterUtil.getBoolean(
+				props.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED)));
+
+		setTransactionalCacheNames(
+			GetterUtil.getStringValues(
+				props.get(PropsKeys.TRANSACTIONAL_CACHE_NAMES)));
+
 		if (Validator.isNull(_configFile)) {
 			_configFile = _defaultConfigFile;
 		}

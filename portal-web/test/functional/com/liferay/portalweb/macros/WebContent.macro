@@ -78,10 +78,7 @@
 	</command>
 
 	<command name="addCPwithStructure">
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
@@ -634,10 +631,7 @@
 	</command>
 
 	<command name="addWithStructureAndWorkflowCP">
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 
@@ -663,10 +657,7 @@
 	</command>
 
 	<command name="addWithStructureCP">
-		<var name="key_structureName" value="${structureName}" />
-
-		<execute function="AssertClick" locator1="CPWebcontent#TOOLBAR_ADD" value1="Add"  />
-		<execute function="AssertClick" locator1="CPWebcontent#ADD_MENULIST_STRUCTURE_NAME" value1="${structureName}" />
+		<execute macro="WebContentNavigator#gotoAddWithStructureCP" />
 
 		<execute function="Type" locator1="CPWebcontentAddwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
 

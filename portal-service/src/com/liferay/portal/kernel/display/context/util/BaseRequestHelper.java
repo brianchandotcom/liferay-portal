@@ -254,14 +254,14 @@ public abstract class BaseRequestHelper {
 
 		return _user;
 	}
-	
+
 	public long getUserId() {
 		if (_user == null) {
 			ThemeDisplay themeDisplay = getThemeDisplay();
 
 			_user = themeDisplay.getUser();
 		}
-		
+
 		return _user.getUserId();
 	}
 

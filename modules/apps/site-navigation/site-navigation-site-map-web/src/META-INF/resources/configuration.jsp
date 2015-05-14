@@ -17,9 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String rootNodeName = StringPool.BLANK;
-
-List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescriptions(layout.getGroupId(), layout.isPrivateLayout(), rootNodeName, locale);
+List<LayoutDescription> layoutDescriptions = sitesMapDisplayContext.getLayoutDescriptions();
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -41,7 +39,7 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 				if (layoutDescriptionLayout != null) {
 			%>
 
-				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= layoutDescriptionLayout.getUuid().equals(rootLayoutUuid) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), sitesMapDisplayContext.getRootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
 			<%
 				}
@@ -57,7 +55,7 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 			for (int i = 1; i <= 20; i++) {
 			%>
 
-				<aui:option label="<%= i %>" selected="<%= displayDepth == i %>" />
+				<aui:option label="<%= i %>" selected="<%= sitesMapDisplayContext.getDisplayDepth() == i %>" />
 
 			<%
 			}
@@ -65,19 +63,19 @@ List<LayoutDescription> layoutDescriptions = LayoutListUtil.getLayoutDescription
 
 		</aui:select>
 
-		<aui:input name="preferences--includeRootInTree--" type="checkbox" value="<%= includeRootInTree %>" />
+		<aui:input name="preferences--includeRootInTree--" type="checkbox" value="<%= sitesMapDisplayContext.isIncludeRootInTree() %>" />
 
-		<aui:input name="preferences--showCurrentPage--" type="checkbox" value="<%= showCurrentPage %>" />
+		<aui:input name="preferences--showCurrentPage--" type="checkbox" value="<%= sitesMapDisplayContext.isShowCurrentPage() %>" />
 
-		<aui:input name="preferences--useHtmlTitle--" type="checkbox" value="<%= useHtmlTitle %>" />
+		<aui:input name="preferences--useHtmlTitle--" type="checkbox" value="<%= sitesMapDisplayContext.isUseHtmlTitle() %>" />
 
-		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= showHiddenPages %>" />
+		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= sitesMapDisplayContext.isShowHiddenPages() %>" />
 
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
 				className="<%= LayoutSet.class.getName() %>"
-				displayStyle="<%= displayStyle %>"
-				displayStyleGroupId="<%= displayStyleGroupId %>"
+				displayStyle="<%= sitesMapDisplayContext.getDisplayStyle() %>"
+				displayStyleGroupId="<%= sitesMapDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"
 				showEmptyOption="<%= true %>"
 			/>

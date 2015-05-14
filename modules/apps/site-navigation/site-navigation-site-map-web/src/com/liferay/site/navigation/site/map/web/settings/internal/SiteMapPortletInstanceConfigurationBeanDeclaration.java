@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,12 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.site.navigation.site.map.web.settings.internal;
 
-<liferay-ui:ddm-template-renderer className="<%= LayoutSet.class.getName() %>" displayStyle="<%= sitesMapDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= sitesMapDisplayContext.getDisplayStyleGroupId() %>" entries="<%= sitesMapDisplayContext.getRootLayouts() %>">
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration;
 
-	<%= sitesMapDisplayContext.buildSiteMap() %>
+import org.osgi.service.component.annotations.Component;
 
-</liferay-ui:ddm-template-renderer>
+/**
+ * @author Juergen Kappler
+ */
+@Component
+public class SiteMapPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
+
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return SiteMapPortletInstanceConfiguration.class;
+	}
+
+}

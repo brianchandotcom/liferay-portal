@@ -3,6 +3,24 @@
 <project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<macrodef name="clean-common">
+		<element name="clean-extra" optional="true" />
+
+		<sequential>
+			<delete dir="classes" />
+			<delete dir="test-classes" />
+			<delete dir="test-coverage" />
+			<delete dir="test-results" />
+			<delete dir="woven-classes" />
+			<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
+			<delete file="${jar.file}.jar" failonerror="false" />
+			<delete file="${jar.file}-javadoc.jar" failonerror="false" />
+			<delete file="${jar.file}-sources.jar" failonerror="false" />
+
+			<clean-extra />
+		</sequential>
+	</macrodef>
+
 	<if>
 		<and>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -48,15 +66,7 @@
 	</target>
 
 	<target name="clean">
-		<delete dir="classes" />
-		<delete dir="test-classes" />
-		<delete dir="test-coverage" />
-		<delete dir="test-results" />
-		<delete dir="woven-classes" />
-		<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
-		<delete file="${jar.file}.jar" failonerror="false" />
-		<delete file="${jar.file}-javadoc.jar" failonerror="false" />
-		<delete file="${jar.file}-sources.jar" failonerror="false" />
+		<clean-common />
 	</target>
 
 	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">

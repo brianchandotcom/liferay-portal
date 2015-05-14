@@ -136,30 +136,9 @@
 			<delete dir="test-results" />
 
 			<if>
-				<equals arg1="${app.server.type}" arg2="resin" />
+				<available file="support-${app.server.type}" />
 				<then>
-					<ant dir="support-resin" target="clean" inheritAll="false" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<then>
-					<delete failonerror="false">
-						<fileset
-							dir="${app.server.dir}/conf/Catalina/localhost"
-							includes="*-hook.xml,*-portlet.xml"
-						/>
-					</delete>
-
-					<ant dir="support-tomcat" target="clean" inheritAll="false" />
-				</then>
-			</if>
-
-			<if>
-				<equals arg1="${app.server.type}" arg2="websphere" />
-				<then>
-					<ant dir="support-websphere" target="clean" inheritAll="false" />
+					<ant dir="support-${app.server.type}" target="clean" inheritAll="false" />
 				</then>
 			</if>
 

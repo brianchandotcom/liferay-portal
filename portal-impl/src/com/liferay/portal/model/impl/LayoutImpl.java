@@ -808,6 +808,11 @@ public class LayoutImpl extends LayoutBaseImpl {
 	}
 
 	@Override
+	public boolean hasSetModifiedDate() {
+		return true;
+	}
+
+	@Override
 	public boolean includeLayoutContent(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {

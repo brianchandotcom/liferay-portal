@@ -281,6 +281,11 @@ public class LayoutSetImpl extends LayoutSetBaseImpl {
 	}
 
 	@Override
+	public boolean hasSetModifiedDate() {
+		return true;
+	}
+
+	@Override
 	public boolean isLayoutSetPrototypeLinkActive() {
 		if (isLayoutSetPrototypeLinkEnabled() &&
 			Validator.isNotNull(getLayoutSetPrototypeUuid())) {

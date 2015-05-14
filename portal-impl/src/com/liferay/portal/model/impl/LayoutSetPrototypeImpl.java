@@ -74,6 +74,11 @@ public class LayoutSetPrototypeImpl extends LayoutSetPrototypeBaseImpl {
 	}
 
 	@Override
+	public boolean hasSetModifiedDate() {
+		return true;
+	}
+
+	@Override
 	public void setSettings(String settings) {
 		_settingsProperties = null;
 

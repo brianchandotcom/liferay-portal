@@ -82,22 +82,6 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class S3Store extends BaseStore {
 
-	public S3Store() {
-		S3Service s3Service = null;
-		S3Bucket s3Bucket = null;
-
-		try {
-			s3Service = getS3Service();
-			s3Bucket = getS3Bucket();
-		}
-		catch (S3ServiceException s3se) {
-			_log.error(s3se.getMessage());
-		}
-
-		_s3Service = s3Service;
-		_s3Bucket = s3Bucket;
-	}
-
 	@Override
 	public void addDirectory(
 		long companyId, long repositoryId, String dirName) {
@@ -513,6 +497,20 @@ public class S3Store extends BaseStore {
 	protected void activate(Map<String, Object> properties) {
 		_s3Configuration = Configurable.createConfigurable(
 			S3Configuration.class, properties);
+
+		S3Service s3Service = null;
+		S3Bucket s3Bucket = null;
+
+		try {
+			s3Service = getS3Service();
+			s3Bucket = getS3Bucket();
+		}
+		catch (S3ServiceException s3se) {
+			_log.error(s3se.getMessage());
+		}
+
+		_s3Service = s3Service;
+		_s3Bucket = s3Bucket;
 	}
 
 	protected void cleanUpTempFiles() {
@@ -811,8 +809,8 @@ public class S3Store extends BaseStore {
 	private static final Log _log = LogFactoryUtil.getLog(S3Store.class);
 
 	private int _calledGetFileCount;
-	private final S3Bucket _s3Bucket;
+	private S3Bucket _s3Bucket;
 	private volatile S3Configuration _s3Configuration;
-	private final S3Service _s3Service;
+	private S3Service _s3Service;
 
 }

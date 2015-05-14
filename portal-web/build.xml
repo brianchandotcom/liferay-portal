@@ -109,12 +109,12 @@
 
 				<!-- JavaScript -->
 
-				<property name="alloy.bootstrap.js.lib.dir" value="${alloy.bootstrap.lib.dir}/javascripts/" />
+				<property name="alloy.bootstrap.js.lib.dir" value="${alloy.bootstrap.lib.dir}/javascripts" />
 
 				<delete failonerror="false" includeemptydirs="true" quiet="true">
 					<fileset
 						dir="${alloy.bootstrap.js.lib.dir}"
-						includes="_bootstrap-*.scss"
+						includes="bootstrap-*.js"
 					/>
 				</delete>
 

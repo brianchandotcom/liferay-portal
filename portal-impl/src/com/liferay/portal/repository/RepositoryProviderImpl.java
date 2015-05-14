@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.RepositoryLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -36,6 +40,8 @@ import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalService;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalService;
+import com.liferay.portlet.documentlibrary.service.permission.DLFileEntryPermission;
+import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +87,7 @@ public class RepositoryProviderImpl
 		localRepository = _repositoryFactory.createLocalRepository(
 			repositoryId);
 
-		checkRepository(repositoryId);
+		checkLocalRepository(repositoryId);
 
 		_localRepositoriesByRepositoryId.put(repositoryId, localRepository);
 
@@ -167,12 +173,16 @@ public class RepositoryProviderImpl
 	public Repository getRepositoryByFileEntryId(long fileEntryId)
 		throws PortalException {
 
+		checkFileEntryPermissions(fileEntryId);
+
 		return getRepository(getRepositoryIdByFileEntryId(fileEntryId));
 	}
 
 	@Override
 	public Repository getRepositoryByFileShortcutId(long fileShortcutId)
 		throws PortalException {
+
+		checkFileShortcutPermissions(fileShortcutId);
 
 		return getRepository(getRepositoryIdByFileShortcutId(fileShortcutId));
 	}
@@ -181,12 +191,16 @@ public class RepositoryProviderImpl
 	public Repository getRepositoryByFileVersionId(long fileVersionId)
 		throws PortalException {
 
+		checkFileVersionPermissions(fileVersionId);
+
 		return getRepository(getRepositoryIdByFileVersionId(fileVersionId));
 	}
 
 	@Override
 	public Repository getRepositoryByFolderId(long folderId)
 		throws PortalException {
+
+		checkFolderPermissions(folderId);
 
 		return getRepository(getRepositoryIdByFolderId(folderId));
 	}
@@ -211,8 +225,59 @@ public class RepositoryProviderImpl
 		_repositoriesByRepositoryId.remove(repositoryId);
 	}
 
-	protected void checkRepository(long repositoryId) throws PortalException {
-		Group group = _groupLocalService.getGroup(repositoryId);
+	protected void checkFileEntryPermissions(long fileEntryId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = _dlFileEntryLocalService.fetchDLFileEntry(
+			fileEntryId);
+
+		if (dlFileEntry != null) {
+			DLFileEntryPermission.check(
+				getPermissionChecker(), fileEntryId, ActionKeys.VIEW);
+		}
+	}
+
+	protected void checkFileShortcutPermissions(long fileShortcutId)
+		throws PortalException {
+
+		DLFileShortcut dlFileShortcut =
+			_dlFileShortcutLocalService.fetchDLFileShortcut(fileShortcutId);
+
+		if (dlFileShortcut != null) {
+			DLFileEntryPermission.check(
+				getPermissionChecker(), dlFileShortcut.getToFileEntryId(),
+				ActionKeys.VIEW);
+		}
+	}
+
+	protected void checkFileVersionPermissions(long fileVersionId)
+		throws PortalException {
+
+		DLFileVersion dlFileVersion =
+			_dlFileVersionLocalService.fetchDLFileVersion(fileVersionId);
+
+		if (dlFileVersion != null) {
+			DLFileEntryPermission.check(
+				getPermissionChecker(), dlFileVersion.getFileEntryId(),
+				ActionKeys.VIEW);
+		}
+	}
+
+	protected void checkFolderPermissions(long folderId)
+		throws PortalException {
+
+		DLFolder dlFolder = _dlFolderLocalService.fetchDLFolder(folderId);
+
+		if (dlFolder != null) {
+			DLFolderPermission.check(
+				getPermissionChecker(), dlFolder, ActionKeys.VIEW);
+		}
+	}
+
+	protected void checkLocalRepository(long repositoryId)
+		throws PortalException {
+
+		Group group = _groupLocalService.fetchGroup(repositoryId);
 
 		if (group != null) {
 			return;
@@ -224,6 +289,43 @@ public class RepositoryProviderImpl
 		catch (NoSuchRepositoryException nsre) {
 			throw new InvalidRepositoryIdException(nsre.getMessage());
 		}
+	}
+
+	protected void checkRepository(long repositoryId) throws PortalException {
+		Group group = _groupLocalService.fetchGroup(repositoryId);
+
+		if (group != null) {
+			return;
+		}
+
+		try {
+			com.liferay.portal.model.Repository repository =
+				_repositoryLocalService.fetchRepository(repositoryId);
+
+			if (repository != null) {
+				DLFolderPermission.check(
+					getPermissionChecker(), repository.getGroupId(),
+					repository.getDlFolderId(), ActionKeys.VIEW);
+
+				return;
+			}
+		}
+		catch (NoSuchRepositoryException nsre) {
+			throw new InvalidRepositoryIdException(nsre.getMessage());
+		}
+	}
+
+	protected PermissionChecker getPermissionChecker()
+		throws PrincipalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			throw new PrincipalException("PermissionChecker not initialized");
+		}
+
+		return permissionChecker;
 	}
 
 	protected long getRepositoryIdByFileEntryId(long fileEntryId) {

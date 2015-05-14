@@ -46,6 +46,33 @@ public class MBMailMessage {
 		}
 	}
 
+	public String getBody(String preferredFormat) {
+		String body = null;
+
+		if (preferredFormat.equals("html")) {
+			if (Validator.isNotNull(_htmlBody)) {
+				body = GetterUtil.getString(_htmlBody);
+			}
+			else if (Validator.isNotNull(_plainBody)) {
+				body = GetterUtil.getString(_plainBody);
+			}
+		}
+		else if (preferredFormat.equals("text")) {
+			if (Validator.isNotNull(_plainBody)) {
+				body = GetterUtil.getString(_plainBody);
+			}
+			else if (Validator.isNotNull(_htmlBody)) {
+				body = HtmlUtil.extractText(_htmlBody);
+			}
+		}
+
+		if (Validator.isNull(body)) {
+			body = "-";
+		}
+
+		return body;
+	}
+
 	public String getHtmlBody() {
 		return _htmlBody;
 	}

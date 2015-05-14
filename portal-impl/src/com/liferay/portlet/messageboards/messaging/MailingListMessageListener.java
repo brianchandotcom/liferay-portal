@@ -233,15 +233,17 @@ public class MailingListMessageListener extends BaseMessageListener {
 		try {
 			if (parentMessage == null) {
 				MBMessageServiceUtil.addMessage(
-					groupId, categoryId, subject, mbMailMessage.getBody(),
+					groupId, categoryId, subject,
+					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
 					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
 					anonymous, 0.0, true, serviceContext);
 			}
 			else {
 				MBMessageServiceUtil.addMessage(
 					parentMessage.getMessageId(), subject,
-					mbMailMessage.getBody(), MBMessageConstants.DEFAULT_FORMAT,
-					inputStreamOVPs, anonymous, 0.0, true, serviceContext);
+					mbMailMessage.getBody(MBMessageConstants.DEFAULT_FORMAT),
+					MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs,
+					anonymous, 0.0, true, serviceContext);
 			}
 		}
 		finally {

@@ -66,16 +66,21 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		String[] contentMetadataAssetAddonEntries = new String[0];
 
 		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
-			contentMetadataAssetAddonEntries, portletPreferences, "enableCommentRatings");
+			contentMetadataAssetAddonEntries, portletPreferences,
+			"enableCommentRatings");
 		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
-			contentMetadataAssetAddonEntries, portletPreferences, "enableComments");
+			contentMetadataAssetAddonEntries, portletPreferences,
+			"enableComments");
 		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
-			contentMetadataAssetAddonEntries, portletPreferences, "enableRatings");
+			contentMetadataAssetAddonEntries, portletPreferences,
+			"enableRatings");
 		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
-			contentMetadataAssetAddonEntries, portletPreferences, "enableRelatedAssets");
+			contentMetadataAssetAddonEntries, portletPreferences,
+			"enableRelatedAssets");
 
 		portletPreferences.setValue(
-			"contentMetadataAssetAddonEntries", StringUtil.merge(contentMetadataAssetAddonEntries));
+			"contentMetadataAssetAddonEntries",
+			StringUtil.merge(contentMetadataAssetAddonEntries));
 	}
 
 	protected String[] upgradeMultiValueSelectableEntry(

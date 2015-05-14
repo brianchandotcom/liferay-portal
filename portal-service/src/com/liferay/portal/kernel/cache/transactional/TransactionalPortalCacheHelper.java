@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.transaction.TransactionAttribute;
 import com.liferay.portal.kernel.transaction.TransactionLifecycleListener;
 import com.liferay.portal.kernel.transaction.TransactionStatus;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InitialThreadLocal;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.io.Serializable;
 
@@ -70,7 +72,7 @@ public class TransactionalPortalCacheHelper {
 		};
 
 	public static void begin() {
-		if (!PropsValues.TRANSACTIONAL_CACHE_ENABLED) {
+		if (!_isTransactionalCacheEnabled()) {
 			return;
 		}
 
@@ -78,7 +80,7 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	public static void commit() {
-		if (!PropsValues.TRANSACTIONAL_CACHE_ENABLED) {
+		if (!_isTransactionalCacheEnabled()) {
 			return;
 		}
 
@@ -101,7 +103,7 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	public static boolean isEnabled() {
-		if (!PropsValues.TRANSACTIONAL_CACHE_ENABLED) {
+		if (!_isTransactionalCacheEnabled()) {
 			return false;
 		}
 
@@ -112,7 +114,7 @@ public class TransactionalPortalCacheHelper {
 	}
 
 	public static void rollback() {
-		if (!PropsValues.TRANSACTIONAL_CACHE_ENABLED) {
+		if (!_isTransactionalCacheEnabled()) {
 			return;
 		}
 
@@ -176,6 +178,15 @@ public class TransactionalPortalCacheHelper {
 		uncommittedBuffer.removeAll(AggregatedCacheListener.isRemoteInvoke());
 	}
 
+	private static boolean _isTransactionalCacheEnabled() {
+		if (_transactionalCacheEnabled == null) {
+			_transactionalCacheEnabled = GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.TRANSACTIONAL_CACHE_ENABLED));
+		}
+
+		return _transactionalCacheEnabled;
+	}
+
 	private static PortalCacheMap _peekPortalCacheMap() {
 		List<PortalCacheMap> portalCacheMaps =
 			_portalCacheMapsThreadLocal.get();
@@ -207,6 +218,8 @@ public class TransactionalPortalCacheHelper {
 				TransactionalPortalCacheHelper.class.getName() +
 					"._portalCacheMapsThreadLocal",
 				new ArrayList<PortalCacheMap>());
+
+	private volatile static Boolean _transactionalCacheEnabled;
 
 	private static class PortalCacheMap
 		extends HashMap

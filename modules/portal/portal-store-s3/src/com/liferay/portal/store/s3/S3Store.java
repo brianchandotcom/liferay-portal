@@ -35,6 +35,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
+import com.liferay.portlet.documentlibrary.store.Store;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -59,13 +60,20 @@ import org.jets3t.service.model.S3Object;
 import org.jets3t.service.model.StorageObject;
 import org.jets3t.service.security.AWSCredentials;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
  * @author Edward Han
  * @author Vilmos Papp
  * @author Mate Thurzo
+ * @author Manuel de la Peña
  */
+@Component(
+	property = "store.type=com.liferay.portal.store.s3.S3Store",
+	service = Store.class
+)
 public class S3Store extends BaseStore {
 
 	public S3Store() {

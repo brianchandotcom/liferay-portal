@@ -46,7 +46,6 @@ import com.liferay.portlet.documentlibrary.store.CMISStore;
 import com.liferay.portlet.documentlibrary.store.DBStore;
 import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.JCRStore;
-import com.liferay.portlet.documentlibrary.store.S3Store;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
@@ -402,7 +401,7 @@ public class ConvertDocumentLibrary
 	private static final String[] _HOOKS = new String[] {
 		AdvancedFileSystemStore.class.getName(), CMISStore.class.getName(),
 		DBStore.class.getName(), FileSystemStore.class.getName(),
-		JCRStore.class.getName(), S3Store.class.getName()
+		JCRStore.class.getName()
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

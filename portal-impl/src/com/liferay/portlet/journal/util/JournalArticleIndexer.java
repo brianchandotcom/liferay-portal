@@ -315,7 +315,7 @@ public class JournalArticleIndexer extends BaseIndexer {
 		long classPK = article.getId();
 
 		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS &&
-			 (JournalArticleLocalServiceUtil.getArticlesCount(
+			(JournalArticleLocalServiceUtil.getArticlesCount(
 				article.getGroupId(), article.getArticleId()) > 0)) {
 
 			doReindex(obj);

@@ -5323,6 +5323,7 @@ if (ppstate.equals("normal")) {
 			<then>
 				<antcall target="rebuild-database" inheritAll="false">
 					<param name="database.type" value="mysql" />
+					<param name="delete.liferay.home" value="false" />
 				</antcall>
 
 				<echo file="portal-impl/classes/portal-ext.properties">liferay.home=${liferay.home}

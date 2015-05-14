@@ -12,11 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.scripting.javascript;
+package com.liferay.portal.scripting.javascript.internal;
 
+import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.scripting.ScriptingExecutorTestCase;
+
+import java.io.Serializable;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -26,6 +30,8 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.mockito.Mockito;
 
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -42,7 +48,20 @@ public class JavaScriptExecutorTest extends ScriptingExecutorTestCase {
 
 	@Override
 	public ScriptingExecutor getScriptingExecutor() {
-		return new JavaScriptExecutor();
+		JavaScriptExecutor javaScriptExecutor = new JavaScriptExecutor();
+
+		PortalCache portalCache = Mockito.mock(PortalCache.class);
+		Mockito.when(
+			portalCache.get(Mockito.any(Serializable.class))).thenReturn(null);
+
+		SingleVMPool singleVMPool = Mockito.mock(SingleVMPool.class);
+
+		Mockito.when(singleVMPool.getCache(Mockito.anyString())).thenReturn(
+			portalCache);
+
+		javaScriptExecutor.setSingleVMPool(singleVMPool);
+
+		return javaScriptExecutor;
 	}
 
 	@Test

@@ -14,9 +14,6 @@
 
 package com.liferay.portal.scripting;
 
-import com.liferay.portal.util.PropsValues;
-
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -30,7 +27,11 @@ public class ClassVisibilityChecker {
 
 	public static final String ALL_CLASSES = "all_classes";
 
-	public ClassVisibilityChecker(Set<String> allowedClasses) {
+	public ClassVisibilityChecker(
+		Set<String> allowedClasses, Set<String> forbiddenClasses) {
+
+		_forbiddenClasses = forbiddenClasses;
+
 		if ((allowedClasses != null) && allowedClasses.contains(ALL_CLASSES)) {
 			_allowAll = true;
 		}
@@ -79,11 +80,9 @@ public class ClassVisibilityChecker {
 		return false;
 	}
 
-	private static final Set<String> _forbiddenClasses = new HashSet<>(
-		Arrays.asList(PropsValues.SCRIPTING_FORBIDDEN_CLASSES));
-
 	private final boolean _allowAll;
 	private final Set<Pattern> _allowedPatterns;
 	private final boolean _denyAll;
+	private final Set<String> _forbiddenClasses;
 
 }

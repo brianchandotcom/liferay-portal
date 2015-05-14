@@ -255,7 +255,6 @@
 	<classpathentry kind="lib" path="lib/portal/portals-bridges.jar"/>
 	<classpathentry kind="lib" path="lib/portal/quartz.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rdffilter.jar"/>
-	<classpathentry kind="lib" path="lib/portal/rhino.jar"/>
 	<classpathentry kind="lib" path="lib/portal/ridl.jar"/>
 	<classpathentry kind="lib" path="lib/portal/rome.jar"/>
 	<classpathentry kind="lib" path="lib/portal/saaj-api.jar"/>

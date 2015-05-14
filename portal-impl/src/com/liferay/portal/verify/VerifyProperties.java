@@ -553,6 +553,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.iframe.web"
 		},
 
+		// Javascript Executor
+
+		new String[] {
+			"scripting.forbidden.classes", "forbidden.classes",
+			"com.liferay.portal.scripting.javascript"
+		},
+
 		// Journal
 
 		new String[] {

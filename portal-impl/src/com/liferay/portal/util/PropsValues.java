@@ -1488,8 +1488,6 @@ public class PropsValues {
 
 	public static final boolean SCHEDULER_ENABLED = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.SCHEDULER_ENABLED));
 
-	public static final String[] SCRIPTING_FORBIDDEN_CLASSES = PropsUtil.getArray(PropsKeys.SCRIPTING_FORBIDDEN_CLASSES);
-
 	public static final String SCRIPTING_JRUBY_COMPILE_MODE = PropsUtil.get(PropsKeys.SCRIPTING_JRUBY_COMPILE_MODE);
 
 	public static final int SCRIPTING_JRUBY_COMPILE_THRESHOLD = GetterUtil.getInteger(PropsUtil.get(PropsKeys.SCRIPTING_JRUBY_COMPILE_THRESHOLD), 50);

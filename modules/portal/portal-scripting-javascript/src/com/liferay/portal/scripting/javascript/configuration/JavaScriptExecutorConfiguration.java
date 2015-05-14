@@ -12,27 +12,26 @@
  * details.
  */
 
-package com.liferay.portal.scripting.javascript;
+package com.liferay.portal.scripting.javascript.configuration;
 
-import com.liferay.portal.scripting.ClassVisibilityChecker;
-
-import java.util.Set;
-
-import org.mozilla.javascript.ClassShutter;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
- * @author Alberto Montero
+ * @author Michael C. Han
  */
-public class JavaScriptClassVisibilityChecker
-	extends ClassVisibilityChecker implements ClassShutter {
+@Meta.OCD(
+	id = "com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration",
+	localization = "content/Language"
+)
+public interface JavaScriptExecutorConfiguration {
 
-	public JavaScriptClassVisibilityChecker(Set<String> allowedClasses) {
-		super(allowedClasses);
-	}
-
-	@Override
-	public boolean visibleToScripts(String className) {
-		return isVisible(className);
-	}
+	@Meta.AD(
+		deflt =
+			"com.liferay.portal.kernel.scripting.ScriptingUtil," +
+			"com.liferay.portal.scripting.internal.ScriptingImpl," +
+			"java.lang.System",
+		required = false
+	)
+	public String forbiddenClasses();
 
 }

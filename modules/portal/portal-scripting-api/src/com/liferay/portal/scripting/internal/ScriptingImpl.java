@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting;
+package com.liferay.portal.scripting.internal;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
@@ -21,15 +21,9 @@ import com.liferay.portal.kernel.scripting.Scripting;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.scripting.UnsupportedLanguageException;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
 
 import java.io.IOException;
 import java.io.LineNumberReader;
@@ -40,29 +34,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
+
 /**
  * @author Alberto Montero
  * @author Brian Wing Shun Chan
  * @author Shuyang Zhou
  */
-@DoPrivileged
+@Component(immediate = true, service = Scripting.class)
 public class ScriptingImpl implements Scripting {
-
-	public void addScriptingExecutor(
-		String language, ScriptingExecutor scriptingExecutor) {
-
-		_scriptingExecutors.put(language, scriptingExecutor);
-	}
-
-	public void afterPropertiesSet() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			ScriptingExecutor.class,
-			new ScriptingExecutorServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
 
 	@Override
 	public void clearCache(String language) throws ScriptingException {
@@ -82,12 +66,6 @@ public class ScriptingImpl implements Scripting {
 		ScriptingExecutor scriptingExecutor = _scriptingExecutors.get(language);
 
 		return scriptingExecutor.newInstance(executeInSeparateThread);
-	}
-
-	public void destroy() {
-		_serviceTracker.close();
-
-		_serviceTracker = null;
 	}
 
 	@Override
@@ -139,16 +117,6 @@ public class ScriptingImpl implements Scripting {
 		return _scriptingExecutors.keySet();
 	}
 
-	public void setScriptingExecutors(
-		Map<String, ScriptingExecutor> scriptingExecutors) {
-
-		for (Map.Entry<String, ScriptingExecutor> entry :
-				scriptingExecutors.entrySet()) {
-
-			_scriptingExecutors.put(entry.getKey(), entry.getValue());
-		}
-	}
-
 	protected ClassLoader[] getClassLoaders(String[] servletContextNames) {
 		ClassLoader[] classLoaders =
 			new ClassLoader[servletContextNames.length];
@@ -196,50 +164,25 @@ public class ScriptingImpl implements Scripting {
 		return sb.toString();
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setScriptingExecutors(ScriptingExecutor scriptingExecutor) {
+		_scriptingExecutors.put(
+			scriptingExecutor.getLanguage(), scriptingExecutor);
+	}
+
+	protected void unsetScriptingExecutors(
+		ScriptingExecutor scriptingExecutor) {
+
+		_scriptingExecutors.remove(scriptingExecutor.getLanguage());
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(ScriptingImpl.class);
 
 	private final Map<String, ScriptingExecutor> _scriptingExecutors =
 		new ConcurrentHashMap<>();
-	private ServiceTracker<ScriptingExecutor, ScriptingExecutor>
-		_serviceTracker;
-
-	private class ScriptingExecutorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer
-			<ScriptingExecutor, ScriptingExecutor> {
-
-		@Override
-		public ScriptingExecutor addingService(
-			ServiceReference<ScriptingExecutor> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			ScriptingExecutor scriptingExecutor = registry.getService(
-				serviceReference);
-
-			_scriptingExecutors.put(
-				scriptingExecutor.getLanguage(), scriptingExecutor);
-
-			return scriptingExecutor;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<ScriptingExecutor> serviceReference,
-			ScriptingExecutor scriptingExecutor) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<ScriptingExecutor> serviceReference,
-			ScriptingExecutor scriptingExecutor) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			_scriptingExecutors.remove(scriptingExecutor.getLanguage());
-		}
-
-	}
 
 }

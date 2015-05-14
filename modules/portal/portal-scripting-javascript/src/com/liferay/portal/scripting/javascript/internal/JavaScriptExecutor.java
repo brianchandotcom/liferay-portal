@@ -12,18 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.scripting.javascript;
+package com.liferay.portal.scripting.javascript.internal;
+
+import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.cache.SingleVMPoolUtil;
+import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.scripting.BaseScriptingExecutor;
 import com.liferay.portal.kernel.scripting.ScriptingException;
 import com.liferay.portal.kernel.scripting.ScriptingExecutor;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.scripting.javascript.configuration.JavaScriptExecutorConfiguration;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,10 +40,22 @@ import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
 import org.mozilla.javascript.Wrapper;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Alberto Montero
  */
+@Component(
+	immediate = true,
+	property = {"scripting.language=" + JavaScriptExecutor.LANGUAGE},
+	service = ScriptingExecutor.class
+)
 public class JavaScriptExecutor extends BaseScriptingExecutor {
+
+	public static final String LANGUAGE = "javascript";
 
 	@Override
 	public void clearCache() {
@@ -59,7 +78,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						ClassLoaderUtil.getPortalClassLoader(), classLoaders);
+						PortalClassLoaderUtil.getClassLoader(), classLoaders);
 
 				context.setApplicationClassLoader(aggregateClassLoader);
 			}
@@ -74,7 +93,8 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 			if (allowedClasses != null) {
 				context.setClassShutter(
-					new JavaScriptClassVisibilityChecker(allowedClasses));
+					new JavaScriptClassVisibilityChecker(
+						allowedClasses, _forbiddenClasses));
 			}
 
 			compiledScript.exec(context, scriptable);
@@ -110,12 +130,26 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 	@Override
 	public String getLanguage() {
-		return _LANGUAGE;
+		return LANGUAGE;
 	}
 
 	@Override
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
 		return new JavaScriptExecutor();
+	}
+
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		JavaScriptExecutorConfiguration javaScriptExecutorConfiguration =
+			Configurable.createConfigurable(
+				JavaScriptExecutorConfiguration.class, properties);
+
+		String[] forbiddenClasses = StringUtil.split(
+			javaScriptExecutorConfiguration.forbiddenClasses(),
+			StringPool.COMMA);
+
+		_forbiddenClasses = new HashSet<>(Arrays.asList(forbiddenClasses));
 	}
 
 	protected Script getCompiledScript(
@@ -136,7 +170,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						ClassLoaderUtil.getPortalClassLoader(), classLoaders);
+						PortalClassLoaderUtil.getClassLoader(), classLoaders);
 
 				context.setApplicationClassLoader(aggregateClassLoader);
 			}
@@ -155,12 +189,16 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 		return compiledScript;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSingleVMPool(SingleVMPool singleVMPool) {
+		_portalCache = (PortalCache<String, Script>)singleVMPool.getCache(
+			_CACHE_NAME);
+	}
+
 	private static final String _CACHE_NAME =
 		JavaScriptExecutor.class.getName();
 
-	private static final String _LANGUAGE = "javascript";
-
-	private final PortalCache<String, Script> _portalCache =
-		SingleVMPoolUtil.getCache(_CACHE_NAME);
+	private volatile Set<String> _forbiddenClasses;
+	private PortalCache<String, Script> _portalCache;
 
 }

@@ -274,18 +274,7 @@
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.scripting.Scripting" class="com.liferay.portal.scripting.ScriptingImpl">
-		<property name="scriptingExecutors">
-			<map>
-				<entry key="javascript">
-					<bean class="com.liferay.portal.scripting.javascript.JavaScriptExecutor" />
-				</entry>
-				<entry key="ruby">
-					<bean class="com.liferay.portal.scripting.ruby.RubyExecutor" depends-on="com.liferay.portal.kernel.util.FileUtil" />
-				</entry>
-			</map>
-		</property>
-	</bean>
+	<bean class="com.liferay.portal.scripting.ruby.RubyExecutor" depends-on="com.liferay.portal.kernel.util.FileUtil" />
 	<bean id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
 		<property name="browserSniffer">
 			<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" />

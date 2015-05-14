@@ -131,6 +131,8 @@ public class JournalArticleIndexVersionsTest {
 	public void testExpireAllArticleVersions() throws Exception {
 		long initialSearchCount = searchCount(true);
 
+		long initialNonHeadSearchCount = searchCount(false);
+
 		JournalArticle article = JournalTestUtil.addArticle(
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
@@ -146,6 +148,8 @@ public class JournalArticleIndexVersionsTest {
 		JournalTestUtil.expireArticle(_group.getGroupId(), updateArticle);
 
 		Assert.assertEquals(initialSearchCount, searchCount(true));
+
+		Assert.assertEquals(initialNonHeadSearchCount + 1, searchCount(false));
 	}
 
 	@Test

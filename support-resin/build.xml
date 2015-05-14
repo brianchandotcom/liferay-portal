@@ -14,8 +14,12 @@
 		<fileset dir="${project.dir}/lib/development" includes="resin.jar" />
 	</path>
 
-	<target name="clean" depends="build-common-java.clean">
-		<delete file="${deploy.dir}/${jar.file}.jar" />
+	<target name="clean">
+		<common-clean>
+			<extra-clean>
+				<delete file="${deploy.dir}/${jar.file}.jar" />
+			</extra-clean>
+		</common-clean>
 	</target>
 
 	<target name="deploy" depends="jar">

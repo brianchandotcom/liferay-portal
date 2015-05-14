@@ -123,21 +123,23 @@ public final class XMLLoggerHandler {
 
 		String stackTrace = PoshiRunnerStackTraceUtil.getSimpleStackTrace();
 
-		if (!stackTrace.contains(".function")) {
-			LoggerElement loggerElement = _loggerElements.get(stackTrace);
+		if (stackTrace.contains(".function")) {
+			return;
+		}
 
-			loggerElement.setAttribute("data-status01", status);
+		LoggerElement loggerElement = _loggerElements.get(stackTrace);
 
-			if (status.equals("conditional-fail") || status.equals("pass")) {
-				LoggerUtil.executeJavaScript(
-					"loggerInterface.fire('line-trigger', '" +
-						loggerElement.getID() + "', false)");
-			}
-			else if (status.equals("pending")) {
-				LoggerUtil.executeJavaScript(
-					"loggerInterface.fire('line-trigger', '" +
-						loggerElement.getID() + "', true)");
-			}
+		loggerElement.setAttribute("data-status01", status);
+
+		if (status.equals("conditional-fail") || status.equals("pass")) {
+			LoggerUtil.executeJavaScript(
+				"loggerInterface.fire('line-trigger', '" +
+					loggerElement.getID() + "', false)");
+		}
+		else if (status.equals("pending")) {
+			LoggerUtil.executeJavaScript(
+				"loggerInterface.fire('line-trigger', '" +
+					loggerElement.getID() + "', true)");
 		}
 	}
 

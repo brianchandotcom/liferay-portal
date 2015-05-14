@@ -21,10 +21,12 @@ import com.liferay.portal.kernel.cache.PortalCacheWrapper;
 import com.liferay.portal.kernel.cache.configuration.PortalCacheManagerConfiguration;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -67,7 +69,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	@Override
 	public void reconfigureCaches(URL configurationURL) {
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configurationURL, isClusterAware(), _usingDefault);
+			configurationURL, isClusterAware(), _usingDefault, props);
 
 		reconfigEhcache(_configurationPair.getKey());
 
@@ -176,7 +178,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
 			EhcacheConfigurationHelperUtil.class.getResource(_configFile),
-			isClusterAware(), _usingDefault);
+			isClusterAware(), _usingDefault, props);
 
 		_cacheManager = new CacheManager(_configurationPair.getKey());
 
@@ -205,7 +207,10 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			new PortalCacheManagerEventListener(
 				aggregatedCacheManagerListener));
 
-		if (PropsValues.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED) {
+		if (GetterUtil.getBoolean(
+				props.get(
+					PropsKeys.EHCACHE_PORTAL_CACHE_MANAGER_JMX_ENABLED))) {
+
 			Registry registry = RegistryUtil.getRegistry();
 
 			_serviceTracker = registry.trackServices(
@@ -247,6 +252,8 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 			}
 		}
 	}
+
+	protected volatile Props props;
 
 	private EhcachePortalCache<K, V> _getEhcachePortalCache(
 		PortalCache<K, V> portalCache) {

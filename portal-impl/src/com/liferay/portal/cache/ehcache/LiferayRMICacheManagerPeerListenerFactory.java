@@ -14,7 +14,8 @@
 
 package com.liferay.portal.cache.ehcache;
 
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 
 import java.util.List;
 import java.util.Properties;
@@ -39,13 +40,17 @@ public class LiferayRMICacheManagerPeerListenerFactory
 	public CacheManagerPeerListener createCachePeerListener(
 		CacheManager cacheManager, Properties properties) {
 
+		boolean clusterEnabled = GetterUtil.getBoolean(
+			properties.remove(PropsKeys.CLUSTER_LINK_ENABLED));
+		boolean clusterLinkReplicationEnabled = GetterUtil.getBoolean(
+			properties.remove(
+				PropsKeys.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED));
+
 		CacheManagerPeerListener cacheManagerPeerListener =
 			_cacheManagerPeerListenerFactory.createCachePeerListener(
 				cacheManager, properties);
 
-		if (PropsValues.CLUSTER_LINK_ENABLED &&
-			!PropsValues.EHCACHE_CLUSTER_LINK_REPLICATION_ENABLED) {
-
+		if (clusterEnabled && !clusterLinkReplicationEnabled) {
 			return new LiferayCacheManagerPeerListener(
 				cacheManager, cacheManagerPeerListener);
 		}

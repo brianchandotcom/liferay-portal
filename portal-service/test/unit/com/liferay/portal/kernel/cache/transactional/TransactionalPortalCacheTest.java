@@ -19,18 +19,20 @@ import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
+import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
-import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
+import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import java.util.Map;
+import java.util.Properties;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -61,7 +63,7 @@ public class TransactionalPortalCacheTest {
 				}
 
 			},
-			AspectJNewEnvTestRule.INSTANCE);
+			NewEnvTestRule.INSTANCE);
 
 	@Before
 	public void setUp() {
@@ -87,9 +89,10 @@ public class TransactionalPortalCacheTest {
 		new TransactionalPortalCacheHelper();
 	}
 
-	@AdviseWith(adviceClasses = {DisableTransactionalCacheAdvice.class})
 	@Test
 	public void testNoneTransactionalCache1() {
+		setEnableTransactionalCache(false);
+
 		TransactionalPortalCacheHelper.begin();
 
 		TransactionalPortalCacheHelper.rollback();
@@ -99,9 +102,10 @@ public class TransactionalPortalCacheTest {
 		testNoneTransactionalCache2();
 	}
 
-	@AdviseWith(adviceClasses = {EnableTransactionalCacheAdvice.class})
 	@Test
 	public void testNoneTransactionalCache2() {
+		setEnableTransactionalCache(true);
+
 		Assert.assertEquals(_VALUE_1, _transactionalPortalCache.get(_KEY_1));
 		Assert.assertNull(_transactionalPortalCache.get(_KEY_2));
 		Assert.assertEquals(_VALUE_1, _portalCache.get(_KEY_1));
@@ -287,15 +291,17 @@ public class TransactionalPortalCacheTest {
 		_testCacheReplicator.reset();
 	}
 
-	@AdviseWith(adviceClasses = {EnableTransactionalCacheAdvice.class})
 	@Test
 	public void testTransactionalCacheWithoutTTL() {
+		setEnableTransactionalCache(true);
+
 		doTestTransactionalCache(false);
 	}
 
-	@AdviseWith(adviceClasses = {EnableTransactionalCacheAdvice.class})
 	@Test
 	public void testTransactionalCacheWithParameterValidation() {
+		setEnableTransactionalCache(true);
+
 		TransactionalPortalCacheHelper.begin();
 
 		// Get
@@ -371,44 +377,6 @@ public class TransactionalPortalCacheTest {
 		catch (NullPointerException npe) {
 			Assert.assertEquals("Key is null", npe.getMessage());
 		}
-	}
-
-	@AdviseWith(adviceClasses = {EnableTransactionalCacheAdvice.class})
-	@Test
-	public void testTransactionalCacheWithTTL() {
-		doTestTransactionalCache(true);
-	}
-
-	@Aspect
-	public static class DisableTransactionalCacheAdvice {
-
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues." +
-				"TRANSACTIONAL_CACHE_ENABLED)"
-		)
-		public Object disableTransactionalCache(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.FALSE});
-		}
-
-	}
-
-	@Aspect
-	public static class EnableTransactionalCacheAdvice {
-
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues." +
-				"TRANSACTIONAL_CACHE_ENABLED)"
-		)
-		public Object enableTransactionalCache(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
-		}
-
 	}
 
 	protected void doTestTransactionalCache(boolean ttl) {
@@ -792,6 +760,17 @@ public class TransactionalPortalCacheTest {
 		_testCacheReplicator.assertActionsCount(0);
 	}
 
+	private void setEnableTransactionalCache(boolean enabled) {
+		MockProps mockProps = new MockProps();
+
+		PropsUtil propsUtil = new PropsUtil();
+
+		propsUtil.setProps(mockProps);
+
+		mockProps.setProperty(
+			PropsKeys.TRANSACTIONAL_CACHE_ENABLED, Boolean.toString(enabled));
+	}
+
 	private static final String _KEY_1 = "KEY_1";
 
 	private static final String _KEY_2 = "KEY_2";
@@ -806,5 +785,43 @@ public class TransactionalPortalCacheTest {
 	private TestCacheListener<String, String> _testCacheListener;
 	private TestCacheReplicator<String, String> _testCacheReplicator;
 	private TransactionalPortalCache<String, String> _transactionalPortalCache;
+
+	private class MockProps implements Props {
+
+		public boolean contains(String key) {
+			return _properties.containsKey(key);
+		}
+
+		public String get(String key) {
+			return _properties.get(key);
+		}
+
+		public String get(String key, Filter filter) {
+			throw new UnsupportedOperationException();
+		}
+
+		public String[] getArray(String key) {
+			throw new UnsupportedOperationException();
+		}
+
+		public String[] getArray(String key, Filter filter) {
+			throw new UnsupportedOperationException();
+		}
+
+		public Properties getProperties() {
+			throw new UnsupportedOperationException();
+		}
+
+		public Properties getProperties(String prefix, boolean removePrefix) {
+			throw new UnsupportedOperationException();
+		}
+
+		public void setProperty(String key, String value) {
+			_properties.put(key, value);
+		}
+
+		private final Map<String, String> _properties = new HashMap<>();
+
+	}
 
 }

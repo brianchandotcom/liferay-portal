@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Tools Lang Builder
-Bundle-SymbolicName: com.liferay.portal.tools.lang.builder
+Bundle-Name: Liferay Lang Builder
+Bundle-SymbolicName: com.liferay.lang.builder
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
@@ -26,4 +26,4 @@ Include-Resource:\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemEnv.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
-Main-Class: com.liferay.portal.tools.lang.builder.LangBuilder
+Main-Class: com.liferay.lang.builder.LangBuilder

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.lang.builder;
+package com.liferay.lang.builder;
 
 import com.liferay.portal.kernel.io.OutputStreamWriter;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;

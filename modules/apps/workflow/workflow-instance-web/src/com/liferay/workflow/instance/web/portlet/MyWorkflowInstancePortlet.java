@@ -15,10 +15,10 @@
 package com.liferay.workflow.instance.web.portlet;
 
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.instance.web.portlet.context.MyWorkflowInstanceEditDisplayContext;
-import com.liferay.workflow.instance.web.portlet.context.MyWorkflowInstanceViewDisplayContext;
-import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceEditDisplayContext;
-import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceViewDisplayContext;
+import com.liferay.workflow.instance.web.context.MyWorkflowInstanceEditDisplayContext;
+import com.liferay.workflow.instance.web.context.MyWorkflowInstanceViewDisplayContext;
+import com.liferay.workflow.instance.web.context.WorkflowInstanceEditDisplayContext;
+import com.liferay.workflow.instance.web.context.WorkflowInstanceViewDisplayContext;
 
 import javax.portlet.Portlet;
 import javax.portlet.RenderRequest;

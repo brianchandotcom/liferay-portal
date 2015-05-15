@@ -20,7 +20,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.workflow.WorkflowControlPanelEntry;
 import com.liferay.portlet.ControlPanelEntry;
-import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
+import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

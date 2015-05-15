@@ -12,14 +12,20 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.portlet.constants;
+package com.liferay.workflow.instance.web.context.util;
+
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.util.PortalUtil;
+
+import javax.portlet.RenderRequest;
 
 /**
- * @author Leonardo Barros
+ * @author Marcellus Tavares
  */
-public class WorkflowInstancePortletKeys {
+public class WorkflowInstanceRequestHelper extends BaseRequestHelper {
 
-	public static final String WORKFLOW_INSTANCE =
-		"com_liferay_workflow_instance_web_portlet_WorkflowInstancePortlet";
+	public WorkflowInstanceRequestHelper(RenderRequest renderRequest) {
+		super(PortalUtil.getHttpServletRequest(renderRequest));
+	}
 
 }

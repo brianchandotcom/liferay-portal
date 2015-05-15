@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.workflow.instance.web.portlet.context;
+package com.liferay.workflow.instance.web.context;
 
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.workflow.instance.web.portlet.context.util.WorkflowInstanceRequestHelper;
+import com.liferay.workflow.instance.web.context.util.WorkflowInstanceRequestHelper;
 
 import java.text.Format;
 

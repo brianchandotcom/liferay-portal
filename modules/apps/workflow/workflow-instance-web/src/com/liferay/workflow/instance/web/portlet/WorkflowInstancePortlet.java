@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.util.log4j.Log4JUtil;
-import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
-import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceEditDisplayContext;
-import com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceViewDisplayContext;
+import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
+import com.liferay.workflow.instance.web.context.WorkflowInstanceEditDisplayContext;
+import com.liferay.workflow.instance.web.context.WorkflowInstanceViewDisplayContext;
 
 import java.io.IOException;
 

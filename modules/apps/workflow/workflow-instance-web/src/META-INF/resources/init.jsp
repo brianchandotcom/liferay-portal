@@ -45,8 +45,8 @@ page import="com.liferay.portlet.asset.model.AssetEntry" %><%@
 page import="com.liferay.portlet.asset.model.AssetRenderer" %><%@
 page import="com.liferay.portlet.asset.model.AssetRendererFactory" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceEditDisplayContext" %><%@
-page import="com.liferay.workflow.instance.web.portlet.context.WorkflowInstanceViewDisplayContext" %>
+page import="com.liferay.workflow.instance.web.context.WorkflowInstanceEditDisplayContext" %><%@
+page import="com.liferay.workflow.instance.web.context.WorkflowInstanceViewDisplayContext" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

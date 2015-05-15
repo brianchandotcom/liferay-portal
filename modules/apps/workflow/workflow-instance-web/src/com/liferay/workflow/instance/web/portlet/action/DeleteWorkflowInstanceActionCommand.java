@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.workflow.instance.web.portlet.constants.WorkflowInstancePortletKeys;
+import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
 import java.io.Serializable;
 

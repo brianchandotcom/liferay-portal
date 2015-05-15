@@ -1,4 +1,4 @@
-<definition component-name="portal-wcm">
+<definition component-name="portal-breadcrumb">
 	<property name="testray.main.component.name" value="Navigation" />
 
 	<set-up>

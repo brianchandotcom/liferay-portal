@@ -1,0 +1,221 @@
+<definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="WCM" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Test Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+
+	<command known-issues="LPS-55648" name="AddWCWithMultipleTranslations" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addBasic">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Contenido" />
+			<var name="localizedLanguage" value="Spanish (Spain)" />
+			<var name="localizedTitle" value="WC Titulo" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Inhalt" />
+			<var name="localizedLanguage" value="German (Germany)" />
+			<var name="localizedTitle" value="WC Titel" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Pitoisuus" />
+			<var name="localizedLanguage" value="Finnish (Finland)" />
+			<var name="localizedTitle" value="WC Otsikko" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Spanish (Spain)" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC Contenido" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="localizedTitle" value="WC Titulo" />
+			<var name="webContentTranslationLanguage" value="español (España)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="German (Germany)" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC Inhalt" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="localizedTitle" value="WC Titel" />
+			<var name="webContentTranslationLanguage" value="German (Germany)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Finnish (Finland)" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC Pitoisuus" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="localizedTitle" value="WC Otsikko" />
+			<var name="webContentTranslationLanguage" value="Finnish (Finland)" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55648" name="AddWCWithTranslation" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addBasic">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Contenido" />
+			<var name="localizedLanguage" value="Spanish (Spain)" />
+			<var name="localizedTitle" value="WC Titulo" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Spanish (Spain)" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC Contenido" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="localizedTitle" value="WC Titulo" />
+			<var name="webContentTranslationLanguage" value="español (España)" />
+		</execute>
+	</command>
+</definition>

@@ -441,6 +441,25 @@ public final class CommandLoggerHandler {
 		return element.equals(_commandElement);
 	}
 
+	private static void _linkLoggerElements(LoggerElement xmlLoggerElement) {
+		String functionLinkID = xmlLoggerElement.getAttributeValue(
+			"data-functionlinkid");
+
+		if (functionLinkID != null) {
+			_functionLinkId = Integer.parseInt(functionLinkID.substring(15));
+		}
+
+		xmlLoggerElement.setAttribute("data-status01", "pending");
+
+		xmlLoggerElement.setAttribute(
+			"data-functionlinkid", "functionLinkId-" + _functionLinkId);
+
+		_lineGroupLoggerElement.setAttribute(
+			"data-functionlinkid", "functionLinkId-" + _functionLinkId);
+
+		_functionLinkId++;
+	}
+
 	private static void _takeScreenshot(String screenshotName, int errorLinkId)
 		throws Exception {
 
@@ -461,6 +480,7 @@ public final class CommandLoggerHandler {
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
 	private static int _errorLinkId;
+	private static int _functionLinkId;
 	private static LoggerElement _lineGroupLoggerElement;
 	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
 		"xml-log");

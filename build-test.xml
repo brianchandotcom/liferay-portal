@@ -1236,7 +1236,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 			<fail message="Please set the property ${mobile.android.home}." unless="mobile.android.home" />
 
 			<execute>
-				echo no | ${mobile.android.home}/tools/android create avd -n deviceName -t android-19
+				echo no | ${mobile.android.home}/tools/android create avd -n deviceName -t android-19 -f
 			</execute>
 
 			<echo file="${user.home}/.android/avd/deviceName.avd/config.ini" append="true">

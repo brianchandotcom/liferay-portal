@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner;
 
 import com.liferay.poshi.runner.selenium.LiferaySelenium;
+import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -23,9 +24,14 @@ import com.liferay.poshi.runner.util.Validator;
 import java.lang.reflect.Method;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
@@ -42,6 +48,7 @@ public class PoshiRunnerContext {
 		_actionExtendClassName.clear();
 		_commandElements.clear();
 		_commandSummaries.clear();
+		_componentNames.clear();
 		_filePaths.clear();
 		_functionLocatorCounts.clear();
 		_pathLocators.clear();
@@ -179,6 +186,12 @@ public class PoshiRunnerContext {
 		return _rootElements.containsKey(rootElementKey);
 	}
 
+	public static void main(String[] args) throws Exception {
+		readFiles();
+
+		_writeTestCaseMethodNamesFile();
+	}
+
 	public static void readFiles() throws Exception {
 		_readPoshiFiles();
 		_readSeleniumFiles();
@@ -247,6 +260,92 @@ public class PoshiRunnerContext {
 		relatedClassCommandNames.add("BaseLiferay#" + commandName);
 
 		return relatedClassCommandNames;
+	}
+
+	private static Set<String> _getTestCaseCommandNames(
+		Element rootElement, String componentName, String className) {
+
+		Set<String> testCaseCommandNames = new TreeSet<>();
+
+		if (!Validator.equals("true", rootElement.attributeValue("ignore"))) {
+			String extendedTestCaseName = rootElement.attributeValue("extends");
+
+			if (Validator.isNotNull(extendedTestCaseName)) {
+				Element extendedTestCaseElement = getTestCaseRootElement(
+					extendedTestCaseName);
+
+				List<String> ignoreCommandNamesList = new ArrayList<>();
+
+				if (Validator.isNotNull(
+						rootElement.attributeValue("ignore-command-names"))) {
+
+					String ignoreCommandNames = rootElement.attributeValue(
+						"ignore-command-names");
+
+					ignoreCommandNamesList = Arrays.asList(
+						ignoreCommandNames.split(","));
+				}
+
+				List<Element> extendedCommandElements =
+					extendedTestCaseElement.elements("command");
+
+				for (Element extendedCommandElement : extendedCommandElements) {
+					String extendedCommandName =
+						extendedCommandElement.attributeValue("name");
+
+					if (ignoreCommandNamesList.contains(extendedCommandName)) {
+						continue;
+					}
+
+					testCaseCommandNames.add(
+						className + "TestCase#test" + extendedCommandName);
+				}
+			}
+
+			List<Element> testCaseCommandElements = rootElement.elements(
+				"command");
+
+			for (Element testCaseCommandElement : testCaseCommandElements) {
+				String classCommandName = testCaseCommandElement.attributeValue(
+					"name");
+
+				if (Validator.isNotNull(
+						testCaseCommandElement.attributeValue(
+							"known-issues"))) {
+
+					String knownIssuesComponent = "portal-known-issues";
+
+					if (componentName.startsWith("marketplace")) {
+						knownIssuesComponent = "marketplace-known-issues";
+					}
+					else if (componentName.startsWith("social-office")) {
+						knownIssuesComponent = "social-office-known-issues";
+					}
+
+					Set<String> knownIssuesTestCaseMethodNames =
+						new TreeSet<>();
+
+					if (_testCaseMethodNames.containsKey(
+							knownIssuesComponent)) {
+
+						knownIssuesTestCaseMethodNames =
+							_testCaseMethodNames.get(knownIssuesComponent);
+					}
+
+					knownIssuesTestCaseMethodNames.add(
+						className + "TestCase#test" + classCommandName);
+
+					_testCaseMethodNames.put(
+						knownIssuesComponent, knownIssuesTestCaseMethodNames);
+				}
+				else {
+					testCaseCommandNames.add(
+						className + "TestCase#test" + classCommandName);
+				}
+			}
+		}
+
+		return testCaseCommandNames;
 	}
 
 	private static void _readPathFile(
@@ -347,6 +446,10 @@ public class PoshiRunnerContext {
 
 				_rootElements.put(classType + "#" + className, rootElement);
 
+				if (classType.equals("test-case")) {
+					_testCaseClassNames.add(className);
+				}
+
 				if (rootElement.element("set-up") != null) {
 					Element setUpElement = rootElement.element("set-up");
 
@@ -438,6 +541,67 @@ public class PoshiRunnerContext {
 		_seleniumParameterCounts.put("open", 1);
 	}
 
+	private static void _setTestCaseMethodNames() {
+		for (String testCaseClassName : _testCaseClassNames) {
+			Element rootElement = getTestCaseRootElement(testCaseClassName);
+
+			String componentName = rootElement.attributeValue("component-name");
+
+			Set<String> testCaseCommandNames = _getTestCaseCommandNames(
+				rootElement, componentName, testCaseClassName);
+
+			if (!_testCaseMethodNames.containsKey(componentName)) {
+				_testCaseMethodNames.put(componentName, testCaseCommandNames);
+			}
+			else {
+				testCaseCommandNames.addAll(
+					_testCaseMethodNames.get(componentName));
+
+				_testCaseMethodNames.put(componentName, testCaseCommandNames);
+			}
+		}
+	}
+
+	private static void _writeTestCaseMethodNamesFile() throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		_setTestCaseMethodNames();
+
+		for (String componentName : _componentNames) {
+			String componentKey = componentName + "_TEST_CASE_METHOD_NAMES=";
+
+			componentKey = StringUtil.upperCase(componentKey.replace("-", "_"));
+
+			Set<String> classCommandNames = _testCaseMethodNames.get(
+				componentName);
+
+			if (Validator.isNotNull(classCommandNames) &&
+				!classCommandNames.isEmpty()) {
+
+				sb.append(componentKey);
+
+				Iterator<String> iterator = classCommandNames.iterator();
+
+				while (iterator.hasNext()) {
+					sb.append(iterator.next());
+
+					if (iterator.hasNext()) {
+						sb.append(" ");
+					}
+				}
+
+				sb.append("\n");
+			}
+			else {
+				sb.append(componentKey);
+				sb.append("PortalSmokeTestCase#testSmoke");
+				sb.append("\n");
+			}
+		}
+
+		FileUtil.write("test.case.method.names2.properties", sb.toString());
+	}
+
 	private static final String _BASE_DIR =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
 
@@ -447,6 +611,8 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
 		new HashMap<>();
+	private static final List<String> _componentNames = Arrays.asList(
+		StringUtil.split(PropsValues.COMPONENT_NAMES));
 	private static final Map<String, String> _filePaths = new HashMap<>();
 	private static String[] _filePathsArray;
 	private static final Map<String, Integer> _functionLocatorCounts =
@@ -457,6 +623,9 @@ public class PoshiRunnerContext {
 	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
+	private static final List<String> _testCaseClassNames = new ArrayList<>();
+	private static final Map<String, Set<String>> _testCaseMethodNames =
+		new TreeMap<>();
 	private static String _testClassCommandName;
 	private static String _testClassName;
 

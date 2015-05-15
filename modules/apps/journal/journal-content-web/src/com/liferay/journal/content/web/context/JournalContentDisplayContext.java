@@ -239,8 +239,10 @@ public class JournalContentDisplayContext {
 
 					@Override
 					public boolean filter(
-						ContentMetadataAssetAddonEntry contentMetadataEntry) {
-							return contentMetadataEntry.isEnabled();
+						ContentMetadataAssetAddonEntry
+							contentMetadataAssetAddonEntry) {
+
+						return contentMetadataAssetAddonEntry.isEnabled();
 					}
 
 				});
@@ -318,15 +320,17 @@ public class JournalContentDisplayContext {
 		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
 			contentMetadataAssetAddonEntriesPref);
 
-		for (String contentMetadataEntryKey :
+		for (String contentMetadataAssetAddonEntryKey :
 				contentMetadataAssetAddonEntryKeys) {
 
-			ContentMetadataAssetAddonEntry contentMetadataEntry =
+			ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry =
 				ContentMetadataAssetAddonEntryTracker.
-					getContentMetadataAssetAddonEntry(contentMetadataEntryKey);
+					getContentMetadataAssetAddonEntry(
+						contentMetadataAssetAddonEntryKey);
 
-			if (contentMetadataEntry != null) {
-				_contentMetadataAssetAddonEntries.add(contentMetadataEntry);
+			if (contentMetadataAssetAddonEntry != null) {
+				_contentMetadataAssetAddonEntries.add(
+					contentMetadataAssetAddonEntry);
 			}
 		}
 

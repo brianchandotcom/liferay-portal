@@ -41,7 +41,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		};
 	}
 
-	protected String[] upgradeBooleanSelectableEntry(
+	protected String[] upgradeBooleanAssetAddonEntry(
 			String[] selectableEntries, PortletPreferences portletPreferences,
 			String preferenceKey)
 		throws Exception {
@@ -65,16 +65,16 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		String[] contentMetadataAssetAddonEntries = new String[0];
 
-		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
 			contentMetadataAssetAddonEntries, portletPreferences,
 			"enableCommentRatings");
-		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
 			contentMetadataAssetAddonEntries, portletPreferences,
 			"enableComments");
-		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
 			contentMetadataAssetAddonEntries, portletPreferences,
 			"enableRatings");
-		contentMetadataAssetAddonEntries = upgradeBooleanSelectableEntry(
+		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
 			contentMetadataAssetAddonEntries, portletPreferences,
 			"enableRelatedAssets");
 
@@ -83,7 +83,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			StringUtil.merge(contentMetadataAssetAddonEntries));
 	}
 
-	protected String[] upgradeMultiValueSelectableEntry(
+	protected String[] upgradeMultiValueAssetAddonEntry(
 			String[] selectableEntries, PortletPreferences portletPreferences,
 			String preferenceKey, Map<String, String> newPreferenceValues)
 		throws Exception {
@@ -130,7 +130,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 		String[] userToolAssetAddonEntries = new String[0];
 
-		userToolAssetAddonEntries = upgradeBooleanSelectableEntry(
+		userToolAssetAddonEntries = upgradeBooleanAssetAddonEntry(
 			userToolAssetAddonEntries, portletPreferences, "enablePrint");
 
 		Map<String, String> extensions = new HashMap<>();
@@ -140,11 +140,11 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		extensions.put("pdf", "enablePDF");
 		extensions.put("txt", "enableTXT");
 
-		userToolAssetAddonEntries = upgradeMultiValueSelectableEntry(
+		userToolAssetAddonEntries = upgradeMultiValueAssetAddonEntry(
 			userToolAssetAddonEntries, portletPreferences, "extensions",
 			extensions);
 
-		userToolAssetAddonEntries = upgradeBooleanSelectableEntry(
+		userToolAssetAddonEntries = upgradeBooleanAssetAddonEntry(
 			userToolAssetAddonEntries, portletPreferences,
 			"showAvailableLocales");
 

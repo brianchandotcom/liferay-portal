@@ -104,7 +104,7 @@ public class CommentsContentMetadataAssetAddonEntry
 	}
 
 	@Reference
-	public void setCommentRatingsSelectableEntry(
+	public void setCommentRatingsContentMetadataAssetAddonEntry(
 		CommentRatingsContentMetadataAssetAddonEntry
 			commentRatingsContentMetadataAssetAddonEntry) {
 

@@ -220,6 +220,7 @@
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-test" target="compile" inheritAll="false" />
+			<ant dir="support-tomcat" target="compile" inheritAll="false" />
 			<ant dir="util-bridges" target="compile" inheritAll="false" />
 
 			<sequential>
@@ -235,7 +236,6 @@
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-pacl" target="compile" inheritAll="false" />
 			<ant dir="portal-test-internal" target="compile" inheritAll="false" />
-			<ant dir="support-tomcat" target="compile" inheritAll="false" />
 
 			<sequential>
 				<ant dir="sql" target="build-db" inheritAll="false" />

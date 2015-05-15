@@ -22,6 +22,13 @@ List<?> entries = (List<?>)request.getAttribute("liferay-ui:ddm-template-rendere
 DDMTemplate portletDisplayDDMTemplate = (DDMTemplate)request.getAttribute("liferay-ui:ddm-template-renderer:portletDisplayDDMTemplate");
 %>
 
-<c:if test="<%= portletDisplayDDMTemplate != null %>">
-	<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate, entries, contextObjects) %>
-</c:if>
+<c:choose>
+	<c:when test="<%= portletDisplayDDMTemplate != null %>">
+		<%= PortletDisplayTemplateUtil.renderDDMTemplate(request, response, portletDisplayDDMTemplate, entries, contextObjects) %>
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-danger">
+			<liferay-ui:message key="the-selected-display-template-no-longer-exists" />
+		</div>
+	</c:otherwise>
+</c:choose>

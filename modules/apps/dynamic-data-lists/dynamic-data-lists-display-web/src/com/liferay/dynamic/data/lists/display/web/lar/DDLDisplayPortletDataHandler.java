@@ -12,35 +12,52 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.lar;
+package com.liferay.dynamic.data.lists.display.web.lar;
 
+import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandler;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
 import com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 
 import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DDLDisplayPortletKeys.DDL_DISPLAY},
+	service = PortletDataHandler.class
+)
 public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
-	public DDLDisplayPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences(
-			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
+		setDataPortletPreferences("recordSetId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 
@@ -54,11 +71,9 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			return portletPreferences;
 		}
 
-		portletPreferences.setValue("displayDDMTemplateId", StringPool.BLANK);
-		portletPreferences.setValue("editable", Boolean.TRUE.toString());
-		portletPreferences.setValue("formDDMTemplateId", StringPool.BLANK);
+		portletPreferences.setValue("displayStyle", StringPool.BLANK);
+		portletPreferences.setValue("displayStyleGroupId", StringPool.BLANK);
 		portletPreferences.setValue("recordSetId", StringPool.BLANK);
-		portletPreferences.setValue("spreadsheet", Boolean.FALSE.toString());
 
 		return portletPreferences;
 	}
@@ -109,10 +124,6 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
 		long importedRecordSetId = GetterUtil.getLong(
 			portletPreferences.getValue("recordSetId", null));
-		long importedDisplayDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("displayDDMTemplateId", null));
-		long importedFormDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("formDDMTemplateId", null));
 
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -121,24 +132,54 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		long recordSetId = MapUtil.getLong(
 			recordSetIds, importedRecordSetId, importedRecordSetId);
 
-		Map<Long, Long> templateIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMTemplate.class);
-
-		long displayDDMTemplateId = MapUtil.getLong(
-			templateIds, importedDisplayDDMTemplateId,
-			importedDisplayDDMTemplateId);
-
-		long formDDMTemplateId = MapUtil.getLong(
-			templateIds, importedFormDDMTemplateId, importedFormDDMTemplateId);
-
 		portletPreferences.setValue("recordSetId", String.valueOf(recordSetId));
-		portletPreferences.setValue(
-			"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
-		portletPreferences.setValue(
-			"formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 		return portletPreferences;
+	}
+
+	@Override
+	protected String getDisplayStyle(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		try {
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(
+					DDLRecord.class.getName());
+
+			if (Validator.isNotNull(templateHandler)) {
+				return portletPreferences.getValue("displayStyle", null);
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
+	@Override
+	protected long getDisplayStyleGroupId(
+		PortletDataContext portletDataContext, String portletId,
+		PortletPreferences portletPreferences) {
+
+		try {
+			TemplateHandler templateHandler =
+				TemplateHandlerRegistryUtil.getTemplateHandler(
+					DDLRecord.class.getName());
+
+			if (Validator.isNotNull(templateHandler)) {
+				return GetterUtil.getLong(
+					portletPreferences.getValue("displayStyleGroupId", null));
+			}
+		}
+		catch (Exception e) {
+		}
+
+		return 0;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

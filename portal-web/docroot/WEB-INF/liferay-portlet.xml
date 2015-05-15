@@ -946,25 +946,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>169</portlet-name>
-		<struts-path>dynamic_data_list_display</struts-path>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLDisplayPortletDataHandler</portlet-data-handler-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<instanceable>true</instanceable>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/dynamic_data_lists/css/main.css</header-portlet-css>
-		<header-portlet-javascript>/html/portlet/dynamic_data_mapping/js/custom_fields.js</header-portlet-javascript>
-		<header-portlet-javascript>/html/portlet/dynamic_data_mapping/js/main.js</header-portlet-javascript>
-		<header-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</header-portlet-javascript>
-		<css-class-wrapper>portlet-dynamic-data-list-display</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>170</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>staging_bar</struts-path>

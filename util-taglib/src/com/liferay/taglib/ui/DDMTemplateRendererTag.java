@@ -54,10 +54,6 @@ public class DDMTemplateRendererTag extends IncludeTag {
 						PortalUtil.getClassNameId(_className));
 		}
 
-		if (_portletDisplayDDMTemplate != null) {
-			return SKIP_BODY;
-		}
-
 		return EVAL_BODY_INCLUDE;
 	}
 

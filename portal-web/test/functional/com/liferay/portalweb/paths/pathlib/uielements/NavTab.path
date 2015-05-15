@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>DISPLAY_SETTINGS</td>
-	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Dispaly Settings')]/a</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Display Settings')]/a</td>
 	<td></td>
 </tr>
 <tr>

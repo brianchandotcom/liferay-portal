@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>WikiCompareVersions</title>
+<title>WikiConfiguration</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">WikiCompareVersions</td></tr>
+<tr><td rowspan="1" colspan="3">WikiConfiguration</td></tr>
 </thead>
 <tbody>
 <!--COMMUNICATION-->

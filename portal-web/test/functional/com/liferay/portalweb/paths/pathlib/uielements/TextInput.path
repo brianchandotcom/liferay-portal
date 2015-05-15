@@ -129,7 +129,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>SELECT_FILES_FIELD</td>
+	<td>SELECT_FILES</td>
 	<td>//div[contains(@id,'uploaderContent') and contains(.,'Select Files')]/input</td>
 	<td></td>
 </tr>

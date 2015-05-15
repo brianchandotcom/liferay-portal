@@ -632,7 +632,7 @@
 </tr>
 <tr>
 	<td>SEARCH_RESULT_COMMENT_BODY</td>
-	<td>//div[@data-title='${key_wikiPageTitle}']f//div[@class='entry-discussion']//span[@class='body']</td>
+	<td>//div[@data-title='${key_wikiPageTitle}']//div[@class='entry-discussion']//span[@class='body']</td>
 	<td></td>
 </tr>
 <tr>

@@ -210,7 +210,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//a[contains(.,'Permissions')] | //button[contains(.,'Permissions')]</td>
+	<td>//a[contains(.,'Permissions') and contains(@class,'btn')] | //button[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -226,11 +226,6 @@
 <tr>
 	<td>PUBLISH</td>
 	<td>//button[contains(.,'Publish')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>PUBLISH_BUTTON_LOCALIZED</td>
-	<td>//button[contains(@id,'publishButton')]</td>
 	<td></td>
 </tr>
 <tr>

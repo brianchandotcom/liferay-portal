@@ -145,11 +145,26 @@ public class TestPropsValues
 	public static final String LCS_EMAIL_ADDRESS_2 = TestPropsUtil.get(
 		"lcs.email.address.2");
 
+	public static final String LCS_EMAIL_ADDRESS_3 = TestPropsUtil.get(
+		"lcs.email.address.3");
+
+	public static final String LCS_EMAIL_ID_1 = TestPropsUtil.get(
+		"lcs.email.id.1");
+
+	public static final String LCS_EMAIL_ID_2 = TestPropsUtil.get(
+		"lcs.email.id.2");
+
+	public static final String LCS_EMAIL_ID_3 = TestPropsUtil.get(
+		"lcs.email.id.3");
+
 	public static final String LCS_EMAIL_PASSWORD_1 = TestPropsUtil.get(
 		"lcs.email.password.1");
 
 	public static final String LCS_EMAIL_PASSWORD_2 = TestPropsUtil.get(
 		"lcs.email.password.2");
+
+	public static final String LCS_EMAIL_PASSWORD_3 = TestPropsUtil.get(
+		"lcs.email.password.3");
 
 	public static final String LIFERAY_PORTAL_BRANCH = TestPropsUtil.get(
 		"liferay.portal.branch");

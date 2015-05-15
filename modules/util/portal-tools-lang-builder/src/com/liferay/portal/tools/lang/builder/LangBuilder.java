@@ -695,9 +695,9 @@ public class LangBuilder {
 
 		// LPS-26741
 
-		if (toLanguageId.equals("de")) {
+		/*if (toLanguageId.equals("de")) {
 			return null;
-		}
+		}*/
 
 		// Limit the number of retries to 3
 

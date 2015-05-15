@@ -80,6 +80,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -488,16 +489,24 @@ public class WebServerServlet extends HttpServlet {
 		return image;
 	}
 
-	protected byte[] getImageBytes(HttpServletRequest request, Image image) {
+	protected byte[] getImageBytes(HttpServletRequest request, Image image)
+		throws NoSuchFileException {
+
+		byte[] textObj = image.getTextObj();
+
+		if ((textObj == null) || (textObj.length == 0)) {
+			throw new NoSuchFileException();
+		}
+
 		try {
 			if (!PropsValues.IMAGE_AUTO_SCALE) {
-				return image.getTextObj();
+				return textObj;
 			}
 
 			ImageBag imageBag = null;
 
 			if (image.getImageId() == 0) {
-				imageBag = ImageToolUtil.read(image.getTextObj());
+				imageBag = ImageToolUtil.read(textObj);
 
 				RenderedImage renderedImage = imageBag.getRenderedImage();
 
@@ -511,11 +520,11 @@ public class WebServerServlet extends HttpServlet {
 				request, "width", image.getWidth());
 
 			if ((height >= image.getHeight()) && (width >= image.getWidth())) {
-				return image.getTextObj();
+				return textObj;
 			}
 
 			if (image.getImageId() != 0) {
-				imageBag = ImageToolUtil.read(image.getTextObj());
+				imageBag = ImageToolUtil.read(textObj);
 			}
 
 			RenderedImage renderedImage = ImageToolUtil.scale(
@@ -529,7 +538,7 @@ public class WebServerServlet extends HttpServlet {
 			}
 		}
 
-		return image.getTextObj();
+		return textObj;
 	}
 
 	protected long getImageId(HttpServletRequest request) {
@@ -1196,7 +1205,9 @@ public class WebServerServlet extends HttpServlet {
 	}
 
 	protected void writeImage(
-		Image image, HttpServletRequest request, HttpServletResponse response) {
+			Image image, HttpServletRequest request,
+			HttpServletResponse response)
+		throws NoSuchFileException {
 
 		if (image == null) {
 			return;
@@ -1214,9 +1225,9 @@ public class WebServerServlet extends HttpServlet {
 
 		String fileName = ParamUtil.getString(request, "fileName");
 
-		try {
-			byte[] bytes = getImageBytes(request, image);
+		byte[] bytes = getImageBytes(request, image);
 
+		try {
 			if (Validator.isNotNull(fileName)) {
 				ServletResponseUtil.sendFile(
 					request, response, fileName, bytes, contentType);

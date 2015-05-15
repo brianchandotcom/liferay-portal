@@ -1,6 +1,5 @@
 <definition component-name="portal-test-plugins">
 	<property name="testray.main.component.name" value="Test Plugins" />
-	<property name="custom.properties" value="hibernate.cache.use_query_cache=true$${line.separator}hibernate.cache.use_second_level_cache=true" />
 	<property name="portlet.plugins.includes" value="test-cache-configuration-portlet" />
 
 	<set-up>

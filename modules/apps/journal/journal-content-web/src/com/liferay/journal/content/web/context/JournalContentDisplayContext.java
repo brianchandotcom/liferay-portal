@@ -256,16 +256,16 @@ public class JournalContentDisplayContext {
 			ListUtil.filter(
 				UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntries(),
 				new PredicateFilter<UserToolAssetAddonEntry>() {
-	
+
 					@Override
 					public boolean filter(
 						UserToolAssetAddonEntry userToolAssetAddonEntry) {
-	
+
 						return userToolAssetAddonEntry.isEnabled();
 					}
-	
+
 				});
-	
+
 		return ListUtil.sort(
 			userToolAssetAddonEntries,
 			new PropertyComparator("weight", true, false));

@@ -16,6 +16,8 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
+import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
+import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
@@ -221,6 +223,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
 
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
+		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, SourceFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
@@ -430,6 +433,23 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			buildCssTask.setTmpDir(tmpDir);
 		}
+	}
+
+	protected void configureTaskBuildLang(Project project) {
+		BuildLangTask buildLangTask = (BuildLangTask)GradleUtil.getTask(
+			project, LangBuilderPlugin.BUILD_LANG_TASK_NAME);
+
+		configureTaskBuildLangLangDirName(buildLangTask);
+	}
+
+	protected void configureTaskBuildLangLangDirName(
+		BuildLangTask buildLangTask) {
+
+		Project project = buildLangTask.getProject();
+
+		File langDir = new File(getResourcesDir(project), "content");
+
+		buildLangTask.setLangDirName(project.relativePath(langDir));
 	}
 
 	protected void configureTaskBuildService(Project project) {
@@ -747,6 +767,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		configureTaskBuildCss(project, liferayExtension);
+		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
 		configureTaskFormatWSDL(project);

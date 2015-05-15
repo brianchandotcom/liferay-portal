@@ -408,6 +408,8 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
 
+		XMLLoggerHandler.updateStatus(executeElement, "pending");
+
 		String classCommandName = executeElement.attributeValue(macroType);
 
 		String className =
@@ -424,11 +426,15 @@ public class PoshiRunnerExecutor {
 			runVarElement(rootVarElement, false, true);
 		}
 
+		PoshiRunnerStackTraceUtil.popStackTrace();
+
 		List<Element> executeVarElements = executeElement.elements("var");
 
 		for (Element executeVarElement : executeVarElements) {
 			runVarElement(executeVarElement, false, false);
 		}
+
+		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		SummaryLoggerHandler.startSummary(executeElement);
 
@@ -447,6 +453,8 @@ public class PoshiRunnerExecutor {
 		SummaryLoggerHandler.passSummary(executeElement);
 
 		PoshiRunnerStackTraceUtil.popStackTrace();
+
+		XMLLoggerHandler.updateStatus(executeElement, "pass");
 	}
 
 	public static void runSeleniumElement(Element executeElement)

@@ -126,7 +126,7 @@ public class ElasticsearchCluster {
 		}
 
 		@Override
-		public boolean isOnMasterExecutor() {
+		public boolean isMaster() {
 			return _clusterMasterExecutor.isMaster();
 		}
 

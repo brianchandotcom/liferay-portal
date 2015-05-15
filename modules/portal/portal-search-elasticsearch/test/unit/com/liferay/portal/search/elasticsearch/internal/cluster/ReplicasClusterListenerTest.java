@@ -157,7 +157,7 @@ public class ReplicasClusterListenerTest {
 
 	protected void setMasterExecutor(boolean value) {
 		Mockito.when(
-			_replicasClusterContext.isOnMasterExecutor()
+			_replicasClusterContext.isMaster()
 		).thenReturn(
 			value
 		);

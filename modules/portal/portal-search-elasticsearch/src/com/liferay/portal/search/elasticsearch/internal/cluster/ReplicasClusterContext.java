@@ -27,6 +27,6 @@ public interface ReplicasClusterContext {
 
 	public boolean isEmbeddedOperationMode();
 
-	public boolean isOnMasterExecutor();
+	public boolean isMaster();
 
 }

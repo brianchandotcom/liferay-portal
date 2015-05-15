@@ -43,7 +43,7 @@ public class ReplicasClusterListener
 
 	@Override
 	public void processClusterEvent(ClusterEvent clusterEvent) {
-		if (_replicasClusterContext.isOnMasterExecutor()) {
+		if (_replicasClusterContext.isMaster()) {
 			updateNumberOfReplicas();
 		}
 	}

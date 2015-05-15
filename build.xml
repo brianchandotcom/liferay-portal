@@ -214,10 +214,7 @@
 	<target name="compile" depends="setup-sdk">
 		<delete file="javac.output.txt" />
 
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="compile"
-		/>
+		<ant dir="modules/core/registry-api" target="compile" inheritAll="false" />
 
 		<ant dir="portal-service" target="compile" inheritAll="false" />
 
@@ -225,13 +222,12 @@
 			<ant dir="util-bridges" target="compile" inheritAll="false" />
 			<ant dir="util-java" target="compile" inheritAll="false" />
 			<ant dir="util-slf4j" target="compile" inheritAll="false" />
+			<ant dir="portal-test" target="compile" inheritAll="false" />
 		</parallel>
 
-		<ant dir="util-taglib" target="compile" inheritAll="false" />
-
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
+			<ant dir="util-taglib" target="compile" inheritAll="false" />
 			<ant dir="portal-impl" target="compile" inheritAll="false" />
-			<ant dir="portal-test" target="compile" inheritAll="false" />
 		</parallel>
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">

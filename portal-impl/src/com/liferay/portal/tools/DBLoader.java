@@ -86,10 +86,10 @@ public class DBLoader {
 		String databaseName = arguments.get("db.database.name");
 		String databaseType = arguments.get("db.database.type");
 		String sqlDir = arguments.get("db.sql.dir");
-		String fileName = arguments.get("db.file.name");
+		String fileNames = arguments.get("db.file.names");
 
 		try {
-			new DBLoader(databaseName, databaseType, sqlDir, fileName);
+			new DBLoader(databaseName, databaseType, sqlDir, fileNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -98,13 +98,13 @@ public class DBLoader {
 
 	public DBLoader(
 			String databaseName, String databaseType, String sqlDir,
-			String fileName)
+			String fileNames)
 		throws Exception {
 
 		_databaseName = databaseName;
 		_databaseType = databaseType;
 		_sqlDir = sqlDir;
-		_fileName = fileName;
+		_fileNames = fileNames;
 
 		if (_databaseType.equals("derby")) {
 			_loadDerby();
@@ -124,12 +124,14 @@ public class DBLoader {
 				"jdbc:derby:" + _sqlDir + "/" + _databaseName + ";create=true",
 				"", "");
 
-			if (Validator.isNull(_fileName)) {
+			if (Validator.isNull(_fileNames)) {
 				_loadDerby(con, _sqlDir + "/portal/portal-derby.sql");
 				_loadDerby(con, _sqlDir + "/indexes.sql");
 			}
 			else {
-				_loadDerby(con, _sqlDir + "/" + _fileName);
+				for (String fileName : StringUtil.split(_fileNames)) {
+					_loadDerby(con, _sqlDir + "/" + fileName);
+				}
 			}
 		}
 		finally {
@@ -212,12 +214,14 @@ public class DBLoader {
 					";shutdown=true",
 				"sa", "")) {
 
-			if (Validator.isNull(_fileName)) {
+			if (Validator.isNull(_fileNames)) {
 				loadHypersonic(con, _sqlDir + "/portal/portal-hypersonic.sql");
 				loadHypersonic(con, _sqlDir + "/indexes.sql");
 			}
 			else {
-				loadHypersonic(con, _sqlDir + "/" + _fileName);
+				for (String fileName : StringUtil.split(_fileNames)) {
+					loadHypersonic(con, _sqlDir + "/" + fileName);
+				}
 			}
 
 			// Shutdown Hypersonic
@@ -241,7 +245,7 @@ public class DBLoader {
 
 	private final String _databaseName;
 	private final String _databaseType;
-	private final String _fileName;
+	private final String _fileNames;
 	private final String _sqlDir;
 
 }

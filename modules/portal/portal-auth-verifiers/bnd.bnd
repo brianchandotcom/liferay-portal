@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Auth Verifiers
+Bundle-SymbolicName: com.liferay.portal.security.auth.verifier
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.security.auth.verifier.*;version=${plugin.full.version}
+Include-Resource: classes

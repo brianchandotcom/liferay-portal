@@ -115,7 +115,7 @@ public class ElasticsearchCluster {
 		}
 
 		@Override
-		public boolean isElasticsearchEmbeddedCluster() {
+		public boolean isEmbeddedOperationMode() {
 			ElasticsearchConnection elasticsearchConnection =
 				getActiveElasticsearchConnection();
 

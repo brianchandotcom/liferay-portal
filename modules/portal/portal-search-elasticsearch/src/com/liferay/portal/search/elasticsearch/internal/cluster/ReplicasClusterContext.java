@@ -25,7 +25,7 @@ public interface ReplicasClusterContext {
 
 	public String[] getTargetIndexNames();
 
-	public boolean isElasticsearchEmbeddedCluster();
+	public boolean isEmbeddedOperationMode();
 
 	public boolean isOnMasterExecutor();
 

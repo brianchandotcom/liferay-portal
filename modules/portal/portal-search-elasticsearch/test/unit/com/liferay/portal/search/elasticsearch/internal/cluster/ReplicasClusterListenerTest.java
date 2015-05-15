@@ -149,7 +149,7 @@ public class ReplicasClusterListenerTest {
 
 	protected void setEmbeddedCluster(boolean value) {
 		Mockito.when(
-			_replicasClusterContext.isElasticsearchEmbeddedCluster()
+			_replicasClusterContext.isEmbeddedOperationMode()
 		).thenReturn(
 			value
 		);

@@ -59,7 +59,7 @@ public class ReplicasClusterListener
 	}
 
 	protected void updateNumberOfReplicas() {
-		if (!_replicasClusterContext.isElasticsearchEmbeddedCluster()) {
+		if (!_replicasClusterContext.isEmbeddedOperationMode()) {
 			return;
 		}
 

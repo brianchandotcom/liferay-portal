@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/com.liferay.portal.tools.wsdd.builder/lib" />
 
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/tools" />
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

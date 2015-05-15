@@ -44,29 +44,36 @@ public class PoshiRunnerExecutor {
 
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
+		boolean conditionalValue = false;
+
 		String elementName = element.getName();
 
 		if (elementName.equals("and")) {
 			List<Element> andElements = element.elements();
 
+			conditionalValue = true;
+
 			for (Element andElement : andElements) {
-				if (!evaluateConditionalElement(andElement)) {
-					return false;
+				conditionalValue =
+					conditionalValue && evaluateConditionalElement(andElement);
+
+				if (!conditionalValue) {
+					break;
 				}
 			}
-
-			return true;
 		}
 		else if (elementName.equals("condition")) {
 			if (element.attributeValue("function") != null) {
 				runFunctionExecuteElement(element);
 
-				return (boolean)_returnObject;
+				conditionalValue = (boolean)_returnObject;
 			}
 			else if (element.attributeValue("selenium") != null) {
 				runSeleniumElement(element);
 
-				return (boolean)_returnObject;
+				conditionalValue = (boolean)_returnObject;
 			}
 		}
 		else if (elementName.equals("contains")) {
@@ -76,10 +83,8 @@ public class PoshiRunnerExecutor {
 				element.attributeValue("substring"));
 
 			if (string.contains(substring)) {
-				return true;
+				conditionalValue = true;
 			}
-
-			return false;
 		}
 		else if (elementName.equals("equals")) {
 			String arg1 = PoshiRunnerVariablesUtil.replaceCommandVars(
@@ -88,40 +93,44 @@ public class PoshiRunnerExecutor {
 				element.attributeValue("arg2"));
 
 			if (arg1.equals(arg2)) {
-				return true;
+				conditionalValue = true;
 			}
-
-			return false;
 		}
 		else if (elementName.equals("isset")) {
 			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
 					element.attributeValue("var"))) {
 
-				return true;
+				conditionalValue = true;
 			}
-
-			return false;
 		}
 		else if (elementName.equals("or")) {
 			List<Element> orElements = element.elements();
 
 			for (Element orElement : orElements) {
-				if (evaluateConditionalElement(orElement)) {
-					return true;
+				conditionalValue =
+					conditionalValue || evaluateConditionalElement(orElement);
+
+				if (conditionalValue) {
+					break;
 				}
 			}
-
-			return false;
 		}
 		else if (elementName.equals("not")) {
 			List<Element> notElements = element.elements();
 
 			Element notElement = notElements.get(0);
 
-			return !evaluateConditionalElement(notElement);
+			conditionalValue = !evaluateConditionalElement(notElement);
 		}
 
-		return false;
+		if (conditionalValue) {
+			XMLLoggerHandler.updateStatus(element, "pass");
+		}
+		else {
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
+		}
+
+		return conditionalValue;
 	}
 
 	public static void parseElement(Element element) throws Exception {
@@ -342,24 +351,35 @@ public class PoshiRunnerExecutor {
 	public static void runIfElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		List<Element> ifChildElements = element.elements();
 
 		Element ifConditionElement = ifChildElements.get(0);
 
 		boolean condition = evaluateConditionalElement(ifConditionElement);
+		boolean conditionRun = false;
 
 		if (condition) {
+			conditionRun = true;
+
 			Element ifThenElement = element.element("then");
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(ifThenElement);
 
+			XMLLoggerHandler.updateStatus(ifThenElement, "pending");
+
 			parseElement(ifThenElement);
+
+			XMLLoggerHandler.updateStatus(ifThenElement, "pass");
 		}
 		else if (element.element("elseif") != null) {
 			List<Element> elseIfElements = element.elements("elseif");
 
 			for (Element elseIfElement : elseIfElements) {
 				PoshiRunnerStackTraceUtil.setCurrentElement(elseIfElement);
+
+				XMLLoggerHandler.updateStatus(elseIfElement, "pending");
 
 				List<Element> elseIfChildElements = elseIfElement.elements();
 
@@ -368,24 +388,48 @@ public class PoshiRunnerExecutor {
 				condition = evaluateConditionalElement(elseIfConditionElement);
 
 				if (condition) {
+					conditionRun = true;
+
 					Element elseIfThenElement = elseIfElement.element("then");
 
 					PoshiRunnerStackTraceUtil.setCurrentElement(
 						elseIfThenElement);
 
+					XMLLoggerHandler.updateStatus(elseIfThenElement, "pending");
+
 					parseElement(elseIfThenElement);
 
+					XMLLoggerHandler.updateStatus(elseIfThenElement, "pass");
+					XMLLoggerHandler.updateStatus(elseIfElement, "pass");
+
 					break;
+				}
+				else {
+					XMLLoggerHandler.updateStatus(
+						elseIfElement, "conditional-fail");
 				}
 			}
 		}
 
-		if ((element.element("else") != null) && !condition) {
+		if ((element.element("else") != null) && !conditionRun) {
+			conditionRun = true;
+
 			Element elseElement = element.element("else");
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(elseElement);
 
+			XMLLoggerHandler.updateStatus(elseElement, "pending");
+
 			parseElement(elseElement);
+
+			XMLLoggerHandler.updateStatus(elseElement, "pass");
+		}
+
+		if (conditionRun) {
+			XMLLoggerHandler.updateStatus(element, "pass");
+		}
+		else {
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
 		}
 	}
 
@@ -663,6 +707,8 @@ public class PoshiRunnerExecutor {
 	public static void runWhileElement(Element element) throws Exception {
 		PoshiRunnerStackTraceUtil.setCurrentElement(element);
 
+		XMLLoggerHandler.updateStatus(element, "pending");
+
 		int maxIterations = 15;
 
 		if (element.attributeValue("max-iterations") != null) {
@@ -675,14 +721,29 @@ public class PoshiRunnerExecutor {
 		Element conditionElement = whileChildElements.get(0);
 		Element thenElement = element.element("then");
 
+		boolean conditionRun = false;
+
 		for (int i = 0; i < maxIterations; i++) {
 			if (!evaluateConditionalElement(conditionElement)) {
 				break;
 			}
 
+			conditionRun = true;
+
 			PoshiRunnerStackTraceUtil.setCurrentElement(thenElement);
 
+			XMLLoggerHandler.updateStatus(thenElement, "pending");
+
 			parseElement(thenElement);
+
+			XMLLoggerHandler.updateStatus(thenElement, "pass");
+		}
+
+		if (conditionRun) {
+			XMLLoggerHandler.updateStatus(element, "pass");
+		}
+		else {
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
 		}
 	}
 

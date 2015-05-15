@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.lang.builder</groupId>
+	<artifactId>sample.lang.builder</artifactId>
+	<name>Sample Source Formatter Project</name>
+	<version>1.0.0</version>
+	<description>Sample Source Formatter Project</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.lang.builder</artifactId>
+				<version>1.0.0</version>
+				<configuration>
+					<langDirName>.</langDirName>
+					<translateClientId>${microsoft.translator.client.id}</translateClientId>
+					<translateClientSecret>${microsoft.translator.client.secret}</translateClientSecret>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

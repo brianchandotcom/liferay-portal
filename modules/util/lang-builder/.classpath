@@ -19,6 +19,7 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/ant.jar" />
 	<classpathentry kind="lib" path="lib/json-simple.jar" />
+	<classpathentry kind="lib" path="lib/maven-plugin-api.jar" />
 	<classpathentry kind="lib" path="lib/microsoft-translator-java-api.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

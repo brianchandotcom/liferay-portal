@@ -2,10 +2,12 @@ Bundle-Name: Liferay Lang Builder
 Bundle-SymbolicName: com.liferay.lang.builder
 Bundle-Version: 1.0.1
 Import-Package:\
+	!org.apache.maven.plugin.*,\
 	!org.apache.tools.ant.*,\
 	*
 Include-Resource:\
 	classes,\
+	{META-INF/maven/plugin.xml=src/META-INF/maven/plugin.xml},\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/io/OutputStreamWriter.class,\

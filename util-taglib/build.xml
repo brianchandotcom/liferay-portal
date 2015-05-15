@@ -65,8 +65,6 @@
 			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
 		</replace>
 
-		<mkdir dir="classes" />
-
 		<compile-java
 			javac.classpathref="project.classpath"
 			javac.destdir="classes"

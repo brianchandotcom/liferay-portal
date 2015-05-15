@@ -125,8 +125,6 @@
 	</target>
 
 	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
-		<mkdir dir="classes" />
-
 		<compile-java
 			javac.classpathref="project.classpath"
 			javac.destdir="classes"

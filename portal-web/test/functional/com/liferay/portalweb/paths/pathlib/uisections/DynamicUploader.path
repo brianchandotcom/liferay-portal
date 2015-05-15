@@ -1,11 +1,11 @@
 <html>
 <head>
-<title>AttachmentUploader</title>
+<title>DynamicUploader</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">AttachmentUploader</td></tr>
+<tr><td rowspan="1" colspan="3">DynamicUploader</td></tr>
 </thead>
 <tbody>
 <tr>

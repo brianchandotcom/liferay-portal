@@ -1329,7 +1329,7 @@
 		</init-param>
 		<init-param>
 			<name>view-action</name>
-			<value>/dynamic_data_mapping/view_template</value>
+			<value>/o/ddm-web/view_template.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

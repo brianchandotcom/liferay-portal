@@ -158,7 +158,7 @@ AUI.add(
 				var instance = this;
 
 				A.io.request(
-					themeDisplay.getPathMain() + '/dynamic_data_mapping/render_structure_field',
+					themeDisplay.getPathMain() + '/o/ddm-web/render_structure_field.jsp',
 					{
 						data: {
 							controlPanelCategory: 'portlet',
@@ -168,7 +168,7 @@ AUI.add(
 							mode: instance.get('mode'),
 							namespace: instance.get('namespace'),
 							p_l_id: instance.get('p_l_id'),
-							p_p_id: '166',
+							p_p_id: 'com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet',
 							p_p_isolated: true,
 							portletNamespace: instance.get('portletNamespace'),
 							readOnly: instance.get('readOnly')

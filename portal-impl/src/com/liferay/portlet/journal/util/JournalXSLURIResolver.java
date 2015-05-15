@@ -14,6 +14,17 @@
 
 package com.liferay.portlet.journal.util;
 
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
+
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,16 +34,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xsl.XSLURIResolver;
-
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
-import java.util.Map;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 
 /**
  * @author Brian Wing Shun Chan
@@ -101,17 +102,16 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 	public Source resolve(String href, String base) {
 		try {
 			String content = null;
+			
+			Pattern p = Pattern.compile(".*_templateId=([0-9]+).*");
+			
+			Matcher m = p.matcher(href);  
 
-			int templatePathIndex = href.indexOf(_PATH_GET_TEMPLATE);
-
-			if (templatePathIndex >= 0) {
+			if (m.matches()) {
 				long articleGroupId = GetterUtil.getLong(
 					_tokens.get("article_group_id"));
 
-				int templateIdIndex =
-					templatePathIndex + _PATH_GET_TEMPLATE.length();
-
-				String templateId = href.substring(templateIdIndex);
+				String templateId = m.group(1);
 
 				content = JournalUtil.getTemplateScript(
 					articleGroupId, templateId, _tokens, _languageId);
@@ -140,9 +140,6 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 
 		objectOutput.writeObject(_tokens);
 	}
-
-	private static final String _PATH_GET_TEMPLATE =
-		"/c/dynamic_data_mapping/get_template?template_id=";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalXSLURIResolver.class);

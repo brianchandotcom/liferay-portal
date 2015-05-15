@@ -228,7 +228,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/dynamic_data_mapping/view");
+		portletURL.setParameter("mvcPath", "/view.jsp");
 
 		return portletURL.toString();
 	}
@@ -310,7 +310,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
 
 		portletURL.setParameter(
-			"struts_action", "/dynamic_data_mapping/view_template");
+			"mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
 

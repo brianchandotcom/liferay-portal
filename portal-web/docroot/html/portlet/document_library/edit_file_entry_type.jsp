@@ -96,7 +96,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
-			<%@ include file="/html/portlet/dynamic_data_mapping/form_builder.jspf" %>
+			<%@ include file="/o/ddm-web/form_builder.jspf" %>
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="additionalMetadataFields" persistState="<%= true %>" title="additional-metadata-fields">
@@ -167,7 +167,7 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 				showAncestorScopes: true,
 				showManageTemplates: false,
 				showToolbar: true,
-				struts_action: '/dynamic_data_mapping/select_structure',
+				mvcPath: '/select_structure.jsp',
 				title: '<%= UnicodeLanguageUtil.get(request, "metadata-sets") %>'
 			},
 			function(event) {

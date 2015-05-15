@@ -353,7 +353,7 @@ if (feed != null) {
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 
 				showAncestorScopes: true,
-				struts_action: '/dynamic_data_mapping/select_structure',
+				mvcPath: '/select_structure.jsp',
 				title: '<%= UnicodeLanguageUtil.get(request, "structures") %>'
 			},
 			function(event) {

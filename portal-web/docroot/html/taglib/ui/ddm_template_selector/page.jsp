@@ -109,7 +109,7 @@ if (displayStyle.startsWith(PortletDisplayTemplate.DISPLAY_STYLE_PREFIX)) {
 					},
 					groupId: <%= ddmTemplateGroupId %>,
 					refererPortletName: '<%= PortletKeys.PORTLET_DISPLAY_TEMPLATES %>',
-					struts_action: '/dynamic_data_mapping/view_template',
+					mvcPath: '/view_template.jsp',
 					title: '<%= UnicodeLanguageUtil.get(request, "application-display-templates") %>'
 				},
 				function(event) {

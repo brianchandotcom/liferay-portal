@@ -92,7 +92,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
 		int fileNameFragmentLength = fileNameFragment.length();
 
-		if ((fileNameFragmentLength <= 2) || (getDepth(sb.toString()) > 3)) {
+		if (fileNameFragmentLength <= 2) {
 			return;
 		}
 

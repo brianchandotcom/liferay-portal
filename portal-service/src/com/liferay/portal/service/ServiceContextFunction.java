@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.portlet.blogs.action;
+package com.liferay.portal.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author André de Oliveira
  */
-public class TrackbackServiceContextFunction
+public class ServiceContextFunction
 	implements Function<String, ServiceContext> {
 
-	public TrackbackServiceContextFunction(PortletRequest portletRequest) {
+	public ServiceContextFunction(PortletRequest portletRequest) {
 		_portletRequest = portletRequest;
 	}
 

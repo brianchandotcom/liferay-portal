@@ -97,10 +97,19 @@ public interface MBMessageService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
+	String, long, long, long)}
+	*/
+	@java.lang.Deprecated
 	public void deleteDiscussionMessage(long groupId,
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
 		long permissionOwnerId, long messageId) throws PortalException;
+
+	public void deleteDiscussionMessage(java.lang.String permissionClassName,
+		long permissionClassPK, long permissionOwnerId, long messageId)
+		throws PortalException;
 
 	public void deleteMessage(long messageId) throws PortalException;
 

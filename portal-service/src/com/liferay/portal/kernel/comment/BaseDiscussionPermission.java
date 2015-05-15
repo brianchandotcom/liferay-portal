@@ -15,46 +15,55 @@
 package com.liferay.portal.kernel.comment;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.security.auth.PrincipalException;
 
 /**
  * @author Adolfo Pérez
  */
-public interface DiscussionPermission {
+public abstract class BaseDiscussionPermission implements DiscussionPermission {
 
+	@Override
 	public void checkAddPermission(
 			long companyId, long groupId, String className, long classPK,
 			long userId)
-		throws PortalException;
+		throws PortalException {
 
+		if (!hasAddPermission(companyId, groupId, className, classPK, userId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
 	public void checkDeletePermission(
 			String className, long classPK, long commentId, long userId)
-		throws PortalException;
+		throws PortalException {
 
+		if (!hasDeletePermission(className, classPK, commentId, userId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
 	public void checkUpdatePermission(
 			String className, long classPK, long commentId, long userId)
-		throws PortalException;
+		throws PortalException {
 
+		if (!hasUpdatePermission(className, classPK, commentId, userId)) {
+			throw new PrincipalException();
+		}
+	}
+
+	@Override
 	public void checkViewPermission(
 			long companyId, long groupId, String className, long classPK,
 			long userId)
-		throws PortalException;
+		throws PortalException {
 
-	public boolean hasAddPermission(
-			long companyId, long groupId, String className, long classPK,
-			long userId)
-		throws PortalException;
+		if (!hasViewPermission(
+				companyId, groupId, className, classPK, userId)) {
 
-	public boolean hasDeletePermission(
-			String className, long classPK, long commentId, long userId)
-		throws PortalException;
-
-	public boolean hasUpdatePermission(
-			String className, long classPK, long commentId, long userId)
-		throws PortalException;
-
-	public boolean hasViewPermission(
-			long companyId, long groupId, String className, long classPK,
-			long userId)
-		throws PortalException;
+			throw new PrincipalException();
+		}
+	}
 
 }

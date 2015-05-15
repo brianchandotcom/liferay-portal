@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContextFunction;
 import com.liferay.portal.struts.ActionConstants;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -109,7 +110,7 @@ public class TrackbackAction extends PortletAction {
 
 			_trackback.addTrackback(
 				entry, themeDisplay, excerpt, url, blogName, title,
-				new TrackbackServiceContextFunction(actionRequest));
+				new ServiceContextFunction(actionRequest));
 		}
 		catch (TrackbackValidationException tve) {
 			sendError(actionRequest, actionResponse, tve.getMessage());

@@ -58,13 +58,14 @@ public class CommentManagerImpl implements CommentManager {
 	@Override
 	public void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		commentManager.addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 
 	@Override
@@ -79,6 +80,20 @@ public class CommentManagerImpl implements CommentManager {
 		return commentManager.addComment(
 			userId, groupId, className, classPK, userName, subject, body,
 			serviceContextFunction);
+	}
+
+	@Override
+	public long addComment(
+			long userId, String className, long classPK, String userName,
+			long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.addComment(
+			userId, className, classPK, userName, parentCommentId, subject,
+			body, serviceContextFunction);
 	}
 
 	@Override
@@ -119,13 +134,13 @@ public class CommentManagerImpl implements CommentManager {
 	@Override
 	public Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.getDiscussion(
-			userId, groupId, className, classPK, serviceContext);
+			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
 	@Override
@@ -135,6 +150,40 @@ public class CommentManagerImpl implements CommentManager {
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.getDiscussionPermission(permissionChecker);
+	}
+
+	@Override
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.subscribeDiscussion(userId, groupId, className, classPK);
+	}
+
+	@Override
+	public void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.unsubscribeDiscussion(userId, className, classPK);
+	}
+
+	@Override
+	public long updateComment(
+			long userId, String className, long classPK, long commentId,
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.updateComment(
+			userId, className, classPK, commentId, subject, body,
+			serviceContextFunction);
 	}
 
 	protected CommentManager getCommentManager() {

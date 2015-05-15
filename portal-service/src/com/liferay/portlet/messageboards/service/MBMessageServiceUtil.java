@@ -115,6 +115,11 @@ public class MBMessageServiceUtil {
 			inputStreamOVPs, anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
+	String, long, long, long)}
+	*/
+	@Deprecated
 	public static void deleteDiscussionMessage(long groupId,
 		java.lang.String className, long classPK,
 		java.lang.String permissionClassName, long permissionClassPK,
@@ -123,6 +128,15 @@ public class MBMessageServiceUtil {
 		getService()
 			.deleteDiscussionMessage(groupId, className, classPK,
 			permissionClassName, permissionClassPK, permissionOwnerId, messageId);
+	}
+
+	public static void deleteDiscussionMessage(
+		java.lang.String permissionClassName, long permissionClassPK,
+		long permissionOwnerId, long messageId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.deleteDiscussionMessage(permissionClassName, permissionClassPK,
+			permissionOwnerId, messageId);
 	}
 
 	public static void deleteMessage(long messageId)

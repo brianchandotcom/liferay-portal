@@ -48,20 +48,6 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long companyId, long groupId,
-			String className, long classPK, long messageId, long ownerId,
-			String actionId)
-		throws PortalException {
-
-		if (!contains(
-				permissionChecker, companyId, groupId, className, classPK,
-				messageId, ownerId, actionId)) {
-
-			throw new PrincipalException();
-		}
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long companyId, long groupId,
 			String className, long classPK, long ownerId, String actionId)
 		throws PortalException {
 
@@ -73,40 +59,17 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 		}
 	}
 
-	public static boolean contains(
-			PermissionChecker permissionChecker, long companyId, long groupId,
-			String className, long classPK, long messageId, long ownerId,
-			String actionId)
+	public static void check(
+			PermissionChecker permissionChecker, String className, long classPK,
+			long messageId, long ownerId, String actionId)
 		throws PortalException {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		if (!contains(
+				permissionChecker, className, classPK, messageId, ownerId,
+				actionId)) {
 
-		if (className.equals(WorkflowInstance.class.getName())) {
-			return permissionChecker.hasPermission(
-				message.getGroupId(), PortletKeys.WORKFLOW_DEFINITION,
-				message.getGroupId(), ActionKeys.VIEW);
+			throw new PrincipalException();
 		}
-
-		if (PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER &&
-			(permissionChecker.getUserId() == message.getUserId())) {
-
-			return true;
-		}
-
-		if (message.isPending()) {
-			Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
-				permissionChecker, message.getGroupId(),
-				message.getWorkflowClassName(), message.getMessageId(),
-				actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
-		return contains(
-			permissionChecker, companyId, groupId, className, classPK, ownerId,
-			actionId);
 	}
 
 	public static boolean contains(
@@ -151,6 +114,41 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 		return permissionChecker.hasPermission(
 			groupId, className, classPK, actionId);
+	}
+
+	public static boolean contains(
+			PermissionChecker permissionChecker, String className, long classPK,
+			long messageId, long ownerId, String actionId)
+		throws PortalException {
+
+		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+		if (className.equals(WorkflowInstance.class.getName())) {
+			return permissionChecker.hasPermission(
+				message.getGroupId(), PortletKeys.WORKFLOW_DEFINITION,
+				message.getGroupId(), ActionKeys.VIEW);
+		}
+
+		if (PropsValues.DISCUSSION_COMMENTS_ALWAYS_EDITABLE_BY_OWNER &&
+			(permissionChecker.getUserId() == message.getUserId())) {
+
+			return true;
+		}
+
+		if (message.isPending()) {
+			Boolean hasPermission = WorkflowPermissionUtil.hasPermission(
+				permissionChecker, message.getGroupId(),
+				message.getWorkflowClassName(), message.getMessageId(),
+				actionId);
+
+			if (hasPermission != null) {
+				return hasPermission.booleanValue();
+			}
+		}
+
+		return contains(
+			permissionChecker, message.getCompanyId(), message.getGroupId(),
+			className, classPK, ownerId, actionId);
 	}
 
 	@Override

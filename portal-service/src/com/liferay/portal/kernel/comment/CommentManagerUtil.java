@@ -27,11 +27,12 @@ public class CommentManagerUtil {
 
 	public static void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		getCommentManager().addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body, serviceContextFunction);
 	}
 
 	public static long addComment(
@@ -43,6 +44,17 @@ public class CommentManagerUtil {
 		return getCommentManager().addComment(
 			userId, groupId, className, classPK, userName, subject, body,
 			serviceContextFunction);
+	}
+
+	public static long addComment(
+			long userId, String className, long classPK, String userName,
+			long parentCommentId, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		return getCommentManager().addComment(
+			userId, className, classPK, userName, parentCommentId, subject,
+			body, serviceContextFunction);
 	}
 
 	public static void addDiscussion(
@@ -76,17 +88,43 @@ public class CommentManagerUtil {
 
 	public static Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException {
 
 		return getCommentManager().getDiscussion(
-			userId, groupId, className, classPK, serviceContext);
+			userId, groupId, className, classPK, serviceContextFunction);
 	}
 
 	public static DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker) {
 
 		return getCommentManager().getDiscussionPermission(permissionChecker);
+	}
+
+	public static void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException {
+
+		getCommentManager().subscribeDiscussion(
+			userId, groupId, className, classPK);
+	}
+
+	public static void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException {
+
+		getCommentManager().unsubscribeDiscussion(userId, className, classPK);
+	}
+
+	public static long updateComment(
+			long userId, String className, long classPK, long commentId,
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException {
+
+		return getCommentManager().updateComment(
+			userId, className, classPK, commentId, subject, body,
+			serviceContextFunction);
 	}
 
 	public void setCommentManager(CommentManager commentManager) {

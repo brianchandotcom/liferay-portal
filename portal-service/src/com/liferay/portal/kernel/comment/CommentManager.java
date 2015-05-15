@@ -26,12 +26,19 @@ public interface CommentManager {
 
 	public void addComment(
 			long userId, long groupId, String className, long classPK,
-			String body, ServiceContext serviceContext)
+			String body,
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
 	public long addComment(
 			long userId, long groupId, String className, long classPK,
 			String userName, String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException;
+
+	public long addComment(
+			long userId, String className, long classPK, String userName,
+			long parentCommentId, String subject, String body,
 			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
@@ -49,10 +56,24 @@ public interface CommentManager {
 
 	public Discussion getDiscussion(
 			long userId, long groupId, String className, long classPK,
-			ServiceContext serviceContext)
+			Function<String, ServiceContext> serviceContextFunction)
 		throws PortalException;
 
 	public DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker);
+
+	public void subscribeDiscussion(
+			long userId, long groupId, String className, long classPK)
+		throws PortalException;
+
+	public void unsubscribeDiscussion(
+			long userId, String className, long classPK)
+		throws PortalException;
+
+	public long updateComment(
+			long userId, String className, long classPK, long commentId,
+			String subject, String body,
+			Function<String, ServiceContext> serviceContextFunction)
+		throws PortalException;
 
 }

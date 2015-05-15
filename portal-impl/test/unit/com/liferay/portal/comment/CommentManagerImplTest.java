@@ -122,15 +122,13 @@ public class CommentManagerImplTest extends Mockito {
 		String body = RandomTestUtil.randomString();
 		long commentId = RandomTestUtil.randomLong();
 
-		ServiceContext serviceContext = new ServiceContext();
-
 		_commentManagerImpl.addComment(
-			userId, groupId, className, classPK, body, serviceContext);
+			userId, groupId, className, classPK, body, _serviceContextFunction);
 
 		Mockito.verify(
 			commentManager
 		).addComment(
-			userId, groupId, className, classPK, body, serviceContext
+			userId, groupId, className, classPK, body, _serviceContextFunction
 		);
 
 		when(

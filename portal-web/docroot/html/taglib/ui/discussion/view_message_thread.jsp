@@ -43,8 +43,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		<div id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
 			<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>
 
-			<aui:input name='<%= "messageId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
-			<aui:input name='<%= "parentMessageId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
+			<aui:input name='<%= "commentId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
+			<aui:input name='<%= "parentCommentId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
 		</div>
 
 		<div class="lfr-discussion-details">

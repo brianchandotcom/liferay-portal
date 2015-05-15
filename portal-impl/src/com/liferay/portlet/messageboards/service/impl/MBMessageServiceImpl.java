@@ -242,6 +242,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			priority, allowPingbacks, serviceContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
+	 *             String, long, long, long)}
+	 */
+	@Deprecated
 	@Override
 	public void deleteDiscussionMessage(
 			long groupId, String className, long classPK,
@@ -249,12 +254,20 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			long permissionOwnerId, long messageId)
 		throws PortalException {
 
-		User user = getUser();
+		deleteDiscussionMessage(
+			permissionClassName, permissionClassPK, permissionOwnerId,
+			messageId);
+	}
+
+	@Override
+	public void deleteDiscussionMessage(
+			String permissionClassName, long permissionClassPK,
+			long permissionOwnerId, long messageId)
+		throws PortalException {
 
 		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(), groupId,
-			permissionClassName, permissionClassPK, messageId,
-			permissionOwnerId, ActionKeys.DELETE_DISCUSSION);
+			getPermissionChecker(), permissionClassName, permissionClassPK,
+			messageId, permissionOwnerId, ActionKeys.DELETE_DISCUSSION);
 
 		mbMessageLocalService.deleteDiscussionMessage(messageId);
 	}
@@ -688,13 +701,9 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String subject, String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = getUser();
-
 		MBDiscussionPermission.check(
-			getPermissionChecker(), user.getCompanyId(),
-			serviceContext.getScopeGroupId(), permissionClassName,
-			permissionClassPK, messageId, permissionOwnerId,
-			ActionKeys.UPDATE_DISCUSSION);
+			getPermissionChecker(), permissionClassName, permissionClassPK,
+			messageId, permissionOwnerId, ActionKeys.UPDATE_DISCUSSION);
 
 		return mbMessageLocalService.updateDiscussionMessage(
 			getUserId(), messageId, className, classPK, subject, body,

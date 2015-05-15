@@ -17,7 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = (WorkflowInstanceEditDisplayContext)request.getAttribute(WebKeys.DISPLAY_CONTEXT);
+WorkflowInstanceEditDisplayContext workflowInstanceEditDisplayContext = null;
+
+if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
+	workflowInstanceEditDisplayContext = new WorkflowInstanceEditDisplayContext(renderRequest, renderResponse);
+}
+else {
+	workflowInstanceEditDisplayContext = new MyWorkflowInstanceEditDisplayContext(renderRequest, renderResponse);
+}
 %>
 
 <portlet:renderURL var="backURL">

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
@@ -29,8 +28,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.util.log4j.Log4JUtil;
 import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
-import com.liferay.workflow.instance.web.context.WorkflowInstanceEditDisplayContext;
-import com.liferay.workflow.instance.web.context.WorkflowInstanceViewDisplayContext;
 
 import java.io.IOException;
 
@@ -93,9 +90,6 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 
 		try {
 			setWorkflowInstanceRenderRequestAttribute(renderRequest);
-
-			setDisplayContextRenderRequestAttribute(
-				renderRequest, renderResponse);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -120,22 +114,6 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		Class<? extends MVCPortlet> clazz = getClass();
 
 		initLogger(clazz.getClassLoader());
-	}
-
-	protected WorkflowInstanceEditDisplayContext
-		createWorkflowInstanceEditDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new WorkflowInstanceEditDisplayContext(
-			renderRequest, renderResponse);
-	}
-
-	protected WorkflowInstanceViewDisplayContext
-		createWorkflowInstanceViewDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new WorkflowInstanceViewDisplayContext(
-			renderRequest, renderResponse);
 	}
 
 	@Override
@@ -165,27 +143,6 @@ public class WorkflowInstancePortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	protected void setDisplayContextRenderRequestAttribute(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		String path = getPath(renderRequest);
-
-		if (Validator.equals(path, "/edit_workflow_instance.jsp")) {
-			renderRequest.setAttribute(
-				WebKeys.DISPLAY_CONTEXT,
-				createWorkflowInstanceEditDisplayContext(
-					renderRequest, renderResponse));
-
-			return;
-		}
-
-		renderRequest.setAttribute(
-			WebKeys.DISPLAY_CONTEXT,
-			createWorkflowInstanceViewDisplayContext(
-				renderRequest, renderResponse));
 	}
 
 	protected void setWorkflowInstanceRenderRequestAttribute(

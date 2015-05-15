@@ -15,14 +15,8 @@
 package com.liferay.workflow.instance.web.portlet;
 
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.instance.web.context.MyWorkflowInstanceEditDisplayContext;
-import com.liferay.workflow.instance.web.context.MyWorkflowInstanceViewDisplayContext;
-import com.liferay.workflow.instance.web.context.WorkflowInstanceEditDisplayContext;
-import com.liferay.workflow.instance.web.context.WorkflowInstanceViewDisplayContext;
 
 import javax.portlet.Portlet;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -52,23 +46,4 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class MyWorkflowInstancePortlet extends WorkflowInstancePortlet {
-
-	@Override
-	protected WorkflowInstanceEditDisplayContext
-		createWorkflowInstanceEditDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new MyWorkflowInstanceEditDisplayContext(
-			renderRequest, renderResponse);
-	}
-
-	@Override
-	protected WorkflowInstanceViewDisplayContext
-		createWorkflowInstanceViewDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new MyWorkflowInstanceViewDisplayContext(
-			renderRequest, renderResponse);
-	}
-
 }

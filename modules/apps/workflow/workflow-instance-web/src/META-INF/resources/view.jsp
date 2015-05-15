@@ -17,7 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = (WorkflowInstanceViewDisplayContext)request.getAttribute(WebKeys.DISPLAY_CONTEXT);
+WorkflowInstanceViewDisplayContext workflowInstanceViewDisplayContext = null;
+
+if (portletName.equals(WorkflowInstancePortletKeys.WORKFLOW_INSTANCE)) {
+	workflowInstanceViewDisplayContext = new WorkflowInstanceViewDisplayContext(renderRequest, renderResponse);
+}
+else {
+	workflowInstanceViewDisplayContext = new MyWorkflowInstanceViewDisplayContext(renderRequest, renderResponse);
+}
 
 PortletURL portletURL = workflowInstanceViewDisplayContext.getViewPortletURL();
 %>

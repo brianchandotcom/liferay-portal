@@ -1,0 +1,21 @@
+Bundle-Name: Liferay Shopping Service
+Bundle-SymbolicName: com.liferay.shopping.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.shopping.lar,\
+	com.liferay.shopping.model,\
+	com.liferay.shopping.model.impl,\
+	com.liferay.shopping.service.permission,\
+	com.liferay.shopping.service,\
+	com.liferay.shopping.service.impl,\
+	com.liferay.shopping.util,\
+	com.liferay.shopping.service.persistence,\
+	com.liferay.util.service,\
+	com.liferay.shopping.util,\
+	com.liferay.util,\
+	com.liferay.util.dao.orm,\
+	com.liferay.shopping.util.comparator,\
+	*
+Include-Resource:\
+	classes
+Liferay-Service: true

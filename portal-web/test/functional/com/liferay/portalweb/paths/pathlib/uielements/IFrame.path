@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>DIALOG</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
+	<td>//iframe[contains(@class,'dialog-iframe-node')]</td>
 	<td></td>
 </tr>
 <tr>

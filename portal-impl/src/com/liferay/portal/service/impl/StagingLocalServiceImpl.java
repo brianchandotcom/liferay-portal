@@ -68,6 +68,7 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameCo
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -417,6 +418,11 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			file = FileUtil.createTempFile("lar");
 
 			FileUtil.write(file, stagingRequestFileEntry.getContentStream());
+
+			Map<String, Serializable> settingsMap =
+				exportImportConfiguration.getSettingsMap();
+
+			settingsMap.put("userId", userId);
 
 			layoutLocalService.importLayoutsDataDeletions(
 				exportImportConfiguration, file);

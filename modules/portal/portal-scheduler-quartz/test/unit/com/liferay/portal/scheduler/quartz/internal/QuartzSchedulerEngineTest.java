@@ -12,14 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.quartz;
+package com.liferay.portal.scheduler.quartz.internal;
 
-import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
@@ -27,35 +25,34 @@ import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.model.impl.PortletAppImpl;
-import com.liferay.portal.model.impl.PortletImpl;
-import com.liferay.portal.scheduler.SchedulerEngineHelperImpl;
-import com.liferay.portal.scheduler.job.MessageSenderJob;
-import com.liferay.portal.test.rule.AdviseWith;
-import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
-import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.uuid.PortalUUIDImpl;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
+import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
+import com.liferay.portal.service.PortletLocalService;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,17 +62,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
+import javax.servlet.ServletContext;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 
 import org.mockito.Matchers;
@@ -99,8 +94,6 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.quartz.spi.JobFactory;
 
-import org.springframework.mock.web.MockServletContext;
-
 /**
  * @author Tina Tian
  */
@@ -109,29 +102,59 @@ public class QuartzSchedulerEngineTest {
 
 	@Before
 	public void setUp() throws SchedulerException {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
-
 		Thread currentThread = Thread.currentThread();
 
 		ClassLoader currentClassLoader = currentThread.getContextClassLoader();
 
 		PortalClassLoaderUtil.setClassLoader(currentClassLoader);
 
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+		_jsonFactory = Mockito.mock(JSONFactory.class);
 
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
+		Mockito.when(_jsonFactory.serialize(Mockito.anyObject())).then(
+			new Answer<String>() {
 
-		PropsUtil.setProps(new PropsImpl());
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
 
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
+					Object obj = invocationOnMock.getArguments()[0];
 
-		Registry registry = RegistryUtil.getRegistry();
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+					ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+					oos.writeObject(obj);
+
+					byte[] bytes = baos.toByteArray();
+
+					oos.close();
+
+					return Base64.encode(bytes);
+				}
+			}
+		);
+
+		Mockito.when(_jsonFactory.deserialize(Mockito.anyString())).then(
+			new Answer<Object>() {
+
+				@Override
+				public Object answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					String base64 = (String)invocationOnMock.getArguments()[0];
+
+					byte[] bytes = Base64.decode(base64);
+
+					ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+
+					ObjectInputStream ois = new ObjectInputStream(bais);
+
+					return ois.readObject();
+				}
+			}
+		);
 
 		MessageBus messageBus = Mockito.mock(MessageBus.class);
-
-		registry.registerService(MessageBus.class, messageBus);
 
 		Mockito.when(
 			messageBus.getDestination(Matchers.anyString())
@@ -201,9 +224,73 @@ public class QuartzSchedulerEngineTest {
 
 		_synchronousDestination.setName(_TEST_DESTINATION_NAME);
 
-		MessageBusUtil.addDestination(_synchronousDestination);
+		messageBus.addDestination(_synchronousDestination);
+
+		PortalUUID portalUUID = Mockito.mock(PortalUUID.class);
+
+		Mockito.when(portalUUID.generate()).then(
+			new Answer<String>() {
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					UUID uuid = new UUID(
+						SecureRandomUtil.nextLong(),
+						SecureRandomUtil.nextLong());
+
+					return uuid.toString();
+				}
+			}
+
+		);
+
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+
+		portalUUIDUtil.setPortalUUID(portalUUID);
+
+		Props props = Mockito.mock(Props.class);
+
+		Mockito.when(props.get(PropsKeys.SCHEDULER_ENABLED)).thenReturn("true");
+
+		PortletLocalService portletLocalService = Mockito.mock(
+			PortletLocalService.class);
+
+		Mockito.when(
+			portletLocalService.getPortletById(Mockito.anyString())).then(
+				new Answer<Portlet>() {
+
+					@Override
+					public Portlet answer(InvocationOnMock invocationOnMock)
+						throws Throwable {
+
+						ServletContext servletContext = Mockito.mock(
+							ServletContext.class);
+						Mockito.when(
+							servletContext.getClassLoader()).thenReturn(
+								Thread.currentThread().getContextClassLoader());
+
+						PortletApp portletApp = Mockito.mock(PortletApp.class);
+						Mockito.when(portletApp.getServletContext()).thenReturn(
+							servletContext);
+
+						Portlet portlet = Mockito.mock(Portlet.class);
+						Mockito.when(portlet.getPortletApp()).thenReturn(
+							portletApp);
+
+						return portlet;
+					}
+
+				}
+		);
+
+		Mockito.when(props.get(PropsKeys.SCHEDULER_ENABLED)).thenReturn("true");
 
 		_quartzSchedulerEngine = new QuartzSchedulerEngine();
+
+		_quartzSchedulerEngine.setJsonFactory(_jsonFactory);
+		_quartzSchedulerEngine.setMessageBus(messageBus);
+		_quartzSchedulerEngine.setPortletLocalService(portletLocalService);
+		_quartzSchedulerEngine.setProps(props);
 
 		ReflectionTestUtil.setFieldValue(
 			_quartzSchedulerEngine, "_memoryScheduler",
@@ -220,11 +307,10 @@ public class QuartzSchedulerEngineTest {
 	@After
 	public void tearDown() {
 		if (_quartzSchedulerEngine != null) {
-			_quartzSchedulerEngine.destroy();
+			_quartzSchedulerEngine.deactivate();
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testDelete1() throws Exception {
 
@@ -264,7 +350,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertNull(schedulerResponse);
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testDelete2() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -306,7 +391,6 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testGetQuartzTrigger1() throws Exception {
 		Date startDate = new Date(System.currentTimeMillis() + 10000);
@@ -328,7 +412,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertTrue(nextFireDate1.before(nextFireDate2));
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testGetQuartzTrigger2() {
 		String wrongCronTriggerContent = "bad-cron-trigger-content";
@@ -347,7 +430,6 @@ public class QuartzSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testGetQuartzTrigger3() throws SchedulerException {
 		try (CaptureHandler captureHandler =
@@ -376,12 +458,13 @@ public class QuartzSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testGetQuartzTrigger4() throws Exception {
 		String jobName = _TEST_JOB_NAME_0;
 
-		while (jobName.length() <= SchedulerEngine.JOB_NAME_MAX_LENGTH) {
+		while (jobName.length() <=
+					_quartzSchedulerEngine.getJobNameMaxLength()) {
+
 			jobName = jobName.concat(_TEST_JOB_NAME_0);
 		}
 
@@ -402,15 +485,8 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertTrue(jobName.equals(trigger.getJobKey().getName()));
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testInitJobState() throws Exception {
-		SchedulerEngineHelperUtil schedulerEngineHelperUtil =
-			new SchedulerEngineHelperUtil();
-
-		schedulerEngineHelperUtil.setSchedulerEngineHelper(
-			new SchedulerEngineHelperImpl());
-
 		List<SchedulerResponse> schedulerResponses =
 			_quartzSchedulerEngine.getScheduledJobs(
 				_PERSISTED_TEST_GROUP_NAME, StorageType.PERSISTED);
@@ -437,7 +513,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testPauseAndResume1() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -469,7 +544,6 @@ public class QuartzSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testPauseAndResume2() throws Exception {
 		SchedulerResponse schedulerResponse =
@@ -500,11 +574,6 @@ public class QuartzSchedulerEngineTest {
 		_assertTriggerState(schedulerResponse, TriggerState.NORMAL);
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			EnableSchedulerAdvice.class, PortalLocalServiceUtilAdvice.class
-		}
-	)
 	@Test
 	public void testSchedule1() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -538,7 +607,6 @@ public class QuartzSchedulerEngineTest {
 			1, _synchronousDestination.getMessageListenerCount());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testSchedule2() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -565,7 +633,6 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testSchedule3() throws Exception {
 		List<SchedulerResponse> schedulerResponses =
@@ -587,7 +654,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_JOB_NUMBER, schedulerResponses.size());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testSuppressError() throws Exception {
 		SchedulerResponse schedulerResponse =
@@ -613,7 +679,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertNull(jobState.getExceptions());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule1() throws Exception {
 
@@ -655,7 +720,6 @@ public class QuartzSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule2() throws Exception {
 
@@ -694,7 +758,6 @@ public class QuartzSchedulerEngineTest {
 		_assertTriggerState(schedulerResponse, TriggerState.UNSCHEDULED);
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUnschedule3() throws Exception {
 		Assert.assertEquals(
@@ -734,7 +797,6 @@ public class QuartzSchedulerEngineTest {
 			0, _synchronousDestination.getMessageListenerCount());
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUpdate1() throws Exception {
 		SchedulerResponse schedulerResponse =
@@ -760,7 +822,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(_DEFAULT_INTERVAL * 2, triggerContent);
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUpdate2() throws Exception {
 		SchedulerResponse schedulerResponse =
@@ -787,7 +848,6 @@ public class QuartzSchedulerEngineTest {
 		Assert.assertEquals(newTriggerContent, triggerContent);
 	}
 
-	@AdviseWith(adviceClasses = {EnableSchedulerAdvice.class})
 	@Test
 	public void testUpdate3() throws SchedulerException {
 		MockScheduler mockScheduler = ReflectionTestUtil.getFieldValue(
@@ -813,53 +873,6 @@ public class QuartzSchedulerEngineTest {
 			_TEST_JOB_NAME_0, _MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
 		Assert.assertNotNull(schedulerResponse.getTrigger());
-	}
-
-	@Rule
-	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
-		AspectJNewEnvTestRule.INSTANCE;
-
-	@Aspect
-	public static class EnableSchedulerAdvice {
-
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)"
-		)
-		public Object enableScheduler(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
-
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
-		}
-
-	}
-
-	@Aspect
-	public static class PortalLocalServiceUtilAdvice {
-
-		@Around(
-			"execution(* com.liferay.portal.service.PortletLocalServiceUtil." +
-				"getPortletById(java.lang.String)) && args(portletId)"
-		)
-		public Portlet getPortletById(String portletId) {
-			Portlet portlet = new PortletImpl();
-
-			PortletApp portletApp = new PortletAppImpl(portletId);
-
-			portletApp.setServletContext(
-				new MockServletContext() {
-
-					@Override
-					public ClassLoader getClassLoader() {
-						return Thread.currentThread().getContextClassLoader();
-					}
-
-				});
-
-			portlet.setPortletApp(portletApp);
-
-			return portlet;
-		}
-
 	}
 
 	public static class TestMessageListener implements MessageListener {
@@ -900,6 +913,7 @@ public class QuartzSchedulerEngineTest {
 
 	private static final String _TEST_PORTLET_ID = "testPortletId";
 
+	private JSONFactory _jsonFactory;
 	private QuartzSchedulerEngine _quartzSchedulerEngine;
 	private SynchronousDestination _synchronousDestination;
 
@@ -952,8 +966,7 @@ public class QuartzSchedulerEngineTest {
 			JobDataMap jobDataMap = jobDetail.getJobDataMap();
 
 			jobDataMap.put(
-				SchedulerEngine.MESSAGE,
-				JSONFactoryUtil.serialize(new Message()));
+				SchedulerEngine.MESSAGE, _jsonFactory.serialize(new Message()));
 			jobDataMap.put(
 				SchedulerEngine.DESTINATION_NAME, _TEST_DESTINATION_NAME);
 			jobDataMap.put(

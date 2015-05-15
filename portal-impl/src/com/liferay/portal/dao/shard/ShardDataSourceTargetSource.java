@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.shard;
 
+import com.liferay.portal.kernel.dao.shard.ShardTargetSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CentralizedThreadLocal;
@@ -29,8 +30,10 @@ import org.springframework.aop.TargetSource;
 /**
  * @author Michael Young
  */
-public class ShardDataSourceTargetSource implements TargetSource {
+public class ShardDataSourceTargetSource
+	implements TargetSource, ShardTargetSource {
 
+	@Override
 	public String[] getAvailableShardNames() {
 		return _availableShardNames;
 	}
@@ -62,6 +65,7 @@ public class ShardDataSourceTargetSource implements TargetSource {
 	public void releaseTarget(Object target) throws Exception {
 	}
 
+	@Override
 	public void resetDataSource() {
 		DataSource dataSource = _dataSources.get(
 			PropsValues.SHARD_DEFAULT_NAME);
@@ -69,12 +73,14 @@ public class ShardDataSourceTargetSource implements TargetSource {
 		_dataSource.set(dataSource);
 	}
 
+	@Override
 	public void setDataSource(String shardName) {
 		DataSource dataSource = _dataSources.get(shardName);
 
 		_dataSource.set(dataSource);
 	}
 
+	@Override
 	public void setDataSources(Map<String, DataSource> dataSources) {
 		_dataSources = dataSources;
 

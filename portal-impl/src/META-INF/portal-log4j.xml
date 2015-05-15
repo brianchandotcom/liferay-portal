@@ -448,7 +448,7 @@
 		<priority value="ERROR" />
 	</category>
 
-	<category name="com.liferay.portal.scheduler.quartz.PortalJobStore">
+	<category name="com.liferay.portal.scheduler.quartz.internal.PortalJobStore">
 		<priority value="ERROR" />
 	</category>
 

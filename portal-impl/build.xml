@@ -933,7 +933,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			javac.srcdir="src"
 		/>
 
-		<antcall target="print-current-time" />
+		<print-current-time />
 	</target>
 
 	<target name="compile-dependencies">

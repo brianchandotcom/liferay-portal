@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch.internal.cluster;
 import com.liferay.portal.kernel.cluster.ClusterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterNode;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
@@ -37,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true)
+@Component(immediate = true, service = ElasticsearchCluster.class)
 public class ElasticsearchCluster {
 
 	@Activate
@@ -61,19 +60,19 @@ public class ElasticsearchCluster {
 		_replicasClusterListener = null;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
 		_clusterExecutor = clusterExecutor;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setClusterMasterExecutor(
 		ClusterMasterExecutor clusterMasterExecutor) {
 
 		_clusterMasterExecutor = clusterMasterExecutor;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
 
@@ -111,7 +110,17 @@ public class ElasticsearchCluster {
 
 		@Override
 		public String[] getTargetIndexNames() {
-			return ArrayUtil.toStringArray(getCompanyIdsWithActiveIndexes());
+			List<Company> companies = _companyLocalService.getCompanies();
+
+			String[] targetIndexNames = new String[companies.size()];
+
+			for (int i = 0; i < targetIndexNames.length; i++) {
+				Company company = companies.get(i);
+
+				targetIndexNames[i] = String.valueOf(company.getCompanyId());
+			}
+
+			return targetIndexNames;
 		}
 
 		@Override
@@ -122,7 +131,7 @@ public class ElasticsearchCluster {
 			OperationMode operationMode =
 				elasticsearchConnection.getOperationMode();
 
-			return operationMode == OperationMode.EMBEDDED;
+			return (operationMode == OperationMode.EMBEDDED);
 		}
 
 		@Override
@@ -132,19 +141,6 @@ public class ElasticsearchCluster {
 
 		protected ElasticsearchConnection getActiveElasticsearchConnection() {
 			return _elasticsearchConnectionManager.getElasticsearchConnection();
-		}
-
-		private long[] getCompanyIdsWithActiveIndexes() {
-			List<Company> companies = _companyLocalService.getCompanies();
-
-			long[] companyIds = new long[companies.size()];
-
-			for (int i = 0; i < companyIds.length; i++) {
-				Company company = companies.get(i);
-				companyIds[i] = company.getCompanyId();
-			}
-
-			return companyIds;
 		}
 
 	}

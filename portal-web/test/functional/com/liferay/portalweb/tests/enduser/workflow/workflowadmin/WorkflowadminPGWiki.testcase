@@ -302,7 +302,7 @@
 		<execute macro="Workflow#rejectTaskByActions">
 			<var name="workflowAssetTitle" value="FrontPage" />
 			<var name="workflowAssetType" value="Wiki Page" />
-			<var name="workflowTask" value="Update" />
+			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
@@ -322,7 +322,7 @@
 			<var name="portletName" value="My Submissions" />
 		</execute>
 
-		<execute macro="Workflow#withdrawTaskCompletedNoByActions">
+		<execute macro="Workflow#viewMySubmissions">
 			<var name="workflowAssetTitle" value="FrontPage" />
 			<var name="workflowAssetType" value="Wiki Page" />
 			<var name="workflowDefinition" value="Single Approver" />

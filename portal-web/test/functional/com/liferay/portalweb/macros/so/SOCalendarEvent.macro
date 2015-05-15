@@ -1,6 +1,6 @@
 <definition>
 	<command name="addRepeatingEventsPG">
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -39,7 +39,7 @@
 	</command>
 
 	<command name="deleteFutureEventPG">
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -68,7 +68,7 @@
 	</command>
 
 	<command name="editFutureEventPG">
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 

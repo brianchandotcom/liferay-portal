@@ -42,7 +42,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableCommentsPG">
+		<execute macro="Calendar#enableComments">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
@@ -54,7 +54,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -97,11 +97,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetails">
+		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -112,7 +112,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewCommentPG">
+		<execute macro="CalendarEvent#viewComment">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventComment" value="${commentContent}" />
 			<var name="eventTitle" value="${eventTitle}" />
@@ -188,7 +188,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableViewEventDetailsPermissionsPG">
+		<execute macro="Calendar#enableViewEventDetailsPermissions">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
@@ -201,7 +201,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableCommentsPG">
+		<execute macro="Calendar#enableComments">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
@@ -213,7 +213,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -453,7 +453,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableCommentsPG">
+		<execute macro="Calendar#enableComments">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
@@ -465,7 +465,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -512,11 +512,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetails">
+		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -546,7 +546,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableCommentsPG">
+		<execute macro="Calendar#enableComments">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="site" value="${siteName}" />
@@ -558,7 +558,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
@@ -612,11 +612,11 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewEventDetails">
+		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
@@ -627,7 +627,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewCommentPG">
+		<execute macro="CalendarEvent#viewComment">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventComment" value="${commentContentEdit}" />
 			<var name="eventTitle" value="${eventTitle}" />
@@ -657,7 +657,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
@@ -673,7 +673,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
@@ -689,7 +689,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="calendarName" value="${siteName}" />
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType}" />
@@ -759,7 +759,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />

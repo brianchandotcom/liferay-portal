@@ -49,7 +49,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -88,7 +88,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -129,7 +129,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -210,7 +210,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
@@ -342,7 +342,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
@@ -351,7 +351,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
@@ -360,7 +360,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
@@ -369,7 +369,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
@@ -378,7 +378,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle6}" />
 		</execute>
 
@@ -423,7 +423,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -435,7 +435,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -447,7 +447,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -521,7 +521,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -533,7 +533,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -545,7 +545,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -557,7 +557,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle4}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -569,7 +569,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle5}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -581,7 +581,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle6}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -593,7 +593,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle7}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -605,7 +605,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle8}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -617,7 +617,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle9}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -629,7 +629,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle10}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -641,7 +641,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle11}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -653,7 +653,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle12}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -665,7 +665,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle13}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -677,7 +677,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle14}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -689,7 +689,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle15}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -701,7 +701,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle16}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -713,7 +713,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle17}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -725,7 +725,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle18}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -737,7 +737,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle19}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -749,7 +749,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle20}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -761,7 +761,7 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle21}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
@@ -1062,14 +1062,14 @@
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="soDashboard" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deletePG">
+		<execute macro="CalendarEvent#deleteSpecific">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
@@ -1118,7 +1118,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableViewEventDetailsPermissionsPG">
+		<execute macro="Calendar#enableViewEventDetailsPermissions">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Guest" />
@@ -1185,7 +1185,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
@@ -1287,7 +1287,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -1300,7 +1300,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deletePG">
+		<execute macro="CalendarEvent#deleteSpecific">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
@@ -1352,7 +1352,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableViewEventDetailsPermissionsPG">
+		<execute macro="Calendar#enableViewEventDetailsPermissions">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Guest" />
@@ -1419,7 +1419,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#editViaAgendaViewPG">
+		<execute macro="CalendarEvent#editViaAgendaView">
 			<var name="endDateTimeEdit" value="${endDateTimeEdit}" />
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventTitleEdit" value="${eventTitle3Edit}" />
@@ -1627,7 +1627,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
@@ -1637,7 +1637,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 
@@ -1647,7 +1647,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle4}" />
 		</execute>
 
@@ -1657,7 +1657,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle5}" />
 		</execute>
 
@@ -1667,7 +1667,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#deleteViaAgendaViewPG">
+		<execute macro="CalendarEvent#deleteViaAgendaView">
 			<var name="eventTitle" value="${eventTitle6}" />
 		</execute>
 
@@ -1727,7 +1727,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#removeViewPermissionsPG">
+		<execute macro="Calendar#removeViewPermissions">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Site Member" />
@@ -1740,7 +1740,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -1816,7 +1816,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="Calendar#enableViewEventDetailsPermissionsPG">
+		<execute macro="Calendar#enableViewEventDetailsPermissions">
 			<var name="calendarName" value="${siteName}" />
 			<var name="calendarType" value="Current Site Calendars" />
 			<var name="roleName" value="Guest" />
@@ -2188,7 +2188,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2201,7 +2201,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2214,7 +2214,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2227,7 +2227,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle4}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2240,7 +2240,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle5}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2253,7 +2253,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle6}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2266,7 +2266,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle7}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2279,7 +2279,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle8}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2292,7 +2292,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle9}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2305,7 +2305,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle10}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2318,7 +2318,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle11}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2331,7 +2331,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle12}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2344,7 +2344,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle13}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2357,7 +2357,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle14}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2370,7 +2370,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle15}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2383,7 +2383,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle16}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2396,7 +2396,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle17}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2409,7 +2409,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle18}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2422,7 +2422,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle19}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2435,7 +2435,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle20}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2448,7 +2448,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle21}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2803,7 +2803,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2816,7 +2816,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2829,7 +2829,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />
@@ -2885,7 +2885,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="siteName" value="${siteName}" />

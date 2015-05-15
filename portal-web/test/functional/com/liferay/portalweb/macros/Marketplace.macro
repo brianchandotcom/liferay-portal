@@ -416,7 +416,7 @@
 			<var name="pageName" value="${pageName5}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle1}" />
 			<var name="eventType" value="${eventType1}" />
 			<var name="pageName" value="${pageName5}" />
@@ -426,7 +426,7 @@
 			<var name="pageName" value="${pageName5}" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewPG">
+		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle1}" />
 		</execute>
 
@@ -434,7 +434,7 @@
 			<var name="pageName" value="${pageName5}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle2}" />
 			<var name="eventType" value="${eventType2}" />
 			<var name="pageName" value="${pageName5}" />
@@ -444,7 +444,7 @@
 			<var name="pageName" value="${pageName5}" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewPG">
+		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle2}" />
 		</execute>
 
@@ -452,7 +452,7 @@
 			<var name="pageName" value="${pageName5}" />
 		</execute>
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle3}" />
 			<var name="eventType" value="${eventType3}" />
 			<var name="pageName" value="${pageName5}" />
@@ -462,7 +462,7 @@
 			<var name="pageName" value="${pageName5}" />
 		</execute>
 
-		<execute macro="CalendarEvent#viewPG">
+		<execute macro="CalendarEvent#view">
 			<var name="eventTitle" value="${eventTitle3}" />
 		</execute>
 

@@ -62,13 +62,16 @@ public class LangBuilder {
 
 		System.setProperty("line.separator", StringPool.NEW_LINE);
 
-		String langDirName = arguments.get("lang.dir");
-		String langFileName = arguments.get("lang.file");
-		boolean plugin = GetterUtil.getBoolean(arguments.get("lang.plugin"));
+		String langDirName = GetterUtil.getString(
+			arguments.get("lang.dir"), LangBuilderArgs.LANG_DIR_NAME);
+		String langFileName = GetterUtil.getString(
+			arguments.get("lang.file"), LangBuilderArgs.LANG_FILE_NAME);
+		boolean plugin = GetterUtil.getBoolean(
+			arguments.get("lang.plugin"), LangBuilderArgs.PLUGIN);
 		String portalLanguagePropertiesFileName = arguments.get(
 			"lang.portal.language.properties.file");
 		boolean translate = GetterUtil.getBoolean(
-			arguments.get("lang.translate"), true);
+			arguments.get("lang.translate"), LangBuilderArgs.TRANSLATE);
 		String translateClientId = arguments.get("lang.translate.client.id");
 		String translateClientSecret = arguments.get(
 			"lang.translate.client.secret");

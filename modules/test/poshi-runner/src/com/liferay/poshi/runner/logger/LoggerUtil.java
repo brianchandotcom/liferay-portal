@@ -313,7 +313,7 @@ public final class LoggerUtil {
 			"META-INF/resources/html/index.html");
 
 		htmlContent = htmlContent.replace(
-			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\" />",
+			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\"></ul>",
 			XMLLoggerHandler.getXMLLogText());
 
 		FileUtil.write(_getHtmlFilePath(), htmlContent);
@@ -343,7 +343,7 @@ public final class LoggerUtil {
 				"</ul>",
 			CommandLoggerHandler.getCommandLogText());
 		htmlContent = htmlContent.replace(
-			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\" />",
+			"<ul class=\"xml-log-container\" id=\"xmlLogContainer\"></ul>",
 			XMLLoggerHandler.getXMLLogText());
 
 		if (!PropsValues.TEST_RUN_LOCALLY) {

@@ -125,19 +125,6 @@
 	</target>
 
 	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
-		<if>
-			<available file="$${javac.destdir}" />
-			<then>
-
-				<!--
-				Clean up stale dir that was accidentally introduced in
-				0b63ac06aec90d42d428a1b23140303324125042.
-				-->
-
-				<delete dir="$${javac.destdir}" />
-			</then>
-		</if>
-
 		<mkdir dir="classes" />
 
 		<compile-java

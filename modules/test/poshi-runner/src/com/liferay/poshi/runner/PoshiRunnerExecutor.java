@@ -358,8 +358,11 @@ public class PoshiRunnerExecutor {
 		Element ifConditionElement = ifChildElements.get(0);
 
 		boolean condition = evaluateConditionalElement(ifConditionElement);
+		boolean conditionRun = false;
 
 		if (condition) {
+			conditionRun = true;
+
 			Element ifThenElement = element.element("then");
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(ifThenElement);
@@ -385,6 +388,8 @@ public class PoshiRunnerExecutor {
 				condition = evaluateConditionalElement(elseIfConditionElement);
 
 				if (condition) {
+					conditionRun = true;
+
 					Element elseIfThenElement = elseIfElement.element("then");
 
 					PoshiRunnerStackTraceUtil.setCurrentElement(
@@ -406,7 +411,9 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
-		if ((element.element("else") != null) && !condition) {
+		if ((element.element("else") != null) && !conditionRun) {
+			conditionRun = true;
+
 			Element elseElement = element.element("else");
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(elseElement);
@@ -418,11 +425,11 @@ public class PoshiRunnerExecutor {
 			XMLLoggerHandler.updateStatus(elseElement, "pass");
 		}
 
-		if ((element.element("else") == null) && !condition) {
-			XMLLoggerHandler.updateStatus(element, "conditional-fail");
+		if (conditionRun) {
+			XMLLoggerHandler.updateStatus(element, "pass");
 		}
 		else {
-			XMLLoggerHandler.updateStatus(element, "pass");
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
 		}
 	}
 
@@ -706,16 +713,14 @@ public class PoshiRunnerExecutor {
 		Element conditionElement = whileChildElements.get(0);
 		Element thenElement = element.element("then");
 
-		boolean firstFailed = false;
+		boolean conditionRun = false;
 
 		for (int i = 0; i < maxIterations; i++) {
 			if (!evaluateConditionalElement(conditionElement)) {
-				if (i == 0) {
-					firstFailed = true;
-				}
-
 				break;
 			}
+
+			conditionRun = true;
 
 			PoshiRunnerStackTraceUtil.setCurrentElement(thenElement);
 
@@ -726,11 +731,11 @@ public class PoshiRunnerExecutor {
 			XMLLoggerHandler.updateStatus(thenElement, "pass");
 		}
 
-		if (firstFailed) {
-			XMLLoggerHandler.updateStatus(element, "conditional-fail");
+		if (conditionRun) {
+			XMLLoggerHandler.updateStatus(element, "pass");
 		}
 		else {
-			XMLLoggerHandler.updateStatus(element, "pass");
+			XMLLoggerHandler.updateStatus(element, "conditional-fail");
 		}
 	}
 

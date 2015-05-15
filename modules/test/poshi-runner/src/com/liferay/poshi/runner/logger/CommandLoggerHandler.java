@@ -475,6 +475,16 @@ public final class CommandLoggerHandler {
 					errorLinkId + ".jpg");
 	}
 
+	private static void _updateStatus(
+		LoggerElement loggerElement, String status) {
+
+		loggerElement.setAttribute("data-status01", status);
+
+		LoggerUtil.executeJavaScript(
+			"loggerInterface.fire('command-complete', " +
+				loggerElement.getID() + ")");
+	}
+
 	private static int _btnLinkId;
 	private static Element _commandElement;
 	private static final LoggerElement _commandLogLoggerElement =

@@ -78,6 +78,7 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Tina Tian
@@ -92,7 +93,8 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	@Override
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	public void addClusterEventListener(
 		ClusterEventListener clusterEventListener) {
@@ -214,17 +216,7 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 	public void removeClusterEventListener(
 		ClusterEventListener clusterEventListener) {
 
-		if (!isEnabled()) {
-			return;
-		}
-
 		_clusterEventListeners.remove(clusterEventListener);
-	}
-
-	public void setClusterEventListeners(
-		List<ClusterEventListener> clusterEventListeners) {
-
-		_clusterEventListeners.addAllAbsent(clusterEventListeners);
 	}
 
 	@Activate
@@ -526,6 +518,12 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		ClusterChannelFactory clusterChannelFactory) {
 
 		_clusterChannelFactory = clusterChannelFactory;
+	}
+
+	protected void setClusterEventListeners(
+		List<ClusterEventListener> clusterEventListeners) {
+
+		_clusterEventListeners.addAllAbsent(clusterEventListeners);
 	}
 
 	@Reference(unbind = "-")

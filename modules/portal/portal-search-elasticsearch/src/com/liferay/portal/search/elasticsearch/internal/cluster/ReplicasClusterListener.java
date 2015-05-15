@@ -58,7 +58,7 @@ public class ReplicasClusterListener
 		return 0;
 	}
 
-	protected void updateNumberOfReplicas() {
+	protected synchronized void updateNumberOfReplicas() {
 		if (!_replicasClusterContext.isEmbeddedOperationMode()) {
 			return;
 		}

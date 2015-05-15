@@ -43,7 +43,7 @@ public class ReplicasClusterListenerTest {
 		);
 
 		Mockito.when(
-			_replicasClusterContext.getLiferayClusterSize()
+			_replicasClusterContext.getClusterSize()
 		).thenReturn(
 			_REPLICAS + 1
 		);
@@ -67,7 +67,7 @@ public class ReplicasClusterListenerTest {
 	@Test
 	public void testLiferayClusterReportsEmpty() {
 		Mockito.when(
-			_replicasClusterContext.getLiferayClusterSize()
+			_replicasClusterContext.getClusterSize()
 		).thenReturn(
 			0
 		);

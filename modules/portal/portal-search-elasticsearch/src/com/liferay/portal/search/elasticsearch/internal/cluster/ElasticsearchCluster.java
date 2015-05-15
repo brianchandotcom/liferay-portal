@@ -91,15 +91,15 @@ public class ElasticsearchCluster {
 		implements ReplicasClusterContext {
 
 		@Override
-		public String[] getElasticsearchTargetIndexNames() {
-			return ArrayUtil.toStringArray(getCompanyIdsWithActiveIndexes());
-		}
-
-		@Override
-		public int getLiferayClusterSize() {
+		public int getClusterSize() {
 			List<ClusterNode> clusterNodes = _clusterExecutor.getClusterNodes();
 
 			return clusterNodes.size();
+		}
+
+		@Override
+		public String[] getElasticsearchTargetIndexNames() {
+			return ArrayUtil.toStringArray(getCompanyIdsWithActiveIndexes());
 		}
 
 		@Override

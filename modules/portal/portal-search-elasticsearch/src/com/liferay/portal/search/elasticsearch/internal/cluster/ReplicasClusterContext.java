@@ -19,9 +19,9 @@ package com.liferay.portal.search.elasticsearch.internal.cluster;
  */
 public interface ReplicasClusterContext {
 
-	public String[] getElasticsearchTargetIndexNames();
+	public int getClusterSize();
 
-	public int getLiferayClusterSize();
+	public String[] getElasticsearchTargetIndexNames();
 
 	public ReplicasManager getReplicasManager();
 

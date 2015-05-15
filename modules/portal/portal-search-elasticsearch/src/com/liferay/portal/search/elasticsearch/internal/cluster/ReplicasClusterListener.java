@@ -49,8 +49,7 @@ public class ReplicasClusterListener
 	}
 
 	protected int getNumberOfReplicas() {
-		int liferayClusterSize =
-			_replicasClusterContext.getLiferayClusterSize();
+		int liferayClusterSize = _replicasClusterContext.getClusterSize();
 
 		if (liferayClusterSize > 0) {
 			return liferayClusterSize - 1;

@@ -1,5 +1,5 @@
 <definition>
-	<command name="addPG">
+	<command name="add">
 		<if>
 			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
@@ -39,8 +39,8 @@
 		</if>
 	</command>
 
-	<command name="deletePG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="delete">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -50,14 +50,14 @@
 		<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
 		<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 
-		<execute macro="Calendar#deleteCalendarCmd" />
+		<execute macro="Calendar#_deleteCalendar" />
 
 		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#MY_CALENDARS_CALENDAR_ADDITIONAL" />
 		<execute function="AssertTextNotPresent" value1="${user} - ${calendarName}" />
 	</command>
 
-	<command name="tearDownPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="tearDown">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -66,7 +66,7 @@
 			<then>
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
 
-				<execute macro="Calendar#deleteCalendarCmd" />
+				<execute macro="Calendar#_deleteCalendar" />
 			</then>
 		</while>
 
@@ -75,7 +75,7 @@
 			<then>
 				<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
 
-				<execute macro="Calendar#deleteCalendarCmd" />
+				<execute macro="Calendar#_deleteCalendar" />
 			</then>
 		</while>
 
@@ -94,15 +94,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
 	</command>
 
-	<command name="viewDefaultPG">
-		<var name="key_calendarName" value="${calendarName}" />
-		<var name="key_user" value="${user}" />
-
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
-		<execute function="AssertTextNotPresent" value1="${user} - ${calendarName}" />
-	</command>
-
-	<command name="viewPG">
+	<command name="view">
 		<var name="key_calendarName" value="${calendarName}" />
 
 		<if>
@@ -132,5 +124,13 @@
 				</then>
 			</elseif>
 		</if>
+	</command>
+
+	<command name="viewDefault">
+		<var name="key_calendarName" value="${calendarName}" />
+		<var name="key_user" value="${user}" />
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
+		<execute function="AssertTextNotPresent" value1="${user} - ${calendarName}" />
 	</command>
 </definition>

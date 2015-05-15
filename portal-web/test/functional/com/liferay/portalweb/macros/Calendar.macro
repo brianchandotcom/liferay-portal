@@ -1,6 +1,65 @@
 <definition>
-	<command name="addPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="_deleteCalendar">
+		<var name="key_menuListOption" value="Delete" />
+
+		<execute function="AssertClickNoError" locator1="PGCalendar#CALENDAR_MENULIST_OPTION" value1="Delete" />
+
+		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
+	</command>
+
+	<command name="_gotoMenulistOption">
+		<var name="key_menuListOption" value="${menuListOption}" />
+
+		<execute function="AssertClick" locator1="PGCalendar#CALENDAR_MENULIST_OPTION" value1="${menuListOption}" />
+
+		<if>
+			<equals arg1="${menuListOption}" arg2="RSS" />
+			<then>
+				<execute function="SelectWindow#selectPopUp" />
+			</then>
+		</if>
+	</command>
+
+	<command name="_gotoOtherCalendarMenulist">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
+
+		<execute function="Click" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
+	</command>
+
+	<command name="_gotoSiteCalendarMenulist">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${calendarName}" />
+
+		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
+	</command>
+
+	<command name="_viewCalendarHidden">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR" />
+	</command>
+
+	<command name="_viewCalendarSettingsIframe">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#HEADER_TITLE" value1="${calendarName}" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="_viewPermissionsIframe">
+		<execute function="AssertTextEquals" locator1="CalendarPermissions#HEADER_TITLE" value1="${calendarName}" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+	</command>
+
+	<command name="add">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -49,20 +108,8 @@
 		</if>
 	</command>
 
-	<command name="assertDialogBoxPresentCmd">
-		<if>
-			<equals arg1="${schedulerEventDialogBox}" arg2="false" />
-			<then>
-				<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
-			</then>
-			<else>
-				<execute function="AssertSelectedLabel" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_CALENDAR_SELECT" value1="${calendarName}" />
-			</else>
-		</if>
-	</command>
-
-	<command name="changeColorPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="changeColor">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -95,37 +142,27 @@
 	</command>
 
 	<command name="chooseOtherCalendarMenulistOption">
-		<execute macro="Calendar#gotoOtherCalendarMenulistCmd">
+		<execute macro="Calendar#_gotoOtherCalendarMenulist">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 
-		<execute macro="Calendar#gotoMenulistOptionCmd">
+		<execute macro="Calendar#_gotoMenulistOption">
 			<var name="menuListOption" value="${menuListOption}" />
 		</execute>
 	</command>
 
 	<command name="chooseSiteCalendarMenulistOption">
-		<execute macro="Calendar#gotoSiteCalendarMenulistCmd">
+		<execute macro="Calendar#_gotoSiteCalendarMenulist">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 
-		<execute macro="Calendar#gotoMenulistOptionCmd">
+		<execute macro="Calendar#_gotoMenulistOption">
 			<var name="menuListOption" value="${menuListOption}" />
 		</execute>
 	</command>
 
-	<command name="deleteCalendarCmd">
-		<var name="key_menuListOption" value="Delete" />
-
-		<execute function="AssertClickNoError" locator1="PGCalendar#CALENDAR_MENULIST_OPTION" value1="Delete" />
-
-		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
-	</command>
-
-	<command name="deletePG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="delete">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -138,7 +175,7 @@
 				<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 
-				<execute macro="Calendar#deleteCalendarCmd" />
+				<execute macro="Calendar#_deleteCalendar" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
@@ -149,14 +186,14 @@
 					<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${site} - ${calendarName}" />
 					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 
-					<execute macro="Calendar#deleteCalendarCmd" />
+					<execute macro="Calendar#_deleteCalendar" />
 				</then>
 			</elseif>
 		</if>
 	</command>
 
-	<command name="editEmailTemplatePG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="edit">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -169,7 +206,71 @@
 				<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 
-				<execute macro="Calendar#gotoMenulistOptionCmd">
+				<execute macro="Calendar#_gotoMenulistOption">
+					<var name="menuListOption" value="Calendar Settings" />
+				</execute>
+
+				<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
+				<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
+				<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
+				<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+				<execute function="SelectFrame" value1="relative=top" />
+			</then>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
+				<then>
+					<var name="key_calendarName" value="${calendarName}" />
+
+					<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${calendarName}" />
+					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
+
+					<execute macro="Calendar#_gotoMenulistOption">
+						<var name="menuListOption" value="Calendar Settings" />
+					</execute>
+
+					<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
+					<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
+					<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
+					<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+					<execute function="SelectFrame" value1="relative=top" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Other Calendars" />
+				<then>
+					<execute macro="Calendar#chooseOtherCalendarMenulistOption">
+						<var name="calendarName" value="${calendarName}" />
+						<var name="menuListOption" value="Calendar Settings" />
+					</execute>
+
+					<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
+					<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
+					<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
+					<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+
+					<execute function="SelectFrame" value1="relative=top" />
+				</then>
+			</elseif>
+		</if>
+	</command>
+
+	<command name="editEmailTemplate">
+		<execute macro="CalendarNavigation#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<if>
+			<equals arg1="${calendarType}" arg2="My Calendars" />
+			<then>
+				<var name="key_calendarName" value="${calendarName}" />
+				<var name="key_user" value="${user}" />
+
+				<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
+				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
+
+				<execute macro="Calendar#_gotoMenulistOption">
 					<var name="menuListOption" value="Calendar Settings" />
 				</execute>
 			</then>
@@ -182,7 +283,7 @@
 					<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${site} - ${calendarName}" />
 					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
 
-					<execute macro="Calendar#gotoMenulistOptionCmd">
+					<execute macro="Calendar#_gotoMenulistOption">
 						<var name="menuListOption" value="Calendar Settings" />
 					</execute>
 				</then>
@@ -285,72 +386,8 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="editPG">
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<if>
-			<equals arg1="${calendarType}" arg2="My Calendars" />
-			<then>
-				<var name="key_calendarName" value="${calendarName}" />
-				<var name="key_user" value="${user}" />
-
-				<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
-				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
-
-				<execute macro="Calendar#gotoMenulistOptionCmd">
-					<var name="menuListOption" value="Calendar Settings" />
-				</execute>
-
-				<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
-				<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
-				<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
-				<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
-				<then>
-					<var name="key_calendarName" value="${calendarName}" />
-
-					<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${calendarName}" />
-					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_MENULIST_ARROW" />
-
-					<execute macro="Calendar#gotoMenulistOptionCmd">
-						<var name="menuListOption" value="Calendar Settings" />
-					</execute>
-
-					<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
-					<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
-					<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
-					<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-					<execute function="SelectFrame" value1="relative=top" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Other Calendars" />
-				<then>
-					<execute macro="Calendar#chooseOtherCalendarMenulistOption">
-						<var name="calendarName" value="${calendarName}" />
-						<var name="menuListOption" value="Calendar Settings" />
-					</execute>
-
-					<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
-					<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
-					<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
-					<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-
-					<execute function="SelectFrame" value1="relative=top" />
-				</then>
-			</elseif>
-		</if>
-	</command>
-
-	<command name="enableCommentsPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="enableComments">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -361,7 +398,7 @@
 
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-				<execute macro="Calendar#gotoMenulistOptionCmd">
+				<execute macro="Calendar#_gotoMenulistOption">
 					<var name="menuListOption" value="Calendar Settings" />
 				</execute>
 			</then>
@@ -372,7 +409,7 @@
 
 					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-					<execute macro="Calendar#gotoMenulistOptionCmd">
+					<execute macro="Calendar#_gotoMenulistOption">
 						<var name="menuListOption" value="Calendar Settings" />
 					</execute>
 				</then>
@@ -410,8 +447,8 @@
 		</if>
 	</command>
 
-	<command name="enableRatingPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="enableRating">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -422,7 +459,7 @@
 
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-				<execute macro="Calendar#gotoMenulistOptionCmd">
+				<execute macro="Calendar#_gotoMenulistOption">
 					<var name="menuListOption" value="Calendar Settings" />
 				</execute>
 			</then>
@@ -433,7 +470,7 @@
 
 					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-					<execute macro="Calendar#gotoMenulistOptionCmd">
+					<execute macro="Calendar#_gotoMenulistOption">
 						<var name="menuListOption" value="Calendar Settings" />
 					</execute>
 				</then>
@@ -470,8 +507,8 @@
 		</if>
 	</command>
 
-	<command name="enableViewEventDetailsPermissionsPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="enableViewEventDetailsPermissions">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -482,7 +519,7 @@
 
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-				<execute macro="Calendar#gotoMenulistOptionCmd">
+				<execute macro="Calendar#_gotoMenulistOption">
 					<var name="menuListOption" value="Permissions" />
 				</execute>
 			</then>
@@ -493,7 +530,7 @@
 
 					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-					<execute macro="Calendar#gotoMenulistOptionCmd">
+					<execute macro="Calendar#_gotoMenulistOption">
 						<var name="menuListOption" value="Permissions" />
 					</execute>
 				</then>
@@ -519,100 +556,9 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="gotoBusyDayViaSmallCalendar">
-		<execute function="AssertElementPresent" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
-
-		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
-
-		<execute function="Pause" locator1="5000" />
-	</command>
-
-	<command name="gotoConfiguration">
-		<execute macro="Portlet#gotoPortletOptions">
-			<var name="portletName" value="Calendar" />
-			<var name="portletOption" value="Configuration" />
-		</execute>
-
-		<execute function="SelectFrame" locator1="CalendarConfiguration#CALENDAR_CONFIGURATION_IFRAME" />
-	</command>
-
 	<command name="gotoCurrentSiteCalendarsManage">
 		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
 		<execute function="AssertClick" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_MANAGE_CALENDAR" value1="Manage Calendars" />
-	</command>
-
-	<command name="gotoMenulistOptionCmd">
-		<var name="key_menuListOption" value="${menuListOption}" />
-
-		<execute function="AssertClick" locator1="PGCalendar#CALENDAR_MENULIST_OPTION" value1="${menuListOption}" />
-
-		<if>
-			<equals arg1="${menuListOption}" arg2="RSS" />
-			<then>
-				<execute function="SelectWindow#selectPopUp" />
-			</then>
-		</if>
-	</command>
-
-	<command name="gotoMonthViaSmallCalendar">
-
-		<!--
-		To ensure the desired month will always be reached, click "Previous"
-		until it reaches our baseline of February 2015. Then click "Next" until
-		it reaches ${dateMonth}.
-		-->
-
-		<while>
-			<condition function="IsTextNotEqual" locator1="PGCalendar#SMALL_CALENDAR_DATE" value1="February 2015" />
-			<then>
-				<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_PREVIOUS" />
-			</then>
-		</while>
-
-		<while>
-			<condition function="IsTextNotEqual" locator1="PGCalendar#SMALL_CALENDAR_DATE" value1="${dateMonth}" />
-			<then>
-				<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_NEXT" />
-			</then>
-		</while>
-	</command>
-
-	<command name="gotoOtherCalendarMenulistCmd">
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
-
-		<execute function="Click" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
-	</command>
-
-	<command name="gotoPageWindow">
-		<execute function="SelectWindow" locator1="title=${pageName} - Liferay" />
-	</command>
-
-	<command name="gotoSiteCalendarMenulistCmd">
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR" value1="${calendarName}" />
-
-		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_MENULIST_ARROW" value1="${calendarName}" />
-	</command>
-
-	<command name="gotoSpecificBusyDayViaSmallCalendar">
-		<var name="key_dateNumber" value="${dateNumber}" />
-
-		<execute function="AssertElementPresent" locator1="PGCalendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY" />
-
-		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_SPECIFIC_BUSY_DAY" />
-	</command>
-
-	<command name="gotoSpecificDayViaSmallCalendar">
-		<var name="key_dateNumber" value="${dateNumber}" />
-
-		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_SPECIFIC_DAY" />
-
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Day" />
-		</execute>
 	</command>
 
 	<command name="importCalendarFile">
@@ -632,8 +578,8 @@
 		<execute function="AssertTextEquals" locator1="CalendarImport#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="removeViewPermissionsPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="removeViewPermissions">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -644,7 +590,7 @@
 
 				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-				<execute macro="Calendar#gotoMenulistOptionCmd">
+				<execute macro="Calendar#_gotoMenulistOption">
 					<var name="menuListOption" value="Permissions" />
 				</execute>
 			</then>
@@ -655,7 +601,7 @@
 
 					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
 
-					<execute macro="Calendar#gotoMenulistOptionCmd">
+					<execute macro="Calendar#_gotoMenulistOption">
 						<var name="menuListOption" value="Permissions" />
 					</execute>
 				</then>
@@ -685,18 +631,48 @@
 		<execute function="Type" locator1="PGCalendar#OTHER_CALENDARS_SEARCH" value1="${searchValue}" />
 	</command>
 
-	<command name="selectCalendarSettingsIframeCmd">
-		<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
+	<command name="tearDown">
+		<execute macro="CalendarNavigation#gotoView">
+			<var name="viewType" value="Week" />
+		</execute>
+
+		<while>
+			<condition function="IsElementPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
+
+				<execute macro="Calendar#_deleteCalendar" />
+			</then>
+		</while>
+
+		<while>
+			<condition function="IsElementPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
+
+				<execute macro="Calendar#_deleteCalendar" />
+			</then>
+		</while>
+
+		<while>
+			<condition function="IsElementPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
+			<then>
+				<execute function="Click" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC_MENULIST_ARROW" />
+
+				<execute macro="Calendar#_gotoMenulistOption">
+					<var name="menuListOption" value="Hide Calendar" />
+				</execute>
+			</then>
+		</while>
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
+		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_EMPTY_MESSAGE" value1="No calendars selected." />
 	</command>
 
-	<command name="selectPermissionsIframeCmd">
-		<execute function="AssertTextEquals" locator1="CalendarPermissions#PERMISSIONS_TITLE" value1="Permissions" />
-
-		<execute function="SelectFrame" locator1="CalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
-	</command>
-
-	<command name="tearDownColorPG">
-		<execute macro="CalendarEvent#changeViewPG">
+	<command name="tearDownColor">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -712,44 +688,33 @@
 		</if>
 	</command>
 
-	<command name="tearDownPG">
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Week" />
-		</execute>
+	<command name="view">
+		<var name="key_calendarName" value="${calendarName}" />
 
-		<while>
-			<condition function="IsElementPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
+		<if>
+			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
-				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
+				<var name="key_user" value="${user}" />
 
-				<execute macro="Calendar#deleteCalendarCmd" />
+				<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
 			</then>
-		</while>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Site Calendars" />
+				<then>
+					<var name="key_site" value="${site}" />
 
-		<while>
-			<condition function="IsElementPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
-			<then>
-				<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC_MENULIST_ARROW" />
+					<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${site} - ${calendarName}" />
+				</then>
+			</elseif>
+			<elseif>
+				<equals arg1="${calendarType}" arg2="Other Calendars" />
+				<then>
+					<var name="key_calendarName" value="${calendarName}" />
 
-				<execute macro="Calendar#deleteCalendarCmd" />
-			</then>
-		</while>
-
-		<while>
-			<condition function="IsElementPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
-			<then>
-				<execute function="Click" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC_MENULIST_ARROW" />
-
-				<execute macro="Calendar#gotoMenulistOptionCmd">
-					<var name="menuListOption" value="Hide Calendar" />
-				</execute>
-			</then>
-		</while>
-
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
-		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_EMPTY_MESSAGE" value1="No calendars selected." />
+					<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
+				</then>
+			</elseif>
+		</if>
 	</command>
 
 	<command name="viewBusyDaySmallCalendar">
@@ -763,7 +728,7 @@
 	</command>
 
 	<command name="viewCalendarColorPicker">
-		<execute macro="Calendar#gotoOtherCalendarMenulistCmd">
+		<execute macro="Calendar#_gotoOtherCalendarMenulist">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 
@@ -772,32 +737,7 @@
 		<execute function="AssertElementPresent" locator1="PGCalendar#CALENDAR_MENULIST_COLOR_PICKER" />
 	</command>
 
-	<command name="viewCalendarHiddenCmd">
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR" />
-	</command>
-
-	<command name="viewCalendarSettingsIframeCmd">
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#HEADER_TITLE" value1="${calendarName}" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
-
-	<command name="viewColorDefaultPG">
-		<var name="key_color" value="${myCalendarColor}" />
-
-		<if>
-			<equals arg1="${calendarType}" arg2="My Calendars" />
-			<then>
-				<execute function="AssertElementPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
-			</then>
-		</if>
-	</command>
-
-	<command name="viewColorPG">
+	<command name="viewColor">
 		<var name="key_color" value="${myCalendarColor}" />
 
 		<if>
@@ -809,48 +749,31 @@
 		</if>
 	</command>
 
+	<command name="viewColorDefault">
+		<var name="key_color" value="${myCalendarColor}" />
+
+		<if>
+			<equals arg1="${calendarType}" arg2="My Calendars" />
+			<then>
+				<execute function="AssertElementPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_PRIMARY_COLOR_DEFAULT" />
+			</then>
+		</if>
+	</command>
+
 	<command name="viewCurrentSiteCalendarName">
 		<var name="key_site" value="${site}" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_PRIMARY" value1="${site}" />
 	</command>
 
-	<command name="viewDefaultPG">:
+	<command name="viewDefault">:
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR_GENERIC" />
 	</command>
 
-	<command name="viewFirstHourViaScheduler">
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Day" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_FIRST_HOUR" value1="${firstHour}" />
-
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_FIRST_HOUR" value1="${firstHour}" />
-	</command>
-
-	<command name="viewLastHourViaScheduler">
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Day" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_LAST_HOUR" value1="${lastHour}" />
-
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_LAST_HOUR" value1="${lastHour}" />
-	</command>
-
 	<command name="viewMonth">
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
@@ -910,9 +833,9 @@
 			<var name="menuListOption" value="Add Event" />
 		</execute>
 
-		<execute macro="CalendarEvent#selectEventIframeCmd" />
+		<execute macro="CalendarEvent#_selectEventIframe" />
 
-		<execute macro="CalendarEvent#viewNewEventIframeCmd" />
+		<execute macro="CalendarEvent#_viewNewEventIframe" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
 
@@ -925,9 +848,9 @@
 			<var name="menuListOption" value="Calendar Settings" />
 		</execute>
 
-		<execute macro="Calendar#selectCalendarSettingsIframeCmd" />
+		<execute macro="CalendarNavigation#_selectCalendarSettingsIframe" />
 
-		<execute macro="Calendar#viewCalendarSettingsIframeCmd">
+		<execute macro="Calendar#_viewCalendarSettingsIframe">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 
@@ -940,9 +863,9 @@
 			<var name="menuListOption" value="Permissions" />
 		</execute>
 
-		<execute macro="Calendar#selectPermissionsIframeCmd" />
+		<execute macro="CalendarNavigation#_selectPermissionsIframe" />
 
-		<execute macro="Calendar#viewPermissionsIframeCmd">
+		<execute macro="Calendar#_viewPermissionsIframe">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 
@@ -973,7 +896,7 @@
 			<var name="menuListOption" value="Hide Calendar" />
 		</execute>
 
-		<execute macro="Calendar#viewCalendarHiddenCmd">
+		<execute macro="Calendar#_viewCalendarHidden">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 	</command>
@@ -982,41 +905,6 @@
 		<var name="key_calendarName" value="${calendarName}" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />
-	</command>
-
-	<command name="viewPermissionsIframeCmd">
-		<execute function="AssertTextEquals" locator1="CalendarPermissions#HEADER_TITLE" value1="${calendarName}" />
-
-		<execute function="SelectFrameTop" value1="relative=top" />
-	</command>
-
-	<command name="viewPG">
-		<var name="key_calendarName" value="${calendarName}" />
-
-		<if>
-			<equals arg1="${calendarType}" arg2="My Calendars" />
-			<then>
-				<var name="key_user" value="${user}" />
-
-				<execute function="AssertTextEquals" locator1="PGCalendar#MY_CALENDARS_CALENDAR_ADDITIONAL" value1="${user} - ${calendarName}" />
-			</then>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Site Calendars" />
-				<then>
-					<var name="key_site" value="${site}" />
-
-					<execute function="AssertTextEquals" locator1="PGCalendar#CURRENT_SITE_CALENDARS_CALENDAR_ADDITIONAL" value1="${site} - ${calendarName}" />
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${calendarType}" arg2="Other Calendars" />
-				<then>
-					<var name="key_calendarName" value="${calendarName}" />
-
-					<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_CALENDAR" value1="${calendarName}" />
-				</then>
-			</elseif>
-		</if>
 	</command>
 
 	<command name="viewRSSFeedEventNotPresent">
@@ -1038,15 +926,8 @@
 		<execute function="AssertElementPresent" locator1="CalendarRSS#FEED_EVENT_DATES" />
 	</command>
 
-	<command name="viewSelectedSchedulerView">
-		<var method="StringUtil#upperCase(${view})" name="viewUppercase" />
-
-		<execute function="AssertElementPresent" locator1="PGCalendar#VIEW_${viewUppercase}_BUTTON_ACTIVE" />
-		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendar#SCHEDULER_VIEW_${viewUppercase}" />
-	</command>
-
 	<command name="viewSiteCalendarNoMenulistOption">
-		<execute macro="Calendar#gotoSiteCalendarMenulistCmd">
+		<execute macro="Calendar#_gotoSiteCalendarMenulist">
 			<var name="calendarName" value="${calendarName}" />
 		</execute>
 
@@ -1068,7 +949,7 @@
 	</command>
 
 	<command name="viewWeekStartDayViaMonthView">
-		<execute macro="CalendarEvent#changeViewPG">
+		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
@@ -1077,13 +958,5 @@
 
 	<command name="viewWeekStartDayViaSmallCalendar">
 		<execute function="AssertTextEquals" locator1="PGCalendar#SMALL_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
-	</command>
-
-	<command name="viewWeekStartDayViaWeekView">
-		<execute macro="CalendarEvent#changeViewPG">
-			<var name="viewType" value="Week" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>
 </definition>

@@ -937,6 +937,18 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-current-time">
+		<sequential>
+			<local name="current.time" />
+
+			<tstamp>
+				<format property="current.time" pattern="MMMM d, yyyy 'at' hh:mm aa" />
+			</tstamp>
+
+			<echo message="${current.time}" />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="report-test-coverage">
 		<attribute name="test.type" />
 
@@ -1329,14 +1341,6 @@ rerun your task.
 			<arg value="javadoc.output.file.prefix=${output.file.prefix}" />
 			<arg value="javadoc.update=${update}" />
 		</java>
-	</target>
-
-	<target name="print-current-time">
-		<tstamp>
-			<format property="current.time" pattern="MMMM d, yyyy 'at' hh:mm aa" />
-		</tstamp>
-
-		<echo message="${current.time}" />
 	</target>
 
 	<target name="print-properties">

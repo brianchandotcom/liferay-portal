@@ -85,9 +85,6 @@ public class PoshiRunnerExecutor {
 			if (string.contains(substring)) {
 				conditionalValue = true;
 			}
-			else {
-				conditionalValue = false;
-			}
 		}
 		else if (elementName.equals("equals")) {
 			String arg1 = PoshiRunnerVariablesUtil.replaceCommandVars(
@@ -98,18 +95,12 @@ public class PoshiRunnerExecutor {
 			if (arg1.equals(arg2)) {
 				conditionalValue = true;
 			}
-			else {
-				conditionalValue = false;
-			}
 		}
 		else if (elementName.equals("isset")) {
 			if (PoshiRunnerVariablesUtil.containsKeyInCommandMap(
 					element.attributeValue("var"))) {
 
 				conditionalValue = true;
-			}
-			else {
-				conditionalValue = false;
 			}
 		}
 		else if (elementName.equals("or")) {

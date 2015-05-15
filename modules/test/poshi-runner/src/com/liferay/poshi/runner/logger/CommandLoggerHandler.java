@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -38,6 +39,11 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 
 		_failLineGroupLoggerElement(_lineGroupLoggerElement);
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "fail");
 	}
 
 	public static String getCommandLogText() {
@@ -68,6 +74,11 @@ public final class CommandLoggerHandler {
 		}
 
 		_commandElement = null;
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "pass");
 	}
 
 	public static void startCommand(Element element) throws Exception {
@@ -82,6 +93,13 @@ public final class CommandLoggerHandler {
 		_lineGroupLoggerElement = _getLineGroupLoggerElement(element);
 
 		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "pending");
+
+		_linkLoggerElements(xmlLoggerElement);
 	}
 
 	public static void startRunning() throws Exception {

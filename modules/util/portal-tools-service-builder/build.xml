@@ -4,5 +4,14 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
+	<target name="deploy">
+		<deploy module.dir="." />
+
+		<copy
+			file="${plugin.file}"
+			tofile="../../../tools/sdk/dependencies/${plugin.name}/lib/${plugin.name}.${plugin.packaging}"
+		/>
+	</target>
+
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/tools" />
 </project>

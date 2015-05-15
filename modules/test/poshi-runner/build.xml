@@ -6,11 +6,164 @@
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
+	<target name="generate-test-case-method-names-file" depends="prepare-poshi-runner">
+		<java classname="com.liferay.poshi.runner.PoshiRunnerContext" classpath="classes">
+			<classpath refid="plugin.classpath" />
+		</java>
+	</target>
+
 	<target name="prepare-poshi-runner" depends="jar">
 		<echo file="classes/poshi-runner-ext.properties">
 			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
 
 			test.name=${test.name}
+
+			component.names=\
+				extra-apps-content-targeting,\
+				\
+				liferay-connected-services-fix-packs,\
+				liferay-connected-services-known-issues,\
+				liferay-connected-services-notifications,\
+				liferay-connected-services-project-administration,\
+				liferay-connected-services-subscriptions,\
+				liferay-connected-services-user-management,\
+				\
+				marketplace,\
+				marketplace-known-issues,\
+				marketplace-plugins-1-2-1-columns-layouttpl,\
+				marketplace-plugins-1-3-1-columns-layouttpl,\
+				marketplace-plugins-1-3-2-columns-layouttpl,\
+				marketplace-plugins-2-1-2-columns-layouttpl,\
+				marketplace-plugins-3-2-3-columns-layouttpl,\
+				marketplace-plugins-akismet-portlet,\
+				marketplace-plugins-antisamy-hook,\
+				marketplace-plugins-audit-hook,\
+				marketplace-plugins-audit-portlet,\
+				marketplace-plugins-calendar-portlet,\
+				marketplace-plugins-cas-web,\
+				marketplace-plugins-chat-portlet,\
+				marketplace-plugins-ddl-form-portlet,\
+				marketplace-plugins-default-web-content-hook,\
+				marketplace-plugins-documentum-hook,\
+				marketplace-plugins-drools-web,\
+				marketplace-plugins-ehcache-cluster-web,\
+				marketplace-plugins-email-to-mb-filter-hook,\
+				marketplace-plugins-flash-portlet,\
+				marketplace-plugins-google-adsense-portlet,\
+				marketplace-plugins-google-maps-portlet,\
+				marketplace-plugins-ip-geocoder-portlet,\
+				marketplace-plugins-jasperreports-web,\
+				marketplace-plugins-kaleo-designer-portlet,\
+				marketplace-plugins-kaleo-forms-portlet,\
+				marketplace-plugins-kaleo-web,\
+				marketplace-plugins-knowledge-base-portlet,\
+				marketplace-plugins-localization-ja-hook,\
+				marketplace-plugins-localization-zh-hook,\
+				marketplace-plugins-logos-reftagger-portlet,\
+				marketplace-plugins-mail-portlet,\
+				marketplace-plugins-marketplace-portlet,\
+				marketplace-plugins-mb-subscription-manager-portlet,\
+				marketplace-plugins-mongodb-hook,\
+				marketplace-plugins-my-subscriptions-portlet,\
+				marketplace-plugins-netvibes-widget-portlet,\
+				marketplace-plugins-notifications-portlet,\
+				marketplace-plugins-opensocial-portlet,\
+				marketplace-plugins-reports-portlet,\
+				marketplace-plugins-resources-importer-web,\
+				marketplace-plugins-saml-portlet,\
+				marketplace-plugins-scripting-executor-web,\
+				marketplace-plugins-server-manager-web,\
+				marketplace-plugins-sharepoint-hook,\
+				marketplace-plugins-social-bookmarks-hook,\
+				marketplace-plugins-social-networking-portlet,\
+				marketplace-plugins-stocks-portlet,\
+				marketplace-plugins-sync-web,\
+				marketplace-plugins-theme-loader-web,\
+				marketplace-plugins-twitter-portlet,\
+				marketplace-plugins-vimeo-portlet,\
+				marketplace-plugins-vldap-web,\
+				marketplace-plugins-weather-portlet,\
+				marketplace-plugins-web-form-portlet,\
+				marketplace-plugins-welcome-theme,\
+				marketplace-plugins-wiki-navigation-portlet,\
+				marketplace-plugins-wsrp-portlet,\
+				marketplace-plugins-wurfl-web,\
+				marketplace-plugins-wysiwyg-portlet,\
+				marketplace-plugins-youtube-portlet,\
+				marketplace-plugins-zoe-brochure-theme,\
+				marketplace-plugins-zoe-healthcare-theme,\
+				marketplace-plugins-zoe-political-theme,\
+				marketplace-plugins-zoe-resort-theme,\
+				marketplace-plugins-zoe-tech-theme,\
+				\
+				portal-acceptance,\
+				portal-apis,\
+				portal-application-standards,\
+				portal-application-standards-ee,\
+				portal-authentication,\
+				portal-authentication-ee,\
+				portal-breadcrumb,\
+				portal-business-productivity-ee,\
+				portal-calendar,\
+				portal-categories,\
+				portal-collaboration,\
+				portal-configuration,\
+				portal-core-infrastructure-portal-services,\
+				portal-deployment-hsql,\
+				portal-deployment-mysql,\
+				portal-document-management,\
+				portal-document-management-ee,\
+				portal-frameworks,\
+				portal-infrastructure,\
+				portal-integrations,\
+				portal-knowledge-base,\
+				portal-known-issues,\
+				portal-language,\
+				portal-legacy,\
+				portal-opensocial,\
+				portal-operations,\
+				portal-performance-and-fault-tolerance,\
+				portal-permissions,\
+				portal-personalization-and-customization,\
+				portal-plugins-osgi,\
+				portal-portal-services,\
+				portal-rss,\
+				portal-sample-portlet-plugins,\
+				portal-search,\
+				portal-security,\
+				portal-smoke,\
+				portal-social-networking,\
+				portal-staging,\
+				portal-tags,\
+				portal-test-plugins,\
+				portal-testing-infrastructure,\
+				portal-theme-development,\
+				portal-tools,\
+				portal-upgrades,\
+				portal-user-interface,\
+				portal-user-management-and-portal-configuration,\
+				portal-util-misc,\
+				portal-wcd,\
+				portal-wcm,\
+				portal-web-forms-and-data-lists,\
+				portal-workflow,\
+				portal-xsl,\
+				\
+				social-office-activities,\
+				social-office-administration,\
+				social-office-calendar,\
+				social-office-collaboration,\
+				social-office-communication,\
+				social-office-document-management,\
+				social-office-environment,\
+				social-office-known-issues,\
+				social-office-legacy,\
+				social-office-microblogs,\
+				social-office-notifications,\
+				social-office-search,\
+				social-office-upgrades,\
+				social-office-user-information,\
+				social-office-wcm
 		</echo>
 
 		<if>
@@ -66,8 +219,8 @@
 	</target>
 
 	<target name="validate" depends="prepare-poshi-runner">
-	    <java classname="com.liferay.poshi.runner.PoshiRunnerValidation" classpath="classes">
-	    	<classpath refid="plugin.classpath" />
-	    </java>
+		<java classname="com.liferay.poshi.runner.PoshiRunnerValidation" classpath="classes">
+			<classpath refid="plugin.classpath" />
+		</java>
 	</target>
 </project>

@@ -8,47 +8,6 @@
 <tr><td rowspan="1" colspan="3">WikiCompareVersions</td></tr>
 </thead>
 <tbody>
-<tr>
-	<td>IFRAME</td>
-	<td>//iframe[@class='dialog-iframe-node ']</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--NAVIGATION_TAB-->
-<tr>
-	<td>NAVIGATION_TAB_SETUP</td>
-	<td>//li[contains(@class,'tab') and contains(.,'Setup')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_TAB_PERMISSIONS</td>
-	<td>//li[contains(@class,'tab') and contains(.,'Permissions')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_TAB_COMMUNICATION</td>
-	<td>//li[contains(@class,'tab') and contains(.,'Communication')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_TAB_SHARING</td>
-	<td>//li[contains(@class,'tab') and contains(.,'Sharing')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_TAB_SCOPE</td>
-	<td>//li[contains(@class,'tab') and contains(.,'Scope')]/a</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--COMMUNICATION-->
 <tr>
 	<td>COMMUNICATION_SELECT_NODE_ID</td>

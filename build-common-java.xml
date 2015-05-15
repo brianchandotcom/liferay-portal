@@ -21,6 +21,61 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="compile-java">
+		<attribute name="javac.classpathref" />
+		<attribute name="javac.destdir" />
+		<attribute name="javac.srcdir" />
+
+		<sequential>
+			<copy todir="@{javac.destdir}" preservelastmodified="true">
+				<fileset dir="@{javac.srcdir}" excludes="**/*.java" />
+			</copy>
+
+			<if>
+				<equals arg1="${javac.deprecation}" arg2="on" />
+				<then>
+					<record action="start" name="${project.dir}/${ant.project.name}/javac.output.txt" />
+				</then>
+			</if>
+
+			<javac
+				classpathref="@{javac.classpathref}"
+				compiler="${javac.compiler}"
+				debug="${javac.debug}"
+				deprecation="${javac.deprecation}"
+				destdir="@{javac.destdir}"
+				encoding="${javac.encoding}"
+				includeAntRuntime="false"
+				nowarn="${javac.nowarn}"
+				srcdir="@{javac.srcdir}"
+			/>
+
+			<if>
+				<equals arg1="${javac.deprecation}" arg2="on" />
+				<then>
+					<record action="stop" name="${project.dir}/${ant.project.name}/javac.output.txt" />
+
+					<loadfile property="javac.output.txt.content" srcfile="${project.dir}/${ant.project.name}/javac.output.txt" />
+
+					<delete file="${project.dir}/${ant.project.name}/javac.output.txt" />
+
+					<if>
+						<or>
+							<contains string="${javac.output.txt.content}" substring="a deprecated API" />
+							<contains string="${javac.output.txt.content}" substring="[deprecation]" />
+						</or>
+						<then>
+							<echo append="true" file="${project.dir}/javac.output.txt" message="${line.separator}${ant.project.name}${line.separator}" />
+							<echo append="true" file="${project.dir}/javac.output.txt" message="${javac.output.txt.content}" />
+						</then>
+					</if>
+				</then>
+			</if>
+
+			<echo file="@{javac.destdir}/.touch"></echo>
+		</sequential>
+	</macrodef>
+
 	<if>
 		<and>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -85,60 +140,11 @@
 
 		<mkdir dir="classes" />
 
-		<antcall target="compile-java">
-			<param name="javac.classpathref" value="project.classpath" />
-			<param name="javac.destdir" value="classes" />
-			<param name="javac.srcdir" value="src" />
-		</antcall>
-	</target>
-
-	<target name="compile-java">
-		<copy todir="${javac.destdir}" preservelastmodified="true">
-			<fileset dir="${javac.srcdir}" excludes="**/*.java" />
-		</copy>
-
-		<if>
-			<equals arg1="${javac.deprecation}" arg2="on" />
-			<then>
-				<record action="start" name="${project.dir}/${ant.project.name}/javac.output.txt" />
-			</then>
-		</if>
-
-		<javac
-			classpathref="${javac.classpathref}"
-			compiler="${javac.compiler}"
-			debug="${javac.debug}"
-			deprecation="${javac.deprecation}"
-			destdir="${javac.destdir}"
-			encoding="${javac.encoding}"
-			includeAntRuntime="false"
-			nowarn="${javac.nowarn}"
-			srcdir="${javac.srcdir}"
+		<compile-java
+			javac.classpathref="project.classpath"
+			javac.destdir="classes"
+			javac.srcdir="src"
 		/>
-
-		<if>
-			<equals arg1="${javac.deprecation}" arg2="on" />
-			<then>
-				<record action="stop" name="${project.dir}/${ant.project.name}/javac.output.txt" />
-
-				<loadfile property="javac.output.txt.content" srcfile="${project.dir}/${ant.project.name}/javac.output.txt" />
-
-				<delete file="${project.dir}/${ant.project.name}/javac.output.txt" />
-
-				<if>
-					<or>
-						<contains string="${javac.output.txt.content}" substring="a deprecated API" />
-						<contains string="${javac.output.txt.content}" substring="[deprecation]" />
-					</or>
-					<then>
-						<echo append="true" file="${project.dir}/javac.output.txt" message="${line.separator}${ant.project.name}${line.separator}" />
-						<echo append="true" file="${project.dir}/javac.output.txt" message="${javac.output.txt.content}" />
-					</then>
-				</if>
-			</then>
-		</if>
-
-		<echo file="${javac.destdir}/.touch"></echo>
 	</target>
 
 	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">

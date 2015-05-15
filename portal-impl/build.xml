@@ -99,11 +99,11 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<delete file="json-java.zip" />
 
-		<antcall target="compile-java">
-			<param name="javac.classpathref" value="project.classpath" />
-			<param name="javac.destdir" value="${tstamp.value}" />
-			<param name="javac.srcdir" value="${tstamp.value}" />
-		</antcall>
+		<compile-java
+			javac.classpathref="project.classpath"
+			javac.destdir="${tstamp.value}"
+			javac.srcdir="${tstamp.value}"
+		/>
 
 		<zip
 			basedir="${tstamp.value}"
@@ -324,11 +324,11 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<replacefilter token="localhost" value="127.0.0.1" />
 		</replace>
 
-		<antcall target="compile-java">
-			<param name="javac.classpathref" value="project.classpath" />
-			<param name="javac.destdir" value="${tstamp.value}" />
-			<param name="javac.srcdir" value="${tstamp.value}" />
-		</antcall>
+		<compile-java
+			javac.classpathref="project.classpath"
+			javac.destdir="${tstamp.value}"
+			javac.srcdir="${tstamp.value}"
+		/>
 
 		<copy
 			file="${project.dir}/lib/development/selenium-java.jar"

@@ -5,9 +5,6 @@
 
 	<property name="deploy.dir" value="${app.server.lib.support.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
-	<property name="javac.classpathref" value="web.classpath" />
-	<property name="javac.destdir" value="classes" />
-	<property name="javac.srcdir" value="src" />
 	<property name="release.info.version" value="6.2.0" />
 
 	<path id="web-lib.classpath">
@@ -23,7 +20,11 @@
 	</target>
 
 	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
-		<antcall target="compile-java" />
+		<compile-java
+			javac.classpathref="web.classpath"
+			javac.destdir="classes"
+			javac.srcdir="src"
+		/>
 
 		<!--
 		LEP-2995

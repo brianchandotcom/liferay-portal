@@ -458,7 +458,7 @@ public class AssetEntryQuery {
 		_toString = null;
 	}
 
-	public void setListable(boolean listable) {
+	public void setListable(Boolean listable) {
 		_listable = listable;
 	}
 
@@ -703,7 +703,7 @@ public class AssetEntryQuery {
 	private String _keywords;
 	private Layout _layout;
 	private long _linkedAssetEntryId = 0;
-	private boolean _listable = true;
+	private Boolean _listable = true;
 	private long[] _notAllCategoryIds = new long[0];
 	private long[] _notAllTagIds = new long[0];
 	private long[][] _notAllTagIdsArray = new long[0][];

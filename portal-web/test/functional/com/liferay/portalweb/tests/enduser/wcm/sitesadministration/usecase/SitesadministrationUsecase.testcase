@@ -19,7 +19,7 @@
 		<execute macro="UserGroup#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-55444" name="AddOrganizationSitesAndDeactivate" priority="5">
+	<command name="AddOrganizationSitesAndDeactivate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -517,7 +517,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55444" name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="5">
+	<command name="PrivateVirtualHostUrlDoesNotRedirectUserToLoginPage" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 		</execute>
@@ -849,7 +849,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55444" name="SitesDeactivated" priority="3">
+	<command name="SitesDeactivated" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1261,6 +1261,7 @@
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="Site Team Name" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 
@@ -1270,6 +1271,7 @@
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="Site Team Name" />
 			<var name="userNameIsNotFound" value="true" />
 			<var name="userScreenName" value="usersn2" />
 		</execute>
@@ -1383,6 +1385,7 @@
 		</execute>
 
 		<execute macro="Team#assignMembersCP">
+			<var name="teamName" value="Site Team Name" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
 

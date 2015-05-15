@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SITE_ID</td>
-	<td>//input[@id='_165_siteId']</td>
+	<td>//input[contains(@id,'siteId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,7 +36,7 @@
 <!--MEMBERSHIP_OPTIONS-->
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_MANAGEMENT_CHECKBOX</td>
-	<td>//input[@id='_165_manualMembership']</td>
+	<td>//input[contains(@id,'manualMembership')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,7 +47,7 @@
 <!--PARENT_SITE-->
 <tr>
 	<td>PARENT_SITE_LIMIT_MEMBERSHIP_CHECKBOX</td>
-	<td>//input[@id='_165_membershipRestriction']</td>
+	<td>//input[contains(@id,'membershipRestriction')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,7 +63,7 @@
 </tr>
 <tr>
 	<td>MENU_STAGING</td>
-	<td>//a[@id='_165_stagingLink']</td>
+	<td>//a[contains(@id,'stagingLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -74,32 +74,32 @@
 <!--STAGING-->
 <tr>
 	<td>STAGING_NONE</td>
-	<td>//input[@id='_165_none']</td>
+	<td>//input[contains(@id,'none')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_LOCAL_LIVE</td>
-	<td>//input[@id='_165_local']</td>
+	<td>//input[contains(@id,'local')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_REMOTE_LIVE</td>
-	<td>//input[@id='_165_remote']</td>
+	<td>//input[contains(@id,'remote')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_ENABLED_ON_PUBLIC_PAGES_CHECKBOX</td>
-	<td>//input[@id='_165_branchingPublic']</td>
+	<td>//input[contains(@id,'branchingPublic')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_ENABLED_ON_PRIVATE_PAGES_CHECKBOX</td>
-	<td>//input[@id='_165_branchingPrivate']</td>
+	<td>//input[contains(@id,'branchingPrivate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STAGING_CONTENT_CHECKBOX</td>
-	<td>//div[@id="_165_stagedPortlets"]//label[contains(.,'${key_contentName}')]/input</td>
+	<td>//div[contains(@id,'stagedPortlets')]//label[contains(.,'${key_contentName}')]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,22 +110,22 @@
 <!--REMOTE_STAGING-->
 <tr>
 	<td>REMOTE_STAGING_IP</td>
-	<td>//input[@id='_165_remoteAddress']</td>
+	<td>//input[contains(@id,'remoteAddress')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMOTE_STAGING_PORT</td>
-	<td>//input[@id='_165_remotePort']</td>
+	<td>//input[contains(@id,'remotePort')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMOTE_STAGING_PATH_CONTEXT</td>
-	<td>//input[@id='_165_remotePathContext']</td>
+	<td>//input[contains(@id,'remotePathContext')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REMOTE_STAGING_SITE_ID</td>
-	<td>//input[@id='_165_remoteGroupId']</td>
+	<td>//input[contains(@id,'remoteGroupId')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -429,7 +429,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54822" name="DisplayTagUsageStatistics" priority="5">
+	<command name="DisplayTagUsageStatistics" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -615,7 +615,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54822" name="FilterTagsByNameAP" priority="5">
+	<command name="FilterTagsByNameAP" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>

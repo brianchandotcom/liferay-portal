@@ -36,12 +36,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//li[contains(@id,'_125_tabs')]/a[contains(.,'My Profile')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Profile')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_DASHBOARD</td>
-	<td>//li[contains(@id,'_125_tabs')]/a[contains(.,'My Dashboard')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Dashboard')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -52,17 +52,17 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_PAGE</td>
-	<td>//ul[@id='_125_layoutsNav']/li/a[contains(.,'Add Page')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_EXPORT</td>
-	<td>//ul[@id='_125_layoutsNav']/li/a[contains(.,'Export')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_IMPORT</td>
-	<td>//ul[@id='_125_layoutsNav']/li/a[contains(.,'Import')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>

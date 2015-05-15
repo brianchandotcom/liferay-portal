@@ -9,7 +9,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-55444" name="AddChildChildSite" priority="5">
+	<command name="AddChildChildSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -51,7 +51,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55444" name="AddChildSite" priority="5">
+	<command name="AddChildSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -350,7 +350,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55462" name="EditSiteFriendlyURLInvalid" priority="4">
+	<command name="EditSiteFriendlyURLInvalid" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -469,7 +469,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55444" name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
+	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -565,7 +565,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55444" name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
+	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

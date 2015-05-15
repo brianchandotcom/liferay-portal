@@ -237,7 +237,7 @@
 		</for>
 	</command>
 
-	<command known-issues="LPS-55444" name="SitesDynamicTemplateInheritance" priority="4">
+	<command name="SitesDynamicTemplateInheritance" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

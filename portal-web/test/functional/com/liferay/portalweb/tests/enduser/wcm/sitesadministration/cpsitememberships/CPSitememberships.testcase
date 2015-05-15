@@ -209,6 +209,7 @@
 
 		<execute macro="Team#assignMembersCP">
 			<var name="siteName" value="Site Name" />
+			<var name="teamName" value="Site Team Name" />
 			<var name="userFirstName" value="userfn" />
 			<var name="userLastName" value="userln" />
 			<var name="userScreenName" value="usersn" />
@@ -308,7 +309,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55444" name="LimitMembershipParentSite" priority="5">
+	<command name="LimitMembershipParentSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -3111,6 +3111,18 @@ ${custom.properties}</echo>
 			</then>
 		</if>
 
+		<get-testcase-property property.name="delete.jdbc.portal.ext.properties" />
+
+		<if>
+			<equals arg1="${delete.jdbc.portal.ext.properties}" arg2="true" />
+			<then>
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.driverClassName=${database.driver}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.password=${database.password}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.url=${database.url}" value="" />
+				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.username=${database.username}" value="" />
+			</then>
+		</if>
+
 		<if>
 			<equals arg1="${java.security}" arg2="true" />
 			<then>
@@ -3676,6 +3688,42 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
 					database.db2.username=${database.db2.username}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.driver" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.driver=${database.hsql.driver}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.password" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.password=${database.hsql.password}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.url" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.url=${database.hsql.url}
+				</echo>
+			</then>
+		</if>
+
+		<if>
+			<isset property="database.hsql.username" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					database.hsql.username=${database.hsql.username}
 				</echo>
 			</then>
 		</if>
@@ -5233,11 +5281,17 @@ if (ppstate.equals("normal")) {
 
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
+		<get-testcase-property property.name="setup.wizard.enabled" />
+
 		<if>
-			<equals arg1="${database.type}" arg2="hsql" />
+			<or>
+				<equals arg1="${database.type}" arg2="hsql" />
+				<equals arg1="${setup.wizard.enabled}" arg2="true" />
+			</or>
 			<then>
 				<antcall target="rebuild-database" inheritAll="false">
 					<param name="database.type" value="mysql" />
+					<param name="delete.liferay.home" value="false" />
 				</antcall>
 
 				<echo file="portal-impl/classes/portal-ext.properties">liferay.home=${liferay.home}

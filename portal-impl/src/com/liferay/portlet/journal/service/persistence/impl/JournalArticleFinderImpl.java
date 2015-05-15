@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
@@ -116,7 +117,10 @@ public class JournalArticleFinderImpl
 			articleIds = CustomSQLUtil.keywords(keywords, false);
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			contents = CustomSQLUtil.keywords(keywords, false);
+
+			if (PropsValues.JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
+				contents = CustomSQLUtil.keywords(keywords, false);
+			}
 		}
 		else {
 			andOperator = true;
@@ -236,7 +240,10 @@ public class JournalArticleFinderImpl
 			articleIds = CustomSQLUtil.keywords(keywords, false);
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			contents = CustomSQLUtil.keywords(keywords, false);
+
+			if (PropsValues.JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
+				contents = CustomSQLUtil.keywords(keywords, false);
+			}
 		}
 		else {
 			andOperator = true;
@@ -357,7 +364,10 @@ public class JournalArticleFinderImpl
 			articleIds = CustomSQLUtil.keywords(keywords, false);
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			contents = CustomSQLUtil.keywords(keywords, false);
+
+			if (PropsValues.JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
+				contents = CustomSQLUtil.keywords(keywords, false);
+			}
 		}
 		else {
 			andOperator = true;
@@ -526,7 +536,10 @@ public class JournalArticleFinderImpl
 			articleIds = CustomSQLUtil.keywords(keywords, false);
 			titles = CustomSQLUtil.keywords(keywords);
 			descriptions = CustomSQLUtil.keywords(keywords, false);
-			contents = CustomSQLUtil.keywords(keywords, false);
+
+			if (PropsValues.JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT) {
+				contents = CustomSQLUtil.keywords(keywords, false);
+			}
 		}
 		else {
 			andOperator = true;

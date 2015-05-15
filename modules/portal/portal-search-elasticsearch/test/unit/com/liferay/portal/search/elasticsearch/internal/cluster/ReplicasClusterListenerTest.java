@@ -37,7 +37,7 @@ public class ReplicasClusterListenerTest {
 		setMasterExecutor(true);
 
 		Mockito.when(
-			_replicasClusterContext.getElasticsearchTargetIndexNames()
+			_replicasClusterContext.getTargetIndexNames()
 		).thenReturn(
 			_INDICES
 		);

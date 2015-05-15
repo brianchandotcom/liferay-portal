@@ -98,11 +98,6 @@ public class ElasticsearchCluster {
 		}
 
 		@Override
-		public String[] getElasticsearchTargetIndexNames() {
-			return ArrayUtil.toStringArray(getCompanyIdsWithActiveIndexes());
-		}
-
-		@Override
 		public ReplicasManager getReplicasManager() {
 			ElasticsearchConnection elasticsearchConnection =
 				getActiveElasticsearchConnection();
@@ -112,6 +107,11 @@ public class ElasticsearchCluster {
 			AdminClient adminClient = client.admin();
 
 			return new ReplicasManagerImpl(adminClient.indices());
+		}
+
+		@Override
+		public String[] getTargetIndexNames() {
+			return ArrayUtil.toStringArray(getCompanyIdsWithActiveIndexes());
 		}
 
 		@Override

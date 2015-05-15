@@ -69,7 +69,7 @@ public class ReplicasClusterListener
 
 			replicasManager.updateNumberOfReplicas(
 				getNumberOfReplicas(),
-				_replicasClusterContext.getElasticsearchTargetIndexNames());
+				_replicasClusterContext.getTargetIndexNames());
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

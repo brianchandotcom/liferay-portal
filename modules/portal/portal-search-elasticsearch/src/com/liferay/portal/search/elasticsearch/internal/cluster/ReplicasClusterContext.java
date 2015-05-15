@@ -21,9 +21,9 @@ public interface ReplicasClusterContext {
 
 	public int getClusterSize();
 
-	public String[] getElasticsearchTargetIndexNames();
-
 	public ReplicasManager getReplicasManager();
+
+	public String[] getTargetIndexNames();
 
 	public boolean isElasticsearchEmbeddedCluster();
 

@@ -6,6 +6,7 @@
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 	xmlns:sonar="antlib:org.sonar.ant"
 >
+
 	<dirname file="${ant.file.build-common}" property="project.dir.native" />
 
 	<pathconvert property="project.dir" targetos="unix">
@@ -78,6 +79,9 @@
 
 	<taskdef classname="com.tonicsystems.jarjar.JarJarTask" classpath="${project.dir}/lib/development/jarjar.jar" name="jarjar" />
 	<taskdef classname="com.oopsconsultancy.xmltask.ant.XmlTask" classpath="${project.dir}/lib/development/xmltask.jar" name="xmltask" />
+
+	<taskdef classname="com.liferay.ant.logger.LiferayLoggerTask" classpath="${project.dir}/lib/development/com.liferay.ant.logger.jar" name="liferayLogger" />
+	<liferayLogger />
 
 	<import file="build-common-ivy.xml" />
 

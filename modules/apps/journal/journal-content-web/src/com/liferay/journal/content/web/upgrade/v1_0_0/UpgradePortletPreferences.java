@@ -42,7 +42,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	}
 
 	protected String[] upgradeBooleanAssetAddonEntry(
-			String[] selectableEntries, PortletPreferences portletPreferences,
+			String[] assetAddonEntryKeys, PortletPreferences portletPreferences,
 			String preferenceKey)
 		throws Exception {
 
@@ -50,41 +50,41 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			portletPreferences.getValue(preferenceKey, null));
 
 		if (preferenceValue) {
-			selectableEntries = ArrayUtil.append(
-				selectableEntries, preferenceKey);
+			assetAddonEntryKeys = ArrayUtil.append(
+				assetAddonEntryKeys, preferenceKey);
 		}
 
 		portletPreferences.reset(preferenceKey);
 
-		return selectableEntries;
+		return assetAddonEntryKeys;
 	}
 
-	protected void upgradeContentMetadataAssetAddonEntries(
+	protected void upgradeContentMetadataAssetAddonEntryKeys(
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String[] contentMetadataAssetAddonEntries = new String[0];
+		String[] contentMetadataAssetAddonEntryKeys = new String[0];
 
-		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
-			contentMetadataAssetAddonEntries, portletPreferences,
+		contentMetadataAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
+			contentMetadataAssetAddonEntryKeys, portletPreferences,
 			"enableCommentRatings");
-		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
-			contentMetadataAssetAddonEntries, portletPreferences,
+		contentMetadataAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
+			contentMetadataAssetAddonEntryKeys, portletPreferences,
 			"enableComments");
-		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
-			contentMetadataAssetAddonEntries, portletPreferences,
+		contentMetadataAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
+			contentMetadataAssetAddonEntryKeys, portletPreferences,
 			"enableRatings");
-		contentMetadataAssetAddonEntries = upgradeBooleanAssetAddonEntry(
-			contentMetadataAssetAddonEntries, portletPreferences,
+		contentMetadataAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
+			contentMetadataAssetAddonEntryKeys, portletPreferences,
 			"enableRelatedAssets");
 
 		portletPreferences.setValue(
-			"contentMetadataAssetAddonEntries",
-			StringUtil.merge(contentMetadataAssetAddonEntries));
+			"contentMetadataAssetAddonEntryKeys",
+			StringUtil.merge(contentMetadataAssetAddonEntryKeys));
 	}
 
 	protected String[] upgradeMultiValueAssetAddonEntry(
-			String[] selectableEntries, PortletPreferences portletPreferences,
+			String[] assetAddonEntryKeys, PortletPreferences portletPreferences,
 			String preferenceKey, Map<String, String> newPreferenceValues)
 		throws Exception {
 
@@ -97,15 +97,15 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 					preferenceValue);
 
 				if (Validator.isNotNull(newPreferenceValue)) {
-					selectableEntries = ArrayUtil.append(
-						selectableEntries, preferenceKey);
+					assetAddonEntryKeys = ArrayUtil.append(
+						assetAddonEntryKeys, preferenceKey);
 				}
 			}
 		}
 
 		portletPreferences.reset(preferenceKey);
 
-		return selectableEntries;
+		return assetAddonEntryKeys;
 	}
 
 	@Override
@@ -118,20 +118,20 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		upgradeUserToolAssetAddonEntries(portletPreferences);
-		upgradeContentMetadataAssetAddonEntries(portletPreferences);
+		upgradeContentMetadataAssetAddonEntryKeys(portletPreferences);
+		upgradeUserToolAssetAddonEntryKeys(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
 	}
 
-	protected void upgradeUserToolAssetAddonEntries(
+	protected void upgradeUserToolAssetAddonEntryKeys(
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		String[] userToolAssetAddonEntries = new String[0];
+		String[] userToolAssetAddonEntryKeys = new String[0];
 
-		userToolAssetAddonEntries = upgradeBooleanAssetAddonEntry(
-			userToolAssetAddonEntries, portletPreferences, "enablePrint");
+		userToolAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
+			userToolAssetAddonEntryKeys, portletPreferences, "enablePrint");
 
 		Map<String, String> extensions = new HashMap<>();
 
@@ -140,17 +140,17 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 		extensions.put("pdf", "enablePDF");
 		extensions.put("txt", "enableTXT");
 
-		userToolAssetAddonEntries = upgradeMultiValueAssetAddonEntry(
-			userToolAssetAddonEntries, portletPreferences, "extensions",
+		userToolAssetAddonEntryKeys = upgradeMultiValueAssetAddonEntry(
+			userToolAssetAddonEntryKeys, portletPreferences, "extensions",
 			extensions);
 
-		userToolAssetAddonEntries = upgradeBooleanAssetAddonEntry(
-			userToolAssetAddonEntries, portletPreferences,
+		userToolAssetAddonEntryKeys = upgradeBooleanAssetAddonEntry(
+			userToolAssetAddonEntryKeys, portletPreferences,
 			"showAvailableLocales");
 
 		portletPreferences.setValue(
-			"userToolAssetAddonEntries",
-			StringUtil.merge(userToolAssetAddonEntries));
+			"userToolAssetAddonEntryKeys",
+			StringUtil.merge(userToolAssetAddonEntryKeys));
 	}
 
 }

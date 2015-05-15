@@ -309,16 +309,16 @@ public class JournalContentDisplayContext {
 
 		_contentMetadataAssetAddonEntries = new ArrayList<>();
 
-		String contentMetadataAssetAddonEntriesPref =
+		String contentMetadataAssetAddonEntryKeysPref =
 			_portletPreferences.getValue(
-				"contentMetadataAssetAddonEntries", null);
+				"contentMetadataAssetAddonEntryKeys", null);
 
-		if (Validator.isNull(contentMetadataAssetAddonEntriesPref)) {
+		if (Validator.isNull(contentMetadataAssetAddonEntryKeysPref)) {
 			return _contentMetadataAssetAddonEntries;
 		}
 
 		String[] contentMetadataAssetAddonEntryKeys = StringUtil.split(
-			contentMetadataAssetAddonEntriesPref);
+			contentMetadataAssetAddonEntryKeysPref);
 
 		for (String contentMetadataAssetAddonEntryKey :
 				contentMetadataAssetAddonEntryKeys) {
@@ -350,15 +350,15 @@ public class JournalContentDisplayContext {
 
 		_userToolAssetAddonEntries = new ArrayList<>();
 
-		String userToolAssetAddonEntriesPref = _portletPreferences.getValue(
-			"userToolAssetAddonEntries", null);
+		String userToolAssetAddonEntryKeysPref = _portletPreferences.getValue(
+			"userToolAssetAddonEntryKeys", null);
 
-		if (Validator.isNull(userToolAssetAddonEntriesPref)) {
+		if (Validator.isNull(userToolAssetAddonEntryKeysPref)) {
 			return _userToolAssetAddonEntries;
 		}
 
 		String[] userToolAssetAddonEntryKeys = StringUtil.split(
-			userToolAssetAddonEntriesPref);
+			userToolAssetAddonEntryKeysPref);
 
 		for (String userToolAssetAddonEntryKey : userToolAssetAddonEntryKeys) {
 			UserToolAssetAddonEntry userToolAssetAddonEntry =

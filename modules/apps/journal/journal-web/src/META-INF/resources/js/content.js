@@ -227,7 +227,7 @@ AUI.add(
 								groupId: ddm.groupId,
 								refererPortletName: ddm.refererPortletName,
 								showAncestorScopes: true,
-								struts_action: '/dynamic_data_mapping/select_structure',
+								mvcPath: '/select_structure.jsp',
 								title: strings.structures
 							},
 							function(event) {
@@ -270,7 +270,7 @@ AUI.add(
 								refererPortletName: ddm.refererPortletName,
 								showAncestorScopes: true,
 								resourceClassNameId: ddm.resourceClassNameId,
-								struts_action: '/dynamic_data_mapping/select_template',
+								mvcPath: '/select_template.jsp',
 								templateId: ddm.templateId,
 								title: strings.templates
 							},

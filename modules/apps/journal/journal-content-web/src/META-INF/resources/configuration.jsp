@@ -64,7 +64,7 @@ String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 				%>
 
 				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL">
-					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="refererPortletName" value="<%= PortletProviderUtil.getPortletId(JournalArticle.class.getName(), PortletProvider.Action.EDIT) %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(tableIteratorObj.getGroupId()) %>" />

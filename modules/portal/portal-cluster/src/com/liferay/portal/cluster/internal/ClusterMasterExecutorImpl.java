@@ -43,6 +43,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -53,7 +54,8 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	@Override
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	public void addClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
@@ -161,14 +163,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			clusterMasterTokenTransitionListener);
 	}
 
-	public void setClusterMasterTokenTransitionListeners(
-		Set<ClusterMasterTokenTransitionListener>
-			clusterMasterTokenTransitionListeners) {
-
-		_clusterMasterTokenTransitionListeners.addAll(
-			clusterMasterTokenTransitionListeners);
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		if (_clusterEventListener != null) {
@@ -262,9 +256,17 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
 		_clusterExecutor = clusterExecutor;
+	}
+
+	protected void setClusterMasterTokenTransitionListeners(
+		Set<ClusterMasterTokenTransitionListener>
+			clusterMasterTokenTransitionListeners) {
+
+		_clusterMasterTokenTransitionListeners.addAll(
+			clusterMasterTokenTransitionListeners);
 	}
 
 	@Reference(unbind = "-")

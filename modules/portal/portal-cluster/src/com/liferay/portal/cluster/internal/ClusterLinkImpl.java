@@ -45,6 +45,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Shuyang Zhou
@@ -261,7 +262,8 @@ public class ClusterLinkImpl implements ClusterLink {
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
 	)
 	protected void setMessageBus(MessageBus messageBus) {
 		_messageBus = messageBus;

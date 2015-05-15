@@ -625,6 +625,8 @@
 
 		<execute function="UploadCommonFile" locator1="CalendarImport#FILE_FIELD" value1="${calendarFile}" />
 
+		<execute function="ScrollWebElementIntoView" locator1="CalendarImport#IMPORT_BUTTON" />
+
 		<execute function="Click" locator1="CalendarImport#IMPORT_BUTTON" />
 
 		<execute function="AssertTextEquals" locator1="CalendarImport#SUCCESS_MESSAGE" value1="Your request completed successfully." />

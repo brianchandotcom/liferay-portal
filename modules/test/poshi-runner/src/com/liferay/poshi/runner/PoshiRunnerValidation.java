@@ -979,7 +979,8 @@ public class PoshiRunnerValidation {
 	private static void _validateWhileElement(Element element, String filePath)
 		throws Exception {
 
-		_validateHasNoAttributes(element, filePath);
+		_validatePossibleAttributeNames(
+			element, Arrays.asList("line-number", "max-iterations"), filePath);
 		_validateThenElement(element, filePath);
 
 		List<String> conditionTags = Arrays.asList(

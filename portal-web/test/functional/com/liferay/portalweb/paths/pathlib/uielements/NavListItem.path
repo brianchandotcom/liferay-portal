@@ -10,17 +10,17 @@
 <tbody>
 <tr>
 	<td>ADD_BOOKMARK</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Bookmark')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Add Bookmark')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_FOLDER</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Add Folder')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Add Folder')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_SUBFOLDER</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subfolder')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Subfolder')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +65,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Edit')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Edit')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -85,7 +85,7 @@
 </tr>
 <tr>
 	<td>MOVE_TO_THE_RECYCLE_BIN</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -105,7 +105,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Permissions')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>SUBSCRIBE</td>
-	<td>//ul[contains(@id,'_menu')]/li/a[contains(.,'Subscribe')]</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
 <tr>

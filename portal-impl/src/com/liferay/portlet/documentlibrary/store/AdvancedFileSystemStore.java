@@ -119,9 +119,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 			if (path.endsWith(_HOOK_EXTENSION)) {
 				shortFileName = FileUtil.stripExtension(shortFileName);
-
-				itr.set(shortFileName);
 			}
+
+			itr.set(unbuildPath(shortFileName));
 		}
 	}
 
@@ -273,6 +273,32 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	@Override
 	protected String getRootDirName() {
 		return PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR;
+	}
+
+	protected String unbuildPath(String path) {
+		if (path.startsWith("DLFE/")) {
+			path = path.substring(5);
+		}
+
+		if (path.length() <= 2) {
+			return path;
+		}
+
+		String[] fragments = StringUtil.split(path, CharPool.SLASH);
+
+		StringBundler sb = new StringBundler(fragments.length - 1);
+
+		for (int i = 0; i < fragments.length - 1; i++) {
+			sb.append(fragments[i]);
+		}
+
+		String simpleName = fragments[fragments.length - 1];
+
+		if (simpleName.startsWith(sb.toString())) {
+			return simpleName;
+		}
+
+		return path;
 	}
 
 	private static final String _HOOK_EXTENSION = "afsh";

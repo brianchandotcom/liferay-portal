@@ -14,7 +14,14 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.search.elasticsearch.internal.util.LogUtil;
+
+import java.util.concurrent.Future;
+
 import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsRequestBuilder;
+import org.elasticsearch.action.admin.indices.settings.put.UpdateSettingsResponse;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.ImmutableSettings.Builder;
@@ -41,8 +48,23 @@ public class ReplicasManagerImpl implements ReplicasManager {
 
 		updateSettingsRequestBuilder.setSettings(builder);
 
-		updateSettingsRequestBuilder.get();
+		Future<UpdateSettingsResponse> future =
+			updateSettingsRequestBuilder.execute();
+
+		try {
+			UpdateSettingsResponse updateSettingsResponse = future.get();
+
+			LogUtil.logActionResponse(_log, updateSettingsResponse);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to update number of replicas", e);
+			}
+		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ReplicasManagerImpl.class);
 
 	private final IndicesAdminClient _indicesAdminClient;
 

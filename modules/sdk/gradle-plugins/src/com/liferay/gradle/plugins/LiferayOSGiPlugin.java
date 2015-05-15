@@ -25,11 +25,13 @@ import java.util.Properties;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
+import org.dm.gradle.plugins.bundle.JarBuilder;
 
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.internal.Factory;
 
 /**
  * @author Andrea Di Giorgi
@@ -52,9 +54,11 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	@Override
 	protected void applyPlugins(Project project) {
-		super.applyPlugins(project);
-
 		GradleUtil.applyPlugin(project, BundlePlugin.class);
+
+		replaceJarBuilderFactory(project);
+
+		super.applyPlugins(project);
 	}
 
 	protected void configureBundleExtension(Project project) {
@@ -140,6 +144,34 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, BundleExtension.class);
 
 		return (Map<String, String>)bundleExtension.getInstructions();
+	}
+
+	protected void replaceJarBuilderFactory(Project project) {
+		BundleExtension bundleExtension = GradleUtil.getExtension(
+			project, BundleExtension.class);
+
+		bundleExtension.setJarBuilderFactory(
+			new Factory<JarBuilder>() {
+
+				@Override
+				public JarBuilder create() {
+					return new LiferayJarBuilder();
+				}
+
+			});
+	}
+
+	private static class LiferayJarBuilder extends JarBuilder {
+
+		@Override
+		public JarBuilder withResources(Object files) {
+
+			// Prevent BundlePlugin from adding
+			// sourceSets.main.output.classesDir/resourcesDir.
+
+			return this;
+		}
+
 	}
 
 }

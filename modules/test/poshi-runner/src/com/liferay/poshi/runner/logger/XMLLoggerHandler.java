@@ -114,6 +114,10 @@ public final class XMLLoggerHandler {
 		_xmlLogLoggerElement.addChildLoggerElement(headerLoggerElement);
 	}
 
+	public static LoggerElement getXMLLoggerElement(String stackTrace) {
+		return _loggerElements.get(stackTrace);
+	}
+
 	public static String getXMLLogText() {
 		return _xmlLogLoggerElement.toString();
 	}
@@ -127,7 +131,7 @@ public final class XMLLoggerHandler {
 			return;
 		}
 
-		LoggerElement loggerElement = _loggerElements.get(stackTrace);
+		LoggerElement loggerElement = getXMLLoggerElement(stackTrace);
 
 		loggerElement.setAttribute("data-status01", status);
 

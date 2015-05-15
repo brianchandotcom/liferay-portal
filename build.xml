@@ -221,19 +221,26 @@
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-test" target="compile" inheritAll="false" />
 			<ant dir="util-bridges" target="compile" inheritAll="false" />
-			<ant dir="util-java" target="compile" inheritAll="false" />
+
+			<sequential>
+				<ant dir="util-java" target="compile" inheritAll="false" />
+				<ant dir="util-taglib" target="compile" inheritAll="false" />
+			</sequential>
+
 			<ant dir="util-slf4j" target="compile" inheritAll="false" />
 		</parallel>
 
-		<parallel failonany="true" threadcount="${parallel.thread.count}">
-			<ant dir="portal-impl" target="compile" inheritAll="false" />
-			<ant dir="util-taglib" target="compile" inheritAll="false" />
-		</parallel>
+		<ant dir="portal-impl" target="compile" inheritAll="false" />
 
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="portal-pacl" target="compile" inheritAll="false" />
 			<ant dir="portal-test-internal" target="compile" inheritAll="false" />
 			<ant dir="support-tomcat" target="compile" inheritAll="false" />
+
+			<sequential>
+				<ant dir="sql" target="build-db" inheritAll="false" />
+				<ant dir="sql" target="rebuild-hypersonic" inheritAll="false" />
+			</sequential>
 		</parallel>
 
 		<if>
@@ -242,9 +249,6 @@
 				<fail message="Deprecated APIs detected. Please see javac.output.txt for details." />
 			</then>
 		</if>
-
-		<ant dir="sql" target="build-db" inheritAll="false" />
-		<ant dir="sql" target="rebuild-hypersonic" inheritAll="false" />
 
 		<print-current-time />
 	</target>

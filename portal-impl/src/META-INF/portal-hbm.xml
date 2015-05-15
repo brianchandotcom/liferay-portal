@@ -42,7 +42,6 @@
 	<import class="com.liferay.portal.model.Portlet" />
 	<import class="com.liferay.portal.model.PortletItem" />
 	<import class="com.liferay.portal.model.PortletPreferences" />
-	<import class="com.liferay.portal.model.Quartz" />
 	<import class="com.liferay.portal.model.Region" />
 	<import class="com.liferay.portal.model.Release" />
 	<import class="com.liferay.portal.model.Repository" />

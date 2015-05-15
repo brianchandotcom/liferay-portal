@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Scheduler Quartz
+Bundle-SymbolicName: com.liferay.portal.scheduler.quartz
+Bundle-Version: 1.0.0
+Import-Package: \
+	!com.mchange.v2.c3p0.*,\
+	!javax.ejb.*,\
+	!javax.jms.*,\
+	!javax.mail.*,\
+	!javax.transaction.*,\
+	*
+Include-Resource:\
+	classes,\
+	@lib/quartz.jar

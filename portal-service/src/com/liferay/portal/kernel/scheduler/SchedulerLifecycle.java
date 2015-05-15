@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.dependency.ServiceDependencyListener;
@@ -68,8 +69,19 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 
 			});
 
+		Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(objectClass=" +
+				"com.liferay.portal.scheduler.quartz.internal." +
+				"QuartzSchemaManager)");
+
 		serviceDependencyManager.registerDependencies(
-			ClusterMasterExecutor.class, SchedulerEngineHelper.class);
+			new Class[] {
+				ClusterMasterExecutor.class, SchedulerEngineHelper.class
+			},
+			new Filter[] {filter}
+		);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

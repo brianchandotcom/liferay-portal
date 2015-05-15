@@ -36,12 +36,11 @@
 
 	<!-- Util -->
 
+	<bean id="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" class="com.liferay.portal.scheduler.SchedulerEngineHelperImpl">
+		<property name="schedulerEngine" ref="com.liferay.portal.scheduler.ClusterSchedulerEngineService" />
+	</bean>
 	<bean class="com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil">
-		<property name="schedulerEngineHelper">
-			<bean class="com.liferay.portal.scheduler.SchedulerEngineHelperImpl">
-				<property name="schedulerEngine" ref="com.liferay.portal.scheduler.ClusterSchedulerEngineService" />
-			</bean>
-		</property>
+		<property name="schedulerEngineHelper" ref="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" />
 	</bean>
 
 	<!-- Messaging -->

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service.impl;
+package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -20,19 +20,27 @@ import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.service.base.QuartzLocalServiceBaseImpl;
+import com.liferay.portal.kernel.util.InfrastructureUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.io.InputStream;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  */
-public class QuartzLocalServiceImpl extends QuartzLocalServiceBaseImpl {
+@Component(immediate = true, service = QuartzSchemaManager.class)
+public class QuartzSchemaManager {
 
-	@Override
-	public void checkQuartzTables() {
+	@Activate
+	protected void activate() {
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -50,25 +58,64 @@ public class QuartzLocalServiceImpl extends QuartzLocalServiceBaseImpl {
 			}
 		}
 		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+			if (_log.isInfoEnabled()) {
+				_log.info(e, e);
 			}
 		}
 		finally {
 			DataAccess.cleanUp(con, ps, rs);
 		}
 
-		DB db = DBFactoryUtil.getDB();
-
 		try {
-			db.runSQLTemplate("quartz-tables.sql", false);
+			con = DataAccess.getConnection();
+
+			populateSchema(con);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
+		finally {
+			DataAccess.cleanUp(con);
+		}
+	}
+
+	@Reference
+	protected void setInfrastructureUtil(
+		InfrastructureUtil infrastructureUtil) {
+	}
+
+	private void populateSchema(Connection con) throws Exception {
+		InputStream is = getClass().getClassLoader().getResourceAsStream(
+			"/META-INF/sql/quartz-tables.sql");
+
+		if (is == null) {
+			throw new SystemException("Cannot open quartz sql file");
+		}
+
+		String template = StringUtil.read(is);
+
+		DB db = DBFactoryUtil.getDB();
+
+		boolean autoCommit = con.getAutoCommit();
+
+		try {
+			con.setAutoCommit(false);
+
+			db.runSQLTemplateString(con, template, false, false);
+
+			con.commit();
+		}
+		catch (Exception e) {
+			con.rollback();
+
+			throw e;
+		}
+		finally {
+			con.setAutoCommit(autoCommit);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		QuartzLocalServiceImpl.class);
+		QuartzSchemaManager.class);
 
 }

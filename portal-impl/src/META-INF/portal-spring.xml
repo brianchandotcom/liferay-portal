@@ -108,7 +108,6 @@
 	<bean id="com.liferay.portal.service.PortletPreferencesService" class="com.liferay.portal.service.impl.PortletPreferencesServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.PortletPreferencesPersistence" class="com.liferay.portal.service.persistence.impl.PortletPreferencesPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.persistence.PortletPreferencesFinder" class="com.liferay.portal.service.persistence.impl.PortletPreferencesFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.QuartzLocalService" class="com.liferay.portal.service.impl.QuartzLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.RegionService" class="com.liferay.portal.service.impl.RegionServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.RegionPersistence" class="com.liferay.portal.service.persistence.impl.RegionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ReleaseLocalService" class="com.liferay.portal.service.impl.ReleaseLocalServiceImpl" />

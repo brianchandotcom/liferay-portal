@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.quartz;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -44,7 +43,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.scheduler.job.MessageSenderJob;
 import com.liferay.portal.service.PortletLocalServiceUtil;
-import com.liferay.portal.service.QuartzLocalService;
 import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -91,8 +89,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		}
 
 		try {
-			quartzLocalService.checkQuartzTables();
-
 			_persistedScheduler = initializeScheduler(
 				"persisted.scheduler.", true);
 
@@ -1204,9 +1200,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 
 		scheduler.addJob(jobDetail, true);
 	}
-
-	@BeanReference(name = "com.liferay.portal.service.QuartzLocalService")
-	protected QuartzLocalService quartzLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		QuartzSchedulerEngine.class);

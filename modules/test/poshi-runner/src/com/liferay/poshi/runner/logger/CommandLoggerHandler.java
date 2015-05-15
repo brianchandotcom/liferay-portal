@@ -89,8 +89,6 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void stopRunning() throws Exception {
-		_commandLogLoggerElement.addClassName("collapse");
-
 		_xmlLogLoggerElement.removeClassName("running");
 	}
 
@@ -469,8 +467,9 @@ public final class CommandLoggerHandler {
 
 	static {
 		_commandLogLoggerElement.setAttribute("data-logid", "01");
-		_commandLogLoggerElement.setClassName("command-log");
+		_commandLogLoggerElement.setClassName("collapse command-log");
 		_commandLogLoggerElement.setName("ul");
+		_commandLogLoggerElement.setWrittenToLogger(true);
 	}
 
 }

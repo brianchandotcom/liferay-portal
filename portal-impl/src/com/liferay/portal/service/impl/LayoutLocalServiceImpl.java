@@ -3563,8 +3563,8 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	}
 
 	/**
+	 * @throws     PortalException
 	 * @deprecated As of 7.0.0, with no direct replacement
-	 * @throws PortalException
 	 */
 	@Deprecated
 	@Override

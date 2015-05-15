@@ -14,8 +14,7 @@
 
 package com.liferay.portal.kernel.cache.index;
 
-import com.liferay.portal.cache.memory.MemoryPortalCache;
-import com.liferay.portal.cache.test.MockPortalCacheManager;
+import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.concurrent.test.MappedMethodNameCallableInvocationHandler;
@@ -45,10 +44,7 @@ public class PortalCacheIndexerTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_portalCache = new MemoryPortalCache<>(
-			new MockPortalCacheManager<TestIndexedCacheKey, String>(
-				RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(), 10);
+		_portalCache = new TestPortalCache<>(RandomTestUtil.randomString());
 
 		_portalCacheIndexer = new PortalCacheIndexer<>(_portalCache);
 
@@ -118,10 +114,7 @@ public class PortalCacheIndexerTest {
 
 	@Test
 	public void testConstructor() {
-		_portalCache = new MemoryPortalCache<>(
-			new MockPortalCacheManager<TestIndexedCacheKey, String>(
-				RandomTestUtil.randomString()),
-			RandomTestUtil.randomString(), 10);
+		_portalCache = new TestPortalCache<>(RandomTestUtil.randomString());
 
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
 

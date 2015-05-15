@@ -14,10 +14,9 @@
 
 package com.liferay.portal.kernel.cache.transactional;
 
-import com.liferay.portal.cache.memory.MemoryPortalCache;
-import com.liferay.portal.cache.test.MockPortalCacheManager;
 import com.liferay.portal.cache.test.TestCacheListener;
 import com.liferay.portal.cache.test.TestCacheReplicator;
+import com.liferay.portal.cache.test.TestPortalCache;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -66,10 +65,8 @@ public class TransactionalPortalCacheTest {
 
 	@Before
 	public void setUp() {
-		_portalCache = new MemoryPortalCache<String, String>(
-			new MockPortalCacheManager<String, String>(
-				_PORTAL_CACHE_MANAGER_NAME),
-			_PORTAL_CACHE_NAME, 16);
+		_portalCache = new TestPortalCache<>(_PORTAL_CACHE_NAME);
+
 		_transactionalPortalCache = new TransactionalPortalCache<>(
 			_portalCache);
 
@@ -798,9 +795,6 @@ public class TransactionalPortalCacheTest {
 	private static final String _KEY_1 = "KEY_1";
 
 	private static final String _KEY_2 = "KEY_2";
-
-	private static final String _PORTAL_CACHE_MANAGER_NAME =
-		"PORTAL_CACHE_MANAGER_NAME";
 
 	private static final String _PORTAL_CACHE_NAME = "PORTAL_CACHE_NAME";
 

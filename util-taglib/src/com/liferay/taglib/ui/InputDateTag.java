@@ -108,7 +108,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 		_dayValue = 0;
 		_disabled = false;
 		_disableNamespace = false;
-		_firstDayOfWeek = Calendar.SUNDAY - 1;
+		_firstDayOfWeek = Calendar.SUNDAY - 2;
 		_firstEnabledDate = null;
 		_formName = "fm";
 		_lastEnabledDate = null;
@@ -167,7 +167,7 @@ public class InputDateTag extends BaseValidatorTagSupport {
 	private int _dayValue;
 	private boolean _disabled;
 	private boolean _disableNamespace;
-	private int _firstDayOfWeek = Calendar.SUNDAY - 1;
+	private int _firstDayOfWeek = Calendar.SUNDAY - 2;
 	private Date _firstEnabledDate;
 	private String _formName = "fm";
 	private Date _lastEnabledDate;

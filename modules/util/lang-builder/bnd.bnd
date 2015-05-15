@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Lang Builder
 Bundle-SymbolicName: com.liferay.lang.builder
 Bundle-Version: 1.0.1
+Import-Package:\
+	!org.apache.tools.ant.*,\
+	*
 Include-Resource:\
 	classes,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

@@ -19,25 +19,27 @@
 		</clean-common>
 	</target>
 
-	<target name="compile" depends="check-compile-uptodate" unless="${compile.uptodate}">
+	<target name="compile">
 		<compile-java
 			javac.classpathref="web.classpath"
 			javac.destdir="classes"
-			javac.srcdir="src"
-		/>
+			javac.srcdir="src">
+			<post-compile>
 
-		<!--
-		LEP-2995
-		-->
+				<!--
+				LEP-2995
+				-->
 
-		<mkdir dir="classes/com/liferay/portal/security/jaas" />
+				<mkdir dir="classes/com/liferay/portal/security/jaas" />
 
-		<copy todir="classes/com/liferay/portal/security/jaas" preservelastmodified="true">
-			<fileset
-				dir="${portal-impl.classes.dir}/com/liferay/portal/security/jaas"
-				includes="PortalPrincipal.class,PortalRole.class"
-			/>
-		</copy>
+				<copy todir="classes/com/liferay/portal/security/jaas" preservelastmodified="true">
+					<fileset
+						dir="${portal-impl.classes.dir}/com/liferay/portal/security/jaas"
+						includes="PortalPrincipal.class,PortalRole.class"
+					/>
+				</copy>
+			</post-compile>
+		</compile-java>
 	</target>
 
 	<target name="deploy">

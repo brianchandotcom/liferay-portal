@@ -31,6 +31,9 @@ public class PropsValues {
 	public static final String CLUSTER_NODE_2 = PropsUtil.get(
 		"cluster.node2");
 
+	public static final String COMPONENT_NAMES = PropsUtil.get(
+		"component.names");
+
 	public static final String EMAIL_ADDRESS_1 = PropsUtil.get(
 		"email.address.1");
 

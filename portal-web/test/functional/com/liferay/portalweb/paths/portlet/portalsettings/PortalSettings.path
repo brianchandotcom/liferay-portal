@@ -75,7 +75,7 @@
 </tr>
 <tr>
 	<td>TICKER_SYMBOL_FIELD</td>
-	<td>//input[@contains(@id,'tickerSymbol')]</td>
+	<td>//input[contains(@id,'tickerSymbol')]</td>
 	<td></td>
 </tr>
 <tr>

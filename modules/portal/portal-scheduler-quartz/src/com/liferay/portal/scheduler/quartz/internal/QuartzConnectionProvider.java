@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.quartz;
+package com.liferay.portal.scheduler.quartz.internal;
 
-import com.liferay.portal.dao.shard.ShardDataSourceTargetSource;
+import com.liferay.portal.kernel.dao.shard.ShardTargetSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
@@ -35,8 +35,8 @@ public class QuartzConnectionProvider implements ConnectionProvider {
 		Connection con = null;
 
 		try {
-			ShardDataSourceTargetSource shardDataSourceTargetSource =
-				(ShardDataSourceTargetSource)
+			ShardTargetSource shardDataSourceTargetSource =
+				(ShardTargetSource)
 					InfrastructureUtil.getShardDataSourceTargetSource();
 
 			if (shardDataSourceTargetSource != null) {

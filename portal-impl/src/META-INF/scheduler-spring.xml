@@ -45,11 +45,6 @@
 
 	<!-- Messaging -->
 
-	<bean id="messageListener.scheduler_engine" class="com.liferay.portal.kernel.messaging.proxy.ProxyMessageListener">
-		<property name="manager">
-			<bean class="com.liferay.portal.scheduler.quartz.QuartzSchedulerEngine" />
-		</property>
-	</bean>
 	<bean id="messageListener.scheduler_scripting" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
 			<bean class="com.liferay.portal.scheduler.messaging.ScriptingMessageListener" />
@@ -80,11 +75,6 @@
 		</property>
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/scheduler_engine">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.scheduler_engine" />
-					</list>
-				</entry>
 				<entry key="liferay/scheduler_scripting">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.scheduler_scripting" />

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTHENTICATION</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Authentication')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIZATION</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Categorization')]</td>
 	<td></td>
@@ -41,6 +46,11 @@
 <tr>
 	<td>COMMENTS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_SHARING</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Content Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -69,6 +79,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EMAIL_NOTIFICATIONS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Email Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Javascript')]</td>
 	<td></td>
@@ -76,6 +96,11 @@
 <tr>
 	<td>LOOK_AND_FEEL</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Look and Feel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIL_HOST_NAMES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mail Host Names')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,6 +134,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Roles')]</td>
 	<td></td>
@@ -134,55 +164,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--MENU_CONFIGURATION-->
-<tr>
-	<td>CONFIGURATION_GENERAL</td>
-	<td>//a[contains(@id,'generalLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_AUTHENTICATION</td>
-	<td>//a[contains(@id,'authenticationLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_USERS</td>
-	<td>//a[contains(@id,'usersLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_MAIL_HOST_NAMES</td>
-	<td>//a[contains(@id,'mailHostNamesLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_EMAIL_NOTIFICATIONS</td>
-	<td>//a[contains(@id,'emailNotificationsLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_CONTENT_SHARING</td>
-	<td>//a[contains(@id,'contentSharingLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CONFIGURATION_RECYCLE_BIN</td>
-	<td>//a[contains(@id,'recycleBinLink')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--MENU_MISCELLANEOUS-->
-<tr>
-	<td>DISPLAY_SETTINGS</td>
-	<td>//a[contains(@id,'displaySettingsLink')]</td>
+	<td>USERS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 </tbody>

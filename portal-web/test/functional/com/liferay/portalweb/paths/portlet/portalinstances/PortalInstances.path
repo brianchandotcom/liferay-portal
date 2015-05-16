@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ADD</td>
-	<td>//button[contains(.,'Add')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

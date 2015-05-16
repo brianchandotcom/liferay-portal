@@ -19,9 +19,8 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Tomas Polesovsky
@@ -43,7 +42,7 @@ public class StripDoctypeXMLReaderTest {
 
 			String result = new String(buff, 0, length);
 
-			Assert.assertEquals(result, _SANITIZED_XML[i]);
+			Assert.assertEquals(_SANITIZED_XML[i], result);
 		}
 	}
 
@@ -63,7 +62,7 @@ public class StripDoctypeXMLReaderTest {
 
 			String result = new String(chars, 0, length);
 
-			Assert.assertEquals(result, _SANITIZED_XML[i]);
+			Assert.assertEquals(_SANITIZED_XML[i], result);
 		}
 	}
 

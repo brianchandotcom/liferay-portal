@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StreamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -1743,15 +1744,37 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 		throws PortalException {
 
 		if (Validator.isNull(title)) {
-			throw new EventTitleException();
+			throw new EventTitleException("Title is null");
 		}
 
 		if (!Validator.isDate(startDateMonth, startDateDay, startDateYear)) {
-			throw new EventStartDateException();
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("Invalid date for {title=");
+			sb.append(title);
+			sb.append(", startDateMonth=");
+			sb.append(startDateMonth);
+			sb.append(", startDateDay=");
+			sb.append(startDateMonth);
+			sb.append(", startDateYear=");
+			sb.append(startDateYear);
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			throw new EventStartDateException(sb.toString());
 		}
 
 		if (!allDay && (durationHour <= 0) && (durationMinute <= 0)) {
-			throw new EventDurationException();
+			StringBundler sb = new StringBundler(7);
+
+			sb.append("Invalid date for {title=");
+			sb.append(title);
+			sb.append(", durationHour=");
+			sb.append(durationHour);
+			sb.append(", durationMinute=");
+			sb.append(durationMinute);
+			sb.append(StringPool.CLOSE_BRACKET);
+
+			throw new EventDurationException(sb.toString());
 		}
 
 		Calendar startDate = CalendarFactoryUtil.getCalendar(
@@ -1761,7 +1784,14 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			Calendar until = recurrence.getUntil();
 
 			if ((until != null) && startDate.after(until)) {
-				throw new EventEndDateException();
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Start date time ");
+				sb.append(startDate.getTimeInMillis());
+				sb.append(" must be before recurrence end date time ");
+				sb.append(until.getTimeInMillis());
+
+				throw new EventEndDateException(sb.toString());
 			}
 		}
 	}

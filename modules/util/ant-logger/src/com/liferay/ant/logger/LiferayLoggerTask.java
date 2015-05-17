@@ -41,8 +41,8 @@ public class LiferayLoggerTask extends Task {
 			return;
 		}
 
-		currentProject.addBuildListener(new LiferayBuildLogger(
-			(DefaultLogger)defaultLogger));
+		currentProject.addBuildListener(
+			new LiferayBuildLogger((DefaultLogger)defaultLogger));
 		currentProject.removeBuildListener((BuildListener)defaultLogger);
 
 		BuildListener buildListener;
@@ -62,53 +62,13 @@ public class LiferayLoggerTask extends Task {
 		}
 
 		@Override
-		public void setMessageOutputLevel(int i) {
-			_defaultLogger.setMessageOutputLevel(i);
-		}
-
-		@Override
-		public void setOutputPrintStream(PrintStream stream) {
-			_defaultLogger.setOutputPrintStream(stream);
-		}
-
-		@Override
-		public void setEmacsMode(boolean bln) {
-			_defaultLogger.setEmacsMode(bln);
-		}
-
-		@Override
-		public void setErrorPrintStream(PrintStream stream) {
-			_defaultLogger.setErrorPrintStream(stream);
-		}
-
-		@Override
-		public void buildStarted(BuildEvent be) {
-			_defaultLogger.buildStarted(be);
-		}
-
-		@Override
 		public void buildFinished(BuildEvent be) {
 			_defaultLogger.buildFinished(be);
 		}
 
 		@Override
-		public void targetStarted(BuildEvent be) {
-			_defaultLogger.targetStarted(be);
-		}
-
-		@Override
-		public void targetFinished(BuildEvent be) {
-			_defaultLogger.targetFinished(be);
-		}
-
-		@Override
-		public void taskStarted(BuildEvent be) {
-			_defaultLogger.taskStarted(be);
-		}
-
-		@Override
-		public void taskFinished(BuildEvent be) {
-			_defaultLogger.taskFinished(be);
+		public void buildStarted(BuildEvent be) {
+			_defaultLogger.buildStarted(be);
 		}
 
 		@Override
@@ -122,7 +82,48 @@ public class LiferayLoggerTask extends Task {
 			_defaultLogger.messageLogged(be);
 		}
 
+		@Override
+		public void setEmacsMode(boolean bln) {
+			_defaultLogger.setEmacsMode(bln);
+		}
+
+		@Override
+		public void setErrorPrintStream(PrintStream stream) {
+			_defaultLogger.setErrorPrintStream(stream);
+		}
+
+		@Override
+		public void setMessageOutputLevel(int i) {
+			_defaultLogger.setMessageOutputLevel(i);
+		}
+
+		@Override
+		public void setOutputPrintStream(PrintStream stream) {
+			_defaultLogger.setOutputPrintStream(stream);
+		}
+
+		@Override
+		public void targetFinished(BuildEvent be) {
+			_defaultLogger.targetFinished(be);
+		}
+
+		@Override
+		public void targetStarted(BuildEvent be) {
+			_defaultLogger.targetStarted(be);
+		}
+
+		@Override
+		public void taskFinished(BuildEvent be) {
+			_defaultLogger.taskFinished(be);
+		}
+
+		@Override
+		public void taskStarted(BuildEvent be) {
+			_defaultLogger.taskStarted(be);
+		}
+
 		private final DefaultLogger _defaultLogger;
 
 	}
+
 }

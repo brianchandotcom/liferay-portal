@@ -16,7 +16,7 @@ package com.liferay.ant.logger;
 
 import java.io.PrintStream;
 
-import java.util.Vector;
+import java.util.List;
 
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
@@ -33,7 +33,7 @@ public class LiferayLoggerTask extends Task {
 	public void execute() {
 		Project currentProject = getProject();
 
-		Vector buildListeners = currentProject.getBuildListeners();
+		List<BuildListener> buildListeners = currentProject.getBuildListeners();
 
 		Object defaultLogger = buildListeners.get(0);
 

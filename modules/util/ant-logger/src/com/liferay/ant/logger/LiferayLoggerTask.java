@@ -55,7 +55,7 @@ public class LiferayLoggerTask extends Task {
 			String message = be.getMessage();
 
 			if (message.startsWith("Trying to override old definition of ")) {
-				return;
+				be.setMessage(message, Project.MSG_DEBUG);
 			}
 
 			_buildListener.messageLogged(be);

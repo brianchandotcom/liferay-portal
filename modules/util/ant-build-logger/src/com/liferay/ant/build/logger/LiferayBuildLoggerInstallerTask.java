@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.ant.logger;
+package com.liferay.ant.build.logger;
 
 import java.lang.reflect.Field;
 
@@ -27,7 +27,7 @@ import org.apache.tools.ant.Task;
  * @author William Newbury
  * @author Shuyang Zhou
  */
-public class LiferayLoggerTask extends Task {
+public class LiferayBuildLoggerInstallerTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {

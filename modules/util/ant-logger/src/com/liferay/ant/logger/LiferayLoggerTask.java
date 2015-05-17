@@ -16,6 +16,8 @@ package com.liferay.ant.logger;
 
 import java.io.PrintStream;
 
+import java.util.Vector;
+
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.DefaultLogger;

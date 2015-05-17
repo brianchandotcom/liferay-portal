@@ -16,7 +16,7 @@ package com.liferay.portlet.asset.service;
 
 import com.liferay.portlet.blogs.util.BlogsIndexer;
 
-import org.testng.Assert;
+import org.junit.Assert;
 
 /**
  * @author Michael C. Han

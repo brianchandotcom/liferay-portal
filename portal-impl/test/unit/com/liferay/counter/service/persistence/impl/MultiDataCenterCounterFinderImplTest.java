@@ -14,9 +14,8 @@
 
 package com.liferay.counter.service.persistence.impl;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Michael C. Han

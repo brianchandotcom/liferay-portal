@@ -18,9 +18,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Marcellus Tavares
@@ -32,7 +31,7 @@ public class LocalizedValueTest {
 		Value value1 = new LocalizedValue(LocaleUtil.US);
 		Value value2 = new LocalizedValue(LocaleUtil.BRAZIL);
 
-		Assert.assertFalse(value1.equals(value2));
+		Assert.assertNotEquals(value1, value2);
 	}
 
 	@Test
@@ -47,7 +46,7 @@ public class LocalizedValueTest {
 		value2.addString(LocaleUtil.US, "Different Test");
 		value2.addString(LocaleUtil.BRAZIL, "Teste");
 
-		Assert.assertFalse(value1.equals(value2));
+		Assert.assertNotEquals(value1, value2);
 	}
 
 	@Test
@@ -62,7 +61,7 @@ public class LocalizedValueTest {
 		value2.addString(LocaleUtil.US, "Test");
 		value2.addString(LocaleUtil.BRAZIL, "Teste");
 
-		Assert.assertTrue(value1.equals(value2));
+		Assert.assertEquals(value1, value2);
 	}
 
 }

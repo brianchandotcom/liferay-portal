@@ -54,7 +54,7 @@ public class LiferayLoggerTask extends Task {
 		public void messageLogged(BuildEvent be) {
 			String message = be.getMessage();
 
-			if (message.startsWith("Trying to override")) {
+			if (message.startsWith("Trying to override old definition of ")) {
 				return;
 			}
 

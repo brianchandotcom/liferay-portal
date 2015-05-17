@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.quartz;
+package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;

@@ -18,8 +18,10 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
+import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
@@ -60,7 +62,20 @@ public class MultiVMEhcachePortalCacheManager
 		setMpiOnly(true);
 		setName(PortalCacheManagerNames.MULTI_VM);
 
-		initialize();
+		Thread thread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
+
+		ClassLoaderUtil.setContextClassLoader(
+			AggregateClassLoader.getAggregateClassLoader(
+				contextClassLoader, getClass().getClassLoader()));
+
+		try {
+			initialize();
+		}
+		finally {
+			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Deactivate

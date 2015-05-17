@@ -47,7 +47,7 @@ import org.junit.Test;
 /**
  * @author Shuyang Zhou
  */
-public class DefaultDynamicDataSourceAdviceTest {
+public class DynamicDataSourceAdviceTest {
 
 	@ClassRule
 	public static final CodeCoverageAssertor codeCoverageAssertor =
@@ -61,7 +61,7 @@ public class DefaultDynamicDataSourceAdviceTest {
 			new DefaultDynamicDataSourceTargetSource();
 
 		ClassLoader classLoader =
-			DefaultDynamicDataSourceAdviceTest.class.getClassLoader();
+			DynamicDataSourceAdviceTest.class.getClassLoader();
 
 		InvocationHandler invocationHandler = new InvocationHandler() {
 

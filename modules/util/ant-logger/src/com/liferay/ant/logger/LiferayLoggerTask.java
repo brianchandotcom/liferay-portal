@@ -14,8 +14,6 @@
 
 package com.liferay.ant.logger;
 
-import java.io.PrintStream;
-
 import org.apache.tools.ant.BuildEvent;
 import org.apache.tools.ant.BuildListener;
 import org.apache.tools.ant.DefaultLogger;
@@ -35,25 +33,25 @@ public class LiferayLoggerTask extends Task {
 			if (buildListener.getClass() == DefaultLogger.class) {
 				currentProject.removeBuildListener(buildListener);
 				currentProject.addBuildListener(
-					new LiferayBuildLogger((DefaultLogger)buildListener));
+					new LiferayBuildLogger(buildListener));
 			}
 		}
 	}
 
-	private class LiferayBuildLogger extends DefaultLogger {
+	private class LiferayBuildLogger implements BuildListener {
 
-		public LiferayBuildLogger(DefaultLogger defaultLogger) {
-			_defaultLogger = defaultLogger;
+		public LiferayBuildLogger(BuildListener buildListener) {
+			_buildListener = buildListener;
 		}
 
 		@Override
 		public void buildFinished(BuildEvent be) {
-			_defaultLogger.buildFinished(be);
+			_buildListener.buildFinished(be);
 		}
 
 		@Override
 		public void buildStarted(BuildEvent be) {
-			_defaultLogger.buildStarted(be);
+			_buildListener.buildStarted(be);
 		}
 
 		@Override
@@ -64,50 +62,30 @@ public class LiferayLoggerTask extends Task {
 				return;
 			}
 
-			_defaultLogger.messageLogged(be);
-		}
-
-		@Override
-		public void setEmacsMode(boolean bln) {
-			_defaultLogger.setEmacsMode(bln);
-		}
-
-		@Override
-		public void setErrorPrintStream(PrintStream stream) {
-			_defaultLogger.setErrorPrintStream(stream);
-		}
-
-		@Override
-		public void setMessageOutputLevel(int i) {
-			_defaultLogger.setMessageOutputLevel(i);
-		}
-
-		@Override
-		public void setOutputPrintStream(PrintStream stream) {
-			_defaultLogger.setOutputPrintStream(stream);
+			_buildListener.messageLogged(be);
 		}
 
 		@Override
 		public void targetFinished(BuildEvent be) {
-			_defaultLogger.targetFinished(be);
+			_buildListener.targetFinished(be);
 		}
 
 		@Override
 		public void targetStarted(BuildEvent be) {
-			_defaultLogger.targetStarted(be);
+			_buildListener.targetStarted(be);
 		}
 
 		@Override
 		public void taskFinished(BuildEvent be) {
-			_defaultLogger.taskFinished(be);
+			_buildListener.taskFinished(be);
 		}
 
 		@Override
 		public void taskStarted(BuildEvent be) {
-			_defaultLogger.taskStarted(be);
+			_buildListener.taskStarted(be);
 		}
 
-		private final DefaultLogger _defaultLogger;
+		private final BuildListener _buildListener;
 
 	}
 

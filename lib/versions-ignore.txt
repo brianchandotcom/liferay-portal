@@ -1,4 +1,5 @@
 lib/development/com.liferay.ant.bnd.jar
+lib/development/com.liferay.ant.build.logger.jar
 lib/development/com.liferay.tld.formatter.jar
 lib/development/com.liferay.whip.jar
 lib/development/liferay-doclet.jar

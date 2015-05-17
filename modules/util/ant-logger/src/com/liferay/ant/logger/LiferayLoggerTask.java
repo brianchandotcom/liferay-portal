@@ -40,10 +40,6 @@ public class LiferayLoggerTask extends Task {
 
 	private class LiferayBuildLogger implements BuildListener {
 
-		public LiferayBuildLogger(BuildListener buildListener) {
-			_buildListener = buildListener;
-		}
-
 		@Override
 		public void buildFinished(BuildEvent be) {
 			_buildListener.buildFinished(be);
@@ -83,6 +79,10 @@ public class LiferayLoggerTask extends Task {
 		@Override
 		public void taskStarted(BuildEvent be) {
 			_buildListener.taskStarted(be);
+		}
+
+		private LiferayBuildLogger(BuildListener buildListener) {
+			_buildListener = buildListener;
 		}
 
 		private final BuildListener _buildListener;

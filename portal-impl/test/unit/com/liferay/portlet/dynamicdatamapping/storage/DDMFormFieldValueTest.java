@@ -18,9 +18,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Marcellus Tavares
@@ -35,7 +34,7 @@ public class DDMFormFieldValueTest extends BaseDDMTestCase {
 		DDMFormFieldValue ddmFormFieldValue2 = createDDMFormFieldValue(
 			StringUtil.randomString(), "Test", new UnlocalizedValue("Value"));
 
-		Assert.assertFalse(ddmFormFieldValue1.equals(ddmFormFieldValue2));
+		Assert.assertNotEquals(ddmFormFieldValue1, ddmFormFieldValue2);
 	}
 
 	@Test
@@ -46,7 +45,7 @@ public class DDMFormFieldValueTest extends BaseDDMTestCase {
 		DDMFormFieldValue ddmFormFieldValue2 = createDDMFormFieldValue(
 			"xhsy", StringUtil.randomString(), new UnlocalizedValue("Value"));
 
-		Assert.assertFalse(ddmFormFieldValue1.equals(ddmFormFieldValue2));
+		Assert.assertNotEquals(ddmFormFieldValue1, ddmFormFieldValue2);
 	}
 
 	@Test
@@ -66,7 +65,7 @@ public class DDMFormFieldValueTest extends BaseDDMTestCase {
 				"jamy", "Nested",
 				new UnlocalizedValue("Different Nested Value")));
 
-		Assert.assertFalse(ddmFormFieldValue1.equals(ddmFormFieldValue2));
+		Assert.assertNotEquals(ddmFormFieldValue1, ddmFormFieldValue2);
 	}
 
 	@Test
@@ -77,7 +76,7 @@ public class DDMFormFieldValueTest extends BaseDDMTestCase {
 		DDMFormFieldValue ddmFormFieldValue2 = createDDMFormFieldValue(
 			"xhsy", "Test", new UnlocalizedValue("Different Value"));
 
-		Assert.assertFalse(ddmFormFieldValue1.equals(ddmFormFieldValue2));
+		Assert.assertNotEquals(ddmFormFieldValue1, ddmFormFieldValue2);
 	}
 
 	@Test
@@ -96,7 +95,7 @@ public class DDMFormFieldValueTest extends BaseDDMTestCase {
 			createDDMFormFieldValue(
 				"jamy", "Nested", new UnlocalizedValue("Nested Value")));
 
-		Assert.assertTrue(ddmFormFieldValue1.equals(ddmFormFieldValue2));
+		Assert.assertEquals(ddmFormFieldValue1, ddmFormFieldValue2);
 	}
 
 }

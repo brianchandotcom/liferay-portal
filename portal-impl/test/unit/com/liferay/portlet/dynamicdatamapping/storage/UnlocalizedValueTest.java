@@ -18,9 +18,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.UnlocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Marcellus Tavares
@@ -32,7 +31,7 @@ public class UnlocalizedValueTest {
 		Value value1 = new UnlocalizedValue(StringUtil.randomString());
 		Value value2 = new UnlocalizedValue(StringUtil.randomString());
 
-		Assert.assertFalse(value1.equals(value2));
+		Assert.assertNotEquals(value1, value2);
 	}
 
 	@Test
@@ -42,7 +41,7 @@ public class UnlocalizedValueTest {
 		Value value1 = new UnlocalizedValue(valueString);
 		Value value2 = new UnlocalizedValue(valueString);
 
-		Assert.assertTrue(value1.equals(value2));
+		Assert.assertEquals(value1, value2);
 	}
 
 }

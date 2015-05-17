@@ -33,6 +33,7 @@
 	<classpathentry kind="lib" path="lib/development/catalina.jar"/>
 	<classpathentry kind="lib" path="lib/development/cobertura.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.ant.bnd.jar"/>
+	<classpathentry kind="lib" path="lib/development/com.liferay.ant.build.logger.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.tld.formatter.jar"/>
 	<classpathentry kind="lib" path="lib/development/com.liferay.whip.jar"/>
 	<classpathentry kind="lib" path="lib/development/deployment.jar"/>

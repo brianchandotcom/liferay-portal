@@ -16,9 +16,8 @@ package com.liferay.portal.kernel.settings;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
 
+import org.junit.Assert;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Iván Zaera

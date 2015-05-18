@@ -14,8 +14,10 @@
 
 package com.liferay.dynamic.data.lists.display.web.lar;
 
+import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -33,15 +35,26 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + DDLDisplayPortletKeys.DDL_DISPLAY},
+	service = PortletDataHandler.class
+)
 public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 
-	public DDLDisplayPortletDataHandler() {
+	@Activate
+	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences(
-			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
+		setDataPortletPreferences("displayDDMTemplateId", "recordSetId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 
@@ -56,10 +69,7 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		}
 
 		portletPreferences.setValue("displayDDMTemplateId", StringPool.BLANK);
-		portletPreferences.setValue("editable", Boolean.TRUE.toString());
-		portletPreferences.setValue("formDDMTemplateId", StringPool.BLANK);
 		portletPreferences.setValue("recordSetId", StringPool.BLANK);
-		portletPreferences.setValue("spreadsheet", Boolean.FALSE.toString());
 
 		return portletPreferences;
 	}
@@ -112,8 +122,6 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			portletPreferences.getValue("recordSetId", null));
 		long importedDisplayDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("displayDDMTemplateId", null));
-		long importedFormDDMTemplateId = GetterUtil.getLong(
-			portletPreferences.getValue("formDDMTemplateId", null));
 
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -130,16 +138,15 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			templateIds, importedDisplayDDMTemplateId,
 			importedDisplayDDMTemplateId);
 
-		long formDDMTemplateId = MapUtil.getLong(
-			templateIds, importedFormDDMTemplateId, importedFormDDMTemplateId);
-
 		portletPreferences.setValue("recordSetId", String.valueOf(recordSetId));
 		portletPreferences.setValue(
 			"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
-		portletPreferences.setValue(
-			"formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 		return portletPreferences;
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

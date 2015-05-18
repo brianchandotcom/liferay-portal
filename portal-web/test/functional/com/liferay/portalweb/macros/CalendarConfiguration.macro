@@ -73,6 +73,8 @@
 			<var name="weekStartDay" value="Sunday" />
 		</execute>
 
+		<execute macro="CalendarConfiguration#save" />
+
 		<execute macro="CalendarConfiguration#enableRSS" />
 
 		<execute macro="CalendarConfiguration#save" />

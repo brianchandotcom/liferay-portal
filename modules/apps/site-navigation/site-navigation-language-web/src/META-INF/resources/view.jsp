@@ -21,4 +21,5 @@
 	ddmTemplateKey="<%= languageDisplayContext.getDDMTemplateKey() %>"
 	displayCurrentLocale="<%= languageDisplayContext.isDisplayCurrentLocale() %>"
 	languageIds="<%= languageDisplayContext.getLanguageIds() %>"
+	useNamespace="<%= Boolean.FALSE %>"
 />

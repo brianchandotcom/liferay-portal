@@ -80,6 +80,10 @@ public class LanguageTag extends IncludeTag {
 		_name = name;
 	}
 
+	public void setUseNamespace(boolean useNamespace) {
+		_useNamespace = useNamespace;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_ddmTemplateGroupId = 0;
@@ -90,6 +94,7 @@ public class LanguageTag extends IncludeTag {
 		_languageId = null;
 		_languageIds = null;
 		_name = "languageId";
+		_useNamespace = true;
 	}
 
 	protected String getDisplayStyle() {
@@ -196,6 +201,10 @@ public class LanguageTag extends IncludeTag {
 	protected String getNamespacedName() {
 		String name = _name;
 
+		if (!_useNamespace) {
+			return name;
+		}
+
 		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
 			JavaConstants.JAVAX_PORTLET_REQUEST);
 		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
@@ -246,5 +255,6 @@ public class LanguageTag extends IncludeTag {
 	private String _languageId;
 	private String[] _languageIds;
 	private String _name = "languageId";
+	private boolean _useNamespace = true;
 
 }

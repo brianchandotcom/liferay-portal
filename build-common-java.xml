@@ -22,6 +22,16 @@
 	</macrodef>
 
 	<macrodef name="compile-java">
+		<sequential>
+			<do-compile-java
+				javac.classpathref="project.classpath"
+				javac.destdir="classes"
+				javac.srcdir="src"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="do-compile-java">
 		<attribute name="javac.classpathref" />
 		<attribute name="javac.destdir" />
 		<attribute name="javac.srcdir" />
@@ -135,11 +145,7 @@
 	</target>
 
 	<target name="compile">
-		<compile-java
-			javac.classpathref="project.classpath"
-			javac.destdir="classes"
-			javac.srcdir="src"
-		/>
+		<compile-java />
 	</target>
 
 	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">

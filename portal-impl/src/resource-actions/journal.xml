@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.journal</model-name>
 		<portlet-ref>
-			<portlet-name>15</portlet-name>
+			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -40,7 +40,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.journal.model.JournalArticle</model-name>
 		<portlet-ref>
-			<portlet-name>15</portlet-name>
+			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -73,7 +73,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.journal.model.JournalFeed</model-name>
 		<portlet-ref>
-			<portlet-name>15</portlet-name>
+			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>
 		<permissions>
@@ -97,7 +97,7 @@
 	<model-resource>
 		<model-name>com.liferay.portlet.journal.model.JournalFolder</model-name>
 		<portlet-ref>
-			<portlet-name>15</portlet-name>
+			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

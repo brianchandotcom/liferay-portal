@@ -45,7 +45,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Team</model-name>
 		<portlet-ref>
-			<portlet-name>174</portlet-name>
+			<portlet-name>com_liferay_site_teams_web_portlet_SiteTeamsPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

@@ -19,6 +19,8 @@ import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import java.io.File;
+
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
@@ -84,6 +86,21 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 	}
 
+	@Override
+	protected void configureSourceSetMain(Project project) {
+		File docrootDir = project.file("docroot");
+
+		if (!docrootDir.exists()) {
+			super.configureSourceSetMain(project);
+
+			return;
+		}
+
+		File srcDir = new File(docrootDir, "WEB-INF/src");
+
+		configureSourceSetMain(project, srcDir);
+	}
+
 	protected void configureTaskJar(Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
@@ -144,6 +161,28 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, BundleExtension.class);
 
 		return (Map<String, String>)bundleExtension.getInstructions();
+	}
+
+	@Override
+	protected File getLibDir(Project project) {
+		File docrootDir = project.file("docroot");
+
+		if (!docrootDir.exists()) {
+			return super.getLibDir(project);
+		}
+
+		return new File(docrootDir, "WEB-INF/lib");
+	}
+
+	@Override
+	protected File getServiceBaseDir(Project project) {
+		File docrootDir = project.file("docroot");
+
+		if (!docrootDir.exists()) {
+			return super.getServiceBaseDir(project);
+		}
+
+		return new File(docrootDir, "WEB-INF");
 	}
 
 	protected void replaceJarBuilderFactory(Project project) {

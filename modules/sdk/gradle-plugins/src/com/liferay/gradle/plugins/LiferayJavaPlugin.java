@@ -397,12 +397,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureSourceSetMain(Project project) {
+		File srcDir = project.file("src");
+
+		configureSourceSetMain(project, srcDir);
+	}
+
+	protected void configureSourceSetMain(Project project, File srcDir) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
-
-		File srcDir = project.file("src");
 
 		Set<File> srcDirs = Collections.singleton(srcDir);
 

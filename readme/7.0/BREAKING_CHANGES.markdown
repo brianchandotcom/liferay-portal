@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `ef6867d`.*
+*This document has been reviewed through commit `27c97c9`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1530,7 +1530,7 @@ change is used for the blog abstract field.
 ---------------------------------------
 
 ### Moved the Contact Name Exception Classes to Inner classes of ContactNameException
-- **Date:** 2015-May-5
+- **Date:** 2015-May-05
 - **JIRA Ticket:** LPS-55364
 
 #### What changed?
@@ -1559,35 +1559,36 @@ feature to be thoroughly covered by exceptions for different configurations.
 
 ---------------------------------------
 
-### Removed USERS_LAST_NAME_REQUIRED from portal.properties in favor of language.properties configurations
+### Removed USERS_LAST_NAME_REQUIRED from portal.properties in Favor of language.properties Configurations
 - **Date:** 2015-May-07
 - **JIRA Ticket:** LPS-54956
 
 #### What changed?
 
-The USERS_LAST_NAME_REQUIRED property has been removed from the
-portal.properties and the corresponding UI. Required names are now handled on a
-per-language basis via the language.properties files. It has also been removed
-as an option from the Portal Settings section of the control panel.
+The `USERS_LAST_NAME_REQUIRED` property has been removed from
+`portal.properties` and the corresponding UI. Required names are now handled on
+a per-language basis via the `language.properties` files. It has also been
+removed as an option from the Portal Settings section of the Control Panel.
 
 #### Who is affected?
 
-This affects anyone who uses the USERS_LAST_NAME_REQUIRED portal property.
+This affects anyone who uses the `USERS_LAST_NAME_REQUIRED` portal property.
 
 #### How should I update my code?
 
-If you need to require the last name, list it on the
+If you need to require the user's last name, list it on the
 `lang.user.name.required.field.names` line of the appropriate
-language.properties files like so:
-`lang.user.name.required.field.names=last-name`.
+`language.properties` files:
+
+    lang.user.name.required.field.names=last-name
 
 #### Why was this change made?
 
-This change was made to account for different languages allowing for different
-user name fields, along with which of those fields are required (introduced as
-part of LPS-48406). That change was in conflict with the current
-USERS_LAST_NAME_REQUIRED property, so all control has been relegated to the
-language.properties files (with the exception of first-name, which is still
-always present and always required).
+This change was made to account for different languages allowing different user
+name fields (introduced as part of LPS-48406), and the uncertainty of which
+fields are required. That functionality was in conflict with the current
+`USERS_LAST_NAME_REQUIRED` property, so all control has been relegated to the
+`language.properties` files, with the exception of `first-name`, which is still
+always present and required.
 
 ---------------------------------------

@@ -14,19 +14,17 @@
 
 package com.liferay.portal.sso.cas;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.security.sso.SSO;
 import com.liferay.portal.sso.cas.configuration.CASConfiguration;
+import com.liferay.portal.sso.cas.constants.CASConstants;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -39,10 +37,10 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public String getSessionExpirationRedirectUrl(long companyId) {
-		if (isSessionRedirectOnExpire(companyId)) {
-			return PrefsPropsUtil.getString(
-				companyId, PropsKeys.CAS_LOGOUT_URL,
-				_casConfiguration.logoutURL());
+		CASConfiguration casConfiguration = getCASConfiguration(companyId);
+
+		if (casConfiguration.logoutOnSessionExpiration()) {
+			return casConfiguration.logoutURL();
 		}
 
 		return null;
@@ -50,16 +48,13 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public String getSignInURL(long companyId, String defaultSigninURL) {
-		if (!isCASAuthEnabled(companyId)) {
+		CASConfiguration casConfiguration = getCASConfiguration(companyId);
+
+		if (!casConfiguration.enabled()) {
 			return null;
 		}
 
-		if (Validator.isNotNull(_casConfiguration.loginURL())) {
-			defaultSigninURL = _casConfiguration.loginURL();
-		}
-
-		return PrefsPropsUtil.getString(
-			companyId, PropsKeys.CAS_LOGIN_URL, defaultSigninURL);
+		return casConfiguration.loginURL();
 	}
 
 	@Override
@@ -74,31 +69,41 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public boolean isSessionRedirectOnExpire(long companyId) {
-		if (isCASAuthEnabled(companyId)) {
-			return _casConfiguration.logoutOnSessionExpiration();
-		}
+		CASConfiguration casConfiguration = getCASConfiguration(companyId);
 
-		return false;
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_casConfiguration = Configurable.createConfigurable(
-			CASConfiguration.class, properties);
+		return casConfiguration.logoutOnSessionExpiration();
 	}
 
 	protected boolean isCASAuthEnabled(long companyId) {
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.CAS_AUTH_ENABLED,
-				_casConfiguration.enabled())) {
+		CASConfiguration casConfiguration = getCASConfiguration(companyId);
 
-			return true;
-		}
-
-		return false;
+		return casConfiguration.enabled();
 	}
 
-	private volatile CASConfiguration _casConfiguration;
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	private CASConfiguration getCASConfiguration(long companyId) {
+		try {
+			CASConfiguration casCompanyServiceSettings =
+				_settingsFactory.getSettings(
+					CASConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, CASConstants.SERVICE_NAME));
+
+			return casCompanyServiceSettings;
+		}
+		catch (SettingsException se) {
+			_log.error("Unable to get CAS configuration", se);
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
+
+	private volatile SettingsFactory _settingsFactory;
 
 }

@@ -14,17 +14,16 @@
 
 package com.liferay.portal.sso.cas;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sso.cas.configuration.CASConfiguration;
+import com.liferay.portal.sso.cas.constants.CASConstants;
 import com.liferay.portal.sso.cas.constants.CASWebKeys;
 import com.liferay.portal.util.PortalUtil;
 
@@ -44,9 +43,8 @@ import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Young
@@ -78,10 +76,13 @@ public class CASFilter extends BaseFilter {
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
-			if (PrefsPropsUtil.getBoolean(
-					companyId, PropsKeys.CAS_AUTH_ENABLED,
-					_casConfiguration.enabled())) {
+			CASConfiguration casCompanyServiceSettings =
+				_settingsFactory.getSettings(
+					CASConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, CASConstants.SERVICE_NAME));
 
+			if (casCompanyServiceSettings.enabled()) {
 				return true;
 			}
 		}
@@ -90,13 +91,6 @@ public class CASFilter extends BaseFilter {
 		}
 
 		return false;
-	}
-
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_casConfiguration = Configurable.createConfigurable(
-			CASConfiguration.class, properties);
 	}
 
 	@Override
@@ -113,13 +107,15 @@ public class CASFilter extends BaseFilter {
 			return ticketValidator;
 		}
 
-		String serverName = PrefsPropsUtil.getString(
-			companyId, PropsKeys.CAS_SERVER_NAME,
-			_casConfiguration.serverName());
-		String serverUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.CAS_SERVER_URL, _casConfiguration.serverURL());
-		String loginUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.CAS_LOGIN_URL, _casConfiguration.loginURL());
+		CASConfiguration casCompanyServiceSettings =
+			_settingsFactory.getSettings(
+				CASConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, CASConstants.SERVICE_NAME));
+
+		String serverName = casCompanyServiceSettings.serverName();
+		String serverUrl = casCompanyServiceSettings.serverURL();
+		String loginUrl = casCompanyServiceSettings.loginURL();
 
 		Cas20ProxyTicketValidator cas20ProxyTicketValidator =
 			new Cas20ProxyTicketValidator(serverUrl);
@@ -148,6 +144,12 @@ public class CASFilter extends BaseFilter {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
+		CASConfiguration casCompanyServiceSettings =
+			_settingsFactory.getSettings(
+				CASConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, CASConstants.SERVICE_NAME));
+
 		String pathInfo = request.getPathInfo();
 
 		Object forceLogout = session.getAttribute(CASWebKeys.CAS_FORCE_LOGOUT);
@@ -155,9 +157,7 @@ public class CASFilter extends BaseFilter {
 		if (forceLogout != null) {
 			session.removeAttribute(CASWebKeys.CAS_FORCE_LOGOUT);
 
-			String logoutUrl = PrefsPropsUtil.getString(
-				companyId, PropsKeys.CAS_LOGOUT_URL,
-				_casConfiguration.logoutURL());
+			String logoutUrl = casCompanyServiceSettings.logoutURL();
 
 			response.sendRedirect(logoutUrl);
 
@@ -169,9 +169,7 @@ public class CASFilter extends BaseFilter {
 
 			session.invalidate();
 
-			String logoutUrl = PrefsPropsUtil.getString(
-				companyId, PropsKeys.CAS_LOGOUT_URL,
-				_casConfiguration.logoutURL());
+			String logoutUrl = casCompanyServiceSettings.logoutURL();
 
 			response.sendRedirect(logoutUrl);
 
@@ -186,13 +184,9 @@ public class CASFilter extends BaseFilter {
 				return;
 			}
 
-			String serverName = PrefsPropsUtil.getString(
-				companyId, PropsKeys.CAS_SERVER_NAME,
-				_casConfiguration.serverName());
+			String serverName = casCompanyServiceSettings.serverName();
 
-			String serviceUrl = PrefsPropsUtil.getString(
-				companyId, PropsKeys.CAS_SERVICE_URL,
-				_casConfiguration.serviceURL());
+			String serviceUrl = casCompanyServiceSettings.serviceURL();
 
 			if (Validator.isNull(serviceUrl)) {
 				serviceUrl = CommonUtils.constructServiceUrl(
@@ -202,9 +196,7 @@ public class CASFilter extends BaseFilter {
 			String ticket = ParamUtil.getString(request, "ticket");
 
 			if (Validator.isNull(ticket)) {
-				String loginUrl = PrefsPropsUtil.getString(
-					companyId, PropsKeys.CAS_LOGIN_URL,
-					_casConfiguration.loginURL());
+				String loginUrl = casCompanyServiceSettings.loginURL();
 
 				loginUrl = HttpUtil.addParameter(
 					loginUrl, "service", serviceUrl);
@@ -231,11 +223,16 @@ public class CASFilter extends BaseFilter {
 		processFilter(CASFilter.class, request, response, filterChain);
 	}
 
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(CASFilter.class);
 
 	private static final Map<Long, TicketValidator> _ticketValidators =
 		new ConcurrentHashMap<>();
 
-	private volatile CASConfiguration _casConfiguration;
+	private volatile SettingsFactory _settingsFactory;
 
 }

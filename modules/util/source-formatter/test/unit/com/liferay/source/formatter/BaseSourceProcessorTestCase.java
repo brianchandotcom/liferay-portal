@@ -91,7 +91,7 @@ public class BaseSourceProcessorTestCase {
 
 		fileName = FilenameUtils.getBaseName(fileName);
 
-		if (!keepTestExtension && originalExtension.startsWith("test")) {
+		if (originalExtension.startsWith("test")) {
 			extension = extension.substring(4);
 		}
 
@@ -174,7 +174,6 @@ public class BaseSourceProcessorTestCase {
 
 	protected final ClassLoader classLoader =
 		BaseSourceProcessorTestCase.class.getClassLoader();
-	protected boolean keepTestExtension = false;
 
 	private static final String _DIR_NAME =
 		"com/liferay/source/formatter/dependencies";

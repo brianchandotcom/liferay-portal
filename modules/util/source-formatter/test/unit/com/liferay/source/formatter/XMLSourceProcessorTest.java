@@ -22,11 +22,6 @@ import org.junit.Test;
  */
 public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 
-	@Before
-	public void setUp() {
-		keepTestExtension = true;
-	}
-
 	@Test
 	public void testCharactersAfterDefinitionTag() throws Exception {
 		test(

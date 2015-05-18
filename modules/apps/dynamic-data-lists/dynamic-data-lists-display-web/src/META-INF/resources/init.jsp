@@ -14,39 +14,66 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+
+<%@ page import="com.liferay.dynamic.data.lists.display.web.context.DDLDisplayContext" %><%@
+page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
+page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.search.BaseModelSearchResult" %><%@
+page import="com.liferay.portal.kernel.search.Field" %><%@
+page import="com.liferay.portal.kernel.search.SearchContext" %><%@
+page import="com.liferay.portal.kernel.search.SearchContextFactory" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringBundler" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.StringUtil" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portal.model.Portlet" %><%@
+page import="com.liferay.portal.security.auth.PrincipalException" %><%@
+page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portal.util.PortletKeys" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %><%@
+page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
+page import="com.liferay.portlet.dynamicdatalists.model.DDLRecord" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
 page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %><%@
-page import="com.liferay.portlet.dynamicdatalists.search.RecordSetSearch" %><%@
-page import="com.liferay.portlet.dynamicdatalists.search.RecordSetSearchTerms" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission" %><%@
-page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler" %>
+page import="com.liferay.portlet.dynamicdatamapping.model.LocalizedValue" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %>
+
+<%@ page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
+
+<liferay-theme:defineObjects />
+<portlet:defineObjects />
 
 <%
-String portletResource = ParamUtil.getString(request, "portletResource");
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
-long recordSetId = GetterUtil.getLong(portletPreferences.getValue("recordSetId", StringPool.BLANK));
+String currentURL = currentURLObj.toString();
 
-long displayDDMTemplateId = GetterUtil.getLong(portletPreferences.getValue("displayDDMTemplateId", StringPool.BLANK));
-long formDDMTemplateId = GetterUtil.getLong(portletPreferences.getValue("formDDMTemplateId", StringPool.BLANK));
-
-boolean editable = GetterUtil.getBoolean(portletPreferences.getValue("editable", Boolean.TRUE.toString()));
-boolean spreadsheet = GetterUtil.getBoolean(portletPreferences.getValue("spreadsheet", Boolean.FALSE.toString()));
-
-DDMDisplay ddmDisplay = DDMDisplayRegistryUtil.getDDMDisplay(PortletKeys.DYNAMIC_DATA_LISTS);
-
-DDMPermissionHandler ddmPermissionHandler = ddmDisplay.getDDMPermissionHandler();
-long scopeClassNameId = PortalUtil.getClassNameId(ddmDisplay.getStructureType());
+DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(renderRequest, renderResponse);
 %>
 
-<%@ include file="/html/portlet/dynamic_data_list_display/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

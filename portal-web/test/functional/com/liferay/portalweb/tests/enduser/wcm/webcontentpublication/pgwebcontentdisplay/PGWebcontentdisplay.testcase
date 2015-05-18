@@ -786,7 +786,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54960" name="ViewPortletWCDShowAvailableLocales" priority="5">
+	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
 			<var name="wcdConfigurationSettings" value="Show Available Locales" />
 		</execute>

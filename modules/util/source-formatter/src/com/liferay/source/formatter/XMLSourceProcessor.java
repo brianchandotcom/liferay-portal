@@ -379,8 +379,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				 (fileName.endsWith(".action") ||
 				  fileName.endsWith(".function") ||
 				  fileName.endsWith(".macro") ||
-				  fileName.endsWith(".testcase") ||
-				  fileName.endsWith(".testxml"))) {
+				  fileName.endsWith(".testcase"))) {
 
 			newContent = formatPoshiXML(fileName, newContent);
 		}

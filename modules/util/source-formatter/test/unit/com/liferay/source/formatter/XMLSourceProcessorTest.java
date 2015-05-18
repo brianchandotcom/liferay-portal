@@ -30,40 +30,40 @@ public class XMLSourceProcessorTest extends BaseSourceProcessorTestCase {
 	@Test
 	public void testCharactersAfterDefinitionTag() throws Exception {
 		test(
-			"CharactersAfterDefinitionTag1.testxml",
+			"CharactersAfterDefinitionTag1.testmacro",
 			"Characters found after definition element:");
 		test(
-			"CharactersAfterDefinitionTag2.testxml",
+			"CharactersAfterDefinitionTag2.testmacro",
 			"Characters found after definition element:");
 		test(
-			"CharactersAfterDefinitionTag3.testxml",
+			"CharactersAfterDefinitionTag3.testmacro",
 			"Characters found after definition element:");
 		test(
-			"CharactersAfterDefinitionTag4.testxml",
+			"CharactersAfterDefinitionTag4.testmacro",
 			"Characters found after definition element:");
 	}
 
 	@Test
 	public void testCharactersBeforeDefinitionTag() throws Exception {
 		test(
-			"CharactersBeforeDefinitionTag1.testxml",
+			"CharactersBeforeDefinitionTag1.testmacro",
 			"Characters found before definition element:");
 		test(
-			"CharactersBeforeDefinitionTag2.testxml",
+			"CharactersBeforeDefinitionTag2.testmacro",
 			"Characters found before definition element:");
 		test(
-			"CharactersBeforeDefinitionTag3.testxml",
+			"CharactersBeforeDefinitionTag3.testmacro",
 			"Characters found before definition element:");
 		test(
-			"CharactersBeforeDefinitionTag4.testxml",
+			"CharactersBeforeDefinitionTag4.testmacro",
 			"Characters found before definition element:");
 	}
 
 	@Test
 	public void testIncorrectTabs() throws Exception {
-		test("IncorrectTabs1.testxml");
-		test("IncorrectTabs2.testxml");
-		test("IncorrectTabs3.testxml");
+		test("IncorrectTabs1.testaction");
+		test("IncorrectTabs2.testaction");
+		test("IncorrectTabs3.testaction");
 	}
 
 }

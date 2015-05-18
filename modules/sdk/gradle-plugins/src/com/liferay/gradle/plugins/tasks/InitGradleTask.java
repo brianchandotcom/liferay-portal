@@ -135,22 +135,31 @@ public class InitGradleTask extends DefaultTask {
 		String importShared = getBuildXmlProperty("import.shared");
 
 		if (Validator.isNotNull(importShared)) {
-			Map<String, String> projectNamePathMap = new HashMap<>();
+			Map<String, String> projectFileNamePathMap = new HashMap<>();
 
 			Project rootProject = _project.getRootProject();
 
-			for (Project project : rootProject.getAllprojects()) {
-				projectNamePathMap.put(project.getName(), project.getPath());
+			File projectDir = _project.getProjectDir();
+			File parentDir = projectDir.getParentFile();
+
+			for (Project project : rootProject.getSubprojects()) {
+				String projectFileName = FileUtil.relativize(
+					project.getProjectDir(), parentDir);
+
+				projectFileName = projectFileName.replace('\\', '/');
+
+				projectFileNamePathMap.put(projectFileName, project.getPath());
 			}
 
 			String[] importSharedArray = importShared.split(",");
 
-			for (String projectName : importSharedArray) {
-				String projectPath = projectNamePathMap.get(projectName);
+			for (String projectFileName : importSharedArray) {
+				String projectPath = projectFileNamePathMap.get(
+					projectFileName);
 
 				if (Validator.isNull(projectPath)) {
 					throw new GradleException(
-						"Unable to find project dependency " + projectName);
+						"Unable to find project dependency " + projectFileName);
 				}
 
 				contents.add(wrapProjectDependency(projectPath));

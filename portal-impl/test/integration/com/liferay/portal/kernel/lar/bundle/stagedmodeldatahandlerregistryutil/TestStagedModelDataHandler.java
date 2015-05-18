@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 
 import java.util.List;
@@ -41,13 +40,12 @@ public class TestStagedModelDataHandler
 		{TestStagedModelDataHandler.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
+	public void deleteStagedModel(
+		String uuid, long groupId, String className, String extraData) {
 	}
 
 	@Override
-	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+	public void deleteStagedModel(User user) throws PortalException {
 	}
 
 	@Override

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -59,12 +58,8 @@ public class BlogsEntryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {BlogsEntry.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof BlogsEntry) {
-			BlogsEntryLocalServiceUtil.deleteEntry((BlogsEntry)stagedModel);
-		}
+	public void deleteStagedModel(BlogsEntry entry) throws PortalException {
+		BlogsEntryLocalServiceUtil.deleteEntry(entry);
 	}
 
 	@Override

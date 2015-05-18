@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -49,13 +48,10 @@ public class MBThreadFlagStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBThreadFlag.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(MBThreadFlag threadFlag)
 		throws PortalException {
 
-		if (stagedModel instanceof MBThreadFlag) {
-			MBThreadFlagLocalServiceUtil.deleteThreadFlag(
-				(MBThreadFlag)stagedModel);
-		}
+		MBThreadFlagLocalServiceUtil.deleteThreadFlag(threadFlag);
 	}
 
 	@Override

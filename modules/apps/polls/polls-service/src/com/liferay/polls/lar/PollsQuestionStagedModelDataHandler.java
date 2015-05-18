@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.Calendar;
@@ -46,13 +45,10 @@ public class PollsQuestionStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {PollsQuestion.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(PollsQuestion question)
 		throws PortalException {
 
-		if (stagedModel instanceof PollsQuestion) {
-			PollsQuestionLocalServiceUtil.deleteQuestion(
-				(PollsQuestion)stagedModel);
-		}
+		PollsQuestionLocalServiceUtil.deleteQuestion(question);
 	}
 
 	@Override

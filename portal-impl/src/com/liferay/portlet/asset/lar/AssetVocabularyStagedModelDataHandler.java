@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -50,13 +49,10 @@ public class AssetVocabularyStagedModelDataHandler
 		{AssetVocabulary.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(AssetVocabulary vocabulary)
 		throws PortalException {
 
-		if (stagedModel instanceof AssetVocabulary) {
-			AssetVocabularyLocalServiceUtil.deleteVocabulary(
-				(AssetVocabulary)stagedModel);
-		}
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(vocabulary);
 	}
 
 	@Override

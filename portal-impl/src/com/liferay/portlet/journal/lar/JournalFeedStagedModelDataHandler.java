@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -58,12 +57,8 @@ public class JournalFeedStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {JournalFeed.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof JournalFeed) {
-			JournalFeedLocalServiceUtil.deleteFeed((JournalFeed)stagedModel);
-		}
+	public void deleteStagedModel(JournalFeed feed) throws PortalException {
+		JournalFeedLocalServiceUtil.deleteFeed(feed);
 	}
 
 	@Override

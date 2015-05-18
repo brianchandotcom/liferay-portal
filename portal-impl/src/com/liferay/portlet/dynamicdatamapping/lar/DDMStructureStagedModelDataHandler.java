@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -48,13 +47,10 @@ public class DDMStructureStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDMStructure.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(DDMStructure structure)
 		throws PortalException {
 
-		if (stagedModel instanceof DDMStructure) {
-			DDMStructureLocalServiceUtil.deleteStructure(
-				(DDMStructure)stagedModel);
-		}
+		DDMStructureLocalServiceUtil.deleteStructure(structure);
 	}
 
 	@Override

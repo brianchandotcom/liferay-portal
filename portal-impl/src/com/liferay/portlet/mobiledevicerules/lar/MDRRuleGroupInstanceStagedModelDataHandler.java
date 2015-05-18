@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -51,13 +50,11 @@ public class MDRRuleGroupInstanceStagedModelDataHandler
 		{MDRRuleGroupInstance.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(MDRRuleGroupInstance ruleGroupInstance)
 		throws PortalException {
 
-		if (stagedModel instanceof MDRRuleGroupInstance) {
-			MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
-				(MDRRuleGroupInstance)stagedModel);
-		}
+		MDRRuleGroupInstanceLocalServiceUtil.deleteRuleGroupInstance(
+			ruleGroupInstance);
 	}
 
 	@Override

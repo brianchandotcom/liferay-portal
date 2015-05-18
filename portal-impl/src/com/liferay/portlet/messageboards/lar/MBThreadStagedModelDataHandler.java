@@ -17,7 +17,6 @@ package com.liferay.portlet.messageboards.lar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 
@@ -32,12 +31,8 @@ public class MBThreadStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBThread.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof MBThread) {
-			MBThreadLocalServiceUtil.deleteThread((MBThread)stagedModel);
-		}
+	public void deleteStagedModel(MBThread thread) throws PortalException {
+		MBThreadLocalServiceUtil.deleteThread(thread);
 	}
 
 	@Override

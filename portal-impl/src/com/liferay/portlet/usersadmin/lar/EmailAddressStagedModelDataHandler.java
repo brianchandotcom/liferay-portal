@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.EmailAddressLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -38,13 +37,10 @@ public class EmailAddressStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {EmailAddress.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(EmailAddress emailAddress)
 		throws PortalException {
 
-		if (stagedModel instanceof EmailAddress) {
-			EmailAddressLocalServiceUtil.deleteEmailAddress(
-				(EmailAddress)stagedModel);
-		}
+		EmailAddressLocalServiceUtil.deleteEmailAddress(emailAddress);
 	}
 
 	@Override

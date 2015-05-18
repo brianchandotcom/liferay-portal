@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.mobile.device.rulegroup.action.impl.SiteRedirectActionHandler;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
@@ -51,12 +50,8 @@ public class MDRActionStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MDRAction.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof MDRAction) {
-			MDRActionLocalServiceUtil.deleteAction((MDRAction)stagedModel);
-		}
+	public void deleteStagedModel(MDRAction action) throws PortalException {
+		MDRActionLocalServiceUtil.deleteAction(action);
 	}
 
 	@Override

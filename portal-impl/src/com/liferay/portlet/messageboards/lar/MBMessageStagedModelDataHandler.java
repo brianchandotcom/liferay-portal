@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.lar.FileEntryUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
@@ -63,12 +62,8 @@ public class MBMessageStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBMessage.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof MBMessage) {
-			MBMessageLocalServiceUtil.deleteMessage((MBMessage)stagedModel);
-		}
+	public void deleteStagedModel(MBMessage message) throws PortalException {
+		MBMessageLocalServiceUtil.deleteMessage(message);
 	}
 
 	@Override

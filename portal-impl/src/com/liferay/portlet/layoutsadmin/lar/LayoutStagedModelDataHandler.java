@@ -58,7 +58,6 @@ import com.liferay.portal.model.LayoutStagingHandler;
 import com.liferay.portal.model.LayoutTemplate;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.LayoutTypePortletConstants;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.adapter.StagedTheme;
 import com.liferay.portal.model.adapter.impl.StagedThemeImpl;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -93,13 +92,8 @@ public class LayoutStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Layout.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof Layout) {
-			LayoutLocalServiceUtil.deleteLayout(
-				(Layout)stagedModel, true, new ServiceContext());
-		}
+	public void deleteStagedModel(Layout layout) throws PortalException {
+		LayoutLocalServiceUtil.deleteLayout(layout);
 	}
 
 	@Override

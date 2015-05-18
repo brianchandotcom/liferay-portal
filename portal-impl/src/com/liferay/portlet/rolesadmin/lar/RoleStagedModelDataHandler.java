@@ -35,7 +35,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.ResourceTypePermission;
 import com.liferay.portal.model.Role;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionConversionFilter;
 import com.liferay.portal.security.permission.PermissionConverterUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -59,12 +58,8 @@ public class RoleStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Role.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof Role) {
-			RoleLocalServiceUtil.deleteRole((Role)stagedModel);
-		}
+	public void deleteStagedModel(Role role) throws PortalException {
+		RoleLocalServiceUtil.deleteRole(role);
 	}
 
 	@Override

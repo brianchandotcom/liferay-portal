@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
@@ -55,13 +54,10 @@ public class AssetCategoryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {AssetCategory.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(AssetCategory category)
 		throws PortalException {
 
-		if (stagedModel instanceof AssetCategory) {
-			AssetCategoryLocalServiceUtil.deleteCategory(
-				(AssetCategory)stagedModel);
-		}
+		AssetCategoryLocalServiceUtil.deleteCategory(category);
 	}
 
 	@Override

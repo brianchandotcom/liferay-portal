@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetTag;
@@ -41,12 +40,10 @@ public class StagedAssetTagStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {StagedAssetTag.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(StagedAssetTag stagedAssetTag)
 		throws PortalException {
 
-		if (stagedModel instanceof AssetTag) {
-			AssetTagLocalServiceUtil.deleteTag((AssetTag)stagedModel);
-		}
+		AssetTagLocalServiceUtil.deleteTag(stagedAssetTag);
 	}
 
 	@Override

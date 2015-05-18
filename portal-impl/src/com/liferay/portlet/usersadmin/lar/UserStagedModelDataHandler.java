@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -35,15 +34,6 @@ public class UserStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {User.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof User) {
-			UserLocalServiceUtil.deleteUser((User)stagedModel);
-		}
-	}
-
-	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -56,6 +46,11 @@ public class UserStagedModelDataHandler
 		if (user != null) {
 			deleteStagedModel(user);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(User user) throws PortalException {
+		UserLocalServiceUtil.deleteUser(user);
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
@@ -37,13 +36,10 @@ public class MDRRuleGroupStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MDRRuleGroup.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(MDRRuleGroup ruleGroup)
 		throws PortalException {
 
-		if (stagedModel instanceof MDRRuleGroup) {
-			MDRRuleGroupLocalServiceUtil.deleteRuleGroup(
-				(MDRRuleGroup)stagedModel);
-		}
+		MDRRuleGroupLocalServiceUtil.deleteRuleGroup(ruleGroup);
 	}
 
 	@Override

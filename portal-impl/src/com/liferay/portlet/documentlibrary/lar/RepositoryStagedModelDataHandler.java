@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.RepositoryEntry;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -47,15 +46,11 @@ public class RepositoryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Repository.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(Repository repository)
 		throws PortalException {
 
-		if (stagedModel instanceof Repository) {
-			Repository repository = (Repository)stagedModel;
-
-			RepositoryLocalServiceUtil.deleteRepository(
-				repository.getRepositoryId());
-		}
+		RepositoryLocalServiceUtil.deleteRepository(
+			repository.getRepositoryId());
 	}
 
 	@Override

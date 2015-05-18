@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -47,13 +46,10 @@ public class MBDiscussionStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBDiscussion.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(MBDiscussion discussion)
 		throws PortalException {
 
-		if (stagedModel instanceof MBDiscussion) {
-			MBDiscussionLocalServiceUtil.deleteMBDiscussion(
-				(MBDiscussion)stagedModel);
-		}
+		MBDiscussionLocalServiceUtil.deleteMBDiscussion(discussion);
 	}
 
 	@Override

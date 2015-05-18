@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.ratings.model.RatingsEntry;
@@ -40,13 +39,10 @@ public class RatingsEntryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {RatingsEntry.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(RatingsEntry ratingsEntry)
 		throws PortalException {
 
-		if (stagedModel instanceof RatingsEntry) {
-			RatingsEntryLocalServiceUtil.deleteRatingsEntry(
-				(RatingsEntry)stagedModel);
-		}
+		RatingsEntryLocalServiceUtil.deleteRatingsEntry(ratingsEntry);
 	}
 
 	@Override

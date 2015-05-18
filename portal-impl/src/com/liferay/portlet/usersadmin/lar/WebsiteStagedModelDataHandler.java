@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Website;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -38,15 +37,6 @@ public class WebsiteStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Website.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof Website) {
-			WebsiteLocalServiceUtil.deleteWebsite((Website)stagedModel);
-		}
-	}
-
-	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -60,6 +50,11 @@ public class WebsiteStagedModelDataHandler
 		if (website != null) {
 			deleteStagedModel(website);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(Website website) throws PortalException {
+		WebsiteLocalServiceUtil.deleteWebsite(website);
 	}
 
 	@Override

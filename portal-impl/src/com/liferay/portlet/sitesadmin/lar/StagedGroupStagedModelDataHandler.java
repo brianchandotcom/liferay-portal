@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.adapter.StagedGroup;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 
@@ -39,7 +38,7 @@ public class StagedGroupStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {StagedGroup.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
+	public void deleteStagedModel(StagedGroup stagedGroup)
 		throws PortalException {
 
 		throw new UnsupportedOperationException();

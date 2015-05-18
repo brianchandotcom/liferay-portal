@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
@@ -42,12 +41,8 @@ public class MBCategoryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBCategory.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof MBCategory) {
-			MBCategoryLocalServiceUtil.deleteCategory((MBCategory)stagedModel);
-		}
+	public void deleteStagedModel(MBCategory category) throws PortalException {
+		MBCategoryLocalServiceUtil.deleteCategory(category);
 	}
 
 	@Override

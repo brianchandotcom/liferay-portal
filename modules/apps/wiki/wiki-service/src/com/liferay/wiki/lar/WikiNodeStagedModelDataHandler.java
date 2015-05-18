@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
@@ -44,15 +43,6 @@ public class WikiNodeStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {WikiNode.class.getName()};
 
 	@Override
-	public void deleteStagedModel(StagedModel stagedModel)
-		throws PortalException {
-
-		if (stagedModel instanceof WikiNode) {
-			WikiNodeLocalServiceUtil.deleteNode((WikiNode)stagedModel);
-		}
-	}
-
-	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -62,6 +52,11 @@ public class WikiNodeStagedModelDataHandler
 		if (wikiNode != null) {
 			deleteStagedModel(wikiNode);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(WikiNode node) throws PortalException {
+		WikiNodeLocalServiceUtil.deleteNode(node);
 	}
 
 	@Override

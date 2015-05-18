@@ -47,9 +47,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
-	},
+	property = {"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING},
 	service = StagedModelDataHandler.class
 )
 public class DDMStructureStagedModelDataHandler

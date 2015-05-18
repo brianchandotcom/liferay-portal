@@ -14,14 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -34,6 +26,14 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -48,18 +48,6 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 )
 public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
 
-	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		
-		DDMTemplate template = copyTemplate(portletRequest);
-
-		String redirect = getSaveAndContinueRedirect(
-			portletRequest, template);
-		
-		super.setRedirectAttribute(portletRequest, redirect);
-	}
-
 	protected DDMTemplate copyTemplate(PortletRequest portletRequest)
 		throws Exception {
 
@@ -68,7 +56,7 @@ public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			portletRequest, DDMConstants.NAME);
-		
+
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				portletRequest, DDMConstants.DESCRIPTION);
@@ -78,6 +66,18 @@ public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
 
 		return DDMTemplateServiceUtil.copyTemplate(
 			templateId, nameMap, descriptionMap, serviceContext);
+	}
+
+	@Override
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		DDMTemplate template = copyTemplate(portletRequest);
+
+		String redirect = getSaveAndContinueRedirect(portletRequest, template);
+
+		super.setRedirectAttribute(portletRequest, redirect);
 	}
 
 	protected String getSaveAndContinueRedirect(
@@ -91,15 +91,15 @@ public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
 			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
 			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
 
+		portletURL.setParameter(DDMConstants.MVC_PATH, "/copy_template.jsp");
+
 		portletURL.setParameter(
-			DDMConstants.MVC_PATH, "/copy_template.jsp");
-		
-		portletURL.setParameter(
-			DDMConstants.TEMPLATE_ID, String.valueOf(template.getTemplateId()), 
+			DDMConstants.TEMPLATE_ID, String.valueOf(template.getTemplateId()),
 			false);
-		
+
 		portletURL.setWindowState(portletRequest.getWindowState());
 
 		return portletURL.toString();
 	}
+
 }

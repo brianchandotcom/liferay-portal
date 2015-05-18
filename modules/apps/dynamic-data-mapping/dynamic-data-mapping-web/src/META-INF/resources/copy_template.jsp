@@ -24,7 +24,7 @@ DDMTemplate template = (DDMTemplate)request.getAttribute(WebKeys.DYNAMIC_DATA_MA
 long templateId = BeanParamUtil.getLong(template, request, "templateId");
 %>
 
-<portlet:actionURL var="copyTemplateURL" name="ddmCopyTemplate">
+<portlet:actionURL name="ddmCopyTemplate" var="copyTemplateURL">
 	<portlet:param name="mvcPath" value="/copy_template.jsp" />
 </portlet:actionURL>
 

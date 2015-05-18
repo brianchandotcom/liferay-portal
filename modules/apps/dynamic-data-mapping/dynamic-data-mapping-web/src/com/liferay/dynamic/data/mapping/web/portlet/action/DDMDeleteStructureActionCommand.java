@@ -14,17 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -40,9 +40,10 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 public class DDMDeleteStructureActionCommand extends DDMBaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
 		long[] deleteStructureIds = null;
 
 		long structureId = ParamUtil.getLong(
@@ -60,7 +61,7 @@ public class DDMDeleteStructureActionCommand extends DDMBaseActionCommand {
 		for (long deleteStructureId : deleteStructureIds) {
 			DDMStructureServiceUtil.deleteStructure(deleteStructureId);
 		}
-		
+
 		String redirect = ParamUtil.getString(
 			portletRequest, DDMConstants.REDIRECT);
 

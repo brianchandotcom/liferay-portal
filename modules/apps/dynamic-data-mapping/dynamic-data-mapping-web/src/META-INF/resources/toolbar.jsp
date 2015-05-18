@@ -22,7 +22,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.
 String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
-
 %>
 
 <aui:nav-bar>
@@ -46,5 +45,5 @@ long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
 	<aui:nav-bar-search searchContainer="<%= searchContainer %>">
 		<liferay-util:include page="/structure_search.jsp" servletContext="<%= application %>" />
 	</aui:nav-bar-search>
-	
+
 </aui:nav-bar>

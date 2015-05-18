@@ -14,15 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -41,6 +32,15 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
@@ -55,27 +55,73 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
 		DDMStructure structure = updateStructure(portletRequest);
-		
+
 		String redirect = ParamUtil.getString(
 			portletRequest, DDMConstants.REDIRECT);
-		
+
 		redirect = super.setRedirectAttribute(portletRequest, redirect);
-		
+
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			portletRequest, DDMConstants.SAVE_AND_CONTINUE);
 
 		if (saveAndContinue) {
 			redirect = getSaveAndContinueRedirect(
 				portletRequest, structure, redirect);
-			
-			portletRequest.setAttribute(WebKeys.REDIRECT,redirect);
+
+			portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
 		}
 	}
-	
+
+	protected String getSaveAndContinueRedirect(
+			PortletRequest portletRequest, DDMStructure structure,
+			String redirect)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String availableFields = ParamUtil.getString(
+			portletRequest, DDMConstants.AVAILABLE_FIELDS);
+
+		String eventName = ParamUtil.getString(
+			portletRequest, DDMConstants.EVENT_NAME);
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(DDMConstants.MVC_PATH, "/edit_structure.jsp");
+
+		portletURL.setParameter(DDMConstants.REDIRECT, redirect, false);
+
+		portletURL.setParameter(
+			DDMConstants.GROUP_ID, String.valueOf(structure.getGroupId()),
+			false);
+
+		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
+
+		portletURL.setParameter(
+			DDMConstants.CLASS_NAME_ID, String.valueOf(classNameId), false);
+
+		portletURL.setParameter(
+			DDMConstants.CLASS_PK, String.valueOf(structure.getStructureId()),
+			false);
+
+		portletURL.setParameter(
+			DDMConstants.AVAILABLE_FIELDS, availableFields, false);
+
+		portletURL.setParameter(DDMConstants.EVENT_NAME, eventName, false);
+
+		portletURL.setWindowState(portletRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
 	protected DDMStructure updateStructure(PortletRequest portletRequest)
 		throws Exception {
 
@@ -84,10 +130,10 @@ public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
 		long parentStructureId = ParamUtil.getLong(
 			portletRequest, DDMConstants.PARENT_STRUCTURE_ID,
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-		
+
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			portletRequest, DDMConstants.NAME);
-		
+
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				portletRequest, DDMConstants.DESCRIPTION);
@@ -97,57 +143,11 @@ public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				DDMStructure.class.getName(), portletRequest);
+			DDMStructure.class.getName(), portletRequest);
 
 		return DDMStructureServiceUtil.updateStructure(
 			classPK, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext);
-	}
-	
-	protected String getSaveAndContinueRedirect(
-			PortletRequest portletRequest, DDMStructure structure, 
-			String redirect)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String availableFields = ParamUtil.getString(
-			portletRequest, DDMConstants.AVAILABLE_FIELDS);
-		
-		String eventName = ParamUtil.getString(
-			portletRequest, DDMConstants.EVENT_NAME);
-
-		PortletURLImpl portletURL = new PortletURLImpl(
-			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(
-			DDMConstants.MVC_PATH, "/edit_structure.jsp");
-		
-		portletURL.setParameter(DDMConstants.REDIRECT, redirect, false);
-		
-		portletURL.setParameter(
-			DDMConstants.GROUP_ID, String.valueOf(structure.getGroupId()), 
-			false);
-
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		portletURL.setParameter(
-			DDMConstants.CLASS_NAME_ID, String.valueOf(classNameId), false);
-
-		portletURL.setParameter(
-			DDMConstants.CLASS_PK, String.valueOf(structure.getStructureId()), 
-			false);
-		
-		portletURL.setParameter(DDMConstants.AVAILABLE_FIELDS, availableFields, 
-				false);
-		
-		portletURL.setParameter(DDMConstants.EVENT_NAME, eventName, false);
-		
-		portletURL.setWindowState(portletRequest.getWindowState());
-
-		return portletURL.toString();
 	}
 
 }

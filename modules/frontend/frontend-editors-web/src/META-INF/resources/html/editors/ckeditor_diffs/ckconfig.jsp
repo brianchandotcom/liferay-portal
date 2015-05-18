@@ -102,7 +102,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		config.extraPlugins += ',ajaxsave,restore';
 	</c:if>
 
-	config.filebrowserWindowFeatures = 'title=<%= LanguageUtil.get(locale, "browse") %>';
+	config.filebrowserWindowFeatures = 'title=<%= LanguageUtil.get(request, "browse") %>';
 
 	config.height = 265;
 

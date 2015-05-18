@@ -637,6 +637,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 							lineCount);
 				}
 
+				// LPS-55341
+
+				if (!javaSource) {
+					line = StringUtil.replace(
+						line, "LanguageUtil.get(locale,",
+						"LanguageUtil.get(request,");
+				}
+
 				if (!trimmedLine.equals("%>") && line.contains("%>") &&
 					!line.contains("--%>") && !line.contains(" %>")) {
 

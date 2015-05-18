@@ -1254,16 +1254,6 @@
 		<execute function="Type" locator1="PGCalendarAddevent#END_DATE" value1="${endDate}" />
 	</command>
 
-	<command name="viewWeekStartDayViaEventMiniCalendar">
-		<execute function="Click" locator1="PGCalendarAddevent#START_DATE" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
-
-		<execute function="Click" locator1="PGCalendarAddevent#END_DATE" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
-	</command>
-
 	<command name="setDatesToday">
 		<var locator="PGCalendarAddevent#START_DATE" name="endDate" />
 
@@ -1948,5 +1938,15 @@
 				<var method="MathUtil#sum('${i}', '1')" name="i" />
 			</then>
 		</while>
+	</command>
+
+	<command name="viewWeekStartDayViaEventMiniCalendar">
+		<execute function="Click" locator1="PGCalendarAddevent#START_DATE" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
+
+		<execute function="Click" locator1="PGCalendarAddevent#END_DATE" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
 	</command>
 </definition>

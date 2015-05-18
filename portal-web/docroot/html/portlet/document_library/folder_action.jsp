@@ -227,7 +227,7 @@ String iconMenuId = null;
 					<c:if test="<%= folder.isMountPoint() %>">
 
 						<%
-						LocalRepository localRepository = RepositoryLocalServiceUtil.getLocalRepositoryImpl(folder.getRepositoryId());
+						LocalRepository localRepository = RepositoryProviderUtil.getLocalRepository(folder.getRepositoryId());
 
 						if (localRepository.isCapabilityProvided(TemporaryFileEntriesCapability.class)) {
 						%>

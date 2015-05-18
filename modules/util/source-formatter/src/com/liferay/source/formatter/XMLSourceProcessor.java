@@ -345,9 +345,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isExcludedFile(_xmlExclusionFiles, absolutePath) ||
-			fileName.contains("/com/liferay/source/formatter/dependencies/")) {
-
+		if (isExcludedFile(_xmlExclusionFiles, absolutePath)) {
 			return content;
 		}
 
@@ -381,8 +379,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 				 (fileName.endsWith(".action") ||
 				  fileName.endsWith(".function") ||
 				  fileName.endsWith(".macro") ||
-				  fileName.endsWith(".testcase") ||
-				  fileName.endsWith(".testxml"))) {
+				  fileName.endsWith(".testcase"))) {
 
 			newContent = formatPoshiXML(fileName, newContent);
 		}
@@ -1243,7 +1240,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 
 	private static final String[] _INCLUDES = new String[] {
 		"**\\*.action", "**\\*.function", "**\\*.macro", "**\\*.testcase",
-		"**\\*.testxml", "**\\*.xml"
+		"**\\*.xml"
 	};
 
 	private static final Pattern _commentPattern1 = Pattern.compile(

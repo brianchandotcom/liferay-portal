@@ -17,8 +17,6 @@
 		<sequential>
 			<do-compile-java
 				javac.classpathref="portal.test.classpath"
-				javac.destdir="classes"
-				javac.srcdir="src"
 			/>
 		</sequential>
 	</macrodef>

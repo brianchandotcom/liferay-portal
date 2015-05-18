@@ -18,11 +18,7 @@
 		<sequential>
 			<antcall target="compile-dependencies" />
 
-			<do-compile-java
-				javac.classpathref="project.classpath"
-				javac.destdir="classes"
-				javac.srcdir="src"
-			/>
+			<do-compile-java />
 
 			<print-current-time />
 		</sequential>
@@ -114,7 +110,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<delete file="json-java.zip" />
 
 		<compile-java
-			javac.classpathref="project.classpath"
 			javac.destdir="${tstamp.value}"
 			javac.srcdir="${tstamp.value}"
 		/>
@@ -344,7 +339,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</replace>
 
 		<compile-java
-			javac.classpathref="project.classpath"
 			javac.destdir="${tstamp.value}"
 			javac.srcdir="${tstamp.value}"
 		/>

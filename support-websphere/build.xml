@@ -15,8 +15,6 @@
 		<sequential>
 			<do-compile-java
 				javac.classpathref="web.classpath"
-				javac.destdir="classes"
-				javac.srcdir="src"
 			/>
 		</sequential>
 	</macrodef>

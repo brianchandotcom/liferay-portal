@@ -23,18 +23,14 @@
 
 	<macrodef name="compile-java">
 		<sequential>
-			<do-compile-java
-				javac.classpathref="project.classpath"
-				javac.destdir="classes"
-				javac.srcdir="src"
-			/>
+			<do-compile-java />
 		</sequential>
 	</macrodef>
 
 	<macrodef name="do-compile-java">
-		<attribute name="javac.classpathref" />
-		<attribute name="javac.destdir" />
-		<attribute name="javac.srcdir" />
+		<attribute default="project.classpath" name="javac.classpathref" />
+		<attribute default="classes" name="javac.destdir" />
+		<attribute default="src" name="javac.srcdir" />
 		<element name="post-compile" optional="true" />
 
 		<sequential>

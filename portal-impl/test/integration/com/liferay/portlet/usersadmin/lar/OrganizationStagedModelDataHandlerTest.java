@@ -70,6 +70,10 @@ public class OrganizationStagedModelDataHandlerTest
 		_organization =
 			OrganizationLocalServiceUtil.fetchOrganizationByUuidAndCompanyId(
 				_organization.getUuid(), _organization.getCompanyId());
+
+		if (_organization != null) {
+			deleteOrganizations(_organization);
+		}
 	}
 
 	@Override
@@ -120,6 +124,20 @@ public class OrganizationStagedModelDataHandlerTest
 			dependentStagedModelsMap, Website.class, website);
 
 		return _organization;
+	}
+
+	protected void deleteOrganizations(Organization organization)
+		throws Exception {
+
+		List<Organization> childOrganizations =
+			OrganizationLocalServiceUtil.getOrganizations(
+				organization.getCompanyId(), organization.getOrganizationId());
+
+		for (Organization childOrganization : childOrganizations) {
+			deleteOrganizations(childOrganization);
+		}
+
+		OrganizationLocalServiceUtil.deleteOrganization(organization);
 	}
 
 	@Override

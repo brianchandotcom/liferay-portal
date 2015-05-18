@@ -17,5 +17,17 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/activation.jar" />
+	<classpathentry kind="lib" path="lib/base64.jar" />
+	<classpathentry kind="lib" path="lib/bcprov-jdk15on.jar" />
+	<classpathentry kind="lib" path="lib/commons-codec.jar" />
+	<classpathentry kind="lib" path="lib/httpclient.jar" />
+	<classpathentry kind="lib" path="lib/httpcore.jar" />
+	<classpathentry kind="lib" path="lib/jackson-core-asl.jar" />
+	<classpathentry kind="lib" path="lib/jackson-mapper-asl.jar" />
+	<classpathentry kind="lib" path="lib/java-xmlbuilder.jar" />
+	<classpathentry kind="lib" path="lib/jets3t.jar" />
+	<classpathentry kind="lib" path="lib/mail.jar" />
+	<classpathentry kind="lib" path="lib/mx4j.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

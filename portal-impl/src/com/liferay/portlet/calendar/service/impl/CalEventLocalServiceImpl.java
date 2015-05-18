@@ -1755,7 +1755,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			sb.append(", startDateMonth=");
 			sb.append(startDateMonth);
 			sb.append(", startDateDay=");
-			sb.append(startDateMonth);
+			sb.append(startDateDay);
 			sb.append(", startDateYear=");
 			sb.append(startDateYear);
 			sb.append(StringPool.CLOSE_BRACKET);

@@ -273,16 +273,15 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		stagedModelDataHandler.deleteStagedModel(stagedModel);
 
-		for (List<StagedModel> dependentStagedModelList :
+		for (List<StagedModel> dependentStagedModels :
 				dependentStagedModelsMap.values()) {
 
-			for (StagedModel dependentStagedModel : dependentStagedModelList) {
-				String className = ExportImportClassedModelUtil.getClassName(
-					dependentStagedModel);
-
+			for (StagedModel dependentStagedModel : dependentStagedModels) {
 				stagedModelDataHandler =
 					StagedModelDataHandlerRegistryUtil.
-						getStagedModelDataHandler(className);
+						getStagedModelDataHandler(
+							ExportImportClassedModelUtil.getClassName(
+								dependentStagedModel));
 
 				stagedModelDataHandler.deleteStagedModel(dependentStagedModel);
 			}

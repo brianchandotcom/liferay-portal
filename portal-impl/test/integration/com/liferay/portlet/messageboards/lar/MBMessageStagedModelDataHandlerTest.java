@@ -195,18 +195,16 @@ public class MBMessageStagedModelDataHandlerTest
 
 		stagedModelDataHandler.deleteStagedModel(stagedModel);
 
-		for (List<StagedModel> dependentStagedModelList :
+		for (List<StagedModel> dependentStagedModels :
 				dependentStagedModelsMap.values()) {
 
-			for (StagedModel dependentStagedModel : dependentStagedModelList) {
+			for (StagedModel dependentStagedModel : dependentStagedModels) {
 				try {
-					String className =
-						ExportImportClassedModelUtil.getClassName(
-							dependentStagedModel);
-
 					stagedModelDataHandler =
 						StagedModelDataHandlerRegistryUtil.
-							getStagedModelDataHandler(className);
+							getStagedModelDataHandler(
+								ExportImportClassedModelUtil.getClassName(
+									dependentStagedModel));
 
 					stagedModelDataHandler.deleteStagedModel(
 						dependentStagedModel);

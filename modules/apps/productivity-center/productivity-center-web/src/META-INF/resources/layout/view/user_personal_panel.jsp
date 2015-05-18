@@ -18,7 +18,7 @@
 
 <c:choose>
 	<c:when test="<%= themeDisplay.isStatePopUp() %>">
-		<productivity-center-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" servletContext="<%= application %>" />
+		<productivity-center-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" />
 	</c:when>
 	<c:otherwise>
 		<aui:container cssClass="panel-manage-frontpage">
@@ -27,7 +27,7 @@
 					<liferay-portlet:runtime portletName="<%= ProductivityCenterPortletKeys.PRODUCTIVITY_CENTER %>" />
 				</aui:col>
 				<aui:col width="<%= 75 %>">
-					<productivity-center-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" servletContext="<%= application %>" />
+					<productivity-center-ui:panel-content portletId="<%= themeDisplay.getPpid() %>" />
 				</aui:col>
 			</aui:row>
 		</aui:container>

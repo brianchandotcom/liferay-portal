@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>
+package com.liferay.productivity.center.taglib.servlet.taglib.ui;
 
-<%@ page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
-page import="com.liferay.productivity.center.panel.PanelCategoryRegistry" %><%@
-page import="com.liferay.productivity.center.panel.constants.PanelCategoryKeys" %><%@
-page import="com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys" %>
+import com.liferay.productivity.center.taglib.util.ServletContextUtil;
+import com.liferay.taglib.util.IncludeTag;
+
+import javax.servlet.jsp.PageContext;
+
+/**
+ * @author Adolfo Pérez
+ */
+public class BasePanelTag extends IncludeTag {
+
+	@Override
+	public void setPageContext(PageContext pageContext) {
+		super.setPageContext(pageContext);
+
+		servletContext = ServletContextUtil.getServletContext();
+	}
+
+}

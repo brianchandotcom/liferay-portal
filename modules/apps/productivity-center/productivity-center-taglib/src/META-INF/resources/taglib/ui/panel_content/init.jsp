@@ -14,9 +14,11 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/productivity-center/ui" prefix="productivity-center-ui" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ page import="com.liferay.productivity.center.panel.PanelCategory" %><%@
-page import="com.liferay.productivity.center.panel.PanelCategoryRegistry" %><%@
-page import="com.liferay.productivity.center.panel.constants.PanelCategoryKeys" %><%@
-page import="com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys" %>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+
+<%@ page import="com.liferay.productivity.center.taglib.servlet.taglib.display.context.logic.PanelAppContentHelper" %>
+
+<liferay-theme:defineObjects />

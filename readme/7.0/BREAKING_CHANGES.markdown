@@ -1565,7 +1565,10 @@ feature to be thoroughly covered by exceptions for different configurations.
 
 #### What changed?
 
-The USERS_LAST_NAME_REQUIRED property has been removed from the portal.properties and the corresponding UI.  Required names are now handled on a per-language basis via the language.properties files.  It has also been removed as an option from the Portal Settings section of the control panel.
+The USERS_LAST_NAME_REQUIRED property has been removed from the
+portal.properties and the corresponding UI. Required names are now handled on a
+per-language basis via the language.properties files. It has also been removed
+as an option from the Portal Settings section of the control panel.
 
 #### Who is affected?
 
@@ -1573,10 +1576,18 @@ This affects anyone who uses the USERS_LAST_NAME_REQUIRED portal property.
 
 #### How should I update my code?
 
-If you need to require the last name, list it on the `lang.user.name.required.field.names` line of the appropriate language.properties files like so: `lang.user.name.required.field.names=last-name`.
+If you need to require the last name, list it on the
+`lang.user.name.required.field.names` line of the appropriate
+language.properties files like so:
+`lang.user.name.required.field.names=last-name`.
 
 #### Why was this change made?
 
-This change was made to account for different languages allowing for different user name fields, along with which of those fields are required (introduced as part of LPS-48406). That change was in conflict with the current USERS_LAST_NAME_REQUIRED property, so all control has been relegated to the language.properties files (with the exception of first-name, which is still always present and always required).
+This change was made to account for different languages allowing for different
+user name fields, along with which of those fields are required (introduced as
+part of LPS-48406). That change was in conflict with the current
+USERS_LAST_NAME_REQUIRED property, so all control has been relegated to the
+language.properties files (with the exception of first-name, which is still
+always present and always required).
 
 ---------------------------------------

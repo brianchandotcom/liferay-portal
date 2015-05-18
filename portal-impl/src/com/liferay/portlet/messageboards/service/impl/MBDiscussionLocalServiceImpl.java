@@ -48,22 +48,12 @@ public class MBDiscussionLocalServiceImpl
 
 		long discussionId = counterLocalService.increment();
 
-		MBDiscussion discussion = mbDiscussionPersistence.create(discussionId);
-
-		discussion.setUuid(serviceContext.getUuid());
-		discussion.setGroupId(groupId);
-		discussion.setCompanyId(serviceContext.getCompanyId());
-		discussion.setUserId(userId);
-		discussion.setUserName(user.getFullName());
-		discussion.setCreateDate(serviceContext.getCreateDate(now));
-		discussion.setModifiedDate(serviceContext.getModifiedDate(now));
-		discussion.setClassNameId(classNameId);
-		discussion.setClassPK(classPK);
-		discussion.setThreadId(threadId);
-
-		mbDiscussionPersistence.update(discussion);
-
-		return discussion;
+		return addDiscussion(
+			serviceContext.getUuid(), discussionId, groupId,
+			serviceContext.getCompanyId(), userId, user.getFullName(),
+			serviceContext.getCreateDate(now),
+			serviceContext.getModifiedDate(now), classNameId, classPK,
+			threadId);
 	}
 
 	/**
@@ -143,7 +133,7 @@ public class MBDiscussionLocalServiceImpl
 		long threadId = importMBThread(
 			mbDiscussion.getThreadId(), toClassNameId, toClassPK);
 
-		addMBDiscussion(
+		addDiscussion(
 			PortalUUIDUtil.generate(), counterLocalService.increment(),
 			mbDiscussion.getGroupId(), mbDiscussion.getCompanyId(),
 			mbDiscussion.getUserId(), mbDiscussion.getUserName(),
@@ -168,7 +158,7 @@ public class MBDiscussionLocalServiceImpl
 		subscriptionLocalService.deleteSubscription(userId, className, classPK);
 	}
 
-	protected void addMBDiscussion(
+	protected MBDiscussion addDiscussion(
 		String uuid, long discussionId, long groupId, long companyId,
 		long userId, String userName, Date createDate, Date modifiedDate,
 		long classNameId, long classPK, long threadId) {
@@ -187,7 +177,7 @@ public class MBDiscussionLocalServiceImpl
 		mbDiscussion.setClassPK(classPK);
 		mbDiscussion.setThreadId(threadId);
 
-		mbDiscussionPersistence.update(mbDiscussion);
+		return mbDiscussionPersistence.update(mbDiscussion);
 	}
 
 	protected void addMBMessage(

@@ -10,6 +10,7 @@
 
 	<path id="portal.test.classpath">
 		<path refid="lib.classpath" />
+		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 		<pathelement location="${project.dir}/portal-service/classes" />
 	</path>
 

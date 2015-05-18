@@ -26,11 +26,17 @@
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
 			FROM
 				JournalArticle
+			LEFT JOIN JournalArticle tempJournalArticle ON
+				[$STATUS_JOIN$] AND
+				(JournalArticle.groupId = tempJournalArticle.groupId) AND
+				(JournalArticle.articleId = tempJournalArticle.articleId) AND
+				(JournalArticle.version < tempJournalArticle.version)
 			WHERE
-				(groupId = ?) AND
-				(classNameId = ?) AND
+				(JournalArticle.groupId = ?) AND
+				(JournalArticle.classNameId = ?) AND
 				([$DDM_STRUCTURE_KEY$]) AND
-				([$STATUS$])
+				([$STATUS$]) AND
+				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
 	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_F_C">

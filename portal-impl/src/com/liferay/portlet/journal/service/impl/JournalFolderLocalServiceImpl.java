@@ -1013,8 +1013,13 @@ public class JournalFolderLocalServiceImpl
 
 		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
 
-		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
+		long oldParentFolderId = folder.getParentFolderId();
+
+		if (oldParentFolderId != parentFolderId) {
+			folder.setParentFolderId(parentFolderId);
+			folder.setTreePath(folder.buildTreePath());
+		}
+
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setRestrictionType(restrictionType);
@@ -1035,8 +1040,10 @@ public class JournalFolderLocalServiceImpl
 			updateFolderDDMStructures(folder, ddmStructureIds);
 		}
 
-		rebuildTree(
-			folder.getCompanyId(), folderId, folder.getTreePath(), true);
+		if (oldParentFolderId != parentFolderId) {
+			rebuildTree(
+				folder.getCompanyId(), folderId, folder.getTreePath(), true);
+		}
 
 		return folder;
 	}

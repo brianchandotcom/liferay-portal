@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scheduler.quartz;
+package com.liferay.portal.scheduler.quartz.internal;
 
 import com.liferay.portal.kernel.dao.shard.ShardDataSourceTargetSource;
 import com.liferay.portal.kernel.log.Log;

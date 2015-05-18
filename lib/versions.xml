@@ -2877,18 +2877,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/quartz.jar</file-name>
-				<version>2.1.7</version>
-				<project-name>Quartz</project-name>
-				<project-url>http://www.quartz-scheduler.org</project-url>
-				<licenses>
-					<license>
-						<license-name>Apache License 2.0</license-name>
-						<license-url>http://www.apache.org/licenses/LICENSE-2.0</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/rdffilter.jar</file-name>
 				<version>1.0</version>
 				<project-name>RDF Filter</project-name>

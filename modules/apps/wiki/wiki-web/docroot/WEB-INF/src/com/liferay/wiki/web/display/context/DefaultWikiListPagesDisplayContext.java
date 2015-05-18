@@ -287,7 +287,8 @@ public class DefaultWikiListPagesDisplayContext
 		portletURL.setParameter("struts_action", "/wiki/move_page");
 		portletURL.setParameter("redirect", _wikiRequestHelper.getCurrentURL());
 		portletURL.setParameter("nodeId", String.valueOf(wikiPage.getNodeId()));
-		portletURL.setParameter("title", StringPool.BLANK);
+		portletURL.setParameter(
+			"title", HtmlUtil.unescape(wikiPage.getTitle()));
 
 		urlMenuItem.setURL(portletURL.toString());
 

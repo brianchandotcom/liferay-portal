@@ -436,8 +436,14 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -622,6 +628,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 		pollsVoteModelImpl._setOriginalUserId = false;
 
+		pollsVoteModelImpl._setModifiedDate = false;
+
 		pollsVoteModelImpl._originalQuestionId = pollsVoteModelImpl._questionId;
 
 		pollsVoteModelImpl._setOriginalQuestionId = false;
@@ -803,6 +811,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _questionId;
 	private long _originalQuestionId;
 	private boolean _setOriginalQuestionId;

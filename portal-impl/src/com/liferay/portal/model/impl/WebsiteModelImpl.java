@@ -444,8 +444,14 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -690,6 +696,8 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 
 		websiteModelImpl._setOriginalUserId = false;
 
+		websiteModelImpl._setModifiedDate = false;
+
 		websiteModelImpl._originalClassNameId = websiteModelImpl._classNameId;
 
 		websiteModelImpl._setOriginalClassNameId = false;
@@ -888,6 +896,7 @@ public class WebsiteModelImpl extends BaseModelImpl<Website>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

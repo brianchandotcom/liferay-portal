@@ -501,8 +501,14 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1061,6 +1067,8 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 
 		bookmarksFolderModelImpl._setOriginalCompanyId = false;
 
+		bookmarksFolderModelImpl._setModifiedDate = false;
+
 		bookmarksFolderModelImpl._originalResourceBlockId = bookmarksFolderModelImpl._resourceBlockId;
 
 		bookmarksFolderModelImpl._setOriginalResourceBlockId = false;
@@ -1318,6 +1326,7 @@ public class BookmarksFolderModelImpl extends BaseModelImpl<BookmarksFolder>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _resourceBlockId;
 	private long _originalResourceBlockId;
 	private boolean _setOriginalResourceBlockId;

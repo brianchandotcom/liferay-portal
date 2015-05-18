@@ -35,11 +35,14 @@ import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.ExportImportConfigurationImpl;
 import com.liferay.portal.model.impl.ExportImportConfigurationModelImpl;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.ExportImportConfigurationPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2869,6 +2872,30 @@ public class ExportImportConfigurationPersistenceImpl
 		boolean isNew = exportImportConfiguration.isNew();
 
 		ExportImportConfigurationModelImpl exportImportConfigurationModelImpl = (ExportImportConfigurationModelImpl)exportImportConfiguration;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (exportImportConfiguration.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				exportImportConfiguration.setCreateDate(now);
+			}
+			else {
+				exportImportConfiguration.setCreateDate(serviceContext.getCreateDate(
+						now));
+			}
+		}
+
+		if (!exportImportConfigurationModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				exportImportConfiguration.setModifiedDate(now);
+			}
+			else {
+				exportImportConfiguration.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 

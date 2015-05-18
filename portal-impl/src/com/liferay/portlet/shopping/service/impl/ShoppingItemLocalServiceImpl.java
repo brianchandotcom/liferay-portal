@@ -48,7 +48,6 @@ import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,8 +85,6 @@ public class ShoppingItemLocalServiceImpl
 		catch (IOException ioe) {
 		}
 
-		Date now = new Date();
-
 		validate(
 			user.getCompanyId(), 0, sku, name, smallImage, smallImageURL,
 			smallImageFile, smallImageBytes, mediumImage, mediumImageURL,
@@ -102,8 +99,6 @@ public class ShoppingItemLocalServiceImpl
 		item.setCompanyId(user.getCompanyId());
 		item.setUserId(user.getUserId());
 		item.setUserName(user.getFullName());
-		item.setCreateDate(now);
-		item.setModifiedDate(now);
 		item.setCategoryId(categoryId);
 		item.setSku(sku);
 		item.setName(name);
@@ -472,7 +467,6 @@ public class ShoppingItemLocalServiceImpl
 			mediumImageFile, mediumImageBytes, largeImage, largeImageURL,
 			largeImageFile, largeImageBytes, itemFields);
 
-		item.setModifiedDate(new Date());
 		item.setCategoryId(categoryId);
 		item.setSku(sku);
 		item.setName(name);

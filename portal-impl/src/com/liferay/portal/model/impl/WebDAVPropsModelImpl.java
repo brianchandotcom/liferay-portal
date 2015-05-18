@@ -241,8 +241,14 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -426,6 +432,8 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	public void resetOriginalValues() {
 		WebDAVPropsModelImpl webDAVPropsModelImpl = this;
 
+		webDAVPropsModelImpl._setModifiedDate = false;
+
 		webDAVPropsModelImpl._originalClassNameId = webDAVPropsModelImpl._classNameId;
 
 		webDAVPropsModelImpl._setOriginalClassNameId = false;
@@ -560,6 +568,7 @@ public class WebDAVPropsModelImpl extends BaseModelImpl<WebDAVProps>
 	private long _companyId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

@@ -424,8 +424,14 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -874,6 +880,8 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 
 		layoutSetPrototypeModelImpl._setOriginalCompanyId = false;
 
+		layoutSetPrototypeModelImpl._setModifiedDate = false;
+
 		layoutSetPrototypeModelImpl._originalActive = layoutSetPrototypeModelImpl._active;
 
 		layoutSetPrototypeModelImpl._setOriginalActive = false;
@@ -1066,6 +1074,7 @@ public class LayoutSetPrototypeModelImpl extends BaseModelImpl<LayoutSetPrototyp
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;

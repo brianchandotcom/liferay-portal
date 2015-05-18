@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -32,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.portlet.messageboards.NoSuchBanException;
@@ -43,6 +46,7 @@ import com.liferay.portlet.messageboards.service.persistence.MBBanPersistence;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -3330,6 +3334,30 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			String uuid = PortalUUIDUtil.generate();
 
 			mbBan.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (mbBan.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					mbBan.setCreateDate(now);
+				}
+				else {
+					mbBan.setCreateDate(serviceContext.getCreateDate(now));
+				}
+			}
+
+			if (!mbBanModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					mbBan.setModifiedDate(now);
+				}
+				else {
+					mbBan.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
+			}
 		}
 
 		Session session = null;

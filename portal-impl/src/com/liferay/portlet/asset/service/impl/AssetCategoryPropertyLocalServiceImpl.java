@@ -22,7 +22,6 @@ import com.liferay.portlet.asset.model.AssetCategoryProperty;
 import com.liferay.portlet.asset.service.base.AssetCategoryPropertyLocalServiceBaseImpl;
 import com.liferay.portlet.asset.util.AssetUtil;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,7 +37,6 @@ public class AssetCategoryPropertyLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		validate(key, value);
 
@@ -50,8 +48,6 @@ public class AssetCategoryPropertyLocalServiceImpl
 		categoryProperty.setCompanyId(user.getCompanyId());
 		categoryProperty.setUserId(user.getUserId());
 		categoryProperty.setUserName(user.getFullName());
-		categoryProperty.setCreateDate(now);
-		categoryProperty.setModifiedDate(now);
 		categoryProperty.setCategoryId(categoryId);
 		categoryProperty.setKey(key);
 		categoryProperty.setValue(value);
@@ -138,7 +134,6 @@ public class AssetCategoryPropertyLocalServiceImpl
 			categoryProperty.setUserName(user.getFullName());
 		}
 
-		categoryProperty.setModifiedDate(new Date());
 		categoryProperty.setKey(key);
 		categoryProperty.setValue(value);
 

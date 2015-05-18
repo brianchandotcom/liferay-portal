@@ -25,7 +25,6 @@ import com.liferay.service.access.control.profile.exception.DuplicateSACPEntryNa
 import com.liferay.service.access.control.profile.model.SACPEntry;
 import com.liferay.service.access.control.profile.service.base.SACPEntryLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -49,7 +48,6 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 		}
 
 		User user = userLocalService.getUserById(userId);
-		Date now = new Date();
 
 		long sacpEntryId = counterLocalService.increment();
 
@@ -59,8 +57,6 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 		sacpEntry.setCompanyId(companyId);
 		sacpEntry.setUserId(userId);
 		sacpEntry.setUserName(user.getFullName());
-		sacpEntry.setCreateDate(now);
-		sacpEntry.setModifiedDate(now);
 		sacpEntry.setAllowedServices(allowedServices);
 		sacpEntry.setName(name);
 		sacpEntry.setTitleMap(titleMap);

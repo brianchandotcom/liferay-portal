@@ -27,7 +27,6 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.model.MBThreadFlag;
 import com.liferay.portlet.messageboards.service.base.MBThreadFlagLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -63,7 +62,6 @@ public class MBThreadFlagLocalServiceImpl
 			threadFlag.setCompanyId(user.getCompanyId());
 			threadFlag.setUserId(userId);
 			threadFlag.setUserName(user.getFullName());
-			threadFlag.setCreateDate(serviceContext.getCreateDate(new Date()));
 			threadFlag.setModifiedDate(
 				serviceContext.getModifiedDate(thread.getLastPostDate()));
 			threadFlag.setThreadId(threadId);

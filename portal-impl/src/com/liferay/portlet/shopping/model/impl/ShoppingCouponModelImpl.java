@@ -447,8 +447,14 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -732,6 +738,8 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 
 		shoppingCouponModelImpl._setOriginalGroupId = false;
 
+		shoppingCouponModelImpl._setModifiedDate = false;
+
 		shoppingCouponModelImpl._originalCode = shoppingCouponModelImpl._code;
 
 		shoppingCouponModelImpl._columnBitmask = 0;
@@ -994,6 +1002,7 @@ public class ShoppingCouponModelImpl extends BaseModelImpl<ShoppingCoupon>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _code;
 	private String _originalCode;
 	private String _name;

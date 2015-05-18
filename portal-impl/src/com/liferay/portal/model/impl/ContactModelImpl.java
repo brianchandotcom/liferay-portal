@@ -591,8 +591,14 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1180,6 +1186,8 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 		contactModelImpl._setOriginalCompanyId = false;
 
+		contactModelImpl._setModifiedDate = false;
+
 		contactModelImpl._originalClassNameId = contactModelImpl._classNameId;
 
 		contactModelImpl._setOriginalClassNameId = false;
@@ -1651,6 +1659,7 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

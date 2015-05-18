@@ -630,8 +630,14 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1781,6 +1787,8 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 
 		layoutModelImpl._setOriginalCompanyId = false;
 
+		layoutModelImpl._setModifiedDate = false;
+
 		layoutModelImpl._originalPrivateLayout = layoutModelImpl._privateLayout;
 
 		layoutModelImpl._setOriginalPrivateLayout = false;
@@ -2222,6 +2230,7 @@ public class LayoutModelImpl extends BaseModelImpl<Layout>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private boolean _privateLayout;
 	private boolean _originalPrivateLayout;
 	private boolean _setOriginalPrivateLayout;

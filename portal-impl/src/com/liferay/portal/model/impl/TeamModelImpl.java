@@ -373,8 +373,14 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -544,6 +550,8 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	public void resetOriginalValues() {
 		TeamModelImpl teamModelImpl = this;
 
+		teamModelImpl._setModifiedDate = false;
+
 		teamModelImpl._originalGroupId = teamModelImpl._groupId;
 
 		teamModelImpl._setOriginalGroupId = false;
@@ -706,6 +714,7 @@ public class TeamModelImpl extends BaseModelImpl<Team> implements TeamModel {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

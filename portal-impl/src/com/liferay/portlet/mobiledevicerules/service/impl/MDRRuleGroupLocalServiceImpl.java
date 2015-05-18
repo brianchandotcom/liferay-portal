@@ -29,7 +29,6 @@ import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.base.MDRRuleGroupLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +49,6 @@ public class MDRRuleGroupLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(
 			serviceContext.getUserId());
-		Date now = new Date();
 
 		long ruleGroupId = counterLocalService.increment();
 
@@ -59,8 +57,6 @@ public class MDRRuleGroupLocalServiceImpl
 		ruleGroup.setUuid(serviceContext.getUuid());
 		ruleGroup.setGroupId(groupId);
 		ruleGroup.setCompanyId(serviceContext.getCompanyId());
-		ruleGroup.setCreateDate(serviceContext.getCreateDate(now));
-		ruleGroup.setModifiedDate(serviceContext.getModifiedDate(now));
 		ruleGroup.setUserId(user.getUserId());
 		ruleGroup.setUserName(user.getFullName());
 		ruleGroup.setNameMap(nameMap);
@@ -309,7 +305,6 @@ public class MDRRuleGroupLocalServiceImpl
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
 
-		ruleGroup.setModifiedDate(serviceContext.getModifiedDate(null));
 		ruleGroup.setNameMap(nameMap);
 		ruleGroup.setDescriptionMap(descriptionMap);
 

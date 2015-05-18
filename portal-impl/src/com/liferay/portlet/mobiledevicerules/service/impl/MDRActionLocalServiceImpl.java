@@ -55,8 +55,6 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		action.setUuid(serviceContext.getUuid());
 		action.setGroupId(ruleGroupInstance.getGroupId());
 		action.setCompanyId(serviceContext.getCompanyId());
-		action.setCreateDate(serviceContext.getCreateDate(now));
-		action.setModifiedDate(serviceContext.getModifiedDate(now));
 		action.setUserId(serviceContext.getUserId());
 		action.setUserName(user.getFullName());
 		action.setClassNameId(ruleGroupInstance.getClassNameId());
@@ -163,7 +161,6 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 		MDRAction action = mdrActionPersistence.findByPrimaryKey(actionId);
 
-		action.setModifiedDate(serviceContext.getModifiedDate(null));
 		action.setNameMap(nameMap);
 		action.setDescriptionMap(descriptionMap);
 		action.setType(type);

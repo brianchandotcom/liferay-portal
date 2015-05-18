@@ -761,8 +761,14 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1618,6 +1624,8 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 
 		shoppingOrderModelImpl._setOriginalUserId = false;
 
+		shoppingOrderModelImpl._setModifiedDate = false;
+
 		shoppingOrderModelImpl._originalNumber = shoppingOrderModelImpl._number;
 
 		shoppingOrderModelImpl._originalPpTxnId = shoppingOrderModelImpl._ppTxnId;
@@ -2294,6 +2302,7 @@ public class ShoppingOrderModelImpl extends BaseModelImpl<ShoppingOrder>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _number;
 	private String _originalNumber;
 	private double _tax;

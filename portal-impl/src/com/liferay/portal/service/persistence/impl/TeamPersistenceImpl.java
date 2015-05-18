@@ -39,6 +39,8 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.model.impl.TeamImpl;
 import com.liferay.portal.model.impl.TeamModelImpl;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.TeamPersistence;
 import com.liferay.portal.service.persistence.UserGroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
@@ -46,6 +48,7 @@ import com.liferay.portal.service.persistence.UserPersistence;
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1404,6 +1407,28 @@ public class TeamPersistenceImpl extends BasePersistenceImpl<Team>
 		boolean isNew = team.isNew();
 
 		TeamModelImpl teamModelImpl = (TeamModelImpl)team;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (team.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				team.setCreateDate(now);
+			}
+			else {
+				team.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!teamModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				team.setModifiedDate(now);
+			}
+			else {
+				team.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

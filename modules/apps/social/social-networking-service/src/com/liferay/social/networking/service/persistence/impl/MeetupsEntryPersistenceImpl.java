@@ -29,6 +29,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import com.liferay.social.networking.exception.NoSuchMeetupsEntryException;
@@ -40,6 +42,7 @@ import com.liferay.social.networking.service.persistence.MeetupsEntryPersistence
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -1227,6 +1230,28 @@ public class MeetupsEntryPersistenceImpl extends BasePersistenceImpl<MeetupsEntr
 		boolean isNew = meetupsEntry.isNew();
 
 		MeetupsEntryModelImpl meetupsEntryModelImpl = (MeetupsEntryModelImpl)meetupsEntry;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (meetupsEntry.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				meetupsEntry.setCreateDate(now);
+			}
+			else {
+				meetupsEntry.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!meetupsEntryModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				meetupsEntry.setModifiedDate(now);
+			}
+			else {
+				meetupsEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

@@ -22,7 +22,6 @@ import com.liferay.portlet.softwarecatalog.FrameworkVersionNameException;
 import com.liferay.portlet.softwarecatalog.model.SCFrameworkVersion;
 import com.liferay.portlet.softwarecatalog.service.base.SCFrameworkVersionLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,7 +41,6 @@ public class SCFrameworkVersionLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-		Date now = new Date();
 
 		validate(name);
 
@@ -55,8 +53,6 @@ public class SCFrameworkVersionLocalServiceImpl
 		frameworkVersion.setCompanyId(user.getCompanyId());
 		frameworkVersion.setUserId(user.getUserId());
 		frameworkVersion.setUserName(user.getFullName());
-		frameworkVersion.setCreateDate(now);
-		frameworkVersion.setModifiedDate(now);
 		frameworkVersion.setName(name);
 		frameworkVersion.setUrl(url);
 		frameworkVersion.setActive(active);

@@ -524,8 +524,14 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1174,6 +1180,8 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 
 		mbThreadModelImpl._setOriginalCompanyId = false;
 
+		mbThreadModelImpl._setModifiedDate = false;
+
 		mbThreadModelImpl._originalCategoryId = mbThreadModelImpl._categoryId;
 
 		mbThreadModelImpl._setOriginalCategoryId = false;
@@ -1456,6 +1464,7 @@ public class MBThreadModelImpl extends BaseModelImpl<MBThread>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _categoryId;
 	private long _originalCategoryId;
 	private boolean _setOriginalCategoryId;

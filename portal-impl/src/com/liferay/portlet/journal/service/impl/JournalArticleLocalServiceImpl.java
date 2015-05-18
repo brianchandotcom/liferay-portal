@@ -368,8 +368,6 @@ public class JournalArticleLocalServiceImpl
 		article.setCompanyId(user.getCompanyId());
 		article.setUserId(user.getUserId());
 		article.setUserName(user.getFullName());
-		article.setCreateDate(serviceContext.getCreateDate(now));
-		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
 		article.setClassNameId(classNameId);
 		article.setClassPK(classPK);
@@ -754,7 +752,6 @@ public class JournalArticleLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		oldArticleId = StringUtil.toUpperCase(oldArticleId.trim());
 		newArticleId = StringUtil.toUpperCase(newArticleId.trim());
-		Date now = new Date();
 
 		JournalArticle oldArticle = journalArticlePersistence.findByG_A_V(
 			groupId, oldArticleId, version);
@@ -793,8 +790,6 @@ public class JournalArticleLocalServiceImpl
 		newArticle.setCompanyId(user.getCompanyId());
 		newArticle.setUserId(user.getUserId());
 		newArticle.setUserName(user.getFullName());
-		newArticle.setCreateDate(now);
-		newArticle.setModifiedDate(now);
 		newArticle.setFolderId(oldArticle.getFolderId());
 		newArticle.setTreePath(oldArticle.getTreePath());
 		newArticle.setArticleId(newArticleId);
@@ -3432,7 +3427,6 @@ public class JournalArticleLocalServiceImpl
 			}
 
 			article.setFolderId(newFolderId);
-			article.setModifiedDate(new Date());
 			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
@@ -3526,8 +3520,6 @@ public class JournalArticleLocalServiceImpl
 		throws PortalException {
 
 		// Article
-
-		article.setModifiedDate(new Date());
 
 		int oldStatus = article.getStatus();
 
@@ -3715,8 +3707,6 @@ public class JournalArticleLocalServiceImpl
 			article.setContent(content);
 		}
 
-		article.setModifiedDate(new Date());
-
 		journalArticlePersistence.update(article);
 
 		return article;
@@ -3756,7 +3746,6 @@ public class JournalArticleLocalServiceImpl
 		}
 
 		article.setArticleId(trashArticleId);
-		article.setModifiedDate(new Date());
 
 		journalArticlePersistence.update(article);
 
@@ -5224,7 +5213,6 @@ public class JournalArticleLocalServiceImpl
 			user, groupId, articleId, article.getVersion(), addNewVersion,
 			content, images);
 
-		article.setModifiedDate(serviceContext.getModifiedDate(now));
 		article.setFolderId(folderId);
 		article.setTreePath(article.buildTreePath());
 		article.setTitleMap(titleMap, locale);
@@ -5465,7 +5453,6 @@ public class JournalArticleLocalServiceImpl
 			article.setUserId(oldArticle.getUserId());
 			article.setUserName(user.getFullName());
 			article.setCreateDate(oldArticle.getCreateDate());
-			article.setModifiedDate(new Date());
 			article.setClassNameId(oldArticle.getClassNameId());
 			article.setClassPK(oldArticle.getClassPK());
 			article.setArticleId(articleId);

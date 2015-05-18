@@ -38,8 +38,6 @@ import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
-import java.util.Date;
-
 import org.apache.chemistry.opencmis.commons.enums.CapabilityQuery;
 
 import org.junit.Assert;
@@ -84,10 +82,8 @@ public class CMISQueryBuilderTest {
 		_repositoryEntry.setCompanyId(serviceContext.getCompanyId());
 		_repositoryEntry.setUserId(serviceContext.getUserId());
 		_repositoryEntry.setUserName(StringUtil.randomString());
-		_repositoryEntry.setCreateDate(
-			serviceContext.getCreateDate(new Date()));
-		_repositoryEntry.setModifiedDate(
-			serviceContext.getModifiedDate(new Date()));
+		_repositoryEntry.setCreateDate(serviceContext.getCreateDate(null));
+		_repositoryEntry.setModifiedDate(serviceContext.getModifiedDate(null));
 		_repositoryEntry.setRepositoryId(_repository.getRepositoryId());
 		_repositoryEntry.setMappedId(_MAPPED_ID);
 

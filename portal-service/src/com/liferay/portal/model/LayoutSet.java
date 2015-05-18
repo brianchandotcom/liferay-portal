@@ -104,6 +104,8 @@ public interface LayoutSet extends LayoutSetModel, PersistedModel {
 
 	public com.liferay.portal.model.Theme getWapTheme();
 
+	public boolean hasSetModifiedDate();
+
 	public boolean isLayoutSetPrototypeLinkActive();
 
 	public boolean isLogo();

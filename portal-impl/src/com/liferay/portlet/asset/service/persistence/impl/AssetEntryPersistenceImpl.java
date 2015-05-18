@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
@@ -3859,6 +3861,28 @@ public class AssetEntryPersistenceImpl extends BasePersistenceImpl<AssetEntry>
 		boolean isNew = assetEntry.isNew();
 
 		AssetEntryModelImpl assetEntryModelImpl = (AssetEntryModelImpl)assetEntry;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (assetEntry.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				assetEntry.setCreateDate(now);
+			}
+			else {
+				assetEntry.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!assetEntryModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				assetEntry.setModifiedDate(now);
+			}
+			else {
+				assetEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+			}
+		}
 
 		Session session = null;
 

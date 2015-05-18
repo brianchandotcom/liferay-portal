@@ -99,7 +99,6 @@ public class BackgroundTaskLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		final long backgroundTaskId = counterLocalService.increment();
 
@@ -107,9 +106,7 @@ public class BackgroundTaskLocalServiceImpl
 			backgroundTaskId);
 
 		backgroundTask.setCompanyId(user.getCompanyId());
-		backgroundTask.setCreateDate(serviceContext.getCreateDate(now));
 		backgroundTask.setGroupId(groupId);
-		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
 		backgroundTask.setUserId(userId);
 		backgroundTask.setUserName(user.getFullName());
 		backgroundTask.setName(name);
@@ -192,16 +189,12 @@ public class BackgroundTaskLocalServiceImpl
 		long backgroundTaskId, Map<String, Serializable> taskContextMap,
 		int status, String statusMessage, ServiceContext serviceContext) {
 
-		Date now = new Date();
-
 		BackgroundTask backgroundTask =
 			backgroundTaskPersistence.fetchByPrimaryKey(backgroundTaskId);
 
 		if (backgroundTask == null) {
 			return null;
 		}
-
-		backgroundTask.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		if (taskContextMap != null) {
 			_backgroundTaskThreadLocalManager.serializeThreadLocals(
@@ -214,7 +207,7 @@ public class BackgroundTaskLocalServiceImpl
 			(status == BackgroundTaskConstants.STATUS_SUCCESSFUL)) {
 
 			backgroundTask.setCompleted(true);
-			backgroundTask.setCompletionDate(now);
+			backgroundTask.setCompletionDate(new Date());
 		}
 
 		backgroundTask.setStatus(status);

@@ -40,4 +40,6 @@ public interface LayoutPrototype extends LayoutPrototypeModel, PersistedModel {
 
 	public com.liferay.portal.model.Layout getLayout()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public boolean hasSetModifiedDate();
 }

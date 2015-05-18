@@ -244,8 +244,14 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -437,6 +443,8 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	public void resetOriginalValues() {
 		ReleaseModelImpl releaseModelImpl = this;
 
+		releaseModelImpl._setModifiedDate = false;
+
 		releaseModelImpl._originalServletContextName = releaseModelImpl._servletContextName;
 
 		releaseModelImpl._columnBitmask = 0;
@@ -593,6 +601,7 @@ public class ReleaseModelImpl extends BaseModelImpl<Release>
 	private long _releaseId;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _servletContextName;
 	private String _originalServletContextName;
 	private int _buildNumber;

@@ -70,7 +70,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -197,8 +196,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			classPK = roleId;
 		}
 
-		Date now = new Date();
-
 		validate(0, user.getCompanyId(), classNameId, name);
 
 		Role role = rolePersistence.create(roleId);
@@ -210,16 +207,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		role.setCompanyId(user.getCompanyId());
 		role.setUserId(user.getUserId());
 		role.setUserName(user.getFullName());
-
-		if (serviceContext != null) {
-			role.setCreateDate(serviceContext.getCreateDate(now));
-			role.setModifiedDate(serviceContext.getModifiedDate(now));
-		}
-		else {
-			role.setCreateDate(now);
-			role.setModifiedDate(now);
-		}
-
 		role.setClassNameId(classNameId);
 		role.setClassPK(classPK);
 		role.setName(name);
@@ -1420,7 +1407,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			subtype = null;
 		}
 
-		role.setModifiedDate(new Date());
 		role.setName(name);
 		role.setTitleMap(titleMap);
 		role.setDescriptionMap(descriptionMap);

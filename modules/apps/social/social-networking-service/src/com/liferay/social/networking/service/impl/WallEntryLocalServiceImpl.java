@@ -30,7 +30,6 @@ import com.liferay.social.networking.model.WallEntry;
 import com.liferay.social.networking.service.base.WallEntryLocalServiceBaseImpl;
 import com.liferay.social.networking.wall.social.WallActivityKeys;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
@@ -50,7 +49,6 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 		User user = userLocalService.getUserById(userId);
-		Date now = new Date();
 
 		long wallEntryId = counterLocalService.increment();
 
@@ -60,8 +58,6 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		wallEntry.setCompanyId(user.getCompanyId());
 		wallEntry.setUserId(user.getUserId());
 		wallEntry.setUserName(user.getFullName());
-		wallEntry.setCreateDate(now);
-		wallEntry.setModifiedDate(now);
 		wallEntry.setComments(comments);
 
 		wallEntryPersistence.update(wallEntry);
@@ -164,7 +160,6 @@ public class WallEntryLocalServiceImpl extends WallEntryLocalServiceBaseImpl {
 		WallEntry wallEntry = wallEntryPersistence.findByPrimaryKey(
 			wallEntryId);
 
-		wallEntry.setModifiedDate(new Date());
 		wallEntry.setComments(comments);
 
 		wallEntryPersistence.update(wallEntry);

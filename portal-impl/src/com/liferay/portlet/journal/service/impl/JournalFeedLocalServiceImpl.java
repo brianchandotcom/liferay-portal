@@ -44,7 +44,6 @@ import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.model.JournalFeedConstants;
 import com.liferay.portlet.journal.service.base.JournalFeedLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -69,7 +68,6 @@ public class JournalFeedLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		feedId = StringUtil.toUpperCase(feedId.trim());
-		Date now = new Date();
 
 		validate(
 			user.getCompanyId(), groupId, feedId, autoFeedId, name,
@@ -88,8 +86,6 @@ public class JournalFeedLocalServiceImpl
 		feed.setCompanyId(user.getCompanyId());
 		feed.setUserId(user.getUserId());
 		feed.setUserName(user.getFullName());
-		feed.setCreateDate(serviceContext.getCreateDate(now));
-		feed.setModifiedDate(serviceContext.getModifiedDate(now));
 		feed.setFeedId(feedId);
 		feed.setName(name);
 		feed.setDescription(description);
@@ -302,7 +298,6 @@ public class JournalFeedLocalServiceImpl
 			feed.getCompanyId(), groupId, name, ddmStructureKey,
 			targetLayoutFriendlyUrl, contentField);
 
-		feed.setModifiedDate(serviceContext.getModifiedDate(null));
 		feed.setName(name);
 		feed.setDescription(description);
 		feed.setDDMStructureKey(ddmStructureKey);

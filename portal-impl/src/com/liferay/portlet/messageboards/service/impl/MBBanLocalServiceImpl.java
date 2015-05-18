@@ -44,7 +44,6 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
-		Date now = new Date();
 
 		long banId = counterLocalService.increment();
 
@@ -58,11 +57,8 @@ public class MBBanLocalServiceImpl extends MBBanLocalServiceBaseImpl {
 			ban.setCompanyId(user.getCompanyId());
 			ban.setUserId(user.getUserId());
 			ban.setUserName(user.getFullName());
-			ban.setCreateDate(serviceContext.getCreateDate(now));
 			ban.setBanUserId(banUserId);
 		}
-
-		ban.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		mbBanPersistence.update(ban);
 

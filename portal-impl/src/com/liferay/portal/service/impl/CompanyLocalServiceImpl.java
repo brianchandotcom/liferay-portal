@@ -318,8 +318,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			defaultUser = userPersistence.create(userId);
 
 			defaultUser.setCompanyId(companyId);
-			defaultUser.setCreateDate(now);
-			defaultUser.setModifiedDate(now);
 			defaultUser.setDefaultUser(true);
 			defaultUser.setContactId(counterLocalService.increment());
 			defaultUser.setPassword("password");
@@ -364,8 +362,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			defaultContact.setCompanyId(defaultUser.getCompanyId());
 			defaultContact.setUserId(defaultUser.getUserId());
 			defaultContact.setUserName(StringPool.BLANK);
-			defaultContact.setCreateDate(now);
-			defaultContact.setModifiedDate(now);
 			defaultContact.setClassName(User.class.getName());
 			defaultContact.setClassPK(defaultUser.getUserId());
 			defaultContact.setAccountId(company.getAccountId());
@@ -1426,8 +1422,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 		String legalType, String sicCode, String tickerSymbol, String industry,
 		String type, String size) {
 
-		Date now = new Date();
-
 		Account account = accountPersistence.fetchByPrimaryKey(
 			company.getAccountId());
 
@@ -1437,7 +1431,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			account = accountPersistence.create(accountId);
 
 			account.setCompanyId(company.getCompanyId());
-			account.setCreateDate(now);
 			account.setUserId(0);
 			account.setUserName(StringPool.BLANK);
 
@@ -1446,7 +1439,6 @@ public class CompanyLocalServiceImpl extends CompanyLocalServiceBaseImpl {
 			companyPersistence.update(company);
 		}
 
-		account.setModifiedDate(now);
 		account.setName(name);
 		account.setLegalName(legalName);
 		account.setLegalId(legalId);

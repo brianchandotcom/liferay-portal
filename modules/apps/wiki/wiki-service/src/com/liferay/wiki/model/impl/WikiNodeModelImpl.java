@@ -467,8 +467,14 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -963,6 +969,8 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 
 		wikiNodeModelImpl._setOriginalCompanyId = false;
 
+		wikiNodeModelImpl._setModifiedDate = false;
+
 		wikiNodeModelImpl._originalName = wikiNodeModelImpl._name;
 
 		wikiNodeModelImpl._originalStatus = wikiNodeModelImpl._status;
@@ -1197,6 +1205,7 @@ public class WikiNodeModelImpl extends BaseModelImpl<WikiNode>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
 	private String _description;

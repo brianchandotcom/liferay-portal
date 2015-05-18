@@ -458,8 +458,14 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -736,6 +742,8 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 
 		backgroundTaskModelImpl._setOriginalCompanyId = false;
 
+		backgroundTaskModelImpl._setModifiedDate = false;
+
 		backgroundTaskModelImpl._originalName = backgroundTaskModelImpl._name;
 
 		backgroundTaskModelImpl._originalTaskExecutorClassName = backgroundTaskModelImpl._taskExecutorClassName;
@@ -978,6 +986,7 @@ public class BackgroundTaskModelImpl extends BaseModelImpl<BackgroundTask>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
 	private String _servletContextNames;

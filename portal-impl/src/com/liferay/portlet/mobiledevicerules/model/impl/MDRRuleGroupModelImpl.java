@@ -418,8 +418,14 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -826,6 +832,8 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 
 		mdrRuleGroupModelImpl._setOriginalCompanyId = false;
 
+		mdrRuleGroupModelImpl._setModifiedDate = false;
+
 		mdrRuleGroupModelImpl._columnBitmask = 0;
 	}
 
@@ -994,6 +1002,7 @@ public class MDRRuleGroupModelImpl extends BaseModelImpl<MDRRuleGroup>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;

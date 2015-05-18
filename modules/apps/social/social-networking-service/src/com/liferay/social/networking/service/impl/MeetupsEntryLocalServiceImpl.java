@@ -53,8 +53,6 @@ public class MeetupsEntryLocalServiceImpl
 			endDateMonth, endDateDay, endDateYear, endDateHour, endDateMinute,
 			user.getTimeZone(), MeetupsEntryEndDateException.class);
 
-		Date now = new Date();
-
 		long meetupsEntryId = counterLocalService.increment();
 
 		MeetupsEntry meetupsEntry = meetupsEntryPersistence.create(
@@ -63,8 +61,6 @@ public class MeetupsEntryLocalServiceImpl
 		meetupsEntry.setCompanyId(user.getCompanyId());
 		meetupsEntry.setUserId(user.getUserId());
 		meetupsEntry.setUserName(user.getFullName());
-		meetupsEntry.setCreateDate(now);
-		meetupsEntry.setModifiedDate(now);
 		meetupsEntry.setTitle(title);
 		meetupsEntry.setDescription(description);
 		meetupsEntry.setStartDate(startDate);
@@ -137,7 +133,6 @@ public class MeetupsEntryLocalServiceImpl
 		MeetupsEntry meetupsEntry = meetupsEntryPersistence.findByPrimaryKey(
 			meetupsEntryId);
 
-		meetupsEntry.setModifiedDate(new Date());
 		meetupsEntry.setTitle(title);
 		meetupsEntry.setDescription(description);
 		meetupsEntry.setStartDate(startDate);

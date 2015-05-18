@@ -332,8 +332,14 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -504,6 +510,8 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 
 		shoppingCartModelImpl._setOriginalUserId = false;
 
+		shoppingCartModelImpl._setModifiedDate = false;
+
 		shoppingCartModelImpl._columnBitmask = 0;
 	}
 
@@ -672,6 +680,7 @@ public class ShoppingCartModelImpl extends BaseModelImpl<ShoppingCart>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _itemIds;
 	private String _couponCodes;
 	private int _altShipping;

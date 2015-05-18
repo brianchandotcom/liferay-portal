@@ -491,6 +491,11 @@ public class LayoutSetWrapper implements LayoutSet, ModelWrapper<LayoutSet> {
 	}
 
 	@Override
+	public boolean hasSetModifiedDate() {
+		return _layoutSet.hasSetModifiedDate();
+	}
+
+	@Override
 	public int hashCode() {
 		return _layoutSet.hashCode();
 	}

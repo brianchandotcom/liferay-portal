@@ -25,7 +25,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.EmailAddressLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,7 +58,6 @@ public class EmailAddressLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
-		Date now = new Date();
 
 		validate(
 			0, user.getCompanyId(), classNameId, classPK, address, typeId,
@@ -74,8 +72,6 @@ public class EmailAddressLocalServiceImpl
 		emailAddress.setCompanyId(user.getCompanyId());
 		emailAddress.setUserId(user.getUserId());
 		emailAddress.setUserName(user.getFullName());
-		emailAddress.setCreateDate(serviceContext.getCreateDate(now));
-		emailAddress.setModifiedDate(serviceContext.getModifiedDate(now));
 		emailAddress.setClassNameId(classNameId);
 		emailAddress.setClassPK(classPK);
 		emailAddress.setAddress(address);
@@ -147,7 +143,6 @@ public class EmailAddressLocalServiceImpl
 		EmailAddress emailAddress = emailAddressPersistence.findByPrimaryKey(
 			emailAddressId);
 
-		emailAddress.setModifiedDate(new Date());
 		emailAddress.setAddress(address);
 		emailAddress.setTypeId(typeId);
 		emailAddress.setPrimary(primary);

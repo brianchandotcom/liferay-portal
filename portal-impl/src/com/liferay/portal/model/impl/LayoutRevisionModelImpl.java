@@ -573,8 +573,14 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_columnBitmask = -1L;
 
 		_modifiedDate = modifiedDate;
@@ -1773,6 +1779,8 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	public void resetOriginalValues() {
 		LayoutRevisionModelImpl layoutRevisionModelImpl = this;
 
+		layoutRevisionModelImpl._setModifiedDate = false;
+
 		layoutRevisionModelImpl._originalLayoutSetBranchId = layoutRevisionModelImpl._layoutSetBranchId;
 
 		layoutRevisionModelImpl._setOriginalLayoutSetBranchId = false;
@@ -2189,6 +2197,7 @@ public class LayoutRevisionModelImpl extends BaseModelImpl<LayoutRevision>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _layoutSetBranchId;
 	private long _originalLayoutSetBranchId;
 	private boolean _setOriginalLayoutSetBranchId;

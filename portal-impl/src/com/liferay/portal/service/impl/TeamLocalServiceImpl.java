@@ -28,7 +28,6 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.base.TeamLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -45,7 +44,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		// Team
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		validate(0, groupId, name);
 
@@ -56,8 +54,6 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 		team.setUserId(userId);
 		team.setCompanyId(user.getCompanyId());
 		team.setUserName(user.getFullName());
-		team.setCreateDate(now);
-		team.setModifiedDate(now);
 		team.setGroupId(groupId);
 		team.setName(name);
 		team.setDescription(description);
@@ -160,13 +156,10 @@ public class TeamLocalServiceImpl extends TeamLocalServiceBaseImpl {
 	public Team updateTeam(long teamId, String name, String description)
 		throws PortalException {
 
-		Date now = new Date();
-
 		Team team = teamPersistence.findByPrimaryKey(teamId);
 
 		validate(teamId, team.getGroupId(), name);
 
-		team.setModifiedDate(now);
 		team.setName(name);
 		team.setDescription(description);
 

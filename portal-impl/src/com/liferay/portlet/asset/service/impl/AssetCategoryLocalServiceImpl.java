@@ -57,7 +57,6 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -99,8 +98,6 @@ public class AssetCategoryLocalServiceImpl
 			categoryProperties = new String[0];
 		}
 
-		Date now = new Date();
-
 		validate(0, parentCategoryId, name, vocabularyId);
 
 		if (parentCategoryId > 0) {
@@ -118,8 +115,6 @@ public class AssetCategoryLocalServiceImpl
 		category.setCompanyId(user.getCompanyId());
 		category.setUserId(user.getUserId());
 		category.setUserName(user.getFullName());
-		category.setCreateDate(now);
-		category.setModifiedDate(now);
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
 		category.setTitleMap(titleMap);
@@ -580,7 +575,6 @@ public class AssetCategoryLocalServiceImpl
 			updateChildrenVocabularyId(category, vocabularyId);
 		}
 
-		category.setModifiedDate(new Date());
 		category.setParentCategoryId(parentCategoryId);
 
 		assetCategoryPersistence.update(category);
@@ -680,7 +674,6 @@ public class AssetCategoryLocalServiceImpl
 			updateChildrenVocabularyId(category, vocabularyId);
 		}
 
-		category.setModifiedDate(new Date());
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
 		category.setTitleMap(titleMap);
@@ -840,11 +833,10 @@ public class AssetCategoryLocalServiceImpl
 		if (!childrenCategories.isEmpty()) {
 			for (AssetCategory childCategory : childrenCategories) {
 				childCategory.setVocabularyId(vocabularyId);
-				childCategory.setModifiedDate(new Date());
 
 				assetCategoryPersistence.update(childCategory);
 
-				updateChildrenVocabularyId (childCategory, vocabularyId);
+				updateChildrenVocabularyId(childCategory, vocabularyId);
 			}
 		}
 	}

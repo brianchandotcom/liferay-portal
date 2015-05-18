@@ -26,7 +26,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutFriendlyURLLocalServiceBaseImpl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -60,7 +59,6 @@ public class LayoutFriendlyURLLocalServiceImpl
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		long layoutFriendlyURLId = counterLocalService.increment();
 
@@ -72,8 +70,6 @@ public class LayoutFriendlyURLLocalServiceImpl
 		layoutFriendlyURL.setCompanyId(companyId);
 		layoutFriendlyURL.setUserId(user.getUserId());
 		layoutFriendlyURL.setUserName(user.getFullName());
-		layoutFriendlyURL.setCreateDate(serviceContext.getCreateDate(now));
-		layoutFriendlyURL.setModifiedDate(serviceContext.getModifiedDate(now));
 		layoutFriendlyURL.setPlid(plid);
 		layoutFriendlyURL.setPrivateLayout(privateLayout);
 		layoutFriendlyURL.setFriendlyURL(friendlyURL);

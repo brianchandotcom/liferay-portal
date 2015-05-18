@@ -351,8 +351,14 @@ public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayou
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -519,6 +525,8 @@ public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayou
 		ddmStructureLayoutModelImpl._originalCompanyId = ddmStructureLayoutModelImpl._companyId;
 
 		ddmStructureLayoutModelImpl._setOriginalCompanyId = false;
+
+		ddmStructureLayoutModelImpl._setModifiedDate = false;
 
 		ddmStructureLayoutModelImpl._originalStructureVersionId = ddmStructureLayoutModelImpl._structureVersionId;
 
@@ -691,6 +699,7 @@ public class DDMStructureLayoutModelImpl extends BaseModelImpl<DDMStructureLayou
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _structureVersionId;
 	private long _originalStructureVersionId;
 	private boolean _setOriginalStructureVersionId;

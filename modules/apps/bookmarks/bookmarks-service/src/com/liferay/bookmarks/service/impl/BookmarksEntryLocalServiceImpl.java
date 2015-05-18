@@ -96,8 +96,6 @@ public class BookmarksEntryLocalServiceImpl
 			name = url;
 		}
 
-		Date now = new Date();
-
 		validate(url);
 
 		long entryId = counterLocalService.increment();
@@ -109,8 +107,6 @@ public class BookmarksEntryLocalServiceImpl
 		entry.setCompanyId(user.getCompanyId());
 		entry.setUserId(user.getUserId());
 		entry.setUserName(user.getFullName());
-		entry.setCreateDate(serviceContext.getCreateDate(now));
-		entry.setModifiedDate(serviceContext.getModifiedDate(now));
 		entry.setFolderId(folderId);
 		entry.setTreePath(entry.buildTreePath());
 		entry.setName(name);
@@ -599,7 +595,6 @@ public class BookmarksEntryLocalServiceImpl
 
 		validate(url);
 
-		entry.setModifiedDate(serviceContext.getModifiedDate(null));
 		entry.setFolderId(folderId);
 		entry.setTreePath(entry.buildTreePath());
 		entry.setName(name);

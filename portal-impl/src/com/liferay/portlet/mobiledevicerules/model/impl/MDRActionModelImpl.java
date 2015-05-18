@@ -464,8 +464,14 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -974,6 +980,8 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 
 		mdrActionModelImpl._setOriginalCompanyId = false;
 
+		mdrActionModelImpl._setModifiedDate = false;
+
 		mdrActionModelImpl._originalRuleGroupInstanceId = mdrActionModelImpl._ruleGroupInstanceId;
 
 		mdrActionModelImpl._setOriginalRuleGroupInstanceId = false;
@@ -1198,6 +1206,7 @@ public class MDRActionModelImpl extends BaseModelImpl<MDRAction>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _classPK;
 	private long _ruleGroupInstanceId;

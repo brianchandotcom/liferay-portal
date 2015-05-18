@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -39,11 +40,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -2588,6 +2592,30 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			String uuid = PortalUUIDUtil.generate();
 
 			app.setUuid(uuid);
+		}
+
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+			Date now = new Date();
+
+			if (isNew && (app.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					app.setCreateDate(now);
+				}
+				else {
+					app.setCreateDate(serviceContext.getCreateDate(now));
+				}
+			}
+
+			if (!appModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					app.setModifiedDate(now);
+				}
+				else {
+					app.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
+			}
 		}
 
 		Session session = null;

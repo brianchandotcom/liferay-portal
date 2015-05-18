@@ -354,8 +354,14 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -528,6 +534,8 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 
 		assetCategoryPropertyModelImpl._setOriginalCompanyId = false;
 
+		assetCategoryPropertyModelImpl._setModifiedDate = false;
+
 		assetCategoryPropertyModelImpl._originalCategoryId = assetCategoryPropertyModelImpl._categoryId;
 
 		assetCategoryPropertyModelImpl._setOriginalCategoryId = false;
@@ -683,6 +691,7 @@ public class AssetCategoryPropertyModelImpl extends BaseModelImpl<AssetCategoryP
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _categoryId;
 	private long _originalCategoryId;
 	private boolean _setOriginalCategoryId;

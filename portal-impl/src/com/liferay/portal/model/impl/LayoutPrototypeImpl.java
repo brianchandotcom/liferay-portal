@@ -55,4 +55,9 @@ public class LayoutPrototypeImpl extends LayoutPrototypeBaseImpl {
 		throw new NoSuchLayoutException("{groupId=" + group.getGroupId() + "}");
 	}
 
+	@Override
+	public boolean hasSetModifiedDate() {
+		return true;
+	}
+
 }

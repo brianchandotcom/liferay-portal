@@ -312,8 +312,14 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -440,6 +446,8 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 		wallEntryModelImpl._originalUserId = wallEntryModelImpl._userId;
 
 		wallEntryModelImpl._setOriginalUserId = false;
+
+		wallEntryModelImpl._setModifiedDate = false;
 
 		wallEntryModelImpl._columnBitmask = 0;
 	}
@@ -579,6 +587,7 @@ public class WallEntryModelImpl extends BaseModelImpl<WallEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _comments;
 	private long _columnBitmask;
 	private WallEntry _escapedModel;

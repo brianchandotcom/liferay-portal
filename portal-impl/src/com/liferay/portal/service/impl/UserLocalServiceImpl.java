@@ -734,7 +734,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		Company company = companyPersistence.findByPrimaryKey(companyId);
 		screenName = getLogin(screenName);
 		openId = StringUtil.trim(openId);
-		Date now = new Date();
 
 		if (PrefsPropsUtil.getBoolean(
 				companyId, PropsKeys.USERS_SCREEN_NAME_ALWAYS_AUTOGENERATE)) {
@@ -811,8 +810,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		}
 
 		user.setCompanyId(companyId);
-		user.setCreateDate(now);
-		user.setModifiedDate(now);
 		user.setDefaultUser(false);
 		user.setContactId(counterLocalService.increment());
 
@@ -890,8 +887,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		contact.setCompanyId(user.getCompanyId());
 		contact.setUserId(creatorUserId);
 		contact.setUserName(creatorUserName);
-		contact.setCreateDate(now);
-		contact.setModifiedDate(now);
 		contact.setClassName(User.class.getName());
 		contact.setClassPK(user.getUserId());
 		contact.setAccountId(company.getAccountId());
@@ -4792,8 +4787,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		user.setModifiedDate(modifiedDate);
-
 		userPersistence.update(user);
 
 		return user;
@@ -5253,7 +5246,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		skypeSn = StringUtil.toLowerCase(skypeSn.trim());
 		twitterSn = StringUtil.toLowerCase(twitterSn.trim());
 		ymSn = StringUtil.toLowerCase(ymSn.trim());
-		Date now = new Date();
 
 		EmailAddressGenerator emailAddressGenerator =
 			EmailAddressGeneratorFactory.getInstance();
@@ -5285,8 +5277,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			user.setDigest(StringPool.BLANK);
 		}
-
-		user.setModifiedDate(now);
 
 		if (user.getContactId() <= 0) {
 			user.setContactId(counterLocalService.increment());
@@ -5373,7 +5363,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 
 			contact.setCompanyId(user.getCompanyId());
 			contact.setUserName(StringPool.BLANK);
-			contact.setCreateDate(now);
 			contact.setClassName(User.class.getName());
 			contact.setClassPK(user.getUserId());
 			contact.setAccountId(company.getAccountId());
@@ -5381,7 +5370,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				ContactConstants.DEFAULT_PARENT_CONTACT_ID);
 		}
 
-		contact.setModifiedDate(now);
 		contact.setEmailAddress(user.getEmailAddress());
 		contact.setFirstName(firstName);
 		contact.setMiddleName(middleName);

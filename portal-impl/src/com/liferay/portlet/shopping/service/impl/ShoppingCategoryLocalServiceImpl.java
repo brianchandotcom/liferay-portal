@@ -27,7 +27,6 @@ import com.liferay.portlet.shopping.service.base.ShoppingCategoryLocalServiceBas
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,7 +46,6 @@ public class ShoppingCategoryLocalServiceImpl
 		User user = userPersistence.findByPrimaryKey(userId);
 		long groupId = serviceContext.getScopeGroupId();
 		parentCategoryId = getParentCategoryId(groupId, parentCategoryId);
-		Date now = new Date();
 
 		validate(name);
 
@@ -60,8 +58,6 @@ public class ShoppingCategoryLocalServiceImpl
 		category.setCompanyId(user.getCompanyId());
 		category.setUserId(user.getUserId());
 		category.setUserName(user.getFullName());
-		category.setCreateDate(now);
-		category.setModifiedDate(now);
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
 		category.setDescription(description);
@@ -302,7 +298,6 @@ public class ShoppingCategoryLocalServiceImpl
 
 		validate(name);
 
-		category.setModifiedDate(new Date());
 		category.setParentCategoryId(parentCategoryId);
 		category.setName(name);
 		category.setDescription(description);

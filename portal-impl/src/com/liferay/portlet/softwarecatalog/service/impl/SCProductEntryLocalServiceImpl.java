@@ -79,7 +79,6 @@ public class SCProductEntryLocalServiceImpl
 		tags = getTags(tags);
 		repoGroupId = StringUtil.toLowerCase(repoGroupId.trim());
 		repoArtifactId = StringUtil.toLowerCase(repoArtifactId.trim());
-		Date now = new Date();
 
 		validate(
 			0, name, type, shortDescription, pageURL, author, repoGroupId,
@@ -94,8 +93,6 @@ public class SCProductEntryLocalServiceImpl
 		productEntry.setCompanyId(user.getCompanyId());
 		productEntry.setUserId(user.getUserId());
 		productEntry.setUserName(user.getFullName());
-		productEntry.setCreateDate(now);
-		productEntry.setModifiedDate(now);
 		productEntry.setName(name);
 		productEntry.setType(type);
 		productEntry.setTags(tags);
@@ -409,7 +406,6 @@ public class SCProductEntryLocalServiceImpl
 		tags = getTags(tags);
 		repoGroupId = StringUtil.toLowerCase(repoGroupId.trim());
 		repoArtifactId = StringUtil.toLowerCase(repoArtifactId.trim());
-		Date now = new Date();
 
 		validate(
 			productEntryId, name, type, shortDescription, pageURL, author,
@@ -418,7 +414,6 @@ public class SCProductEntryLocalServiceImpl
 		SCProductEntry productEntry =
 			scProductEntryPersistence.findByPrimaryKey(productEntryId);
 
-		productEntry.setModifiedDate(now);
 		productEntry.setName(name);
 		productEntry.setType(type);
 		productEntry.setTags(tags);

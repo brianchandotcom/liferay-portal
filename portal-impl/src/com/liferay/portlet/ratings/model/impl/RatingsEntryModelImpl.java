@@ -404,8 +404,14 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -617,6 +623,8 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 
 		ratingsEntryModelImpl._setOriginalUserId = false;
 
+		ratingsEntryModelImpl._setModifiedDate = false;
+
 		ratingsEntryModelImpl._originalClassNameId = ratingsEntryModelImpl._classNameId;
 
 		ratingsEntryModelImpl._setOriginalClassNameId = false;
@@ -784,6 +792,7 @@ public class RatingsEntryModelImpl extends BaseModelImpl<RatingsEntry>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

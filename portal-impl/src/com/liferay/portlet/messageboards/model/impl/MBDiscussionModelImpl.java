@@ -362,8 +362,14 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -573,6 +579,8 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 
 		mbDiscussionModelImpl._setOriginalCompanyId = false;
 
+		mbDiscussionModelImpl._setModifiedDate = false;
+
 		mbDiscussionModelImpl._originalClassNameId = mbDiscussionModelImpl._classNameId;
 
 		mbDiscussionModelImpl._setOriginalClassNameId = false;
@@ -749,6 +757,7 @@ public class MBDiscussionModelImpl extends BaseModelImpl<MBDiscussion>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

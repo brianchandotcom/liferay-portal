@@ -38,7 +38,6 @@ import com.liferay.portlet.social.util.SocialCounterPeriodUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,8 +61,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Date now = new Date();
-
 		long tagId = counterLocalService.increment();
 
 		AssetTag tag = assetTagPersistence.create(tagId);
@@ -72,8 +69,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		tag.setCompanyId(user.getCompanyId());
 		tag.setUserId(user.getUserId());
 		tag.setUserName(user.getFullName());
-		tag.setCreateDate(now);
-		tag.setModifiedDate(now);
 
 		name = name.trim();
 		name = StringUtil.toLowerCase(name);
@@ -479,8 +474,6 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 		AssetTag tag = assetTagPersistence.findByPrimaryKey(tagId);
 
 		String oldName = tag.getName();
-
-		tag.setModifiedDate(new Date());
 
 		name = name.trim();
 		name = StringUtil.toLowerCase(name);

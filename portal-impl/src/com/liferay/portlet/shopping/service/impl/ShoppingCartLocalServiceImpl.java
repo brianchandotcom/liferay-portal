@@ -35,7 +35,6 @@ import com.liferay.portlet.shopping.service.base.ShoppingCartLocalServiceBaseImp
 import com.liferay.portlet.shopping.util.ShoppingUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -185,7 +184,6 @@ public class ShoppingCartLocalServiceImpl
 		}
 
 		User user = userPersistence.findByPrimaryKey(userId);
-		Date now = new Date();
 
 		ShoppingCart cart = null;
 
@@ -196,7 +194,6 @@ public class ShoppingCartLocalServiceImpl
 			cart.setCompanyId(user.getCompanyId());
 			cart.setUserId(userId);
 			cart.setUserName(user.getFullName());
-			cart.setCreateDate(now);
 		}
 		else {
 			cart = shoppingCartPersistence.fetchByG_U(groupId, userId);
@@ -210,11 +207,9 @@ public class ShoppingCartLocalServiceImpl
 				cart.setCompanyId(user.getCompanyId());
 				cart.setUserId(userId);
 				cart.setUserName(user.getFullName());
-				cart.setCreateDate(now);
 			}
 		}
 
-		cart.setModifiedDate(now);
 		cart.setItemIds(checkItemIds(groupId, itemIds));
 		cart.setCouponCodes(couponCodes);
 		cart.setAltShipping(altShipping);

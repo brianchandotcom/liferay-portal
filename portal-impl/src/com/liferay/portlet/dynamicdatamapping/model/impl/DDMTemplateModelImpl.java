@@ -542,8 +542,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -1247,6 +1253,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		ddmTemplateModelImpl._setOriginalCompanyId = false;
 
+		ddmTemplateModelImpl._setModifiedDate = false;
+
 		ddmTemplateModelImpl._originalClassNameId = ddmTemplateModelImpl._classNameId;
 
 		ddmTemplateModelImpl._setOriginalClassNameId = false;
@@ -1581,6 +1589,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;

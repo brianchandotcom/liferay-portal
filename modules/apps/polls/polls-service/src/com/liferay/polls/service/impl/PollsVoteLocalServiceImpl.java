@@ -101,8 +101,6 @@ public class PollsVoteLocalServiceImpl extends PollsVoteLocalServiceBaseImpl {
 		vote.setCompanyId(serviceContext.getCompanyId());
 		vote.setUserId(userId);
 		vote.setUserName(userName);
-		vote.setCreateDate(serviceContext.getCreateDate(now));
-		vote.setModifiedDate(serviceContext.getModifiedDate(now));
 		vote.setQuestionId(questionId);
 		vote.setChoiceId(choiceId);
 		vote.setVoteDate(serviceContext.getCreateDate(now));

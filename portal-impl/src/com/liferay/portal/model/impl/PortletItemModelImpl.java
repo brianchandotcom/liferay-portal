@@ -333,8 +333,14 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 		return _modifiedDate;
 	}
 
+	public boolean hasSetModifiedDate() {
+		return _setModifiedDate;
+	}
+
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_setModifiedDate = true;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -538,6 +544,8 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 
 		portletItemModelImpl._setOriginalGroupId = false;
 
+		portletItemModelImpl._setModifiedDate = false;
+
 		portletItemModelImpl._originalName = portletItemModelImpl._name;
 
 		portletItemModelImpl._originalPortletId = portletItemModelImpl._portletId;
@@ -713,6 +721,7 @@ public class PortletItemModelImpl extends BaseModelImpl<PortletItem>
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
 	private String _portletId;

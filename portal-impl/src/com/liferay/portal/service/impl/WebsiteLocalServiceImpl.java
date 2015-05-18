@@ -25,7 +25,6 @@ import com.liferay.portal.model.Website;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.WebsiteLocalServiceBaseImpl;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -57,7 +56,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		long classNameId = classNameLocalService.getClassNameId(className);
-		Date now = new Date();
 
 		validate(
 			0, user.getCompanyId(), classNameId, classPK, url, typeId, primary);
@@ -70,9 +68,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 		website.setCompanyId(user.getCompanyId());
 		website.setUserId(user.getUserId());
 		website.setUserName(user.getFullName());
-		website.setCreateDate(now);
-		website.setCreateDate(serviceContext.getCreateDate(now));
-		website.setModifiedDate(serviceContext.getModifiedDate(now));
 		website.setClassNameId(classNameId);
 		website.setClassPK(classPK);
 		website.setUrl(url);
@@ -137,7 +132,6 @@ public class WebsiteLocalServiceImpl extends WebsiteLocalServiceBaseImpl {
 
 		Website website = websitePersistence.findByPrimaryKey(websiteId);
 
-		website.setModifiedDate(new Date());
 		website.setUrl(url);
 		website.setTypeId(typeId);
 		website.setPrimary(primary);

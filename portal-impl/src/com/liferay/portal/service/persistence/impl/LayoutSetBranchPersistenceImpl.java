@@ -38,11 +38,14 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.LayoutSetBranchImpl;
 import com.liferay.portal.model.impl.LayoutSetBranchModelImpl;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutSetBranchPersistence;
 
 import java.io.Serializable;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -3330,6 +3333,29 @@ public class LayoutSetBranchPersistenceImpl extends BasePersistenceImpl<LayoutSe
 		boolean isNew = layoutSetBranch.isNew();
 
 		LayoutSetBranchModelImpl layoutSetBranchModelImpl = (LayoutSetBranchModelImpl)layoutSetBranch;
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (layoutSetBranch.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				layoutSetBranch.setCreateDate(now);
+			}
+			else {
+				layoutSetBranch.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!layoutSetBranchModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				layoutSetBranch.setModifiedDate(now);
+			}
+			else {
+				layoutSetBranch.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
+		}
 
 		Session session = null;
 

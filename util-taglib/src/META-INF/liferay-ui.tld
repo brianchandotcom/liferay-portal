@@ -798,7 +798,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a liferay-ui:error component to display tag related error messages.</description>
+		<description>Creates a <![CDATA[<code>liferay-ui:error</code>]]> component to display tag related error messages.</description>
 		<name>asset-tags-error</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsErrorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -839,7 +839,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a Liferay.AssetTagsSelector component to select existing tags and create and add new tags to an asset such as a blog, bookmark, or wiki.</description>
+		<description>Creates a <![CDATA[<code>Liferay.AssetTagsSelector</code>]]> component to select existing tags as well as create and add new tags to an asset such as a blog, bookmark, or wiki.</description>
 		<name>asset-tags-selector</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsSelectorTag</tag-class>
 		<body-content>JSP</body-content>
@@ -857,7 +857,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Whether to automatically focus the tag input field. Default is false. The default value is <![CDATA[<code>true</code>]]>.</description>
+			<description>Whether to automatically focus the tag input field. The default value is <![CDATA[<code>false</code>]]>.</description>
 			<name>autoFocus</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -900,7 +900,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The id of the component.</description>
+			<description>An ID for the component instance.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -920,12 +920,12 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a component to display all the tags associated with any given asset such as a blog, wiki, or message-board message.</description>
+		<description>Creates a component to display all the tags associated with an asset such as a blog, wiki, or message-board message.</description>
 		<name>asset-tags-summary</name>
 		<tag-class>com.liferay.taglib.ui.AssetTagsSummaryTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>An array of all the asset tag names.</description>
+			<description>An array of the asset tag names.</description>
 			<name>assetTagNames</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -943,13 +943,13 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A message to display before all the tag lables. A standard example is <![CDATA[<code>tags</code>]]>. This will be displayed as <![CDATA[<code>Tags:</code>]]>.</description>
+			<description>A message to display before the tag labels. A standard example is <![CDATA[<code>tags</code>]]>. This will be displayed as <![CDATA[<code>Tags:</code>]]>.</description>
 			<name>message</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The parameter name for tags. The default value is <![CDATA[<code>tag</code>]]> when no value is set.</description>
+			<description>The parameter name for tags. The default value is <![CDATA[<code>tag</code>]]>.</description>
 			<name>paramName</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -1512,7 +1512,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Creates a liferay-ui:header with a back button that can be displayed above an error message.</description>
+		<description>Creates a <![CDATA[<code>liferay-ui:header</code>]]> with a back button that can be displayed above an error message.</description>
 		<name>error-header</name>
 		<tag-class>com.liferay.taglib.ui.ErrorHeaderTag</tag-class>
 		<body-content>JSP</body-content>

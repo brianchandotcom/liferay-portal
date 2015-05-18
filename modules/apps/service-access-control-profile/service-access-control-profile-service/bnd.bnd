@@ -1,6 +1,8 @@
 Bundle-Name: Liferay Service Access Control Profile Service
 Bundle-SymbolicName: com.liferay.service.access.control.profile.service
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.service.access.control.profile.service.permission
 Include-Resource: classes
 Liferay-Service: true
 Require-Capability:\

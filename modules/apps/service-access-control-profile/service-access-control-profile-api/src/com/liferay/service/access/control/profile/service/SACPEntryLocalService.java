@@ -47,12 +47,6 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link SACPEntryLocalServiceUtil} to access the s a c p entry local service. Add custom service methods to {@link com.liferay.service.access.control.profile.service.impl.SACPEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
-		long companyId, long userId, java.lang.String allowedServices,
-		java.lang.String name,
-		java.util.Map<java.util.Locale, java.lang.String> titleMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Adds the s a c p entry to the database. Also notifies the appropriate model listeners.
@@ -64,14 +58,10 @@ public interface SACPEntryLocalService extends BaseLocalService,
 	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
 		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry);
 
-	public void addSACPEntryResources(
-		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry,
-		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException;
-
-	public void addSACPEntryResources(
-		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
+		long userId, java.lang.String allowedServices, java.lang.String name,
+		java.util.Map<java.util.Locale, java.lang.String> titleMap,
+		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -297,10 +287,5 @@ public interface SACPEntryLocalService extends BaseLocalService,
 		java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateSACPEntryResources(
-		com.liferay.service.access.control.profile.model.SACPEntry sacpEntry,
-		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws PortalException;
 }

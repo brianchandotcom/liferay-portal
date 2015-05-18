@@ -515,6 +515,10 @@ public class JournalFolderLocalServiceImpl
 
 		parentFolderId = getParentFolderId(folder, parentFolderId);
 
+		if (folder.getParentFolderId() == parentFolderId) {
+			return folder;
+		}
+
 		validateFolderDDMStructures(folder.getFolderId(), parentFolderId);
 
 		validateFolder(

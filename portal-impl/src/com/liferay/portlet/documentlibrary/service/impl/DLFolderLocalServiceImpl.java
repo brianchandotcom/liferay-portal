@@ -847,6 +847,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 
 			parentFolderId = getParentFolderId(dlFolder, parentFolderId);
 
+			if (dlFolder.getParentFolderId() == parentFolderId) {
+				return dlFolder;
+			}
+
 			validateFolder(
 				dlFolder.getFolderId(), dlFolder.getGroupId(), parentFolderId,
 				dlFolder.getName());

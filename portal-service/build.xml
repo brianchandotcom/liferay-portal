@@ -5,13 +5,20 @@
 
 	<property name="deploy.dir" value="${app.server.lib.global.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
-	<property name="javac.classpathref" value="web.classpath" />
-	<property name="javac.destdir" value="classes" />
-	<property name="javac.srcdir" value="src" />
 	<property name="manifest.bundle.name" value="Liferay Portal Service" />
 	<property name="manifest.bundle.symbolic.name" value="portal-service" />
 
 	<path id="web-lib.classpath">
 		<fileset dir="${project.dir}/lib/development" includes="junit.jar" />
 	</path>
+
+	<macrodef name="compile-java">
+		<sequential>
+			<do-compile-java
+				javac.classpathref="web.classpath"
+				javac.destdir="classes"
+				javac.srcdir="src"
+			/>
+		</sequential>
+	</macrodef>
 </project>

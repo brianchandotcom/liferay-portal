@@ -91,7 +91,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 	<div id="<portlet:namespace />imageGalleryAssetInfo">
 			<div class="form-search">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(locale, "search-images") %>' />
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" placeholder='<%= LanguageUtil.get(request, "keywords") %>' title='<%= LanguageUtil.get(request, "search-images") %>' />
 			</div>
 
 		<br /><br />

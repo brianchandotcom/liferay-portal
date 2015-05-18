@@ -59,7 +59,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 
 		<liferay-ui:search-container-column-text
 			name="active"
-			value='<%= workflowDefinition.isActive() ? LanguageUtil.get(locale, "yes") : LanguageUtil.get(locale, "no") %>'
+			value='<%= workflowDefinition.isActive() ? LanguageUtil.get(request, "yes") : LanguageUtil.get(request, "no") %>'
 		/>
 
 		<liferay-ui:search-container-column-jsp

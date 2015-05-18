@@ -14,7 +14,9 @@
 
 package com.liferay.dynamic.data.lists.display.web.template;
 
+import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
 import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.util.StringPool;
@@ -40,10 +42,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Jorge Ferrer
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name="+ DDLDisplayPortletKeys.DDL_DISPLAY},
+	service = TemplateHandler.class
+)
 public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
@@ -111,12 +120,6 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 		return templateVariableGroups;
 	}
 
-	protected ClassLoader getClassLoader() {
-		Class<?> clazz = getClass();
-
-		return clazz.getClassLoader();
-	}
-
 	protected TemplateVariableGroup getDDLVariablesTemplateVariableGroups() {
 		TemplateVariableGroup templateVariableGroup = new TemplateVariableGroup(
 			"data-list-variables");
@@ -152,7 +155,8 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
-			getClassLoader(),
-			"com/liferay/portlet/dynamicdatalists/dependencies/template/");
+			DDLTemplateHandler.class.getClassLoader(),
+			"com/liferay/dynamic/data/lists/display/web/template/dependencies/"
+		);
 
 }

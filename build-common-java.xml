@@ -30,7 +30,7 @@
 		<sequential>
 			<if>
 				<not>
-					<uptodate property="compile.uptodate" targetfile="classes/.touch">
+					<uptodate targetfile="classes/.touch">
 						<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 					</uptodate>
 				</not>

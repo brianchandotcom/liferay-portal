@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
@@ -32,6 +33,8 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -54,18 +57,22 @@ public class WidgetPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
+		HttpServletRequest request = _requestThreadLocal.get();
+
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
 		try {
-			Portlet portlet = (Portlet)_request.getAttribute(
+			Portlet portlet = (Portlet)request.getAttribute(
 				WebKeys.RENDER_PORTLET);
 
 			PortletURL basePortletURL = PortletURLFactoryUtil.create(
-				_request, PortletKeys.PORTLET_SHARING, _themeDisplay.getPlid(),
+				request, PortletKeys.PORTLET_SHARING, themeDisplay.getPlid(),
 				PortletRequest.RESOURCE_PHASE);
 
 			StringBundler sb = new StringBundler();
 
 			sb.append("javascript:Liferay.PortletSharing.showWidgetInfo('");
-			sb.append(PortalUtil.getWidgetURL(portlet, _themeDisplay));
+			sb.append(PortalUtil.getWidgetURL(portlet, themeDisplay));
 			sb.append("', '");
 			sb.append(basePortletURL);
 			sb.append("');");
@@ -89,11 +96,13 @@ public class WidgetPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				_themeDisplay.getLayout(), portletDisplay.getId());
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
 			portletSetup.getValue("lfrWidgetShowAddAppLink", null),

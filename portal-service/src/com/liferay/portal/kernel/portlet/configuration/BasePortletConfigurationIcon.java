@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.configuration;
 
+import com.liferay.portal.kernel.util.CentralizedThreadLocal;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -134,13 +135,15 @@ public abstract class BasePortletConfigurationIcon
 
 	@Override
 	public void setRequest(HttpServletRequest request) {
-		_request = request;
+		_requestThreadLocal.set(request);
 
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		_themeDisplayThreadLocal.set((ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY));
 	}
 
-	protected HttpServletRequest _request;
-	protected ThemeDisplay _themeDisplay;
+	protected final CentralizedThreadLocal<HttpServletRequest> _requestThreadLocal =
+		new CentralizedThreadLocal<>(false);
+	protected final CentralizedThreadLocal<ThemeDisplay> _themeDisplayThreadLocal =
+		new CentralizedThreadLocal<>(false);
 
 }

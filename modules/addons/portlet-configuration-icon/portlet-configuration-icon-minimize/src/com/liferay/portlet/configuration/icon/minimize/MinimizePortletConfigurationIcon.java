@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.icon.minimize;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -34,7 +35,9 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getImage() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (portletDisplay.isStateMin()) {
 			return "../aui/resize-vertical";
@@ -45,7 +48,9 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (portletDisplay.isStateMin()) {
 			return "restore";
@@ -56,7 +61,9 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "Liferay.Portlet.minimize('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_', this); return false;");
@@ -64,7 +71,9 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLMin();
 	}
@@ -76,7 +85,9 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowMinIcon();
 	}

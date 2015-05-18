@@ -17,6 +17,7 @@ package com.liferay.portlet.configuration.icon.help;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -43,7 +44,9 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLHelp();
 	}
@@ -55,7 +58,9 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowHelpIcon();
 	}

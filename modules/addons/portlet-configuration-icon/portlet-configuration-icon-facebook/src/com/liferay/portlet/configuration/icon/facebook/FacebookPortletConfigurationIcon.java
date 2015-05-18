@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
@@ -50,11 +51,13 @@ public class FacebookPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				_themeDisplay.getLayout(), portletDisplay.getId());
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		String lfrFacebookAPIKey = portletSetup.getValue(
 			"lfrFacebookApiKey", StringPool.BLANK);
@@ -75,11 +78,13 @@ public class FacebookPortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				_themeDisplay.getLayout(), portletDisplay.getId());
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		String lfrFacebookAPIKey = portletSetup.getValue(
 			"lfrFacebookApiKey", StringPool.BLANK);

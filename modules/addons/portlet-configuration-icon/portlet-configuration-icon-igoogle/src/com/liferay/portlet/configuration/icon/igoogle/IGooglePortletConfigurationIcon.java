@@ -22,10 +22,13 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import javax.portlet.PortletPreferences;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -38,7 +41,9 @@ public class IGooglePortletConfigurationIcon
 
 	@Override
 	public String getCssClass() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getNamespace() + "expose-as-widget";
 	}
@@ -55,12 +60,16 @@ public class IGooglePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
+		HttpServletRequest request = _requestThreadLocal.get();
+
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
 		try {
-			Portlet portlet = (Portlet)_request.getAttribute(
+			Portlet portlet = (Portlet)request.getAttribute(
 				WebKeys.RENDER_PORTLET);
 
 			return "http://fusion.google.com/add?source=atgs&moduleurl=" +
-				PortalUtil.getGoogleGadgetURL(portlet, _themeDisplay);
+				PortalUtil.getGoogleGadgetURL(portlet, themeDisplay);
 		}
 		catch (PortalException pe) {
 			return StringPool.BLANK;
@@ -79,11 +88,13 @@ public class IGooglePortletConfigurationIcon
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		ThemeDisplay themeDisplay = _themeDisplayThreadLocal.get();
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				_themeDisplay.getLayout(), portletDisplay.getId());
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		boolean lfrIgoogleShowAddAppLink = GetterUtil.getBoolean(
 			portletSetup.getValue(

@@ -23,7 +23,7 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/user_groups_admin/select_user_group");
+portletURL.setParameter("mvcPath", "/html/portlet/user_groups_admin/select_user_group.jsp");
 
 if (selUser != null) {
 	portletURL.setParameter("p_u_i_d", String.valueOf(selUser.getUserId()));

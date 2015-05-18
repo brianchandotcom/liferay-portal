@@ -1434,56 +1434,6 @@
 
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
-		<!-- User Groups Admin -->
-
-		<action path="/user_groups_admin/add_layout" forward="portlet.layouts_admin.add_layout" />
-
-		<action path="/user_groups_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/user_groups_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/user_groups_admin/edit_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">
-			<forward name="portlet.users_admin.edit_user" path="portlet.users_admin.edit_user" />
-			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
-		</action>
-
-		<action path="/user_groups_admin/edit_user_group" type="com.liferay.portlet.usergroupsadmin.action.EditUserGroupAction">
-			<forward name="portlet.user_groups_admin.edit_user_group" path="portlet.user_groups_admin.edit_user_group" />
-			<forward name="portlet.user_groups_admin.error" path="portlet.user_groups_admin.error" />
-		</action>
-
-		<action path="/user_groups_admin/edit_user_group_assignments" type="com.liferay.portlet.usergroupsadmin.action.EditUserGroupAssignmentsAction">
-			<forward name="portlet.user_groups_admin.edit_user_group_assignments" path="portlet.user_groups_admin.edit_user_group_assignments" />
-			<forward name="portlet.user_groups_admin.error" path="portlet.user_groups_admin.error" />
-		</action>
-
-		<action path="/user_groups_admin/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
-		<action path="/user_groups_admin/get_users_count" type="com.liferay.portlet.usersadmin.action.GetUsersCountAction" />
-
-		<action path="/user_groups_admin/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
-
-		<action path="/user_groups_admin/page" type="com.liferay.portlet.myplaces.action.ViewAction" />
-
-		<action path="/user_groups_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
-
-		<action path="/user_groups_admin/view" forward="portlet.user_groups_admin.view" />
-
-		<action path="/user_groups_admin/view_users" forward="portlet.users_admin.view" />
-
 		<!-- Users Admin -->
 
 		<action path="/users_admin/add_layout" forward="portlet.layouts_admin.add_layout" />

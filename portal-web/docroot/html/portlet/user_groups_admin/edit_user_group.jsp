@@ -21,9 +21,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-UserGroup userGroup = (UserGroup)request.getAttribute(WebKeys.USER_GROUP);
+long userGroupId = ParamUtil.getLong(request, "userGroupId");
 
-long userGroupId = BeanParamUtil.getLong(userGroup, request, "userGroupId");
+UserGroup userGroup = UserGroupServiceUtil.fetchUserGroup(userGroupId);
 
 boolean hasUserGroupUpdatePermission = true;
 
@@ -33,7 +33,6 @@ if (userGroup != null) {
 %>
 
 <aui:form method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveUserGroup();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="userGroupId" type="hidden" value="<%= userGroupId %>" />
 
@@ -280,9 +279,7 @@ if (userGroup != null) {
 	}
 
 	function <portlet:namespace />saveUserGroup() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (userGroup == null) ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user_group" /></portlet:actionURL>');
+		submitForm(document.<portlet:namespace />fm, '<portlet:actionURL name="editUserGroup" />');
 	}
 
 	Liferay.Util.toggleSelectBox('<portlet:namespace />publicLayoutSetPrototypeId', <portlet:namespace />isVisible, '<portlet:namespace />publicLayoutSetPrototypeIdOptions');

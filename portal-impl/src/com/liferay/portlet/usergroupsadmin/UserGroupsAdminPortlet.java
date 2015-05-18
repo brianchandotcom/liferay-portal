@@ -12,118 +12,42 @@
  * details.
  */
 
-package com.liferay.portlet.usergroupsadmin.action;
+package com.liferay.portlet.usergroupsadmin;
 
 import com.liferay.portal.DuplicateUserGroupException;
 import com.liferay.portal.NoSuchUserGroupException;
 import com.liferay.portal.RequiredUserGroupException;
 import com.liferay.portal.UserGroupNameException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupServiceUtil;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Charles May
+ * @author Drew Brokke
  */
-public class EditUserGroupAction extends PortletAction {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+public class UserGroupsAdminPortlet extends MVCPortlet {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateUserGroup(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteUserGroups(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException) {
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.user_groups_admin.error");
-			}
-			else if (e instanceof DuplicateUserGroupException ||
-					 e instanceof NoSuchUserGroupException ||
-					 e instanceof RequiredUserGroupException ||
-					 e instanceof UserGroupNameException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				if (cmd.equals(Constants.DELETE)) {
-					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, "redirect"));
-
-					if (Validator.isNotNull(redirect)) {
-						actionResponse.sendRedirect(redirect);
-					}
-				}
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getUserGroup(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchUserGroupException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward(
-					"portlet.user_groups_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.user_groups_admin.edit_user_group"));
-	}
-
-	protected void deleteUserGroups(ActionRequest actionRequest)
+	public void deleteUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] deleteUserGroupIds = StringUtil.split(
@@ -134,7 +58,8 @@ public class EditUserGroupAction extends PortletAction {
 		}
 	}
 
-	protected void updateUserGroup(ActionRequest actionRequest)
+	public void editUserGroup(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long userGroupId = ParamUtil.getLong(actionRequest, "userGroupId");
@@ -182,6 +107,73 @@ public class EditUserGroupAction extends PortletAction {
 				publicLayoutSetPrototypeLinkEnabled,
 				privateLayoutSetPrototypeLinkEnabled);
 		}
+	}
+
+	public void editUserGroupAssignments(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long userGroupId = ParamUtil.getLong(actionRequest, "userGroupId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		UserServiceUtil.addUserGroupUsers(userGroupId, addUserIds);
+		UserServiceUtil.unsetUserGroupUsers(userGroupId, removeUserIds);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchUserGroupException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include(
+				"/html/portlet/user_groups_admin/error.jsp", renderRequest,
+				renderResponse);
+		}
+		else if (SessionErrors.contains(
+					renderRequest,
+					RequiredUserGroupException.class.getName())) {
+
+			include(
+				"/html/portlet/user_groups_admin/view.jsp", renderRequest,
+				renderResponse);
+		}
+		else if (SessionErrors.contains(
+					renderRequest,
+					DuplicateUserGroupException.class.getName()) ||
+				 SessionErrors.contains(
+					 renderRequest, UserGroupNameException.class.getName())) {
+
+			include(
+				"/html/portlet/user_groups_admin/edit_user_group.jsp",
+				renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof DuplicateUserGroupException ||
+			cause instanceof MembershipPolicyException ||
+			cause instanceof NoSuchUserGroupException ||
+			cause instanceof PrincipalException ||
+			cause instanceof RequiredUserGroupException ||
+			cause instanceof UserGroupNameException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

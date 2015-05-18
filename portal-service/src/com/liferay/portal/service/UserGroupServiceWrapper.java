@@ -124,6 +124,21 @@ public class UserGroupServiceWrapper implements UserGroupService,
 	}
 
 	/**
+	* Fetches a user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return Returns the user group with the primary key
+	* @throws PortalException if a user group with the primary key could not be
+	found or if the user did not have permission to view the user
+	group
+	*/
+	@Override
+	public com.liferay.portal.model.UserGroup fetchUserGroup(long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _userGroupService.fetchUserGroup(userGroupId);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

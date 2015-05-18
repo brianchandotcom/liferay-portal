@@ -125,6 +125,19 @@ public interface UserGroupService extends BaseService {
 	public void deleteUserGroup(long userGroupId) throws PortalException;
 
 	/**
+	* Fetches a user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return Returns the user group with the primary key
+	* @throws PortalException if a user group with the primary key could not be
+	found or if the user did not have permission to view the user
+	group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.UserGroup fetchUserGroup(long userGroupId)
+		throws PortalException;
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

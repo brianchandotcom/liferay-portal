@@ -28,12 +28,10 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 	<aui:nav-bar>
 		<aui:nav cssClass="navbar-nav" searchContainer="<%= userGroupSearch %>">
 			<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
-				<portlet:renderURL var="viewUserGroupsURL">
-					<portlet:param name="struts_action" value="/user_groups_admin/view" />
-				</portlet:renderURL>
+				<portlet:renderURL var="viewUserGroupsURL" />
 
 				<portlet:renderURL var="addUsergroupURL">
-					<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
+					<portlet:param name="mvcPath" value="/html/portlet/user_groups_admin/edit_user_group.jsp" />
 					<portlet:param name="redirect" value="<%= viewUserGroupsURL %>" />
 				</portlet:renderURL>
 
@@ -74,7 +72,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 		modelVar="userGroup"
 	>
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" />
+			<portlet:param name="mvcPath" value="/html/portlet/user_groups_admin/edit_user_group.jsp" />
 			<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>

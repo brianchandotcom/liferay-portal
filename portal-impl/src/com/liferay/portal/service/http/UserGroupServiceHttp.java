@@ -204,12 +204,44 @@ public class UserGroupServiceHttp {
 		}
 	}
 
+	public static com.liferay.portal.model.UserGroup fetchUserGroup(
+		HttpPrincipal httpPrincipal, long userGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
+					"fetchUserGroup", _fetchUserGroupParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					userGroupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.portal.model.UserGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.portal.model.UserGroup getUserGroup(
 		HttpPrincipal httpPrincipal, long userGroupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroup", _getUserGroupParameterTypes5);
+					"getUserGroup", _getUserGroupParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					userGroupId);
@@ -241,7 +273,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroup", _getUserGroupParameterTypes6);
+					"getUserGroup", _getUserGroupParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name);
 
@@ -272,7 +304,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserGroups", _getUserGroupsParameterTypes7);
+					"getUserGroups", _getUserGroupsParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, companyId);
 
@@ -303,7 +335,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"getUserUserGroups", _getUserUserGroupsParameterTypes8);
+					"getUserUserGroups", _getUserUserGroupsParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId);
 
@@ -334,7 +366,8 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"unsetGroupUserGroups", _unsetGroupUserGroupsParameterTypes9);
+					"unsetGroupUserGroups",
+					_unsetGroupUserGroupsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					userGroupIds);
@@ -362,7 +395,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"unsetTeamUserGroups", _unsetTeamUserGroupsParameterTypes10);
+					"unsetTeamUserGroups", _unsetTeamUserGroupsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, teamId,
 					userGroupIds);
@@ -391,7 +424,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"updateUserGroup", _updateUserGroupParameterTypes11);
+					"updateUserGroup", _updateUserGroupParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					userGroupId, name, description);
@@ -425,7 +458,7 @@ public class UserGroupServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(UserGroupServiceUtil.class,
-					"updateUserGroup", _updateUserGroupParameterTypes12);
+					"updateUserGroup", _updateUserGroupParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					userGroupId, name, description, serviceContext);
@@ -469,28 +502,31 @@ public class UserGroupServiceHttp {
 	private static final Class<?>[] _deleteUserGroupParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getUserGroupParameterTypes5 = new Class[] {
+	private static final Class<?>[] _fetchUserGroupParameterTypes5 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getUserGroupParameterTypes6 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getUserGroupParameterTypes7 = new Class[] {
 			java.lang.String.class
 		};
-	private static final Class<?>[] _getUserGroupsParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getUserGroupsParameterTypes8 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getUserUserGroupsParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getUserUserGroupsParameterTypes9 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _unsetGroupUserGroupsParameterTypes9 = new Class[] {
+	private static final Class<?>[] _unsetGroupUserGroupsParameterTypes10 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _unsetTeamUserGroupsParameterTypes10 = new Class[] {
+	private static final Class<?>[] _unsetTeamUserGroupsParameterTypes11 = new Class[] {
 			long.class, long[].class
-		};
-	private static final Class<?>[] _updateUserGroupParameterTypes11 = new Class[] {
-			long.class, java.lang.String.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateUserGroupParameterTypes12 = new Class[] {
+			long.class, java.lang.String.class, java.lang.String.class
+		};
+	private static final Class<?>[] _updateUserGroupParameterTypes13 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			com.liferay.portal.service.ServiceContext.class
 		};

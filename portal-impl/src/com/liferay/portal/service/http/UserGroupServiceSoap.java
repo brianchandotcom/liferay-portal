@@ -194,6 +194,29 @@ public class UserGroupServiceSoap {
 	}
 
 	/**
+	* Fetches a user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return Returns the user group with the primary key
+	* @throws PortalException if a user group with the primary key could not be
+	found or if the user did not have permission to view the user
+	group
+	*/
+	public static com.liferay.portal.model.UserGroupSoap fetchUserGroup(
+		long userGroupId) throws RemoteException {
+		try {
+			com.liferay.portal.model.UserGroup returnValue = UserGroupServiceUtil.fetchUserGroup(userGroupId);
+
+			return com.liferay.portal.model.UserGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns the user group with the primary key.
 	*
 	* @param userGroupId the primary key of the user group

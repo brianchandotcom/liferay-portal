@@ -22,8 +22,6 @@ String backURL = ParamUtil.getString(request, "backURL", viewUserGroupsRedirect)
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/user_groups_admin/view");
-
 if (Validator.isNotNull(viewUserGroupsRedirect)) {
 	portletURL.setParameter("viewUserGroupsRedirect", viewUserGroupsRedirect);
 }
@@ -37,7 +35,6 @@ String portletURLString = portletURL.toString();
 
 <aui:form action="<%= portletURLString %>" method="get" name="fm">
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 
 	<%@ include file="/html/portlet/user_groups_admin/view_flat_user_groups.jspf" %>
@@ -111,11 +108,10 @@ String portletURLString = portletURL.toString();
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 		form.fm('redirect').val(form.fm('userGroupsRedirect').val());
 		form.fm('deleteUserGroupIds').val(userGroupIds);
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/user_groups_admin/edit_user_group" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="deleteUserGroups" />');
 	}
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {

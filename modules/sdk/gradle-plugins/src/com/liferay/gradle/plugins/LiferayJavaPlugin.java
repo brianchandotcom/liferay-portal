@@ -65,6 +65,7 @@ import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.bundling.Jar;
 
 /**
@@ -403,14 +404,22 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureSourceSetMain(Project project) {
+		File classesDir = project.file("classes");
 		File srcDir = project.file("src");
 
-		configureSourceSetMain(project, srcDir);
+		configureSourceSetMain(project, classesDir, srcDir);
 	}
 
-	protected void configureSourceSetMain(Project project, File srcDir) {
+	protected void configureSourceSetMain(
+		Project project, File classesDir, File srcDir) {
+
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		sourceSetOutput.setClassesDir(classesDir);
+		sourceSetOutput.setResourcesDir(classesDir);
 
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 

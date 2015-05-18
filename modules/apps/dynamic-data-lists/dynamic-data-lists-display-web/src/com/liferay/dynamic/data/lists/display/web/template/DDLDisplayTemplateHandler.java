@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"javax.portlet.name="+ DDLDisplayPortletKeys.DDL_DISPLAY},
 	service = TemplateHandler.class
 )
-public class DDLTemplateHandler extends BaseDDMTemplateHandler {
+public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 
 	@Override
 	public String getClassName() {
@@ -155,7 +155,7 @@ public class DDLTemplateHandler extends BaseDDMTemplateHandler {
 
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
-			DDLTemplateHandler.class.getClassLoader(),
+			DDLDisplayTemplateHandler.class.getClassLoader(),
 			"com/liferay/dynamic/data/lists/display/web/template/dependencies/"
 		);
 

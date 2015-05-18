@@ -35,12 +35,11 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
-import org.testng.Assert;
 
 /**
  * @author Adolfo Pérez
@@ -93,7 +92,7 @@ public class PortletFileRepositoryTest {
 			RandomTestUtil.randomString());
 
 		Assert.assertEquals(
-			fileEntry.getVersion(), DLFileEntryConstants.VERSION_DEFAULT);
+			DLFileEntryConstants.VERSION_DEFAULT, fileEntry.getVersion());
 	}
 
 	@Test
@@ -104,7 +103,7 @@ public class PortletFileRepositoryTest {
 		int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
 			_group.getGroupId(), _folder.getFolderId());
 
-		Assert.assertEquals(count, 2);
+		Assert.assertEquals(2, count);
 	}
 
 	@Test
@@ -114,7 +113,7 @@ public class PortletFileRepositoryTest {
 		int count = PortletFileRepositoryUtil.getPortletFileEntriesCount(
 			_group.getGroupId(), _folder.getFolderId());
 
-		Assert.assertEquals(count, 1);
+		Assert.assertEquals(1, count);
 	}
 
 	@Test

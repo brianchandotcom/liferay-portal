@@ -208,6 +208,14 @@ public class PasswordPoliciesAdminPortlet extends MVCPortlet {
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}
+		else if (SessionErrors.contains(
+				renderRequest,
+				DuplicatePasswordPolicyException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PasswordPolicyNameException.class.getName())) {
+
+			include("/edit_password_policy.jsp", renderRequest, renderResponse);
+		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}

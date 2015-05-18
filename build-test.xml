@@ -2931,6 +2931,8 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<echo file="portal-impl/src/portal-ext.properties">liferay.home=${liferay.home}
 
+hot.deploy.dependency.management.enabled=false
+
 plugin.notifications.enabled=false
 
 jdbc.default.jndi.name=
@@ -3378,10 +3380,6 @@ include-and-override=${liferay.home}/portal-setup-wizard.properties</echo>
 				<replace file="portal-impl/src/portal-ext.properties" token="jdbc.default.username=${database.username}" value="" />
 			</then>
 		</if>
-
-		<echo file="portal-impl/src/portal-ext.properties" append="true">
-
-hot.deploy.dependency.management.enabled=false</echo>
 
 		<if>
 			<isset property="test.set.default.portal.properties" />

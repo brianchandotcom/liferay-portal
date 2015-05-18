@@ -3,6 +3,8 @@
 (function() {
 	'use strict';
 
+	var Util = Liferay.Util;
+
 	var ButtonImage = React.createClass(
 		{
 			displayName: 'ButtonImage',
@@ -42,41 +44,93 @@
 				);
 			},
 
+			_closeDialog: function(dialogId) {
+				var instance = this;
+
+				var dialog = Util.getWindow(dialogId);
+
+				dialog.hide();
+
+				instance._selectedItem = null;
+			},
+
 			_handleClick: function() {
+				var instance = this;
+
 				var editor = this.props.editor.get('nativeEditor');
 
 				var eventName = editor.name + 'selectDocument';
 
-				Liferay.Util.selectEntity(
+				Util.selectEntity(
 					{
 						dialog: {
 							constrain: true,
 							destroyOnHide: true,
-							modal: true
+							modal: true,
+							'toolbars.footer': [
+								{
+									cssClass: 'btn-primary',
+									disabled: true,
+									id: 'addButton',
+									label: Liferay.Language.get('add'),
+									on: {
+										click: function() {
+											instance._onDocumentSelected(instance._selectedItem);
+
+											instance._closeDialog(eventName);
+										}
+									}
+								},
+								{
+									id: 'cancelButton',
+									label: Liferay.Language.get('cancel'),
+									on: {
+										click: function() {
+											instance._closeDialog(eventName);
+										}
+									}
+								}
+							]
 						},
 						eventName: eventName,
 						id: eventName,
 						title: Liferay.Language.get('select-image'),
 						uri: editor.config.filebrowserImageBrowseUrl
 					},
-					this._onDocumentSelected
+					instance._onDocumentPicked
 				);
 			},
 
-			_onDocumentSelected: function(event) {
+			_onDocumentPicked: function(event) {
+				var instance = this;
+
+				instance._selectedItem = event.value;
+
+				var editor = this.props.editor.get('nativeEditor');
+
+				var eventName = editor.name + 'selectDocument';
+
+				var dialog = Util.getWindow(eventName);
+
+				var addButton = dialog.getToolbar('footer').get('boundingBox').one('#addButton');
+
+				Util.toggleDisabled(addButton, !instance._selectedItem);
+			},
+
+			_onDocumentSelected: function(itemSrc) {
 				var instance = this;
 
 				var editor = instance.props.editor.get('nativeEditor');
 
 				var eventName = editor.name + 'selectDocument';
 
-				Liferay.Util.getWindow(eventName).onceAfter(
+				Util.getWindow(eventName).onceAfter(
 					'visibleChange',
 					function() {
 						var image = CKEDITOR.dom.element.createFromHtml(
 							instance.props.imageTPL.output(
 								{
-									src: event.url
+									src: itemSrc
 								}
 							)
 						);

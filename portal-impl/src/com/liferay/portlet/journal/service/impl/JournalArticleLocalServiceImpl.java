@@ -108,6 +108,7 @@ import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
@@ -442,14 +443,7 @@ public class JournalArticleLocalServiceImpl
 				classPK, content, serviceContext);
 		}
 		else {
-			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-				PortalUtil.getSiteGroupId(groupId),
-				classNameLocalService.getClassNameId(DDMStructure.class),
-				ddmTemplateKey, true);
-
-			ddmTemplateLinkLocalService.addTemplateLink(
-				classNameLocalService.getClassNameId(JournalArticle.class), id,
-				ddmTemplate.getTemplateId());
+			updateDDMLinks(groupId, id, ddmStructureKey, ddmTemplateKey, true);
 		}
 
 		// Message boards
@@ -881,6 +875,12 @@ public class JournalArticleLocalServiceImpl
 			userId, newArticle, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds);
 
+		// Dynamic data mapping
+
+		updateDDMLinks(
+			groupId, id, oldArticle.getDDMStructureKey(),
+			oldArticle.getDDMTemplateKey(), true);
+
 		return newArticle;
 	}
 
@@ -975,6 +975,8 @@ public class JournalArticleLocalServiceImpl
 
 		if (article.getClassNameId() !=
 				classNameLocalService.getClassNameId(DDMStructure.class)) {
+
+			ddmStorageLinkLocalService.deleteClassStorageLink(article.getId());
 
 			ddmTemplateLinkLocalService.deleteTemplateLink(
 				classNameLocalService.getClassNameId(JournalArticle.class),
@@ -5282,21 +5284,9 @@ public class JournalArticleLocalServiceImpl
 				article.getClassPK(), content, serviceContext);
 		}
 		else {
-			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
-				PortalUtil.getSiteGroupId(groupId),
-				classNameLocalService.getClassNameId(DDMStructure.class),
-				ddmTemplateKey, true);
-
-			if (addNewVersion) {
-				ddmTemplateLinkLocalService.addTemplateLink(
-					classNameLocalService.getClassNameId(JournalArticle.class),
-					article.getId(), ddmTemplate.getTemplateId());
-			}
-			else {
-				ddmTemplateLinkLocalService.updateTemplateLink(
-					classNameLocalService.getClassNameId(JournalArticle.class),
-					latestArticle.getId(), ddmTemplate.getTemplateId());
-			}
+			updateDDMLinks(
+				groupId, article.getId(), ddmStructureKey, ddmTemplateKey,
+				addNewVersion);
 		}
 
 		// Small image
@@ -5505,6 +5495,12 @@ public class JournalArticleLocalServiceImpl
 			article.setStatus(WorkflowConstants.STATUS_DRAFT);
 			article.setStatusDate(new Date());
 			article.setExpandoBridgeAttributes(oldArticle);
+
+			// Dynamic data mapping
+
+			updateDDMLinks(
+				groupId, id, oldArticle.getDDMStructureKey(),
+				oldArticle.getDDMTemplateKey(), true);
 		}
 		else {
 			article = oldArticle;
@@ -7397,6 +7393,44 @@ public class JournalArticleLocalServiceImpl
 
 		for (Locale locale : predefinedValue.getAvailableLocales()) {
 			predefinedValue.addString(locale, ddmFormFieldValue);
+		}
+	}
+
+	protected void updateDDMLinks(
+			long groupId, long id, String ddmStructureKey,
+			String ddmTemplateKey, boolean incrementVersion)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getStructure(
+			PortalUtil.getSiteGroupId(groupId),
+			classNameLocalService.getClassNameId(JournalArticle.class),
+			ddmStructureKey, true);
+
+		DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
+			PortalUtil.getSiteGroupId(groupId),
+			classNameLocalService.getClassNameId(DDMStructure.class),
+			ddmTemplateKey, true);
+
+		if (incrementVersion) {
+			ddmStorageLinkLocalService.addStorageLink(
+				ddmStructure.getClassNameId(), id,
+				ddmStructure.getStructureId(), new ServiceContext());
+
+			ddmTemplateLinkLocalService.addTemplateLink(
+				classNameLocalService.getClassNameId(JournalArticle.class), id,
+				ddmTemplate.getTemplateId());
+		}
+		else {
+			DDMStorageLink ddmStorageLink =
+				ddmStorageLinkLocalService.getClassStorageLink(id);
+
+			ddmStorageLink.setStructureId(ddmStructure.getStructureId());
+
+			ddmStorageLinkLocalService.updateDDMStorageLink(ddmStorageLink);
+
+			ddmTemplateLinkLocalService.updateTemplateLink(
+				classNameLocalService.getClassNameId(JournalArticle.class), id,
+				ddmTemplate.getTemplateId());
 		}
 	}
 

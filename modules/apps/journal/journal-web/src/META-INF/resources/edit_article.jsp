@@ -61,7 +61,7 @@ else if (Validator.isNotNull(ddmStructureKey)) {
 
 String ddmTemplateKey = ParamUtil.getString(request, "ddmTemplateKey");
 
-if (Validator.isNull(ddmTemplateKey) && (article != null)) {
+if ((ddmTemplateKey == null) && (article != null)) {
 	ddmTemplateKey = article.getDDMTemplateKey();
 }
 

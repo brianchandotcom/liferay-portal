@@ -44,6 +44,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetLinkPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetTagFinder;
 import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
+import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStorageLinkPersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMTemplateFinder;
@@ -1068,6 +1069,44 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the d d m storage link local service.
+	 *
+	 * @return the d d m storage link local service
+	 */
+	public com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService getDDMStorageLinkLocalService() {
+		return ddmStorageLinkLocalService;
+	}
+
+	/**
+	 * Sets the d d m storage link local service.
+	 *
+	 * @param ddmStorageLinkLocalService the d d m storage link local service
+	 */
+	public void setDDMStorageLinkLocalService(
+		com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService ddmStorageLinkLocalService) {
+		this.ddmStorageLinkLocalService = ddmStorageLinkLocalService;
+	}
+
+	/**
+	 * Returns the d d m storage link persistence.
+	 *
+	 * @return the d d m storage link persistence
+	 */
+	public DDMStorageLinkPersistence getDDMStorageLinkPersistence() {
+		return ddmStorageLinkPersistence;
+	}
+
+	/**
+	 * Sets the d d m storage link persistence.
+	 *
+	 * @param ddmStorageLinkPersistence the d d m storage link persistence
+	 */
+	public void setDDMStorageLinkPersistence(
+		DDMStorageLinkPersistence ddmStorageLinkPersistence) {
+		this.ddmStorageLinkPersistence = ddmStorageLinkPersistence;
+	}
+
+	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -1946,6 +1985,10 @@ public abstract class JournalArticleServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.documentlibrary.service.DLAppLocalService dlAppLocalService;
 	@BeanReference(type = com.liferay.portlet.documentlibrary.service.DLAppService.class)
 	protected com.liferay.portlet.documentlibrary.service.DLAppService dlAppService;
+	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService.class)
+	protected com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService ddmStorageLinkLocalService;
+	@BeanReference(type = DDMStorageLinkPersistence.class)
+	protected DDMStorageLinkPersistence ddmStorageLinkPersistence;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService ddmStructureLocalService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureService.class)

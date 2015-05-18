@@ -222,6 +222,7 @@
 		<reference package-path="com.liferay.portlet.asset" entity="AssetLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetTag" />
 		<reference package-path="com.liferay.portlet.documentlibrary" entity="DLApp" />
+		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStorageLink" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplate" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMTemplateLink" />

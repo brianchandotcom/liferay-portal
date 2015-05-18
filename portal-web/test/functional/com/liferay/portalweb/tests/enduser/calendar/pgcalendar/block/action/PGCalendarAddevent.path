@@ -80,11 +80,18 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--MINI_CALENDAR-->
 <tr>
 	<td>MINI_CALENDAR_WEEK_START_DAY</td>
 	<td>//div[@class='yui3-widget-bd popover-content']//tr[@class='yui3-calendar-weekdayrow']/th[1]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ALL_DAY-->
 <tr>
 	<td>ALL_DAY_CHECKBOX</td>
 	<td>//input[contains(@id,'calendarportlet_allDay')]</td>

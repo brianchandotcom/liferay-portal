@@ -183,7 +183,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		setTransactionalCacheNames(
 			GetterUtil.getStringValues(
-				props.get(PropsKeys.TRANSACTIONAL_CACHE_NAMES)));
+				props.getArray(PropsKeys.TRANSACTIONAL_CACHE_NAMES)));
 
 		if (Validator.isNull(_configFile)) {
 			_configFile = _defaultConfigFile;

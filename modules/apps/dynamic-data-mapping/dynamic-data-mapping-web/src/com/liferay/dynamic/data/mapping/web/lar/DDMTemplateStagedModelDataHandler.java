@@ -43,6 +43,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
 import java.io.File;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +56,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
-	},
+	property = {"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING},
 	service = StagedModelDataHandler.class
 )
 public class DDMTemplateStagedModelDataHandler

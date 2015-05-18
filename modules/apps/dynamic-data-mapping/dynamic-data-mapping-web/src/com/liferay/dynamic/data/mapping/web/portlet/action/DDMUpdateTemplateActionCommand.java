@@ -14,16 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import java.io.File;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
@@ -51,6 +41,17 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
+import java.io.File;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
@@ -65,28 +66,160 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 public class DDMUpdateTemplateActionCommand extends DDMBaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
 		DDMTemplate template = saveOrUpdateTemplate(portletRequest);
-		
+
 		String redirect = ParamUtil.getString(
 			portletRequest, DDMConstants.REDIRECT);
-		
+
 		redirect = super.setRedirectAttribute(portletRequest, redirect);
-		
+
 		boolean saveAndContinue = ParamUtil.getBoolean(
 			portletRequest, DDMConstants.SAVE_AND_CONTINUE);
 
 		if (saveAndContinue) {
 			redirect = getSaveAndContinueRedirect(
 				portletRequest, template, redirect);
-			
-			portletRequest.setAttribute(WebKeys.REDIRECT,redirect);
+
+			portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		}
+	}
+
+	protected String getFileScriptContent(
+			UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		File file = uploadPortletRequest.getFile(DDMConstants.SCRIPT);
+
+		if (file == null) {
+			return null;
 		}
 
+		String fileScriptContent = FileUtil.read(file);
+
+		if (Validator.isNotNull(fileScriptContent) && !isValidFile(file)) {
+			throw new TemplateScriptException();
+		}
+
+		return fileScriptContent;
 	}
-	
+
+	protected String getSaveAndContinueRedirect(
+			PortletRequest portletRequest, DDMTemplate template,
+			String redirect)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletResourceNamespace = ParamUtil.getString(
+			portletRequest, DDMConstants.PORTLET_RESOURCE_NAMESPACE);
+
+		long classNameId = ParamUtil.getLong(
+			portletRequest, DDMConstants.CLASS_NAME_ID);
+
+		long classPK = ParamUtil.getLong(portletRequest, DDMConstants.CLASS_PK);
+
+		String structureAvailableFields = ParamUtil.getString(
+			portletRequest, DDMConstants.STRUCTURE_AVAILABLE_FIELDS);
+
+		PortletURLImpl portletURL = new PortletURLImpl(
+			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
+			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(DDMConstants.MVC_PATH, "/edit_template.jsp");
+
+		portletURL.setParameter(DDMConstants.REDIRECT, redirect, false);
+
+		portletURL.setParameter(
+			DDMConstants.PORTLET_RESOURCE_NAMESPACE, portletResourceNamespace,
+			false);
+
+		portletURL.setParameter(
+			DDMConstants.TEMPLATE_ID, String.valueOf(template.getTemplateId()),
+			false);
+
+		portletURL.setParameter(
+			DDMConstants.GROUP_ID, String.valueOf(template.getGroupId()),
+			false);
+
+		portletURL.setParameter(
+			DDMConstants.CLASS_NAME_ID, String.valueOf(classNameId), false);
+
+		portletURL.setParameter(
+			DDMConstants.CLASS_PK, String.valueOf(classPK), false);
+
+		portletURL.setParameter(DDMConstants.TYPE, template.getType(), false);
+
+		portletURL.setParameter(
+			DDMConstants.STRUCTURE_AVAILABLE_FIELDS, structureAvailableFields,
+			false);
+
+		portletURL.setWindowState(portletRequest.getWindowState());
+
+		return portletURL.toString();
+	}
+
+	protected String getScript(UploadPortletRequest uploadPortletRequest)
+		throws Exception {
+
+		String fileScriptContent = getFileScriptContent(uploadPortletRequest);
+
+		if (Validator.isNotNull(fileScriptContent)) {
+			return fileScriptContent;
+		}
+
+		return ParamUtil.getString(
+			uploadPortletRequest, DDMConstants.SCRIPT_CONTENT);
+	}
+
+	protected PortletPreferences getStrictPortletSetup(
+			Layout layout, String portletId)
+		throws PortalException {
+
+		if (Validator.isNull(portletId)) {
+			return null;
+		}
+
+		PortletPreferences portletPreferences =
+			PortletPreferencesFactoryUtil.getStrictPortletSetup(
+				layout, portletId);
+
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+			throw new PrincipalException();
+		}
+
+		return portletPreferences;
+	}
+
+	protected PortletPreferences getStrictPortletSetup(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		String portletResource = ParamUtil.getString(
+			portletRequest, DDMConstants.PORTLET_RESOURCE);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
+	}
+
+	protected boolean isValidFile(File file) {
+		String contentType = MimeTypesUtil.getContentType(file);
+
+		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
+			contentType.startsWith(ContentTypes.TEXT)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	protected DDMTemplate saveOrUpdateTemplate(PortletRequest portletRequest)
 		throws Exception {
 
@@ -98,47 +231,47 @@ public class DDMUpdateTemplateActionCommand extends DDMBaseActionCommand {
 
 		long groupId = ParamUtil.getLong(
 			uploadPortletRequest, DDMConstants.GROUP_ID);
-		
+
 		long classNameId = ParamUtil.getLong(
 			uploadPortletRequest, DDMConstants.CLASS_NAME_ID);
-		
+
 		long classPK = ParamUtil.getLong(
 			uploadPortletRequest, DDMConstants.CLASS_PK);
-		
+
 		long resourceClassNameId = ParamUtil.getLong(
 			uploadPortletRequest, DDMConstants.RESOURCE_CLASS_NAME_ID);
-		
+
 		String templateKey = ParamUtil.getString(
 			uploadPortletRequest, DDMConstants.TEMPLATE_KEY);
-		
+
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
 			uploadPortletRequest, DDMConstants.NAME);
-		
+
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				uploadPortletRequest, DDMConstants.DESCRIPTION);
-		
+
 		String type = ParamUtil.getString(
 			uploadPortletRequest, DDMConstants.TYPE);
-		
+
 		String mode = ParamUtil.getString(
 			uploadPortletRequest, DDMConstants.MODE);
-		
+
 		String language = ParamUtil.getString(
-			uploadPortletRequest, DDMConstants.LANGUAGE, 
+			uploadPortletRequest, DDMConstants.LANGUAGE,
 			TemplateConstants.LANG_TYPE_VM);
 
 		String script = getScript(uploadPortletRequest);
 
 		boolean cacheable = ParamUtil.getBoolean(
 			uploadPortletRequest, DDMConstants.CACHEABLE);
-		
+
 		boolean smallImage = ParamUtil.getBoolean(
 			uploadPortletRequest, DDMConstants.SMALL_IMAGE);
-		
+
 		String smallImageURL = ParamUtil.getString(
 			uploadPortletRequest, DDMConstants.SMALL_IMAGE_URL);
-		
+
 		File smallImageFile = uploadPortletRequest.getFile(
 			DDMConstants.SMALL_IMAGE_FILE);
 
@@ -181,136 +314,5 @@ public class DDMUpdateTemplateActionCommand extends DDMBaseActionCommand {
 
 		return template;
 	}
-	
-	protected String getSaveAndContinueRedirect(
-		PortletRequest portletRequest, DDMTemplate template, String redirect)
-		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String portletResourceNamespace = ParamUtil.getString(
-			portletRequest, DDMConstants.PORTLET_RESOURCE_NAMESPACE);
-		
-		long classNameId = ParamUtil.getLong(
-			portletRequest, DDMConstants.CLASS_NAME_ID);
-		
-		long classPK = ParamUtil.getLong(
-			portletRequest, DDMConstants.CLASS_PK);
-		
-		String structureAvailableFields = ParamUtil.getString(
-			portletRequest, DDMConstants.STRUCTURE_AVAILABLE_FIELDS);
-
-		PortletURLImpl portletURL = new PortletURLImpl(
-			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(DDMConstants.MVC_PATH, "/edit_template.jsp");
-		
-		portletURL.setParameter(DDMConstants.REDIRECT, redirect, false);
-		
-		portletURL.setParameter(
-			DDMConstants.PORTLET_RESOURCE_NAMESPACE, portletResourceNamespace, 
-			false);
-		
-		portletURL.setParameter(
-			DDMConstants.TEMPLATE_ID, String.valueOf(template.getTemplateId()), 
-			false);
-		
-		portletURL.setParameter(
-			DDMConstants.GROUP_ID, String.valueOf(template.getGroupId()), 
-			false);
-		
-		portletURL.setParameter(
-			DDMConstants.CLASS_NAME_ID, String.valueOf(classNameId), false);
-		
-		portletURL.setParameter(DDMConstants.CLASS_PK, String.valueOf(classPK), 
-			false);
-		
-		portletURL.setParameter(DDMConstants.TYPE, template.getType(), false);
-		
-		portletURL.setParameter(
-			DDMConstants.STRUCTURE_AVAILABLE_FIELDS, structureAvailableFields, 
-			false);
-		
-		portletURL.setWindowState(portletRequest.getWindowState());
-
-		return portletURL.toString();
-	}
-	
-	protected String getScript(UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		String fileScriptContent = getFileScriptContent(uploadPortletRequest);
-
-		if (Validator.isNotNull(fileScriptContent)) {
-			return fileScriptContent;
-		}
-
-		return ParamUtil.getString(
-			uploadPortletRequest, DDMConstants.SCRIPT_CONTENT);
-	}
-	
-	protected String getFileScriptContent(
-			UploadPortletRequest uploadPortletRequest)
-		throws Exception {
-
-		File file = uploadPortletRequest.getFile(DDMConstants.SCRIPT);
-
-		if (file == null) {
-			return null;
-		}
-
-		String fileScriptContent = FileUtil.read(file);
-
-		if (Validator.isNotNull(fileScriptContent) && !isValidFile(file)) {
-			throw new TemplateScriptException();
-		}
-
-		return fileScriptContent;
-	}
-	
-	protected boolean isValidFile(File file) {
-		String contentType = MimeTypesUtil.getContentType(file);
-
-		if (contentType.equals(ContentTypes.APPLICATION_XSLT_XML) ||
-			contentType.startsWith(ContentTypes.TEXT)) {
-
-			return true;
-		}
-
-		return false;
-	}
-	
-	protected PortletPreferences getStrictPortletSetup(
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		String portletResource = ParamUtil.getString(
-			portletRequest, DDMConstants.PORTLET_RESOURCE);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
-	}
-	
-	protected PortletPreferences getStrictPortletSetup(
-			Layout layout, String portletId)
-		throws PortalException {
-
-		if (Validator.isNull(portletId)) {
-			return null;
-		}
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, portletId);
-
-		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
-		}
-
-		return portletPreferences;
-	}
 }

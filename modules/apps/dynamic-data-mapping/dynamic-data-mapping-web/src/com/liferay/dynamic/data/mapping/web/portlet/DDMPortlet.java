@@ -14,17 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet;
 
-import java.io.IOException;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,22 +43,24 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.private-request-attributes=false",
-		"com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.use-default-template=false",
-		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
-		"com.liferay.portlet.header-portlet-javascript=/js/custom_fields.js",
-		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping",
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.autopropagated-parameters=refererPortletName",
 		"com.liferay.portlet.autopropagated-parameters=refererWebDAVToken",
 		"com.liferay.portlet.autopropagated-parameters=scopeTitle",
@@ -77,23 +68,34 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 		"com.liferay.portlet.autopropagated-parameters=showBackURL",
 		"com.liferay.portlet.autopropagated-parameters=showManageTemplates",
 		"com.liferay.portlet.autopropagated-parameters=showToolbar",
+		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/custom_fields.js",
+		"com.liferay.portlet.preferences-owned-by-group=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.use-default-template=false",
 		"javax.portlet.display-name=Dynamic Data Mapping Web",
-		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
+		"javax.portlet.name=",
+		"javax.portlet.resource-bundle=content.Language" +
+			PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
 	service = { Portlet.class }
 )
 public class DDMPortlet extends MVCPortlet {
-	
+
 	@Override
-	public void processAction(ActionRequest actionRequest,
-			ActionResponse actionResponse) 
+	public void processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
+
 		try {
 			super.processAction(actionRequest, actionResponse);
 		}
@@ -103,7 +105,7 @@ public class DDMPortlet extends MVCPortlet {
 				e instanceof NoSuchTemplateException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
-				
+
 				include("/error.jsp", actionRequest, actionResponse);
 			}
 			else if (e instanceof LocaleException ||
@@ -122,9 +124,10 @@ public class DDMPortlet extends MVCPortlet {
 
 				if (e instanceof RequiredStructureException ||
 					e instanceof RequiredTemplateException) {
+
 					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(actionRequest, 
-							DDMConstants.REDIRECT));
+						ParamUtil.getString(
+							actionRequest, DDMConstants.REDIRECT));
 
 					if (Validator.isNotNull(redirect)) {
 						actionResponse.sendRedirect(redirect);
@@ -136,17 +139,15 @@ public class DDMPortlet extends MVCPortlet {
 			}
 		}
 	}
-	
+
 	@Override
 	public void render(RenderRequest request, RenderResponse response)
 		throws IOException, PortletException {
 
 		try {
-			
 			setDDMTemplateRequestAttribute(request);
-			
+
 			setDDMStructureRequestAttribute(request);
-			
 		}
 		catch (NoSuchStructureException nsse) {
 
@@ -165,10 +166,9 @@ public class DDMPortlet extends MVCPortlet {
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException) {
-
 				SessionErrors.add(request, e.getClass());
-				
-				include("/error.jsp", request, response);			
+
+				include("/error.jsp", request, response);
 			}
 			else {
 				throw new PortletException(e);
@@ -177,10 +177,32 @@ public class DDMPortlet extends MVCPortlet {
 
 		super.render(request, response);
 	}
-	
+
+	protected void setDDMStructureRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long classNameId = ParamUtil.getLong(
+			renderRequest, DDMConstants.CLASS_NAME_ID);
+		long classPK = ParamUtil.getLong(renderRequest, DDMConstants.CLASS_PK);
+
+		if ((classNameId > 0) && (classPK > 0)) {
+			DDMStructure structure = null;
+
+			long structureClassNameId = PortalUtil.getClassNameId(
+				DDMStructure.class);
+
+			if ((structureClassNameId == classNameId) && (classPK > 0)) {
+				structure = DDMStructureServiceUtil.getStructure(classPK);
+			}
+
+			renderRequest.setAttribute(
+				WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
+		}
+	}
+
 	protected void setDDMTemplateRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
-		
+
 		long templateId = ParamUtil.getLong(
 			renderRequest, DDMConstants.TEMPLATE_ID);
 
@@ -190,33 +212,8 @@ public class DDMPortlet extends MVCPortlet {
 			renderRequest.setAttribute(
 				WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
 		}
-
 	}
-	
-	protected void setDDMStructureRequestAttribute(RenderRequest renderRequest)
-			throws PortalException {
-		
-		long classNameId = ParamUtil.getLong(
-			renderRequest, DDMConstants.CLASS_NAME_ID);
-		long classPK = ParamUtil.getLong(
-			renderRequest, DDMConstants.CLASS_PK);
 
-		
-		if(classNameId > 0 && classPK > 0) {
-			DDMStructure structure = null;
-	
-			long structureClassNameId = PortalUtil.getClassNameId(
-				DDMStructure.class);
-	
-			if ((structureClassNameId == classNameId) && (classPK > 0)) {
-				structure = DDMStructureServiceUtil.getStructure(classPK);
-			}
-	
-			renderRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE, structure);
-		}
-	}
-	
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMPortlet.class);
+	private static final Log _log = LogFactoryUtil.getLog(DDMPortlet.class);
+
 }

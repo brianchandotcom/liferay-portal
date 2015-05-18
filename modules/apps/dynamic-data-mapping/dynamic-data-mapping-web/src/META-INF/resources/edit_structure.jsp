@@ -48,14 +48,13 @@ String script = BeanParamUtil.getString(structure, request, "definition");
 JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
 %>
 
-<portlet:actionURL var="editStructureURL" name="ddmUpdateStructure">
+<portlet:actionURL name="ddmUpdateStructure" var="editStructureURL">
 	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 </portlet:actionURL>
 
-<portlet:actionURL var="addStructureURL" name="ddmAddStructure">
+<portlet:actionURL name="ddmAddStructure" var="addStructureURL">
 	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 </portlet:actionURL>
-
 
 <%
 String requestEditStructureURL = ParamUtil.getString(request, "editStructureURL");
@@ -189,11 +188,11 @@ if (Validator.isNotNull(requestEditStructureURL)) {
 				</aui:field-wrapper>
 
 				<c:if test="<%= structure != null %>">
-					<portlet:actionURL var="getStructureURL" name="ddmGetStructure">
+					<portlet:actionURL name="ddmGetStructure" var="getStructureURL">
 						<portlet:param name="structureId" value="<%= String.valueOf(classPK) %>" />
 					</portlet:actionURL>
-					
-					<aui:input name="url" type="resource" value='<%= getStructureURL.toString() %>' />
+
+					<aui:input name="url" type="resource" value="<%= getStructureURL.toString() %>" />
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
 						<aui:input name="webDavURL" type="resource" value="<%= structure.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />

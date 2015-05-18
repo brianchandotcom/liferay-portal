@@ -14,15 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
@@ -41,6 +32,16 @@ import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Basto
  * @author Leonardo Barros
@@ -55,35 +56,6 @@ import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContex
 )
 public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 
-	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		
-		HttpServletResponse httpServletResponse = 
-			PortalUtil.getHttpServletResponse(portletResponse);
-		
-		HttpServletRequest httpServletRequest = 
-			PortalUtil.getHttpServletRequest(portletRequest);
-
-		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
-
-		DDMFormFieldRenderer ddmFormFieldRenderer =
-			DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
-				ddmFormField.getType());
-
-		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
-			createDDMFormFieldRenderingContext(
-				httpServletRequest, httpServletResponse);
-
-		String ddmFormFieldHTML = ddmFormFieldRenderer.render(
-			ddmFormField, ddmFormFieldRenderingContext);
-		
-		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
-
-		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
-
-	}
-	
 	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext(
 		HttpServletRequest request, HttpServletResponse response) {
 
@@ -91,13 +63,12 @@ public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		String mode = ParamUtil.getString(request, DDMConstants.MODE);
-		
-		String namespace = ParamUtil.getString(
-			request, DDMConstants.NAMESPACE);
-		
+
+		String namespace = ParamUtil.getString(request, DDMConstants.NAMESPACE);
+
 		String portletNamespace = ParamUtil.getString(
 			request, DDMConstants.PORTLET_NAMESPACE);
-		
+
 		boolean readOnly = ParamUtil.getBoolean(
 			request, DDMConstants.READ_ONLY);
 
@@ -118,12 +89,41 @@ public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 		return ddmFormFieldRenderingContext;
 	}
 
+	@Override
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(portletResponse);
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
+
+		DDMFormFieldRenderer ddmFormFieldRenderer =
+			DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
+				ddmFormField.getType());
+
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
+			createDDMFormFieldRenderingContext(
+				httpServletRequest, httpServletResponse);
+
+		String ddmFormFieldHTML = ddmFormFieldRenderer.render(
+			ddmFormField, ddmFormFieldRenderingContext);
+
+		httpServletResponse.setContentType(ContentTypes.TEXT_HTML);
+
+		ServletResponseUtil.write(httpServletResponse, ddmFormFieldHTML);
+	}
+
 	protected DDMFormField getDDMFormField(HttpServletRequest request)
 		throws PortalException {
 
 		String definition = ParamUtil.getString(
 			request, DDMConstants.DEFINITION);
-		
+
 		String fieldName = ParamUtil.getString(
 			request, DDMConstants.FIELD_NAME);
 

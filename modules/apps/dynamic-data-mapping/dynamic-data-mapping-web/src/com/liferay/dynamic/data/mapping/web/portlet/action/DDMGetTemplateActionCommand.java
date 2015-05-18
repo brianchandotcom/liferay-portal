@@ -14,13 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
@@ -34,6 +27,14 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
@@ -49,21 +50,21 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 public class DDMGetTemplateActionCommand extends BaseActionCommand {
 
 	@Override
-	protected void doProcessCommand(PortletRequest portletRequest,
-			PortletResponse portletResponse) throws Exception {
-		
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
+
 		long templateId = ParamUtil.getLong(
 			portletRequest, DDMConstants.TEMPLATE_ID);
 
-		DDMTemplate template = DDMTemplateServiceUtil.getTemplate(
-			templateId);
+		DDMTemplate template = DDMTemplateServiceUtil.getTemplate(templateId);
 
 		String script = template.getScript();
 
 		String contentType = null;
 
 		String type = template.getType();
-		
+
 		String language = GetterUtil.getString(
 			template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
 
@@ -75,15 +76,15 @@ public class DDMGetTemplateActionCommand extends BaseActionCommand {
 		else {
 			contentType = ContentTypes.TEXT_PLAIN_UTF8;
 		}
-		
-		HttpServletRequest httpServletRequest = 
+
+		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(portletRequest);
-		
-		HttpServletResponse httpServletResponse = 
+
+		HttpServletResponse httpServletResponse =
 			PortalUtil.getHttpServletResponse(portletResponse);
 
 		ServletResponseUtil.sendFile(
-			httpServletRequest, httpServletResponse, null, script.getBytes(), 
+			httpServletRequest, httpServletResponse, null, script.getBytes(),
 			contentType);
 	}
 

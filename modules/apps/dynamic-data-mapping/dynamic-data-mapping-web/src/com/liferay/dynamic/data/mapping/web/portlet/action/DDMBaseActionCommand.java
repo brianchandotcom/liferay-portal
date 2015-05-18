@@ -14,8 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import javax.portlet.PortletRequest;
-
 import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -25,6 +23,8 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
+import javax.portlet.PortletRequest;
+
 /**
  * @author Leonardo Barros
  */
@@ -32,7 +32,7 @@ public abstract class DDMBaseActionCommand extends BaseActionCommand {
 
 	protected String setRedirectAttribute(
 		PortletRequest portletRequest, String redirect) {
-		
+
 		String closeRedirect = ParamUtil.getString(
 			portletRequest, DDMConstants.CLOSE_REDIRECT);
 
@@ -47,8 +47,8 @@ public abstract class DDMBaseActionCommand extends BaseActionCommand {
 				closeRedirect);
 		}
 
-		portletRequest.setAttribute(WebKeys.REDIRECT,redirect);
-		
+		portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
+
 		return redirect;
 	}
 

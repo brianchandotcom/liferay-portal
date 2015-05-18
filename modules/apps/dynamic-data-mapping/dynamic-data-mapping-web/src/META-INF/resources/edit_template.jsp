@@ -73,11 +73,11 @@ if (Validator.isNotNull(structureAvailableFields)) {
 boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput");
 %>
 
-<portlet:actionURL var="editTemplateURL" name="ddmUpdateTemplate">
+<portlet:actionURL name="ddmUpdateTemplate" var="editTemplateURL">
 	<portlet:param name="mvcPath" value="/edit_template.jsp" />
 </portlet:actionURL>
 
-<portlet:actionURL var="addTemplateURL" name="ddmAddTemplate">
+<portlet:actionURL name="ddmAddTemplate" var="addTemplateURL">
 	<portlet:param name="mvcPath" value="/edit_template.jsp" />
 </portlet:actionURL>
 
@@ -191,12 +191,12 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 				<c:if test="<%= template != null %>">
 					<aui:input helpMessage="template-key-help" name="templateKey" type="resource" value="<%= template.getTemplateKey() %>" />
-					
-					<portlet:actionURL var="getTemplateURL" name="ddmGetTemplate">
+
+					<portlet:actionURL name="ddmGetTemplate" var="getTemplateURL">
 						<portlet:param name="templateId" value="<%= String.valueOf(templateId) %>" />
 					</portlet:actionURL>
 
-					<aui:input name="url" type="resource" value='<%= getTemplateURL.toString() %>' />
+					<aui:input name="url" type="resource" value="<%= getTemplateURL.toString() %>" />
 
 					<c:if test="<%= Validator.isNotNull(refererWebDAVToken) %>">
 						<aui:input name="webDavURL" type="resource" value="<%= template.getWebDavURL(themeDisplay, refererWebDAVToken) %>" />

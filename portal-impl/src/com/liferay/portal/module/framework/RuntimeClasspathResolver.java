@@ -31,6 +31,11 @@ public class RuntimeClasspathResolver implements ClasspathResolver {
 
 		File[] files = coreDir.listFiles();
 
+		if (files == null) {
+			throw new IllegalStateException(
+				"Missing " + coreDir.getCanonicalPath());
+		}
+
 		URL[] urls = new URL[files.length];
 
 		for (int i = 0; i < urls.length; i++) {

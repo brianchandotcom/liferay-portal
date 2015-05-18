@@ -377,6 +377,14 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		return _mbDiscussionLocalService.getThreadDiscussion(threadId);
 	}
 
+	@Override
+	public void importMBDiscussion(java.lang.String fromClassName,
+		long fromClassPK, java.lang.String toClassName, long toClassPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbDiscussionLocalService.importMBDiscussion(fromClassName,
+			fromClassPK, toClassName, toClassPK);
+	}
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

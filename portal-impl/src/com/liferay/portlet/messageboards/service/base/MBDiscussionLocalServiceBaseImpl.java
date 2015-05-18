@@ -57,6 +57,10 @@ import com.liferay.portlet.messageboards.service.persistence.MBMessageFinder;
 import com.liferay.portlet.messageboards.service.persistence.MBMessagePersistence;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadFinder;
 import com.liferay.portlet.messageboards.service.persistence.MBThreadPersistence;
+import com.liferay.portlet.ratings.service.persistence.RatingsEntryFinder;
+import com.liferay.portlet.ratings.service.persistence.RatingsEntryPersistence;
+import com.liferay.portlet.ratings.service.persistence.RatingsStatsFinder;
+import com.liferay.portlet.ratings.service.persistence.RatingsStatsPersistence;
 
 import java.io.Serializable;
 
@@ -663,6 +667,137 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the ratings entry local service.
+	 *
+	 * @return the ratings entry local service
+	 */
+	public com.liferay.portlet.ratings.service.RatingsEntryLocalService getRatingsEntryLocalService() {
+		return ratingsEntryLocalService;
+	}
+
+	/**
+	 * Sets the ratings entry local service.
+	 *
+	 * @param ratingsEntryLocalService the ratings entry local service
+	 */
+	public void setRatingsEntryLocalService(
+		com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService) {
+		this.ratingsEntryLocalService = ratingsEntryLocalService;
+	}
+
+	/**
+	 * Returns the ratings entry remote service.
+	 *
+	 * @return the ratings entry remote service
+	 */
+	public com.liferay.portlet.ratings.service.RatingsEntryService getRatingsEntryService() {
+		return ratingsEntryService;
+	}
+
+	/**
+	 * Sets the ratings entry remote service.
+	 *
+	 * @param ratingsEntryService the ratings entry remote service
+	 */
+	public void setRatingsEntryService(
+		com.liferay.portlet.ratings.service.RatingsEntryService ratingsEntryService) {
+		this.ratingsEntryService = ratingsEntryService;
+	}
+
+	/**
+	 * Returns the ratings entry persistence.
+	 *
+	 * @return the ratings entry persistence
+	 */
+	public RatingsEntryPersistence getRatingsEntryPersistence() {
+		return ratingsEntryPersistence;
+	}
+
+	/**
+	 * Sets the ratings entry persistence.
+	 *
+	 * @param ratingsEntryPersistence the ratings entry persistence
+	 */
+	public void setRatingsEntryPersistence(
+		RatingsEntryPersistence ratingsEntryPersistence) {
+		this.ratingsEntryPersistence = ratingsEntryPersistence;
+	}
+
+	/**
+	 * Returns the ratings entry finder.
+	 *
+	 * @return the ratings entry finder
+	 */
+	public RatingsEntryFinder getRatingsEntryFinder() {
+		return ratingsEntryFinder;
+	}
+
+	/**
+	 * Sets the ratings entry finder.
+	 *
+	 * @param ratingsEntryFinder the ratings entry finder
+	 */
+	public void setRatingsEntryFinder(RatingsEntryFinder ratingsEntryFinder) {
+		this.ratingsEntryFinder = ratingsEntryFinder;
+	}
+
+	/**
+	 * Returns the ratings stats local service.
+	 *
+	 * @return the ratings stats local service
+	 */
+	public com.liferay.portlet.ratings.service.RatingsStatsLocalService getRatingsStatsLocalService() {
+		return ratingsStatsLocalService;
+	}
+
+	/**
+	 * Sets the ratings stats local service.
+	 *
+	 * @param ratingsStatsLocalService the ratings stats local service
+	 */
+	public void setRatingsStatsLocalService(
+		com.liferay.portlet.ratings.service.RatingsStatsLocalService ratingsStatsLocalService) {
+		this.ratingsStatsLocalService = ratingsStatsLocalService;
+	}
+
+	/**
+	 * Returns the ratings stats persistence.
+	 *
+	 * @return the ratings stats persistence
+	 */
+	public RatingsStatsPersistence getRatingsStatsPersistence() {
+		return ratingsStatsPersistence;
+	}
+
+	/**
+	 * Sets the ratings stats persistence.
+	 *
+	 * @param ratingsStatsPersistence the ratings stats persistence
+	 */
+	public void setRatingsStatsPersistence(
+		RatingsStatsPersistence ratingsStatsPersistence) {
+		this.ratingsStatsPersistence = ratingsStatsPersistence;
+	}
+
+	/**
+	 * Returns the ratings stats finder.
+	 *
+	 * @return the ratings stats finder
+	 */
+	public RatingsStatsFinder getRatingsStatsFinder() {
+		return ratingsStatsFinder;
+	}
+
+	/**
+	 * Sets the ratings stats finder.
+	 *
+	 * @param ratingsStatsFinder the ratings stats finder
+	 */
+	public void setRatingsStatsFinder(RatingsStatsFinder ratingsStatsFinder) {
+		this.ratingsStatsFinder = ratingsStatsFinder;
+	}
+
+	/**
 	 * Returns the message boards mailing list local service.
 	 *
 	 * @return the message boards mailing list local service
@@ -935,6 +1070,20 @@ public abstract class MBDiscussionLocalServiceBaseImpl
 	protected UserPersistence userPersistence;
 	@BeanReference(type = UserFinder.class)
 	protected UserFinder userFinder;
+	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryLocalService.class)
+	protected com.liferay.portlet.ratings.service.RatingsEntryLocalService ratingsEntryLocalService;
+	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsEntryService.class)
+	protected com.liferay.portlet.ratings.service.RatingsEntryService ratingsEntryService;
+	@BeanReference(type = RatingsEntryPersistence.class)
+	protected RatingsEntryPersistence ratingsEntryPersistence;
+	@BeanReference(type = RatingsEntryFinder.class)
+	protected RatingsEntryFinder ratingsEntryFinder;
+	@BeanReference(type = com.liferay.portlet.ratings.service.RatingsStatsLocalService.class)
+	protected com.liferay.portlet.ratings.service.RatingsStatsLocalService ratingsStatsLocalService;
+	@BeanReference(type = RatingsStatsPersistence.class)
+	protected RatingsStatsPersistence ratingsStatsPersistence;
+	@BeanReference(type = RatingsStatsFinder.class)
+	protected RatingsStatsFinder ratingsStatsFinder;
 	@BeanReference(type = com.liferay.portlet.messageboards.service.MBMailingListLocalService.class)
 	protected com.liferay.portlet.messageboards.service.MBMailingListLocalService mbMailingListLocalService;
 	@BeanReference(type = MBMailingListPersistence.class)

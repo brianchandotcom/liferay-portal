@@ -109,6 +109,18 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public void copyDiscussion(
+			String fromClassName, long fromClassPK, String toClassName,
+			long toClassPK)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		commentManager.copyDiscussion(
+			fromClassName, fromClassPK, toClassName, toClassPK);
+	}
+
+	@Override
 	public void deleteComment(long commentId) throws PortalException {
 		CommentManager commentManager = getCommentManager();
 

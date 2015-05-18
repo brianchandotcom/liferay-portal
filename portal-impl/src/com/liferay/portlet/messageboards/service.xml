@@ -183,6 +183,8 @@
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMailingList" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBThread" />
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsEntry" />
+		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 	</entity>
 	<entity name="MBMailingList" human-name="message boards mailing list" uuid="true" local-service="true" remote-service="false">
 

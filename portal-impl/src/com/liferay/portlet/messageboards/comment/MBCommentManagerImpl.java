@@ -143,6 +143,16 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public void copyDiscussion(
+			String fromClassName, long fromClassPK, String toClassName,
+			long toClassPK)
+		throws PortalException {
+
+		_mbDiscussionLocalService.importMBDiscussion(
+			fromClassName, fromClassPK, toClassName, toClassPK);
+	}
+
+	@Override
 	public void deleteComment(long commentId) throws PortalException {
 		_mbMessageLocalService.deleteDiscussionMessage(commentId);
 	}

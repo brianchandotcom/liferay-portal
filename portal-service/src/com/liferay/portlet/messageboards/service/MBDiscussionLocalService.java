@@ -306,6 +306,10 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public com.liferay.portlet.messageboards.model.MBDiscussion getThreadDiscussion(
 		long threadId) throws PortalException;
 
+	public void importMBDiscussion(java.lang.String fromClassName,
+		long fromClassPK, java.lang.String toClassName, long toClassPK)
+		throws PortalException;
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

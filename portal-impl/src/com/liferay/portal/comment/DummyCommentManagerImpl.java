@@ -59,6 +59,12 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public void copyDiscussion(
+		String fromClassName, long fromClassPK, String toClassName,
+		long toClassPK) {
+	}
+
+	@Override
 	public void deleteComment(long commentId) {
 	}
 

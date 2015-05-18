@@ -66,6 +66,15 @@ public class CommentManagerUtil {
 			userId, groupId, className, classPK, userName);
 	}
 
+	public static void copyDiscussion(
+			String fromClassName, long fromClassPK, String toClassName,
+			long toClassPK)
+		throws PortalException {
+
+		getCommentManager().copyDiscussion(
+			fromClassName, fromClassPK, toClassName, toClassPK);
+	}
+
 	public static void deleteComment(long commentId) throws PortalException {
 		getCommentManager().deleteComment(commentId);
 	}

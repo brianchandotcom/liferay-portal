@@ -498,19 +498,13 @@ public class S3Store extends BaseStore {
 		_s3Configuration = Configurable.createConfigurable(
 			S3Configuration.class, properties);
 
-		S3Service s3Service = null;
-		S3Bucket s3Bucket = null;
-
 		try {
-			s3Service = getS3Service();
-			s3Bucket = getS3Bucket();
+			_s3Service = getS3Service();
+			_s3Bucket = getS3Bucket();
 		}
 		catch (S3ServiceException s3se) {
-			_log.error(s3se.getMessage());
+			throw new IllegalArgumentException(s3se);
 		}
-
-		_s3Service = s3Service;
-		_s3Bucket = s3Bucket;
 	}
 
 	protected void cleanUpTempFiles() {

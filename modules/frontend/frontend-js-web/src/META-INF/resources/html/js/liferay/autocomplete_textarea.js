@@ -96,8 +96,7 @@ AUI.add(
 				if (caretIndex) {
 					val = val.substring(0, caretIndex.start);
 
-					AArray.each(
-						instance._getTriggers(),
+					instance._getTriggers().forEach(
 						function(item, index, collection) {
 							var lastTriggerIndex = val.lastIndexOf(item);
 

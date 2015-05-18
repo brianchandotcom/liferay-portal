@@ -110,8 +110,7 @@ AUI.add(
 
 							node.hide();
 
-							AArray.each(
-								CSS_VALIDATION_HELPER_CLASSES,
+							CSS_VALIDATION_HELPER_CLASSES.forEach(
 								function(item, index) {
 									var disabledClass = item + '-disabled';
 
@@ -158,8 +157,7 @@ AUI.add(
 										);
 									}
 
-									AArray.each(
-										CSS_VALIDATION_HELPER_CLASSES,
+									CSS_VALIDATION_HELPER_CLASSES.forEach(
 										function(item, index) {
 											var disabledClass = item + '-disabled';
 
@@ -390,8 +388,7 @@ AUI.add(
 							}
 						);
 
-						AArray.each(
-							CSS_VALIDATION_HELPER_CLASSES,
+						CSS_VALIDATION_HELPER_CLASSES.forEach(
 							function(item, index) {
 								node.all('.' + item).removeClass(item);
 							}

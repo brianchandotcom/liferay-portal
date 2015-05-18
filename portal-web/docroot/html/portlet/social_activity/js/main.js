@@ -427,8 +427,7 @@ AUI.add(
 
 						var actionsNode = headerNode.one('.settings-actions');
 
-						A.each(
-							originalConfig.dataSet,
+						originalConfig.dataSet.forEach(
 							function(item, index) {
 								item.localizedName = activityDefinitionLanguageKeys[item.modelName + '.' + item.languageKey];
 

@@ -232,8 +232,7 @@ AUI.add(
 
 				_registerTask: A.debounce(
 					function() {
-						A.Array.each(
-							buffer,
+						buffer.forEach(
 							function(item, index) {
 								var handle = item.container.on(
 									EVENT_INTERACTIONS_RENDER,

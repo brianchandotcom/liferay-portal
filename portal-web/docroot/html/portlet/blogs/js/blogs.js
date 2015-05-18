@@ -402,8 +402,7 @@ AUI.add(
 					_updateImages: function(persistentImages) {
 						var instance = this;
 
-						A.Array.each(
-							persistentImages,
+						persistentImages.forEach(
 							function(item, index) {
 								var el = instance.one('img[' + item.attributeDataImageId + '="' + item.fileEntryId + '"]');
 

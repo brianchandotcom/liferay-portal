@@ -466,8 +466,7 @@ AUI.add(
 
 				var popupBoundingBox = instance._currentPopup.get(BOUNDING_BOX);
 
-				A.each(
-					[cTopColor, cRightColor, cBottomColor, cLeftColor],
+				[cTopColor, cRightColor, cBottomColor, cLeftColor].forEach(
 					function(item, index) {
 						var hexValue = item.val().replace('#', EMPTY);
 

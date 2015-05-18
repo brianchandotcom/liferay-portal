@@ -192,8 +192,7 @@ AUI.add(
 				if (!instance._triggers) {
 					var triggers = [];
 
-					AArray.each(
-						instance.get(STR_TRIGGER),
+					instance.get(STR_TRIGGER).forEach(
 						function(item, index, collection) {
 							triggers.push(Lang.isString(item) ? item : item.term);
 						}

@@ -300,8 +300,7 @@ AUI.add(
 
 						var queue = instance._getUploader().queue;
 
-						AArray.each(
-							files,
+						files.forEach(
 							function(item, index) {
 								queue.addToQueueBottom(item);
 							}
@@ -452,8 +451,7 @@ AUI.add(
 					_combineFileLists: function(fileList, queuedFiles) {
 						var instance = this;
 
-						AArray.each(
-							queuedFiles,
+						queuedFiles.forEach(
 							function(item, index) {
 								fileList.push(item);
 							}
@@ -625,8 +623,7 @@ AUI.add(
 						var fileList = currentUploadData.fileList;
 
 						if (!currentUploadData.folder) {
-							AArray.each(
-								fileList,
+							fileList.forEach(
 								function(item, index) {
 									item.overlay.destroy();
 

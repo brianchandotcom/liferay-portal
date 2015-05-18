@@ -312,8 +312,7 @@ AUI.add(
 						else if (n.options && n.options.length) {
 							html += '<select class="' + buttonClass + '" selectId="' + i + '" title="' + buttonText + '">';
 
-							A.each(
-								n.options,
+							n.options.forEach(
 								function(v, i) {
 									html += '<option value="' + v + '">' + v + '</option>';
 								}

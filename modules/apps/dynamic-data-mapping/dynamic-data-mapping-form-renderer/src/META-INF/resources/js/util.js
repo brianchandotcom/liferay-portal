@@ -75,7 +75,7 @@ AUI.add(
 						var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
 
 						if (children) {
-							AArray.each(children, addToQueue);
+							children.forEach(addToQueue);
 						}
 					}
 				}

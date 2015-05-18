@@ -108,7 +108,7 @@ AUI.add(
 							var set = new A.Set();
 
 							if (A.Lang.isString(val)) {
-								AArray.each(val.split(','), set.add, set);
+								val.split(',').forEach(set.add, set);
 							}
 
 							return set;
@@ -432,8 +432,7 @@ AUI.add(
 
 						var translatedLanguages = instance.get('translatedLanguages');
 
-						AArray.each(
-							flags,
+						flags.forEach(
 							function(item, index) {
 								var flagNode = instance.getItemByIndex(index);
 

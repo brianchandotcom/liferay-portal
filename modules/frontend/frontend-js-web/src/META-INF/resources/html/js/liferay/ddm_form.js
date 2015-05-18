@@ -100,7 +100,7 @@ AUI.add(
 						var children = next.fields || next.nestedFields || next.fieldValues || next.nestedFieldValues;
 
 						if (children) {
-							AArray.each(children, addToQueue);
+							children.forEach(addToQueue);
 						}
 					}
 				}
@@ -536,8 +536,7 @@ AUI.add(
 						var translationManager = parent.get('translationManager');
 
 						if (translationManager) {
-							AArray.each(
-								translationManager.get('availableLocales'),
+							translationManager.get('availableLocales').forEach(
 								function(item, index) {
 									var value = localizationMap[item];
 
@@ -560,8 +559,7 @@ AUI.add(
 							}
 						);
 
-						AArray.each(
-							newField.get('fields'),
+						newField.get('fields').forEach(
 							function(item, index) {
 								var name = item.get('name');
 
@@ -635,8 +633,7 @@ AUI.add(
 					_removeFieldValidation: function(field) {
 						var instance = this;
 
-						AArray.each(
-							field.get('fields'),
+						field.get('fields').forEach(
 							function(item, index) {
 								instance._removeFieldValidation(item);
 							}

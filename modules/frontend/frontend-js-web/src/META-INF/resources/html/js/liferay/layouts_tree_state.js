@@ -241,7 +241,7 @@ AUI.add(
 							treeNodeTaskSuperClass.uncheck.call(node, tree);
 						}
 
-						AArray.each(node.get('children'), A.bind(instance._restoreCheckedNode, instance));
+						node.get('children').forEach(A.bind(instance._restoreCheckedNode, instance));
 					},
 
 					_updateCheckedNodes: function(node, state) {

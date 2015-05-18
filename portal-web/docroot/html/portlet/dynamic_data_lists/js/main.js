@@ -157,8 +157,7 @@ AUI.add(
 						var fieldsDisplayValues = [];
 						var normalized = {};
 
-						A.each(
-							structure,
+						structure.forEach(
 							function(item, index) {
 								var type = item.type;
 								var value = record.get(item.name);
@@ -341,8 +340,7 @@ AUI.add(
 				buildDataTableColumns: function(columns, structure, editable) {
 					var instance = this;
 
-					AArray.each(
-						columns,
+					columns.forEach(
 						function(item, index) {
 							var dataType = item.dataType;
 							var label = item.label;
@@ -510,8 +508,7 @@ AUI.add(
 									var label = [];
 									var value = data[name];
 
-									AArray.each(
-										value,
+									value.forEach(
 										function(item1, index1) {
 											label.push(options[item1]);
 										}
@@ -579,8 +576,7 @@ AUI.add(
 				getCellEditorOptions: function(options) {
 					var normalized = {};
 
-					AArray.each(
-						options,
+					options.forEach(
 						function(item, index) {
 							normalized[item.value] = item.label;
 						}
@@ -594,8 +590,7 @@ AUI.add(
 
 					var recordModel = {};
 
-					AArray.each(
-						keys,
+					keys.forEach(
 						function(item, index) {
 							recordModel[item] = STR_EMPTY;
 						}

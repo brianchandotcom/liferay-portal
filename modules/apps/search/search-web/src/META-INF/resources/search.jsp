@@ -66,8 +66,7 @@ request.setAttribute("search.jsp-returnToFullPageURL", portletDisplay.getURLBack
 
 						var fieldValues = item.attr('data-fieldValues').split();
 
-						A.Array.each(
-							fieldValues,
+						fieldValues.forEach(
 							function(item, index) {
 								var values = item.split('|');
 

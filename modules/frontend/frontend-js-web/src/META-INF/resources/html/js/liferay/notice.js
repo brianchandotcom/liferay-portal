@@ -299,8 +299,7 @@ AUI.add(
 					notice.html(content);
 				}
 
-				A.Array.each(
-					instance._noticeClass.split(' '),
+				instance._noticeClass.split(' ').forEach(
 					function(item, index) {
 						notice.addClass(item);
 					}

@@ -220,8 +220,7 @@ AUI.add(
 
 						instance.get(STR_VERSION_ITEMS).one('.message-info').toggle(!event.results.length);
 
-						A.Array.each(
-							event.results,
+						event.results.forEach(
 							function(item, index, collection) {
 								item.raw.node.show();
 							}

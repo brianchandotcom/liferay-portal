@@ -138,8 +138,7 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
-						A.Array.each(
-							instance._eventHandles,
+						instance._eventHandles.forEach(
 							function(item, index, collection) {
 								google.maps.event.removeListener(item);
 							}
@@ -280,8 +279,7 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
-						A.Array.each(
-							instance._eventHandles,
+						instance._eventHandles.forEach(
 							function(item, index, collection) {
 								google.maps.event.removeListener(item);
 							}

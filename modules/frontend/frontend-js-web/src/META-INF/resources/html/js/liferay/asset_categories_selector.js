@@ -195,8 +195,7 @@ AUI.add(
 						var curEntries = instance.get('curEntries');
 						var curEntryIds = instance.get('curEntryIds');
 
-						A.each(
-							curEntryIds,
+						curEntryIds.forEach(
 							function(item, index) {
 								var entry = {
 									categoryId: item
@@ -247,8 +246,7 @@ AUI.add(
 							type = 'radio';
 						}
 
-						A.each(
-							json,
+						json.forEach(
 							function(item, index) {
 								var checked = false;
 								var treeId = 'category' + item.categoryId;
@@ -537,8 +535,7 @@ AUI.add(
 
 							var inputName = A.guid();
 
-							A.each(
-								categories,
+							categories.forEach(
 								function(item, index) {
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
 
@@ -642,7 +639,7 @@ AUI.add(
 							function(entries) {
 								popup.entriesNode.empty();
 
-								A.each(entries, instance._vocabulariesIterator, instance);
+								entries.forEach(instance._vocabulariesIterator, instance);
 
 								A.each(
 									instance.TREEVIEWS,

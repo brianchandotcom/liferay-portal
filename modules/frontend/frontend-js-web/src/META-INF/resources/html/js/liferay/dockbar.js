@@ -312,8 +312,7 @@ AUI.add(
 						BODY.detach('layoutControlsEsc|key');
 
 						if (panelId === STR_ADD_PANEL) {
-							A.Array.each(
-								ADD_PANEL_COMPONENTS,
+							ADD_PANEL_COMPONENTS.forEach(
 								function(item, index) {
 									var componentName = Liferay.Util.ns(namespace, item);
 

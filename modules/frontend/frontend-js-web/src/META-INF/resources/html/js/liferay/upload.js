@@ -378,8 +378,7 @@ AUI.add(
 
 						queue.pauseUpload();
 
-						A.each(
-							queue.queuedFiles,
+						queue.queuedFiles.forEach(
 							function(item, index) {
 								var li = A.one('#' + item.id);
 
@@ -749,7 +748,7 @@ AUI.add(
 							if (instance._isUploading()) {
 								var uploadQueue = uploader.queue;
 
-								AArray.each(validFiles, uploadQueue.addToQueueBottom, uploadQueue);
+								validFiles.forEach(uploadQueue.addToQueueBottom, uploadQueue);
 							}
 							else {
 								uploader.uploadAll();

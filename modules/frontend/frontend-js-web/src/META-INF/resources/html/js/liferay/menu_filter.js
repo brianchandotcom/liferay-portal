@@ -64,8 +64,7 @@ AUI.add(
 
 						instance._menuItems.addClass(CSS_HIDDEN);
 
-						AArray.each(
-							event.results,
+						event.results.forEach(
 							function(result) {
 								result.raw.node.removeClass(CSS_HIDDEN);
 							}

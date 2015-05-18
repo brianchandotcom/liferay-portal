@@ -133,8 +133,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	var data = Liferay.SpreadSheet.buildEmptyRecords(<%= Math.max(recordSet.getMinDisplayRows(), records.size()) %>, keys);
 
-	A.Array.each(
-		records,
+	records.forEach(
 		function(item, index) {
 			data.splice(item.displayIndex, 0, item);
 		}

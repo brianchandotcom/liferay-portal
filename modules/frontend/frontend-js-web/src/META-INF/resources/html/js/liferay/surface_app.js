@@ -10,8 +10,7 @@ AUI.add(
 			if (content) {
 				var frag = A.Node.create(content);
 
-				AArray.each(
-					Liferay.Data.sharedResources,
+				Liferay.Data.sharedResources.forEach(
 					function(outputKey) {
 						frag.all('[data-outputkey="' + outputKey + '"]').remove();
 					}

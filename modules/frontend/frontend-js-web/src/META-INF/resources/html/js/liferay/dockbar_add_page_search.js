@@ -43,8 +43,7 @@ AUI.add(
 				instance.get('nodes').toggle(!query || query === '*');
 
 				if (query) {
-					AArray.each(
-						event.results,
+					event.results.forEach(
 						function(item, index) {
 							item.raw.node.show();
 						}

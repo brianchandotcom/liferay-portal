@@ -41,8 +41,7 @@ AUI.add(
 
 			instance.array = array;
 
-			A.each(
-				array,
+			array.forEach(
 				function(item, index) {
 					var id = item.select;
 					var select = A.one('#' + id);
@@ -116,8 +115,7 @@ AUI.add(
 					selectOptions.push('<option value="0"></option>');
 				}
 
-				A.each(
-					list,
+				list.forEach(
 					function(item, index) {
 						var key = item[selectId];
 						var value = item[selectDesc];

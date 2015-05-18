@@ -109,8 +109,7 @@ AUI.add(
 
 						boxObj.all('option').remove(true);
 
-						A.each(
-							newBox,
+						newBox.forEach(
 							function(item, index) {
 								boxObj.append('<option value="' + item[0] + '">' + item[1] + '</option>');
 							}

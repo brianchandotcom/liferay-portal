@@ -192,8 +192,7 @@ AUI.add(
 
 								cells.empty();
 
-								A.each(
-									arr,
+								arr.forEach(
 									function(item, index) {
 										var cell = cells.item(index);
 

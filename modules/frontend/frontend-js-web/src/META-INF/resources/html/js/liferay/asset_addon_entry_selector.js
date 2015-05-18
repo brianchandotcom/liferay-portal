@@ -206,8 +206,7 @@ AUI.add(
 
 						var entriesMap = {};
 
-						AArray.each(
-							val,
+						val.forEach(
 							function(item) {
 								entriesMap[item.key] = item;
 							}
@@ -236,8 +235,7 @@ AUI.add(
 
 						instance._selectDialogContent.all(STR_INPUT).attr(STR_CHECKED, false);
 
-						AArray.each(
-							selectedAssetAddonEntries,
+						selectedAssetAddonEntries.forEach(
 							function(item) {
 								selectedAssetAddonEntriesNode.append(
 									Lang.sub(TPL_SUMMARY_ASSET_ADDON_ENTRY, instance._entriesMap[item])

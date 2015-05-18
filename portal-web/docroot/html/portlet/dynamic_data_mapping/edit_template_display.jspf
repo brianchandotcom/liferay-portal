@@ -212,8 +212,7 @@ if (Validator.isNotNull(scriptContent)) {
 						}
 					);
 
-					AArray.each(
-						event.results,
+					event.results.forEach(
 						function(item, index) {
 							item.raw.node.removeClass('hide');
 						}

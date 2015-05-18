@@ -123,8 +123,7 @@ AUI.add(
 							instance._setItemsVisibility(true);
 
 							if (instance._collapsedCategories) {
-								A.each(
-									instance._collapsedCategories,
+								instance._collapsedCategories.forEach(
 									function(item, index) {
 										var categoryIndex = categories.indexOf(item);
 
@@ -152,8 +151,7 @@ AUI.add(
 
 								instance._setItemsVisibility(false);
 
-								A.each(
-									event.results,
+								event.results.forEach(
 									function(item, index) {
 										var node = item.raw.node;
 

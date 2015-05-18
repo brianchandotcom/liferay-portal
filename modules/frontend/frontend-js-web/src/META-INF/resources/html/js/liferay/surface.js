@@ -202,8 +202,7 @@ AUI.add(
 			resetAllPortlets: function() {
 				var instance = this;
 
-				AArray.each(
-					instance.getPortletBoundaryIds(Liferay.Portlet.list),
+				instance.getPortletBoundaryIds(Liferay.Portlet.list).forEach(
 					function(value, index, collection) {
 						var portlet = A.one('#' + value);
 

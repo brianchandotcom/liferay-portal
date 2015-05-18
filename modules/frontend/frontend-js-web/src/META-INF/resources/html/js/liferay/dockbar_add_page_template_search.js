@@ -40,8 +40,7 @@ AUI.add(
 						instance._entries.toggle(!query || query == '*');
 
 						if (query) {
-							A.Array.each(
-								event.results,
+							event.results.forEach(
 								function(item, index) {
 									item.raw.node.show();
 								}

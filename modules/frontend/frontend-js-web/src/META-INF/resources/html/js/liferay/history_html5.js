@@ -83,8 +83,7 @@ AUI.add(
 							A.each(
 								state,
 								function(value1, key1) {
-									A.Array.each(
-										instance.PROTECTED_HASH_KEYS,
+									instance.PROTECTED_HASH_KEYS.forEach(
 										function(value2, key2) {
 											if (value2.test(key1)) {
 												delete state[key1];

@@ -205,8 +205,7 @@ AUI.add(
 
 						var fields = content.fields;
 
-						A.each(
-							fields,
+						fields.forEach(
 							function(fieldJSON) {
 								instance._deserializeField(fieldJSON, availableLanguageIds);
 							}
@@ -268,8 +267,7 @@ AUI.add(
 						var fields = fieldJSON.fields;
 
 						if (isArray(fields)) {
-							AArray.each(
-								fields,
+							fields.forEach(
 								function(item, index) {
 									instance._deserializeField(item, availableLanguageIds);
 								}
@@ -286,8 +284,7 @@ AUI.add(
 						var defaultLocale = instance.translationManager.get('defaultLocale');
 						var editingLocale = instance.translationManager.get('editingLocale');
 
-						A.each(
-							LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS,
+						LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(
 							function(item, index) {
 								var localizedValue = fieldJSON[item];
 
@@ -301,14 +298,12 @@ AUI.add(
 					_deserializeFieldLocalizationMap: function(fieldJSON, availableLanguageIds) {
 						var instance = this;
 
-						A.each(
-							availableLanguageIds,
+						availableLanguageIds.forEach(
 							function(languageId) {
 								fieldJSON.localizationMap = fieldJSON.localizationMap || {};
 								fieldJSON.localizationMap[languageId] = {};
 
-								A.each(
-									LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS,
+								LiferayFormBuilder.LOCALIZABLE_FIELD_ATTRS.forEach(
 									function(attribute) {
 										var attributeMap = fieldJSON[attribute];
 
@@ -333,8 +328,7 @@ AUI.add(
 						var defaultLocale = instance.translationManager.get('defaultLocale');
 						var editingLocale = instance.translationManager.get('editingLocale');
 
-						A.each(
-							fieldJSON.options,
+						fieldJSON.options.forEach(
 							function(item, index) {
 								labels = item.label;
 
@@ -342,8 +336,7 @@ AUI.add(
 
 								item.localizationMap = {};
 
-								A.each(
-									availableLanguageIds,
+								availableLanguageIds.forEach(
 									function(languageId) {
 										item.localizationMap[languageId] = {
 											label: labels[languageId]
@@ -502,8 +495,7 @@ AUI.add(
 						var newVal = config.newVal;
 						var prevVal = config.prevVal;
 
-						AArray.each(
-							fields._items,
+						fields._items.forEach(
 							function(field) {
 								var childFields = field.get('fields');
 								var localizationMap = field.get('localizationMap');

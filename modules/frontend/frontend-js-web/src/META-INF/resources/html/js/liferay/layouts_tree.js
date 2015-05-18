@@ -204,12 +204,9 @@ AUI.add(
 			_formatJSONResults: function(json) {
 				var instance = this;
 
-				var output = [];
-
-				A.each(
-					json.layouts,
+				var output = json.layouts.map(
 					function(node) {
-						output.push(instance._formatNode(node));
+						return instance._formatNode(node);
 					}
 				);
 

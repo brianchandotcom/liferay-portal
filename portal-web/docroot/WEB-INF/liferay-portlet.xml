@@ -924,7 +924,6 @@
 		<portlet-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.dynamicdatalists.lar.DDLRecordStagedModelDataHandler</staged-model-data-handler-class>
-		<template-handler>com.liferay.portlet.dynamicdatalists.template.DDLTemplateHandler</template-handler>
 		<webdav-storage-token>dynamic_data_lists</webdav-storage-token>
 		<webdav-storage-class>com.liferay.portlet.dynamicdatalists.webdav.DDLWebDAVStorageImpl</webdav-storage-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>

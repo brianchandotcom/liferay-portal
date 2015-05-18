@@ -1,4 +1,4 @@
-<div class="dynamic-data-lists-template-error">
+<div class="dynamic-data-lists-display-template-error">
 	<span class="alert alert-error">
 		<@liferay.language key="an-error-occurred-while-processing-the-template" />
 	</span>

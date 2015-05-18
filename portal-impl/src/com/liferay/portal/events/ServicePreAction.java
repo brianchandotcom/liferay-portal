@@ -101,11 +101,6 @@ import com.liferay.portal.webserver.WebServerServletTokenUtil;
 import com.liferay.portlet.PortalPreferences;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletURLImpl;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.journal.NoSuchArticleException;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.File;
@@ -2139,35 +2134,6 @@ public class ServicePreAction extends Action {
 
 			request.setAttribute(
 				WebKeys.PORTLET_PARALLEL_RENDER, portletParallelRender);
-		}
-
-		// Main Journal article
-
-		String strutsAction = PortalUtil.getStrutsAction(request);
-
-		if (strutsAction.equals(_PATH_PORTAL_LAYOUT)) {
-			long mainJournalArticleId = ParamUtil.getLong(request, "p_j_a_id");
-
-			if (mainJournalArticleId > 0) {
-				try {
-					JournalArticle mainJournalArticle =
-						JournalArticleServiceUtil.getArticle(
-							mainJournalArticleId);
-
-					AssetEntry layoutAssetEntry =
-						AssetEntryLocalServiceUtil.getEntry(
-							JournalArticle.class.getName(),
-							mainJournalArticle.getResourcePrimKey());
-
-					request.setAttribute(
-						WebKeys.LAYOUT_ASSET_ENTRY, layoutAssetEntry);
-				}
-				catch (NoSuchArticleException nsae) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(nsae.getMessage());
-					}
-				}
-			}
 		}
 	}
 

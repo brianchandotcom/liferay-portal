@@ -1035,6 +1035,9 @@ public class JournalFolderLocalServiceImpl
 			updateFolderDDMStructures(folder, ddmStructureIds);
 		}
 
+		rebuildTree(
+			folder.getCompanyId(), folderId, folder.getTreePath(), true);
+
 		return folder;
 	}
 

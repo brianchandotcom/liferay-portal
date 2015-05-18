@@ -1248,6 +1248,10 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 					serviceContext);
 			}
 
+			rebuildTree(
+				dlFolder.getCompanyId(), folderId, dlFolder.getTreePath(),
+				true);
+
 			return dlFolder;
 		}
 		finally {

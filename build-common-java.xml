@@ -152,7 +152,9 @@
 		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 	</target>
 
-	<target name="jar" depends="check-jar-uptodate,compile" unless="${jar.uptodate}">
+	<target name="jar" depends="check-jar-uptodate" unless="${jar.uptodate}">
+		<compile-java />
+
 		<if>
 			<available file="bnd.bnd" />
 			<then>

@@ -375,6 +375,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			liferayExtension.setDeployDir(deployDir);
 		}
+
+		if (liferayExtension.getLiferayHome() == null) {
+			File liferayHome = appServerParentDir.getParentFile();
+
+			liferayExtension.setLiferayHome(liferayHome);
+		}
 	}
 
 	protected void configureProperties(Project project) {

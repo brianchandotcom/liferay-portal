@@ -91,6 +91,20 @@ public class InitGradleTask extends DefaultTask {
 		contents1.addAll(contents2);
 	}
 
+	protected String convertBuildPropertyValue(String value) {
+		value = value.replace(
+			"${app.server.deploy.dir}", "${appServerDeployDir}");
+		value = value.replace("${app.server.dir}", "${appServerDir}");
+		value = value.replace(
+			"${app.server.lib.global.dir}", "${appServerLibGlobalDir}");
+		value = value.replace(
+			"${app.server.parent.dir}", "${appServerParentDir}");
+		value = value.replace("${auto.deploy.dir}", "${deployDir}");
+		value = value.replace("${liferay.home}", "${liferayHome}");
+
+		return value;
+	}
+
 	protected List<String> getBuildDependenciesCompile() {
 		List<String> contents = new ArrayList<>();
 
@@ -276,6 +290,8 @@ public class InitGradleTask extends DefaultTask {
 		String autoDeployDir = getBuildXmlProperty("auto.deploy.dir");
 
 		if (Validator.isNotNull(autoDeployDir)) {
+			autoDeployDir = convertBuildPropertyValue(autoDeployDir);
+
 			contents.add(wrapPropertyFile("deployDir", autoDeployDir));
 		}
 

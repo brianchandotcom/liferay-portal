@@ -14,13 +14,36 @@
 
 package com.liferay.portal.kernel.comment;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.User;
+
+import java.util.Date;
+
 /**
  * @author Adolfo Pérez
  */
 public interface DetachedComment {
 
+	public String getBody();
+
 	public String getClassName();
 
 	public long getClassPK();
+
+	public long getCommentId();
+
+	public Date getCreateDate();
+
+	public Class<?> getModelClass();
+
+	public String getModelClassName();
+
+	public Date getModifiedDate();
+
+	public User getUser() throws PortalException;
+
+	public long getUserId();
+
+	public String getUserName();
 
 }

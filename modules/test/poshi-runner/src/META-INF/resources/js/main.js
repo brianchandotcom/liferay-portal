@@ -1,3 +1,14 @@
+function macroHover(node, enter) {
+	var lineGroup = node.parentNode;
+
+	if (enter) {
+		lineGroup.classList.add('hover');
+	}
+	else {
+		lineGroup.classList.remove('hover');
+	}
+}
+
 YUI.add(
 	'liferay-qa-poshi-logger',
 	function(A) {
@@ -909,5 +920,30 @@ YUI.add(
 	'',
 	{
 		requires: ['anim', 'aui-base', 'aui-component', 'aui-node', 'event', 'resize', 'transition', 'widget']
+	}
+);
+
+var loggerInterface = YUI().use(
+	'liferay-qa-poshi-logger',
+	function(Y) {
+		var logger = new Y.PoshiLogger(
+			{
+				contentBox: '.poshi-logger',
+				xmlLog: '.xml-log',
+				sidebar: '.sidebar'
+			}
+		).render();
+
+		Y.on(
+			'command-complete',
+			logger.handleCommandCompleted,
+			logger
+		);
+
+		Y.on(
+			'line-trigger',
+			logger.handleLineTrigger,
+			logger
+		);
 	}
 );

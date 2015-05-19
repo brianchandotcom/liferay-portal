@@ -27,7 +27,7 @@ public class LanguagePortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return LanguagePortletInstanceConfiguration.class;
 	}
 

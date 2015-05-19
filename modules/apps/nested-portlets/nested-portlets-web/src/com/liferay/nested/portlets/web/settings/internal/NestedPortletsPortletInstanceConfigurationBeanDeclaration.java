@@ -27,7 +27,7 @@ public class NestedPortletsPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return NestedPortletsPortletInstanceConfiguration.class;
 	}
 

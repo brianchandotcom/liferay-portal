@@ -157,13 +157,12 @@ public class UserGroupServiceImpl extends UserGroupServiceBaseImpl {
 	}
 
 	/**
-	 * Fetches a user group with the primary key.
+	 * Fetches the user group with the primary key.
 	 *
 	 * @param  userGroupId the primary key of the user group
-	 * @return Returns the user group with the primary key
-	 * @throws PortalException if a user group with the primary key could not be
-	 *         found or if the user did not have permission to view the user
-	 *         group
+	 * @return the user group with the primary key
+	 * @throws PortalException if the user did not have permission to view the
+	 *         user group
 	 */
 	@Override
 	public UserGroup fetchUserGroup(long userGroupId) throws PortalException {

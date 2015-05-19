@@ -119,7 +119,7 @@ public class ServiceComponentLocalServiceTest {
 		for (ServiceComponent serviceComponent : serviceComponents) {
 			String currentBuildNamespace = serviceComponent.getBuildNamespace();
 
-			if (currentBuildNamespace.contains(buildNamespace)) {
+			if (currentBuildNamespace.equals(buildNamespace)) {
 				return serviceComponent;
 			}
 		}

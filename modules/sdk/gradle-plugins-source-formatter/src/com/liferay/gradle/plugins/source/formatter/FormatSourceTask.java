@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.source.formatter;
 
-import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.source.formatter.SourceFormatterArgs;
 

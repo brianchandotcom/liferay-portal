@@ -25,6 +25,15 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface JCRStoreConfiguration {
 
+	@Meta.AD(deflt = "500", required = true)
+	public int fetchDelay();
+
+	@Meta.AD(deflt = "5", required = true)
+	public int fetchMaxFailures();
+
+	@Meta.AD(deflt = "false", required = true)
+	public boolean initializeOnStartup();
+
 	@Meta.AD(deflt = "repository.xml", required = true)
 	public String jackrabbitConfigFilePath();
 
@@ -39,5 +48,11 @@ public interface JCRStoreConfiguration {
 
 	@Meta.AD(deflt = "data/jackrabbit", required = true)
 	public String jackrabbitRepositoryRoot();
+
+	@Meta.AD(deflt = "false", required = true)
+	public boolean moveVersionLabels();
+
+	@Meta.AD(deflt = "documentlibrary", required = true)
+	public String nodeDocumentlibrary();
 
 }

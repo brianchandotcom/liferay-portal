@@ -749,12 +749,6 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_IMPL = "dl.store.impl";
 
-	public static final String DL_STORE_JCR_FETCH_DELAY = "dl.store.jcr.fetch.delay";
-
-	public static final String DL_STORE_JCR_FETCH_MAX_FAILURES = "dl.store.jcr.fetch.max.failures";
-
-	public static final String DL_STORE_JCR_MOVE_VERSION_LABELS = "dl.store.jcr.move.version.labels";
-
 	public static final String DL_SUBFOLDERS_VISIBLE = "dl.subfolders.visible";
 
 	public static final String DL_TABS_VISIBLE = "dl.tabs.visible";
@@ -1016,14 +1010,6 @@ public interface PropsKeys {
 	public static final String JAVASCRIPT_LOG_ENABLED = "javascript.log.enabled";
 
 	public static final String JAVASCRIPT_SINGLE_PAGE_APPLICATION_ENABLED = "javascript.single.page.application.enabled";
-
-	public static final String JCR_INITIALIZE_ON_STARTUP = "jcr.initialize.on.startup";
-
-	public static final String JCR_NODE_DOCUMENTLIBRARY = "jcr.node.documentlibrary";
-
-	public static final String JCR_WORKSPACE_NAME = "jcr.workspace.name";
-
-	public static final String JCR_WRAP_SESSION = "jcr.wrap.session";
 
 	public static final String JDBC_DEFAULT_DRIVER_CLASS_NAME = "jdbc.default.driverClassName";
 

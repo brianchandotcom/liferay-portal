@@ -14,6 +14,8 @@
 
 package com.liferay.portal.store.jcr;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,7 +24,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
@@ -53,7 +55,9 @@ import javax.jcr.version.VersionManager;
 
 import org.apache.commons.lang.StringUtils;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Michael Young
@@ -62,6 +66,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Manuel de la Peña
  */
 @Component(
+	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	immediate = true,
 	property = "store.type=com.liferay.portal.store.jcr.JCRStore",
 	service = Store.class
@@ -818,7 +824,7 @@ public class JCRStore extends BaseStore {
 
 			versionHistory.addVersionLabel(
 				version.getName(), versionLabel,
-				PropsValues.DL_STORE_JCR_MOVE_VERSION_LABELS);
+				_jcrStoreConfiguration.moveVersionLabels());
 		}
 		catch (PathNotFoundException pnfe) {
 			throw new NoSuchFileException(
@@ -861,6 +867,12 @@ public class JCRStore extends BaseStore {
 		else if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
 			fileNames.add(dirName);
 		}
+	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_jcrStoreConfiguration = Configurable.createConfigurable(
+			JCRStoreConfiguration.class, properties);
 	}
 
 	protected Node getFileContentNode(
@@ -968,8 +980,11 @@ public class JCRStore extends BaseStore {
 
 		Node companyNode = getFolderNode(session.getRootNode(), companyId);
 
-		return getFolderNode(companyNode, JCRFactory.NODE_DOCUMENTLIBRARY);
+		return getFolderNode(
+			companyNode, _jcrStoreConfiguration.nodeDocumentlibrary());
 	}
+
+	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(JCRStore.class);
 

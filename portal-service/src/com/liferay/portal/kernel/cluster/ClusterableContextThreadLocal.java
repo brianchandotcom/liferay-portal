@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.cluster;
+package com.liferay.portal.kernel.cluster;
 
 import com.liferay.portal.kernel.util.InitialThreadLocal;
 
@@ -26,18 +26,18 @@ import java.util.Map;
  */
 public class ClusterableContextThreadLocal {
 
-	public static void putThreadLocalContext(String key, Serializable value) {
-		Map<String, Serializable> context = _contextThreadLocal.get();
-
-		context.put(key, value);
-	}
-
-	protected static Map<String, Serializable> collectThreadLocalContext() {
+	public static Map<String, Serializable> collectThreadLocalContext() {
 		Map<String, Serializable> context = _contextThreadLocal.get();
 
 		_contextThreadLocal.remove();
 
 		return context;
+	}
+
+	public static void putThreadLocalContext(String key, Serializable value) {
+		Map<String, Serializable> context = _contextThreadLocal.get();
+
+		context.put(key, value);
 	}
 
 	private static final ThreadLocal<HashMap<String, Serializable>>

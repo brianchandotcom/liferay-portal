@@ -14,15 +14,11 @@
 
 package com.liferay.portal.kernel.scheduler;
 
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.dependency.ServiceDependencyListener;
-import com.liferay.registry.dependency.ServiceDependencyManager;
 
 /**
  * @author Tina Tian
@@ -35,51 +31,17 @@ public class SchedulerLifecycle extends BasePortalLifecycle {
 
 	@Override
 	protected void doPortalInit() throws Exception {
-		ServiceDependencyManager serviceDependencyManager =
-			new ServiceDependencyManager();
-
-		serviceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
-
-				@Override
-				public void dependenciesFulfilled() {
-					Registry registry = RegistryUtil.getRegistry();
-
-					SchedulerEngineHelper schedulerEngineHelper =
-						registry.getService(SchedulerEngineHelper.class);
-
-					if (schedulerEngineHelper.isClusteredSchedulerEngine()) {
-						ClusterMasterExecutor clusterMasterExecutor =
-							registry.getService(ClusterMasterExecutor.class);
-
-						clusterMasterExecutor.initialize();
-					}
-
-					try {
-						schedulerEngineHelper.start();
-					}
-					catch (SchedulerException se) {
-						_log.error("Unable to start scheduler engine", se);
-					}
-				}
-
-				@Override
-				public void destroy() {
-				}
-
-			});
-
 		Registry registry = RegistryUtil.getRegistry();
 
-		Filter filter = registry.getFilter(
-			"(objectClass=com.liferay.portal.scheduler.quartz.internal." +
-				"QuartzSchemaManager)");
+		SchedulerEngineHelper schedulerEngineHelper = registry.getService(
+			SchedulerEngineHelper.class);
 
-		serviceDependencyManager.registerDependencies(
-			new Class[] {
-				ClusterMasterExecutor.class, SchedulerEngineHelper.class
-			},
-			new Filter[] {filter});
+		try {
+			schedulerEngineHelper.start();
+		}
+		catch (SchedulerException se) {
+			_log.error("Unable to start scheduler engine", se);
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

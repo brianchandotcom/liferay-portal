@@ -71,7 +71,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(true));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		MockClusterExecutor mockClusterExecutor = new MockClusterExecutor(true);
 
@@ -79,7 +79,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		List<ClusterEventListener> clusterEventListeners =
 			mockClusterExecutor.getClusterEventListeners();
@@ -154,7 +154,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		List<ClusterEventListener> clusterEventListeners =
 			mockClusterExecutor.getClusterEventListeners();
@@ -174,7 +174,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(false));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		clusterMasterExecutorImpl.deactivate();
 
@@ -185,12 +185,12 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(true));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(true));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		_mockLockLocalService.setUnlockError(true);
 
@@ -236,7 +236,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(false));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		Assert.assertFalse(clusterMasterExecutorImpl.isEnabled());
 
@@ -325,7 +325,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isEnabled());
 
@@ -366,7 +366,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 
@@ -379,7 +379,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		_mockLockLocalService.setLock(otherClusterNodeId);
 
-		clusterMasterExecutorImpl.getMasterClusterNodeId();
+		clusterMasterExecutorImpl.getMasterClusterNodeId(true);
 
 		Assert.assertFalse(clusterMasterExecutorImpl.isMaster());
 		Assert.assertTrue(
@@ -391,7 +391,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		_mockLockLocalService.setLock(
 			mockClusterExecutor.getLocalClusterNodeId());
 
-		clusterMasterExecutorImpl.getMasterClusterNodeId();
+		clusterMasterExecutorImpl.getMasterClusterNodeId(true);
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
 		Assert.assertTrue(
@@ -411,7 +411,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		try (CaptureHandler captureHandler =
 				JDKLoggerTestUtil.configureJDKLogger(
@@ -423,7 +423,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			Assert.assertEquals(
 				mockClusterExecutor.getLocalClusterNodeId(),
-				clusterMasterExecutorImpl.getMasterClusterNodeId());
+				clusterMasterExecutorImpl.getMasterClusterNodeId(true));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -452,7 +452,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			Assert.assertEquals(
 				mockClusterExecutor.getLocalClusterNodeId(),
-				clusterMasterExecutorImpl.getMasterClusterNodeId());
+				clusterMasterExecutorImpl.getMasterClusterNodeId(true));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -481,7 +481,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			Assert.assertEquals(
 				mockClusterExecutor.getLocalClusterNodeId(),
-				clusterMasterExecutorImpl.getMasterClusterNodeId());
+				clusterMasterExecutorImpl.getMasterClusterNodeId(true));
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -500,7 +500,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(false));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		Assert.assertFalse(clusterMasterExecutorImpl.isEnabled());
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
@@ -514,7 +514,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 		clusterMasterExecutorImpl.setClusterExecutor(
 			new MockClusterExecutor(true));
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isEnabled());
 		Assert.assertTrue(clusterMasterExecutorImpl.isMaster());
@@ -533,7 +533,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.setClusterExecutor(mockClusterExecutor);
 
-		clusterMasterExecutorImpl.initialize();
+		clusterMasterExecutorImpl.activate();
 
 		Assert.assertTrue(clusterMasterExecutorImpl.isEnabled());
 		Assert.assertFalse(clusterMasterExecutorImpl.isMaster());

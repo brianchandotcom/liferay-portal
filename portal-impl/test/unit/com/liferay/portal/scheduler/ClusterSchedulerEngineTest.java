@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -51,6 +52,9 @@ import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.uuid.PortalUUIDImpl;
+import com.liferay.registry.BasicRegistryImpl;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -89,6 +93,10 @@ public class ClusterSchedulerEngineTest {
 
 	@Before
 	public void setUp() throws Exception {
+		RegistryUtil.setRegistry(new BasicRegistryImpl());
+
+		Registry registry = RegistryUtil.getRegistry();
+
 		PortalUtil portalUtil = new PortalUtil();
 
 		portalUtil.setPortal(new PortalImpl());
@@ -110,13 +118,10 @@ public class ClusterSchedulerEngineTest {
 		SchedulerEngineHelperImpl schedulerEngineHelperImpl =
 			new SchedulerEngineHelperImpl();
 
+		registry.registerService(
+			SchedulerEngineHelper.class, schedulerEngineHelperImpl);
+
 		schedulerEngineHelperImpl.setSchedulerEngine(_clusterSchedulerEngine);
-
-		SchedulerEngineHelperUtil schedulerEngineHelperUtil =
-			new SchedulerEngineHelperUtil();
-
-		schedulerEngineHelperUtil.setSchedulerEngineHelper(
-			schedulerEngineHelperImpl);
 
 		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
 			(Class<? extends ClusterInvokeAcceptor>)Class.forName(
@@ -1822,7 +1827,7 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Around(
-			"execution(void com.liferay.portal.cluster." +
+			"execution(void com.liferay.portal.kernel.cluster." +
 				"ClusterableContextThreadLocal.putThreadLocalContext(" +
 					"java.lang.String, java.io.Serializable)) && " +
 						"args(key, value)"
@@ -2050,10 +2055,6 @@ public class ClusterSchedulerEngineTest {
 		}
 
 		@Override
-		public void initialize() {
-		}
-
-		@Override
 		public boolean isEnabled() {
 			return true;
 		}
@@ -2061,6 +2062,10 @@ public class ClusterSchedulerEngineTest {
 		@Override
 		public boolean isMaster() {
 			return _master;
+		}
+
+		@Override
+		public void notifyMasterTokenTransitionListeners() {
 		}
 
 		@Override

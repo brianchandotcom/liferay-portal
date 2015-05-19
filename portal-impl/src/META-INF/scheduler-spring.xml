@@ -15,7 +15,7 @@
 		<constructor-arg>
 			<bean class="com.liferay.portal.messaging.proxy.MessagingProxyBeanMatcher">
 				<property name="beanClass" value="com.liferay.portal.kernel.messaging.proxy.BaseProxyBean" />
-				<property name="beanNamePattern" value="com.liferay.portal.scheduler.SchedulerEngineProxyBean" />
+				<property name="beanNamePattern" value="com.liferay.portal.kernel.scheduler.SchedulerEngineProxyBean" />
 			</bean>
 		</constructor-arg>
 		<constructor-arg>
@@ -26,9 +26,9 @@
 	<!-- Proxy -->
 
 	<bean id="com.liferay.portal.scheduler.ClusterSchedulerEngineService" class="com.liferay.portal.scheduler.ClusterSchedulerEngine" factory-method="createClusterSchedulerEngine">
-		<constructor-arg name="schedulerEngine" ref="com.liferay.portal.scheduler.SchedulerEngineProxyBean" />
+		<constructor-arg name="schedulerEngine" ref="com.liferay.portal.kernel.scheduler.SchedulerEngineProxyBean" />
 	</bean>
-	<bean id="com.liferay.portal.scheduler.SchedulerEngineProxyBean" class="com.liferay.portal.scheduler.SchedulerEngineProxyBean">
+	<bean id="com.liferay.portal.kernel.scheduler.SchedulerEngineProxyBean" class="com.liferay.portal.kernel.scheduler.SchedulerEngineProxyBean">
 		<property name="destinationName" value="liferay/scheduler_engine" />
 		<property name="synchronousDestinationName" value="liferay/scheduler_engine" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
@@ -38,9 +38,6 @@
 
 	<bean id="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" class="com.liferay.portal.scheduler.SchedulerEngineHelperImpl">
 		<property name="schedulerEngine" ref="com.liferay.portal.scheduler.ClusterSchedulerEngineService" />
-	</bean>
-	<bean class="com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil">
-		<property name="schedulerEngineHelper" ref="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" />
 	</bean>
 
 	<!-- Messaging -->

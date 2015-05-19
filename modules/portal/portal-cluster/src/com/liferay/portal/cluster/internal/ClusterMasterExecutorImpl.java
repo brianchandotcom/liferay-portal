@@ -38,6 +38,7 @@ import com.liferay.portal.service.LockLocalService;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -89,7 +90,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 			}
 		}
 
-		final String masterClusterNodeId = getMasterClusterNodeId();
+		final String masterClusterNodeId = getMasterClusterNodeId(true);
 
 		ClusterRequest clusterRequest = ClusterRequest.createUnicastRequest(
 			methodHandler, masterClusterNodeId);
@@ -119,28 +120,6 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
-	public void initialize() {
-		if (!_clusterExecutor.isEnabled() || SPIUtil.isSPI()) {
-			return;
-		}
-
-		_clusterEventListener = new ClusterMasterTokenClusterEventListener();
-
-		_clusterExecutor.addClusterEventListener(_clusterEventListener);
-
-		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
-
-		_localClusterNodeId = localClusterNode.getClusterNodeId();
-
-		_enabled = true;
-
-		String masterClusterNodeId = getMasterClusterNodeId();
-
-		notifyMasterTokenTransitionListeners(
-			_localClusterNodeId.equals(masterClusterNodeId));
-	}
-
-	@Override
 	public boolean isEnabled() {
 		return _enabled;
 	}
@@ -155,12 +134,36 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	}
 
 	@Override
+	public void notifyMasterTokenTransitionListeners() {
+		notifyMasterTokenTransitionListeners(isMaster());
+	}
+
+	@Override
 	public void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener
 			clusterMasterTokenTransitionListener) {
 
 		_clusterMasterTokenTransitionListeners.remove(
 			clusterMasterTokenTransitionListener);
+	}
+
+	@Activate
+	protected synchronized void activate() {
+		if (!_clusterExecutor.isEnabled() || SPIUtil.isSPI()) {
+			return;
+		}
+
+		_clusterEventListener = new ClusterMasterTokenClusterEventListener();
+
+		_clusterExecutor.addClusterEventListener(_clusterEventListener);
+
+		ClusterNode localClusterNode = _clusterExecutor.getLocalClusterNode();
+
+		_localClusterNodeId = localClusterNode.getClusterNodeId();
+
+		_enabled = true;
+
+		getMasterClusterNodeId(false);
 	}
 
 	@Deactivate
@@ -186,7 +189,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 		_localClusterNodeId = null;
 	}
 
-	protected String getMasterClusterNodeId() {
+	protected String getMasterClusterNodeId(boolean notify) {
 		String owner = null;
 
 		while (true) {
@@ -233,7 +236,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 		_master = master;
 
-		if (_enabled) {
+		if (_enabled && notify) {
 			notifyMasterTokenTransitionListeners(master);
 		}
 
@@ -295,7 +298,7 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 
 		@Override
 		public void processClusterEvent(ClusterEvent clusterEvent) {
-			getMasterClusterNodeId();
+			getMasterClusterNodeId(true);
 		}
 
 	}

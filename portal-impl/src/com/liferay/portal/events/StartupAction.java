@@ -35,8 +35,10 @@ import com.liferay.portal.kernel.resiliency.mpi.MPIHelperUtil;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.MatchType;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerLifecycle;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
@@ -45,6 +47,7 @@ import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.messageboards.util.MBMessageIndexer;
+import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.dependency.ServiceDependencyListener;
@@ -142,7 +145,36 @@ public class StartupAction extends SimpleAction {
 			_log.debug("Initialize scheduler engine lifecycle");
 		}
 
-		SchedulerEngineHelperUtil.initialize();
+		ServiceDependencyManager schedulerServiceDependencyManager =
+			new ServiceDependencyManager();
+
+		schedulerServiceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					SchedulerLifecycle schedulerLifecycle =
+						new SchedulerLifecycle();
+
+					schedulerLifecycle.registerPortalLifecycle(
+						PortalLifecycle.METHOD_INIT);
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		final Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(objectClass=com.liferay.portal.scheduler.quartz.internal." +
+				"QuartzSchemaManager)");
+
+		schedulerServiceDependencyManager.registerDependencies(
+			new Class[] {SchedulerEngineHelper.class},
+			new Filter[] {filter});
 
 		// Verify
 
@@ -152,34 +184,38 @@ public class StartupAction extends SimpleAction {
 
 		DBUpgrader.verify();
 
-		// Background tasks
+		// Cluster Master Token Listener
 
-		ServiceDependencyManager backgroundTaskServiceDependencyManager =
+		ServiceDependencyManager clusterMasterExecutorServiceDependencyManager =
 			new ServiceDependencyManager();
 
-		backgroundTaskServiceDependencyManager.registerDependencies(
-			ClusterExecutor.class, ClusterMasterExecutor.class);
+		clusterMasterExecutorServiceDependencyManager.
+			addServiceDependencyListener(
+				new ServiceDependencyListener() {
 
-		backgroundTaskServiceDependencyManager.addServiceDependencyListener(
-			new ServiceDependencyListener() {
+					@Override
+					public void dependenciesFulfilled() {
+						ClusterMasterExecutor clusterMasterExecutor =
+							registry.getService(ClusterMasterExecutor.class);
 
-				@Override
-				public void dependenciesFulfilled() {
-					Registry registry = RegistryUtil.getRegistry();
-
-					ClusterMasterExecutor clusterMasterExecutor =
-						registry.getService(ClusterMasterExecutor.class);
-
-					if (!clusterMasterExecutor.isEnabled()) {
-						BackgroundTaskLocalServiceUtil.cleanUpBackgroundTasks();
+						if (!clusterMasterExecutor.isEnabled()) {
+							BackgroundTaskLocalServiceUtil.
+								cleanUpBackgroundTasks();
+						}
+						else {
+							clusterMasterExecutor.
+								notifyMasterTokenTransitionListeners();
+						}
 					}
-				}
 
-				@Override
-				public void destroy() {
-				}
+					@Override
+					public void destroy() {
+					}
 
-			});
+				});
+
+		clusterMasterExecutorServiceDependencyManager.registerDependencies(
+			ClusterExecutor.class, ClusterMasterExecutor.class);
 
 		// Liferay JspFactory
 

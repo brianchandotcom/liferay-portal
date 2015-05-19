@@ -31,11 +31,11 @@ public interface ClusterMasterExecutor {
 
 	public <T> NoticeableFuture<T> executeOnMaster(MethodHandler methodHandler);
 
-	public void initialize();
-
 	public boolean isEnabled();
 
 	public boolean isMaster();
+
+	public void notifyMasterTokenTransitionListeners();
 
 	public void removeClusterMasterTokenTransitionListener(
 		ClusterMasterTokenTransitionListener

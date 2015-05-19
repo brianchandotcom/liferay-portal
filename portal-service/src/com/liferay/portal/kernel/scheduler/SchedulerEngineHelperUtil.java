@@ -18,6 +18,9 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -218,7 +221,7 @@ public class SchedulerEngineHelperUtil {
 		PortalRuntimePermission.checkGetBeanProperty(
 			SchedulerEngineHelperUtil.class);
 
-		return _schedulerEngineHelper;
+		return _instance._serviceTracker.getService();
 	}
 
 	public static Date getStartTime(SchedulerResponse schedulerResponse) {
@@ -231,10 +234,6 @@ public class SchedulerEngineHelperUtil {
 
 		return getSchedulerEngineHelper().getStartTime(
 			jobName, groupName, storageType);
-	}
-
-	public static void initialize() throws SchedulerException {
-		getSchedulerEngineHelper().initialize();
 	}
 
 	public static boolean isClusteredSchedulerEngine() {
@@ -349,14 +348,18 @@ public class SchedulerEngineHelperUtil {
 		getSchedulerEngineHelper().update(trigger, storageType);
 	}
 
-	public void setSchedulerEngineHelper(
-		SchedulerEngineHelper schedulerEngineHelper) {
+	private SchedulerEngineHelperUtil() {
+		Registry registry = RegistryUtil.getRegistry();
 
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+		_serviceTracker = registry.trackServices(SchedulerEngineHelper.class);
 
-		_schedulerEngineHelper = schedulerEngineHelper;
+		_serviceTracker.open();
 	}
 
-	private static SchedulerEngineHelper _schedulerEngineHelper;
+	private static final SchedulerEngineHelperUtil _instance =
+		new SchedulerEngineHelperUtil();
+
+	private final ServiceTracker<SchedulerEngineHelper, SchedulerEngineHelper>
+		_serviceTracker;
 
 }

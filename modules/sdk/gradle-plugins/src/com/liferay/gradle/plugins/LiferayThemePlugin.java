@@ -272,9 +272,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			String relativeDiffsDir = FileUtil.relativize(
 				diffsDir, getWebAppDir(project));
 
-			if (Validator.isNotNull(relativeDiffsDir)) {
-				war.exclude(relativeDiffsDir + "/**");
-			}
+			war.exclude(relativeDiffsDir + "/**");
 		}
 	}
 

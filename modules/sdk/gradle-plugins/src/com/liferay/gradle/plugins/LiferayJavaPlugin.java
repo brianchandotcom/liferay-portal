@@ -63,7 +63,10 @@ import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.WarPlugin;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.bundling.Jar;
 
 /**
  * @author Andrea Di Giorgi
@@ -72,6 +75,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
+	public static final String DEPLOY_TASK_NAME = "deploy";
+
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
 	public static final String FORMAT_XSD_TASK_NAME = "formatXSD";
@@ -79,6 +84,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
+
+	public static final String PROVIDED_CONFIGURATION_NAME = "provided";
 
 	@Override
 	public void apply(Project project) {
@@ -138,7 +145,26 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
+	protected Configuration addConfigurationProvided(Project project) {
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, PROVIDED_CONFIGURATION_NAME);
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		configuration.setDescription(
+			"Provided classpath for " + sourceSet + ".");
+		configuration.setVisible(false);
+
+		FileCollection fileCollection = sourceSet.getCompileClasspath();
+
+		sourceSet.setCompileClasspath(fileCollection.plus(configuration));
+
+		return configuration;
+	}
+
 	protected void addConfigurations(Project project) {
+		addConfigurationProvided(project);
 		addConfigurationPortalWeb(project);
 	}
 
@@ -161,6 +187,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		buildCssTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		return buildCssTask;
+	}
+
+	protected Copy addTaskDeploy(Project project) {
+		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+
+		copy.setDescription("Assembles the project and deploys it to Liferay.");
+
+		return copy;
 	}
 
 	protected FormatXMLTask addTaskFormatWSDL(Project project) {
@@ -198,6 +232,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project, LiferayExtension liferayExtension) {
 
 		addTaskBuildCss(project);
+		addTaskDeploy(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
@@ -341,6 +376,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			liferayExtension.setDeployDir(deployDir);
 		}
+
+		if (liferayExtension.getLiferayHome() == null) {
+			File liferayHome = appServerParentDir.getParentFile();
+
+			liferayExtension.setLiferayHome(liferayHome);
+		}
 	}
 
 	protected void configureProperties(Project project) {
@@ -363,12 +404,24 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureSourceSetMain(Project project) {
+		File classesDir = project.file("classes");
+		File srcDir = project.file("src");
+
+		configureSourceSetMain(project, classesDir, srcDir);
+	}
+
+	protected void configureSourceSetMain(
+		Project project, File classesDir, File srcDir) {
+
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
 
-		File srcDir = project.file("src");
+		sourceSetOutput.setClassesDir(classesDir);
+		sourceSetOutput.setResourcesDir(classesDir);
+
+		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
 		Set<File> srcDirs = Collections.singleton(srcDir);
 
@@ -721,6 +774,28 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				true, BasePlugin.CLEAN_TASK_NAME));
 	}
 
+	protected void configureTaskDeploy(
+		Project project, LiferayExtension liferayExtension) {
+
+		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		configureTaskDeployFrom(copy);
+		configureTaskDeployInto(copy, liferayExtension);
+	}
+
+	protected void configureTaskDeployFrom(Copy deployTask) {
+		Jar jar = (Jar)GradleUtil.getTask(
+			deployTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+		deployTask.from(jar.getOutputs());
+	}
+
+	protected void configureTaskDeployInto(
+		Copy deployTask, LiferayExtension liferayExtension) {
+
+		deployTask.into(liferayExtension.getDeployDir());
+	}
+
 	protected void configureTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
 			project, FORMAT_WSDL_TASK_NAME);
@@ -770,6 +845,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);
+		configureTaskDeploy(project, liferayExtension);
 		configureTaskFormatWSDL(project);
 		configureTaskFormatXSD(project);
 	}

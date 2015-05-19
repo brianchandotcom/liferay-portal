@@ -32,12 +32,10 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -53,7 +51,6 @@ import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.RelativePath;
-import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.internal.file.copy.CopySpecInternal;
 import org.gradle.api.internal.file.copy.CopySpecResolver;
 import org.gradle.api.plugins.BasePlugin;
@@ -73,9 +70,12 @@ import org.gradle.api.tasks.compile.JavaCompile;
  */
 public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
-	public static final String DEPLOY_TASK_NAME = "deploy";
-
 	public static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
+
+	@Override
+	protected Configuration addConfigurationProvided(Project project) {
+		return null;
+	}
 
 	protected Task addTaskBuildServiceCompile(
 		BuildServiceTask buildServiceTask) {
@@ -154,13 +154,10 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildServiceTask.finalizedBy(buildServiceJarTask);
 	}
 
+	@Override
 	protected Copy addTaskDeploy(Project project) {
-		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
+		Copy copy = super.addTaskDeploy(project);
 
-		copy.dependsOn(WarPlugin.WAR_TASK_NAME);
-
-		copy.setDescription(
-			"Assembles the project into a WAR file and deploys it to Liferay.");
 		copy.setGroup(WarPlugin.WEB_APP_GROUP);
 
 		return copy;
@@ -186,7 +183,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.addTasks(project, liferayExtension);
 
-		addTaskDeploy(project);
 		addTaskDirectDeploy(project);
 	}
 
@@ -251,21 +247,10 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 	@Override
 	protected void configureSourceSetMain(Project project) {
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
-
+		File classesDir = project.file("docroot/WEB-INF/classes");
 		File srcDir = project.file("docroot/WEB-INF/src");
 
-		Set<File> srcDirs = Collections.singleton(srcDir);
-
-		javaSourceDirectorySet.setSrcDirs(srcDirs);
-
-		SourceDirectorySet resourcesSourceDirectorySet =
-			sourceSet.getResources();
-
-		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
+		configureSourceSetMain(project, classesDir, srcDir);
 	}
 
 	@Override
@@ -333,15 +318,12 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		buildXSDTask.setInputDir(inputDir);
 	}
 
-	protected void configureTaskDeploy(
-		Project project, LiferayExtension liferayExtension) {
+	@Override
+	protected void configureTaskDeployFrom(Copy deployTask) {
+		War war = (War)GradleUtil.getTask(
+			deployTask.getProject(), WarPlugin.WAR_TASK_NAME);
 
-		Copy copy = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
-
-		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
-
-		copy.from(war.getArchivePath());
-		copy.into(liferayExtension.getDeployDir());
+		deployTask.from(war.getOutputs());
 	}
 
 	protected void configureTaskDirectDeploy(
@@ -427,7 +409,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		super.configureTasks(project, liferayExtension);
 
-		configureTaskDeploy(project, liferayExtension);
 		configureTaskDirectDeploy(project, liferayExtension);
 		configureTaskWar(project, liferayExtension);
 

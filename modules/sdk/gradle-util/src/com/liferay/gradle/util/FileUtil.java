@@ -75,10 +75,6 @@ public class FileUtil {
 		Path path = file.toPath();
 		Path startPath = startFile.toPath();
 
-		if (!path.startsWith(startPath)) {
-			return null;
-		}
-
 		Path relativePath = startPath.relativize(path);
 
 		return relativePath.toString();

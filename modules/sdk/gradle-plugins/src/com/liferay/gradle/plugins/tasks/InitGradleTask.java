@@ -14,6 +14,7 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
@@ -90,30 +91,40 @@ public class InitGradleTask extends DefaultTask {
 		contents1.addAll(contents2);
 	}
 
+	protected String convertBuildPropertyValue(String value) {
+		value = value.replace(
+			"${app.server.deploy.dir}", "${appServerDeployDir}");
+		value = value.replace("${app.server.dir}", "${appServerDir}");
+		value = value.replace(
+			"${app.server.lib.global.dir}", "${appServerLibGlobalDir}");
+		value = value.replace(
+			"${app.server.parent.dir}", "${appServerParentDir}");
+		value = value.replace("${auto.deploy.dir}", "${deployDir}");
+		value = value.replace("${liferay.home}", "${liferayHome}");
+
+		return value;
+	}
+
 	protected List<String> getBuildDependenciesCompile() {
 		List<String> contents = new ArrayList<>();
 
-		if (_ivyXmlNode != null) {
-			Node dependenciesNode = getNode(_ivyXmlNode, "dependencies");
+		Iterator<Node> iterator = getIvyXmlDependenciesIterator();
 
-			if (dependenciesNode != null) {
-				Iterator<Node> iterator = dependenciesNode.iterator();
+		if (iterator != null) {
+			while (iterator.hasNext()) {
+				Node dependencyNode = iterator.next();
 
-				while (iterator.hasNext()) {
-					Node dependencyNode = iterator.next();
+				String conf = (String)dependencyNode.attribute("conf");
 
-					String conf = (String)dependencyNode.attribute("conf");
-
-					if (Validator.isNotNull(conf) && !conf.equals("default")) {
-						continue;
-					}
-
-					String group = (String)dependencyNode.attribute("org");
-					String name = (String)dependencyNode.attribute("name");
-					String version = (String)dependencyNode.attribute("rev");
-
-					contents.add(wrapDependency(group, name, version));
+				if (Validator.isNotNull(conf) && !conf.equals("default")) {
+					continue;
 				}
+
+				String group = (String)dependencyNode.attribute("org");
+				String name = (String)dependencyNode.attribute("name");
+				String version = (String)dependencyNode.attribute("rev");
+
+				contents.add(wrapDependency(group, name, version));
 			}
 		}
 
@@ -138,22 +149,31 @@ public class InitGradleTask extends DefaultTask {
 		String importShared = getBuildXmlProperty("import.shared");
 
 		if (Validator.isNotNull(importShared)) {
-			Map<String, String> projectNamePathMap = new HashMap<>();
+			Map<String, String> projectFileNamePathMap = new HashMap<>();
 
 			Project rootProject = _project.getRootProject();
 
-			for (Project project : rootProject.getAllprojects()) {
-				projectNamePathMap.put(project.getName(), project.getPath());
+			File projectDir = _project.getProjectDir();
+			File parentDir = projectDir.getParentFile();
+
+			for (Project project : rootProject.getSubprojects()) {
+				String projectFileName = FileUtil.relativize(
+					project.getProjectDir(), parentDir);
+
+				projectFileName = projectFileName.replace('\\', '/');
+
+				projectFileNamePathMap.put(projectFileName, project.getPath());
 			}
 
 			String[] importSharedArray = importShared.split(",");
 
-			for (String projectName : importSharedArray) {
-				String projectPath = projectNamePathMap.get(projectName);
+			for (String projectFileName : importSharedArray) {
+				String projectPath = projectFileNamePathMap.get(
+					projectFileName);
 
 				if (Validator.isNull(projectPath)) {
 					throw new GradleException(
-						"Unable to find project dependency " + projectName);
+						"Unable to find project dependency " + projectFileName);
 				}
 
 				contents.add(wrapProjectDependency(projectPath));
@@ -162,6 +182,34 @@ public class InitGradleTask extends DefaultTask {
 
 		return wrapContents(
 			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")", true);
+	}
+
+	protected List<String> getBuildDependenciesProvided() {
+		List<String> contents = new ArrayList<>();
+
+		Iterator<Node> iterator = getIvyXmlDependenciesIterator();
+
+		if (iterator != null) {
+			while (iterator.hasNext()) {
+				Node dependencyNode = iterator.next();
+
+				String conf = (String)dependencyNode.attribute("conf");
+
+				if (Validator.isNull(conf) || !conf.contains("provided")) {
+					continue;
+				}
+
+				String group = (String)dependencyNode.attribute("org");
+				String name = (String)dependencyNode.attribute("name");
+				String version = (String)dependencyNode.attribute("rev");
+
+				contents.add(wrapDependency(group, name, version));
+			}
+		}
+
+		return wrapContents(
+			contents, 1, "(", LiferayJavaPlugin.PROVIDED_CONFIGURATION_NAME,
+			")", true);
 	}
 
 	protected List<String> getBuildDependenciesProvidedCompile() {
@@ -200,27 +248,23 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildDependenciesTestCompile() {
 		List<String> contents = new ArrayList<>();
 
-		if (_ivyXmlNode != null) {
-			Node dependenciesNode = getNode(_ivyXmlNode, "dependencies");
+		Iterator<Node> iterator = getIvyXmlDependenciesIterator();
 
-			if (dependenciesNode != null) {
-				Iterator<Node> iterator = dependenciesNode.iterator();
+		if (iterator != null) {
+			while (iterator.hasNext()) {
+				Node dependencyNode = iterator.next();
 
-				while (iterator.hasNext()) {
-					Node dependencyNode = iterator.next();
+				String conf = (String)dependencyNode.attribute("conf");
 
-					String conf = (String)dependencyNode.attribute("conf");
-
-					if (Validator.isNull(conf) || !conf.contains("test")) {
-						continue;
-					}
-
-					String group = (String)dependencyNode.attribute("org");
-					String name = (String)dependencyNode.attribute("name");
-					String version = (String)dependencyNode.attribute("rev");
-
-					contents.add(wrapDependency(group, name, version));
+				if (Validator.isNull(conf) || !conf.contains("test")) {
+					continue;
 				}
+
+				String group = (String)dependencyNode.attribute("org");
+				String name = (String)dependencyNode.attribute("name");
+				String version = (String)dependencyNode.attribute("rev");
+
+				contents.add(wrapDependency(group, name, version));
 			}
 		}
 
@@ -233,6 +277,7 @@ public class InitGradleTask extends DefaultTask {
 		List<String> contents = new ArrayList<>();
 
 		addContents(contents, getBuildDependenciesCompile());
+		addContents(contents, getBuildDependenciesProvided());
 		addContents(contents, getBuildDependenciesProvidedCompile());
 		addContents(contents, getBuildDependenciesTestCompile());
 
@@ -241,6 +286,14 @@ public class InitGradleTask extends DefaultTask {
 
 	protected List<String> getBuildGradleLiferay() {
 		List<String> contents = new ArrayList<>();
+
+		String autoDeployDir = getBuildXmlProperty("auto.deploy.dir");
+
+		if (Validator.isNotNull(autoDeployDir)) {
+			autoDeployDir = convertBuildPropertyValue(autoDeployDir);
+
+			contents.add(wrapPropertyFile("deployDir", autoDeployDir));
+		}
 
 		if (_liferayExtension instanceof LiferayThemeExtension) {
 			String themeParent = getBuildXmlProperty("theme.parent");
@@ -294,6 +347,20 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return defaultValue;
+	}
+
+	protected Iterator<Node> getIvyXmlDependenciesIterator() {
+		if (_ivyXmlNode == null) {
+			return null;
+		}
+
+		Node dependenciesNode = getNode(_ivyXmlNode, "dependencies");
+
+		if (dependenciesNode == null) {
+			return null;
+		}
+
+		return dependenciesNode.iterator();
 	}
 
 	protected Node getNode(Node parentNode, String name) {
@@ -387,6 +454,18 @@ public class InitGradleTask extends DefaultTask {
 		sb.append(" = \"");
 		sb.append(value);
 		sb.append("\"");
+
+		return sb.toString();
+	}
+
+	protected String wrapPropertyFile(String name, String value) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append('\t');
+		sb.append(name);
+		sb.append(" = file(\"");
+		sb.append(value);
+		sb.append("\")");
 
 		return sb.toString();
 	}

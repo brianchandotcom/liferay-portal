@@ -14,6 +14,8 @@
 
 package com.liferay.source.formatter.dependencies;
 
+import aQute.bnd.annotation.metatype.Meta;
+
 import com.liferay.portal.kernel.provider.AddPortletProvider;
 import com.liferay.portal.kernel.provider.ViewPortletProvider;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -37,12 +39,18 @@ import java.util.Set;
 		AddPortletProvider.class, ViewPortletProvider.class
 	}
 )
+@Meta.OCD(
+	id = "com.liferay.portal.tools.sourceformatter.CombineLines"
+)
 public class CombineLines
 	extends SuperClass {
 
 	public static final String
 		STRING_1;
 
+	@Meta.AD(
+		deflt = "false", required = false
+	)
 	public String getString(
 		String test) {
 

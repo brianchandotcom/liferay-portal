@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.cmis;
+package com.liferay.portal.store.cmis;
 
 import java.util.HashSet;
 import java.util.Set;

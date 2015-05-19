@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true, service = ContentMetadataAssetAddonEntry.class
-)
+@Component(immediate = true, service = ContentMetadataAssetAddonEntry.class)
 public class RelatedAssetsContentMetadataAssetAddonEntry
 	extends BaseJSPAssetAddonEntry implements ContentMetadataAssetAddonEntry {
 

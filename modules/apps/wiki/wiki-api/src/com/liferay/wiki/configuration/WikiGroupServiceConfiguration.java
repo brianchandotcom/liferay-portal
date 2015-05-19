@@ -27,9 +27,7 @@ public interface WikiGroupServiceConfiguration {
 	/**
 	 * Set the default wiki format.
 	 */
-	@Meta.AD(
-		deflt = "creole", required = false
-	)
+	@Meta.AD(deflt = "creole", required = false)
 	public String defaultFormat();
 
 	@Meta.AD(
@@ -50,9 +48,7 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap emailPageAddedBody();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean emailPageAddedEnabled();
 
 	@Meta.AD(
@@ -67,9 +63,7 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap emailPageUpdatedBody();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean emailPageUpdatedEnabled();
 
 	@Meta.AD(
@@ -78,9 +72,7 @@ public interface WikiGroupServiceConfiguration {
 	)
 	public LocalizedValuesMap emailPageUpdatedSubject();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean enableRss();
 
 	/**
@@ -91,56 +83,40 @@ public interface WikiGroupServiceConfiguration {
 	 * letters. See http://www.usemod.com/cgi-bin/wiki.pl?WhatIsaWiki for more
 	 * information on wiki naming conventions.
 	 */
-	@Meta.AD(
-		deflt = "FrontPage", required = false
-	)
+	@Meta.AD(deflt = "FrontPage", required = false)
 	public String frontPageName();
 
-	@Meta.AD(
-		deflt = "ckeditor_creole", required = false
-	)
+	@Meta.AD(deflt = "ckeditor_creole", required = false)
 	public String getCreoleEditor();
 
-	@Meta.AD(
-		deflt = "ckeditor", required = false
-	)
+	@Meta.AD(deflt = "ckeditor", required = false)
 	public String getHTMLEditor();
 
-	@Meta.AD(
-		deflt = "simple", required = false
-	)
+	@Meta.AD(deflt = "simple", required = false)
 	public String getMediaWikiEditor();
 
 	/**
 	 * Set the name of the default node that will be automatically created when
 	 * the Wiki portlet is first used in a site.
 	 */
-	@Meta.AD(
-		deflt = "Main", required = false
-	)
+	@Meta.AD(deflt = "Main", required = false)
 	public String initialNodeName();
 
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean pageCommentsEnabled();
 
 	/**
 	 * Set this to <code>true</code> to enable social activity notifications on
 	 * minor edits of a wiki page.
 	 */
-	@Meta.AD(
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", required = false)
 	public boolean pageMinorEditAddSocialActivity();
 
 	/**
 	 * Set this to <code>true</code> to enable email notifications on minor
 	 * edits of a wiki page.
 	 */
-	@Meta.AD(
-		deflt = "false", required = false
-	)
+	@Meta.AD(deflt = "false", required = false)
 	public boolean pageMinorEditSendEmail();
 
 	/**
@@ -148,9 +124,7 @@ public interface WikiGroupServiceConfiguration {
 	 * few characters are forbidden. Uncomment the regular expression below to
 	 * allow only CamelCase titles.
 	 */
-	@Meta.AD(
-		deflt = "([^\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+)", required = false
-	)
+	@Meta.AD(deflt = "([^\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+)", required = false)
 	public String pageTitlesRegexp();
 
 	/**
@@ -159,22 +133,16 @@ public interface WikiGroupServiceConfiguration {
 	 * are forbidden in the regexp specified in the property
 	 * "wiki.page.titles.regexp".
 	 */
-	@Meta.AD(
-		deflt = "([\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+)", required = false
-	)
+	@Meta.AD(deflt = "([\\\\\\\\\\\\[\\\\]\\\\|:;%<>]+)", required = false)
 	public String pageTitlesRemoveRegexp();
 
 	/**
 	 * Specify the supported protocols for the Creole parser.
 	 */
-	@Meta.AD(
-		deflt = "ftp://|http://|https://|mailto:|mms://", required = false
-	)
+	@Meta.AD(deflt = "ftp://|http://|https://|mailto:|mms://", required = false)
 	public String[] parsersCreoleSupportedProtocols();
 
-	@Meta.AD(
-		deflt = "200", required = false
-	)
+	@Meta.AD(deflt = "200", required = false)
 	public int rssAbstractLength();
 
 	@Meta.AD(

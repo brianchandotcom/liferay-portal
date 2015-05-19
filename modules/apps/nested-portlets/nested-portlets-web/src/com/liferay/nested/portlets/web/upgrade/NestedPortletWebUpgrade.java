@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = NestedPortletWebUpgrade.class
-)
+@Component(immediate = true, service = NestedPortletWebUpgrade.class)
 public class NestedPortletWebUpgrade {
 
 	@Reference(unbind = "-")

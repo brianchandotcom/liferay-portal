@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = SearchFacet.class
-)
+@Component(immediate = true, service = SearchFacet.class)
 public class AssetEntriesSearchFacet extends BaseSearchFacet {
 
 	public List<AssetRendererFactory> getAssetRendererFactories() {

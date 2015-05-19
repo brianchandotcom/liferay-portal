@@ -25,9 +25,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Brian Wing Shun Chan
  */
-@Component(
-	immediate = true, service = OpenSearch.class
-)
+@Component(immediate = true, service = OpenSearch.class)
 public class WikiOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String SEARCH_PATH = "/c/wiki/open_search";

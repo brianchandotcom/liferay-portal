@@ -46,9 +46,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	immediate = true, service = Indexer.class
-)
+@Component(immediate = true, service = Indexer.class)
 public class BookmarksFolderIndexer extends BaseIndexer {
 
 	public static final String CLASS_NAME = BookmarksFolder.class.getName();

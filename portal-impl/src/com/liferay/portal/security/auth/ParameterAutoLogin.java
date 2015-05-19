@@ -32,9 +32,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Minhchau Dang
  * @author Tomas Polesovsky
  */
-@OSGiBeanProperties(
-	portalPropertyPrefix = "auth.verifier.ParameterAutoLogin."
-)
+@OSGiBeanProperties(portalPropertyPrefix = "auth.verifier.ParameterAutoLogin.")
 public class ParameterAutoLogin extends BaseAutoLogin {
 
 	@Override

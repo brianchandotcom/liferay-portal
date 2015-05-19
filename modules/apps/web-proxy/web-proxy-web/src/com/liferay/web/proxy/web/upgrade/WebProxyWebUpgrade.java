@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true, service = WebProxyWebUpgrade.class
-)
+@Component(immediate = true, service = WebProxyWebUpgrade.class)
 public class WebProxyWebUpgrade {
 
 	@Reference(unbind = "-")

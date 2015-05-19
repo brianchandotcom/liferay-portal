@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
-	immediate = true, service = WikiWebUpgrade.class
-)
+@Component(immediate = true, service = WikiWebUpgrade.class)
 public class WikiWebUpgrade {
 
 	@Reference(unbind = "-")

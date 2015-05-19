@@ -35,9 +35,7 @@ public interface TranslatorConfiguration {
 	)
 	public String languageIds();
 
-	@Meta.AD(
-		deflt = "en_es", id = "translation.id", required = false
-	)
+	@Meta.AD(deflt = "en_es", id = "translation.id", required = false)
 	public String translationId();
 
 }

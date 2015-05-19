@@ -24,9 +24,7 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface CurrencyConverterConfiguration {
 
-	@Meta.AD(
-		deflt = "GBP|CNY|EUR|JPY|USD", required = false
-	)
+	@Meta.AD(deflt = "GBP|CNY|EUR|JPY|USD", required = false)
 	public String[] symbols();
 
 }

@@ -35,9 +35,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Iván Zaera
  */
-@Component(
-	immediate = true, service = WikiServiceUpgrade.class
-)
+@Component(immediate = true, service = WikiServiceUpgrade.class)
 public class WikiServiceUpgrade {
 
 	@Reference(

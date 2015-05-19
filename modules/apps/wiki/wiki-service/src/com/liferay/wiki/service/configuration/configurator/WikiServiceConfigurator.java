@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
-	immediate = true, service = WikiServiceConfigurator.class
-)
+@Component(immediate = true, service = WikiServiceConfigurator.class)
 public class WikiServiceConfigurator {
 
 	@Activate

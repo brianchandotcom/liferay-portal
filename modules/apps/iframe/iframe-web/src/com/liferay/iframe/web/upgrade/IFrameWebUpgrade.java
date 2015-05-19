@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = IFrameWebUpgrade.class
-)
+@Component(immediate = true, service = IFrameWebUpgrade.class)
 public class IFrameWebUpgrade {
 
 	@Reference(unbind = "-")

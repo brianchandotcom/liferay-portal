@@ -38,9 +38,7 @@ import org.osgi.service.url.URLStreamHandlerService;
  * @author Miguel Pastor
  * @author Raymond Augé
  */
-@Component(
-	immediate = true
-)
+@Component(immediate = true)
 public class WabGenerator {
 
 	@Activate
@@ -87,9 +85,7 @@ public class WabGenerator {
 	 * This reference is held to force a dependency on the portal's complete
 	 * startup.
 	 */
-	@Reference(
-		target = "(original.bean=true)"
-	)
+	@Reference(target = "(original.bean=true)")
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

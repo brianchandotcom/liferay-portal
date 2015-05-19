@@ -41,9 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
-	immediate = true, service = ServiceWrapper.class
-)
+@Component(immediate = true, service = ServiceWrapper.class)
 public class MentionsBlogsEntryServiceWrapper
 	extends BlogsEntryLocalServiceWrapper {
 

@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = SearchFacet.class
-)
+@Component(immediate = true, service = SearchFacet.class)
 public class AssetCategoriesSearchFacet extends BaseSearchFacet {
 
 	@Override

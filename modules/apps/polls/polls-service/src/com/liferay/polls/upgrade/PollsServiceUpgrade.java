@@ -32,9 +32,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Miguel Pastor
  */
-@Component(
-	immediate = true, service = PollsServiceUpgrade.class
-)
+@Component(immediate = true, service = PollsServiceUpgrade.class)
 public class PollsServiceUpgrade {
 
 	@Reference(

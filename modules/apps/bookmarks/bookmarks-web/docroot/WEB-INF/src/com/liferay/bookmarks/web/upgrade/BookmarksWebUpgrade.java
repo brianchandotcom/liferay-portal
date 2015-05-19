@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(
-	immediate = true, service = BookmarksWebUpgrade.class
-)
+@Component(immediate = true, service = BookmarksWebUpgrade.class)
 public class BookmarksWebUpgrade {
 
 	@Reference(unbind = "-")

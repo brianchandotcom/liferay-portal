@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true, service = XSLContentWebUpgrade.class
-)
+@Component(immediate = true, service = XSLContentWebUpgrade.class)
 public class XSLContentWebUpgrade {
 
 	@Reference(unbind = "-")

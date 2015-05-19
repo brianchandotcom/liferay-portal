@@ -24,9 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true, service = UserToolAssetAddonEntry.class
-)
+@Component(immediate = true, service = UserToolAssetAddonEntry.class)
 public class TXTConvertionUserToolAssetAddonEntry
 	extends BaseConvertionUserToolAssetAddonEntry
 	implements UserToolAssetAddonEntry {

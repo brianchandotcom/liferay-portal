@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = HelloVelocityWebUpgrade.class
-)
+@Component(immediate = true, service = HelloVelocityWebUpgrade.class)
 public class HelloVelocityWebUpgrade {
 
 	@Reference(unbind = "-")

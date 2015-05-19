@@ -32,9 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = BreadcrumbWebUpgrade.class
-)
+@Component(immediate = true, service = BreadcrumbWebUpgrade.class)
 public class BreadcrumbWebUpgrade {
 
 	@Reference(unbind = "-")

@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Joan Kim
  */
-@Component(
-	immediate = true, service = MarketplaceServiceConfigurator.class
-)
+@Component(immediate = true, service = MarketplaceServiceConfigurator.class)
 public class MarketplaceServiceConfigurator {
 
 	@Activate

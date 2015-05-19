@@ -87,6 +87,25 @@ public class PortalImplTest {
 		Assert.assertTrue(_atomicState.isSet());
 	}
 
+	@Test
+	public void testIsValidResourceId() {
+		Assert.assertTrue(PortalUtil.isValidResourceId("/view.jsp"));
+
+		Assert.assertFalse(
+			PortalUtil.isValidResourceId("/META-INF/MANIFEST.MF"));
+		Assert.assertFalse(
+			PortalUtil.isValidResourceId("/META-INF\\MANIFEST.MF"));
+		Assert.assertFalse(
+			PortalUtil.isValidResourceId("\\META-INF/MANIFEST.MF"));
+		Assert.assertFalse(
+			PortalUtil.isValidResourceId("\\META-INF\\MANIFEST.MF"));
+
+		Assert.assertFalse(PortalUtil.isValidResourceId("/WEB-INF/web.xml"));
+		Assert.assertFalse(PortalUtil.isValidResourceId("/WEB-INF\\web.xml"));
+		Assert.assertFalse(PortalUtil.isValidResourceId("\\WEB-INF/web.xml"));
+		Assert.assertFalse(PortalUtil.isValidResourceId("\\WEB-INF\\web.xml"));
+	}
+
 	private static AtomicState _atomicState;
 
 }

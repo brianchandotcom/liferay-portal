@@ -96,7 +96,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.entities = false;
 
-	config.extraPlugins = 'a11yhelpbtn,lfrpopup,media,scayt,wsc';
+	config.extraPlugins = 'a11yhelpbtn,imageselector,lfrpopup,media,scayt,wsc';
 
 	<c:if test="<%= inlineEdit %>">
 		config.extraPlugins += ',ajaxsave,restore';
@@ -141,7 +141,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
 		['FontSize'],
 		['Link', 'Unlink'],
-		['Image'],
+		['ImageSelector'],
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo' ],
 		['SpellChecker', 'Scayt'],
@@ -162,7 +162,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Styles', 'FontSize'],
 		['Link', 'Unlink', 'Anchor'],
 
-		['Table', '-', 'Image', <c:if test="<%= XugglerUtil.isEnabled() %>"> 'Audio', 'Video',</c:if> 'Flash', '-', 'Smiley', 'SpecialChar'],
+		['Table', '-', 'ImageSelector', <c:if test="<%= XugglerUtil.isEnabled() %>"> 'Audio', 'Video',</c:if> 'Flash', '-', 'Smiley', 'SpecialChar'],
 		'/',
 
 		<c:if test="<%= inlineEdit %>">
@@ -187,7 +187,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Styles', 'FontSize'],
 		['Link', 'Unlink', 'Anchor'],
-		['Table', '-', 'Image', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if>, 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar'],
+		['Table', '-', 'ImageSelector', <c:if test="<%= XugglerUtil.isEnabled() %>">'Audio', 'Video',</c:if>, 'Flash', '-', 'LiferayPageBreak', '-', 'Smiley', 'SpecialChar'],
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Find', 'Replace', '-', 'SpellChecker', 'Scayt'],
@@ -203,7 +203,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
 		['Link', 'Unlink'],
-		['Image']
+		['ImageSelector']
 	];
 
 	<c:if test="<%= showSource %>">
@@ -214,7 +214,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Bold', 'Italic', 'Underline', 'Strike'],
 		['NumberedList', 'BulletedList'],
 		['Link', 'Unlink'],
-		['Table', 'Image']
+		['Table', 'ImageSelector']
 	];
 
 	<c:if test="<%= showSource %>">
@@ -227,7 +227,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['NumberedList', 'BulletedList'],
 		['Styles', 'FontSize'],
 		['Link', 'Unlink'],
-		['Image']
+		['ImageSelector']
 	];
 
 	<c:if test="<%= showSource %>">

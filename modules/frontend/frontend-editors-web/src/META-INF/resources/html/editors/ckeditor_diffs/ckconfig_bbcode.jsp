@@ -76,7 +76,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		'/',
 		['Format', 'Font', 'FontSize'],
 		['Link', 'Unlink'],
-		['Image', '-', 'Smiley'],
+		['ImageSelector', '-', 'Smiley'],
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 
@@ -91,7 +91,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['Bold', 'Italic', 'Underline'],
 		['NumberedList', 'BulletedList'],
 		['Link', 'Unlink'],
-		['Image']
+		['ImageSelector']
 	];
 
 	<c:if test="<%= showSource %>">
@@ -104,7 +104,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['NumberedList', 'BulletedList'],
 		['Styles', 'FontSize'],
 		['Link', 'Unlink'],
-		['Image']
+		['ImageSelector']
 	];
 
 	<c:if test="<%= showSource %>">
@@ -125,7 +125,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.enterMode = CKEDITOR.ENTER_BR;
 
-	config.extraPlugins = 'a11yhelpbtn,bbcode,wikilink';
+	config.extraPlugins = 'a11yhelpbtn,bbcode,imageselector,wikilink';
 
 	config.filebrowserBrowseUrl = '';
 

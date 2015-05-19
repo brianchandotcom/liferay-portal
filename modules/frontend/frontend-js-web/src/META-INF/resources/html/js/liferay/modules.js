@@ -533,6 +533,9 @@
 							'liferay-portlet-base'
 						]
 					},
+					'liferay-item-selector-dialog': {
+						path: 'item_selector_dialog.js'
+					},
 					'liferay-item-viewer': {
 						path: 'item_viewer.js',
 						requires: [

@@ -429,7 +429,7 @@ public abstract class BaseMobileDriverImpl
 
 	@Override
 	public boolean isValue(String locator, String value) {
-		throw new UnsupportedOperationException();
+		return value.equals(getValue(locator, "1"));
 	}
 
 	@Override

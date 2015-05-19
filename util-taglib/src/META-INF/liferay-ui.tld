@@ -3303,6 +3303,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>Whether to use a namespace in the tag. The default value is <![CDATA[<code>true</code>]]>.</description>
 			<name>useNamespace</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -16,8 +16,8 @@ package com.liferay.portal.comment.context;
 
 import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.exception.PortalException;

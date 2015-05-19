@@ -15,9 +15,9 @@
 package com.liferay.portal.comment;
 
 import com.liferay.portal.kernel.comment.BaseDiscussionPermission;
-import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.security.permission.PermissionChecker;

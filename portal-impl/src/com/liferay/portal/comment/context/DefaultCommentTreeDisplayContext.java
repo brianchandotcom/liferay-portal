@@ -16,8 +16,8 @@ package com.liferay.portal.comment.context;
 
 import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.CommentConstants;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
@@ -41,7 +41,8 @@ public class DefaultCommentTreeDisplayContext
 	public DefaultCommentTreeDisplayContext(
 		DiscussionRequestHelper discussionRequestHelper,
 		DiscussionTaglibHelper discussionTaglibHelper,
-		DiscussionPermission discussionPermission, DiscussionComment discussionComment) {
+		DiscussionPermission discussionPermission,
+		DiscussionComment discussionComment) {
 
 		_discussionRequestHelper = discussionRequestHelper;
 		_discussionTaglibHelper = discussionTaglibHelper;
@@ -79,7 +80,8 @@ public class DefaultCommentTreeDisplayContext
 		}
 
 		return !TrashUtil.isInTrash(
-			_discussionComment.getModelClassName(), _discussionComment.getCommentId());
+			_discussionComment.getModelClassName(),
+			_discussionComment.getCommentId());
 	}
 
 	@Override
@@ -123,7 +125,8 @@ public class DefaultCommentTreeDisplayContext
 		}
 
 		return !TrashUtil.isInTrash(
-			_discussionComment.getModelClassName(), _discussionComment.getCommentId());
+			_discussionComment.getModelClassName(),
+			_discussionComment.getCommentId());
 	}
 
 	@Override

@@ -246,8 +246,7 @@ public class MBMessageIndexer extends BaseIndexer {
 				message.getClassName());
 
 			if (indexer != null) {
-				Comment comment = new MBCommentImpl(
-					message);
+				Comment comment = new MBCommentImpl(message);
 
 				indexer.addRelatedEntryFields(document, comment);
 

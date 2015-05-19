@@ -14,8 +14,8 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 
 /**
  * @author Adolfo Pérez
@@ -23,7 +23,8 @@ import com.liferay.portal.kernel.comment.Discussion;
 public class MBDiscussionImpl implements Discussion {
 
 	public MBDiscussionImpl(
-		DiscussionComment rootDiscussionComment, boolean maxCommentsLimitExceeded) {
+		DiscussionComment rootDiscussionComment,
+		boolean maxCommentsLimitExceeded) {
 
 		_rootDiscussionComment = rootDiscussionComment;
 		_maxCommentsLimitExceeded = maxCommentsLimitExceeded;

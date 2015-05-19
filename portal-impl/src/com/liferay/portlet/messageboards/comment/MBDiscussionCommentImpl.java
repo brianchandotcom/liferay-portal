@@ -131,7 +131,8 @@ public class MBDiscussionCommentImpl
 	public List<DiscussionComment> getThreadComments() {
 		List<DiscussionComment> discussionComments = new ArrayList<>();
 
-		DiscussionCommentIterator discussionCommentIterator = getThreadDiscussionCommentIterator();
+		DiscussionCommentIterator discussionCommentIterator =
+			getThreadDiscussionCommentIterator();
 
 		while (discussionCommentIterator.hasNext()) {
 			discussionComments.add(discussionCommentIterator.next());
@@ -158,7 +159,9 @@ public class MBDiscussionCommentImpl
 	}
 
 	@Override
-	public DiscussionCommentIterator getThreadDiscussionCommentIterator(int from) {
+	public DiscussionCommentIterator getThreadDiscussionCommentIterator(
+		int from) {
+
 		List<MBMessage> messages = _treeWalker.getMessages();
 
 		int[] range = _treeWalker.getChildrenRange(getMessage());
@@ -190,7 +193,8 @@ public class MBDiscussionCommentImpl
 	private final List<RatingsStats> _ratingsStats;
 	private final MBTreeWalker _treeWalker;
 
-	private class MBDiscussionCommentIterator implements DiscussionCommentIterator {
+	private class MBDiscussionCommentIterator
+		implements DiscussionCommentIterator {
 
 		public MBDiscussionCommentIterator(
 			List<MBMessage> messages, int from, int to, MBTreeWalker treeWalker,

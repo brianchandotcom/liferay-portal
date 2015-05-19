@@ -39,7 +39,8 @@ public interface DiscussionComment extends Comment {
 
 	public DiscussionCommentIterator getThreadDiscussionCommentIterator();
 
-	public DiscussionCommentIterator getThreadDiscussionCommentIterator(int from);
+	public DiscussionCommentIterator getThreadDiscussionCommentIterator(
+		int from);
 
 	public String getTranslatedBody();
 

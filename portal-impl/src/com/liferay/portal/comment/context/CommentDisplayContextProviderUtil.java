@@ -14,8 +14,8 @@
 
 package com.liferay.portal.comment.context;
 
-import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
 import com.liferay.portal.kernel.comment.context.CommentTreeDisplayContext;
@@ -38,7 +38,8 @@ public class CommentDisplayContextProviderUtil {
 
 	public static CommentTreeDisplayContext getCommentTreeDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		DiscussionPermission discussionPermission, DiscussionComment discussionComment) {
+		DiscussionPermission discussionPermission,
+		DiscussionComment discussionComment) {
 
 		return _commentDisplayContextProvider.getCommentTreeDisplayContext(
 			request, response, discussionPermission, discussionComment);

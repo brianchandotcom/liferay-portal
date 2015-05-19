@@ -58,6 +58,8 @@ import org.apache.commons.lang.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -876,9 +878,27 @@ public class JCRStore extends BaseStore {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(Map<String, Object> properties)
+		throws RepositoryException {
+
 		_jcrStoreConfiguration = Configurable.createConfigurable(
 			JCRStoreConfiguration.class, properties);
+
+		try {
+			_jcrFactoryUtil.prepare();
+
+			if (_jcrStoreConfiguration.initializeOnStartup()) {
+				_jcrFactoryUtil.initialize();
+			}
+		}
+		catch (Exception e) {
+			throw new RepositoryException(e);
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_jcrFactoryUtil.shutdown();
 	}
 
 	protected Node getFileContentNode(
@@ -988,6 +1008,14 @@ public class JCRStore extends BaseStore {
 
 		return getFolderNode(
 			companyNode, _jcrStoreConfiguration.nodeDocumentlibrary());
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws RepositoryException {
+
+		deactivate();
+		activate(properties);
 	}
 
 	private volatile JCRStoreConfiguration _jcrStoreConfiguration;

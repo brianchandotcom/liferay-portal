@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public interface Comment {
+public interface Comment extends DetachedComment {
 
 	public String getBody();
 

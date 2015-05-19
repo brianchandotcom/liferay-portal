@@ -55,6 +55,16 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
+	public String getClassName() {
+		return _message.getClassName();
+	}
+
+	@Override
+	public long getClassPK() {
+		return _message.getClassPK();
+	}
+
+	@Override
 	public long getCommentId() {
 		return _message.getMessageId();
 	}

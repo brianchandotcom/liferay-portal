@@ -20,9 +20,9 @@ AUI.add(
 
 		var SELECTOR_DOCKBAR_ITEM = '.dockbar-item:visible, a.nav-navigation-btn:visible';
 
-		var SELECTOR_DOCKBAR_ITEM_FIRST_LINK = '.dockbar-item:visible > a[role=menuitem], a.nav-navigation-btn:visible';
+		var SELECTOR_DOCKBAR_ITEM_FIRST_LINK = '.dockbar-item:visible > a, a.nav-navigation-btn:visible';
 
-		var SELECTOR_DOCKBAR_ITEM_LINK = '.dockbar-item:visible a[role=menuitem], a.nav-navigation-btn:visible';
+		var SELECTOR_DOCKBAR_ITEM_LINK = '.dockbar-item:visible a, a.nav-navigation-btn:visible';
 
 		var STR_MENU_ITEM = 'menuItem';
 

@@ -55,7 +55,6 @@ public class POPServerUtilTest {
 
 	@Test
 	public void testGetListeners() throws Exception {
-
 		POPServerUtil.start();
 
 		Assert.assertTrue(_atomicState.isSet());
@@ -64,16 +63,14 @@ public class POPServerUtilTest {
 
 		if (messageListeners != null) {
 			for (MessageListener messageListenerWrapper : messageListeners) {
-				
 				MessageListener messageListener =
 					((MessageListenerWrapper)messageListenerWrapper).
 						getMessageListener();
 
 				Class<?> clazz = messageListener.getClass();
+				String className = TestMessageListener.class.getName();
 
-				if (TestMessageListener.class.getName().equals(
-					clazz.getName())) {
-					
+				if (className.equals(clazz.getName())) {
 					return;
 				}
 			}

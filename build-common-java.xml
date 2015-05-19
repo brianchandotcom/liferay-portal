@@ -185,7 +185,9 @@
 		<compile-java />
 	</target>
 
-	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
+	<target name="deploy" depends="check-deploy-uptodate" unless="${deploy.uptodate}">
+		<jar-marco />
+
 		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 	</target>
 

@@ -20,7 +20,8 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Manuel de la Peña
  */
 @Meta.OCD(
-	id = "com.liferay.portal.store.cmis.configuration.CMISConfiguration"
+	id = "com.liferay.portal.store.cmis.configuration.CMISConfiguration",
+	localization = "content/Language", name = "%cmis.store.configuration.name"
 )
 public interface CMISConfiguration {
 

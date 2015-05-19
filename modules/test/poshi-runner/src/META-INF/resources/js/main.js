@@ -1,3 +1,14 @@
+function macroHover(node, enter) {
+	var lineGroup = node.parentNode;
+
+	if (enter) {
+		lineGroup.classList.add('hover');
+	}
+	else {
+		lineGroup.classList.remove('hover');
+	}
+}
+
 YUI.add(
 	'liferay-qa-poshi-logger',
 	function(A) {

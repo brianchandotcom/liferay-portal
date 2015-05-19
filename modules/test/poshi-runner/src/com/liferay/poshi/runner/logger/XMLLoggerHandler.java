@@ -418,6 +418,13 @@ public final class XMLLoggerHandler {
 		lineContainerLoggerElement.setClassName("line-container");
 		lineContainerLoggerElement.setName("div");
 
+		if (element.attributeValue("macro") != null) {
+			lineContainerLoggerElement.setAttribute(
+				"onmouseover", "macroHover(this, true)");
+			lineContainerLoggerElement.setAttribute(
+				"onmouseout", "macroHover(this, false)");
+		}
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(_getLineItemText("misc", "&lt;"));

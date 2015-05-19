@@ -82,13 +82,14 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		capabilityRegistry.addExportedCapability(
 			ThumbnailCapability.class, thumbnailCapability);
 
+		capabilityRegistry.addExportedCapability(
+			WorkflowCapability.class, _workflowCapability);
+
 		capabilityRegistry.addSupportedCapability(
 			ProcessorCapability.class, _processorCapability);
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class,
 			new LiferaySyncCapability(bulkOperationCapability));
-		capabilityRegistry.addSupportedCapability(
-			WorkflowCapability.class, _workflowCapability);
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
 			capabilityRegistry.addSupportedCapability(

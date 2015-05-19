@@ -43,11 +43,11 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
-		capabilityRegistry.addSupportedCapability(
-			WorkflowCapability.class, _workflowCapability);
-
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, new LiferayTrashCapability());
+
+		capabilityRegistry.addExportedCapability(
+			WorkflowCapability.class, new MinimalWorkflowCapability());
 	}
 
 	@Override
@@ -62,7 +62,5 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	private RepositoryFactory _repositoryFactory;
-	private final WorkflowCapability _workflowCapability =
-		new MinimalWorkflowCapability();
 
 }

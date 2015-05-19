@@ -14,29 +14,13 @@
 
 package com.liferay.portal.kernel.repository.capabilities;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.service.ServiceContext;
 
 /**
  * @author Adolfo Pérez
  */
 public interface WorkflowCapability extends Capability {
 
-	public void addFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void checkInFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void revertFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
-
-	public void updateFileEntry(
-			long userId, FileEntry fileEntry, ServiceContext serviceContext)
-		throws PortalException;
+	public int getStatus(FileEntry fileEntry);
 
 }

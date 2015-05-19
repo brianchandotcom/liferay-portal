@@ -160,7 +160,7 @@ AUI.add(
 							viewURL.setWindowState('EXCLUSIVE');
 
 							viewURL.setParameter('mvcPath', '/view.jsp');
-							viewURL.setParameter("portletResource", instance._portletId);
+							viewURL.setParameter('portletResource', instance._portletId);
 
 							instance._currentPopup.plug(
 								[
@@ -169,6 +169,7 @@ AUI.add(
 											after: {
 												success: function(event) {
 													var host = this.get(HOST);
+
 													var boundingBox = host.get(BOUNDING_BOX);
 
 													var properties = boundingBox.one('#portlet-set-properties');
@@ -214,7 +215,7 @@ AUI.add(
 				var setColor = function(color) {
 					var cssColor = color;
 
-					if ((color === EMPTY) || (color === '#')) {
+					if (color === EMPTY || color === '#') {
 						cssColor = TRANSPARENT;
 
 						color = EMPTY;
@@ -261,26 +262,26 @@ AUI.add(
 
 				var portlet = instance._curPortlet;
 
-				var ufaWidth = instance._ufaBorderWidth;
-				var ufaStyle = instance._ufaBorderStyle;
 				var ufaColor = instance._ufaBorderColor;
+				var ufaStyle = instance._ufaBorderStyle;
+				var ufaWidth = instance._ufaBorderWidth;
 
 				var borderData = instance._objData.borderData;
 
 				// Border width
 
-				var wTopInt = instance._borderTopInt;
-				var wTopUnit = instance._borderTopUnit;
-				var wRightInt = instance._borderRightInt;
-				var wRightUnit = instance._borderRightUnit;
 				var wBottomInt = instance._borderBottomInt;
 				var wBottomUnit = instance._borderBottomUnit;
 				var wLeftInt = instance._borderLeftInt;
 				var wLeftUnit = instance._borderLeftUnit;
+				var wRightInt = instance._borderRightInt;
+				var wRightUnit = instance._borderRightUnit;
+				var wTopInt = instance._borderTopInt;
+				var wTopUnit = instance._borderTopUnit;
 
 				var changeWidth = function() {
-					var styling = {};
 					var borderWidth = {};
+					var styling = {};
 
 					borderWidth = instance._getCombo(wTopInt, wTopUnit);
 					styling = {borderWidth: borderWidth.both};
@@ -296,9 +297,9 @@ AUI.add(
 
 						extStyling.borderTopWidth = styling.borderWidth;
 
-						var right = instance._getCombo(wRightInt, wRightUnit);
 						var bottom = instance._getCombo(wBottomInt, wBottomUnit);
 						var left = instance._getCombo(wLeftInt, wLeftUnit);
+						var right = instance._getCombo(wRightInt, wRightUnit);
 
 						extStyling.borderRightWidth = right.both;
 						extStyling.borderBottomWidth = bottom.both;
@@ -363,17 +364,20 @@ AUI.add(
 
 				// Border style
 
-				var sTopStyle = instance._borderTopStyle;
-				var sRightStyle = instance._borderRightStyle;
 				var sBottomStyle = instance._borderBottomStyle;
 				var sLeftStyle = instance._borderLeftStyle;
+				var sRightStyle = instance._borderRightStyle;
+				var sTopStyle = instance._borderTopStyle;
 
 				var changeStyle = function() {
-					var styling = {};
 					var borderStyle = {};
+					var styling = {};
 
 					borderStyle = sTopStyle.val();
-					styling = {borderStyle: borderStyle};
+
+					styling = {
+						borderStyle: borderStyle
+					};
 
 					var ufa = ufaStyle.get(CHECKED);
 
@@ -385,9 +389,9 @@ AUI.add(
 
 						extStyling.borderTopStyle = styling.borderStyle;
 
-						var right = sRightStyle.val();
 						var bottom = sBottomStyle.val();
 						var left = sLeftStyle.val();
+						var right = sRightStyle.val();
 
 						extStyling.borderRightStyle = right;
 						extStyling.borderBottomStyle = bottom;
@@ -422,14 +426,14 @@ AUI.add(
 
 				// Border color
 
-				var cTopColor = instance._borderTopColor;
-				var cRightColor = instance._borderRightColor;
 				var cBottomColor = instance._borderBottomColor;
 				var cLeftColor = instance._borderLeftColor;
+				var cRightColor = instance._borderRightColor;
+				var cTopColor = instance._borderTopColor;
 
 				var changeColor = function() {
-					var styling = {};
 					var borderColor = {};
+					var styling = {};
 
 					borderColor = cTopColor.val();
 					styling = {borderColor: borderColor};
@@ -444,9 +448,9 @@ AUI.add(
 
 						extStyling.borderTopColor = styling.borderColor;
 
-						var right = cRightColor.val();
 						var bottom = cBottomColor.val();
 						var left = cLeftColor.val();
+						var right = cRightColor.val();
 
 						extStyling.borderRightColor = right;
 						extStyling.borderBottomColor = bottom;
@@ -542,10 +546,10 @@ AUI.add(
 
 				var customCSS = instance._getNodeById('lfr-custom-css');
 				var customCSSClassName = instance._getNodeById('lfr-custom-css-class-name');
-				var customCSSContainer = customCSS;
 				var customCSSClassNameContainer = customCSSClassName;
-				var customPortletNoteHTML = '<p class="alert alert-info form-hint"></p>';
+				var customCSSContainer = customCSS;
 				var customPortletNote = A.one('#lfr-portlet-info');
+				var customPortletNoteHTML = '<p class="alert alert-info form-hint"></p>';
 				var refreshText = EMPTY;
 
 				var portletId = instance._curPortletWrapperId;
@@ -628,9 +632,9 @@ AUI.add(
 
 				customNote.empty().append(refreshLink);
 
-				var insertContainer = A.one('#lfr-add-rule-container');
-				var addIdLink = A.one('#lfr-add-id');
 				var addClassLink = A.one('#lfr-add-class');
+				var addIdLink = A.one('#lfr-add-id');
+				var insertContainer = A.one('#lfr-add-rule-container');
 				var updateOnType = A.one('#lfr-update-on-type');
 
 				if (!insertContainer) {
@@ -1082,12 +1086,12 @@ AUI.add(
 
 						var fieldset = checkBox.ancestor(FIELDSET);
 
-						var otherHolders = fieldset.all('.field-row');
 						var firstIndex = 0;
+						var otherHolders = fieldset.all('.field-row');
 
 						if (!otherHolders.size()) {
-							otherHolders = fieldset.all('.field-content');
 							firstIndex = 1;
+							otherHolders = fieldset.all('.field-content');
 						}
 
 						var checked = item.get(CHECKED);
@@ -1095,8 +1099,8 @@ AUI.add(
 						otherHolders.each(
 							function(holderItem, holderIndex) {
 								if (holderIndex > firstIndex) {
-									var fields = holderItem.all('input, select');
 									var colorPickerImages = holderItem.all('.buttonitem');
+									var fields = holderItem.all('input, select');
 
 									var action = SHOW;
 									var disabled = false;
@@ -1135,8 +1139,8 @@ AUI.add(
 					};
 
 					var saveHandler = function(event, id, obj) {
-						var ajaxResponseMsg = instance._portletMsgResponse;
 						var ajaxResponseHTML = '<div id="lfr-portlet-css-response"></div>';
+						var ajaxResponseMsg = instance._portletMsgResponse;
 						var message = EMPTY;
 						var messageClass = EMPTY;
 						var type = SUCCESS;
@@ -1175,8 +1179,8 @@ AUI.add(
 						function() {
 							instance._objData.advancedData.customCSS = instance._customCSS.val();
 
-							var previousCSSClass = instance._objData.advancedData.customCSSClassName;
 							var newCSSClass = instance._customCSSClassName.val();
+							var previousCSSClass = instance._objData.advancedData.customCSSClassName;
 
 							instance._objData.advancedData.customCSSClassName = newCSSClass;
 
@@ -1238,7 +1242,7 @@ AUI.add(
 
 				var getLookAndFeelURL = new Liferay.PortletURL.createURL(instance._baseResourcePortletURL);
 
-				getLookAndFeelURL.setParameter("portletId", instance._portletId);
+				getLookAndFeelURL.setParameter('portletId', instance._portletId);
 				getLookAndFeelURL.setResourceId('getLookAndFeel');
 
 				A.io.request(
@@ -1269,13 +1273,13 @@ AUI.add(
 			_portletConfig: function() {
 				var instance = this;
 
-				var portletData = instance._objData.portletData;
-				var customTitleInput = instance._customTitleInput;
-				var customTitleCheckbox = instance._customTitleCheckbox;
-				var showBorders = instance._showBorders;
-				var language = instance._portletLanguage;
 				var borderNote = instance._borderNote;
+				var customTitleCheckbox = instance._customTitleCheckbox;
+				var customTitleInput = instance._customTitleInput;
+				var language = instance._portletLanguage;
+				var portletData = instance._objData.portletData;
 				var portletLinksTarget = instance._portletLinksTarget;
+				var showBorders = instance._showBorders;
 
 				// Use custom title
 
@@ -1443,7 +1447,7 @@ AUI.add(
 					title = Lang.trim(customTitleInput.val());
 
 					if (title == EMPTY) {
-						title = (portletTitleText && portletTitleText.text()) || EMPTY;
+						title = portletTitleText && portletTitleText.text() || EMPTY;
 						title = Lang.trim(title);
 
 						customTitleInput.val(title);
@@ -1470,11 +1474,11 @@ AUI.add(
 
 				var objData = instance._objData;
 
-				var portletData = objData.portletData;
-				var textData = objData.textData;
 				var bgData = objData.bgData;
 				var borderData = objData.borderData;
+				var portletData = objData.portletData;
 				var spacingData = objData.spacingData;
+				var textData = objData.textData;
 				var wapData = objData.wapData;
 
 				if (wapData == null) {
@@ -1662,21 +1666,21 @@ AUI.add(
 
 				var portlet = instance._curPortlet;
 
-				var ufaPadding = instance._ufaPadding;
 				var ufaMargin = instance._ufaMargin;
+				var ufaPadding = instance._ufaPadding;
 
 				var spacingData = instance._objData.spacingData;
 
 				// Padding
 
-				var pTop = instance._paddingTopInt;
-				var pTopUnit = instance._paddingTopUnit;
-				var pRight = instance._paddingRightInt;
-				var pRightUnit = instance._paddingRightUnit;
 				var pBottom = instance._paddingBottomInt;
 				var pBottomUnit = instance._paddingBottomUnit;
 				var pLeft = instance._paddingLeftInt;
 				var pLeftUnit = instance._paddingLeftUnit;
+				var pRight = instance._paddingRightInt;
+				var pRightUnit = instance._paddingRightUnit;
+				var pTop = instance._paddingTopInt;
+				var pTopUnit = instance._paddingTopUnit;
 
 				var changePadding = function() {
 					var styling = {};
@@ -1697,9 +1701,9 @@ AUI.add(
 
 						extStyling.paddingTop = styling.padding;
 
-						var right = instance._getCombo(pRight, pRightUnit);
 						var bottom = instance._getCombo(pBottom, pBottomUnit);
 						var left = instance._getCombo(pLeft, pLeftUnit);
+						var right = instance._getCombo(pRight, pRightUnit);
 
 						extStyling.paddingRight = right.both;
 						extStyling.paddingBottom = bottom.both;
@@ -1761,14 +1765,14 @@ AUI.add(
 
 				// Margin
 
-				var mTop = instance._marginTopInt;
-				var mTopUnit = instance._marginTopUnit;
-				var mRight = instance._marginRightInt;
-				var mRightUnit = instance._marginRightUnit;
 				var mBottom = instance._marginBottomInt;
 				var mBottomUnit = instance._marginBottomUnit;
 				var mLeft = instance._marginLeftInt;
 				var mLeftUnit = instance._marginLeftUnit;
+				var mRight = instance._marginRightInt;
+				var mRightUnit = instance._marginRightUnit;
+				var mTop = instance._marginTopInt;
+				var mTopUnit = instance._marginTopUnit;
 
 				var changeMargin = function() {
 					var styling = {};
@@ -1789,9 +1793,9 @@ AUI.add(
 
 						extStyling.marginTop = styling.margin;
 
-						var right = instance._getCombo(mRight, mRightUnit);
 						var bottom = instance._getCombo(mBottom, mBottomUnit);
 						var left = instance._getCombo(mLeft, mLeftUnit);
+						var right = instance._getCombo(mRight, mRightUnit);
 
 						extStyling.marginRight = right.both;
 						extStyling.marginBottom = bottom.both;
@@ -1855,17 +1859,17 @@ AUI.add(
 			_textStyles: function() {
 				var instance = this;
 
-				var portlet = instance._curPortlet;
-				var fontFamily = instance._fontFamily;
 				var fontBold = instance._fontWeight;
+				var fontColor = instance._fontColor;
+				var fontFamily = instance._fontFamily;
 				var fontItalic = instance._fontStyle;
 				var fontSize = instance._fontSize;
-				var fontColor = instance._fontColor;
+				var leading = instance._leading;
+				var portlet = instance._curPortlet;
 				var textAlign = instance._textAlign;
 				var textDecoration = instance._textDecoration;
-				var wordSpacing = instance._wordSpacing;
-				var leading = instance._leading;
 				var tracking = instance._tracking;
+				var wordSpacing = instance._wordSpacing;
 
 				var textData = instance._objData.textData;
 

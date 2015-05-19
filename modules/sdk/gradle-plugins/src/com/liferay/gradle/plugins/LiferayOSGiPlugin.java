@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -100,6 +101,27 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		File srcDir = new File(docrootDir, "WEB-INF/src");
 
 		configureSourceSetMain(project, classesDir, srcDir);
+	}
+
+	@Override
+	protected void configureTaskBuildServiceOsgiModule(
+		BuildServiceTask buildServiceTask) {
+
+		buildServiceTask.setOsgiModule(true);
+	}
+
+	@Override
+	protected void configureTaskBuildServicePluginName(
+		BuildServiceTask buildServiceTask) {
+
+		buildServiceTask.setPluginName("");
+	}
+
+	@Override
+	protected void configureTaskBuildServiceSpringNamespaces(
+		BuildServiceTask buildServiceTask) {
+
+		buildServiceTask.setSpringNamespaces(new String[] {"beans", "osgi"});
 	}
 
 	protected void configureTaskJar(Project project) {

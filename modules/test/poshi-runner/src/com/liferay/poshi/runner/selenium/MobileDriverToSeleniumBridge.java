@@ -15,6 +15,7 @@
 package com.liferay.poshi.runner.selenium;
 
 import com.liferay.poshi.runner.util.PropsValues;
+import com.liferay.poshi.runner.util.StringUtil;
 
 import com.thoughtworks.selenium.Selenium;
 
@@ -863,7 +864,32 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void type(String locator, String value) {
-		WebDriverHelper.type(this, locator, value);
+		WebElement webElement = getWebElement(locator);
+
+		if (!webElement.isEnabled()) {
+			return;
+		}
+
+		webElement.clear();
+
+		Runtime runtime = Runtime.getRuntime();
+
+		StringBuilder sb = new StringBuilder(6);
+
+		sb.append(PropsValues.MOBILE_ANDROID_HOME);
+		sb.append("/platform-tools/");
+		sb.append("adb -s emulator-5554 shell input text ");
+
+		String escapedValue = StringUtil.replace(value, " ", "%s");
+
+		sb.append(escapedValue);
+
+		try {
+			runtime.exec(sb.toString());
+		}
+		catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
 	}
 
 	@Override

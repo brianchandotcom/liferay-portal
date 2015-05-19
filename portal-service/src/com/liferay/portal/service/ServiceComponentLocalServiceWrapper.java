@@ -208,6 +208,11 @@ public class ServiceComponentLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.portal.model.ServiceComponent> getLatestServiceComponentsByBuildNamespace() {
+		return _serviceComponentLocalService.getLatestServiceComponentsByBuildNamespace();
+	}
+
+	@Override
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {

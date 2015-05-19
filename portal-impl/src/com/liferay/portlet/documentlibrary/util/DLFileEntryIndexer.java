@@ -424,7 +424,8 @@ public class DLFileEntryIndexer extends BaseIndexer {
 					dlFileEntry.getClassName());
 
 				if (indexer != null) {
-					indexer.addRelatedEntryFields(document, obj);
+					indexer.addRelatedEntryFields(
+						document, new LiferayFileEntry(dlFileEntry));
 
 					DocumentHelper documentHelper = new DocumentHelper(
 						document);

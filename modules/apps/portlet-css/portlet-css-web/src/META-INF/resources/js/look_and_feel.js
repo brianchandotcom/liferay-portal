@@ -612,7 +612,10 @@ AUI.add(
 					customStyles = customStyles.replace(/<script[^>]*>([\u0001-\uFFFF]*?)<\/script>/gim, EMPTY);
 					customStyles = customStyles.replace(/<\/?[^>]+>/gi, EMPTY);
 
-					if (styleEl.styleSheet) { // for IE only
+					if (styleEl.styleSheet) {
+
+						// for IE only
+
 						if (customStyles == EMPTY) {
 
 							// Do not modify. This is a workaround for an IE bug.

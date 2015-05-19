@@ -29,10 +29,6 @@ import ${packagePath}.service.persistence.${entity.name}Persistence;
 	import ${packagePath}.service.persistence.${entity.PKClassName};
 </#if>
 
-<#if entity.isStagedModel()>
-	import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
-</#if>
-
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchModelException;
@@ -553,10 +549,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 		</#if>
 
 		<#if entity.hasColumn("createDate", "Date") && entity.hasColumn("modifiedDate", "Date")>
-			<#if entity.isStagedModel()>
-				if (!ExportImportThreadLocal.isImportInProcess()) {
-			</#if>
-
 			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
 			Date now = new Date();
@@ -578,10 +570,6 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 					${entity.varName}.setModifiedDate(serviceContext.getModifiedDate(now));
 				}
 			}
-
-			<#if entity.isStagedModel()>
-				}
-			</#if>
 		</#if>
 
 		<#assign sanitizeTuples = modelHintsUtil.getSanitizeTuples("${packagePath}.model.${entity.name}")>

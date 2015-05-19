@@ -117,17 +117,9 @@
 	</target>
 
 	<target name="check-jar-uptodate">
-		<if>
-			<uptodate targetfile="classes/.touch">
-				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-			</uptodate>
-			<then>
-				<uptodate property="jar.uptodate" srcfile="classes/.touch" targetfile="${jar.file}.jar" />
-			</then>
-			<else>
-				<property name="jar.uptodate" value="false" />
-			</else>
-		</if>
+		<uptodate property="jar.uptodate" targetfile="${jar.file}.jar">
+			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+		</uptodate>
 
 		<condition property="deploy.uptodate" value="false">
 			<not>

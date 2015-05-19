@@ -66,6 +66,18 @@ public interface EmailAddressService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address with the primary key or null if an email
+	address with the primary key could not be found or if the user
+	did not have permission to view the email address
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.EmailAddress fetchEmailAddress(
+		long emailAddressId) throws PortalException;
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

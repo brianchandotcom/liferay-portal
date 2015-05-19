@@ -263,6 +263,18 @@ public interface OrganizationService extends BaseService {
 		throws PortalException;
 
 	/**
+	* Returns the organization with the primary key.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the organization with the primary key or null if an organization
+	with the primary key could not be found or if the user did not
+	have permission to view the organization
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Organization fetchOrganization(
+		long organizationId) throws PortalException;
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

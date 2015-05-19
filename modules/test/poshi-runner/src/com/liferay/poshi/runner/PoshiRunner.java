@@ -142,7 +142,11 @@ public class PoshiRunner {
 			PoshiRunnerStackTraceUtil.startStackTrace(
 				classCommandName, "test-case");
 
+			XMLLoggerHandler.updateStatus(commandElement, "pending");
+
 			PoshiRunnerExecutor.parseElement(commandElement);
+
+			XMLLoggerHandler.updateStatus(commandElement, "pass");
 
 			PoshiRunnerStackTraceUtil.emptyStackTrace();
 		}

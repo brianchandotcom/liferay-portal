@@ -85,7 +85,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			objectClassDefinition, configuration, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			configurationModel, null);
+			configurationModel, getDDMForm(configurationModel));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -127,7 +127,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			objectClassDefinition, configuration, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			configurationModel, null);
+			configurationModel, getDDMForm(configurationModel));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -166,7 +166,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			objectClassDefinition, configuration, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			configurationModel, null);
+			configurationModel, getDDMForm(configurationModel));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -197,13 +197,48 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			objectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			configurationModel, null);
+			configurationModel, getDDMForm(configurationModel));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
 
 		Assert.assertEquals(1, ddmFormFieldValues.size());
 		Assert.assertEquals("false", getValueString(ddmFormFieldValues.get(0)));
+	}
+
+	@Test
+	public void testGetValuesByDefaultValueWithSelectField() {
+		ObjectClassDefinition objectClassDefinition = mock(
+			ObjectClassDefinition.class);
+
+		AttributeDefinition attributeDefinition = mock(
+			AttributeDefinition.class);
+
+		whenObjectClassDefinitionGetAttributeDefinitions(
+			objectClassDefinition,
+			new AttributeDefinition[] {attributeDefinition});
+
+		whenAttributeDefinitionGetCardinality(attributeDefinition, 0);
+		whenAttributeDefinitionGetDefaultValue(
+			attributeDefinition, new String[] {"REQUEST_HEADER"});
+		whenAttributeDefinitionGetID(attributeDefinition, "Select");
+		whenAttributeDefinitionGetOptionLabels(
+			attributeDefinition, new String[] {"COOKIE", "REQUEST_HEADER"});
+		whenAttributeDefinitionGetOptionValues(
+			attributeDefinition, new String[] {"COOKIE", "REQUEST_HEADER"});
+
+		ConfigurationModel configurationModel = new ConfigurationModel(
+			objectClassDefinition, null, null, false);
+
+		DDMFormValues ddmFormValues = getDDMFormValues(
+			configurationModel, getDDMForm(configurationModel));
+
+		List<DDMFormFieldValue> ddmFormFieldValues =
+			ddmFormValues.getDDMFormFieldValues();
+
+		Assert.assertEquals(1, ddmFormFieldValues.size());
+		Assert.assertEquals(
+			"[\"REQUEST_HEADER\"]", getValueString(ddmFormFieldValues.get(0)));
 	}
 
 	@Test
@@ -227,7 +262,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			objectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			configurationModel, null);
+			configurationModel, getDDMForm(configurationModel));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -259,7 +294,7 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			objectClassDefinition, null, null, false);
 
 		DDMFormValues ddmFormValues = getDDMFormValues(
-			configurationModel, null);
+			configurationModel, getDDMForm(configurationModel));
 
 		List<DDMFormFieldValue> ddmFormFieldValues =
 			ddmFormValues.getDDMFormFieldValues();
@@ -267,6 +302,15 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 		Assert.assertEquals(1, ddmFormFieldValues.size());
 		Assert.assertEquals(
 			StringPool.BLANK, getValueString(ddmFormFieldValues.get(0)));
+	}
+
+	protected DDMForm getDDMForm(ConfigurationModel configurationModel) {
+		ConfigurationModelToDDMFormConverter
+			configurationModelToDDMFormConverter =
+				new ConfigurationModelToDDMFormConverter(
+					configurationModel, _enLocale);
+
+		return configurationModelToDDMFormConverter.getDDMForm();
 	}
 
 	protected DDMFormValues getDDMFormValues(
@@ -313,6 +357,26 @@ public class ConfigurationModelToDDMFormValuesConverterTest extends Mockito {
 			attributeDefinition.getID()
 		).thenReturn(
 			returnID
+		);
+	}
+
+	protected void whenAttributeDefinitionGetOptionLabels(
+		AttributeDefinition attributeDefinition, String[] returnOptionLabels) {
+
+		when(
+			attributeDefinition.getOptionLabels()
+		).thenReturn(
+			returnOptionLabels
+		);
+	}
+
+	protected void whenAttributeDefinitionGetOptionValues(
+		AttributeDefinition attributeDefinition, String[] returnOptionValues) {
+
+		when(
+			attributeDefinition.getOptionValues()
+		).thenReturn(
+			returnOptionValues
 		);
 	}
 

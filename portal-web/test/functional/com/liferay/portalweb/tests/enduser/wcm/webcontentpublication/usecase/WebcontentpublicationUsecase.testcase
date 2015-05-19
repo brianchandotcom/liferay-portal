@@ -673,11 +673,17 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addTranslationCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
 			<var name="localizedInteger" value="3" />
 			<var name="localizedLanguage" value="German (Germany)" />
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
+
+		<execute macro="WebContent#publish" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -697,11 +703,17 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addTranslationCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
 			<var name="localizedInteger" value="2" />
 			<var name="localizedLanguage" value="German (Germany)" />
 			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
+
+		<execute macro="WebContent#publish" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
@@ -721,11 +733,17 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#addTranslationCP">
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
 			<var name="localizedInteger" value="8" />
 			<var name="localizedLanguage" value="German (Germany)" />
 			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
+
+		<execute macro="WebContent#publish" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

@@ -173,7 +173,7 @@
 			<var name="siteName" value="Liferay" />
 		</execute>
 
-		<execute macro="WebContent#publishBasicCP" />
+		<execute macro="WebContent#publish" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />

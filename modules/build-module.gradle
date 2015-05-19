@@ -1,0 +1,38 @@
+apply plugin: "com.liferay.plugin"
+
+liferay {
+	appServerParentDir = rootProject.file("../../bundles")
+}
+
+File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
+File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
+File sdkDir = rootProject.file("../tools/sdk")
+
+repositories {
+	mavenLocal()
+}
+
+dependencies {
+	compile files(appServerClassesPortalDir)
+	compile fileTree(dir: appServerLibPortalDir, include: "*.jar")
+	compile fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
+	compile fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
+}
+
+bundle {
+	instruction "-jsp", "*.jsp"
+	instruction "-jsp", "*.jspf"
+	instruction "-metatype", "*"
+	instruction "-plugin", "com.liferay.ant.bnd.plugin.JspAnalyzerPlugin"
+	instruction "-plugin", "com.liferay.ant.bnd.plugin.SassAnalyzerPlugin"
+	instruction "-sass", "*"
+}
+
+jar {
+	destinationDir = new File(sdkDir, "dist2")
+}
+
+afterEvaluate {
+	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
+	project.ext.set("plugin.full.version", project.version.toString())
+}

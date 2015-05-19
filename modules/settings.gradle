@@ -1,1 +1,16 @@
-apply from: "${rootDir}/../tools/sdk/settings.gradle"
+FileTree fileTree = fileTree(rootDir) {
+	exclude "sdk/*/samples/build.gradle"
+	include "**/build.gradle"
+}
+
+URI rootURI = rootDir.toURI()
+
+fileTree.each {
+	File buildGradleFile ->
+
+	String moduleDirName = rootURI.relativize(buildGradleFile.toURI())
+
+	moduleDirName = moduleDirName.replaceFirst("/build.gradle", "")
+
+	include ":" + moduleDirName.replaceAll("[\\/]", ":")
+}

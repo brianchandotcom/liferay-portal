@@ -114,7 +114,8 @@ public class JournalArticleServiceTest {
 
 		testAddArticleRequiredFields(
 			"test-ddm-structure-html-required-field.xml",
-			"test-journal-content-html-empty-required-field.xml", requiredFields);
+			"test-journal-content-html-empty-required-field.xml",
+			requiredFields);
 	}
 
 	@Test

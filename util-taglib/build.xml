@@ -87,9 +87,7 @@
 		</if>
 	</target>
 
-	<target name="jar" depends="check-jar-uptodate" unless="${jar.uptodate}">
-		<antcall target="build-common-java.jar" />
-
+	<target name="jar" depends="build-common-java.jar" unless="${jar.uptodate}">
 		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 
 		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">

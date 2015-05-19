@@ -22,6 +22,18 @@
 			color: $scoped-command-hover-text-color;
 		}
 
+		.child-container {
+			color: $scoped-child-container-text-color;
+
+			.command-name {
+				color: $scoped-child-container-command-name-color;
+			}
+
+			.param-value {
+				color: $scoped-child-container-param-value-color;
+			}
+		}
+
 		.expand-toggle {
 			color: $scoped-command-expand-toggle-color;
 		}

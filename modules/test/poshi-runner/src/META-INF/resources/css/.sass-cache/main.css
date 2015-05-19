@@ -191,7 +191,7 @@ h3 {
 
 li {
   display: block;
-  padding: 1px; }
+  padding: 1px 0 1px 1px; }
 
 /* ---------- Scope selection ---------- */
 .current-scope {
@@ -266,6 +266,12 @@ li {
     .command-log .current-scope.linkable:hover {
       background-color: #FAE841;
       color: #444; }
+    .command-log .current-scope .child-container {
+      color: #359AB6; }
+      .command-log .current-scope .child-container .command-name {
+        color: #715D3B; }
+      .command-log .current-scope .child-container .param-value {
+        color: #B56F28; }
     .command-log .current-scope .expand-toggle {
       color: #444; }
   .command-log.collapse {
@@ -396,7 +402,7 @@ li {
   color: #447090; }
 
 .param-type {
-  color: #CFCFCD; }
+  color: #3D4E58; }
 
 .failed .command-name {
   color: #FBF4D7; }

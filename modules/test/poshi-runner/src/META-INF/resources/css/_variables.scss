@@ -107,7 +107,7 @@ $xml-selectable-name-color: #663615;
 //Sidebar
 
 $command-name-color: #8CEFF6;
-$param-type-color: #CFCFCD;
+$param-type-color: #3D4E58;
 $param-value-color: $param-type-color;
 
 $failed-command-name-color: #FBF4D7;
@@ -115,6 +115,9 @@ $failed-param-type-color: #FFE4C7;
 $failed-param-value-color: $failed-param-type-color;
 
 $scoped-command-name-color: #447090;
+$scoped-child-container-command-name-color: #715D3B;
+$scoped-child-container-param-value-color: #B56F28;
+$scoped-child-container-text-color: #359AB6;
 
 $sub-command-name-color: #E9C993;
 $sub-param-value-color: #FDBA93;

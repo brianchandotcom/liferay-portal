@@ -148,7 +148,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						int rootIndexPage = 0;
 						boolean moreCommentsPagination = false;
 
-						DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadCommentsIterator();
+						DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadDiscussionCommentIterator();
 
 						while (discussionCommentIterator.hasNext()) {
 							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);

@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.scheduler.CronTrigger;
 import com.liferay.portal.kernel.scheduler.IntervalTrigger;
 import com.liferay.portal.kernel.scheduler.JobState;
-import com.liferay.portal.kernel.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
+import com.liferay.portal.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 import com.liferay.portal.service.PortletLocalService;
 

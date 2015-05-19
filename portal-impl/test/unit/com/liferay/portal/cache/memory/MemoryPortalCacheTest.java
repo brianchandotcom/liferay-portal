@@ -14,9 +14,9 @@
 
 package com.liferay.portal.cache.memory;
 
-import com.liferay.portal.cache.MockPortalCacheManager;
-import com.liferay.portal.cache.TestCacheListener;
-import com.liferay.portal.cache.TestCacheReplicator;
+import com.liferay.portal.cache.test.MockPortalCacheManager;
+import com.liferay.portal.cache.test.TestCacheListener;
+import com.liferay.portal.cache.test.TestCacheReplicator;
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
 import com.liferay.portal.kernel.cache.CacheListenerScope;
 import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;

@@ -16,17 +16,17 @@ package com.liferay.portal.scheduler.internal;
 
 import com.liferay.portal.kernel.cluster.ClusterInvokeAcceptor;
 import com.liferay.portal.kernel.cluster.ClusterInvokeThreadLocal;
+import com.liferay.portal.kernel.cluster.ClusterLink;
 import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
 import com.liferay.portal.kernel.concurrent.NoticeableFuture;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -35,27 +35,28 @@ import com.liferay.portal.kernel.scheduler.TriggerFactoryUtil;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.TriggerType;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
+import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
+import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.test.rule.AdviseWith;
 import com.liferay.portal.test.rule.AspectJNewEnvTestRule;
-import com.liferay.portal.util.PortalImpl;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.uuid.PortalUUIDImpl;
-import com.liferay.registry.BasicRegistryImpl;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import java.lang.reflect.Constructor;
@@ -66,18 +67,21 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 /**
  * @author Tina Tian
@@ -85,126 +89,99 @@ import org.junit.Test;
 @NewEnv(type = NewEnv.Type.CLASSLOADER)
 public class ClusterSchedulerEngineTest {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			CodeCoverageAssertor.INSTANCE, AspectJNewEnvTestRule.INSTANCE);
-
 	@Before
 	public void setUp() throws Exception {
-		RegistryUtil.setRegistry(new BasicRegistryImpl());
+		_clusterLink = Mockito.mock(ClusterLink.class);
 
-		Registry registry = RegistryUtil.getRegistry();
+		Mockito.when(_clusterLink.isEnabled()).thenReturn(true);
 
-		PortalUtil portalUtil = new PortalUtil();
+		setUpPortalUUIDUtil();
 
-		portalUtil.setPortal(new PortalImpl());
+		setUpProps();
 
-		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+		setUpSchedulerEngineHelper(setUpJSONFactory());
 
-		portalUUIDUtil.setPortalUUID(new PortalUUIDImpl());
+		setUpClusterSchedulerEngine();
 
-		_mockClusterMasterExecutor = new MockClusterMasterExecutor();
+		_schedulerEngineHelperImpl.setSchedulerEngine(_clusterSchedulerEngine);
 
-		_mockSchedulerEngine = new MockSchedulerEngine();
+		_clusterSchedulerEngine.setSchedulerEngineHelper(
+			_schedulerEngineHelperImpl);
 
-		_clusterSchedulerEngine = new ClusterSchedulerEngine(
-			_mockSchedulerEngine);
-
-		_memoryClusteredJobs = ReflectionTestUtil.getFieldValue(
-			_clusterSchedulerEngine, "_memoryClusteredJobs");
-
-		SchedulerEngineHelperImpl schedulerEngineHelperImpl =
-			new SchedulerEngineHelperImpl();
-
-		registry.registerService(
-			SchedulerEngineHelper.class, schedulerEngineHelperImpl);
-
-		schedulerEngineHelperImpl.setSchedulerEngine(_clusterSchedulerEngine);
-
-		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
-			(Class<? extends ClusterInvokeAcceptor>)Class.forName(
-				SchedulerClusterInvokeAcceptor.class.getName());
-
-		Constructor<? extends ClusterInvokeAcceptor> constructor =
-			clusterInvokeAcceptorClass.getDeclaredConstructor();
-
-		constructor.setAccessible(true);
-
-		_clusterInvokeAcceptor = constructor.newInstance();
+		setUpClusterInvokeAcceptor();
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterMasterExecutorUtilAdvice.class,
-			EnableClusterLinkEnabledAdvice.class,
-			EnableSchedulerEnabledAdvice.class
-		}
-	)
 	@Test
 	public void testCreateClusterSchedulerEngine1() {
+		Mockito.when(_clusterLink.isEnabled()).thenReturn(true);
+		Mockito.when(
+			_props.get(PropsKeys.SCHEDULER_ENABLED)
+		).thenReturn("true");
+
+		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
+
+		_schedulerEngineHelperImpl.activate();
+
 		SchedulerEngine schedulerEngine =
-			ClusterSchedulerEngine.createClusterSchedulerEngine(
-				_mockSchedulerEngine);
+			_schedulerEngineHelperImpl.getSchedulerEngine();
 
 		Assert.assertNotSame(_mockSchedulerEngine, schedulerEngine);
+		Assert.assertEquals(
+			ClusterSchedulerEngine.class, schedulerEngine.getClass());
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterMasterExecutorUtilAdvice.class,
-			EnableClusterLinkEnabledAdvice.class,
-			DisableSchedulerEnabledAdvice.class
-		}
-	)
 	@Test
 	public void testCreateClusterSchedulerEngine2() {
+		Mockito.when(_clusterLink.isEnabled()).thenReturn(true);
+		Mockito.when(
+			_props.get(PropsKeys.SCHEDULER_ENABLED)
+		).thenReturn("false");
+
+		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
+
+		_schedulerEngineHelperImpl.activate();
+
 		SchedulerEngine schedulerEngine =
-			ClusterSchedulerEngine.createClusterSchedulerEngine(
-				_mockSchedulerEngine);
+			_schedulerEngineHelperImpl.getSchedulerEngine();
 
 		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterMasterExecutorUtilAdvice.class,
-			DisableClusterLinkEnabledAdvice.class,
-			EnableSchedulerEnabledAdvice.class
-		}
-	)
 	@Test
 	public void testCreateClusterSchedulerEngine3() {
+		Mockito.when(_clusterLink.isEnabled()).thenReturn(false);
+		Mockito.when(
+			_props.get(PropsKeys.SCHEDULER_ENABLED)
+		).thenReturn("true");
+
+		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
+
+		_schedulerEngineHelperImpl.activate();
+
 		SchedulerEngine schedulerEngine =
-			ClusterSchedulerEngine.createClusterSchedulerEngine(
-				_mockSchedulerEngine);
+			_schedulerEngineHelperImpl.getSchedulerEngine();
 
 		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterMasterExecutorUtilAdvice.class,
-			DisableClusterLinkEnabledAdvice.class,
-			DisableSchedulerEnabledAdvice.class
-		}
-	)
 	@Test
 	public void testCreateClusterSchedulerEngine4() {
+		Mockito.when(_clusterLink.isEnabled()).thenReturn(false);
+		Mockito.when(
+			_props.get(PropsKeys.SCHEDULER_ENABLED)
+		).thenReturn("false");
+
+		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
+
+		_schedulerEngineHelperImpl.activate();
+
 		SchedulerEngine schedulerEngine =
-			ClusterSchedulerEngine.createClusterSchedulerEngine(
-				_mockSchedulerEngine);
+			_schedulerEngineHelperImpl.getSchedulerEngine();
 
 		Assert.assertSame(_mockSchedulerEngine, schedulerEngine);
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testDeleteOnMaster() throws SchedulerException {
 
@@ -298,12 +275,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testDeleteOnSlave() throws SchedulerException {
 
@@ -385,7 +357,6 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testGetSchedulerJobs() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(true, 0, 0);
@@ -400,7 +371,6 @@ public class ClusterSchedulerEngineTest {
 		Assert.assertEquals(6, schedulerResponses.size());
 	}
 
-	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testGetSetBeanIdentifier() {
 		String beanIdentifier = "BeanIdentifier";
@@ -411,7 +381,6 @@ public class ClusterSchedulerEngineTest {
 			beanIdentifier, _clusterSchedulerEngine.getBeanIdentifier());
 	}
 
-	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testMasterToSlave() throws SchedulerException {
 
@@ -423,7 +392,7 @@ public class ClusterSchedulerEngineTest {
 
 		_clusterSchedulerEngine.start();
 
-		Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+		Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
 		List<SchedulerResponse> schedulerResponses =
 			_clusterSchedulerEngine.getScheduledJobs(
@@ -448,7 +417,7 @@ public class ClusterSchedulerEngineTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-			Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
@@ -466,7 +435,7 @@ public class ClusterSchedulerEngineTest {
 
 			_memoryClusteredJobs.clear();
 
-			Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
@@ -491,7 +460,7 @@ public class ClusterSchedulerEngineTest {
 			Assert.assertEquals(
 				"MEMORY_CLUSTERED jobs stopped running on this node",
 				logRecord.getMessage());
-			Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
@@ -501,12 +470,7 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testPauseAndResumeOnMaster() throws SchedulerException {
 
@@ -705,12 +669,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testPauseAndResumeOnSlave() throws SchedulerException {
 
@@ -885,12 +844,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testScheduleOnMaster() throws SchedulerException {
 
@@ -958,12 +912,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testScheduleOnSlave() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(false, 1, 0);
@@ -1000,7 +949,6 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testShutdown() throws SchedulerException {
 		_clusterSchedulerEngine.start();
@@ -1016,7 +964,6 @@ public class ClusterSchedulerEngineTest {
 				getClusterMasterTokenTransitionListener());
 	}
 
-	@AdviseWith(adviceClasses = {ClusterMasterExecutorUtilAdvice.class})
 	@Test
 	public void testSlaveToMaster() throws SchedulerException {
 
@@ -1028,7 +975,7 @@ public class ClusterSchedulerEngineTest {
 
 		_clusterSchedulerEngine.start();
 
-		Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+		Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
 		List<SchedulerResponse> schedulerResponses =
 			_clusterSchedulerEngine.getScheduledJobs(
@@ -1057,7 +1004,7 @@ public class ClusterSchedulerEngineTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			Assert.assertTrue(logRecords.isEmpty());
-			Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
@@ -1081,7 +1028,7 @@ public class ClusterSchedulerEngineTest {
 
 			_clusterSchedulerEngine.start();
 
-			Assert.assertFalse(ClusterMasterExecutorUtil.isMaster());
+			Assert.assertFalse(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
@@ -1106,7 +1053,7 @@ public class ClusterSchedulerEngineTest {
 			Assert.assertEquals(
 				"MEMORY_CLUSTERED jobs are running on this node",
 				logRecord.getMessage());
-			Assert.assertTrue(ClusterMasterExecutorUtil.isMaster());
+			Assert.assertTrue(_mockClusterMasterExecutor.isMaster());
 
 			schedulerResponses = _clusterSchedulerEngine.getScheduledJobs(
 				StorageType.MEMORY_CLUSTERED);
@@ -1116,12 +1063,7 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testStart() {
 		_mockClusterMasterExecutor.reset(false, 0, 0);
@@ -1139,12 +1081,7 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testSuppressErrorOnMaster() throws SchedulerException {
 
@@ -1212,12 +1149,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testSuppressErrorOnSlave() throws SchedulerException {
 		_mockClusterMasterExecutor.reset(false, 1, 0);
@@ -1257,12 +1189,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testThreadLocal() throws SchedulerException {
 
@@ -1437,12 +1364,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testUnscheduleOnMaster() throws SchedulerException {
 
@@ -1581,12 +1503,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testUnscheduleOnSlave() throws SchedulerException {
 
@@ -1657,12 +1574,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testUpdateOnMaster() throws SchedulerException {
 
@@ -1734,12 +1646,7 @@ public class ClusterSchedulerEngineTest {
 				ClusterableContextThreadLocalAdvice.getAndClearThreadLocals()));
 	}
 
-	@AdviseWith(
-		adviceClasses = {
-			ClusterableContextThreadLocalAdvice.class,
-			ClusterMasterExecutorUtilAdvice.class
-		}
-	)
+	@AdviseWith(adviceClasses = {ClusterableContextThreadLocalAdvice.class})
 	@Test
 	public void testUpdateOnSlave() throws SchedulerException {
 
@@ -1814,6 +1721,10 @@ public class ClusterSchedulerEngineTest {
 		}
 	}
 
+	@Rule
+	public final AspectJNewEnvTestRule aspectJNewEnvTestRule =
+		AspectJNewEnvTestRule.INSTANCE;
+
 	@Aspect
 	public static class ClusterableContextThreadLocalAdvice {
 
@@ -1841,78 +1752,131 @@ public class ClusterSchedulerEngineTest {
 
 	}
 
-	@Aspect
-	public static class ClusterMasterExecutorUtilAdvice {
+	protected void setUpClusterInvokeAcceptor() throws Exception {
+		Class<? extends ClusterInvokeAcceptor> clusterInvokeAcceptorClass =
+			(Class<? extends ClusterInvokeAcceptor>)Class.forName(
+				SchedulerClusterInvokeAcceptor.class.getName());
 
-		@Around(
-			"execution(private com.liferay.portal.kernel.cluster." +
-				"ClusterMasterExecutorUtil.new())"
-		)
-		public void ClusterMasterExecutorUtil() {
-		}
+		Constructor<? extends ClusterInvokeAcceptor> constructor =
+			clusterInvokeAcceptorClass.getDeclaredConstructor();
 
-		@Around(
-			"execution(* com.liferay.portal.kernel.cluster." +
-				"ClusterMasterExecutorUtil.getClusterMasterExecutor(..))"
-		)
-		public ClusterMasterExecutor getClusterMasterExecutor() {
-			return _mockClusterMasterExecutor;
-		}
+		constructor.setAccessible(true);
 
+		_clusterInvokeAcceptor = constructor.newInstance();
 	}
 
-	@Aspect
-	public static class DisableClusterLinkEnabledAdvice {
+	protected void setUpClusterSchedulerEngine() {
+		_mockSchedulerEngine = new MockSchedulerEngine();
 
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)"
-		)
-		public Object clusterLinkEnabled(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
+		_clusterSchedulerEngine = new ClusterSchedulerEngine(
+			_mockSchedulerEngine);
 
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.FALSE});
-		}
+		_clusterSchedulerEngine.setClusterMasterExecutor(
+			_mockClusterMasterExecutor);
+		_clusterSchedulerEngine.setProps(_props);
 
+		_memoryClusteredJobs = ReflectionTestUtil.getFieldValue(
+			_clusterSchedulerEngine, "_memoryClusteredJobs");
 	}
 
-	@Aspect
-	public static class DisableSchedulerEnabledAdvice {
+	protected JSONFactory setUpJSONFactory() {
+		JSONFactory jsonFactory = Mockito.mock(JSONFactory.class);
 
-		@Around("set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)")
-		public Object schedulerEnabled(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
+		Mockito.when(
+			jsonFactory.deserialize(Mockito.anyString())
+		).then(
+			new Answer<Object>() {
 
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.FALSE});
-		}
+				@Override
+				public Object answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
 
+					String base64 = (String)invocationOnMock.getArguments()[0];
+
+					byte[] bytes = Base64.decode(base64);
+
+					ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+
+					ObjectInputStream ois = new ObjectInputStream(bais);
+
+					return ois.readObject();
+				}
+			}
+		);
+		Mockito.when(
+			jsonFactory.serialize(Mockito.anyObject())
+		).then(
+			new Answer<String>() {
+
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
+
+					Object obj = invocationOnMock.getArguments()[0];
+
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+					ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+					oos.writeObject(obj);
+
+					byte[] bytes = baos.toByteArray();
+
+					oos.close();
+
+					return Base64.encode(bytes);
+				}
+			}
+		);
+
+		return jsonFactory;
 	}
 
-	@Aspect
-	public static class EnableClusterLinkEnabledAdvice {
+	protected void setUpPortalUUIDUtil() {
+		PortalUUID portalUUID = Mockito.mock(PortalUUID.class);
 
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.CLUSTER_LINK_ENABLED)"
-		)
-		public Object clusterLinkEnabled(
-				ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
+		Mockito.when(
+			portalUUID.generate()
+		).then(
+			new Answer<String>() {
+				@Override
+				public String answer(InvocationOnMock invocationOnMock)
+					throws Throwable {
 
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
-		}
+					UUID uuid = new UUID(
+						SecureRandomUtil.nextLong(),
+						SecureRandomUtil.nextLong());
 
+					return uuid.toString();
+				}
+			}
+
+		);
+
+		PortalUUIDUtil portalUUIDUtil = new PortalUUIDUtil();
+
+		portalUUIDUtil.setPortalUUID(portalUUID);
 	}
 
-	@Aspect
-	public static class EnableSchedulerEnabledAdvice {
+	protected void setUpProps() {
+		_props = Mockito.mock(Props.class);
 
-		@Around("set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)")
-		public Object schedulerEnabled(ProceedingJoinPoint proceedingJoinPoint)
-			throws Throwable {
+		Mockito.when(
+			_props.get(PropsKeys.SCHEDULER_ENABLED)
+		).thenReturn("true");
+	}
 
-			return proceedingJoinPoint.proceed(new Object[] {Boolean.TRUE});
-		}
+	protected void setUpSchedulerEngineHelper(JSONFactory jsonFactory) {
+		_mockClusterMasterExecutor = new MockClusterMasterExecutor();
 
+		_schedulerEngineHelperImpl = new SchedulerEngineHelperImpl();
+
+		_schedulerEngineHelperImpl.setClusterMasterExecutor(
+			_mockClusterMasterExecutor);
+		_schedulerEngineHelperImpl.setProps(_props);
+		_schedulerEngineHelperImpl.setJsonFactory(jsonFactory);
+
+		_schedulerEngineHelperImpl.setClusterLink(_clusterLink);
 	}
 
 	private void _assertSuppressErrorValue(
@@ -2004,10 +1968,13 @@ public class ClusterSchedulerEngineTest {
 	private static MockClusterMasterExecutor _mockClusterMasterExecutor;
 
 	private ClusterInvokeAcceptor _clusterInvokeAcceptor;
+	private ClusterLink _clusterLink;
 	private ClusterSchedulerEngine _clusterSchedulerEngine;
 	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs;
 	private MockSchedulerEngine _mockSchedulerEngine;
+	private Props _props;
+	private SchedulerEngineHelperImpl _schedulerEngineHelperImpl;
 
 	private static class MockClusterMasterExecutor
 		implements ClusterMasterExecutor {

@@ -41,8 +41,6 @@ int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calenda
 %>
 
 <aui:fieldset>
-
-
 	<aui:field-wrapper label="start-date">
 		<div class="field-row">
 			<liferay-ui:input-date

@@ -1584,11 +1584,10 @@ If you need to require the user's last name, list it on the
 
 #### Why was this change made?
 
-This change was made to account for different languages allowing different user
-name fields (introduced as part of LPS-48406), and the uncertainty of which
-fields are required. That functionality was in conflict with the current
-`USERS_LAST_NAME_REQUIRED` property, so all control has been relegated to the
-`language.properties` files, with the exception of `first-name`, which is still
-always present and required.
+Portal property `USERS_LAST_NAME_REQUIRED` didn't support the multicultural user
+name configurations introduced in LPS-48406. Language property files (e.g.,
+`language.properties`) now support these configurations. Control of all user
+name configuration, except with regards to first name, is relegated to language
+property files. First name is required and always present. 
 
 ---------------------------------------

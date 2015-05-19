@@ -157,7 +157,7 @@ AUI.add(
 
 							var viewURL = new Liferay.PortletURL.createURL(instance._baseRenderPortletURL);
 
-							viewURL.setWindowState('EXCLUSIVE');
+							viewURL.setWindowState('exclusive');
 
 							viewURL.setParameter('mvcPath', '/view.jsp');
 							viewURL.setParameter('portletResource', instance._portletId);
@@ -1195,7 +1195,7 @@ AUI.add(
 
 							updateLookAndFeelURL.setParameter('javax.portlet.action', 'updateLookAndFeel');
 							updateLookAndFeelURL.setParameter('portletId', instance._portletId);
-							updateLookAndFeelURL.setWindowState('NORMAL');
+							updateLookAndFeelURL.setWindowState('normal');
 
 							A.io.request(
 								updateLookAndFeelURL.toString(),

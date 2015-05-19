@@ -324,7 +324,7 @@ AUI.add(
 					portletURL.setParameter('modelResourceDescription', modelResourceDescription);
 					portletURL.setParameter('resourcePrimKey', resourcePrimKey);
 					portletURL.setPortletId(Liferay.PortletKeys.PORTLET_CONFIGURATION);
-					portletURL.setWindowState('MAXIMIZED');
+					portletURL.setWindowState('maximized');
 
 					return portletURL;
 				},

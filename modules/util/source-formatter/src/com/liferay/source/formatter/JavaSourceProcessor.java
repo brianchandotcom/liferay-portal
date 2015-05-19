@@ -2598,6 +2598,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			else if (!line.endsWith(StringPool.OPEN_PARENTHESIS) &&
 					 !line.endsWith(StringPool.PLUS) &&
 					 !line.endsWith(StringPool.PERIOD) &&
+					 !Validator.isVariableName(trimmedLine) &&
 					 (!trimmedLine.startsWith("new ") ||
 					  !line.endsWith(StringPool.OPEN_CURLY_BRACE)) &&
 					 ((trimmedLine.length() + previousLineLength) <

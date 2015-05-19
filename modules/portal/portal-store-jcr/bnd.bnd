@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Portal Store JCR
+Bundle-SymbolicName: com.liferay.portal.store.jcr
+Bundle-Version: 1.0.0
+Import-Package:\
+	*
+Include-Resource:\
+	classes

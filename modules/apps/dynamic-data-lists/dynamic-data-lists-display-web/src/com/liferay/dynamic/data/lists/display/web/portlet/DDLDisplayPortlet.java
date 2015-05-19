@@ -14,16 +14,6 @@
 
 package com.liferay.dynamic.data.lists.display.web.portlet;
 
-import java.io.IOException;
-
-import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +26,16 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService;
+
+import java.io.IOException;
+
+import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -138,7 +138,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 			renderRequest.getPreferences(), renderRequest, "recordSetId");
 
 		DDLRecordSet recordSet = null;
-		
+
 		if (recordSetId > 0) {
 			recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 

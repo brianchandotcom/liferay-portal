@@ -107,25 +107,16 @@
 		</else>
 	</if>
 
-	<target name="check-deploy-uptodate" depends="check-jar-uptodate">
-		<if>
-			<available file="${jar.file}.jar" />
-			<then>
-				<uptodate property="deploy.uptodate" srcfile="${jar.file}.jar" targetfile="${deploy.dir}/${jar.file}.jar" />
-			</then>
-		</if>
+	<target name="check-deploy-uptodate">
+		<uptodate property="deploy.uptodate" targetfile="${deploy.dir}/${jar.file}.jar">
+			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+		</uptodate>
 	</target>
 
 	<target name="check-jar-uptodate">
 		<uptodate property="jar.uptodate" targetfile="${jar.file}.jar">
 			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 		</uptodate>
-
-		<condition property="deploy.uptodate" value="false">
-			<not>
-				<equals arg1="${jar.uptodate}" arg2="true" />
-			</not>
-		</condition>
 	</target>
 
 	<target name="clean">

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -115,7 +116,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-undo",
 			DLUIItemKeys.CANCEL_CHECKOUT,
-			UnicodeLanguageUtil.get(_request, "cancel-checkout[document]"),
+			LanguageUtil.get(_request, "cancel-checkout[document]"),
 			getSubmitFormJavaScript(Constants.CANCEL_CHECKOUT, null));
 	}
 
@@ -142,7 +143,7 @@ public class UIItemsBuilder {
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-lock",
-			DLUIItemKeys.CHECKIN, UnicodeLanguageUtil.get(_request, "checkin"),
+			DLUIItemKeys.CHECKIN, LanguageUtil.get(_request, "checkin"),
 			getSubmitFormJavaScript(Constants.CHECKIN, null));
 	}
 
@@ -174,7 +175,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-unlock",
 			DLUIItemKeys.CHECKOUT,
-			UnicodeLanguageUtil.get(_request, "checkout[document]"),
+			LanguageUtil.get(_request, "checkout[document]"),
 			getSubmitFormJavaScript(Constants.CHECKOUT, null));
 	}
 
@@ -234,7 +235,7 @@ public class UIItemsBuilder {
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-remove",
-			DLUIItemKeys.DELETE, UnicodeLanguageUtil.get(_request, "delete"),
+			DLUIItemKeys.DELETE, LanguageUtil.get(_request, "delete"),
 			sb.toString());
 	}
 
@@ -271,8 +272,7 @@ public class UIItemsBuilder {
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, "icon-download",
-			DLUIItemKeys.DOWNLOAD,
-			UnicodeLanguageUtil.get(_request, "download"),
+			DLUIItemKeys.DOWNLOAD, LanguageUtil.get(_request, "download"),
 			DLUtil.getDownloadURL(
 				_fileEntry, _fileVersion, _themeDisplay, StringPool.BLANK));
 	}
@@ -306,7 +306,7 @@ public class UIItemsBuilder {
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, "icon-edit", DLUIItemKeys.EDIT,
-			UnicodeLanguageUtil.get(_request, "edit"), portletURL.toString());
+			LanguageUtil.get(_request, "edit"), portletURL.toString());
 	}
 
 	public void addMoveMenuItem(List<MenuItem> menuItems)
@@ -350,7 +350,7 @@ public class UIItemsBuilder {
 
 		_addURLUIItem(
 			new URLToolbarItem(), toolbarItems, "icon-move", DLUIItemKeys.MOVE,
-			UnicodeLanguageUtil.get(_request, "move"), portletURL.toString());
+			LanguageUtil.get(_request, "move"), portletURL.toString());
 	}
 
 	public void addMoveToTheRecycleBinToolbarItem(
@@ -373,7 +373,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-trash",
 			DLUIItemKeys.MOVE_TO_THE_RECYCLE_BIN,
-			UnicodeLanguageUtil.get(_request, "move-to-the-recycle-bin"),
+			LanguageUtil.get(_request, "move-to-the-recycle-bin"),
 			getSubmitFormJavaScript(
 				Constants.MOVE_TO_TRASH, portletURL.toString()));
 	}
@@ -445,8 +445,7 @@ public class UIItemsBuilder {
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-file-alt",
 			DLUIItemKeys.OPEN_IN_MS_OFFICE,
-			UnicodeLanguageUtil.get(_request, "open-in-ms-office"),
-			sb.toString());
+			LanguageUtil.get(_request, "open-in-ms-office"), sb.toString());
 	}
 
 	public void addPermissionsMenuItem(List<MenuItem> menuItems)
@@ -509,8 +508,8 @@ public class UIItemsBuilder {
 
 		_addJavaScriptUIItem(
 			new JavaScriptToolbarItem(), toolbarItems, "icon-lock",
-			DLUIItemKeys.PERMISSIONS,
-			UnicodeLanguageUtil.get(_request, "permissions"), sb.toString());
+			DLUIItemKeys.PERMISSIONS, LanguageUtil.get(_request, "permissions"),
+			sb.toString());
 	}
 
 	public void addViewOriginalFileMenuItem(List<MenuItem> menuItems) {

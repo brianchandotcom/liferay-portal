@@ -16,6 +16,7 @@ package com.liferay.wiki.web.display.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.taglib.ui.DeleteMenuItem;
@@ -119,7 +120,7 @@ public class DefaultWikiListPagesDisplayContext
 		URLToolbarItem addPageURLToolbarItem = new URLToolbarItem();
 
 		addPageURLToolbarItem.setKey(WikiUIItemKeys.ADD_PAGE);
-		addPageURLToolbarItem.setLabel("add-page");
+		addPageURLToolbarItem.setLabel(LanguageUtil.get(_request, "add-page"));
 		addPageURLToolbarItem.setURL(portletURL.toString());
 
 		toolbarItems.add(addPageURLToolbarItem);

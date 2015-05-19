@@ -31,7 +31,7 @@ String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 		<%= var %>.push(
 			{
 				icon: '<%= javaScriptToolbarItem.getIcon() %>',
-				label: '<%= javaScriptToolbarItem.getLabel() %>',
+				label: '<%= UnicodeFormatter.toString(javaScriptToolbarItem.getLabel()) %>',
 				on: {
 					click: function(event) {
 						<%= javaScriptToolbarItem.getOnClick() %>
@@ -49,7 +49,7 @@ String var = (String)request.getAttribute("liferay-ui:toolbar-item:var");
 		<%= var %>.push(
 			{
 				icon: '<%= urlToolbarItem.getIcon() %>',
-				label: '<%= UnicodeLanguageUtil.get(request, urlToolbarItem.getLabel()) %>',
+				label: '<%= UnicodeFormatter.toString(urlToolbarItem.getLabel()) %>',
 				on: {
 					click: function(event) {
 						window.open('<%= urlToolbarItem.getURL() %>', '<%= urlToolbarItem.getTarget() %>');

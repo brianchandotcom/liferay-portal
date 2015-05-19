@@ -26,7 +26,7 @@
 
 <body onLoad="setTimeout('document.fm.submit()', 100);">
 
-<form action="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getSrc()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
+<form action="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.src()) %>" method="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFormMethod()) %>" name="fm">
 
 <%
 for (KeyValuePair hiddenVariableKVP : iFrameDisplayContext.getHiddenVariableKVPs()) {
@@ -38,9 +38,9 @@ for (KeyValuePair hiddenVariableKVP : iFrameDisplayContext.getHiddenVariableKVPs
 }
 %>
 
-<input name="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserName()) %>" />
+<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.userNameField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getUserName()) %>" />
 
-<input name="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPasswordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
+<input name="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.passwordField()) %>" type="hidden" value="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getPassword()) %>" />
 
 </form>
 

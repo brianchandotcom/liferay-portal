@@ -17,14 +17,14 @@
 <%@ include file="/init.jsp" %>
 
 <c:choose>
-	<c:when test="<%= iFrameDisplayContext.isAuth() && Validator.isNull(iFrameDisplayContext.getUserName()) && !themeDisplay.isSignedIn() %>">
+	<c:when test="<%= iFramePortletInstanceConfiguration.auth() && Validator.isNull(iFrameDisplayContext.getUserName()) && !themeDisplay.isSignedIn() %>">
 		<div class="alert alert-info">
 			<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-access-this-application" /></a>
 		</div>
 	</c:when>
 	<c:otherwise>
 		<div class="iframe-container">
-			<iframe alt="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getAlt()) %>" border="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getBorder()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getBordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getFrameborder()) %>" height="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getLongdesc()) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getScrolling()) %>" src="<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>" title="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getTitle()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getVspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getWidth()) %>">
+			<iframe alt="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.alt()) %>" border="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.border()) %>" bordercolor="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.bordercolor()) %>" frameborder="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.frameborder()) %>" height="<%= HtmlUtil.escapeAttribute(iFrameDisplayContext.getHeight()) %>" hspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.hspace()) %>" id="<portlet:namespace />iframe" longdesc="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.longdesc()) %>" name="<portlet:namespace />iframe" onload="<portlet:namespace />monitorIframe();" scrolling="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.scrolling()) %>" src="<%= HtmlUtil.escapeHREF(iFrameDisplayContext.getIframeSrc()) %>" title="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.title()) %>" vspace="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.vspace()) %>" width="<%= HtmlUtil.escapeAttribute(iFramePortletInstanceConfiguration.width()) %>">
 				<liferay-ui:message
 					arguments="<%= HtmlUtil.escape(iFrameDisplayContext.getIframeSrc()) %>"
 					key="your-browser-does-not-support-inline-frames-or-is-currently-configured-not-to-display-inline-frames.-content-can-be-viewed-at-actual-source-page-x"
@@ -155,7 +155,7 @@
 		iframe.plug(
 			A.Plugin.AutosizeIframe,
 			{
-				monitorHeight: <%= iFrameDisplayContext.isResizeAutomatically() %>
+				monitorHeight: <%= iFramePortletInstanceConfiguration.resizeAutomatically() %>
 			}
 		);
 
@@ -165,10 +165,10 @@
 				var height = A.Plugin.AutosizeIframe.getContentHeight(iframe);
 
 				if (height == null) {
-					height = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getHeightNormal()) %>';
+					height = '<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightNormal()) %>';
 
 					if (themeDisplay.isStateMaximized()) {
-						height = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getHeightMaximized()) %>';
+						height = '<%= HtmlUtil.escapeJS(iFramePortletInstanceConfiguration.heightMaximized()) %>';
 					}
 
 					iframe.setStyle('height', height);

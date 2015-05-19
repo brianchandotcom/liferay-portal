@@ -16,40 +16,53 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%
+Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
+
+int endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR_OF_DAY));
+int startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR_OF_DAY));
+
+if (DateUtil.isFormatAmPm(locale)) {
+	endHour = ParamUtil.get(request, "schedulerEndDateHour", cal.get(Calendar.HOUR));
+	startHour = ParamUtil.get(request, "schedulerStartDateHour", cal.get(Calendar.HOUR));
+}
+
+int endAmPm = ParamUtil.get(request, "schedulerEndDateAmPm", cal.get(Calendar.AM_PM));
+int endDay = ParamUtil.get(request, "schedulerEndDateDay", cal.get(Calendar.DATE));
+int endMinute = ParamUtil.get(request, "schedulerEndDateMinute", cal.get(Calendar.MINUTE));
+int endMonth = ParamUtil.get(request, "schedulerEndDateMonth", cal.get(Calendar.MONTH));
+int endYear = ParamUtil.get(request, "schedulerEndDateYear", cal.get(Calendar.YEAR));
+
+int startAmPm = ParamUtil.get(request, "schedulerStartDateAmPm", cal.get(Calendar.AM_PM));
+int startDay = ParamUtil.get(request, "schedulerStartDateDay", cal.get(Calendar.DATE));
+int startMinute = ParamUtil.get(request, "schedulerStartDateMinute", cal.get(Calendar.MINUTE));
+int startMonth = ParamUtil.get(request, "schedulerStartDateMonth", cal.get(Calendar.MONTH));
+int startYear = ParamUtil.get(request, "schedulerStartDateYear", cal.get(Calendar.YEAR));
+%>
+
 <aui:fieldset>
-
-	<%
-	Calendar cal = CalendarFactoryUtil.getCalendar(timeZone, locale);
-
-	int hour = cal.get(Calendar.HOUR_OF_DAY);
-
-	if (DateUtil.isFormatAmPm(locale)) {
-		hour = cal.get(Calendar.HOUR);
-	}
-	%>
-
 	<aui:field-wrapper label="start-date">
 		<div class="field-row">
 			<liferay-ui:input-date
 				dayParam="schedulerStartDateDay"
-				dayValue="<%= cal.get(Calendar.DATE) %>"
+				dayValue="<%= startDay %>"
 				disabled="<%= false %>"
 				firstDayOfWeek="<%= cal.getFirstDayOfWeek() - 1 %>"
 				monthParam="schedulerStartDateMonth"
-				monthValue="<%= cal.get(Calendar.MONTH) %>"
+				monthValue="<%= startMonth %>"
 				yearParam="schedulerStartDateYear"
-				yearValue="<%= cal.get(Calendar.YEAR) %>"
+				yearValue="<%= startYear %>"
 			/>
 
 			&nbsp;
 
 			<liferay-ui:input-time
 				amPmParam="schedulerStartDateAmPm"
-				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
+				amPmValue="<%= startAmPm %>"
 				hourParam="schedulerStartDateHour"
-				hourValue="<%= hour %>"
+				hourValue="<%= startHour %>"
 				minuteParam="schedulerStartDateMinute"
-				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
+				minuteValue="<%= startMinute %>"
 			/>
 		</div>
 	</aui:field-wrapper>
@@ -61,24 +74,24 @@
 		<div class="field-row hide" id="<portlet:namespace />schedulerEndDateType">
 			<liferay-ui:input-date
 				dayParam="schedulerEndDateDay"
-				dayValue="<%= cal.get(Calendar.DATE) %>"
+				dayValue="<%= endDay %>"
 				disabled="<%= false %>"
 				firstDayOfWeek="<%= cal.getFirstDayOfWeek() - 1 %>"
 				monthParam="schedulerEndDateMonth"
-				monthValue="<%= cal.get(Calendar.MONTH) %>"
+				monthValue="<%= endMonth %>"
 				yearParam="schedulerEndDateYear"
-				yearValue="<%= cal.get(Calendar.YEAR) %>"
+				yearValue="<%= endYear %>"
 			/>
 
 			&nbsp;
 
 			<liferay-ui:input-time
 				amPmParam="schedulerEndDateAmPm"
-				amPmValue="<%= cal.get(Calendar.AM_PM) %>"
+				amPmValue="<%= endAmPm %>"
 				hourParam="schedulerEndDateHour"
-				hourValue="<%= hour %>"
+				hourValue="<%= endHour %>"
 				minuteParam="schedulerEndDateMinute"
-				minuteValue="<%= cal.get(Calendar.MINUTE) %>"
+				minuteValue="<%= endMinute %>"
 			/>
 		</div>
 	</aui:field-wrapper>

@@ -14,6 +14,16 @@
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
+	<macrodef name="compile-java">
+		<sequential>
+			<antcall target="compile-dependencies" />
+
+			<do-compile-java />
+
+			<print-current-time />
+		</sequential>
+	</macrodef>
+
 	<target name="build-alloy-taglib-jar">
 		<if>
 			<not>
@@ -100,7 +110,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<delete file="json-java.zip" />
 
 		<compile-java
-			javac.classpathref="project.classpath"
 			javac.destdir="${tstamp.value}"
 			javac.srcdir="${tstamp.value}"
 		/>
@@ -330,7 +339,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</replace>
 
 		<compile-java
-			javac.classpathref="project.classpath"
 			javac.destdir="${tstamp.value}"
 			javac.srcdir="${tstamp.value}"
 		/>
@@ -927,18 +935,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				</if>
 			</clean-extra>
 		</clean-common>
-	</target>
-
-	<target name="compile">
-		<antcall target="compile-dependencies" />
-
-		<compile-java
-			javac.classpathref="project.classpath"
-			javac.destdir="classes"
-			javac.srcdir="src"
-		/>
-
-		<print-current-time />
 	</target>
 
 	<target name="compile-dependencies">

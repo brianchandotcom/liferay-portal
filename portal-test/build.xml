@@ -5,14 +5,20 @@
 
 	<property name="deploy.dir" value="${liferay.home}/osgi/test" />
 	<property name="jar.file" value="${ant.project.name}" />
-	<property name="javac.classpathref" value="portal.test.classpath" />
-	<property name="javac.destdir" value="classes" />
-	<property name="javac.srcdir" value="src" />
 	<property name="manifest.bundle.name" value="Liferay Portal Test" />
 	<property name="manifest.bundle.symbolic.name" value="portal-test" />
 
 	<path id="portal.test.classpath">
 		<path refid="lib.classpath" />
+		<pathelement location="${project.dir}/modules/core/registry-api/classes" />
 		<pathelement location="${project.dir}/portal-service/classes" />
 	</path>
+
+	<macrodef name="compile-java">
+		<sequential>
+			<do-compile-java
+				javac.classpathref="portal.test.classpath"
+			/>
+		</sequential>
+	</macrodef>
 </project>

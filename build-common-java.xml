@@ -22,15 +22,21 @@
 	</macrodef>
 
 	<macrodef name="compile-java">
-		<attribute name="javac.classpathref" />
-		<attribute name="javac.destdir" />
-		<attribute name="javac.srcdir" />
+		<sequential>
+			<do-compile-java />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="do-compile-java">
+		<attribute default="project.classpath" name="javac.classpathref" />
+		<attribute default="classes" name="javac.destdir" />
+		<attribute default="src" name="javac.srcdir" />
 		<element name="post-compile" optional="true" />
 
 		<sequential>
 			<if>
 				<not>
-					<uptodate property="compile.uptodate" targetfile="classes/.touch">
+					<uptodate targetfile="classes/.touch">
 						<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
 					</uptodate>
 				</not>
@@ -135,18 +141,16 @@
 	</target>
 
 	<target name="compile">
-		<compile-java
-			javac.classpathref="project.classpath"
-			javac.destdir="classes"
-			javac.srcdir="src"
-		/>
+		<compile-java />
 	</target>
 
 	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
 		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 	</target>
 
-	<target name="jar" depends="check-jar-uptodate,compile" unless="${jar.uptodate}">
+	<target name="jar" depends="check-jar-uptodate" unless="${jar.uptodate}">
+		<compile-java />
+
 		<if>
 			<available file="bnd.bnd" />
 			<then>

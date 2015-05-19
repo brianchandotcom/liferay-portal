@@ -34,9 +34,15 @@ import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.core.TransientRepository;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael Young
+ * @author Manuel de la Peña
  */
+@Component(
+	immediate = true
+)
 public class JCRFactoryImpl implements JCRFactory {
 
 	public static final String CONFIG_FILE_PATH = PropsUtil.get(

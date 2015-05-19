@@ -67,13 +67,13 @@ public class PortletToolbarTest {
 		for (Menu menu : portletTitleMenus) {
 			String label = menu.getLabel();
 
-			if (label != null && label.equals("PortletToolbarTest")) {
+			if ((label != null) && label.equals("PortletToolbarTest")) {
 				return;
 			}
 		}
 
 		Assert.fail(
-			"Unalbe to retrieve menu with label = \"PortletToolbarTest\"");
+			"Unable to retrieve menu with label = \"PortletToolbarTest\"");
 	}
 
 	private class TestPortletRequest implements PortletRequest {

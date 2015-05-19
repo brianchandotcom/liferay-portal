@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2594,27 +2593,25 @@ public class AppPersistenceImpl extends BasePersistenceImpl<App>
 			app.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (app.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					app.setCreateDate(now);
-				}
-				else {
-					app.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (app.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				app.setCreateDate(now);
 			}
+			else {
+				app.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!appModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					app.setModifiedDate(now);
-				}
-				else {
-					app.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!appModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				app.setModifiedDate(now);
+			}
+			else {
+				app.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

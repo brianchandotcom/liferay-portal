@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -6994,29 +6993,26 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 			bookmarksFolder.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (bookmarksFolder.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					bookmarksFolder.setCreateDate(now);
-				}
-				else {
-					bookmarksFolder.setCreateDate(serviceContext.getCreateDate(
-							now));
-				}
+		if (isNew && (bookmarksFolder.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				bookmarksFolder.setCreateDate(now);
 			}
+			else {
+				bookmarksFolder.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!bookmarksFolderModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					bookmarksFolder.setModifiedDate(now);
-				}
-				else {
-					bookmarksFolder.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!bookmarksFolderModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				bookmarksFolder.setModifiedDate(now);
+			}
+			else {
+				bookmarksFolder.setModifiedDate(serviceContext.getModifiedDate(
+						now));
 			}
 		}
 

@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -21374,27 +21373,25 @@ public class WikiPagePersistenceImpl extends BasePersistenceImpl<WikiPage>
 			wikiPage.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (wikiPage.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					wikiPage.setCreateDate(now);
-				}
-				else {
-					wikiPage.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (wikiPage.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				wikiPage.setCreateDate(now);
 			}
+			else {
+				wikiPage.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!wikiPageModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					wikiPage.setModifiedDate(now);
-				}
-				else {
-					wikiPage.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!wikiPageModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				wikiPage.setModifiedDate(now);
+			}
+			else {
+				wikiPage.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

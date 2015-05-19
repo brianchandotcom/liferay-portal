@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2526,29 +2525,26 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 			pollsQuestion.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (pollsQuestion.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					pollsQuestion.setCreateDate(now);
-				}
-				else {
-					pollsQuestion.setCreateDate(serviceContext.getCreateDate(
-							now));
-				}
+		if (isNew && (pollsQuestion.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				pollsQuestion.setCreateDate(now);
 			}
+			else {
+				pollsQuestion.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!pollsQuestionModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					pollsQuestion.setModifiedDate(now);
-				}
-				else {
-					pollsQuestion.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!pollsQuestionModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				pollsQuestion.setModifiedDate(now);
+			}
+			else {
+				pollsQuestion.setModifiedDate(serviceContext.getModifiedDate(
+						now));
 			}
 		}
 

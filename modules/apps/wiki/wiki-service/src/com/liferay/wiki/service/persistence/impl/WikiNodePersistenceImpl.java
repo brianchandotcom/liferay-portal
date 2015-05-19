@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -4678,27 +4677,25 @@ public class WikiNodePersistenceImpl extends BasePersistenceImpl<WikiNode>
 			wikiNode.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (wikiNode.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					wikiNode.setCreateDate(now);
-				}
-				else {
-					wikiNode.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (wikiNode.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				wikiNode.setCreateDate(now);
 			}
+			else {
+				wikiNode.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!wikiNodeModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					wikiNode.setModifiedDate(now);
-				}
-				else {
-					wikiNode.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!wikiNodeModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				wikiNode.setModifiedDate(now);
+			}
+			else {
+				wikiNode.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

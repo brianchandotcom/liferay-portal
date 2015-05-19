@@ -58,6 +58,7 @@ import org.apache.commons.lang.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Young
@@ -81,7 +82,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -113,7 +114,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -125,7 +126,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Workspace workspace = session.getWorkspace();
 
@@ -182,7 +183,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -191,7 +192,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			getRootNode(session, companyId);
 
@@ -201,7 +202,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -212,7 +213,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -242,7 +243,7 @@ public class JCRStore extends BaseStore {
 			}
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -256,7 +257,7 @@ public class JCRStore extends BaseStore {
 		// Create a dummy node
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Workspace workspace = session.getWorkspace();
 
@@ -296,13 +297,13 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 
 		// Delete version tree
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Workspace workspace = session.getWorkspace();
 
@@ -347,13 +348,13 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 
 		// Delete file
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -372,7 +373,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -384,7 +385,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Workspace workspace = session.getWorkspace();
 
@@ -438,7 +439,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -451,7 +452,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node contentNode = getFileContentNode(
 				session, companyId, repositoryId, fileName, versionLabel);
@@ -474,7 +475,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -485,7 +486,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -512,7 +513,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 
 		return fileNames.toArray(new String[fileNames.size()]);
@@ -527,7 +528,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -544,7 +545,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 
 		return fileNames.toArray(new String[fileNames.size()]);
@@ -559,7 +560,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node contentNode = getFileContentNode(
 				session, companyId, repositoryId, fileName, StringPool.BLANK);
@@ -572,7 +573,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 
 		return size;
@@ -585,7 +586,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -602,7 +603,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -630,7 +631,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			session.move(srcDir, destDir);
 
@@ -640,8 +641,13 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
+	}
+
+	@Reference
+	public void setJCRFactoryUtil(JCRFactoryUtil jcrFactoryUtil) {
+		_jcrFactoryUtil = jcrFactoryUtil;
 	}
 
 	@Override
@@ -653,7 +659,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -701,7 +707,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -714,7 +720,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Node rootNode = getRootNode(session, companyId);
 
@@ -760,7 +766,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -773,7 +779,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			Workspace workspace = session.getWorkspace();
 
@@ -834,7 +840,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 	}
 
@@ -885,7 +891,7 @@ public class JCRStore extends BaseStore {
 		Session session = null;
 
 		try {
-			session = JCRFactoryUtil.createSession();
+			session = _jcrFactoryUtil.createSession();
 
 			contentNode = getFileContentNode(
 				session, companyId, repositoryId, fileName, versionLabel);
@@ -894,7 +900,7 @@ public class JCRStore extends BaseStore {
 			throw new SystemException(re);
 		}
 		finally {
-			JCRFactoryUtil.closeSession(session);
+			_jcrFactoryUtil.closeSession(session);
 		}
 
 		return contentNode;
@@ -985,6 +991,7 @@ public class JCRStore extends BaseStore {
 	}
 
 	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
+	private JCRFactoryUtil _jcrFactoryUtil;
 
 	private static final Log _log = LogFactoryUtil.getLog(JCRStore.class);
 

@@ -168,18 +168,6 @@ public class JournalContentPortlet extends MVCPortlet {
 		}
 	}
 
-	@Activate
-	protected void activate() {
-		Class<? extends MVCPortlet> clazz = getClass();
-
-		initLogger(clazz.getClassLoader());
-	}
-
-	protected void initLogger(ClassLoader classLoader) {
-		Log4JUtil.configureLog4J(
-			classLoader.getResource("META-INF/portal-log4j.xml"));
-	}
-
 	@Reference
 	protected void setJournalContentSearchLocal(
 		JournalArticleLocalService journalArticleLocalService) {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jcr;
+package com.liferay.portal.store.jcr;
 
 /**
  * @author Michael Young

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.test;
 
-import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -285,16 +284,6 @@ public class ServiceTestUtil {
 	}
 
 	public static void initServices() {
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
-
 		// Thread locals
 
 		_setThreadLocals();

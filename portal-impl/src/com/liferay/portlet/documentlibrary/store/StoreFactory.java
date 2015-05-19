@@ -172,9 +172,6 @@ public class StoreFactory {
 		new String[] {
 			"com.liferay.documentlibrary.util.FileSystemHook",
 			FileSystemStore.class.getName()
-		},
-		new String[] {
-			"com.liferay.documentlibrary.util.JCRHook", JCRStore.class.getName()
 		}
 	};
 

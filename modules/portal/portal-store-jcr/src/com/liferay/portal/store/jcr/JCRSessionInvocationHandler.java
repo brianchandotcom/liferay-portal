@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jcr;
+package com.liferay.portal.store.jcr;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.store.jcr.jackrabbit;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -25,6 +27,8 @@ import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.Map;
+
 import javax.jcr.Credentials;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -32,8 +36,11 @@ import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.core.TransientRepository;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Michael Young
@@ -139,7 +146,13 @@ public class JCRFactoryImpl implements JCRFactory {
 		_initialized = false;
 	}
 
-	protected JCRFactoryImpl() throws Exception {
+	@Activate
+	protected void activate(Map<String, Object> properties)
+		throws RepositoryException {
+
+		_jcrStoreConfiguration = Configurable.createConfigurable(
+			JCRStoreConfiguration.class, properties);
+
 		String repositoryHome =
 			_jcrStoreConfiguration.jackrabbitRepositoryHome();
 
@@ -160,12 +173,27 @@ public class JCRFactoryImpl implements JCRFactory {
 					_jcrStoreConfiguration.jackrabbitConfigFilePath() +
 						" and repository home " + repositoryHome);
 		}
+
+		prepare();
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		shutdown();
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws RepositoryException {
+
+		deactivate();
+		activate(properties);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JCRFactoryImpl.class);
 
 	private boolean _initialized;
 	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
-	private final TransientRepository _transientRepository;
+	private TransientRepository _transientRepository;
 
 }

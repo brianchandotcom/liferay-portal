@@ -34,19 +34,14 @@ import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
-import com.liferay.gradle.util.Validator;
-
-import groovy.util.ConfigObject;
 
 import java.io.File;
 
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 
 import org.gradle.api.Action;
-import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -114,7 +109,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
-					configureLiferayExtension(project, liferayExtension);
 					configureVersion(project, liferayExtension);
 
 					configureTasks(project, liferayExtension);
@@ -323,64 +317,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			GradleUtil.addDependency(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
-		}
-	}
-
-	protected void configureLiferayExtension(
-		Project project, LiferayExtension liferayExtension) {
-
-		File appServerParentDir = liferayExtension.getAppServerParentDir();
-		String appServerType = liferayExtension.getAppServerType();
-
-		if ((appServerParentDir == null) || Validator.isNull(appServerType)) {
-			return;
-		}
-
-		File appServerDir = liferayExtension.getAppServerDir();
-
-		if (appServerDir == null) {
-			String appServerName = getAppServerProperty(
-				liferayExtension, appServerType, "name");
-			String appServerVersion = getAppServerProperty(
-				liferayExtension, appServerType, "version");
-
-			appServerDir = new File(
-				appServerParentDir, appServerName + "-" + appServerVersion);
-
-			liferayExtension.setAppServerDir(appServerDir);
-		}
-
-		if (liferayExtension.getAppServerDeployDir() == null) {
-			File appServerDeployDir = getAppServerDir(
-				liferayExtension, appServerDir, "deployDirName");
-
-			liferayExtension.setAppServerDeployDir(appServerDeployDir);
-		}
-
-		if (liferayExtension.getAppServerLibGlobalDir() == null) {
-			File appServerLibGlobalDir = getAppServerDir(
-				liferayExtension, appServerDir, "libGlobalDirName");
-
-			liferayExtension.setAppServerLibGlobalDir(appServerLibGlobalDir);
-		}
-
-		if (liferayExtension.getAppServerPortalDir() == null) {
-			File appServerPortalDir = getAppServerDir(
-				liferayExtension, appServerDir, "portalDirName");
-
-			liferayExtension.setAppServerPortalDir(appServerPortalDir);
-		}
-
-		if (liferayExtension.getDeployDir() == null) {
-			File deployDir = new File(appServerParentDir, "deploy");
-
-			liferayExtension.setDeployDir(deployDir);
-		}
-
-		if (liferayExtension.getLiferayHome() == null) {
-			File liferayHome = appServerParentDir.getParentFile();
-
-			liferayExtension.setLiferayHome(liferayHome);
 		}
 	}
 
@@ -855,34 +791,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		project.setVersion(
 			liferayExtension.getVersionPrefix() + "." + project.getVersion());
-	}
-
-	protected File getAppServerDir(
-		LiferayExtension liferayExtension, File appServerDir,
-		String dirNameKey) {
-
-		String dirName = getAppServerProperty(
-			liferayExtension, liferayExtension.getAppServerType(), dirNameKey);
-
-		return new File(appServerDir, dirName);
-	}
-
-	protected String getAppServerProperty(
-		LiferayExtension liferayExtension, String appServerType, String key) {
-
-		ConfigObject appServers = liferayExtension.getAppServers();
-
-		Map<String, String> appServerProperties =
-			(Map<String, String>)appServers.getProperty(appServerType);
-
-		String value = appServerProperties.get(key);
-
-		if (Validator.isNull(value)) {
-			throw new GradleException(
-				"Unable to get property " + key + " for " + appServerType);
-		}
-
-		return value;
 	}
 
 	protected File getJavaDir(Project project) {

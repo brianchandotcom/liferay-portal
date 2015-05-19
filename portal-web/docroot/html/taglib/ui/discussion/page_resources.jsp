@@ -26,9 +26,9 @@ DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(reque
 
 Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(renderRequest));
 
-Comment rootComment = discussion.getRootComment();
+DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
-CommentIterator commentIterator = rootComment.getThreadCommentsIterator(rootIndexPage);
+CommentIterator commentIterator = rootDiscussionComment.getThreadCommentsIterator(rootIndexPage);
 
 while (commentIterator.hasNext()) {
 	rootIndexPage = commentIterator.getIndexPage();
@@ -37,9 +37,9 @@ while (commentIterator.hasNext()) {
 		break;
 	}
 
-	Comment comment = commentIterator.next();
+	DiscussionComment discussionComment = commentIterator.next();
 
-	request.setAttribute("liferay-ui:discussion:currentComment", comment);
+	request.setAttribute("liferay-ui:discussion:currentComment", discussionComment);
 	request.setAttribute("liferay-ui:discussion:discussion", discussion);
 %>
 
@@ -57,7 +57,7 @@ while (commentIterator.hasNext()) {
 	rootIndexPage.val('<%= String.valueOf(rootIndexPage) %>');
 	index.val('<%= String.valueOf(index) %>');
 
-	<c:if test="<%= rootComment.getThreadCommentsCount() <= (index + 1) %>">
+	<c:if test="<%= rootDiscussionComment.getThreadCommentsCount() <= (index + 1) %>">
 		var moreCommentsLink = $('#<%= namespace %>moreComments');
 
 		moreCommentsLink.hide();

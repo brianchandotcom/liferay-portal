@@ -16,7 +16,7 @@ package com.liferay.portal.comment.context;
 
 import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
@@ -37,7 +37,7 @@ public class DefaultCommentSectionDisplayContext
 		_discussionRequestHelper = discussionRequestHelper;
 		_discussionTaglibHelper = discussionTaglibHelper;
 		_discussionPermission = discussionPermission;
-		_rootComment = discussion.getRootComment();
+		_rootDiscussionComment = discussion.getRootDiscussionComment();
 	}
 
 	@Override
@@ -56,11 +56,11 @@ public class DefaultCommentSectionDisplayContext
 
 	@Override
 	public boolean isDiscussionVisible() throws PortalException {
-		if (_rootComment == null) {
+		if (_rootDiscussionComment == null) {
 			return false;
 		}
 
-		if ((_rootComment.getThreadCommentsCount() > 1) ||
+		if ((_rootDiscussionComment.getThreadCommentsCount() > 1) ||
 			hasViewPermission()) {
 
 			return true;
@@ -71,8 +71,8 @@ public class DefaultCommentSectionDisplayContext
 
 	@Override
 	public boolean isMessageThreadVisible() {
-		if ((_rootComment != null) &&
-			(_rootComment.getThreadCommentsCount() > 1)) {
+		if ((_rootDiscussionComment != null) &&
+			(_rootDiscussionComment.getThreadCommentsCount() > 1)) {
 
 			return true;
 		}
@@ -97,6 +97,6 @@ public class DefaultCommentSectionDisplayContext
 	private final DiscussionPermission _discussionPermission;
 	private final DiscussionRequestHelper _discussionRequestHelper;
 	private final DiscussionTaglibHelper _discussionTaglibHelper;
-	private final Comment _rootComment;
+	private final DiscussionComment _rootDiscussionComment;
 
 }

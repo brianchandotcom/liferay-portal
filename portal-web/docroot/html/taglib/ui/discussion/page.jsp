@@ -25,7 +25,7 @@ DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(reque
 DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.getUserId(), discussionRequestHelper.getScopeGroupId(), discussionTaglibHelper.getClassName(), discussionTaglibHelper.getClassPK(), new ServiceContextFunction(renderRequest));
 
-Comment rootComment = discussion.getRootComment();
+DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
 CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContextProviderUtil.getCommentSectionDisplayContext(request, response, discussionPermission, discussion);
 %>
@@ -59,15 +59,15 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<aui:input name="ajax" type="hidden" value="<%= true %>" />
 
 				<%
-				Comment comment = rootComment;
+				DiscussionComment discussionComment = rootDiscussionComment;
 				%>
 
 				<c:if test="<%= commentSectionDisplayContext.isControlsVisible() %>">
 					<aui:fieldset cssClass="add-comment" id='<%= randomNamespace + "messageScroll0" %>'>
 						<c:if test="<%= !discussion.isMaxCommentsLimitExceeded() %>">
-							<div id="<%= randomNamespace %>messageScroll<%= rootComment.getCommentId() %>">
-								<aui:input name="commentId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
-								<aui:input name="parentCommentId0" type="hidden" value="<%= rootComment.getCommentId() %>" />
+							<div id="<%= randomNamespace %>messageScroll<%= rootDiscussionComment.getCommentId() %>">
+								<aui:input name="commentId0" type="hidden" value="<%= rootDiscussionComment.getCommentId() %>" />
+								<aui:input name="parentCommentId0" type="hidden" value="<%= rootDiscussionComment.getCommentId() %>" />
 							</div>
 						</c:if>
 
@@ -148,7 +148,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						int rootIndexPage = 0;
 						boolean moreCommentsPagination = false;
 
-						CommentIterator commentIterator = rootComment.getThreadCommentsIterator();
+						CommentIterator commentIterator = rootDiscussionComment.getThreadCommentsIterator();
 
 						while (commentIterator.hasNext()) {
 							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);
@@ -161,9 +161,9 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								break;
 							}
 
-							comment = commentIterator.next();
+							discussionComment = commentIterator.next();
 
-							request.setAttribute("liferay-ui:discussion:currentComment", comment);
+							request.setAttribute("liferay-ui:discussion:currentComment", discussionComment);
 							request.setAttribute("liferay-ui:discussion:discussion", discussion);
 							request.setAttribute("liferay-ui:discussion:randomNamespace", randomNamespace);
 						%>

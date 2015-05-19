@@ -23,9 +23,9 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public interface Comment extends DetachedComment {
+public interface DiscussionComment extends DetachedComment {
 
-	public Comment getParentComment() throws PortalException;
+	public DiscussionComment getParentComment() throws PortalException;
 
 	public long getParentCommentId();
 
@@ -33,7 +33,7 @@ public interface Comment extends DetachedComment {
 
 	public RatingsStats getRatingsStats();
 
-	public List<Comment> getThreadComments();
+	public List<DiscussionComment> getThreadComments();
 
 	public int getThreadCommentsCount();
 

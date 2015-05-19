@@ -19,7 +19,7 @@
 <%@ page import="com.liferay.portal.comment.context.CommentDisplayContextProviderUtil" %><%@
 page import="com.liferay.portal.comment.context.util.DiscussionRequestHelper" %><%@
 page import="com.liferay.portal.comment.context.util.DiscussionTaglibHelper" %><%@
-page import="com.liferay.portal.kernel.comment.Comment" %><%@
+page import="com.liferay.portal.kernel.comment.DiscussionComment" %><%@
 page import="com.liferay.portal.kernel.comment.CommentConstants" %><%@
 page import="com.liferay.portal.kernel.comment.CommentIterator" %><%@
 page import="com.liferay.portal.kernel.comment.CommentManagerUtil" %><%@

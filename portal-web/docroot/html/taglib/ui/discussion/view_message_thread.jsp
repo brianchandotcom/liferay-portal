@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/ui/discussion/init.jsp" %>
 
 <%
-Comment comment = (Comment)request.getAttribute("liferay-ui:discussion:currentComment");
+DiscussionComment discussionComment = (DiscussionComment)request.getAttribute("liferay-ui:discussion:currentComment");
 Discussion discussion = (Discussion)request.getAttribute("liferay-ui:discussion:discussion");
 
 int index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"));
@@ -33,26 +33,26 @@ DiscussionTaglibHelper discussionTaglibHelper = new DiscussionTaglibHelper(reque
 
 DiscussionPermission discussionPermission = CommentManagerUtil.getDiscussionPermission(discussionRequestHelper.getPermissionChecker());
 
-CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, discussionPermission, comment);
+CommentTreeDisplayContext commentTreeDisplayContext = CommentDisplayContextProviderUtil.getCommentTreeDisplayContext(request, response, discussionPermission, discussionComment);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>
 
 <c:if test="<%= commentTreeDisplayContext.isDiscussionVisible() %>">
 	<article class="lfr-discussion">
-		<div id="<%= randomNamespace %>messageScroll<%= comment.getCommentId() %>">
-			<a name="<%= randomNamespace %>message_<%= comment.getCommentId() %>"></a>
+		<div id="<%= randomNamespace %>messageScroll<%= discussionComment.getCommentId() %>">
+			<a name="<%= randomNamespace %>message_<%= discussionComment.getCommentId() %>"></a>
 
-			<aui:input name='<%= "commentId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
-			<aui:input name='<%= "parentCommentId" + index %>' type="hidden" value="<%= comment.getCommentId() %>" />
+			<aui:input name='<%= "commentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
+			<aui:input name='<%= "parentCommentId" + index %>' type="hidden" value="<%= discussionComment.getCommentId() %>" />
 		</div>
 
 		<div class="lfr-discussion-details">
 			<liferay-ui:user-display
-				author="<%= discussionTaglibHelper.getUserId() == comment.getUserId() %>"
+				author="<%= discussionTaglibHelper.getUserId() == discussionComment.getUserId() %>"
 				displayStyle="2"
 				showUserName="<%= false %>"
-				userId="<%= comment.getUserId() %>"
+				userId="<%= discussionComment.getUserId() %>"
 			/>
 		</div>
 
@@ -60,7 +60,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 			<c:if test="<%= commentTreeDisplayContext.isWorkflowStatusVisible() %>">
 
 				<%
-				WorkflowableComment workflowableComment = (WorkflowableComment)comment;
+				WorkflowableComment workflowableComment = (WorkflowableComment)discussionComment;
 				%>
 
 				<aui:model-context bean="<%= workflowableComment %>" model="<%= workflowableComment.getModelClass() %>" />
@@ -74,39 +74,39 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<header class="lfr-discussion-message-author">
 
 					<%
-					User messageUser = comment.getUser();
+					User messageUser = discussionComment.getUser();
 					%>
 
 					<aui:a href="<%= (messageUser != null) ? messageUser.getDisplayURL(themeDisplay) : null %>">
-						<%= HtmlUtil.escape(comment.getUserName()) %>
+						<%= HtmlUtil.escape(discussionComment.getUserName()) %>
 
-						<c:if test="<%= comment.getUserId() == user.getUserId() %>">
+						<c:if test="<%= discussionComment.getUserId() == user.getUserId() %>">
 							(<liferay-ui:message key="you" />)
 						</c:if>
 					</aui:a>
 
 					<%
-					Comment rootComment = discussion.getRootComment();
+					DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
-					Date createDate = comment.getCreateDate();
+					Date createDate = discussionComment.getCreateDate();
 
 					String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 					%>
 
 					<c:choose>
-						<c:when test="<%= comment.getParentCommentId() == rootComment.getCommentId() %>">
+						<c:when test="<%= discussionComment.getParentCommentId() == rootDiscussionComment.getCommentId() %>">
 							<liferay-ui:message arguments="<%= createDateDescription %>" key="x-ago" translateArguments="<%= false %>" />
 						</c:when>
 						<c:otherwise>
 
 							<%
-							Comment parentComment = comment.getParentComment();
+							DiscussionComment parentDiscussionComment = discussionComment.getParentComment();
 							%>
 
 							<liferay-util:buffer var="parentCommentUserBuffer">
 
 								<%
-								User parentMessageUser = parentComment.getUser();
+								User parentMessageUser = parentDiscussionComment.getUser();
 
 								boolean male = (parentMessageUser == null) ? true : parentMessageUser.isMale();
 								long portraitId = (parentMessageUser == null) ? 0 : parentMessageUser.getPortraitId();
@@ -115,22 +115,22 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 
 								<span>
 									<div class="lfr-discussion-reply-user-avatar">
-										<img alt="<%= HtmlUtil.escapeAttribute(parentComment.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
+										<img alt="<%= HtmlUtil.escapeAttribute(parentDiscussionComment.getUserName()) %>" class="user-status-avatar-image" src="<%= UserConstants.getPortraitURL(themeDisplay.getPathImage(), male, portraitId, userUuid) %>" width="30" />
 									</div>
 
 									<div class="lfr-discussion-reply-user-name">
-										<%= parentComment.getUserName() %>
+										<%= parentDiscussionComment.getUserName() %>
 									</div>
 
 									<div class="lfr-discussion-reply-creation-date">
-										<%= dateFormatDateTime.format(parentComment.getCreateDate()) %>
+										<%= dateFormatDateTime.format(parentDiscussionComment.getCreateDate()) %>
 									</div>
 								</span>
 							</liferay-util:buffer>
 
 							<liferay-util:buffer var="parentCommentBodyBuffer">
-								<a class="lfr-discussion-parent-link" data-metadata="<%= HtmlUtil.escape(parentComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>">
-									<%= HtmlUtil.escape(parentComment.getUserName()) %>
+								<a class="lfr-discussion-parent-link" data-metadata="<%= HtmlUtil.escape(parentDiscussionComment.getBody()) %>" data-title="<%= HtmlUtil.escape(parentCommentUserBuffer) %>">
+									<%= HtmlUtil.escape(parentDiscussionComment.getUserName()) %>
 								</a>
 							</liferay-util:buffer>
 
@@ -139,7 +139,7 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 					</c:choose>
 
 					<%
-					Date modifiedDate = comment.getModifiedDate();
+					Date modifiedDate = discussionComment.getModifiedDate();
 					%>
 
 					<c:if test="<%= createDate.before(modifiedDate) %>">
@@ -150,14 +150,14 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				</header>
 
 				<div class="lfr-discussion-message-body" id='<portlet:namespace /><%= randomNamespace + "discussionMessage" + index %>'>
-					<%= comment.getTranslatedBody() %>
+					<%= discussionComment.getTranslatedBody() %>
 				</div>
 
 				<c:if test="<%= commentTreeDisplayContext.isEditControlsVisible() %>">
 					<div class="lfr-discussion-form lfr-discussion-form-edit" id="<%= namespace + randomNamespace %>editForm<%= index %>" style='<%= "display: none; max-width: " + ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH + "px;" %>'>
-						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= comment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>' showSource="<%= false %>" />
+						<liferay-ui:input-editor autoCreate="<%= false %>" configKey="commentsEditor" contents="<%= discussionComment.getBody() %>" editorName='<%= PropsUtil.get("editor.wysiwyg.portal-web.docroot.html.taglib.ui.discussion.jsp") %>' name='<%= randomNamespace + "editReplyBody" + index %>' onChangeMethod='<%= randomNamespace + index + "EditOnChange" %>' showSource="<%= false %>" />
 
-						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= comment.getBody() %>" />
+						<aui:input name='<%= "editReplyBody" + index %>' type="hidden" value="<%= discussionComment.getBody() %>" />
 
 						<aui:button-row>
 							<aui:button name='<%= randomNamespace + "editReplyButton" + index %>' onClick='<%= randomNamespace + "updateMessage(" + index + ");" %>' value="<%= commentTreeDisplayContext.getPublishButtonLabel(locale) %>" />
@@ -182,9 +182,9 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 				<c:if test="<%= commentTreeDisplayContext.isRatingsVisible() %>">
 					<liferay-ui:ratings
 						className="<%= CommentConstants.getDiscussionClassName() %>"
-						classPK="<%= comment.getCommentId() %>"
-						ratingsEntry="<%= comment.getRatingsEntry() %>"
-						ratingsStats="<%= comment.getRatingsStats() %>"
+						classPK="<%= discussionComment.getCommentId() %>"
+						ratingsEntry="<%= discussionComment.getRatingsEntry() %>"
+						ratingsStats="<%= discussionComment.getRatingsStats() %>"
 					/>
 				</c:if>
 
@@ -292,8 +292,8 @@ Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZo
 		</div>
 
 		<%
-		for (Comment curComment : comment.getThreadComments()) {
-			request.setAttribute("liferay-ui:discussion:currentComment", curComment);
+		for (DiscussionComment curDiscussionComment : discussionComment.getThreadComments()) {
+			request.setAttribute("liferay-ui:discussion:currentComment", curDiscussionComment);
 		%>
 
 			<liferay-util:include page="/html/taglib/ui/discussion/view_message_thread.jsp" />

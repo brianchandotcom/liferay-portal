@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.CommentIterator;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -32,10 +32,10 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentImpl
+public class MBDiscussionCommentImpl
 	extends MBDetachedCommentImpl implements WorkflowableComment {
 
-	public MBCommentImpl(
+	public MBDiscussionCommentImpl(
 		MBMessage message, MBTreeWalker treeWalker,
 		List<RatingsEntry> ratingsEntries, List<RatingsStats> ratingsStats,
 		String pathThemeImages) {
@@ -63,7 +63,7 @@ public class MBCommentImpl
 	}
 
 	@Override
-	public Comment getParentComment() throws PortalException {
+	public DiscussionComment getParentComment() throws PortalException {
 		MBMessage message = getMessage();
 
 		long parentMessageId = message.getParentMessageId();
@@ -75,7 +75,7 @@ public class MBCommentImpl
 		MBMessage parentMessage = MBMessageLocalServiceUtil.getMessage(
 			parentMessageId);
 
-		return new MBCommentImpl(
+		return new MBDiscussionCommentImpl(
 			parentMessage, _treeWalker, _ratingsEntries, _ratingsStats,
 			_pathThemeImages);
 	}
@@ -128,16 +128,16 @@ public class MBCommentImpl
 	}
 
 	@Override
-	public List<Comment> getThreadComments() {
-		List<Comment> comments = new ArrayList<>();
+	public List<DiscussionComment> getThreadComments() {
+		List<DiscussionComment> discussionComments = new ArrayList<>();
 
 		CommentIterator commentIterator = getThreadCommentsIterator();
 
 		while (commentIterator.hasNext()) {
-			comments.add(commentIterator.next());
+			discussionComments.add(commentIterator.next());
 		}
 
-		return comments;
+		return discussionComments;
 	}
 
 	@Override
@@ -218,14 +218,14 @@ public class MBCommentImpl
 		}
 
 		@Override
-		public Comment next() {
-			Comment comment = new MBCommentImpl(
+		public DiscussionComment next() {
+			DiscussionComment discussionComment = new MBDiscussionCommentImpl(
 				_messages.get(_from), _treeWalker, _ratingsEntries,
 				_ratingsStats, _pathThemeImages);
 
 			_from++;
 
-			return comment;
+			return discussionComment;
 		}
 
 		@Override

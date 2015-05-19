@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
@@ -200,12 +200,12 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		ThemeDisplay themeDisplay = serviceContext.getThemeDisplay();
 
-		Comment rootComment = new MBCommentImpl(
+		DiscussionComment rootDiscussionComment = new MBDiscussionCommentImpl(
 			treeWalker.getRoot(), treeWalker, ratingsEntries, ratingsStats,
 			themeDisplay.getPathThemeImages());
 
 		return new MBDiscussionImpl(
-			rootComment, messageDisplay.isDiscussionMaxComments());
+			rootDiscussionComment, messageDisplay.isDiscussionMaxComments());
 	}
 
 	@Override

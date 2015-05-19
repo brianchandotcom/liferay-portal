@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.util;
 
-import com.liferay.portal.kernel.comment.DetachedComment;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -43,7 +43,7 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.messageboards.comment.MBDetachedCommentImpl;
+import com.liferay.portlet.messageboards.comment.MBCommentImpl;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
@@ -246,10 +246,10 @@ public class MBMessageIndexer extends BaseIndexer {
 				message.getClassName());
 
 			if (indexer != null) {
-				DetachedComment detachedComment = new MBDetachedCommentImpl(
+				Comment comment = new MBCommentImpl(
 					message);
 
-				indexer.addRelatedEntryFields(document, detachedComment);
+				indexer.addRelatedEntryFields(document, comment);
 
 				document.addKeyword(Field.RELATED_ENTRY, true);
 			}

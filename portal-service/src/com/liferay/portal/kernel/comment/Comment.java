@@ -22,7 +22,7 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public interface DetachedComment {
+public interface Comment {
 
 	public String getBody();
 

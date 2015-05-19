@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.indexer;
 
-import com.liferay.portal.kernel.comment.DetachedComment;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -84,10 +84,10 @@ public class WikiPageIndexer extends BaseIndexer {
 
 			classPK = dlFileEntry.getClassPK();
 		}
-		else if (obj instanceof DetachedComment) {
-			DetachedComment detachedComment = (DetachedComment)obj;
+		else if (obj instanceof Comment) {
+			Comment comment = (Comment)obj;
 
-			classPK = detachedComment.getClassPK();
+			classPK = comment.getClassPK();
 		}
 
 		WikiPage page = null;

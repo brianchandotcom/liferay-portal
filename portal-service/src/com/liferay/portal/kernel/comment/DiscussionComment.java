@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public interface DiscussionComment extends DetachedComment {
+public interface DiscussionComment extends Comment {
 
 	public DiscussionComment getParentComment() throws PortalException;
 

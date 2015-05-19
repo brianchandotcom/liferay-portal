@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
-import com.liferay.portal.kernel.comment.DetachedComment;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -113,13 +113,13 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
 
-		DetachedComment detachedComment = (DetachedComment)obj;
+		Comment comment = (Comment)obj;
 
 		FileEntry fileEntry = null;
 
 		try {
 			fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				detachedComment.getClassPK());
+				comment.getClassPK());
 		}
 		catch (Exception e) {
 			return;

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.comment.DetachedComment;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -24,9 +24,9 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class MBDetachedCommentImpl implements DetachedComment {
+public class MBCommentImpl implements Comment {
 
-	public MBDetachedCommentImpl(MBMessage message) {
+	public MBCommentImpl(MBMessage message) {
 		_message = message;
 	}
 

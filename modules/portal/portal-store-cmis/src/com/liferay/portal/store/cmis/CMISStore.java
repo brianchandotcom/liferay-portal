@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.store;
+package com.liferay.portal.store.cmis;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
@@ -21,10 +21,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.repository.cmis.CMISRepositoryUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.store.BaseStore;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.InputStream;

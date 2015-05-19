@@ -786,6 +786,22 @@ public class VerifyProperties extends VerifyProcess {
 		// JCR Store
 
 		new String[] {
+			"dl.store.jcr.fetch.delay", "fetch.delay",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"dl.store.jcr.fetch.max.failures", "fetch.max.failures",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"dl.store.jcr.move.version.labels", "move.version.labels",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.initialize.on.startup", "initialize.on.startup",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
 			"jcr.jackrabbit.config.file.path", "jackrabbit.config.file.path",
 			"com.liferay.portal.store.jcr"
 		},
@@ -804,6 +820,17 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"jcr.jackrabbit.repository.root", "repository.root",
 			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.node.documentlibrary", "node.documentlibrary",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.workspace.name", "workspace.name",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.wrap.session", "wrap.session", "com.liferay.portal.store.jcr"
 		},
 
 		// Journal

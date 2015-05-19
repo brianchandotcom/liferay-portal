@@ -14,22 +14,14 @@
 
 package com.liferay.portal.store.jcr;
 
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PropsUtil;
-
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
 /**
  * @author Michael Young
+ * @author Manuel de la Peña
  */
 public interface JCRFactory {
-
-	public static final String NODE_DOCUMENTLIBRARY = PropsUtil.get(
-		PropsKeys.JCR_NODE_DOCUMENTLIBRARY);
-
-	public static final String WORKSPACE_NAME = PropsUtil.get(
-		PropsKeys.JCR_WORKSPACE_NAME);
 
 	public Session createSession(String workspaceName)
 		throws RepositoryException;

@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.configuration.internal;
+package com.liferay.nested.portlets.web.settings.internal;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
-import com.liferay.nested.portlets.web.constants.NestedPortletsPortletKeys;
-import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Juergen Kappler
  */
 @Component
-public class NestedPortletsPortletInstanceSettingsIdMapping
-	implements SettingsIdMapping {
+public class NestedPortletsPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class<?> getConfigurationBeanClass() {
+	public Class getConfigurationBeanClass() {
 		return NestedPortletsPortletInstanceConfiguration.class;
-	}
-
-	@Override
-	public String getSettingsId() {
-		return NestedPortletsPortletKeys.NESTED_PORTLETS;
 	}
 
 }

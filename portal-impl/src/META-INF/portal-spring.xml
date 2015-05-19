@@ -139,6 +139,7 @@
 	<bean id="com.liferay.portal.service.persistence.RoleFinder" class="com.liferay.portal.service.persistence.impl.RoleFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ServiceComponentLocalService" class="com.liferay.portal.service.impl.ServiceComponentLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ServiceComponentPersistence" class="com.liferay.portal.service.persistence.impl.ServiceComponentPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.service.persistence.ServiceComponentFinder" class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ShardLocalService" class="com.liferay.portal.service.impl.ShardLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ShardPersistence" class="com.liferay.portal.service.persistence.impl.ShardPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.StagingLocalService" class="com.liferay.portal.service.impl.StagingLocalServiceImpl" />

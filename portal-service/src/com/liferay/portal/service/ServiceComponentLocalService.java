@@ -177,6 +177,9 @@ public interface ServiceComponentLocalService extends BaseLocalService,
 	*/
 	public java.lang.String getBeanIdentifier();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.ServiceComponent> getLatestServiceComponentsByBuildNamespace();
+
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(

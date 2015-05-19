@@ -37,6 +37,7 @@ import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.ServiceComponentLocalService;
+import com.liferay.portal.service.persistence.ServiceComponentFinder;
 import com.liferay.portal.service.persistence.ServiceComponentPersistence;
 import com.liferay.portal.util.PortalUtil;
 
@@ -337,6 +338,25 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the service component finder.
+	 *
+	 * @return the service component finder
+	 */
+	public ServiceComponentFinder getServiceComponentFinder() {
+		return serviceComponentFinder;
+	}
+
+	/**
+	 * Sets the service component finder.
+	 *
+	 * @param serviceComponentFinder the service component finder
+	 */
+	public void setServiceComponentFinder(
+		ServiceComponentFinder serviceComponentFinder) {
+		this.serviceComponentFinder = serviceComponentFinder;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -421,6 +441,8 @@ public abstract class ServiceComponentLocalServiceBaseImpl
 	protected ServiceComponentLocalService serviceComponentLocalService;
 	@BeanReference(type = ServiceComponentPersistence.class)
 	protected ServiceComponentPersistence serviceComponentPersistence;
+	@BeanReference(type = ServiceComponentFinder.class)
+	protected ServiceComponentFinder serviceComponentFinder;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)

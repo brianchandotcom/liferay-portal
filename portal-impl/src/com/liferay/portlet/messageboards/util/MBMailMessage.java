@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.messageboards.model.MBMessageConstants;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -35,15 +36,30 @@ public class MBMailMessage {
 	}
 
 	public String getBody() {
-		if (Validator.isNotNull(_plainBody)) {
-			return GetterUtil.getString(_plainBody);
+		String body = null;
+
+		if (MBMessageConstants.DEFAULT_FORMAT.equals("html")) {
+			if (Validator.isNotNull(_htmlBody)) {
+				body = GetterUtil.getString(_htmlBody);
+			}
+			else if (Validator.isNotNull(_plainBody)) {
+				body = GetterUtil.getString(_plainBody);
+			}
 		}
-		else if (Validator.isNotNull(_htmlBody)) {
-			return HtmlUtil.extractText(_htmlBody);
+		else if (MBMessageConstants.DEFAULT_FORMAT.equals("text")) {
+			if (Validator.isNotNull(_plainBody)) {
+				body = GetterUtil.getString(_plainBody);
+			}
+			else if (Validator.isNotNull(_htmlBody)) {
+				body = HtmlUtil.extractText(_htmlBody);
+			}
 		}
-		else {
-			return "-";
+
+		if (Validator.isNull(body)) {
+			body = "-";
 		}
+
+		return body;
 	}
 
 	public String getHtmlBody() {

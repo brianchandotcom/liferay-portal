@@ -5279,12 +5279,12 @@ if (ppstate.equals("normal")) {
 
 		<ant dir="portal-impl" target="compile-test" inheritAll="false" />
 
-		<get-testcase-property property.name="setup.wizard.enabled" />
+		<get-testcase-property property.name="setup.wizard.initial.database.type" />
 
 		<if>
 			<or>
 				<equals arg1="${database.type}" arg2="hsql" />
-				<equals arg1="${setup.wizard.enabled}" arg2="true" />
+				<equals arg1="${setup.wizard.initial.database.type}" arg2="hsql" />
 			</or>
 			<then>
 				<antcall target="rebuild-database" inheritAll="false">

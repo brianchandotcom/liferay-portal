@@ -17,15 +17,17 @@ package com.liferay.productivity.center.service.panel;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortletKeys;
+import com.liferay.productivity.center.panel.BaseControlPanelEntryPanelApp;
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
 
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
@@ -37,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 	},
 	service = PanelApp.class
 )
-public class MyPagesPanelApp implements PanelApp {
+public class MyPagesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getKey() {
@@ -58,10 +60,17 @@ public class MyPagesPanelApp implements PanelApp {
 	}
 
 	@Override
-	public boolean hasAccessPermission(
-		PermissionChecker permissionChecker, Group group) {
-
-		return true;
+	protected Portlet getPortlet() {
+		return _portletLocalService.getPortletById(getPortletId());
 	}
+
+	@Reference(unbind = "-")
+	protected void setPortletLocalService(
+		PortletLocalService portletLocalService) {
+
+		_portletLocalService = portletLocalService;
+	}
+
+	private PortletLocalService _portletLocalService;
 
 }

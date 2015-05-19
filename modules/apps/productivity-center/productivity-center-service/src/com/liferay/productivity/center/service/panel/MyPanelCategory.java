@@ -15,8 +15,7 @@
 package com.liferay.productivity.center.service.panel;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.productivity.center.panel.BasePanelCategory;
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
 
@@ -32,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"panel.category.key=" + PanelCategoryKeys.USER_PERSONAL_PANEL},
 	service = PanelCategory.class
 )
-public class MyPanelCategory implements PanelCategory {
+public class MyPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
@@ -47,13 +46,6 @@ public class MyPanelCategory implements PanelCategory {
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, "category.my");
-	}
-
-	@Override
-	public boolean hasAccessPermission(
-		PermissionChecker permissionChecker, Group group) {
-
-		return true;
 	}
 
 }

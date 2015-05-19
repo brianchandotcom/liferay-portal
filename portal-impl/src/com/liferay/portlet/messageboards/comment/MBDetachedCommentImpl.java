@@ -85,6 +85,10 @@ public class MBDetachedCommentImpl implements DetachedComment {
 		return _message.getUserName();
 	}
 
+	protected MBMessage getMessage() {
+		return _message;
+	}
+
 	private final MBMessage _message;
 
 }

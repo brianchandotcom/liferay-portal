@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentIterator;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBTreeWalker;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
@@ -29,20 +27,21 @@ import com.liferay.portlet.ratings.model.RatingsStats;
 import com.liferay.portlet.ratings.service.persistence.RatingsStatsUtil;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author Adolfo Pérez
  */
-public class MBCommentImpl implements Comment, WorkflowableComment {
+public class MBCommentImpl
+	extends MBDetachedCommentImpl implements WorkflowableComment {
 
 	public MBCommentImpl(
 		MBMessage message, MBTreeWalker treeWalker,
 		List<RatingsEntry> ratingsEntries, List<RatingsStats> ratingsStats,
 		String pathThemeImages) {
 
-		_message = message;
+		super(message);
+
 		_treeWalker = treeWalker;
 		_ratingsEntries = ratingsEntries;
 		_ratingsStats = ratingsStats;
@@ -50,62 +49,24 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
-	public String getBody() {
-		return _message.getBody();
-	}
-
-	@Override
-	public String getClassName() {
-		return _message.getClassName();
-	}
-
-	@Override
-	public long getClassPK() {
-		return _message.getClassPK();
-	}
-
-	@Override
-	public long getCommentId() {
-		return _message.getMessageId();
-	}
-
-	@Override
 	public long getCompanyId() {
-		return _message.getCompanyId();
-	}
+		MBMessage message = getMessage();
 
-	@Override
-	public Date getCreateDate() {
-		return _message.getCreateDate();
+		return message.getCompanyId();
 	}
 
 	@Override
 	public long getGroupId() {
-		return _message.getGroupId();
-	}
+		MBMessage message = getMessage();
 
-	public MBMessage getMessage() {
-		return _message;
-	}
-
-	@Override
-	public Class<?> getModelClass() {
-		return MBMessage.class;
-	}
-
-	@Override
-	public String getModelClassName() {
-		return MBMessage.class.getName();
-	}
-
-	@Override
-	public Date getModifiedDate() {
-		return _message.getModifiedDate();
+		return message.getGroupId();
 	}
 
 	@Override
 	public Comment getParentComment() throws PortalException {
-		long parentMessageId = _message.getParentMessageId();
+		MBMessage message = getMessage();
+
+		long parentMessageId = message.getParentMessageId();
 
 		if (parentMessageId == 0) {
 			return null;
@@ -121,12 +82,16 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 
 	@Override
 	public long getParentCommentId() {
-		return _message.getParentMessageId();
+		MBMessage message = getMessage();
+
+		return message.getParentMessageId();
 	}
 
 	@Override
 	public long getPrimaryKey() {
-		return _message.getPrimaryKey();
+		MBMessage message = getMessage();
+
+		return message.getPrimaryKey();
 	}
 
 	@Override
@@ -157,7 +122,9 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 
 	@Override
 	public int getStatus() {
-		return _message.getStatus();
+		MBMessage message = getMessage();
+
+		return message.getStatus();
 	}
 
 	@Override
@@ -184,7 +151,7 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	public CommentIterator getThreadCommentsIterator() {
 		List<MBMessage> messages = _treeWalker.getMessages();
 
-		int[] range = _treeWalker.getChildrenRange(_message);
+		int[] range = _treeWalker.getChildrenRange(getMessage());
 
 		return new MBCommentIterator(
 			messages, range[0], range[1], _treeWalker, _pathThemeImages);
@@ -194,7 +161,7 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	public CommentIterator getThreadCommentsIterator(int from) {
 		List<MBMessage> messages = _treeWalker.getMessages();
 
-		int[] range = _treeWalker.getChildrenRange(_message);
+		int[] range = _treeWalker.getChildrenRange(getMessage());
 
 		return new MBCommentIterator(
 			messages, from, range[1], _treeWalker, _pathThemeImages);
@@ -202,7 +169,9 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 
 	@Override
 	public String getTranslatedBody() {
-		if (_message.isFormatBBCode()) {
+		MBMessage message = getMessage();
+
+		if (message.isFormatBBCode()) {
 			return MBUtil.getBBCodeHTML(getBody(), _pathThemeImages);
 		}
 
@@ -210,26 +179,12 @@ public class MBCommentImpl implements Comment, WorkflowableComment {
 	}
 
 	@Override
-	public User getUser() {
-		return UserLocalServiceUtil.fetchUser(getUserId());
-	}
-
-	@Override
-	public long getUserId() {
-		return _message.getUserId();
-	}
-
-	@Override
-	public String getUserName() {
-		return _message.getUserName();
-	}
-
-	@Override
 	public boolean isRoot() {
-		return _message.isRoot();
+		MBMessage message = getMessage();
+
+		return message.isRoot();
 	}
 
-	private final MBMessage _message;
 	private final String _pathThemeImages;
 	private final List<RatingsEntry> _ratingsEntries;
 	private final List<RatingsStats> _ratingsStats;

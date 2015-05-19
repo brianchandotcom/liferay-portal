@@ -88,10 +88,6 @@
 		<priority value="WARN" />
 	</category>
 
-	<category name="com.liferay.portal.cache.ehcache.internal.EhcachePortalCacheManager">
-		<priority value="ERROR" />
-	</category>
-
 	<category name="com.liferay.portal.captcha.CaptchaImpl">
 		<priority value="INFO" />
 	</category>

@@ -15,8 +15,14 @@
 package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -86,6 +92,32 @@ public class DDMFormValuesToPropertiesConverter {
 		return ddmFormField.getDataType();
 	}
 
+	protected String getDDMFormFieldType(String fieldName) {
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
+
+		return ddmFormField.getType();
+	}
+
+	protected String getDDMFormFieldValueString(
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		String type = getDDMFormFieldType(ddmFormFieldValue.getName());
+
+		Value value = ddmFormFieldValue.getValue();
+
+		String valueString = value.getString(_locale);
+
+		if (type.equals(DDMFormFieldType.SELECT)) {
+			JSONArray jsonArray = toJSONArray(valueString);
+
+			if (jsonArray.length() == 1) {
+				valueString = jsonArray.getString(0);
+			}
+		}
+
+		return valueString;
+	}
+
 	protected Serializable toArrayValue(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
@@ -98,13 +130,23 @@ public class DDMFormValuesToPropertiesConverter {
 		return FieldConstants.getSerializable(dataType, values);
 	}
 
+	protected JSONArray toJSONArray(String json) {
+		try {
+			return JSONFactoryUtil.createJSONArray(json);
+		}
+		catch (JSONException jsone) {
+			_log.error(jsone);
+		}
+
+		return JSONFactoryUtil.createJSONArray();
+	}
+
 	protected Serializable toSimpleValue(DDMFormFieldValue ddmFormFieldValue) {
 		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
 
-		Value value = ddmFormFieldValue.getValue();
+		String valueString = getDDMFormFieldValueString(ddmFormFieldValue);
 
-		return FieldConstants.getSerializable(
-			dataType, value.getString(_locale));
+		return FieldConstants.getSerializable(dataType, valueString);
 	}
 
 	protected Vector<Serializable> toVectorValue(
@@ -118,6 +160,9 @@ public class DDMFormValuesToPropertiesConverter {
 
 		return values;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormValuesToPropertiesConverter.class);
 
 	private final ConfigurationModel _configurationModel;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;

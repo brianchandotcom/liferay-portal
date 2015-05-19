@@ -45,19 +45,36 @@ public class ServiceComponentLocalServiceTest {
 		_previousServiceComponentsCount =
 			ServiceComponentLocalServiceUtil.getServiceComponentsCount();
 
-		_serviceComponentA = addServiceComponent(
-			_SERVICE_COMPONENT_A_BUILDNAME, 1);
-
-		_serviceComponentB = addServiceComponent(
-			_SERVICE_COMPONENT_B_BUILDNAME, 1);
+		_serviceComponentA = addServiceComponent(_SERVICE_COMPONENT_A, 1);
+		_serviceComponentB = addServiceComponent(_SERVICE_COMPONENT_B, 1);
 	}
 
 	@Test
-	public void testGetLatestServiceComponentsMatchPreviousVersions()
+	public void testGetLatestServiceComponentsSingleVersion() throws Exception {
+		List<ServiceComponent> serviceComponents =
+			ServiceComponentLocalServiceUtil.
+				getLatestServiceComponentsByBuildNamespace();
+
+		Assert.assertEquals(
+			2, serviceComponents.size() - _previousServiceComponentsCount);
+
+		ServiceComponent latestServiceComponent = getServiceComponent(
+			serviceComponents, _SERVICE_COMPONENT_A);
+
+		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
+
+		latestServiceComponent = getServiceComponent(
+			serviceComponents, _SERVICE_COMPONENT_B);
+
+		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
+	}
+
+	@Test
+	public void testGetLatestServiceComponentsWithMultipleVersions()
 		throws Exception {
 
-		ServiceComponent serviceComponentA2 = addServiceComponent(
-			_SERVICE_COMPONENT_A_BUILDNAME, 2);
+		ServiceComponent serviceComponent = addServiceComponent(
+			_SERVICE_COMPONENT_A, 2);
 
 		List<ServiceComponent> serviceComponents =
 			ServiceComponentLocalServiceUtil.
@@ -66,36 +83,18 @@ public class ServiceComponentLocalServiceTest {
 		Assert.assertEquals(
 			2, serviceComponents.size() - _previousServiceComponentsCount);
 
-		ServiceComponent actualServiceComponentA = getServiceComponent(
-			serviceComponents, _SERVICE_COMPONENT_A_BUILDNAME);
+		ServiceComponent latestServiceComponent = getServiceComponent(
+			serviceComponents, _SERVICE_COMPONENT_A);
 
-		ServiceComponent actualServiceComponentB = getServiceComponent(
-			serviceComponents, _SERVICE_COMPONENT_B_BUILDNAME);
+		Assert.assertEquals(2, latestServiceComponent.getBuildNumber());
 
-		Assert.assertEquals(2, actualServiceComponentA.getBuildNumber());
-		Assert.assertEquals(1, actualServiceComponentB.getBuildNumber());
+		latestServiceComponent = getServiceComponent(
+			serviceComponents, _SERVICE_COMPONENT_B);
+
+		Assert.assertEquals(1, latestServiceComponent.getBuildNumber());
 
 		ServiceComponentLocalServiceUtil.deleteServiceComponent(
-			serviceComponentA2);
-	}
-
-	@Test
-	public void testGetLatestServiceComponentsOneVersion() throws Exception {
-		List<ServiceComponent> serviceComponents =
-			ServiceComponentLocalServiceUtil.
-				getLatestServiceComponentsByBuildNamespace();
-
-		Assert.assertEquals(
-			2, serviceComponents.size() - _previousServiceComponentsCount);
-
-		ServiceComponent actualServiceComponentA = getServiceComponent(
-			serviceComponents, _SERVICE_COMPONENT_A_BUILDNAME);
-
-		ServiceComponent actualServiceComponentB = getServiceComponent(
-			serviceComponents, _SERVICE_COMPONENT_B_BUILDNAME);
-
-		Assert.assertEquals(1, actualServiceComponentA.getBuildNumber());
-		Assert.assertEquals(1, actualServiceComponentB.getBuildNumber());
+			serviceComponent);
 	}
 
 	protected ServiceComponent addServiceComponent(
@@ -128,11 +127,9 @@ public class ServiceComponentLocalServiceTest {
 		return null;
 	}
 
-	private static final String _SERVICE_COMPONENT_A_BUILDNAME =
-		"serviceComponentA";
+	private static final String _SERVICE_COMPONENT_A = "serviceComponentA";
 
-	private static final String _SERVICE_COMPONENT_B_BUILDNAME =
-		"serviceComponentB";
+	private static final String _SERVICE_COMPONENT_B = "serviceComponentB";
 
 	private int _previousServiceComponentsCount;
 

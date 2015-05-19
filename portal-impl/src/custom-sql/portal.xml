@@ -1307,6 +1307,23 @@
 				(Users_Roles.userId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.portal.service.persistence.ServiceComponentFinder.findLatestVersionByBuildNamespace">
+		<![CDATA[
+			SELECT
+				{ServiceComponent.*}
+			FROM
+				ServiceComponent
+			WHERE
+				buildNumber =
+					(
+						SELECT MAX(buildNumber)
+						FROM ServiceComponent scTemp
+						WHERE ServiceComponent.buildNamespace = scTemp.buildNamespace
+					)
+			ORDER BY
+				buildNamespace DESC
+		]]>
+	</sql>
 	<sql id="com.liferay.portal.service.persistence.TeamFinder.countByG_N_D">
 		<![CDATA[
 			SELECT

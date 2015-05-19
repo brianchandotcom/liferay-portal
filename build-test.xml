@@ -4847,6 +4847,10 @@ cluster.link.bind.addr["cluster-link-udp"]=127.0.0.1</echo>
 		</if>
 	</target>
 
+	<target name="record-database-type">
+		<echo file="database-type" append="true">${database.type},</echo>
+	</target>
+
 	<target name="record-git-commit-bottom-test-jsp">
 		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
 			<arg line="rev-parse HEAD" />

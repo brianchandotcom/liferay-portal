@@ -436,7 +436,6 @@
 				<classpath mode="compile">lib/portal/jempbox.jar</classpath>
 				<classpath mode="compile">lib/portal/jena.jar</classpath>
 				<classpath mode="compile">lib/portal/jericho-html.jar</classpath>
-				<classpath mode="compile">lib/portal/jets3t.jar</classpath>
 				<classpath mode="compile">lib/portal/jfreechart.jar</classpath>
 				<classpath mode="compile">lib/portal/jhighlight.jar</classpath>
 				<classpath mode="compile">lib/portal/jhlabs-filters.jar</classpath>

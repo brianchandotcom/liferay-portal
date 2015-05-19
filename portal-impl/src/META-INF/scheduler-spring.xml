@@ -34,12 +34,6 @@
 		<constructor-arg name="schedulerEngine" ref="com.liferay.portal.kernel.scheduler.SchedulerEngineProxyBean" />
 	</bean>
 
-	<!-- Util -->
-
-	<bean id="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" class="com.liferay.portal.scheduler.SchedulerEngineHelperImpl">
-		<property name="schedulerEngine" ref="com.liferay.portal.scheduler.ClusterSchedulerEngineService" />
-	</bean>
-
 	<!-- Messaging -->
 
 	<bean id="messageListener.scheduler_scripting" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">

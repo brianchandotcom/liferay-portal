@@ -115,7 +115,8 @@ public class LanguageDisplayContext {
 			return _ddmTemplateKey;
 		}
 
-		String displayStyle = getDisplayStyle();
+		String displayStyle =
+			_languagePortletInstanceConfiguration.displayStyle();
 
 		if (displayStyle != null) {
 			_ddmTemplateKey = PortletDisplayTemplateUtil.getDDMTemplateKey(
@@ -123,16 +124,6 @@ public class LanguageDisplayContext {
 		}
 
 		return _ddmTemplateKey;
-	}
-
-	public String getDisplayStyle() {
-		if (_displayStyle != null) {
-			return _displayStyle;
-		}
-
-		_displayStyle = _languagePortletInstanceConfiguration.displayStyle();
-
-		return _displayStyle;
 	}
 
 	public long getDisplayStyleGroupId() {
@@ -165,21 +156,14 @@ public class LanguageDisplayContext {
 		return _languageIds;
 	}
 
-	public boolean isDisplayCurrentLocale() {
-		if (_displayCurrentLocale != null) {
-			return _displayCurrentLocale;
-		}
+	public LanguagePortletInstanceConfiguration
+		getLanguagePortletInstanceConfiguration() {
 
-		_displayCurrentLocale =
-			_languagePortletInstanceConfiguration.displayCurrentLocale();
-
-		return _displayCurrentLocale;
+		return _languagePortletInstanceConfiguration;
 	}
 
 	private String[] _availableLanguageIds;
 	private String _ddmTemplateKey;
-	private Boolean _displayCurrentLocale;
-	private String _displayStyle;
 	private long _displayStyleGroupId;
 	private String[] _languageIds;
 	private final LanguagePortletInstanceConfiguration

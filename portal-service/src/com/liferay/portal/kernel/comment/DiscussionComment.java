@@ -37,9 +37,9 @@ public interface DiscussionComment extends DetachedComment {
 
 	public int getThreadCommentsCount();
 
-	public CommentIterator getThreadCommentsIterator();
+	public DiscussionCommentIterator getThreadCommentsIterator();
 
-	public CommentIterator getThreadCommentsIterator(int from);
+	public DiscussionCommentIterator getThreadCommentsIterator(int from);
 
 	public String getTranslatedBody();
 

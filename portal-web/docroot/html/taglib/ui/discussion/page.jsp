@@ -148,12 +148,12 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 						int rootIndexPage = 0;
 						boolean moreCommentsPagination = false;
 
-						CommentIterator commentIterator = rootDiscussionComment.getThreadCommentsIterator();
+						DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadCommentsIterator();
 
-						while (commentIterator.hasNext()) {
+						while (discussionCommentIterator.hasNext()) {
 							index = GetterUtil.getInteger(request.getAttribute("liferay-ui:discussion:index"), 1);
 
-							rootIndexPage = commentIterator.getIndexPage();
+							rootIndexPage = discussionCommentIterator.getIndexPage();
 
 							if ((index + 1) > PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE) {
 								moreCommentsPagination = true;
@@ -161,7 +161,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								break;
 							}
 
-							discussionComment = commentIterator.next();
+							discussionComment = discussionCommentIterator.next();
 
 							request.setAttribute("liferay-ui:discussion:currentComment", discussionComment);
 							request.setAttribute("liferay-ui:discussion:discussion", discussion);

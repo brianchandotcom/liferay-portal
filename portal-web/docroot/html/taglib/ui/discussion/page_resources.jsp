@@ -28,16 +28,16 @@ Discussion discussion = CommentManagerUtil.getDiscussion(discussionTaglibHelper.
 
 DiscussionComment rootDiscussionComment = discussion.getRootDiscussionComment();
 
-CommentIterator commentIterator = rootDiscussionComment.getThreadCommentsIterator(rootIndexPage);
+DiscussionCommentIterator discussionCommentIterator = rootDiscussionComment.getThreadCommentsIterator(rootIndexPage);
 
-while (commentIterator.hasNext()) {
-	rootIndexPage = commentIterator.getIndexPage();
+while (discussionCommentIterator.hasNext()) {
+	rootIndexPage = discussionCommentIterator.getIndexPage();
 
 	if (index >= (initialIndex + PropsValues.DISCUSSION_COMMENTS_DELTA_VALUE)) {
 		break;
 	}
 
-	DiscussionComment discussionComment = commentIterator.next();
+	DiscussionComment discussionComment = discussionCommentIterator.next();
 
 	request.setAttribute("liferay-ui:discussion:currentComment", discussionComment);
 	request.setAttribute("liferay-ui:discussion:discussion", discussion);

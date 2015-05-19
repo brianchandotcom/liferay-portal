@@ -19,7 +19,7 @@ import java.util.Iterator;
 /**
  * @author Adolfo Pérez
  */
-public interface CommentIterator extends Iterator<DiscussionComment> {
+public interface DiscussionCommentIterator extends Iterator<DiscussionComment> {
 
 	public int getIndexPage();
 

@@ -15,7 +15,7 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.DiscussionComment;
-import com.liferay.portal.kernel.comment.CommentIterator;
+import com.liferay.portal.kernel.comment.DiscussionCommentIterator;
 import com.liferay.portal.kernel.comment.WorkflowableComment;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -131,10 +131,10 @@ public class MBDiscussionCommentImpl
 	public List<DiscussionComment> getThreadComments() {
 		List<DiscussionComment> discussionComments = new ArrayList<>();
 
-		CommentIterator commentIterator = getThreadCommentsIterator();
+		DiscussionCommentIterator discussionCommentIterator = getThreadCommentsIterator();
 
-		while (commentIterator.hasNext()) {
-			discussionComments.add(commentIterator.next());
+		while (discussionCommentIterator.hasNext()) {
+			discussionComments.add(discussionCommentIterator.next());
 		}
 
 		return discussionComments;
@@ -148,22 +148,22 @@ public class MBDiscussionCommentImpl
 	}
 
 	@Override
-	public CommentIterator getThreadCommentsIterator() {
+	public DiscussionCommentIterator getThreadCommentsIterator() {
 		List<MBMessage> messages = _treeWalker.getMessages();
 
 		int[] range = _treeWalker.getChildrenRange(getMessage());
 
-		return new MBCommentIterator(
+		return new MBDiscussionCommentIterator(
 			messages, range[0], range[1], _treeWalker, _pathThemeImages);
 	}
 
 	@Override
-	public CommentIterator getThreadCommentsIterator(int from) {
+	public DiscussionCommentIterator getThreadCommentsIterator(int from) {
 		List<MBMessage> messages = _treeWalker.getMessages();
 
 		int[] range = _treeWalker.getChildrenRange(getMessage());
 
-		return new MBCommentIterator(
+		return new MBDiscussionCommentIterator(
 			messages, from, range[1], _treeWalker, _pathThemeImages);
 	}
 
@@ -190,9 +190,9 @@ public class MBDiscussionCommentImpl
 	private final List<RatingsStats> _ratingsStats;
 	private final MBTreeWalker _treeWalker;
 
-	private class MBCommentIterator implements CommentIterator {
+	private class MBDiscussionCommentIterator implements DiscussionCommentIterator {
 
-		public MBCommentIterator(
+		public MBDiscussionCommentIterator(
 			List<MBMessage> messages, int from, int to, MBTreeWalker treeWalker,
 			String pathThemeImages) {
 

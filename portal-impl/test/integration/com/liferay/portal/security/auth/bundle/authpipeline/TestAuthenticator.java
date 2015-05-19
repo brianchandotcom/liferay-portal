@@ -28,9 +28,9 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"key=auth.pipeline.pre",
-				"service.ranking:Integer=" + Integer.MAX_VALUE
-			},
+	property = {
+		"key=auth.pipeline.pre", "service.ranking:Integer=" + Integer.MAX_VALUE
+	},
 	service = Authenticator.class
 )
 public class TestAuthenticator implements Authenticator {
@@ -38,8 +38,7 @@ public class TestAuthenticator implements Authenticator {
 	@Override
 	public int authenticateByEmailAddress(
 		long companyId, String emailAddress, String password,
-		Map<String, String[]> headerMap,
-		Map<String, String[]> parameterMap) {
+		Map<String, String[]> headerMap, Map<String, String[]> parameterMap) {
 
 		_atomicReference.set(StackTraceUtil.getCallerKey());
 

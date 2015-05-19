@@ -2,6 +2,6 @@
 
 <root available-locales="en_US" default-locale="en_US">
 	<dynamic-element name="HTML2030" index="0" type="text_area" index-type="keyword">
-		<dynamic-content language-id="en_US"><![CDATA[<p>Hello World!</p>]]></dynamic-content>
+		<dynamic-content language-id="en_US"><![CDATA[]]></dynamic-content>
 	</dynamic-element>
 </root>

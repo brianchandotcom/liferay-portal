@@ -7540,7 +7540,7 @@ public class JournalArticleLocalServiceImpl
 			classNameLocalService.getClassNameId(JournalArticle.class),
 			ddmStructureKey, true);
 
-		validateDDMStructureFields(ddmStructure, classNameId, serviceContext);
+		validateDDMStructureFields(ddmStructure, classNameId, content);
 
 		if (Validator.isNotNull(ddmTemplateKey)) {
 			DDMTemplate ddmTemplate = ddmTemplateLocalService.getTemplate(
@@ -7667,12 +7667,8 @@ public class JournalArticleLocalServiceImpl
 	}
 
 	protected void validateDDMStructureFields(
-			DDMStructure ddmStructure, long classNameId,
-			ServiceContext serviceContext)
+			DDMStructure ddmStructure, long classNameId, Fields fields)
 		throws PortalException {
-
-		Fields fields = DDMUtil.getFields(
-			ddmStructure.getStructureId(), serviceContext);
 
 		for (com.liferay.portlet.dynamicdatamapping.storage.Field field :
 				fields) {
@@ -7688,6 +7684,26 @@ public class JournalArticleLocalServiceImpl
 				throw new StorageFieldRequiredException();
 			}
 		}
+	}
+
+	protected void validateDDMStructureFields(
+			DDMStructure ddmStructure, long classNameId,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Fields fields = DDMUtil.getFields(
+			ddmStructure.getStructureId(), serviceContext);
+
+		validateDDMStructureFields(ddmStructure, classNameId, fields);
+	}
+
+	protected void validateDDMStructureFields(
+			DDMStructure ddmStructure, long classNameId, String content)
+		throws PortalException {
+
+		Fields fields = DDMXMLUtil.getFields(ddmStructure, content);
+
+		validateDDMStructureFields(ddmStructure, classNameId, fields);
 	}
 
 	protected void validateDDMStructureId(

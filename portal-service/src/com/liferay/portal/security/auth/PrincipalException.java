@@ -214,44 +214,6 @@ public class PrincipalException extends PortalException {
 
 	}
 
-	public static class MustHaveValidPermissionChecker extends PrincipalException {
-
-		public MustHaveValidPermissionChecker(
-			long userId, PermissionChecker permissionChecker) {
-			super(
-				String.format(
-					"Permission checker for user %s is not valid for current " +
-						"user: %s",
-					permissionChecker.getUserId(),
-					Validator.isNull(userId) ? "" : userId));
-
-			this.userId = userId;
-		}
-
-		public final long userId;
-
-	}
-
-	public static class MustInitializePermissionChecker
-		extends PrincipalException {
-
-		public MustInitializePermissionChecker() {
-			super(
-				String.format(
-					"Permission checker must be initialized so that " +
-						"permissions can be checked for this action"));
-		}
-
-		public MustInitializePermissionChecker(long userId, Exception e) {
-			super(
-				String.format(
-					"Permission checker for user %s cannot be initialized",
-					Validator.isNull(userId) ? "" : userId),
-				e);
-		}
-
-	}
-
 	public static class MustHaveUserGroupRole extends PrincipalException {
 
 		public MustHaveUserGroupRole(long userId, String role, long groupId) {
@@ -290,6 +252,26 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustHaveValidPermissionChecker
+		extends PrincipalException {
+
+		public MustHaveValidPermissionChecker(
+			long userId, PermissionChecker permissionChecker) {
+
+			super(
+				String.format(
+					"Permission checker for user %s is not valid for current " +
+						"user: %s",
+					permissionChecker.getUserId(),
+					Validator.isNull(userId) ? "" : userId));
+
+			this.userId = userId;
+		}
+
+		public final long userId;
+
+	}
+
 	public static class MustHaveValidPortletId extends PrincipalException {
 
 		public MustHaveValidPortletId(String portletId) {
@@ -311,6 +293,26 @@ public class PrincipalException extends PortalException {
 		}
 
 		public final String name;
+
+	}
+
+	public static class MustInitializePermissionChecker
+		extends PrincipalException {
+
+		public MustInitializePermissionChecker() {
+			super(
+				String.format(
+					"Permission checker must be initialized so that " +
+						"permissions can be checked for this action"));
+		}
+
+		public MustInitializePermissionChecker(long userId, Exception e) {
+			super(
+				String.format(
+					"Permission checker for user %s cannot be initialized",
+					Validator.isNull(userId) ? "" : userId),
+				e);
+		}
 
 	}
 

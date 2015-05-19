@@ -14,8 +14,6 @@
 
 package com.liferay.portal.sso.ntlm.servlet.filters;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.SingleVMPool;
 import com.liferay.portal.kernel.io.BigEndianCodec;
@@ -25,14 +23,15 @@ import com.liferay.portal.kernel.security.SecureRandomUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.sso.ntlm.NetlogonConnectionManager;
 import com.liferay.portal.sso.ntlm.NtlmManager;
 import com.liferay.portal.sso.ntlm.NtlmUserAccount;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.sso.ntlm.constants.NtlmWebKeys;
 import com.liferay.portal.util.PortalInstances;
 
@@ -80,10 +79,13 @@ public class NtlmFilter extends BaseFilter {
 		try {
 			long companyId = PortalInstances.getCompanyId(request);
 
+			NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
+				NtlmConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, NtlmConstants.SERVICE_NAME));
+
 			if (BrowserSnifferUtil.isIe(request) &&
-				PrefsPropsUtil.getBoolean(
-					companyId, PropsKeys.NTLM_AUTH_ENABLED,
-					_ntlmConfiguration.enabled())) {
+				ntlmConfiguration.enabled()) {
 
 				return true;
 			}
@@ -111,9 +113,6 @@ public class NtlmFilter extends BaseFilter {
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_ntlmConfiguration = Configurable.createConfigurable(
-			NtlmConfiguration.class, properties);
-
 		for (Map.Entry<String, Object> entry : properties.entrySet()) {
 			String key = entry.getKey();
 
@@ -123,6 +122,8 @@ public class NtlmFilter extends BaseFilter {
 				Config.setProperty(key, value);
 			}
 		}
+
+		_ntlmManagers.clear();
 	}
 
 	@Override
@@ -130,21 +131,17 @@ public class NtlmFilter extends BaseFilter {
 		return _log;
 	}
 
-	protected NtlmManager getNtlmManager(long companyId) {
-		String domain = PrefsPropsUtil.getString(
-			companyId, PropsKeys.NTLM_DOMAIN, _ntlmConfiguration.domain());
-		String domainController = PrefsPropsUtil.getString(
-			companyId, PropsKeys.NTLM_DOMAIN_CONTROLLER,
-			_ntlmConfiguration.domainController());
-		String domainControllerName = PrefsPropsUtil.getString(
-			companyId, PropsKeys.NTLM_DOMAIN_CONTROLLER_NAME,
-			_ntlmConfiguration.domainControllerName());
-		String serviceAccount = PrefsPropsUtil.getString(
-			companyId, PropsKeys.NTLM_SERVICE_ACCOUNT,
-			_ntlmConfiguration.serviceAccount());
-		String servicePassword = PrefsPropsUtil.getString(
-			companyId, PropsKeys.NTLM_SERVICE_PASSWORD,
-			_ntlmConfiguration.servicePassword());
+	protected NtlmManager getNtlmManager(long companyId) throws Exception {
+		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
+			NtlmConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId, NtlmConstants.SERVICE_NAME));
+
+		String domain = ntlmConfiguration.domain();
+		String domainController = ntlmConfiguration.domainController();
+		String domainControllerName = ntlmConfiguration.domainControllerName();
+		String serviceAccount = ntlmConfiguration.serviceAccount();
+		String servicePassword = ntlmConfiguration.servicePassword();
 
 		NtlmManager ntlmManager = _ntlmManagers.get(companyId);
 
@@ -315,12 +312,17 @@ public class NtlmFilter extends BaseFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(NtlmFilter.class);
 
 	private NetlogonConnectionManager _netlogonConnectionManager;
-	private volatile NtlmConfiguration _ntlmConfiguration;
 	private final Map<Long, NtlmManager> _ntlmManagers =
 		new ConcurrentHashMap<>();
 	private PortalCache<String, byte[]> _portalCache;
+	private volatile SettingsFactory _settingsFactory;
 
 }

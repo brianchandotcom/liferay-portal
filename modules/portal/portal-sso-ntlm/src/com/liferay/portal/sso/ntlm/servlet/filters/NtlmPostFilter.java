@@ -14,21 +14,18 @@
 
 package com.liferay.portal.sso.ntlm.servlet.filters;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.HttpMethods;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.util.PortalInstances;
-
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,9 +37,8 @@ import jcifs.ntlmssp.Type2Message;
 
 import jcifs.util.Base64;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -58,13 +54,6 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class NtlmPostFilter extends BaseFilter {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ntlmConfiguration = Configurable.createConfigurable(
-			NtlmConfiguration.class, properties);
-	}
-
 	@Override
 	protected Log getLog() {
 		return _log;
@@ -78,10 +67,12 @@ public class NtlmPostFilter extends BaseFilter {
 
 		long companyId = PortalInstances.getCompanyId(request);
 
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-				_ntlmConfiguration.enabled()) &&
-			BrowserSnifferUtil.isIe(request) &&
+		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
+			NtlmConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId, NtlmConstants.SERVICE_NAME));
+
+		if (ntlmConfiguration.enabled() && BrowserSnifferUtil.isIe(request) &&
 			request.getMethod().equals(HttpMethods.POST)) {
 
 			String authorization = GetterUtil.getString(
@@ -112,8 +103,13 @@ public class NtlmPostFilter extends BaseFilter {
 		processFilter(NtlmPostFilter.class, request, response, filterChain);
 	}
 
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(NtlmPostFilter.class);
 
-	private volatile NtlmConfiguration _ntlmConfiguration;
+	private volatile SettingsFactory _settingsFactory;
 
 }

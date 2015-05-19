@@ -14,18 +14,17 @@
 
 package com.liferay.portal.sso.ntlm;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.security.sso.SSO;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.constants.NtlmConstants;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -48,11 +47,16 @@ public class SSOImpl implements SSO {
 
 	@Override
 	public boolean isLoginRedirectRequired(long companyId) {
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-				_ntlmConfiguration.enabled())) {
+		try {
+			NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
+				NtlmConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, NtlmConstants.SERVICE_NAME));
 
-			return true;
+			return ntlmConfiguration.enabled();
+		}
+		catch (SettingsException se) {
+			_log.error("Unable to get Ntlm configuration", se);
 		}
 
 		return false;
@@ -68,13 +72,13 @@ public class SSOImpl implements SSO {
 		return false;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ntlmConfiguration = Configurable.createConfigurable(
-			NtlmConfiguration.class, properties);
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
 	}
 
-	private volatile NtlmConfiguration _ntlmConfiguration;
+	private static final Log _log = LogFactoryUtil.getLog(SSOImpl.class);
+
+	private volatile SettingsFactory _settingsFactory;
 
 }

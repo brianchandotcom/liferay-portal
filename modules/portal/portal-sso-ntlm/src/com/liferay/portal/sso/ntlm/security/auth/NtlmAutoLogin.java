@@ -14,26 +14,22 @@
 
 package com.liferay.portal.sso.ntlm.security.auth;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.AutoLogin;
 import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.sso.ntlm.configuration.NtlmConfiguration;
+import com.liferay.portal.sso.ntlm.constants.NtlmConstants;
 import com.liferay.portal.sso.ntlm.constants.NtlmWebKeys;
 import com.liferay.portal.util.PortalUtil;
-
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Farache
@@ -44,13 +40,6 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class NtlmAutoLogin extends BaseAutoLogin {
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_ntlmConfiguration = Configurable.createConfigurable(
-			NtlmConfiguration.class, properties);
-	}
-
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest request, HttpServletResponse response)
@@ -58,10 +47,12 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (!PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.NTLM_AUTH_ENABLED,
-				_ntlmConfiguration.enabled())) {
+		NtlmConfiguration ntlmConfiguration = _settingsFactory.getSettings(
+			NtlmConfiguration.class,
+			new CompanyServiceSettingsLocator(
+				companyId, NtlmConstants.SERVICE_NAME));
 
+		if (!ntlmConfiguration.enabled()) {
 			return null;
 		}
 
@@ -92,6 +83,11 @@ public class NtlmAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	private volatile NtlmConfiguration _ntlmConfiguration;
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	private volatile SettingsFactory _settingsFactory;
 
 }

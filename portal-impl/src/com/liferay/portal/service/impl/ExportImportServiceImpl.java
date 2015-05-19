@@ -32,7 +32,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.Map;
 
 /**
@@ -92,8 +91,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			String taskName, long groupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
+			long[] layoutIds, Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		GroupPermissionUtil.check(
@@ -101,7 +99,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 		return exportImportLocalService.exportLayoutsAsFileInBackground(
 			getUserId(), taskName, groupId, privateLayout, layoutIds,
-			parameterMap, startDate, endDate);
+			parameterMap);
 	}
 
 	@Override
@@ -127,8 +125,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			String taskName, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate,
-			String fileName)
+			Map<String, String[]> parameterMap, String fileName)
 		throws PortalException {
 
 		Layout layout = layoutLocalService.getLayout(plid);
@@ -139,14 +136,13 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 		return exportImportLocalService.exportPortletInfoAsFileInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap,
-			startDate, endDate, fileName);
+			fileName);
 	}
 
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			String taskName, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate,
-			String fileName)
+			Map<String, String[]> parameterMap, String fileName)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(getUserId());
@@ -159,8 +155,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.exportPortletInfoAsFileInBackground(
-			getUserId(), taskName, portletId, parameterMap, startDate, endDate,
-			fileName);
+			getUserId(), taskName, portletId, parameterMap, fileName);
 	}
 
 	@Override

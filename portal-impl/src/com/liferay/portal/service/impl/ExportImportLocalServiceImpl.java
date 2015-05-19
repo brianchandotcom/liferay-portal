@@ -57,7 +57,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -146,8 +145,7 @@ public class ExportImportLocalServiceImpl
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			long userId, String taskName, long groupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate)
+			long[] layoutIds, Map<String, String[]> parameterMap)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -246,7 +244,7 @@ public class ExportImportLocalServiceImpl
 	public long exportPortletInfoAsFileInBackground(
 			long userId, String taskName, long plid, long groupId,
 			String portletId, Map<String, String[]> parameterMap,
-			Date startDate, Date endDate, String fileName)
+			String fileName)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -272,8 +270,7 @@ public class ExportImportLocalServiceImpl
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, Date startDate, Date endDate,
-			String fileName)
+			Map<String, String[]> parameterMap, String fileName)
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
@@ -289,8 +286,7 @@ public class ExportImportLocalServiceImpl
 
 		return exportPortletInfoAsFileInBackground(
 			userId, taskName, controlPanelLayout.getPlid(),
-			companyGroup.getGroupId(), portletId, parameterMap, startDate,
-			endDate, fileName);
+			companyGroup.getGroupId(), portletId, parameterMap, fileName);
 	}
 
 	@Override

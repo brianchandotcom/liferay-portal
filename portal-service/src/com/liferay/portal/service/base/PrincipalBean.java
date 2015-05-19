@@ -83,7 +83,7 @@ public class PrincipalBean {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker == null) {
-			throw new PrincipalException.MustHavePermissionChecker(0);
+			throw new PrincipalException.MustInitializePermissionChecker();
 		}
 
 		return permissionChecker;

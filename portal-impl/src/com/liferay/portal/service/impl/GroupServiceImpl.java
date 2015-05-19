@@ -764,7 +764,8 @@ public class GroupServiceImpl extends GroupServiceBaseImpl {
 				permissionChecker = PermissionCheckerFactoryUtil.create(user);
 			}
 			catch (Exception e) {
-				throw new PrincipalException.MustHavePermissionChecker(userId);
+				throw new PrincipalException.MustInitializePermissionChecker(
+					userId, e);
 			}
 		}
 

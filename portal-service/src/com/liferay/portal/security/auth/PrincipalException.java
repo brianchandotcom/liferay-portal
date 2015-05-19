@@ -17,6 +17,7 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.permission.PermissionChecker;
 
 /**
  * @author Brian Wing Shun Chan
@@ -213,18 +214,41 @@ public class PrincipalException extends PortalException {
 
 	}
 
-	public static class MustHavePermissionChecker extends PrincipalException {
+	public static class MustHaveValidPermissionChecker extends PrincipalException {
 
-		public MustHavePermissionChecker(long userId) {
+		public MustHaveValidPermissionChecker(
+			long userId, PermissionChecker permissionChecker) {
 			super(
 				String.format(
-					"Permission checker for user %s cannot be initialized",
+					"Permission checker for user %s is not valid for current " +
+						"user: %s",
+					permissionChecker.getUserId(),
 					Validator.isNull(userId) ? "" : userId));
 
 			this.userId = userId;
 		}
 
 		public final long userId;
+
+	}
+
+	public static class MustInitializePermissionChecker
+		extends PrincipalException {
+
+		public MustInitializePermissionChecker() {
+			super(
+				String.format(
+					"Permission checker must be initialized so that " +
+						"permissions can be checked for this action"));
+		}
+
+		public MustInitializePermissionChecker(long userId, Exception e) {
+			super(
+				String.format(
+					"Permission checker for user %s cannot be initialized",
+					Validator.isNull(userId) ? "" : userId),
+				e);
+		}
 
 	}
 

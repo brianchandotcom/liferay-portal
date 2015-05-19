@@ -98,6 +98,10 @@ public final class LoggerUtil {
 	}
 
 	public static void executeJavaScript(String script) {
+		if (!isLoggerStarted()) {
+			return;
+		}
+
 		_javascriptExecutor.executeScript(script);
 	}
 

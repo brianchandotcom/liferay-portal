@@ -449,6 +449,16 @@
 		<reference package-path="com.liferay.portal" entity="ListType" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
+	<entity name="ExportImport" local-service="true" remote-service="true" >
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
+		<reference package-path="com.liferay.portal" entity="ExportImportConfiguration" />
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Layout" />
+		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
 	<entity name="ExportImportConfiguration" local-service="true" remote-service="true" trash-enabled="true">
 
 		<!-- PK fields -->

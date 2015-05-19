@@ -113,12 +113,6 @@
 		</uptodate>
 	</target>
 
-	<target name="check-jar-uptodate">
-		<uptodate property="jar.uptodate" targetfile="${jar.file}.jar">
-			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-		</uptodate>
-	</target>
-
 	<target name="clean">
 		<clean-common />
 	</target>
@@ -131,43 +125,54 @@
 		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 	</target>
 
-	<target name="jar" depends="check-jar-uptodate" unless="${jar.uptodate}">
-		<compile-java />
+	<target name="jar">
+		<uptodate property="jar.uptodate" targetfile="${jar.file}.jar">
+			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+		</uptodate>
 
 		<if>
-			<available file="bnd.bnd" />
+			<not>
+				<isset property="jar.uptodate" />
+			</not>
 			<then>
-				<manifest-helper />
+				<compile-java />
 
-				<bndexpand propertyfile="${project.dir}/common.bnd" />
+				<if>
+					<available file="bnd.bnd" />
+					<then>
+						<manifest-helper />
 
-				<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
-					<bndfiles>
-						<fileset dir=".">
-							<include name="bnd.bnd" />
-						</fileset>
-					</bndfiles>
-					<classpath>
-						<pathelement location="classes" />
-					</classpath>
-					<property name="-sourcepath" value="." />
-				</bnd>
+						<bndexpand propertyfile="${project.dir}/common.bnd" />
 
-				<baseline-jar
-					bndFile="bnd.bnd"
-					bndRootFile="${project.dir}/common.bnd"
-					newJarFile="${jar.file}.jar"
-				/>
+						<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
+							<bndfiles>
+								<fileset dir=".">
+									<include name="bnd.bnd" />
+								</fileset>
+							</bndfiles>
+							<classpath>
+								<pathelement location="classes" />
+							</classpath>
+							<property name="-sourcepath" value="." />
+						</bnd>
+
+						<baseline-jar
+							bndFile="bnd.bnd"
+							bndRootFile="${project.dir}/common.bnd"
+							newJarFile="${jar.file}.jar"
+						/>
+					</then>
+					<else>
+						<antcall target="manifest" />
+
+						<jar
+							basedir="classes"
+							jarfile="${jar.file}.jar"
+							manifest="classes/META-INF/MANIFEST.MF"
+						/>
+					</else>
+				</if>
 			</then>
-			<else>
-				<antcall target="manifest" />
-
-				<jar
-					basedir="classes"
-					jarfile="${jar.file}.jar"
-					manifest="classes/META-INF/MANIFEST.MF"
-				/>
-			</else>
 		</if>
 	</target>
 

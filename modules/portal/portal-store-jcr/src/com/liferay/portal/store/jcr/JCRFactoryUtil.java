@@ -14,11 +14,13 @@
 
 package com.liferay.portal.store.jcr;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +28,19 @@ import java.util.Map;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Young
  * @author Manuel de la Peña
  */
+@Component(
+	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
+)
 public class JCRFactoryUtil {
 
 	public void closeSession(Session session) {
@@ -48,10 +57,10 @@ public class JCRFactoryUtil {
 		throws RepositoryException {
 
 		if (workspaceName == null) {
-			workspaceName = JCRFactory.WORKSPACE_NAME;
+			workspaceName = _jcrStoreConfiguration.workspaceName();
 		}
 
-		if (!PropsValues.JCR_WRAP_SESSION) {
+		if (!_jcrStoreConfiguration.wrapSession()) {
 			JCRFactory jcrFactory = getJCRFactory();
 
 			return jcrFactory.createSession(workspaceName);
@@ -115,7 +124,17 @@ public class JCRFactoryUtil {
 		jcrFactory.shutdown();
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties)
+		throws RepositoryException {
+
+		_jcrStoreConfiguration = Configurable.createConfigurable(
+			JCRStoreConfiguration.class, properties);
+	}
+
 	private JCRFactory _jcrFactory;
+
+	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 
 	private static final ThreadLocal<Map<String, Session>> _sessions =
 		new AutoResetThreadLocal<Map<String, Session>>(

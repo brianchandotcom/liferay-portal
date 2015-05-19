@@ -55,4 +55,10 @@ public interface JCRStoreConfiguration {
 	@Meta.AD(deflt = "documentlibrary", required = true)
 	public String nodeDocumentlibrary();
 
+	@Meta.AD(deflt = "liferay", required = true)
+	public String workspaceName();
+
+	@Meta.AD(deflt = "true", required = true)
+	public boolean wrapSession();
+
 }

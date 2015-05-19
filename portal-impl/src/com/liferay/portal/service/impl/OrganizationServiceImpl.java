@@ -377,6 +377,30 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	}
 
 	/**
+	 * Returns the organization with the primary key.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @return the organization with the primary key or null if an organization
+	 * 		   with the primary key could not be found or if the user did not
+	 * 		   have permission to view the organization
+	 */
+	@Override
+	public Organization fetchOrganization(long organizationId) {
+		Organization organization = organizationLocalService.fetchOrganization(
+			organizationId);
+
+		try {
+			OrganizationPermissionUtil.check(
+				getPermissionChecker(), organizationId, ActionKeys.VIEW);
+
+			return organization;
+		}
+		catch (PortalException pe) {
+			return null;
+		}
+	}
+
+	/**
 	 * Returns all the organizations which the user has permission to manage.
 	 *
 	 * @param      actionId the permitted action

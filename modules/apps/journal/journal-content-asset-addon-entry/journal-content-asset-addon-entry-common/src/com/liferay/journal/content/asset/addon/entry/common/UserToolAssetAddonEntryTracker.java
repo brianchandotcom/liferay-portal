@@ -28,9 +28,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Julio Camarero
  */
-@Component(
-	immediate = true, service = UserToolAssetAddonEntryTracker.class
-)
+@Component(immediate = true, service = UserToolAssetAddonEntryTracker.class)
 public class UserToolAssetAddonEntryTracker {
 
 	public static List<UserToolAssetAddonEntry> getUserToolAssetAddonEntries() {

@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Raymond Augé
  */
-@Component(
-	immediate = true
-)
+@Component(immediate = true)
 public class HttpAdapter {
 
 	@Activate

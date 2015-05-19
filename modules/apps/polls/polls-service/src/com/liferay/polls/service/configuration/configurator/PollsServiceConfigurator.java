@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Miguel Pastor
  */
-@Component(
-	immediate = true, service = PollsServiceConfigurator.class
-)
+@Component(immediate = true, service = PollsServiceConfigurator.class)
 public class PollsServiceConfigurator {
 
 	@Activate

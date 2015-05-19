@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Raymond Augé
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = TranslatorWebUpgrade.class
-)
+@Component(immediate = true, service = TranslatorWebUpgrade.class)
 public class TranslatorWebUpgrade {
 
 	@Reference(unbind = "-")

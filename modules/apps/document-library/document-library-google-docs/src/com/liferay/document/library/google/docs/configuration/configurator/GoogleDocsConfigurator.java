@@ -37,9 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
-	immediate = true, service = GoogleDocsConfigurator.class
-)
+@Component(immediate = true, service = GoogleDocsConfigurator.class)
 public class GoogleDocsConfigurator {
 
 	@Activate

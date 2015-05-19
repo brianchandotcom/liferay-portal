@@ -552,9 +552,7 @@ public class OSGiBeanPropertiesTest {
 
 	@Test
 	public void testWithPortalProperties() {
-		@OSGiBeanProperties(
-			portalPropertyPrefix = "portlet."
-		)
+		@OSGiBeanProperties(portalPropertyPrefix = "portlet.")
 		class C {
 		}
 

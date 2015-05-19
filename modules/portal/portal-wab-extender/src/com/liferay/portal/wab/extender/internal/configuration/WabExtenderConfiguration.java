@@ -24,9 +24,7 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface WabExtenderConfiguration {
 
-	@Meta.AD(
-		deflt = "60000", required = false
-	)
+	@Meta.AD(deflt = "60000", required = false)
 	public long stopTimeout();
 
 }

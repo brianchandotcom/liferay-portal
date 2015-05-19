@@ -34,9 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
-	service = DLStoreConvertProcess.class
-)
+@Component(service = DLStoreConvertProcess.class)
 public class WikiDLStoreConvertProcess implements DLStoreConvertProcess {
 
 	@Override

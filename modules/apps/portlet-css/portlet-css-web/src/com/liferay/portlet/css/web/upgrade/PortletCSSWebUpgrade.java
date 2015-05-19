@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = PortletCSSWebUpgrade.class
-)
+@Component(immediate = true, service = PortletCSSWebUpgrade.class)
 public class PortletCSSWebUpgrade {
 
 	@Reference(unbind = "-")

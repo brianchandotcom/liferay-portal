@@ -32,9 +32,7 @@ import org.springframework.context.ApplicationContext;
 /**
  * @author Joan Kim
  */
-@Component(
-	immediate = true, service = MarketplaceServiceUpgrade.class
-)
+@Component(immediate = true, service = MarketplaceServiceUpgrade.class)
 public class MarketplaceServiceUpgrade {
 
 	@Reference(

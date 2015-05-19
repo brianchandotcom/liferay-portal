@@ -40,9 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Iván Zaera
  */
-@Component(
-	immediate = true, service = DLDisplayContextFactory.class
-)
+@Component(immediate = true, service = DLDisplayContextFactory.class)
 public class GoogleDocsDLDisplayContextFactory
 	implements DLDisplayContextFactory {
 

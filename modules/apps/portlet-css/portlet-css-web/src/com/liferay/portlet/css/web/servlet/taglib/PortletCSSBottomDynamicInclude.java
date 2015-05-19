@@ -33,9 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = DynamicInclude.class
-)
+@Component(immediate = true, service = DynamicInclude.class)
 public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
 
 	@Override
@@ -64,9 +62,7 @@ public class PortletCSSBottomDynamicInclude extends BaseDynamicInclude {
 		dynamicIncludeRegistry.register("/html/common/themes/bottom-ext.jsp");
 	}
 
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.portlet.css.web)"
-	)
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.portlet.css.web)")
 	protected void setServletContext(ServletContext servletContext) {
 		_servletContext = servletContext;
 	}

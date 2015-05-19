@@ -1874,9 +1874,7 @@ public class ClusterSchedulerEngineTest {
 	@Aspect
 	public static class DisableSchedulerEnabledAdvice {
 
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)"
-		)
+		@Around("set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)")
 		public Object schedulerEnabled(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 
@@ -1903,9 +1901,7 @@ public class ClusterSchedulerEngineTest {
 	@Aspect
 	public static class EnableSchedulerEnabledAdvice {
 
-		@Around(
-			"set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)"
-		)
+		@Around("set(* com.liferay.portal.util.PropsValues.SCHEDULER_ENABLED)")
 		public Object schedulerEnabled(ProceedingJoinPoint proceedingJoinPoint)
 			throws Throwable {
 

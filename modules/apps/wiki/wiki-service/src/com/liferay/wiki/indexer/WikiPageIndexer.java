@@ -59,9 +59,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Bruno Farache
  * @author Raymond Augé
  */
-@Component(
-	immediate = true, service = Indexer.class
-)
+@Component(immediate = true, service = Indexer.class)
 public class WikiPageIndexer extends BaseIndexer {
 
 	public static final String CLASS_NAME = WikiPage.class.getName();

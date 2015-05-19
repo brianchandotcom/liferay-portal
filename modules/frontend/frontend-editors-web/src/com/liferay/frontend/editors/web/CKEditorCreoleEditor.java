@@ -19,8 +19,6 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Raymond Augé
  */
-@Component(
-	property = {"editor.name=ckeditor_creole"}, service = Object.class
-)
+@Component(property = {"editor.name=ckeditor_creole"}, service = Object.class)
 public class CKEditorCreoleEditor {
 }

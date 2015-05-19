@@ -22,9 +22,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Manuel de la Peña
  */
-@Component(
-	immediate = true, service = DLDisplayContextFactory.class
-)
+@Component(immediate = true, service = DLDisplayContextFactory.class)
 public class TestBaseDisplayContextFactoryImpl
 	extends BaseDLDisplayContextFactory {
 }

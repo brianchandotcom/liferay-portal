@@ -19,14 +19,10 @@ import aQute.bnd.annotation.metatype.Meta;
 /**
  * @author Juergen Kappler
  */
-@Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSWebConfiguration"
-)
+@Meta.OCD(id = "com.liferay.rss.web.configuration.RSSWebConfiguration")
 public interface RSSWebConfiguration {
 
-	@Meta.AD(
-		deflt = "20", required = false
-	)
+	@Meta.AD(deflt = "20", required = false)
 	public int feedTime();
 
 }

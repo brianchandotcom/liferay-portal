@@ -23,9 +23,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = PortletConfigurationIcon.class
-)
+@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ClosePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 

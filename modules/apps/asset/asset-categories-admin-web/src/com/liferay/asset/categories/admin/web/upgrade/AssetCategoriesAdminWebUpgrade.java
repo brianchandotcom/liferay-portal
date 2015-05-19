@@ -31,9 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eudaldo Alonso
  */
-@Component(
-	immediate = true, service = AssetCategoriesAdminWebUpgrade.class
-)
+@Component(immediate = true, service = AssetCategoriesAdminWebUpgrade.class)
 public class AssetCategoriesAdminWebUpgrade {
 
 	@Reference(unbind = "-")

@@ -36,9 +36,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Julio Camarero
  */
-@OSGiBeanProperties(
-	property = {"key=servlet.service.events.pre"}
-)
+@OSGiBeanProperties(property = {"key=servlet.service.events.pre"})
 public class JournalArticleServicePreAction extends Action {
 
 	@Override

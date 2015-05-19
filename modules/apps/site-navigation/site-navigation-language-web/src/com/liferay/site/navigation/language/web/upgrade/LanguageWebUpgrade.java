@@ -33,9 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Eudaldo Alonso
  * @author Julio Camarero
  */
-@Component(
-	immediate = true, service = LanguageWebUpgrade.class
-)
+@Component(immediate = true, service = LanguageWebUpgrade.class)
 public class LanguageWebUpgrade {
 
 	@Reference(unbind = "-")

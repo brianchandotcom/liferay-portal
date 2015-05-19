@@ -58,6 +58,8 @@ import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Alexander Chow
@@ -71,20 +73,6 @@ import org.osgi.service.component.annotations.ConfigurationPolicy;
 	service = Store.class
 )
 public class CMISStore extends BaseStore {
-
-	public CMISStore() {
-		Folder systemRootDir = getFolder(
-			SessionHolder.session.getRootFolder(),
-			_cmisConfiguration.systemRootDir());
-
-		if (systemRootDir == null) {
-			systemRootDir = createFolder(
-				SessionHolder.session.getRootFolder(),
-				_cmisConfiguration.systemRootDir());
-		}
-
-		_systemRootDir = systemRootDir;
-	}
 
 	@Override
 	public void addDirectory(
@@ -450,6 +438,18 @@ public class CMISStore extends BaseStore {
 	protected void activate(Map<String, Object> properties) {
 		_cmisConfiguration = Configurable.createConfigurable(
 			CMISConfiguration.class, properties);
+
+		Folder systemRootDir = getFolder(
+			SessionHolder.session.getRootFolder(),
+			_cmisConfiguration.systemRootDir());
+
+		if (systemRootDir == null) {
+			systemRootDir = createFolder(
+				SessionHolder.session.getRootFolder(),
+				_cmisConfiguration.systemRootDir());
+		}
+
+		_systemRootDir = systemRootDir;
 	}
 
 	protected Document createDocument(
@@ -504,6 +504,11 @@ public class CMISStore extends BaseStore {
 		else {
 			fileNames.add(dirName);
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_systemRootDir = null;
 	}
 
 	protected Folder getCompanyFolder(long companyId) {
@@ -632,7 +637,14 @@ public class CMISStore extends BaseStore {
 		return versions;
 	}
 
-	private final Folder _systemRootDir;
+	@Modified
+	protected void modified(Map<String, Object> properties) {
+		deactivate();
+		activate(properties);
+	}
+
+	private Folder _systemRootDir;
+
 	private static volatile CMISConfiguration _cmisConfiguration;
 
 	private static class SessionHolder {

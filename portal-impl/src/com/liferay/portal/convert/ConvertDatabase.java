@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
@@ -175,8 +174,8 @@ public class ConvertDatabase extends BaseConvertProcess {
 			StartupHelperUtil.updateIndexes(db, connection, false);
 
 			List<ServiceComponent> serviceComponents =
-				ServiceComponentLocalServiceUtil.getServiceComponents(
-					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				ServiceComponentLocalServiceUtil.
+					getLatestServiceComponentsByBuildNamespace();
 
 			Set<String> validIndexNames = new HashSet<>();
 

@@ -16,7 +16,6 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.deploy.DeployUtil;
 import com.liferay.portal.deploy.RequiredPluginsUtil;
-import com.liferay.portal.jcr.JCRFactoryUtil;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployDir;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployListener;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployUtil;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PortalLifecycle;
@@ -259,21 +257,6 @@ public class GlobalStartupAction extends SimpleAction {
 			ClassLoaderUtil.getContextClassLoader();
 
 		JavadocManagerUtil.load(StringPool.BLANK, contextClassLoader);
-
-		// JCR
-
-		try {
-			JCRFactoryUtil.prepare();
-
-			if (GetterUtil.getBoolean(
-					PropsUtil.get(PropsKeys.JCR_INITIALIZE_ON_STARTUP))) {
-
-				JCRFactoryUtil.initialize();
-			}
-		}
-		catch (Exception e) {
-			_log.error(e);
-		}
 
 		// JNDI
 

@@ -355,9 +355,6 @@ public class ServiceTestUtil {
 
 	private static void _deleteDirectories() {
 		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
-
-		FileUtil.deltree(
-			PropsUtil.get(PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT));
 	}
 
 	private static Filter _registerDestinationFilter(String destinationName) {

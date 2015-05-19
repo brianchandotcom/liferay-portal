@@ -657,6 +657,25 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.document.library.repository.cmis"
 		},
 
+		// CMIS Store
+
+		new String[] {
+			"dl.store.cmis.credentials.username", "credentials.username",
+			"com.liferay.portal.store.cmis"
+		},
+		new String[] {
+			"dl.store.cmis.credentials.password", "credentials.password",
+			"com.liferay.portal.store.cmis"
+		},
+		new String[] {
+			"dl.store.cmis.repository.url", "repository.url",
+			"com.liferay.portal.store.cmis"
+		},
+		new String[] {
+			"dl.store.cmis.system.root.dir", "system.root.dir",
+			"com.liferay.portal.store.cmis"
+		},
+
 		// Currency Converter
 
 		new String[] {

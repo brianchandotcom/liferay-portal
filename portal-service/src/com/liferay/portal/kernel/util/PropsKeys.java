@@ -745,14 +745,6 @@ public interface PropsKeys {
 
 	public static final String DL_STORE_ANTIVIRUS_IMPL = "dl.store.antivirus.impl";
 
-	public static final String DL_STORE_CMIS_CREDENTIALS_PASSWORD = "dl.store.cmis.credentials.password";
-
-	public static final String DL_STORE_CMIS_CREDENTIALS_USERNAME = "dl.store.cmis.credentials.username";
-
-	public static final String DL_STORE_CMIS_REPOSITORY_URL = "dl.store.cmis.repository.url";
-
-	public static final String DL_STORE_CMIS_SYSTEM_ROOT_DIR = "dl.store.cmis.system.root.dir";
-
 	public static final String DL_STORE_FILE_SYSTEM_ROOT_DIR = "dl.store.file.system.root.dir";
 
 	public static final String DL_STORE_IMPL = "dl.store.impl";

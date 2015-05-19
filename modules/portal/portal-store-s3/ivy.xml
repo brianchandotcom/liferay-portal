@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="jets3t" org="net.java.dev.jets3t" rev="0.9.0" />
+		<dependency name="jets3t" org="net.java.dev.jets3t" rev="0.9.3" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

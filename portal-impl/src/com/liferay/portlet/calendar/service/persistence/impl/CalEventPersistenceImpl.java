@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
@@ -5384,27 +5383,25 @@ public class CalEventPersistenceImpl extends BasePersistenceImpl<CalEvent>
 			calEvent.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (calEvent.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					calEvent.setCreateDate(now);
-				}
-				else {
-					calEvent.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (calEvent.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				calEvent.setCreateDate(now);
 			}
+			else {
+				calEvent.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!calEventModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					calEvent.setModifiedDate(now);
-				}
-				else {
-					calEvent.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!calEventModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				calEvent.setModifiedDate(now);
+			}
+			else {
+				calEvent.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

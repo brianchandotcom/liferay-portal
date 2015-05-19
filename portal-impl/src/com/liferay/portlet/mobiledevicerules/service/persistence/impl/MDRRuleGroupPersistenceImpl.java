@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -2947,28 +2946,25 @@ public class MDRRuleGroupPersistenceImpl extends BasePersistenceImpl<MDRRuleGrou
 			mdrRuleGroup.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (mdrRuleGroup.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					mdrRuleGroup.setCreateDate(now);
-				}
-				else {
-					mdrRuleGroup.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (mdrRuleGroup.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				mdrRuleGroup.setCreateDate(now);
 			}
+			else {
+				mdrRuleGroup.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!mdrRuleGroupModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					mdrRuleGroup.setModifiedDate(now);
-				}
-				else {
-					mdrRuleGroup.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!mdrRuleGroupModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				mdrRuleGroup.setModifiedDate(now);
+			}
+			else {
+				mdrRuleGroup.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

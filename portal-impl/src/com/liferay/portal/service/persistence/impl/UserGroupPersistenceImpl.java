@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -4226,28 +4225,25 @@ public class UserGroupPersistenceImpl extends BasePersistenceImpl<UserGroup>
 			userGroup.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (userGroup.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					userGroup.setCreateDate(now);
-				}
-				else {
-					userGroup.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (userGroup.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				userGroup.setCreateDate(now);
 			}
+			else {
+				userGroup.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!userGroupModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					userGroup.setModifiedDate(now);
-				}
-				else {
-					userGroup.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!userGroupModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				userGroup.setModifiedDate(now);
+			}
+			else {
+				userGroup.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

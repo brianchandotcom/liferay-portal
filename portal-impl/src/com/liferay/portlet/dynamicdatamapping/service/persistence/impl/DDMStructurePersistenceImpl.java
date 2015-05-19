@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -8687,28 +8686,25 @@ public class DDMStructurePersistenceImpl extends BasePersistenceImpl<DDMStructur
 			ddmStructure.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (ddmStructure.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					ddmStructure.setCreateDate(now);
-				}
-				else {
-					ddmStructure.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (ddmStructure.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ddmStructure.setCreateDate(now);
 			}
+			else {
+				ddmStructure.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!ddmStructureModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					ddmStructure.setModifiedDate(now);
-				}
-				else {
-					ddmStructure.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!ddmStructureModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				ddmStructure.setModifiedDate(now);
+			}
+			else {
+				ddmStructure.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

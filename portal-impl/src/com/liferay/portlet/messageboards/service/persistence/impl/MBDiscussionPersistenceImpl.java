@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2666,28 +2665,25 @@ public class MBDiscussionPersistenceImpl extends BasePersistenceImpl<MBDiscussio
 			mbDiscussion.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (mbDiscussion.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					mbDiscussion.setCreateDate(now);
-				}
-				else {
-					mbDiscussion.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (mbDiscussion.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				mbDiscussion.setCreateDate(now);
 			}
+			else {
+				mbDiscussion.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!mbDiscussionModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					mbDiscussion.setModifiedDate(now);
-				}
-				else {
-					mbDiscussion.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!mbDiscussionModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				mbDiscussion.setModifiedDate(now);
+			}
+			else {
+				mbDiscussion.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

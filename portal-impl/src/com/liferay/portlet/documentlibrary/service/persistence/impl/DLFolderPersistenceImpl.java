@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -11039,27 +11038,25 @@ public class DLFolderPersistenceImpl extends BasePersistenceImpl<DLFolder>
 			dlFolder.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (dlFolder.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					dlFolder.setCreateDate(now);
-				}
-				else {
-					dlFolder.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (dlFolder.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				dlFolder.setCreateDate(now);
 			}
+			else {
+				dlFolder.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!dlFolderModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					dlFolder.setModifiedDate(now);
-				}
-				else {
-					dlFolder.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!dlFolderModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				dlFolder.setModifiedDate(now);
+			}
+			else {
+				dlFolder.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

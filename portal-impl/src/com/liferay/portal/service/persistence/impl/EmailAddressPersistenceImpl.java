@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3994,28 +3993,25 @@ public class EmailAddressPersistenceImpl extends BasePersistenceImpl<EmailAddres
 			emailAddress.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (emailAddress.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					emailAddress.setCreateDate(now);
-				}
-				else {
-					emailAddress.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (emailAddress.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				emailAddress.setCreateDate(now);
 			}
+			else {
+				emailAddress.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!emailAddressModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					emailAddress.setModifiedDate(now);
-				}
-				else {
-					emailAddress.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!emailAddressModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				emailAddress.setModifiedDate(now);
+			}
+			else {
+				emailAddress.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

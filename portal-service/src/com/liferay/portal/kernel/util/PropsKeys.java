@@ -1019,16 +1019,6 @@ public interface PropsKeys {
 
 	public static final String JCR_INITIALIZE_ON_STARTUP = "jcr.initialize.on.startup";
 
-	public static final String JCR_JACKRABBIT_CONFIG_FILE_PATH = "jcr.jackrabbit.config.file.path";
-
-	public static final String JCR_JACKRABBIT_CREDENTIALS_PASSWORD = "jcr.jackrabbit.credentials.password";
-
-	public static final String JCR_JACKRABBIT_CREDENTIALS_USERNAME = "jcr.jackrabbit.credentials.username";
-
-	public static final String JCR_JACKRABBIT_REPOSITORY_HOME = "jcr.jackrabbit.repository.home";
-
-	public static final String JCR_JACKRABBIT_REPOSITORY_ROOT = "jcr.jackrabbit.repository.root";
-
 	public static final String JCR_NODE_DOCUMENTLIBRARY = "jcr.node.documentlibrary";
 
 	public static final String JCR_WORKSPACE_NAME = "jcr.workspace.name";

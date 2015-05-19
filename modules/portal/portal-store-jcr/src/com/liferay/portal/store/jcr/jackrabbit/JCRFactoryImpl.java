@@ -17,12 +17,10 @@ package com.liferay.portal.store.jcr.jackrabbit;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.store.jcr.JCRFactory;
-import com.liferay.portal.util.PropsUtil;
+import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,38 +33,29 @@ import javax.jcr.SimpleCredentials;
 import org.apache.jackrabbit.core.TransientRepository;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Michael Young
  * @author Manuel de la Peña
  */
 @Component(
-	immediate = true
+	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
 public class JCRFactoryImpl implements JCRFactory {
-
-	public static final String CONFIG_FILE_PATH = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_CONFIG_FILE_PATH);
-
-	public static final char[] CREDENTIALS_PASSWORD = GetterUtil.getString(
-		PropsUtil.get(PropsKeys.JCR_JACKRABBIT_CREDENTIALS_PASSWORD)).
-			toCharArray();
-
-	public static final String CREDENTIALS_USERNAME = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_CREDENTIALS_USERNAME);
-
-	public static final String REPOSITORY_HOME = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_REPOSITORY_HOME);
-
-	public static final String REPOSITORY_ROOT = PropsUtil.get(
-		PropsKeys.JCR_JACKRABBIT_REPOSITORY_ROOT);
 
 	@Override
 	public Session createSession(String workspaceName)
 		throws RepositoryException {
 
+		char[] credentialsPassword =
+			_jcrStoreConfiguration.jackrabbitCredentialsPassword().
+				toCharArray();
+
 		Credentials credentials = new SimpleCredentials(
-			CREDENTIALS_USERNAME, CREDENTIALS_PASSWORD);
+			_jcrStoreConfiguration.jackrabbitCredentialsUsername(),
+			credentialsPassword);
 
 		Session session = null;
 
@@ -106,7 +95,8 @@ public class JCRFactoryImpl implements JCRFactory {
 	@Override
 	public void prepare() throws RepositoryException {
 		try {
-			FileUtil.mkdirs(JCRFactoryImpl.REPOSITORY_ROOT);
+			FileUtil.mkdirs(
+				_jcrStoreConfiguration.jackrabbitRepositoryRoot());
 
 			File tempFile = new File(
 				SystemProperties.get(SystemProperties.TMP_DIR) +
@@ -128,7 +118,8 @@ public class JCRFactoryImpl implements JCRFactory {
 				tempFile, classLoader.getResourceAsStream(repositoryXmlPath));
 
 			FileUtil.copyFile(
-				tempFile, new File(JCRFactoryImpl.CONFIG_FILE_PATH));
+				tempFile,
+				new File(_jcrStoreConfiguration.jackrabbitConfigFilePath()));
 
 			tempFile.delete();
 		}
@@ -149,9 +140,13 @@ public class JCRFactoryImpl implements JCRFactory {
 	}
 
 	protected JCRFactoryImpl() throws Exception {
+		String repositoryHome =
+			_jcrStoreConfiguration.jackrabbitRepositoryHome();
+
 		try {
 			_transientRepository = new TransientRepository(
-				CONFIG_FILE_PATH, REPOSITORY_HOME);
+				_jcrStoreConfiguration.jackrabbitConfigFilePath(),
+				repositoryHome);
 		}
 		catch (Exception e) {
 			_log.error("Problem initializing Jackrabbit JCR.", e);
@@ -162,14 +157,15 @@ public class JCRFactoryImpl implements JCRFactory {
 		if (_log.isInfoEnabled()) {
 			_log.info(
 				"Jackrabbit JCR intialized with config file path " +
-					CONFIG_FILE_PATH + " and repository home " +
-						REPOSITORY_HOME);
+					_jcrStoreConfiguration.jackrabbitConfigFilePath() +
+						" and repository home " + repositoryHome);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(JCRFactoryImpl.class);
 
 	private boolean _initialized;
+	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 	private final TransientRepository _transientRepository;
 
 }

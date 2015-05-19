@@ -783,6 +783,29 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.iframe.web"
 		},
 
+		// JCR Store
+
+		new String[] {
+			"jcr.jackrabbit.config.file.path", "jackrabbit.config.file.path",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.credentials.password",
+			"jackrabbit.credentials.password", "com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.credentials.username",
+			"jackrabbit.credentials.username", "com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.repository.home", "repository.home",
+			"com.liferay.portal.store.jcr"
+		},
+		new String[] {
+			"jcr.jackrabbit.repository.root", "repository.root",
+			"com.liferay.portal.store.jcr"
+		},
+
 		// Journal
 
 		new String[] {

@@ -186,11 +186,6 @@
 	<classpathentry kind="lib" path="lib/portal/im4java.jar"/>
 	<classpathentry kind="lib" path="lib/portal/isoparser.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jabsorb.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jackrabbit-api.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jackrabbit-core.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jackrabbit-jcr-commons.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jackrabbit-spi.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jackrabbit-spi-commons.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jai_core.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jakarta-regexp.jar"/>
@@ -205,7 +200,6 @@
 	<classpathentry kind="lib" path="lib/portal/jcifs.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcommon.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jcl-over-slf4j.jar"/>
-	<classpathentry kind="lib" path="lib/portal/jcr.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jempbox.jar"/>
 	<classpathentry kind="lib" path="lib/portal/jena.jar"/>

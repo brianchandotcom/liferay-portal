@@ -50,16 +50,6 @@ public class RSSDisplayContext {
 				RSSPortletInstanceConfiguration.class);
 	}
 
-	public String getDisplayStyle() {
-		if (_displayStyle != null) {
-			return _displayStyle;
-		}
-
-		_displayStyle = _rssPortletInstanceConfiguration.displayStyle();
-
-		return _displayStyle;
-	}
-
 	public long getDisplayStyleGroupId() {
 		if (_displayStyleGroupId != 0) {
 			return _displayStyleGroupId;
@@ -76,38 +66,6 @@ public class RSSDisplayContext {
 		}
 
 		return _displayStyleGroupId;
-	}
-
-	public int getEntriesPerFeed() {
-		if (_entriesPerFeed != null) {
-			return _entriesPerFeed;
-		}
-
-		_entriesPerFeed = _rssPortletInstanceConfiguration.entriesPerFeed();
-
-		return _entriesPerFeed;
-	}
-
-	public int getExpandedEntriesPerFeed() {
-		if (_expandedEntriesPerFeed != null) {
-			return _expandedEntriesPerFeed;
-		}
-
-		_expandedEntriesPerFeed =
-			_rssPortletInstanceConfiguration.expandedEntriesPerFeed();
-
-		return _expandedEntriesPerFeed;
-	}
-
-	public String getFeedImageAlignment() {
-		if (_feedImageAlignment != null) {
-			return _feedImageAlignment;
-		}
-
-		_feedImageAlignment =
-			_rssPortletInstanceConfiguration.feedImageAlignment();
-
-		return _feedImageAlignment;
 	}
 
 	public List<RSSFeed> getRSSFeeds() {
@@ -132,80 +90,16 @@ public class RSSDisplayContext {
 		return rssFeeds;
 	}
 
-	public String[] getTitles() {
-		return _rssPortletInstanceConfiguration.titles();
+	public RSSPortletInstanceConfiguration
+		getRSSPortletInstanceConfiguration() {
+
+		return _rssPortletInstanceConfiguration;
 	}
 
-	public String[] getUrls() {
-		return _rssPortletInstanceConfiguration.urls();
-	}
-
-	public boolean isShowFeedDescription() {
-		if (_showFeedDescription != null) {
-			return _showFeedDescription;
-		}
-
-		_showFeedDescription =
-			_rssPortletInstanceConfiguration.showFeedDescription();
-
-		return _showFeedDescription;
-	}
-
-	public boolean isShowFeedImage() {
-		if (_showFeedImage != null) {
-			return _showFeedImage;
-		}
-
-		_showFeedImage = _rssPortletInstanceConfiguration.showFeedImage();
-
-		return _showFeedImage;
-	}
-
-	public boolean isShowFeedItemAuthor() {
-		if (_showFeedItemAuthor != null) {
-			return _showFeedItemAuthor;
-		}
-
-		_showFeedItemAuthor =
-			_rssPortletInstanceConfiguration.showFeedItemAuthor();
-
-		return _showFeedItemAuthor;
-	}
-
-	public boolean isShowFeedPublishedDate() {
-		if (_showFeedPublishedDate != null) {
-			return _showFeedPublishedDate;
-		}
-
-		_showFeedPublishedDate =
-			_rssPortletInstanceConfiguration.showFeedPublishedDate();
-
-		return _showFeedPublishedDate;
-	}
-
-	public boolean isShowFeedTitle() {
-		if (_showFeedTitle != null) {
-			return _showFeedTitle;
-		}
-
-		_showFeedTitle = _rssPortletInstanceConfiguration.showFeedTitle();
-
-		return _showFeedTitle;
-	}
-
-	private String _displayStyle;
 	private long _displayStyleGroupId;
-	private Integer _entriesPerFeed;
-	private Integer _expandedEntriesPerFeed;
-	private String _feedImageAlignment;
 	private final HttpServletRequest _request;
 	private final RSSPortletInstanceConfiguration
 		_rssPortletInstanceConfiguration;
 	private final RSSWebConfiguration _rssWebConfiguration;
-	private Boolean _showFeedDescription;
-	private Boolean _showFeedImage;
-	private Boolean _showFeedItemAuthor;
-	private Boolean _showFeedPublishedDate;
-	private Boolean _showFeedTitle;
 
 }

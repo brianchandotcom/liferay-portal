@@ -731,8 +731,6 @@ public interface PropsKeys {
 
 	public static final String DL_RELATED_ASSETS_ENABLED = "dl.related.assets.enabled";
 
-	public static final String DL_REPOSITORY_CMIS_DELETE_DEPTH = "dl.repository.cmis.delete.depth";
-
 	public static final String DL_REPOSITORY_GUEST_PASSWORD = "dl.repository.guest.password";
 
 	public static final String DL_REPOSITORY_GUEST_USERNAME = "dl.repository.guest.username";

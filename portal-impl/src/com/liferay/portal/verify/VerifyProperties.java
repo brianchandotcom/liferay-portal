@@ -650,6 +650,13 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.cluster"
 		},
 
+		// CMIS Repository
+
+		new String[] {
+			"dl.repository.cmis.delete.depth", "delete.depth",
+			"com.liferay.document.library.repository.cmis"
+		},
+
 		// Currency Converter
 
 		new String[] {

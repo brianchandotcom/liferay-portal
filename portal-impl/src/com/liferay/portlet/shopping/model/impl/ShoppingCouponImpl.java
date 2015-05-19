@@ -48,9 +48,7 @@ public class ShoppingCouponImpl extends ShoppingCouponBaseImpl {
 
 	@Override
 	public boolean hasValidStartDate() {
-		Date now = new Date();
-
-		if (CalendarUtil.beforeByDay(now, getStartDate())) {
+		if (CalendarUtil.beforeByDay(new Date(), getStartDate())) {
 			return false;
 		}
 		else {

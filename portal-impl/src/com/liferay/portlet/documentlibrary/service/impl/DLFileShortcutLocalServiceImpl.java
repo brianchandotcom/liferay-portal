@@ -52,7 +52,6 @@ public class DLFileShortcutLocalServiceImpl
 
 		User user = userPersistence.findByPrimaryKey(userId);
 		folderId = getFolderId(user.getCompanyId(), folderId);
-		Date now = new Date();
 
 		validate(user, toFileEntryId);
 
@@ -74,7 +73,7 @@ public class DLFileShortcutLocalServiceImpl
 		fileShortcut.setStatus(WorkflowConstants.STATUS_APPROVED);
 		fileShortcut.setStatusByUserId(userId);
 		fileShortcut.setStatusByUserName(user.getFullName());
-		fileShortcut.setStatusDate(now);
+		fileShortcut.setStatusDate(new Date());
 
 		dlFileShortcutPersistence.update(fileShortcut);
 

@@ -161,11 +161,9 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Date now = new Date();
-
 		return addEntry(
-			userId, title, StringPool.BLANK, StringPool.BLANK, content, now,
-			true, true, new String[0], StringPool.BLANK, null, null,
+			userId, title, StringPool.BLANK, StringPool.BLANK, content,
+			new Date(), true, true, new String[0], StringPool.BLANK, null, null,
 			serviceContext);
 	}
 

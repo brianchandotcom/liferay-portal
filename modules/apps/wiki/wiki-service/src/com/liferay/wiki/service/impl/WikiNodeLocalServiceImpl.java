@@ -469,12 +469,10 @@ public class WikiNodeLocalServiceImpl extends WikiNodeLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
-		Date now = new Date();
-
 		node.setStatus(status);
 		node.setStatusByUserId(userId);
 		node.setStatusByUserName(user.getFullName());
-		node.setStatusDate(now);
+		node.setStatusDate(new Date());
 
 		wikiNodePersistence.update(node);
 

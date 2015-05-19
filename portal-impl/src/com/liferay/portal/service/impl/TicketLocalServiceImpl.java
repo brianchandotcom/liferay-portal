@@ -47,14 +47,13 @@ public class TicketLocalServiceImpl extends TicketLocalServiceBaseImpl {
 		String extraInfo, Date expirationDate, ServiceContext serviceContext) {
 
 		long classNameId = classNameLocalService.getClassNameId(className);
-		Date now = new Date();
 
 		long ticketId = counterLocalService.increment();
 
 		Ticket ticket = ticketPersistence.create(ticketId);
 
 		ticket.setCompanyId(companyId);
-		ticket.setCreateDate(now);
+		ticket.setCreateDate(new Date());
 		ticket.setClassNameId(classNameId);
 		ticket.setClassPK(classPK);
 		ticket.setKey(PortalUUIDUtil.generate());

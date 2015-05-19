@@ -113,13 +113,13 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
 
-		DetachedComment message = (DetachedComment)obj;
+		DetachedComment detachedComment = (DetachedComment)obj;
 
 		FileEntry fileEntry = null;
 
 		try {
 			fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				message.getClassPK());
+				detachedComment.getClassPK());
 		}
 		catch (Exception e) {
 			return;

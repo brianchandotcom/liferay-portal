@@ -42,16 +42,6 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		addWSDDBuilderConfiguration(project);
 
 		addBuildWSDDTask(project);
-
-		project.afterEvaluate(
-			new Action<Project>() {
-
-				@Override
-				public void execute(Project project) {
-					configureBuildWSDDTask(project);
-				}
-
-			});
 	}
 
 	protected BuildWSDDTask addBuildWSDDTask(Project project) {
@@ -60,6 +50,18 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 		buildWSDDTask.setDescription("Runs Liferay WSDD Builder.");
 		buildWSDDTask.setGroup("build");
+
+		buildWSDDTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+		buildWSDDTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					configureBuildWSDDTaskBuilderClasspath((BuildWSDDTask)task);
+				}
+
+			});
 
 		return buildWSDDTask;
 	}
@@ -92,7 +94,9 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 			"com.liferay.portal.tools.wsdd.builder", "latest.release");
 	}
 
-	protected void configureBuildWSDDTask(BuildWSDDTask buildWSDDTask) {
+	protected void configureBuildWSDDTaskBuilderClasspath(
+		BuildWSDDTask buildWSDDTask) {
+
 		if (Validator.isNotNull(buildWSDDTask.getBuilderClasspath())) {
 			return;
 		}
@@ -103,12 +107,6 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 
 		Task compileJavaTask = taskContainer.findByName(
 			JavaPlugin.COMPILE_JAVA_TASK_NAME);
-
-		if (compileJavaTask == null) {
-			return;
-		}
-
-		buildWSDDTask.dependsOn(compileJavaTask);
 
 		TaskOutputs taskOutputs = compileJavaTask.getOutputs();
 
@@ -125,21 +123,6 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 		}
 
 		buildWSDDTask.setBuilderClasspath(fileCollection.getAsPath());
-	}
-
-	protected void configureBuildWSDDTask(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BuildWSDDTask.class,
-			new Action<BuildWSDDTask>() {
-
-				@Override
-				public void execute(BuildWSDDTask buildWSDDTask) {
-					configureBuildWSDDTask(buildWSDDTask);
-				}
-
-			});
 	}
 
 }

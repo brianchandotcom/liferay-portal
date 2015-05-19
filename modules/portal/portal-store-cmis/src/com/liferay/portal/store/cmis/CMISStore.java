@@ -14,6 +14,8 @@
 
 package com.liferay.portal.store.cmis;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -21,7 +23,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.store.cmis.configuration.CMISConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
@@ -53,7 +55,9 @@ import org.apache.chemistry.opencmis.commons.enums.BindingType;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * @author Alexander Chow
@@ -61,6 +65,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Manuel de la Peña
  */
 @Component(
+	configurationPid = "com.liferay.portal.store.cmis.configuration.CMISConfiguration",
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "store.type=com.liferay.portal.store.cmis.CMISStore",
 	service = Store.class
 )
@@ -69,12 +75,12 @@ public class CMISStore extends BaseStore {
 	public CMISStore() {
 		Folder systemRootDir = getFolder(
 			SessionHolder.session.getRootFolder(),
-			PropsValues.DL_STORE_CMIS_SYSTEM_ROOT_DIR);
+			_cmisConfiguration.systemRootDir());
 
 		if (systemRootDir == null) {
 			systemRootDir = createFolder(
 				SessionHolder.session.getRootFolder(),
-				PropsValues.DL_STORE_CMIS_SYSTEM_ROOT_DIR);
+				_cmisConfiguration.systemRootDir());
 		}
 
 		_systemRootDir = systemRootDir;
@@ -440,6 +446,12 @@ public class CMISStore extends BaseStore {
 		document.updateProperties(documentProperties);
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_cmisConfiguration = Configurable.createConfigurable(
+			CMISConfiguration.class, properties);
+	}
+
 	protected Document createDocument(
 		Folder versioningFolder, String title, InputStream is) {
 
@@ -621,6 +633,7 @@ public class CMISStore extends BaseStore {
 	}
 
 	private final Folder _systemRootDir;
+	private static volatile CMISConfiguration _cmisConfiguration;
 
 	private static class SessionHolder {
 
@@ -631,7 +644,7 @@ public class CMISStore extends BaseStore {
 
 			parameters.put(
 				SessionParameter.ATOMPUB_URL,
-				PropsValues.DL_STORE_CMIS_REPOSITORY_URL);
+				_cmisConfiguration.repositoryUrl());
 			parameters.put(
 				SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
 			parameters.put(
@@ -645,10 +658,10 @@ public class CMISStore extends BaseStore {
 				SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
 			parameters.put(
 				SessionParameter.PASSWORD,
-				PropsValues.DL_STORE_CMIS_CREDENTIALS_PASSWORD);
+				_cmisConfiguration.credentialsPassword());
 			parameters.put(
 				SessionParameter.USER,
-				PropsValues.DL_STORE_CMIS_CREDENTIALS_USERNAME);
+				_cmisConfiguration.credentialsUsername());
 
 			SessionFactory sessionFactory =
 				CMISRepositoryUtil.getSessionFactory();

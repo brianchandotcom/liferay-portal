@@ -20,7 +20,8 @@ import aQute.bnd.annotation.metatype.Meta;
  * @author Manuel de la Peña
  */
 @Meta.OCD(
-	id = "com.liferay.portal.store.s3.configuration.S3Configuration"
+	id = "com.liferay.portal.store.s3.configuration.S3Configuration",
+	localization = "content/Language", name = "%s3.store.configuration.name"
 )
 public interface S3Configuration {
 

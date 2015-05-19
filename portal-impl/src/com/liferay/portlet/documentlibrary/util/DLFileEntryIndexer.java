@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.util;
 
+import com.liferay.portal.kernel.comment.DetachedComment;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -77,7 +78,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -113,7 +113,7 @@ public class DLFileEntryIndexer extends BaseIndexer {
 	public void addRelatedEntryFields(Document document, Object obj)
 		throws Exception {
 
-		MBMessage message = (MBMessage)obj;
+		DetachedComment message = (DetachedComment)obj;
 
 		FileEntry fileEntry = null;
 

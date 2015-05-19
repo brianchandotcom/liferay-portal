@@ -68,6 +68,9 @@ import org.gradle.api.tasks.bundling.Jar;
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
 
+	public static final String ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
+		"com.liferay.adddefaultdependencies";
+
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
@@ -312,6 +315,13 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void configureDependenciesCompile(
 		Project project, LiferayExtension liferayExtension) {
+
+		boolean addDefaultDependencies = getProperty(
+			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+
+		if (!addDefaultDependencies) {
+			return;
+		}
 
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
@@ -808,6 +818,26 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected File getLibDir(Project project) {
 		return project.file("lib");
+	}
+
+	protected boolean getProperty(
+		Project project, String name, boolean defaultValue) {
+
+		if (!project.hasProperty(name)) {
+			return defaultValue;
+		}
+
+		Object value = project.property(name);
+
+		if (value instanceof Boolean) {
+			return (Boolean)value;
+		}
+
+		if (value instanceof String) {
+			return Boolean.parseBoolean((String)value);
+		}
+
+		return defaultValue;
 	}
 
 	protected File getResourcesDir(Project project) {

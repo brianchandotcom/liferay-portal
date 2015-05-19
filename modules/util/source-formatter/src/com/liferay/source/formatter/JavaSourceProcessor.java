@@ -895,7 +895,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
 
-		newContent = getCombinedLinesContent(newContent);
+		newContent = getCombinedLinesContent(
+			newContent, _combinedLinesPattern1);
+		newContent = getCombinedLinesContent(
+			newContent, _combinedLinesPattern2);
 
 		newContent = fixIncorrectEmptyLineBeforeCloseCurlyBrace(
 			newContent, fileName);
@@ -2196,16 +2199,28 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		return line;
 	}
 
-	protected String getCombinedLinesContent(String content) {
-		Matcher matcher = _combinedLinesPattern.matcher(content);
+	protected String getCombinedLinesContent(String content, Pattern pattern) {
+		Matcher matcher = pattern.matcher(content);
 
 		while (matcher.find()) {
 			String tabs = matcher.group(1);
 
 			int x = matcher.start(1);
 
-			int y = content.indexOf(
-				StringPool.NEW_LINE + tabs + StringPool.CLOSE_CURLY_BRACE, x);
+			String openChar = matcher.group(matcher.groupCount());
+
+			int y = -1;
+
+			if (openChar.equals(StringPool.OPEN_CURLY_BRACE)) {
+				y = content.indexOf(
+					StringPool.NEW_LINE + tabs + StringPool.CLOSE_CURLY_BRACE,
+					x);
+			}
+			else if (openChar.equals(StringPool.OPEN_PARENTHESIS)) {
+				y = content.indexOf(
+					StringPool.NEW_LINE + tabs + StringPool.CLOSE_PARENTHESIS,
+					x);
+			}
 
 			y = content.indexOf(StringPool.NEW_LINE, y + 1);
 
@@ -2227,7 +2242,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (getLineLength(replacement) <= _MAX_LINE_LENGTH) {
 				return getCombinedLinesContent(
-					StringUtil.replace(content, match, replacement));
+					StringUtil.replace(content, match, replacement), pattern);
 			}
 		}
 
@@ -3257,8 +3272,10 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		"\n(\t+)catch \\((.+Exception) (.+)\\) \\{\n");
 	private List<String> _checkJavaFieldTypesExclusionFiles;
 	private boolean _checkUnprocessedExceptions;
-	private Pattern _combinedLinesPattern = Pattern.compile(
-		"\n(\t*).+(=|\\]) \\{\n");
+	private Pattern _combinedLinesPattern1 = Pattern.compile(
+		"\n(\t*).+(=|\\]) (\\{)\n");
+	private Pattern _combinedLinesPattern2 = Pattern.compile(
+		"\n(\t*)@.+(\\()\n");
 	private List<String> _diamondOperatorExclusionFiles;
 	private List<String> _diamondOperatorExclusionPaths;
 	private Pattern _diamondOperatorPattern = Pattern.compile(

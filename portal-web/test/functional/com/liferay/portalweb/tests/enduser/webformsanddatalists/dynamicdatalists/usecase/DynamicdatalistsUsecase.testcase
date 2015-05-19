@@ -69,7 +69,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsAddlist#ERROR_MESSAGE_2" value1="Please enter a valid definition." />
 	</command>
 
-	<command name="AddRecord" priority="5">
+	<command known-issues="LPS-54988" name="AddRecord" priority="5">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />
@@ -393,7 +393,7 @@
 		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 2'])" />
 	</command>
 
-	<command name="AssertConfigurationMenulist" priority="3">
+	<command known-issues="LPS-54988" name="AssertConfigurationMenulist" priority="3">
 		<var name="ddlDataDefinitionName" value="To Do" />
 		<var name="ddlListName" value="List Name" />
 		<var name="pageName" value="Dynamic Data List Display Page" />
@@ -451,7 +451,7 @@
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
 	</command>
 
-	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
+	<command known-issues="LPS-54988" name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
 		<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="0.987a" />
 		<var name="ddlListName" value="List Name" />
@@ -564,7 +564,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertGuestCannotEditRecord" priority="4">
+	<command known-issues="LPS-54988" name="AssertGuestCannotEditRecord" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListDescription" value="List Description" />
@@ -750,7 +750,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsEditrecord#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
-	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
+	<command known-issues="LPS-54988" name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
 		<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="aaaa" />
 		<var name="ddlListName" value="List Name" />
@@ -819,7 +819,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsAddrecord#RECORD_FIELD_ALERT" value1="Please enter only digits." />
 	</command>
 
-	<command name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
+	<command known-issues="LPS-54988" name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
 		<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="555b" />
 		<var name="ddlListName" value="List Name" />
@@ -887,7 +887,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsAddrecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
-	<command name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">
+	<command known-issues="LPS-54988" name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

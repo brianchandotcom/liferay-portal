@@ -2,6 +2,8 @@ Bundle-Name: Liferay Portal Store CMIS
 Bundle-SymbolicName: com.liferay.portal.store.cmis
 Bundle-Version: 1.0.0
 Import-Package:\
+	!com.sun.xml.*,\
+	!org.json.simple.*,\
 	*
 Include-Resource:\
 	@lib/chemistry-opencmis-client-api.jar,\

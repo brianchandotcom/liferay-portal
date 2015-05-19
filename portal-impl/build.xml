@@ -14,9 +14,80 @@
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
+	<macrodef name="compile-dependencies">
+		<sequential>
+			<copy todir="${portal-impl.classes.dir}/com/liferay/portal/definitions" preservelastmodified="true">
+				<fileset dir="${project.dir}/definitions" />
+			</copy>
+
+			<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
+				<fileset
+					dir="${project.dir}/classes"
+					includes="*.properties"
+				/>
+				<fileset
+					dir="${project.dir}/portal-web/docroot/WEB-INF/tld"
+					includes="*.tld"
+				/>
+			</copy>
+
+			<copy todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies" preservelastmodified="true">
+				<fileset
+					dir="${project.dir}/sql"
+					includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
+				/>
+			</copy>
+
+			<copy file="${project.dir}/classes/log4j.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
+			<copy file="${project.dir}/classes/logging.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
+
+			<if>
+				<not>
+					<available file="${portal-impl.classes.dir}/jamwiki.properties" />
+				</not>
+				<then>
+					<unzip
+						dest="${portal-impl.classes.dir}"
+						src="${project.dir}/tools/jamwiki-0.9.3-src.zip"
+					>
+						<patternset
+							includes="**/main/resources/ApplicationResources.properties,**/main/resources/jamwiki-configuration.xml,**/main/resources/logging.properties,**/main/resources/interwiki.properties"
+						/>
+					</unzip>
+
+					<move todir="${portal-impl.classes.dir}">
+						<fileset
+							dir="${portal-impl.classes.dir}/jamwiki-0.9.3/main/resources"
+							excludes="logging.properties"
+						/>
+					</move>
+
+					<concat destfile="${portal-impl.classes.dir}/logging.properties.new">
+						<fileset file="${portal-impl.classes.dir}/logging.properties" />
+						<fileset file="${portal-impl.classes.dir}/jamwiki-0.9.3/main/resources/logging.properties" />
+					</concat>
+
+					<move file="${portal-impl.classes.dir}/logging.properties.new" tofile="${portal-impl.classes.dir}/logging.properties" />
+
+					<delete dir="${portal-impl.classes.dir}/jamwiki-0.9.3" />
+
+					<echo file="${portal-impl.classes.dir}/jamwiki.properties">
+						database-type=com.liferay.portlet.wiki.engines.mediawiki.LiferayDataHandler
+						props-initialized=true
+						search-engine=com.liferay.portlet.wiki.engines.mediawiki.LiferaySearchEngine
+					</echo>
+				</then>
+			</if>
+
+			<copy todir="${portal-impl.classes.dir}" preservelastmodified="true">
+				<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
+			</copy>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="compile-java">
 		<sequential>
-			<antcall target="compile-dependencies" />
+			<compile-dependencies />
 
 			<compile-java-cmd />
 
@@ -979,75 +1050,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</clean-common>
 	</target>
 
-	<target name="compile-dependencies">
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/definitions" preservelastmodified="true">
-			<fileset dir="${project.dir}/definitions" />
-		</copy>
-
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
-			<fileset
-				dir="${project.dir}/classes"
-				includes="*.properties"
-			/>
-			<fileset
-				dir="${project.dir}/portal-web/docroot/WEB-INF/tld"
-				includes="*.tld"
-			/>
-		</copy>
-
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/tools/sql/dependencies" preservelastmodified="true">
-			<fileset
-				dir="${project.dir}/sql"
-				includes="portal-data-common.sql,portal-data-counter.sql,portal-data-release.sql,portal-tables.sql,indexes.properties,indexes.sql,sequences.sql,update-*.sql"
-			/>
-		</copy>
-
-		<copy file="${project.dir}/classes/log4j.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
-		<copy file="${project.dir}/classes/logging.properties" todir="${portal-impl.classes.dir}" preservelastmodified="true" />
-
-		<if>
-			<not>
-				<available file="${portal-impl.classes.dir}/jamwiki.properties" />
-			</not>
-			<then>
-				<unzip
-					dest="${portal-impl.classes.dir}"
-					src="${project.dir}/tools/jamwiki-0.9.3-src.zip"
-				>
-					<patternset
-						includes="**/main/resources/ApplicationResources.properties,**/main/resources/jamwiki-configuration.xml,**/main/resources/logging.properties,**/main/resources/interwiki.properties"
-					/>
-				</unzip>
-
-				<move todir="${portal-impl.classes.dir}">
-					<fileset
-						dir="${portal-impl.classes.dir}/jamwiki-0.9.3/main/resources"
-						excludes="logging.properties"
-					/>
-				</move>
-
-				<concat destfile="${portal-impl.classes.dir}/logging.properties.new">
-					<fileset file="${portal-impl.classes.dir}/logging.properties" />
-					<fileset file="${portal-impl.classes.dir}/jamwiki-0.9.3/main/resources/logging.properties" />
-				</concat>
-
-				<move file="${portal-impl.classes.dir}/logging.properties.new" tofile="${portal-impl.classes.dir}/logging.properties" />
-
-				<delete dir="${portal-impl.classes.dir}/jamwiki-0.9.3" />
-
-				<echo file="${portal-impl.classes.dir}/jamwiki.properties">
-					database-type=com.liferay.portlet.wiki.engines.mediawiki.LiferayDataHandler
-					props-initialized=true
-					search-engine=com.liferay.portlet.wiki.engines.mediawiki.LiferaySearchEngine
-				</echo>
-			</then>
-		</if>
-
-		<copy todir="${portal-impl.classes.dir}" preservelastmodified="true">
-			<fileset dir="src" excludes="**/*.java,**/META-INF/javadocs-all*.xml" />
-		</copy>
-	</target>
-
 	<target name="compile-test">
 		<ant dir="${project.dir}/portal-service" target="compile-test" inheritAll="false" />
 
@@ -1055,7 +1057,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="compile-tools">
-		<antcall target="compile-dependencies" />
+		<compile-dependencies />
 
 		<javac
 			classpathref="project.classpath"

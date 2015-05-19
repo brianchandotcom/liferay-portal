@@ -63,6 +63,7 @@ import org.jets3t.service.security.AWSCredentials;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
 
@@ -493,7 +494,6 @@ public class S3Store extends BaseStore {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
 		_s3Configuration = Configurable.createConfigurable(
 			S3Configuration.class, properties);
@@ -567,6 +567,17 @@ public class S3Store extends BaseStore {
 				return;
 			}
 		}
+	}
+
+	@Deactivate
+	protected void deactivate() throws ServiceException {
+		if (!_s3Service.isShutdown()) {
+			_s3Service.shutdown();
+		}
+
+		_s3Bucket = null;
+		_s3Configuration = null;
+		_s3Service = null;
 	}
 
 	protected AWSCredentials getAWSCredentials() throws S3ServiceException {
@@ -780,6 +791,14 @@ public class S3Store extends BaseStore {
 		}
 
 		return tempFile;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws ServiceException {
+
+		deactivate();
+		activate(properties);
 	}
 
 	protected boolean isS3NoSuchKeyException(Exception e) {

@@ -24,7 +24,9 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
+long organizationId = ParamUtil.getLong(request, "organizationId");
+
+Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 

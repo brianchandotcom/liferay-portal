@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
+long organizationId = ParamUtil.getLong(request, "organizationId");
+
+Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
 List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 

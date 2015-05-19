@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/directory/init.jsp" %>
 
 <%
-Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
+long organizationId = ParamUtil.getLong(request, "organizationId");
 
-long organizationId = (organization != null) ? organization.getOrganizationId() : 0;
+Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
 List<OrgLabor> orgLabors = OrgLaborServiceUtil.getOrgLabors(organizationId);
 

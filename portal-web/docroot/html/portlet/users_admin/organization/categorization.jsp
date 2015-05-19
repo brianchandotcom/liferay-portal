@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/users_admin/init.jsp" %>
 
 <%
-Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
+long organizationId = ParamUtil.getLong(request, "organizationId");
+
+Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 %>
 
 <aui:model-context bean="<%= organization %>" model="<%= Organization.class %>" />

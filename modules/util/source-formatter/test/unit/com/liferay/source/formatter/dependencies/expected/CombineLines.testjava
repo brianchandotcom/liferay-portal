@@ -54,7 +54,15 @@ public class CombineLines extends SuperClass {
 		}
 	}
 
-	public void method2() throws Exception {
+	public void method2(
+		String test1,
+		String
+			stringWithALongNameSoItDoesNotFitOnTheSameLineWithThePreviousOne) {
+
+		return;
+	}
+
+	public void method3() throws Exception {
 		String test1 = getString("test1");
 
 		String test2 = getString(
@@ -87,7 +95,7 @@ public class CombineLines extends SuperClass {
 		}
 	}
 
-	public String method3() {
+	public String method4() {
 		String test1 = getString(
 			"hello world" + "hello world" + "hello world" + "hello world");
 
@@ -97,14 +105,14 @@ public class CombineLines extends SuperClass {
 		return test1 + test2;
 	}
 
-	public String method4() {
+	public String method5() {
 		String stringWithAFairlyMediumLongName =
 			StringPool.GREATER_THAN_OR_EQUAL;
 
 		return stringWithAFairlyMediumLongName;
 	}
 
-	public Set<String> method5() {
+	public Set<String> method6() {
 		Set<String> numbers = SetUtil.fromArray(
 			new String[] {
 				"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
@@ -114,7 +122,7 @@ public class CombineLines extends SuperClass {
 		return numbers;
 	}
 
-	public String method6(String s) {
+	public String method7(String s) {
 		return StringUtil.replace(
 			s, new String[] {StringPool.PERIOD, StringPool.SLASH},
 			new String[] {StringPool.COMMA, StringPool.BACK_SLASH});

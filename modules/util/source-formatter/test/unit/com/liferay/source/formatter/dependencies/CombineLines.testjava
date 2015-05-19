@@ -71,7 +71,15 @@ public class CombineLines
 		}
 	}
 
-	public void method2()
+	public void method2(
+		String test1,
+		String
+			stringWithALongNameSoItDoesNotFitOnTheSameLineWithThePreviousOne) {
+
+		return;
+	}
+
+	public void method3()
 		throws Exception {
 
 		String test1 = getString(
@@ -111,7 +119,7 @@ public class CombineLines
 		}
 	}
 
-	public String method3() {
+	public String method4() {
 		String test1 = getString(
 			"hello world" + "hello world" + "hello world" +
 				"hello world");
@@ -124,7 +132,7 @@ public class CombineLines
 			test2;
 	}
 
-	public String method4() {
+	public String method5() {
 		String stringWithAFairlyMediumLongName =
 			StringPool.
 				GREATER_THAN_OR_EQUAL;
@@ -132,7 +140,7 @@ public class CombineLines
 		return stringWithAFairlyMediumLongName;
 	}
 
-	public Set<String> method5() {
+	public Set<String> method6() {
 		Set<String> numbers =
 			SetUtil.fromArray(
 				new String[] {
@@ -143,7 +151,7 @@ public class CombineLines
 		return numbers;
 	}
 
-	public String method6(String s) {
+	public String method7(String s) {
 		return StringUtil.replace(
 			s,
 			new String[] {

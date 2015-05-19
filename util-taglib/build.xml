@@ -41,6 +41,26 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="jar-marco">
+		<sequential>
+			<jar-marco-cmd>
+				<post-jar>
+					<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
+
+					<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
+						<fileset dir="classes/META-INF" />
+					</copy>
+
+					<copy file="${jar.file}.jar" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" preservelastmodified="true" />
+
+					<copy overwrite="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld" preservelastmodified="true">
+						<fileset dir="classes/META-INF" includes="*.tld" />
+					</copy>
+				</post-jar>
+			</jar-marco-cmd>
+		</sequential>
+	</macrodef>
+
 	<target name="build-taglibs">
 		<delete file="${project.dir}/util-taglib/src/META-INF/aui.tld" failonerror="false" />
 		<delete file="${project.dir}/util-taglib/src/META-INF/ddm.tld" failonerror="false" />
@@ -85,20 +105,6 @@
 				</copy>
 			</then>
 		</if>
-	</target>
-
-	<target name="jar" depends="build-common-java.jar" unless="${jar.uptodate}">
-		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
-
-		<copy todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true">
-			<fileset dir="classes/META-INF" />
-		</copy>
-
-		<copy file="${jar.file}.jar" todir="${project.dir}/portal-web/docroot/WEB-INF/lib" preservelastmodified="true" />
-
-		<copy overwrite="true" todir="${project.dir}/portal-web/docroot/WEB-INF/tld" preservelastmodified="true">
-			<fileset dir="classes/META-INF" includes="*.tld" />
-		</copy>
 	</target>
 
 	<target name="taglibdoc" depends="validate-tld">

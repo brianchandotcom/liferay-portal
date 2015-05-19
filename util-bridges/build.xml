@@ -23,8 +23,14 @@
 		</sequential>
 	</macrodef>
 
-	<target name="jar" depends="build-common-java.jar" unless="${jar.uptodate}">
-		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
-		<copy file="${project.dir}/lib/portal/portals-bridges.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
-	</target>
+	<macrodef name="jar-marco">
+		<sequential>
+			<jar-marco-cmd>
+				<post-jar>
+					<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
+					<copy file="${project.dir}/lib/portal/portals-bridges.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
+				</post-jar>
+			</jar-marco-cmd>
+		</sequential>
+	</macrodef>
 </project>

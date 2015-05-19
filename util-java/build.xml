@@ -8,7 +8,13 @@
 	<property name="manifest.bundle.name" value="Liferay Util Java" />
 	<property name="manifest.bundle.symbolic.name" value="util-java" />
 
-	<target name="jar" depends="build-common-java.jar" unless="${jar.uptodate}">
-		<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
-	</target>
+	<macrodef name="jar-marco">
+		<sequential>
+			<jar-marco-cmd>
+				<post-jar>
+					<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
+				</post-jar>
+			</jar-marco-cmd>
+		</sequential>
+	</macrodef>
 </project>

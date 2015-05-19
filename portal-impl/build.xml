@@ -24,6 +24,48 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="jar-marco">
+		<sequential>
+			<jar-marco-cmd>
+				<pre-jar>
+					<ant dir="../util-bridges" target="jar" inheritAll="false" />
+					<ant dir="../util-java" target="jar" inheritAll="false" />
+					<ant dir="../util-taglib" target="jar" inheritAll="false" />
+
+					<property name="portal.deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
+
+					<for list="1,2,3,4,5,6,7,8,9" param="index">
+						<sequential>
+							<if>
+								<available file="${portal.deploy.dependencies.dir}/plugins@{index}" />
+								<then>
+									<fileset dir="${portal.deploy.dependencies.dir}/plugins@{index}" id="plugins@{index}.wars">
+										<include name="*.war" />
+									</fileset>
+
+									<pathconvert property="plugins@{index}.wars.list" pathsep="," refid="plugins@{index}.wars">
+										<flattenmapper />
+									</pathconvert>
+
+									<if>
+										<not>
+											<uptodate targetfile="${jar.file}.jar">
+												<srcfiles dir="${portal.deploy.dependencies.dir}/plugins@{index}" includes="**/*.*" />
+											</uptodate>
+										</not>
+										<then>
+											<echo file="${portal.deploy.dependencies.dir}/plugins@{index}/wars.txt">${plugins@{index}.wars.list}</echo>
+										</then>
+									</if>
+								</then>
+							</if>
+						</sequential>
+					</for>
+				</pre-jar>
+			</jar-marco-cmd>
+		</sequential>
+	</macrodef>
+
 	<target name="build-alloy-taglib-jar">
 		<if>
 			<not>
@@ -1100,44 +1142,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</java>
 
 		<delete file="ServiceBuilder.temp" />
-	</target>
-
-	<target name="jar" depends="compile">
-		<ant dir="../util-bridges" target="jar" inheritAll="false" />
-		<ant dir="../util-java" target="jar" inheritAll="false" />
-		<ant dir="../util-taglib" target="jar" inheritAll="false" />
-
-		<property name="portal.deploy.dependencies.dir" value="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" />
-
-		<for list="1,2,3,4,5,6,7,8,9" param="index">
-			<sequential>
-				<if>
-					<available file="${portal.deploy.dependencies.dir}/plugins@{index}" />
-					<then>
-						<fileset dir="${portal.deploy.dependencies.dir}/plugins@{index}" id="plugins@{index}.wars">
-							<include name="*.war" />
-						</fileset>
-
-						<pathconvert property="plugins@{index}.wars.list" pathsep="," refid="plugins@{index}.wars">
-							<flattenmapper />
-						</pathconvert>
-
-						<if>
-							<not>
-								<uptodate targetfile="${jar.file}.jar">
-									<srcfiles dir="${portal.deploy.dependencies.dir}/plugins@{index}" includes="**/*.*" />
-								</uptodate>
-							</not>
-							<then>
-								<echo file="${portal.deploy.dependencies.dir}/plugins@{index}/wars.txt">${plugins@{index}.wars.list}</echo>
-							</then>
-						</if>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<antcall target="build-common-java.jar" />
 	</target>
 
 	<target name="rebuild-hypersonic">

@@ -94,6 +94,70 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="jar-marco">
+		<sequential>
+			<jar-marco-cmd />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="jar-marco-cmd">
+		<element name="pre-jar" optional="true" />
+		<element name="post-jar" optional="true" />
+
+		<sequential>
+			<if>
+				<not>
+					<uptodate targetfile="${jar.file}.jar">
+						<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+					</uptodate>
+				</not>
+				<then>
+					<compile-java />
+
+					<pre-jar />
+
+					<if>
+						<available file="bnd.bnd" />
+						<then>
+							<manifest-helper />
+
+							<bndexpand propertyfile="${project.dir}/common.bnd" />
+
+							<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
+								<bndfiles>
+									<fileset dir=".">
+										<include name="bnd.bnd" />
+									</fileset>
+								</bndfiles>
+								<classpath>
+									<pathelement location="classes" />
+								</classpath>
+								<property name="-sourcepath" value="." />
+							</bnd>
+
+							<baseline-jar
+								bndFile="bnd.bnd"
+								bndRootFile="${project.dir}/common.bnd"
+								newJarFile="${jar.file}.jar"
+							/>
+						</then>
+						<else>
+							<antcall target="manifest" />
+
+							<jar
+								basedir="classes"
+								jarfile="${jar.file}.jar"
+								manifest="classes/META-INF/MANIFEST.MF"
+							/>
+						</else>
+					</if>
+
+					<post-jar />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<if>
 		<and>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
@@ -126,54 +190,7 @@
 	</target>
 
 	<target name="jar">
-		<uptodate property="jar.uptodate" targetfile="${jar.file}.jar">
-			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-		</uptodate>
-
-		<if>
-			<not>
-				<isset property="jar.uptodate" />
-			</not>
-			<then>
-				<compile-java />
-
-				<if>
-					<available file="bnd.bnd" />
-					<then>
-						<manifest-helper />
-
-						<bndexpand propertyfile="${project.dir}/common.bnd" />
-
-						<bnd eclipse="false" exceptions="true" failok="false" inherit="true" output="${jar.file}.jar">
-							<bndfiles>
-								<fileset dir=".">
-									<include name="bnd.bnd" />
-								</fileset>
-							</bndfiles>
-							<classpath>
-								<pathelement location="classes" />
-							</classpath>
-							<property name="-sourcepath" value="." />
-						</bnd>
-
-						<baseline-jar
-							bndFile="bnd.bnd"
-							bndRootFile="${project.dir}/common.bnd"
-							newJarFile="${jar.file}.jar"
-						/>
-					</then>
-					<else>
-						<antcall target="manifest" />
-
-						<jar
-							basedir="classes"
-							jarfile="${jar.file}.jar"
-							manifest="classes/META-INF/MANIFEST.MF"
-						/>
-					</else>
-				</if>
-			</then>
-		</if>
+		<jar-marco />
 	</target>
 
 	<target name="jar-javadoc" depends="javadoc">

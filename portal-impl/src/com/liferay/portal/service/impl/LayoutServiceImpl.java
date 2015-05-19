@@ -426,6 +426,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			groupId, privateLayout, parameterMap, startDate, endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#exportLayoutsAsFile(
+	 *             ExportImportConfiguration)}
+	 */
+	@Deprecated
 	@Override
 	public File exportLayoutsAsFile(
 			ExportImportConfiguration exportImportConfiguration)
@@ -479,6 +485,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#exportLayoutsAsFileInBackground(
+	 *             ExportImportConfiguration)}
+	 */
+	@Deprecated
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			ExportImportConfiguration exportImportConfiguration)
@@ -492,6 +504,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), exportImportConfiguration);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#exportLayoutsAsFileInBackground(
+	 *             long)}
+	 */
+	@Deprecated
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			long exportImportConfigurationId)
@@ -509,6 +527,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), exportImportConfigurationId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long exportLayoutsAsFileInBackground(
 			String taskName, long groupId, boolean privateLayout,
@@ -525,9 +547,7 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #exportLayoutsAsFileInBackground(String, long, boolean,
-	 *             long[], Map, Date, Date)}
+	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
 	@Override
@@ -602,6 +622,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			companyId, portletId, parameterMap, startDate, endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#exportPortletInfoAsFile(
+	 *             ExportImportConfiguration)}
+	 */
+	@Deprecated
 	@Override
 	public File exportPortletInfoAsFile(
 			ExportImportConfiguration exportImportConfiguration)
@@ -682,6 +708,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			user.getCompanyId(), portletId, parameterMap, startDate, endDate);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			String taskName, long plid, long groupId, String portletId,
@@ -700,6 +730,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			startDate, endDate, fileName);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long exportPortletInfoAsFileInBackground(
 			String taskName, String portletId,
@@ -972,6 +1006,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			DigesterUtil.digestHex(Digester.SHA_256, folderName));
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#importLayouts(
+	 *             ExportImportConfiguration, File)}
+	 */
+	@Deprecated
 	@Override
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -989,6 +1029,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		layoutLocalService.importLayouts(exportImportConfiguration, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#importLayouts(
+	 *             ExportImportConfiguration, InputStream)}
+	 */
+	@Deprecated
 	@Override
 	public void importLayouts(
 			ExportImportConfiguration exportImportConfiguration, InputStream is)
@@ -1097,6 +1143,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), groupId, privateLayout, parameterMap, is);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long importLayoutsInBackground(
 			String taskName, long groupId, boolean privateLayout,
@@ -1110,6 +1160,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), taskName, groupId, privateLayout, parameterMap, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long importLayoutsInBackground(
 			String taskName, long groupId, boolean privateLayout,
@@ -1124,6 +1178,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			inputStream);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#importPortletInfo(
+	 *             ExportImportConfiguration, File)} (
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -1141,6 +1201,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		layoutLocalService.importPortletInfo(exportImportConfiguration, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#importPortletInfo(
+	 *             ExportImportConfiguration, InputStream)} (
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, InputStream is)
@@ -1267,6 +1333,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), portletId, parameterMap, is);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long importPortletInfoInBackground(
 			String taskName, long plid, long groupId, String portletId,
@@ -1282,6 +1352,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public long importPortletInfoInBackground(
 			String taskName, long plid, long groupId, String portletId,
@@ -1296,6 +1370,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), taskName, plid, groupId, portletId, parameterMap, is);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfoInBackground(
 			String taskName, String portletId,
@@ -1315,6 +1393,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), taskName, portletId, parameterMap, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	@Override
 	public void importPortletInfoInBackground(
 			String taskName, String portletId,
@@ -1968,6 +2050,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 		return layoutLocalService.updatePriority(plid, priority);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#validateImportLayoutsFile(
+	 *             ExportImportConfiguration, File)}
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -1986,6 +2074,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			exportImportConfiguration, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#validateImportLayoutsFile(
+	 *             ExportImportConfiguration, InputStream)}
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportLayoutsFile(
 			ExportImportConfiguration exportImportConfiguration,
@@ -2041,6 +2135,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			getUserId(), groupId, privateLayout, parameterMap, inputStream);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#validateImportPortletInfo(
+	 *             ExportImportConfiguration, File)}
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportPortletInfo(
 			ExportImportConfiguration exportImportConfiguration, File file)
@@ -2060,6 +2160,12 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 			exportImportConfiguration, file);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             com.liferay.portal.service.ExportImportServiceUtil#validateImportPortletInfo(
+	 *             ExportImportConfiguration, InputStream)}
+	 */
+	@Deprecated
 	@Override
 	public MissingReferences validateImportPortletInfo(
 			ExportImportConfiguration exportImportConfiguration,

@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.jcr.jackrabbit;
+package com.liferay.portal.store.jcr.jackrabbit;
 
-import com.liferay.portal.jcr.JCRFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.store.jcr.JCRFactory;
 import com.liferay.portal.util.PropsUtil;
 
 import java.io.File;
@@ -107,14 +107,14 @@ public class JCRFactoryImpl implements JCRFactory {
 					File.separator + Time.getTimestamp());
 
 			String repositoryXmlPath =
-				"com/liferay/portal/jcr/jackrabbit/dependencies/" +
+				"com/liferay/portal/store/jcr/jackrabbit/dependencies/" +
 					"repository-ext.xml";
 
 			ClassLoader classLoader = getClass().getClassLoader();
 
 			if (classLoader.getResource(repositoryXmlPath) == null) {
 				repositoryXmlPath =
-					"com/liferay/portal/jcr/jackrabbit/dependencies/" +
+					"com/liferay/portal/store/jcr/jackrabbit/dependencies/" +
 						"repository.xml";
 			}
 

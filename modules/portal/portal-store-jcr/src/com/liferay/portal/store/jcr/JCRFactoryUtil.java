@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.jcr;
+package com.liferay.portal.store.jcr;
 
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;

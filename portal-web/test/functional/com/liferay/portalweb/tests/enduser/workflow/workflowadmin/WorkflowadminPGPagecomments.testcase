@@ -104,7 +104,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteComment" priority="5">
+	<command known-issues="LPS-54708" name="DeleteComment" priority="5">
 		<description message="This is a use case for LPS-54707." />
 
 		<execute macro="Page#gotoPG">

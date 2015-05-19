@@ -14,7 +14,6 @@
 
 package com.liferay.portal.store.jcr;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
@@ -27,22 +26,25 @@ import java.util.Map;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael Young
+ * @author Manuel de la Peña
  */
 public class JCRFactoryUtil {
 
-	public static void closeSession(Session session) {
+	public void closeSession(Session session) {
 		if (session != null) {
 			session.logout();
 		}
 	}
 
-	public static Session createSession() throws RepositoryException {
+	public Session createSession() throws RepositoryException {
 		return createSession(null);
 	}
 
-	public static Session createSession(String workspaceName)
+	public Session createSession(String workspaceName)
 		throws RepositoryException {
 
 		if (workspaceName == null) {
@@ -86,34 +88,35 @@ public class JCRFactoryUtil {
 		return session;
 	}
 
-	public static JCRFactory getJCRFactory() {
-		if (_jcrFactory == null) {
-			_jcrFactory = (JCRFactory)PortalBeanLocatorUtil.locate(
-				JCRFactory.class.getName());
-		}
-
+	public JCRFactory getJCRFactory() {
 		return _jcrFactory;
 	}
 
-	public static void initialize() throws RepositoryException {
+	public void initialize() throws RepositoryException {
 		JCRFactory jcrFactory = getJCRFactory();
 
 		jcrFactory.initialize();
 	}
 
-	public static void prepare() throws RepositoryException {
+	public void prepare() throws RepositoryException {
 		JCRFactory jcrFactory = getJCRFactory();
 
 		jcrFactory.prepare();
 	}
 
-	public static void shutdown() {
+	@Reference
+	public void setJCRFactory(JCRFactory jcrFactory) {
+		_jcrFactory = jcrFactory;
+	}
+
+	public void shutdown() {
 		JCRFactory jcrFactory = getJCRFactory();
 
 		jcrFactory.shutdown();
 	}
 
-	private static JCRFactory _jcrFactory;
+	private JCRFactory _jcrFactory;
+
 	private static final ThreadLocal<Map<String, Session>> _sessions =
 		new AutoResetThreadLocal<Map<String, Session>>(
 			JCRFactoryUtil.class + "._sessions",

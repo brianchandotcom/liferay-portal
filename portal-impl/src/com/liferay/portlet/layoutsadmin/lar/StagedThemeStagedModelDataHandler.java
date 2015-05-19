@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.layoutsadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -33,6 +34,11 @@ public class StagedThemeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedTheme> {
 
 	public static final String[] CLASS_NAMES = {StagedTheme.class.getName()};
+
+	@Override
+	public void deleteStagedModel(StagedTheme stagedTheme)
+		throws PortalException {
+	}
 
 	@Override
 	public void deleteStagedModel(

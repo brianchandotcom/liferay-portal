@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.sitesadmin.lar;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -35,6 +36,13 @@ public class StagedGroupStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedGroup> {
 
 	public static final String[] CLASS_NAMES = {StagedGroup.class.getName()};
+
+	@Override
+	public void deleteStagedModel(StagedGroup stagedGroup)
+		throws PortalException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	@Override
 	public void deleteStagedModel(

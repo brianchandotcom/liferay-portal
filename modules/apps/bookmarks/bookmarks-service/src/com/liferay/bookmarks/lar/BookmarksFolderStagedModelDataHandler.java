@@ -47,6 +47,13 @@ public class BookmarksFolderStagedModelDataHandler
 		{BookmarksFolder.class.getName()};
 
 	@Override
+	public void deleteStagedModel(BookmarksFolder folder)
+		throws PortalException {
+
+		BookmarksFolderLocalServiceUtil.deleteFolder(folder);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -55,7 +62,7 @@ public class BookmarksFolderStagedModelDataHandler
 			uuid, groupId);
 
 		if (folder != null) {
-			BookmarksFolderLocalServiceUtil.deleteFolder(folder);
+			deleteStagedModel(folder);
 		}
 	}
 

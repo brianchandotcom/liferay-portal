@@ -43,6 +43,11 @@ public class JournalFolderStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {JournalFolder.class.getName()};
 
 	@Override
+	public void deleteStagedModel(JournalFolder folder) throws PortalException {
+		JournalFolderLocalServiceUtil.deleteFolder(folder);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -50,7 +55,7 @@ public class JournalFolderStagedModelDataHandler
 		JournalFolder folder = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (folder != null) {
-			JournalFolderLocalServiceUtil.deleteFolder(folder);
+			deleteStagedModel(folder);
 		}
 	}
 

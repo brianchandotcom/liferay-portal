@@ -54,6 +54,14 @@ public class FileShortcutStagedModelDataHandler
 	};
 
 	@Override
+	public void deleteStagedModel(FileShortcut fileShortcut)
+		throws PortalException {
+
+		DLFileShortcutLocalServiceUtil.deleteFileShortcut(
+			fileShortcut.getFileShortcutId());
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -62,8 +70,7 @@ public class FileShortcutStagedModelDataHandler
 			uuid, groupId);
 
 		if (fileShortcut != null) {
-			DLFileShortcutLocalServiceUtil.deleteFileShortcut(
-				fileShortcut.getFileShortcutId());
+			deleteStagedModel(fileShortcut);
 		}
 	}
 

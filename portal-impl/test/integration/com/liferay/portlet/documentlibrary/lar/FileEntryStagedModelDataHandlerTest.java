@@ -46,6 +46,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUt
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -162,19 +163,19 @@ public class FileEntryStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DLFileEntryType.class.getName());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		DLFileEntryType dlFileEntryType = addDLFileEntryType(
 			group.getGroupId(), ddmStructure.getStructureId());
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DLFileEntryType.class, dlFileEntryType);
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

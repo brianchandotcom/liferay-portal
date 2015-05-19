@@ -77,6 +77,13 @@ public class JournalArticleStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {JournalArticle.class.getName()};
 
 	@Override
+	public void deleteStagedModel(JournalArticle article)
+		throws PortalException {
+
+		JournalArticleLocalServiceUtil.deleteArticle(article);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -98,7 +105,7 @@ public class JournalArticleStagedModelDataHandler
 			JournalArticle article = fetchStagedModelByUuidAndGroupId(
 				articleUuid, groupId);
 
-			JournalArticleLocalServiceUtil.deleteArticle(article);
+			deleteStagedModel(article);
 		}
 		else {
 			JournalArticleLocalServiceUtil.deleteArticle(

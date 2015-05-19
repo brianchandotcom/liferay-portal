@@ -40,6 +40,13 @@ public class RepositoryEntryStagedModelDataHandler
 		{RepositoryEntry.class.getName()};
 
 	@Override
+	public void deleteStagedModel(RepositoryEntry repositoryEntry)
+		throws PortalException {
+
+		RepositoryEntryLocalServiceUtil.deleteRepositoryEntry(repositoryEntry);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -48,8 +55,7 @@ public class RepositoryEntryStagedModelDataHandler
 			uuid, groupId);
 
 		if (repositoryEntry != null) {
-			RepositoryEntryLocalServiceUtil.deleteRepositoryEntry(
-				repositoryEntry.getRepositoryId());
+			deleteStagedModel(repositoryEntry);
 		}
 	}
 

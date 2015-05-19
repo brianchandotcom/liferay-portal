@@ -51,6 +51,13 @@ public class DLFileEntryTypeStagedModelDataHandler
 		{DLFileEntryType.class.getName()};
 
 	@Override
+	public void deleteStagedModel(DLFileEntryType fileEntryType)
+		throws PortalException {
+
+		DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(fileEntryType);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -59,8 +66,7 @@ public class DLFileEntryTypeStagedModelDataHandler
 			uuid, groupId);
 
 		if (dlFileEntryType != null) {
-			DLFileEntryTypeLocalServiceUtil.deleteFileEntryType(
-				dlFileEntryType);
+			deleteStagedModel(dlFileEntryType);
 		}
 	}
 

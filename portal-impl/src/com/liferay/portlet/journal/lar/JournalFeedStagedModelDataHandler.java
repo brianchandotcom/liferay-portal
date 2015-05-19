@@ -57,6 +57,11 @@ public class JournalFeedStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {JournalFeed.class.getName()};
 
 	@Override
+	public void deleteStagedModel(JournalFeed feed) throws PortalException {
+		JournalFeedLocalServiceUtil.deleteFeed(feed);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -64,7 +69,7 @@ public class JournalFeedStagedModelDataHandler
 		JournalFeed feed = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (feed != null) {
-			JournalFeedLocalServiceUtil.deleteFeed(feed);
+			deleteStagedModel(feed);
 		}
 	}
 

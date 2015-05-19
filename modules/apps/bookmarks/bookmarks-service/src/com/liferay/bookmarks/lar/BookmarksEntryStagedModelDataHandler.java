@@ -47,6 +47,11 @@ public class BookmarksEntryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {BookmarksEntry.class.getName()};
 
 	@Override
+	public void deleteStagedModel(BookmarksEntry entry) throws PortalException {
+		BookmarksEntryLocalServiceUtil.deleteEntry(entry);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -54,7 +59,7 @@ public class BookmarksEntryStagedModelDataHandler
 		BookmarksEntry entry = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (entry != null) {
-			BookmarksEntryLocalServiceUtil.deleteEntry(entry);
+			deleteStagedModel(entry);
 		}
 	}
 

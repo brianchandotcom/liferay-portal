@@ -45,6 +45,13 @@ public class PollsQuestionStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {PollsQuestion.class.getName()};
 
 	@Override
+	public void deleteStagedModel(PollsQuestion question)
+		throws PortalException {
+
+		PollsQuestionLocalServiceUtil.deleteQuestion(question);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -53,7 +60,7 @@ public class PollsQuestionStagedModelDataHandler
 			uuid, groupId);
 
 		if (question != null) {
-			PollsQuestionLocalServiceUtil.deleteQuestion(question);
+			deleteStagedModel(question);
 		}
 	}
 

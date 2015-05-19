@@ -48,6 +48,11 @@ public class DDLRecordStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDLRecord.class.getName()};
 
 	@Override
+	public void deleteStagedModel(DDLRecord record) throws PortalException {
+		DDLRecordLocalServiceUtil.deleteRecord(record);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -55,7 +60,7 @@ public class DDLRecordStagedModelDataHandler
 		DDLRecord record = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (record != null) {
-			DDLRecordLocalServiceUtil.deleteRecord(record);
+			deleteStagedModel(record);
 		}
 	}
 

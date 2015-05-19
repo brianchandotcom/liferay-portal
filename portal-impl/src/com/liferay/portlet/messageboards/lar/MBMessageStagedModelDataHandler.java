@@ -62,6 +62,11 @@ public class MBMessageStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBMessage.class.getName()};
 
 	@Override
+	public void deleteStagedModel(MBMessage message) throws PortalException {
+		MBMessageLocalServiceUtil.deleteMessage(message);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -69,7 +74,7 @@ public class MBMessageStagedModelDataHandler
 		MBMessage message = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (message != null) {
-			MBMessageLocalServiceUtil.deleteMessage(message);
+			deleteStagedModel(message);
 		}
 	}
 

@@ -31,7 +31,7 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUti
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,13 +59,10 @@ public class DDLRecordSetStagedModelDataHandlerTest
 		throws Exception {
 
 		Map<String, List<StagedModel>> dependentStagedModelsMap =
-			new HashMap<>();
+			new LinkedHashMap<>();
 
 		DDMStructure ddmStructure = DDMStructureTestUtil.addStructure(
 			group.getGroupId(), DDLRecordSet.class.getName());
-
-		addDependentStagedModel(
-			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		DDMTemplate ddmTemplate1 = DDMTemplateTestUtil.addTemplate(
 			group.getGroupId(), ddmStructure.getStructureId());
@@ -78,6 +75,9 @@ public class DDLRecordSetStagedModelDataHandlerTest
 
 		addDependentStagedModel(
 			dependentStagedModelsMap, DDMTemplate.class, ddmTemplate2);
+
+		addDependentStagedModel(
+			dependentStagedModelsMap, DDMStructure.class, ddmStructure);
 
 		return dependentStagedModelsMap;
 	}

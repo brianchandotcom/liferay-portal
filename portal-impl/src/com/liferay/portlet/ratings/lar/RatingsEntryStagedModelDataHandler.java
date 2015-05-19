@@ -39,6 +39,13 @@ public class RatingsEntryStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {RatingsEntry.class.getName()};
 
 	@Override
+	public void deleteStagedModel(RatingsEntry ratingsEntry)
+		throws PortalException {
+
+		RatingsEntryLocalServiceUtil.deleteRatingsEntry(ratingsEntry);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -50,7 +57,7 @@ public class RatingsEntryStagedModelDataHandler
 				uuid, group.getCompanyId());
 
 		if (entry != null) {
-			RatingsEntryLocalServiceUtil.deleteRatingsEntry(entry);
+			deleteStagedModel(entry);
 		}
 	}
 

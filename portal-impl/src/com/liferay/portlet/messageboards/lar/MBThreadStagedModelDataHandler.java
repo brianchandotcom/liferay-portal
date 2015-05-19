@@ -31,6 +31,11 @@ public class MBThreadStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {MBThread.class.getName()};
 
 	@Override
+	public void deleteStagedModel(MBThread thread) throws PortalException {
+		MBThreadLocalServiceUtil.deleteThread(thread);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -38,7 +43,7 @@ public class MBThreadStagedModelDataHandler
 		MBThread thread = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (thread != null) {
-			MBThreadLocalServiceUtil.deleteThread(thread);
+			deleteStagedModel(thread);
 		}
 	}
 

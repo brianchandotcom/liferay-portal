@@ -48,8 +48,13 @@ public class WebsiteStagedModelDataHandler
 				uuid, group.getCompanyId());
 
 		if (website != null) {
-			WebsiteLocalServiceUtil.deleteWebsite(website);
+			deleteStagedModel(website);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(Website website) throws PortalException {
+		WebsiteLocalServiceUtil.deleteWebsite(website);
 	}
 
 	@Override

@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -75,6 +77,7 @@ import java.util.Map;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -97,6 +100,50 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	@After
 	public void tearDown() throws Exception {
 		ServiceContextThreadLocal.popServiceContext();
+	}
+
+	@Ignore
+	@Test
+	public void testCleanStagedModelDataHandler() throws Exception {
+
+		// Export
+
+		initExport();
+
+		Map<String, List<StagedModel>> dependentStagedModelsMap =
+			addDependentStagedModelsMap(stagingGroup);
+
+		StagedModel stagedModel = addStagedModel(
+			stagingGroup, dependentStagedModelsMap);
+
+		// Comments
+
+		addComments(stagedModel);
+
+		// Ratings
+
+		addRatings(stagedModel);
+
+		StagedModelDataHandlerUtil.exportStagedModel(
+			portletDataContext, stagedModel);
+
+		validateExport(
+			portletDataContext, stagedModel, dependentStagedModelsMap);
+
+		// Import
+
+		initImport();
+
+		deleteStagedModel(stagedModel, dependentStagedModelsMap, stagingGroup);
+
+		// Reread the staged model for import from ZIP for true testing
+
+		StagedModel exportedStagedModel = readExportedStagedModel(stagedModel);
+
+		Assert.assertNotNull(exportedStagedModel);
+
+		StagedModelDataHandlerUtil.importStagedModel(
+			portletDataContext, exportedStagedModel);
 	}
 
 	@Test
@@ -134,8 +181,6 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 		// Import
 
 		initImport();
-
-		deleteStagedModel(stagedModel, dependentStagedModelsMap, stagingGroup);
 
 		// Reread the staged model for import from ZIP for true testing
 
@@ -221,6 +266,26 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			Map<String, List<StagedModel>> dependentStagedModelsMap,
 			Group group)
 		throws Exception {
+
+		StagedModelDataHandler stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				ExportImportClassedModelUtil.getClassName(stagedModel));
+
+		stagedModelDataHandler.deleteStagedModel(stagedModel);
+
+		for (List<StagedModel> dependentStagedModels :
+				dependentStagedModelsMap.values()) {
+
+			for (StagedModel dependentStagedModel : dependentStagedModels) {
+				stagedModelDataHandler =
+					StagedModelDataHandlerRegistryUtil.
+						getStagedModelDataHandler(
+							ExportImportClassedModelUtil.getClassName(
+								dependentStagedModel));
+
+				stagedModelDataHandler.deleteStagedModel(dependentStagedModel);
+			}
+		}
 	}
 
 	protected AssetEntry fetchAssetEntry(StagedModel stagedModel, Group group)

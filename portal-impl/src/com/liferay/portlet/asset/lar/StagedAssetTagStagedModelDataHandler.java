@@ -40,15 +40,22 @@ public class StagedAssetTagStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {StagedAssetTag.class.getName()};
 
 	@Override
+	public void deleteStagedModel(StagedAssetTag stagedAssetTag)
+		throws PortalException {
+
+		AssetTagLocalServiceUtil.deleteTag(stagedAssetTag);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		AssetTag stagedAssetTag = fetchStagedModelByUuidAndGroupId(
+		StagedAssetTag stagedAssetTag = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
 		if (stagedAssetTag != null) {
-			AssetTagLocalServiceUtil.deleteTag(stagedAssetTag);
+			deleteStagedModel(stagedAssetTag);
 		}
 	}
 

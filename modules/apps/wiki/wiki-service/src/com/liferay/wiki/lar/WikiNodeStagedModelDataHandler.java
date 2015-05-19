@@ -50,8 +50,13 @@ public class WikiNodeStagedModelDataHandler
 		WikiNode wikiNode = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (wikiNode != null) {
-			WikiNodeLocalServiceUtil.deleteNode(wikiNode);
+			deleteStagedModel(wikiNode);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(WikiNode node) throws PortalException {
+		WikiNodeLocalServiceUtil.deleteNode(node);
 	}
 
 	@Override

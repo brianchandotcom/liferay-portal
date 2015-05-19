@@ -37,6 +37,11 @@ public class PhoneStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Phone.class.getName()};
 
 	@Override
+	public void deleteStagedModel(Phone phone) throws PortalException {
+		PhoneLocalServiceUtil.deletePhone(phone);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -47,7 +52,7 @@ public class PhoneStagedModelDataHandler
 			uuid, group.getCompanyId());
 
 		if (phone != null) {
-			PhoneLocalServiceUtil.deletePhone(phone);
+			deleteStagedModel(phone);
 		}
 	}
 

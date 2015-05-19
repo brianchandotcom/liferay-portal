@@ -44,8 +44,13 @@ public class UserStagedModelDataHandler
 			uuid, group.getCompanyId());
 
 		if (user != null) {
-			UserLocalServiceUtil.deleteUser(user);
+			deleteStagedModel(user);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(User user) throws PortalException {
+		UserLocalServiceUtil.deleteUser(user);
 	}
 
 	@Override

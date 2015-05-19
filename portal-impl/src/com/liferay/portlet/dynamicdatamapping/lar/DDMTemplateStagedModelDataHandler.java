@@ -56,6 +56,11 @@ public class DDMTemplateStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {DDMTemplate.class.getName()};
 
 	@Override
+	public void deleteStagedModel(DDMTemplate template) throws PortalException {
+		DDMTemplateLocalServiceUtil.deleteTemplate(template);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -64,7 +69,7 @@ public class DDMTemplateStagedModelDataHandler
 			uuid, groupId);
 
 		if (ddmTemplate != null) {
-			DDMTemplateLocalServiceUtil.deleteTemplate(ddmTemplate);
+			deleteStagedModel(ddmTemplate);
 		}
 	}
 

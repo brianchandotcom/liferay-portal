@@ -39,6 +39,13 @@ public class PasswordPolicyStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {PasswordPolicy.class.getName()};
 
 	@Override
+	public void deleteStagedModel(PasswordPolicy passwordPolicy)
+		throws PortalException {
+
+		PasswordPolicyLocalServiceUtil.deletePasswordPolicy(passwordPolicy);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -51,7 +58,7 @@ public class PasswordPolicyStagedModelDataHandler
 					uuid, group.getCompanyId());
 
 		if (passwordPolicy != null) {
-			PasswordPolicyLocalServiceUtil.deletePasswordPolicy(passwordPolicy);
+			deleteStagedModel(passwordPolicy);
 		}
 	}
 

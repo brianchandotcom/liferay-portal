@@ -60,6 +60,14 @@ public class LayoutSetPrototypeStagedModelDataHandler
 		{LayoutSetPrototype.class.getName()};
 
 	@Override
+	public void deleteStagedModel(LayoutSetPrototype layoutSetPrototype)
+		throws PortalException {
+
+		LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
+			layoutSetPrototype);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -70,8 +78,7 @@ public class LayoutSetPrototypeStagedModelDataHandler
 			fetchStagedModelByUuidAndGroupId(uuid, group.getCompanyId());
 
 		if (layoutSetPrototype != null) {
-			LayoutSetPrototypeLocalServiceUtil.deleteLayoutSetPrototype(
-				layoutSetPrototype);
+			deleteStagedModel(layoutSetPrototype);
 		}
 	}
 

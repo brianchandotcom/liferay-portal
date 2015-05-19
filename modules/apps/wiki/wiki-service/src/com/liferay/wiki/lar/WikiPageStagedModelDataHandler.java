@@ -63,8 +63,13 @@ public class WikiPageStagedModelDataHandler
 		WikiPage wikiPage = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (wikiPage != null) {
-			WikiPageLocalServiceUtil.deletePage(wikiPage);
+			deleteStagedModel(wikiPage);
 		}
+	}
+
+	@Override
+	public void deleteStagedModel(WikiPage page) throws PortalException {
+		WikiPageLocalServiceUtil.deletePage(page);
 	}
 
 	@Override

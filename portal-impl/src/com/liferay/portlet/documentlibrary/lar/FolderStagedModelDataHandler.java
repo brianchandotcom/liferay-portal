@@ -62,6 +62,11 @@ public class FolderStagedModelDataHandler
 	};
 
 	@Override
+	public void deleteStagedModel(Folder folder) throws PortalException {
+		DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -69,7 +74,7 @@ public class FolderStagedModelDataHandler
 		Folder folder = fetchStagedModelByUuidAndGroupId(uuid, groupId);
 
 		if (folder != null) {
-			DLAppLocalServiceUtil.deleteFolder(folder.getFolderId());
+			deleteStagedModel(folder);
 		}
 	}
 

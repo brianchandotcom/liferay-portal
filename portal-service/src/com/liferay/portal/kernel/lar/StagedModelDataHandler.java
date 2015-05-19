@@ -32,6 +32,8 @@ public interface StagedModelDataHandler<T extends StagedModel> {
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException;
 
+	public void deleteStagedModel(T stagedModel) throws PortalException;
+
 	public void exportStagedModel(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;

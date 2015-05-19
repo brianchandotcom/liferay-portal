@@ -58,6 +58,11 @@ public class RoleStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {Role.class.getName()};
 
 	@Override
+	public void deleteStagedModel(Role role) throws PortalException {
+		RoleLocalServiceUtil.deleteRole(role);
+	}
+
+	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
@@ -68,7 +73,7 @@ public class RoleStagedModelDataHandler
 			uuid, group.getCompanyId());
 
 		if (role != null) {
-			RoleLocalServiceUtil.deleteRole(role);
+			deleteStagedModel(role);
 		}
 	}
 

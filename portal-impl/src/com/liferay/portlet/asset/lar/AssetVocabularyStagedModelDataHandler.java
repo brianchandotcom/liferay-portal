@@ -49,14 +49,22 @@ public class AssetVocabularyStagedModelDataHandler
 		{AssetVocabulary.class.getName()};
 
 	@Override
+	public void deleteStagedModel(AssetVocabulary vocabulary)
+		throws PortalException {
+
+		AssetVocabularyLocalServiceUtil.deleteVocabulary(vocabulary);
+	}
+
+	@Override
 	public void deleteStagedModel(
-		String uuid, long groupId, String className, String extraData) {
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
 
 		AssetVocabulary vocabulary = fetchStagedModelByUuidAndGroupId(
 			uuid, groupId);
 
 		if (vocabulary != null) {
-			AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(vocabulary);
+			deleteStagedModel(vocabulary);
 		}
 	}
 

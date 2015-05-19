@@ -110,6 +110,21 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeMarketplaceAdmin extends PrincipalException {
+
+		public MustBeMarketplaceAdmin(long userId) {
+			super(
+				String.format(
+					"User %s must be a marketplace administrator to perform " +
+					"the action", userId));
+
+			this.userId = userId;
+		}
+
+		public final long userId;
+
+	}
+
 	public static class MustBeOmniadmin extends PrincipalException {
 
 		public MustBeOmniadmin(long userId) {

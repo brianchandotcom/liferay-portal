@@ -157,7 +157,7 @@ AUI.add(
 
 							var viewURL = new Liferay.PortletURL.createURL(instance._baseRenderPortletURL);
 
-							viewURL.setWindowState('POP_UP');
+							viewURL.setWindowState('EXCLUSIVE');
 
 							viewURL.setParameter('mvcPath', '/view.jsp');
 							viewURL.setParameter("portletResource", instance._portletId);

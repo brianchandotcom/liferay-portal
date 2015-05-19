@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath>
+	<classpathentry excluding="**/.svn/**|.svn/" kind="src" path="src" />
+	<classpathentry kind="src" path="/portal-master" />
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/activation.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/annotations.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/jsp-api.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/mail.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/development/servlet-api.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
+	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
+	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
+	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
+	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
+	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/annotations.jar" />
+	<classpathentry kind="lib" path="lib/ant-launcher.jar" />
+	<classpathentry kind="lib" path="lib/ant.jar" />
+	<classpathentry kind="lib" path="lib/asm-analysis.jar" />
+	<classpathentry kind="lib" path="lib/asm-commons.jar" />
+	<classpathentry kind="lib" path="lib/asm-tree.jar" />
+	<classpathentry kind="lib" path="lib/asm-util.jar" />
+	<classpathentry kind="lib" path="lib/asm.jar" />
+	<classpathentry kind="lib" path="lib/bytelist.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.rtl.css.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.ruby.gems.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.jni.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.ruby.jar" />
+	<classpathentry kind="lib" path="lib/invokebinder.jar" />
+	<classpathentry kind="lib" path="lib/jcodings.jar" />
+	<classpathentry kind="lib" path="lib/jffi.jar" />
+	<classpathentry kind="lib" path="lib/jna.jar" />
+	<classpathentry kind="lib" path="lib/jnaerator-runtime.jar" />
+	<classpathentry kind="lib" path="lib/jnr-constants.jar" />
+	<classpathentry kind="lib" path="lib/jnr-enxio.jar" />
+	<classpathentry kind="lib" path="lib/jnr-ffi.jar" />
+	<classpathentry kind="lib" path="lib/jnr-netdb.jar" />
+	<classpathentry kind="lib" path="lib/jnr-posix.jar" />
+	<classpathentry kind="lib" path="lib/jnr-unixsocket.jar" />
+	<classpathentry kind="lib" path="lib/jnr-x86asm.jar" />
+	<classpathentry kind="lib" path="lib/joda-time.jar" />
+	<classpathentry kind="lib" path="lib/joni.jar" />
+	<classpathentry kind="lib" path="lib/jruby-core.jar" />
+	<classpathentry kind="lib" path="lib/jruby-stdlib.jar" />
+	<classpathentry kind="lib" path="lib/jzlib.jar" />
+	<classpathentry kind="lib" path="lib/nailgun-server.jar" />
+	<classpathentry kind="lib" path="lib/ochafik-util.jar" />
+	<classpathentry kind="lib" path="lib/options.jar" />
+	<classpathentry kind="lib" path="lib/ph-commons.jar" />
+	<classpathentry kind="lib" path="lib/ph-css.jar" />
+	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
+	<classpathentry kind="lib" path="lib/snakeyaml.jar" />
+	<classpathentry kind="lib" path="lib/yecht.jar" />
+	<classpathentry kind="output" path="bin" />
+</classpath>

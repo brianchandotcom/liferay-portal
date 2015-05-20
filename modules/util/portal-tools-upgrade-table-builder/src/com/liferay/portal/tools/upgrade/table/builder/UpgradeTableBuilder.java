@@ -259,7 +259,7 @@ public class UpgradeTableBuilder {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append(_read(Paths.get("../copyright.txt")));
+		sb.append(_getCopyright());
 
 		sb.append("\n\npackage ");
 		sb.append(packagePath);
@@ -316,6 +316,24 @@ public class UpgradeTableBuilder {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	private String _getCopyright() throws IOException {
+		Path path = Paths.get(_upgradeBaseDirName);
+
+		path = path.toAbsolutePath();
+
+		while (path != null) {
+			Path copyrightFilePath = path.resolve("copyright.txt");
+
+			if (Files.exists(copyrightFilePath)) {
+				return _read(copyrightFilePath);
+			}
+
+			path = path.getParent();
+		}
+
+		return null;
 	}
 
 	private Path _getIndexesFilePath(String upgradeFileVersion)

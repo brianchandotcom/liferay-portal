@@ -539,11 +539,6 @@ public class RenderRequestSummaryStatistics
 		return getTimeoutCountByPortlet(portletId, companyStatistics);
 	}
 
-	@Reference
-	public void setServerStatistics(ServerStatistics serverStatistics) {
-		_serverStatistics = serverStatistics;
-	}
-
 	protected long getAverageTimeByCompany(
 		CompanyStatistics companyStatistics) {
 
@@ -683,6 +678,11 @@ public class RenderRequestSummaryStatistics
 			companyStatistics.getRenderRequestStatistics(portletId);
 
 		return requestStatistics.getTimeoutCount();
+	}
+
+	@Reference(unbind = "-")
+	protected void setServerStatistics(ServerStatistics serverStatistics) {
+		_serverStatistics = serverStatistics;
 	}
 
 	private ServerStatistics _serverStatistics;

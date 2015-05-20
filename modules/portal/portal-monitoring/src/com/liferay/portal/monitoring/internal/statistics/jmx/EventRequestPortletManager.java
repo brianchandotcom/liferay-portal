@@ -39,7 +39,7 @@ public class EventRequestPortletManager extends PortletManager {
 		super(PortletManagerMBean.class);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setEventRequestSummaryStatistics(
 		EventRequestSummaryStatistics eventRequestSummaryStatistics) {
 

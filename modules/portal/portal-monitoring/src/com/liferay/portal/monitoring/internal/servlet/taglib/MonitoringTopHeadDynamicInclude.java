@@ -84,7 +84,7 @@ public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {
 			MonitoringConfiguration.class, properties);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDataSampleFactory(DataSampleFactory dataSampleFactory) {
 		_dataSampleFactory = dataSampleFactory;
 	}

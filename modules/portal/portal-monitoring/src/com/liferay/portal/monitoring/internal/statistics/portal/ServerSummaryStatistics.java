@@ -226,11 +226,6 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		return getRequestStatistics(webId).getTimeoutCount();
 	}
 
-	@Reference
-	public void setServerStatistics(ServerStatistics serverStatistics) {
-		_serverStatistics = serverStatistics;
-	}
-
 	protected RequestStatistics getRequestStatistics(long companyId)
 		throws MonitoringException {
 
@@ -259,6 +254,11 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 			throw new MonitoringException(
 				"Unable to get company with web id " + webId, e);
 		}
+	}
+
+	@Reference(unbind = "-")
+	protected void setServerStatistics(ServerStatistics serverStatistics) {
+		_serverStatistics = serverStatistics;
 	}
 
 	private ServerStatistics _serverStatistics;

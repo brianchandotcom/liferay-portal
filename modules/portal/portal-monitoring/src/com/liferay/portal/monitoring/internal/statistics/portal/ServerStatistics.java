@@ -143,13 +143,6 @@ public class ServerStatistics
 		companyStatistics.reset();
 	}
 
-	@Reference
-	public void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
 	public synchronized void unregister(String webId) {
 		CompanyStatistics companyStatistics = _companyStatisticsByWebId.remove(
 			webId);
@@ -168,6 +161,13 @@ public class ServerStatistics
 			companyStatistics.getCompanyId(), companyStatistics);
 		_companyStatisticsByWebId.put(
 			companyStatistics.getWebId(), companyStatistics);
+	}
+
+	@Reference(unbind = "-")
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
 	}
 
 	private CompanyLocalService _companyLocalService;

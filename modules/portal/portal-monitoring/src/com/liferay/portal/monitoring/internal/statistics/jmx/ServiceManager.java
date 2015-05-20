@@ -73,7 +73,7 @@ public class ServiceManager extends StandardMBean
 			className, methodName, parameterTypes);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}

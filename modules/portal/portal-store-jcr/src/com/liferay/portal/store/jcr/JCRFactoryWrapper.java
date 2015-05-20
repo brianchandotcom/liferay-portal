@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
 	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
 )
-public class JCRFactoryUtil {
+public class JCRFactoryWrapper {
 
 	public void closeSession(Session session) {
 		if (session != null) {
@@ -138,7 +138,7 @@ public class JCRFactoryUtil {
 
 	private static final ThreadLocal<Map<String, Session>> _sessions =
 		new AutoResetThreadLocal<Map<String, Session>>(
-			JCRFactoryUtil.class + "._sessions",
+			JCRFactoryWrapper.class + "._sessions",
 			new HashMap<String, Session>());
 
 }

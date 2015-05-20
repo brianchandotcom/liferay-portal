@@ -35,11 +35,11 @@ public class DataSampleFactoryImpl implements DataSampleFactory {
 
 	@Override
 	public DataSample createPortalRequestDataSample(
-		long companyId, String remoteUser, String requestURI,
+		long companyId, long groupId, String remoteUser, String requestURI,
 		String requestURL) {
 
 		return new PortalRequestDataSample(
-			companyId, remoteUser, requestURI, requestURL);
+			companyId, groupId, remoteUser, requestURI, requestURL);
 	}
 
 	@Override

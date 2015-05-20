@@ -14,12 +14,16 @@
 
 package com.liferay.portal.monitoring.internal.statistics.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -41,6 +45,14 @@ public class PortletRequestDataSample extends BaseDataSample {
 		Portlet portlet = liferayPortletResponse.getPortlet();
 
 		setCompanyId(portlet.getCompanyId());
+
+		try {
+			setGroupId(PortalUtil.getScopeGroupId(portletRequest));
+		}
+		catch (PortalException e) {
+			_log.error(e);
+		}
+
 		setUser(portletRequest.getRemoteUser());
 		setNamespace(MonitorNames.PORTLET);
 		setName(portlet.getPortletName());
@@ -77,6 +89,9 @@ public class PortletRequestDataSample extends BaseDataSample {
 
 		return sb.toString();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		PortletRequestDataSample.class);
 
 	private final String _displayName;
 	private final String _portletId;

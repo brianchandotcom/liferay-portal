@@ -14,6 +14,7 @@
 
 package com.liferay.portal.monitoring.internal.servlet.filters;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -27,6 +28,9 @@ import com.liferay.portal.kernel.monitoring.RequestStatus;
 import com.liferay.portal.kernel.monitoring.ServiceMonitoringControl;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -85,6 +89,26 @@ public class MonitoringFilter extends BaseFilter
 		_monitorPortalRequest = monitorPortalRequest;
 	}
 
+	protected long getGroupId(HttpServletRequest request) {
+		long groupId = 0;
+		groupId = ParamUtil.getLong(request, "groupId");
+
+		if (groupId <= 0) {
+			long plid = ParamUtil.getLong(request, "p_l_id");
+
+			if (plid > 0) {
+				try {
+					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+					groupId = layout.getGroupId();
+				}
+				catch (PortalException e) {
+				}
+			}
+		}
+
+		return groupId;
+	}
+
 	@Override
 	protected Log getLog() {
 		return _log;
@@ -98,11 +122,14 @@ public class MonitoringFilter extends BaseFilter
 
 		long companyId = PortalUtil.getCompanyId(request);
 
+		long groupId = getGroupId(request);
+
 		DataSample dataSample = null;
 
 		if (_monitorPortalRequest) {
 			dataSample = _dataSampleFactory.createPortalRequestDataSample(
-				companyId, request.getRemoteUser(), request.getRequestURI(),
+				companyId, groupId, request.getRemoteUser(),
+				request.getRequestURI(),
 				GetterUtil.getString(request.getRequestURL()));
 
 			DataSampleThreadLocal.initialize();

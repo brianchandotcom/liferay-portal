@@ -26,9 +26,13 @@ public interface DataSample {
 
 	public Map<String, String> getAttributes();
 
+	public long getCompanyId();
+
 	public String getDescription();
 
 	public long getDuration();
+
+	public long getGroupId();
 
 	public String getName();
 
@@ -48,12 +52,14 @@ public interface DataSample {
 
 	public void setDescription(String description);
 
+	public void setGroupId(long groupId);
+
 	public void setName(String name);
 
 	public void setNamespace(String namespace);
 
 	public void setTimeout(long timeout);
 
-	public void setUser(String user); public long getCompanyId();
+	public void setUser(String user);
 
 }

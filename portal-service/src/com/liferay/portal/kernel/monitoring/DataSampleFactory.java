@@ -23,7 +23,7 @@ import javax.portlet.PortletResponse;
 public interface DataSampleFactory {
 
 	public DataSample createPortalRequestDataSample(
-		long companyId, String remoteUser, String requestURI,
+		long companyId, long groupId, String remoteUser, String requestURI,
 		String requestURL);
 
 	public DataSample createPortletRequestDataSample(

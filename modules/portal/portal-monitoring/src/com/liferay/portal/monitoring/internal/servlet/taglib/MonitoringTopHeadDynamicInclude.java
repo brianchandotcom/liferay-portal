@@ -58,8 +58,8 @@ public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		DataSample dataSample =
 			_dataSampleFactory.createPortalRequestDataSample(
-				themeDisplay.getCompanyId(), request.getRemoteUser(),
-				request.getRequestURI(),
+				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+				request.getRemoteUser(), request.getRequestURI(),
 				request.getRequestURL().toString() + ".jsp_display");
 
 		dataSample.setDescription("Portal Request");

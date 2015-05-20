@@ -430,6 +430,44 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the export import local service.
+	 *
+	 * @return the export import local service
+	 */
+	public com.liferay.portal.service.ExportImportLocalService getExportImportLocalService() {
+		return exportImportLocalService;
+	}
+
+	/**
+	 * Sets the export import local service.
+	 *
+	 * @param exportImportLocalService the export import local service
+	 */
+	public void setExportImportLocalService(
+		com.liferay.portal.service.ExportImportLocalService exportImportLocalService) {
+		this.exportImportLocalService = exportImportLocalService;
+	}
+
+	/**
+	 * Returns the export import remote service.
+	 *
+	 * @return the export import remote service
+	 */
+	public com.liferay.portal.service.ExportImportService getExportImportService() {
+		return exportImportService;
+	}
+
+	/**
+	 * Sets the export import remote service.
+	 *
+	 * @param exportImportService the export import remote service
+	 */
+	public void setExportImportService(
+		com.liferay.portal.service.ExportImportService exportImportService) {
+		this.exportImportService = exportImportService;
+	}
+
+	/**
 	 * Returns the export import configuration local service.
 	 *
 	 * @return the export import configuration local service
@@ -2954,6 +2992,10 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.CompanyService companyService;
 	@BeanReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;
+	@BeanReference(type = com.liferay.portal.service.ExportImportLocalService.class)
+	protected com.liferay.portal.service.ExportImportLocalService exportImportLocalService;
+	@BeanReference(type = com.liferay.portal.service.ExportImportService.class)
+	protected com.liferay.portal.service.ExportImportService exportImportService;
 	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationLocalService.class)
 	protected com.liferay.portal.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
 	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationService.class)

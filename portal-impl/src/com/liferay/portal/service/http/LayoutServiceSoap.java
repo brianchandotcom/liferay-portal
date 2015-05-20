@@ -367,6 +367,12 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.service.ExportImportServiceUtil#exportLayoutsAsFileInBackground(
+	ExportImportConfiguration)}
+	*/
+	@Deprecated
 	public static long exportLayoutsAsFileInBackground(
 		com.liferay.portal.model.ExportImportConfigurationSoap exportImportConfiguration)
 		throws RemoteException {
@@ -383,6 +389,12 @@ public class LayoutServiceSoap {
 		}
 	}
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	com.liferay.portal.service.ExportImportServiceUtil#exportLayoutsAsFileInBackground(
+	long)}
+	*/
+	@Deprecated
 	public static long exportLayoutsAsFileInBackground(
 		long exportImportConfigurationId) throws RemoteException {
 		try {

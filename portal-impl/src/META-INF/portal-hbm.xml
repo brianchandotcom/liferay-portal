@@ -13,6 +13,7 @@
 	<import class="com.liferay.portal.model.Contact" />
 	<import class="com.liferay.portal.model.Country" />
 	<import class="com.liferay.portal.model.EmailAddress" />
+	<import class="com.liferay.portal.model.ExportImport" />
 	<import class="com.liferay.portal.model.ExportImportConfiguration" />
 	<import class="com.liferay.portal.model.Group" />
 	<import class="com.liferay.portal.model.Image" />

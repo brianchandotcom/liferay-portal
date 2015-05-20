@@ -21,11 +21,16 @@ import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.portal.monitoring.internal.statistics.portal.PortalRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.portlet.PortletRequestDataSample;
 import com.liferay.portal.monitoring.internal.statistics.service.ServiceRequestDataSample;
+import com.liferay.portal.util.Portal;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -48,7 +53,7 @@ public class DataSampleFactoryImpl implements DataSampleFactory {
 		PortletResponse portletResponse) {
 
 		return new PortletRequestDataSample(
-			requestType, portletRequest, portletResponse);
+			requestType, portletRequest, portletResponse, _portal);
 	}
 
 	@Override
@@ -57,5 +62,20 @@ public class DataSampleFactoryImpl implements DataSampleFactory {
 
 		return new ServiceRequestDataSample(methodSignature);
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setPortal(Portal portal) {
+		_portal = portal;
+	}
+
+	protected void unsetPortal(Portal portal) {
+		_portal = null;
+	}
+
+	private Portal _portal;
 
 }

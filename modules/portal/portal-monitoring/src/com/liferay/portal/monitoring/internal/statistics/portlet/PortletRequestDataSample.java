@@ -26,7 +26,7 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.Portal;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -42,7 +42,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 
 	public PortletRequestDataSample(
 		PortletRequestType requestType, PortletRequest portletRequest,
-		PortletResponse portletResponse) {
+		PortletResponse portletResponse, Portal portal) {
 
 		LiferayPortletResponse liferayPortletResponse =
 			(LiferayPortletResponse)portletResponse;
@@ -51,7 +51,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 
 		setCompanyId(portlet.getCompanyId());
 
-		setGroupId(portletRequest);
+		setGroupId(portletRequest, portal);
 
 		setUser(portletRequest.getRemoteUser());
 		setNamespace(MonitorNames.PORTLET);
@@ -90,7 +90,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 		return sb.toString();
 	}
 
-	protected void setGroupId(PortletRequest portletRequest) {
+	protected void setGroupId(PortletRequest portletRequest, Portal portal) {
 		long groupId = GroupThreadLocal.getGroupId();
 
 		if (groupId != 0) {
@@ -99,29 +99,33 @@ public class PortletRequestDataSample extends BaseDataSample {
 			return;
 		}
 
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
+		if (portal != null) {
+			HttpServletRequest httpServletRequest =
+				portal.getHttpServletRequest(portletRequest);
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)httpServletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-		if (themeDisplay != null) {
-			groupId = themeDisplay.getScopeGroupId();
+			if (themeDisplay != null) {
+				groupId = themeDisplay.getScopeGroupId();
 
-			setGroupId(groupId);
+				setGroupId(groupId);
 
-			return;
+				return;
+			}
 		}
 
-		try {
-			groupId = PortalUtil.getScopeGroupId(portletRequest);
+		if (portal != null) {
+			try {
+				groupId = portal.getScopeGroupId(portletRequest);
 
-			setGroupId(groupId);
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to obtain scope group id", pe);
+				setGroupId(groupId);
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to obtain scope group id", pe);
+				}
 			}
 		}
 	}

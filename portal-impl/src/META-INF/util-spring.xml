@@ -1071,6 +1071,7 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.exportconfiguration.util.ExportImportConfigurationIndexer" class="com.liferay.portlet.exportconfiguration.util.ExportImportConfigurationIndexer" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil">
 		<property name="IGDisplayContextProvider">
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
@@ -1108,7 +1109,6 @@
 	</bean>
 	<bean id="com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler" class="com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler" />
 	<bean id="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.layoutsadmin.util.ExportImportConfigurationIndexer" class="com.liferay.portlet.layoutsadmin.util.ExportImportConfigurationIndexer" />
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />

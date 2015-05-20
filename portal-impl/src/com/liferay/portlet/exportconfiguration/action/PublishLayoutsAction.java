@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portlet.exportconfiguration.action;
 
 import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.LayoutPrototypeException;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.RemoteAuthException;
+import com.liferay.portlet.layoutsadmin.action.EditLayoutsAction;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import javax.portlet.ActionRequest;
@@ -115,7 +116,7 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.layouts_admin.error");
+				setForward(actionRequest, "portlet.export_configuration.error");
 			}
 			else if (e instanceof AuthException ||
 					 e instanceof DuplicateLockException ||
@@ -162,7 +163,8 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.layouts_admin.error");
+				return actionMapping.findForward(
+					"portlet.export_configuration.error");
 			}
 			else {
 				throw e;
@@ -170,7 +172,8 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 		}
 
 		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.publish_layouts"));
+			getForward(
+				renderRequest, "portlet.export_configuration.publish_layouts"));
 	}
 
 	@Override
@@ -184,7 +187,8 @@ public class PublishLayoutsAction extends EditLayoutsAction {
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/publish_layouts_processes.jsp");
+				"/html/portlet/export_configuration/" +
+					"publish_layouts_processes.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}

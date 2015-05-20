@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portlet.exportconfiguration.action;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -60,7 +60,8 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.layouts_admin.error");
+				return actionMapping.findForward(
+					"portlet.export_configuration.error");
 			}
 			else {
 				throw e;
@@ -68,7 +69,8 @@ public class ConfirmationExportImportConfigurationAction extends PortletAction {
 		}
 
 		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.confirmation"));
+			getForward(
+				renderRequest, "portlet.export_configuration.confirmation"));
 	}
 
 	protected void createExportImportConfiguration(RenderRequest renderRequest)

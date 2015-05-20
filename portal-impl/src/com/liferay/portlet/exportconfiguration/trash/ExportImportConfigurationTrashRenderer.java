@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.trash;
+package com.liferay.portlet.exportconfiguration.trash;
 
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
 import com.liferay.portal.model.ExportImportConfiguration;
@@ -85,7 +85,7 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 			WebKeys.EXPORT_IMPORT_CONFIGURATION_ID,
 			_exportImportConfiguration.getExportImportConfigurationId());
 
-		return "/html/portlet/layouts_admin/view_configuration.jsp";
+		return "/html/portlet/export_configuration/view_configuration.jsp";
 	}
 
 	private final ExportImportConfiguration _exportImportConfiguration;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portlet.exportconfiguration.action;
 
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,23 +23,28 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
+import com.liferay.portlet.trash.service.TrashEntryServiceUtil;
+import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
@@ -57,12 +62,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author Daniel Kocsis
- * @author Mate Thurzo
  * @author Levente Hudák
  */
-public class EditPublishConfigurationAction
-	extends EditExportConfigurationAction {
+public class EditExportConfigurationAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -75,32 +77,28 @@ public class EditPublishConfigurationAction
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
-			long exportImportConfigurationId = ParamUtil.getLong(
-				actionRequest, "exportImportConfigurationId");
-
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updatePublishConfiguration(actionRequest);
+				updateExportConfiguration(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				deleteExportImportConfiguration(actionRequest, false);
 			}
+			else if (cmd.equals(Constants.EXPORT)) {
+				long exportImportConfigurationId = ParamUtil.getLong(
+					actionRequest, "exportImportConfigurationId");
+
+				ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+					exportImportConfigurationId);
+			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
 				deleteExportImportConfiguration(actionRequest, true);
 			}
-			else if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-				StagingUtil.publishLayouts(
-					themeDisplay.getUserId(), exportImportConfigurationId);
-			}
-			else if (cmd.equals(Constants.PUBLISH_TO_REMOTE)) {
-				StagingUtil.copyRemoteLayouts(exportImportConfigurationId);
+			else if (cmd.equals(Constants.RESTORE)) {
+				restoreTrashEntries(actionRequest);
 			}
 			else if (cmd.equals(Constants.RELAUNCH)) {
-				relaunchPublishLayoutConfiguration(
-					themeDisplay.getUserId(), actionRequest);
+				relaunchExportLayoutConfiguration(actionRequest);
 			}
 			else if (Validator.isNull(cmd)) {
 				addSessionMessages(actionRequest);
@@ -135,7 +133,8 @@ public class EditPublishConfigurationAction
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.layouts_admin.error");
+				return actionMapping.findForward(
+					"portlet.export_configuration.error");
 			}
 			else {
 				throw e;
@@ -143,7 +142,8 @@ public class EditPublishConfigurationAction
 		}
 
 		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.publish_layouts"));
+			getForward(
+				renderRequest, "portlet.export_configuration.export_layouts"));
 	}
 
 	@Override
@@ -157,12 +157,12 @@ public class EditPublishConfigurationAction
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/publish_layouts_processes.jsp");
+				"/html/portlet/export_configuration/" +
+					"export_layouts_processes.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
-	@Override
 	protected void addSessionMessages(ActionRequest actionRequest)
 		throws Exception {
 
@@ -183,28 +183,64 @@ public class EditPublishConfigurationAction
 
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		int exportImportConfigurationType =
-			ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
-
-		boolean localPublishing = ParamUtil.getBoolean(
-			actionRequest, "localPublishing");
-
-		if (localPublishing) {
-			exportImportConfigurationType =
-				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL;
-		}
-
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				actionRequest, groupId, exportImportConfigurationType);
+				actionRequest, groupId,
+				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT);
 
 		SessionMessages.add(
 			actionRequest, portletId + "settingsMap", settingsMap);
 	}
 
-	protected void relaunchPublishLayoutConfiguration(
-			long userId, ActionRequest actionRequest)
+	protected void deleteExportImportConfiguration(
+			ActionRequest actionRequest, boolean moveToTrash)
 		throws PortalException {
+
+		long[] deleteExportImportConfigurationIds = null;
+
+		long exportImportConfigurationId = ParamUtil.getLong(
+			actionRequest, "exportImportConfigurationId");
+
+		if (exportImportConfigurationId > 0) {
+			deleteExportImportConfigurationIds =
+				new long[] {exportImportConfigurationId};
+		}
+		else {
+			deleteExportImportConfigurationIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "deleteExportImportConfigurationIds"), 0L);
+		}
+
+		List<TrashedModel> trashedModels = new ArrayList<>();
+
+		for (long deleteExportImportConfigurationId :
+				deleteExportImportConfigurationIds) {
+
+			if (moveToTrash) {
+				ExportImportConfiguration exportImportConfiguration =
+					ExportImportConfigurationServiceUtil.
+						moveExportImportConfigurationToTrash(
+							deleteExportImportConfigurationId);
+
+				trashedModels.add(exportImportConfiguration);
+			}
+			else {
+				ExportImportConfigurationServiceUtil.
+					deleteExportImportConfiguration(
+						deleteExportImportConfigurationId);
+			}
+		}
+
+		if (moveToTrash && !trashedModels.isEmpty()) {
+			TrashUtil.addTrashSessionMessages(actionRequest, trashedModels);
+
+			hideDefaultSuccessMessage(actionRequest);
+		}
+	}
+
+	protected void relaunchExportLayoutConfiguration(
+			ActionRequest actionRequest)
+		throws Exception {
 
 		long backgroundTaskId = ParamUtil.getLong(
 			actionRequest, "backgroundTaskId");
@@ -215,62 +251,42 @@ public class EditPublishConfigurationAction
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		ExportImportConfiguration exportImportConfiguration =
-			ExportImportConfigurationLocalServiceUtil.
-				getExportImportConfiguration(
-					MapUtil.getLong(
-						taskContextMap, "exportImportConfigurationId"));
+		long exportImportConfigurationId = MapUtil.getLong(
+			taskContextMap, "exportImportConfigurationId");
 
-		if (exportImportConfiguration.getType() ==
-				ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL) {
+		ExportImportServiceUtil.exportLayoutsAsFileInBackground(
+			exportImportConfigurationId);
+	}
 
-			StagingUtil.publishLayouts(userId, exportImportConfiguration);
-		}
-		else if (exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.
-						TYPE_PUBLISH_LAYOUT_REMOTE) {
+	protected void restoreTrashEntries(ActionRequest actionRequest)
+		throws Exception {
 
-			StagingUtil.copyRemoteLayouts(exportImportConfiguration);
+		long[] restoreTrashEntryIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "restoreTrashEntryIds"), 0L);
+
+		for (long restoreTrashEntryId : restoreTrashEntryIds) {
+			TrashEntryServiceUtil.restoreEntry(restoreTrashEntryId);
 		}
 	}
 
-	protected ExportImportConfiguration updatePublishConfiguration(
+	protected ExportImportConfiguration updateExportConfiguration(
 			ActionRequest actionRequest)
 		throws Exception {
 
 		long exportImportConfigurationId = ParamUtil.getLong(
 			actionRequest, "exportImportConfigurationId");
 
-		boolean localPublishing = ParamUtil.getBoolean(
-			actionRequest, "localPublishing");
-
 		if (exportImportConfigurationId > 0) {
-			if (localPublishing) {
-				return ExportImportConfigurationHelper.
-					updatePublishLayoutLocalExportImportConfiguration(
-						actionRequest);
-			}
-			else {
-				return ExportImportConfigurationHelper.
-					updatePublishLayoutRemoteExportImportConfiguration(
-						actionRequest);
-			}
+			return ExportImportConfigurationHelper.
+				updateExportLayoutExportImportConfiguration(actionRequest);
 		}
 		else {
-			if (localPublishing) {
-				return ExportImportConfigurationHelper.
-					addPublishLayoutLocalExportImportConfiguration(
-						actionRequest);
-			}
-			else {
-				return ExportImportConfigurationHelper.
-					addPublishLayoutRemoteExportImportConfiguration(
-						actionRequest);
-			}
+			return ExportImportConfigurationHelper.
+				addExportLayoutExportImportConfiguration(actionRequest);
 		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		EditPublishConfigurationAction.class);
+		EditExportConfigurationAction.class);
 
 }

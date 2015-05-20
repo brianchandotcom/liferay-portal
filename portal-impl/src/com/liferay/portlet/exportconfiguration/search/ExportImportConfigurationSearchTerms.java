@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.search;
+package com.liferay.portlet.exportconfiguration.search;
 
 import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 

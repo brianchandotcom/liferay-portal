@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portlet.exportconfiguration.action;
 
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARFileSizeException;
@@ -169,7 +169,8 @@ public class ImportLayoutsAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.layouts_admin.error");
+				return actionMapping.findForward(
+					"portlet.export_configuration.error");
 			}
 			else {
 				throw e;
@@ -177,7 +178,8 @@ public class ImportLayoutsAction extends PortletAction {
 		}
 
 		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.import_layouts"));
+			getForward(
+				renderRequest, "portlet.export_configuration.import_layouts"));
 	}
 
 	@Override
@@ -195,11 +197,13 @@ public class ImportLayoutsAction extends PortletAction {
 
 		if (cmd.equals(Constants.IMPORT)) {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/import_layouts_processes.jsp");
+				"/html/portlet/export_configuration/" +
+					"import_layouts_processes.jsp");
 		}
 		else {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/import_layouts_resources.jsp");
+				"/html/portlet/export_configuration/" +
+					"import_layouts_resources.jsp");
 		}
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);

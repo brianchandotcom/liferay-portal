@@ -44,7 +44,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
-import com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction;
+import com.liferay.portlet.exportconfiguration.action.ImportLayoutsAction;
 
 import java.io.InputStream;
 import java.io.Serializable;

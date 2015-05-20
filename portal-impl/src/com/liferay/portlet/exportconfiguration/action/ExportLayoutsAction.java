@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portlet.exportconfiguration.action;
 
 import com.liferay.portal.LARFileNameException;
 import com.liferay.portal.NoSuchGroupException;
@@ -155,7 +155,8 @@ public class ExportLayoutsAction extends PortletAction {
 
 				SessionErrors.add(renderRequest, e.getClass());
 
-				return actionMapping.findForward("portlet.layouts_admin.error");
+				return actionMapping.findForward(
+					"portlet.export_configuration.error");
 			}
 			else {
 				throw e;
@@ -163,7 +164,8 @@ public class ExportLayoutsAction extends PortletAction {
 		}
 
 		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.export_layouts"));
+			getForward(
+				renderRequest, "portlet.export_configuration.export_layouts"));
 	}
 
 	@Override
@@ -177,7 +179,8 @@ public class ExportLayoutsAction extends PortletAction {
 
 		PortletRequestDispatcher portletRequestDispatcher =
 			portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/export_layouts_processes.jsp");
+				"/html/portlet/export_configuration/" +
+					"export_layouts_processes.jsp");
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}

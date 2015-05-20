@@ -357,7 +357,6 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/portlet_configuration/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/html/portlet/export_configuration/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-configuration</css-class-wrapper>
@@ -380,7 +379,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-communities</css-class-wrapper>
+		<css-class-wrapper>portlet-layouts-admin</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
@@ -537,7 +536,6 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/html/portlet/users_admin/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
@@ -554,7 +552,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
+		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
 		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -699,8 +697,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-users-admin</css-class-wrapper>
+		<css-class-wrapper>portlet-layouts-admin</css-class-wrapper>
 		<system>true</system>
 	</portlet>
 	<portlet>
@@ -754,7 +751,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-communities</css-class-wrapper>
+		<css-class-wrapper>portlet-layouts-admin</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
@@ -852,7 +849,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
+		<header-portlet-css>/html/portlet/export_configuration/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/staging_bar/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/staging_bar/js/staging.js</header-portlet-javascript>
 		<header-portlet-javascript>/html/portlet/staging_bar/js/staging_branch.js</header-portlet-javascript>
@@ -1076,7 +1073,7 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
+		<header-portlet-css>/html/portlet/export_configuration/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/html/portlet/export_configuration/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-export-configuration</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>

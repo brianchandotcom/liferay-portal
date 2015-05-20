@@ -25,12 +25,6 @@ import aQute.bnd.annotation.metatype.Meta;
 )
 public interface JCRStoreConfiguration {
 
-	@Meta.AD(deflt = "500", required = true)
-	public int fetchDelay();
-
-	@Meta.AD(deflt = "5", required = true)
-	public int fetchMaxFailures();
-
 	@Meta.AD(deflt = "false", required = true)
 	public boolean initializeOnStartup();
 

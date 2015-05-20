@@ -19,14 +19,19 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.monitoring.PortletRequestType;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Karthik Sudarshan
@@ -46,12 +51,7 @@ public class PortletRequestDataSample extends BaseDataSample {
 
 		setCompanyId(portlet.getCompanyId());
 
-		try {
-			setGroupId(PortalUtil.getScopeGroupId(portletRequest));
-		}
-		catch (PortalException e) {
-			_log.error(e);
-		}
+		setGroupId(portletRequest);
 
 		setUser(portletRequest.getRemoteUser());
 		setNamespace(MonitorNames.PORTLET);
@@ -88,6 +88,42 @@ public class PortletRequestDataSample extends BaseDataSample {
 		sb.append("}");
 
 		return sb.toString();
+	}
+
+	protected void setGroupId(PortletRequest portletRequest) {
+		long groupId = GroupThreadLocal.getGroupId();
+
+		if (groupId != 0) {
+			setGroupId(groupId);
+
+			return;
+		}
+
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			groupId = themeDisplay.getScopeGroupId();
+
+			setGroupId(groupId);
+
+			return;
+		}
+
+		try {
+			groupId = PortalUtil.getScopeGroupId(portletRequest);
+
+			setGroupId(groupId);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to obtain scope group id", pe);
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

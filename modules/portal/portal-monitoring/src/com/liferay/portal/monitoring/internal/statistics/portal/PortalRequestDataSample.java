@@ -26,9 +26,11 @@ import com.liferay.portal.monitoring.internal.BaseDataSample;
 public class PortalRequestDataSample extends BaseDataSample {
 
 	public PortalRequestDataSample(
-		long companyId, String user, String requestURI, String requestURL) {
+		long companyId, long groupId, String user, String requestURI,
+		String requestURL) {
 
 		setCompanyId(companyId);
+		setGroupId(groupId);
 		setUser(user);
 		setNamespace(MonitorNames.PORTAL);
 		setName(requestURI);

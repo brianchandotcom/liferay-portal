@@ -538,11 +538,6 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 		return getTimeoutCountByPortlet(portletId, companyStatistics);
 	}
 
-	@Reference
-	public void setServerStatistics(ServerStatistics serverStatistics) {
-		_serverStatistics = serverStatistics;
-	}
-
 	protected long getAverageTimeByCompany(
 		CompanyStatistics companyStatistics) {
 
@@ -682,6 +677,11 @@ public class EventRequestSummaryStatistics implements PortletSummaryStatistics {
 			companyStatistics.getEventRequestStatistics(portletId);
 
 		return requestStatistics.getTimeoutCount();
+	}
+
+	@Reference(unbind = "-")
+	protected void setServerStatistics(ServerStatistics serverStatistics) {
+		_serverStatistics = serverStatistics;
 	}
 
 	private ServerStatistics _serverStatistics;

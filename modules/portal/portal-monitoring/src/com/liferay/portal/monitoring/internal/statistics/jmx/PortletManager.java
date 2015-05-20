@@ -366,7 +366,7 @@ public class PortletManager
 		_portletSummaryStatistics = portletSummaryStatistics;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setServerStatistics(ServerStatistics serverStatistics) {
 		_serverStatistics = serverStatistics;
 	}

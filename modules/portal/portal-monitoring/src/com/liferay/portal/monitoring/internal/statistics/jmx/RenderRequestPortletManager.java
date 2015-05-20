@@ -39,7 +39,7 @@ public class RenderRequestPortletManager extends PortletManager {
 		super(PortletManagerMBean.class);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setRenderRequestSummaryStatistics(
 		RenderRequestSummaryStatistics renderRequestSummaryStatistics) {
 

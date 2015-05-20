@@ -39,7 +39,7 @@ public class ActionRequestPortletManager extends PortletManager {
 		super(PortletManagerMBean.class);
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setActionRequestSummaryStatistics(
 		ActionRequestSummaryStatistics actionRequestSummaryStatistics) {
 

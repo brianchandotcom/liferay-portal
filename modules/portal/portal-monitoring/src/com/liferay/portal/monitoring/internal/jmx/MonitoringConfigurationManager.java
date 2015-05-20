@@ -215,26 +215,26 @@ public class MonitoringConfigurationManager
 			_monitoringConfiguration.monitorServiceRequest());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setMonitoringControl(MonitoringControl monitoringControl) {
 		_monitoringControl = monitoringControl;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortalMonitoringControl(
 		PortalMonitoringControl portalMonitoringControl) {
 
 		_portalMonitoringControl = portalMonitoringControl;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setPortletMonitoringControl(
 		PortletMonitoringControl portletMonitoringControl) {
 
 		_portletMonitoringControl = portletMonitoringControl;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setServiceMonitoringControl(
 		ServiceMonitoringControl serviceMonitoringControl) {
 

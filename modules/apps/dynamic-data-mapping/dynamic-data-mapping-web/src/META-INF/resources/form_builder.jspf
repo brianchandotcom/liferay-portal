@@ -217,8 +217,8 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			boundingBox: '#<portlet:namespace />formBuilder',
 			enableEditing: false,
 
-			<c:if test="<%= fieldsJSONArray != null %>">
-				fields: <%= fieldsJSONArray.toString() %>,
+			<c:if test="<%= Validator.isNotNull(fieldsJSONArrayString) %>">
+				fields: <%= fieldsJSONArrayString %>,
 			</c:if>
 
 			portletNamespace: '<portlet:namespace />',
@@ -264,9 +264,9 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	Liferay.on('destroyPortlet', clearShowTabHandle);
 
-	window.<portlet:namespace />formBuilder = formBuilder;
+	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>formBuilder'] = formBuilder;
 
-	window.<portlet:namespace />getContentValue = getContentValue;
+	window['<%= HtmlUtil.escapeJS(portletResourceNamespace) %>getContentValue'] = getContentValue;
 
 	Liferay.on(
 		'<portlet:namespace />saveTemplate',

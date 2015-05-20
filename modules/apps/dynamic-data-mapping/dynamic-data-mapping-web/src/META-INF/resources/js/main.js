@@ -232,7 +232,7 @@ AUI.add(
 					getContentValue: function() {
 						var instance = this;
 
-						return window[instance.get('portletNamespace') + 'getContentValue']();
+						return window[instance.get('portletResourceNamespace') + 'getContentValue']();
 					},
 
 					plotField: function(field, container) {

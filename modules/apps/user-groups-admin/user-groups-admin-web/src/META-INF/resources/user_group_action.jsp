@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/user_groups_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 UserGroupSearch searchContainer = (UserGroupSearch)request.getAttribute("liferay-ui:search:searchContainer");
@@ -29,7 +29,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.UPDATE) && UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.VIEW) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcPath" value="/html/portlet/user_groups_admin/edit_user_group.jsp" />
+			<portlet:param name="mvcPath" value="/edit_user_group.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>
@@ -129,7 +129,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 
 	<c:if test="<%= UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignURL">
-			<portlet:param name="mvcPath" value="/html/portlet/user_groups_admin/edit_user_group_assignments.jsp" />
+			<portlet:param name="mvcPath" value="/edit_user_group_assignments.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="userGroupId" value="<%= String.valueOf(userGroup.getUserGroupId()) %>" />
 		</portlet:renderURL>

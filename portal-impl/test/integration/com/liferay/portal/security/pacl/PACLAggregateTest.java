@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.test.rule.PACLTestRule;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsValues;
 
@@ -57,6 +58,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Future;
+
+import javax.naming.Context;
 
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -333,6 +336,19 @@ public class PACLAggregateTest {
 		@Override
 		public Result call() throws ProcessException {
 			ProxySelector.setDefault(new DummySocksProxySelector());
+
+			URL resource = PACLTestRule.class.getResource(
+				"pacl-test.properties");
+
+			if (resource != null) {
+				System.setProperty("external-properties", resource.getPath());
+			}
+
+			System.setProperty(
+				Context.INITIAL_CONTEXT_FACTORY,
+				"org.apache.naming.java.javaURLContextFactory");
+
+			System.setProperty("catalina.base", ".");
 
 			Path tempStatePath = null;
 

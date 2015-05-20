@@ -43,7 +43,8 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=updateTemplate",
-		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
+		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
+		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES
 	},
 	service = ActionCommand.class
 )

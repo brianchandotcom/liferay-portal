@@ -80,12 +80,14 @@ public class ResourceActionsUtil {
 		return getResourceActions().getActionNamePrefix();
 	}
 
+	@Deprecated
 	public static List<String> getActionsNames(
 		HttpServletRequest request, List<String> actions) {
 
 		return getResourceActions().getActionsNames(request, actions);
 	}
 
+	@Deprecated
 	public static List<String> getActionsNames(
 		HttpServletRequest request, String name, long actionIds) {
 
@@ -277,6 +279,7 @@ public class ResourceActionsUtil {
 		getResourceActions().read(servletContextName, classLoader, source);
 	}
 
+	@Deprecated
 	public static void read(String servletContextName, InputStream inputStream)
 		throws Exception {
 

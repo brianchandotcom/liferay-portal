@@ -169,6 +169,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		return _ACTION_NAME_PREFIX;
 	}
 
+	@Deprecated
 	@Override
 	public List<String> getActionsNames(
 		HttpServletRequest request, List<String> actions) {
@@ -182,6 +183,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		return new ArrayList<>(actionNames);
 	}
 
+	@Deprecated
 	@Override
 	public List<String> getActionsNames(
 		HttpServletRequest request, String name, long actionIds) {
@@ -652,6 +654,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		read(servletContextName, document);
 	}
 
+	@Deprecated
 	@Override
 	public void read(String servletContextName, InputStream inputStream)
 		throws Exception {

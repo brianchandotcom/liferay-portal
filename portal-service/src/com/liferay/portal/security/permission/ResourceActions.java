@@ -78,9 +78,11 @@ public interface ResourceActions {
 
 	public String getActionNamePrefix();
 
+	@Deprecated
 	public List<String> getActionsNames(
 		HttpServletRequest request, List<String> actions);
 
+	@Deprecated
 	public List<String> getActionsNames(
 		HttpServletRequest request, String name, long actionIds);
 
@@ -161,6 +163,7 @@ public interface ResourceActions {
 			String servletContextName, ClassLoader classLoader, String source)
 		throws Exception;
 
+	@Deprecated
 	public void read(String servletContextName, InputStream inputStream)
 		throws Exception;
 

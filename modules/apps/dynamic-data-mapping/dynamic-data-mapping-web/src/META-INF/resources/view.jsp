@@ -26,7 +26,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("groupId", String.valueOf(groupId));
 portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter(ActionRequest.ACTION_NAME, "ddmDeleteStructure");
+portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteStructure");
 %>
 
 <liferay-ui:error exception="<%= RequiredStructureException.MustNotDeleteStructureReferencedByStructureLinks.class %>" message="the-structure-cannot-be-deleted-because-it-is-required-by-one-or-more-structure-links" />
@@ -186,7 +186,7 @@ portletURL.setParameter(ActionRequest.ACTION_NAME, "ddmDeleteStructure");
 			form.attr('method', 'post');
 			form.fm('deleteStructureIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="ddmDeleteStructure"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="deleteStructure"><portlet:param name="mvcPath" value="/view.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

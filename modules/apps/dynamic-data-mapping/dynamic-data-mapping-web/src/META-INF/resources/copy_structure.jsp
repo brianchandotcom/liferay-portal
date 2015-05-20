@@ -28,7 +28,7 @@ boolean copyFormTemplates = ParamUtil.getBoolean(request, "copyFormTemplates");
 boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplates");
 %>
 
-<portlet:actionURL name="ddmCopyStructure" var="copyStructureURL">
+<portlet:actionURL name="copyStructure" var="copyStructureURL">
 	<portlet:param name="mvcPath" value="/copy_structure.jsp" />
 </portlet:actionURL>
 

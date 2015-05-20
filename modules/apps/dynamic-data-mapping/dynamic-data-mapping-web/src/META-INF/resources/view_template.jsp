@@ -46,7 +46,7 @@ portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("classNameId", String.valueOf(classNameId));
 portletURL.setParameter("classPK", String.valueOf(classPK));
 portletURL.setParameter("resourceClassNameId", String.valueOf(resourceClassNameId));
-portletURL.setParameter(ActionRequest.ACTION_NAME, "ddmDeleteTemplate");
+portletURL.setParameter(ActionRequest.ACTION_NAME, "deleteTemplate");
 
 boolean controlPanel = false;
 
@@ -274,7 +274,7 @@ String title = ddmDisplay.getViewTemplatesTitle(structure, controlPanel, templat
 			form.attr('method', 'post');
 			form.fm('deleteTemplateIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
-			submitForm(form, '<portlet:actionURL name="ddmDeleteTemplate"><portlet:param name="mvcPath" value="/view.jsp" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL name="deleteTemplate"><portlet:param name="mvcPath" value="/view.jsp" /></portlet:actionURL>');
 		}
 	}
 </aui:script>

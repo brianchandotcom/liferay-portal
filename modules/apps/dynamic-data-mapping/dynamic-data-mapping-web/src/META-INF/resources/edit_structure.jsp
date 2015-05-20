@@ -48,23 +48,19 @@ String script = BeanParamUtil.getString(structure, request, "definition");
 JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
 %>
 
-<portlet:actionURL name="ddmUpdateStructure" var="editStructureURL">
-	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-</portlet:actionURL>
+<portlet:actionURL name="addStructure" var="addStructureURL" />
 
-<portlet:actionURL name="ddmAddStructure" var="addStructureURL">
-	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-</portlet:actionURL>
+<portlet:actionURL name="updateStructure" var="updateStructureURL" />
 
 <%
-String requestEditStructureURL = ParamUtil.getString(request, "editStructureURL");
+String requestUpdateStructureURL = ParamUtil.getString(request, "updateStructureURL");
 
-if (Validator.isNotNull(requestEditStructureURL)) {
-	editStructureURL = requestEditStructureURL;
+if (Validator.isNotNull(requestUpdateStructureURL)) {
+	updateStructureURL = requestUpdateStructureURL;
 }
 %>
 
-<aui:form action="<%= (structure != null) ? editStructureURL : addStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
+<aui:form action="<%= (structure == null) ? addStructureURL : updateStructureURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveStructure();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

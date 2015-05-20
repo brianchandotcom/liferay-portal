@@ -73,15 +73,11 @@ if (Validator.isNotNull(structureAvailableFields)) {
 boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput");
 %>
 
-<portlet:actionURL name="ddmUpdateTemplate" var="editTemplateURL">
-	<portlet:param name="mvcPath" value="/edit_template.jsp" />
-</portlet:actionURL>
+<portlet:actionURL name="addTemplate" var="addTemplateURL" />
 
-<portlet:actionURL name="ddmAddTemplate" var="addTemplateURL">
-	<portlet:param name="mvcPath" value="/edit_template.jsp" />
-</portlet:actionURL>
+<portlet:actionURL name="updateTemplate" var="updateTemplateURL" />
 
-<aui:form action="<%= (template != null) ? editTemplateURL : addTemplateURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveTemplate();" %>'>
+<aui:form action="<%= (template == null) ? addTemplateURL : updateTemplateURL %>" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveTemplate();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

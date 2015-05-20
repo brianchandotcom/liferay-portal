@@ -641,6 +641,7 @@
 		<reference package-path="com.liferay.portal" entity="BackgroundTask" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Company" />
+		<reference package-path="com.liferay.portal" entity="ExportImport" />
 		<reference package-path="com.liferay.portal" entity="ExportImportConfiguration" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="LayoutPrototype" />
@@ -2434,6 +2435,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ExportImport" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />
 		<reference package-path="com.liferay.portal" entity="LayoutRevision" />
@@ -2860,6 +2862,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="ExportImport" />
 		<reference package-path="com.liferay.portal" entity="ExportImportConfiguration" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="Layout" />

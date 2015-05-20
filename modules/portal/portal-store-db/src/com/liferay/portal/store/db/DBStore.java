@@ -45,10 +45,13 @@ import java.sql.SQLException;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Shuyang Zhou
  * @author Tina Tian
  */
+@Component(service = DBStore.class)
 public class DBStore extends BaseStore {
 
 	@Override

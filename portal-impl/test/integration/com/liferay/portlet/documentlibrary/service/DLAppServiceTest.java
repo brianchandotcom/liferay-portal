@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -132,6 +133,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					workflowHandlerInvocationCounter.getCount(
 						"updateStatus", int.class, Map.class));
 			}
+		}
+
+		@Test
+		public void shouldCreateDiscussion() throws Exception {
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			boolean hasDiscussion = CommentManagerUtil.hasDiscussion(
+				DLFileEntryConstants.getClassName(),
+				fileEntry.getFileEntryId());
+
+			Assert.assertEquals(
+				PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED, hasDiscussion);
 		}
 
 		@Test(expected = DuplicateFileException.class)
@@ -721,6 +735,19 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			new AggregateTestRule(
 				new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 				SynchronousDestinationTestRule.INSTANCE);
+
+		@Test
+		public void shouldDeleteDiscussion() throws Exception {
+			FileEntry fileEntry = addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId());
+
+			DLAppServiceUtil.deleteFileEntry(fileEntry.getFileEntryId());
+
+			Assert.assertFalse(
+				CommentManagerUtil.hasDiscussion(
+					DLFileEntryConstants.getClassName(),
+					fileEntry.getFileEntryId()));
+		}
 
 		@Test
 		public void shouldFireSyncEvent() throws Exception {

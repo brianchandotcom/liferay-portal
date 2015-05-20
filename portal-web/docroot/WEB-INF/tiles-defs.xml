@@ -410,6 +410,34 @@
 		<put name="portlet_content" value="/portlet/expando/view_attributes.jsp" />
 	</definition>
 
+	<!-- Export Configuration -->
+
+	<definition name="portlet.export_configuration" extends="portlet" />
+
+	<definition name="portlet.export_configuration.confirmation" extends="portlet.export_configuration">
+		<put name="portlet_content" value="/portlet/export_configuration/confirmation.jsp" />
+	</definition>
+
+	<definition name="portlet.export_configuration.error" extends="portlet.export_configuration">
+		<put name="portlet_content" value="/portlet/export_configuration/error.jsp" />
+	</definition>
+
+	<definition name="portlet.export_configuration.export_layouts" extends="portlet.export_configuration">
+		<put name="portlet_content" value="/portlet/export_configuration/export_layouts.jsp" />
+	</definition>
+
+	<definition name="portlet.export_configuration.import_layouts" extends="portlet.export_configuration">
+		<put name="portlet_content" value="/portlet/export_configuration/import_layouts.jsp" />
+	</definition>
+
+	<definition name="portlet.export_configuration.publish_layouts" extends="portlet.export_configuration">
+		<put name="portlet_content" value="/portlet/export_configuration/publish_layouts.jsp" />
+	</definition>
+
+	<definition name="portlet.export_configuration.publish_layouts_simple" extends="portlet.export_configuration">
+		<put name="portlet_content" value="/portlet/export_configuration/publish_layouts_simple.jsp" />
+	</definition>
+
 	<!-- Flags -->
 
 	<definition name="portlet.flags.edit_entry" path="/portlet/flags/edit_entry.jsp" />
@@ -470,32 +498,12 @@
 		<put name="portlet_content" value="/portlet/layouts_admin/add_layout.jsp" />
 	</definition>
 
-	<definition name="portlet.layouts_admin.confirmation" extends="portlet.layouts_admin">
-		<put name="portlet_content" value="/portlet/layouts_admin/export_configuration/confirmation.jsp" />
-	</definition>
-
 	<definition name="portlet.layouts_admin.edit_layouts" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/view.jsp" />
 	</definition>
 
 	<definition name="portlet.layouts_admin.error" extends="portlet.layouts_admin">
 		<put name="portlet_content" value="/portlet/layouts_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.layouts_admin.export_layouts" extends="portlet.layouts_admin">
-		<put name="portlet_content" value="/portlet/layouts_admin/export_layouts.jsp" />
-	</definition>
-
-	<definition name="portlet.layouts_admin.import_layouts" extends="portlet.layouts_admin">
-		<put name="portlet_content" value="/portlet/layouts_admin/import_layouts.jsp" />
-	</definition>
-
-	<definition name="portlet.layouts_admin.publish_layouts" extends="portlet.layouts_admin">
-		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts.jsp" />
-	</definition>
-
-	<definition name="portlet.layouts_admin.publish_layouts_simple" extends="portlet.layouts_admin">
-		<put name="portlet_content" value="/portlet/layouts_admin/publish_layouts_simple.jsp" />
 	</definition>
 
 	<!-- Login -->

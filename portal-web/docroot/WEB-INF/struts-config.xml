@@ -517,6 +517,40 @@
 
 		<action path="/expando/view_attributes" forward="portlet.expando.view_attributes" />
 
+		<!-- Export Configuration -->
+
+		<action path="/export_configuration/confirmation" type="com.liferay.portlet.exportconfiguration.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_configuration.confirmation" path="portlet.export_configuration.confirmation" />
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+		</action>
+
+		<action path="/export_configuration/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
+
+		<action path="/export_configuration/edit_export_configuration" type="com.liferay.portlet.exportconfiguration.action.EditExportConfigurationAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.export_layouts" path="portlet.export_configuration.export_layouts" />
+		</action>
+
+		<action path="/export_configuration/edit_publish_configuration" type="com.liferay.portlet.exportconfiguration.action.EditPublishConfigurationAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
+		</action>
+
+		<action path="/export_configuration/export_layouts" type="com.liferay.portlet.exportconfiguration.action.ExportLayoutsAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.export_layouts" path="portlet.export_configuration.export_layouts" />
+		</action>
+
+		<action path="/export_configuration/import_layouts" type="com.liferay.portlet.exportconfiguration.action.ImportLayoutsAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.import_layouts" path="portlet.export_configuration.import_layouts" />
+		</action>
+
+		<action path="/export_configuration/publish_layouts" type="com.liferay.portlet.exportconfiguration.action.PublishLayoutsAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
+		</action>
+
 		<!-- Flags -->
 
 		<action path="/flags/edit_entry" type="com.liferay.portlet.flags.action.EditEntryAction">
@@ -533,17 +567,7 @@
 
 		<action path="/group_pages/add_layout" forward="portlet.layouts_admin.add_layout" />
 
-		<action path="/group_pages/confirmation" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.confirmation" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
 		<action path="/group_pages/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
-
-		<action path="/group_pages/edit_export_configuration" type="com.liferay.portlet.layoutsadmin.action.EditExportConfigurationAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
 
 		<action path="/group_pages/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
@@ -565,34 +589,13 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
 
-		<action path="/group_pages/edit_publish_configuration" type="com.liferay.portlet.layoutsadmin.action.EditPublishConfigurationAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
-		</action>
-
-		<action path="/group_pages/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
 		<action path="/group_pages/get_layouts" type="com.liferay.portlet.layoutsadmin.action.GetLayoutsAction" />
-
-		<action path="/group_pages/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
 
 		<action path="/group_pages/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
 
 		<action path="/group_pages/mobile_device_rules" type="com.liferay.portlet.layoutsadmin.action.MobileDeviceRulesAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/group_pages/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
 		</action>
 
 		<action path="/group_pages/sitemap" type="com.liferay.portlet.layoutsadmin.action.SitemapAction" />
@@ -666,18 +669,6 @@
 
 		<action path="/layouts_admin/add_layout" forward="portlet.layouts_admin.add_layout" />
 
-		<action path="/layouts_admin/confirmation" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.confirmation" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/layouts_admin/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
-
-		<action path="/layouts_admin/edit_export_configuration" type="com.liferay.portlet.layoutsadmin.action.EditExportConfigurationAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
 		<action path="/layouts_admin/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
@@ -695,38 +686,16 @@
 
 		<action path="/layouts_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/layouts_admin/edit_publish_configuration" type="com.liferay.portlet.layoutsadmin.action.EditPublishConfigurationAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
-		</action>
-
-		<action path="/layouts_admin/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
 		</action>
 
 		<action path="/layouts_admin/get_layouts" type="com.liferay.portlet.layoutsadmin.action.GetLayoutsAction" />
-
-		<action path="/layouts_admin/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
 
 		<action path="/layouts_admin/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
 
 		<action path="/layouts_admin/mobile_device_rules" type="com.liferay.portlet.layoutsadmin.action.MobileDeviceRulesAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/layouts_admin/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
 		</action>
 
 		<action path="/layouts_admin/robots" type="com.liferay.portlet.layoutsadmin.action.RobotsAction" />
@@ -999,17 +968,6 @@
 		<action path="/my_pages/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/my_pages/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
-		<action path="/my_pages/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
 		</action>
 
 		<action path="/my_pages/view" type="com.liferay.portlet.mypages.action.ViewAction">
@@ -1299,9 +1257,9 @@
 
 		<!-- Staging Bar -->
 
-		<action path="/staging_bar/confirmation" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.confirmation" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		<action path="/staging_bar/confirmation" type="com.liferay.portlet.exportconfiguration.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_configuration.confirmation" path="portlet.export_configuration.confirmation" />
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
 		</action>
 
 		<action path="/staging_bar/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
@@ -1320,21 +1278,21 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.staging_bar.view" />
 		</action>
 
-		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.layoutsadmin.action.EditPublishConfigurationAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
+		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.exportconfiguration.action.EditPublishConfigurationAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
 		</action>
 
 		<action path="/staging_bar/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
 
-		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.layoutsadmin.action.PublishLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.publish_layouts" path="portlet.layouts_admin.publish_layouts" />
+		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.exportconfiguration.action.PublishLayoutsAction">
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
 		</action>
 
-		<action path="/staging_bar/publish_layouts_simple" type="com.liferay.portlet.layoutsadmin.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.layouts_admin.confirmation" path="portlet.layouts_admin.publish_layouts_simple" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
+		<action path="/staging_bar/publish_layouts_simple" type="com.liferay.portlet.exportconfiguration.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_configuration.confirmation" path="portlet.export_configuration.publish_layouts_simple" />
+			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
 		</action>
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
@@ -1366,22 +1324,11 @@
 
 		<action path="/users_admin/edit_user_details" forward="portlet.users_admin.edit_user_details" />
 
-		<action path="/users_admin/export_layouts" type="com.liferay.portlet.layoutsadmin.action.ExportLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.export_layouts" path="portlet.layouts_admin.export_layouts" />
-		</action>
-
 		<action path="/users_admin/export_users" type="com.liferay.portlet.usersadmin.action.ExportUsersAction">
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
 		</action>
 
 		<action path="/users_admin/get_users_count" type="com.liferay.portlet.usersadmin.action.GetUsersCountAction" />
-
-		<action path="/users_admin/import_layouts" type="com.liferay.portlet.layoutsadmin.action.ImportLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-			<forward name="portlet.layouts_admin.import_layouts" path="portlet.layouts_admin.import_layouts" />
-		</action>
 
 		<action path="/users_admin/select_organization" forward="portlet.users_admin.select_organization" />
 

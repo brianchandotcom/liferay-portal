@@ -17,7 +17,39 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
+	<classpathentry kind="lib" path="lib/asm.jar" />
+	<classpathentry kind="lib" path="lib/commons-collections.jar" />
+	<classpathentry kind="lib" path="lib/commons-compress.jar" />
+	<classpathentry kind="lib" path="lib/commons-dbcp.jar" />
+	<classpathentry kind="lib" path="lib/commons-io.jar" />
+	<classpathentry kind="lib" path="lib/commons-pool.jar" />
+	<classpathentry kind="lib" path="lib/concurrent.jar" />
+	<classpathentry kind="lib" path="lib/derby.jar" />
+	<classpathentry kind="lib" path="lib/dom4j.jar" />
+	<classpathentry kind="lib" path="lib/fontbox.jar" />
+	<classpathentry kind="lib" path="lib/geronimo-stax-api_1.0_spec.jar" />
+	<classpathentry kind="lib" path="lib/jackrabbit-api.jar" />
+	<classpathentry kind="lib" path="lib/jackrabbit-core.jar" />
+	<classpathentry kind="lib" path="lib/jackrabbit-jcr-commons.jar" />
+	<classpathentry kind="lib" path="lib/jackrabbit-spi-commons.jar" />
+	<classpathentry kind="lib" path="lib/jackrabbit-spi.jar" />
+	<classpathentry kind="lib" path="lib/jcl-over-slf4j.jar" />
+	<classpathentry kind="lib" path="lib/jcr.jar" />
+	<classpathentry kind="lib" path="lib/jempbox.jar" />
+	<classpathentry kind="lib" path="lib/lucene-core.jar" />
+	<classpathentry kind="lib" path="lib/metadata-extractor.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="lib" path="lib/pdfbox.jar" />
+	<classpathentry kind="lib" path="lib/poi-ooxml-schemas.jar" />
+	<classpathentry kind="lib" path="lib/poi-ooxml.jar" />
+	<classpathentry kind="lib" path="lib/poi-scratchpad.jar" />
+	<classpathentry kind="lib" path="lib/poi.jar" />
+	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
+	<classpathentry kind="lib" path="lib/tagsoup.jar" />
+	<classpathentry kind="lib" path="lib/tika-core.jar" />
+	<classpathentry kind="lib" path="lib/tika-parsers.jar" />
+	<classpathentry kind="lib" path="lib/xml-apis.jar" />
+	<classpathentry kind="lib" path="lib/xmlbeans.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

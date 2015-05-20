@@ -1098,26 +1098,6 @@
 		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
 	</definition>
 
-	<!-- Workflow Instances -->
-
-	<definition name="portlet.workflow_instances" extends="portlet" />
-
-	<definition name="portlet.workflow_instances.edit_workflow_instance" extends="portlet.workflow_instances">
-		<put name="portlet_content" value="/portlet/workflow_instances/edit_workflow_instance.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_instances.error" extends="portlet.workflow_instances">
-		<put name="portlet_content" value="/portlet/workflow_instances/error.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_instances.view" extends="portlet.workflow_instances">
-		<put name="portlet_content" value="/portlet/workflow_instances/view.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_instances.view_content" extends="portlet.workflow_instances">
-		<put name="portlet_content" value="/portlet/workflow_instances/view_content.jsp" />
-	</definition>
-
 	<!-- Workflow Tasks -->
 
 	<definition name="portlet.workflow_tasks" extends="portlet" />

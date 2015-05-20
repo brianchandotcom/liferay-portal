@@ -56,7 +56,7 @@ public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_WORKFLOW_INSTANCES;
+		return PortletKeys.MY_WORKFLOW_INSTANCE;
 	}
 
 	@Override

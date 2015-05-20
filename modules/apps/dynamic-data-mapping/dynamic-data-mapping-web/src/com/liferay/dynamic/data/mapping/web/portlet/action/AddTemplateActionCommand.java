@@ -49,7 +49,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"action.command.name=addTemplate",
-		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
+		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
+		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES
 	},
 	service = ActionCommand.class
 )

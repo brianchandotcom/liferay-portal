@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
-
 DLFileEntryType fileEntryType = (DLFileEntryType)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY_TYPE);
 
 long fileEntryTypeId = BeanParamUtil.getLong(fileEntryType, request, "fileEntryTypeId");
@@ -96,7 +94,12 @@ String scopeAvailableFields = ParamUtil.getString(request, "scopeAvailableFields
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="mainMetadataFields" persistState="<%= true %>" title="main-metadata-fields">
-			<%@ include file="/o/ddm-web/form_builder.jspf" %>
+			<liferay-util:include page="/form_builder.jsp" portletId="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>">
+				<portlet:param name="fieldsJSONArrayString" value="<%= (fieldsJSONArray != null) ? fieldsJSONArray.toString() : StringPool.BLANK %>" />
+				<portlet:param name="script" value="<%= script %>" />
+				<portlet:param name="portletResourceNamespace" value="<%= renderResponse.getNamespace() %>" />
+				<portlet:param name="refererPortletName" value="<%= PortletKeys.DOCUMENT_LIBRARY %>" />
+			</liferay-util:include>
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="additionalMetadataFields" persistState="<%= true %>" title="additional-metadata-fields">

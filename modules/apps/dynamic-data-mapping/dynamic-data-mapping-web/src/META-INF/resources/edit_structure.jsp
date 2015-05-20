@@ -21,7 +21,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 boolean showBackURL = ParamUtil.getBoolean(request, "showBackURL", true);
 
-String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace");
+String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace", renderResponse.getNamespace());
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
@@ -46,6 +46,12 @@ String structureKey = BeanParamUtil.getString(structure, request, "structureKey"
 String script = BeanParamUtil.getString(structure, request, "definition");
 
 JSONArray fieldsJSONArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
+
+String fieldsJSONArrayString = StringPool.BLANK;
+
+if (fieldsJSONArray != null) {
+	fieldsJSONArrayString = fieldsJSONArray.toString();
+}
 %>
 
 <portlet:actionURL name="addStructure" var="addStructureURL" />

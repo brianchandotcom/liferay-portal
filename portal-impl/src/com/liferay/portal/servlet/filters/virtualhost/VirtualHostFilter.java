@@ -161,7 +161,9 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		long companyId = PortalInstances.getCompanyId(request);
 
-		String contextPath = PortalUtil.getPathContext();
+		String originalContextPath = PortalUtil.getPathContext();
+
+		String contextPath = originalContextPath;
 
 		String originalFriendlyURL = request.getRequestURI();
 
@@ -256,7 +258,7 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 		try {
 			LastPath lastPath = new LastPath(
-				contextPath, friendlyURL, request.getParameterMap());
+				originalContextPath, friendlyURL, request.getParameterMap());
 
 			request.setAttribute(WebKeys.LAST_PATH, lastPath);
 

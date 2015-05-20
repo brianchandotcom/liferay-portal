@@ -52,7 +52,6 @@ import com.liferay.portal.repository.liferayrepository.model.LiferayFolder;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.SubscriptionSender;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetLink;
@@ -102,13 +101,6 @@ public class DLAppHelperLocalServiceImpl
 
 		if (!DLAppHelperThreadLocal.isEnabled()) {
 			return;
-		}
-
-		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-			CommentManagerUtil.addDiscussion(
-				fileEntry.getUserId(), fileEntry.getGroupId(),
-				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
-				fileEntry.getUserName());
 		}
 	}
 

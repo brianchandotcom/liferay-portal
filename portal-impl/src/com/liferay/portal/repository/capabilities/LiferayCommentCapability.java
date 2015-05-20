@@ -14,9 +14,16 @@
 
 package com.liferay.portal.repository.capabilities;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.event.RepositoryEventAware;
+import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
+import com.liferay.portal.kernel.repository.event.RepositoryEventType;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 
 /**
  * @author Adolfo Pérez
@@ -28,7 +35,30 @@ public class LiferayCommentCapability
 	public void registerRepositoryEventListeners(
 		RepositoryEventRegistry repositoryEventRegistry) {
 
-		throw new UnsupportedOperationException();
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Add.class, FileEntry.class,
+			COMMENT_ADD_FILE_ENTRY_EVENT_LISTENER);
 	}
+
+	private static final RepositoryEventListener
+		<RepositoryEventType.Add, FileEntry>
+			COMMENT_ADD_FILE_ENTRY_EVENT_LISTENER =
+				new RepositoryEventListener
+					<RepositoryEventType.Add, FileEntry>() {
+
+					@Override
+					public void execute(FileEntry fileEntry)
+						throws PortalException {
+
+						if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+							CommentManagerUtil.addDiscussion(
+								fileEntry.getUserId(), fileEntry.getGroupId(),
+								DLFileEntryConstants.getClassName(),
+								fileEntry.getFileEntryId(),
+								fileEntry.getUserName());
+						}
+					}
+
+				};
 
 }

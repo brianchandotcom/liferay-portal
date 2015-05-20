@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplate.ddm;
+package com.liferay.portlet.display.template.web.ddm;
 
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;

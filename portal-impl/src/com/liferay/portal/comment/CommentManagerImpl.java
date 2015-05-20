@@ -153,6 +153,15 @@ public class CommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public boolean hasDiscussion(String className, long classPK)
+		throws PortalException {
+
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.hasDiscussion(className, classPK);
+	}
+
+	@Override
 	public void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException {

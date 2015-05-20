@@ -169,6 +169,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		return _ACTION_NAME_PREFIX;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public List<String> getActionsNames(
@@ -183,6 +186,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		return new ArrayList<>(actionNames);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public List<String> getActionsNames(
@@ -654,6 +660,9 @@ public class ResourceActionsImpl implements ResourceActions {
 		read(servletContextName, document);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
 	@Deprecated
 	@Override
 	public void read(String servletContextName, InputStream inputStream)

@@ -30,6 +30,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 
 import java.io.IOException;
 
@@ -62,6 +63,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"

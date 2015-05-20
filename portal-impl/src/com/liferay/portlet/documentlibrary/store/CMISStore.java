@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -94,7 +94,7 @@ public class CMISStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		updateFile(companyId, repositoryId, fileName, VERSION_DEFAULT, is);
 	}
@@ -107,19 +107,27 @@ public class CMISStore extends BaseStore {
 	public void copyFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
+
+		if (versioningFolder == null) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, fromVersionLabel);
+		}
+
+		if (hasFile(companyId, repositoryId, fileName, toVersionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, toVersionLabel);
+		}
 
 		ObjectId versioningFolderObjectId = new ObjectIdImpl(
 			versioningFolder.getId());
 
 		Map<String, Object> documentProperties = new HashMap<>();
 
-		String title = String.valueOf(toVersionLabel);
-
-		documentProperties.put(PropertyIds.NAME, title);
+		documentProperties.put(PropertyIds.NAME, toVersionLabel);
 
 		documentProperties.put(
 			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_DOCUMENT.value());
@@ -146,36 +154,41 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
-			throw new NoSuchFileException();
+			logFailedDeletion(companyId, repositoryId, fileName);
 		}
-
-		versioningFolder.deleteTree(true, UnfileObject.DELETE, false);
+		else {
+			versioningFolder.deleteTree(true, UnfileObject.DELETE, false);
+		}
 	}
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-		Document document = getVersionedDocument(
-			companyId, repositoryId, fileName, versionLabel);
+		Document document = null;
 
-		document.delete(true);
+		try {
+			document = getVersionedDocument(
+				companyId, repositoryId, fileName, versionLabel);
+
+			document.delete(true);
+		}
+		catch (NoSuchFileException nsfe) {
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+		}
 	}
 
 	@Override
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		if (Validator.isNull(versionLabel)) {
 			versionLabel = getHeadVersionLabel(
@@ -192,55 +205,39 @@ public class CMISStore extends BaseStore {
 	public String[] getFileNames(long companyId, long repositoryId) {
 		Folder folder = getRepositoryFolder(companyId, repositoryId);
 
-		List<Folder> folders = getFolders(folder);
+		List<String> fileNames = new ArrayList<>();
 
-		String[] fileNames = new String[folders.size()];
+		doGetFileNames(fileNames, StringPool.BLANK, folder);
 
-		for (int i = 0; i < folders.size(); i++) {
-			Folder curFolder = folders.get(i);
-
-			fileNames[i] = curFolder.getName();
-		}
-
-		return fileNames;
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
 	public String[] getFileNames(
 		long companyId, long repositoryId, String dirName) {
 
-		Folder folder = getRepositoryFolder(companyId, repositoryId);
+		Folder directory = getRepositoryFolder(companyId, repositoryId);
 
-		String[] dirNames = StringUtil.split(dirName, CharPool.SLASH);
+		String[] subFolderNames = StringUtil.split(dirName, StringPool.SLASH);
 
-		for (String curDirName : dirNames) {
-			Folder subFolder = getFolder(folder, curDirName);
+		for (String subFolderName : subFolderNames) {
+			directory = getFolder(directory, subFolderName);
 
-			if (subFolder == null) {
-				subFolder = createFolder(folder, curDirName);
+			if (directory == null) {
+				return new String[0];
 			}
-
-			folder = subFolder;
 		}
 
-		List<Folder> folders = getFolders(folder);
+		List<String> fileNames = new ArrayList<>();
 
-		String[] fileNames = new String[folders.size()];
+		doGetFileNames(fileNames, dirName, directory);
 
-		for (int i = 0; i < folders.size(); i++) {
-			Folder curFolder = folders.get(i);
-
-			String fileName = curFolder.getName();
-
-			fileNames[i] = dirName.concat(StringPool.SLASH).concat(fileName);
-		}
-
-		return fileNames;
+		return fileNames.toArray(new String[fileNames.size()]);
 	}
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
 		String versionLabel = getHeadVersionLabel(
 			companyId, repositoryId, fileName);
@@ -259,16 +256,14 @@ public class CMISStore extends BaseStore {
 			companyId, repositoryId, dirName, false);
 
 		if (versioningFolder == null) {
-			throw new NoSuchFileException();
+			throw new NoSuchFileException(companyId, repositoryId, dirName);
 		}
-
-		List<Folder> folders = getFolders(versioningFolder);
 
 		String headVersionLabel = VERSION_DEFAULT;
 
-		for (Folder folder : folders) {
-			String versionLabel = folder.getName();
+		List<String> versionLabels = getVersionLabels(versioningFolder);
 
+		for (String versionLabel : versionLabels) {
 			if (DLUtil.compareVersions(versionLabel, headVersionLabel) > 0) {
 				headVersionLabel = versionLabel;
 			}
@@ -315,30 +310,35 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-	}
-
-	@Override
 	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
-			companyId, repositoryId, fileName, true);
+			companyId, repositoryId, fileName, false);
+
+		if (oldVersioningFolderEntry == null) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, newRepositoryId, fileName)) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
+
 		Folder newVersioningFolderEntry = getVersioningFolder(
 			companyId, newRepositoryId, fileName, true);
 
-		List<Folder> folders = getFolders(oldVersioningFolderEntry);
+		List<String> versionLabels = getVersionLabels(oldVersioningFolderEntry);
 
-		for (Folder folder : folders) {
-			String curFileName = folder.getName();
-
+		for (String versionLabel : versionLabels) {
 			Document document = getDocument(
-				oldVersioningFolderEntry, curFileName);
+				oldVersioningFolderEntry, versionLabel);
 
 			InputStream is = document.getContentStream().getStream();
 
-			createDocument(newVersioningFolderEntry, curFileName, is);
+			createDocument(newVersioningFolderEntry, versionLabel, is);
 		}
 
 		oldVersioningFolderEntry.deleteTree(true, UnfileObject.DELETE, false);
@@ -346,25 +346,34 @@ public class CMISStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder oldVersioningFolderEntry = getVersioningFolder(
-			companyId, repositoryId, fileName, true);
+			companyId, repositoryId, fileName, false);
+
+		if (oldVersioningFolderEntry == null) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, repositoryId, newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
+
 		Folder newVersioningFolderEntry = getVersioningFolder(
 			companyId, repositoryId, newFileName, true);
 
-		List<Folder> folders = getFolders(oldVersioningFolderEntry);
+		List<String> versionLabels = getVersionLabels(oldVersioningFolderEntry);
 
-		for (Folder folder : folders) {
-			String curFileName = folder.getName();
-
+		for (String versionLabel : versionLabels) {
 			Document document = getDocument(
-				oldVersioningFolderEntry, curFileName);
+				oldVersioningFolderEntry, versionLabel);
 
 			InputStream is = document.getContentStream().getStream();
 
-			createDocument(newVersioningFolderEntry, curFileName, is);
+			createDocument(newVersioningFolderEntry, versionLabel, is);
 		}
 
 		oldVersioningFolderEntry.deleteTree(true, UnfileObject.DELETE, false);
@@ -374,7 +383,7 @@ public class CMISStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream is)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, true);
@@ -384,7 +393,8 @@ public class CMISStore extends BaseStore {
 		Document document = getDocument(versioningFolder, title);
 
 		if (document != null) {
-			throw new DuplicateFileException();
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		createDocument(versioningFolder, title, is);
@@ -394,17 +404,21 @@ public class CMISStore extends BaseStore {
 	public void updateFileVersion(
 			long companyId, long repositoryId, String fileName,
 			String fromVersionLabel, String toVersionLabel)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		Folder versioningFolder = getVersioningFolder(
 			companyId, repositoryId, fileName, false);
 
-		String title = String.valueOf(toVersionLabel);
+		if (versioningFolder == null) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, fromVersionLabel);
+		}
 
-		Document document = getDocument(versioningFolder, title);
+		Document document = getDocument(versioningFolder, toVersionLabel);
 
 		if (document != null) {
-			throw new DuplicateFileException();
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, toVersionLabel);
 		}
 
 		document = getVersionedDocument(
@@ -412,7 +426,7 @@ public class CMISStore extends BaseStore {
 
 		Map<String, Object> documentProperties = new HashMap<>();
 
-		documentProperties.put(PropertyIds.NAME, title);
+		documentProperties.put(PropertyIds.NAME, toVersionLabel);
 
 		document.updateProperties(documentProperties);
 	}
@@ -444,6 +458,31 @@ public class CMISStore extends BaseStore {
 			properties, parentFolderId);
 
 		return (Folder)SessionHolder.session.getObject(objectId);
+	}
+
+	protected void doGetFileNames(
+		List<String> fileNames, String dirName, Folder folder) {
+
+		List<Folder> folders = getFolders(folder);
+
+		if (ListUtil.isNotEmpty(folders)) {
+			for (Folder curFolder : folders) {
+				String subDirName = null;
+
+				if (Validator.isBlank(dirName)) {
+					subDirName = curFolder.getName();
+				}
+				else {
+					subDirName =
+						dirName + StringPool.SLASH + curFolder.getName();
+				}
+
+				doGetFileNames(fileNames, subDirName, curFolder);
+			}
+		}
+		else {
+			fileNames.add(dirName);
+		}
 	}
 
 	protected Folder getCompanyFolder(long companyId) {
@@ -523,13 +562,14 @@ public class CMISStore extends BaseStore {
 			companyId, repositoryId, fileName, false);
 
 		if (versioningFolder == null) {
-			throw new NoSuchFileException();
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
 		}
 
 		Document document = getDocument(versioningFolder, versionLabel);
 
 		if (document == null) {
-			throw new NoSuchFileException();
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		return document;
@@ -555,6 +595,20 @@ public class CMISStore extends BaseStore {
 		}
 
 		return versioningFolder;
+	}
+
+	protected List<String> getVersionLabels(Folder versioningFolder) {
+		List<String> versions = new ArrayList<>();
+
+		ItemIterable<CmisObject> cmisObjects = versioningFolder.getChildren();
+
+		for (CmisObject cmisObject : cmisObjects) {
+			if (cmisObject instanceof Document) {
+				versions.add(cmisObject.getName());
+			}
+		}
+
+		return versions;
 	}
 
 	private final Folder _systemRootDir;

@@ -14,21 +14,22 @@
 
 package com.liferay.portlet.documentlibrary.store;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * <p>
@@ -42,28 +43,10 @@ import java.util.List;
 public class AdvancedFileSystemStore extends FileSystemStore {
 
 	@Override
-	public String[] getFileNames(long companyId, long repositoryId) {
-		File repositoryDir = getRepositoryDir(companyId, repositoryId);
-
-		String[] directories = FileUtil.listDirs(repositoryDir);
-
-		List<String> fileNames = new ArrayList<>();
-
-		for (String directory : directories) {
-			fileNames.addAll(
-				getAdvancedFileNames(
-					companyId, repositoryId,
-					repositoryDir.getPath() + StringPool.SLASH + directory));
-		}
-
-		return fileNames.toArray(new String[fileNames.size()]);
-	}
-
-	@Override
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String newFileName)
-		throws PortalException {
+		throws DuplicateFileException, NoSuchFileException {
 
 		super.updateFile(companyId, repositoryId, fileName, newFileName);
 
@@ -75,16 +58,24 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		for (String fileNameVersion : fileNameVersions) {
 			String ext = FileUtil.getExtension(fileNameVersion);
 
+			String newFileNameVersion = newFileName;
+
 			if (ext.equals(_HOOK_EXTENSION)) {
-				continue;
+				int pos = fileNameVersion.lastIndexOf(CharPool.UNDERLINE);
+
+				newFileNameVersion += fileNameVersion.substring(pos);
 			}
 
 			File fileNameVersionFile = new File(
 				newFileNameDir + StringPool.SLASH + fileNameVersion);
+
+			if (!fileNameVersionFile.exists()) {
+				throw new NoSuchFileException(
+					companyId, repositoryId, fileName, fileNameVersion);
+			}
+
 			File newFileNameVersionFile = new File(
-				newFileNameDir + StringPool.SLASH +
-					FileUtil.stripExtension(fileNameVersion) +
-						StringPool.PERIOD + _HOOK_EXTENSION);
+				newFileNameDir + StringPool.SLASH + newFileNameVersion);
 
 			boolean renamed = FileUtil.move(
 				fileNameVersionFile, newFileNameVersionFile);
@@ -101,46 +92,50 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
 		int fileNameFragmentLength = fileNameFragment.length();
 
-		if ((fileNameFragmentLength <= 2) || (getDepth(sb.toString()) > 3)) {
+		if (fileNameFragmentLength <= 2) {
 			return;
 		}
 
-		for (int i = 0; i < fileNameFragmentLength; i += 2) {
-			if ((i + 2) < fileNameFragmentLength) {
-				sb.append(fileNameFragment.substring(i, i + 2));
-				sb.append(StringPool.SLASH);
+		for (int i = 0; (i + 2) < fileNameFragmentLength; i += 2) {
+			sb.append(fileNameFragment.substring(i, i + 2));
+			sb.append(StringPool.SLASH);
 
-				if (getDepth(sb.toString()) > 3) {
-					return;
-				}
+			if (getDepth(sb.toString()) > 3) {
+				return;
 			}
 		}
 	}
 
+	@Override
+	protected void doGetFileNames(
+		List<String> fileNames, String dirName, String path) {
+
+		super.doGetFileNames(fileNames, dirName, path);
+
+		ListIterator<String> itr = fileNames.listIterator();
+
+		while (itr.hasNext()) {
+			String shortFileName = itr.next();
+
+			if (path.endsWith(_HOOK_EXTENSION)) {
+				shortFileName = FileUtil.stripExtension(shortFileName);
+			}
+
+			itr.set(unbuildPath(shortFileName));
+		}
+	}
+
+	/**
+	 * @deprecated As of 7.0.0 as of 7.0, replaced by {@link
+	 *             #doGetFileNames(List, String, String)}
+	 */
+	@Deprecated
 	protected List<String> getAdvancedFileNames(
 		long companyId, long repositoryId, String fileName) {
 
 		List<String> fileNames = new ArrayList<>();
 
-		String shortFileName = FileUtil.getShortFileName(fileName);
-
-		if (shortFileName.equals("DLFE") || Validator.isNumber(shortFileName)) {
-			String[] curFileNames = FileUtil.listDirs(fileName);
-
-			for (String curFileName : curFileNames) {
-				fileNames.addAll(
-					getAdvancedFileNames(
-						companyId, repositoryId,
-						fileName + StringPool.SLASH + curFileName));
-			}
-		}
-		else {
-			if (shortFileName.endsWith(_HOOK_EXTENSION)) {
-				shortFileName = FileUtil.stripExtension(shortFileName);
-			}
-
-			fileNames.add(shortFileName);
-		}
+		doGetFileNames(fileNames, StringPool.BLANK, fileName);
 
 		return fileNames;
 	}
@@ -188,12 +183,19 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-		String parentDirName = repositoryDir + StringPool.SLASH + sb.toString();
+		StringBundler pathSB = new StringBundler(6);
 
-		FileUtil.mkdirs(parentDirName);
+		pathSB.append(repositoryDir);
+		pathSB.append(StringPool.SLASH);
+		pathSB.append(sb.toString());
 
-		return new File(
-			parentDirName + StringPool.SLASH + fileNameFragment + ext);
+		FileUtil.mkdirs(pathSB.toString());
+
+		pathSB.append(StringPool.SLASH);
+		pathSB.append(fileNameFragment);
+		pathSB.append(ext);
+
+		return new File(pathSB.toString());
 	}
 
 	@Override
@@ -223,11 +225,21 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 			File repositoryDir = getRepositoryDir(companyId, repositoryId);
 
-			return new File(
-				repositoryDir + StringPool.SLASH + sb.toString() +
-					StringPool.SLASH + fileNameFragment + ext +
-						StringPool.SLASH + fileNameFragment +
-							StringPool.UNDERLINE + version + ext);
+			StringBundler pathSB = new StringBundler(11);
+
+			pathSB.append(repositoryDir);
+			pathSB.append(StringPool.SLASH);
+			pathSB.append(sb.toString());
+			pathSB.append(StringPool.SLASH);
+			pathSB.append(fileNameFragment);
+			pathSB.append(ext);
+			pathSB.append(StringPool.SLASH);
+			pathSB.append(fileNameFragment);
+			pathSB.append(StringPool.UNDERLINE);
+			pathSB.append(version);
+			pathSB.append(ext);
+
+			return new File(pathSB.toString());
 		}
 		else {
 			File fileNameDir = getDirNameDir(companyId, repositoryId, fileName);
@@ -235,9 +247,16 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 			String fileNameFragment = FileUtil.stripExtension(
 				fileName.substring(pos + 1));
 
-			return new File(
-				fileNameDir + StringPool.SLASH + fileNameFragment +
-					StringPool.UNDERLINE + version + ext);
+			StringBundler pathSB = new StringBundler(6);
+
+			pathSB.append(fileNameDir);
+			pathSB.append(StringPool.SLASH);
+			pathSB.append(fileNameFragment);
+			pathSB.append(StringPool.UNDERLINE);
+			pathSB.append(version);
+			pathSB.append(ext);
+
+			return new File(pathSB.toString());
 		}
 	}
 
@@ -278,6 +297,32 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	@Override
 	protected String getRootDirName() {
 		return PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR;
+	}
+
+	protected String unbuildPath(String path) {
+		if (path.startsWith("DLFE/")) {
+			path = path.substring(5);
+		}
+
+		if (path.length() <= 2) {
+			return path;
+		}
+
+		String[] fragments = StringUtil.split(path, CharPool.SLASH);
+
+		StringBundler sb = new StringBundler(fragments.length - 1);
+
+		for (int i = 0; i < fragments.length - 1; i++) {
+			sb.append(fragments[i]);
+		}
+
+		String simpleName = fragments[fragments.length - 1];
+
+		if (simpleName.startsWith(sb.toString())) {
+			return simpleName;
+		}
+
+		return path;
 	}
 
 	private static final String _HOOK_EXTENSION = "afsh";

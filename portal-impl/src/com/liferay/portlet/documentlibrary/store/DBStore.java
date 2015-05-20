@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
+import com.liferay.portlet.documentlibrary.NoSuchContentException;
+import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.model.DLContent;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 
@@ -55,7 +57,7 @@ public class DBStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, byte[] bytes)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		updateFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, bytes);
@@ -64,7 +66,7 @@ public class DBStore extends BaseStore {
 	@Override
 	public void addFile(
 			long companyId, long repositoryId, String fileName, File file)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		updateFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT, file);
@@ -74,7 +76,7 @@ public class DBStore extends BaseStore {
 	public void addFile(
 			long companyId, long repositoryId, String fileName,
 			InputStream inputStream)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		updateFile(
 			companyId, repositoryId, fileName, Store.VERSION_DEFAULT,
@@ -101,22 +103,38 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
-		DLContentLocalServiceUtil.deleteContent(
-			companyId, repositoryId, fileName, versionLabel);
+		try {
+			DLContentLocalServiceUtil.deleteContent(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+		catch (PortalException pe) {
+			logFailedDeletion(companyId, repositoryId, fileName, versionLabel);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe);
+			}
+		}
 	}
 
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			companyId, repositoryId, fileName);
+		DLContent dlContent = null;
+
+		try {
+			dlContent = DLContentLocalServiceUtil.getContent(
+				companyId, repositoryId, fileName);
+		}
+		catch (NoSuchContentException nsce) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, nsce);
+		}
 
 		dlContent.resetOriginalValues();
 
@@ -124,7 +142,7 @@ public class DBStore extends BaseStore {
 
 		if (blobData == null) {
 			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(9);
+				StringBundler sb = new StringBundler(7);
 
 				sb.append("No blob data found for file {companyId=");
 				sb.append(companyId);
@@ -163,10 +181,18 @@ public class DBStore extends BaseStore {
 	public InputStream getFileAsStream(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel)
-		throws PortalException {
+		throws NoSuchFileException {
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			companyId, repositoryId, fileName, versionLabel);
+		DLContent dlContent = null;
+
+		try {
+			dlContent = DLContentLocalServiceUtil.getContent(
+				companyId, repositoryId, fileName, versionLabel);
+		}
+		catch (NoSuchContentException nsce) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, versionLabel, nsce);
+		}
 
 		Blob blobData = dlContent.getData();
 
@@ -247,10 +273,18 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public long getFileSize(long companyId, long repositoryId, String fileName)
-		throws PortalException {
+		throws NoSuchFileException {
 
-		DLContent dlContent = DLContentLocalServiceUtil.getContent(
-			companyId, repositoryId, fileName);
+		DLContent dlContent = null;
+
+		try {
+			dlContent = DLContentLocalServiceUtil.getContent(
+				companyId, repositoryId, fileName);
+		}
+		catch (NoSuchContentException nsce) {
+			throw new NoSuchFileException(
+				companyId, repositoryId, fileName, nsce);
+		}
 
 		return dlContent.getSize();
 	}
@@ -272,13 +306,19 @@ public class DBStore extends BaseStore {
 	}
 
 	@Override
-	public void move(String srcDir, String destDir) {
-	}
-
-	@Override
 	public void updateFile(
-		long companyId, long repositoryId, long newRepositoryId,
-		String fileName) {
+			long companyId, long repositoryId, long newRepositoryId,
+			String fileName)
+		throws DuplicateFileException, NoSuchFileException {
+
+		if (!hasFile(companyId, repositoryId, fileName)) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, newRepositoryId, fileName)) {
+			throw new DuplicateFileException(
+				companyId, newRepositoryId, fileName);
+		}
 
 		DLContentLocalServiceUtil.updateDLContent(
 			companyId, repositoryId, newRepositoryId, fileName, fileName);
@@ -286,8 +326,18 @@ public class DBStore extends BaseStore {
 
 	@Override
 	public void updateFile(
-		long companyId, long repositoryId, String fileName,
-		String newFileName) {
+			long companyId, long repositoryId, String fileName,
+			String newFileName)
+		throws DuplicateFileException, NoSuchFileException {
+
+		if (!hasFile(companyId, repositoryId, fileName)) {
+			throw new NoSuchFileException(companyId, repositoryId, fileName);
+		}
+
+		if (hasFile(companyId, repositoryId, newFileName)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, newFileName);
+		}
 
 		DLContentLocalServiceUtil.updateDLContent(
 			companyId, repositoryId, repositoryId, fileName, newFileName);
@@ -297,12 +347,11 @@ public class DBStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, byte[] bytes)
-		throws PortalException {
+		throws DuplicateFileException {
 
-		if (DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, fileName, versionLabel)) {
-
-			throw new DuplicateFileException(fileName);
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		DLContentLocalServiceUtil.addContent(
@@ -313,12 +362,11 @@ public class DBStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, File file)
-		throws PortalException {
+		throws DuplicateFileException {
 
-		if (DLContentLocalServiceUtil.hasContent(
-				companyId, repositoryId, fileName, versionLabel)) {
-
-			throw new DuplicateFileException(fileName);
+		if (hasFile(companyId, repositoryId, fileName, versionLabel)) {
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		InputStream inputStream = null;
@@ -339,12 +387,13 @@ public class DBStore extends BaseStore {
 	public void updateFile(
 			long companyId, long repositoryId, String fileName,
 			String versionLabel, InputStream inputStream)
-		throws PortalException {
+		throws DuplicateFileException {
 
 		if (DLContentLocalServiceUtil.hasContent(
 				companyId, repositoryId, fileName, versionLabel)) {
 
-			throw new DuplicateFileException(fileName);
+			throw new DuplicateFileException(
+				companyId, repositoryId, fileName, versionLabel);
 		}
 
 		long length = -1;

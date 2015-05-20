@@ -30,8 +30,8 @@ public class StoreWrapper implements Store {
 	}
 
 	@Override
-	public void addDirectory(long companyId, long repositoryId, String dirName)
-		throws PortalException {
+	public void addDirectory(
+		long companyId, long repositoryId, String dirName) {
 
 		_store.addDirectory(companyId, repositoryId, dirName);
 	}
@@ -78,24 +78,20 @@ public class StoreWrapper implements Store {
 
 	@Override
 	public void deleteDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		_store.deleteDirectory(companyId, repositoryId, dirName);
 	}
 
 	@Override
-	public void deleteFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public void deleteFile(long companyId, long repositoryId, String fileName) {
 		_store.deleteFile(companyId, repositoryId, fileName);
 	}
 
 	@Override
 	public void deleteFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		_store.deleteFile(companyId, repositoryId, fileName, versionLabel);
 	}
@@ -159,8 +155,7 @@ public class StoreWrapper implements Store {
 
 	@Override
 	public String[] getFileNames(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		return _store.getFileNames(companyId, repositoryId, dirName);
 	}
@@ -174,24 +169,20 @@ public class StoreWrapper implements Store {
 
 	@Override
 	public boolean hasDirectory(
-			long companyId, long repositoryId, String dirName)
-		throws PortalException {
+		long companyId, long repositoryId, String dirName) {
 
 		return _store.hasDirectory(companyId, repositoryId, dirName);
 	}
 
 	@Override
-	public boolean hasFile(long companyId, long repositoryId, String fileName)
-		throws PortalException {
-
+	public boolean hasFile(long companyId, long repositoryId, String fileName) {
 		return _store.hasFile(companyId, repositoryId, fileName);
 	}
 
 	@Override
 	public boolean hasFile(
-			long companyId, long repositoryId, String fileName,
-			String versionLabel)
-		throws PortalException {
+		long companyId, long repositoryId, String fileName,
+		String versionLabel) {
 
 		return _store.hasFile(companyId, repositoryId, fileName, versionLabel);
 	}

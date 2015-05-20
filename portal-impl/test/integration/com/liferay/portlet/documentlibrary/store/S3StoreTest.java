@@ -15,18 +15,22 @@
 package com.liferay.portlet.documentlibrary.store;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PropsUtil;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
+import org.junit.Assume;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 
 /**
- * @author Shuyang Zhou
- * @author Tina Tian
+ * @author Preston Crary
  */
-public class DBStoreTest extends BaseStoreTestCase {
+public class S3StoreTest extends BaseStoreTestCase {
 
 	@ClassRule
 	@Rule
@@ -34,9 +38,26 @@ public class DBStoreTest extends BaseStoreTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Assume.assumeTrue(
+			"Property \"" + PropsKeys.DL_STORE_S3_ACCESS_KEY + "\" must be set",
+			Validator.isNotNull(
+				PropsUtil.get(PropsKeys.DL_STORE_S3_ACCESS_KEY)));
+		Assume.assumeTrue(
+			"Property \"" + PropsKeys.DL_STORE_S3_SECRET_KEY + "\" must be set",
+			Validator.isNotNull(
+				PropsUtil.get(PropsKeys.DL_STORE_S3_SECRET_KEY)));
+		Assume.assumeTrue(
+			"Property \"" + PropsKeys.DL_STORE_S3_BUCKET_NAME +
+				"\" must be set",
+			Validator.isNotNull(
+				PropsUtil.get(PropsKeys.DL_STORE_S3_BUCKET_NAME)));
+	}
+
 	@Override
 	protected Store getStore() {
-		return new DBStore();
+		return new S3Store();
 	}
 
 }

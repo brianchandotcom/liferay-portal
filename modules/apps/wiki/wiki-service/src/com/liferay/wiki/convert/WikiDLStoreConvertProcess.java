@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.util.MaintenanceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
@@ -72,15 +71,12 @@ public class WikiDLStoreConvertProcess implements DLStoreConvertProcess {
 					for (FileEntry fileEntry :
 							wikiPage.getAttachmentsFileEntries()) {
 
-						DLFileEntry dlFileEntry =
-							(DLFileEntry)fileEntry.getModel();
-
 						dlStoreConverter.migrateDLFileEntry(
 							wikiPage.getCompanyId(),
 							DLFolderConstants.getDataRepositoryId(
-								dlFileEntry.getRepositoryId(),
-								dlFileEntry.getFolderId()),
-							dlFileEntry);
+								fileEntry.getRepositoryId(),
+								fileEntry.getFolderId()),
+							fileEntry);
 					}
 				}
 

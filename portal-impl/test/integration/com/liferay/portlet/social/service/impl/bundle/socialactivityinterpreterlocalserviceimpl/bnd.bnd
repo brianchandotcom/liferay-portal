@@ -1,0 +1,5 @@
+Bundle-Description: Test Bundle for SocialActivityInterpreterLocalServiceImplTest
+Bundle-Version: 1.0.0
+Private-Package: $(bundle.package).*
+
+-dsannotations: *

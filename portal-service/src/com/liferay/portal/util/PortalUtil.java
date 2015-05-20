@@ -1101,6 +1101,10 @@ public class PortalUtil {
 			locale, defaultI18nPathLanguageId);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String getJournalArticleActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -1112,6 +1116,10 @@ public class PortalUtil {
 			requestContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static Layout getJournalArticleLayout(
 			long groupId, boolean privateLayout, String friendlyURL)
 		throws PortalException {
@@ -2026,6 +2034,10 @@ public class PortalUtil {
 		return getPortal().getVirtualHostname(layoutSet);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static String getVirtualLayoutActualURL(
 			long groupId, boolean privateLayout, String mainPath,
 			String friendlyURL, Map<String, String[]> params,
@@ -2037,6 +2049,10 @@ public class PortalUtil {
 			requestContext);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public static LayoutFriendlyURLComposite
 		getVirtualLayoutFriendlyURLComposite(
 			boolean privateLayout, String friendlyURL,

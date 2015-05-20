@@ -483,6 +483,7 @@
 			<bean class="com.liferay.portal.model.DefaultModelHintsImpl" depends-on="com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.model.VirtualLayoutFriendlyURLResolver" class="com.liferay.portal.model.VirtualLayoutFriendlyURLResolver" />
 	<bean id="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" class="com.liferay.portal.model.adapter.builder.ServiceTrackerMapModelAdapterBuilderLocator" />
 	<bean id="com.liferay.portal.plugin.PluginPackageIndexer" class="com.liferay.portal.plugin.PluginPackageIndexer" />
 	<bean id="com.liferay.portal.portletfilerepository.PortletFileRepository" class="com.liferay.portal.portletfilerepository.PortletFileRepositoryImpl" />

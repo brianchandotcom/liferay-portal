@@ -110,8 +110,9 @@ public class UpgradeTableBuilder {
 
 		String fileName = String.valueOf(path.getFileName());
 
-		String upgradeFileName = fileName.replaceFirst(
-			"Table.java", "ModelImpl.java");
+		String tableName = fileName.substring(0, fileName.length() - 10);
+
+		String upgradeFileName = tableName + "ModelImpl.java";
 
 		Path upgradeFilePath = Paths.get(
 			_upgradeTableDirName, upgradeFileVersion, upgradeFileName);
@@ -131,8 +132,7 @@ public class UpgradeTableBuilder {
 		String content = _read(path);
 
 		String packagePath = _getPackagePath(content);
-
-		String className = fileName.replaceFirst("\\.java", "");
+		String className = fileName.substring(0, fileName.length() - 5);
 
 		String upgradeFileContent = _read(upgradeFilePath);
 
@@ -140,8 +140,7 @@ public class UpgradeTableBuilder {
 
 		Path indexesFilePath = _getIndexesFilePath(upgradeFileVersion);
 
-		String[] addIndexes = _getAddIndexes(
-			indexesFilePath, fileName.replaceFirst("Table\\.java", ""));
+		String[] addIndexes = _getAddIndexes(indexesFilePath, tableName);
 
 		content = _getContent(
 			packagePath, className, upgradeFileContent, author, addIndexes);

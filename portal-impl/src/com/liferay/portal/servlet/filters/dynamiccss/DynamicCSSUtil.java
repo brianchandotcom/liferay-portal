@@ -259,9 +259,17 @@ public class DynamicCSSUtil {
 		String contextPath = ContextPathUtil.getContextPath(servletContext);
 
 		if (!contextPath.equals(portalContextPath)) {
-			baseURL = PortalImpl.PATH_MODULE.concat(
-				GetterUtil.getString(
-					StringPool.SLASH + servletContext.getServletContextName()));
+			if (!theme.isWARFile()) {
+				baseURL = PortalImpl.PATH_MODULE.concat(
+						GetterUtil.getString(
+							StringPool.SLASH +
+						servletContext.getServletContextName()));
+			}
+			else {
+				baseURL = StringPool.SLASH.concat(
+					GetterUtil.getString(
+				servletContext.getServletContextName()));
+			}
 		}
 
 		if (baseURL.endsWith(StringPool.SLASH)) {

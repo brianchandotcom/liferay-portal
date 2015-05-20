@@ -307,11 +307,14 @@ public class ThemeImpl extends PluginBaseImpl implements Theme {
 			return proxyPath.concat(virtualPath);
 		}
 
-		String contextPath = PortalWebResourcesUtil.getContextPath(
-			PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+		String contextPath = null;
 
 		if (!isWARFile()) {
-			return contextPath;
+			contextPath = PortalWebResourcesUtil.getContextPath(
+				PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+		}
+		else {
+			return getContextPath();
 		}
 
 		return proxyPath.concat(contextPath);

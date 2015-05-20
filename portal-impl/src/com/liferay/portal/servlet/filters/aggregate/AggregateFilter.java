@@ -470,9 +470,18 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		String resourcePath, String content) {
 
 		try {
-			ServletContext cssResourcesServletContext =
-				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+			ServletContext cssResourcesServletContext = null;
+
+			String requestURI = request.getRequestURI();
+
+			if (PortalWebResourcesUtil.isResourceContextPath(requestURI)) {
+				cssResourcesServletContext =
+					PortalWebResourcesUtil.getServletContext(
+						PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+			}
+			else {
+				cssResourcesServletContext = _servletContext;
+			}
 
 			content = DynamicCSSUtil.parseSass(
 				cssResourcesServletContext, request, resourcePath, content);

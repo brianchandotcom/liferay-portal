@@ -17,12 +17,15 @@ package com.liferay.dynamic.data.mapping.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -39,23 +42,39 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmGetStructure",
+		"action.command.name=getTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMGetStructureActionCommand extends BaseActionCommand {
+public class GetTemplateActionCommand extends BaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(portletRequest, "structureId");
+		long templateId = ParamUtil.getLong(portletRequest, "templateId");
 
-		DDMStructure structure = _ddmStructureService.getStructure(structureId);
+		DDMTemplate template = _ddmTemplateService.getTemplate(templateId);
 
-		String definition = structure.getDefinition();
+		String script = template.getScript();
+
+		String contentType = null;
+
+		String type = template.getType();
+
+		String language = GetterUtil.getString(
+			template.getLanguage(), TemplateConstants.LANG_TYPE_VM);
+
+		if (type.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM) ||
+			language.equals(TemplateConstants.LANG_TYPE_XSL)) {
+
+			contentType = ContentTypes.TEXT_XML_UTF8;
+		}
+		else {
+			contentType = ContentTypes.TEXT_PLAIN_UTF8;
+		}
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(portletRequest);
@@ -64,17 +83,17 @@ public class DDMGetStructureActionCommand extends BaseActionCommand {
 			PortalUtil.getHttpServletResponse(portletResponse);
 
 		ServletResponseUtil.sendFile(
-			httpServletRequest, httpServletResponse, null,
-			definition.getBytes(), ContentTypes.TEXT_XML_UTF8);
+			httpServletRequest, httpServletResponse, null, script.getBytes(),
+			contentType);
 	}
 
 	@Reference
-	protected void setDDMStructureService(
-		DDMStructureService ddmStructureService) {
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
 
-		_ddmStructureService = ddmStructureService;
+		_ddmTemplateService = ddmTemplateService;
 	}
 
-	private DDMStructureService _ddmStructureService;
+	private DDMTemplateService _ddmTemplateService;
 
 }

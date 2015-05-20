@@ -41,12 +41,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmCopyTemplate",
+		"action.command.name=copyTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
+public class CopyTemplateActionCommand extends DDMBaseActionCommand {
 
 	protected DDMTemplate copyTemplate(PortletRequest portletRequest)
 		throws Exception {

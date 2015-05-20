@@ -235,7 +235,7 @@ public class InitUtil {
 			ModuleFrameworkUtilAdapter.stopFramework();
 		}
 		catch (Exception e) {
-			new RuntimeException(e);
+			throw new RuntimeException(e);
 		}
 	}
 

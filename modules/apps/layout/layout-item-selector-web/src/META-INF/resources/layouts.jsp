@@ -153,7 +153,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 					layoutpath: event.target.getAttribute('data-layoutpath'),
 					returnType : event.target.getAttribute('data-returnType'),
-					value : event.target.getAttribute('data-url')
+					value : event.target.getAttribute('data-value')
 				}
 			);
 
@@ -185,11 +185,13 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 			messageType = 'info';
 
-			button.attr('data-url', url);
-
-			button.attr('data-uuid', uuid);
-
 			button.attr('data-layoutpath', messageText);
+
+			button.attr('data-returnType', <%= StringPool.BLANK %>);
+
+			button.attr('data-value', url);
+
+			button.attr('data-value', uuid);
 		}
 
 		Liferay.Util.toggleDisabled(button, disabled);

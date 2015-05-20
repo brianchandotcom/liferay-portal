@@ -40,13 +40,9 @@ public class PoshiRunnerValidation {
 		PoshiRunnerContext.readFiles();
 
 		validate();
-
-		if (!_logExceptions.isEmpty()) {
-			throwExceptions();
-		}
 	}
 
-	public static void validate() {
+	public static void validate() throws Exception {
 		String[] filePathsArray = PoshiRunnerContext.getFilePathsArray();
 
 		for (String filePath : filePathsArray) {
@@ -86,16 +82,16 @@ public class PoshiRunnerValidation {
 				_validateTestCaseFile(element, filePath);
 			}
 		}
+
+		if (!_logExceptions.isEmpty()) {
+			throwExceptions();
+		}
 	}
 
 	public static void validate(String testName) throws Exception {
 		_validateTestName(testName);
 
 		validate();
-
-		if (!_logExceptions.isEmpty()) {
-			throwExceptions();
-		}
 	}
 
 	private static String _getPrimaryAttributeName(

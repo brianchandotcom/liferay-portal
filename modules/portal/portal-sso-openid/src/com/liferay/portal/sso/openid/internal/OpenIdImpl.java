@@ -14,18 +14,17 @@
 
 package com.liferay.portal.sso.openid.internal;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.openid.OpenId;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.sso.openid.configuration.OpenIdConfiguration;
+import com.liferay.portal.sso.openid.constants.OpenIdConstants;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
@@ -38,18 +37,29 @@ public class OpenIdImpl implements OpenId {
 
 	@Override
 	public boolean isEnabled(long companyId) {
-		return PrefsPropsUtil.getBoolean(
-			companyId, PropsKeys.OPEN_ID_AUTH_ENABLED,
-			_openIdConfiguration.enabled());
+		try {
+			OpenIdConfiguration openIdConfiguration =
+				_settingsFactory.getSettings(
+					OpenIdConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, OpenIdConstants.SERVICE_NAME));
+
+			return openIdConfiguration.enabled();
+		}
+		catch (SettingsException se) {
+			_log.error("Unable to get OpenId settings", se);
+		}
+
+		return false;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_openIdConfiguration = Configurable.createConfigurable(
-			OpenIdConfiguration.class, properties);
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
 	}
 
-	private volatile OpenIdConfiguration _openIdConfiguration;
+	private static final Log _log = LogFactoryUtil.getLog(OpenIdImpl.class);
+
+	private volatile SettingsFactory _settingsFactory;
 
 }

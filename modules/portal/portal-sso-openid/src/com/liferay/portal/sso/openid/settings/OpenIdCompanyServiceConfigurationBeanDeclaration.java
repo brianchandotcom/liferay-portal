@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.sso.openid.configuration;
+package com.liferay.portal.sso.openid.settings;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.sso.openid.configuration.OpenIdConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Michael C. Han
+ * @author Mika Koivisto
  */
-@Meta.OCD(
-	id = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration"
-)
-public interface OpenIdConfiguration {
+@Component
+public class OpenIdCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	@Meta.AD(
-		deflt = "true",
-		description = "Set this to true to enable OpenId authentication.",
-		required = false
-	)
-	public boolean enabled();
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return OpenIdConfiguration.class;
+	}
 
 }

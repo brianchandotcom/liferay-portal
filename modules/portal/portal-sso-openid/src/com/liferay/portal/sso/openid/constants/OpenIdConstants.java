@@ -12,23 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.sso.openid.configuration;
-
-import aQute.bnd.annotation.metatype.Meta;
+package com.liferay.portal.sso.openid.constants;
 
 /**
- * @author Michael C. Han
+ * @author Mika Koivisto
  */
-@Meta.OCD(
-	id = "com.liferay.portal.sso.openid.configuration.OpenIdConfiguration"
-)
-public interface OpenIdConfiguration {
+public class OpenIdConstants {
 
-	@Meta.AD(
-		deflt = "true",
-		description = "Set this to true to enable OpenId authentication.",
-		required = false
-	)
-	public boolean enabled();
+	public static final String SERVICE_NAME = "com.liferay.portal.sso.openid";
 
 }

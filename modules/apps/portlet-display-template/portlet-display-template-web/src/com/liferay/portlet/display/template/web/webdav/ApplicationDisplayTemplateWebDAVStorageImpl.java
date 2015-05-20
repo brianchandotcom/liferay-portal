@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.portletdisplaytemplate.webdav;
+package com.liferay.portlet.display.template.web.webdav;
 
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
+import com.liferay.portal.kernel.webdav.WebDAVStorage;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDavUtil;
@@ -25,9 +27,16 @@ import com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDavUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES},
+	service = WebDAVStorage.class
+)
 public class ApplicationDisplayTemplateWebDAVStorageImpl
 	extends BaseWebDAVStorageImpl {
 

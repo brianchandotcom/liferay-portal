@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <liferay-staging:defineObjects />
 
@@ -127,7 +127,7 @@ if (group.isStaged() && group.isStagedRemotely()) {
 	cmd = Constants.PUBLISH_TO_REMOTE;
 }
 
-portletURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
+portletURL.setParameter("struts_action", "/export_configuration/publish_layouts");
 portletURL.setParameter("closeRedirect", closeRedirect);
 portletURL.setParameter("groupId", String.valueOf(stagingGroupId));
 portletURL.setParameter("stagingGroupId", String.valueOf(stagingGroupId));
@@ -135,7 +135,7 @@ portletURL.setParameter("privateLayout", String.valueOf(privateLayout));
 
 PortletURL renderURL = renderResponse.createRenderURL();
 
-renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
+renderURL.setParameter("struts_action", "/export_configuration/publish_layouts");
 
 if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 	renderURL.setParameter("tabs2", "new-publication-process");
@@ -179,7 +179,7 @@ else if (!quickPublish) {
 %>
 
 <portlet:actionURL var="restoreTrashEntriesURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_export_configuration" />
+	<portlet:param name="struts_action" value="/export_configuration/edit_export_configuration" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
@@ -250,7 +250,7 @@ else if (!quickPublish) {
 
 			<div <%= publishConfigurationButtons.equals("custom") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />customConfiguration">
 				<portlet:actionURL var="updatePublishConfigurationURL">
-					<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+					<portlet:param name="struts_action" value="/export_configuration/edit_publish_configuration" />
 					<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 					<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 				</portlet:actionURL>
@@ -302,11 +302,11 @@ else if (!quickPublish) {
 						</ul>
 					</liferay-ui:error>
 
-					<%@ include file="/html/portlet/layouts_admin/error_auth_exception.jspf" %>
+					<%@ include file="/html/portlet/export_configuration/error_auth_exception.jspf" %>
 
-					<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
+					<%@ include file="/html/portlet/export_configuration/error_remote_export_exception.jspf" %>
 
-					<%@ include file="/html/portlet/layouts_admin/error_remote_options_exception.jspf" %>
+					<%@ include file="/html/portlet/export_configuration/error_remote_options_exception.jspf" %>
 
 					<liferay-ui:error exception="<%= SystemException.class %>">
 
@@ -333,7 +333,7 @@ else if (!quickPublish) {
 							%>
 
 							<div class="<%= incompleteBackgroundTaskCount == 0 ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-								<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+								<liferay-util:include page="/html/portlet/export_configuration/incomplete_processes_message.jsp">
 									<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 								</liferay-util:include>
 							</div>
@@ -359,7 +359,7 @@ else if (!quickPublish) {
 								%>
 
 								<aui:fieldset cssClass="options-group" label="date">
-									<%@ include file="/html/portlet/layouts_admin/publish_layouts_scheduler.jspf" %>
+									<%@ include file="/html/portlet/export_configuration/publish_layouts_scheduler.jspf" %>
 								</aui:fieldset>
 							</c:if>
 
@@ -370,7 +370,7 @@ else if (!quickPublish) {
 									request.setAttribute("select_pages.jsp-parameterMap", parameterMap);
 									%>
 
-									<liferay-util:include page="/html/portlet/layouts_admin/export_configuration/select_pages.jsp">
+									<liferay-util:include page="/html/portlet/export_configuration/select_pages.jsp">
 										<liferay-util:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 										<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 										<liferay-util:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
@@ -388,12 +388,12 @@ else if (!quickPublish) {
 							</c:if>
 
 							<aui:fieldset cssClass="options-group" label="permissions">
-								<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
+								<%@ include file="/html/portlet/export_configuration/permissions.jspf" %>
 							</aui:fieldset>
 
 							<c:if test="<%= !localPublishing %>">
 								<aui:fieldset cssClass="options-group" label="remote-live-connection-settings">
-									<%@ include file="/html/portlet/layouts_admin/publish_layouts_remote_options.jspf" %>
+									<%@ include file="/html/portlet/export_configuration/publish_layouts_remote_options.jspf" %>
 								</aui:fieldset>
 							</c:if>
 						</div>
@@ -417,7 +417,7 @@ else if (!quickPublish) {
 			</div>
 
 			<div <%= publishConfigurationButtons.equals("saved") ? StringPool.BLANK : "class=\"hide\"" %> id="<portlet:namespace />savedConfigurations">
-				<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_configurations.jsp">
+				<liferay-util:include page="/html/portlet/export_configuration/publish_layouts_configurations.jsp">
 					<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 					<liferay-util:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 					<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -428,7 +428,7 @@ else if (!quickPublish) {
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />publishProcesses">
-			<liferay-util:include page="/html/portlet/layouts_admin/publish_layouts_processes.jsp">
+			<liferay-util:include page="/html/portlet/export_configuration/publish_layouts_processes.jsp">
 				<liferay-util:param name="closeRedirect" value="<%= closeRedirect %>" />
 				<liferay-util:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />
 				<liferay-util:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -449,7 +449,7 @@ else if (!quickPublish) {
 			}
 			%>
 
-			<liferay-util:include page="/html/portlet/layouts_admin/scheduled_publishing_events.jsp">
+			<liferay-util:include page="/html/portlet/export_configuration/scheduled_publishing_events.jsp">
 				<liferay-util:param name="groupId" value="<%= String.valueOf(targetGroupId) %>" />
 				<liferay-util:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<liferay-util:param name="destinationName" value="<%= localPublishing ? DestinationNames.LAYOUTS_LOCAL_PUBLISHER : DestinationNames.LAYOUTS_REMOTE_PUBLISHER %>" />
@@ -482,7 +482,7 @@ else if (!quickPublish) {
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="publishProcessesURL">
-		<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+		<portlet:param name="struts_action" value="/export_configuration/publish_layouts" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />

@@ -16,8 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.lar.ExportImportDateUtil" %><%@
-page import="com.liferay.portal.lar.LayoutExporter" %>
+<%@ page import="com.liferay.portal.lar.LayoutExporter" %>
 
 <liferay-staging:defineObjects />
 

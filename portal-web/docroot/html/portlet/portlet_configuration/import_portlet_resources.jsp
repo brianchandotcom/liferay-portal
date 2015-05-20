@@ -115,7 +115,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 														request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 														%>
 
-														<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+														<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 													</ul>
 												</aui:fieldset>
 											</li>
@@ -191,7 +191,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 																%>
 
 																<ul class="lfr-tree list-unstyled">
-																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																	<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																</ul>
 															</c:if>
 														</aui:field-wrapper>
@@ -210,7 +210,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 
 																	<aui:field-wrapper label="content-metadata">
 																		<ul class="lfr-tree list-unstyled">
-																			<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																			<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																		</ul>
 																	</aui:field-wrapper>
 

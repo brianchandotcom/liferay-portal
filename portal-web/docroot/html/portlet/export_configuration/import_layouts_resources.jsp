@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -113,7 +113,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 </liferay-ui:error>
 
 <portlet:actionURL var="importPagesURL">
-	<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+	<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -122,7 +122,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 <aui:form action="<%= importPagesURL %>" cssClass="lfr-export-dialog" method="post" name="fm1">
 	<portlet:renderURL var="portletURL">
-		<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+		<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
 		<portlet:param name="tabs2" value="current-and-previous" />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -266,7 +266,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																			<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(importMetadataControls) ? "content" : StringPool.BLANK %>'>
 																				<ul class="lfr-tree list-unstyled">
-																					<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																					<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																				</ul>
 																			</aui:field-wrapper>
 
@@ -292,7 +292,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 																				<aui:field-wrapper label="content-metadata">
 																					<ul class="lfr-tree list-unstyled">
-																						<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																						<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																					</ul>
 																				</aui:field-wrapper>
 
@@ -383,7 +383,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 			<aui:button-row>
 				<portlet:renderURL var="backURL">
-					<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+					<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

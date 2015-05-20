@@ -35,7 +35,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(scopeGroupId, Export
 			%>
 
 			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-				<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+				<liferay-util:include page="/html/portlet/export_configuration/incomplete_processes_message.jsp">
 					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 				</liferay-util:include>
 			</div>

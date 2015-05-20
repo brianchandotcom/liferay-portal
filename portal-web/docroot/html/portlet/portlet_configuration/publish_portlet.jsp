@@ -91,7 +91,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 				%>
 
 				<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-					<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+					<liferay-util:include page="/html/portlet/export_configuration/incomplete_processes_message.jsp">
 						<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 					</liferay-util:include>
 				</div>
@@ -137,7 +137,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																	request.setAttribute("render_controls.jsp-portletId", selPortlet.getRootPortletId());
 																	%>
 
-																	<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																	<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																</ul>
 															</aui:fieldset>
 														</li>
@@ -347,7 +347,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 																					%>
 
 																					<ul class="lfr-tree list-unstyled">
-																						<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																						<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																					</ul>
 																				</c:if>
 																			</aui:field-wrapper>
@@ -366,7 +366,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 																						<aui:field-wrapper label="content-metadata">
 																							<ul class="lfr-tree list-unstyled">
-																								<liferay-util:include page="/html/portlet/layouts_admin/render_controls.jsp" />
+																								<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
 																							</ul>
 																						</aui:field-wrapper>
 
@@ -437,7 +437,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 								Map<String, String[]> parameterMap = Collections.emptyMap();
 								%>
 
-								<%@ include file="/html/portlet/layouts_admin/export_configuration/permissions.jspf" %>
+								<%@ include file="/html/portlet/export_configuration/permissions.jspf" %>
 							</aui:fieldset>
 						</c:if>
 

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 long backgroundTaskId = ParamUtil.getLong(request, "backgroundTaskId");

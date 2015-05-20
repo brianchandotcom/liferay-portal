@@ -34,7 +34,7 @@
 
 <aui:script>
 	<portlet:renderURL var="scheduledEventsURL">
-		<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+		<portlet:param name="struts_action" value="/export_configuration/publish_layouts" />
 		<portlet:param name="tabs2" value="scheduled" />
 		<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
 		<portlet:param name="groupId" value="<%= String.valueOf(stagingGroupId) %>" />

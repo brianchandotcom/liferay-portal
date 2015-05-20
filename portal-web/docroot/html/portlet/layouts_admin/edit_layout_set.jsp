@@ -24,7 +24,6 @@ Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 long groupId = layoutsAdminDisplayContext.getGroupId();
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
 boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
-UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
@@ -96,9 +95,9 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 </aui:nav-bar>
 
 <c:if test="<%= liveGroup.isStaged() %>">
-	<%@ include file="/html/portlet/layouts_admin/error_auth_exception.jspf" %>
+	<%@ include file="/html/portlet/export_configuration/error_auth_exception.jspf" %>
 
-	<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
+	<%@ include file="/html/portlet/export_configuration/error_remote_export_exception.jspf" %>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />

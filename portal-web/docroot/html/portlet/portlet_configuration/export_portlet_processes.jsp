@@ -70,7 +70,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 		<liferay-ui:search-container-column-jsp
 			cssClass="background-task-status-column"
 			name="status"
-			path="/html/portlet/layouts_admin/publish_process_message.jsp"
+			path="/html/portlet/export_configuration/publish_process_message.jsp"
 		/>
 
 		<liferay-ui:search-container-column-date
@@ -168,7 +168,7 @@ int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackground
 %>
 
 <div class="hide incomplete-process-message">
-	<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+	<liferay-util:include page="/html/portlet/export_configuration/incomplete_processes_message.jsp">
 		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 	</liferay-util:include>
 </div>

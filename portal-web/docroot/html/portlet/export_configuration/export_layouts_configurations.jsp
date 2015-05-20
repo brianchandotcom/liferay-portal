@@ -14,60 +14,59 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
-long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");
-String layoutSetBranchName = ParamUtil.getString(request, "layoutSetBranchName");
-boolean localPublishing = ParamUtil.getBoolean(request, "localPublishing");
+long liveGroupId = ParamUtil.getLong(request, "liveGroupId");
 boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+String rootNodeName = ParamUtil.getString(request, "rootNodeName");
 %>
 
 <liferay-portlet:renderURL varImpl="portletURL">
-	<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
-	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
-	<portlet:param name="tabs2" value="new-publication-process" />
-	<portlet:param name="publishConfigurationButtons" value="saved" />
+	<portlet:param name="struts_action" value="/export_configuration/export_layouts" />
+	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
+	<portlet:param name="tabs2" value="new-export-process" />
+	<portlet:param name="exportConfigurationButtons" value="saved" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-	<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
+	<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 	<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+	<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 </liferay-portlet:renderURL>
-
-<%
-int exportImportConfigurationType = localPublishing ? ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_LOCAL : ExportImportConfigurationConstants.TYPE_PUBLISH_LAYOUT_REMOTE;
-%>
 
 <aui:form action="<%= portletURL %>">
 	<liferay-ui:search-container
-		displayTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
-		emptyResultsMessage="there-are-no-saved-publish-templates"
+		displayTerms="<%= new ExportImportConfigurationDisplayTerms(renderRequest) %>"
+		emptyResultsMessage="there-are-no-saved-export-templates"
 		iteratorURL="<%= portletURL %>"
 		orderByCol="name"
 		orderByType="asc"
 		searchTerms="<%= new ExportImportConfigurationSearchTerms(renderRequest) %>"
-		total="<%= ExportImportConfigurationLocalServiceUtil.getExportImportConfigurationsCount(groupId, exportImportConfigurationType) %>"
 	>
 		<aui:nav-bar>
 			<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
-				<portlet:renderURL var="addPublishConfigurationURL">
-					<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+				<portlet:renderURL var="addExportConfigurationURL">
+					<portlet:param name="struts_action" value="/export_configuration/export_layouts" />
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.ADD %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-					<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranchId) %>" />
-					<portlet:param name="layoutSetBranchName" value="<%= layoutSetBranchName %>" />
+					<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 					<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+					<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 				</portlet:renderURL>
 
-				<aui:nav-item href="<%= addPublishConfigurationURL %>" iconCssClass="icon-plus" label="new" />
+				<aui:nav-item href="<%= addExportConfigurationURL %>" iconCssClass="icon-plus" label="new" />
 			</aui:nav>
 
-			<aui:nav-bar-search file="/html/portlet/layouts_admin/export_import_configuration_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search file="/html/portlet/export_configuration/export_import_configuration_search.jsp" searchContainer="<%= searchContainer %>" />
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/layouts_admin/export_import_configuration_search_results.jspf" %>
+
+			<%
+			int exportImportConfigurationType = ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT;
+			%>
+
+			<%@ include file="/html/portlet/export_configuration/export_import_configuration_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -88,12 +87,14 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 			</liferay-ui:search-container-column-text>
 
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+				<portlet:param name="struts_action" value="/export_configuration/export_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
+				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
 			</liferay-portlet:renderURL>
 
 			<liferay-ui:search-container-column-text
@@ -114,7 +115,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/layouts_admin/publish_configuration_actions.jsp"
+				path="/html/portlet/export_configuration/export_configuration_actions.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

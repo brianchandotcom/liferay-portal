@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId");
@@ -27,7 +27,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImpor
 
 <c:if test="<%= showHeader %>">
 	<portlet:renderURL var="backURL">
-		<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+		<portlet:param name="struts_action" value="/export_configuration/edit_layout_set" />
 		<portlet:param name="tabs1" value='<%= privateLayout ? "my-dashboard" : "my-profile" %>' />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	</portlet:renderURL>
@@ -51,17 +51,17 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImpor
 			%>
 
 			<div class="<%= (incompleteBackgroundTaskCount == 0) ? "hide" : "in-progress" %>" id="<portlet:namespace />incompleteProcessMessage">
-				<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+				<liferay-util:include page="/html/portlet/export_configuration/incomplete_processes_message.jsp">
 					<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 				</liferay-util:include>
 			</div>
 
 			<c:choose>
 				<c:when test="<%= (tempFileNames.length > 0) && !validate %>">
-					<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_resources.jsp" />
+					<liferay-util:include page="/html/portlet/export_configuration/import_layouts_resources.jsp" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_validation.jsp" />
+					<liferay-util:include page="/html/portlet/export_configuration/import_layouts_validation.jsp" />
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -69,14 +69,14 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImpor
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />importProcesses">
-			<liferay-util:include page="/html/portlet/layouts_admin/import_layouts_processes.jsp" />
+			<liferay-util:include page="/html/portlet/export_configuration/import_layouts_processes.jsp" />
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="importProcessesURL">
-		<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+		<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.IMPORT %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />

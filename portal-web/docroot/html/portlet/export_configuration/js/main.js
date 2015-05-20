@@ -763,7 +763,7 @@ AUI.add(
 								portletURL.setParameter('exportConfigurationButtons', 'custom');
 							}
 							else {
-								portletURL.setParameter('struts_action', '/layouts_admin/edit_publish_configuration');
+								portletURL.setParameter('struts_action', '/export_configuration/edit_publish_configuration');
 								portletURL.setParameter('tabs2', 'new-publication-process');
 								portletURL.setParameter('publishConfigurationButtons', 'custom');
 							}

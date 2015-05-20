@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 long exportImportConfigurationId = (Long)request.getAttribute(WebKeys.EXPORT_IMPORT_CONFIGURATION_ID);

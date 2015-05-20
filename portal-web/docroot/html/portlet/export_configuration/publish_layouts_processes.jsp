@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
@@ -28,7 +28,7 @@ boolean quickPublish = ParamUtil.getBoolean(request, "quickPublish");
 
 PortletURL renderURL = liferayPortletResponse.createRenderURL();
 
-renderURL.setParameter("struts_action", "/layouts_admin/publish_layouts");
+renderURL.setParameter("struts_action", "/export_configuration/publish_layouts");
 renderURL.setParameter("tabs2", "current-and-previous");
 renderURL.setParameter("closeRedirect", closeRedirect);
 renderURL.setParameter("groupId", String.valueOf(groupId));
@@ -101,7 +101,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 		<liferay-ui:search-container-column-jsp
 			cssClass="background-task-status-column"
 			name="status"
-			path="/html/portlet/layouts_admin/publish_process_message.jsp"
+			path="/html/portlet/export_configuration/publish_process_message.jsp"
 		/>
 
 		<c:if test="<%= localPublishing %>">
@@ -143,7 +143,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 					<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 						<c:if test="<%= backgroundTask.getGroupId() != liveGroupId %>">
 							<portlet:actionURL var="relaunchURL">
-								<portlet:param name="struts_action" value="/layouts_admin/edit_publish_configuration" />
+								<portlet:param name="struts_action" value="/export_configuration/edit_publish_configuration" />
 								<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
 								<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 								<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
@@ -154,7 +154,7 @@ String taskExecutorClassName = localPublishing ? LayoutStagingBackgroundTaskExec
 						</c:if>
 
 						<portlet:actionURL var="deleteBackgroundTaskURL">
-							<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+							<portlet:param name="struts_action" value="/export_configuration/delete_background_task" />
 							<portlet:param name="redirect" value="<%= renderURL.toString() %>" />
 							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 							<portlet:param name="quickPublish" value="<%= String.valueOf(quickPublish) %>" />
@@ -187,7 +187,7 @@ if (localPublishing) {
 %>
 
 <div class="hide incomplete-process-message">
-	<liferay-util:include page="/html/portlet/layouts_admin/incomplete_processes_message.jsp">
+	<liferay-util:include page="/html/portlet/export_configuration/incomplete_processes_message.jsp">
 		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
 	</liferay-util:include>
 </div>

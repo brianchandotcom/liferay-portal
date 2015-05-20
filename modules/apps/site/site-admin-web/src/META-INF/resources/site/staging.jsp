@@ -66,7 +66,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 		/>
 	</div>
 
-	<liferay-util:include page="/html/portlet/layouts_admin/publish_process_message_task_details.jsp">
+	<liferay-util:include page="/html/portlet/export_configuration/publish_process_message_task_details.jsp">
 		<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
 	</liferay-util:include>
 </c:if>

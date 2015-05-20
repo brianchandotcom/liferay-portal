@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
 String redirectURL = ParamUtil.getString(request, "redirect");
@@ -33,7 +33,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 %>
 
 <portlet:actionURL var="confirmedActionURL">
-	<portlet:param name="struts_action" value='<%= cmd.equals(Constants.EXPORT) ? "/layouts_admin/edit_export_configuration" : "/layouts_admin/edit_publish_configuration" %>' />
+	<portlet:param name="struts_action" value='<%= cmd.equals(Constants.EXPORT) ? "/export_configuration/edit_export_configuration" : "/export_configuration/edit_publish_configuration" %>' />
 	<portlet:param name="redirect" value="<%= redirectURL %>" />
 	<portlet:param name="exportImportConfigurationId" value="<%= String.valueOf(exportImportConfiguration.getExportImportConfigurationId()) %>" />
 	<portlet:param name="quickPublish" value="<%= Boolean.TRUE.toString() %>" />

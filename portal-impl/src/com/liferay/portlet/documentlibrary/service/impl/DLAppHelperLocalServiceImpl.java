@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -213,11 +212,6 @@ public class DLAppHelperLocalServiceImpl
 		// Asset
 
 		assetEntryLocalService.deleteEntry(
-			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
-
-		// Comments
-
-		CommentManagerUtil.deleteDiscussion(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		// Ratings

@@ -37,6 +37,10 @@ public class LiferayCommentCapability
 		repositoryEventRegistry.registerRepositoryEventListener(
 			RepositoryEventType.Add.class, FileEntry.class,
 			COMMENT_ADD_FILE_ENTRY_EVENT_LISTENER);
+
+		repositoryEventRegistry.registerRepositoryEventListener(
+			RepositoryEventType.Delete.class, FileEntry.class,
+			COMMENT_DELETE_FILE_ENTRY_EVENT_LISTENER);
 	}
 
 	private static final RepositoryEventListener
@@ -55,6 +59,23 @@ public class LiferayCommentCapability
 							fileEntry.getFileEntryId(),
 							fileEntry.getUserName());
 					}
+				};
+
+	private static final RepositoryEventListener
+		<RepositoryEventType.Delete, FileEntry>
+			COMMENT_DELETE_FILE_ENTRY_EVENT_LISTENER =
+				new RepositoryEventListener
+					<RepositoryEventType.Delete, FileEntry>() {
+
+					@Override
+					public void execute(FileEntry fileEntry)
+						throws PortalException {
+
+						CommentManagerUtil.deleteDiscussion(
+							DLFileEntryConstants.getClassName(),
+							fileEntry.getFileEntryId());
+					}
+
 				};
 
 }

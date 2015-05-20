@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -104,10 +105,10 @@ public class DLAppHelperLocalServiceImpl
 		}
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				fileEntry.getUserId(), fileEntry.getUserName(),
-				fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId(), WorkflowConstants.ACTION_PUBLISH);
+			CommentManagerUtil.addDiscussion(
+				fileEntry.getUserId(), fileEntry.getGroupId(),
+				DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId(),
+				fileEntry.getUserName());
 		}
 	}
 
@@ -233,9 +234,9 @@ public class DLAppHelperLocalServiceImpl
 		assetEntryLocalService.deleteEntry(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
-		// Message boards
+		// Comments
 
-		mbMessageLocalService.deleteDiscussionMessages(
+		CommentManagerUtil.deleteDiscussion(
 			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
 
 		// Ratings

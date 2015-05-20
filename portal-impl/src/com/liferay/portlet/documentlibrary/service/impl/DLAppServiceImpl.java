@@ -217,9 +217,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			getUserId(), folderId, sourceFileName, mimeType, title, description,
 			changeLog, file, serviceContext);
 
-		dlAppHelperLocalService.addFileEntry(
-			getUserId(), fileEntry, null, serviceContext);
-
 		return fileEntry;
 	}
 
@@ -301,9 +298,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 		FileEntry fileEntry = repository.addFileEntry(
 			getUserId(), folderId, sourceFileName, mimeType, title, description,
 			changeLog, is, size, serviceContext);
-
-		dlAppHelperLocalService.addFileEntry(
-			getUserId(), fileEntry, null, serviceContext);
 
 		return fileEntry;
 	}
@@ -3200,9 +3194,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			latestFileVersion.getContentStream(false),
 			latestFileVersion.getSize(), serviceContext);
 
-		dlAppHelperLocalService.addFileEntry(
-			getUserId(), destinationFileEntry, null, serviceContext);
-
 		for (int i = fileVersions.size() - 2; i >= 0; i--) {
 			FileVersion fileVersion = fileVersions.get(i);
 
@@ -3258,9 +3249,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 						getUserId(), curDestFolder.getGroupId(),
 						srcFileEntry.getFileEntryId(),
 						curDestFolder.getFolderId(), serviceContext);
-
-					dlAppHelperLocalService.addFileEntry(
-						getUserId(), fileEntry, null, serviceContext);
 
 					fileEntries.add(fileEntry);
 				}

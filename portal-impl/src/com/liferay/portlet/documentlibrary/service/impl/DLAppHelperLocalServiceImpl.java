@@ -94,17 +94,6 @@ public class DLAppHelperLocalServiceImpl
 	extends DLAppHelperLocalServiceBaseImpl {
 
 	@Override
-	public void addFileEntry(
-			long userId, FileEntry fileEntry, FileVersion fileVersion,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		if (!DLAppHelperThreadLocal.isEnabled()) {
-			return;
-		}
-	}
-
-	@Override
 	public void addFolder(
 			long userId, Folder folder, ServiceContext serviceContext)
 		throws PortalException {

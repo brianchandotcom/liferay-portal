@@ -72,9 +72,9 @@
 					<delete dir="${portal-impl.classes.dir}/jamwiki-0.9.3" />
 
 					<echo file="${portal-impl.classes.dir}/jamwiki.properties">
-						database-type=com.liferay.portlet.wiki.engines.mediawiki.LiferayDataHandler
+						database-type=com.liferay.wiki.engine.mediawiki.LiferayDataHandler
 						props-initialized=true
-						search-engine=com.liferay.portlet.wiki.engines.mediawiki.LiferaySearchEngine
+						search-engine=com.liferay.wiki.engine.mediawiki.LiferaySearchEngine
 					</echo>
 				</then>
 			</if>

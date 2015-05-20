@@ -55,7 +55,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), sourceGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.exportLayoutsAsFile(
+		return exportImportLocalService.exportLayoutsAsFile(
 			exportImportConfiguration);
 	}
 
@@ -68,7 +68,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), exportImportConfiguration.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.exportLayoutsAsFileInBackground(
+		return exportImportLocalService.exportLayoutsAsFileInBackground(
 			getUserId(), exportImportConfiguration);
 	}
 
@@ -85,7 +85,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), exportImportConfiguration.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.exportLayoutsAsFileInBackground(
+		return exportImportLocalService.exportLayoutsAsFileInBackground(
 			getUserId(), exportImportConfigurationId);
 	}
 
@@ -99,7 +99,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.exportLayoutsAsFileInBackground(
+		return exportImportLocalService.exportLayoutsAsFileInBackground(
 			getUserId(), taskName, groupId, privateLayout, layoutIds,
 			parameterMap, startDate, endDate);
 	}
@@ -120,7 +120,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), layout.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		return layoutLocalService.exportPortletInfoAsFile(
+		return exportImportLocalService.exportPortletInfoAsFile(
 			exportImportConfiguration);
 	}
 
@@ -137,7 +137,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), layout.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		return layoutLocalService.exportPortletInfoAsFileInBackground(
+		return exportImportLocalService.exportPortletInfoAsFileInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap,
 			startDate, endDate, fileName);
 	}
@@ -158,7 +158,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), companyGroup,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		return layoutLocalService.exportPortletInfoAsFileInBackground(
+		return exportImportLocalService.exportPortletInfoAsFileInBackground(
 			getUserId(), taskName, portletId, parameterMap, startDate, endDate,
 			fileName);
 	}
@@ -177,7 +177,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		layoutLocalService.importLayouts(exportImportConfiguration, file);
+		exportImportLocalService.importLayouts(exportImportConfiguration, file);
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		layoutLocalService.importLayouts(exportImportConfiguration, is);
+		exportImportLocalService.importLayouts(exportImportConfiguration, is);
 	}
 
 	@Override
@@ -206,7 +206,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.importLayoutsInBackground(
+		return exportImportLocalService.importLayoutsInBackground(
 			getUserId(), taskName, groupId, privateLayout, parameterMap, file);
 	}
 
@@ -219,7 +219,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 		GroupPermissionUtil.check(
 			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.importLayoutsInBackground(
+		return exportImportLocalService.importLayoutsInBackground(
 			getUserId(), taskName, groupId, privateLayout, parameterMap,
 			inputStream);
 	}
@@ -238,7 +238,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		layoutLocalService.importPortletInfo(exportImportConfiguration, file);
+		exportImportLocalService.importPortletInfo(
+			exportImportConfiguration, file);
 	}
 
 	@Override
@@ -255,7 +256,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		layoutLocalService.importPortletInfo(exportImportConfiguration, is);
+		exportImportLocalService.importPortletInfo(
+			exportImportConfiguration, is);
 	}
 
 	@Override
@@ -268,7 +270,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), groupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		return layoutLocalService.importPortletInfoInBackground(
+		return exportImportLocalService.importPortletInfoInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap,
 			file);
 	}
@@ -283,7 +285,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), groupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		return layoutLocalService.importPortletInfoInBackground(
+		return exportImportLocalService.importPortletInfoInBackground(
 			getUserId(), taskName, plid, groupId, portletId, parameterMap, is);
 	}
 
@@ -302,7 +304,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), companyGroup,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		layoutLocalService.importPortletInfoInBackground(
+		exportImportLocalService.importPortletInfoInBackground(
 			getUserId(), taskName, portletId, parameterMap, file);
 	}
 
@@ -321,7 +323,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), companyGroup,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
-		layoutLocalService.importPortletInfoInBackground(
+		exportImportLocalService.importPortletInfoInBackground(
 			getUserId(), taskName, portletId, parameterMap, is);
 	}
 
@@ -339,7 +341,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.validateImportLayoutsFile(
+		return exportImportLocalService.validateImportLayoutsFile(
 			exportImportConfiguration, file);
 	}
 
@@ -358,7 +360,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		return layoutLocalService.validateImportLayoutsFile(
+		return exportImportLocalService.validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);
 	}
 
@@ -377,7 +379,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetPlid, portletId,
 			ActionKeys.CONFIGURATION);
 
-		return layoutLocalService.validateImportPortletInfo(
+		return exportImportLocalService.validateImportPortletInfo(
 			exportImportConfiguration, file);
 	}
 
@@ -397,7 +399,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetPlid, portletId,
 			ActionKeys.CONFIGURATION);
 
-		return layoutLocalService.validateImportPortletInfo(
+		return exportImportLocalService.validateImportPortletInfo(
 			exportImportConfiguration, inputStream);
 	}
 

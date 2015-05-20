@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.portal.tools.upgrade.table.builder;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -112,7 +112,7 @@ public class UpgradeTableBuilder {
 				}
 			}
 
- 			String content = _fileUtil.read(upgradeFilePath);
+			String content = _fileUtil.read(upgradeFilePath);
 
 			String packagePath =
 				"com.liferay.portal.upgrade.v" +
@@ -129,7 +129,7 @@ public class UpgradeTableBuilder {
 			content = _getContent(
 				packagePath, className, content, author, addIndexes);
 
- 			_fileUtil.write(filePath, content);
+			_fileUtil.write(filePath, content);
 		}
 	}
 

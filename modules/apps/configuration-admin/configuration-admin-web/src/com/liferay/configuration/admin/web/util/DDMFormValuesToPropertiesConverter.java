@@ -17,9 +17,8 @@ package com.liferay.configuration.admin.web.util;
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
@@ -48,13 +47,14 @@ public class DDMFormValuesToPropertiesConverter {
 
 	public DDMFormValuesToPropertiesConverter(
 		ConfigurationModel configurationModel, DDMFormValues ddmFormValues,
-		Locale locale) {
+		JSONFactory jsonFactory, Locale locale) {
 
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
 
 		_configurationModel = configurationModel;
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 		_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
+		_jsonFactory = jsonFactory;
 		_locale = locale;
 	}
 
@@ -108,10 +108,15 @@ public class DDMFormValuesToPropertiesConverter {
 		String valueString = value.getString(_locale);
 
 		if (type.equals(DDMFormFieldType.SELECT)) {
-			JSONArray jsonArray = toJSONArray(valueString);
+			try {
+				JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
 
-			if (jsonArray.length() == 1) {
-				valueString = jsonArray.getString(0);
+				if (jsonArray.length() == 1) {
+					valueString = jsonArray.getString(0);
+				}
+			}
+			catch (JSONException je) {
+				ReflectionUtil.throwException(je);
 			}
 		}
 
@@ -128,17 +133,6 @@ public class DDMFormValuesToPropertiesConverter {
 		Vector<Serializable> values = toVectorValue(ddmFormFieldValues);
 
 		return FieldConstants.getSerializable(dataType, values);
-	}
-
-	protected JSONArray toJSONArray(String json) {
-		try {
-			return JSONFactoryUtil.createJSONArray(json);
-		}
-		catch (JSONException jsone) {
-			_log.error(jsone);
-		}
-
-		return JSONFactoryUtil.createJSONArray();
 	}
 
 	protected Serializable toSimpleValue(DDMFormFieldValue ddmFormFieldValue) {
@@ -161,12 +155,10 @@ public class DDMFormValuesToPropertiesConverter {
 		return values;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DDMFormValuesToPropertiesConverter.class);
-
 	private final ConfigurationModel _configurationModel;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;
+	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 
 }

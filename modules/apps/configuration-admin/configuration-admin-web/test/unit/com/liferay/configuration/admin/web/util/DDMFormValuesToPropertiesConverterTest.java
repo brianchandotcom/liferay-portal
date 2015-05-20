@@ -16,7 +16,7 @@ package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.json.JSONFactoryImpl;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -53,7 +53,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
-		setUpJSONFactoryUtil();
+		_jsonFactory = new JSONFactoryImpl();
 	}
 
 	@Test
@@ -101,7 +101,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, _enLocale);
+				configurationModel, ddmFormValues, _jsonFactory, _enLocale);
 
 		Dictionary<String, Object> properties =
 			ddmFormValuesToPropertiesConverter.getProperties();
@@ -156,7 +156,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, _enLocale);
+				configurationModel, ddmFormValues, _jsonFactory, _enLocale);
 
 		Dictionary<String, Object> properties =
 			ddmFormValuesToPropertiesConverter.getProperties();
@@ -205,7 +205,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, _enLocale);
+				configurationModel, ddmFormValues, _jsonFactory, _enLocale);
 
 		Dictionary<String, Object> properties =
 			ddmFormValuesToPropertiesConverter.getProperties();
@@ -254,7 +254,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, _enLocale);
+				configurationModel, ddmFormValues, _jsonFactory, _enLocale);
 
 		Dictionary<String, Object> properties =
 			ddmFormValuesToPropertiesConverter.getProperties();
@@ -308,7 +308,7 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, _enLocale);
+				configurationModel, ddmFormValues, _jsonFactory, _enLocale);
 
 		Dictionary<String, Object> properties =
 			ddmFormValuesToPropertiesConverter.getProperties();
@@ -337,12 +337,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 		ddmFormFieldValue.setValue(value);
 
 		return ddmFormFieldValue;
-	}
-
-	protected void setUpJSONFactoryUtil() {
-		JSONFactoryUtil jsonFactoryUtil = new JSONFactoryUtil();
-
-		jsonFactoryUtil.setJSONFactory(new JSONFactoryImpl());
 	}
 
 	protected void whenAttributeDefinitionGetCardinality(
@@ -377,5 +371,6 @@ public class DDMFormValuesToPropertiesConverterTest extends Mockito {
 	}
 
 	private final Locale _enLocale = LocaleUtil.US;
+	private JSONFactory _jsonFactory;
 
 }

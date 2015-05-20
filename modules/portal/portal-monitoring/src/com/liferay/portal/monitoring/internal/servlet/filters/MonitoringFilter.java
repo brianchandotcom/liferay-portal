@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -43,6 +43,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Rajesh Thiagarajan
@@ -90,18 +93,23 @@ public class MonitoringFilter extends BaseFilter
 	}
 
 	protected long getGroupId(HttpServletRequest request) {
-		long groupId = 0;
-		groupId = ParamUtil.getLong(request, "groupId");
+		long groupId = ParamUtil.getLong(request, "groupId");
 
-		if (groupId <= 0) {
-			long plid = ParamUtil.getLong(request, "p_l_id");
+		if (groupId > 0) {
+			return groupId;
+		}
 
-			if (plid > 0) {
-				try {
-					Layout layout = LayoutLocalServiceUtil.getLayout(plid);
-					groupId = layout.getGroupId();
-				}
-				catch (PortalException e) {
+		long plid = ParamUtil.getLong(request, "p_l_id");
+
+		if ((plid > 0) && (_layoutLocalService != null)) {
+			try {
+				Layout layout = _layoutLocalService.getLayout(plid);
+
+				groupId = layout.getGroupId();
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to retrieve layout: " + plid, pe);
 				}
 			}
 		}
@@ -173,29 +181,47 @@ public class MonitoringFilter extends BaseFilter
 		}
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setDataSampleFactory(DataSampleFactory dataSampleFactory) {
 		_dataSampleFactory = dataSampleFactory;
 	}
 
-	@Reference
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = layoutLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected final void setPortletMonitoringControl(
 		PortletMonitoringControl portletMonitoringControl) {
 
 		_portletMonitoringControl = portletMonitoringControl;
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	protected void setServiceMonitoringControl(
 		ServiceMonitoringControl serviceMonitoringControl) {
 
 		_serviceMonitoringControl = serviceMonitoringControl;
 	}
 
+	protected void unsetLayoutLocalService(
+		LayoutLocalService layoutLocalService) {
+
+		_layoutLocalService = null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		MonitoringFilter.class);
 
 	private DataSampleFactory _dataSampleFactory;
+	private volatile LayoutLocalService _layoutLocalService;
 	private boolean _monitorPortalRequest;
 	private PortletMonitoringControl _portletMonitoringControl;
 	private ServiceMonitoringControl _serviceMonitoringControl;

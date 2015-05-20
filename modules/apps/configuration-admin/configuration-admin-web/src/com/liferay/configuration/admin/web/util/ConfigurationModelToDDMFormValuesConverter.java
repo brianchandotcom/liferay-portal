@@ -18,12 +18,15 @@ import com.liferay.configuration.admin.web.model.ConfigurationModel;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
 import java.util.Dictionary;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Vector;
 
 import org.osgi.service.cm.Configuration;
@@ -39,6 +42,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 		_configurationModel = configurationModel;
 		_ddmForm = ddmForm;
+		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 		_locale = locale;
 	}
 
@@ -161,8 +165,20 @@ public class ConfigurationModelToDDMFormValuesConverter {
 		return ddmFormFieldValue;
 	}
 
+	protected String getDDMFormFieldType(String ddmFormFieldName) {
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(ddmFormFieldName);
+
+		return ddmFormField.getType();
+	}
+
 	protected void setDDMFormFieldValueLocalizedValue(
 		String value, DDMFormFieldValue ddmFormFieldValue) {
+
+		String type = getDDMFormFieldType(ddmFormFieldValue.getName());
+
+		if (type.equals(DDMFormFieldType.SELECT)) {
+			value = "[\"" + value + "\"]";
+		}
 
 		LocalizedValue localizedValue = new LocalizedValue(_locale);
 
@@ -173,6 +189,7 @@ public class ConfigurationModelToDDMFormValuesConverter {
 
 	private final ConfigurationModel _configurationModel;
 	private final DDMForm _ddmForm;
+	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Locale _locale;
 
 }

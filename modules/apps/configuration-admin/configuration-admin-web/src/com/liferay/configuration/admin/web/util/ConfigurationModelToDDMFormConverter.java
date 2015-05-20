@@ -157,6 +157,29 @@ public class ConfigurationModelToDDMFormConverter {
 		return FieldConstants.STRING;
 	}
 
+	protected String getDDMFormFieldPredefinedValue(
+		AttributeDefinition attributeDefinition) {
+
+		String dataType = getDDMFormFieldDataType(attributeDefinition);
+
+		if (dataType.equals(FieldConstants.BOOLEAN)) {
+			return "false";
+		}
+		else if (dataType.equals(FieldConstants.DOUBLE) ||
+				 dataType.equals(FieldConstants.FLOAT)) {
+
+			return "0.0";
+		}
+		else if (dataType.equals(FieldConstants.INTEGER) ||
+				 dataType.equals(FieldConstants.LONG) ||
+				 dataType.equals(FieldConstants.SHORT)) {
+
+			return "0";
+		}
+
+		return StringPool.BLANK;
+	}
+
 	protected String getDDMFormFieldType(
 		AttributeDefinition attributeDefinition) {
 
@@ -211,27 +234,18 @@ public class ConfigurationModelToDDMFormConverter {
 	protected void setDDMFormFieldPredefinedValue(
 		AttributeDefinition attributeDefinition, DDMFormField ddmFormField) {
 
+		String type = ddmFormField.getType();
+
+		String predefinedValueString = getDDMFormFieldPredefinedValue(
+			attributeDefinition);
+
+		if (type.equals(DDMFormFieldType.SELECT)) {
+			predefinedValueString = "[\"" + predefinedValueString + "\"]";
+		}
+
 		LocalizedValue predefinedValue = new LocalizedValue(_locale);
 
-		String dataType = getDDMFormFieldDataType(attributeDefinition);
-
-		if (dataType.equals(FieldConstants.BOOLEAN)) {
-			predefinedValue.addString(_locale, "false");
-		}
-		else if (dataType.equals(FieldConstants.DOUBLE) ||
-				 dataType.equals(FieldConstants.FLOAT)) {
-
-			predefinedValue.addString(_locale, "0.0");
-		}
-		else if (dataType.equals(FieldConstants.INTEGER) ||
-				 dataType.equals(FieldConstants.LONG) ||
-				 dataType.equals(FieldConstants.SHORT)) {
-
-			predefinedValue.addString(_locale, "0");
-		}
-		else {
-			predefinedValue.addString(_locale, StringPool.BLANK);
-		}
+		predefinedValue.addString(_locale, predefinedValueString);
 
 		ddmFormField.setPredefinedValue(predefinedValue);
 	}

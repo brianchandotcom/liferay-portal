@@ -15,8 +15,13 @@
 package com.liferay.configuration.admin.web.util;
 
 import com.liferay.configuration.admin.web.model.ConfigurationModel;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.Value;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
@@ -42,13 +47,14 @@ public class DDMFormValuesToPropertiesConverter {
 
 	public DDMFormValuesToPropertiesConverter(
 		ConfigurationModel configurationModel, DDMFormValues ddmFormValues,
-		Locale locale) {
+		JSONFactory jsonFactory, Locale locale) {
 
 		DDMForm ddmForm = ddmFormValues.getDDMForm();
 
 		_configurationModel = configurationModel;
 		_ddmFormFieldsMap = ddmForm.getDDMFormFieldsMap(false);
 		_ddmFormFieldValuesMap = ddmFormValues.getDDMFormFieldValuesMap();
+		_jsonFactory = jsonFactory;
 		_locale = locale;
 	}
 
@@ -86,6 +92,37 @@ public class DDMFormValuesToPropertiesConverter {
 		return ddmFormField.getDataType();
 	}
 
+	protected String getDDMFormFieldType(String fieldName) {
+		DDMFormField ddmFormField = _ddmFormFieldsMap.get(fieldName);
+
+		return ddmFormField.getType();
+	}
+
+	protected String getDDMFormFieldValueString(
+		DDMFormFieldValue ddmFormFieldValue) {
+
+		String type = getDDMFormFieldType(ddmFormFieldValue.getName());
+
+		Value value = ddmFormFieldValue.getValue();
+
+		String valueString = value.getString(_locale);
+
+		if (type.equals(DDMFormFieldType.SELECT)) {
+			try {
+				JSONArray jsonArray = _jsonFactory.createJSONArray(valueString);
+
+				if (jsonArray.length() == 1) {
+					valueString = jsonArray.getString(0);
+				}
+			}
+			catch (JSONException je) {
+				ReflectionUtil.throwException(je);
+			}
+		}
+
+		return valueString;
+	}
+
 	protected Serializable toArrayValue(
 		List<DDMFormFieldValue> ddmFormFieldValues) {
 
@@ -101,10 +138,9 @@ public class DDMFormValuesToPropertiesConverter {
 	protected Serializable toSimpleValue(DDMFormFieldValue ddmFormFieldValue) {
 		String dataType = getDDMFormFieldDataType(ddmFormFieldValue.getName());
 
-		Value value = ddmFormFieldValue.getValue();
+		String valueString = getDDMFormFieldValueString(ddmFormFieldValue);
 
-		return FieldConstants.getSerializable(
-			dataType, value.getString(_locale));
+		return FieldConstants.getSerializable(dataType, valueString);
 	}
 
 	protected Vector<Serializable> toVectorValue(
@@ -122,6 +158,7 @@ public class DDMFormValuesToPropertiesConverter {
 	private final ConfigurationModel _configurationModel;
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final Map<String, List<DDMFormFieldValue>> _ddmFormFieldValuesMap;
+	private final JSONFactory _jsonFactory;
 	private final Locale _locale;
 
 }

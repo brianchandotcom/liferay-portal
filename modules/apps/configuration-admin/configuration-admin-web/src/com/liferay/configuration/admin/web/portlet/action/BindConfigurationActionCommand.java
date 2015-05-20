@@ -20,6 +20,7 @@ import com.liferay.configuration.admin.web.util.ConfigurationHelper;
 import com.liferay.configuration.admin.web.util.ConfigurationModelToDDMFormConverter;
 import com.liferay.configuration.admin.web.util.DDMFormValuesToPropertiesConverter;
 import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory;
+import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
@@ -99,7 +100,8 @@ public class BindConfigurationActionCommand implements ActionCommand {
 
 		DDMFormValuesToPropertiesConverter ddmFormValuesToPropertiesConverter =
 			new DDMFormValuesToPropertiesConverter(
-				configurationModel, ddmFormValues, themeDisplay.getLocale());
+				configurationModel, ddmFormValues, _jsonFactory,
+				themeDisplay.getLocale());
 
 		Dictionary<String, Object> properties =
 			ddmFormValuesToPropertiesConverter.getProperties();
@@ -202,6 +204,11 @@ public class BindConfigurationActionCommand implements ActionCommand {
 	}
 
 	@Reference(unbind = "-")
+	protected void setJSONFactory(JSONFactory jsonFactory) {
+		_jsonFactory = jsonFactory;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMetaTypeService(MetaTypeService metaTypeService) {
 		_metaTypeService = metaTypeService;
 	}
@@ -212,6 +219,7 @@ public class BindConfigurationActionCommand implements ActionCommand {
 	private BundleContext _bundleContext;
 	private ConfigurationAdmin _configurationAdmin;
 	private DDMFormValuesFactory _ddmFormValuesFactory;
+	private JSONFactory _jsonFactory;
 	private MetaTypeService _metaTypeService;
 
 }

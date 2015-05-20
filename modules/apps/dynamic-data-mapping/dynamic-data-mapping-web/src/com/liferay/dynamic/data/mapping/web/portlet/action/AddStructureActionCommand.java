@@ -30,7 +30,6 @@ import com.liferay.portlet.dynamicdatamapping.util.DDM;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -43,19 +42,47 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmUpdateStructure",
+		"action.command.name=addStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
+public class AddStructureActionCommand extends DDMBaseActionCommand {
+
+	protected DDMStructure addStructure(PortletRequest portletRequest)
+		throws Exception {
+
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long scopeClassNameId = ParamUtil.getLong(
+			portletRequest, "scopeClassNameId");
+		String structureKey = ParamUtil.getString(
+			portletRequest, "structureKey");
+		long parentStructureId = ParamUtil.getLong(
+			portletRequest, "parentStructureId",
+			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			portletRequest, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+		DDMForm ddmForm = _ddm.getDDMForm(portletRequest);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
+		String storageType = ParamUtil.getString(portletRequest, "storageType");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			DDMStructure.class.getName(), portletRequest);
+
+		return _ddmStructureService.addStructure(
+			groupId, parentStructureId, scopeClassNameId, structureKey, nameMap,
+			descriptionMap, ddmForm, ddmFormLayout, storageType,
+			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
+	}
 
 	@Override
 	protected void doProcessCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		DDMStructure structure = updateStructure(portletRequest);
+		DDMStructure structure = addStructure(portletRequest);
 
 		setRedirectAttribute(portletRequest, structure);
 	}
@@ -70,29 +97,6 @@ public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
 		DDMStructureService ddmStructureService) {
 
 		_ddmStructureService = ddmStructureService;
-	}
-
-	protected DDMStructure updateStructure(PortletRequest portletRequest)
-		throws Exception {
-
-		long classPK = ParamUtil.getLong(portletRequest, "classPK");
-
-		long parentStructureId = ParamUtil.getLong(
-			portletRequest, "parentStructureId",
-			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "name");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(portletRequest, "description");
-		DDMForm ddmForm = _ddm.getDDMForm((ActionRequest)portletRequest);
-		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), portletRequest);
-
-		return _ddmStructureService.updateStructure(
-			classPK, parentStructureId, nameMap, descriptionMap, ddmForm,
-			ddmFormLayout, serviceContext);
 	}
 
 	private DDM _ddm;

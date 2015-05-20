@@ -48,12 +48,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmAddTemplate",
+		"action.command.name=addTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMAddTemplateActionCommand extends DDMBaseActionCommand {
+public class AddTemplateActionCommand extends DDMBaseActionCommand {
 
 	protected DDMTemplate addTemplate(PortletRequest portletRequest)
 		throws Exception {

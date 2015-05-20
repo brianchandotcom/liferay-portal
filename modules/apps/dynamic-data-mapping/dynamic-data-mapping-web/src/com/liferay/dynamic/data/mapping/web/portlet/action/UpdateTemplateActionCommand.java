@@ -42,13 +42,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmUpdateTemplate",
+		"action.command.name=updateTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMUpdateTemplateActionCommand
-	extends DDMAddTemplateActionCommand {
+public class UpdateTemplateActionCommand extends AddTemplateActionCommand {
 
 	@Override
 	protected void doProcessCommand(

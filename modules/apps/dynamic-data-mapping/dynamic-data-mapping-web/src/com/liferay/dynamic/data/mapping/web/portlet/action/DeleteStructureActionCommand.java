@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmDeleteStructure",
+		"action.command.name=deleteStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMDeleteStructureActionCommand extends DDMBaseActionCommand {
+public class DeleteStructureActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(

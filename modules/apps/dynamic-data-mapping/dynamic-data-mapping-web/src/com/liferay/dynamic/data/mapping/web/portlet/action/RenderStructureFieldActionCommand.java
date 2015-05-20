@@ -49,12 +49,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=ddmRenderStructureField",
+		"action.command.name=renderStructureField",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
-public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
+public class RenderStructureFieldActionCommand extends BaseActionCommand {
 
 	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext(
 		HttpServletRequest request, HttpServletResponse response) {

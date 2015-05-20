@@ -849,15 +849,18 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 					<property name="upgrade.table.dir" value="${upgrade.table.dir}" />
 				</ant>
 
+				<path id="upgrade.table.builder.classpath">
+					<fileset dir="${project.dir}/tools/sdk/dependencies/com.liferay.portal.tools.upgrade.table.builder/lib" includes="*.jar" />
+				</path>
+
 				<java
-					classname="com.liferay.portal.tools.UpgradeTableBuilder"
-					classpathref="project.classpath"
+					classname="com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder"
+					classpathref="upgrade.table.builder.classpath"
 					fork="true"
 					newenvironment="true"
 				>
-					<arg value="bnd=false" />
-					<arg value="module.name=portal-impl" />
-					<arg value="upgrade.base.dir=D:/liferay-portal/portal-impl" />
+					<arg value="upgrade.base.dir=." />
+					<arg value="upgrade.module.name=portal-impl" />
 					<arg value="upgrade.table.dir=${upgrade.table.dir}" />
 				</java>
 			</then>

@@ -1127,6 +1127,7 @@ public class JournalFolderLocalServiceImpl
 
 		for (JournalArticle article : articles) {
 			article.setFolderId(toFolderId);
+			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
 

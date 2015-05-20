@@ -1623,3 +1623,34 @@ now you must call:
 This change was made to enhance the Repository API and make decoupling from Document Library easier when modularizing the portal.
 
 ---------------------------------------
+
+### Removed addFileEntry method from DLAppHelperLocalService
+- **Date:** 2015-May-20
+- **JIRA Ticket:** LPS-47645
+
+#### What changed?
+
+The `addFileEntry` method has been removed from the
+`DLAppHelperLocalService` service.
+
+#### Who is affected?
+
+This affects anyone who calls the `addFileEntry` method.
+
+#### How should I update my code?
+
+If you need to invoke the `addFileEntry` method as part of a custom
+repository implementation, use the provided repository capabilities
+instead. See `LiferayRepositoryDefiner` for examples on their use.
+
+For other use cases, you may need to invoke explicitly each of the
+service methods used by `addFileEntry`.
+
+#### Why was this change made?
+
+The logic inside the `addFileEntry` method was moved out from
+`DLAppHelperLocalService` and into repository capabilities to further
+decouple core repository implementations from additional (optional)
+functionality.
+
+---------------------------------------

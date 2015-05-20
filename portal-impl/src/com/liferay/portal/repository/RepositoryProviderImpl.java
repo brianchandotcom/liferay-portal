@@ -59,7 +59,73 @@ public class RepositoryProviderImpl
 	}
 
 	@Override
-	public List<LocalRepository> getLocalRepositoriesByGroupId(long groupId)
+	public LocalRepository getFileEntryLocalRepository(long fileEntryId)
+		throws PortalException {
+
+		return getLocalRepository(getRepositoryIdByFileEntryId(fileEntryId));
+	}
+
+	@Override
+	public Repository getFileEntryRepository(long fileEntryId)
+		throws PortalException {
+
+		checkFileEntryPermissions(fileEntryId);
+
+		return getRepository(getRepositoryIdByFileEntryId(fileEntryId));
+	}
+
+	@Override
+	public LocalRepository getFileShortcutLocalRepository(long fileShortcutId)
+		throws PortalException {
+
+		return getLocalRepository(
+			getRepositoryIdByFileShortcutId(fileShortcutId));
+	}
+
+	@Override
+	public Repository getFileShortcutRepository(long fileShortcutId)
+		throws PortalException {
+
+		checkFileShortcutPermissions(fileShortcutId);
+
+		return getRepository(getRepositoryIdByFileShortcutId(fileShortcutId));
+	}
+
+	@Override
+	public LocalRepository getFileVersionLocalRepository(long fileVersionId)
+		throws PortalException {
+
+		return getLocalRepository(
+			getRepositoryIdByFileVersionId(fileVersionId));
+	}
+
+	@Override
+	public Repository getFileVersionRepository(long fileVersionId)
+		throws PortalException {
+
+		checkFileVersionPermissions(fileVersionId);
+
+		return getRepository(getRepositoryIdByFileVersionId(fileVersionId));
+	}
+
+	@Override
+	public LocalRepository getFolderLocalRepository(long folderId)
+		throws PortalException {
+
+		return getLocalRepository(getRepositoryIdByFolderId(folderId));
+	}
+
+	@Override
+	public Repository getFolderRepository(long folderId)
+		throws PortalException {
+
+		checkFolderPermissions(folderId);
+
+		return getRepository(getRepositoryIdByFolderId(folderId));
+	}
+
+	@Override
+	public List<LocalRepository> getGroupLocalRepositories(long groupId)
 		throws PortalException {
 
 		List<LocalRepository> localRepositories = new ArrayList<>();
@@ -71,6 +137,33 @@ public class RepositoryProviderImpl
 		}
 
 		return localRepositories;
+	}
+
+	@Override
+	public List<Repository> getGroupRepositories(long groupId)
+		throws PortalException {
+
+		List<Repository> repositories = new ArrayList<>();
+
+		List<Long> repositoryIds = getRepositoryIdsByGroupId(groupId);
+
+		for (long repositoryId : repositoryIds) {
+			repositories.add(getRepository(repositoryId));
+		}
+
+		return repositories;
+	}
+
+	@Override
+	public LocalRepository getImageLocalRepository(long imageId)
+		throws PortalException {
+
+		return getLocalRepository(getRepositoryIdByImageId(imageId));
+	}
+
+	@Override
+	public Repository getImageRepository(long imageId) throws PortalException {
+		return getRepository(getRepositoryIdByImageId(imageId));
 	}
 
 	@Override
@@ -96,61 +189,8 @@ public class RepositoryProviderImpl
 	}
 
 	@Override
-	public LocalRepository getLocalRepositoryByFileEntryId(long fileEntryId)
-		throws PortalException {
-
-		return getLocalRepository(getRepositoryIdByFileEntryId(fileEntryId));
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryByFileShortcutId(
-			long fileShortcutId)
-		throws PortalException {
-
-		return getLocalRepository(
-			getRepositoryIdByFileShortcutId(fileShortcutId));
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryByFileVersionId(long fileVersionId)
-		throws PortalException {
-
-		return getLocalRepository(
-			getRepositoryIdByFileVersionId(fileVersionId));
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryByFolderId(long folderId)
-		throws PortalException {
-
-		return getLocalRepository(getRepositoryIdByFolderId(folderId));
-	}
-
-	@Override
-	public LocalRepository getLocalRepositoryByImageId(long imageId)
-		throws PortalException {
-
-		return getLocalRepository(getRepositoryIdByImageId(imageId));
-	}
-
-	@Override
 	public String getRegistryName() {
 		return RepositoryProviderImpl.class.getName();
-	}
-
-	@Override
-	public List<Repository> getRepositoriesByGroupId(long groupId)
-		throws PortalException {
-
-		List<Repository> repositories = new ArrayList<>();
-
-		List<Long> repositoryIds = getRepositoryIdsByGroupId(groupId);
-
-		for (long repositoryId : repositoryIds) {
-			repositories.add(getRepository(repositoryId));
-		}
-
-		return repositories;
 	}
 
 	@Override
@@ -169,49 +209,6 @@ public class RepositoryProviderImpl
 		_repositoriesByRepositoryId.put(repositoryId, repository);
 
 		return repository;
-	}
-
-	@Override
-	public Repository getRepositoryByFileEntryId(long fileEntryId)
-		throws PortalException {
-
-		checkFileEntryPermissions(fileEntryId);
-
-		return getRepository(getRepositoryIdByFileEntryId(fileEntryId));
-	}
-
-	@Override
-	public Repository getRepositoryByFileShortcutId(long fileShortcutId)
-		throws PortalException {
-
-		checkFileShortcutPermissions(fileShortcutId);
-
-		return getRepository(getRepositoryIdByFileShortcutId(fileShortcutId));
-	}
-
-	@Override
-	public Repository getRepositoryByFileVersionId(long fileVersionId)
-		throws PortalException {
-
-		checkFileVersionPermissions(fileVersionId);
-
-		return getRepository(getRepositoryIdByFileVersionId(fileVersionId));
-	}
-
-	@Override
-	public Repository getRepositoryByFolderId(long folderId)
-		throws PortalException {
-
-		checkFolderPermissions(folderId);
-
-		return getRepository(getRepositoryIdByFolderId(folderId));
-	}
-
-	@Override
-	public Repository getRepositoryByImageId(long imageId)
-		throws PortalException {
-
-		return getRepository(getRepositoryIdByImageId(imageId));
 	}
 
 	@Override

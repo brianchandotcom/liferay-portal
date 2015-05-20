@@ -16,8 +16,8 @@ package com.liferay.portal.comment.context;
 
 import com.liferay.portal.comment.context.util.DiscussionRequestHelper;
 import com.liferay.portal.comment.context.util.DiscussionTaglibHelper;
-import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.Discussion;
+import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.context.CommentDisplayContextFactory;
 import com.liferay.portal.kernel.comment.context.CommentSectionDisplayContext;
@@ -68,7 +68,8 @@ public class CommentDisplayContextProviderImpl
 	@Override
 	public CommentTreeDisplayContext getCommentTreeDisplayContext(
 		HttpServletRequest request, HttpServletResponse response,
-		DiscussionPermission discussionPermission, Comment comment) {
+		DiscussionPermission discussionPermission,
+		DiscussionComment discussionComment) {
 
 		DiscussionRequestHelper discussionRequestHelper =
 			new DiscussionRequestHelper(request);
@@ -78,7 +79,7 @@ public class CommentDisplayContextProviderImpl
 		CommentTreeDisplayContext commentTreeDisplayContext =
 			new DefaultCommentTreeDisplayContext(
 				discussionRequestHelper, discussionTaglibHelper,
-				discussionPermission, comment);
+				discussionPermission, discussionComment);
 
 		for (CommentDisplayContextFactory commentDisplayContextFactory :
 				getDisplayContextFactories()) {
@@ -86,7 +87,7 @@ public class CommentDisplayContextProviderImpl
 			commentTreeDisplayContext =
 				commentDisplayContextFactory.getCommentTreeDisplayContext(
 					commentTreeDisplayContext, request, response,
-					discussionPermission, comment);
+					discussionPermission, discussionComment);
 		}
 
 		return commentTreeDisplayContext;

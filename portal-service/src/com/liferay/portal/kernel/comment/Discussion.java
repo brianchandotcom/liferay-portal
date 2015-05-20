@@ -19,7 +19,7 @@ package com.liferay.portal.kernel.comment;
  */
 public interface Discussion {
 
-	public Comment getRootComment();
+	public DiscussionComment getRootDiscussionComment();
 
 	public boolean isMaxCommentsLimitExceeded();
 

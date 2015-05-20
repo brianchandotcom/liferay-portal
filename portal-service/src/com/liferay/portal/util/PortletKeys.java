@@ -67,6 +67,8 @@ public class PortletKeys {
 
 	public static final String EXPANDO = "139";
 
+	public static final String EXPORT_CONFIGURATION = "200";
+
 	public static final String FAST_LOGIN = "164";
 
 	public static final String FLAGS = "142";

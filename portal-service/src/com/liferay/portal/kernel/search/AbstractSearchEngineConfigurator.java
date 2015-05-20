@@ -182,15 +182,11 @@ public abstract class AbstractSearchEngineConfigurator
 	protected void destroySearchEngine(
 		SearchEngineRegistration searchEngineRegistration) {
 
-		Destination searchReaderDestination = _messageBus.removeDestination(
+		_messageBus.removeDestination(
 			searchEngineRegistration.getSearchReaderDestinationName());
 
-		searchReaderDestination.close(true);
-
-		Destination searchWriterDestination = _messageBus.removeDestination(
+		_messageBus.removeDestination(
 			searchEngineRegistration.getSearchWriterDestinationName());
-
-		searchWriterDestination.close(true);
 
 		SearchEngineUtil.removeSearchEngine(
 			searchEngineRegistration.getSearchEngineId());
@@ -202,14 +198,14 @@ public abstract class AbstractSearchEngineConfigurator
 		SearchEngineProxyWrapper originalSearchEngineProxy =
 			searchEngineRegistration.getOriginalSearchEngineProxyWrapper();
 
-		searchReaderDestination = getSearchReaderDestination(
+		Destination searchReaderDestination = getSearchReaderDestination(
 			_messageBus, searchEngineRegistration.getSearchEngineId());
 
 		registerInvokerMessageListener(
 			searchReaderDestination,
 			searchEngineRegistration.getOriginalSearchReaderMessageListeners());
 
-		searchWriterDestination = getSearchWriterDestination(
+		Destination searchWriterDestination = getSearchWriterDestination(
 			_messageBus, searchEngineRegistration.getSearchEngineId());
 
 		registerInvokerMessageListener(

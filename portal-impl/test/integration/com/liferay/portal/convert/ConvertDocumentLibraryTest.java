@@ -46,7 +46,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.DBStore;
 import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -73,6 +72,7 @@ import org.junit.Test;
 /**
  * @author Roberto Díaz
  * @author Sergio González
+ * @author Manuel de la Peña
  */
 public class ConvertDocumentLibraryTest {
 
@@ -97,8 +97,12 @@ public class ConvertDocumentLibraryTest {
 		_convertProcess = (ConvertProcess)InstancePool.get(
 			ConvertDocumentLibrary.class.getName());
 
+		Store dbStore = StoreFactory.getInstance("db");
+
+		_dbStoreClassName = dbStore.getClass().getName();
+
 		_convertProcess.setParameterValues(
-			new String[] {DBStore.class.getName(), Boolean.TRUE.toString()});
+			new String[] {_dbStoreClassName, Boolean.TRUE.toString()});
 	}
 
 	@After
@@ -181,7 +185,7 @@ public class ConvertDocumentLibraryTest {
 		Store store = StoreFactory.getInstance();
 
 		Assert.assertEquals(
-			DBStore.class.getName(), store.getClass().getName());
+			_dbStoreClassName, store.getClass().getName());
 	}
 
 	protected FileEntry addFileEntry(
@@ -239,7 +243,7 @@ public class ConvertDocumentLibraryTest {
 		throws Exception {
 
 		_convertProcess.setParameterValues(
-			new String[] {DBStore.class.getName(), delete.toString()});
+			new String[] {_dbStoreClassName, delete.toString()});
 
 		FileEntry rootFileEntry = addFileEntry(
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
@@ -306,6 +310,8 @@ public class ConvertDocumentLibraryTest {
 	}
 
 	private ConvertProcess _convertProcess;
+
+	private String _dbStoreClassName;
 
 	@DeleteAfterTestRun
 	private Group _group;

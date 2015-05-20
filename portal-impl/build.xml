@@ -843,7 +843,9 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 	<target name="build-upgrade-table">
 		<if>
-			<isset property="upgrade.table.dir" />
+			<not>
+				<equals arg1="${upgrade.table.dir}" arg2="" />
+			</not>
 			<then>
 				<ant antfile="build-common.xml" dir="${project.dir}/tools/sdk" inheritAll="false" target="prepare-upgrade-table">
 					<property name="upgrade.table.dir" value="${upgrade.table.dir}" />

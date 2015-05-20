@@ -995,6 +995,7 @@
 			microsoft.translator.client.id=${microsoft.translator.client.id}
 			microsoft.translator.client.secret=${microsoft.translator.client.secret}
 			module.framework.base.dir=${liferay.home}/osgi
+			upgrade.table.dir=${upgrade.table.dir}
 			-baselinerepo=${-baselinerepo}
 			-metatype=${-metatype}
 			-plugin=${-plugin}

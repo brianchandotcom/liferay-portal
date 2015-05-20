@@ -16,6 +16,7 @@ package com.liferay.portlet.comments.notifications;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.notifications.BaseModelUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -72,7 +73,7 @@ public class CommentsUserNotificationHandler
 			return null;
 		}
 
-		String title = StringPool.BLANK;
+		String message = StringPool.BLANK;
 
 		int notificationType = jsonObject.getInt("notificationType");
 
@@ -80,41 +81,47 @@ public class CommentsUserNotificationHandler
 				UserNotificationDefinition.NOTIFICATION_TYPE_ADD_ENTRY) {
 
 			if (assetRenderer != null) {
-				title = "x-added-a-new-comment-to-x";
+				message = "x-added-a-new-comment-to-x";
 			}
 			else {
-				title = "x-added-a-new-comment";
+				message = "x-added-a-new-comment";
 			}
 		}
 		else if (notificationType ==
 					UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY) {
 
 			if (assetRenderer != null) {
-				title = "x-updated-a-comment-to-x";
+				message = "x-updated-a-comment-to-x";
 			}
 			else {
-				title = "x-updated-a-comment";
+				message = "x-updated-a-comment";
 			}
 		}
 
 		if (assetRenderer != null) {
-			title = serviceContext.translate(
-				title,
-				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						mbDiscussion.getUserId(), StringPool.BLANK)),
-				HtmlUtil.escape(
-					assetRenderer.getTitle(serviceContext.getLocale())));
+			message = LanguageUtil.format(
+				serviceContext.getLocale(), message,
+				new String[] {
+					HtmlUtil.escape(
+						PortalUtil.getUserName(
+							jsonObject.getLong("userId"), StringPool.BLANK)),
+					HtmlUtil.escape(
+						assetRenderer.getTitle(serviceContext.getLocale()))
+				},
+				false);
 		}
 		else {
-			title = serviceContext.translate(
-				title,
-				HtmlUtil.escape(
-					PortalUtil.getUserName(
-						mbDiscussion.getUserId(), StringPool.BLANK)));
+			message = LanguageUtil.format(
+				serviceContext.getLocale(), message,
+				new String[] {
+					HtmlUtil.escape(
+						PortalUtil.getUserName(
+							jsonObject.getLong("userId"), StringPool.BLANK))
+				},
+				false);
 		}
 
-		return title;
+		return message;
 	}
 
 }

@@ -858,7 +858,7 @@ public class SubscriptionSender implements Serializable {
 		notificationEventJSONObject.put("entryTitle", _entryTitle);
 		notificationEventJSONObject.put("entryURL", _entryURL);
 		notificationEventJSONObject.put("notificationType", _notificationType);
-		notificationEventJSONObject.put("userId", user.getUserId());
+		notificationEventJSONObject.put("userId", currentUserId);
 
 		if (UserNotificationManagerUtil.isDeliver(
 				user.getUserId(), portletId, _notificationClassNameId,

@@ -34,24 +34,30 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.CmisObject;
 import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.Folder;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.ObjectId;
+import org.apache.chemistry.opencmis.client.api.OperationContext;
 import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.api.SessionFactory;
 import org.apache.chemistry.opencmis.client.runtime.ObjectIdImpl;
+import org.apache.chemistry.opencmis.client.runtime.OperationContextImpl;
+import org.apache.chemistry.opencmis.client.runtime.SessionFactoryImpl;
 import org.apache.chemistry.opencmis.commons.PropertyIds;
 import org.apache.chemistry.opencmis.commons.SessionParameter;
 import org.apache.chemistry.opencmis.commons.data.ContentStream;
 import org.apache.chemistry.opencmis.commons.enums.BaseTypeId;
 import org.apache.chemistry.opencmis.commons.enums.BindingType;
+import org.apache.chemistry.opencmis.commons.enums.IncludeRelationships;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 
@@ -439,6 +445,8 @@ public class CMISStore extends BaseStore {
 		_cmisConfiguration = Configurable.createConfigurable(
 			CMISConfiguration.class, properties);
 
+		initializeOperationContext();
+
 		Folder systemRootDir = getFolder(
 			SessionHolder.session.getRootFolder(),
 			_cmisConfiguration.systemRootDir());
@@ -637,6 +645,42 @@ public class CMISStore extends BaseStore {
 		return versions;
 	}
 
+	protected void initializeOperationContext() {
+		Set<String> defaultFilterSet = new HashSet<>();
+
+		// Base
+
+		defaultFilterSet.add(PropertyIds.BASE_TYPE_ID);
+		defaultFilterSet.add(PropertyIds.CREATED_BY);
+		defaultFilterSet.add(PropertyIds.CREATION_DATE);
+		defaultFilterSet.add(PropertyIds.LAST_MODIFIED_BY);
+		defaultFilterSet.add(PropertyIds.LAST_MODIFICATION_DATE);
+		defaultFilterSet.add(PropertyIds.NAME);
+		defaultFilterSet.add(PropertyIds.OBJECT_ID);
+		defaultFilterSet.add(PropertyIds.OBJECT_TYPE_ID);
+
+		// Document
+
+		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_LENGTH);
+		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_MIME_TYPE);
+		defaultFilterSet.add(PropertyIds.IS_VERSION_SERIES_CHECKED_OUT);
+		defaultFilterSet.add(PropertyIds.VERSION_LABEL);
+		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_BY);
+		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_ID);
+		defaultFilterSet.add(PropertyIds.VERSION_SERIES_ID);
+
+		// Folder
+
+		defaultFilterSet.add(PropertyIds.PARENT_ID);
+		defaultFilterSet.add(PropertyIds.PATH);
+
+		// Operation context
+
+		_operationContext = new OperationContextImpl(
+			defaultFilterSet, false, true, false, IncludeRelationships.NONE,
+			null, false, "cmis:name ASC", true, 1000);
+	}
+
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		deactivate();
@@ -646,6 +690,11 @@ public class CMISStore extends BaseStore {
 	private Folder _systemRootDir;
 
 	private static volatile CMISConfiguration _cmisConfiguration;
+
+	private static OperationContext _operationContext;
+
+	private static final SessionFactory _sessionFactory =
+		SessionFactoryImpl.newInstance();
 
 	private static class SessionHolder {
 
@@ -675,17 +724,14 @@ public class CMISStore extends BaseStore {
 				SessionParameter.USER,
 				_cmisConfiguration.credentialsUsername());
 
-			SessionFactory sessionFactory =
-				CMISRepositoryUtil.getSessionFactory();
-
-			List<Repository> repositories = sessionFactory.getRepositories(
+			List<Repository> repositories = _sessionFactory.getRepositories(
 				parameters);
 
 			Repository repository = repositories.get(0);
 
 			session = repository.createSession();
 
-			session.setDefaultContext(CMISRepositoryUtil.getOperationContext());
+			session.setDefaultContext(_operationContext);
 		}
 
 	}

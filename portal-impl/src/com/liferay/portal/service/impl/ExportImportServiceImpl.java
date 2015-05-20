@@ -20,9 +20,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.User;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.base.ExportImportServiceBaseImpl;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
@@ -89,20 +87,6 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 	}
 
 	@Override
-	public long exportLayoutsAsFileInBackground(
-			String taskName, long groupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
-
-		return exportImportLocalService.exportLayoutsAsFileInBackground(
-			getUserId(), taskName, groupId, privateLayout, layoutIds,
-			parameterMap);
-	}
-
-	@Override
 	public File exportPortletInfoAsFile(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
@@ -124,38 +108,22 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public long exportPortletInfoAsFileInBackground(
-			String taskName, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, String fileName)
+			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
 
-		Layout layout = layoutLocalService.getLayout(plid);
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long sourcePlid = MapUtil.getLong(settingsMap, "sourcePlid");
+
+		Layout layout = layoutLocalService.getLayout(sourcePlid);
 
 		GroupPermissionUtil.check(
 			getPermissionChecker(), layout.getGroupId(),
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.exportPortletInfoAsFileInBackground(
-			getUserId(), taskName, plid, groupId, portletId, parameterMap,
-			fileName);
-	}
-
-	@Override
-	public long exportPortletInfoAsFileInBackground(
-			String taskName, String portletId,
-			Map<String, String[]> parameterMap, String fileName)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(getUserId());
-
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			user.getCompanyId());
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), companyGroup,
-			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
-
-		return exportImportLocalService.exportPortletInfoAsFileInBackground(
-			getUserId(), taskName, portletId, parameterMap, fileName);
+			getUserId(), exportImportConfiguration);
 	}
 
 	@Override
@@ -194,29 +162,38 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public long importLayoutsInBackground(
-			String taskName, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return exportImportLocalService.importLayoutsInBackground(
-			getUserId(), taskName, groupId, privateLayout, parameterMap, file);
+			getUserId(), exportImportConfiguration, file);
 	}
 
 	@Override
 	public long importLayoutsInBackground(
-			String taskName, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, InputStream inputStream)
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
 		throws PortalException {
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId, ActionKeys.EXPORT_IMPORT_LAYOUTS);
+			getPermissionChecker(), targetGroupId,
+			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return exportImportLocalService.importLayoutsInBackground(
-			getUserId(), taskName, groupId, privateLayout, parameterMap,
-			inputStream);
+			getUserId(), exportImportConfiguration, is);
 	}
 
 	@Override
@@ -257,69 +234,38 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public long importPortletInfoInBackground(
-			String taskName, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, File file)
+			ExportImportConfiguration exportImportConfiguration, File file)
 		throws PortalException {
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId,
+			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.importPortletInfoInBackground(
-			getUserId(), taskName, plid, groupId, portletId, parameterMap,
-			file);
+			getUserId(), exportImportConfiguration, file);
 	}
 
 	@Override
 	public long importPortletInfoInBackground(
-			String taskName, long plid, long groupId, String portletId,
-			Map<String, String[]> parameterMap, InputStream is)
+			ExportImportConfiguration exportImportConfiguration, InputStream is)
 		throws PortalException {
 
+		Map<String, Serializable> settingsMap =
+			exportImportConfiguration.getSettingsMap();
+
+		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
+
 		GroupPermissionUtil.check(
-			getPermissionChecker(), groupId,
+			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.importPortletInfoInBackground(
-			getUserId(), taskName, plid, groupId, portletId, parameterMap, is);
-	}
-
-	@Override
-	public void importPortletInfoInBackground(
-			String taskName, String portletId,
-			Map<String, String[]> parameterMap, File file)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(getUserId());
-
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			user.getCompanyId());
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), companyGroup,
-			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
-
-		exportImportLocalService.importPortletInfoInBackground(
-			getUserId(), taskName, portletId, parameterMap, file);
-	}
-
-	@Override
-	public void importPortletInfoInBackground(
-			String taskName, String portletId,
-			Map<String, String[]> parameterMap, InputStream is)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(getUserId());
-
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			user.getCompanyId());
-
-		GroupPermissionUtil.check(
-			getPermissionChecker(), companyGroup,
-			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
-
-		exportImportLocalService.importPortletInfoInBackground(
-			getUserId(), taskName, portletId, parameterMap, is);
+			getUserId(), exportImportConfiguration, is);
 	}
 
 	@Override

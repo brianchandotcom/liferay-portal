@@ -23,15 +23,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
-import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.LayoutExporter;
 import com.liferay.portal.lar.LayoutImporter;
 import com.liferay.portal.lar.PortletExporter;
@@ -42,11 +38,6 @@ import com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor
 import com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.ExportImportLocalServiceBaseImpl;
 import com.liferay.portlet.documentlibrary.util.DLValidatorUtil;
@@ -143,31 +134,6 @@ public class ExportImportLocalServiceImpl
 	}
 
 	@Override
-	public long exportLayoutsAsFileInBackground(
-			long userId, String taskName, long groupId, boolean privateLayout,
-			long[] layoutIds, Map<String, String[]> parameterMap)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				userId, groupId, privateLayout, layoutIds, parameterMap,
-				user.getLocale(), user.getTimeZone());
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				userId, groupId, taskName, StringPool.BLANK,
-				ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
-				settingsMap, WorkflowConstants.STATUS_DRAFT, serviceContext);
-
-		return exportLayoutsAsFileInBackground(
-			userId, exportImportConfiguration);
-	}
-
-	@Override
 	public File exportPortletInfoAsFile(
 			ExportImportConfiguration exportImportConfiguration)
 		throws PortalException {
@@ -238,55 +204,6 @@ public class ExportImportLocalServiceImpl
 
 		return exportPortletInfoAsFileInBackground(
 			userId, exportImportConfiguration);
-	}
-
-	@Override
-	public long exportPortletInfoAsFileInBackground(
-			long userId, String taskName, long plid, long groupId,
-			String portletId, Map<String, String[]> parameterMap,
-			String fileName)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildExportSettingsMap(
-				userId, plid, groupId, portletId, parameterMap,
-				Constants.EXPORT, user.getLocale(), user.getTimeZone(),
-				fileName);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				userId, groupId, taskName, StringPool.BLANK,
-				ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
-				settingsMap, WorkflowConstants.STATUS_DRAFT, serviceContext);
-
-		return exportPortletInfoAsFileInBackground(
-			userId, exportImportConfiguration);
-	}
-
-	@Override
-	public long exportPortletInfoAsFileInBackground(
-			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, String fileName)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			user.getCompanyId());
-		Group controlPanelGroup = groupPersistence.findByC_F(
-			user.getCompanyId(), GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
-
-		Layout controlPanelLayout = layoutPersistence.findByG_P_T_First(
-			controlPanelGroup.getGroupId(), true,
-			LayoutConstants.TYPE_CONTROL_PANEL, null);
-
-		return exportPortletInfoAsFileInBackground(
-			userId, taskName, controlPanelLayout.getPlid(),
-			companyGroup.getGroupId(), portletId, parameterMap, fileName);
 	}
 
 	@Override
@@ -415,6 +332,30 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public long importLayoutsInBackground(
+			long userId, ExportImportConfiguration exportImportConfiguration,
+			InputStream is)
+		throws PortalException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, is);
+
+			return importLayoutsInBackground(
+				userId, exportImportConfiguration, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Override
+	public long importLayoutsInBackground(
 			long userId, long exportImportConfigurationId, File file)
 		throws PortalException {
 
@@ -428,52 +369,14 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public long importLayoutsInBackground(
-			long userId, String taskName, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, File file)
+			long userId, long exportImportConfigurationId, InputStream is)
 		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				userId, groupId, privateLayout, null, parameterMap,
-				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-				file.getName());
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				userId, groupId, taskName, StringPool.BLANK,
-				ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-				settingsMap, WorkflowConstants.STATUS_DRAFT, serviceContext);
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
 
-		return importLayoutsInBackground(
-			userId, exportImportConfiguration, file);
-	}
-
-	@Override
-	public long importLayoutsInBackground(
-			long userId, String taskName, long groupId, boolean privateLayout,
-			Map<String, String[]> parameterMap, InputStream is)
-		throws PortalException {
-
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile("lar");
-
-			FileUtil.write(file, is);
-
-			return importLayoutsInBackground(
-				userId, taskName, groupId, privateLayout, parameterMap, file);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+		return importLayoutsInBackground(userId, exportImportConfiguration, is);
 	}
 
 	@Override
@@ -620,6 +523,30 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public long importPortletInfoInBackground(
+			long userId, ExportImportConfiguration exportImportConfiguration,
+			InputStream is)
+		throws PortalException {
+
+		File file = null;
+
+		try {
+			file = FileUtil.createTempFile("lar");
+
+			FileUtil.write(file, is);
+
+			return importPortletInfoInBackground(
+				userId, exportImportConfiguration, file);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
+		finally {
+			FileUtil.delete(file);
+		}
+	}
+
+	@Override
+	public long importPortletInfoInBackground(
 			long userId, long exportImportConfigurationId, File file)
 		throws PortalException {
 
@@ -633,100 +560,15 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public long importPortletInfoInBackground(
-			long userId, String taskName, long plid, long groupId,
-			String portletId, Map<String, String[]> parameterMap, File file)
+			long userId, long exportImportConfigurationId, InputStream is)
 		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Map<String, Serializable> settingsMap =
-			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
-				userId, plid, groupId, portletId, parameterMap,
-				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
-				file.getName());
-
-		ServiceContext serviceContext = new ServiceContext();
 
 		ExportImportConfiguration exportImportConfiguration =
-			exportImportConfigurationLocalService.addExportImportConfiguration(
-				userId, groupId, taskName, StringPool.BLANK,
-				ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
-				settingsMap, WorkflowConstants.STATUS_DRAFT, serviceContext);
+			exportImportConfigurationLocalService.getExportImportConfiguration(
+				exportImportConfigurationId);
 
 		return importPortletInfoInBackground(
-			userId, exportImportConfiguration, file);
-	}
-
-	@Override
-	public long importPortletInfoInBackground(
-			long userId, String taskName, long plid, long groupId,
-			String portletId, Map<String, String[]> parameterMap,
-			InputStream is)
-		throws PortalException {
-
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile("lar");
-
-			FileUtil.write(file, is);
-
-			return importPortletInfoInBackground(
-				userId, taskName, plid, groupId, portletId, parameterMap, file);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
-	}
-
-	@Override
-	public long importPortletInfoInBackground(
-			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, File file)
-		throws PortalException {
-
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		Group companyGroup = groupLocalService.getCompanyGroup(
-			user.getCompanyId());
-
-		Group controlPanelGroup = groupPersistence.findByC_F(
-			user.getCompanyId(), GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
-
-		Layout controlPanelLayout = layoutPersistence.findByG_P_T_First(
-			controlPanelGroup.getGroupId(), true,
-			LayoutConstants.TYPE_CONTROL_PANEL, null);
-
-		return importPortletInfoInBackground(
-			userId, taskName, controlPanelLayout.getPlid(),
-			companyGroup.getGroupId(), portletId, parameterMap, file);
-	}
-
-	@Override
-	public long importPortletInfoInBackground(
-			long userId, String taskName, String portletId,
-			Map<String, String[]> parameterMap, InputStream is)
-		throws PortalException {
-
-		File file = null;
-
-		try {
-			file = FileUtil.createTempFile("lar");
-
-			FileUtil.write(file, is);
-
-			return importPortletInfoInBackground(
-				userId, taskName, portletId, parameterMap, file);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		finally {
-			FileUtil.delete(file);
-		}
+			userId, exportImportConfiguration, is);
 	}
 
 	@Override

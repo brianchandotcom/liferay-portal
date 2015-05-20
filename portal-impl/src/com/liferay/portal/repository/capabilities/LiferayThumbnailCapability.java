@@ -80,10 +80,72 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 		return dlFileEntry.getSmallImageId();
 	}
 
+	@Override
+	public FileEntry setCustom1ImageId(FileEntry fileEntry, long imageId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(fileEntry.getFileEntryId());
+
+		dlFileEntry.setCustom1ImageId(imageId);
+
+		return updateDLFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileEntry setCustom2ImageId(FileEntry fileEntry, long imageId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(fileEntry.getFileEntryId());
+
+		dlFileEntry.setCustom2ImageId(imageId);
+
+		return updateDLFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileEntry setLargeImageId(FileEntry fileEntry, long imageId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(fileEntry.getFileEntryId());
+
+		dlFileEntry.setLargeImageId(imageId);
+
+		return updateDLFileEntry(dlFileEntry);
+	}
+
+	@Override
+	public FileEntry setSmallImageId(FileEntry fileEntry, long imageId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = getDLFileEntry(fileEntry.getFileEntryId());
+
+		dlFileEntry.setSmallImageId(imageId);
+
+		return updateDLFileEntry(dlFileEntry);
+	}
+
 	protected DLFileEntry getDLFileEntry(FileEntry fileEntry) {
 		_repositoryEntryChecker.checkFileEntry(fileEntry);
 
 		return _repositoryEntryConverter.getDLFileEntry(fileEntry);
+	}
+
+	protected FileEntry updateDLFileEntry(DLFileEntry dlFileEntry)
+		throws PortalException {
+
+		return new LiferayFileEntry(
+			DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry));
+	}
+
+	private DLFileEntry getDLFileEntry(long fileEntryId)
+		throws PortalException {
+
+		DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getDLFileEntry(
+			fileEntryId);
+
+		_repositoryEntryChecker.checkDLFileEntry(dlFileEntry);
+
+		return dlFileEntry;
 	}
 
 	private final RepositoryEntryChecker _repositoryEntryChecker;

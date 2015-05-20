@@ -33,4 +33,16 @@ public interface ThumbnailCapability extends Capability {
 
 	public long getSmallImageId(FileEntry fileEntry);
 
+	public FileEntry setCustom1ImageId(FileEntry fileEntry, long imageId)
+		throws PortalException;
+
+	public FileEntry setCustom2ImageId(FileEntry fileEntry, long imageId)
+		throws PortalException;
+
+	public FileEntry setLargeImageId(FileEntry fileEntry, long imageId)
+		throws PortalException;
+
+	public FileEntry setSmallImageId(FileEntry fileEntry, long imageId)
+		throws PortalException;
+
 }

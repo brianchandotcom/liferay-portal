@@ -25,6 +25,9 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -56,7 +59,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -68,10 +70,8 @@ import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
@@ -129,13 +129,14 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomBytes(), serviceContext);
 
-		LiferayFileEntry liferayFileEntry = (LiferayFileEntry)_fileEntry;
+		Repository repository = RepositoryProviderUtil.getRepository(
+			_fileEntry.getRepositoryId());
 
-		DLFileEntry dlFileEntry = liferayFileEntry.getDLFileEntry();
+		ThumbnailCapability thumbnailCapability = repository.getCapability(
+			ThumbnailCapability.class);
 
-		dlFileEntry.setLargeImageId(dlFileEntry.getFileEntryId());
-
-		DLFileEntryLocalServiceUtil.updateDLFileEntry(dlFileEntry);
+		_fileEntry = thumbnailCapability.setLargeImageId(
+			_fileEntry, _fileEntry.getFileEntryId());
 
 		TestReaderWriter testReaderWriter = new TestReaderWriter();
 

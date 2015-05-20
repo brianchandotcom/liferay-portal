@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -33,11 +34,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
+import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.util.MaintenanceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.AdvancedFileSystemStore;
@@ -105,13 +106,20 @@ public class ConvertDocumentLibrary
 
 	@Override
 	public void migrateDLFileEntry(
-		long companyId, long repositoryId, DLFileEntry dlFileEntry) {
+		long companyId, long repositoryId, FileEntry fileEntry) {
 
-		String fileName = dlFileEntry.getName();
+		Object model = fileEntry.getModel();
 
-		List<DLFileVersion> dlFileVersions = getDLFileVersions(dlFileEntry);
+		if (!(model instanceof DLFileEntry)) {
+			throw new IllegalArgumentException(
+				"Unsupported file entry model " + model.getClass());
+		}
 
-		if (dlFileVersions.isEmpty()) {
+		String fileName = ((DLFileEntry)model).getName();
+
+		List<FileVersion> fileVersions = getFileVersions(fileEntry);
+
+		if (fileVersions.isEmpty()) {
 			String versionNumber = Store.VERSION_DEFAULT;
 
 			migrateFile(companyId, repositoryId, fileName, versionNumber);
@@ -119,8 +127,8 @@ public class ConvertDocumentLibrary
 			return;
 		}
 
-		for (DLFileVersion dlFileVersion : dlFileVersions) {
-			String versionNumber = dlFileVersion.getVersion();
+		for (FileVersion fileVersion : fileVersions) {
+			String versionNumber = fileVersion.getVersion();
 
 			migrateFile(companyId, repositoryId, fileName, versionNumber);
 		}
@@ -204,12 +212,12 @@ public class ConvertDocumentLibrary
 		PropsValues.DL_STORE_IMPL = targetStoreClassName;
 	}
 
-	protected List<DLFileVersion> getDLFileVersions(DLFileEntry dlFileEntry) {
-		List<DLFileVersion> dlFileVersions = dlFileEntry.getFileVersions(
+	protected List<FileVersion> getFileVersions(FileEntry fileEntry) {
+		List<FileVersion> fileVersions = fileEntry.getFileVersions(
 			WorkflowConstants.STATUS_ANY);
 
 		return ListUtil.sort(
-			dlFileVersions, new DLFileVersionVersionComparator(true));
+			fileVersions, new FileVersionVersionComparator(true));
 	}
 
 	protected String getSourceStoreClassName() {
@@ -260,7 +268,8 @@ public class ConvertDocumentLibrary
 
 					migrateDLFileEntry(
 						dlFileEntry.getCompanyId(),
-						dlFileEntry.getDataRepositoryId(), dlFileEntry);
+						dlFileEntry.getDataRepositoryId(),
+						new LiferayFileEntry(dlFileEntry));
 				}
 
 			});
@@ -354,7 +363,7 @@ public class ConvertDocumentLibrary
 							DLFolderConstants.getDataRepositoryId(
 								dlFileEntry.getRepositoryId(),
 								dlFileEntry.getFolderId()),
-							dlFileEntry);
+							new LiferayFileEntry(dlFileEntry));
 					}
 				}
 

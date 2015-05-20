@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -76,18 +75,17 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.use-default-template=false",
+		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Dynamic Data Mapping Web",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=",
-		"javax.portlet.resource-bundle=content.Language" +
-			PortletKeys.DYNAMIC_DATA_MAPPING,
+		"javax.portlet.name="+ PortletKeys.DYNAMIC_DATA_MAPPING,
+		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { Portlet.class }
+	service = Portlet.class
 )
 public class DDMPortlet extends MVCPortlet {
 
@@ -126,8 +124,7 @@ public class DDMPortlet extends MVCPortlet {
 					e instanceof RequiredTemplateException) {
 
 					String redirect = PortalUtil.escapeRedirect(
-						ParamUtil.getString(
-							actionRequest, DDMConstants.REDIRECT));
+						ParamUtil.getString(actionRequest, "redirect"));
 
 					if (Validator.isNotNull(redirect)) {
 						actionResponse.sendRedirect(redirect);
@@ -181,9 +178,8 @@ public class DDMPortlet extends MVCPortlet {
 	protected void setDDMStructureRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
-		long classNameId = ParamUtil.getLong(
-			renderRequest, DDMConstants.CLASS_NAME_ID);
-		long classPK = ParamUtil.getLong(renderRequest, DDMConstants.CLASS_PK);
+		long classNameId = ParamUtil.getLong(renderRequest, "classNameId");
+		long classPK = ParamUtil.getLong(renderRequest, "classPK");
 
 		if ((classNameId > 0) && (classPK > 0)) {
 			DDMStructure structure = null;
@@ -203,12 +199,12 @@ public class DDMPortlet extends MVCPortlet {
 	protected void setDDMTemplateRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
-		long templateId = ParamUtil.getLong(
-			renderRequest, DDMConstants.TEMPLATE_ID);
+		long templateId = ParamUtil.getLong(renderRequest, "templateId");
 
 		if (templateId > 0) {
 			DDMTemplate template = DDMTemplateLocalServiceUtil.getDDMTemplate(
 				templateId);
+
 			renderRequest.setAttribute(
 				WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE, template);
 		}

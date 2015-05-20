@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -25,7 +24,7 @@ import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -34,6 +33,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -44,27 +44,24 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmCopyTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
 
 	protected DDMTemplate copyTemplate(PortletRequest portletRequest)
 		throws Exception {
 
-		long templateId = ParamUtil.getLong(
-			portletRequest, DDMConstants.TEMPLATE_ID);
+		long templateId = ParamUtil.getLong(portletRequest, "templateId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, DDMConstants.NAME);
-
+			portletRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				portletRequest, DDMConstants.DESCRIPTION);
+			LocalizationUtil.getLocalizationMap(portletRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), portletRequest);
 
-		return DDMTemplateServiceUtil.copyTemplate(
+		return _ddmTemplateService.copyTemplate(
 			templateId, nameMap, descriptionMap, serviceContext);
 	}
 
@@ -75,31 +72,37 @@ public class DDMCopyTemplateActionCommand extends DDMBaseActionCommand {
 
 		DDMTemplate template = copyTemplate(portletRequest);
 
-		String redirect = getSaveAndContinueRedirect(portletRequest, template);
-
-		super.setRedirectAttribute(portletRequest, redirect);
+		setRedirectAttribute(portletRequest, template);
 	}
 
+	@Override
 	protected String getSaveAndContinueRedirect(
-			PortletRequest portletRequest, DDMTemplate template)
+			PortletRequest portletRequest, DDMTemplate template,
+			String redirect)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			portletRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(DDMConstants.MVC_PATH, "/copy_template.jsp");
-
+		portletURL.setParameter("mvcPath", "/copy_template");
 		portletURL.setParameter(
-			DDMConstants.TEMPLATE_ID, String.valueOf(template.getTemplateId()),
-			false);
-
+			"templateId", String.valueOf(template.getTemplateId()), false);
 		portletURL.setWindowState(portletRequest.getWindowState());
 
 		return portletURL.toString();
 	}
+
+	@Reference
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		_ddmTemplateService = ddmTemplateService;
+	}
+
+	private DDMTemplateService _ddmTemplateService;
 
 }

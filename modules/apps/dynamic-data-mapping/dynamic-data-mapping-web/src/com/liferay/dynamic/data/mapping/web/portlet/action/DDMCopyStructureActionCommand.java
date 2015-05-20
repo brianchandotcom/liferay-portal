@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -28,7 +27,7 @@ import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
 
 import java.util.Locale;
@@ -38,6 +37,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -48,26 +48,24 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmCopyStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMCopyStructureActionCommand extends DDMBaseActionCommand {
 
 	protected DDMStructure copyStructure(PortletRequest portletRequest)
 		throws Exception {
 
-		long classPK = ParamUtil.getLong(portletRequest, DDMConstants.CLASS_PK);
+		long classPK = ParamUtil.getLong(portletRequest, "classPK");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, DDMConstants.NAME);
-
+			portletRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				portletRequest, DDMConstants.DESCRIPTION);
+			LocalizationUtil.getLocalizationMap(portletRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), portletRequest);
 
-		DDMStructure structure = DDMStructureServiceUtil.copyStructure(
+		DDMStructure structure = _ddmStructureService.copyStructure(
 			classPK, nameMap, descriptionMap, serviceContext);
 
 		copyTemplates(portletRequest, classPK, structure.getStructureId());
@@ -85,9 +83,9 @@ public class DDMCopyStructureActionCommand extends DDMBaseActionCommand {
 			DDMTemplate.class.getName(), portletRequest);
 
 		long resourceClassNameId = ParamUtil.getLong(
-			portletRequest, DDMConstants.RESOURCE_CLASS_NAME_ID);
+			portletRequest, "resourceClassNameId");
 		boolean copyDisplayTemplates = ParamUtil.getBoolean(
-			portletRequest, DDMConstants.COPY_DISPLAY_TEMPLATES);
+			portletRequest, "copyDisplayTemplates");
 
 		if (copyDisplayTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
@@ -96,7 +94,7 @@ public class DDMCopyStructureActionCommand extends DDMBaseActionCommand {
 		}
 
 		boolean copyFormTemplates = ParamUtil.getBoolean(
-			portletRequest, DDMConstants.COPY_FORM_TEMPLATES);
+			portletRequest, "copyFormTemplates");
 
 		if (copyFormTemplates) {
 			DDMTemplateServiceUtil.copyTemplates(
@@ -112,43 +110,49 @@ public class DDMCopyStructureActionCommand extends DDMBaseActionCommand {
 
 		DDMStructure structure = copyStructure(portletRequest);
 
-		String redirect = getSaveAndContinueRedirect(portletRequest, structure);
-
-		super.setRedirectAttribute(portletRequest, redirect);
+		setRedirectAttribute(portletRequest, structure);
 	}
 
+	@Override
 	protected String getSaveAndContinueRedirect(
-			PortletRequest portletRequest, DDMStructure structure)
+			PortletRequest portletRequest, DDMStructure structure,
+			String redirect)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURLImpl portletURL = new PortletURLImpl(
-			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+			portletRequest, themeDisplay.getPpid(), themeDisplay.getPlid(),
+			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(DDMConstants.MVC_PATH, "/copy_structure.jsp");
+		portletURL.setParameter("mvcPath", "/copy_structure");
 
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		portletURL.setParameter(
-			DDMConstants.CLASS_NAME_ID, String.valueOf(classNameId), false);
+			"classNameId", String.valueOf(classNameId), false);
 
 		portletURL.setParameter(
-			DDMConstants.CLASS_PK, String.valueOf(structure.getStructureId()),
-			false);
+			"classPK", String.valueOf(structure.getStructureId()), false);
 		portletURL.setParameter(
-			DDMConstants.COPY_FORM_TEMPLATES,
-			ParamUtil.getString(
-				portletRequest, DDMConstants.COPY_FORM_TEMPLATES), false);
+			"copyFormTemplates",
+			ParamUtil.getString(portletRequest, "copyFormTemplates"), false);
 		portletURL.setParameter(
-			DDMConstants.COPY_DISPLAY_TEMPLATES,
-			ParamUtil.getString(
-				portletRequest, DDMConstants.COPY_DISPLAY_TEMPLATES), false);
+			"copyDisplayTemplates",
+			ParamUtil.getString(portletRequest, "copyDisplayTemplates"), false);
 		portletURL.setWindowState(portletRequest.getWindowState());
 
 		return portletURL.toString();
 	}
+
+	@Reference
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	private DDMStructureService _ddmStructureService;
 
 }

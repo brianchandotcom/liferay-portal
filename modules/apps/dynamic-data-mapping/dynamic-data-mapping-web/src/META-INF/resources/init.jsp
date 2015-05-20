@@ -25,8 +25,8 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-page import="com.liferay.portal.LocaleException" %>
-<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
+<%@ page import="com.liferay.portal.LocaleException" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.configuration.Filter" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -111,9 +111,8 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplay" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %>
-
-<%@ page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
+page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.ContentUtil" %>
@@ -133,10 +132,6 @@ page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
-
-
-
-
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />

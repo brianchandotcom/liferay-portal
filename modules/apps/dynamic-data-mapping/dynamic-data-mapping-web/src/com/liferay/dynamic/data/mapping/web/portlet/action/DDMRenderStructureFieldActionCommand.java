@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
@@ -25,11 +24,11 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
+import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializer;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderer;
-import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistryUtil;
+import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRendererRegistry;
 import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContext;
 
 import java.util.Map;
@@ -41,6 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Bruno Basto
@@ -52,7 +52,7 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmRenderStructureField",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 
@@ -62,21 +62,16 @@ public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String mode = ParamUtil.getString(request, DDMConstants.MODE);
-
-		String namespace = ParamUtil.getString(request, DDMConstants.NAMESPACE);
-
+		String mode = ParamUtil.getString(request, "mode");
+		String namespace = ParamUtil.getString(request, "namespace");
 		String portletNamespace = ParamUtil.getString(
-			request, DDMConstants.PORTLET_NAMESPACE);
-
-		boolean readOnly = ParamUtil.getBoolean(
-			request, DDMConstants.READ_ONLY);
+			request, "portletNamespace");
+		boolean readOnly = ParamUtil.getBoolean(request, "readOnly");
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();
 
-		request.setAttribute(
-			DDMConstants.AUI_FORM_PORTLET_NAMESPACE, portletNamespace);
+		request.setAttribute("aui:form:portletNamespace", portletNamespace);
 
 		ddmFormFieldRenderingContext.setHttpServletRequest(request);
 		ddmFormFieldRenderingContext.setHttpServletResponse(response);
@@ -103,7 +98,7 @@ public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
-			DDMFormFieldRendererRegistryUtil.getDDMFormFieldRenderer(
+			_ddmFormFieldRendererRegistry.getDDMFormFieldRenderer(
 				ddmFormField.getType());
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
@@ -121,18 +116,32 @@ public class DDMRenderStructureFieldActionCommand extends BaseActionCommand {
 	protected DDMFormField getDDMFormField(HttpServletRequest request)
 		throws PortalException {
 
-		String definition = ParamUtil.getString(
-			request, DDMConstants.DEFINITION);
+		String definition = ParamUtil.getString(request, "definition");
+		String fieldName = ParamUtil.getString(request, "fieldName");
 
-		String fieldName = ParamUtil.getString(
-			request, DDMConstants.FIELD_NAME);
-
-		DDMForm ddmForm = DDMFormJSONDeserializerUtil.deserialize(definition);
+		DDMForm ddmForm = _ddmFormJSONDeserializer.deserialize(definition);
 
 		Map<String, DDMFormField> ddmFormFieldsMap =
 			ddmForm.getDDMFormFieldsMap(true);
 
 		return ddmFormFieldsMap.get(fieldName);
 	}
+
+	@Reference
+	protected void setDDMFormFieldRendererRegistry(
+		DDMFormFieldRendererRegistry ddmFormFieldRendererRegistry) {
+
+		_ddmFormFieldRendererRegistry = ddmFormFieldRendererRegistry;
+	}
+
+	@Reference
+	protected void setDDMFormJSONDeserializer(
+		DDMFormJSONDeserializer ddmFormJSONDeserializer) {
+
+		_ddmFormJSONDeserializer = ddmFormJSONDeserializer;
+	}
+
+	private DDMFormFieldRendererRegistry _ddmFormFieldRendererRegistry;
+	private DDMFormJSONDeserializer _ddmFormJSONDeserializer;
 
 }

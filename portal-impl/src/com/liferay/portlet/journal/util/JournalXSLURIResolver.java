@@ -14,17 +14,6 @@
 
 package com.liferay.portlet.journal.util;
 
-import java.io.Externalizable;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
-
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -34,6 +23,18 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.xsl.XSLURIResolver;
+
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 
 /**
  * @author Brian Wing Shun Chan
@@ -102,16 +103,14 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 	public Source resolve(String href, String base) {
 		try {
 			String content = null;
-			
-			Pattern p = Pattern.compile(".*_templateId=([0-9]+).*");
-			
-			Matcher m = p.matcher(href);  
 
-			if (m.matches()) {
+			Matcher matcher = _templateIdPattern.matcher(href);
+
+			if (matcher.matches()) {
 				long articleGroupId = GetterUtil.getLong(
 					_tokens.get("article_group_id"));
 
-				String templateId = m.group(1);
+				String templateId = matcher.group(1);
 
 				content = JournalUtil.getTemplateScript(
 					articleGroupId, templateId, _tokens, _languageId);
@@ -144,6 +143,9 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalXSLURIResolver.class);
 
+	private final Pattern _templateIdPattern = Pattern.compile(
+		".*_templateId=([0-9]+).*");
+			
 	private String _languageId;
 	private Map<String, String> _tokens;
 

@@ -1,16 +1,30 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -21,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmDeleteTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMDeleteTemplateActionCommand extends DDMBaseActionCommand {
 
@@ -32,26 +46,30 @@ public class DDMDeleteTemplateActionCommand extends DDMBaseActionCommand {
 
 		long[] deleteTemplateIds = null;
 
-		long templateId = ParamUtil.getLong(
-			portletRequest, DDMConstants.TEMPLATE_ID);
+		long templateId = ParamUtil.getLong(portletRequest, "templateId");
 
 		if (templateId > 0) {
 			deleteTemplateIds = new long[] {templateId};
 		}
 		else {
 			deleteTemplateIds = StringUtil.split(
-				ParamUtil.getString(
-					portletRequest, DDMConstants.DELETE_TEMPLATE_IDS), 0L);
+				ParamUtil.getString(portletRequest, "deleteTemplateIds"), 0L);
 		}
 
 		for (long deleteTemplateId : deleteTemplateIds) {
-			DDMTemplateServiceUtil.deleteTemplate(deleteTemplateId);
+			_ddmTemplateService.deleteTemplate(deleteTemplateId);
 		}
 
-		String redirect = ParamUtil.getString(
-			portletRequest, DDMConstants.REDIRECT);
-
-		super.setRedirectAttribute(portletRequest, redirect);
+		setRedirectAttribute(portletRequest);
 	}
+
+	@Reference
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		_ddmTemplateService = ddmTemplateService;
+	}
+
+	private DDMTemplateService _ddmTemplateService;
 
 }

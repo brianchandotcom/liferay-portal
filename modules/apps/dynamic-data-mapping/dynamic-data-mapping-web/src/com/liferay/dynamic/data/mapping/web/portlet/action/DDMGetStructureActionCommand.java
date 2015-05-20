@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -23,7 +22,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -32,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmGetStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMGetStructureActionCommand extends BaseActionCommand {
 
@@ -51,11 +51,9 @@ public class DDMGetStructureActionCommand extends BaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		long structureId = ParamUtil.getLong(
-			portletRequest, DDMConstants.STRUCTURE_ID);
+		long structureId = ParamUtil.getLong(portletRequest, "structureId");
 
-		DDMStructure structure = DDMStructureServiceUtil.getStructure(
-			structureId);
+		DDMStructure structure = _ddmStructureService.getStructure(structureId);
 
 		String definition = structure.getDefinition();
 
@@ -69,5 +67,14 @@ public class DDMGetStructureActionCommand extends BaseActionCommand {
 			httpServletRequest, httpServletResponse, null,
 			definition.getBytes(), ContentTypes.TEXT_XML_UTF8);
 	}
+
+	@Reference
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	private DDMStructureService _ddmStructureService;
 
 }

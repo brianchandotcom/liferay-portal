@@ -326,10 +326,10 @@ public class PoshiRunnerExecutor {
 			}
 		}
 
-		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
-
 		CommandLoggerHandler.startCommand(executeElement);
 		SummaryLoggerHandler.startSummary(executeElement);
+
+		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
 
 		Element commandElement = PoshiRunnerContext.getFunctionCommandElement(
 			classCommandName);
@@ -338,16 +338,22 @@ public class PoshiRunnerExecutor {
 			runFunctionCommandElement(classCommandName, commandElement);
 		}
 		catch (Exception e) {
+			PoshiRunnerStackTraceUtil.popStackTrace();
+
+			PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+
 			CommandLoggerHandler.failCommand(executeElement);
 			SummaryLoggerHandler.failSummary(executeElement, e.getMessage());
 
 			throw e;
 		}
 
+		PoshiRunnerStackTraceUtil.popStackTrace();
+
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+
 		CommandLoggerHandler.passCommand(executeElement);
 		SummaryLoggerHandler.passSummary(executeElement);
-
-		PoshiRunnerStackTraceUtil.popStackTrace();
 	}
 
 	public static void runIfElement(Element element) throws Exception {

@@ -16,6 +16,7 @@ package com.liferay.poshi.runner.logger;
 
 import com.liferay.poshi.runner.PoshiRunnerContext;
 import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
+import com.liferay.poshi.runner.PoshiRunnerStackTraceUtil;
 import com.liferay.poshi.runner.PoshiRunnerVariablesUtil;
 import com.liferay.poshi.runner.selenium.LiferaySeleniumHelper;
 import com.liferay.poshi.runner.util.StringUtil;
@@ -38,6 +39,11 @@ public final class CommandLoggerHandler {
 		_commandElement = null;
 
 		_failLineGroupLoggerElement(_lineGroupLoggerElement);
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "fail");
 	}
 
 	public static String getCommandLogText() {
@@ -68,6 +74,11 @@ public final class CommandLoggerHandler {
 		}
 
 		_commandElement = null;
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "pass");
 	}
 
 	public static void startCommand(Element element) throws Exception {
@@ -82,6 +93,13 @@ public final class CommandLoggerHandler {
 		_lineGroupLoggerElement = _getLineGroupLoggerElement(element);
 
 		_commandLogLoggerElement.addChildLoggerElement(_lineGroupLoggerElement);
+
+		LoggerElement xmlLoggerElement = XMLLoggerHandler.getXMLLoggerElement(
+			PoshiRunnerStackTraceUtil.getSimpleStackTrace());
+
+		_updateStatus(xmlLoggerElement, "pending");
+
+		_linkLoggerElements(xmlLoggerElement);
 	}
 
 	public static void startRunning() throws Exception {
@@ -89,8 +107,6 @@ public final class CommandLoggerHandler {
 	}
 
 	public static void stopRunning() throws Exception {
-		_commandLogLoggerElement.addClassName("collapse");
-
 		_xmlLogLoggerElement.removeClassName("running");
 	}
 
@@ -443,6 +459,25 @@ public final class CommandLoggerHandler {
 		return element.equals(_commandElement);
 	}
 
+	private static void _linkLoggerElements(LoggerElement xmlLoggerElement) {
+		String functionLinkID = xmlLoggerElement.getAttributeValue(
+			"data-functionlinkid");
+
+		if (functionLinkID != null) {
+			_functionLinkId = Integer.parseInt(functionLinkID.substring(15));
+		}
+
+		xmlLoggerElement.setAttribute("data-status01", "pending");
+
+		xmlLoggerElement.setAttribute(
+			"data-functionlinkid", "functionLinkId-" + _functionLinkId);
+
+		_lineGroupLoggerElement.setAttribute(
+			"data-functionlinkid", "functionLinkId-" + _functionLinkId);
+
+		_functionLinkId++;
+	}
+
 	private static void _takeScreenshot(String screenshotName, int errorLinkId)
 		throws Exception {
 
@@ -458,19 +493,31 @@ public final class CommandLoggerHandler {
 					errorLinkId + ".jpg");
 	}
 
+	private static void _updateStatus(
+		LoggerElement loggerElement, String status) {
+
+		loggerElement.setAttribute("data-status01", status);
+
+		LoggerUtil.executeJavaScript(
+			"loggerInterface.fire('command-complete', " +
+				loggerElement.getID() + ")");
+	}
+
 	private static int _btnLinkId;
 	private static Element _commandElement;
 	private static final LoggerElement _commandLogLoggerElement =
 		new LoggerElement("commandLog");
 	private static int _errorLinkId;
+	private static int _functionLinkId;
 	private static LoggerElement _lineGroupLoggerElement;
 	private static final LoggerElement _xmlLogLoggerElement = new LoggerElement(
 		"xml-log");
 
 	static {
 		_commandLogLoggerElement.setAttribute("data-logid", "01");
-		_commandLogLoggerElement.setClassName("command-log");
+		_commandLogLoggerElement.setClassName("collapse command-log");
 		_commandLogLoggerElement.setName("ul");
+		_commandLogLoggerElement.setWrittenToLogger(true);
 	}
 
 }

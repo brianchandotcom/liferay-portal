@@ -21,13 +21,14 @@ import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 import com.liferay.portal.util.FileImpl;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -41,39 +42,37 @@ import org.apache.tools.ant.DirectoryScanner;
  */
 public class UpgradeTableBuilder {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
+
+		boolean bnd = GetterUtil.getBoolean(arguments.get("upgrade.bnd"));
+		String moduleName = arguments.get("upgrade.module.name");
+		String upgradeBaseDirName = arguments.get("upgrade.base.dir");
+		String upgradeTableDirName = arguments.get("upgrade.table.dir");
+
 		try {
-			Map<String, String> arguments =
-				ArgumentsUtil.parseArguments(args);
-
-			Boolean bnd = Boolean.valueOf(arguments.get("bnd"));
-			String moduleName = arguments.get("module.name");
-			String upgradeBaseDir = arguments.get("upgrade.base.dir");
-			String upgradeTableDir = arguments.get("upgrade.table.dir");
-
-			new UpgradeTableBuilder(bnd, moduleName, upgradeBaseDir,
-				upgradeTableDir);
+			new UpgradeTableBuilder(
+				bnd, moduleName, upgradeBaseDirName, upgradeTableDirName);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
 	public UpgradeTableBuilder(
-			boolean bnd, String moduleName, String upgradeBaseDir,
-			String upgradeTableDir)
+			boolean bnd, String moduleName, String upgradeBaseDirName,
+			String upgradeTableDirName)
 		throws Exception {
 
 		_bnd = bnd;
 		_moduleName = moduleName;
-		_upgradeBaseDir = upgradeBaseDir;
-		_upgradeTableDir = upgradeTableDir;
+		_upgradeBaseDirName = upgradeBaseDirName;
+		_upgradeTableDirName = upgradeTableDirName;
 
 		DirectoryScanner ds = new DirectoryScanner();
 
-		ds.setBasedir(_upgradeBaseDir);
-		ds.setIncludes(
-			new String[] {"**\\upgrade\\v**\\util\\*Table.java"});
+		ds.setBasedir(_upgradeBaseDirName);
+		ds.setIncludes(new String[] {"**\\upgrade\\v**\\util\\*Table.java"});
 
 		ds.scan();
 
@@ -94,11 +93,12 @@ public class UpgradeTableBuilder {
 
 			String fileName = FilenameUtils.getName(filePath);
 
-			String upgradeFileName = fileName.replaceFirst("Table",
-				"ModelImpl");
+			String upgradeFileName = fileName.replaceFirst(
+				"Table", "ModelImpl");
 
-			String upgradeFilePath = _upgradeTableDir + "/" + upgradeFileVersion
-				+ "/" + upgradeFileName;
+			String upgradeFilePath =
+				_upgradeTableDirName + "/" + upgradeFileVersion + "/" +
+					upgradeFileName;
 
 			if (!_fileUtil.exists(upgradeFilePath)) {
 				if (!upgradeFileVersion.equals(_getModuleVersion())) {
@@ -123,8 +123,8 @@ public class UpgradeTableBuilder {
 
 			File indexesFile = _getIndexesFile(upgradeFileVersion);
 
-			String[] addIndexes = _getAddIndexes(indexesFile,
-				fileName.replaceFirst("Table\\.java", ""));
+			String[] addIndexes = _getAddIndexes(
+				indexesFile, fileName.replaceFirst("Table\\.java", ""));
 
 			content = _getContent(
 				packagePath, className, content, author, addIndexes);
@@ -136,17 +136,18 @@ public class UpgradeTableBuilder {
 	private String _findModuleIndexFileName() {
 		DirectoryScanner ds = new DirectoryScanner();
 
-		ds.setBasedir(_upgradeBaseDir);
+		ds.setBasedir(_upgradeBaseDirName);
 		ds.setIncludes(
 			new String[] {
-				"**\\" + _moduleName + "-service\\src\\*\\sql\\indexes.sql"});
+				"**\\" + _moduleName + "-service\\src\\*\\sql\\indexes.sql"
+			});
 
 		ds.scan();
 
 		String[] fileNames = ds.getIncludedFiles();
 
 		if (fileNames.length > 0) {
-			return _upgradeBaseDir + fileNames[0];
+			return _upgradeBaseDirName + fileNames[0];
 		}
 		else {
 			return null;
@@ -156,7 +157,7 @@ public class UpgradeTableBuilder {
 	private String _findUpgradeFilePath(String modelName) {
 		DirectoryScanner ds = new DirectoryScanner();
 
-		ds.setBasedir(_upgradeBaseDir);
+		ds.setBasedir(_upgradeBaseDirName);
 
 		ds.setIncludes(new String[] {"**\\" + modelName});
 
@@ -175,11 +176,11 @@ public class UpgradeTableBuilder {
 	private String[] _getAddIndexes(File indexesFile, String tableName)
 		throws Exception {
 
-		List<String> addIndexes = new ArrayList<String>();
+		List<String> addIndexes = new ArrayList<>();
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new InputStreamReader(
-					new FileInputStream(indexesFile)))) {
+				new UnsyncBufferedReader(
+					new InputStreamReader(new FileInputStream(indexesFile)))) {
 
 			String line = null;
 
@@ -242,12 +243,8 @@ public class UpgradeTableBuilder {
 
 		content = StringUtil.replace(
 			content,
-			new String[] {
-				"\t", "{ \"", "new Integer(Types.", ") }", " }"
-			},
-			new String[] {
-				"", "{\"", "Types.", "}", "}"
-			});
+			new String[] {"\t", "{ \"", "new Integer(Types.", ") }", " }"},
+			new String[] {"", "{\"", "Types.", "}", "}"});
 
 		while (content.contains("\n\n")) {
 			content = StringUtil.replace(content, "\n\n", "\n");
@@ -276,9 +273,7 @@ public class UpgradeTableBuilder {
 		String[] lines = StringUtil.splitLines(content);
 
 		for (String line : lines) {
-			if (line.startsWith("public static") ||
-				line.startsWith("};")) {
-
+			if (line.startsWith("public static") || line.startsWith("};")) {
 				sb.append("\t");
 			}
 			else if (line.startsWith("{\"")) {
@@ -317,8 +312,8 @@ public class UpgradeTableBuilder {
 	}
 
 	private File _getIndexesFile(String upgradeFileVersion) {
-		File indexesFile = new File(_upgradeTableDir + "/" +
-			upgradeFileVersion + "/indexes.sql");
+		File indexesFile = new File(
+			_upgradeTableDirName + "/" + upgradeFileVersion + "/indexes.sql");
 
 		if (_moduleName.equals("portal-impl")) {
 			if (!indexesFile.exists()) {
@@ -336,7 +331,7 @@ public class UpgradeTableBuilder {
 		if (_bnd) {
 			DirectoryScanner ds = new DirectoryScanner();
 
-			ds.setBasedir(_upgradeBaseDir);
+			ds.setBasedir(_upgradeBaseDirName);
 			ds.setIncludes(
 				new String[] {"**\\" + _moduleName + "\\*-service\\*.bnd"});
 
@@ -359,11 +354,11 @@ public class UpgradeTableBuilder {
 		}
 	}
 
-	private static FileImpl _fileUtil = FileImpl.getInstance();
+	private static final FileImpl _fileUtil = FileImpl.getInstance();
 
-	private Boolean _bnd;
-	private String _moduleName;
-	private String _upgradeBaseDir;
-	private String _upgradeTableDir;
+	private final Boolean _bnd;
+	private final String _moduleName;
+	private final String _upgradeBaseDirName;
+	private final String _upgradeTableDirName;
 
 }

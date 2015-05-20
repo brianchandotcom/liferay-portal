@@ -80,6 +80,24 @@ public class StagingServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+		long stagingRequestId,
+		com.liferay.portal.model.ExportImportConfigurationSoap exportImportConfiguration)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lar.MissingReferences returnValue = StagingServiceUtil.publishStagingRequest(stagingRequestId,
+					com.liferay.portal.model.impl.ExportImportConfigurationModelImpl.toModel(
+						exportImportConfiguration));
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void updateStagingRequest(long stagingRequestId,
 		java.lang.String fileName, byte[] bytes) throws RemoteException {
 		try {

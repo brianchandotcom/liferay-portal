@@ -16,10 +16,6 @@ package com.liferay.portal.lar.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
-import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.util.DateRange;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -58,15 +54,6 @@ public class LayoutExportBackgroundTaskExecutor
 			exportImportConfiguration.getSettingsMap();
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
-		long groupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		boolean privateLayout = MapUtil.getBoolean(
-			settingsMap, "privateLayout");
-		long[] layoutIds = GetterUtil.getLongValues(
-			settingsMap.get("layoutIds"));
-		Map<String, String[]> parameterMap =
-			(Map<String, String[]>)settingsMap.get("parameterMap");
-		DateRange dateRange = ExportImportDateUtil.getDateRange(
-			exportImportConfiguration);
 
 		StringBundler sb = new StringBundler(4);
 
@@ -79,20 +66,11 @@ public class LayoutExportBackgroundTaskExecutor
 		sb.append(".lar");
 
 		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			groupId, privateLayout, layoutIds, parameterMap,
-			dateRange.getStartDate(), dateRange.getEndDate());
+			exportImportConfiguration);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
 			userId, backgroundTask.getBackgroundTaskId(), sb.toString(),
 			larFile);
-
-		boolean updateLastPublishDate = MapUtil.getBoolean(
-			parameterMap, PortletDataHandlerKeys.UPDATE_LAST_PUBLISH_DATE);
-
-		if (updateLastPublishDate) {
-			ExportImportDateUtil.updateLastPublishDate(
-				groupId, privateLayout, dateRange, dateRange.getEndDate());
-		}
 
 		return BackgroundTaskResult.SUCCESS;
 	}

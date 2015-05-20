@@ -18,25 +18,36 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.lar.test.BaseExportImportTestCase;
 import com.liferay.portal.model.Company;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSetPrototype;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+
+import java.io.Serializable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -447,13 +458,41 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 			long[] layoutIds, Map<String, String[]> parameterMap)
 		throws Exception {
 
-		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
-			group.getGroupId(), false, layoutIds, getExportParameterMap(), null,
-			null);
+		User user = TestPropsValues.getUser();
 
-		LayoutLocalServiceUtil.importLayouts(
-			TestPropsValues.getUserId(), importedGroup.getGroupId(), false,
-			parameterMap, larFile);
+		Map<String, Serializable> exportSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+				user.getUserId(), group.getGroupId(), false, layoutIds,
+				getExportParameterMap(), user.getLocale(), user.getTimeZone());
+
+		ExportImportConfiguration exportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), group.getGroupId(), StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			exportConfiguration);
+
+		Map<String, Serializable> importSettingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				user.getUserId(), importedGroup.getGroupId(), false, null,
+				parameterMap, Constants.IMPORT, user.getLocale(),
+				user.getTimeZone(), larFile.getName());
+
+		ExportImportConfiguration importConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					user.getUserId(), importedGroup.getGroupId(),
+					StringPool.BLANK, StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		LayoutLocalServiceUtil.importLayouts(importConfiguration, larFile);
 	}
 
 	protected void testAvailableLocales(

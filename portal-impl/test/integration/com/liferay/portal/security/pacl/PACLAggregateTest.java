@@ -139,6 +139,9 @@ public class PACLAggregateTest {
 		}
 
 		arguments.add(
+			"-Dportal:" + PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS +
+				StringPool.EQUAL);
+		arguments.add(
 			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
 				PropsValues.LIFERAY_LIB_PORTAL_DIR);
 		arguments.add(

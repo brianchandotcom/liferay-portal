@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -402,12 +403,12 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	@Override
 	public void deleteAllRepositories(long groupId) throws PortalException {
 		LocalRepository groupLocalRepository =
-			repositoryLocalService.getLocalRepositoryImpl(groupId);
+			RepositoryProviderUtil.getLocalRepository(groupId);
 
 		deleteRepository(groupLocalRepository);
 
 		List<LocalRepository> localRepositories =
-			repositoryLocalService.getGroupLocalRepositoryImpl(groupId);
+			RepositoryProviderUtil.getLocalRepositoriesByGroupId(groupId);
 
 		for (LocalRepository localRepository : localRepositories) {
 			if (localRepository.getRepositoryId() !=
@@ -1392,8 +1393,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryLocalService.getLocalRepositoryImpl(
-				0, fileEntryId, 0, 0);
+			return RepositoryProviderUtil.getLocalRepositoryByFileEntryId(
+				fileEntryId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1411,8 +1412,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryLocalService.getLocalRepositoryImpl(
-				0, 0, 0, fileShortcutId);
+			return RepositoryProviderUtil.getLocalRepositoryByFileShortcutId(
+				fileShortcutId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1429,8 +1430,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryLocalService.getLocalRepositoryImpl(
-				0, 0, fileVersionId, 0);
+			return RepositoryProviderUtil.getLocalRepositoryByFileVersionId(
+				fileVersionId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1447,8 +1448,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryLocalService.getLocalRepositoryImpl(
-				folderId, 0, 0, 0);
+			return RepositoryProviderUtil.getLocalRepositoryByFolderId(
+				folderId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);
@@ -1476,7 +1477,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 		throws PortalException {
 
 		try {
-			return repositoryLocalService.getLocalRepositoryImpl(repositoryId);
+			return RepositoryProviderUtil.getLocalRepository(repositoryId);
 		}
 		catch (InvalidRepositoryIdException irie) {
 			StringBundler sb = new StringBundler(3);

@@ -16,6 +16,7 @@ package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.repository.LocalRepository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -31,7 +32,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.repository.liferayrepository.LiferayRepository;
 import com.liferay.portal.service.RepositoryLocalServiceUtil;
-import com.liferay.portal.service.RepositoryServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -131,7 +131,7 @@ public class RepositoryTest {
 
 		for (long repositoryId : repositoryIds) {
 			try {
-				RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+				RepositoryProviderUtil.getLocalRepository(repositoryId);
 
 				Assert.fail(
 					"Should not be able to access repository " + repositoryId);
@@ -166,7 +166,7 @@ public class RepositoryTest {
 		for (int i = 0; i < fileEntryIds.length; i++) {
 			try {
 				LocalRepository localRepository =
-					RepositoryServiceUtil.getLocalRepositoryImpl(
+					RepositoryProviderUtil.getLocalRepository(
 						dlRepository.getRepositoryId());
 
 				localRepository.getFileEntry(fileEntryIds[i]);
@@ -249,8 +249,7 @@ public class RepositoryTest {
 
 		try {
 			LocalRepository localRepository =
-				RepositoryServiceUtil.getLocalRepositoryImpl(
-					_group.getGroupId());
+				RepositoryProviderUtil.getLocalRepository(_group.getGroupId());
 
 			localRepository.getFileEntry(fileEntryIds[0]);
 			localRepository.getFileEntry(fileEntryIds[1]);
@@ -263,7 +262,7 @@ public class RepositoryTest {
 		}
 
 		LocalRepository localRepository =
-			RepositoryServiceUtil.getLocalRepositoryImpl(
+			RepositoryProviderUtil.getLocalRepository(
 				repository.getRepositoryId());
 
 		localRepository.getFileEntry(fileEntryIds[2]);
@@ -306,7 +305,7 @@ public class RepositoryTest {
 
 		try {
 			LocalRepository localRepository =
-				RepositoryServiceUtil.getLocalRepositoryImpl(
+				RepositoryProviderUtil.getLocalRepository(
 					repository2.getRepositoryId());
 
 			localRepository.getFileEntry(fileEntryIds[0]);
@@ -320,7 +319,7 @@ public class RepositoryTest {
 		}
 
 		LocalRepository localRepository =
-			RepositoryServiceUtil.getLocalRepositoryImpl(
+			RepositoryProviderUtil.getLocalRepository(
 				repository2.getRepositoryId());
 
 		localRepository.getFileEntry(fileEntryIds[2]);
@@ -332,7 +331,7 @@ public class RepositoryTest {
 			_TEST_CONTENT.getBytes());
 
 		LocalRepository localRepository =
-			RepositoryServiceUtil.getLocalRepositoryImpl(repositoryId);
+			RepositoryProviderUtil.getLocalRepository(repositoryId);
 
 		FileEntry fileEntry = localRepository.addFileEntry(
 			TestPropsValues.getUserId(),

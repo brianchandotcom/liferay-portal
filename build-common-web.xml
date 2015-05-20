@@ -15,39 +15,6 @@
 	</target>
 
 	<target name="compile">
-		<if>
-			<available file="docroot/WEB-INF/src" />
-			<then>
-				<if>
-					<available file="tmp" type="dir" />
-					<then>
-						<property name="compile.file.dest" value="tmp/WEB-INF/classes" />
-					</then>
-					<else>
-						<property name="compile.file.dest" value="docroot/WEB-INF/classes" />
-					</else>
-				</if>
-
-				<mkdir dir="${compile.file.dest}" />
-
-				<copy todir="${compile.file.dest}" preservelastmodified="true">
-					<fileset dir="docroot/WEB-INF/src" excludes="**/*.java" />
-				</copy>
-
-				<javac
-					classpathref="web.classpath"
-					compiler="${javac.compiler}"
-					debug="${javac.debug}"
-					deprecation="${javac.deprecation}"
-					destdir="${compile.file.dest}"
-					encoding="${javac.encoding}"
-					includeAntRuntime="false"
-					nowarn="${javac.nowarn}"
-					srcdir="docroot/WEB-INF/src"
-				/>
-			</then>
-		</if>
-
 		<mkdir dir="docroot/WEB-INF/classes/META-INF" />
 
 		<manifest file="docroot/WEB-INF/classes/META-INF/MANIFEST.MF" mode="update">

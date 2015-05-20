@@ -149,6 +149,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	public String getStatusLabel() {
+		return null;
+	}
+
+	@Override
 	public String getSummary() {
 		return getSummary(null, null);
 	}

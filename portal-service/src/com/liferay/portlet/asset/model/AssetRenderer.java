@@ -77,6 +77,8 @@ public interface AssetRenderer extends Renderer {
 
 	public String getSearchSummary(Locale locale);
 
+	public String getStatusLabel();
+
 	public String getSummary();
 
 	/**

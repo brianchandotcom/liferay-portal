@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -149,6 +150,11 @@ public class JournalArticleAssetRenderer
 	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
+	}
+
+	@Override
+	public String getStatusLabel() {
+		return WorkflowConstants.getStatusLabel(_article.getStatus());
 	}
 
 	@Override

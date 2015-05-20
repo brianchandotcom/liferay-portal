@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
@@ -85,6 +86,11 @@ public class LayoutRevisionAssetRenderer extends BaseJSPAssetRenderer {
 		else {
 			return null;
 		}
+	}
+
+	@Override
+	public String getStatusLabel() {
+		return WorkflowConstants.getStatusLabel(_layoutRevision.getStatus());
 	}
 
 	@Override

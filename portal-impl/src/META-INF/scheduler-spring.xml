@@ -30,15 +30,6 @@
 		<property name="synchronousDestinationName" value="liferay/scheduler_engine" />
 		<property name="synchronousMessageSenderMode" value="DIRECT" />
 	</bean>
-	<bean id="com.liferay.portal.scheduler.ClusterSchedulerEngineService" class="com.liferay.portal.scheduler.ClusterSchedulerEngine" factory-method="createClusterSchedulerEngine">
-		<constructor-arg name="schedulerEngine" ref="com.liferay.portal.kernel.scheduler.SchedulerEngineProxyBean" />
-	</bean>
-
-	<!-- Util -->
-
-	<bean id="com.liferay.portal.kernel.scheduler.SchedulerEngineHelper" class="com.liferay.portal.scheduler.SchedulerEngineHelperImpl">
-		<property name="schedulerEngine" ref="com.liferay.portal.scheduler.ClusterSchedulerEngineService" />
-	</bean>
 
 	<!-- Messaging -->
 

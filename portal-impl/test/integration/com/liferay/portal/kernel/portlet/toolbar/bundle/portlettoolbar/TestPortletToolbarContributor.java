@@ -36,7 +36,7 @@ public class TestPortletToolbarContributor
 
 		Menu menu = new Menu();
 
-		menu.setLabel("PortletToolbarTest");
+		menu.setLabel(LABEL);
 
 		portletTitleMenus.add(menu);
 

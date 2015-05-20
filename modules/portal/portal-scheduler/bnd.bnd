@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Scheduler
+Bundle-SymbolicName: com.liferay.portal.scheduler
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.scheduler.*;version=${plugin.full.version}
+Include-Resource: classes

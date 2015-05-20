@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.scheduler;
+package com.liferay.portal.scheduler.internal;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.cluster.BaseClusterMasterTokenTransitionListener;
-import com.liferay.portal.kernel.cluster.ClusterMasterExecutorUtil;
+import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.cluster.ClusterMasterTokenTransitionListener;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.cluster.ClusterableContextThreadLocal;
@@ -26,6 +25,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
@@ -33,11 +33,13 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.servlet.PluginContextLifecycleThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.Props;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Iterator;
 import java.util.List;
@@ -54,16 +56,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 public class ClusterSchedulerEngine
 	implements IdentifiableBean, SchedulerEngine {
-
-	public static SchedulerEngine createClusterSchedulerEngine(
-		SchedulerEngine schedulerEngine) {
-
-		if (PropsValues.CLUSTER_LINK_ENABLED && PropsValues.SCHEDULER_ENABLED) {
-			schedulerEngine = new ClusterSchedulerEngine(schedulerEngine);
-		}
-
-		return schedulerEngine;
-	}
 
 	public ClusterSchedulerEngine(SchedulerEngine schedulerEngine) {
 		_schedulerEngine = schedulerEngine;
@@ -350,7 +342,7 @@ public class ClusterSchedulerEngine
 	public void shutdown() throws SchedulerException {
 		_portalReady = false;
 
-		ClusterMasterExecutorUtil.removeClusterMasterTokenTransitionListener(
+		_clusterMasterExecutor.removeClusterMasterTokenTransitionListener(
 			_schedulerClusterMasterTokenTransitionListener);
 
 		_schedulerEngine.shutdown();
@@ -359,14 +351,14 @@ public class ClusterSchedulerEngine
 	@Override
 	public void start() throws SchedulerException {
 		try {
-			if (!ClusterMasterExecutorUtil.isMaster()) {
+			if (!_clusterMasterExecutor.isMaster()) {
 				initMemoryClusteredJobs();
 			}
 
 			_schedulerClusterMasterTokenTransitionListener =
 				new SchedulerClusterMasterTokenTransitionListener();
 
-			ClusterMasterExecutorUtil.addClusterMasterTokenTransitionListener(
+			_clusterMasterExecutor.addClusterMasterTokenTransitionListener(
 				_schedulerClusterMasterTokenTransitionListener);
 		}
 		catch (Exception e) {
@@ -511,17 +503,18 @@ public class ClusterSchedulerEngine
 			_getScheduledJobsMethodKey, StorageType.MEMORY_CLUSTERED);
 
 		Future<List<SchedulerResponse>> future =
-			ClusterMasterExecutorUtil.executeOnMaster(methodHandler);
+			_clusterMasterExecutor.executeOnMaster(methodHandler);
 
 		List<SchedulerResponse> schedulerResponses = future.get(
-			PropsValues.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT,
+			GetterUtil.getLong(
+				_props.get(PropsKeys.CLUSTERABLE_ADVICE_CALL_MASTER_TIMEOUT)),
 			TimeUnit.SECONDS);
 
 		for (SchedulerResponse schedulerResponse : schedulerResponses) {
 			String jobName = schedulerResponse.getJobName();
 			String groupName = schedulerResponse.getGroupName();
 
-			TriggerState triggerState = SchedulerEngineHelperUtil.getJobState(
+			TriggerState triggerState = _schedulerEngineHelper.getJobState(
 				schedulerResponse);
 
 			Message message = schedulerResponse.getMessage();
@@ -530,14 +523,13 @@ public class ClusterSchedulerEngine
 
 			_memoryClusteredJobs.put(
 				getFullName(jobName, groupName),
-				new ObjectValuePair<SchedulerResponse, TriggerState>(
-					schedulerResponse, triggerState));
+				new ObjectValuePair<>(schedulerResponse, triggerState));
 		}
 	}
 
 	protected boolean isMemoryClusteredSlaveJob(StorageType storageType) {
 		if ((storageType != StorageType.MEMORY_CLUSTERED) ||
-			ClusterMasterExecutorUtil.isMaster()) {
+			_clusterMasterExecutor.isMaster()) {
 
 			return false;
 		}
@@ -587,6 +579,22 @@ public class ClusterSchedulerEngine
 			PLUGIN_READY, pluginReady);
 	}
 
+	protected void setClusterMasterExecutor(
+		ClusterMasterExecutor clusterMasterExecutor) {
+
+		_clusterMasterExecutor = clusterMasterExecutor;
+	}
+
+	protected void setProps(Props props) {
+		_props = props;
+	}
+
+	protected void setSchedulerEngineHelper(
+		SchedulerEngineHelper schedulerEngineHelper) {
+
+		_schedulerEngineHelper = schedulerEngineHelper;
+	}
+
 	protected void updateMemoryClusteredJob(
 		String jobName, String groupName, TriggerState triggerState) {
 
@@ -617,11 +625,6 @@ public class ClusterSchedulerEngine
 
 	protected static final String PORTAL_READY = "portal.ready";
 
-	@BeanReference(
-		name = "com.liferay.portal.scheduler.ClusterSchedulerEngineService"
-	)
-	protected SchedulerEngine schedulerEngine;
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		ClusterSchedulerEngine.class);
 
@@ -629,13 +632,16 @@ public class ClusterSchedulerEngine
 		SchedulerEngineHelperUtil.class, "getScheduledJobs", StorageType.class);
 
 	private String _beanIdentifier;
+	private ClusterMasterExecutor _clusterMasterExecutor;
 	private final Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs = new ConcurrentHashMap<>();
 	private boolean _portalReady;
+	private Props _props;
 	private final java.util.concurrent.locks.Lock _readLock;
 	private ClusterMasterTokenTransitionListener
 		_schedulerClusterMasterTokenTransitionListener;
 	private final SchedulerEngine _schedulerEngine;
+	private SchedulerEngineHelper _schedulerEngineHelper;
 	private final java.util.concurrent.locks.Lock _writeLock;
 
 	private class SchedulerClusterMasterTokenTransitionListener

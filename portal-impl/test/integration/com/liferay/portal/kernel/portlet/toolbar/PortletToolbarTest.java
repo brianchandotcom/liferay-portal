@@ -48,6 +48,12 @@ public class PortletToolbarTest {
 	public void testGetPortletTitleMenus() {
 		PortletToolbar portletToolbar = new PortletToolbar();
 
+		try {
+			Thread.sleep(1000);
+		}
+		catch (InterruptedException e) {
+		}
+
 		List<Menu> menus = portletToolbar.getPortletTitleMenus(
 			TestPortletToolbarContributor.LABEL,
 			Mockito.mock(PortletRequest.class));

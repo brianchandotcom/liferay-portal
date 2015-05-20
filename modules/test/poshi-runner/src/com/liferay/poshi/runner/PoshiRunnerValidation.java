@@ -18,9 +18,6 @@ import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -1026,18 +1023,17 @@ public class PoshiRunnerValidation {
 	}
 
 	private static void throwExceptions() throws Exception {
-		StringWriter stringWriter = new StringWriter();
+		StringBuilder sb = new StringBuilder();
 
-		stringWriter.write(Integer.toString(_logExceptions.size()));
-		stringWriter.write(" errors in POSHI\n\n");
+		sb.append(Integer.toString(_logExceptions.size()));
+		sb.append(" errors in POSHI\n\n\n");
 
 		for (Exception exception : _logExceptions) {
-			exception.printStackTrace(new PrintWriter(stringWriter));
-
-			stringWriter.write("\n");
+			sb.append(exception.getMessage());
+			sb.append("\n\n");
 		}
 
-		System.out.println(stringWriter.toString());
+		System.out.println(sb.toString());
 
 		throw new Exception();
 	}

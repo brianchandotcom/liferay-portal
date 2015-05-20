@@ -100,8 +100,6 @@ public final class SummaryLoggerHandler {
 	private static void _failStepLoggerElement(
 		LoggerElement stepLoggerElement) {
 
-		stepLoggerElement.addClassName("fail");
-
 		LoggerElement lineContainerLoggerElement =
 			stepLoggerElement.loggerElement("div");
 
@@ -114,17 +112,6 @@ public final class SummaryLoggerHandler {
 		LoggerElement loggerElement = new LoggerElement();
 
 		loggerElement.setClassName("cause-body");
-
-		return loggerElement;
-	}
-
-	private static LoggerElement _getLineContainerLoggerElement(Element element)
-		throws Exception {
-
-		LoggerElement loggerElement = new LoggerElement();
-
-		loggerElement.setClassName("line-container");
-		loggerElement.setText(_getSummary(element));
 
 		return loggerElement;
 	}
@@ -178,6 +165,18 @@ public final class SummaryLoggerHandler {
 		return loggerElement;
 	}
 
+	private static LoggerElement _getStepDescriptionLoggerElement(
+			Element element)
+		throws Exception {
+
+		LoggerElement loggerElement = new LoggerElement();
+
+		loggerElement.setClassName("step-description");
+		loggerElement.setText(_getSummary(element));
+
+		return loggerElement;
+	}
+
 	private static LoggerElement _getStepLoggerElement(Element element)
 		throws Exception {
 
@@ -186,7 +185,7 @@ public final class SummaryLoggerHandler {
 		loggerElement.setName("li");
 
 		loggerElement.addChildLoggerElement(
-			_getLineContainerLoggerElement(element));
+			_getStepDescriptionLoggerElement(element));
 
 		return loggerElement;
 	}

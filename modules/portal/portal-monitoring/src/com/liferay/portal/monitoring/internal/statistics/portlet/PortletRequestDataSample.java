@@ -99,33 +99,33 @@ public class PortletRequestDataSample extends BaseDataSample {
 			return;
 		}
 
-		if (portal != null) {
-			HttpServletRequest httpServletRequest =
-				portal.getHttpServletRequest(portletRequest);
-
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			if (themeDisplay != null) {
-				groupId = themeDisplay.getScopeGroupId();
-
-				setGroupId(groupId);
-
-				return;
-			}
+		if (portal == null) {
+			return;
 		}
 
-		if (portal != null) {
-			try {
-				groupId = portal.getScopeGroupId(portletRequest);
+		HttpServletRequest httpServletRequest =
+			portal.getHttpServletRequest(portletRequest);
 
-				setGroupId(groupId);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug("Unable to obtain scope group id", pe);
-				}
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (themeDisplay != null) {
+			groupId = themeDisplay.getScopeGroupId();
+
+			setGroupId(groupId);
+
+			return;
+		}
+
+		try {
+			groupId = portal.getScopeGroupId(portletRequest);
+
+			setGroupId(groupId);
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unable to obtain scope group id", pe);
 			}
 		}
 	}

@@ -43,4 +43,4 @@ if (portletName.equals(PortletKeys.MY_ACCOUNT) || permissionChecker.hasPermissio
 }
 %>
 
-<%@ include file="/html/portlet/user_groups_admin/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

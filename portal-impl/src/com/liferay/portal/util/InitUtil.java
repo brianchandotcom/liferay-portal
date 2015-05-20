@@ -239,6 +239,15 @@ public class InitUtil {
 		}
 	}
 
+	public synchronized static void stopRuntime() {
+		try {
+			ModuleFrameworkUtilAdapter.stopRuntime();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 	private static final boolean _PRINT_TIME = false;
 
 	private static boolean _initialized;

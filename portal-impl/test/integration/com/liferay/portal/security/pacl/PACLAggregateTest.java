@@ -388,6 +388,8 @@ public class PACLAggregateTest {
 				throw new ProcessException(ioe);
 			}
 			finally {
+				InitUtil.stopRuntime();
+
 				InitUtil.stopModuleFramework();
 
 				MPIHelperUtil.shutdown();

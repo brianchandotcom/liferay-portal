@@ -28,7 +28,7 @@ public class
 		implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return AssetCategoriesNavigationPortletInstanceConfiguration.class;
 	}
 

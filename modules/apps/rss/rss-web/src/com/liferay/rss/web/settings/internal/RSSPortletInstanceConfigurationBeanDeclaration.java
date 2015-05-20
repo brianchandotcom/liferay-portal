@@ -27,7 +27,7 @@ public class RSSPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return RSSPortletInstanceConfiguration.class;
 	}
 

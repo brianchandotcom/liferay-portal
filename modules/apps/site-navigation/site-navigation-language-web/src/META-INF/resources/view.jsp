@@ -19,7 +19,7 @@
 <liferay-ui:language
 	ddmTemplateGroupId="<%= languageDisplayContext.getDisplayStyleGroupId() %>"
 	ddmTemplateKey="<%= languageDisplayContext.getDDMTemplateKey() %>"
-	displayCurrentLocale="<%= languageDisplayContext.isDisplayCurrentLocale() %>"
+	displayCurrentLocale="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>"
 	languageIds="<%= languageDisplayContext.getLanguageIds() %>"
 	useNamespace="<%= false %>"
 />

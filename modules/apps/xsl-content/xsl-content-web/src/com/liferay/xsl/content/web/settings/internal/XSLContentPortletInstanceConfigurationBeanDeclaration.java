@@ -27,7 +27,7 @@ public class XSLContentPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return XSLContentPortletInstanceConfiguration.class;
 	}
 

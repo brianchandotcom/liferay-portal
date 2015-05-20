@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.nested.portlets.web.configuration.internal;
+package com.liferay.nested.portlets.web.settings.internal;
 
 import com.liferay.nested.portlets.web.configuration.NestedPortletsPortletInstanceConfiguration;
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
@@ -27,7 +27,7 @@ public class NestedPortletsPortletInstanceConfigurationBeanDeclaration
 	implements ConfigurationBeanDeclaration {
 
 	@Override
-	public Class getConfigurationBeanClass() {
+	public Class<?> getConfigurationBeanClass() {
 		return NestedPortletsPortletInstanceConfiguration.class;
 	}
 

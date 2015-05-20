@@ -18,15 +18,15 @@
 
 <%
 String htmlAttributes =
-	"alt=" + iFrameDisplayContext.getAlt() + "\n" +
-	"border=" + iFrameDisplayContext.getBorder() + "\n" +
-	"bordercolor=" + iFrameDisplayContext.getBordercolor() + "\n" +
-	"frameborder=" + iFrameDisplayContext.getFrameborder() + "\n" +
-	"hspace=" + iFrameDisplayContext.getHspace() + "\n" +
-	"longdesc=" + iFrameDisplayContext.getLongdesc() + "\n" +
-	"scrolling=" + iFrameDisplayContext.getScrolling() + "\n" +
-	"title=" + iFrameDisplayContext.getTitle() + "\n" +
-	"vspace=" + iFrameDisplayContext.getVspace() + "\n";
+	"alt=" + iFramePortletInstanceConfiguration.alt() + "\n" +
+	"border=" + iFramePortletInstanceConfiguration.border() + "\n" +
+	"bordercolor=" + iFramePortletInstanceConfiguration.bordercolor() + "\n" +
+	"frameborder=" + iFramePortletInstanceConfiguration.frameborder() + "\n" +
+	"hspace=" + iFramePortletInstanceConfiguration.hspace() + "\n" +
+	"longdesc=" + iFramePortletInstanceConfiguration.longdesc() + "\n" +
+	"scrolling=" + iFramePortletInstanceConfiguration.scrolling() + "\n" +
+	"title=" + iFramePortletInstanceConfiguration.title() + "\n" +
+	"vspace=" + iFramePortletInstanceConfiguration.vspace() + "\n";
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -40,15 +40,15 @@ String htmlAttributes =
 	<liferay-ui:panel-container extended="<%= true %>" id="iframeSettingsPanelContainer" persistState="<%= true %>">
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="iframeGeneralPanel" persistState="<%= true %>" title="general">
 			<aui:fieldset>
-				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= iFrameDisplayContext.isRelative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= iFrameDisplayContext.getSrc() %>" />
+				<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" cssClass="lfr-input-text-container" label="source-url" name="preferences--src--" prefix="<%= iFramePortletInstanceConfiguration.relative() ? StringPool.TRIPLE_PERIOD : StringPool.BLANK %>" type="text" value="<%= iFramePortletInstanceConfiguration.src() %>" />
 
-				<aui:input label="relative-to-context-path" name="preferences--relative--" type="checkbox" value="<%= iFrameDisplayContext.isRelative() %>" />
+				<aui:input label="relative-to-context-path" name="preferences--relative--" type="checkbox" value="<%= iFramePortletInstanceConfiguration.relative() %>" />
 			</aui:fieldset>
 		</liferay-ui:panel>
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="iframeAuthenticationPanel" persistState="<%= true %>" title="authenticate">
 			<aui:fieldset>
-				<aui:input label="authenticate" name="preferences--auth--" type="checkbox" value="<%= iFrameDisplayContext.isAuth() %>" />
+				<aui:input label="authenticate" name="preferences--auth--" type="checkbox" value="<%= iFramePortletInstanceConfiguration.auth() %>" />
 
 				<div id="<portlet:namespace />authenticationOptions">
 					<div class="alert alert-info" id="<portlet:namespace />currentLoginMsg">
@@ -77,10 +77,10 @@ String htmlAttributes =
 							<table class="lfr-table">
 							<tr>
 								<td>
-									<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--userNameField--" type="text" value="<%= iFrameDisplayContext.getUserNameField() %>" />
+									<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--userNameField--" type="text" value="<%= iFramePortletInstanceConfiguration.userNameField() %>" />
 								</td>
 								<td>
-									<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formUserName--" type="text" value="<%= iFrameDisplayContext.getFormUserName() %>" />
+									<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formUserName--" type="text" value="<%= iFramePortletInstanceConfiguration.formUserName() %>" />
 								</td>
 							</tr>
 							</table>
@@ -90,10 +90,10 @@ String htmlAttributes =
 							<table class="lfr-table">
 							<tr>
 								<td>
-									<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--passwordField--" type="text" value="<%= iFrameDisplayContext.getPasswordField() %>" />
+									<aui:input cssClass="lfr-input-text-container" label="field-name" name="preferences--passwordField--" type="text" value="<%= iFramePortletInstanceConfiguration.passwordField() %>" />
 								</td>
 								<td>
-									<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formPassword--" type="text" value="<%= iFrameDisplayContext.getFormPassword() %>" />
+									<aui:input cssClass="lfr-input-text-container" label="value" name="preferences--formPassword--" type="text" value="<%= iFramePortletInstanceConfiguration.formPassword() %>" />
 								</td>
 							</tr>
 							</table>
@@ -103,9 +103,9 @@ String htmlAttributes =
 					</div>
 
 					<div id="<portlet:namespace />basicAuthOptions">
-						<aui:input cssClass="lfr-input-text-container" label="user-name" name="preferences--basicUserName--" type="text" value="<%= iFrameDisplayContext.getBasicUserName() %>" />
+						<aui:input cssClass="lfr-input-text-container" label="user-name" name="preferences--basicUserName--" type="text" value="<%= iFramePortletInstanceConfiguration.basicUserName() %>" />
 
-						<aui:input cssClass="lfr-input-text-container" label="password" name="preferences--basicPassword--" type="text" value="<%= iFrameDisplayContext.getBasicPassword() %>" />
+						<aui:input cssClass="lfr-input-text-container" label="password" name="preferences--basicPassword--" type="text" value="<%= iFramePortletInstanceConfiguration.basicPassword() %>" />
 					</div>
 				</div>
 			</aui:fieldset>
@@ -113,20 +113,20 @@ String htmlAttributes =
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="iframeDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">
 			<aui:fieldset>
-				<aui:input label="resize-automatically" name="preferences--resizeAutomatically--" type="checkbox" value="<%= iFrameDisplayContext.isResizeAutomatically() %>" />
+				<aui:input label="resize-automatically" name="preferences--resizeAutomatically--" type="checkbox" value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>" />
 
 				<div id="<portlet:namespace />displaySettings">
-					<aui:input name="preferences--heightMaximized--" type="text" value="<%= iFrameDisplayContext.getHeightMaximized() %>">
+					<aui:input name="preferences--heightMaximized--" type="text" value="<%= iFramePortletInstanceConfiguration.heightMaximized() %>">
 						<aui:validator name="digits" />
 						<aui:validator name="required" />
 					</aui:input>
 
-					<aui:input name="preferences--heightNormal--" type="text" value="<%= iFrameDisplayContext.getHeightNormal() %>">
+					<aui:input name="preferences--heightNormal--" type="text" value="<%= iFramePortletInstanceConfiguration.heightNormal() %>">
 						<aui:validator name="digits" />
 						<aui:validator name="required" />
 					</aui:input>
 
-					<aui:input name="preferences--width--" type="text" value="<%= iFrameDisplayContext.getWidth() %>" />
+					<aui:input name="preferences--width--" type="text" value="<%= iFramePortletInstanceConfiguration.width() %>" />
 				</div>
 
 				<aui:input cssClass="lfr-textarea-container" name="preferences--htmlAttributes--" onKeyDown="Liferay.Util.checkTab(this); Liferay.Util.disableEsc();" type="textarea" value="<%= htmlAttributes %>" wrap="soft" />

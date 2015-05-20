@@ -24,6 +24,7 @@
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.iframe.web.configuration.IFrameConfiguration" %><%@
+page import="com.liferay.iframe.web.configuration.IFramePortletInstanceConfiguration" %><%@
 page import="com.liferay.iframe.web.display.context.IFrameDisplayContext" %><%@
 page import="com.liferay.iframe.web.util.IFrameUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
@@ -45,6 +46,8 @@ WindowState windowState = liferayPortletRequest.getWindowState();
 IFrameConfiguration iFrameConfiguration = (IFrameConfiguration)renderRequest.getAttribute(IFrameConfiguration.class.getName());
 
 IFrameDisplayContext iFrameDisplayContext = new IFrameDisplayContext(iFrameConfiguration, renderRequest);
+
+IFramePortletInstanceConfiguration iFramePortletInstanceConfiguration = iFrameDisplayContext.getIFramePortletInstanceConfiguration();
 %>
 
 <%@ include file="/init-ext.jsp" %>

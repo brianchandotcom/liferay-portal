@@ -42,14 +42,14 @@
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
 				className="<%= LanguageEntry.class.getName() %>"
-				displayStyle="<%= languageDisplayContext.getDisplayStyle() %>"
+				displayStyle="<%= languagePortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= languageDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"
 			/>
 		</div>
 	</aui:fieldset>
 
-	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= languageDisplayContext.isDisplayCurrentLocale() %>" />
+	<aui:input name="preferences--displayCurrentLocale--" type="checkbox" value="<%= languagePortletInstanceConfiguration.displayCurrentLocale() %>" />
 
 	<aui:button-row>
 		<aui:button type="submit" />

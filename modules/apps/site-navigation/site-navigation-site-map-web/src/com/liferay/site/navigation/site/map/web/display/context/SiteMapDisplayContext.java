@@ -61,30 +61,14 @@ public class SiteMapDisplayContext {
 
 		_buildSiteMap(
 			_themeDisplay.getLayout(), getRootLayouts(), getRootLayout(),
-			isIncludeRootInTree(), getDisplayDepth(), isShowCurrentPage(),
-			isUseHtmlTitle(), isShowHiddenPages(), 1, _themeDisplay, sb);
+			isIncludeRootInTree(),
+			_siteMapPortletInstanceConfiguration.displayDepth(),
+			_siteMapPortletInstanceConfiguration.showCurrentPage(),
+			_siteMapPortletInstanceConfiguration.useHtmlTitle(),
+			_siteMapPortletInstanceConfiguration.showHiddenPages(), 1,
+			_themeDisplay, sb);
 
 		return sb.toString();
-	}
-
-	public Integer getDisplayDepth() {
-		if (_displayDepth != null) {
-			return _displayDepth;
-		}
-
-		_displayDepth = _siteMapPortletInstanceConfiguration.displayDepth();
-
-		return _displayDepth;
-	}
-
-	public String getDisplayStyle() {
-		if (_displayStyle != null) {
-			return _displayStyle;
-		}
-
-		_displayStyle = _siteMapPortletInstanceConfiguration.displayStyle();
-
-		return _displayStyle;
 	}
 
 	public Long getDisplayStyleGroupId() {
@@ -117,11 +101,14 @@ public class SiteMapDisplayContext {
 			return _rootLayout;
 		}
 
-		if (Validator.isNotNull(getRootLayoutUuid())) {
+		String rootLayoutUuid =
+			_siteMapPortletInstanceConfiguration.rootLayoutUuid();
+
+		if (Validator.isNotNull(rootLayoutUuid)) {
 			Layout layout = _themeDisplay.getLayout();
 
 			_rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-				getRootLayoutUuid(), _themeDisplay.getScopeGroupId(),
+				rootLayoutUuid, _themeDisplay.getScopeGroupId(),
 				layout.isPrivateLayout());
 		}
 
@@ -135,7 +122,8 @@ public class SiteMapDisplayContext {
 
 		Layout rootLayout = getRootLayout();
 
-		if (Validator.isNotNull(getRootLayoutUuid()) &&
+		if (Validator.isNotNull(
+				_siteMapPortletInstanceConfiguration.rootLayoutUuid()) &&
 			Validator.isNotNull(rootLayout)) {
 
 			_rootLayoutId = rootLayout.getLayoutId();
@@ -154,14 +142,10 @@ public class SiteMapDisplayContext {
 			layout.getGroupId(), layout.isPrivateLayout(), getRootLayoutId());
 	}
 
-	public String getRootLayoutUuid() {
-		if (_rootLayoutUuid != null) {
-			return _rootLayoutUuid;
-		}
+	public SiteMapPortletInstanceConfiguration
+		getSiteMapPortletInstanceConfiguration() {
 
-		_rootLayoutUuid = _siteMapPortletInstanceConfiguration.rootLayoutUuid();
-
-		return _rootLayoutUuid;
+		return _siteMapPortletInstanceConfiguration;
 	}
 
 	public Boolean isIncludeRootInTree() {
@@ -172,45 +156,14 @@ public class SiteMapDisplayContext {
 		_includeRootInTree =
 			_siteMapPortletInstanceConfiguration.includeRootInTree();
 
-		if (Validator.isNull(getRootLayoutUuid()) ||
+		if (Validator.isNull(
+				_siteMapPortletInstanceConfiguration.rootLayoutUuid()) ||
 			(getRootLayoutId() == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID)) {
 
 			_includeRootInTree = false;
 		}
 
 		return _includeRootInTree;
-	}
-
-	public Boolean isShowCurrentPage() {
-		if (_showCurrentPage != null) {
-			return _showCurrentPage;
-		}
-
-		_showCurrentPage =
-			_siteMapPortletInstanceConfiguration.showCurrentPage();
-
-		return _showCurrentPage;
-	}
-
-	public Boolean isShowHiddenPages() {
-		if (_showHiddenPages != null) {
-			return _showHiddenPages;
-		}
-
-		_showHiddenPages =
-			_siteMapPortletInstanceConfiguration.showHiddenPages();
-
-		return _showHiddenPages;
-	}
-
-	public Boolean isUseHtmlTitle() {
-		if (_useHtmlTitle != null) {
-			return _useHtmlTitle;
-		}
-
-		_useHtmlTitle = _siteMapPortletInstanceConfiguration.useHtmlTitle();
-
-		return _useHtmlTitle;
 	}
 
 	private void _buildLayoutView(
@@ -324,19 +277,13 @@ public class SiteMapDisplayContext {
 		sb.append("</ul>");
 	}
 
-	private Integer _displayDepth;
-	private String _displayStyle;
 	private Long _displayStyleGroupId;
 	private Boolean _includeRootInTree;
 	private final HttpServletRequest _request;
 	private Layout _rootLayout;
 	private Long _rootLayoutId;
-	private String _rootLayoutUuid;
-	private Boolean _showCurrentPage;
-	private Boolean _showHiddenPages;
 	private final SiteMapPortletInstanceConfiguration
 		_siteMapPortletInstanceConfiguration;
 	private final ThemeDisplay _themeDisplay;
-	private Boolean _useHtmlTitle;
 
 }

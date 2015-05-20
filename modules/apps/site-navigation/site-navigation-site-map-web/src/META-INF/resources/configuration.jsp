@@ -39,7 +39,7 @@ List<LayoutDescription> layoutDescriptions = siteMapDisplayContext.getLayoutDesc
 				if (layoutDescriptionLayout != null) {
 			%>
 
-				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteMapDisplayContext.getRootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
+				<aui:option label="<%= layoutDescription.getDisplayName() %>" selected="<%= Validator.equals(layoutDescriptionLayout.getUuid(), siteMapPortletInstanceConfiguration.rootLayoutUuid()) %>" value="<%= layoutDescriptionLayout.getUuid() %>" />
 
 			<%
 				}
@@ -55,7 +55,7 @@ List<LayoutDescription> layoutDescriptions = siteMapDisplayContext.getLayoutDesc
 			for (int i = 1; i <= 20; i++) {
 			%>
 
-				<aui:option label="<%= i %>" selected="<%= siteMapDisplayContext.getDisplayDepth() == i %>" />
+				<aui:option label="<%= i %>" selected="<%= siteMapPortletInstanceConfiguration.displayDepth() == i %>" />
 
 			<%
 			}
@@ -65,16 +65,16 @@ List<LayoutDescription> layoutDescriptions = siteMapDisplayContext.getLayoutDesc
 
 		<aui:input name="preferences--includeRootInTree--" type="checkbox" value="<%= siteMapDisplayContext.isIncludeRootInTree() %>" />
 
-		<aui:input name="preferences--showCurrentPage--" type="checkbox" value="<%= siteMapDisplayContext.isShowCurrentPage() %>" />
+		<aui:input name="preferences--showCurrentPage--" type="checkbox" value="<%= siteMapPortletInstanceConfiguration.showCurrentPage() %>" />
 
-		<aui:input name="preferences--useHtmlTitle--" type="checkbox" value="<%= siteMapDisplayContext.isUseHtmlTitle() %>" />
+		<aui:input name="preferences--useHtmlTitle--" type="checkbox" value="<%= siteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
 
-		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= siteMapDisplayContext.isShowHiddenPages() %>" />
+		<aui:input name="preferences--showHiddenPages--" type="checkbox" value="<%= siteMapPortletInstanceConfiguration.showHiddenPages() %>" />
 
 		<div class="display-template">
 			<liferay-ui:ddm-template-selector
 				className="<%= LayoutSet.class.getName() %>"
-				displayStyle="<%= siteMapDisplayContext.getDisplayStyle() %>"
+				displayStyle="<%= siteMapPortletInstanceConfiguration.displayStyle() %>"
 				displayStyleGroupId="<%= siteMapDisplayContext.getDisplayStyleGroupId() %>"
 				refreshURL="<%= configurationRenderURL %>"
 				showEmptyOption="<%= true %>"

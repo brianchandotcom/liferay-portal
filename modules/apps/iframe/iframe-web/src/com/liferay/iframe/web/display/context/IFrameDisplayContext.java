@@ -59,16 +59,6 @@ public class IFrameDisplayContext {
 				IFramePortletInstanceConfiguration.class);
 	}
 
-	public String getAlt() {
-		if (_alt != null) {
-			return _alt;
-		}
-
-		_alt = _iFramePortletInstanceConfiguration.alt();
-
-		return _alt;
-	}
-
 	public String getAuthType() {
 		if (_authType != null) {
 			return _authType;
@@ -81,46 +71,6 @@ public class IFrameDisplayContext {
 		}
 
 		return _authType;
-	}
-
-	public String getBasicPassword() {
-		if (_basicPassword != null) {
-			return _basicPassword;
-		}
-
-		_basicPassword = _iFramePortletInstanceConfiguration.basicPassword();
-
-		return _basicPassword;
-	}
-
-	public String getBasicUserName() {
-		if (_basicUserName != null) {
-			return _basicUserName;
-		}
-
-		_basicUserName = _iFramePortletInstanceConfiguration.basicUserName();
-
-		return _basicUserName;
-	}
-
-	public String getBorder() {
-		if (_border != null) {
-			return _border;
-		}
-
-		_border = _iFramePortletInstanceConfiguration.border();
-
-		return _border;
-	}
-
-	public String getBordercolor() {
-		if (_bordercolor != null) {
-			return _bordercolor;
-		}
-
-		_bordercolor = _iFramePortletInstanceConfiguration.bordercolor();
-
-		return _bordercolor;
 	}
 
 	public String getFormMethod() {
@@ -137,36 +87,6 @@ public class IFrameDisplayContext {
 		return _formMethod;
 	}
 
-	public String getFormPassword() {
-		if (_formPassword != null) {
-			return _formPassword;
-		}
-
-		_formPassword = _iFramePortletInstanceConfiguration.formPassword();
-
-		return _formPassword;
-	}
-
-	public String getFormUserName() {
-		if (_formUserName != null) {
-			return _formUserName;
-		}
-
-		_formUserName = _iFramePortletInstanceConfiguration.formUserName();
-
-		return _formUserName;
-	}
-
-	public String getFrameborder() {
-		if (_frameborder != null) {
-			return _frameborder;
-		}
-
-		_frameborder = _iFramePortletInstanceConfiguration.frameborder();
-
-		return _frameborder;
-	}
-
 	public String getHeight() {
 		if (_height != null) {
 			return _height;
@@ -175,34 +95,13 @@ public class IFrameDisplayContext {
 		String windowState = String.valueOf(_request.getWindowState());
 
 		if (windowState.equals(WindowState.MAXIMIZED)) {
-			_height = getHeightMaximized();
+			_height = _iFramePortletInstanceConfiguration.heightMaximized();
 		}
 		else {
-			_height = getHeightNormal();
+			_height = _iFramePortletInstanceConfiguration.heightNormal();
 		}
 
 		return _height;
-	}
-
-	public String getHeightMaximized() {
-		if (_heightMaximized != null) {
-			return _heightMaximized;
-		}
-
-		_heightMaximized =
-			_iFramePortletInstanceConfiguration.heightMaximized();
-
-		return _heightMaximized;
-	}
-
-	public String getHeightNormal() {
-		if (_heightNormal != null) {
-			return _heightNormal;
-		}
-
-		_heightNormal = _iFramePortletInstanceConfiguration.heightNormal();
-
-		return _heightNormal;
 	}
 
 	public List<KeyValuePair> getHiddenVariableKVPs() {
@@ -246,16 +145,6 @@ public class IFrameDisplayContext {
 		return _hiddenVariables;
 	}
 
-	public String getHspace() {
-		if (_hspace != null) {
-			return _hspace;
-		}
-
-		_hspace = _iFramePortletInstanceConfiguration.hspace();
-
-		return _hspace;
-	}
-
 	public String getIframeBaseSrc() {
 		if (_iFrameBaseSrc != null) {
 			return _iFrameBaseSrc;
@@ -276,6 +165,12 @@ public class IFrameDisplayContext {
 		return _iFrameBaseSrc;
 	}
 
+	public IFramePortletInstanceConfiguration
+		getIFramePortletInstanceConfiguration() {
+
+		return _iFramePortletInstanceConfiguration;
+	}
+
 	public String getIframeSrc() {
 		if (_iFrameSrc != null) {
 			return _iFrameSrc;
@@ -283,7 +178,7 @@ public class IFrameDisplayContext {
 
 		_iFrameSrc = StringPool.BLANK;
 
-		if (isRelative()) {
+		if (_iFramePortletInstanceConfiguration.relative()) {
 			_iFrameSrc = _themeDisplay.getPathContext();
 		}
 
@@ -322,16 +217,6 @@ public class IFrameDisplayContext {
 		return iFrameVariables;
 	}
 
-	public String getLongdesc() {
-		if (_longdesc != null) {
-			return _longdesc;
-		}
-
-		_longdesc = _iFramePortletInstanceConfiguration.longdesc();
-
-		return _longdesc;
-	}
-
 	public String getPassword() throws PortalException {
 		if (_password != null) {
 			return _password;
@@ -340,73 +225,36 @@ public class IFrameDisplayContext {
 		String authType = getAuthType();
 
 		if (authType.equals("basic")) {
-			_password = getBasicPassword();
+			_password = _iFramePortletInstanceConfiguration.basicPassword();
 		}
 		else {
-			_password = getFormPassword();
+			_password = _iFramePortletInstanceConfiguration.formPassword();
 		}
 
 		if (Validator.isNull(_password)) {
 			return StringPool.BLANK;
 		}
 
-		if (Validator.isNull(getPasswordField())) {
+		String passwordField =
+			_iFramePortletInstanceConfiguration.passwordField();
+
+		if (Validator.isNull(passwordField)) {
 			int pos = _password.indexOf(StringPool.EQUAL);
 
 			if (pos != -1) {
 				String fieldValuePair = _password;
 
-				_passwordField = fieldValuePair.substring(0, pos);
+				passwordField = fieldValuePair.substring(0, pos);
 
 				_password = fieldValuePair.substring(pos + 1);
 			}
 		}
 
-		if (Validator.isNotNull(getPasswordField())) {
+		if (Validator.isNotNull(passwordField)) {
 			_password = IFrameUtil.getPassword(_request, _password);
 		}
 
 		return _password;
-	}
-
-	public String getPasswordField() {
-		if (_passwordField != null) {
-			return _passwordField;
-		}
-
-		_passwordField = _iFramePortletInstanceConfiguration.passwordField();
-
-		return _passwordField;
-	}
-
-	public String getScrolling() {
-		if (_scrolling != null) {
-			return _scrolling;
-		}
-
-		_scrolling = _iFramePortletInstanceConfiguration.scrolling();
-
-		return _scrolling;
-	}
-
-	public String getSrc() {
-		if (_src != null) {
-			return _src;
-		}
-
-		_src = _iFramePortletInstanceConfiguration.src();
-
-		return _src;
-	}
-
-	public String getTitle() {
-		if (_title != null) {
-			return _title;
-		}
-
-		_title = _iFramePortletInstanceConfiguration.title();
-
-		return _title;
 	}
 
 	public String getUserName() throws PortalException {
@@ -417,132 +265,52 @@ public class IFrameDisplayContext {
 		String authType = getAuthType();
 
 		if (authType.equals("basic")) {
-			_userName = getBasicUserName();
+			_userName = _iFramePortletInstanceConfiguration.basicUserName();
 		}
 		else {
-			_userName = getFormUserName();
+			_userName = _iFramePortletInstanceConfiguration.formUserName();
 		}
 
 		if (Validator.isNull(_userName)) {
 			return StringPool.BLANK;
 		}
 
-		if (Validator.isNull(getUserNameField())) {
+		String userNameField =
+			_iFramePortletInstanceConfiguration.userNameField();
+
+		if (Validator.isNull(userNameField)) {
 			int pos = _userName.indexOf(StringPool.EQUAL);
 
 			if (pos != -1) {
 				String fieldValuePair = _userName;
 
-				_userNameField = fieldValuePair.substring(0, pos);
+				userNameField = fieldValuePair.substring(0, pos);
 
 				_userName = fieldValuePair.substring(pos + 1);
 			}
 		}
 
-		if (Validator.isNotNull(getUserNameField())) {
+		if (Validator.isNotNull(userNameField)) {
 			_userName = IFrameUtil.getUserName(_request, _userName);
 		}
 
 		return _userName;
 	}
 
-	public String getUserNameField() {
-		if (_userNameField != null) {
-			return _userNameField;
-		}
-
-		_userNameField = _iFramePortletInstanceConfiguration.userNameField();
-
-		return _userNameField;
-	}
-
-	public String getVspace() {
-		if (_vspace != null) {
-			return _vspace;
-		}
-
-		_vspace = _iFramePortletInstanceConfiguration.vspace();
-
-		return _vspace;
-	}
-
-	public String getWidth() {
-		if (_width != null) {
-			return _width;
-		}
-
-		_width = _iFramePortletInstanceConfiguration.width();
-
-		return _width;
-	}
-
-	public boolean isAuth() {
-		if (_auth != null) {
-			return _auth;
-		}
-
-		_auth = _iFramePortletInstanceConfiguration.auth();
-
-		return _auth;
-	}
-
-	public boolean isRelative() {
-		if (_relative != null) {
-			return _relative;
-		}
-
-		_relative = _iFramePortletInstanceConfiguration.relative();
-
-		return _relative;
-	}
-
-	public boolean isResizeAutomatically() {
-		if (_resizeAutomatically != null) {
-			return _resizeAutomatically;
-		}
-
-		_resizeAutomatically =
-			_iFramePortletInstanceConfiguration.resizeAutomatically();
-
-		return _resizeAutomatically;
-	}
-
 	private static final String _IFRAME_PREFIX = "iframe_";
 
-	private String _alt;
-	private Boolean _auth;
 	private String _authType;
-	private String _basicPassword;
-	private String _basicUserName;
-	private String _border;
-	private String _bordercolor;
 	private String _formMethod;
-	private String _formPassword;
-	private String _formUserName;
-	private String _frameborder;
 	private String _height;
-	private String _heightMaximized;
-	private String _heightNormal;
 	private String _hiddenVariables;
-	private String _hspace;
 	private String _iFrameBaseSrc;
 	private final IFrameConfiguration _iFrameConfiguration;
 	private final IFramePortletInstanceConfiguration
 		_iFramePortletInstanceConfiguration;
 	private String _iFrameSrc;
-	private String _longdesc;
 	private String _password;
-	private String _passwordField;
-	private Boolean _relative;
 	private final PortletRequest _request;
-	private Boolean _resizeAutomatically;
-	private String _scrolling;
-	private String _src;
 	private final ThemeDisplay _themeDisplay;
-	private String _title;
 	private String _userName;
-	private String _userNameField;
-	private String _vspace;
-	private String _width;
 
 }

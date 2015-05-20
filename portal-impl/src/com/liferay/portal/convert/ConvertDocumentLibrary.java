@@ -42,7 +42,6 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.store.AdvancedFileSystemStore;
-import com.liferay.portlet.documentlibrary.store.DBStore;
 import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
@@ -397,8 +396,7 @@ public class ConvertDocumentLibrary
 	private static final String _FILE_SYSTEM_STORE_SUFFIX = "FileSystemStore";
 
 	private static final String[] _HOOKS = new String[] {
-		AdvancedFileSystemStore.class.getName(), DBStore.class.getName(),
-		FileSystemStore.class.getName()
+		AdvancedFileSystemStore.class.getName(), FileSystemStore.class.getName()
 	};
 
 	private static final Log _log = LogFactoryUtil.getLog(

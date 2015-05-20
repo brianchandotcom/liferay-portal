@@ -31,6 +31,7 @@ import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portlet.sites.util.SitesUtil;
 import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.web.upgrade.UserGroupsAdminWebUpgrade;
 
 import java.io.IOException;
 
@@ -42,6 +43,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Charles May
@@ -200,6 +202,11 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setUserGroupsAdminWebUpgrade(
+		UserGroupsAdminWebUpgrade UserGroupsAdminWebUpgrade) {
 	}
 
 }

@@ -515,6 +515,10 @@ public class JournalFolderLocalServiceImpl
 
 		parentFolderId = getParentFolderId(folder, parentFolderId);
 
+		if (folder.getParentFolderId() == parentFolderId) {
+			return folder;
+		}
+
 		validateFolderDDMStructures(folder.getFolderId(), parentFolderId);
 
 		validateFolder(
@@ -1013,8 +1017,13 @@ public class JournalFolderLocalServiceImpl
 
 		validateFolder(folderId, folder.getGroupId(), parentFolderId, name);
 
-		folder.setParentFolderId(parentFolderId);
-		folder.setTreePath(folder.buildTreePath());
+		long oldParentFolderId = folder.getParentFolderId();
+
+		if (oldParentFolderId != parentFolderId) {
+			folder.setParentFolderId(parentFolderId);
+			folder.setTreePath(folder.buildTreePath());
+		}
+
 		folder.setName(name);
 		folder.setDescription(description);
 		folder.setRestrictionType(restrictionType);
@@ -1033,6 +1042,11 @@ public class JournalFolderLocalServiceImpl
 
 		if (ddmStructureIds != null) {
 			updateFolderDDMStructures(folder, ddmStructureIds);
+		}
+
+		if (oldParentFolderId != parentFolderId) {
+			rebuildTree(
+				folder.getCompanyId(), folderId, folder.getTreePath(), true);
 		}
 
 		return folder;
@@ -1113,6 +1127,7 @@ public class JournalFolderLocalServiceImpl
 
 		for (JournalArticle article : articles) {
 			article.setFolderId(toFolderId);
+			article.setTreePath(article.buildTreePath());
 
 			journalArticlePersistence.update(article);
 

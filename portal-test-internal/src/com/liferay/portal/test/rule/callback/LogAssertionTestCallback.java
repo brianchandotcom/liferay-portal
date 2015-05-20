@@ -56,40 +56,7 @@ public class LogAssertionTestCallback
 		}
 	}
 
-	@Override
-	public void doAfterClass(
-		Description description, CaptureAppender captureAppender) {
-
-		ExpectedLogs expectedLogs = description.getAnnotation(
-			ExpectedLogs.class);
-
-		endAssert(expectedLogs, captureAppender);
-	}
-
-	@Override
-	public void doAfterMethod(
-		Description description, CaptureAppender captureAppender,
-		Object target) {
-
-		doAfterClass(description, captureAppender);
-	}
-
-	@Override
-	public CaptureAppender doBeforeClass(Description description) {
-		ExpectedLogs expectedLogs = description.getAnnotation(
-			ExpectedLogs.class);
-
-		return startAssert(expectedLogs);
-	}
-
-	@Override
-	public CaptureAppender doBeforeMethod(
-		Description description, Object target) {
-
-		return doBeforeClass(description);
-	}
-
-	protected static void endAssert(
+	public static void endAssert(
 		ExpectedLogs expectedLogs, CaptureAppender captureAppender) {
 
 		if (expectedLogs != null) {
@@ -128,6 +95,57 @@ public class LogAssertionTestCallback
 		finally {
 			_concurrentFailures.clear();
 		}
+	}
+
+	public static CaptureAppender startAssert(ExpectedLogs expectedLogs) {
+		_thread = Thread.currentThread();
+
+		CaptureAppender captureAppender = null;
+
+		if (expectedLogs != null) {
+			Class<?> clazz = expectedLogs.loggerClass();
+
+			captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
+				clazz.getName(), Level.toLevel(expectedLogs.level()));
+		}
+
+		installJdk14Handler();
+		installLog4jAppender();
+
+		return captureAppender;
+	}
+
+	@Override
+	public void doAfterClass(
+		Description description, CaptureAppender captureAppender) {
+
+		ExpectedLogs expectedLogs = description.getAnnotation(
+			ExpectedLogs.class);
+
+		endAssert(expectedLogs, captureAppender);
+	}
+
+	@Override
+	public void doAfterMethod(
+		Description description, CaptureAppender captureAppender,
+		Object target) {
+
+		doAfterClass(description, captureAppender);
+	}
+
+	@Override
+	public CaptureAppender doBeforeClass(Description description) {
+		ExpectedLogs expectedLogs = description.getAnnotation(
+			ExpectedLogs.class);
+
+		return startAssert(expectedLogs);
+	}
+
+	@Override
+	public CaptureAppender doBeforeMethod(
+		Description description, Object target) {
+
+		return doBeforeClass(description);
 	}
 
 	protected static void installJdk14Handler() {
@@ -171,24 +189,6 @@ public class LogAssertionTestCallback
 		}
 
 		return false;
-	}
-
-	protected static CaptureAppender startAssert(ExpectedLogs expectedLogs) {
-		_thread = Thread.currentThread();
-
-		CaptureAppender captureAppender = null;
-
-		if (expectedLogs != null) {
-			Class<?> clazz = expectedLogs.loggerClass();
-
-			captureAppender = Log4JLoggerTestUtil.configureLog4JLogger(
-				clazz.getName(), Level.toLevel(expectedLogs.level()));
-		}
-
-		installJdk14Handler();
-		installLog4jAppender();
-
-		return captureAppender;
 	}
 
 	private LogAssertionTestCallback() {

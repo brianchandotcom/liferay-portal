@@ -28,9 +28,14 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.rule.PACLTestRule;
+import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -350,6 +355,8 @@ public class PACLAggregateTest {
 
 			System.setProperty("catalina.base", ".");
 
+			CaptureAppender captureAppender = null;
+
 			Path tempStatePath = null;
 
 			try {
@@ -358,6 +365,17 @@ public class PACLAggregateTest {
 				System.setProperty(
 					"portal:" + PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
 					tempStatePath.toString());
+
+				com.liferay.portal.kernel.util.PropsUtil.setProps(
+					new PropsImpl());
+
+				SystemProperties.set(
+					"log4j.configure.on.startup", StringPool.FALSE);
+
+				Log4JUtil.configureLog4J(
+					PACLTestsProcessCallable.class.getClassLoader());
+
+				captureAppender = LogAssertionTestCallback.startAssert(null);
 
 				JUnitCore junitCore = new JUnitCore();
 
@@ -406,6 +424,8 @@ public class PACLAggregateTest {
 					catch (IOException ioe) {
 						throw new ProcessException(ioe);
 					}
+
+					LogAssertionTestCallback.endAssert(null, captureAppender);
 				}
 			}
 		}

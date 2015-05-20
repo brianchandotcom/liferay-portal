@@ -880,6 +880,16 @@ public class SitesImpl implements Sites {
 		User user = UserLocalServiceUtil.fetchUser(serviceContext.getUserId());
 
 		if (user == null) {
+			BackgroundTask backgroundTask =
+				BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
+					BackgroundTaskThreadLocal.getBackgroundTaskId());
+
+			if (backgroundTask != null) {
+				user = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
+			}
+		}
+
+		if (user == null) {
 			user = UserLocalServiceUtil.getUser(
 				GetterUtil.getLong(PrincipalThreadLocal.getName()));
 		}

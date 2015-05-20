@@ -309,8 +309,7 @@ public abstract class BaseDDMDisplay implements DDMDisplay {
 			getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.DYNAMIC_DATA_MAPPING, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"mvcPath", "/view_template.jsp");
+		portletURL.setParameter("mvcPath", "/view_template.jsp");
 		portletURL.setParameter("classNameId", String.valueOf(classNameId));
 		portletURL.setParameter("classPK", String.valueOf(classPK));
 

@@ -37,6 +37,7 @@ import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Adolfo Pérez
@@ -77,8 +78,11 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			new LiferaySyncCapability(bulkOperationCapability));
 		capabilityRegistry.addSupportedCapability(
 			WorkflowCapability.class, _liferayWorkflowCapability);
-		capabilityRegistry.addSupportedCapability(
-			CommentCapability.class, _commentCapability);
+
+		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			capabilityRegistry.addSupportedCapability(
+				CommentCapability.class, _commentCapability);
+		}
 	}
 
 	@Override

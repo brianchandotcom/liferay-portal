@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.repository.event.RepositoryEventListener;
 import com.liferay.portal.kernel.repository.event.RepositoryEventType;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.registry.RepositoryEventRegistry;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 
 /**
@@ -50,15 +49,12 @@ public class LiferayCommentCapability
 					public void execute(FileEntry fileEntry)
 						throws PortalException {
 
-						if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
-							CommentManagerUtil.addDiscussion(
-								fileEntry.getUserId(), fileEntry.getGroupId(),
-								DLFileEntryConstants.getClassName(),
-								fileEntry.getFileEntryId(),
-								fileEntry.getUserName());
-						}
+						CommentManagerUtil.addDiscussion(
+							fileEntry.getUserId(), fileEntry.getGroupId(),
+							DLFileEntryConstants.getClassName(),
+							fileEntry.getFileEntryId(),
+							fileEntry.getUserName());
 					}
-
 				};
 
 }

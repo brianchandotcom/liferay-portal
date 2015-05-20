@@ -29,7 +29,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 
 import java.io.Serializable;
 
-import javax.portlet.ActionRequest;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eduardo Lundgren
@@ -49,16 +49,16 @@ public class DDMUtil {
 		return getDDM().getDDMDisplay(classNameId);
 	}
 
-	public static DDMForm getDDMForm(ActionRequest actionRequest)
-		throws PortalException {
-
-		return getDDM().getDDMForm(actionRequest);
-	}
-
 	public static DDMForm getDDMForm(long classNameId, long classPK)
 		throws PortalException {
 
 		return getDDM().getDDMForm(classNameId, classPK);
+	}
+
+	public static DDMForm getDDMForm(PortletRequest portletRequest)
+		throws PortalException {
+
+		return getDDM().getDDMForm(portletRequest);
 	}
 
 	public static JSONArray getDDMFormFieldsJSONArray(

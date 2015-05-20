@@ -32,6 +32,7 @@
 		<dirset dir="password-policies-admin" includes="*" />
 		<dirset dir="polls" includes="*" />
 		<dirset dir="portlet-css" includes="*" />
+		<dirset dir="portlet-display-template" includes="*" />
 		<dirset dir="productivity-center" includes="*" />
 		<dirset dir="quick-note" includes="*" />
 		<dirset dir="roles" includes="*" />

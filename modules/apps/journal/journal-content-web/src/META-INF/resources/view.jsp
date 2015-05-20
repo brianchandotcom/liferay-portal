@@ -152,7 +152,7 @@ AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.get
 				%>
 
 				<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-					<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+					<portlet:param name="mvcPath" value="/edit_template.jsp" />
 					<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
 					<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 					<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />

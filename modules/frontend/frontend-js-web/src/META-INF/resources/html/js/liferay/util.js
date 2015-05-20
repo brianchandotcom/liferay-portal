@@ -1282,11 +1282,11 @@
 
 			ddmURL.setParameter('structureAvailableFields', config.structureAvailableFields);
 
-			if (config.struts_action) {
-				ddmURL.setParameter('struts_action', config.struts_action);
+			if (config.mvcPath) {
+				ddmURL.setParameter('mvcPath', config.mvcPath);
 			}
 			else {
-				ddmURL.setParameter('struts_action', '/dynamic_data_mapping/view');
+				ddmURL.setParameter('mvcPath', '/view.jsp');
 			}
 
 			ddmURL.setParameter('templateId', config.templateId);

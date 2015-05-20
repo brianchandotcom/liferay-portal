@@ -205,7 +205,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 </div>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editStructureURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_structure" />
+	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
 	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />
@@ -215,7 +215,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 </liferay-portlet:renderURL>
 
 <liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="editTemplateURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="struts_action" value="/dynamic_data_mapping/edit_template" />
+	<portlet:param name="mvcPath" value="/edit_template.jsp" />
 	<portlet:param name="closeRedirect" value="<%= currentURL %>" />
 	<portlet:param name="showBackURL" value="<%= Boolean.FALSE.toString() %>" />
 	<portlet:param name="refererPortletName" value="<%= JournalPortletKeys.JOURNAL %>" />

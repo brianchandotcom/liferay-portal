@@ -167,7 +167,7 @@ if (ddmStructureId > 0) {
 				refererPortletName: '<%= portlet.getPortletName() %>',
 				refererWebDAVToken: '<%= portlet.getWebDAVStorageToken() %>',
 				showAncestorScopes: true,
-				struts_action: '/dynamic_data_mapping/select_structure',
+				mvcPath: '/select_structure.jsp',
 				title: '<%= UnicodeLanguageUtil.get(request, "data-definitions") %>'
 			},
 			function(event) {

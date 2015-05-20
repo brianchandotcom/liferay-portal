@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.struts.PortletAction;
@@ -375,7 +376,7 @@ public class ImportLayoutsAction extends PortletAction {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		LayoutServiceUtil.importLayoutsInBackground(
+		ExportImportServiceUtil.importLayoutsInBackground(
 			fileName, groupId, privateLayout, actionRequest.getParameterMap(),
 			inputStream);
 	}
@@ -454,7 +455,7 @@ public class ImportLayoutsAction extends PortletAction {
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		return LayoutServiceUtil.validateImportLayoutsFile(
+		return ExportImportServiceUtil.validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);
 	}
 

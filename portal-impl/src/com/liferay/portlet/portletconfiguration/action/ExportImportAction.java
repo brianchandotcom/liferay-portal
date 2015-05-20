@@ -40,7 +40,7 @@ import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -277,10 +277,9 @@ public class ExportImportAction extends ImportLayoutsAction {
 				actionRequest, groupId, false, plid, portlet.getPortletId(),
 				ExportImportDateUtil.RANGE_ALL);
 
-			LayoutServiceUtil.exportPortletInfoAsFileInBackground(
+			ExportImportServiceUtil.exportPortletInfoAsFileInBackground(
 				portlet.getPortletId(), plid, groupId, portlet.getPortletId(),
-				actionRequest.getParameterMap(), dateRange.getStartDate(),
-				dateRange.getEndDate(), fileName);
+				actionRequest.getParameterMap(), fileName);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -302,7 +301,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
-		LayoutServiceUtil.importPortletInfoInBackground(
+		ExportImportServiceUtil.importPortletInfoInBackground(
 			portlet.getPortletId(), plid, groupId, portlet.getPortletId(),
 			actionRequest.getParameterMap(), inputStream);
 	}
@@ -336,7 +335,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		return LayoutServiceUtil.validateImportPortletInfo(
+		return ExportImportServiceUtil.validateImportPortletInfo(
 			exportImportConfiguration, inputStream);
 	}
 

@@ -28,8 +28,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portlet.sites.action.ActionUtil;
 
@@ -91,9 +91,9 @@ public class ExportLayoutsAction extends PortletAction {
 					actionRequest.getLocale(), "public-pages");
 			}
 
-			LayoutServiceUtil.exportLayoutsAsFileInBackground(
+			ExportImportServiceUtil.exportLayoutsAsFileInBackground(
 				taskName, groupId, privateLayout, layoutIds,
-				actionRequest.getParameterMap(), null, null);
+				actionRequest.getParameterMap());
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

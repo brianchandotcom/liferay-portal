@@ -40,6 +40,7 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -474,7 +475,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		larFile = ExportImportServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);
 
 		Map<String, Serializable> importSettingsMap =
@@ -492,7 +493,7 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		LayoutLocalServiceUtil.importLayouts(importConfiguration, larFile);
+		ExportImportServiceUtil.importLayouts(importConfiguration, larFile);
 	}
 
 	protected void testAvailableLocales(

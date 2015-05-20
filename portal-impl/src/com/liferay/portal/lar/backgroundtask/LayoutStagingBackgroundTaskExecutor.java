@@ -33,8 +33,8 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.StagingLocalServiceUtil;
@@ -89,7 +89,7 @@ public class LayoutStagingBackgroundTaskExecutor
 
 			initThreadLocals(sourceGroupId, privateLayout);
 
-			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 				exportImportConfiguration);
 
 			markBackgroundTask(
@@ -199,16 +199,16 @@ public class LayoutStagingBackgroundTaskExecutor
 
 		@Override
 		public MissingReferences call() throws PortalException {
-			LayoutLocalServiceUtil.importLayoutsDataDeletions(
+			ExportImportLocalServiceUtil.importLayoutsDataDeletions(
 				_exportImportConfiguration, _file);
 
 			MissingReferences missingReferences =
-				LayoutLocalServiceUtil.validateImportLayoutsFile(
+				ExportImportLocalServiceUtil.validateImportLayoutsFile(
 					_exportImportConfiguration, _file);
 
 			markBackgroundTask(_backgroundTaskId, "validated");
 
-			LayoutLocalServiceUtil.importLayouts(
+			ExportImportLocalServiceUtil.importLayouts(
 				_exportImportConfiguration, _file);
 
 			initLayoutSetBranches(_userId, _sourceGroupId, _targetGroupId);

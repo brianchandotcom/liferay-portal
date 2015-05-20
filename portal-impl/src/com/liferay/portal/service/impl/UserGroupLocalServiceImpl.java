@@ -1031,7 +1031,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			files[0] = layoutLocalService.exportLayoutsAsFile(
+			files[0] = exportImportLocalService.exportLayoutsAsFile(
 				exportImportConfiguration);
 		}
 
@@ -1052,7 +1052,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			files[1] = layoutLocalService.exportLayoutsAsFile(
+			files[1] = exportImportLocalService.exportLayoutsAsFile(
 				exportImportConfiguration);
 		}
 
@@ -1144,7 +1144,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			layoutLocalService.importLayouts(
+			exportImportLocalService.importLayouts(
 				exportImportConfiguration, privateLayoutsFile);
 		}
 
@@ -1165,7 +1165,7 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			layoutLocalService.importLayouts(
+			exportImportLocalService.importLayouts(
 				exportImportConfiguration, publicLayoutsFile);
 		}
 	}

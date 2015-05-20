@@ -35,7 +35,7 @@ import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
@@ -149,13 +149,14 @@ public class StagingLocalizationTest {
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 
 		CompanyTestUtil.resetCompanyLocales(
 			TestPropsValues.getCompanyId(), languageIds, defaultLanguageId);
 
-		LayoutLocalServiceUtil.importLayouts(exportImportConfiguration, file);
+		ExportImportLocalServiceUtil.importLayouts(
+			exportImportConfiguration, file);
 
 		JournalArticleResource articleResource =
 			JournalArticleResourceLocalServiceUtil.

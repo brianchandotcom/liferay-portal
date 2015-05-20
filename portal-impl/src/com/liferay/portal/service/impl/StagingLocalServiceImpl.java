@@ -424,14 +424,15 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 
 			settingsMap.put("userId", userId);
 
-			layoutLocalService.importLayoutsDataDeletions(
+			exportImportLocalService.importLayoutsDataDeletions(
 				exportImportConfiguration, file);
 
 			MissingReferences missingReferences =
-				layoutLocalService.validateImportLayoutsFile(
+				exportImportLocalService.validateImportLayoutsFile(
 					exportImportConfiguration, file);
 
-			layoutLocalService.importLayouts(exportImportConfiguration, file);
+			exportImportLocalService.importLayouts(
+				exportImportConfiguration, file);
 
 			return missingReferences;
 		}

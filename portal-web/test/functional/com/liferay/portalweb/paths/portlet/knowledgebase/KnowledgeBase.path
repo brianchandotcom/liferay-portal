@@ -14,11 +14,6 @@
 	<td>//a[@role='menuitem' and contains(.,'${kbTemplateTitle}')]</td>
 </tr>
 <tr>
-	<td>HEADER</td>
-	<td>//h3[@class='header-title']/span</td>
-	<td></td>
-</tr>
-<tr>
 	<td></td>
 	<td></td>
 	<td></td>

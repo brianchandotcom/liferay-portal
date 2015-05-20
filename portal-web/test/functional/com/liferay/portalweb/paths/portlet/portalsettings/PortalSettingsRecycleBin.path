@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>PortalSettingsRecycleBin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">PortalSettingsRecycleBin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>RECYCLE_BIN_TITLE</td>
+	<td>//div[@id='_130_recycleBin']/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_REYCLE_BIN_CHECKBOX</td>
+	<td>//label//input[@id='_130_trashEnabled']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

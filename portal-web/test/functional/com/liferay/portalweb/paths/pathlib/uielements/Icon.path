@@ -25,12 +25,17 @@
 </tr>
 <tr>
 	<td>CLOSE</td>
-	<td>//button[contains(@class,'close-content')]</td>
+	<td>//button[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COG</td>
 	<td>//div[@id='main-content']//i[contains(@class,'icon-cog') and contains(@class,'lfr-icon-menu-icon')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS</td>
+	<td>//div[contains(.,'Details')]/span/a/i[@class='icon-file-alt']</td>
 	<td></td>
 </tr>
 <tr>

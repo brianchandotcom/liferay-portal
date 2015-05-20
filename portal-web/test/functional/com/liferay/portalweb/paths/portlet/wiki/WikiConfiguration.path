@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>WikiConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">WikiConfiguration</td></tr>
+</thead>
+<tbody>
+<!--COMMUNICATION-->
+<tr>
+	<td>COMMUNICATION_SELECT_NODE_ID</td>
+	<td>//select[contains(@id,'nodeId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMUNICATION_SELECT_TITLE</td>
+	<td>//select[contains(@Id,'title')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SCOPE-->
+<tr>
+	<td>SCOPE_SELECT</td>
+	<td>//div[@class='btn-group lfr-icon-menu']/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCOPE_MENULIST_SITE_NAME</td>
+	<td>//a[@role='menuitem' and contains(.,'${key_siteName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

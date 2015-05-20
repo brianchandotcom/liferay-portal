@@ -9,6 +9,21 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD_BOOKMARK</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Add Bookmark')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FOLDER</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Add Folder')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_SUBFOLDER</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Subfolder')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Advanced')]</td>
 	<td></td>
@@ -19,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AUTHENTICATION</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Authentication')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIZATION</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Categorization')]</td>
 	<td></td>
@@ -26,6 +46,11 @@
 <tr>
 	<td>COMMENTS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Comments')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_SHARING</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Content Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -49,6 +74,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EDIT</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EMAIL_NOTIFICATIONS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Email Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'General')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Javascript')]</td>
 	<td></td>
@@ -59,8 +99,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAIL_HOST_NAMES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mail Host Names')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOBILE_DEVICE_RULES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Mobile Device Rules')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,6 +129,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECYCLE_BIN</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ROLES</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Roles')]</td>
 	<td></td>
@@ -94,8 +154,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SUBSCRIBE</td>
+	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Subscribe')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>USER_GROUPS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'User Groups')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Users')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS_CHECKBOX</td>
+	<td>//tr[contains(.,'${key_roleName}')]//input[@value='${key_permissionsDefinitionKey}']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GUEST_ACCESS_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]//input[@value='ACCESS']</td>
 	<td></td>
@@ -56,6 +61,11 @@
 <tr>
 	<td>GUEST_ADD_DOCUMENT_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]//input[@value='ADD_DOCUMENT']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_ADD_ENTRY</td>
+	<td>//tr[contains(.,'Guest')]//input[@value='ADD_ENTRY']</td>
 	<td></td>
 </tr>
 <tr>
@@ -91,6 +101,11 @@
 <tr>
 	<td>GUEST_REPLY_TO_MESSAGE_CHECKBOX</td>
 	<td>//tr[contains(.,'Guest')]/input[contains(@type,'checkbox') and contains(@name,'ACTION_REPLY_TO_MESSAGE')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST_SUBSCRIBE_CHECKBOX</td>
+	<td>//input[@id='_198_guestPermissions_SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +154,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITE_MEMBER_ADD_ENTRY_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_ENTRY']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_MEMBER_ADD_SUBFOLDER_CHECKBOX</td>
 	<td>//tr[contains(.,'Site Member')]//input[@value='ADD_SUBFOLDER']</td>
 	<td></td>
@@ -161,6 +181,11 @@
 <tr>
 	<td>SITE_MEMBER_PERMISSIONS_CHECKBOX</td>
 	<td>//tr[contains(.,'Site Member')]//input[@value='PERMISSIONS']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_MEMBER_SUBSCRIBE_CHECKBOX</td>
+	<td>//tr[contains(.,'Site Member')]//input[@value='SUBSCRIBE']</td>
 	<td></td>
 </tr>
 <tr>

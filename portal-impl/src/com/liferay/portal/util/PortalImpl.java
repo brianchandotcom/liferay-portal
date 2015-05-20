@@ -204,6 +204,7 @@ import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.journal.NoSuchFeedException;
+import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolder;
 import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.portlet.messageboards.action.EditDiscussionAction;
@@ -1031,19 +1032,21 @@ public class PortalImpl implements Portal {
 			for (FriendlyURLResolver friendlyURLResolver :
 					friendlyURLResolvers) {
 
-				if (friendlyURL.startsWith(
+				if (!friendlyURL.startsWith(
 						friendlyURLResolver.getURLSeparator())) {
 
-					try {
-						actualURL = friendlyURLResolver.getActualURL(
-							companyId, groupId, privateLayout, mainPath,
-							friendlyURL, params, requestContext);
+					continue;
+				}
 
-						break;
-					}
-					catch (Exception e) {
-						throw new NoSuchLayoutException(e);
-					}
+				try {
+					actualURL = friendlyURLResolver.getActualURL(
+						companyId, groupId, privateLayout, mainPath,
+						friendlyURL, params, requestContext);
+
+					break;
+				}
+				catch (Exception e) {
+					throw new NoSuchLayoutException(e);
 				}
 			}
 		}
@@ -2771,7 +2774,8 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver("/-/");
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 
 		if (friendlyURLResolver == null) {
 			return null;
@@ -2797,7 +2801,8 @@ public class PortalImpl implements Portal {
 		throws PortalException {
 
 		FriendlyURLResolver friendlyURLResolver =
-			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver("/-/");
+			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
+				JournalArticleConstants.CANONICAL_URL_SEPARATOR);
 
 		if (friendlyURLResolver == null) {
 			return null;
@@ -2805,7 +2810,7 @@ public class PortalImpl implements Portal {
 
 		LayoutFriendlyURLComposite layoutFriendlyURLComposite =
 			friendlyURLResolver.getLayoutFriendlyURLComposite(
-				0L, groupId, privateLayout, friendlyURL,
+				0, groupId, privateLayout, friendlyURL,
 				new HashMap<String, String[]>(),
 				new HashMap<String, Object>());
 
@@ -2953,20 +2958,22 @@ public class PortalImpl implements Portal {
 			for (FriendlyURLResolver friendlyURLResolver :
 					friendlyURLResolvers) {
 
-				if (friendlyURL.startsWith(
+				if (!friendlyURL.startsWith(
 						friendlyURLResolver.getURLSeparator())) {
 
-					try {
-						layoutFriendlyURLComposite =
-							friendlyURLResolver.getLayoutFriendlyURLComposite(
-								companyId, groupId, privateLayout, friendlyURL,
-								params, requestContext);
+					continue;
+				}
 
-						break;
-					}
-					catch (Exception e) {
-						throw new NoSuchLayoutException(e);
-					}
+				try {
+					layoutFriendlyURLComposite =
+						friendlyURLResolver.getLayoutFriendlyURLComposite(
+							companyId, groupId, privateLayout, friendlyURL,
+							params, requestContext);
+
+					break;
+				}
+				catch (Exception e) {
+					throw new NoSuchLayoutException(e);
 				}
 			}
 		}
@@ -2979,10 +2986,9 @@ public class PortalImpl implements Portal {
 			getActualLayoutQueryStringComposite(
 				groupId, privateLayout, friendlyURL, params, requestContext);
 
-		Layout layout = layoutQueryStringComposite.getLayout();
-		String layoutFriendlyURL = layoutQueryStringComposite.getFriendlyURL();
-
-		return new LayoutFriendlyURLComposite(layout, layoutFriendlyURL);
+		return new LayoutFriendlyURLComposite(
+			layoutQueryStringComposite.getLayout(),
+			layoutQueryStringComposite.getFriendlyURL());
 	}
 
 	@Override
@@ -5953,7 +5959,7 @@ public class PortalImpl implements Portal {
 		long companyId = PortalInstances.getCompanyId(request);
 
 		return friendlyURLResolver.getLayoutFriendlyURLComposite(
-			companyId, 0L, privateLayout, friendlyURL, params, requestContext);
+			companyId, 0, privateLayout, friendlyURL, params, requestContext);
 	}
 
 	@Override

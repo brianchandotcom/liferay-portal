@@ -14,28 +14,30 @@
 
 package com.liferay.portal.tools.upgrade.table.builder;
 
-import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropertiesUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
-import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
-import com.liferay.portal.util.FileImpl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.PathMatcher;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-
-import org.apache.commons.io.FilenameUtils;
-import org.apache.tools.ant.DirectoryScanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Brian Wing Shun Chan
@@ -45,14 +47,13 @@ public class UpgradeTableBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		boolean bnd = GetterUtil.getBoolean(arguments.get("upgrade.bnd"));
 		String moduleName = arguments.get("upgrade.module.name");
 		String upgradeBaseDirName = arguments.get("upgrade.base.dir");
 		String upgradeTableDirName = arguments.get("upgrade.table.dir");
 
 		try {
 			new UpgradeTableBuilder(
-				bnd, moduleName, upgradeBaseDirName, upgradeTableDirName);
+				moduleName, upgradeBaseDirName, upgradeTableDirName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -60,131 +61,141 @@ public class UpgradeTableBuilder {
 	}
 
 	public UpgradeTableBuilder(
-			boolean bnd, String moduleName, String upgradeBaseDirName,
+			String moduleName, String upgradeBaseDirName,
 			String upgradeTableDirName)
 		throws Exception {
 
-		_bnd = bnd;
 		_moduleName = moduleName;
 		_upgradeBaseDirName = upgradeBaseDirName;
 		_upgradeTableDirName = upgradeTableDirName;
 
-		DirectoryScanner ds = new DirectoryScanner();
+		FileSystem fileSystem = FileSystems.getDefault();
 
-		ds.setBasedir(_upgradeBaseDirName);
-		ds.setIncludes(new String[] {"**\\upgrade\\v**\\util\\*Table.java"});
+		final PathMatcher pathMatcher = fileSystem.getPathMatcher(
+			"glob:**/upgrade/v**/util/*Table.java");
 
-		ds.scan();
+		Files.walkFileTree(
+			Paths.get(_upgradeBaseDirName),
+			new SimpleFileVisitor<Path>() {
 
-		String[] filePaths = ds.getIncludedFiles();
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
 
-		for (String filePath : filePaths) {
-			filePath = StringUtil.replace(filePath, "\\", "/");
+					if (pathMatcher.matches(path)) {
+						_buildUpgradeTable(path);
+					}
 
-			String upgradeFileVersion = filePath.replaceFirst(
-				".*/upgrade/v(.+)/util.*", "$1");
-
-			upgradeFileVersion = upgradeFileVersion.replaceAll("_", ".");
-
-			if (upgradeFileVersion.contains("to")) {
-				upgradeFileVersion = upgradeFileVersion.replaceFirst(
-					".+\\.to\\.(.+)", "$1");
-			}
-
-			String fileName = FilenameUtils.getName(filePath);
-
-			String upgradeFileName = fileName.replaceFirst(
-				"Table", "ModelImpl");
-
-			String upgradeFilePath =
-				_upgradeTableDirName + "/" + upgradeFileVersion + "/" +
-					upgradeFileName;
-
-			if (!_fileUtil.exists(upgradeFilePath)) {
-				if (!upgradeFileVersion.equals(_getModuleVersion())) {
-					continue;
+					return FileVisitResult.CONTINUE;
 				}
 
-				upgradeFilePath = _findUpgradeFilePath(upgradeFileName);
-
-				if (upgradeFilePath == null) {
-					continue;
-				}
-			}
-
-			String content = _fileUtil.read(upgradeFilePath);
-
-			String packagePath =
-				"com.liferay.portal.upgrade.v" +
-					StringUtil.replace(upgradeFileVersion, ".", "_") + ".util";
-			String className = fileName.replaceFirst("\\.java", "");
-
-			String author = _getAuthor(fileName);
-
-			File indexesFile = _getIndexesFile(upgradeFileVersion);
-
-			String[] addIndexes = _getAddIndexes(
-				indexesFile, fileName.replaceFirst("Table\\.java", ""));
-
-			content = _getContent(
-				packagePath, className, content, author, addIndexes);
-
-			_fileUtil.write(filePath, content);
-		}
+			});
 	}
 
-	private String _findModuleIndexFileName() {
-		DirectoryScanner ds = new DirectoryScanner();
+	private void _buildUpgradeTable(Path path) throws IOException {
+		String pathString = path.toString();
 
-		ds.setBasedir(_upgradeBaseDirName);
-		ds.setIncludes(
-			new String[] {
-				"**\\" + _moduleName + "-service\\src\\*\\sql\\indexes.sql"
+		pathString = pathString.replace('\\', '/');
+
+		String upgradeFileVersion = pathString.replaceFirst(
+			".*/upgrade/v(.+)/util.*", "$1");
+
+		upgradeFileVersion = upgradeFileVersion.replace('_', '.');
+
+		if (upgradeFileVersion.contains("to")) {
+			upgradeFileVersion = upgradeFileVersion.replaceFirst(
+				".+\\.to\\.(.+)", "$1");
+		}
+
+		String fileName = String.valueOf(path.getFileName());
+
+		String upgradeFileName = fileName.replaceFirst(
+			"Table.java", "ModelImpl.java");
+
+		Path upgradeFilePath = Paths.get(
+			_upgradeTableDirName, upgradeFileVersion, upgradeFileName);
+
+		if (Files.notExists(upgradeFilePath)) {
+			if (!upgradeFileVersion.equals(_getModuleVersion())) {
+				return;
+			}
+
+			upgradeFilePath = _getUpgradeFilePath(upgradeFileName);
+
+			if (upgradeFilePath == null) {
+				return;
+			}
+		}
+
+		String content = _read(path);
+
+		String packagePath = _getPackagePath(content);
+
+		String className = fileName.replaceFirst("\\.java", "");
+
+		String upgradeFileContent = _read(upgradeFilePath);
+
+		String author = _getAuthor(content);
+
+		Path indexesFilePath = _getIndexesFilePath(upgradeFileVersion);
+
+		String[] addIndexes = _getAddIndexes(
+			indexesFilePath, fileName.replaceFirst("Table\\.java", ""));
+
+		content = _getContent(
+			packagePath, className, upgradeFileContent, author, addIndexes);
+
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private List<Path> _findFiles(
+			String baseDirName, String pattern, final int limit)
+		throws IOException {
+
+		final List<Path> paths = new ArrayList<>();
+
+		FileSystem fileSystem = FileSystems.getDefault();
+
+		final PathMatcher pathMatcher = fileSystem.getPathMatcher(
+			"glob:" + pattern);
+
+		Files.walkFileTree(
+			Paths.get(baseDirName),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path filePath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					if (pathMatcher.matches(filePath)) {
+						paths.add(filePath);
+
+						if (paths.size() == limit) {
+							return FileVisitResult.TERMINATE;
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
 			});
 
-		ds.scan();
-
-		String[] fileNames = ds.getIncludedFiles();
-
-		if (fileNames.length > 0) {
-			return _upgradeBaseDirName + fileNames[0];
-		}
-		else {
-			return null;
-		}
+		return paths;
 	}
 
-	private String _findUpgradeFilePath(String modelName) {
-		DirectoryScanner ds = new DirectoryScanner();
-
-		ds.setBasedir(_upgradeBaseDirName);
-
-		ds.setIncludes(new String[] {"**\\" + modelName});
-
-		ds.scan();
-
-		String[] fileNames = ds.getIncludedFiles();
-
-		if (fileNames.length > 0) {
-			return fileNames[0];
-		}
-		else {
-			return null;
-		}
-	}
-
-	private String[] _getAddIndexes(File indexesFile, String tableName)
-		throws Exception {
+	private String[] _getAddIndexes(Path indexesFilePath, String tableName)
+		throws IOException {
 
 		List<String> addIndexes = new ArrayList<>();
 
-		try (UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(
-					new InputStreamReader(new FileInputStream(indexesFile)))) {
+		try (BufferedReader bufferedReader = Files.newBufferedReader(
+				indexesFilePath, StandardCharsets.UTF_8)) {
 
 			String line = null;
 
-			while ((line = unsyncBufferedReader.readLine()) != null) {
+			while ((line = bufferedReader.readLine()) != null) {
 				if (line.contains(" on " + tableName + " (") ||
 					line.contains(" on " + tableName + "_ (")) {
 
@@ -202,28 +213,24 @@ public class UpgradeTableBuilder {
 		return addIndexes.toArray(new String[addIndexes.size()]);
 	}
 
-	private String _getAuthor(String fileName) throws Exception {
-		if (_fileUtil.exists(fileName)) {
-			String content = _fileUtil.read(fileName);
+	private String _getAuthor(String content) throws IOException {
+		int x = content.indexOf("* @author ");
 
-			int x = content.indexOf("* @author ");
+		if (x != -1) {
+			int y = content.indexOf("*", x + 1);
 
-			if (x != -1) {
-				int y = content.indexOf("*", x + 1);
-
-				if (y != -1) {
-					return content.substring(x + 10, y).trim();
-				}
+			if (y != -1) {
+				return content.substring(x + 10, y).trim();
 			}
 		}
 
-		return ServiceBuilder.AUTHOR;
+		return _AUTHOR;
 	}
 
 	private String _getContent(
 			String packagePath, String className, String content, String author,
 			String[] addIndexes)
-		throws Exception {
+		throws IOException {
 
 		int x = content.indexOf("public static final String TABLE_NAME =");
 
@@ -241,18 +248,19 @@ public class UpgradeTableBuilder {
 
 		content = content.substring(x, y + 1);
 
-		content = StringUtil.replace(
-			content,
-			new String[] {"\t", "{ \"", "new Integer(Types.", ") }", " }"},
-			new String[] {"", "{\"", "Types.", "}", "}"});
+		content = content.replace("\t", "");
+		content = content.replace("{ \"", "{\"");
+		content = content.replace("new Integer(Types.", "Types.");
+		content = content.replace(") }", "}");
+		content = content.replace(" }", "}");
 
 		while (content.contains("\n\n")) {
-			content = StringUtil.replace(content, "\n\n", "\n");
+			content = content.replace("\n\n", "\n");
 		}
 
-		StringBundler sb = new StringBundler();
+		StringBuilder sb = new StringBuilder();
 
-		sb.append(_fileUtil.read("../copyright.txt"));
+		sb.append(_read(Paths.get("../copyright.txt")));
 
 		sb.append("\n\npackage ");
 		sb.append(packagePath);
@@ -270,7 +278,7 @@ public class UpgradeTableBuilder {
 		sb.append(className);
 		sb.append(" {\n\n");
 
-		String[] lines = StringUtil.splitLines(content);
+		String[] lines = content.split("\\n");
 
 		for (String line : lines) {
 			if (line.startsWith("public static") || line.startsWith("};")) {
@@ -311,52 +319,87 @@ public class UpgradeTableBuilder {
 		return sb.toString();
 	}
 
-	private File _getIndexesFile(String upgradeFileVersion) {
-		File indexesFile = new File(
-			_upgradeTableDirName + "/" + upgradeFileVersion + "/indexes.sql");
+	private Path _getIndexesFilePath(String upgradeFileVersion)
+		throws IOException {
 
-		if (_moduleName.equals("portal-impl")) {
-			if (!indexesFile.exists()) {
-				indexesFile = new File("../sql/indexes.sql");
+		Path indexesFilePath = null;
+
+		if (_moduleName.equals(_PORTAL_IMPL_MODULE_NAME)) {
+			indexesFilePath = Paths.get(
+				_upgradeTableDirName, upgradeFileVersion, "indexes.sql");
+
+			if (Files.notExists(indexesFilePath)) {
+				indexesFilePath = Paths.get("../sql/indexes.sql");
 			}
 		}
 		else {
-			indexesFile = new File(_findModuleIndexFileName());
+			List<Path> paths = _findFiles(
+				_upgradeBaseDirName,
+				"**/" + _moduleName + "-service/**/sql/indexes.sql", 1);
+
+			if (!paths.isEmpty()) {
+				indexesFilePath = paths.get(0);
+			}
 		}
 
-		return indexesFile;
+		return indexesFilePath;
 	}
 
-	private String _getModuleVersion() throws Exception {
-		if (_bnd) {
-			DirectoryScanner ds = new DirectoryScanner();
-
-			ds.setBasedir(_upgradeBaseDirName);
-			ds.setIncludes(
-				new String[] {"**\\" + _moduleName + "\\*-service\\*.bnd"});
-
-			ds.scan();
-
-			String[] fileNames = ds.getIncludedFiles();
-
-			if (fileNames.length > 0) {
-				String content = _fileUtil.read(fileNames[0]);
-
-				Properties properties = PropertiesUtil.load(content);
-
-				return properties.getProperty("Bundle-Version");
-			}
-
-			return StringPool.BLANK;
-		}
-		else {
+	private String _getModuleVersion() throws IOException {
+		if (_moduleName.equals(_PORTAL_IMPL_MODULE_NAME)) {
 			return ReleaseInfo.getVersion();
 		}
+
+		List<Path> paths = _findFiles(
+			_upgradeBaseDirName, "**\\" + _moduleName + "\\*-service\\*.bnd",
+			1);
+
+		if (paths.isEmpty()) {
+			return "";
+		}
+
+		Properties properties = new Properties();
+
+		try (InputStream inputStream = Files.newInputStream(paths.get(0))) {
+			properties.load(inputStream);
+		}
+
+		return properties.getProperty("Bundle-Version", "");
 	}
 
-	private static final FileImpl _fileUtil = FileImpl.getInstance();
+	private String _getPackagePath(String content) {
+		Matcher matcher = _packagePathPattern.matcher(content);
 
-	private final Boolean _bnd;
+		if (matcher.find()) {
+			return matcher.group(1);
+		}
+
+		return null;
+	}
+
+	private Path _getUpgradeFilePath(String fileName) throws IOException {
+		List<Path> paths = _findFiles(_upgradeBaseDirName, "**/" + fileName, 1);
+
+		if (paths.isEmpty()) {
+			return null;
+		}
+
+		return paths.get(0);
+	}
+
+	private String _read(Path path) throws IOException {
+		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
+
+		return s.replace("\r\n", "\n");
+	}
+
+	private static final String _AUTHOR = "Brian Wing Shun Chan";
+
+	private static final String _PORTAL_IMPL_MODULE_NAME = "portal-impl";
+
+	private static final Pattern _packagePathPattern = Pattern.compile(
+		"package (.+?);");
+
 	private final String _moduleName;
 	private final String _upgradeBaseDirName;
 	private final String _upgradeTableDirName;

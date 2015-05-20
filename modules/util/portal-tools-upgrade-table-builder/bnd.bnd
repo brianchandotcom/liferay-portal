@@ -1,5 +1,12 @@
 Bundle-Name: Liferay Portal Tools Upgrade Table Builder
 Bundle-SymbolicName: com.liferay.portal.tools.upgrade.table.builder
 Bundle-Version: 1.0.0
-Include-Resource: classes
+Include-Resource:\
+	classes,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/CharPool.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/GetterUtil.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/ReleaseInfo.class,\
+	@../../../portal-service/portal-service.jar!/com/liferay/portal/kernel/util/Validator.class
 Main-Class: com.liferay.portal.tools.upgrade.table.builder.UpgradeTableBuilder

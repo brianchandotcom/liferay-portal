@@ -981,27 +981,6 @@
 		<css-class-wrapper>portlet-group-statistics</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>183</portlet-name>
-		<icon>/html/icons/portlet_display_template.png</icon>
-		<parent-struts-path>dynamic_data_mapping</parent-struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.portlet.portletdisplaytemplate.lar.PortletDisplayTemplatePortletDataHandler</portlet-data-handler-class>
-		<webdav-storage-token>application_display_template</webdav-storage-token>
-		<webdav-storage-class>com.liferay.portlet.portletdisplaytemplate.webdav.ApplicationDisplayTemplateWebDAVStorageImpl</webdav-storage-class>
-		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
-		<control-panel-entry-weight>2.0</control-panel-entry-weight>
-		<ddm-display>com.liferay.portlet.portletdisplaytemplate.ddm.PortletDisplayTemplateDDMDisplay</ddm-display>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<autopropagated-parameters>scopeTitle,showAncestorScopes,showManageTemplates,showToolbar</autopropagated-parameters>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/dynamic_data_mapping/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-dynamic-data-mapping</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-	</portlet>
-	<portlet>
 		<portlet-name>186</portlet-name>
 		<icon>/html/icons/directory.png</icon>
 		<parent-struts-path>directory</parent-struts-path>

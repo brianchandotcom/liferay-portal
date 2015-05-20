@@ -1320,27 +1320,6 @@
 		</security-role-ref>
 	</portlet>
 	<portlet>
-		<portlet-name>183</portlet-name>
-		<display-name>Application Display Templates</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
-		<init-param>
-			<name>refererWebDAVToken</name>
-			<value>application_display_template</value>
-		</init-param>
-		<init-param>
-			<name>view-action</name>
-			<value>/o/ddm-web/view_template.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>186</portlet-name>
 		<display-name>Friends Directory</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>

@@ -133,7 +133,8 @@ public class PortletKeys {
 
 	public static final String PORTLET_CONFIGURATION = "86";
 
-	public static final String PORTLET_DISPLAY_TEMPLATES = "183";
+	public static final String PORTLET_DISPLAY_TEMPLATES =
+		"com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet";
 
 	public static final String PORTLET_SHARING = "133";
 

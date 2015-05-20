@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.comment;
 /**
  * @author Adolfo Pérez
  */
-public interface WorkflowableComment extends DiscussionComment {
+public interface WorkflowableComment extends Comment {
 
 	public long getCompanyId();
 

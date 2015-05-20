@@ -33,7 +33,7 @@ import java.util.List;
  * @author Adolfo Pérez
  */
 public class MBDiscussionCommentImpl
-	extends MBCommentImpl implements WorkflowableComment {
+	extends MBCommentImpl implements DiscussionComment, WorkflowableComment {
 
 	public MBDiscussionCommentImpl(
 		MBMessage message, MBTreeWalker treeWalker,
@@ -46,20 +46,6 @@ public class MBDiscussionCommentImpl
 		_ratingsEntries = ratingsEntries;
 		_ratingsStats = ratingsStats;
 		_pathThemeImages = pathThemeImages;
-	}
-
-	@Override
-	public long getCompanyId() {
-		MBMessage message = getMessage();
-
-		return message.getCompanyId();
-	}
-
-	@Override
-	public long getGroupId() {
-		MBMessage message = getMessage();
-
-		return message.getGroupId();
 	}
 
 	@Override
@@ -88,13 +74,6 @@ public class MBDiscussionCommentImpl
 	}
 
 	@Override
-	public long getPrimaryKey() {
-		MBMessage message = getMessage();
-
-		return message.getPrimaryKey();
-	}
-
-	@Override
 	public RatingsEntry getRatingsEntry() {
 		long classPK = getCommentId();
 
@@ -118,13 +97,6 @@ public class MBDiscussionCommentImpl
 		}
 
 		return RatingsStatsUtil.create(0);
-	}
-
-	@Override
-	public int getStatus() {
-		MBMessage message = getMessage();
-
-		return message.getStatus();
 	}
 
 	@Override

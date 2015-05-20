@@ -14,17 +14,17 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmDeleteStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMDeleteStructureActionCommand extends DDMBaseActionCommand {
 
@@ -46,26 +46,30 @@ public class DDMDeleteStructureActionCommand extends DDMBaseActionCommand {
 
 		long[] deleteStructureIds = null;
 
-		long structureId = ParamUtil.getLong(
-			portletRequest, DDMConstants.CLASS_PK);
+		long structureId = ParamUtil.getLong(portletRequest, "classPK");
 
 		if (structureId > 0) {
 			deleteStructureIds = new long[] {structureId};
 		}
 		else {
 			deleteStructureIds = StringUtil.split(
-				ParamUtil.getString(
-					portletRequest, DDMConstants.DELETE_STRUCTURE_IDS), 0L);
+				ParamUtil.getString(portletRequest, "deleteStructureIds"), 0L);
 		}
 
 		for (long deleteStructureId : deleteStructureIds) {
-			DDMStructureServiceUtil.deleteStructure(deleteStructureId);
+			_ddmStructureService.deleteStructure(deleteStructureId);
 		}
 
-		String redirect = ParamUtil.getString(
-			portletRequest, DDMConstants.REDIRECT);
-
-		super.setRedirectAttribute(portletRequest, redirect);
+		setRedirectAttribute(portletRequest);
 	}
+
+	@Reference
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	private DDMStructureService _ddmStructureService;
 
 }

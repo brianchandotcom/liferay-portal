@@ -14,29 +14,27 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
+import com.liferay.portlet.dynamicdatamapping.util.DDM;
 
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -47,44 +45,33 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmAddStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
-public class DDMAddStructureActionCommand
-	extends DDMUpdateStructureActionCommand {
+public class DDMAddStructureActionCommand extends DDMBaseActionCommand {
 
 	protected DDMStructure addStructure(PortletRequest portletRequest)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(portletRequest, DDMConstants.GROUP_ID);
-
+		long groupId = ParamUtil.getLong(portletRequest, "groupId");
 		long scopeClassNameId = ParamUtil.getLong(
-			portletRequest, DDMConstants.SCOPE_CLASS_NAME_ID);
-
+			portletRequest, "scopeClassNameId");
 		String structureKey = ParamUtil.getString(
-			portletRequest, DDMConstants.STRUCTURE_KEY);
-
+			portletRequest, "structureKey");
 		long parentStructureId = ParamUtil.getLong(
-			portletRequest, DDMConstants.PARENT_STRUCTURE_ID,
+			portletRequest, "parentStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, DDMConstants.NAME);
-
+			portletRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				portletRequest, DDMConstants.DESCRIPTION);
-
-		DDMForm ddmForm = DDMUtil.getDDMForm((ActionRequest)portletRequest);
-
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
-
-		String storageType = ParamUtil.getString(
-			portletRequest, DDMConstants.STORAGE_TYPE);
+			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+		DDMForm ddmForm = _ddm.getDDMForm(portletRequest);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
+		String storageType = ParamUtil.getString(portletRequest, "storageType");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), portletRequest);
 
-		return DDMStructureServiceUtil.addStructure(
+		return _ddmStructureService.addStructure(
 			groupId, parentStructureId, scopeClassNameId, structureKey, nameMap,
 			descriptionMap, ddmForm, ddmFormLayout, storageType,
 			DDMStructureConstants.TYPE_DEFAULT, serviceContext);
@@ -97,20 +84,22 @@ public class DDMAddStructureActionCommand
 
 		DDMStructure structure = addStructure(portletRequest);
 
-		String redirect = ParamUtil.getString(
-			portletRequest, DDMConstants.REDIRECT);
-
-		redirect = super.setRedirectAttribute(portletRequest, redirect);
-
-		boolean saveAndContinue = ParamUtil.getBoolean(
-			portletRequest, DDMConstants.SAVE_AND_CONTINUE);
-
-		if (saveAndContinue) {
-			redirect = getSaveAndContinueRedirect(
-				portletRequest, structure, redirect);
-
-			portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
+		setRedirectAttribute(portletRequest, structure);
 	}
+
+	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
+
+	@Reference
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
+
+		_ddmStructureService = ddmStructureService;
+	}
+
+	private DDM _ddm;
+	private DDMStructureService _ddmStructureService;
 
 }

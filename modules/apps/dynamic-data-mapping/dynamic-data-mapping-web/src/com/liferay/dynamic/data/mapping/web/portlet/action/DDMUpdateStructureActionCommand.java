@@ -14,23 +14,18 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
+import com.liferay.portlet.dynamicdatamapping.util.DDM;
 
 import java.util.Locale;
 import java.util.Map;
@@ -40,6 +35,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -50,7 +46,7 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmUpdateStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
 
@@ -61,93 +57,45 @@ public class DDMUpdateStructureActionCommand extends DDMBaseActionCommand {
 
 		DDMStructure structure = updateStructure(portletRequest);
 
-		String redirect = ParamUtil.getString(
-			portletRequest, DDMConstants.REDIRECT);
-
-		redirect = super.setRedirectAttribute(portletRequest, redirect);
-
-		boolean saveAndContinue = ParamUtil.getBoolean(
-			portletRequest, DDMConstants.SAVE_AND_CONTINUE);
-
-		if (saveAndContinue) {
-			redirect = getSaveAndContinueRedirect(
-				portletRequest, structure, redirect);
-
-			portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
-		}
+		setRedirectAttribute(portletRequest, structure);
 	}
 
-	protected String getSaveAndContinueRedirect(
-			PortletRequest portletRequest, DDMStructure structure,
-			String redirect)
-		throws Exception {
+	@Reference
+	protected void setDDM(DDM ddm) {
+		_ddm = ddm;
+	}
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	@Reference
+	protected void setDDMStructureService(
+		DDMStructureService ddmStructureService) {
 
-		String availableFields = ParamUtil.getString(
-			portletRequest, DDMConstants.AVAILABLE_FIELDS);
-
-		String eventName = ParamUtil.getString(
-			portletRequest, DDMConstants.EVENT_NAME);
-
-		PortletURLImpl portletURL = new PortletURLImpl(
-			portletRequest, PortletKeys.DYNAMIC_DATA_MAPPING,
-			themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-		portletURL.setParameter(DDMConstants.MVC_PATH, "/edit_structure.jsp");
-
-		portletURL.setParameter(DDMConstants.REDIRECT, redirect, false);
-
-		portletURL.setParameter(
-			DDMConstants.GROUP_ID, String.valueOf(structure.getGroupId()),
-			false);
-
-		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
-
-		portletURL.setParameter(
-			DDMConstants.CLASS_NAME_ID, String.valueOf(classNameId), false);
-
-		portletURL.setParameter(
-			DDMConstants.CLASS_PK, String.valueOf(structure.getStructureId()),
-			false);
-
-		portletURL.setParameter(
-			DDMConstants.AVAILABLE_FIELDS, availableFields, false);
-
-		portletURL.setParameter(DDMConstants.EVENT_NAME, eventName, false);
-
-		portletURL.setWindowState(portletRequest.getWindowState());
-
-		return portletURL.toString();
+		_ddmStructureService = ddmStructureService;
 	}
 
 	protected DDMStructure updateStructure(PortletRequest portletRequest)
 		throws Exception {
 
-		long classPK = ParamUtil.getLong(portletRequest, DDMConstants.CLASS_PK);
+		long classPK = ParamUtil.getLong(portletRequest, "classPK");
 
 		long parentStructureId = ParamUtil.getLong(
-			portletRequest, DDMConstants.PARENT_STRUCTURE_ID,
+			portletRequest, "parentStructureId",
 			DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, DDMConstants.NAME);
-
+			portletRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(
-				portletRequest, DDMConstants.DESCRIPTION);
-
-		DDMForm ddmForm = DDMUtil.getDDMForm((ActionRequest)portletRequest);
-
-		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
+			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+		DDMForm ddmForm = _ddm.getDDMForm((ActionRequest)portletRequest);
+		DDMFormLayout ddmFormLayout = _ddm.getDefaultDDMFormLayout(ddmForm);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), portletRequest);
 
-		return DDMStructureServiceUtil.updateStructure(
+		return _ddmStructureService.updateStructure(
 			classPK, parentStructureId, nameMap, descriptionMap, ddmForm,
 			ddmFormLayout, serviceContext);
 	}
+
+	private DDM _ddm;
+	private DDMStructureService _ddmStructureService;
 
 }

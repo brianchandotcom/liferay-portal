@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import com.liferay.dynamic.data.mapping.web.portlet.constants.DDMConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -26,7 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -35,6 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Component;
 		"action.command.name=ddmGetTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = { ActionCommand.class }
+	service = ActionCommand.class
 )
 public class DDMGetTemplateActionCommand extends BaseActionCommand {
 
@@ -54,10 +54,9 @@ public class DDMGetTemplateActionCommand extends BaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
-		long templateId = ParamUtil.getLong(
-			portletRequest, DDMConstants.TEMPLATE_ID);
+		long templateId = ParamUtil.getLong(portletRequest, "templateId");
 
-		DDMTemplate template = DDMTemplateServiceUtil.getTemplate(templateId);
+		DDMTemplate template = _ddmTemplateService.getTemplate(templateId);
 
 		String script = template.getScript();
 
@@ -87,5 +86,14 @@ public class DDMGetTemplateActionCommand extends BaseActionCommand {
 			httpServletRequest, httpServletResponse, null, script.getBytes(),
 			contentType);
 	}
+
+	@Reference
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		_ddmTemplateService = ddmTemplateService;
+	}
+
+	private DDMTemplateService _ddmTemplateService;
 
 }

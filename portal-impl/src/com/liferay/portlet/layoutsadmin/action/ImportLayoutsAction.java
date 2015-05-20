@@ -438,7 +438,7 @@ public class ImportLayoutsAction extends PortletAction {
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		Map<String, Serializable> settingsMap =
+		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				themeDisplay.getUserId(), groupId, privateLayout, null,
 				actionRequest.getParameterMap(), StringPool.BLANK,
@@ -451,7 +451,7 @@ public class ImportLayoutsAction extends PortletAction {
 					themeDisplay.getUserId(), groupId, StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		return LayoutServiceUtil.validateImportLayoutsFile(

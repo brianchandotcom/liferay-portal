@@ -1009,10 +1009,10 @@ public class UserGroupLocalServiceImpl extends UserGroupLocalServiceBaseImpl {
 		UserGroup userGroup = userGroupPersistence.findByPrimaryKey(
 			userGroupId);
 
-		Group group = userGroup.getGroup();
-
 		User user = userLocalService.getUser(
 			GetterUtil.getLong(PrincipalThreadLocal.getName()));
+
+		Group group = userGroup.getGroup();
 
 		if (userGroup.hasPrivateLayouts()) {
 			Map<String, Serializable> settingsMap =

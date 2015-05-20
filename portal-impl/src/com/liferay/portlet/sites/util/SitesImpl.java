@@ -884,7 +884,7 @@ public class SitesImpl implements Sites {
 				GetterUtil.getLong(PrincipalThreadLocal.getName()));
 		}
 
-		Map<String, Serializable> settingsMap =
+		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), layoutSet.getGroupId(),
 				layoutSet.isPrivateLayout(), null, parameterMap,
@@ -897,7 +897,7 @@ public class SitesImpl implements Sites {
 					user.getUserId(), layoutSet.getGroupId(), StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
 		LayoutServiceUtil.importLayouts(exportImportConfiguration, inputStream);
@@ -1886,7 +1886,7 @@ public class SitesImpl implements Sites {
 			newFile = true;
 		}
 
-		Map<String, Serializable> settingsMap =
+		Map<String, Serializable> importSettingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
 				user.getUserId(), groupId, privateLayout, null, parameterMap,
 				Constants.IMPORT, user.getLocale(), user.getTimeZone(),
@@ -1898,7 +1898,7 @@ public class SitesImpl implements Sites {
 					user.getUserId(), groupId, StringPool.BLANK,
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
-					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
 		LayoutLocalServiceUtil.importLayouts(exportImportConfiguration, file);

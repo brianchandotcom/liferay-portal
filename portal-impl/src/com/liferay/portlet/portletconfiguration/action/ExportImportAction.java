@@ -20,7 +20,6 @@ import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
-import com.liferay.portal.kernel.lar.ExportImportDateUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelper;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -267,19 +265,34 @@ public class ExportImportAction extends ImportLayoutsAction {
 			Portlet portlet)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long plid = ParamUtil.getLong(actionRequest, "plid");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String fileName = ParamUtil.getString(
 				actionRequest, "exportFileName");
 
-			DateRange dateRange = ExportImportDateUtil.getDateRange(
-				actionRequest, groupId, false, plid, portlet.getPortletId(),
-				ExportImportDateUtil.RANGE_ALL);
+			Map<String, Serializable> settingsMap =
+				ExportImportConfigurationSettingsMapFactory.
+					buildExportSettingsMap(
+						themeDisplay.getUserId(), plid, groupId,
+						portlet.getPortletId(), actionRequest.getParameterMap(),
+						StringPool.BLANK, themeDisplay.getLocale(),
+						themeDisplay.getTimeZone(), fileName);
+
+			ExportImportConfiguration exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addExportImportConfiguration(
+						themeDisplay.getUserId(), groupId, StringPool.BLANK,
+						StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
+						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						new ServiceContext());
 
 			ExportImportServiceUtil.exportPortletInfoAsFileInBackground(
-				portlet.getPortletId(), plid, groupId, portlet.getPortletId(),
-				actionRequest.getParameterMap(), fileName);
+				exportImportConfiguration);
 		}
 		catch (Exception e) {
 			if (_log.isDebugEnabled()) {
@@ -296,14 +309,32 @@ public class ExportImportAction extends ImportLayoutsAction {
 			InputStream inputStream)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long plid = ParamUtil.getLong(actionRequest, "plid");
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
 		Portlet portlet = ActionUtil.getPortlet(actionRequest);
 
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				themeDisplay.getUserId(), plid, groupId, portlet.getPortletId(),
+				actionRequest.getParameterMap(), StringPool.BLANK,
+				themeDisplay.getLocale(), themeDisplay.getTimeZone(),
+				StringPool.BLANK);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
 		ExportImportServiceUtil.importPortletInfoInBackground(
-			portlet.getPortletId(), plid, groupId, portlet.getPortletId(),
-			actionRequest.getParameterMap(), inputStream);
+			exportImportConfiguration, inputStream);
 	}
 
 	@Override

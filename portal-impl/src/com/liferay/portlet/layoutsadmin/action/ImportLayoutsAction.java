@@ -372,13 +372,30 @@ public class ImportLayoutsAction extends PortletAction {
 			InputStream inputStream)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				themeDisplay.getUserId(), groupId, privateLayout, null,
+				actionRequest.getParameterMap(), StringPool.BLANK,
+				themeDisplay.getLocale(), themeDisplay.getTimeZone(), fileName);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
 		ExportImportServiceUtil.importLayoutsInBackground(
-			fileName, groupId, privateLayout, actionRequest.getParameterMap(),
-			inputStream);
+			exportImportConfiguration, inputStream);
 	}
 
 	protected void validateFile(

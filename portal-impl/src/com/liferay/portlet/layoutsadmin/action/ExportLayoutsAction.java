@@ -18,6 +18,8 @@ import com.liferay.portal.LARFileNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
+import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -26,12 +28,20 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.sites.action.ActionUtil;
+
+import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -74,6 +84,9 @@ public class ExportLayoutsAction extends PortletAction {
 			return;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		try {
 			long groupId = ParamUtil.getLong(actionRequest, "liveGroupId");
 			boolean privateLayout = ParamUtil.getBoolean(
@@ -91,9 +104,25 @@ public class ExportLayoutsAction extends PortletAction {
 					actionRequest.getLocale(), "public-pages");
 			}
 
+			Map<String, Serializable> settingsMap =
+				ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
+					themeDisplay.getUserId(), groupId, privateLayout, layoutIds,
+					actionRequest.getParameterMap(), themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			ExportImportConfiguration exportImportConfiguration =
+				ExportImportConfigurationLocalServiceUtil.
+					addExportImportConfiguration(
+						themeDisplay.getUserId(), groupId, taskName,
+						StringPool.BLANK,
+						ExportImportConfigurationConstants.TYPE_EXPORT_LAYOUT,
+						settingsMap, WorkflowConstants.STATUS_DRAFT,
+						serviceContext);
+
 			ExportImportServiceUtil.exportLayoutsAsFileInBackground(
-				taskName, groupId, privateLayout, layoutIds,
-				actionRequest.getParameterMap());
+				exportImportConfiguration);
 
 			String redirect = ParamUtil.getString(actionRequest, "redirect");
 

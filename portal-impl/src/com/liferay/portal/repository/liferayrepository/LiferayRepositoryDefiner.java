@@ -61,7 +61,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
 		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, _liferayTrashCapability);
+			TrashCapability.class, _trashCapability);
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
@@ -77,7 +77,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			SyncCapability.class,
 			new LiferaySyncCapability(bulkOperationCapability));
 		capabilityRegistry.addSupportedCapability(
-			WorkflowCapability.class, _liferayWorkflowCapability);
+			WorkflowCapability.class, _workflowCapability);
 
 		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
 			capabilityRegistry.addSupportedCapability(
@@ -99,13 +99,13 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 	private final CommentCapability _commentCapability =
 		new LiferayCommentCapability();
-	private final LiferayTrashCapability _liferayTrashCapability =
-		new LiferayTrashCapability();
-	private final LiferayWorkflowCapability _liferayWorkflowCapability =
-		new LiferayWorkflowCapability();
 	private final ProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
+	private final TrashCapability _trashCapability =
+		new LiferayTrashCapability();
+	private final WorkflowCapability _workflowCapability =
+		new LiferayWorkflowCapability();
 
 	private class LiferayRepositoryFactoryWrapper implements RepositoryFactory {
 

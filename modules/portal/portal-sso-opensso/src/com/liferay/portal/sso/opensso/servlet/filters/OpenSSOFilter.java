@@ -14,23 +14,20 @@
 
 package com.liferay.portal.sso.opensso.servlet.filters;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BaseFilter;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.OpenSSO;
 import com.liferay.portal.sso.opensso.configuration.OpenSSOConfiguration;
+import com.liferay.portal.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -38,9 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -68,22 +63,13 @@ public class OpenSSOFilter extends BaseFilter {
 		try {
 			long companyId = PortalUtil.getCompanyId(request);
 
-			boolean enabled = PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.OPEN_SSO_AUTH_ENABLED,
-				_openSSOConfiguration.enabled());
-			String loginUrl = PrefsPropsUtil.getString(
-				companyId, PropsKeys.OPEN_SSO_LOGIN_URL,
-				_openSSOConfiguration.loginURL());
-			String logoutUrl = PrefsPropsUtil.getString(
-				companyId, PropsKeys.OPEN_SSO_LOGOUT_URL,
-				_openSSOConfiguration.logoutURL());
-			String serviceUrl = PrefsPropsUtil.getString(
-				companyId, PropsKeys.OPEN_SSO_SERVICE_URL,
-				_openSSOConfiguration.serviceURL());
+			OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
+				companyId);
 
-			if (enabled && Validator.isNotNull(loginUrl) &&
-				Validator.isNotNull(logoutUrl) &&
-				Validator.isNotNull(serviceUrl)) {
+			if (openSSOConfiguration.enabled() &&
+				Validator.isNotNull(openSSOConfiguration.loginURL()) &&
+				Validator.isNotNull(openSSOConfiguration.logoutURL()) &&
+				Validator.isNotNull(openSSOConfiguration.serviceURL())) {
 
 				return true;
 			}
@@ -95,16 +81,21 @@ public class OpenSSOFilter extends BaseFilter {
 		return false;
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		_openSSOConfiguration = Configurable.createConfigurable(
-			OpenSSOConfiguration.class, properties);
-	}
-
 	@Override
 	protected Log getLog() {
 		return _log;
+	}
+
+	protected OpenSSOConfiguration getOpenSSOConfiguration(long companyId)
+		throws Exception {
+
+		OpenSSOConfiguration openSSOConfiguration =
+			_settingsFactory.getSettings(
+				OpenSSOConfiguration.class,
+				new CompanyServiceSettingsLocator(
+					companyId, OpenSSOConstants.SERVICE_NAME));
+
+		return openSSOConfiguration;
 	}
 
 	@Override
@@ -115,15 +106,8 @@ public class OpenSSOFilter extends BaseFilter {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		String loginUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.OPEN_SSO_LOGIN_URL,
-			_openSSOConfiguration.loginURL());
-		String logoutUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.OPEN_SSO_LOGOUT_URL,
-			_openSSOConfiguration.logoutURL());
-		String serviceUrl = PrefsPropsUtil.getString(
-			companyId, PropsKeys.OPEN_SSO_SERVICE_URL,
-			_openSSOConfiguration.serviceURL());
+		OpenSSOConfiguration openSSOConfiguration = getOpenSSOConfiguration(
+			companyId);
 
 		String requestURI = GetterUtil.getString(request.getRequestURI());
 
@@ -132,7 +116,7 @@ public class OpenSSOFilter extends BaseFilter {
 
 			session.invalidate();
 
-			response.sendRedirect(logoutUrl);
+			response.sendRedirect(openSSOConfiguration.logoutURL());
 
 			return;
 		}
@@ -143,7 +127,8 @@ public class OpenSSOFilter extends BaseFilter {
 
 			// LEP-5943
 
-			authenticated = _openSSO.isAuthenticated(request, serviceUrl);
+			authenticated = _openSSO.isAuthenticated(
+				request, openSSOConfiguration.serviceURL());
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -159,7 +144,8 @@ public class OpenSSOFilter extends BaseFilter {
 
 			// LEP-5943
 
-			String newSubjectId = _openSSO.getSubjectId(request, serviceUrl);
+			String newSubjectId = _openSSO.getSubjectId(
+				request, openSSOConfiguration.serviceURL());
 
 			String oldSubjectId = (String)session.getAttribute(_SUBJECT_ID_KEY);
 
@@ -183,9 +169,9 @@ public class OpenSSOFilter extends BaseFilter {
 		}
 
 		if (!PropsValues.AUTH_FORWARD_BY_LAST_PATH ||
-			!loginUrl.contains("/portal/login")) {
+			!openSSOConfiguration.loginURL().contains("/portal/login")) {
 
-			response.sendRedirect(loginUrl);
+			response.sendRedirect(openSSOConfiguration.loginURL());
 
 			return;
 		}
@@ -203,7 +189,7 @@ public class OpenSSOFilter extends BaseFilter {
 		}
 
 		redirect =
-			loginUrl +
+			openSSOConfiguration.loginURL() +
 				HttpUtil.encodeURL("?redirect=" + HttpUtil.encodeURL(redirect));
 
 		response.sendRedirect(redirect);
@@ -214,11 +200,16 @@ public class OpenSSOFilter extends BaseFilter {
 		_openSSO = openSSO;
 	}
 
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	private static final String _SUBJECT_ID_KEY = "open.sso.subject.id";
 
 	private static final Log _log = LogFactoryUtil.getLog(OpenSSOFilter.class);
 
 	private OpenSSO _openSSO;
-	private OpenSSOConfiguration _openSSOConfiguration;
+	private volatile SettingsFactory _settingsFactory;
 
 }

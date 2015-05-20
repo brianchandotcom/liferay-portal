@@ -34,7 +34,11 @@ public interface OpenSSOConfiguration {
 	@Meta.AD(deflt = "givenname", required = false)
 	public String firstNameAttr();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false",
+		description = "Set this to true if you want to import the users from LDAP after successful login through OpenSSO. The LDAP settings need to be configured properly in the LDAP section. If this is set to false, the users will be created from OpenSSO provided data.",
+		required = false
+	)
 	public boolean importFromLDAP();
 
 	@Meta.AD(deflt = "sn", required = false)
@@ -46,7 +50,11 @@ public interface OpenSSOConfiguration {
 	)
 	public String loginURL();
 
-	@Meta.AD(deflt = "false", required = false)
+	@Meta.AD(
+		deflt = "false",
+		description = "Set this to true to log a user out of OpenSSO when the portal session expires.",
+		required = false
+	)
 	public boolean logoutOnSessionExpiration();
 
 	@Meta.AD(

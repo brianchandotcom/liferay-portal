@@ -61,8 +61,9 @@ public class PortletKeys {
 
 	public static final String DYNAMIC_DATA_LISTS = "167";
 
-	public static final String DYNAMIC_DATA_MAPPING = 
-		"com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet";
+	public static final String DYNAMIC_DATA_MAPPING =
+		"com_liferay_dynamic_data_mapping_web_portlet_" +
+			"DynamicDataMappingPortlet";
 
 	public static final String EXPANDO = "139";
 
@@ -134,7 +135,8 @@ public class PortletKeys {
 	public static final String PORTLET_CONFIGURATION = "86";
 
 	public static final String PORTLET_DISPLAY_TEMPLATES =
-		"com_liferay_dynamic_data_mapping_web_portlet_PortletDisplayTemplatePortlet";
+		"com_liferay_dynamic_data_mapping_web_portlet_" +
+			"PortletDisplayTemplatePortlet";
 
 	public static final String PORTLET_SHARING = "133";
 

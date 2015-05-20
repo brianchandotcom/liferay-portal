@@ -1281,8 +1281,8 @@
 			}
 
 			ddmURL.setParameter('structureAvailableFields', config.structureAvailableFields);
-			
-			if(config.mvcPath) {
+
+			if (config.mvcPath) {
 				ddmURL.setParameter('mvcPath', config.mvcPath);
 			}
 			else {

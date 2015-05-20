@@ -128,7 +128,6 @@ page import="java.util.Set" %><%@
 page import="java.util.StringTokenizer" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.PortletMode" %><%@
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
@@ -137,7 +136,6 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-PortletMode portletMode = liferayPortletRequest.getPortletMode();
 WindowState windowState = liferayPortletRequest.getWindowState();
 
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

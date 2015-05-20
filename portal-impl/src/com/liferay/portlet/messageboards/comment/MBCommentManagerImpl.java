@@ -28,6 +28,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageDisplay;
 import com.liferay.portlet.messageboards.model.MBThread;
@@ -213,6 +214,20 @@ public class MBCommentManagerImpl implements CommentManager {
 		PermissionChecker permissionChecker) {
 
 		return new MBDiscussionPermissionImpl(permissionChecker);
+	}
+
+	@Override
+	public boolean hasDiscussion(String className, long classPK)
+		throws PortalException {
+
+		MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
+			className, classPK);
+
+		if (discussion == null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	public void setMBDiscussionLocalService(

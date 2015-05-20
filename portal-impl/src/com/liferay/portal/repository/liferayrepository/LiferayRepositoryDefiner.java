@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
+import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -31,10 +32,12 @@ import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
 import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
+import com.liferay.portal.repository.capabilities.LiferayCommentCapability;
 import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
+import com.liferay.portal.util.PropsValues;
 
 /**
  * @author Adolfo Pérez
@@ -58,7 +61,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
 		capabilityRegistry.addExportedCapability(
-			TrashCapability.class, _liferayTrashCapability);
+			TrashCapability.class, _trashCapability);
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
@@ -74,7 +77,12 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			SyncCapability.class,
 			new LiferaySyncCapability(bulkOperationCapability));
 		capabilityRegistry.addSupportedCapability(
-			WorkflowCapability.class, _liferayWorkflowCapability);
+			WorkflowCapability.class, _workflowCapability);
+
+		if (PropsValues.DL_FILE_ENTRY_COMMENTS_ENABLED) {
+			capabilityRegistry.addSupportedCapability(
+				CommentCapability.class, _commentCapability);
+		}
 	}
 
 	@Override
@@ -89,13 +97,15 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			repositoryFactory);
 	}
 
-	private final LiferayTrashCapability _liferayTrashCapability =
-		new LiferayTrashCapability();
-	private final LiferayWorkflowCapability _liferayWorkflowCapability =
-		new LiferayWorkflowCapability();
+	private final CommentCapability _commentCapability =
+		new LiferayCommentCapability();
 	private final ProcessorCapability _processorCapability =
 		new LiferayProcessorCapability();
 	private RepositoryFactory _repositoryFactory;
+	private final TrashCapability _trashCapability =
+		new LiferayTrashCapability();
+	private final WorkflowCapability _workflowCapability =
+		new LiferayWorkflowCapability();
 
 	private class LiferayRepositoryFactoryWrapper implements RepositoryFactory {
 

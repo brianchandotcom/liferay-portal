@@ -87,6 +87,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public boolean hasDiscussion(String className, long classPK) {
+		return false;
+	}
+
+	@Override
 	public void subscribeDiscussion(
 		long userId, long groupId, String className, long classPK) {
 	}

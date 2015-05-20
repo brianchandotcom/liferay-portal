@@ -25,7 +25,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 import com.liferay.portlet.documentlibrary.service.base.DLFileVersionLocalServiceBaseImpl;
-import com.liferay.portlet.documentlibrary.util.comparator.FileVersionVersionComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.DLFileVersionVersionComparator;
 
 import java.util.Collections;
 import java.util.List;
@@ -72,7 +72,7 @@ public class DLFileVersionLocalServiceImpl
 
 		dlFileVersions = ListUtil.copy(dlFileVersions);
 
-		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
+		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
 
 		return dlFileVersions;
 	}
@@ -97,7 +97,7 @@ public class DLFileVersionLocalServiceImpl
 
 		dlFileVersions = ListUtil.copy(dlFileVersions);
 
-		Collections.sort(dlFileVersions, new FileVersionVersionComparator());
+		Collections.sort(dlFileVersions, new DLFileVersionVersionComparator());
 
 		DLFileVersion dlFileVersion = dlFileVersions.get(0);
 

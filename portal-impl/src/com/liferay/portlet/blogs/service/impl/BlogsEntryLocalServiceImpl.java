@@ -226,8 +226,6 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 		long entryId = counterLocalService.increment();
 
-		Date now = new Date();
-
 		validate(title, content);
 
 		BlogsEntry entry = blogsEntryPersistence.create(entryId);
@@ -248,7 +246,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		entry.setAllowTrackbacks(allowTrackbacks);
 		entry.setStatus(WorkflowConstants.STATUS_DRAFT);
 		entry.setStatusByUserId(userId);
-		entry.setStatusDate(serviceContext.getModifiedDate(now));
+		entry.setStatusDate(serviceContext.getModifiedDate(null));
 		entry.setExpandoBridgeAttributes(serviceContext);
 
 		blogsEntryPersistence.update(entry);

@@ -894,6 +894,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			checkXMLSecurity(fileName, content, isRunOutsidePortalExclusion);
 		}
 
+		// LPS-55690
+
+		if (newContent.contains("org.testng.Assert")) {
+			processErrorMessage(
+				fileName,
+				"Use org.junit.Assert instead of org.testng.Assert: " +
+					fileName);
+		}
+
 		newContent = getCombinedLinesContent(
 			newContent, _combinedLinesPattern1);
 		newContent = getCombinedLinesContent(

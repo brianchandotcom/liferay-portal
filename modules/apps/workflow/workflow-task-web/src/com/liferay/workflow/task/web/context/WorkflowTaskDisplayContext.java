@@ -689,6 +689,14 @@ public class WorkflowTaskDisplayContext {
 		}
 	}
 
+	public Map<String, Object> getWorkflowTaskActionLinkData() {
+		Map<String, Object> data = new HashMap<>();
+
+		data.put("navigation", Boolean.TRUE);
+
+		return data;
+	}
+
 	public String getWorkflowTaskAssigneeUserName(WorkflowTask workflowTask) {
 		return PortalUtil.getUserName(
 			workflowTask.getAssigneeUserId(), StringPool.BLANK);

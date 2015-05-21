@@ -50,6 +50,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 			<liferay-ui:icon
 				cssClass='<%= "workflow-task-" + randomId + " task-change-status-link" %>'
+				data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 				iconCssClass="icon-random"
 				id='<%= randomId + HtmlUtil.escapeAttribute(transitionName) + "taskChangeStatusLink" %>'
 				message="<%= message %>"
@@ -74,6 +75,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-to-me-link" %>'
+			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 			iconCssClass="icon-signin"
 			id='<%= randomId + "taskAssignToMeLink" %>'
 			message="assign-to-me"
@@ -92,6 +94,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-assign-link" %>'
+			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 			iconCssClass="icon-signin"
 			id='<%= randomId + "taskAssignLink" %>'
 			message="assign-to-..."
@@ -109,6 +112,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
 		<liferay-ui:icon
 			cssClass='<%= "workflow-task-" + randomId + " task-due-date-link" %>'
+			data="<%= workflowTaskDisplayContext.getWorkflowTaskActionLinkData() %>"
 			iconCssClass="icon-time"
 			id='<%= randomId + "taskDueDateLink" %>'
 			message="update-due-date"

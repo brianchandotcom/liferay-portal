@@ -16,9 +16,10 @@ package com.liferay.workflow.task.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -43,20 +44,19 @@ public class AssignTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long workflowTaskId = ParamUtil.getLong(
-			portletRequest, WorkflowTaskConstants.WORKFLOW_TASK_ID);
+			portletRequest, "workflowTaskId");
 
 		long assigneeUserId = ParamUtil.getLong(
-			portletRequest, WorkflowTaskConstants.ASSIGNEE_USER_ID);
-
-		String comment = ParamUtil.getString(
-			portletRequest, WorkflowTaskConstants.COMMENT);
+			portletRequest, "assigneeUserId");
+		String comment = ParamUtil.getString(portletRequest, "comment");
 
 		WorkflowTaskManagerUtil.assignWorkflowTaskToUser(
-			getCompanyId(portletRequest), getUserId(portletRequest),
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, assigneeUserId, comment, null, null);
-
-		super.doProcessCommand(portletRequest, portletResponse);
 	}
 
 }

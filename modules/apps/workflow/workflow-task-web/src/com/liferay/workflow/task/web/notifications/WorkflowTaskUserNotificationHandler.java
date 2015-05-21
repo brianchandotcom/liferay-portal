@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.notifications.BaseUserNotificationHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
@@ -28,7 +27,6 @@ import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -58,21 +56,19 @@ public class WorkflowTaskUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		long workflowTaskId = jsonObject.getLong(
-			WorkflowTaskConstants.WORKFLOW_TASK_ID);
+		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
 		WorkflowTask workflowTask = WorkflowTaskManagerUtil.fetchWorkflowTask(
 			serviceContext.getCompanyId(), workflowTaskId);
 
-		if (Validator.isNull(workflowTask)) {
+		if (workflowTask == null) {
 			UserNotificationEventLocalServiceUtil.deleteUserNotificationEvent(
 				userNotificationEvent.getUserNotificationEventId());
 
 			return null;
 		}
 
-		return HtmlUtil.escape(
-			jsonObject.getString(WorkflowTaskConstants.NOTIFICATION_MESSAGE));
+		return HtmlUtil.escape(jsonObject.getString("notificationMessage"));
 	}
 
 	@Override
@@ -84,18 +80,16 @@ public class WorkflowTaskUserNotificationHandler
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 			userNotificationEvent.getPayload());
 
-		String entryClassName = jsonObject.getString(
-			WorkflowTaskConstants.ENTRY_CLASS_NAME);
+		String entryClassName = jsonObject.getString("entryClassName");
 
 		WorkflowHandler<?> workflowHandler =
 			WorkflowHandlerRegistryUtil.getWorkflowHandler(entryClassName);
 
-		if (Validator.isNull(workflowHandler)) {
+		if (workflowHandler == null) {
 			return null;
 		}
 
-		long workflowTaskId = jsonObject.getLong(
-			WorkflowTaskConstants.WORKFLOW_TASK_ID);
+		long workflowTaskId = jsonObject.getLong("workflowTaskId");
 
 		return workflowHandler.getURLEditWorkflowTask(
 			workflowTaskId, serviceContext);

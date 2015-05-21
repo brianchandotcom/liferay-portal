@@ -26,7 +26,6 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import java.io.IOException;
 
@@ -79,9 +78,7 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		String actionName = ParamUtil.getString(
 			actionRequest, ActionRequest.ACTION_NAME);
 
-		if (StringUtil.equalsIgnoreCase(
-				actionName, WorkflowTaskConstants.DISCUSSION_ACTION)) {
-
+		if (StringUtil.equalsIgnoreCase(actionName, "invokeTaglibDiscussion")) {
 			hideDefaultSuccessMessage(actionRequest);
 		}
 	}
@@ -142,7 +139,7 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		throws PortalException {
 
 		long workflowTaskId = ParamUtil.getLong(
-			renderRequest, WorkflowTaskConstants.WORKFLOW_TASK_ID);
+			renderRequest, "workflowTaskId");
 
 		if (workflowTaskId > 0) {
 			ThemeDisplay themeDisplay =

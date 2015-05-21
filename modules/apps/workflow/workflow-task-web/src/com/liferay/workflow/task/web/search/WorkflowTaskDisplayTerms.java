@@ -16,7 +16,6 @@ package com.liferay.workflow.task.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import javax.portlet.PortletRequest;
 
@@ -28,8 +27,8 @@ public class WorkflowTaskDisplayTerms extends DisplayTerms {
 	public WorkflowTaskDisplayTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		name = ParamUtil.getString(portletRequest, WorkflowTaskConstants.NAME);
-		type = ParamUtil.getString(portletRequest, WorkflowTaskConstants.TYPE);
+		name = ParamUtil.getString(portletRequest, "name");
+		type = ParamUtil.getString(portletRequest, "type");
 	}
 
 	public String getName() {

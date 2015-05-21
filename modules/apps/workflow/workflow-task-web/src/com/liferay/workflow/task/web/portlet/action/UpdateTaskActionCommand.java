@@ -16,11 +16,12 @@ package com.liferay.workflow.task.web.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -48,29 +49,21 @@ public class UpdateTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long workflowTaskId = ParamUtil.getLong(
-			portletRequest, WorkflowTaskConstants.WORKFLOW_TASK_ID);
+			portletRequest, "workflowTaskId");
 
-		String comment = ParamUtil.getString(
-			portletRequest, WorkflowTaskConstants.COMMENT);
+		String comment = ParamUtil.getString(portletRequest, "comment");
 
-		int dueDateMonth = ParamUtil.getInteger(
-			portletRequest, WorkflowTaskConstants.DUE_DATE_MONTH);
-
-		int dueDateDay = ParamUtil.getInteger(
-			portletRequest, WorkflowTaskConstants.DUE_DATE_DAY);
-
-		int dueDateYear = ParamUtil.getInteger(
-			portletRequest, WorkflowTaskConstants.DUE_DATE_YEAR);
-
-		int dueDateHour = ParamUtil.getInteger(
-			portletRequest, WorkflowTaskConstants.DUE_DATE_HOUR);
-
+		int dueDateMonth = ParamUtil.getInteger(portletRequest, "dueDateMonth");
+		int dueDateDay = ParamUtil.getInteger(portletRequest, "dueDateDay");
+		int dueDateYear = ParamUtil.getInteger(portletRequest, "dueDateYear");
+		int dueDateHour = ParamUtil.getInteger(portletRequest, "dueDateHour");
 		int dueDateMinute = ParamUtil.getInteger(
-			portletRequest, WorkflowTaskConstants.DUE_DATE_MINUTE);
-
-		int dueDateAmPm = ParamUtil.getInteger(
-			portletRequest, WorkflowTaskConstants.DUE_DATE_AM_PM);
+			portletRequest, "dueDateMinute");
+		int dueDateAmPm = ParamUtil.getInteger(portletRequest, "dueDateAmPm");
 
 		if (dueDateAmPm == Calendar.PM) {
 			dueDateHour += 12;
@@ -81,10 +74,8 @@ public class UpdateTaskActionCommand extends WorkflowTaskBaseActionCommand {
 			WorkflowTaskDueDateException.class);
 
 		WorkflowTaskManagerUtil.updateDueDate(
-			getCompanyId(portletRequest), getUserId(portletRequest),
+			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 			workflowTaskId, comment, dueDate);
-
-		super.doProcessCommand(portletRequest, portletResponse);
 	}
 
 }

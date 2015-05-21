@@ -2,12 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
-
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
-
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
 	<target name="jar">
 		<process-ivy
@@ -28,6 +23,6 @@
 
 		<delete dir="lib/META-INF" />
 
-		<copy file="lib/org.apache.felix.configadmin.jar" tofile="../../../tools/sdk/dist/${plugin.name}-${plugin.full.version}.${plugin.packaging}" />
+		<copy file="lib/org.apache.felix.configadmin.jar" tofile="${plugin.file}" />
 	</target>
 </project>

@@ -14,6 +14,24 @@
 	<property name="manifest.bundle.symbolic.name" value="portal-impl;singleton:=true" />
 	<property name="service.file" value="service.xml" />
 
+	<macrodef name="clean">
+		<sequential>
+			<clean-cmd>
+				<clean-post>
+					<if>
+						<and>
+							<equals arg1="${app.server.type}" arg2="tomcat" />
+							<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
+						</and>
+						<then>
+							<delete dir="${app.server.classes.portal.dir}" />
+						</then>
+					</if>
+				</clean-post>
+			</clean-cmd>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="compile-dependencies">
 		<sequential>
 			<copy todir="${portal-impl.classes.dir}/com/liferay/portal/definitions" preservelastmodified="true">
@@ -1030,22 +1048,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			<rule pattern="org.mozilla.**" result="com.yahoo.platform.yui.mozilla.@1" />
 			<zipfileset src="${project.dir}/tools/yuicompressor-2.4.7.jar" />
 		</jarjar>
-	</target>
-
-	<target name="clean">
-		<clean-common>
-			<clean-extra>
-				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
-					</and>
-					<then>
-						<delete dir="${app.server.classes.portal.dir}" />
-					</then>
-				</if>
-			</clean-extra>
-		</clean-common>
 	</target>
 
 	<target name="compile-test">

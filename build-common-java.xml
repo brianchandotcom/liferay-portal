@@ -3,8 +3,14 @@
 <project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
-	<macrodef name="clean-common">
-		<element name="clean-extra" optional="true" />
+	<macrodef name="clean">
+		<sequential>
+			<clean-cmd />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="clean-cmd">
+		<element name="clean-post" optional="true" />
 
 		<sequential>
 			<delete dir="classes" />
@@ -18,7 +24,7 @@
 			<delete file="${jar.file}-javadoc.jar" failonerror="false" />
 			<delete file="${jar.file}-sources.jar" failonerror="false" />
 
-			<clean-extra />
+			<clean-post />
 		</sequential>
 	</macrodef>
 
@@ -179,7 +185,7 @@
 	</target>
 
 	<target name="clean">
-		<clean-common />
+		<clean />
 	</target>
 
 	<target name="compile">

@@ -49,9 +49,9 @@ public class BackgroundTaskDisplayFactoryImpl
 		Class clazz = backgroundTaskExecutor.getBackgroundTaskDisplay();
 
 		try {
-			Class[] parameterTypes = { BackgroundTask.class, Locale.class };
+			Class[] parameterTypes = {BackgroundTask.class, Locale.class};
 
-			Object[] arguments = { backgroundTask, locale };
+			Object[] arguments = {backgroundTask, locale};
 
 			return (BackgroundTaskDisplay)InstanceFactory.newInstance(
 				clazz.getName(), parameterTypes, arguments);

@@ -30,7 +30,7 @@ String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
 
 <c:choose>
 	<c:when test="<%= !backgroundTaskDisplay.hasDetails() %>">
-		<div class="alert <%= backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED ? "alert-danger" : StringPool.BLANK %> publish-error">
+		<div class="alert <%= (backgroundTaskStatus == BackgroundTaskConstants.STATUS_FAILED) ? "alert-danger" : StringPool.BLANK %> publish-error">
 			<liferay-ui:message arguments="<%= backgroundTaskStatusMessage %>" key="unable-to-execute-process-x" translateArguments="<%= false %>" />
 		</div>
 	</c:when>
@@ -50,7 +50,7 @@ String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
 			<%
 			JSONArray detailItems = details.getJSONArray("detailItems");
 
-			for (int i=0; i < detailItems.length(); i++ ) {
+			for (int i = 0; i < detailItems.length(); i++) {
 				JSONObject jsonObject = detailItems.getJSONObject(i);
 			%>
 

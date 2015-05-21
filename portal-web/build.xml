@@ -772,7 +772,9 @@ Please set the property "jdk.7.home" in build.properties.
 		</antcall>
 	</target>
 
-	<target name="deploy" depends="compile,build-portal-web-dependencies">
+	<target name="deploy" depends="build-portal-web-dependencies">
+		<manifest-macro />
+
 		<antcall target="build-common-web.deploy" />
 
 		<if>
@@ -905,7 +907,9 @@ Please set the property "jdk.7.home" in build.properties.
 		/>
 	</target>
 
-	<target name="war" depends="compile,build-portal-web-dependencies">
+	<target name="war" depends="build-portal-web-dependencies">
+		<manifest-macro />
+
 		<war
 			basedir="docroot"
 			destfile="${war.file}.war"

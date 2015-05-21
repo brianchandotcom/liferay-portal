@@ -101,6 +101,44 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy">
+		<attribute name="deploy.dir" />
+		<attribute name="jar.file" />
+		<attribute name="src.dir" />
+
+		<sequential>
+			<deploy-cmd
+				deploy.dir="@{deploy.dir}"
+				jar.file="@{jar.file}"
+				src.dir="@{src.dir}"
+			/>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="deploy-cmd">
+		<attribute name="deploy.dir" />
+		<attribute name="jar.file" />
+		<attribute name="src.dir" />
+		<element name="deploy-post" optional="true" />
+
+		<sequential>
+			<if>
+				<not>
+					<uptodate targetfile="@{deploy.dir}/@{jar.file}.jar">
+						<srcfiles dir="@{src.dir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+					</uptodate>
+				</not>
+				<then>
+					<jar-marco />
+
+					<copy file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
+
+					<deploy-post />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="jar-marco">
 		<sequential>
 			<jar-marco-cmd />
@@ -187,18 +225,11 @@
 	</target>
 
 	<target name="deploy">
-		<if>
-			<not>
-				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
-					<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-				</uptodate>
-			</not>
-			<then>
-				<jar-marco />
-
-				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
-			</then>
-		</if>
+		<deploy
+			deploy.dir="${deploy.dir}"
+			jar.file="${jar.file}"
+			src.dir="${basedir}"
+		/>
 	</target>
 
 	<target name="jar">

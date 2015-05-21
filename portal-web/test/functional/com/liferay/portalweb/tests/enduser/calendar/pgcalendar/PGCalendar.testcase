@@ -4071,6 +4071,10 @@
 
 		<execute macro="CalendarEvent#gotoAdd" />
 
+		<execute macro="CalendarEvent#viewWeekStartDayViaEventMiniCalendar">
+			<var name="weekStartDay" value="Mo" />
+		</execute>
+
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
 		<execute macro="CalendarEvent#selectRepeatFrequency">
@@ -4114,6 +4118,11 @@
 		</execute>
 
 		<execute macro="CalendarEvent#gotoAdd" />
+
+		<execute macro="CalendarEvent#viewWeekStartDayViaEventMiniCalendar">
+			<var name="weekStartDay" value="Sa" />
+		</execute>
+
 		<execute macro="CalendarEvent#gotoRepeatConfiguration" />
 
 		<execute macro="CalendarEvent#selectRepeatFrequency">

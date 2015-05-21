@@ -3,7 +3,6 @@
 
 <project>
 	<property name="import.shared" value="bookmarks-api" />
-	<property name="module.name" value="bookmarks" />
 	<property name="osgi.ide.dependencies" value="spring-context.jar" />
 	<property name="service.input.file" value="service.xml" />
 

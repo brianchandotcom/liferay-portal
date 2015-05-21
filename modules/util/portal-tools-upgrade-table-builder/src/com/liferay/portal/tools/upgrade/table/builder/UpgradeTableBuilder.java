@@ -14,6 +14,7 @@
 
 package com.liferay.portal.tools.upgrade.table.builder;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.tools.ArgumentsUtil;
 
@@ -47,13 +48,14 @@ public class UpgradeTableBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String moduleName = arguments.get("upgrade.module.name");
+		boolean osgiModule = GetterUtil.getBoolean(
+			arguments.get("upgrade.osgi.module"), true);
 		String upgradeBaseDirName = arguments.get("upgrade.base.dir");
 		String upgradeTableDirName = arguments.get("upgrade.table.dir");
 
 		try {
 			new UpgradeTableBuilder(
-				moduleName, upgradeBaseDirName, upgradeTableDirName);
+				osgiModule, upgradeBaseDirName, upgradeTableDirName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -61,11 +63,11 @@ public class UpgradeTableBuilder {
 	}
 
 	public UpgradeTableBuilder(
-			String moduleName, String upgradeBaseDirName,
+			boolean osgiModule, String upgradeBaseDirName,
 			String upgradeTableDirName)
 		throws Exception {
 
-		_moduleName = moduleName;
+		_osgiModule = osgiModule;
 		_upgradeBaseDirName = upgradeBaseDirName;
 		_upgradeTableDirName = upgradeTableDirName;
 
@@ -341,21 +343,21 @@ public class UpgradeTableBuilder {
 
 		Path indexesFilePath = null;
 
-		if (_moduleName.equals(_PORTAL_IMPL_MODULE_NAME)) {
+		if (_osgiModule) {
+			List<Path> paths = _findFiles(
+				_upgradeBaseDirName, "**/sql/indexes.sql", 1);
+
+			if (!paths.isEmpty()) {
+				indexesFilePath = paths.get(0);
+			}
+		}
+		else {
 			indexesFilePath = Paths.get(
 				_upgradeTableDirName, upgradeFileVersion, "indexes.sql");
 
 			if (Files.notExists(indexesFilePath)) {
-				indexesFilePath = Paths.get("../sql/indexes.sql");
-			}
-		}
-		else {
-			List<Path> paths = _findFiles(
-				_upgradeBaseDirName,
-				"**/" + _moduleName + "-service/**/sql/indexes.sql", 1);
-
-			if (!paths.isEmpty()) {
-				indexesFilePath = paths.get(0);
+				indexesFilePath = Paths.get(
+					_upgradeBaseDirName, "../sql/indexes.sql");
 			}
 		}
 
@@ -363,25 +365,19 @@ public class UpgradeTableBuilder {
 	}
 
 	private String _getModuleVersion() throws IOException {
-		if (_moduleName.equals(_PORTAL_IMPL_MODULE_NAME)) {
+		if (!_osgiModule) {
 			return ReleaseInfo.getVersion();
-		}
-
-		List<Path> paths = _findFiles(
-			_upgradeBaseDirName, "**\\" + _moduleName + "\\*-service\\*.bnd",
-			1);
-
-		if (paths.isEmpty()) {
-			return "";
 		}
 
 		Properties properties = new Properties();
 
-		try (InputStream inputStream = Files.newInputStream(paths.get(0))) {
+		Path path = Paths.get(_upgradeBaseDirName, "bnd.bnd");
+
+		try (InputStream inputStream = Files.newInputStream(path)) {
 			properties.load(inputStream);
 		}
 
-		return properties.getProperty("Bundle-Version", "");
+		return properties.getProperty("Bundle-Version");
 	}
 
 	private String _getPackagePath(String content) {
@@ -412,12 +408,10 @@ public class UpgradeTableBuilder {
 
 	private static final String _AUTHOR = "Brian Wing Shun Chan";
 
-	private static final String _PORTAL_IMPL_MODULE_NAME = "portal-impl";
-
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		"package (.+?);");
 
-	private final String _moduleName;
+	private final boolean _osgiModule;
 	private final String _upgradeBaseDirName;
 	private final String _upgradeTableDirName;
 

@@ -589,11 +589,13 @@ AUI.add(
 
 					Liferay.component(id, map);
 
-					instance._pendingCallbacks[id].forEach(
-						function(item, index) {
-							item(map);
-						}
-					);
+					if (instance._pendingCallbacks[id]) {
+						instance._pendingCallbacks[id].forEach(
+							function(item, index) {
+								item(map);
+							}
+						);
+					}
 				},
 
 				_pendingCallbacks: {}

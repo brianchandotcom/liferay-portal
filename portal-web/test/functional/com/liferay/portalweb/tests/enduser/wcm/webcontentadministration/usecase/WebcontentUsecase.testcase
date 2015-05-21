@@ -971,6 +971,60 @@
 		</execute>
 	</command>
 
+	<command name="ViewMultipleCategoriesViaWebContent" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<for list="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" param="categoryName">
+			<execute macro="Category#addCP">
+				<var name="categoryName" value="${categoryName}" />
+				<var name="vocabularyName" value="Vocabulary Name" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithMultipleCategories">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="WC Content Body" />
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+
+		<for list="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" param="categoryName">
+			<execute macro="WebContent#viewCategorizationCategoryCP">
+				<var name="categoryName" value="${categoryName}" />
+				<var name="webContentTitle" value="WC Content Title" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCategoryDescriptiveCP">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+	</command>
+
 	<command name="WebContentAdministrationDataValidation" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentContentEdit" value="WC WebContent Content Edit" />

@@ -135,8 +135,7 @@ if (!inlineEdit) {
 				AUI().use(
 					'aui-base',
 					function(A) {
-						scripts = A.Array.filter(
-							scripts,
+						scripts = scripts.filter(
 							function(item) {
 								return !A.one('script[src=' + item + ']');
 							}

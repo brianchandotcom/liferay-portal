@@ -4,7 +4,10 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<path id="plugin.classpath" path="lib/biz.aQute.bnd.jar" />
+	<path id="plugin.classpath">
+		<pathelement path="lib/biz.aQute.bnd.jar" />
+		<pathelement path="lib/slf4j-api.jar" />
+	</path>
 
 	<property name="auto.deploy.dir" value="${app.server.lib.global.dir}" />
 </project>

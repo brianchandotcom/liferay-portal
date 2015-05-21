@@ -18,5 +18,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="biz.aQute.bnd" org="biz.aQute.bnd" rev="2.4.1" />
+		<dependency name="slf4j-api" org="org.slf4j" rev="1.7.2" />
 	</dependencies>
 </ivy-module>

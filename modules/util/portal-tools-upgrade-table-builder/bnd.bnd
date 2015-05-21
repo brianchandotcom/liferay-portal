@@ -1,6 +1,9 @@
 Bundle-Name: Liferay Portal Tools Upgrade Table Builder
 Bundle-SymbolicName: com.liferay.portal.tools.upgrade.table.builder
 Bundle-Version: 1.0.1
+Import-Package:\
+	!org.apache.tools.ant.*,\
+	*
 Include-Resource:\
 	classes,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\

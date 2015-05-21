@@ -22,16 +22,17 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -39,10 +40,18 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Hugo Huijser
  */
-@OSGiBeanProperties
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN
+	},
+	service = Indexer.class
+)
 public class UserGroupIndexer extends BaseIndexer<UserGroup> {
 
 	public static final String CLASS_NAME = UserGroup.class.getName();

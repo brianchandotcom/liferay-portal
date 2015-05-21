@@ -753,42 +753,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>150</portlet-name>
-		<icon>/html/icons/workflow_tasks.png</icon>
-		<struts-path>workflow_tasks</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/workflow_definitions/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-workflow-tasks</css-class-wrapper>
-	</portlet>
-	<portlet>
-		<portlet-name>153</portlet-name>
-		<icon>/html/icons/my_workflow_tasks.png</icon>
-		<struts-path>my_workflow_tasks</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
-		<friendly-url-mapping>my_workflow_tasks</friendly-url-mapping>
-		<friendly-url-routes>com/liferay/portlet/workflowtasks/workflow-tasks-friendly-url-routes.xml</friendly-url-routes>
-		<user-notification-handler-class>com.liferay.portlet.workflowtasks.notifications.WorkflowTasksUserNotificationHandler</user-notification-handler-class>
-		<control-panel-entry-category>my</control-panel-entry-category>
-		<control-panel-entry-weight>3.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portal.workflow.MyWorkflowTasksControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/users_admin/css/main.css</header-portlet-css>
-		<header-portlet-css>/html/portlet/workflow_definitions/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/workflow_tasks/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-workflow-tasks</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>156</portlet-name>
 		<icon>/html/icons/group_pages.png</icon>
 		<struts-path>group_pages</struts-path>

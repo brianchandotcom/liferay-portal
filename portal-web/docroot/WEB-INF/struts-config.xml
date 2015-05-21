@@ -1017,21 +1017,6 @@
 			<forward name="portlet.my_pages.view" path="portlet.my_account.view" />
 		</action>
 
-		<!-- My Workflow Tasks -->
-
-		<action path="/my_workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
-			<forward name="portlet.workflow_tasks.edit_workflow_task" path="portlet.workflow_tasks.edit_workflow_task" />
-			<forward name="portlet.workflow_tasks.error" path="portlet.workflow_tasks.error" />
-		</action>
-
-		<action path="/my_workflow_tasks/edit_workflow_task_discussion" type="com.liferay.portlet.workflowtasks.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.workflow_tasks.error" />
-		</action>
-
-		<action path="/my_workflow_tasks/view" forward="portlet.workflow_tasks.view" />
-
-		<action path="/my_workflow_tasks/view_content" forward="portlet.workflow_instances.view_content" />
-
 		<!-- News -->
 
 		<action path="/news/edit" type="com.liferay.portlet.news.action.EditPreferencesAction">
@@ -1411,21 +1396,6 @@
 		<action path="/users_admin/view" forward="portlet.users_admin.view" />
 
 		<action path="/users_admin/view_users" forward="portlet.users_admin.view" />
-
-		<!-- Workflow Tasks -->
-
-		<action path="/workflow_tasks/edit_workflow_task" type="com.liferay.portlet.workflowtasks.action.EditWorkflowTaskAction">
-			<forward name="portlet.workflow_tasks.edit_workflow_task" path="portlet.workflow_tasks.edit_workflow_task" />
-			<forward name="portlet.workflow_tasks.error" path="portlet.workflow_tasks.error" />
-		</action>
-
-		<action path="/workflow_tasks/edit_workflow_task_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.workflow_tasks.error" />
-		</action>
-
-		<action path="/workflow_tasks/view" forward="portlet.workflow_tasks.view" />
-
-		<action path="/workflow_tasks/view_content" forward="portlet.workflow_instances.view_content" />
 	</action-mappings>
 
 	<!-- Custom Request Processor -->

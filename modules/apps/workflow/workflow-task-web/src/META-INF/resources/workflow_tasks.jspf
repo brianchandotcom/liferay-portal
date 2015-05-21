@@ -1,0 +1,84 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<liferay-ui:search-container searchContainer="<%= workflowTaskSearch %>"
+>
+
+	<liferay-ui:search-container-results results="<%= workflowTaskSearch.getResults() %>"
+		total="<%= workflowTaskSearch.getTotal() %>">
+	</liferay-ui:search-container-results>
+
+	<liferay-ui:search-container-row
+		className="com.liferay.portal.kernel.workflow.WorkflowTask"
+		modelVar="workflowTask"
+		stringKey="<%= true %>"
+	>
+		<liferay-ui:search-container-row-parameter
+			name="workflowTask"
+			value="<%= workflowTask %>"
+		/>
+
+		<portlet:renderURL var="rowURL">
+			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="workflowTaskId" value="<%= String.valueOf(workflowTask.getWorkflowTaskId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="task"
+		>
+			<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
+				<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
+			</span>
+		</liferay-ui:search-container-column-text>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="asset-title"
+			value="<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="asset-type"
+			value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="last-activity-date"
+			value="<%= workflowTaskDisplayContext.getLastActivityDate(workflowTask) %>"
+		/>
+
+		<liferay-ui:search-container-column-text
+			href="<%= rowURL %>"
+			name="due-date"
+			orderable="<%= true %>"
+			value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>"
+		/>
+
+		<c:if test="<%= !workflowTaskDisplayContext.isCompletedTabSelected() %>">
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				cssClass="entry-action"
+				path="/workflow_task_action.jsp"
+			/>
+		</c:if>
+	</liferay-ui:search-container-row>
+
+	<liferay-ui:search-iterator />
+</liferay-ui:search-container>

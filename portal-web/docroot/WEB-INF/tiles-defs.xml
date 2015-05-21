@@ -1049,20 +1049,4 @@
 	<definition name="portlet.users_admin.view" extends="portlet.users_admin">
 		<put name="portlet_content" value="/portlet/users_admin/view.jsp" />
 	</definition>
-
-	<!-- Workflow Tasks -->
-
-	<definition name="portlet.workflow_tasks" extends="portlet" />
-
-	<definition name="portlet.workflow_tasks.edit_workflow_task" extends="portlet.workflow_tasks">
-		<put name="portlet_content" value="/portlet/workflow_tasks/edit_workflow_task.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_tasks.error" extends="portlet.workflow_tasks">
-		<put name="portlet_content" value="/portlet/workflow_tasks/error.jsp" />
-	</definition>
-
-	<definition name="portlet.workflow_tasks.view" extends="portlet.workflow_tasks">
-		<put name="portlet_content" value="/portlet/workflow_tasks/view.jsp" />
-	</definition>
 </tiles-definitions>

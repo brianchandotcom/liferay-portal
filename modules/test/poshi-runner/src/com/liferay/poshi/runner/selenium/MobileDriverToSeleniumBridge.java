@@ -880,9 +880,9 @@ public class MobileDriverToSeleniumBridge
 		sb.append("/platform-tools/");
 		sb.append("adb -s emulator-5554 shell input text ");
 
-		String escapedValue = StringUtil.replace(value, " ", "%s");
+		value = StringUtil.replace(value, " ", "%s");
 
-		sb.append(escapedValue);
+		sb.append(value);
 
 		try {
 			runtime.exec(sb.toString());

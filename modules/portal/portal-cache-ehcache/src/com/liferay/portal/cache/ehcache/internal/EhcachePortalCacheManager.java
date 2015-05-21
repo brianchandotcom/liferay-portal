@@ -67,12 +67,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public void reconfigureCaches(URL configurationURL) {
-		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configurationURL, isClusterAware(), _usingDefault, props);
+		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+			configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
+				configurationURL, isClusterAware(), _usingDefault, props);
 
-		reconfigEhcache(_configurationPair.getKey());
+		reconfigEhcache(configurationPair.getKey());
 
-		reconfigPortalCache(_configurationPair.getValue());
+		reconfigPortalCache(configurationPair.getValue());
 	}
 
 	public void setConfigFile(String configFile) {

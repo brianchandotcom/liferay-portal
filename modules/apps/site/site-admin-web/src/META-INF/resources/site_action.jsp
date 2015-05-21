@@ -110,11 +110,12 @@ if (row == null) {
 	</c:if>
 
 	<c:if test="<%= group.isCompany() && hasUpdatePermission %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="exportURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/export_configuration/export_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
+			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<%
@@ -127,11 +128,12 @@ if (row == null) {
 			url="<%= taglibExportURL %>"
 		/>
 
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+		<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="importURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 			<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />
+			<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
 		</liferay-portlet:renderURL>
 
 		<%
@@ -145,8 +147,8 @@ if (row == null) {
 		/>
 
 		<c:if test="<%= group.isStaged() %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="publishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/layouts_admin/publish_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="publishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_configuration/publish_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= group.isStagedRemotely() ? Constants.PUBLISH_TO_REMOTE : Constants.PUBLISH_TO_LIVE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(group.getGroupId()) %>" />
 				<portlet:param name="rootNodeName" value="<%= group.getDescriptiveName(locale) %>" />

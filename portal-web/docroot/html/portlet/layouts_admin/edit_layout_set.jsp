@@ -70,26 +70,28 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-page" />
 		</c:if>
 		<c:if test="<%= hasExportImportLayoutsPermission %>">
-			<portlet:renderURL var="exportPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_configuration/export_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</portlet:renderURL>
+				<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" />
+			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" useDialog="<%= true %>" />
 
-			<portlet:renderURL var="importPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</portlet:renderURL>
+				<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" />
+			<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" useDialog="<%= true %>" />
 		</c:if>
 	</aui:nav>
 </aui:nav-bar>

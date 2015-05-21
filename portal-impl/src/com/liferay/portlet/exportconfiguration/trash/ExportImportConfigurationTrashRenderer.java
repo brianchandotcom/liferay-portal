@@ -55,7 +55,7 @@ public class ExportImportConfigurationTrashRenderer extends BaseTrashRenderer {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.LAYOUTS_ADMIN;
+		return PortletKeys.EXPORT_CONFIGURATION;
 	}
 
 	@Override

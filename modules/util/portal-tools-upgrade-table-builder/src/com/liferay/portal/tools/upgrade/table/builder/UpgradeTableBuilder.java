@@ -48,9 +48,12 @@ public class UpgradeTableBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
-		String baseDirName = arguments.get("upgrade.base.dir");
+		String baseDirName = GetterUtil.getString(
+			arguments.get("upgrade.base.dir"),
+			UpgradeTableBuilderArgs.BASE_DIR_NAME);
 		boolean osgiModule = GetterUtil.getBoolean(
-			arguments.get("upgrade.osgi.module"), true);
+			arguments.get("upgrade.osgi.module"),
+			UpgradeTableBuilderArgs.OSGI_MODULE);
 		String upgradeTableDirName = arguments.get("upgrade.table.dir");
 
 		try {

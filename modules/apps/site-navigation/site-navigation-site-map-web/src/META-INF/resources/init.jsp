@@ -30,7 +30,9 @@ page import="com.liferay.portal.util.LayoutDescription" %><%@
 page import="com.liferay.site.navigation.site.map.web.configuration.SiteMapPortletInstanceConfiguration" %><%@
 page import="com.liferay.site.navigation.site.map.web.display.context.SiteMapDisplayContext" %>
 
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />

@@ -70,8 +70,8 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-page" />
 		</c:if>
 		<c:if test="<%= hasExportImportLayoutsPermission %>">
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/export_configuration/export_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_import/export_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
@@ -82,8 +82,8 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 
 			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" useDialog="<%= true %>" />
 
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/export_configuration/import_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_import/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -97,9 +97,9 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 </aui:nav-bar>
 
 <c:if test="<%= liveGroup.isStaged() %>">
-	<%@ include file="/html/portlet/export_configuration/error_auth_exception.jspf" %>
+	<%@ include file="/html/portlet/export_import/error_auth_exception.jspf" %>
 
-	<%@ include file="/html/portlet/export_configuration/error_remote_export_exception.jspf" %>
+	<%@ include file="/html/portlet/export_import/error_remote_export_exception.jspf" %>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />

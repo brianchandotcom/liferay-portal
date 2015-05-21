@@ -61,8 +61,8 @@ else {
 String publishMessage = LanguageUtil.get(request, publishDialogTitle);
 %>
 
-<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.EXPORT_CONFIGURATION %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<liferay-portlet:param name="struts_action" value="/export_configuration/publish_layouts" />
+<liferay-portlet:renderURL plid="<%= plid %>" portletMode="<%= PortletMode.VIEW.toString() %>" portletName="<%= PortletKeys.EXPORT_IMPORT %>" varImpl="publishRenderURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<liferay-portlet:param name="struts_action" value="/export_import/publish_layouts" />
 	<liferay-portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH_TO_LIVE %>" />
 	<liferay-portlet:param name="tabs1" value='<%= (privateLayout) ? "private-pages" : "public-pages" %>' />
 	<liferay-portlet:param name="closeRedirect" value="<%= currentURL %>" />

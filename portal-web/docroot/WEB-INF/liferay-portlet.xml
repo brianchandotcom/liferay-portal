@@ -358,7 +358,7 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/portlet_configuration/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/export_configuration/js/main.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/html/portlet/export_import/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-configuration</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
@@ -849,12 +849,12 @@
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/export_configuration/css/main.css</header-portlet-css>
+		<header-portlet-css>/html/portlet/export_import/css/main.css</header-portlet-css>
 		<header-portlet-css>/html/portlet/staging_bar/css/main.css</header-portlet-css>
 		<header-portlet-javascript>/html/portlet/staging_bar/js/staging.js</header-portlet-javascript>
 		<header-portlet-javascript>/html/portlet/staging_bar/js/staging_branch.js</header-portlet-javascript>
 		<header-portlet-javascript>/html/portlet/staging_bar/js/staging_version.js</header-portlet-javascript>
-		<footer-portlet-javascript>/html/portlet/export_configuration/js/main.js</footer-portlet-javascript>
+		<footer-portlet-javascript>/html/portlet/export_import/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>portlet-staging-bar</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
@@ -1056,9 +1056,9 @@
 	<portlet>
 		<portlet-name>200</portlet-name>
 		<icon>/html/icons/default.png</icon>
-		<struts-path>export_configuration</struts-path>
+		<struts-path>export_import</struts-path>
 		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portlet.exportconfiguration.messaging.DraftExportImportConfigurationMessageListener</scheduler-event-listener-class>
+			<scheduler-event-listener-class>com.liferay.portlet.exportimport.messaging.DraftExportImportConfigurationMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
 					<property-key>staging.draft.export.import.configuration.check.interval</property-key>
@@ -1067,15 +1067,15 @@
 			</trigger>
 		</scheduler-entry>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<trash-handler>com.liferay.portlet.exportconfiguration.trash.ExportImportConfigurationTrashHandler</trash-handler>
+		<trash-handler>com.liferay.portlet.exportimport.trash.ExportImportConfigurationTrashHandler</trash-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/export_configuration/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/export_configuration/js/main.js</footer-portlet-javascript>
-		<css-class-wrapper>portlet-export-configuration</css-class-wrapper>
+		<header-portlet-css>/html/portlet/export_import/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/html/portlet/export_import/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>portlet-export-import</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>

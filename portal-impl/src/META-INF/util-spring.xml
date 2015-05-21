@@ -1071,7 +1071,7 @@
 			<bean class="com.liferay.portlet.expando.util.ExpandoBridgeIndexerImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.exportconfiguration.util.ExportImportConfigurationIndexer" class="com.liferay.portlet.exportconfiguration.util.ExportImportConfigurationIndexer" />
+	<bean id="com.liferay.portlet.exportimport.util.ExportImportConfigurationIndexer" class="com.liferay.portlet.exportimport.util.ExportImportConfigurationIndexer" />
 	<bean id="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil" class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderUtil">
 		<property name="IGDisplayContextProvider">
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />

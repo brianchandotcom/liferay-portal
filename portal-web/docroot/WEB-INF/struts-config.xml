@@ -517,38 +517,38 @@
 
 		<action path="/expando/view_attributes" forward="portlet.expando.view_attributes" />
 
-		<!-- Export Configuration -->
+		<!-- Export Import -->
 
-		<action path="/export_configuration/confirmation" type="com.liferay.portlet.exportconfiguration.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.export_configuration.confirmation" path="portlet.export_configuration.confirmation" />
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+		<action path="/export_import/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_import.confirmation" path="portlet.export_import.confirmation" />
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
 		</action>
 
-		<action path="/export_configuration/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
+		<action path="/export_import/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
 
-		<action path="/export_configuration/edit_export_configuration" type="com.liferay.portlet.exportconfiguration.action.EditExportConfigurationAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.export_layouts" path="portlet.export_configuration.export_layouts" />
+		<action path="/export_import/edit_export_configuration" type="com.liferay.portlet.exportimport.action.EditExportConfigurationAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.export_layouts" path="portlet.export_import.export_layouts" />
 		</action>
 
-		<action path="/export_configuration/edit_publish_configuration" type="com.liferay.portlet.exportconfiguration.action.EditPublishConfigurationAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
+		<action path="/export_import/edit_publish_configuration" type="com.liferay.portlet.exportimport.action.EditPublishConfigurationAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
-		<action path="/export_configuration/export_layouts" type="com.liferay.portlet.exportconfiguration.action.ExportLayoutsAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.export_layouts" path="portlet.export_configuration.export_layouts" />
+		<action path="/export_import/export_layouts" type="com.liferay.portlet.exportimport.action.ExportLayoutsAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.export_layouts" path="portlet.export_import.export_layouts" />
 		</action>
 
-		<action path="/export_configuration/import_layouts" type="com.liferay.portlet.exportconfiguration.action.ImportLayoutsAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.import_layouts" path="portlet.export_configuration.import_layouts" />
+		<action path="/export_import/import_layouts" type="com.liferay.portlet.exportimport.action.ImportLayoutsAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.import_layouts" path="portlet.export_import.import_layouts" />
 		</action>
 
-		<action path="/export_configuration/publish_layouts" type="com.liferay.portlet.exportconfiguration.action.PublishLayoutsAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
+		<action path="/export_import/publish_layouts" type="com.liferay.portlet.exportimport.action.PublishLayoutsAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
 		<!-- Flags -->
@@ -1257,9 +1257,9 @@
 
 		<!-- Staging Bar -->
 
-		<action path="/staging_bar/confirmation" type="com.liferay.portlet.exportconfiguration.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.export_configuration.confirmation" path="portlet.export_configuration.confirmation" />
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+		<action path="/staging_bar/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_import.confirmation" path="portlet.export_import.confirmation" />
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
 		</action>
 
 		<action path="/staging_bar/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
@@ -1278,21 +1278,21 @@
 			<forward name="portlet.layouts_admin.error" path="portlet.staging_bar.view" />
 		</action>
 
-		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.exportconfiguration.action.EditPublishConfigurationAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
+		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.exportimport.action.EditPublishConfigurationAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
 		<action path="/staging_bar/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
 
-		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.exportconfiguration.action.PublishLayoutsAction">
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
-			<forward name="portlet.export_configuration.publish_layouts" path="portlet.export_configuration.publish_layouts" />
+		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.exportimport.action.PublishLayoutsAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
-		<action path="/staging_bar/publish_layouts_simple" type="com.liferay.portlet.exportconfiguration.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.export_configuration.confirmation" path="portlet.export_configuration.publish_layouts_simple" />
-			<forward name="portlet.export_configuration.error" path="portlet.export_configuration.error" />
+		<action path="/staging_bar/publish_layouts_simple" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_import.confirmation" path="portlet.export_import.publish_layouts_simple" />
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
 		</action>
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />

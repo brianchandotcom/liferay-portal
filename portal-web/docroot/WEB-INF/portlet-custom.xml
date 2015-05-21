@@ -1462,11 +1462,11 @@
 	</portlet>
 	<portlet>
 		<portlet-name>200</portlet-name>
-		<display-name>Export Configuration</display-name>
+		<display-name>Export Import</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
-			<value>/html/portlet/export_configuration/</value>
+			<value>/html/portlet/export_import/</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -1124,12 +1124,11 @@ public class ServicePreAction extends Action {
 
 				if (hasPublishStagingPermission) {
 					PortletURL publishToLiveURL = new PortletURLImpl(
-						request, PortletKeys.EXPORT_CONFIGURATION, plid,
+						request, PortletKeys.EXPORT_IMPORT, plid,
 						PortletRequest.RENDER_PHASE);
 
 					publishToLiveURL.setParameter(
-						"struts_action",
-						"/export_configuration/publish_layouts");
+						"struts_action", "/export_import/publish_layouts");
 
 					if (layout.isPrivateLayout()) {
 						publishToLiveURL.setParameter("tabs1", "private-pages");

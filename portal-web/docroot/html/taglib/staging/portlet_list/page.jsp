@@ -86,7 +86,7 @@
 
 									<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 										<ul class="lfr-tree list-unstyled">
-											<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
+											<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
 										</ul>
 									</aui:field-wrapper>
 
@@ -103,7 +103,7 @@
 
 									<aui:field-wrapper label='<%= ArrayUtil.isNotEmpty(metadataControls) ? "content" : StringPool.BLANK %>'>
 										<ul class="lfr-tree list-unstyled">
-											<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
+											<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
 										</ul>
 									</aui:field-wrapper>
 
@@ -129,7 +129,7 @@
 
 										<aui:field-wrapper label="content-metadata">
 											<ul class="lfr-tree list-unstyled">
-												<liferay-util:include page="/html/portlet/export_configuration/render_controls.jsp" />
+												<liferay-util:include page="/html/portlet/export_import/render_controls.jsp" />
 											</ul>
 										</aui:field-wrapper>
 

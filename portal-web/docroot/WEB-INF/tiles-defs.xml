@@ -410,32 +410,32 @@
 		<put name="portlet_content" value="/portlet/expando/view_attributes.jsp" />
 	</definition>
 
-	<!-- Export Configuration -->
+	<!-- Export Import -->
 
-	<definition name="portlet.export_configuration" extends="portlet" />
+	<definition name="portlet.export_import" extends="portlet" />
 
-	<definition name="portlet.export_configuration.confirmation" extends="portlet.export_configuration">
-		<put name="portlet_content" value="/portlet/export_configuration/confirmation.jsp" />
+	<definition name="portlet.export_import.confirmation" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/confirmation.jsp" />
 	</definition>
 
-	<definition name="portlet.export_configuration.error" extends="portlet.export_configuration">
-		<put name="portlet_content" value="/portlet/export_configuration/error.jsp" />
+	<definition name="portlet.export_import.error" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/error.jsp" />
 	</definition>
 
-	<definition name="portlet.export_configuration.export_layouts" extends="portlet.export_configuration">
-		<put name="portlet_content" value="/portlet/export_configuration/export_layouts.jsp" />
+	<definition name="portlet.export_import.export_layouts" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/export_layouts.jsp" />
 	</definition>
 
-	<definition name="portlet.export_configuration.import_layouts" extends="portlet.export_configuration">
-		<put name="portlet_content" value="/portlet/export_configuration/import_layouts.jsp" />
+	<definition name="portlet.export_import.import_layouts" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/import_layouts.jsp" />
 	</definition>
 
-	<definition name="portlet.export_configuration.publish_layouts" extends="portlet.export_configuration">
-		<put name="portlet_content" value="/portlet/export_configuration/publish_layouts.jsp" />
+	<definition name="portlet.export_import.publish_layouts" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/publish_layouts.jsp" />
 	</definition>
 
-	<definition name="portlet.export_configuration.publish_layouts_simple" extends="portlet.export_configuration">
-		<put name="portlet_content" value="/portlet/export_configuration/publish_layouts_simple.jsp" />
+	<definition name="portlet.export_import.publish_layouts_simple" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/publish_layouts_simple.jsp" />
 	</definition>
 
 	<!-- Flags -->

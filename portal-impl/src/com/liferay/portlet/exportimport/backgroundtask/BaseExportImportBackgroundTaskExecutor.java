@@ -45,7 +45,7 @@ public abstract class BaseExportImportBackgroundTaskExecutor
 
 	@Override
 	public Class<? extends BackgroundTaskDisplay> getBackgroundTaskDisplay() {
-		return StagingBackgroundTaskDisplay.class;
+		return ExportImportBackgroundTaskDisplay.class;
 	}
 
 	@Override

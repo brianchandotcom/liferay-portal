@@ -38,9 +38,9 @@ import java.util.Map;
 /**
  * @author Andrew Betts
  */
-public class StagingBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
+public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
 
-	public StagingBackgroundTaskDisplay(
+	public ExportImportBackgroundTaskDisplay(
 		BackgroundTask backgroundTask, Locale locale) {
 
 		super(backgroundTask, locale);

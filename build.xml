@@ -559,22 +559,7 @@
 	</target>
 
 	<target name="deploy-properties">
-		<if>
-			<and>
-				<equals arg1="${app.server.bundled}" arg2="true" />
-				<equals arg1="${app.server.type}" arg2="glassfish" />
-			</and>
-			<then>
-				<war destfile="${app.server.glassfish.portal.war.dir}" update="true">
-					<classes dir="portal-impl/src" includes="portal-*.properties,system-*.properties" />
-				</war>
-			</then>
-			<else>
-				<copy todir="${app.server.classes.portal.dir}" overwrite="true">
-					<fileset dir="portal-impl/src" includes="portal-*.properties,system-*.properties" />
-				</copy>
-			</else>
-		</if>
+		<deploy-properties />
 	</target>
 
 	<target name="dist">

@@ -721,6 +721,27 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy-properties">
+		<sequential>
+			<if>
+				<and>
+					<equals arg1="${app.server.bundled}" arg2="true" />
+					<equals arg1="${app.server.type}" arg2="glassfish" />
+				</and>
+				<then>
+					<war destfile="${app.server.glassfish.portal.war.dir}" update="true">
+						<classes dir="${project.dir}/portal-impl/src" includes="portal-*.properties,system-*.properties" />
+					</war>
+				</then>
+				<else>
+					<copy todir="${app.server.classes.portal.dir}" overwrite="true">
+						<fileset dir="${project.dir}/portal-impl/src" includes="portal-*.properties,system-*.properties" />
+					</copy>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="execute">
 		<attribute default="." name="dir" />
 

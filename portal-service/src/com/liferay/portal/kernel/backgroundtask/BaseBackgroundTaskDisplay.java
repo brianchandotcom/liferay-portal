@@ -34,9 +34,7 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
 
-		_details = null;
 		_locale = locale;
-		_message = null;
 		_percentage = -1;
 	}
 
@@ -135,9 +133,9 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 	}
 
 	private final BackgroundTaskStatus _backgroundTaskStatus;
-	private JSONObject _details;
+	private JSONObject _details = null;
 	private final Locale _locale;
-	private String _message;
-	private int _percentage;
+	private String _message = null;
+	private int _percentage = -1;
 
 }

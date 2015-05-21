@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `215494e`.*
+*This document has been reviewed through commit `59f8239`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1632,8 +1632,7 @@ Document Library easier when modularizing the portal.
 
 #### What changed?
 
-The `addFileEntry` method has been removed from the `DLAppHelperLocalService`
-service.
+The `addFileEntry` method has been removed from `DLAppHelperLocalService`.
 
 #### Who is affected?
 
@@ -1645,7 +1644,7 @@ If you need to invoke the `addFileEntry` method as part of a custom repository
 implementation, use the provided repository capabilities instead. See
 `LiferayRepositoryDefiner` for examples on their use.
 
-For other use cases, you may need to invoke explicitly each of the service
+For other use cases, you may need to explicitly invoke each of the service
 methods used by `addFileEntry`.
 
 #### Why was this change made?

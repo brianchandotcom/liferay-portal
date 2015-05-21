@@ -19,14 +19,6 @@
 		</sequential>
 	</macrodef>
 
-	<target name="clean">
-		<clean-common>
-			<clean-extra>
-				<delete file="${deploy.dir}/${jar.file}.jar" />
-			</clean-extra>
-		</clean-common>
-	</target>
-
 	<target name="deploy" depends="jar">
 		<delete file="${deploy.dir}/${ant.project.name}.jar" />
 

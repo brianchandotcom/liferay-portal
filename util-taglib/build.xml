@@ -3,9 +3,20 @@
 <project name="util-taglib" basedir="." default="compile">
 	<import file="../build-common-java.xml" />
 
+	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="util-taglib" />
+
+	<macrodef name="clean">
+		<sequential>
+			<clean-cmd>
+				<clean-post>
+					<delete file="${liferay.home}/osgi/portal/${jar.file}.jar" />
+				</clean-post>
+			</clean-cmd>
+		</sequential>
+	</macrodef>
 
 	<macrodef name="compile-java">
 		<sequential>
@@ -84,21 +95,13 @@
 		</java>
 	</target>
 
-	<target name="clean">
-		<clean-common>
-			<clean-extra>
-				<delete file="${liferay.home}/osgi/portal/${jar.file}.jar" />
-			</clean-extra>
-		</clean-common>
-	</target>
-
 	<target name="deploy" depends="check-deploy-uptodate,jar" unless="${deploy.uptodate}">
 		<copy file="${jar.file}.jar" todir="${liferay.home}/osgi/portal" preservelastmodified="true" />
 
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
-				<copy file="${jar.file}.jar" todir="${app.server.portal.dir}/WEB-INF/lib" preservelastmodified="true" />
+				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 
 				<copy todir="${app.server.portal.dir}/WEB-INF/tld" preservelastmodified="true">
 					<fileset dir="classes/META-INF" includes="*.tld" />

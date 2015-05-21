@@ -18,5 +18,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency conf="provided->master" name="ant" org="org.apache.ant" rev="1.9.4" />
+		<dependency conf="provided->master" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
 	</dependencies>
 </ivy-module>

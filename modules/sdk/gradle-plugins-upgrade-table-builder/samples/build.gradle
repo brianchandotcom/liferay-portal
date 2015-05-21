@@ -1,0 +1,27 @@
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.upgrade.table.builder", version: "latest.release"
+	}
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
+
+buildUpgradeTable {
+	upgradeTableDirName = "upgrade.table.dir.name"
+}

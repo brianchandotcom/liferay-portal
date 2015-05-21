@@ -869,10 +869,6 @@ Please set the property "jdk.7.home" in build.properties.
 		</if>
 	</target>
 
-	<target name="deploy-properties">
-		<deploy-properties />
-	</target>
-
 	<target name="format-js">
 		<taskdef classname="com.philmander.jshint.JsHintAntTask" classpath="${project.dir}/tools/ant-jshint-2.0.5.jar" name="jshint" />
 

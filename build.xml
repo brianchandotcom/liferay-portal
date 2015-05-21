@@ -558,10 +558,6 @@
 		</if>
 	</target>
 
-	<target name="deploy-properties">
-		<deploy-properties />
-	</target>
-
 	<target name="dist">
 		<ant antfile="build-dist.xml" target="dist" inheritAll="false" />
 	</target>

@@ -1105,10 +1105,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</if>
 	</target>
 
-	<target name="deploy-properties">
-		<deploy-properties />
-	</target>
-
 	<target name="format-source">
 		<path id="source.formatter.classpath">
 			<fileset dir="${project.dir}/tools/sdk/dependencies/com.liferay.source.formatter/lib" includes="*.jar" />

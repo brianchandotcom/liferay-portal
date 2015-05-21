@@ -1345,6 +1345,10 @@ rerun your task.
 		</if>
 	</target>
 
+	<target name="deploy-properties">
+		<deploy-properties />
+	</target>
+
 	<target name="format-javadoc">
 		<echo>Run "ant compile compile-test" before using format-javadoc to generate @Override tags.</echo>
 

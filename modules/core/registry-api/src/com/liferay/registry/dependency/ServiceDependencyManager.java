@@ -25,6 +25,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author Michael C. Han
  */
@@ -160,16 +163,25 @@ public class ServiceDependencyManager {
 				return;
 			}
 
+			boolean missingDependencies = false;
+
 			for (ServiceDependency serviceDependency : _serviceDependencies) {
 				if (!serviceDependency.isFulfilled()) {
+					missingDependencies = true;
+
 					break;
 				}
 			}
 
-			try {
-				_serviceDependencies.wait(timeout);
-			}
-			catch (InterruptedException ie) {
+			if (missingDependencies) {
+				try {
+					_serviceDependencies.wait(timeout);
+				}
+				catch (InterruptedException ie) {
+					if (_log.isDebugEnabled()) {
+						_log.debug("Wait interrupted", ie);
+					}
+				}
 			}
 		}
 	}
@@ -210,6 +222,9 @@ public class ServiceDependencyManager {
 			serviceDependency.setServiceTracker(serviceTracker);
 		}
 	}
+
+	private static final Logger _log = LoggerFactory.getLogger(
+		ServiceDependencyManager.class);
 
 	private final Set<ServiceDependency> _serviceDependencies = new HashSet<>();
 	private final Set<ServiceDependencyListener> _serviceDependencyListeners =

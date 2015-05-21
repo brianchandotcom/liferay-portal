@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.AggregateClassLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.NamedThreadFactory;
+import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
@@ -142,6 +143,18 @@ public class RubyExecutor extends BaseScriptingExecutor {
 		rubyInstanceConfig.setLoadPaths(_loadPaths);
 
 		scriptingContainer.setCurrentDirectory(_basePath);
+
+		ClassLoader moduleClassLoader = getClass().getClassLoader();
+
+		if (!moduleClassLoader.equals(PortalClassLoaderUtil.getClassLoader())) {
+			_scriptingExecutorClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					PortalClassLoaderUtil.getClassLoader(),
+					getClass().getClassLoader());
+		}
+		else {
+			_scriptingExecutorClassLoader = moduleClassLoader;
+		}
 	}
 
 	public void destroy() {
@@ -220,7 +233,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						ClassLoaderUtil.getPortalClassLoader(), classLoaders);
+						_scriptingExecutorClassLoader, classLoaders);
 
 				rubyInstanceConfig.setLoader(aggregateClassLoader);
 			}
@@ -338,6 +351,7 @@ public class RubyExecutor extends BaseScriptingExecutor {
 	private final List<String> _loadPaths;
 	private final ScriptingContainer<org.jruby.embed.ScriptingContainer>
 		_scriptingContainer;
+	private final ClassLoader _scriptingExecutorClassLoader;
 
 	private class EvalCallable implements Callable<Map<String, Object>> {
 

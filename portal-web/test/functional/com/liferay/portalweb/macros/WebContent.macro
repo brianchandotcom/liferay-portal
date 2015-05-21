@@ -1146,6 +1146,8 @@
 		<var name="key_categoryName" value="${categoryName}" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
+
+		<execute function="Click" locator1="CPWebcontentEditwebcontent#MENU_CONTENT" />
 	</command>
 
 	<command name="viewCategorizationCategoryNotVisibleCP">

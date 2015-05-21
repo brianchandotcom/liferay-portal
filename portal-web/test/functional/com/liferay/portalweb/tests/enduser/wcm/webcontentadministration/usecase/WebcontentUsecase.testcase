@@ -1025,6 +1025,33 @@
 		</execute>
 	</command>
 
+	<command name="ViewMultipleVocabulariesViaAddWebContent" priority="4">
+		<for list="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" param="vocabularyName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Categories" />
+			</execute>
+
+			<execute macro="Vocabulary#addCP">
+				<var name="vocabularyName" value="${vocabularyName}" />
+			</execute>
+
+			<execute macro="Category#addCP">
+				<var name="categoryName" value="Category Name" />
+				<var name="vocabularyName" value="${vocabularyName}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#viewCategorizationVocabularyCP">
+			<var name="vocabularyNameList" value="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" />
+		</execute>
+	</command>
+
 	<command name="WebContentAdministrationDataValidation" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentContentEdit" value="WC WebContent Content Edit" />

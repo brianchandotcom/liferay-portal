@@ -308,7 +308,7 @@
 			</fileset>
 		</copy>
 
-		<antcall target="deploy-properties" />
+		<deploy-properties />
 
 		<antcall target="deploy-additional-jars" />
 

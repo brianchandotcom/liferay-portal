@@ -1084,7 +1084,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 
 		<ant dir="../portal-service" target="deploy" inheritAll="false" />
 
-		<antcall target="deploy-properties" />
+		<deploy-properties />
 
 		<if>
 			<and>
@@ -1106,7 +1106,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="deploy-properties">
-		<ant dir=".." target="deploy-properties" inheritAll="false" />
+		<deploy-properties />
 	</target>
 
 	<target name="format-source">

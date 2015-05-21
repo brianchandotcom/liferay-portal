@@ -67,16 +67,14 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					%>
 
 					<liferay-ui:search-container-column-text name="title">
+						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
+
 						<c:choose>
 							<c:when test="<%= assetEntry.isVisible() %>">
-									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
-									<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+								<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
 							</c:when>
 							<c:otherwise>
-									<i class="<%= assetRenderer.getIconCssClass() %>"></i>
-
-									<%= HtmlUtil.escape(assetRenderer.getTitle(locale) + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, assetRenderer.getStatusLabel() == null ? "not-visible" : assetRenderer.getStatusLabel()) + StringPool.CLOSE_PARENTHESIS) %>
+								<%= HtmlUtil.escape(assetRenderer.getTitle(locale) + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, assetRenderer.getStatusLabel() == null ? "not-visible" : assetRenderer.getStatusLabel()) + StringPool.CLOSE_PARENTHESIS) %>
 							</c:otherwise>
 						</c:choose>
 					</liferay-ui:search-container-column-text>

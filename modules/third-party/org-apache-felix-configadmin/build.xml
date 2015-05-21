@@ -8,4 +8,26 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+
+	<target name="jar">
+		<process-ivy
+			module.dir="${basedir}"
+		/>
+
+		<unjar src="lib/org.apache.felix.configadmin.jar" dest="lib">
+			<patternset>
+				<include name="META-INF/MANIFEST.MF" />
+			</patternset>
+		</unjar>
+
+		<jar destfile="lib/temp.jar" manifest="lib/META-INF/MANIFEST.MF">
+			<zipfileset src="lib/org.apache.felix.configadmin.jar" excludes="OSGI-INF/permissions.perm" />
+		</jar>
+
+		<move file="lib/temp.jar" tofile="lib/org.apache.felix.configadmin.jar" />
+
+		<delete dir="lib/META-INF" />
+
+		<copy file="lib/org.apache.felix.configadmin.jar" tofile="../../../tools/sdk/dist/${plugin.name}-${plugin.full.version}.${plugin.packaging}" />
+	</target>
 </project>

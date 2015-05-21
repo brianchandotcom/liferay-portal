@@ -17,5 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency conf="default->master" name="org.apache.felix.configadmin" org="org.apache.felix" rev="1.8.0" />
 	</dependencies>
 </ivy-module>

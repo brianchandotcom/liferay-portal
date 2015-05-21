@@ -21,6 +21,8 @@ AUI.add(
 
 		var STR_SELECTED_ASSET_ADDON_ENTRIES = 'selectedAssetAddonEntries';
 
+		var TPL_SELECT_LIST = '<ul class="list-inline list-unstyled">{entries}</ul>';
+
 		var TPL_STR_SELECTED_ASSET_ADDON_ENTRY = '<li>' +
 				'<label>' +
 					'<input {checked} class="toggle-card" data-key={key} data-label={label} type="checkbox">' +
@@ -37,8 +39,6 @@ AUI.add(
 					'</div>' +
 				'</label>' +
 			'</li>';
-
-		var TPL_SELECT_LIST = '<ul class="list-inline list-unstyled">{entries}</ul>';
 
 		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="list-entry" data-key="{key}" data-label="{label}">' +
 				'<span class="label label-entry label-circle">' +

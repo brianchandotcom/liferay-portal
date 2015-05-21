@@ -244,7 +244,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
 
-				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+				if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) == '<br />') {
 					data = '';
 				}
 			}
@@ -432,9 +432,9 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
 		var filebrowserBrowseUrl = '';
-		var filebrowserImageBrowseUrl = '';
-		var filebrowserImageBrowseLinkUrl = '';
 		var filebrowserFlashBrowseUrl = '';
+		var filebrowserImageBrowseLinkUrl = '';
+		var filebrowserImageBrowseUrl = '';
 
 		<c:if test="<%= allowBrowseDocuments %>">
 			<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="itemSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">

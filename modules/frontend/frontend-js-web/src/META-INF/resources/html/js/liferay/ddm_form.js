@@ -298,7 +298,7 @@ AUI.add(
 						return AArray.find(
 							instance.get('fields'),
 							function(item) {
-								return (item.get('name') === name);
+								return item.get('name') === name;
 							}
 						);
 					},
@@ -306,8 +306,8 @@ AUI.add(
 					getInputName: function() {
 						var instance = this;
 
-						var portletNamespace = instance.get('portletNamespace');
 						var fieldsNamespace = instance.get('fieldsNamespace');
+						var portletNamespace = instance.get('portletNamespace');
 
 						var prefix = [portletNamespace];
 
@@ -649,8 +649,8 @@ AUI.add(
 					_valueLocalizationMap: function() {
 						var instance = this;
 
-						var values = instance.get('values');
 						var instanceId = instance.get('instanceId');
+						var values = instance.get('values');
 
 						var fieldValue = instance.getFieldInfo(values, 'instanceId', instanceId);
 
@@ -1101,8 +1101,8 @@ AUI.add(
 
 						var imagePreviewURL = instance._getImagePreviewURL();
 
-						var previewLinkNode = A.one('#' + instance.getInputName() + 'PreviewContainer a');
 						var previewImageNode = A.one('#' + instance.getInputName() + 'PreviewContainer img');
+						var previewLinkNode = A.one('#' + instance.getInputName() + 'PreviewContainer a');
 
 						previewLinkNode.attr('href', imagePreviewURL);
 						previewImageNode.attr('src', imagePreviewURL);

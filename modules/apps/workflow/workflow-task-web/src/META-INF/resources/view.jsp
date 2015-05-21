@@ -17,17 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-WorkflowTaskSearch workflowTaskSearch = null;
-
 PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 
-WorkflowTaskDisplayTerms displayTerms = workflowTaskDisplayContext.getDisplayTerms();
+WorkflowTaskDisplayTerms workflowTaskDisplayTerms = workflowTaskDisplayContext.getWorkflowTaskDisplayTerms();
 
-String displayTermsType = displayTerms.getType();
+String workflowTaskDisplayTermsType = workflowTaskDisplayTerms.getType();
 
-String selectedTab = workflowTaskDisplayContext.getSelectedTab();
-
-List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = workflowTaskDisplayContext.getWorkflowHandlersOfSearchableAssets();
+WorkflowTaskSearch workflowTaskSearch = null;
 %>
 
 <liferay-ui:tabs
@@ -41,21 +37,19 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = workflowTaskDispla
 			<liferay-ui:search-toggle
 				autoFocus="<%= workflowTaskDisplayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
 				buttonLabel="search"
-				displayTerms="<%= displayTerms %>"
+				displayTerms="<%= workflowTaskDisplayTerms %>"
 				id="toggle_id_workflow_task_search">
 
+					<aui:input inlineField="<%= true %>" label="task" name="name" size="20" value="<%= workflowTaskDisplayTerms.getName() %>" />
 				<aui:fieldset>
-					<aui:input inlineField="<%= true %>" label="task" name="<%= WorkflowTaskConstants.NAME %>" size="20" value="<%= displayTerms.getName() %>" />
 
-					<aui:select inlineField="<%= true %>" name="<%= WorkflowTaskConstants.TYPE %>">
+					<aui:select inlineField="<%= true %>" name="type">
 
 						<%
-						for (WorkflowHandler<?> workflowHandler : workflowHandlersOfSearchableAssets) {
-
-							String defaultWorkflowHandlerType = workflowHandler.getClassName();
+						for (WorkflowHandler<?> workflowHandler : workflowTaskDisplayContext.getSearchableAssetsWorkflowHandlers()) {
 						%>
 
-							<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= displayTermsType.equals(defaultWorkflowHandlerType) %>" value="<%= defaultWorkflowHandlerType %>" />
+							<aui:option label="<%= workflowHandler.getType(locale) %>" selected="<%= workflowTaskDisplayTermsType.equals(workflowHandler.getClassName()) %>" value="<%= workflowHandler.getClassName() %>" />
 
 						<%
 						}
@@ -67,7 +61,7 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = workflowTaskDispla
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 	<c:choose>
-		<c:when test="<%= workflowTaskDisplayContext.isPendingTab() %>">
+		<c:when test="<%= workflowTaskDisplayContext.isPendingTabSelected() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="workflowTasksPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="workflowMyTasksPanel" persistState="<%= true %>" title="assigned-to-me">
 
@@ -101,5 +95,5 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = workflowTaskDispla
 </aui:form>
 
 <%
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedTab), currentURL);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, workflowTaskDisplayContext.getSelectedTab()), currentURL);
 %>

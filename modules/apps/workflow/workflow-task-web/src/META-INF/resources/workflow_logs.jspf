@@ -57,7 +57,7 @@ for (WorkflowLog workflowLog : workflowLogs) {
 				<c:choose>
 					<c:when test="<%= workflowTaskDisplayContext.isAuditUser(workflowLog) %>">
 						<div>
-							<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getUserFullName(workflowLog) %>" key='<%= workflowTaskDisplayContext.getAssignedTheTaskMessageKey(workflowLog) %>' translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getUserFullName(workflowLog) %>" key="<%= workflowTaskDisplayContext.getAssignedTheTaskMessageKey(workflowLog) %>" translateArguments="<%= false %>" />
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -66,7 +66,7 @@ for (WorkflowLog workflowLog : workflowLogs) {
 							<c:when test="<%= workflowLog.getRoleId() == 0 %>">
 								<div>
 									<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getAssignedTheTaskToMessageArguments(workflowLog) %>" key="x-assigned-the-task-to-x" translateArguments="<%= false %>" />
-	
+
 									<c:if test="<%= workflowLog.getPreviousUserId() != 0 %>">
 										<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getPreviousAssigneeMessageArguments(workflowLog) %>" key="previous-assignee-was-x" translateArguments="<%= false %>" />
 									</c:if>

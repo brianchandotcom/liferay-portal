@@ -40,9 +40,6 @@ if (assetRenderer != null) {
 String headerTitle = workflowTaskDisplayContext.getHeaderTitle(workflowTask);
 
 boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
-
-PortletURL editPortletURL = workflowTaskDisplayContext.getEditPortletURL(workflowTask);
-
 %>
 
 <portlet:renderURL var="backURL">
@@ -64,10 +61,10 @@ PortletURL editPortletURL = workflowTaskDisplayContext.getEditPortletURL(workflo
 				<div class="lfr-asset-assigned">
 					<c:choose>
 						<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= workflowTaskDisplayContext.getNameForAssignedToSingleUser(workflowTask) %>" />
+							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= workflowTaskDisplayContext.getWorkflowTaskAssigneeUserName(workflowTask) %>" />
 						</c:when>
 						<c:otherwise>
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value='<%= workflowTaskDisplayContext.getNameForAssignedToAnyone() %>' />
+							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= workflowTaskDisplayContext.getWorkflowTaskUnassignedUserName() %>" />
 						</c:otherwise>
 					</c:choose>
 
@@ -103,7 +100,7 @@ PortletURL editPortletURL = workflowTaskDisplayContext.getEditPortletURL(workflo
 			<aui:col width="<%= 50 %>">
 				<aui:input name="createDate" type="resource" value="<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>" />
 
-				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value='<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>' />
+				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>" />
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
 					<portlet:actionURL name="updateWorkflowTask" var="updateDueDateURL">
@@ -133,7 +130,7 @@ PortletURL editPortletURL = workflowTaskDisplayContext.getEditPortletURL(workflo
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
 			<c:if test="<%= assetRenderer != null %>">
-				<liferay-ui:panel defaultState="open" title='<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>'>
+				<liferay-ui:panel defaultState="open" title="<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>">
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">

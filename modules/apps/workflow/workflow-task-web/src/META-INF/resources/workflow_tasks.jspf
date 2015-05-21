@@ -71,7 +71,7 @@
 			value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>"
 		/>
 
-		<c:if test="<%= !workflowTaskDisplayContext.isCompletedTab() %>">
+		<c:if test="<%= !workflowTaskDisplayContext.isCompletedTabSelected() %>">
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"

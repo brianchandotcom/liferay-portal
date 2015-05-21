@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetRendererFactoryFromRequest();
+AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetRendererFactory();
 
 AssetEntry assetEntry = workflowTaskDisplayContext.getAssetEntryFromRequest();
 

@@ -1598,7 +1598,10 @@ property files. First name is required and always present.
 
 #### What changed?
 
-The methods getGroupLocalRepositoryImpl() and getLocalRepositoryImpl() have been removed from RepositoryLocalService and RepositoryService because, although they are related to that service, they should be placed in a different level of abstraction.
+The methods getGroupLocalRepositoryImpl() and getLocalRepositoryImpl() have been
+removed from RepositoryLocalService and RepositoryService because, although they
+are related to that service, they should be placed in a different level of
+abstraction.
 
 #### Who is affected?
 
@@ -1606,7 +1609,9 @@ This affects anyone who uses those methods.
 
 #### How should I update my code?
 
-The removed methods where generic and had a long signature with optional parameters, now they have on specialized version per parameter and are placed in the RepositoryProvider service. For instance, if you called:
+The removed methods where generic and had a long signature with optional
+parameters, now they have on specialized version per parameter and are placed in
+the RepositoryProvider service. For instance, if you called:
 
 ```
     RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0)
@@ -1620,7 +1625,8 @@ now you must call:
 
 #### Why was this change made?
 
-This change was made to enhance the Repository API and make decoupling from Document Library easier when modularizing the portal.
+This change was made to enhance the Repository API and make decoupling from
+Document Library easier when modularizing the portal.
 
 ---------------------------------------
 
@@ -1630,8 +1636,8 @@ This change was made to enhance the Repository API and make decoupling from Docu
 
 #### What changed?
 
-The `addFileEntry` method has been removed from the
-`DLAppHelperLocalService` service.
+The `addFileEntry` method has been removed from the `DLAppHelperLocalService`
+service.
 
 #### Who is affected?
 
@@ -1639,18 +1645,17 @@ This affects anyone who calls the `addFileEntry` method.
 
 #### How should I update my code?
 
-If you need to invoke the `addFileEntry` method as part of a custom
-repository implementation, use the provided repository capabilities
-instead. See `LiferayRepositoryDefiner` for examples on their use.
+If you need to invoke the `addFileEntry` method as part of a custom repository
+implementation, use the provided repository capabilities instead. See
+`LiferayRepositoryDefiner` for examples on their use.
 
-For other use cases, you may need to invoke explicitly each of the
-service methods used by `addFileEntry`.
+For other use cases, you may need to invoke explicitly each of the service
+methods used by `addFileEntry`.
 
 #### Why was this change made?
 
 The logic inside the `addFileEntry` method was moved out from
-`DLAppHelperLocalService` and into repository capabilities to further
-decouple core repository implementations from additional (optional)
-functionality.
+`DLAppHelperLocalService` and into repository capabilities to further decouple
+core repository implementations from additional (optional) functionality.
 
 ---------------------------------------

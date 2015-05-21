@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="build-common-java" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build-common.xml" />
 
 	<macrodef name="clean">
@@ -116,6 +116,7 @@
 	</macrodef>
 
 	<macrodef name="deploy-cmd">
+		<attribute default="true" name="copy.jar" />
 		<attribute name="deploy.dir" />
 		<attribute name="jar.file" />
 		<attribute name="src.dir" />
@@ -131,7 +132,7 @@
 				<then>
 					<jar-marco />
 
-					<copy file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
+					<copy if:true="@{copy.jar}" file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
 
 					<deploy-post />
 				</then>

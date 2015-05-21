@@ -44,7 +44,7 @@
 				params = $.param(params, true);
 			}
 			else {
-				params = $.trim(params);
+				params = String(params).trim();
 			}
 
 			var loc = url || location.href;

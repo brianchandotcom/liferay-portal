@@ -486,7 +486,7 @@ AUI.add(
 
 				var prototypeTemplate = instance._prototypeMenuTemplate || STR_EMPTY;
 
-				var prevVal = Lang.trim(options.prevVal);
+				var prevVal = options.prevVal.trim();
 
 				if (options.actionNode) {
 					options.actionNode.hide();
@@ -781,9 +781,9 @@ AUI.add(
 
 				var pageTitle = field.get('value');
 
-				var prevVal = Lang.trim(event.prevVal);
+				var prevVal = event.prevVal.trim();
 
-				pageTitle = Lang.trim(pageTitle);
+				pageTitle = pageTitle.trim();
 
 				var data = null;
 				var onSuccess = null;

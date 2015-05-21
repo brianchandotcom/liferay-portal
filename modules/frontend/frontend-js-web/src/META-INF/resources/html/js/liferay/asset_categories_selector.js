@@ -585,7 +585,7 @@ AUI.add(
 					_searchCategories: function(event, searchResults, vocabularyIds, vocabularyGroupIds, callback) {
 						var instance = this;
 
-						var searchValue = Lang.trim(event.currentTarget.val());
+						var searchValue = event.currentTarget.val().trim();
 
 						if (searchValue && !event.isNavKey()) {
 							searchResults.empty();

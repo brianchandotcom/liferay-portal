@@ -751,7 +751,7 @@ AUI.add(
 				if (portlet && portlet != portletBoundary) {
 					portletClasses = portlet.attr(CLASS_NAME).replace(REGEX_IGNORED_CLASSES_PORTLET, EMPTY);
 
-					portletClasses = Lang.trim(portletClasses).replace(/\s+/g, '.');
+					portletClasses = portletClasses.trim().replace(/\s+/g, '.');
 
 					if (portletClasses) {
 						portletClasses = ' .' + portletClasses;
@@ -914,7 +914,7 @@ AUI.add(
 			_insertCustomCSSValue: function(textarea, value) {
 				var instance = this;
 
-				var currentVal = Lang.trim(textarea.val());
+				var currentVal = textarea.val().trim();
 
 				if (currentVal.length) {
 					currentVal += '\n\n';
@@ -957,7 +957,7 @@ AUI.add(
 
 					var portletTitle = instance._curPortlet.one('.portlet-title-text');
 
-					instance._defaultPortletTitle = Lang.trim(portletTitle ? portletTitle.text() : EMPTY);
+					instance._defaultPortletTitle = portletTitle ? portletTitle.text().trim() : EMPTY;
 
 					instance._customTitleInput = instance._getNodeById('custom-title');
 					instance._customTitleCheckbox = instance._getNodeById('use-custom-title');
@@ -1447,11 +1447,11 @@ AUI.add(
 					customTitleInput.set(DISABLED, false);
 					language.set(DISABLED, false);
 
-					title = Lang.trim(customTitleInput.val());
+					title = customTitleInput.val().trim();
 
 					if (title == EMPTY) {
 						title = portletTitleText && portletTitleText.text() || EMPTY;
-						title = Lang.trim(title);
+						title = title.trim();
 
 						customTitleInput.val(title);
 					}

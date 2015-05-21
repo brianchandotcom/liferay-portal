@@ -332,15 +332,15 @@ public class JournalArticleLocalServiceImpl
 
 		validateDDMStructureId(groupId, folderId, ddmStructureKey);
 
+		if (autoArticleId) {
+			articleId = String.valueOf(counterLocalService.increment());
+		}
+
 		validate(
 			user.getCompanyId(), groupId, classNameId, articleId, autoArticleId,
 			version, titleMap, content, ddmStructureKey, ddmTemplateKey,
 			expirationDate, smallImage, smallImageURL, smallImageFile,
 			smallImageBytes, serviceContext);
-
-		if (autoArticleId) {
-			articleId = String.valueOf(counterLocalService.increment());
-		}
 
 		serviceContext.setAttribute("articleId", articleId);
 

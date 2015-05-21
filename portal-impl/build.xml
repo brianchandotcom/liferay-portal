@@ -1079,29 +1079,38 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		/>
 	</target>
 
-	<target name="deploy" depends="check-deploy-uptodate" unless="${deploy.uptodate}">
-		<jar-marco />
-
-		<ant dir="../portal-service" target="deploy" inheritAll="false" />
-
-		<deploy-properties />
-
+	<target name="deploy">
 		<if>
-			<and>
-				<equals arg1="${app.server.type}" arg2="tomcat" />
-				<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
-			</and>
+			<not>
+				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
+					<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+				</uptodate>
+			</not>
 			<then>
-				<delete file="${app.server.lib.portal.dir}/portal-impl.jar" failonerror="false" />
+				<jar-marco />
 
-				<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
+				<ant dir="../portal-service" target="deploy" inheritAll="false" />
+
+				<deploy-properties />
+
+				<if>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
+					</and>
+					<then>
+						<delete file="${app.server.lib.portal.dir}/portal-impl.jar" failonerror="false" />
+
+						<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
+					</then>
+					<else>
+						<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+
+						<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
+						<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
+					</else>
+				</if>
 			</then>
-			<else>
-				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
-
-				<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
-				<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
-			</else>
 		</if>
 	</target>
 

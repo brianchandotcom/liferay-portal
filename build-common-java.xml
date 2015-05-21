@@ -178,12 +178,6 @@
 		</else>
 	</if>
 
-	<target name="check-deploy-uptodate">
-		<uptodate property="deploy.uptodate" targetfile="${deploy.dir}/${jar.file}.jar">
-			<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-		</uptodate>
-	</target>
-
 	<target name="clean">
 		<clean />
 	</target>
@@ -192,10 +186,19 @@
 		<compile-java />
 	</target>
 
-	<target name="deploy" depends="check-deploy-uptodate" unless="${deploy.uptodate}">
-		<jar-marco />
+	<target name="deploy">
+		<if>
+			<not>
+				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
+					<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+				</uptodate>
+			</not>
+			<then>
+				<jar-marco />
 
-		<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+			</then>
+		</if>
 	</target>
 
 	<target name="jar">

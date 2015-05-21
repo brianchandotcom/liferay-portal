@@ -95,19 +95,28 @@
 		</java>
 	</target>
 
-	<target name="deploy" depends="check-deploy-uptodate" unless="${deploy.uptodate}">
-		<jar-marco />
-
-		<copy file="${jar.file}.jar" todir="${liferay.home}/osgi/portal" preservelastmodified="true" />
-
+	<target name="deploy">
 		<if>
-			<equals arg1="${app.server.type}" arg2="tomcat" />
+			<not>
+				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
+					<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+				</uptodate>
+			</not>
 			<then>
-				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+				<jar-marco />
 
-				<copy todir="${app.server.portal.dir}/WEB-INF/tld" preservelastmodified="true">
-					<fileset dir="classes/META-INF" includes="*.tld" />
-				</copy>
+				<copy file="${jar.file}.jar" todir="${liferay.home}/osgi/portal" preservelastmodified="true" />
+
+				<if>
+					<equals arg1="${app.server.type}" arg2="tomcat" />
+					<then>
+						<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
+
+						<copy todir="${app.server.portal.dir}/WEB-INF/tld" preservelastmodified="true">
+							<fileset dir="classes/META-INF" includes="*.tld" />
+						</copy>
+					</then>
+				</if>
 			</then>
 		</if>
 	</target>

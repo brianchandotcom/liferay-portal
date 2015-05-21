@@ -13,6 +13,7 @@
 			<delete dir="test-results" />
 			<delete dir="woven-classes" />
 			<delete dir="${doc.dir}/${ant.project.name}/javadocs" />
+			<delete file="${deploy.dir}/${jar.file}.jar" failonerror="false" />
 			<delete file="${jar.file}.jar" failonerror="false" />
 			<delete file="${jar.file}-javadoc.jar" failonerror="false" />
 			<delete file="${jar.file}-sources.jar" failonerror="false" />

@@ -3,6 +3,7 @@
 <project name="util-taglib" basedir="." default="compile">
 	<import file="../build-common-java.xml" />
 
+	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
 	<property name="jar.file" value="${ant.project.name}" />
 	<property name="manifest.bundle.name" value="Liferay Util Taglib" />
 	<property name="manifest.bundle.symbolic.name" value="util-taglib" />
@@ -98,7 +99,7 @@
 		<if>
 			<equals arg1="${app.server.type}" arg2="tomcat" />
 			<then>
-				<copy file="${jar.file}.jar" todir="${app.server.portal.dir}/WEB-INF/lib" preservelastmodified="true" />
+				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 
 				<copy todir="${app.server.portal.dir}/WEB-INF/tld" preservelastmodified="true">
 					<fileset dir="classes/META-INF" includes="*.tld" />

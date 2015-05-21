@@ -159,8 +159,7 @@ AUI.add(
 							)
 						);
 
-						var buffer = AArray.map(
-							instance.get(ITEMS_PER_PAGE_LIST),
+						var buffer = instance.get(ITEMS_PER_PAGE_LIST).map(
 							function(item, index) {
 								return Lang.sub(
 									instance.TPL_ITEM,

@@ -457,8 +457,7 @@ AUI.add(
 					_setAvailableFields: function(val) {
 						var instance = this;
 
-						var fields = AArray.map(
-							val,
+						var fields = val.map(
 							function(item, index) {
 								return A.instanceOf(item, A.PropertyBuilderAvailableField) ? item : new A.LiferayAvailableField(item);
 							}

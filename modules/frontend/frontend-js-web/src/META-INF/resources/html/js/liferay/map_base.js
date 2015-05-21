@@ -37,7 +37,7 @@ AUI.add(
 
 						var nativeFeatures = instance._addData(data);
 
-						var features = AArray.map(nativeFeatures, instance._wrapNativeFeature, instance);
+						var features = nativeFeatures.map(instance._wrapNativeFeature, instance);
 
 						instance.fire(
 							'featuresAdded',

@@ -399,8 +399,7 @@ AUI.add(
 
 										var dragDropFiles = AArray(dataTransfer.files);
 
-										event.fileList = AArray.map(
-											dragDropFiles,
+										event.fileList = dragDropFiles.map(
 											function(item, index) {
 												return new A.FileHTML5(item);
 											}
@@ -523,8 +522,7 @@ AUI.add(
 
 						var searchContainer = Liferay.SearchContainer.get(searchContainerNode.attr('id'));
 
-						var columnValues = AArray.map(
-							instance._columnNames,
+						var columnValues = instance._columnNames.map(
 							function(item, index) {
 								var value = STR_BLANK;
 
@@ -1281,8 +1279,7 @@ AUI.add(
 						else {
 							var displayStyle = instance._getDisplayStyle();
 
-							AArray.map(
-								filesPartition.matches,
+							filesPartition.map(
 								function(file) {
 									var entryNode = instance._createEntryNode(file.name, file.size, displayStyle);
 
@@ -1290,8 +1287,7 @@ AUI.add(
 								}
 							);
 
-							AArray.map(
-								filesPartition.rejects,
+							filesPartition.map(
 								function(file) {
 									var entryNode = instance._createEntryNode(file.name, file.size, displayStyle);
 

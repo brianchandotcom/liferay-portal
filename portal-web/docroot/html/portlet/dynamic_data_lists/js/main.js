@@ -86,8 +86,7 @@ AUI.add(
 						var columns = instance.get('columns');
 						var data = instance.get('data');
 
-						var keys = AArray.map(
-							columns,
+						var keys = columns.map(
 							function(item, index) {
 								return item.key;
 							}
@@ -396,8 +395,7 @@ AUI.add(
 							}
 							else if (type === 'ddm-date') {
 								config.inputFormatter = function(val) {
-									return AArray.map(
-										val,
+									return val.map(
 										function(item, index) {
 											return item.getTime();
 										}
@@ -405,8 +403,7 @@ AUI.add(
 								};
 
 								config.outputFormatter = function(val) {
-									return AArray.map(
-										val,
+									return val.map(
 										function(item, index) {
 											var value = Lang.toInt(item) || Date.now();
 

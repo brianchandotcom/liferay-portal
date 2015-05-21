@@ -1380,14 +1380,4 @@
 			<var name="usersList" value="${usersList}" />
 		</execute>
 	</command>
-
-	<command name="viewWeekStartDayViaEventMiniCalendar">
-		<execute function="Click" locator1="PGCalendarAddevent#START_DATE" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
-
-		<execute function="Click" locator1="PGCalendarAddevent#END_DATE" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
-	</command>
 </definition>

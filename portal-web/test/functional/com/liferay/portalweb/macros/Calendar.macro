@@ -948,6 +948,16 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_WEEK_NUMBER" />
 	</command>
 
+	<command name="viewWeekStartDayViaAddEventMiniCalendar">
+		<execute function="Click" locator1="PGCalendarAddevent#START_DATE" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
+
+		<execute function="Click" locator1="PGCalendarAddevent#END_DATE" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#MINI_CALENDAR_WEEK_START_DAY" value1="${weekStartDay}" />
+	</command>
+
 	<command name="viewWeekStartDayViaMonthView">
 		<execute macro="CalendarNavigation#gotoView">
 			<var name="viewType" value="Month" />

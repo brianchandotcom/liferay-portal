@@ -4071,7 +4071,7 @@
 
 		<execute macro="CalendarNavigation#gotoAdd" />
 
-		<execute macro="CalendarEvent#viewWeekStartDayViaEventMiniCalendar">
+		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
 			<var name="weekStartDay" value="Mo" />
 		</execute>
 
@@ -4119,7 +4119,7 @@
 
 		<execute macro="CalendarNavigation#gotoAdd" />
 
-		<execute macro="CalendarEvent#viewWeekStartDayViaEventMiniCalendar">
+		<execute macro="Calendar#viewWeekStartDayViaAddEventMiniCalendar">
 			<var name="weekStartDay" value="Sa" />
 		</execute>
 

@@ -48,14 +48,14 @@ public class UpgradeTableBuilder {
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
 
+		String baseDirName = arguments.get("upgrade.base.dir");
 		boolean osgiModule = GetterUtil.getBoolean(
 			arguments.get("upgrade.osgi.module"), true);
-		String upgradeBaseDirName = arguments.get("upgrade.base.dir");
 		String upgradeTableDirName = arguments.get("upgrade.table.dir");
 
 		try {
 			new UpgradeTableBuilder(
-				osgiModule, upgradeBaseDirName, upgradeTableDirName);
+				baseDirName, osgiModule, upgradeTableDirName);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -63,12 +63,11 @@ public class UpgradeTableBuilder {
 	}
 
 	public UpgradeTableBuilder(
-			boolean osgiModule, String upgradeBaseDirName,
-			String upgradeTableDirName)
+			String baseDirName, boolean osgiModule, String upgradeTableDirName)
 		throws Exception {
 
+		_baseDirName = baseDirName;
 		_osgiModule = osgiModule;
-		_upgradeBaseDirName = upgradeBaseDirName;
 		_upgradeTableDirName = upgradeTableDirName;
 
 		FileSystem fileSystem = FileSystems.getDefault();
@@ -77,7 +76,7 @@ public class UpgradeTableBuilder {
 			"glob:**/upgrade/v**/util/*Table.java");
 
 		Files.walkFileTree(
-			Paths.get(_upgradeBaseDirName),
+			Paths.get(_baseDirName),
 			new SimpleFileVisitor<Path>() {
 
 				@Override
@@ -321,7 +320,7 @@ public class UpgradeTableBuilder {
 	}
 
 	private String _getCopyright() throws IOException {
-		Path path = Paths.get(_upgradeBaseDirName);
+		Path path = Paths.get(_baseDirName);
 
 		path = path.toAbsolutePath();
 
@@ -345,7 +344,7 @@ public class UpgradeTableBuilder {
 
 		if (_osgiModule) {
 			List<Path> paths = _findFiles(
-				_upgradeBaseDirName, "**/sql/indexes.sql", 1);
+				_baseDirName, "**/sql/indexes.sql", 1);
 
 			if (!paths.isEmpty()) {
 				indexesFilePath = paths.get(0);
@@ -356,8 +355,7 @@ public class UpgradeTableBuilder {
 				_upgradeTableDirName, upgradeFileVersion, "indexes.sql");
 
 			if (Files.notExists(indexesFilePath)) {
-				indexesFilePath = Paths.get(
-					_upgradeBaseDirName, "../sql/indexes.sql");
+				indexesFilePath = Paths.get(_baseDirName, "../sql/indexes.sql");
 			}
 		}
 
@@ -371,7 +369,7 @@ public class UpgradeTableBuilder {
 
 		Properties properties = new Properties();
 
-		Path path = Paths.get(_upgradeBaseDirName, "bnd.bnd");
+		Path path = Paths.get(_baseDirName, "bnd.bnd");
 
 		try (InputStream inputStream = Files.newInputStream(path)) {
 			properties.load(inputStream);
@@ -391,7 +389,7 @@ public class UpgradeTableBuilder {
 	}
 
 	private Path _getUpgradeFilePath(String fileName) throws IOException {
-		List<Path> paths = _findFiles(_upgradeBaseDirName, "**/" + fileName, 1);
+		List<Path> paths = _findFiles(_baseDirName, "**/" + fileName, 1);
 
 		if (paths.isEmpty()) {
 			return null;
@@ -411,8 +409,8 @@ public class UpgradeTableBuilder {
 	private static final Pattern _packagePathPattern = Pattern.compile(
 		"package (.+?);");
 
+	private final String _baseDirName;
 	private final boolean _osgiModule;
-	private final String _upgradeBaseDirName;
 	private final String _upgradeTableDirName;
 
 }

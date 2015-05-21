@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `291214b`.*
+*This document has been reviewed through commit `215494e`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1592,16 +1592,16 @@ property files. First name is required and always present.
 
 ---------------------------------------
 
-### Removed methods getGroupLocalRepositoryImpl() and getLocalRepositoryImpl() from RepositoryLocalService and RepositoryService
+### Removed Methods getGroupLocalRepositoryImpl and getLocalRepositoryImpl from RepositoryLocalService and RepositoryService
 - **Date:** 2015-May-14
 - **JIRA Ticket:** LPS-55566
 
 #### What changed?
 
-The methods getGroupLocalRepositoryImpl() and getLocalRepositoryImpl() have been
-removed from RepositoryLocalService and RepositoryService because, although they
-are related to that service, they should be placed in a different level of
-abstraction.
+The methods `getGroupLocalRepositoryImpl(...)` and `getLocalRepositoryImpl(...)`
+have been removed from `RepositoryLocalService` and `RepositoryService` because,
+although they are related to that service, they should be placed in a different
+level of abstraction.
 
 #### Who is affected?
 
@@ -1609,23 +1609,19 @@ This affects anyone who uses those methods.
 
 #### How should I update my code?
 
-The removed methods where generic and had a long signature with optional
-parameters, now they have on specialized version per parameter and are placed in
-the RepositoryProvider service. For instance, if you called:
+The removed methods were generic and had a long signature with optional
+parameters. Now they have one specialized version per parameter and are placed
+in the `RepositoryProvider` service. For instance, if you called:
 
-```
     RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0)
-```
 
 now you must call:
 
-```
     RepositoryProviderUtil.getLocalRepositoryByFileEntryId(fileEntryId)
-```
 
 #### Why was this change made?
 
-This change was made to enhance the Repository API and make decoupling from
+This change was made to enhance the Repository API and make decoupling from the
 Document Library easier when modularizing the portal.
 
 ---------------------------------------

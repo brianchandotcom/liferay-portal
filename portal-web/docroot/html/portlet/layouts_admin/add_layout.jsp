@@ -129,17 +129,11 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 							</div>
 
 							<div class="lfr-page-template-options toggler-content toggler-content-expanded">
-
-								<%
-								String layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-								String layoutTemplateIdPrefix = "addLayout";
-
-								Theme selTheme = layout.getTheme();
-
-								List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
-								%>
-
-								<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
+								<liferay-ui:layout-template-list
+									layoutTemplateId="<%= PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID %>"
+									layoutTemplateIdPrefix="addLayout"
+									layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(layout.getThemeId()) %>"
+								/>
 							</div>
 						</aui:nav-item>
 					</c:if>

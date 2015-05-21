@@ -47,17 +47,10 @@ Boolean showLayoutTemplates = ParamUtil.getBoolean(request, "showLayoutTemplates
 
 		selTheme = selLayout.getTheme();
 	}
-
-	String layoutTemplateId = StringPool.BLANK;
-
-	if (selLayoutTypePortlet != null) {
-		layoutTemplateId = selLayoutTypePortlet.getLayoutTemplateId();
-	}
-
-	String layoutTemplateIdPrefix = StringPool.BLANK;
-
-	List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId());
 	%>
 
-	<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
+	<liferay-ui:layout-template-list
+		layoutTemplateId="<%= (selLayoutTypePortlet != null) ? selLayoutTypePortlet.getLayoutTemplateId() : StringPool.BLANK %>"
+		layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates(selTheme.getThemeId()) %>"
+	/>
 </div>

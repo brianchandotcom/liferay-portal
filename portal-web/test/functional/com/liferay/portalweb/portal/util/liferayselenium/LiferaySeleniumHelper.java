@@ -1060,6 +1060,12 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
+		// LPS-55835, temporarily ignore while Brian Wulbern investigates
+
+		if (line.contains("Current URL /web/guest/home?p_p_id=145")) {
+			return true;
+		}
+
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it
 
 		if (line.contains("Framework Event Dispatcher: Equinox Container:")) {

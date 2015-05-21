@@ -503,6 +503,23 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void addMessageAttachment(
+			long messageId, String fileName, File file, String mimeType,
+			boolean indexingEnabled)
+		throws PortalException {
+
+		MBMessage message = mbMessagePersistence.findByPrimaryKey(messageId);
+
+		Folder folder = message.addAttachmentsFolder();
+
+		PortletFileRepositoryUtil.addPortletFileEntry(
+			message.getGroupId(), message.getUserId(),
+			MBMessage.class.getName(), message.getMessageId(),
+			PortletKeys.MESSAGE_BOARDS, folder.getFolderId(), file, fileName,
+			mimeType, indexingEnabled);
+	}
+
+	@Override
 	public void addMessageResources(
 			long messageId, boolean addGroupPermissions,
 			boolean addGuestPermissions)

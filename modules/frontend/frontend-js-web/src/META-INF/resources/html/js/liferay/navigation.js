@@ -779,11 +779,9 @@ AUI.add(
 				var listItem = event.listItem;
 				var textNode = event.textNode;
 
-				var pageTitle = field.get('value');
+				var pageTitle = field.get('value').trim();
 
 				var prevVal = event.prevVal.trim();
-
-				pageTitle = pageTitle.trim();
 
 				var data = null;
 				var onSuccess = null;

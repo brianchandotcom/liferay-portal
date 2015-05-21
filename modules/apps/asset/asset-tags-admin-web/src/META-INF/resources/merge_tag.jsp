@@ -127,7 +127,9 @@ for (long mergeTagId : mergeTagIds) {
 
 			var tag = targetTag.one(':selected');
 
-			mergeText = A.Lang.sub(mergeText, [mergeTagNames.split(','), tag.html().trim()]);
+			tag = tag.html().trim();
+
+			mergeText = A.Lang.sub(mergeText, [mergeTagNames.split(','), tag]);
 
 			if (confirm(mergeText)) {
 				submitForm(form, form.attr('action'));

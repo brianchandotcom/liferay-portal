@@ -347,9 +347,9 @@ public interface AssetEntryLocalService extends BaseLocalService,
 		long[] groupIds, long[] classNameIds, java.lang.String keywords,
 		java.lang.String userName, java.lang.String title,
 		java.lang.String description, boolean advancedSearch,
-		boolean andOperator, int start, int end, java.lang.String orderByCol1,
-		java.lang.String orderByCol2, java.lang.String orderByType1,
-		java.lang.String orderByType2);
+		boolean andOperator, boolean includeNonListable, int start, int end,
+		java.lang.String orderByCol1, java.lang.String orderByCol2,
+		java.lang.String orderByType1, java.lang.String orderByType2);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getEntriesCount(
@@ -359,7 +359,7 @@ public interface AssetEntryLocalService extends BaseLocalService,
 	public int getEntriesCount(long[] groupIds, long[] classNameIds,
 		java.lang.String keywords, java.lang.String userName,
 		java.lang.String title, java.lang.String description,
-		boolean advancedSearch, boolean andOperator);
+		boolean advancedSearch, boolean andOperator, boolean includeNonListable);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.asset.model.AssetEntry getEntry(

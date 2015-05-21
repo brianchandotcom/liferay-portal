@@ -1060,7 +1060,7 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-55835, temporarily ignore while Brian Wulbern investigates
+		// LPS-55835, temporary workaround while Brian Wulbern investigates it
 
 		if (line.contains("Current URL /web/guest/home?p_p_id=145")) {
 			return true;

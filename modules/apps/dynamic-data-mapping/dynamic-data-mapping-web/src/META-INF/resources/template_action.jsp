@@ -82,7 +82,6 @@ DDMTemplate template = (DDMTemplate)row.getObject();
 
 	<c:if test="<%= DDMTemplatePermission.contains(permissionChecker, scopeGroupId, template, refererPortletName, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteTemplate" var="deleteURL">
-			<portlet:param name="mvcPath" value="/edit_template.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
 		</portlet:actionURL>

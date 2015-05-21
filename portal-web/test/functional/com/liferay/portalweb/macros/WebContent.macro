@@ -1160,6 +1160,16 @@
 		<execute function="AssertElementNotPresent" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="viewCategorizationVocabularyCP">
+		<execute function="Click" locator1="CPWebcontentEditwebcontent#MENU_CATEGORIZATION" />
+
+		<for list="${vocabularyNameList}" param="vocabularyName">
+			<var name="key_vocabularyName" value="${vocabularyName}" />
+
+			<execute function="AssertTextEquals" locator1="CPWebcontentCategorization#VOCABULARY_LABEL" value1="${vocabularyName}" />
+		</for>
+	</command>
+
 	<command name="viewCategoryDescriptiveCP">
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

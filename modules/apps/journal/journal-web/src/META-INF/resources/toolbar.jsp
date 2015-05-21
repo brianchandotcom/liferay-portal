@@ -165,7 +165,7 @@ portletURL.setParameter("folderId", String.valueOf(folderId));
 				showAncestorScopes: true,
 				showHeader: false,
 				resourceClassNameId: '<%= PortalUtil.getClassNameId(JournalArticle.class) %>',
-				struts_action: '/dynamic_data_mapping/view_template',
+				mvcPath: '/view_template.jsp',
 				title: '<%= UnicodeLanguageUtil.get(request, "templates") %>'
 			}
 		);

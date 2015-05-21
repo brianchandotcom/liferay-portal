@@ -30,6 +30,8 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
@@ -102,16 +104,13 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		try {
 			String content = null;
 
-			int templatePathIndex = href.indexOf(_PATH_GET_TEMPLATE);
+			Matcher matcher = _templateIdPattern.matcher(href);
 
-			if (templatePathIndex >= 0) {
+			if (matcher.matches()) {
 				long articleGroupId = GetterUtil.getLong(
 					_tokens.get("article_group_id"));
 
-				int templateIdIndex =
-					templatePathIndex + _PATH_GET_TEMPLATE.length();
-
-				String templateId = href.substring(templateIdIndex);
+				String templateId = matcher.group(1);
 
 				content = JournalUtil.getTemplateScript(
 					articleGroupId, templateId, _tokens, _languageId);
@@ -141,13 +140,12 @@ public class JournalXSLURIResolver implements Externalizable, XSLURIResolver {
 		objectOutput.writeObject(_tokens);
 	}
 
-	private static final String _PATH_GET_TEMPLATE =
-		"/c/dynamic_data_mapping/get_template?template_id=";
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalXSLURIResolver.class);
 
 	private String _languageId;
+	private final Pattern _templateIdPattern = Pattern.compile(
+		".*_templateId=([0-9]+).*");
 	private Map<String, String> _tokens;
 
 }

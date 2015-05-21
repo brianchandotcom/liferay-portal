@@ -18,10 +18,4 @@
 			/>
 		</sequential>
 	</macrodef>
-
-	<target name="deploy">
-		<delete file="${deploy.dir}/support-catalina.jar" />
-
-		<antcall target="build-common-java.deploy" />
-	</target>
 </project>

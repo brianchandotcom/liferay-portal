@@ -56,8 +56,7 @@ AUI.add(
 
 						var menuItem = target.ancestor(SELECTOR_DOCKBAR_ITEM) || target.getData(STR_MENU_ITEM);
 
-						AArray.some(
-							MENU_ITEM_CSS_CLASSES,
+						MENU_ITEM_CSS_CLASSES.some(
 							function(item, index) {
 								if (menuItem.hasClass(item)) {
 									menuItem.addClass(CSS_OPEN);
@@ -173,8 +172,7 @@ AUI.add(
 
 									var menuItem = menuItemLink.ancestor(SELECTOR_DOCKBAR_ITEM) || menuItemLink.getData(STR_MENU_ITEM);
 
-									AArray.some(
-										MENU_ITEM_CSS_CLASSES,
+									MENU_ITEM_CSS_CLASSES.some(
 										function(item, index) {
 											if (menuItem.hasClass(item)) {
 												menuItem.addClass(CSS_OPEN);

@@ -14,8 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.MissingReferences;
 import com.liferay.portal.kernel.util.MapUtil;
@@ -35,7 +33,6 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
@@ -145,7 +142,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public void importLayouts(
-			ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
@@ -157,7 +155,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			getPermissionChecker(), targetGroupId,
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
-		exportImportLocalService.importLayouts(exportImportConfiguration, is);
+		exportImportLocalService.importLayouts(
+			exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -180,7 +179,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public long importLayoutsInBackground(
-			ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
@@ -193,7 +193,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			ActionKeys.EXPORT_IMPORT_LAYOUTS);
 
 		return exportImportLocalService.importLayoutsInBackground(
-			getUserId(), exportImportConfiguration, is);
+			getUserId(), exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -216,7 +216,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public void importPortletInfo(
-			ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
@@ -229,7 +230,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		exportImportLocalService.importPortletInfo(
-			exportImportConfiguration, is);
+			exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -252,7 +253,8 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 
 	@Override
 	public long importPortletInfoInBackground(
-			ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException {
 
 		Map<String, Serializable> settingsMap =
@@ -265,7 +267,7 @@ public class ExportImportServiceImpl extends ExportImportServiceBaseImpl {
 			ActionKeys.EXPORT_IMPORT_PORTLET_INFO);
 
 		return exportImportLocalService.importPortletInfoInBackground(
-			getUserId(), exportImportConfiguration, is);
+			getUserId(), exportImportConfiguration, inputStream);
 	}
 
 	@Override

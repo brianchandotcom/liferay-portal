@@ -14,8 +14,6 @@
 
 package com.liferay.portal.service.impl;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.portal.LARFileNameException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -54,7 +52,6 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  */
-@ProviderType
 public class ExportImportLocalServiceImpl
 	extends ExportImportLocalServiceBaseImpl {
 

@@ -4,8 +4,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
-		var trim = Lang.trim;
-
 		var ARIA_ATTR_ROLE = 'role';
 
 		var ATTR_CLASS_NAME = 'className';
@@ -534,7 +532,7 @@ AUI.add(
 						function(node) {
 							results.push(
 								{
-									name: trim(node.one('.taglib-text-icon').text()),
+									name: node.one('.taglib-text-icon').text().trim(),
 									node: node
 								}
 							);

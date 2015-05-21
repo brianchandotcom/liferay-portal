@@ -6,8 +6,6 @@ AUI.add(
 		var AEvent = A.Event;
 		var Util = Liferay.Util;
 
-		var trim = Lang.trim;
-
 		var NAME = 'menutoggle';
 
 		var SELECTOR_NAV_ITEM_FILTER = '.nav-item-filter';
@@ -122,7 +120,7 @@ AUI.add(
 							function(node) {
 								results.push(
 									{
-										name: trim(node.one('.nav-item-label').text()),
+										name: node.one('.nav-item-label').text().trim(),
 										node: node
 									}
 								);

@@ -19,7 +19,6 @@ AUI.add(
 		var isObject = Lang.isObject;
 		var isUndefined = Lang.isUndefined;
 		var isValue = Lang.isValue;
-		var trim = Lang.trim;
 
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
@@ -90,7 +89,7 @@ AUI.add(
 
 					if (rule.length == 2) {
 						var key = camelize(rule[0]);
-						var value = trim(rule[1]);
+						var value = rule[1].trim();
 
 						node.setStyle(key, value);
 					}

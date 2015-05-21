@@ -2,11 +2,12 @@ Bundle-Name: Liferay Portal Scripting Groovy
 Bundle-SymbolicName: com.liferay.portal.scripting.groovy
 Bundle-Version: 1.0.0
 Import-Package:\
-	!antlr.*,\
 	!com.thoughtworks.xstream.*,\
+	!javax.swing.*,\
 	!org.apache.ivy.*,\
 	!org.fusesource.jansi.*,\
 	*
 Include-Resource: \
 	classes,\
+	@lib/antlr.jar,\
 	@lib/groovy.jar

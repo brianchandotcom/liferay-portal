@@ -42,36 +42,36 @@
 			name="task"
 		>
 			<span class="task-name" id="<%= workflowTask.getWorkflowTaskId() %>">
-				<liferay-ui:message key="<%= displayContext.getTaskName(workflowTask) %>" />
+				<liferay-ui:message key="<%= workflowTaskDisplayContext.getTaskName(workflowTask) %>" />
 			</span>
 		</liferay-ui:search-container-column-text>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="asset-title"
-			value="<%= displayContext.getAssetTitle(workflowTask) %>"
+			value="<%= workflowTaskDisplayContext.getAssetTitle(workflowTask) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="asset-type"
-			value="<%= displayContext.getAssetType(workflowTask) %>"
+			value="<%= workflowTaskDisplayContext.getAssetType(workflowTask) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="last-activity-date"
-			value="<%= displayContext.getLastActivityDate(workflowTask) %>"
+			value="<%= workflowTaskDisplayContext.getLastActivityDate(workflowTask) %>"
 		/>
 
 		<liferay-ui:search-container-column-text
 			href="<%= rowURL %>"
 			name="due-date"
 			orderable="<%= true %>"
-			value="<%= displayContext.getDueDate(workflowTask) %>"
+			value="<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>"
 		/>
 
-		<c:if test="<%= !displayContext.isCompletedTab() %>">
+		<c:if test="<%= !workflowTaskDisplayContext.isCompletedTab() %>">
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"

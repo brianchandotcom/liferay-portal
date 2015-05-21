@@ -27,7 +27,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
-import com.liferay.workflow.task.web.context.WorkflowTaskDisplayContext;
 
 import java.io.IOException;
 
@@ -93,8 +92,6 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 
 		try {
 			setWorkflowTaskRenderRequestAttribute(request);
-
-			setDisplayContextRenderRequestAttribute(request, response);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -108,12 +105,6 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		}
 
 		super.render(request, response);
-	}
-
-	protected WorkflowTaskDisplayContext createWorkflowTaskDisplayContext(
-		RenderRequest renderRequest, RenderResponse renderResponse) {
-
-		return new WorkflowTaskDisplayContext(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -144,15 +135,6 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		}
 
 		return false;
-	}
-
-	protected void setDisplayContextRenderRequestAttribute(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException {
-
-		renderRequest.setAttribute(
-			WebKeys.DISPLAY_CONTEXT,
-			createWorkflowTaskDisplayContext(renderRequest, renderResponse));
 	}
 
 	protected void setWorkflowTaskRenderRequestAttribute(

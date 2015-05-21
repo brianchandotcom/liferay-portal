@@ -21,11 +21,11 @@ String randomId = StringUtil.randomId();
 
 String redirect = ParamUtil.getString(request, "redirect");
 
-WorkflowTask workflowTask = displayContext.getWorkflowTask();
+WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 
-long classPK = displayContext.getWorkflowContextEntryClassPK(workflowTask);
+long classPK = workflowTaskDisplayContext.getWorkflowContextEntryClassPK(workflowTask);
 
-WorkflowHandler<?> workflowHandler = displayContext.getWorkflowHandler(workflowTask);
+WorkflowHandler<?> workflowHandler = workflowTaskDisplayContext.getWorkflowHandler(workflowTask);
 
 AssetRenderer assetRenderer = workflowHandler.getAssetRenderer(classPK);
 
@@ -37,11 +37,11 @@ if (assetRenderer != null) {
 	assetEntry = assetRendererFactory.getAssetEntry(assetRendererFactory.getClassName(), assetRenderer.getClassPK());
 }
 
-String headerTitle = displayContext.getHeaderTitle(workflowTask);
+String headerTitle = workflowTaskDisplayContext.getHeaderTitle(workflowTask);
 
-boolean showEditURL = displayContext.showEditURL(workflowTask);
+boolean showEditURL = workflowTaskDisplayContext.showEditURL(workflowTask);
 
-PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
+PortletURL editPortletURL = workflowTaskDisplayContext.getEditPortletURL(workflowTask);
 
 %>
 
@@ -64,10 +64,10 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 				<div class="lfr-asset-assigned">
 					<c:choose>
 						<c:when test="<%= workflowTask.isAssignedToSingleUser() %>">
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= displayContext.getNameForAssignedToSingleUser(workflowTask) %>" />
+							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value="<%= workflowTaskDisplayContext.getNameForAssignedToSingleUser(workflowTask) %>" />
 						</c:when>
 						<c:otherwise>
-							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value='<%= displayContext.getNameForAssignedToAnyone() %>' />
+							<aui:input cssClass="assigned-to" inlineField="<%= true %>" name="assignedTo" type="resource" value='<%= workflowTaskDisplayContext.getNameForAssignedToAnyone() %>' />
 						</c:otherwise>
 					</c:choose>
 
@@ -84,7 +84,7 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 
 					&nbsp;
 
-					<c:if test="<%= displayContext.hasOtherAssignees(workflowTask) %>">
+					<c:if test="<%= workflowTaskDisplayContext.hasOtherAssignees(workflowTask) %>">
 						<%= StringPool.DASH %>
 
 						<portlet:actionURL name="assignWorkflowTask" var="assignURL">
@@ -97,13 +97,13 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 					</c:if>
 				</div>
 
-				<aui:input name="state" type="resource" value="<%= displayContext.getState(workflowTask) %>" />
+				<aui:input name="state" type="resource" value="<%= workflowTaskDisplayContext.getState(workflowTask) %>" />
 			</aui:col>
 
 			<aui:col width="<%= 50 %>">
-				<aui:input name="createDate" type="resource" value="<%= displayContext.getCreateDate(workflowTask) %>" />
+				<aui:input name="createDate" type="resource" value="<%= workflowTaskDisplayContext.getCreateDate(workflowTask) %>" />
 
-				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value='<%= displayContext.getDueDate(workflowTask) %>' />
+				<aui:input inlineField="<%= true %>" name="dueDate" type="resource" value='<%= workflowTaskDisplayContext.getDueDate(workflowTask) %>' />
 
 				<c:if test="<%= !workflowTask.isCompleted() %>">
 					<portlet:actionURL name="updateWorkflowTask" var="updateDueDateURL">
@@ -126,14 +126,14 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 		<c:if test="<%= Validator.isNotNull(workflowTask.getDescription()) %>">
 			<div class="lfr-asset-field">
 				<aui:field-wrapper label="description">
-					<%= displayContext.getDescription(workflowTask) %>
+					<%= workflowTaskDisplayContext.getDescription(workflowTask) %>
 				</aui:field-wrapper>
 			</div>
 		</c:if>
 
 		<liferay-ui:panel-container cssClass="task-panel-container" extended="<%= true %>">
 			<c:if test="<%= assetRenderer != null %>">
-				<liferay-ui:panel defaultState="open" title='<%= displayContext.getPreviewOfTitle(workflowTask) %>'>
+				<liferay-ui:panel defaultState="open" title='<%= workflowTaskDisplayContext.getPreviewOfTitle(workflowTask) %>'>
 					<div class="task-content-actions">
 						<liferay-ui:icon-list>
 							<c:if test="<%= assetRenderer.hasViewPermission(permissionChecker) %>">
@@ -152,18 +152,18 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 
 								<liferay-ui:icon iconCssClass="icon-search" message="view[action]" method="get" target='<%= assetRenderer.isPreviewInContext() ? "_blank" : StringPool.BLANK %>' url="<%= assetRenderer.isPreviewInContext() ? assetRenderer.getURLViewInContext((LiferayPortletRequest)renderRequest, (LiferayPortletResponse)renderResponse, null) : viewFullContentURL.toString() %>" />
 
-								<c:if test="<%= displayContext.hasViewDiffsPortletURL(workflowTask) %>">
+								<c:if test="<%= workflowTaskDisplayContext.hasViewDiffsPortletURL(workflowTask) %>">
 
-									<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= displayContext.getTaglibViewDiffsURL(workflowTask) %>" />
+									<liferay-ui:icon iconCssClass="icon-copy" message="diffs" url="<%= workflowTaskDisplayContext.getTaglibViewDiffsURL(workflowTask) %>" />
 								</c:if>
 							</c:if>
 
-							<c:if test="<%= displayContext.hasEditPortletURL(workflowTask) %>">
+							<c:if test="<%= workflowTaskDisplayContext.hasEditPortletURL(workflowTask) %>">
 
 								<c:choose>
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && showEditURL %>">
 
-										<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= displayContext.getTaglibEditURL(workflowTask) %>" />
+										<liferay-ui:icon iconCssClass="icon-edit" message="edit" url="<%= workflowTaskDisplayContext.getTaglibEditURL(workflowTask) %>" />
 									</c:when>
 									<c:when test="<%= assetRenderer.hasEditPermission(permissionChecker) && !showEditURL && !workflowTask.isCompleted() %>">
 										<liferay-ui:icon-help message="please-assign-the-task-to-yourself-to-be-able-to-edit-the-content" />
@@ -177,7 +177,7 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 						<liferay-ui:icon
 							iconCssClass="<%= workflowHandler.getIconCssClass() %>"
 							label="<%= true %>"
-							message="<%= displayContext.getTaskContentTitle(workflowTask) %>"
+							message="<%= workflowTaskDisplayContext.getTaskContentTitle(workflowTask) %>"
 						/>
 					</h3>
 
@@ -189,7 +189,7 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 					<liferay-ui:asset-metadata
 						className="<%= assetEntry.getClassName() %>"
 						classPK="<%= assetEntry.getClassPK() %>"
-						metadataFields="<%= displayContext.getMetadataFields() %>"
+						metadataFields="<%= workflowTaskDisplayContext.getMetadataFields() %>"
 					/>
 				</liferay-ui:panel>
 
@@ -217,7 +217,7 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 			<liferay-ui:panel defaultState="closed" title="activities">
 
 				<%
-				List<WorkflowLog> workflowLogs = displayContext.getWorkflowLogs(workflowTask);
+				List<WorkflowLog> workflowLogs = workflowTaskDisplayContext.getWorkflowLogs(workflowTask);
 				%>
 
 				<%@ include file="/workflow_logs.jspf" %>
@@ -234,7 +234,7 @@ PortletURL editPortletURL = displayContext.getEditPortletURL(workflowTask);
 			/>
 
 			<div class="task-name">
-				<%= displayContext.getEditTaskName(workflowTask) %>
+				<%= workflowTaskDisplayContext.getEditTaskName(workflowTask) %>
 			</div>
 		</div>
 

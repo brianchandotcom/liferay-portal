@@ -88,8 +88,9 @@ page import="javax.portlet.WindowState" %>
 <portlet:defineObjects />
 
 <%
-WorkflowTaskDisplayContext displayContext = (WorkflowTaskDisplayContext)request.getAttribute(WebKeys.DISPLAY_CONTEXT);
-String currentURL = displayContext.getCurrentURL();
+WorkflowTaskDisplayContext workflowTaskDisplayContext = new WorkflowTaskDisplayContext(renderRequest, renderResponse);
+
+String currentURL = workflowTaskDisplayContext.getCurrentURL();
 %>
 
 <%@ include file="/init-ext.jsp" %>

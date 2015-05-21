@@ -17,11 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-AssetRendererFactory assetRendererFactory = displayContext.getAssetRendererFactoryFromRequest();
+AssetRendererFactory assetRendererFactory = workflowTaskDisplayContext.getAssetRendererFactoryFromRequest();
 
-AssetEntry assetEntry = displayContext.getAssetEntryFromRequest();
+AssetEntry assetEntry = workflowTaskDisplayContext.getAssetEntryFromRequest();
 
-AssetRenderer assetRenderer = displayContext.getAssetRendererFromRequest();
+AssetRenderer assetRenderer = workflowTaskDisplayContext.getAssetRendererFromRequest();
 
 request.setAttribute(WebKeys.WORKFLOW_ASSET_PREVIEW, Boolean.TRUE);
 %>

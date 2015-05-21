@@ -34,30 +34,30 @@ for (WorkflowLog workflowLog : workflowLogs) {
 				</c:otherwise>
 			</c:choose>
 
-			<%= displayContext.getCreateDate(workflowLog) %>
+			<%= workflowTaskDisplayContext.getCreateDate(workflowLog) %>
 		</div>
 
 		<c:choose>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_COMPLETION %>">
 				<div>
-					<liferay-ui:message arguments="<%= displayContext.getTaskCompletionMessageArguments(workflowLog) %>" key="x-completed-the-task-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getTaskCompletionMessageArguments(workflowLog) %>" key="x-completed-the-task-x" translateArguments="<%= false %>" />
 				</div>
 			</c:when>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TASK_UPDATE %>">
 				<div>
-					<liferay-ui:message arguments="<%= displayContext.getTaskUpdateMessageArguments(workflowLog) %>" key="x-updated-the-due-date" />
+					<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getTaskUpdateMessageArguments(workflowLog) %>" key="x-updated-the-due-date" />
 				</div>
 			</c:when>
 			<c:when test="<%= workflowLog.getType() == WorkflowLog.TRANSITION %>">
 				<div>
-					<liferay-ui:message arguments="<%= displayContext.getTransitionMessageArguments(workflowLog) %>" key="x-changed-the-state-from-x-to-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getTransitionMessageArguments(workflowLog) %>" key="x-changed-the-state-from-x-to-x" translateArguments="<%= false %>" />
 				</div>
 			</c:when>
 			<c:otherwise>
 				<c:choose>
-					<c:when test="<%= displayContext.isAuditUser(workflowLog) %>">
+					<c:when test="<%= workflowTaskDisplayContext.isAuditUser(workflowLog) %>">
 						<div>
-							<liferay-ui:message arguments="<%= displayContext.getUserFullName(workflowLog) %>" key='<%= displayContext.getAssignedTheTaskMessageKey(workflowLog) %>' translateArguments="<%= false %>" />
+							<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getUserFullName(workflowLog) %>" key='<%= workflowTaskDisplayContext.getAssignedTheTaskMessageKey(workflowLog) %>' translateArguments="<%= false %>" />
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -65,16 +65,16 @@ for (WorkflowLog workflowLog : workflowLogs) {
 						<c:choose>
 							<c:when test="<%= workflowLog.getRoleId() == 0 %>">
 								<div>
-									<liferay-ui:message arguments="<%= displayContext.getAssignedTheTaskToMessageArguments(workflowLog) %>" key="x-assigned-the-task-to-x" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getAssignedTheTaskToMessageArguments(workflowLog) %>" key="x-assigned-the-task-to-x" translateArguments="<%= false %>" />
 	
 									<c:if test="<%= workflowLog.getPreviousUserId() != 0 %>">
-										<liferay-ui:message arguments="<%= displayContext.getPreviousAssigneeMessageArguments(workflowLog) %>" key="previous-assignee-was-x" translateArguments="<%= false %>" />
+										<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getPreviousAssigneeMessageArguments(workflowLog) %>" key="previous-assignee-was-x" translateArguments="<%= false %>" />
 									</c:if>
 								</div>
 							</c:when>
 							<c:otherwise>
 								<div>
-									<liferay-ui:message arguments="<%= displayContext.getTaskInitiallyAssignedMessageArguments(workflowLog) %>" key="task-initially-assigned-to-the-x-role" translateArguments="<%= false %>" />
+									<liferay-ui:message arguments="<%= workflowTaskDisplayContext.getTaskInitiallyAssignedMessageArguments(workflowLog) %>" key="task-initially-assigned-to-the-x-role" translateArguments="<%= false %>" />
 								</div>
 							</c:otherwise>
 						</c:choose>

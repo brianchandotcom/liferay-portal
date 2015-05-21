@@ -19,15 +19,15 @@
 <%
 WorkflowTaskSearch workflowTaskSearch = null;
 
-PortletURL portletURL = displayContext.getPortletURL();
+PortletURL portletURL = workflowTaskDisplayContext.getPortletURL();
 
-WorkflowTaskDisplayTerms displayTerms = displayContext.getDisplayTerms();
+WorkflowTaskDisplayTerms displayTerms = workflowTaskDisplayContext.getDisplayTerms();
 
 String displayTermsType = displayTerms.getType();
 
-String selectedTab = displayContext.getSelectedTab();
+String selectedTab = workflowTaskDisplayContext.getSelectedTab();
 
-List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.getWorkflowHandlersOfSearchableAssets();
+List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = workflowTaskDisplayContext.getWorkflowHandlersOfSearchableAssets();
 %>
 
 <liferay-ui:tabs
@@ -39,7 +39,7 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.get
 	<aui:nav-bar>
 		<aui:nav-bar-search>
 			<liferay-ui:search-toggle
-				autoFocus="<%= displayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
+				autoFocus="<%= workflowTaskDisplayContext.getWindowState().equals(WindowState.MAXIMIZED) %>"
 				buttonLabel="search"
 				displayTerms="<%= displayTerms %>"
 				id="toggle_id_workflow_task_search">
@@ -67,12 +67,12 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.get
 		</aui:nav-bar-search>
 	</aui:nav-bar>
 	<c:choose>
-		<c:when test="<%= displayContext.isPendingTab() %>">
+		<c:when test="<%= workflowTaskDisplayContext.isPendingTab() %>">
 			<liferay-ui:panel-container extended="<%= false %>" id="workflowTasksPanelContainer" persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="workflowMyTasksPanel" persistState="<%= true %>" title="assigned-to-me">
 
 					<%
-					workflowTaskSearch = displayContext.getPendingTasksAssignedToMe();
+					workflowTaskSearch = workflowTaskDisplayContext.getPendingTasksAssignedToMe();
 					%>
 
 					<%@ include file="/workflow_tasks.jspf" %>
@@ -81,7 +81,7 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.get
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= false %>" id="workflowMyRolesTasksPanel" persistState="<%= true %>" title="assigned-to-my-roles">
 
 					<%
-					workflowTaskSearch = displayContext.getPendingTasksAssignedToMyRoles();
+					workflowTaskSearch = workflowTaskDisplayContext.getPendingTasksAssignedToMyRoles();
 					%>
 
 					<%@ include file="/workflow_tasks.jspf" %>
@@ -92,7 +92,7 @@ List<WorkflowHandler<?>> workflowHandlersOfSearchableAssets = displayContext.get
 			<div class="separator"></div>
 
 			<%
-			workflowTaskSearch = displayContext.getCompletedTasksAssignedToMe();
+			workflowTaskSearch = workflowTaskDisplayContext.getCompletedTasksAssignedToMe();
 			%>
 
 			<%@ include file="/workflow_tasks.jspf" %>

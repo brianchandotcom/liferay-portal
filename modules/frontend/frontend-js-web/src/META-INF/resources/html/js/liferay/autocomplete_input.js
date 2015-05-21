@@ -70,8 +70,7 @@ AUI.add(
 
 				instance._bindUIACIBase();
 
-				var autocompleteAttrs = AArray.filter(
-					A.Object.keys(A.AutoComplete.ATTRS),
+				var autocompleteAttrs = A.Object.keys(A.AutoComplete.ATTRS).filter(
 					function(item) {
 						return item !== 'value';
 					}

@@ -196,8 +196,7 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 			resultFilters: function(query, results) {
 				query = query.toLowerCase().replace(replaceRE, '');
 
-				return AArray.filter(
-					results,
+				return results.filter(
 					function(item, index) {
 						var node = item.raw.node;
 						var guid = node.guid();

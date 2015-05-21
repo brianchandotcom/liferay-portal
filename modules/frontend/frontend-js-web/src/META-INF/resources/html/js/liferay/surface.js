@@ -115,8 +115,7 @@ AUI.add(
 			getRouteablePortletIds: function() {
 				var instance = this;
 
-				return AArray.filter(
-					Liferay.Portlet.list,
+				return Liferay.Portlet.list.filter(
 					function(portletId) {
 						return instance.isPortletRouteable(portletId);
 					}
@@ -136,8 +135,7 @@ AUI.add(
 			getSurfacePortletIds: function() {
 				var instance = this;
 
-				return AArray.filter(
-					Liferay.Portlet.list,
+				return Liferay.Portlet.list.filter(
 					function(portletId) {
 						return instance.isPortletSurface(portletId);
 					}

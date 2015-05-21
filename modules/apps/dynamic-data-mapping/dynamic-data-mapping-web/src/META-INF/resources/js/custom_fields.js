@@ -1075,8 +1075,7 @@ AUI.add(
 					getPropertyModel: function() {
 						var instance = this;
 
-						return AArray.filter(
-							DDMGeolocationField.superclass.getPropertyModel.apply(instance, arguments),
+						return DDMGeolocationField.superclass.getPropertyModel.apply(instance, arguments).filter(
 							function(item, index) {
 								return item.attributeName !== 'predefinedValue';
 							}

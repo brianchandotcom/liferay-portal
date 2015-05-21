@@ -464,8 +464,7 @@ AUI.add(
 
 						var maxFileSize = instance.get('maxFileSize');
 
-						return AArray.filter(
-							data,
+						return data.filter(
 							function(item, index) {
 
 								var id = item.get('id') || A.guid();

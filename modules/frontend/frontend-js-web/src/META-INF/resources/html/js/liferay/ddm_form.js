@@ -339,8 +339,7 @@ AUI.add(
 					getRepeatedSiblings: function() {
 						var instance = this;
 
-						return AArray.filter(
-							instance.getSiblings(),
+						return instance.getSiblings().filter(
 							function(item) {
 								return item.get('name') === instance.get('name');
 							}

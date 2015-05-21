@@ -191,8 +191,7 @@ AUI.add(
 
 						var removedItem = event.currentTarget.ancestor('.list-entry').attr(STR_DATA_KEY);
 
-						selectedAssetAddonEntries = AArray.filter(
-							selectedAssetAddonEntries,
+						selectedAssetAddonEntries = selectedAssetAddonEntries.filter(
 							function(item) {
 								return item !== removedItem;
 							}

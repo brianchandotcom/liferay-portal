@@ -12,6 +12,8 @@
 <#if entries?has_content>
 	<#assign dateFormat = "dd MMM yyyy - HH:mm:ss" />
 
+	<#assign rssPortletInstanceConfiguration = rssDisplayContext.getRSSPortletInstanceConfiguration() />
+
 	<div class="container-fluid">
 		<div class="row" id="<@liferay_portlet.namespace />feedsTab">
 			<ul class="col-xs-4">
@@ -38,7 +40,7 @@
 										<@aui["a"] href="${htmlUtil.escapeJSLink(rssFeedEntry.getSyndEntryLink())}">${htmlUtil.escape(syndEntry.getTitle())}</@>
 									</div>
 
-									<#if getterUtil.getBoolean(showFeedItemAuthor) && syndEntry.getAuthor()??>
+									<#if rssPortletInstanceConfiguration.showFeedTitle() && syndEntry.getAuthor()??>
 										<div class="feed-entry-author">
 											${htmlUtil.escape(syndEntry.getAuthor())}
 										</div>

@@ -1035,8 +1035,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	<target name="clean">
 		<clean-common>
 			<clean-extra>
-				<delete dir="classes" />
-
 				<if>
 					<and>
 						<equals arg1="${app.server.type}" arg2="tomcat" />

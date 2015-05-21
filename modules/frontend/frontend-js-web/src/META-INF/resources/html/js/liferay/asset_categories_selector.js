@@ -320,7 +320,7 @@ AUI.add(
 							);
 						}
 						else {
-							if (!portalModelResource && (themeDisplay.getSiteGroupId() != themeDisplay.getCompanyGroupId())) {
+							if (!portalModelResource && themeDisplay.getSiteGroupId() != themeDisplay.getCompanyGroupId()) {
 								groupIds.push(themeDisplay.getSiteGroupId());
 							}
 
@@ -366,16 +366,18 @@ AUI.add(
 
 					_getTreeNodeAssetId: function(treeNode) {
 						var treeId = treeNode.get(ID);
+
 						var match = treeId.match(/(\d+)$/);
 
-						return (match ? match[1] : null);
+						return match ? match[1] : null;
 					},
 
 					_getTreeNodeAssetType: function(treeNode) {
 						var treeId = treeNode.get(ID);
+
 						var match = treeId.match(/^(vocabulary|category)/);
 
-						return (match ? match[1] : null);
+						return match ? match[1] : null;
 					},
 
 					_initSearch: function() {
@@ -383,8 +385,8 @@ AUI.add(
 
 						var popup = instance._popup;
 
-						var vocabularyIds = instance.get('vocabularyIds');
 						var vocabularyGroupIds = instance.get('vocabularyGroupIds');
+						var vocabularyIds = instance.get('vocabularyIds');
 
 						var searchResults = instance._searchResultsNode;
 
@@ -661,8 +663,8 @@ AUI.add(
 						var instance = this;
 
 						var popup = instance._popup;
-						var vocabularyTitle = LString.escapeHTML(item.titleCurrentValue);
 						var vocabularyId = item.vocabularyId;
+						var vocabularyTitle = LString.escapeHTML(item.titleCurrentValue);
 
 						if (item.groupId == themeDisplay.getCompanyGroupId()) {
 							vocabularyTitle += ' (' + Liferay.Language.get('global') + ')';

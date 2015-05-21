@@ -149,7 +149,7 @@ AUI.add(
 					if (cssClass.indexOf(AUTO) === -1) {
 						var directionMatch = cssClass.match(REGEX_DIRECTION);
 
-						var direction = (directionMatch && directionMatch[1]) || AUTO;
+						var direction = directionMatch && directionMatch[1] || AUTO;
 
 						var overlayHorizontal = mapAlignHorizontalOverlay[direction] || defaultHorizontalAlign;
 						var overlayVertical = MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
@@ -375,8 +375,8 @@ AUI.add(
 
 				var listNode = menu.one('ul');
 
-				var ariaListNodeAttr = 'menu';
 				var ariaLinksAttr = 'menuitem';
+				var ariaListNodeAttr = 'menu';
 
 				if (searchContainer) {
 					ariaListNodeAttr = 'listbox';

@@ -136,7 +136,7 @@
 				function(index, item) {
 					item = $(item);
 
-					if (!item.is(allBox) && (_.indexOf(name, item.attr('name')) > -1)) {
+					if (!item.is(allBox) && _.indexOf(name, item.attr('name')) > -1) {
 						totalBoxes++;
 
 						if (item.prop(STR_CHECKED)) {
@@ -146,11 +146,11 @@
 				}
 			);
 
-			allBox.prop(STR_CHECKED, (totalBoxes == totalOn));
+			allBox.prop(STR_CHECKED, totalBoxes == totalOn);
 		},
 
 		checkTab: function(box) {
-			if ((document.all) && (window.event.keyCode == 9)) {
+			if (document.all && window.event.keyCode == 9) {
 				box.selection = document.selection.createRange();
 
 				setTimeout(
@@ -192,7 +192,7 @@
 		},
 
 		disableEsc: function() {
-			if ((document.all) && (window.event.keyCode == 27)) {
+			if (document.all && window.event.keyCode == 27) {
 				window.event.returnValue = false;
 			}
 		},
@@ -215,7 +215,7 @@
 			var checkBox = $('#' + checkBoxId);
 			var toggleBox = $('#' + toggleBoxId);
 
-			toggleBox.prop('disabled', (checkDisabled && checkBox.prop(STR_CHECKED)));
+			toggleBox.prop('disabled', checkDisabled && checkBox.prop(STR_CHECKED));
 
 			checkBox.on(
 				EVENT_CLICK,
@@ -280,7 +280,7 @@
 			if (link.length) {
 				var url = link.attr('href');
 
-				var newWindow = (link.attr('target') == '_blank');
+				var newWindow = link.attr('target') == '_blank';
 
 				var hrefFm = $(document.hrefFm);
 
@@ -426,7 +426,7 @@
 					if (!parentThemeDisplay || window.name === 'devicePreviewIframe') {
 						break;
 					}
-					else if (!parentThemeDisplay.isStatePopUp() || (parentWindow == parentWindow.parent)) {
+					else if (!parentThemeDisplay.isStatePopUp() || parentWindow == parentWindow.parent) {
 						topWindow = parentWindow;
 
 						break;
@@ -495,7 +495,7 @@
 		},
 
 		getWindowWidth: function() {
-			return (window.innerWidth > 0) ? window.innerWidth : screen.width;
+			return window.innerWidth > 0 ? window.innerWidth : screen.width;
 		},
 
 		inBrowserView: function(node, win, nodeRegion) {
@@ -525,12 +525,10 @@
 				winRegion.top = win.scrollTop();
 				winRegion.bottom = winRegion.top + win.height();
 
-				viewable = (
-					nodeRegion.bottom <= winRegion.bottom &&
+				viewable = nodeRegion.bottom <= winRegion.bottom &&
 					nodeRegion.left >= winRegion.left &&
 					nodeRegion.right <= winRegion.right &&
-					nodeRegion.top >= winRegion.top
-				);
+					nodeRegion.top >= winRegion.top;
 
 				if (viewable) {
 					var frameEl = $(win.prop('frameElement'));
@@ -559,13 +557,13 @@
 		isPhone: function() {
 			var instance = this;
 
-			return (instance.getWindowWidth() < Liferay.BREAKPOINTS.PHONE);
+			return instance.getWindowWidth() < Liferay.BREAKPOINTS.PHONE;
 		},
 
 		isTablet: function() {
 			var instance = this;
 
-			return (instance.getWindowWidth() < Liferay.BREAKPOINTS.TABLET);
+			return instance.getWindowWidth() < Liferay.BREAKPOINTS.TABLET;
 		},
 
 		listCheckboxesExcept: function(form, except, name, checked) {
@@ -584,7 +582,7 @@
 
 					var val = item.val();
 
-					if (val && (item.attr('name') != except) && (item.prop('checked') == checked) && !item.prop('disabled')) {
+					if (val && item.attr('name') != except && item.prop('checked') == checked && !item.prop('disabled')) {
 						prev.push(val);
 					}
 
@@ -682,7 +680,7 @@
 		},
 
 		randomInt: function() {
-			return (Math.ceil(Math.random() * (new Date()).getTime()));
+			return Math.ceil(Math.random() * new Date().getTime());
 		},
 
 		removeEntitySelection: function(entityIdString, entityNameString, removeEntityButton, namespace) {
@@ -853,15 +851,13 @@
 		showCapsLock: function(event, span) {
 			var keyCode = event.keyCode ? event.keyCode : event.which;
 
-			var shiftKeyCode = ((keyCode == 16) ? true : false);
+			var shiftKeyCode = keyCode == 16 ? true : false;
 
 			var shiftKey = event.shiftKey ? event.shiftKey : shiftKeyCode;
 
 			var display = 'none';
 
-			if (((keyCode >= 65 && keyCode <= 90) && !shiftKey) ||
-				((keyCode >= 97 && keyCode <= 122) && shiftKey)) {
-
+			if (((keyCode >= 65 && keyCode <= 90) && !shiftKey) || ((keyCode >= 97 && keyCode <= 122) && shiftKey)) {
 				display = '';
 			}
 
@@ -983,7 +979,7 @@
 			var toggle = function() {
 				var currentValue = selectBox.val();
 
-				var visible = (value == currentValue);
+				var visible = value == currentValue;
 
 				if (dynamicValue) {
 					visible = value(currentValue, value);
@@ -1484,6 +1480,7 @@
 				var iconHiddenClass = 'icon-eye-close';
 				var iconVisibleClass = 'icon-eye-open';
 				var visibleClass = 'controls-visible';
+
 				var currentClass = visibleClass;
 				var currentIconClass = iconVisibleClass;
 
@@ -1503,7 +1500,7 @@
 				Liferay.fire(
 					'toggleControls',
 					{
-						enabled: (Liferay._editControlsState === 'visible')
+						enabled: Liferay._editControlsState === 'visible'
 					}
 				);
 
@@ -1518,14 +1515,14 @@
 						docBody.toggleClass(visibleClass);
 						docBody.toggleClass(hiddenClass);
 
-						Liferay._editControlsState = (docBody.hasClass(visibleClass) ? 'visible' : 'hidden');
+						Liferay._editControlsState = docBody.hasClass(visibleClass) ? 'visible' : 'hidden';
 
 						Liferay.Store('liferay_toggle_controls', Liferay._editControlsState);
 
 						Liferay.fire(
 							'toggleControls',
 							{
-								enabled: (Liferay._editControlsState === 'visible'),
+								enabled: Liferay._editControlsState === 'visible',
 								src: 'ui'
 							}
 						);

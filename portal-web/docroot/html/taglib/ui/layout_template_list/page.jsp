@@ -14,6 +14,14 @@
  */
 --%>
 
+<%@ include file="/html/taglib/init.jsp" %>
+
+<%
+String layoutTemplateId = (String)request.getAttribute("liferay-ui:layout-template-list:layoutTemplateId");
+String layoutTemplateIdPrefix = (String)request.getAttribute("liferay-ui:layout-template-list:layoutTemplateIdPrefix");
+List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribute("liferay-ui:layout-template-list:layoutTemplates");
+%>
+
 <aui:fieldset>
 	<aui:row cssClass="lfr-page-layouts">
 

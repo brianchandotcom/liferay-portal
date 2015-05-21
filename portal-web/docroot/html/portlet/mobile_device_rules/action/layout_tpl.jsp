@@ -17,19 +17,14 @@
 <%@ include file="/html/portlet/mobile_device_rules/action/init.jsp" %>
 
 <%
-String layoutTemplateId = GetterUtil.getString(typeSettingsProperties.getProperty("layoutTemplateId"));
-
-if (Validator.isNull(layoutTemplateId)) {
-	layoutTemplateId = PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID;
-}
-
-String layoutTemplateIdPrefix = StringPool.BLANK;
-
-List<LayoutTemplate> layoutTemplates = LayoutTemplateLocalServiceUtil.getLayoutTemplates();
+String layoutTemplateId = GetterUtil.getString(typeSettingsProperties.getProperty("layoutTemplateId"), PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 %>
 
 <liferay-ui:error-marker key="errorSection" value="layout" />
 
 <h5><%= LanguageUtil.get(request, "layout-template") %></h5>
 
-<%@ include file="/html/portlet/layouts_admin/layout/layout_templates_list.jspf" %>
+<liferay-ui:layout-template-list
+	layoutTemplateId="<%= layoutTemplateId %>"
+	layoutTemplates="<%= LayoutTemplateLocalServiceUtil.getLayoutTemplates() %>"
+/>

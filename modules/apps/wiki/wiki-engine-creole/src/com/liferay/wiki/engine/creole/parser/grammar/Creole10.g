@@ -94,6 +94,7 @@ import com.liferay.wiki.engine.creole.parser.ast.table.TableHeaderNode;
 import com.liferay.wiki.engine.creole.parser.ast.table.TableNode;
 
 import java.util.Stack;
+import org.apache.commons.lang.StringEscapeUtils;
 
 /**
 * This is a generated file from Creole10.g. DO NOT MODIFY THIS FILE MANUALLY!!
@@ -695,7 +696,14 @@ table returns [TableNode table = new TableNode()]
 	:	( tr = table_row {$table.addChildASTNode($tr.row);} )+
 	;
 table_row  returns [CollectionNode row = new CollectionNode()]
-	:	( tc = table_cell { $row.add($tc.cell); } )+  table_rowseparator
+	:	( { input.LA(1) == PIPE && input.LA(2) == PIPE }? 
+		table_cell { 
+	    CollectionNode cn = new CollectionNode();
+	    cn.add(new UnformattedTextNode(StringEscapeUtils.unescapeHtml("&nbsp;")));
+	    TableCellNode space = new TableDataNode(cn);
+	    $row.add(space); } 
+	|   tc = table_cell { $row.add($tc.cell); } 
+	)+  table_rowseparator
 	;
 table_cell returns [TableCellNode cell = null]
 	:	{ input.LA(2) == EQUAL }?  th = table_headercell {$cell = $th.header;}

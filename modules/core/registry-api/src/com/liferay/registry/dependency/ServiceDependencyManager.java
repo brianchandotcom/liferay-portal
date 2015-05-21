@@ -160,16 +160,21 @@ public class ServiceDependencyManager {
 				return;
 			}
 
+			boolean missingDependencies = false;
+
 			for (ServiceDependency serviceDependency : _serviceDependencies) {
 				if (!serviceDependency.isFulfilled()) {
+					missingDependencies = true;
 					break;
 				}
 			}
 
-			try {
-				_serviceDependencies.wait(timeout);
-			}
-			catch (InterruptedException ie) {
+			if (missingDependencies) {
+				try {
+					_serviceDependencies.wait(timeout);
+				}
+				catch (InterruptedException ie) {
+				}
 			}
 		}
 	}

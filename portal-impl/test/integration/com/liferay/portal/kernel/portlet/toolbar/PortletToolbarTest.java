@@ -14,14 +14,6 @@
 
 package com.liferay.portal.kernel.portlet.toolbar;
 
-import com.liferay.portal.kernel.portlet.toolbar.bundle.portlettoolbar.TestPortletToolbarContributor;
-import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.test.rule.SyntheticBundleRule;
-
 import java.util.List;
 
 import javax.portlet.PortletRequest;
@@ -30,8 +22,17 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.mockito.Mockito;
+
+import com.liferay.portal.kernel.portlet.toolbar.bundle.portlettoolbar.TestPortletToolbarContributor;
+import com.liferay.portal.kernel.portlet.toolbar.contributor.locator.PortletToolbarContributorLocator;
+import com.liferay.portal.kernel.servlet.taglib.ui.Menu;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.test.rule.SyntheticBundleRule;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 
 /**
  * @author Philip Jones
@@ -49,11 +50,13 @@ public class PortletToolbarTest {
 	public void testGetPortletTitleMenus() {
 		PortletToolbar portletToolbar = new PortletToolbar();
 
-		try {
-			Thread.sleep(1000);
-		}
-		catch (InterruptedException ie) {
-		}
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+		
+		serviceDependencyManager.registerDependencies(
+			PortletToolbarContributorLocator.class);
+		
+		serviceDependencyManager.waitForDependencies(1000);
 
 		List<Menu> menus = portletToolbar.getPortletTitleMenus(
 			RandomTestUtil.randomString(), Mockito.mock(PortletRequest.class));

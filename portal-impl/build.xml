@@ -113,6 +113,45 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="deploy">
+		<attribute name="deploy.dir" />
+		<attribute name="jar.file" />
+		<attribute name="src.dir" />
+
+		<sequential>
+			<deploy-cmd
+				copy.jar="false"
+				deploy.dir="@{deploy.dir}"
+				jar.file="@{jar.file}"
+				src.dir="@{src.dir}"
+			>
+				<deploy-post>
+					<ant dir="../portal-service" target="deploy" inheritAll="false" />
+
+					<deploy-properties />
+
+					<if>
+						<and>
+							<equals arg1="${app.server.type}" arg2="tomcat" />
+							<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
+						</and>
+						<then>
+							<delete file="@{deploy.dir}/@{jar.file}" failonerror="false" />
+
+							<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
+						</then>
+						<else>
+							<copy file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
+
+							<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
+							<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
+						</else>
+					</if>
+				</deploy-post>
+			</deploy-cmd>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="jar-marco">
 		<sequential>
 			<jar-marco-cmd>
@@ -1077,41 +1116,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 			nowarn="${javac.nowarn}"
 			srcdir="src"
 		/>
-	</target>
-
-	<target name="deploy">
-		<if>
-			<not>
-				<uptodate targetfile="${deploy.dir}/${jar.file}.jar">
-					<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-				</uptodate>
-			</not>
-			<then>
-				<jar-marco />
-
-				<ant dir="../portal-service" target="deploy" inheritAll="false" />
-
-				<deploy-properties />
-
-				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<antelope:endswith string="${app.server.portal.dir}" with="/portal-web/docroot" />
-					</and>
-					<then>
-						<delete file="${app.server.lib.portal.dir}/portal-impl.jar" failonerror="false" />
-
-						<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
-					</then>
-					<else>
-						<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
-
-						<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
-						<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
-					</else>
-				</if>
-			</then>
-		</if>
 	</target>
 
 	<target name="format-source">

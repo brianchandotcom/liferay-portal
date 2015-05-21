@@ -41,7 +41,9 @@ page import="com.sun.syndication.feed.synd.SyndImage" %>
 <%@ page import="java.text.Format" %>
 
 <%@ page import="java.util.Enumeration" %><%@
-page import="java.util.List" %>
+page import="java.util.HashMap" %><%@
+page import="java.util.List" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.ValidatorException" %>
 

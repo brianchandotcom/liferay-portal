@@ -16,7 +16,13 @@
 
 <%@ include file="/init.jsp" %>
 
-<liferay-ui:ddm-template-renderer className="<%= AssetCategory.class.getName() %>" displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
+<%
+Map<String, Object> contextObjects = new HashMap<String, Object>();
+
+contextObjects.put("assetCategoriesNavigationDisplayContext", assetCategoriesNavigationDisplayContext);
+%>
+
+<liferay-ui:ddm-template-renderer className="<%= AssetCategory.class.getName() %>" contextObjects="<%= contextObjects%>" displayStyle="<%= assetCategoriesNavigationPortletInstanceConfiguration.displayStyle() %>" displayStyleGroupId="<%= assetCategoriesNavigationDisplayContext.getDisplayStyleGroupId() %>" entries="<%= assetCategoriesNavigationDisplayContext.getDDMTemplateAssetVocabularies() %>">
 	<c:choose>
 		<c:when test="<%= assetCategoriesNavigationPortletInstanceConfiguration.allAssetVocabularies() %>">
 			<liferay-ui:asset-categories-navigation

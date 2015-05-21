@@ -25,6 +25,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.site.map.web.configuration.SiteMapWebConfigurationValues;
 import com.liferay.site.navigation.site.map.web.constants.SiteMapPortletKeys;
+import com.liferay.site.navigation.site.map.web.display.context.SiteMapDisplayContext;
 
 import java.util.List;
 import java.util.Locale;
@@ -78,6 +79,10 @@ public class SiteMapPortletDisplayTemplateHandler
 			templateVariableGroups.get("fields");
 
 		templateVariableGroup.empty();
+
+		templateVariableGroup.addVariable(
+			"site-map-display-context", SiteMapDisplayContext.class,
+			"siteMapDisplayContext");
 
 		templateVariableGroup.addCollectionVariable(
 			"pages", List.class, PortletDisplayTemplateConstants.ENTRIES,

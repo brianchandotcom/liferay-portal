@@ -228,7 +228,7 @@ if (!cmd.equals(Constants.ADD)) {
 						<c:otherwise>
 							<aui:button type="submit" value="export" />
 
-							<aui:button href="<%= backURL %>" type="cancel" />
+							<aui:button type="cancel" />
 						</c:otherwise>
 					</c:choose>
 				</aui:button-row>

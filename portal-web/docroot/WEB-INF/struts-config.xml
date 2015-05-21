@@ -1020,16 +1020,6 @@
 
 		<!-- My Account -->
 
-		<action path="/my_account/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/my_account/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
 		<action path="/my_account/edit_user" type="com.liferay.portlet.myaccount.action.EditUserAction">
 			<forward name="portlet.users_admin.edit_user" path="portlet.users_admin.edit_user" />
 			<forward name="portlet.users_admin.error" path="portlet.users_admin.error" />
@@ -1416,18 +1406,6 @@
 		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
 
 		<!-- Users Admin -->
-
-		<action path="/users_admin/add_layout" forward="portlet.layouts_admin.add_layout" />
-
-		<action path="/users_admin/edit_layout_set" type="com.liferay.portlet.layoutsadmin.action.EditLayoutSetAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
-
-		<action path="/users_admin/edit_layouts" type="com.liferay.portlet.layoutsadmin.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
-			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
-		</action>
 
 		<action path="/users_admin/edit_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
 			<forward name="portlet.users_admin.edit_organization" path="portlet.users_admin.edit_organization" />

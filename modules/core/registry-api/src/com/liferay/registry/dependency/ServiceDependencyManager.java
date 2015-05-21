@@ -14,6 +14,8 @@
 
 package com.liferay.registry.dependency;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -165,6 +167,7 @@ public class ServiceDependencyManager {
 			for (ServiceDependency serviceDependency : _serviceDependencies) {
 				if (!serviceDependency.isFulfilled()) {
 					missingDependencies = true;
+
 					break;
 				}
 			}
@@ -174,6 +177,9 @@ public class ServiceDependencyManager {
 					_serviceDependencies.wait(timeout);
 				}
 				catch (InterruptedException ie) {
+					if (_log.isDebugEnabled()) {
+						_log.debug(ie, ie);
+					}
 				}
 			}
 		}
@@ -215,6 +221,9 @@ public class ServiceDependencyManager {
 			serviceDependency.setServiceTracker(serviceTracker);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ServiceDependencyManager.class);
 
 	private final Set<ServiceDependency> _serviceDependencies = new HashSet<>();
 	private final Set<ServiceDependencyListener> _serviceDependencyListeners =

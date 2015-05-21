@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -63,7 +64,7 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						PortalClassLoaderUtil.getClassLoader(), classLoaders);
+						_scriptingExecutorClassLoader, classLoaders);
 
 				interpreter.setClassLoader(aggregateClassLoader);
 			}
@@ -96,5 +97,22 @@ public class BeanShellExecutor extends BaseScriptingExecutor {
 	public ScriptingExecutor newInstance(boolean executeInSeparateThread) {
 		return new BeanShellExecutor();
 	}
+
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		ClassLoader moduleClassLoader = getClass().getClassLoader();
+
+		if (!moduleClassLoader.equals(PortalClassLoaderUtil.getClassLoader())) {
+			_scriptingExecutorClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					PortalClassLoaderUtil.getClassLoader(),
+					getClass().getClassLoader());
+		}
+		else {
+			_scriptingExecutorClassLoader = moduleClassLoader;
+		}
+	}
+
+	private ClassLoader _scriptingExecutorClassLoader;
 
 }

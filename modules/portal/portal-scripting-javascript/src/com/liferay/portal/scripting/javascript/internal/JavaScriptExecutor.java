@@ -151,6 +151,18 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 		_forbiddenClassNames = new HashSet<>(
 			Arrays.asList(forbiddenClassNames));
+
+		ClassLoader moduleClassLoader = getClass().getClassLoader();
+
+		if (!moduleClassLoader.equals(PortalClassLoaderUtil.getClassLoader())) {
+			_scriptingExecutorClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					PortalClassLoaderUtil.getClassLoader(),
+					getClass().getClassLoader());
+		}
+		else {
+			_scriptingExecutorClassLoader = moduleClassLoader;
+		}
 	}
 
 	protected Script getCompiledScript(
@@ -171,7 +183,7 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 			if (ArrayUtil.isNotEmpty(classLoaders)) {
 				ClassLoader aggregateClassLoader =
 					AggregateClassLoader.getAggregateClassLoader(
-						PortalClassLoaderUtil.getClassLoader(), classLoaders);
+						_scriptingExecutorClassLoader, classLoaders);
 
 				context.setApplicationClassLoader(aggregateClassLoader);
 			}
@@ -201,5 +213,6 @@ public class JavaScriptExecutor extends BaseScriptingExecutor {
 
 	private volatile Set<String> _forbiddenClassNames;
 	private PortalCache<String, Script> _portalCache;
+	private ClassLoader _scriptingExecutorClassLoader;
 
 }

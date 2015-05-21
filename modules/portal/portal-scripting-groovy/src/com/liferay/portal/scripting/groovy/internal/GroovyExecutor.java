@@ -33,6 +33,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -92,6 +93,21 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		return new GroovyExecutor();
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		ClassLoader moduleClassLoader = getClass().getClassLoader();
+
+		if (!moduleClassLoader.equals(PortalClassLoaderUtil.getClassLoader())) {
+			_scriptingExecutorClassLoader =
+				AggregateClassLoader.getAggregateClassLoader(
+					PortalClassLoaderUtil.getClassLoader(),
+					getClass().getClassLoader());
+		}
+		else {
+			_scriptingExecutorClassLoader = moduleClassLoader;
+		}
+	}
+
 	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
 		if (ArrayUtil.isEmpty(classLoaders)) {
 			if (_groovyShell == null) {
@@ -107,7 +123,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 
 		ClassLoader aggregateClassLoader =
 			AggregateClassLoader.getAggregateClassLoader(
-				PortalClassLoaderUtil.getClassLoader(), classLoaders);
+				_scriptingExecutorClassLoader, classLoaders);
 
 		GroovyShell groovyShell = _groovyShells.get(aggregateClassLoader);
 
@@ -129,5 +145,6 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);
+	private ClassLoader _scriptingExecutorClassLoader;
 
 }

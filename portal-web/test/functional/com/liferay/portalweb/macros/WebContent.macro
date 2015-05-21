@@ -1160,6 +1160,20 @@
 		<execute function="AssertElementNotPresent" locator1="CPWebcontentCategorization#CATEGORY" value1="${categoryName}" />
 	</command>
 
+	<command name="viewCategoryDescriptiveCP">
+		<var name="key_webContentTitle" value="${webContentTitle}" />
+
+		<execute function="Click" locator1="CPWebcontent#TOOLBAR_DISPLAY_STYLE_BUTTON" />
+		<execute function="AssertClick" locator1="CPWebcontent#DISPLAY_STYLE_MENULIST_DESCRIPTIVE" value1="Descriptive" />
+		<execute function="AssertElementPresent#pauseAssertVisible" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_THUMBNAIL" />
+
+		<for list="${categoryNameList}" param="categoryName">
+			<var name="key_categoryName" value="${categoryName}" />
+
+			<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_CATEGORY" value1="${categoryName}" />
+		</for>
+	</command>
+
 	<command name="viewConversionLinksPGViaAP">
 		<var name="key_assetTitle" value="${webContentTitle}" />
 

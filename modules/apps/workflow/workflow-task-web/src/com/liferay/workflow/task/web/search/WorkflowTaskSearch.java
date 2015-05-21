@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.search;
+package com.liferay.workflow.task.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactoryUtil;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import java.util.ArrayList;
 import java.util.HashMap;

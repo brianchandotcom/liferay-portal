@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.constants;
+package com.liferay.workflow.task.web.constants;
 
 /**
  * @author Leonardo Barros

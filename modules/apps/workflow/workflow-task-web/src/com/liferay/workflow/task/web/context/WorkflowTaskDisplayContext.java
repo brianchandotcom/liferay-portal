@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.context;
+package com.liferay.workflow.task.web.context;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.ResultRow;
@@ -56,10 +56,10 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
-import com.liferay.workflow.task.web.portlet.context.util.WorkflowTaskRequestHelper;
-import com.liferay.workflow.task.web.portlet.search.WorkflowTaskDisplayTerms;
-import com.liferay.workflow.task.web.portlet.search.WorkflowTaskSearch;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.context.util.WorkflowTaskRequestHelper;
+import com.liferay.workflow.task.web.search.WorkflowTaskDisplayTerms;
+import com.liferay.workflow.task.web.search.WorkflowTaskSearch;
 
 import java.io.Serializable;
 

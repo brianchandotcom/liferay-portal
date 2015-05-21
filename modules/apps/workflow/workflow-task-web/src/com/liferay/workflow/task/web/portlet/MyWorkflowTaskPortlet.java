@@ -26,8 +26,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
-import com.liferay.workflow.task.web.portlet.context.WorkflowTaskDisplayContext;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.context.WorkflowTaskDisplayContext;
 
 import java.io.IOException;
 
@@ -66,7 +66,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = { MyWorkflowTaskPortlet.class, Portlet.class }
+	service = Portlet.class
 )
 public class MyWorkflowTaskPortlet extends MVCPortlet {
 

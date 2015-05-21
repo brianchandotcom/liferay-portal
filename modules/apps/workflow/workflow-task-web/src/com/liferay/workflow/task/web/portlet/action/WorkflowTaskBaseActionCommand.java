@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

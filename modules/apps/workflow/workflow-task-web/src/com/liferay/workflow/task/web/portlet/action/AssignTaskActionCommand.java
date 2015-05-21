@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

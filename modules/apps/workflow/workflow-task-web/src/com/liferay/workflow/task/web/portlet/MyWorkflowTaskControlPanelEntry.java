@@ -12,20 +12,22 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.context.util;
+package com.liferay.workflow.task.web.portlet;
 
-import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
+import com.liferay.portal.workflow.MyWorkflowTasksControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
 
-import javax.portlet.RenderRequest;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
  */
-public class WorkflowTaskRequestHelper extends BaseRequestHelper {
-
-	public WorkflowTaskRequestHelper(RenderRequest renderRequest) {
-		super(PortalUtil.getHttpServletRequest(renderRequest));
-	}
-
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASKS},
+	service = ControlPanelEntry.class
+)
+public class MyWorkflowTaskControlPanelEntry
+	extends MyWorkflowTasksControlPanelEntry {
 }

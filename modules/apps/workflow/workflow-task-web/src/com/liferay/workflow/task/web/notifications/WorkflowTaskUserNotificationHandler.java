@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.workflow.task.web.portlet.notification;
+package com.liferay.workflow.task.web.notifications;
 
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,7 +28,7 @@ import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import org.osgi.service.component.annotations.Component;
 

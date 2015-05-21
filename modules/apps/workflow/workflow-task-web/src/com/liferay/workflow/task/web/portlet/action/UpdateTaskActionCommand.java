@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.workflow.WorkflowTaskDueDateException;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManagerUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.workflow.task.web.portlet.constants.WorkflowTaskConstants;
+import com.liferay.workflow.task.web.constants.WorkflowTaskConstants;
 
 import java.util.Calendar;
 import java.util.Date;

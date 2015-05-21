@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/com.liferay.portal.tools.upgrade.table.builder/lib" />
+
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+</project>

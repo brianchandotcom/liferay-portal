@@ -47,16 +47,16 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)GetterUtil.getObject
 
 			<%
 			String treeId = ParamUtil.getString(request, "treeId");
+			long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 			%>
 
 			<liferay-ui:layouts-tree
 				defaultStateChecked="<%= true %>"
 				groupId="<%= groupId %>"
 				incomplete="<%= false %>"
-				portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
 				privateLayout="<%= privateLayout %>"
-				rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
-				selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+				rootNodeName="<%= group.getLayoutRootNodeName(privateLayout, locale) %>"
+				selPlid="<%= selPlid %>"
 				selectableTree="<%= true %>"
 				selectedLayoutIds="<%= selectedLayoutIds %>"
 				treeId="<%= treeId %>"

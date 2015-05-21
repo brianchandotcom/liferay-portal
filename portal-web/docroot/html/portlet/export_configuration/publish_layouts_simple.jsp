@@ -17,6 +17,10 @@
 <%@ include file="/html/portlet/export_configuration/init.jsp" %>
 
 <%
+GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHelper(request);
+
+boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
+
 String redirectURL = ParamUtil.getString(request, "redirect");
 
 long exportImportConfigurationId = GetterUtil.getLong(request.getAttribute("exportImportConfigurationId"));
@@ -49,8 +53,8 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 			<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 				<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
 				<portlet:param name="tabs2" value="new-publication-process" />
-				<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
+				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="quickPublish" value="<%= Boolean.FALSE.toString() %>" />
 			</portlet:renderURL>
 
@@ -72,7 +76,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 					<ul class="portlet-list">
 
 						<%
-						LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
+						LayoutSet selLayoutSet = LayoutSetLocalServiceUtil.getLayoutSet(groupDisplayContextHelper.getGroupId(), privateLayout);
 						%>
 
 						<liferay-util:buffer var="badgeHTML">
@@ -86,7 +90,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 						<%
 						List<Portlet> dataSiteLevelPortlets = LayoutExporter.getDataSiteLevelPortlets(company.getCompanyId(), false);
 
-						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), layoutsAdminDisplayContext.getStagingGroupId(), ExportImportDateUtil.getLastPublishDate(selLayoutSet), new Date());
+						PortletDataContext portletDataContext = PortletDataContextFactoryUtil.createPreparePortletDataContext(company.getCompanyId(), groupDisplayContextHelper.getStagingGroupId(), ExportImportDateUtil.getLastPublishDate(selLayoutSet), new Date());
 
 						ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
 
@@ -109,7 +113,7 @@ if (exportImportConfiguration.getType() == ExportImportConfigurationConstants.TY
 								long exportModelCount = portletDataHandler.getExportModelCount(manifestSummary);
 								long modelDeletionCount = manifestSummary.getModelDeletionCount(portletDataHandler.getDeletionSystemEventStagedModelTypes());
 
-								Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+								Group liveGroup = groupDisplayContextHelper.getLiveGroup();
 
 								UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 

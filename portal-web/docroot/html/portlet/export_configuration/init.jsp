@@ -46,12 +46,10 @@ page import="com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKey
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException" %><%@
 page import="com.liferay.portlet.exportconfiguration.search.ExportImportConfigurationDisplayTerms" %><%@
 page import="com.liferay.portlet.exportconfiguration.search.ExportImportConfigurationSearchTerms" %><%@
-page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %>
+page import="com.liferay.portlet.layoutsadmin.context.GroupDisplayContextHelper" %>
 
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
-
-LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(request, liferayPortletResponse);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);
 %>

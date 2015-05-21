@@ -22,6 +22,13 @@ import org.junit.Test;
 public class JavaSourceProcessorTest extends BaseSourceProcessorTestCase {
 
 	@Test
+	public void testAssertUsage() throws Exception {
+		test(
+			"AssertUsage.testjava",
+			"Use org.junit.Assert instead of org.testng.Assert:");
+	}
+
+	@Test
 	public void testCombineLines() throws Exception {
 		test("CombineLines.testjava");
 	}

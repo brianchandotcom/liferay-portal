@@ -119,8 +119,12 @@
 	.failed {
 		background-color: $failed-command-bg-color;
 
-		&.current-scope {
+		&.current-scope.linkable {
 			background-color: $failed-command-scoped-bg-color;
+
+			&:hover {
+				background-color: $failed-command-scoped-hover-bg-color;
+			}
 		}
 
 		&:hover {

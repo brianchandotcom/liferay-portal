@@ -230,10 +230,10 @@ YUI.add(
 						if (fullScreenImage) {
 							var currentTarget = event.currentTarget;
 
-							src = currentTarget.getData(STR_SRC);
+							src = currentTarget.attr(STR_SRC);
 
 							if (src) {
-								fullScreenImage.setData(STR_SRC, src);
+								fullScreenImage.attr(STR_SRC, src);
 							}
 
 							fullScreenImage.toggleClass('hide', !src);
@@ -437,10 +437,12 @@ YUI.add(
 
 					node = node || instance.get(STR_FAILS).last();
 
-					var parentContainers = node.ancestors('.child-container');
+					if (node) {
+						var parentContainers = node.ancestors('.child-container');
 
-					if (parentContainers) {
-						instance._expandParentContainers(parentContainers, node);
+						if (parentContainers) {
+							instance._expandParentContainers(parentContainers, node);
+						}
 					}
 				},
 
@@ -724,37 +726,39 @@ YUI.add(
 					var scrollNode = WIN;
 
 					if (node) {
-						node = node.one('> .line-container');
+						var lineContainer = node.one('> .line-container');
 
-						var halfNodeHeight = node.innerHeight() / 2;
-						var halfWindowHeight = WIN.height() / 2;
+						if (lineContainer) {
+							var halfNodeHeight = lineContainer.innerHeight() / 2;
+							var halfWindowHeight = WIN.height() / 2;
 
-						var offsetHeight = halfWindowHeight - halfNodeHeight;
+							var offsetHeight = halfWindowHeight - halfNodeHeight;
 
-						var nodeY = node.getY();
+							var nodeY = lineContainer.getY();
 
-						if (inSidebar) {
-							scrollNode = instance._getCommandLogNode();
+							if (inSidebar) {
+								scrollNode = instance._getCommandLogNode();
 
-							var dividerLine = scrollNode.one('.divider-line');
+								var dividerLine = scrollNode.one('.divider-line');
 
-							if (dividerLine) {
-								nodeY -= dividerLine.getY();
-							}
-						}
-
-						var yDistance = nodeY - offsetHeight;
-
-						new A.Anim(
-							{
-								duration: 2,
-								easing: 'easeOutStrong',
-								node: scrollNode,
-								to: {
-									scroll: [0, yDistance]
+								if (dividerLine) {
+									nodeY -= dividerLine.getY();
 								}
 							}
-						).run();
+
+							var yDistance = nodeY - offsetHeight;
+
+							new A.Anim(
+								{
+									duration: 2,
+									easing: 'easeOutStrong',
+									node: scrollNode,
+									to: {
+										scroll: [0, yDistance]
+									}
+								}
+							).run();
+						}
 					}
 				},
 

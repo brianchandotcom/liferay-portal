@@ -167,17 +167,17 @@
 	}
 
 	.line-number {
-		color: #FF2600;
+		color: $fail-line-number-color;
 		font-weight: bold;
 	}
 
 	.line-container {
-		background-color: #E2604C;
-		border: 1px solid #FFA191;
+		background-color: $fail-line-container-bg-color;
+		border: 1px solid $fail-line-container-border-color;
 		position: relative;
 
 		&:before {
-			background-color: #FFF;
+			background-color: $fail-line-container-before-bg;
 			content: '';
 			height: 100%;
 			position: absolute;

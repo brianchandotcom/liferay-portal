@@ -494,6 +494,12 @@ html {
 #breadcrumbs {
 	margin-bottom: 45px;
 
+	@include respond-to(phone, tablet) {
+		.portlet-borderless-container {
+			display: none;
+		}
+	}
+
 	.breadcrumb {
 		margin-bottom: 0;
 	}
@@ -641,6 +647,10 @@ html {
 	position: fixed;
 	top: 0;
 	z-index: 300;
+
+	@include respond-to(phone, tablet) {
+		display: none;
+	}
 
 	.breadcrumb {
 		background: #414445;

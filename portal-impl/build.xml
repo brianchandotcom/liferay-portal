@@ -1095,7 +1095,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				<unjar dest="${app.server.classes.portal.dir}" src="portal-impl.jar" />
 			</then>
 			<else>
-				<antcall target="build-common-java.deploy" />
+				<copy file="${jar.file}.jar" todir="${deploy.dir}" preservelastmodified="true" />
 
 				<copy file="classes/log4j.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />
 				<copy file="classes/logging.properties" todir="${app.server.classes.portal.dir}" preservelastmodified="true" />

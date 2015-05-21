@@ -14,34 +14,23 @@
 
 package com.liferay.portlet.layoutsadmin.util;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
 /**
- * @author Raymond Augé
+ * @author Eduardo Garcia
  */
-public interface Sitemap {
+@ProviderType
+public interface SitemapURLProvider {
 
-	public void addURLElement(
-		Element element, String url, UnicodeProperties typeSettingsProperties,
-		Date modifiedDate, String canonicalURL,
-		Map<Locale, String> alternateURLs);
+	public String getClassName();
 
-	public String encodeXML(String input);
-
-	public Map<Locale, String> getAlternateURLs(
-			String canonicalURL, ThemeDisplay themeDisplay, Layout layout)
-		throws PortalException;
-
-	public String getSitemap(
-			long groupId, boolean privateLayout, ThemeDisplay themeDisplay)
+	public void visitLayout(
+			Element element, Layout layout, ThemeDisplay themeDisplay)
 		throws PortalException;
 
 }

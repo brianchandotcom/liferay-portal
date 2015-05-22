@@ -30,9 +30,6 @@ page import="com.liferay.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
 page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %>
 
-<%@ page import="java.util.List" %><%@
-page import="java.util.Set" %>
-
 <%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />

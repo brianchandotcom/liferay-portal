@@ -25,9 +25,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,18 +34,16 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ItemSelectorBrowserTag extends IncludeTag {
 
-	public void setDesiredReturnTypes(
-		List<ItemSelectorBrowserReturnType> desiredReturnTypes) {
-
-		_desiredReturnTypes = desiredReturnTypes;
-	}
-
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
 	}
 
 	public void setIdPrefix(String idPrefix) {
 		_idPrefix = idPrefix;
+	}
+
+	public void setReturnType(ReturnType returnType) {
+		_returnType = returnType;
 	}
 
 	public void setSearchContainer(SearchContainer<?> searchContainer) {
@@ -63,34 +58,39 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 		_uploadMessage = uploadMessage;
 	}
 
-	public enum ItemSelectorBrowserReturnType {
+	public enum ReturnType {
 
 		BASE64(Base64.class), FILE_ENTRY(FileEntry.class),
 		URL (java.net.URL.class);
 
-		public static List<ItemSelectorBrowserReturnType> parse(
-			Set<Class<?>> value) {
-
-			List<ItemSelectorBrowserReturnType> itemSelectorBrowserReturnTypes =
-				new ArrayList<>();
-
-			if (value.contains(BASE64)) {
-				itemSelectorBrowserReturnTypes.add(BASE64);
+		public static ReturnType parse(Class<?> value) {
+			if (BASE64.getValue().equals(value)) {
+				return BASE64;
 			}
 
-			if (value.contains(FILE_ENTRY)) {
-				itemSelectorBrowserReturnTypes.add(FILE_ENTRY);
+			if (FILE_ENTRY.getValue().equals(value)) {
+				return FILE_ENTRY;
 			}
 
-			if (value.contains(URL)) {
-				itemSelectorBrowserReturnTypes.add(URL);
+			if (URL.getValue().equals(value)) {
+				return URL;
 			}
 
-			if (value.isEmpty()) {
-				return Collections.emptyList();
+			throw new IllegalArgumentException(
+				"Invalid value " + value.getName());
+		}
+
+		public static ReturnType parseFirst(Set<Class<?>> value) {
+			for (Class<?> clazz : value) {
+				try {
+					return parse(clazz);
+				}
+				catch (IllegalArgumentException iae) {
+				}
 			}
 
-			return itemSelectorBrowserReturnTypes;
+			throw new IllegalArgumentException(
+				"No valid value found in the set");
 		}
 
 		public ObjectValuePair<String, String> getReturnTypeAndValue(
@@ -118,7 +118,7 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 			return _value;
 		}
 
-		private ItemSelectorBrowserReturnType(Class<?> value) {
+		private ReturnType(Class<?> value) {
 			_value = value;
 		}
 
@@ -130,9 +130,9 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_desiredReturnTypes = null;
 		_displayStyle = "icon";
 		_idPrefix = null;
+		_returnType = null;
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
@@ -157,12 +157,11 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:desiredReturnTypes",
-			_desiredReturnTypes);
-		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyle", _displayStyle);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:idPrefix", _idPrefix);
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:returnType", _returnType);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:searchContainer",
 			_searchContainer);
@@ -176,9 +175,9 @@ public class ItemSelectorBrowserTag extends IncludeTag {
 	private static final String _PAGE =
 		"/html/taglib/ui/item_selector_browser/page.jsp";
 
-	private List<ItemSelectorBrowserReturnType> _desiredReturnTypes;
 	private String _displayStyle;
 	private String _idPrefix;
+	private ReturnType _returnType;
 	private SearchContainer<?> _searchContainer;
 	private String _tabName;
 	private String _uploadMessage;

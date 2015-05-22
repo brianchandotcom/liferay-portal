@@ -17,16 +17,16 @@
 <%@ include file="/html/taglib/ui/item_selector_browser/init.jsp" %>
 
 <%
+ReturnType returnType = (ReturnType)request.getAttribute("liferay-ui:item-selector-browser:returnType");
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "descriptive");
 String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
-List<ItemSelectorBrowserTag.ItemSelectorBrowserReturnType> desiredReturnTypes = (List<ItemSelectorBrowserTag.ItemSelectorBrowserReturnType>)request.getAttribute("liferay-ui:item-selector-browser:desiredReturnTypes");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
 %>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
-	<c:if test="<%= desiredReturnTypes.contains(Base64.class) %>">
+	<c:if test="<%= returnType == ReturnType.BASE64 %>">
 		<div class="drop-zone">
 			<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
 

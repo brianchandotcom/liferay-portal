@@ -16,7 +16,6 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.util.Base64" %><%@
-page import="com.liferay.taglib.ui.ItemSelectorBrowserTag" %>
+<%@ page import="com.liferay.taglib.ui.ItemSelectorBrowserTag.ReturnType" %>
 
 <portlet:defineObjects />

@@ -3178,7 +3178,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>desiredReturnTypes</name>
+			<name>returnType</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

@@ -37,7 +37,7 @@ public class JournalUpdateEntryUserNotificationDefinition
 			JournalPortletKeys.JOURNAL, 0,
 			UserNotificationDefinition.NOTIFICATION_TYPE_UPDATE_ENTRY,
 			"receive-a-notification-when-someone-updates-a-web-content-you-" +
-				"are-subscribed-to<");
+				"are-subscribed-to");
 
 		addUserNotificationDeliveryType(
 			new UserNotificationDeliveryType(

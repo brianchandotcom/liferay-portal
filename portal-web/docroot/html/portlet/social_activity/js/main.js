@@ -251,7 +251,8 @@ AUI.add(
 
 						var lastIndex = socialActivityItems.size() - 1;
 
-						socialActivityItems.some(
+						A.some(
+							socialActivityItems,
 							function(item, index, collection) {
 								var checked = item.one(SELECTOR_INPUT).attr('checked');
 								var node = item;

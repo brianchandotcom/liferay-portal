@@ -163,7 +163,7 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 										%>
 
 											<portlet:actionURL var="layoutSetBranchURL">
-												<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
+												<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 												<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
 												<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>" />
 												<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />

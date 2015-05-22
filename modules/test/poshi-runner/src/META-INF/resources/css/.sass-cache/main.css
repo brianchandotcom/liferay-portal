@@ -1,4 +1,4 @@
-/* ---------- Main Styling ---------- */
+/* ---------- Main styling ---------- */
 /* ---------- Syntax highlight variables ---------- */
 /* ---------- Buttons ---------- */
 .btn-command-log, .btn-error, .btn-jump-to-error, .btn-screenshot, .btn-sidebar {
@@ -29,20 +29,20 @@
   .xml-log .btn.toggle, .sidebar-btn-container .btn.toggle {
     background-color: #e4dbcf; }
 
-.btn-error, .btn-screenshot {
+.xml-log .btn-error, .xml-log .btn-screenshot {
   border-color: #FF5335;
   bottom: 0;
   color: #FF5335;
   display: inline-block;
   font-size: 17px;
   margin-top: 1px; }
-  .btn-error:focus, .btn-error:hover, .btn-screenshot:focus, .btn-screenshot:hover {
+  .xml-log .btn-error:focus, .xml-log .btn-error:hover, .xml-log .btn-screenshot:focus, .xml-log .btn-screenshot:hover {
     background-color: transparent;
     color: #FF5335; }
-  .btn-error.toggle, .btn-screenshot.toggle {
+  .xml-log .btn-error.toggle, .xml-log .btn-screenshot.toggle {
     background: #FF5335;
     color: #EBE7DC; }
-    .btn-error.toggle:hover, .btn-screenshot.toggle:hover {
+    .xml-log .btn-error.toggle:hover, .xml-log .btn-screenshot.toggle:hover {
       background-color: #FF5335; }
 
 /* ---------- Sidebar buttons ---------- */
@@ -230,7 +230,6 @@ li {
 .hover {
   background-color: rgba(74, 220, 231, 0.46);
   border: 1px solid #FFF;
-  margin: 0;
   padding: 0; }
   .hover > .btn-container .line-number, .hover > .line-container .line-number {
     opacity: 1; }
@@ -264,14 +263,14 @@ li {
     color: #555;
     outline-width: 0; }
     .command-log .current-scope.linkable:hover {
-      background-color: #FAE841;
+      background-color: #FFE75F;
       color: #444; }
     .command-log .current-scope .child-container {
-      color: #359AB6; }
+      color: #555; }
       .command-log .current-scope .child-container .command-name {
-        color: #715D3B; }
+        color: #916A52; }
       .command-log .current-scope .child-container .param-value {
-        color: #B56F28; }
+        color: #509688; }
     .command-log .current-scope .expand-toggle {
       color: #444; }
   .command-log.collapse {
@@ -329,8 +328,10 @@ li {
       width: 10px; }
   .command-log .failed {
     background-color: #E2604C; }
-    .command-log .failed.current-scope {
+    .command-log .failed.current-scope.linkable {
       background-color: #EE6C39; }
+      .command-log .failed.current-scope.linkable:hover {
+        background-color: #FF7742; }
     .command-log .failed:hover {
       background-color: #F0652B; }
     .command-log .failed .expand-toggle {
@@ -398,25 +399,38 @@ li {
 .command-name {
   color: #8CEFF6; }
 
-.current-scope .command-name {
-  color: #447090; }
-
 .param-type {
-  color: #3D4E58; }
+  color: #FFEECB; }
 
-.failed .command-name {
-  color: #FBF4D7; }
-.failed .param-type {
-  color: #FFE4C7; }
-.failed .param-value {
-  color: #FFE4C7; }
+.param-value {
+  color: #FFEB7B; }
 
 .command-log .child-container .command-name {
   color: #E9C993; }
 .command-log .child-container .param-value {
-  color: #FDBA93; }
+  color: #FFEB7B; }
 .command-log .child-container .error-line .command-name {
-  color: #FC8666; }
+  color: #893030; }
+
+.current-scope .command-name {
+  color: #2C77AD; }
+.current-scope .param-type {
+  color: #916A52; }
+.current-scope .param-value {
+  color: #509688; }
+.current-scope .child-container {
+  color: #555; }
+  .current-scope .child-container .command-name {
+    color: #916A52; }
+
+.failed.linkable, .failed.linkable .child-container, .failed.linkable.current-scope, .failed.linkable.current-scope .child-container, .failed.linkable.current-scope:hover, .failed.linkable.current-scope:hover .child-container {
+  color: #FFF; }
+.failed.linkable .command-name, .failed.linkable .child-container .command-name, .failed.linkable.current-scope .command-name, .failed.linkable.current-scope .child-container .command-name, .failed.linkable.current-scope:hover .command-name, .failed.linkable.current-scope:hover .child-container .command-name {
+  color: #FBF4D7; }
+.failed.linkable .param-type, .failed.linkable.current-scope .param-type, .failed.linkable.current-scope:hover .param-type {
+  color: #FFE4C7; }
+.failed.linkable .param-value, .failed.linkable .child-container .param-value, .failed.linkable.current-scope .param-value, .failed.linkable.current-scope .child-container .param-value, .failed.linkable.current-scope:hover .param-value, .failed.linkable.current-scope:hover .child-container .param-value {
+  color: #FFC382; }
 
 .action-type, .misc, .tag-type {
   margin: 2px; }

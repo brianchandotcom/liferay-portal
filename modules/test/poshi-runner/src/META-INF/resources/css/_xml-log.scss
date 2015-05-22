@@ -141,12 +141,14 @@
 		padding: 4px 2% 4px 2px;
 	}
 
-	.current-scope.pass.function {
-		background: transparent;
-		outline-width: 0;
-	}
-
 	.current-scope {
+		&.pass {
+			&.function {
+				background: transparent;
+				outline-width: 0;
+			}
+		}
+
 		&.pass, &.pending {
 			> .line-container {
 				background-color: $logger-mode-scoped-line-bg-color;
@@ -167,17 +169,17 @@
 	}
 
 	.line-number {
-		color: #FF2600;
+		color: $fail-line-number-color;
 		font-weight: bold;
 	}
 
 	.line-container {
-		background-color: #E2604C;
-		border: 1px solid #FFA191;
+		background-color: $fail-line-container-bg-color;
+		border: 1px solid $fail-line-container-border-color;
 		position: relative;
 
 		&:before {
-			background-color: #FFF;
+			background-color: $fail-line-container-before-bg;
 			content: '';
 			height: 100%;
 			position: absolute;

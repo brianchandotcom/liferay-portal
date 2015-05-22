@@ -6,8 +6,8 @@ $body-font-size: 11px;
 
 $body-bg-color: #EBE7DC;
 
-$xml-log-font: 'Menlo', 'Source Code Pro', 'Lucia Console', 'Monospace';
 $xml-log-default-text-color: #444;
+$xml-log-font: 'Menlo', 'Source Code Pro', 'Lucia Console', 'Monospace';
 
 $child-container-left-border-color: #DDD;
 
@@ -25,6 +25,7 @@ $scoped-line-bg-color: rgba(232, 255, 118, 0.4);
 $passed-line-bg-color: #7FCDD1;
 
 $pending-border-color: #FD9A07;
+
 $pending-border-bg-color: transparentize($pending-border-color, 0.85);
 
 $passed-function-hover-bg-color: #A3D7C9;
@@ -34,6 +35,11 @@ $logger-mode-hover-line-bg-color: #FFFBF1;
 $logger-mode-scoped-line-bg-color: $passed-function-hover-bg-color;
 
 $running-line-bg-color: #FFB57C;
+
+$fail-line-container-before-bg: #FFF;
+$fail-line-container-bg-color: #E2604C;
+$fail-line-container-border-color: #FFA191;
+$fail-line-number-color: #FF2600;
 
 // Error console & screenshot
 
@@ -49,8 +55,8 @@ $screenshot-img-border-color: #A19C8C;
 
 $sidebar-bg-color: #A1978B;
 $sidebar-box-shadow-color: transparentize(darken($sidebar-bg-color, 46), 0.8);
-$sidebar-font: 'Futura', 'Trebuchet MS', 'Arial', sans-serif;
 $sidebar-default-text-color: #FFF;
+$sidebar-font: 'Futura', 'Trebuchet MS', 'Arial', sans-serif;
 
 // Command-log
 
@@ -61,25 +67,27 @@ $command-log-divider-text-color: desaturate(darken($sidebar-bg-color, 40), 6);
 
 $scoped-command-bg-color: #FFEB7B;
 $scoped-command-border: 2px solid #AAA;
-$scoped-command-text-color: #555;
 $scoped-command-expand-toggle-color: #444;
+$scoped-command-text-color: #555;
 
-$scoped-command-hover-bg-color: #FAE841;
+$scoped-command-hover-bg-color: #FFE75F;
 $scoped-command-hover-text-color: #444;
 
 $command-hover-bg-color: #648590;
-$command-hover-text-color: #FFF;
 $command-hover-outline-color: #777;
+$command-hover-text-color: #FFF;
 
 $command-child-container-border-color: #EEE;
 $command-child-container-text-color: $sidebar-default-text-color;
 
 $command-log-expand-toggle-hover-color: #FFF;
+
 $command-log-expand-toggle-color: darken($command-log-expand-toggle-hover-color, 6);
 
 $failed-command-bg-color: #E2604C;
 $failed-command-hover-bg-color: #F0652B;
 $failed-command-scoped-bg-color: #EE6C39;
+$failed-command-scoped-hover-bg-color: #FF7742;
 $failed-expand-toggle-color: #FBEFB4;
 
 // Buttons
@@ -107,18 +115,19 @@ $xml-tag-type-color: #333;
 // Sidebar
 
 $command-name-color: #8CEFF6;
-$param-type-color: #3D4E58;
-$param-value-color: $param-type-color;
+$param-type-color: #FFEECB;
+$param-value-color: #FFEB7B;
 
 $failed-command-name-color: #FBF4D7;
 $failed-param-type-color: #FFE4C7;
-$failed-param-value-color: $failed-param-type-color;
+$failed-param-value-color: #FFC382;
 
-$scoped-child-container-command-name-color: #715D3B;
-$scoped-child-container-param-value-color: #B56F28;
-$scoped-child-container-text-color: #359AB6;
-$scoped-command-name-color: #447090;
+$scoped-child-container-param-type-color: #916A52;
+$scoped-child-container-command-name-color: $scoped-child-container-param-type-color; //These are the same
+$scoped-child-container-param-value-color: #509688;
+$scoped-child-container-text-color: $scoped-command-text-color; //#555
+$scoped-command-name-color: #2C77AD;
 
 $sub-command-name-color: #E9C993;
-$sub-failed-command-name-color: #FC8666;
-$sub-param-value-color: #FDBA93;
+$sub-failed-command-name-color: #893030;
+$sub-param-value-color: $param-value-color;

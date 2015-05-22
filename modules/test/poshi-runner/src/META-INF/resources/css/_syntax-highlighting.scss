@@ -6,26 +6,12 @@
 	color: $command-name-color;
 }
 
-.current-scope .command-name {
-	color: $scoped-command-name-color;
-}
-
 .param-type {
 	color: $param-type-color;
 }
 
-.failed {
-	.command-name {
-		color: $failed-command-name-color;
-	}
-
-	.param-type {
-		color: $failed-param-type-color;
-	}
-
-	.param-value {
-		color: $failed-param-value-color;
-	}
+.param-value {
+	color: $param-value-color;
 }
 
 .command-log .child-container {
@@ -39,6 +25,48 @@
 
 	.error-line .command-name {
 		color: $sub-failed-command-name-color;
+	}
+}
+
+.current-scope {
+	.command-name {
+		color: $scoped-command-name-color;
+	}
+
+	.param-type {
+		color: $scoped-child-container-param-type-color;
+	}
+
+	.param-value {
+		color: $scoped-child-container-param-value-color;
+	}
+
+	.child-container {
+		color: $scoped-child-container-text-color;
+
+		.command-name {
+			color: $scoped-child-container-command-name-color;
+		}
+	}
+}
+
+.failed.linkable {
+	&, &.current-scope, &.current-scope:hover {
+		&, .child-container {
+			color: $sidebar-default-text-color;
+		}
+
+		.command-name, .child-container .command-name {
+			color: $failed-command-name-color;
+		}
+
+		.param-type {
+			color: $failed-param-type-color;
+		}
+
+		.param-value, .child-container .param-value {
+			color: $failed-param-value-color;
+		}
 	}
 }
 

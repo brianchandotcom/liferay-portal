@@ -1016,7 +1016,7 @@ AUI.add(
 					_renderUploader: function() {
 						var instance = this;
 
-						var timestampParam = '_LFR_UPLOADER_TS=' + Lang.now();
+						var timestampParam = '_LFR_UPLOADER_TS=' + Date.now();
 
 						var uploader = new A.Uploader(
 							{

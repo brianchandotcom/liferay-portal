@@ -219,7 +219,7 @@ AUI.add(
 
 					if (uri) {
 						if (config.cache === false) {
-							uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
+							uri = Liferay.Util.addParams(A.guid() + '=' + Date.now(), uri);
 						}
 
 						dialogIframeConfig = A.merge(

@@ -280,7 +280,7 @@ AUI.add(
 					_setTimestamp: function(value) {
 						var instance = this;
 
-						value = String(value || Lang.now());
+						value = String(value || Date.now());
 
 						return A.Cookie.set(instance._cookieKey, value, instance._cookieOptions);
 					},
@@ -334,7 +334,7 @@ AUI.add(
 											extend = true;
 										}
 										else {
-											var timeOffset = Math.floor((Lang.now() - timestamp) / 1000) * 1000;
+											var timeOffset = Math.floor((Date.now() - timestamp) / 1000) * 1000;
 
 											if (timeOffset < warningTime) {
 												instance._elapsed = timeOffset;

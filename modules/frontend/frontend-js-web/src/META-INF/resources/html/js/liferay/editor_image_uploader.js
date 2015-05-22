@@ -222,7 +222,7 @@ AUI.add(
 
 						image = A.one(image);
 
-						var randomId = Lang.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
+						var randomId = Date.now() + STR_UNDERSCORE + Liferay.Util.randomInt();
 
 						image.attr('data-random-id', randomId);
 

@@ -327,12 +327,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		configureTaskDirectDeployAppServerDeployDir(
 			directDeployTask, liferayExtension);
-		configureTaskDirectDeployAppServerLibGlobalDir(
-			directDeployTask, liferayExtension);
-		configureTaskDirectDeployAppServerPortalDir(
-			directDeployTask, liferayExtension);
-		configureTaskDirectDeployAppServerType(
-			directDeployTask, liferayExtension);
 		configureTaskDirectDeployWebAppFile(directDeployTask);
 		configureTaskDirectDeployWebAppType(directDeployTask);
 	}
@@ -343,33 +337,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		if (directDeployTask.getAppServerDeployDir() == null) {
 			directDeployTask.setAppServerDeployDir(
 				liferayExtension.getAppServerDeployDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerLibGlobalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (directDeployTask.getAppServerLibGlobalDir() == null) {
-			directDeployTask.setAppServerLibGlobalDir(
-				liferayExtension.getAppServerLibGlobalDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerPortalDir(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (directDeployTask.getAppServerPortalDir() == null) {
-			directDeployTask.setAppServerPortalDir(
-				liferayExtension.getAppServerPortalDir());
-		}
-	}
-
-	protected void configureTaskDirectDeployAppServerType(
-		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
-
-		if (Validator.isNull(directDeployTask.getAppServerType())) {
-			directDeployTask.setAppServerType(
-				liferayExtension.getAppServerType());
 		}
 	}
 

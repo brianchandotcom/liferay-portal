@@ -22,6 +22,7 @@ import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
 import com.liferay.gradle.plugins.tasks.BuildCssTask;
+import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
@@ -34,6 +35,7 @@ import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
@@ -61,6 +63,7 @@ import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
+import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.bundling.Jar;
 
 /**
@@ -741,6 +744,33 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		deployTask.into(liferayExtension.getDeployDir());
 	}
 
+	protected void configureTaskDirectDeployAppServerLibGlobalDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerLibGlobalDir() == null) {
+			directDeployTask.setAppServerLibGlobalDir(
+				liferayExtension.getAppServerLibGlobalDir());
+		}
+	}
+
+	protected void configureTaskDirectDeployAppServerPortalDir(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (directDeployTask.getAppServerPortalDir() == null) {
+			directDeployTask.setAppServerPortalDir(
+				liferayExtension.getAppServerPortalDir());
+		}
+	}
+
+	protected void configureTaskDirectDeployAppServerType(
+		DirectDeployTask directDeployTask, LiferayExtension liferayExtension) {
+
+		if (Validator.isNull(directDeployTask.getAppServerType())) {
+			directDeployTask.setAppServerType(
+				liferayExtension.getAppServerType());
+		}
+	}
+
 	protected void configureTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = (FormatXMLTask)GradleUtil.getTask(
 			project, FORMAT_WSDL_TASK_NAME);
@@ -793,6 +823,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskDeploy(project, liferayExtension);
 		configureTaskFormatWSDL(project);
 		configureTaskFormatXSD(project);
+		configureTasksDirectDeploy(project);
+	}
+
+	protected void configureTasksDirectDeploy(Project project) {
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			DirectDeployTask.class,
+			new Action<DirectDeployTask>() {
+
+				@Override
+				public void execute(DirectDeployTask directDeployTask) {
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						directDeployTask.getProject(), LiferayExtension.class);
+
+					configureTaskDirectDeployAppServerLibGlobalDir(
+						directDeployTask, liferayExtension);
+					configureTaskDirectDeployAppServerPortalDir(
+						directDeployTask, liferayExtension);
+					configureTaskDirectDeployAppServerType(
+						directDeployTask, liferayExtension);
+				}
+
+			});
 	}
 
 	protected void configureVersion(

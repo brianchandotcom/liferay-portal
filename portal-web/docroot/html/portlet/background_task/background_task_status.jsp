@@ -50,7 +50,7 @@ BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.g
 
 		<c:if test="<%= backgroundTaskDisplay.hasMessage() %>">
 			<div class="progress-current-item">
-				<liferay-ui:message key="<%= backgroundTaskDisplay.getMessage() %>" localizeKey="<%= false %>" />
+				<liferay-ui:message key="<%= backgroundTaskDisplay.getMessage(locale) %>" localizeKey="<%= false %>" />
 			</div>
 		</c:if>
 	</c:if>

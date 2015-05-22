@@ -17,11 +17,12 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
+			<var name="databaseNameDefault" value="false" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
 			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
-			<var name="jdbcURL" value="jdbc:mysql://localhost/lportal1?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false" />
+			<var name="jdbcURL" property-value="database.mysql.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage">
@@ -40,11 +41,12 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
+			<var name="databaseNameDefault" value="false" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
 			<var name="jdbcDriverClassName" property-value="database.mysql.driver" />
-			<var name="jdbcURL" value="jdbc:mysql://localhost/lportal1?useUnicode=true&amp;characterEncoding=UTF-8&amp;useFastDateParsing=false" />
+			<var name="jdbcURL" property-value="database.mysql.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />
@@ -53,7 +55,6 @@
 	</command>
 
 	<command name="MySQLtoMySQLSampleDataDisabled" priority="5">
-
 		<execute macro="SetupWizard#configureDefaultPG">
 			<var name="addSampleData" value="false" />
 		</execute>

@@ -1,7 +1,6 @@
 AUI.add(
 	'liferay-dockbar-keyboard-interaction',
 	function(A) {
-		var AArray = A.Array;
 		var AObject = A.Object;
 
 		var ACTIVE_DESCENDANT = 'activeDescendant';

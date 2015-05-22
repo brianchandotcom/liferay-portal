@@ -34,4 +34,5 @@ public interface SACPEntry extends SACPEntryModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.service.access.control.profile.model.impl.SACPEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.util.List<java.lang.String> getAllowedServicesList();
 }

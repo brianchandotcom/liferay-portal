@@ -26,15 +26,17 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 %>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
-	<div class="drop-zone">
-		<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
+	<c:if test="<%= desiredReturnTypes.contains(Base64.class) %>">
+		<div class="drop-zone">
+			<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
 
-		<input class="hide" id="<%= idPrefix %>InputFile" type="file" />
+			<input class="hide" id="<%= idPrefix %>InputFile" type="file" />
 
-		<p>
-			<%= uploadMessage %>
-		</p>
-	</div>
+			<p>
+				<%= uploadMessage %>
+			</p>
+		</div>
+	</c:if>
 
 	<c:choose>
 		<c:when test='<%= displayStyle.equals("list") %>'>

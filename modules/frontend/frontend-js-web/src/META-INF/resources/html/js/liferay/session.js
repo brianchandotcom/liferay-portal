@@ -114,7 +114,7 @@ AUI.add(
 
 						var registered = instance._registered;
 
-						if (A.Object.owns(registered, fnId)) {
+						if (registered.hasOwnProperty(fnId)) {
 							delete registered[fnId];
 						}
 

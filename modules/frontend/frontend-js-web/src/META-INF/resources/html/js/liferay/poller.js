@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var AObject = A.Object;
 
-		var owns = AObject.owns;
-
 		var _browserKey = Liferay.Util.randomInt();
 		var _enabled = false;
 		var _encryptedUserId = null;
@@ -307,7 +305,7 @@ AUI.add(
 			submitRequest: function(key, data, chunkId) {
 				if (!_frozen && key in _portlets) {
 					for (var i in data) {
-						if (owns(data, i)) {
+						if (data.hasOwnProperty(i)) {
 							var content = data[i];
 
 							if (content.replace) {

@@ -582,7 +582,7 @@
 			if (portlet) {
 				data = data || {};
 
-				if (!A.Object.owns(data, 'portletAjaxable')) {
+				if (!data.hasOwnProperty('portletAjaxable')) {
 					data.portletAjaxable = true;
 				}
 

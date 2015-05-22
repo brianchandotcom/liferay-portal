@@ -25,6 +25,7 @@ $scoped-line-bg-color: rgba(232, 255, 118, 0.4);
 $passed-line-bg-color: #7FCDD1;
 
 $pending-border-color: #FD9A07;
+
 $pending-border-bg-color: transparentize($pending-border-color, 0.85);
 
 $passed-function-hover-bg-color: #A3D7C9;
@@ -80,6 +81,7 @@ $command-child-container-border-color: #EEE;
 $command-child-container-text-color: $sidebar-default-text-color;
 
 $command-log-expand-toggle-hover-color: #FFF;
+
 $command-log-expand-toggle-color: darken($command-log-expand-toggle-hover-color, 6);
 
 $failed-command-bg-color: #E2604C;

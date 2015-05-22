@@ -43,6 +43,7 @@ import com.liferay.portlet.messageboards.model.MBThread;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
+import java.io.File;
 import java.io.InputStream;
 
 import java.text.DateFormat;
@@ -72,6 +73,16 @@ public class MBMessageLocalServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@Test
+	public void testAddMessageAttachment() throws Exception {
+		MBMessage message = addMessage(null, false);
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test", _testAttachment, "image/png", true);
+
+		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
 	}
 
 	@Test
@@ -126,6 +137,21 @@ public class MBMessageLocalServiceTest {
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_IN_TRASH, dlFileEntry.getStatus());
+	}
+
+	@Test
+	public void testDeleteMessageAttachment() throws Exception {
+		MBMessage message = addMessage(null, false);
+
+		MBMessageLocalServiceUtil.addMessageAttachment(
+			message.getMessageId(), "test", _testAttachment, "image/png", true);
+
+		Assert.assertEquals(1, message.getAttachmentsFileEntriesCount());
+
+		MBMessageLocalServiceUtil.deleteMessageAttachment(
+			message.getMessageId(), "test");
+
+		Assert.assertEquals(0, message.getAttachmentsFileEntriesCount());
 	}
 
 	@Test
@@ -224,6 +250,10 @@ public class MBMessageLocalServiceTest {
 			MBMessageConstants.DEFAULT_FORMAT, inputStreamOVPs, false, 0.0,
 			false, serviceContext);
 	}
+
+	private static final File _testAttachment = new File(
+		"portal-impl/test/integration/com/liferay/portlet/messageboards" +
+			"/attachments/dependencies/company_logo.png");
 
 	@DeleteAfterTestRun
 	private Group _group;

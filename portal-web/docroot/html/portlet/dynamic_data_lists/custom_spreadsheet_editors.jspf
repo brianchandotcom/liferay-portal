@@ -30,7 +30,7 @@
 				var fieldName = item.name;
 				var fieldValue = activeRecord.get(fieldName);
 
-				return !fieldValue && (activeColumn.key !== fieldName) && (item.required === 'true');
+				return !fieldValue && activeColumn.key !== fieldName && item.required === 'true';
 			}
 		);
 	};

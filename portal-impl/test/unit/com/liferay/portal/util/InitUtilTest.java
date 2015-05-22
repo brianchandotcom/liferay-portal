@@ -67,6 +67,8 @@ public class InitUtilTest {
 					_LOG4J_CONFIGURE_ON_STARTUP, log4jConfigureOnStartup);
 			}
 
+			InitUtil.stopRuntime();
+
 			InitUtil.stopModuleFramework();
 		}
 	}

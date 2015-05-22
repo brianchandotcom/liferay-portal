@@ -28,8 +28,14 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.rule.PACLTestRule;
+import com.liferay.portal.test.rule.callback.LogAssertionTestCallback;
 import com.liferay.portal.util.InitUtil;
+import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -57,6 +63,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.Future;
+
+import javax.naming.Context;
 
 import org.junit.Test;
 import org.junit.runner.Description;
@@ -138,6 +146,9 @@ public class PACLAggregateTest {
 			arguments.add("-Djunit.debug=true");
 		}
 
+		arguments.add(
+			"-Dportal:" + PropsKeys.CLUSTER_LINK_AUTODETECT_ADDRESS +
+				StringPool.EQUAL);
 		arguments.add(
 			"-D" + PropsKeys.LIFERAY_LIB_PORTAL_DIR + "=" +
 				PropsValues.LIFERAY_LIB_PORTAL_DIR);
@@ -331,6 +342,21 @@ public class PACLAggregateTest {
 		public Result call() throws ProcessException {
 			ProxySelector.setDefault(new DummySocksProxySelector());
 
+			URL resource = PACLTestRule.class.getResource(
+				"pacl-test.properties");
+
+			if (resource != null) {
+				System.setProperty("external-properties", resource.getPath());
+			}
+
+			System.setProperty(
+				Context.INITIAL_CONTEXT_FACTORY,
+				"org.apache.naming.java.javaURLContextFactory");
+
+			System.setProperty("catalina.base", ".");
+
+			CaptureAppender captureAppender = null;
+
 			Path tempStatePath = null;
 
 			try {
@@ -339,6 +365,17 @@ public class PACLAggregateTest {
 				System.setProperty(
 					"portal:" + PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
 					tempStatePath.toString());
+
+				com.liferay.portal.kernel.util.PropsUtil.setProps(
+					new PropsImpl());
+
+				SystemProperties.set(
+					"log4j.configure.on.startup", StringPool.FALSE);
+
+				Log4JUtil.configureLog4J(
+					PACLTestsProcessCallable.class.getClassLoader());
+
+				captureAppender = LogAssertionTestCallback.startAssert(null);
 
 				JUnitCore junitCore = new JUnitCore();
 
@@ -351,6 +388,8 @@ public class PACLAggregateTest {
 				throw new ProcessException(ioe);
 			}
 			finally {
+				InitUtil.stopRuntime();
+
 				InitUtil.stopModuleFramework();
 
 				MPIHelperUtil.shutdown();
@@ -387,6 +426,8 @@ public class PACLAggregateTest {
 					catch (IOException ioe) {
 						throw new ProcessException(ioe);
 					}
+
+					LogAssertionTestCallback.endAssert(null, captureAppender);
 				}
 			}
 		}

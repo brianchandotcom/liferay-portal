@@ -235,7 +235,16 @@ public class InitUtil {
 			ModuleFrameworkUtilAdapter.stopFramework();
 		}
 		catch (Exception e) {
-			new RuntimeException(e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	public synchronized static void stopRuntime() {
+		try {
+			ModuleFrameworkUtilAdapter.stopRuntime();
+		}
+		catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 

@@ -37,10 +37,10 @@ public class StoreFactoryTest {
 			new SyntheticBundleRule("bundle.storefactory"));
 
 	@Test
-	public void testGetInstance() throws Exception {
+	public void testGetStoreInstance() throws Exception {
 		StoreFactory storeFactory = new StoreFactory();
 
-		Store testStore = storeFactory.getInstance("test");
+		Store testStore = storeFactory.getStoreInstance("test");
 
 		Assert.assertNotNull(testStore);
 

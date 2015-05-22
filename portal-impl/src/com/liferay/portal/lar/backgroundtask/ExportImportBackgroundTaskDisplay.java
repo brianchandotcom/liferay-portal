@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -39,26 +41,25 @@ import java.util.Map;
 /**
  * @author Andrew Betts
  */
-public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay {
+public class ExportImportBackgroundTaskDisplay
+	extends BaseBackgroundTaskDisplay {
 
-	public ExportImportBackgroundTaskDisplay(
-		BackgroundTask backgroundTask, Locale locale) {
-
-		super(backgroundTask, locale);
+	public ExportImportBackgroundTaskDisplay(BackgroundTask backgroundTask) {
+		super(backgroundTask);
 
 		Map<String, Serializable> taskContextMap =
 			backgroundTask.getTaskContextMap();
 
-		_cmd = (String)taskContextMap.get(Constants.CMD);
-
-		JSONObject details = createDetailsJSON(locale, backgroundTask);
-
-		setDetails(details);
+		_cmd = MapUtil.getString(taskContextMap, Constants.CMD);
 
 		BackgroundTaskStatus backgroundTaskStatus = getBackgroundTaskStatus();
 
+		_percentage = _NO_PERCENTAGE;
+
 		if (backgroundTaskStatus == null) {
 			_allProgressBarCountersTotal = 0;
+			_currentProgressBarCountersTotal = 0;
+			_phase = null;
 			_stagedModelName = null;
 			_stagedModelType = null;
 
@@ -72,6 +73,10 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 		long allPortletAdditionCounter = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER));
+
+		_allProgressBarCountersTotal =
+			allModelAdditionCountersTotal + allPortletAdditionCounter;
+
 		long currentModelAdditionCountersTotal = GetterUtil.getLong(
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.
@@ -80,29 +85,53 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.
 					CURRENT_PORTLET_ADDITION_COUNTER));
-		String phase = GetterUtil.getString(
+
+		_currentProgressBarCountersTotal =
+			currentModelAdditionCountersTotal + currentPortletAdditionCounter;
+
+		_phase = GetterUtil.getString(
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.PHASE));
-
-		_allProgressBarCountersTotal =
-			allModelAdditionCountersTotal + allPortletAdditionCounter;
-
-		int percentage = calculatePercentage(
-			currentModelAdditionCountersTotal, currentPortletAdditionCounter,
-			phase);
-
-		setPercentage(percentage);
-
 		_stagedModelName = GetterUtil.getString(
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.STAGED_MODEL_NAME));
 		_stagedModelType = GetterUtil.getString(
 			backgroundTaskStatus.getAttribute(
 				StagingBackgroundTaskConstants.STAGED_MODEL_TYPE));
+	}
 
-		String message = createMessage(locale);
+	@Override
+	public String getMessage(Locale locale) {
+		if (hasStagedModelMessage()) {
+			return translateStagedModelMessage(locale);
+		}
 
-		setMessage(message);
+		return LanguageUtil.get(locale, createMessageKey());
+	}
+
+	@Override
+	public int getPercentage() {
+		if (_percentage > _NO_PERCENTAGE) {
+			return _percentage;
+		}
+
+		_percentage = _MAX_PERCENTAGE;
+
+		if (_allProgressBarCountersTotal > 0) {
+			int base = _MAX_PERCENTAGE;
+
+			if (_phase.equals(Constants.EXPORT) &&
+				!Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
+
+				base = _EXPORT_PHASE_MAX_PERCENTAGE;
+			}
+
+			_percentage = Math.round(
+				(float)_currentProgressBarCountersTotal /
+					_allProgressBarCountersTotal * base);
+		}
+
+		return _percentage;
 	}
 
 	@Override
@@ -126,42 +155,22 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 		return false;
 	}
 
-	protected int calculatePercentage(
-		long currentModelAdditionCountersTotal,
-		long currentPortletAdditionCounter, String phase) {
-
-		int percentage = _MAX_PERCENTAGE;
-
-		long currentProgressBarCountersTotal =
-			currentModelAdditionCountersTotal + currentPortletAdditionCounter;
-
-		if (_allProgressBarCountersTotal > 0) {
-			int base = _MAX_PERCENTAGE;
-
-			if (phase.equals(Constants.EXPORT) &&
-				!Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
-
-				base = _EXPORT_PHASE_MAX_PERCENTAGE;
-			}
-
-			percentage = Math.round(
-				(float)currentProgressBarCountersTotal /
-					_allProgressBarCountersTotal * base);
+	protected JSONObject createDetails(BackgroundTask backgroundTask) {
+		if (_details != null) {
+			return _details;
 		}
 
-		return percentage;
-	}
-
-	protected JSONObject createDetailsJSON(
-		Locale locale, BackgroundTask backgroundTask) {
-
-		JSONObject backgroundTaskJSON;
+		JSONObject backgroundTaskJSON = null;
 
 		try {
 			backgroundTaskJSON = JSONFactoryUtil.createJSONObject(
 				backgroundTask.getStatusMessage());
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+
 			return null;
 		}
 
@@ -170,17 +179,15 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 		boolean validated = MapUtil.getBoolean(
 			backgroundTask.getTaskContextMap(), "validated");
 
-		String detailHeader = LanguageUtil.get(
-			locale,
+		String detailHeader =
 			"an-unexpected-error-occurred-with-the-publication-process." +
-				"-please-check-your-portal-and-publishing-configuration");
+				"-please-check-your-portal-and-publishing-configuration";
 
 		if (exported && !validated) {
-			detailHeader = LanguageUtil.get(
-				locale,
+			detailHeader =
 				"an-unexpected-error-occurred-with-the-publication-" +
 					"process.-please-check-your-portal-and-publishing-" +
-					"configuration");
+						"configuration";
 		}
 
 		JSONArray detailItems = JSONFactoryUtil.createJSONArray();
@@ -215,46 +222,37 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 
 		int status = backgroundTaskJSON.getInt("status");
 
-		return BackgroundTaskDisplayJSONTransformer.createDetailsJSONObject(
+		_details = BackgroundTaskDisplayJSONTransformer.createDetailsJSONObject(
 			detailHeader, detailItems, status);
+
+		return _details;
 	}
 
-	protected String createMessage(Locale locale) {
-		String message = StringPool.BLANK;
+	protected String createMessageKey() {
+		if (Validator.isNotNull(_messageKey)) {
+			return _messageKey;
+		}
+
+		_messageKey = StringPool.BLANK;
 
 		if (hasRemoteMessage()) {
-			message = LanguageUtil.get(
-				locale,
-				"please-wait-as-the-publication-processes-on-the-remote-site");
+			_messageKey =
+				"please-wait-as-the-publication-processes-on-the-remote-site";
 		}
 		else if (hasStagedModelMessage()) {
-			String messageKey = "exporting";
+			_messageKey = "exporting";
 
 			if (Validator.equals(_cmd, Constants.IMPORT)) {
-				messageKey = "importing";
+				_messageKey = "importing";
 			}
 			else if (Validator.equals(_cmd, Constants.PUBLISH_TO_LIVE) ||
 					 Validator.equals(_cmd, Constants.PUBLISH_TO_REMOTE)) {
 
-				messageKey = "publishing";
+				_messageKey = "publishing";
 			}
-
-			StringBundler sb = new StringBundler();
-
-			sb.append("<strong>");
-			sb.append(LanguageUtil.get(locale, messageKey));
-			sb.append(StringPool.TRIPLE_PERIOD);
-			sb.append("</strong>");
-			sb.append(
-				ResourceActionsUtil.getModelResource(locale, _stagedModelType));
-			sb.append("<em>");
-			sb.append(HtmlUtil.escape(_stagedModelName));
-			sb.append("</em>");
-
-			message = sb.toString();
 		}
 
-		return message;
+		return _messageKey;
 	}
 
 	protected boolean hasRemoteMessage() {
@@ -277,12 +275,34 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 		return false;
 	}
 
+	protected String translateStagedModelMessage(Locale locale) {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("<strong>");
+		sb.append(LanguageUtil.get(locale, createMessageKey()));
+		sb.append(StringPool.TRIPLE_PERIOD);
+		sb.append("</strong>");
+		sb.append(
+			ResourceActionsUtil.getModelResource(locale, _stagedModelType));
+		sb.append("<em>");
+		sb.append(HtmlUtil.escape(_stagedModelName));
+		sb.append("</em>");
+
+		return sb.toString();
+	}
+
 	private static final int _EXPORT_PHASE_MAX_PERCENTAGE = 50;
 
-	private static final int _MAX_PERCENTAGE = 100;
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportBackgroundTaskDisplay.class);
 
 	private final long _allProgressBarCountersTotal;
 	private final String _cmd;
+	private final long _currentProgressBarCountersTotal;
+	private JSONObject _details;
+	private String _messageKey;
+	private int _percentage;
+	private final String _phase;
 	private final String _stagedModelName;
 	private final String _stagedModelType;
 

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -154,22 +153,19 @@ public class StoreFactory {
 	}
 
 	private Store _getStoreInstance() throws Exception {
-		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+		String storeType = _store.getType();
 
-		Store store = (Store)InstanceFactory.newInstance(
-			classLoader, PropsValues.DL_STORE_IMPL);
-
-		if (!(store instanceof DBStore)) {
-			return store;
+		if (!(storeType.endsWith("DBStore"))) {
+			return _store;
 		}
-
-		DBStore dbStore = (DBStore)store;
 
 		DB db = DBFactoryUtil.getDB();
 
 		String dbType = db.getType();
 
 		if (dbType.equals(DB.TYPE_POSTGRESQL)) {
+			ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
+
 			MethodInterceptor transactionAdviceMethodInterceptor =
 				(MethodInterceptor)PortalBeanLocatorUtil.locate(
 					"transactionAdvice");
@@ -180,15 +176,13 @@ public class StoreFactory {
 			List<MethodInterceptor> methodInterceptors = Arrays.asList(
 				transactionAdviceMethodInterceptor, tempFileMethodInterceptor);
 
-			store = (Store)ProxyUtil.newProxyInstance(
+			_store = (Store)ProxyUtil.newProxyInstance(
 				classLoader, new Class<?>[] {Store.class},
 				new MethodInterceptorInvocationHandler(
-					store, methodInterceptors));
-
-			dbStore.setStoreProxy(store);
+					_store, methodInterceptors));
 		}
 
-		return store;
+		return _store;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);

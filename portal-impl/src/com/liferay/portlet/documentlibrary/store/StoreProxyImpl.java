@@ -201,6 +201,13 @@ public class StoreProxyImpl implements Store {
 	}
 
 	@Override
+	public String getType() {
+		Store store = _storeFactory.getStoreInstance();
+
+		return store.getType();
+	}
+
+	@Override
 	public boolean hasDirectory(
 		long companyId, long repositoryId, String dirName) {
 

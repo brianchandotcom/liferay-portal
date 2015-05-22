@@ -149,6 +149,11 @@ public class StoreProxyBean extends BaseProxyBean implements Store {
 	}
 
 	@Override
+	public String getType() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public boolean hasDirectory(
 		long companyId, long repositoryId, String dirName) {
 

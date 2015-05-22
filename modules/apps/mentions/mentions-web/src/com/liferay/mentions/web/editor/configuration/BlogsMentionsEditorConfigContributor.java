@@ -12,21 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.editor.config;
+package com.liferay.mentions.web.editor.configuration;
 
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Sergio González
  */
-public interface EditorConfig {
-
-	public JSONObject getConfigJSONObject();
-
-	public Map<String, Object> getData();
-
-	public JSONObject getOptionsJSONObject();
-
+@Component(
+	property = {
+		"editor.config.key=contentEditor", "editor.name=alloyeditor",
+		"editor.name=ckeditor", "javax.portlet.name=33",
+		"javax.portlet.name=161", "service.ranking:Integer=10"
+	},
+	service = EditorConfigContributor.class
+)
+public class BlogsMentionsEditorConfigContributor
+	extends BaseMentionsEditorConfigContributor {
 }

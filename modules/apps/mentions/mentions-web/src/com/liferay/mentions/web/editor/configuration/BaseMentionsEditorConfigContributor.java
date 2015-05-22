@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.mentions.web.editor.config;
+package com.liferay.mentions.web.editor.configuration;
 
 import com.liferay.mentions.web.constants.MentionsPortletKeys;
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -96,13 +96,6 @@ public class BaseMentionsEditorConfigContributor
 		}
 
 		jsonObject.put("extraPlugins", extraPlugins);
-	}
-
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
 	}
 
 }

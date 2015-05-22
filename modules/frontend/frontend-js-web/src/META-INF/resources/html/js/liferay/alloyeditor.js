@@ -26,11 +26,6 @@ AUI.add(
 						value: {}
 					},
 
-					editorOptions: {
-						validator: Lang.isObject,
-						value: {}
-					},
-
 					onBlurMethod: {
 						validator: Lang.isFunction
 					},
@@ -45,6 +40,11 @@ AUI.add(
 
 					onInitMethod: {
 						validator: Lang.isFunction
+					},
+
+					textMode: {
+						validator: Lang.isBoolean,
+						value: {}
 					}
 				},
 
@@ -125,9 +125,7 @@ AUI.add(
 					getHTML: function() {
 						var instance = this;
 
-						var editorOptions = instance.get('editorOptions');
-
-						return editorOptions.textMode ? instance.getText() : instance.getCkData();
+						return instance.get('textMode') ? instance.getText() : instance.getCkData();
 					},
 
 					getNativeEditor: function() {

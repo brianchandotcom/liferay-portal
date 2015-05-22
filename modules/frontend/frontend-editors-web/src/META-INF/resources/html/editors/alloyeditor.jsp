@@ -32,7 +32,7 @@ String contentsLanguageId = (String)request.getAttribute("liferay-ui:input-edito
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("editorConfig") : null;
-JSONObject editorOptionsJSONObject = (data != null) ? (JSONObject)data.get("editorOptions") : null;
+EditorOptions editorOptions = (data != null) ? (EditorOptions)data.get("editorOptions") : null;
 
 String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
@@ -133,10 +133,14 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 <%
 String modules = "liferay-alloy-editor";
 
-String uploadURL = editorOptionsJSONObject.getString("uploadURL");
+String uploadURL = StringPool.BLANK;
 
-if (Validator.isNotNull(data) && Validator.isNotNull(uploadURL)) {
-	modules += ",liferay-editor-image-uploader";
+if (editorOptions != null) {
+	uploadURL = editorOptions.getUploadURL();
+
+	if (Validator.isNotNull(data) && Validator.isNotNull(uploadURL)) {
+		modules += ",liferay-editor-image-uploader";
+	}
 }
 
 if (showSource) {
@@ -192,13 +196,13 @@ if (showSource) {
 		alloyEditor = new A.LiferayAlloyEditor(
 			{
 				editorConfig: editorConfig,
-				editorOptions: <%= editorOptionsJSONObject %>,
 				namespace: '<%= name %>',
 				onBlurMethod: window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'],
 				onChangeMethod: window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'],
 				onFocusMethod: window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'],
 				onInitMethod: window['<%= HtmlUtil.escapeJS(onInitMethod) %>'],
-				plugins: plugins
+				plugins: plugins,
+				textMode: <%= (editorOptions != null) ? editorOptions.isTextMode() : Boolean.FALSE.toString() %>
 			}
 		).render();
 	};

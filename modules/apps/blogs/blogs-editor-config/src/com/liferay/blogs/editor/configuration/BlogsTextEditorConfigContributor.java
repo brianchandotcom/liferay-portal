@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.frontend.editors.web.editor.config;
+package com.liferay.blogs.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -24,14 +26,18 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Ambrin Chaudhary
+ * @author Sergio González
  */
 @Component(
-	property = {"editor.name=tinymce_simple"},
+	property = {
+		"editor.config.key=descriptionEditor",
+		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
+		"javax.portlet.name=33", "javax.portlet.name=161"
+	},
 	service = EditorConfigContributor.class
 )
-public class TinyMCESimpleEditorConfigContributor
-	extends BaseTinyMCEEditorConfigConfigurator {
+public class BlogsTextEditorConfigContributor
+	extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -39,29 +45,10 @@ public class TinyMCESimpleEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		super.populateConfigJSONObject(
-			jsonObject, inputEditorTaglibAttributes, themeDisplay,
-			liferayPortletResponse);
-
-		String plugins = "contextmenu preview print";
-
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			plugins+= " code";
-		}
-
-		jsonObject.put("plugins", plugins);
-
-		String toolbar =
-			"bold italic underline | alignleft aligncenter alignright " +
-				"alignjustify | ";
-
-		if (isShowSource(inputEditorTaglibAttributes)) {
-			toolbar += "code ";
-		}
-
-		toolbar += "preview print";
-
-		jsonObject.put("toolbar", toolbar);
+		jsonObject.put("allowedContent", "p");
+		jsonObject.put("disallowedContent", "br");
+		jsonObject.put("extraPlugins", "placeholder,selectionregion,uicore");
+		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
 }

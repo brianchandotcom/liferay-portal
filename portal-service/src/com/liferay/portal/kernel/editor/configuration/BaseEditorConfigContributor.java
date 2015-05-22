@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.editor.config;
+package com.liferay.portal.kernel.editor.configuration;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;

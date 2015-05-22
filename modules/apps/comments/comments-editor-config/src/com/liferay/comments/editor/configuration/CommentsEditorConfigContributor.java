@@ -12,31 +12,30 @@
  * details.
  */
 
-package com.liferay.blogs.editor.config;
+package com.liferay.comments.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
-
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Sergio González
+ * @author Ambrin Chaudhary
  */
 @Component(
 	property = {
-		"editor.config.key=contentEditor", "javax.portlet.name=33",
-		"javax.portlet.name=161"
+		"editor.config.key=commentsEditor", "service.ranking:Integer=0"
 	},
 	service = EditorConfigContributor.class
 )
-public class BlogsContentEditorConfigContributor
+public class CommentsEditorConfigContributor
 	extends BaseEditorConfigContributor {
 
 	@Override
@@ -44,23 +43,10 @@ public class BlogsContentEditorConfigContributor
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
-	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		if (liferayPortletResponse == null) {
-			return;
-		}
-
-		PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-		portletURL.setParameter("struts_action", "/blogs/upload_editor_image");
-
-		jsonObject.put("uploadURL", portletURL.toString());
+		jsonObject.put(
+			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
+		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
 	}
 
 }

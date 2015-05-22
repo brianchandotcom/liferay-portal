@@ -12,22 +12,37 @@
  * details.
  */
 
-package com.liferay.portal.kernel.editor.config;
+package com.liferay.comments.editor.configuration;
 
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
-public interface EditorConfigFactory {
+@Component(
+	property = {
+		"editor.config.key=commentsEditor", "service.ranking:Integer=0"
+	},
+	service = EditorOptionsContributor.class
+)
+public class CommentsEditorOptionsContributor
+	implements EditorOptionsContributor {
 
-	public EditorConfig getEditorConfig(
-		String portletName, String editorConfigKey, String editorName,
+	@Override
+	public void populateEditorOptions(
+		EditorOptions editorOptions,
 		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse);
+		LiferayPortletResponse liferayPortletResponse) {
+
+		editorOptions.setTextMode(false);
+	}
 
 }

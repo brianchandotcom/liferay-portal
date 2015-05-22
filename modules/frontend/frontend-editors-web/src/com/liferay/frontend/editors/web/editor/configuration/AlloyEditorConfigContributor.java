@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.frontend.editors.web.editor.config;
+package com.liferay.frontend.editors.web.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -129,13 +129,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		}
 
 		jsonObject.put("toolbars", getToolbarsJSONObject());
-	}
-
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {

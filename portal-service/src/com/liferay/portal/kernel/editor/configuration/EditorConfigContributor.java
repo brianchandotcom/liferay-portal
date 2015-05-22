@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.editor.config;
+package com.liferay.portal.kernel.editor.configuration;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -117,32 +117,6 @@ public interface EditorConfigContributor {
 	 *        URLs.
 	 */
 	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse);
-
-	/**
-	 * Updates the original options JSON object to add some new configuration.
-	 * It can even update or delete the original options, or any other option
-	 * introduced by any other {@link EditorConfigContributor}.
-	 *
-	 * <p>
-	 * The options object is used by the <code>input-editor</code> taglib tag
-	 * and it contains options that specify the behavior of the editor. Since
-	 * the object isn't directly used by the editor, it's typically the same for
-	 * all the editors.
-	 * </p>
-	 *
-	 * @param jsonObject the original json object containing all the options set
-	 *        by previous {@link EditorConfigContributor} modules
-	 * @param inputEditorTaglibAttributes the attributes specified to the input
-	 *        taglib tag that renders the editor
-	 * @param themeDisplay the theme display
-	 * @param liferayPortletResponse the Liferay portlet response (optionally
-	 *        <code>null</code>). Only use the response to generate portlet
-	 *        URLs.
-	 */
-	public void populateOptionsJSONObject(
 		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse);

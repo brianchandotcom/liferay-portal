@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.mentions.web.editor.config;
+package com.liferay.portal.kernel.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.theme.ThemeDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import java.util.Map;
 
 /**
  * @author Sergio González
  */
-@Component(
-	property = {
-		"editor.config.key=commentsEditor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "service.ranking:Integer=10"
-	},
-	service = EditorConfigContributor.class
-)
-public class CommentsMentionsEditorConfigContributor
-	extends BaseMentionsEditorConfigContributor {
+public interface EditorConfigurationFactory {
+
+	public EditorConfiguration getEditorConfiguration(
+		String portletName, String editorConfigKey, String editorName,
+		Map<String, Object> inputEditorTaglibAttributes,
+		ThemeDisplay themeDisplay,
+		LiferayPortletResponse liferayPortletResponse);
+
 }

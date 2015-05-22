@@ -12,23 +12,30 @@
  * details.
  */
 
-package com.liferay.mentions.web.editor.config;
-
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.kernel.editor.configuration;
 
 /**
  * @author Sergio González
  */
-@Component(
-	property = {
-		"editor.config.key=contentEditor", "editor.name=alloyeditor",
-		"editor.name=ckeditor", "javax.portlet.name=33",
-		"javax.portlet.name=161", "service.ranking:Integer=10"
-	},
-	service = EditorConfigContributor.class
-)
-public class BlogsMentionsEditorConfigContributor
-	extends BaseMentionsEditorConfigContributor {
+public class EditorOptions {
+
+	public String getUploadURL() {
+		return _uploadURL;
+	}
+
+	public boolean isTextMode() {
+		return _textMode;
+	}
+
+	public void setTextMode(boolean textMode) {
+		_textMode = textMode;
+	}
+
+	public void setUploadURL(String uploadURL) {
+		_uploadURL = uploadURL;
+	}
+
+	private boolean _textMode;
+	private String _uploadURL;
+
 }

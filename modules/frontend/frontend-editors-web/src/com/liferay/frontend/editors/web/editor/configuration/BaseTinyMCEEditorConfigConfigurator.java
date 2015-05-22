@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.frontend.editors.web.editor.config;
+package com.liferay.frontend.editors.web.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
+import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -80,13 +80,6 @@ public class BaseTinyMCEEditorConfigConfigurator
 			"bold italic underline | alignleft aligncenter alignright | " +
 				"preview print");
 		jsonObject.put("toolbar_items_size", "small");
-	}
-
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
 	}
 
 	protected String getTinyMCELanguage(String contentsLanguageId) {

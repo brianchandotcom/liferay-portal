@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.blogs.editor.config;
+package com.liferay.blogs.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.editor.configuration.EditorOptions;
+import com.liferay.portal.kernel.editor.configuration.EditorOptionsContributor;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -34,30 +32,19 @@ import org.osgi.service.component.annotations.Component;
 		"editor.config.key=subtitleEditor", "editor.config.key=titleEditor",
 		"javax.portlet.name=33", "javax.portlet.name=161"
 	},
-	service = EditorConfigContributor.class
+	service = EditorOptionsContributor.class
 )
-public class BlogsTextEditorConfigContributor
-	extends BaseEditorConfigContributor {
+public class BlogsTextEditorOptionsContributor
+	implements EditorOptionsContributor {
 
 	@Override
-	public void populateConfigJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
+	public void populateEditorOptions(
+		EditorOptions editorOptions,
+		Map<String, Object> inputEditorTaglibAttributes,
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put("allowedContent", "p");
-		jsonObject.put("disallowedContent", "br");
-		jsonObject.put("extraPlugins", "placeholder,selectionregion,uicore");
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
-	}
-
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		jsonObject.put("textMode", Boolean.TRUE);
+		editorOptions.setTextMode(true);
 	}
 
 }

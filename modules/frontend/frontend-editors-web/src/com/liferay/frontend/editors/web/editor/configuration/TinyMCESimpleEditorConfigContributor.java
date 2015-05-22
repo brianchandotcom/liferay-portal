@@ -12,15 +12,12 @@
  * details.
  */
 
-package com.liferay.comments.editor.config;
+package com.liferay.frontend.editors.web.editor.configuration;
 
-import com.liferay.portal.kernel.editor.config.BaseEditorConfigContributor;
-import com.liferay.portal.kernel.editor.config.EditorConfigContributor;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.Map;
 
@@ -30,13 +27,11 @@ import org.osgi.service.component.annotations.Component;
  * @author Ambrin Chaudhary
  */
 @Component(
-	property = {
-		"editor.config.key=commentsEditor", "service.ranking:Integer=0"
-	},
+	property = {"editor.name=tinymce_simple"},
 	service = EditorConfigContributor.class
 )
-public class CommentsEditorConfigContributor
-	extends BaseEditorConfigContributor {
+public class TinyMCESimpleEditorConfigContributor
+	extends BaseTinyMCEEditorConfigConfigurator {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -44,18 +39,29 @@ public class CommentsEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		jsonObject.put(
-			"allowedContent", PropsValues.DISCUSSION_COMMENTS_ALLOWED_CONTENT);
-		jsonObject.put("toolbars", JSONFactoryUtil.createJSONObject());
-	}
+		super.populateConfigJSONObject(
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			liferayPortletResponse);
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
+		String plugins = "contextmenu preview print";
 
-		jsonObject.put("textMode", Boolean.FALSE);
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			plugins+= " code";
+		}
+
+		jsonObject.put("plugins", plugins);
+
+		String toolbar =
+			"bold italic underline | alignleft aligncenter alignright " +
+				"alignjustify | ";
+
+		if (isShowSource(inputEditorTaglibAttributes)) {
+			toolbar += "code ";
+		}
+
+		toolbar += "preview print";
+
+		jsonObject.put("toolbar", toolbar);
 	}
 
 }

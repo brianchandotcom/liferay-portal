@@ -40,8 +40,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.AdvancedFileSystemStore;
-import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
@@ -76,12 +74,16 @@ public class ConvertDocumentLibrary
 
 	@Override
 	public String[] getParameterNames() {
-		StringBundler sb = new StringBundler(_HOOKS.length * 2 + 2);
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		String[] hooks = storeFactory.getStoreTypes();
+
+		StringBundler sb = new StringBundler(hooks.length * 2 + 2);
 
 		sb.append(PropsKeys.DL_STORE_IMPL);
 		sb.append(StringPool.EQUAL);
 
-		for (String hook : _HOOKS) {
+		for (String hook : hooks) {
 			if (!hook.equals(PropsValues.DL_STORE_IMPL)) {
 				sb.append(hook);
 				sb.append(StringPool.SEMICOLON);
@@ -355,10 +357,6 @@ public class ConvertDocumentLibrary
 	}
 
 	private static final String _FILE_SYSTEM_STORE_SUFFIX = "FileSystemStore";
-
-	private static final String[] _HOOKS = new String[] {
-		AdvancedFileSystemStore.class.getName(), FileSystemStore.class.getName()
-	};
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConvertDocumentLibrary.class);

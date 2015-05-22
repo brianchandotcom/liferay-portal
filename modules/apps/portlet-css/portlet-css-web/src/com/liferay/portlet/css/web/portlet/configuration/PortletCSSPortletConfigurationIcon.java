@@ -15,7 +15,6 @@
 package com.liferay.portlet.css.web.portlet.configuration;
 
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portlet.PortletURLFactoryUtil;
@@ -26,14 +25,17 @@ import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class PortletCSSPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	public PortletCSSPortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+
+		_request = request;
+	}
 
 	@Override
 	public String getCssClass() {
@@ -52,20 +54,18 @@ public class PortletCSSPortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		HttpServletRequest request = _themeDisplay.getRequest();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletURL baseActionURL = PortletURLFactoryUtil.create(
-			request, PortletCSSPortletKeys.PORTLET_CSS, _themeDisplay.getPlid(),
+			_request, PortletCSSPortletKeys.PORTLET_CSS, themeDisplay.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
 		PortletURL baseRenderURL = PortletURLFactoryUtil.create(
-			request, PortletCSSPortletKeys.PORTLET_CSS, _themeDisplay.getPlid(),
+			_request, PortletCSSPortletKeys.PORTLET_CSS, themeDisplay.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
 		PortletURL baseResourceURL = PortletURLFactoryUtil.create(
-			request, PortletCSSPortletKeys.PORTLET_CSS, _themeDisplay.getPlid(),
+			_request, PortletCSSPortletKeys.PORTLET_CSS, themeDisplay.getPlid(),
 			PortletRequest.RESOURCE_PHASE);
 
 		StringBundler sb = new StringBundler(9);
@@ -85,19 +85,14 @@ public class PortletCSSPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLPortletCss();
 	}
 
 	@Override
-	public double getWeight() {
-		return 16.0;
-	}
-
-	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowPortletCssIcon();
 	}
@@ -106,5 +101,7 @@ public class PortletCSSPortletConfigurationIcon
 	public boolean isToolTip() {
 		return false;
 	}
+
+	private final HttpServletRequest _request;
 
 }

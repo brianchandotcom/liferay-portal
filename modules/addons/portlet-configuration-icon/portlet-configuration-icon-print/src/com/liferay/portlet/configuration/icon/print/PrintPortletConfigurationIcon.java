@@ -15,17 +15,19 @@
 package com.liferay.portlet.configuration.icon.print;
 
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class PrintPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	public PrintPortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+	}
 
 	@Override
 	public String getCssClass() {
@@ -44,7 +46,7 @@ public class PrintPortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "location.href = '".concat(
 			portletDisplay.getURLPrint()).concat("'; return false;");
@@ -57,19 +59,14 @@ public class PrintPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLPrint();
 	}
 
 	@Override
-	public double getWeight() {
-		return 8.0;
-	}
-
-	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowPrintIcon();
 	}

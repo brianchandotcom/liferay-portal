@@ -15,16 +15,18 @@
 package com.liferay.portlet.configuration.icon.help;
 
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
+
+	public HelpPortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+	}
 
 	@Override
 	public String getCssClass() {
@@ -43,19 +45,14 @@ public class HelpPortletConfigurationIcon extends BasePortletConfigurationIcon {
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLHelp();
 	}
 
 	@Override
-	public double getWeight() {
-		return 9.0;
-	}
-
-	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowHelpIcon();
 	}

@@ -15,17 +15,19 @@
 package com.liferay.portlet.configuration.icon.close;
 
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ClosePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	public ClosePortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+	}
 
 	@Override
 	public String getCssClass() {
@@ -44,7 +46,7 @@ public class ClosePortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "Liferay.Portlet.close('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_'); return false;");
@@ -52,19 +54,14 @@ public class ClosePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLClose();
 	}
 
 	@Override
-	public double getWeight() {
-		return 1.0;
-	}
-
-	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowCloseIcon();
 	}

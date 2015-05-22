@@ -1279,7 +1279,7 @@ AUI.add(
 						else {
 							var displayStyle = instance._getDisplayStyle();
 
-							filesPartition.map(
+							filesPartition.matches.map(
 								function(file) {
 									var entryNode = instance._createEntryNode(file.name, file.size, displayStyle);
 
@@ -1287,7 +1287,7 @@ AUI.add(
 								}
 							);
 
-							filesPartition.map(
+							filesPartition.rejects.map(
 								function(file) {
 									var entryNode = instance._createEntryNode(file.name, file.size, displayStyle);
 

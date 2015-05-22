@@ -12,14 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.store;
+package com.liferay.portal.store.cmis.test;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Role;
@@ -28,9 +30,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.store.cmis.CMISStore;
+import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import java.util.Calendar;
@@ -39,38 +40,27 @@ import org.junit.After;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.ClassRule;
-import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Preston Crary
+ * @author Manuel de la Peña
  */
+@RunWith(Arquillian.class)
 public class CMISStoreTest extends BaseStoreTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Assume.assumeFalse(
-			"Property \"" + PropsKeys.DL_STORE_CMIS_CREDENTIALS_USERNAME +
-				"\" is not set",
-			PropsValues.DL_STORE_CMIS_CREDENTIALS_USERNAME.equals("none"));
-		Assume.assumeFalse(
-			"Property \"" + PropsKeys.DL_STORE_CMIS_CREDENTIALS_PASSWORD +
-				"\" is not set",
-			PropsValues.DL_STORE_CMIS_CREDENTIALS_PASSWORD.equals("none"));
 		Assume.assumeTrue(
 			"Property \"" + PropsKeys.SESSION_STORE_PASSWORD +
 				"\" is not set to true",
-			PropsValues.SESSION_STORE_PASSWORD);
+			GetterUtil.getBoolean(
+				PropsUtil.get(PropsKeys.SESSION_STORE_PASSWORD))
+			);
 		Assume.assumeTrue(
 			"Property \"" + PropsKeys.COMPANY_SECURITY_AUTH_TYPE +
 				"\" is not set to \"" + CompanyConstants.AUTH_TYPE_SN + "\"",
-			PropsValues.COMPANY_SECURITY_AUTH_TYPE.equals(
+			GetterUtil.getString(PropsKeys.COMPANY_SECURITY_AUTH_TYPE).equals(
 				CompanyConstants.AUTH_TYPE_SN));
 	}
 

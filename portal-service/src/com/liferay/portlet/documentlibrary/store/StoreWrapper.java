@@ -168,6 +168,11 @@ public class StoreWrapper implements Store {
 	}
 
 	@Override
+	public String getType() {
+		return _store.getType();
+	}
+
+	@Override
 	public boolean hasDirectory(
 		long companyId, long repositoryId, String dirName) {
 

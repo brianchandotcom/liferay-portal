@@ -44,15 +44,15 @@ import org.aopalliance.intercept.MethodInterceptor;
  */
 public class StoreFactory {
 
-	public StoreFactory() {
-		_serviceTrackerMap.open();
+	public static StoreFactory getInstance() {
+		if (_instance == null) {
+			_instance = new StoreFactory();
+		}
+
+		return _instance;
 	}
 
-	public void destroy() {
-		_serviceTrackerMap.close();
-	}
-
-	public static void checkProperties() {
+	public void checkProperties() {
 		if (_warned) {
 			return;
 		}
@@ -108,7 +108,11 @@ public class StoreFactory {
 		_warned = true;
 	}
 
-	public static Store getStoreInstance() {
+	public void destroy() {
+		_serviceTrackerMap.close();
+	}
+
+	public Store getStoreInstance() {
 		if (_store == null) {
 			checkProperties();
 
@@ -137,7 +141,7 @@ public class StoreFactory {
 		return _serviceTrackerMap.getService(key);
 	}
 
-	public static void setStoreInstance(Store store) {
+	public void setStoreInstance(Store store) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Set " + ClassUtil.getClassName(store));
 		}
@@ -145,7 +149,11 @@ public class StoreFactory {
 		_store = store;
 	}
 
-	private static Store _getStoreInstance() throws Exception {
+	private StoreFactory() {
+		_serviceTrackerMap.open();
+	}
+
+	private Store _getStoreInstance() throws Exception {
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		Store store = (Store)InstanceFactory.newInstance(
@@ -186,6 +194,7 @@ public class StoreFactory {
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static Store _store;
+	private static StoreFactory _instance;
 	private static boolean _warned;
 
 	private static final ServiceTrackerMap<String, Store> _serviceTrackerMap =

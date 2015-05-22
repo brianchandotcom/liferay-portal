@@ -90,14 +90,14 @@ public class ConvertDocumentLibraryTest {
 			ClassLoaderUtil.getPortalClassLoader(),
 			FileSystemStore.class.getName());
 
-		StoreFactory.setStoreInstance(_sourceStore);
+		_storeFactory.setStoreInstance(_sourceStore);
 
 		_group = GroupTestUtil.addGroup();
 
 		_convertProcess = (ConvertProcess)InstancePool.get(
 			ConvertDocumentLibrary.class.getName());
 
-		Store dbStore = StoreFactory.getStoreInstance("db");
+		Store dbStore = _storeFactory.getStoreInstance("db");
 
 		_dbStoreClassName = dbStore.getClass().getName();
 
@@ -112,7 +112,7 @@ public class ConvertDocumentLibraryTest {
 		Store store = (Store)InstanceFactory.newInstance(
 			ClassLoaderUtil.getPortalClassLoader(), PropsValues.DL_STORE_IMPL);
 
-		StoreFactory.setStoreInstance(store);
+		_storeFactory.setStoreInstance(store);
 	}
 
 	@Test
@@ -182,7 +182,7 @@ public class ConvertDocumentLibraryTest {
 	public void testStoreUpdatedAfterConversion() throws Exception {
 		_convertProcess.convert();
 
-		Store store = StoreFactory.getStoreInstance();
+		Store store = _storeFactory.getStoreInstance();
 
 		Assert.assertEquals(
 			_dbStoreClassName, store.getClass().getName());
@@ -317,5 +317,8 @@ public class ConvertDocumentLibraryTest {
 	private Group _group;
 
 	private Store _sourceStore;
+
+	private static final StoreFactory _storeFactory =
+		StoreFactory.getInstance();
 
 }

@@ -123,7 +123,7 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				Group liveGroup = group.getLiveGroup();
 
 				if (!liveGroup.isStagedPortlet(
-						PortletKeys.PORTLET_DISPLAY_TEMPLATES)) {
+						PortletKeys.PORTLET_DISPLAY_TEMPLATE)) {
 
 					return liveGroup.getGroupId();
 				}

@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
 		"javax.portlet.init-param.refererWebDAVToken=application_display_template",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view_template.jsp",
-		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES,
+		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE,
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
 	},

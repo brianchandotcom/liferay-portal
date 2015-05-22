@@ -46,13 +46,13 @@ import org.osgi.service.component.annotations.Component;
  * @author Juan Fernández
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES},
+	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE},
 	service = PortletDataHandler.class
 )
 public class PortletDisplayTemplatePortletDataHandler
 	extends BasePortletDataHandler {
 
-	public static final String NAMESPACE = "portlet_display_templates";
+	public static final String NAMESPACE = "portlet_display_template";
 
 	public PortletDisplayTemplatePortletDataHandler() {
 		setExportControls(

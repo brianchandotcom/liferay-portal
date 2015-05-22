@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"action.command.name=deleteTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
-		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES
+		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},
 	service = ActionCommand.class
 )

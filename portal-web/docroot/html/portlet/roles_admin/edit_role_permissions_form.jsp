@@ -115,7 +115,7 @@ if (Validator.isNotNull(portletResource)) {
 		</div>
 	</c:if>
 
-	<c:if test="<%= portletResource.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATES) %>">
+	<c:if test="<%= portletResource.equals(PortletKeys.PORTLET_DISPLAY_TEMPLATE) %>">
 		<h4><liferay-ui:message key="related-application-permissions" /></h4>
 
 		<div>

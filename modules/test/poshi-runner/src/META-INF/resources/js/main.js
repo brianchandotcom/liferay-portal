@@ -120,8 +120,8 @@ YUI.add(
 				renderUI: function() {
 					var instance = this;
 
-					var xmlLog = instance.get(STR_XML_LOG);
 					var sidebar = instance.get(STR_SIDEBAR);
+					var xmlLog = instance.get(STR_XML_LOG);
 
 					xmlLog.toggleClass(STR_RUNNING);
 
@@ -416,8 +416,8 @@ YUI.add(
 							targetNode.removeClass(CSS_COLLAPSE);
 							targetNode.addClass(CSS_TRANSITIONING);
 
-							var lastChildY = lastChild.getY();
 							var lastChildHeight = lastChild.innerHeight();
+							var lastChildY = lastChild.getY();
 
 							var lastChildBottomY = lastChildY + lastChildHeight + 1;
 
@@ -933,8 +933,8 @@ var loggerInterface = YUI().use(
 		var logger = new Y.PoshiLogger(
 			{
 				contentBox: '.poshi-logger',
-				xmlLog: '.xml-log',
-				sidebar: '.sidebar'
+				sidebar: '.sidebar',
+				xmlLog: '.xml-log'
 			}
 		).render();
 

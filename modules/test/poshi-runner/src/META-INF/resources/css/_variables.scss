@@ -6,8 +6,8 @@ $body-font-size: 11px;
 
 $body-bg-color: #EBE7DC;
 
-$xml-log-font: 'Menlo', 'Source Code Pro', 'Lucia Console', 'Monospace';
 $xml-log-default-text-color: #444;
+$xml-log-font: 'Menlo', 'Source Code Pro', 'Lucia Console', 'Monospace';
 
 $child-container-left-border-color: #DDD;
 
@@ -54,8 +54,8 @@ $screenshot-img-border-color: #A19C8C;
 
 $sidebar-bg-color: #A1978B;
 $sidebar-box-shadow-color: transparentize(darken($sidebar-bg-color, 46), 0.8);
-$sidebar-font: 'Futura', 'Trebuchet MS', 'Arial', sans-serif;
 $sidebar-default-text-color: #FFF;
+$sidebar-font: 'Futura', 'Trebuchet MS', 'Arial', sans-serif;
 
 // Command-log
 
@@ -66,15 +66,15 @@ $command-log-divider-text-color: desaturate(darken($sidebar-bg-color, 40), 6);
 
 $scoped-command-bg-color: #FFEB7B;
 $scoped-command-border: 2px solid #AAA;
-$scoped-command-text-color: #555;
 $scoped-command-expand-toggle-color: #444;
+$scoped-command-text-color: #555;
 
 $scoped-command-hover-bg-color: #FFE75F;
 $scoped-command-hover-text-color: #444;
 
 $command-hover-bg-color: #648590;
-$command-hover-text-color: #FFF;
 $command-hover-outline-color: #777;
+$command-hover-text-color: #FFF;
 
 $command-child-container-border-color: #EEE;
 $command-child-container-text-color: $sidebar-default-text-color;

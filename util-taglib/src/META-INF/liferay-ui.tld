@@ -3178,6 +3178,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>returnType</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>searchContainer</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -63,11 +63,17 @@ AUI.add(
 						var rootNode = instance.rootNode;
 
 						instance._eventHandles = [
-							inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance)),
 							rootNode.on('dragover', instance._ddEventHandler, instance),
 							rootNode.on('dragleave', instance._ddEventHandler, instance),
 							rootNode.on('drop', instance._ddEventHandler, instance)
 						];
+
+						if (inputFileNode) {
+							instance._eventHandles.push(
+								inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance))
+							);
+						}
+
 					},
 
 					_ddEventHandler: function(event) {

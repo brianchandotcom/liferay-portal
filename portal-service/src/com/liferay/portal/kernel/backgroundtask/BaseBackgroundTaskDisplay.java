@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
 
@@ -23,33 +25,41 @@ import java.util.Locale;
 /**
  * @author Andrew Betts
  */
-public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
+public abstract class BaseBackgroundTaskDisplay
+	implements BackgroundTaskDisplay {
 
-	public BaseBackgroundTaskDisplay(
-		BackgroundTask backgroundTask, Locale locale) {
-
+	public BaseBackgroundTaskDisplay(BackgroundTask backgroundTask) {
+		_backgroundTask = backgroundTask;
 		_backgroundTaskStatus =
 			BackgroundTaskStatusRegistryUtil.getBackgroundTaskStatus(
 				backgroundTask.getBackgroundTaskId());
-
-		_locale = locale;
-		_percentage = -1;
 	}
 
 	@Override
 	public JSONObject getDetails() {
-		return _details;
+		return getDetails(LocaleUtil.getDefault());
+	}
+
+	@Override
+	public JSONObject getDetails(Locale locale) {
+		JSONObject detailsJSON = createDetails(_backgroundTask);
+
+		return BackgroundTaskDisplayJSONTransformer.translateDetailsJSON(
+			locale, detailsJSON);
 	}
 
 	@Override
 	public String getMessage() {
-		return _message;
+		return getMessage(Locale.getDefault());
 	}
 
 	@Override
-	public int getPercentage() {
-		return _percentage;
+	public String getMessage(Locale locale) {
+		return LanguageUtil.get(locale, createMessageKey());
 	}
+
+	@Override
+	public abstract int getPercentage();
 
 	@Override
 	public boolean hasBackgroundTaskStatus() {
@@ -62,7 +72,7 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 
 	@Override
 	public boolean hasDetails() {
-		if (_details != null) {
+		if (createDetails(_backgroundTask) != null) {
 			return true;
 		}
 
@@ -71,7 +81,7 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 
 	@Override
 	public boolean hasMessage() {
-		if (Validator.isNotNull(_message)) {
+		if (Validator.isNotNull(createMessageKey())) {
 			return true;
 		}
 
@@ -80,37 +90,30 @@ public class BaseBackgroundTaskDisplay implements BackgroundTaskDisplay {
 
 	@Override
 	public boolean hasPercentage() {
-		if (_percentage >= 0) {
+		if (getPercentage() >= 0) {
 			return true;
 		}
 
 		return false;
 	}
 
+	protected abstract JSONObject createDetails(BackgroundTask backgroundTask);
+
+	protected abstract String createMessageKey();
+
+	protected BackgroundTask getBackgroundTask() {
+		return _backgroundTask;
+	}
+
 	protected BackgroundTaskStatus getBackgroundTaskStatus() {
 		return _backgroundTaskStatus;
 	}
 
-	protected Locale getLocale() {
-		return _locale;
-	}
+	protected static final int _MAX_PERCENTAGE = 100;
 
-	protected void setDetails(JSONObject details) {
-		_details = details;
-	}
+	protected static final int _NO_PERCENTAGE = -1;
 
-	protected void setMessage(String message) {
-		_message = message;
-	}
-
-	protected void setPercentage(int percentage) {
-		_percentage = percentage;
-	}
-
+	private final BackgroundTask _backgroundTask;
 	private final BackgroundTaskStatus _backgroundTaskStatus;
-	private JSONObject _details = null;
-	private final Locale _locale;
-	private String _message = null;
-	private int _percentage = -1;
 
 }

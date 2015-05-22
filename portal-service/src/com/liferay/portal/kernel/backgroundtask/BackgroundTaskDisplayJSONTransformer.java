@@ -37,7 +37,7 @@ public class BackgroundTaskDisplayJSONTransformer {
 		detailItems.put(detailItem);
 	}
 
-	public static void addItemsListJSONObject(
+	public static void addListItem(
 		JSONArray itemsList, String info, String errorMessage,
 		String errorStrongMessage) {
 

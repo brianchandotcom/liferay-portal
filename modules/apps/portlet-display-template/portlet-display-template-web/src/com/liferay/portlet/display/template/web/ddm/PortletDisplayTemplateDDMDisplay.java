@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Garcia
  */
 @Component(
-	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATES},
+	property = {"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE},
 	service = DDMDisplay.class
 )
 public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
@@ -74,7 +74,7 @@ public class PortletDisplayTemplateDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.PORTLET_DISPLAY_TEMPLATES;
+		return PortletKeys.PORTLET_DISPLAY_TEMPLATE;
 	}
 
 	@Override

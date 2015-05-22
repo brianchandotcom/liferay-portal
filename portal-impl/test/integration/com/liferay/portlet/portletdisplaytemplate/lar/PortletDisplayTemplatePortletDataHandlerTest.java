@@ -60,7 +60,7 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 	@Override
 	protected PortletDataHandler createPortletDataHandler() {
 		PortletBag portletBag = PortletBagPool.get(
-			PortletKeys.PORTLET_DISPLAY_TEMPLATES);
+			PortletKeys.PORTLET_DISPLAY_TEMPLATE);
 
 		List<PortletDataHandler> portletDataHandlerIsntances =
 			portletBag.getPortletDataHandlerInstances();
@@ -70,7 +70,7 @@ public class PortletDisplayTemplatePortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.PORTLET_DISPLAY_TEMPLATES;
+		return PortletKeys.PORTLET_DISPLAY_TEMPLATE;
 	}
 
 	private final Class<?>[] _DDM_TEMPLATE_CLASSES = {

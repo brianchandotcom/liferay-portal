@@ -38,16 +38,17 @@ public class ExpandoBridgeUtil {
 		ExpandoBridge oldExpandoBridge, ExpandoBridge newExpandoBridge,
 		ServiceContext serviceContext) {
 
-		Map<String, Serializable> newExpandoBridgeAttributes =
+		Map<String, Serializable> expandoBridgeAttributes =
 			oldExpandoBridge.getAttributes(false);
-		Map<String, Serializable> newAttributes =
+
+		Map<String, Serializable> serviceContextAttributes =
 			serviceContext.getExpandoBridgeAttributes();
 
-		for (String key : newAttributes.keySet()) {
-			newExpandoBridgeAttributes.put(key, newAttributes.get(key));
+		for (String key : serviceContextAttributes.keySet()) {
+			expandoBridgeAttributes.put(key, serviceContextAttributes.get(key));
 		}
 
-		newExpandoBridge.setAttributes(newExpandoBridgeAttributes, false);
+		newExpandoBridge.setAttributes(expandoBridgeAttributes, false);
 	}
 
 }

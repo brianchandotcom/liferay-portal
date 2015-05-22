@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class PortletStagingBackgroundTaskExecutor
 				PROCESS_FLAG_PORTLET_STAGING_IN_PROCESS,
 				exportImportConfiguration);
 
-			file = LayoutLocalServiceUtil.exportPortletInfoAsFile(
+			file = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
 				exportImportConfiguration);
 
 			markBackgroundTask(
@@ -129,16 +129,16 @@ public class PortletStagingBackgroundTaskExecutor
 
 		@Override
 		public MissingReferences call() throws PortalException {
-			LayoutLocalServiceUtil.importPortletDataDeletions(
+			ExportImportLocalServiceUtil.importPortletDataDeletions(
 				_exportImportConfiguration, _file);
 
 			MissingReferences missingReferences =
-				LayoutLocalServiceUtil.validateImportPortletInfo(
+				ExportImportLocalServiceUtil.validateImportPortletInfo(
 					_exportImportConfiguration, _file);
 
 			markBackgroundTask(_backgroundTaskId, "validated");
 
-			LayoutLocalServiceUtil.importPortletInfo(
+			ExportImportLocalServiceUtil.importPortletInfo(
 				_exportImportConfiguration, _file);
 
 			return missingReferences;

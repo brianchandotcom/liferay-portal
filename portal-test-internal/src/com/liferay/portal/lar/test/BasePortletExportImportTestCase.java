@@ -38,8 +38,8 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -317,7 +317,7 @@ public abstract class BasePortletExportImportTestCase
 		ExportImportThreadLocal.setPortletStagingInProcess(true);
 
 		try {
-			larFile = LayoutLocalServiceUtil.exportPortletInfoAsFile(
+			larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
 				exportImportConfiguration);
 
 			importedLayout = LayoutTestUtil.addLayout(importedGroup);
@@ -341,10 +341,10 @@ public abstract class BasePortletExportImportTestCase
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			LayoutLocalServiceUtil.importPortletDataDeletions(
+			ExportImportLocalServiceUtil.importPortletDataDeletions(
 				exportImportConfiguration, larFile);
 
-			LayoutLocalServiceUtil.importPortletInfo(
+			ExportImportLocalServiceUtil.importPortletInfo(
 				exportImportConfiguration, larFile);
 		}
 		finally {

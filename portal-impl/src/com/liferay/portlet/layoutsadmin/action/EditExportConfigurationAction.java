@@ -34,7 +34,7 @@ import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.ExportImportConfigurationServiceUtil;
-import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.sites.action.ActionUtil;
@@ -88,7 +88,7 @@ public class EditExportConfigurationAction extends PortletAction {
 				long exportImportConfigurationId = ParamUtil.getLong(
 					actionRequest, "exportImportConfigurationId");
 
-				LayoutServiceUtil.exportLayoutsAsFileInBackground(
+				ExportImportServiceUtil.exportLayoutsAsFileInBackground(
 					exportImportConfigurationId);
 			}
 			else if (cmd.equals(Constants.MOVE_TO_TRASH)) {
@@ -251,7 +251,7 @@ public class EditExportConfigurationAction extends PortletAction {
 		long exportImportConfigurationId = MapUtil.getLong(
 			taskContextMap, "exportImportConfigurationId");
 
-		LayoutServiceUtil.exportLayoutsAsFileInBackground(
+		ExportImportServiceUtil.exportLayoutsAsFileInBackground(
 			exportImportConfigurationId);
 	}
 

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
 
 import java.io.File;
@@ -102,10 +102,10 @@ public class PortletImportBackgroundTaskExecutor
 
 		@Override
 		public Void call() throws PortalException {
-			LayoutLocalServiceUtil.importPortletDataDeletions(
+			ExportImportLocalServiceUtil.importPortletDataDeletions(
 				_exportImportConfiguration, _file);
 
-			LayoutLocalServiceUtil.importPortletInfo(
+			ExportImportLocalServiceUtil.importPortletInfo(
 				_exportImportConfiguration, _file);
 
 			return null;

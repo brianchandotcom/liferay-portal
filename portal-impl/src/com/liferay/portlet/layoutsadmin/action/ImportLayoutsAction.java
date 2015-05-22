@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.struts.PortletAction;
@@ -371,13 +372,30 @@ public class ImportLayoutsAction extends PortletAction {
 			InputStream inputStream)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		boolean privateLayout = ParamUtil.getBoolean(
 			actionRequest, "privateLayout");
 
-		LayoutServiceUtil.importLayoutsInBackground(
-			fileName, groupId, privateLayout, actionRequest.getParameterMap(),
-			inputStream);
+		Map<String, Serializable> settingsMap =
+			ExportImportConfigurationSettingsMapFactory.buildImportSettingsMap(
+				themeDisplay.getUserId(), groupId, privateLayout, null,
+				actionRequest.getParameterMap(), StringPool.BLANK,
+				themeDisplay.getLocale(), themeDisplay.getTimeZone(), fileName);
+
+		ExportImportConfiguration exportImportConfiguration =
+			ExportImportConfigurationLocalServiceUtil.
+				addExportImportConfiguration(
+					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					StringPool.BLANK,
+					ExportImportConfigurationConstants.TYPE_IMPORT_LAYOUT,
+					settingsMap, WorkflowConstants.STATUS_DRAFT,
+					new ServiceContext());
+
+		ExportImportServiceUtil.importLayoutsInBackground(
+			exportImportConfiguration, inputStream);
 	}
 
 	protected void validateFile(
@@ -454,7 +472,7 @@ public class ImportLayoutsAction extends PortletAction {
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		return LayoutServiceUtil.validateImportLayoutsFile(
+		return ExportImportServiceUtil.validateImportLayoutsFile(
 			exportImportConfiguration, inputStream);
 	}
 

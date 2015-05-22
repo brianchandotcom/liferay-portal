@@ -3666,7 +3666,8 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 				settingsMap, WorkflowConstants.STATUS_DRAFT,
 				new ServiceContext());
 
-		layoutLocalService.importLayouts(exportImportConfiguration, larFile);
+		exportImportLocalService.importLayouts(
+			exportImportConfiguration, larFile);
 	}
 
 	protected void addPortletDefaultData(Group group) throws PortalException {

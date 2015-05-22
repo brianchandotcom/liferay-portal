@@ -58,6 +58,7 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -723,10 +724,10 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 
-		LayoutLocalServiceUtil.importLayouts(
+		ExportImportLocalServiceUtil.importLayouts(
 			exportImportConfiguration, larFile);
 	}
 

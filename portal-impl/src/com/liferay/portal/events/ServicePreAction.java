@@ -77,6 +77,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ImageLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -1296,7 +1297,7 @@ public class ServicePreAction extends Action {
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		LayoutLocalServiceUtil.importLayouts(
+		ExportImportLocalServiceUtil.importLayouts(
 			exportImportConfiguration, larFile);
 	}
 

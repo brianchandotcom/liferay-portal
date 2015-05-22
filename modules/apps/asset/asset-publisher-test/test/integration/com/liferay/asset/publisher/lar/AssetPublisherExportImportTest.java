@@ -46,6 +46,7 @@ import com.liferay.portal.model.PortletInstance;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -709,7 +710,7 @@ public class AssetPublisherExportImportTest
 					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);
 
 		// Import site LAR
@@ -730,7 +731,8 @@ public class AssetPublisherExportImportTest
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		LayoutLocalServiceUtil.importLayouts(importConfiguration, larFile);
+		ExportImportLocalServiceUtil.importLayouts(
+			importConfiguration, larFile);
 
 		importedLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
 			layout.getUuid(), importedGroup.getGroupId(),

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 
 import java.io.File;
 import java.io.Serializable;
@@ -65,7 +65,7 @@ public class LayoutExportBackgroundTaskExecutor
 		sb.append(Time.getShortTimestamp());
 		sb.append(".lar");
 
-		File larFile = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(

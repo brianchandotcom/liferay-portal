@@ -71,6 +71,8 @@ import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
+import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -318,7 +320,7 @@ public class SitesImpl implements Sites {
 					exportSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		File file = LayoutLocalServiceUtil.exportLayoutsAsFile(
+		File file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportConfiguration);
 
 		try {
@@ -339,7 +341,8 @@ public class SitesImpl implements Sites {
 						importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			LayoutLocalServiceUtil.importLayouts(importConfiguration, file);
+			ExportImportLocalServiceUtil.importLayouts(
+				importConfiguration, file);
 		}
 		finally {
 			file.delete();
@@ -645,7 +648,7 @@ public class SitesImpl implements Sites {
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		return LayoutLocalServiceUtil.exportLayoutsAsFile(
+		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 	}
 
@@ -910,7 +913,8 @@ public class SitesImpl implements Sites {
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					serviceContext);
 
-		LayoutServiceUtil.importLayouts(exportImportConfiguration, inputStream);
+		ExportImportServiceUtil.importLayouts(
+			exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -1890,7 +1894,7 @@ public class SitesImpl implements Sites {
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
 
-			file = LayoutLocalServiceUtil.exportLayoutsAsFile(
+			file = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 				exportImportConfiguration);
 
 			newFile = true;
@@ -1911,7 +1915,8 @@ public class SitesImpl implements Sites {
 					importSettingsMap, WorkflowConstants.STATUS_DRAFT,
 					new ServiceContext());
 
-		LayoutLocalServiceUtil.importLayouts(exportImportConfiguration, file);
+		ExportImportLocalServiceUtil.importLayouts(
+			exportImportConfiguration, file);
 
 		if (newFile) {
 			try {

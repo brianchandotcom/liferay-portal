@@ -37,6 +37,7 @@ import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
+import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.http.LayoutServiceHttp;
 import com.liferay.portal.service.http.StagingServiceHttp;
@@ -207,7 +208,7 @@ public class LayoutRemoteStagingBackgroundTaskExecutor
 
 		settingsMap.put("layoutIds", layoutIds);
 
-		return LayoutLocalServiceUtil.exportLayoutsAsFile(
+		return ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 	}
 

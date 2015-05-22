@@ -65,6 +65,14 @@
 		<property name="service" ref="com.liferay.portal.service.EmailAddressService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.EmailAddressService" />
 	</bean>
+	<bean name="/com_liferay_portal_service_spring_ExportImportService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portal.service.ExportImportService" />
+		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportService" />
+	</bean>
+	<bean name="/com_liferay_portal_service_spring_ExportImportService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portal.service.ExportImportService" />
+		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportService" />
+	</bean>
 	<bean name="/com_liferay_portal_service_spring_ExportImportConfigurationService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.ExportImportConfigurationService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportConfigurationService" />

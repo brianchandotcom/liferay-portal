@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.service.persistence.test;
+package com.liferay.journal.service.persistence.test;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -34,13 +34,11 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
-
-import com.liferay.portlet.journal.NoSuchFeedException;
-import com.liferay.portlet.journal.model.JournalFeed;
-import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
-import com.liferay.portlet.journal.service.persistence.JournalFeedPersistence;
-import com.liferay.portlet.journal.service.persistence.JournalFeedUtil;
-
+import com.liferay.journal.NoSuchFeedException;
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.service.JournalFeedLocalServiceUtil;
+import com.liferay.journal.service.persistence.JournalFeedPersistence;
+import com.liferay.journal.service.persistence.JournalFeedUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,7 +46,6 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;

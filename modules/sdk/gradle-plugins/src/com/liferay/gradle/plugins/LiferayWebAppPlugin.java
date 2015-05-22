@@ -178,10 +178,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void addTasks(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.addTasks(project, liferayExtension);
+	protected void addTasks(Project project) {
+		super.addTasks(project);
 
 		addTaskDirectDeploy(project);
 	}
@@ -199,19 +197,15 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
-	protected void configureDependencies(
-		Project project, LiferayExtension liferayExtension) {
+	protected void configureDependencies(Project project) {
+		super.configureDependencies(project);
 
-		super.configureDependencies(project, liferayExtension);
-
-		configureDependenciesProvidedCompile(project, liferayExtension);
+		configureDependenciesProvidedCompile(project);
 	}
 
 	@Override
-	protected void configureDependenciesCompile(
-		Project project, LiferayExtension liferayExtension) {
-
-		super.configureDependenciesCompile(project, liferayExtension);
+	protected void configureDependenciesCompile(Project project) {
+		super.configureDependenciesCompile(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -230,9 +224,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 			});
 	}
 
-	protected void configureDependenciesProvidedCompile(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void configureDependenciesProvidedCompile(Project project) {
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
 				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,

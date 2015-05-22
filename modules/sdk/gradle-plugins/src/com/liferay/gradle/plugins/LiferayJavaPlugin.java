@@ -87,18 +87,18 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
-		final LiferayExtension liferayExtension = addLiferayExtension(project);
+		addLiferayExtension(project);
 
 		applyPlugins(project);
 
-		configureConfigurations(project, liferayExtension);
-		configureDependencies(project, liferayExtension);
+		configureConfigurations(project);
+		configureDependencies(project);
 		configureProperties(project);
 		configureRepositories(project);
 		configureSourceSets(project);
 
 		addConfigurations(project);
-		addTasks(project, liferayExtension);
+		addTasks(project);
 
 		applyConfigScripts(project);
 
@@ -112,6 +112,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(Project project) {
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
 					configureVersion(project, liferayExtension);
 
 					configureTasks(project, liferayExtension);
@@ -225,9 +228,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return initGradleTask;
 	}
 
-	protected void addTasks(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void addTasks(Project project) {
 		addTaskBuildCss(project);
 		addTaskDeploy(project);
 		addTaskFormatWSDL(project);
@@ -265,9 +266,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
 	}
 
-	protected void configureConfigurations(
-		Project project, final LiferayExtension liferayExtension) {
-
+	protected void configureConfigurations(final Project project) {
 		Action<Configuration> action = new Action<Configuration>() {
 
 			@Override
@@ -291,6 +290,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 								if (group.equals("com.liferay.portal") &&
 									version.equals("default")) {
 
+									LiferayExtension liferayExtension =
+										GradleUtil.getExtension(
+											project, LiferayExtension.class);
+
 									dependencyResolveDetails.useVersion(
 										liferayExtension.getPortalVersion());
 								}
@@ -307,15 +310,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configurationContainer.all(action);
 	}
 
-	protected void configureDependencies(
-		Project project, LiferayExtension liferayExtension) {
-
-		configureDependenciesCompile(project, liferayExtension);
+	protected void configureDependencies(Project project) {
+		configureDependenciesCompile(project);
 	}
 
-	protected void configureDependenciesCompile(
-		Project project, LiferayExtension liferayExtension) {
-
+	protected void configureDependenciesCompile(Project project) {
 		boolean addDefaultDependencies = getProperty(
 			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
 

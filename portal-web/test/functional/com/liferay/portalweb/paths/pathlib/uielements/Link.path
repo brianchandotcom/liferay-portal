@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>EDIT</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MOVE_TO_THE_RECYCLING_BIN</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Move to the Recycle Bin')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>READ_MORE</td>
 	<td>//a[contains(.,'Read More')]</td>
 	<td></td>
@@ -16,6 +26,11 @@
 <tr>
 	<td>RSS</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'RSS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSIONS</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Permissions')]</td>
 	<td></td>
 </tr>
 <tr>

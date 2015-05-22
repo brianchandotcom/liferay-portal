@@ -19,6 +19,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TITLE_LINK</td>
+	<td>//div[contains(@class,'entry-title')]//h2[contains(.,'${key_entryTitle}')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_GENERIC</td>
+	<td>//div[@class='entry-title']/h2/a</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBTITLE</td>
 	<td>//div[contains(@class,'entry-subtitle')]/p[contains(.,'${key_entrySubtitle}')]</td>
 	<td></td>
@@ -49,8 +59,48 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONTENT_ABSTRACT</td>
+	<td>//div[contains(@class,'entry-body')]/p[contains(.,'${key_entryAbstract}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CONTENT_GENERIC</td>
+	<td>//div[contains(@class,'entry-body')]/p</td>
+	<td></td>
+</tr>
+<tr>
 	<td>READ_MORE</td>
 	<td>//div[contains(@class,'read-more')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>VOCABULARY</td>
+	<td>//span[@class='taglib-asset-categories-summary' and contains(.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CATEGORY</td>
+	<td>//span[@class='taglib-asset-categories-summary']/a[contains(.,'${key_categoryName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FLAG</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//span/a[contains(.,'Flag')]</td>
+	<td>Vocabulary 1</td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_LINK_IMAGE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a/i</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RELATED_ASSETS_TITLE</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'approved') and contains(.,'${key_entryTitle}')]//div/div[contains(@class,'asset-links')]/ul//a[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -96,6 +146,16 @@
 <tr>
 	<td>NEXT_ENTRY_IMAGE</td>
 	<td>//div[contains(@class,'next-entry-content')]//span[contains(@class,'small-image')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DRAFT_ENTRY_STATUS</td>
+	<td>//div[contains(@class,'entry') and contains(@class,'draft')]/div/h3</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WORKFLOW_STATUS</td>
+	<td>//h3[contains(.,'Pending Approval')]</td>
 	<td></td>
 </tr>
 </tbody>

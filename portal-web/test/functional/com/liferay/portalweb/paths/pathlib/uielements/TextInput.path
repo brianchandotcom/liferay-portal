@@ -39,6 +39,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_DATE_HOUR</td>
+	<td>//input[@id='_33_displayDateHour']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_MINUTE</td>
+	<td>//input[@id='_33_displayDateMinute']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DISPLAY_DATE_MERIDIAN</td>
+	<td>//input[@id='_33_displayDateAmPm']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_DATE_TIME</td>
 	<td>//input[contains(@id,'displayDateTime')]</td>
 	<td></td>
@@ -71,6 +86,11 @@
 <tr>
 	<td>FOLDER_NAME</td>
 	<td>//input[contains(@id,'folderName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE</td>
+	<td>//input[contains(@id,'file') and @type='file']</td>
 	<td></td>
 </tr>
 <tr>

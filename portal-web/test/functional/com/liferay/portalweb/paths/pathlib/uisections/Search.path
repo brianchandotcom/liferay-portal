@@ -49,6 +49,22 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--SEARCH_RESULTS-->
+<tr>
+	<td>SEARCH_RESULTS_ENTRY_TITLE</td>
+	<td>//a[@class='entry-link']/div/span[@class='entry-title' and contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEARCH_RESULTS_ENTRY_DESCRIPTION</td>
+	<td>//a[@class='entry-link']/div/span[@class='entry-description' and contains(.,'${key_entryContent}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ADVANCED_SEARCH-->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>

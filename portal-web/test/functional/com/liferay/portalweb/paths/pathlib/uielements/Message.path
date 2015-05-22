@@ -124,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SAVE_STATUS</td>
+	<td>//div[contains(@class,'alert') and contains(@class,'alert-success') and contains(@class,'save-status')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATUS</td>
 	<td>//span[contains(@class,'workflow-status')]/strong</td>
 	<td></td>

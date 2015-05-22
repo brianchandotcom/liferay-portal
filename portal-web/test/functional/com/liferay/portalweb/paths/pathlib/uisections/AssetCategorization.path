@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CATEGORIZATION_FILTER_TITLE</td>
+	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_vocabularyName}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CATEGORIES_SEARCH_FIELD</td>
 	<td>//input[contains(@class,'tag-selector-input')]</td>
 	<td></td>
@@ -76,6 +81,11 @@
 <tr>
 	<td>TAG</td>
 	<td>//div[contains(@class,'lfr-tags-selector-content')]//span[contains(.,'${key_tagName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TAG_FILTER_TITLE</td>
+	<td>//h2[contains(@class,'taglib-categorization-filter') and contains (.,'${key_tagName}')]</td>
 	<td></td>
 </tr>
 <tr>

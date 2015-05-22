@@ -1,0 +1,175 @@
+<definition>
+	<command name="gotoContentTab">
+		<execute function="AssertClick" locator1="BlogsEditEntry#CONTENT_TAB" value1="Content" />
+	</command>
+
+	<command name="gotoDraftCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Draft" />
+
+		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoDraftEditPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+
+		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+	</command>
+
+	<command name="gotoEditCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute function="Click" locator1="Blogs#ENTRY_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#EDIT" value1="Edit" />
+	</command>
+
+	<command name="gotoEditPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+
+		<execute function="AssertClick" locator1="Link#EDIT" value1="Edit" />
+	</command>
+
+	<command name="gotoEntryCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute function="AssertClick" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoEntryPG">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoEntryTitleSpecialCharacter">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE_GENERIC" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT_GENERIC" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="BlogsEntry#TITLE_GENERIC" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<if>
+			<isset var="blogEntryURL" />
+			<then>
+				<var method="selenium#getLocation()" name="currentURL" />
+
+				<execute macro="TestUtils#assertEquals">
+					<var name="actual" value="${currentURL}" />
+					<var name="expected" value="${blogEntryURL}" />
+				</execute>
+			</then>
+			<else>
+				<execute function="Click" locator1="BlogsEntry#TITLE_LINK" value1="${entryTitle}" />
+			</else>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+	</command>
+
+	<command name="gotoSettingsTab">
+		<execute function="AssertClick" locator1="BlogsEditEntry#SETTINGS_TAB" value1="Settings" />
+	</command>
+
+	<command name="moveToRecycleBinCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+
+		<execute function="Click" locator1="Blogs#ENTRY_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+	</command>
+
+	<command name="moveToRecycleBinDraftCP">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_STATUS" value1="Draft" />
+
+		<execute function="Click" locator1="Blogs#ENTRY_TABLE_ACTIONS" />
+
+		<execute function="AssertClick" locator1="MenuItem#MOVE_TO_THE_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+	</command>
+
+	<command name="moveToRecycleBinPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="Link#MOVE_TO_THE_RECYCLING_BIN" value1="Move to the Recycle Bin" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_SUCCESS" value1="The ${assetType} ${entryTitle} was moved to the Recycle Bin. Undo" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#TITLE" />
+		<execute function="AssertElementNotPresent" locator1="BlogsEntry#CONTENT" />
+	</command>
+
+	<command name="viewEditLinkPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<execute function="AssertElementPresent" locator1="Link#EDIT" />
+	</command>
+
+	<command name="viewNextEntryNavigation">
+		<execute function="AssertTextEquals" locator1="BlogsEntry#PREVIOUS_ENTRY_TITLE" value1="${nextEntryTitle}" />
+
+		<if>
+			<isset var="nextEntrySubtitle" />
+			<then>
+				<execute function="AssertTextEquals" locator1="BlogsEntry#NEXT_ENTRY_SUBTITLE" value1="${nextEntrySubtitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="nextEntryAuthor" />
+			<then>
+				<execute function="AssertTextEquals" locator1="BlogsEntry#NEXT_ENTRY_AUTHOR" value1="${nextEntryAuthor}" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewPreviousEntryNavigation">
+		<execute function="AssertTextEquals" locator1="BlogsEntry#NEXT_ENTRY_TITLE" value1="${previousEntryTitle}" />
+
+		<if>
+			<isset var="previousEntrySubtitle" />
+			<then>
+				<execute function="AssertTextEquals" locator1="BlogsEntry#PREVIOUS_ENTRY_SUBTITLE" value1="${previousEntrySubtitle}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="previousEntryAuthor" />
+			<then>
+				<execute function="AssertTextEquals" locator1="BlogsEntry#PREVIOUS_ENTRY_AUTHOR" value1="${previousEntryAuthor}" />
+			</then>
+		</if>
+	</command>
+</definition>

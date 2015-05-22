@@ -1,0 +1,343 @@
+<definition>
+	<command name="addDraft">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#saveAsDraft" />
+	</command>
+
+	<command name="addDraftViaAutoSave">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#autoSaveDraft" />
+	</command>
+
+	<command name="addEntry">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addScheduled">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettingsTab" />
+
+		<execute macro="BlogsEntry#scheduleBlogEntry" />
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addViaAP">
+		<if>
+			<isset var="siteScope" />
+			<then>
+				<var name="key_siteScope" value="${siteScope}" />
+
+				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN_IN_SCOPED_SITE" value1="Add New in ${siteScope}" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN" value1="Add New" />
+			</else>
+		</if>
+
+		<if>
+			<condition function="IsVisible" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BLOGS_ENTRY" />
+			<then>
+				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+			</then>
+			<else>
+				<execute function="AssertClick" locator1="PGAssetpublisher#ADD_BLOGS_ENTRY_BUTTON" value1="Add Blogs Entry" />
+			</else>
+		</if>
+
+		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
+
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="Button#PUBLISH" value1="Publish" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<var name="key_assetTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="PGAssetpublisher#ASSET_ABSTRACT_TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="${entryContent}" />
+	</command>
+
+	<command name="addWithCategory">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettingsTab" />
+
+		<execute macro="BlogsEntry#addCategory">
+			<var name="categoryName" value="${categoryName}" />
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addWithCustomAbstract">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettingsTab" />
+
+		<if>
+			<isset var="entryAbstractDescription" />
+			<then>
+				<execute macro="BlogsEntry#addCustomAbstract">
+					<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="dmDocumentFile" />
+			<then>
+				<execute macro="BlogsEntry#addAbstractImage">
+					<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+					<var name="dmDocumentFile" value="${dmDocumentFile}" />
+					<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addWithInvalidContent">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryInvalidContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publishWithInvalidContent" />
+	</command>
+
+	<command name="addWithInvalidTitle">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryInvalidTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publishWithInvalidTitle" />
+	</command>
+
+	<command name="addWithInvalidTitleLength">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryInvalidTitleLength}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publishWithInvalidTitleLength" >
+			<var name="entryValidTitleLength" value="${entryValidTitleLength}" />
+		</execute>
+	</command>
+
+	<command name="addWithTag">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoSettingsTab" />
+
+		<if>
+			<isset var="tagName" />
+			<then>
+				<execute macro="BlogsEntry#addTag">
+					<var name="tagName" value="${tagName}" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<isset var="tagNameList" />
+			<then>
+				<execute macro="BlogsEntry#addTagList">
+					<var name="tagNameList" value="${tagNameList}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="addWithWorkflow">
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publishWithWorkflow" />
+	</command>
+
+	<command name="addWithWorkflowViaAP">
+		<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_DROPDOWN" value1="Add New" />
+
+		<execute function="AssertClick" locator1="PGAssetpublisher#ADD_NEW_MENULIST_BLOGS_ENTRY" value1="Blogs Entry" />
+
+		<execute function="SelectFrame" locator1="PGAssetpublisherAddnewblogsentry#BLOGS_ENTRY_IFRAME" />
+
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
+
+		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="editEntryContentCP">
+		<execute macro="BlogsNavigator#gotoEditCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entrySubtitleEdit" value="${entrySubtitleEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="editEntryPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editEntryContent">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContentEdit" value="${entryContentEdit}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entrySubtitleEdit" value="${entrySubtitleEdit}" />
+			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitleEdit" value="${entryTitleEdit}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="publishDraftCP">
+		<execute macro="BlogsNavigator#gotoDraftCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#gotoEditPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
+	</command>
+
+	<command name="tearDownCP">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent#isVisible" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
+			<then>
+				<execute function="Click" locator1="Blogs#ENTRY_TABLE_ALL_CHECKBOX" />
+
+				<execute function="AssertClick" locator1="Button#MOVE_TO_RECYCLE_BIN" value1="Move to the Recycle Bin" />
+
+				<execute function="AssertTextEquals#assertPartialText" locator1="Message#SUCCESS" value1="moved to the Recycle Bin. Undo" />
+			</then>
+		</if>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="viewDetailsPG">
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute macro="BlogsEntry#gotoPG">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntryAuthorPG">
+			<var name="entryAuthorFullName" value="${entryAuthorFullName}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+</definition>

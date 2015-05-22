@@ -38,6 +38,26 @@
 		</if>
 	</command>
 
+	<command name="viewEntryAsGuestViaBlogsAggregatorPG">
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="BlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewEntryViaBlogsAggregatorPG">
+		<execute function="AssertTextEquals" locator1="BlogsAggregator#ENTRY_ABSTRACT_DESCRIPTION" value1="${entryAbstractDescription}" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="BlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
+
+		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+	</command>
+
+	<command name="viewNoEntryViaBlogsAggregatorPG">
+		<execute function="AssertElementPresent" locator1="Blogs#AGGREGATOR_NO_ENTRY_MESSAGE" value1="There are no blogs." />
+	</command>
+
 	<command name="viewParentOrganizationPG">
 		<execute macro="Portlet#gotoPortletOptions">
 			<var name="portletOption" value="Configuration" />

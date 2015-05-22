@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>ReportContent</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ReportContent</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>HEADER</td>
+	<td>//h3[contains(.,'Report')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING</td>
+	<td>//p[contains(.,'You are about to report a violation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WARNING_TERMS_OF_USE_LINK</td>
+	<td>//a[@href='/c/portal/terms_of_use']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REASON_SELECT</td>
+	<td>//div[contains(.,'Reason for the Report')]/select[@id='_142_reason']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SUCCESS_MESSAGE</td>
+	<td>//div[contains(.,'Thank you for your report')]/p[2]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

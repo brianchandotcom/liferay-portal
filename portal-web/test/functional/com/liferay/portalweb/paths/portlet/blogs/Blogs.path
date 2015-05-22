@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AGGREGATOR_NO_ENTRY_MESSAGE</td>
+	<td>//div[contains(@class,'portlet-body') and contains(.,'There are no blogs.')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -52,6 +57,58 @@
 <tr>
 	<td>ENTRY_TABLE_ACTIONS</td>
 	<td>//tr[contains(.,'${key_entryTitle}')]/td/div/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RSS_FEED-->
+<tr>
+	<td>RSS_FEED_TITLE</td>
+	<td>//*[@id='feedTitleText']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_FEED_SUBTITLE</td>
+	<td>//*[@id='feedSubtitleText']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_ENTRY_TITLE</td>
+	<td>//*[@class='entry']/*/*</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RSS_ENTRY_CONTENT</td>
+	<td>//*[@class='feedEntryContent']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RECENT_BLOGGER-->
+<tr>
+	<td>RECENT_BLOGGER_USER_NAME</td>
+	<td>//span[@class='user-name']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGGER_POSTS</td>
+	<td>//div[@class='blogger-post-count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGGER_STARS</td>
+	<td>//div[@class='blogger-stars']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RECENT_BLOGGER_DATE</td>
+	<td>//div[@class='blogger-date']</td>
 	<td></td>
 </tr>
 </tbody>

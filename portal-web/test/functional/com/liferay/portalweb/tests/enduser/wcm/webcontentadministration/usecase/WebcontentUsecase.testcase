@@ -1008,12 +1008,10 @@
 			<var name="webContentTitle" value="WC Content Title" />
 		</execute>
 
-		<for list="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" param="categoryName">
-			<execute macro="WebContent#viewCategorizationCategoryCP">
-				<var name="categoryName" value="${categoryName}" />
-				<var name="webContentTitle" value="WC Content Title" />
-			</execute>
-		</for>
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />

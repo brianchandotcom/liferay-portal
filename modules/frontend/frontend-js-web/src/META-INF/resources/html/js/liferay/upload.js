@@ -29,13 +29,13 @@ AUI.add(
 							'<span class="progress" id="{id}progress"></span>',
 						'</span>',
 
-						'<a class="lfr-button cancel-button" href="javascript:;" id="{id}cancelButton">{[ this.strings.cancelFileText ]}</a>',
-						'<a class="lfr-button delete-button" href="javascript:;" id="{id}deleteButton">{[ this.strings.deleteFileText ]}</a>',
+						'<a class="cancel-button lfr-button" href="javascript:;" id="{id}cancelButton">{[ this.strings.cancelFileText ]}</a>',
+						'<a class="delete-button lfr-button" href="javascript:;" id="{id}deleteButton">{[ this.strings.deleteFileText ]}</a>',
 					'</li>',
 				'</tpl>',
 
 				'<tpl if="values.error && this.multipleFiles">',
-					'<li class="upload-file upload-error" data-fileId="{id}" id="{id}">',
+					'<li class="upload-error upload-file" data-fileId="{id}" id="{id}">',
 						'<span class="file-title" title="{[ LString.escapeHTML(values.name) ]}">{[ LString.escapeHTML(values.name) ]}</span>',
 
 						'<span class="error-message" title="{[ LString.escapeHTML(values.error) ]}">{[ LString.escapeHTML(values.error) ]}</span>',
@@ -109,9 +109,9 @@ AUI.add(
 				'<h4>{[ this.strings.uploadsCompleteText ]}</h4>',
 			'</div>',
 
-			'<div class="pending-files-info alert alert-warning hide">{[ this.strings.pendingFileText ]}</div>',
+			'<div class="alert alert-warning hide pending-files-info">{[ this.strings.pendingFileText ]}</div>',
 
-			'<div class="hide float-container manage-upload-target" id="{$ns}manageUploadTarget">',
+			'<div class="float-container hide manage-upload-target" id="{$ns}manageUploadTarget">',
 				'<tpl if="multipleFiles">',
 					'<span class="field field-choice select-files">',
 						'<span class="field-content">',
@@ -122,8 +122,8 @@ AUI.add(
 					'</span>',
 				'</tpl>',
 
-				'<a href="javascript:;" class="lfr-button cancel-uploads hide">{[ this.cancelUploadsText ]}</a>',
-				'<a href="javascript:;" class="lfr-button clear-uploads hide">{[ this.strings.clearRecentUploadsText ]}</a>',
+				'<a class="cancel-uploads hide lfr-button" href="javascript:;">{[ this.cancelUploadsText ]}</a>',
+				'<a class="clear-uploads hide lfr-button" href="javascript:;">{[ this.strings.clearRecentUploadsText ]}</a>',
 			'</div>',
 
 			'<div class="upload-list" id="{$ns}fileList">',
@@ -247,7 +247,7 @@ AUI.add(
 
 						var useFallback = location.hash.indexOf(STR_PARAM_FALLBACK) > -1 && fallback;
 
-						if (useFallback || UPLOADER_TYPE == 'none' || (UPLOADER_TYPE == 'flash' && !A.SWFDetect.isFlashVersionAtLeast(10, 1))) {
+						if (useFallback || UPLOADER_TYPE == 'none' || UPLOADER_TYPE == 'flash' && !A.SWFDetect.isFlashVersionAtLeast(10, 1)) {
 							if (fallback) {
 								fallback.show();
 							}

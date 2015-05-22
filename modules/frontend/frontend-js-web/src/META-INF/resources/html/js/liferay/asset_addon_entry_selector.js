@@ -29,8 +29,8 @@ AUI.add(
 					'<div class="toggle-card-container">' +
 						'<div class="toggle-card-cell">' +
 							'<div class="toggle-card-icon">' +
-								'<span class="toggle-card-off icon-{icon}"></span>' +
-								'<span class="toggle-card-on icon-ok"></span>' +
+								'<span class="icon-{icon} toggle-card-off"></span>' +
+								'<span class="icon-ok toggle-card-on"></span>' +
 							'</div>' +
 							'<div class="toggle-card-label">' +
 								'<span>{label}</span>' +
@@ -41,7 +41,7 @@ AUI.add(
 			'</li>';
 
 		var TPL_SUMMARY_ASSET_ADDON_ENTRY = '<li class="list-entry" data-key="{key}" data-label="{label}">' +
-				'<span class="label label-entry label-circle">' +
+				'<span class="label label-circle label-entry">' +
 					'{label}' +
 					'<button class="remove-button" type="button">' +
 						'<i class="icon-remove"></i>' +

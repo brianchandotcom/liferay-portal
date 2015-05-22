@@ -108,7 +108,7 @@ public class StoreFactory {
 		_warned = true;
 	}
 
-	public static Store getInstance() {
+	public static Store getStoreInstance() {
 		if (_store == null) {
 			checkProperties();
 
@@ -117,7 +117,7 @@ public class StoreFactory {
 			}
 
 			try {
-				_store = _getInstance();
+				_store = _getStoreInstance();
 			}
 			catch (Exception e) {
 				_log.error(e, e);
@@ -133,11 +133,11 @@ public class StoreFactory {
 		return _store;
 	}
 
-	public static Store getInstance(String key) {
+	public static Store getStoreInstance(String key) {
 		return _serviceTrackerMap.getService(key);
 	}
 
-	public static void setInstance(Store store) {
+	public static void setStoreInstance(Store store) {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Set " + ClassUtil.getClassName(store));
 		}
@@ -145,7 +145,7 @@ public class StoreFactory {
 		_store = store;
 	}
 
-	private static Store _getInstance() throws Exception {
+	private static Store _getStoreInstance() throws Exception {
 		ClassLoader classLoader = ClassLoaderUtil.getPortalClassLoader();
 
 		Store store = (Store)InstanceFactory.newInstance(

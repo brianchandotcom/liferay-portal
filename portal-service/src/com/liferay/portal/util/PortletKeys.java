@@ -135,7 +135,7 @@ public class PortletKeys {
 
 	public static final String PORTLET_CONFIGURATION = "86";
 
-	public static final String PORTLET_DISPLAY_TEMPLATES =
+	public static final String PORTLET_DISPLAY_TEMPLATE =
 		"com_liferay_dynamic_data_mapping_web_portlet_" +
 			"PortletDisplayTemplatePortlet";
 

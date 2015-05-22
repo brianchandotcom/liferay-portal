@@ -22,7 +22,7 @@
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.taglib.ui.ItemSelectorBrowserTag" %><%@
+page import="com.liferay.taglib.ui.ItemSelectorBrowserTag.ReturnType" %><%@
 page import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorCriterion" %><%@
 page import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorView" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@

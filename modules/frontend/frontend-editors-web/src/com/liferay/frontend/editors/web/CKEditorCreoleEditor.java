@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(service = Editor.class)
+@Component
 public class CKEditorCreoleEditor implements Editor {
 
 	@Override

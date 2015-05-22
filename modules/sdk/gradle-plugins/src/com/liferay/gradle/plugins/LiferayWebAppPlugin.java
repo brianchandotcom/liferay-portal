@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -60,6 +61,7 @@ import org.gradle.api.plugins.WarPluginConvention;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
@@ -164,7 +166,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	protected DirectDeployTask addTaskDirectDeploy(Project project) {
-		DirectDeployTask directDeployTask = GradleUtil.addTask(
+		final DirectDeployTask directDeployTask = GradleUtil.addTask(
 			project, DIRECT_DEPLOY_TASK_NAME, DirectDeployTask.class);
 
 		directDeployTask.dependsOn(WarPlugin.WAR_TASK_NAME);
@@ -173,6 +175,18 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 			"Assembles the project into a WAR file and directly deploys it " +
 				"to Liferay, skipping the auto deploy directory.");
 		directDeployTask.setGroup(WarPlugin.WEB_APP_GROUP);
+
+		TaskInputs taskInputs = directDeployTask.getInputs();
+
+		taskInputs.dir(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					return directDeployTask.getWebAppFile();
+				}
+
+			});
 
 		return directDeployTask;
 	}

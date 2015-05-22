@@ -334,6 +334,8 @@
 			</then>
 		</if>
 
+		<stopwatch name="module.deploy.time" />
+
 		<ant-execute
 			ant.dir="${project.dir}/modules/core/registry-api"
 			ant.target="deploy"
@@ -343,6 +345,8 @@
 			ant.dir="${project.dir}/modules"
 			ant.target="deploy"
 		/>
+
+		<stopwatch name="module.deploy.time" action="elapsed" />
 
 		<if>
 			<and>

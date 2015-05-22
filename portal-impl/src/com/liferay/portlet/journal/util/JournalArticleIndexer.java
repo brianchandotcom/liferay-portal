@@ -314,13 +314,17 @@ public class JournalArticleIndexer extends BaseIndexer {
 
 		long classPK = article.getId();
 
-		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS &&
-			(JournalArticleLocalServiceUtil.getArticlesCount(
-				article.getGroupId(), article.getArticleId()) > 0)) {
+		if (!PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS) {
+			if (JournalArticleLocalServiceUtil.getArticlesCount(
+					article.getGroupId(), article.getArticleId()) > 0) {
 
-			doReindex(obj);
+				doReindex(obj);
 
-			return;
+				return;
+			}
+			else {
+				classPK = article.getResourcePrimKey();
+			}
 		}
 
 		deleteDocument(article.getCompanyId(), classPK);

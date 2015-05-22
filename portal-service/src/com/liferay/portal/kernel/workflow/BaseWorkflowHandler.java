@@ -173,13 +173,13 @@ public abstract class BaseWorkflowHandler<T> implements WorkflowHandler<T> {
 
 		try {
 			LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
-				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASKS,
+				serviceContext.getRequest(), PortletKeys.MY_WORKFLOW_TASK,
 				PortalUtil.getControlPanelPlid(serviceContext.getCompanyId()),
 				PortletRequest.RENDER_PHASE);
 
 			liferayPortletURL.setControlPanelCategory("my");
 			liferayPortletURL.setParameter(
-				"struts_action", "/my_workflow_tasks/edit_workflow_task");
+				"mvcPath", "/edit_workflow_task.jsp");
 			liferayPortletURL.setParameter(
 				"workflowTaskId", String.valueOf(workflowTaskId));
 			liferayPortletURL.setWindowState(WindowState.MAXIMIZED);

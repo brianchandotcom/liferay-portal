@@ -36,7 +36,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 			String message = workflowTaskDisplayContext.getTransitionMessage(transitionName);
 		%>
 
-			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="editURL">
+			<liferay-portlet:actionURL name="completeWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="editURL">
 				<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -65,7 +65,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() && !workflowTaskDisplayContext.isAssignedToUser(workflowTask) %>">
-		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignToMeURL">
+		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="assignToMeURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -85,7 +85,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 	</c:if>
 
 	<c:if test="<%= workflowTaskDisplayContext.hasOtherAssignees(workflowTask) %>">
-		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="assignURL">
+		<liferay-portlet:actionURL name="assignWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="assignURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="closeRedirect" value="<%= closeRedirect %>" />
@@ -104,7 +104,7 @@ WorkflowTask workflowTask = workflowTaskDisplayContext.getWorkflowTask();
 	</c:if>
 
 	<c:if test="<%= !workflowTask.isCompleted() %>">
-		<liferay-portlet:actionURL name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASKS %>" var="updateDueDateURL">
+		<liferay-portlet:actionURL name="updateWorkflowTask" portletName="<%= PortletKeys.MY_WORKFLOW_TASK %>" var="updateDueDateURL">
 			<portlet:param name="mvcPath" value="/edit_workflow_task.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="workflowTaskId" value="<%= StringUtil.valueOf(workflowTask.getWorkflowTaskId()) %>" />

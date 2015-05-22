@@ -39,11 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PanelApp.class
 )
-public class MyWorkflowTasksPanelApp extends BaseControlPanelEntryPanelApp {
+public class MyWorkflowTaskPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getKey() {
-		return MyWorkflowTasksPanelApp.class.getName();
+		return MyWorkflowTaskPanelApp.class.getName();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class MyWorkflowTasksPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_WORKFLOW_TASKS;
+		return PortletKeys.MY_WORKFLOW_TASK;
 	}
 
 	@Override

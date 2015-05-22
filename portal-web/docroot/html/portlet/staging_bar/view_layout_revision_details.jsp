@@ -132,9 +132,9 @@ else {
 			<%
 			long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-			PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASKS, PortletRequest.RENDER_PHASE);
+			PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(controlPanelPlid, PortletKeys.MY_WORKFLOW_TASK, PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter("struts_action", "/my_workflow_tasks/edit_workflow_task");
+			portletURL.setParameter("mvcPath", "/edit_workflow_task.jsp");
 
 			WorkflowTask workflowTask = StagingUtil.getWorkflowTask(user.getUserId(), layoutRevision);
 

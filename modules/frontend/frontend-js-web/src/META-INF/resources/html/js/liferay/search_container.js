@@ -248,7 +248,7 @@ AUI.add(
 						}
 
 						if (id) {
-							var index = A.Array.indexOf(instance._ids, id.toString());
+							var index = instance._ids.indexOf(id.toString());
 
 							if (index > -1) {
 								instance._ids.splice(index, 1);

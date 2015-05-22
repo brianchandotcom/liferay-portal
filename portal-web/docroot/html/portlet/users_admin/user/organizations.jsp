@@ -152,7 +152,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "organi
 					function(item, index, collection) {
 						var organizationId = item.attr('data-organizationid');
 
-						if (AArray.indexOf(deleteOrganizationIds, organizationId) != -1) {
+						if (deleteOrganizationIds.indexOf(organizationId) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

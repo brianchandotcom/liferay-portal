@@ -186,7 +186,7 @@ AUI.add(
 
 						var siblings = instance.getSiblings();
 
-						var index = AArray.indexOf(siblings, instance);
+						var index = siblings.indexOf(instance);
 
 						siblings.splice(index, 1);
 
@@ -240,7 +240,7 @@ AUI.add(
 
 						var siblings = instance.getSiblings();
 
-						var index = AArray.indexOf(siblings, instance);
+						var index = siblings.indexOf(instance);
 
 						var form = instance.get('form');
 

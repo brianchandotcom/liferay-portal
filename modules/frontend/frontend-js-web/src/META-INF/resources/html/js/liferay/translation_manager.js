@@ -229,7 +229,7 @@ AUI.add(
 
 						var availableLocales = instance.get('availableLocales');
 
-						if (AArray.indexOf(availableLocales, locale) === -1) {
+						if (availableLocales.indexOf(locale) === -1) {
 							availableLocales.push(locale);
 
 							instance.set('availableLocales', availableLocales);

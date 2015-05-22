@@ -108,7 +108,7 @@ AUI.add(
 
 						var editingLocale = event.newVal;
 
-						var selectedIndex = AArray.indexOf(items, editingLocale);
+						var selectedIndex = items.indexOf(editingLocale);
 
 						descriptionInputLocalized.set('selected', selectedIndex);
 						descriptionInputLocalized.selectFlag(editingLocale);

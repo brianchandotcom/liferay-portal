@@ -657,7 +657,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 					function(item, index, collection) {
 						var roleId = item.attr('data-roleid');
 
-						if (A.Array.indexOf(<portlet:namespace />deleteRoleIds, roleId) != -1) {
+						if (<portlet:namespace />deleteRoleIds.indexOf(roleId) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

@@ -84,7 +84,7 @@ AUI.add(
 						if (dataTransfer && dataTransfer.types) {
 							var dataTransferTypes = dataTransfer.types || [];
 
-							if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
+							if (dataTransferTypes.indexOf('Files') > -1 && dataTransferTypes.indexOf('text/html') === -1) {
 								event.halt();
 
 								var type = event.type;

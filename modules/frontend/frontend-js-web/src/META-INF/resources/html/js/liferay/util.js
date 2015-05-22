@@ -1416,7 +1416,7 @@
 						function(item, index) {
 							var assetEntryId = item.attr('data-assetentryid');
 
-							var assetEntryIndex = A.Array.indexOf(selectedData, assetEntryId);
+							var assetEntryIndex = selectedData.indexOf(assetEntryId);
 
 							if (assetEntryIndex > -1) {
 								item.attr('disabled', true);

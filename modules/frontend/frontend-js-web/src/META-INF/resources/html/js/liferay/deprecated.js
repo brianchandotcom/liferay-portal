@@ -318,7 +318,7 @@
 			if (nextSemicolonIndex >= 0) {
 				var entity = string.substring(offset, nextSemicolonIndex + 1);
 
-				if (AArray.indexOf(entitiesValues, entity) >= 0) {
+				if (entitiesValues.indexOf(entity) >= 0) {
 					result = match;
 				}
 			}

@@ -380,7 +380,7 @@ AUI.add(
 
 						var customControls = {};
 
-						if (AArray.indexOf(controls, Base.CONTROLS.HOME) !== -1) {
+						if (controls.indexOf(Base.CONTROLS.HOME) !== -1) {
 							var homeControl = A.Node.create(TPL_HOME_BUTTON);
 
 							customControls[Base.CONTROLS.HOME] = homeControl;
@@ -388,7 +388,7 @@ AUI.add(
 							instance.addControl(homeControl, Base.POSITION.RIGHT_BOTTOM);
 						}
 
-						if (AArray.indexOf(controls, Base.CONTROLS.SEARCH) !== -1) {
+						if (controls.indexOf(Base.CONTROLS.SEARCH) !== -1) {
 							var SearchImpl = instance.SearchImpl;
 
 							if (SearchImpl) {
@@ -423,7 +423,7 @@ AUI.add(
 						A.Object.each(
 							instance.CONTROLS_CONFIG_MAP,
 							function(item, index) {
-								var controlIndex = AArray.indexOf(availableControls, index);
+								var controlIndex = availableControls.indexOf(index);
 
 								if (controlIndex > -1) {
 									var controlConfig = controls[controlIndex];

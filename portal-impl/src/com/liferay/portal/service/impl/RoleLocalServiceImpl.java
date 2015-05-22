@@ -1458,7 +1458,7 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 	protected String[] getDefaultControlPanelPortlets() {
 		return new String[] {
 			PortletKeys.MY_ACCOUNT, PortletKeys.MY_PAGES,
-			PortletKeys.MY_WORKFLOW_INSTANCE, PortletKeys.MY_WORKFLOW_TASKS
+			PortletKeys.MY_WORKFLOW_INSTANCE, PortletKeys.MY_WORKFLOW_TASK
 		};
 	}
 

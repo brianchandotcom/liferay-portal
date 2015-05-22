@@ -265,10 +265,10 @@ public class ExportImportAction extends ImportLayoutsAction {
 			Portlet portlet)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		try {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
 			long plid = ParamUtil.getLong(actionRequest, "plid");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String fileName = ParamUtil.getString(

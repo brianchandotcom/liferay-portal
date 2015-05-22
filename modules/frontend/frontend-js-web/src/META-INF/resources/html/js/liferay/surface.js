@@ -53,7 +53,7 @@ AUI.add(
 				var instance = this;
 
 				if (!themeDisplay.isControlPanel()) {
-					var friendlyURLMaximized = (url.indexOf('/maximized') > -1);
+					var friendlyURLMaximized = url.indexOf('/maximized') > -1;
 
 					if (themeDisplay.isStateMaximized() && !friendlyURLMaximized) {
 						return null;
@@ -106,8 +106,8 @@ AUI.add(
 			getRedirect: function(portletURL) {
 				var instance = this;
 
-				var url = new A.Url(portletURL);
 				var namespace = instance.getNamespace(portletURL);
+				var url = new A.Url(portletURL);
 
 				return url.getParameter(namespace + 'redirect');
 			},
@@ -115,8 +115,7 @@ AUI.add(
 			getRouteablePortletIds: function() {
 				var instance = this;
 
-				return AArray.filter(
-					Liferay.Portlet.list,
+				return Liferay.Portlet.list.filter(
 					function(portletId) {
 						return instance.isPortletRouteable(portletId);
 					}
@@ -136,8 +135,7 @@ AUI.add(
 			getSurfacePortletIds: function() {
 				var instance = this;
 
-				return AArray.filter(
-					Liferay.Portlet.list,
+				return Liferay.Portlet.list.filter(
 					function(portletId) {
 						return instance.isPortletSurface(portletId);
 					}

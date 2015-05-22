@@ -52,6 +52,7 @@ import net.sf.ehcache.config.CacheConfiguration.CacheEventListenerFactoryConfigu
 import net.sf.ehcache.config.Configuration;
 import net.sf.ehcache.config.ConfigurationFactory;
 import net.sf.ehcache.config.FactoryConfiguration;
+import net.sf.ehcache.config.PersistenceConfiguration;
 import net.sf.ehcache.event.NotificationScope;
 
 /**
@@ -233,6 +234,9 @@ public class EhcacheConfigurationHelperUtil {
 				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME;
 		}
 
+		boolean requireSerialization = _requireSerialization(
+			cacheConfiguration, clusterAware, clusterEnabled);
+
 		Map<CallbackConfiguration, CacheListenerScope>
 			cacheListenerConfigurations = new HashMap<>();
 
@@ -329,9 +333,9 @@ public class EhcacheConfigurationHelperUtil {
 			cacheConfiguration.addBootstrapCacheLoaderFactory(null);
 		}
 
-		return new PortalCacheConfiguration(
+		return new EhcachePortalCacheConfiguration(
 			portalCacheName, cacheListenerConfigurations,
-			bootstrapLoaderConfiguration);
+			bootstrapLoaderConfiguration, requireSerialization);
 	}
 
 	private static String _parseFactoryClassName(
@@ -410,6 +414,36 @@ public class EhcacheConfigurationHelperUtil {
 		}
 
 		return properties;
+	}
+
+	private static boolean _requireSerialization(
+		CacheConfiguration cacheConfiguration, boolean clusterAware,
+		boolean clusterEnabled) {
+
+		if (clusterAware && clusterEnabled) {
+			return true;
+		}
+
+		if (cacheConfiguration.isOverflowToDisk() ||
+			cacheConfiguration.isOverflowToOffHeap() ||
+			cacheConfiguration.isDiskPersistent()) {
+
+			return true;
+		}
+
+		PersistenceConfiguration persistenceConfiguration =
+			cacheConfiguration.getPersistenceConfiguration();
+
+		if (persistenceConfiguration != null) {
+			PersistenceConfiguration.Strategy strategy =
+				persistenceConfiguration.getStrategy();
+
+			if (!strategy.equals(PersistenceConfiguration.Strategy.NONE)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static String _unescape(String text) {

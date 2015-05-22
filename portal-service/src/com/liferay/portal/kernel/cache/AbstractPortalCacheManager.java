@@ -71,9 +71,15 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				portalCache.getName());
 
 		if (portalCacheConfiguration == null) {
-			portalCacheConfiguration =
-				_portalCacheManagerConfiguration.
-					getDefaultPortalCacheConfiguration();
+			portalCacheConfiguration = new PortalCacheConfiguration(
+				name,
+				_defaultPortalCacheConfiguration.
+					getCacheListenerConfigurations(),
+				_defaultPortalCacheConfiguration.
+					getBootstrapLoaderConfiguration());
+
+			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				name, portalCacheConfiguration);
 		}
 
 		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
@@ -235,6 +241,10 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
 
+		_defaultPortalCacheConfiguration =
+			_portalCacheManagerConfiguration.
+				getDefaultPortalCacheConfiguration();
+
 		for (CallbackConfiguration callbackConfiguration :
 				_portalCacheManagerConfiguration.
 					getCacheManagerListenerConfigurations()) {
@@ -328,6 +338,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private boolean _blockingCacheAllowed;
 	private boolean _bootstrapCacheLoaderEnabled;
 	private boolean _clusterAware;
+	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private boolean _mpiOnly;
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;

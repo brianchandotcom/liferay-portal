@@ -70,13 +70,6 @@
 		<antcall target="deploy" />
 	</target>
 
-	<target name="check-sdk-uptodate">
-		<uptodate property="sdk.uptodate">
-			<mapper to="${project.dir}/tools/sdk" type="merge" />
-			<srcfiles dir="${project.dir}/tools" includes="liferay-plugins-sdk-7.0.0.zip*" />
-		</uptodate>
-	</target>
-
 	<target name="clean">
 		<parallel failonany="true" threadcount="${parallel.thread.count}">
 			<ant dir="benchmarks" target="clean" inheritAll="false" />
@@ -838,157 +831,167 @@
 		<setup-jrebel />
 	</target>
 
-	<target name="setup-sdk" depends="check-sdk-uptodate" unless="sdk.uptodate">
-		<delete dir="${project.dir}/tools/sdk" />
+	<target name="setup-sdk">
+		<if>
+			<not>
+				<uptodate>
+					<mapper to="${project.dir}/tools/sdk" type="merge" />
+					<srcfiles dir="${project.dir}/tools" includes="liferay-plugins-sdk-7.0.0.zip*" />
+				</uptodate>
+			</not>
+			<then>
+				<delete dir="${project.dir}/tools/sdk" />
 
-		<unzip
-			dest="${project.dir}/tools"
-			src="${project.dir}/tools/liferay-plugins-sdk-7.0.0.zip"
-		>
-			<mapper
-				type="glob"
-				from="liferay-plugins-sdk-7.0.0/*"
-				to="sdk/*"
-			/>
-		</unzip>
+				<unzip
+					dest="${project.dir}/tools"
+					src="${project.dir}/tools/liferay-plugins-sdk-7.0.0.zip"
+				>
+					<mapper
+						type="glob"
+						from="liferay-plugins-sdk-7.0.0/*"
+						to="sdk/*"
+					/>
+				</unzip>
 
-		<propertyselector
-			casesensitive="false"
-			delimiter=","
-			distinct="true"
-			match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
-			override="true"
-			property="app.server.dir.property.list"
-			select="\1"
-		/>
-
-		<sortlist
-			delimiter=","
-			override="true"
-			property="app.server.dir.property.list"
-			value="${app.server.dir.property.list}"
-		/>
-
-		<for list="${app.server.dir.property.list}" param="app.server.dir.property">
-			<sequential>
-				<propertycopy
-					from="app.@{app.server.dir.property}.dir"
-					name="temp.app.server.dir"
+				<propertyselector
+					casesensitive="false"
+					delimiter=","
+					distinct="true"
+					match="app\.(server\.(glassfish|jboss|jetty|jonas|resin|tcat|tcserver|tomcat|weblogic|websphere).+)\.dir"
+					override="true"
+					property="app.server.dir.property.list"
+					select="\1"
 				/>
+
+				<sortlist
+					delimiter=","
+					override="true"
+					property="app.server.dir.property.list"
+					value="${app.server.dir.property.list}"
+				/>
+
+				<for list="${app.server.dir.property.list}" param="app.server.dir.property">
+					<sequential>
+						<propertycopy
+							from="app.@{app.server.dir.property}.dir"
+							name="temp.app.server.dir"
+						/>
+
+						<echo
+							append="true"
+							file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+						>
+							app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+						</echo>
+
+						<var name="temp.app.server.dir" unset="true" />
+					</sequential>
+				</for>
+
+				<propertyselector
+					casesensitive="false"
+					delimiter="," match="ivy.pom.(.+)"
+					property="ivy.pom.property.list"
+					select="\1"
+				/>
+
+				<sortlist
+					delimiter=","
+					override="true"
+					property="ivy.pom.property.list"
+					value="${ivy.pom.property.list}"
+				/>
+
+				<if>
+					<not>
+						<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
+					</not>
+					<then>
+						<for list="${ivy.pom.property.list}" param="ivy.pom.property">
+							<sequential>
+								<propertycopy
+									from="ivy.pom.@{ivy.pom.property}"
+									name="temp.ivy.pom"
+								/>
+
+								<echo
+									append="true"
+									file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+								>
+									ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
+								</echo>
+
+								<var name="temp.ivy.pom" unset="true" />
+							</sequential>
+						</for>
+					</then>
+				</if>
+
+				<propertyselector
+					casesensitive="false"
+					delimiter="," match="sonatype.(.+)"
+					property="sonatype.property.list"
+					select="\1"
+				/>
+
+				<sortlist
+					delimiter=","
+					override="true"
+					property="sonatype.property.list"
+					value="${sonatype.property.list}"
+				/>
+
+				<if>
+					<not>
+						<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
+					</not>
+					<then>
+						<for list="${sonatype.property.list}" param="sonatype.property">
+							<sequential>
+								<propertycopy
+									from="sonatype.@{sonatype.property}"
+									name="temp.sonatype"
+								/>
+
+								<echo
+									append="true"
+									file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
+								>
+									sonatype.@{sonatype.property}=${temp.sonatype}
+								</echo>
+
+								<var name="temp.sonatype" unset="true" />
+							</sequential>
+						</for>
+					</then>
+				</if>
 
 				<echo
 					append="true"
 					file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
 				>
-					app.@{app.server.dir.property}.dir=${temp.app.server.dir}
+					app.server.type=${app.server.type}
+					auto.deploy.dir=${liferay.home}/osgi/apps
+					clean.delete.ivy.md5=true
+					clean.delete.lib=true
+					ivy.home=${ivy.home}
+					junit.test.excludes=${junit.test.excludes}
+					liferay.home=${liferay.home}
+					lp.portal.project.dir=${project.dir}
+					microsoft.translator.client.id=${microsoft.translator.client.id}
+					microsoft.translator.client.secret=${microsoft.translator.client.secret}
+					module.framework.base.dir=${liferay.home}/osgi
+					upgrade.table.dir=${upgrade.table.dir}
+					-baselinerepo=${-baselinerepo}
+					-metatype=${-metatype}
+					-plugin=${-plugin}
+					-releaserepo=${-releaserepo}
 				</echo>
 
-				<var name="temp.app.server.dir" unset="true" />
-			</sequential>
-		</for>
-
-		<propertyselector
-			casesensitive="false"
-			delimiter="," match="ivy.pom.(.+)"
-			property="ivy.pom.property.list"
-			select="\1"
-		/>
-
-		<sortlist
-			delimiter=","
-			override="true"
-			property="ivy.pom.property.list"
-			value="${ivy.pom.property.list}"
-		/>
-
-		<if>
-			<not>
-				<equals arg1="${ivy.pom.property.list}" arg2="$${ivy.pom.property.list}" />
-			</not>
-			<then>
-				<for list="${ivy.pom.property.list}" param="ivy.pom.property">
-					<sequential>
-						<propertycopy
-							from="ivy.pom.@{ivy.pom.property}"
-							name="temp.ivy.pom"
-						/>
-
-						<echo
-							append="true"
-							file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-						>
-							ivy.pom.@{ivy.pom.property}=${temp.ivy.pom}
-						</echo>
-
-						<var name="temp.ivy.pom" unset="true" />
-					</sequential>
-				</for>
+				<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />
+				<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOSTNAME}.properties" />
 			</then>
 		</if>
-
-		<propertyselector
-			casesensitive="false"
-			delimiter="," match="sonatype.(.+)"
-			property="sonatype.property.list"
-			select="\1"
-		/>
-
-		<sortlist
-			delimiter=","
-			override="true"
-			property="sonatype.property.list"
-			value="${sonatype.property.list}"
-		/>
-
-		<if>
-			<not>
-				<equals arg1="${sonatype.property.list}" arg2="$${sonatype.property.list}" />
-			</not>
-			<then>
-				<for list="${sonatype.property.list}" param="sonatype.property">
-					<sequential>
-						<propertycopy
-							from="sonatype.@{sonatype.property}"
-							name="temp.sonatype"
-						/>
-
-						<echo
-							append="true"
-							file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-						>
-							sonatype.@{sonatype.property}=${temp.sonatype}
-						</echo>
-
-						<var name="temp.sonatype" unset="true" />
-					</sequential>
-				</for>
-			</then>
-		</if>
-
-		<echo
-			append="true"
-			file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties"
-		>
-			app.server.type=${app.server.type}
-			auto.deploy.dir=${liferay.home}/osgi/apps
-			clean.delete.ivy.md5=true
-			clean.delete.lib=true
-			ivy.home=${ivy.home}
-			junit.test.excludes=${junit.test.excludes}
-			liferay.home=${liferay.home}
-			lp.portal.project.dir=${project.dir}
-			microsoft.translator.client.id=${microsoft.translator.client.id}
-			microsoft.translator.client.secret=${microsoft.translator.client.secret}
-			module.framework.base.dir=${liferay.home}/osgi
-			upgrade.table.dir=${upgrade.table.dir}
-			-baselinerepo=${-baselinerepo}
-			-metatype=${-metatype}
-			-plugin=${-plugin}
-			-releaserepo=${-releaserepo}
-		</echo>
-
-		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOST}.properties" />
-		<copy file="${project.dir}/tools/sdk/build.${env.COMPUTERNAME}.properties" tofile="${project.dir}/tools/sdk/build.${env.HOSTNAME}.properties" />
 	</target>
 
 	<target name="sort-xml-attributes">

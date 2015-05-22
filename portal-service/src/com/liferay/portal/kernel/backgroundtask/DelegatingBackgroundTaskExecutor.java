@@ -36,8 +36,10 @@ public class DelegatingBackgroundTaskExecutor
 	}
 
 	@Override
-	public Class<? extends BackgroundTaskDisplay> getBackgroundTaskDisplay() {
-		return _backgroundTaskExecutor.getBackgroundTaskDisplay();
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask) {
+
+		return _backgroundTaskExecutor.getBackgroundTaskDisplay(backgroundTask);
 	}
 
 	@Override

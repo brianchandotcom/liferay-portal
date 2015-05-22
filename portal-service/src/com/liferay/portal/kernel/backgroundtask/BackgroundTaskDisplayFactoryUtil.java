@@ -14,20 +14,29 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import aQute.bnd.annotation.ProviderType;
 
-import java.util.Locale;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.BackgroundTask;
 
 /**
  * @author Andrew Betts
  */
+@ProviderType
 public class BackgroundTaskDisplayFactoryUtil {
 
 	public static BackgroundTaskDisplay getBackgroundTaskDisplay(
-		long backgroundTaskId, Locale locale) {
+		BackgroundTask backgroundTask) {
 
 		return getBackgroundTaskDisplayFactory().getBackgroundTaskDisplay(
-			backgroundTaskId, locale);
+			backgroundTask);
+	}
+
+	public static BackgroundTaskDisplay getBackgroundTaskDisplay(
+		long backgroundTaskId) {
+
+		return getBackgroundTaskDisplayFactory().getBackgroundTaskDisplay(
+			backgroundTaskId);
 	}
 
 	public static BackgroundTaskDisplayFactory

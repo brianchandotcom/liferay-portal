@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactoryUtil;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -30,19 +30,17 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -267,37 +265,35 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
-	protected String getEditorName(HttpServletRequest request) {
+	protected Editor getEditor(HttpServletRequest request) {
 		String editorName = _editorName;
 
 		if (!BrowserSnifferUtil.isRtf(request)) {
-			editorName = "simple";
+			return _serviceTrackerMap.getService("simple");
 		}
 
 		if (Validator.isNull(editorName)) {
-			editorName = _EDITOR_WYSIWYG_DEFAULT;
+			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
 		}
 
-		if (!_editorServiceTrackerCustomizer.hasEditor(editorName)) {
-			editorName = _EDITOR_WYSIWYG_DEFAULT;
+		if (!_serviceTrackerMap.containsKey(editorName)) {
+			return _serviceTrackerMap.getService(_EDITOR_WYSIWYG_DEFAULT);
 		}
 
-		return editorName;
+		return _serviceTrackerMap.getService(editorName);
+	}
+
+	protected String getEditorName(HttpServletRequest request) {
+		Editor editor = getEditor(request);
+
+		return editor.getName();
 	}
 
 	@Override
 	protected String getPage() {
-		String editorName = getEditorName(request);
+		Editor editor = getEditor(request);
 
-		return getPage(editorName);
-	}
-
-	protected String getPage(String editorName) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathEditors() +
-			"/editors/" + editorName + ".jsp";
+		return editor.getEditorJspPath(request);
 	}
 
 	@Override
@@ -361,8 +357,26 @@ public class InputEditorTag extends IncludeTag {
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
-	private static final EditorServiceTrackerCustomizer
-		_editorServiceTrackerCustomizer = new EditorServiceTrackerCustomizer();
+	private static final ServiceTrackerMap<String, Editor>
+		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
+		Editor.class, null, new ServiceReferenceMapper<String, Editor>() {
+
+			@Override
+			public void map(
+				ServiceReference<Editor> serviceReference,
+				Emitter<String> emitter) {
+
+				Registry registry = RegistryUtil.getRegistry();
+
+				Editor editor = registry.getService(serviceReference);
+
+				emitter.emit(editor.getName());
+			}
+		});
+
+	static {
+		_serviceTrackerMap.open();
+	}
 
 	private boolean _allowBrowseDocuments = true;
 	private boolean _autoCreate = true;
@@ -389,58 +403,5 @@ public class InputEditorTag extends IncludeTag {
 	private boolean _skipEditorLoading;
 	private String _toolbarSet = "liferay";
 	private String _width;
-
-	private static class EditorServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Object, Object> {
-
-		public EditorServiceTrackerCustomizer() {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Filter filter = registry.getFilter("(editor.name=*)");
-
-			_serviceTracker = registry.trackServices(filter, this);
-
-			_serviceTracker.open();
-		}
-
-		@Override
-		public Object addingService(ServiceReference<Object> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			String editorName = GetterUtil.getString(
-				serviceReference.getProperty("editor.name"));
-
-			_editorNames.put(serviceReference, editorName);
-
-			return registry.getService(serviceReference);
-		}
-
-		public boolean hasEditor(String editorName) {
-			Collection<String> values = _editorNames.values();
-
-			return values.contains(editorName);
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Object> serviceReference, Object service) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Object> serviceReference, Object service) {
-
-			_editorNames.remove(serviceReference);
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-		}
-
-		private final Map<ServiceReference<Object>, String> _editorNames =
-			new ConcurrentHashMap<>();
-		private final ServiceTracker<Object, Object> _serviceTracker;
-
-	}
 
 }

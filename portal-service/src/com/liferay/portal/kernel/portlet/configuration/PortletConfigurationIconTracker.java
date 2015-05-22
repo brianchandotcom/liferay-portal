@@ -28,62 +28,66 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class PortletConfigurationIconTracker {
 
-	public static List<PortletConfigurationIcon>
+	public static List<PortletConfigurationIconFactory>
 		getPortletConfigurationIcons() {
 
-		return _portletConfigurationIcons;
+		return _portletConfigurationIconFactories;
 	}
 
 	public PortletConfigurationIconTracker() {
 		Registry registry = RegistryUtil.getRegistry();
 
 		_serviceTracker = registry.trackServices(
-			PortletConfigurationIcon.class,
+			PortletConfigurationIconFactory.class,
 			new PortletConfigurationIconServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
 
-	private static final List<PortletConfigurationIcon>
-		_portletConfigurationIcons = new CopyOnWriteArrayList<>();
+	private static final List<PortletConfigurationIconFactory>
+		_portletConfigurationIconFactories = new CopyOnWriteArrayList<>();
 
 	private final ServiceTracker
-		<PortletConfigurationIcon, PortletConfigurationIcon> _serviceTracker;
+		<PortletConfigurationIconFactory, PortletConfigurationIconFactory>
+			_serviceTracker;
 
 	private static class PortletConfigurationIconServiceTrackerCustomizer
 		implements ServiceTrackerCustomizer
-			<PortletConfigurationIcon, PortletConfigurationIcon> {
+			<PortletConfigurationIconFactory, PortletConfigurationIconFactory> {
 
 		@Override
-		public PortletConfigurationIcon addingService(
-			ServiceReference<PortletConfigurationIcon> serviceReference) {
+		public PortletConfigurationIconFactory addingService(
+			ServiceReference<PortletConfigurationIconFactory>
+				serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			PortletConfigurationIcon portletConfigurationIcon =
+			PortletConfigurationIconFactory portletConfigurationIconFactory =
 				registry.getService(serviceReference);
 
-			_portletConfigurationIcons.add(portletConfigurationIcon);
+			_portletConfigurationIconFactories.add(
+				portletConfigurationIconFactory);
 
-			return portletConfigurationIcon;
+			return portletConfigurationIconFactory;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<PortletConfigurationIcon> serviceReference,
-			PortletConfigurationIcon portletConfigurationIcon) {
+			ServiceReference<PortletConfigurationIconFactory> serviceReference,
+			PortletConfigurationIconFactory portletConfigurationIconFactory) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<PortletConfigurationIcon> serviceReference,
-			PortletConfigurationIcon portletConfigurationIcon) {
+			ServiceReference<PortletConfigurationIconFactory> serviceReference,
+			PortletConfigurationIconFactory portletConfigurationIconFactory) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 
-			_portletConfigurationIcons.remove(portletConfigurationIcon);
+			_portletConfigurationIconFactories.remove(
+				portletConfigurationIconFactory);
 		}
 
 	}

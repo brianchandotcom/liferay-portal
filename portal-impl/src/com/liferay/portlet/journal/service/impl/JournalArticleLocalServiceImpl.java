@@ -5465,6 +5465,7 @@ public class JournalArticleLocalServiceImpl
 			article.setDescriptionMap(oldArticle.getDescriptionMap());
 			article.setDDMStructureKey(oldArticle.getDDMStructureKey());
 			article.setDDMTemplateKey(oldArticle.getDDMTemplateKey());
+			article.setFolderId(oldArticle.getFolderId());
 			article.setLayoutUuid(oldArticle.getLayoutUuid());
 			article.setDisplayDate(oldArticle.getDisplayDate());
 			article.setExpirationDate(oldArticle.getExpirationDate());

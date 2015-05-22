@@ -141,12 +141,14 @@
 		padding: 4px 2% 4px 2px;
 	}
 
-	.current-scope.pass.function {
-		background: transparent;
-		outline-width: 0;
-	}
-
 	.current-scope {
+		&.pass {
+			&.function {
+				background: transparent;
+				outline-width: 0;
+			}
+		}
+
 		&.pass, &.pending {
 			> .line-container {
 				background-color: $logger-mode-scoped-line-bg-color;

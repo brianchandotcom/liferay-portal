@@ -4,61 +4,65 @@
 	font-family: 'FontAwesome';
 }
 
-.xml-log .btn, .sidebar-btn-container .btn {
-	background: transparent;
-	border-width: 0;
-	cursor: pointer;
-	font-size: 10px;
-	height: 28px;
-	left: 0;
-	margin: auto;
-	outline: none;
-	padding: 2px;
-	text-align: center;
-	transition: all 0.2s ease;
-	width: 28px;
-
-	&:active:focus, &:focus, &:hover {
-		box-shadow: none;
-		outline: 0;
-	}
-
-	.btn-content {
+.xml-log, .sidebar-btn-container {
+	.btn {
+		background: transparent;
+		border-width: 0;
+		cursor: pointer;
+		font-size: 10px;
+		height: 28px;
+		left: 0;
+		margin: auto;
+		outline: none;
+		padding: 2px;
+		text-align: center;
 		transition: all 0.2s ease;
-	}
+		width: 28px;
 
-	&:hover {
-		background-color: $button-hover-bg-color;
-
-		&.btn-content {
-			transform: scale(1.3, 1.3);
+		&:active:focus, &:focus, &:hover {
+			box-shadow: none;
+			outline: 0;
 		}
-	}
 
-	&.toggle {
-		background-color: $button-toggle-bg-color;
+		.btn-content {
+			transition: all 0.2s ease;
+		}
+
+		&:hover {
+			background-color: $button-hover-bg-color;
+
+			&.btn-content {
+				transform: scale(1.3, 1.3);
+			}
+		}
+
+		&.toggle {
+			background-color: $button-toggle-bg-color;
+		}
 	}
 }
 
-.xml-log .btn-error, .xml-log .btn-screenshot {
-	border-color: $button-error-color;
-	bottom: 0;
-	color: $button-error-color;
-	display: inline-block;
-	font-size: 17px;
-	margin-top: 1px;
-
-	&:focus, &:hover {
-		background-color: transparent;
+.xml-log {
+	.btn-error, .btn-screenshot {
+		border-color: $button-error-color;
+		bottom: 0;
 		color: $button-error-color;
-	}
+		display: inline-block;
+		font-size: 17px;
+		margin-top: 1px;
 
-	&.toggle {
-		background: $button-error-color;
-		color: $body-bg-color;
+		&:focus, &:hover {
+			background-color: transparent;
+			color: $button-error-color;
+		}
 
-		&:hover {
-			background-color: $button-error-color;
+		&.toggle {
+			background: $button-error-color;
+			color: $body-bg-color;
+
+			&:hover {
+				background-color: $button-error-color;
+			}
 		}
 	}
 }

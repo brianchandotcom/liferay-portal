@@ -38,8 +38,10 @@
 		}
 
 		.child-container .macro {
-			.btn-container .line-number, .line-container .line-number {
-				opacity: 0.2;
+			.btn-container, .line-container {
+				.line-number {
+					opacity: 0.2;
+				}
 			}
 		}
 	}
@@ -49,12 +51,14 @@
 	background-color: $scoped-line-bg-color;
 }
 
-.current-scope:after, .fail:after {
-	content: ' ';
-	height: 7px;
-	margin-top: -30px;
-	position: absolute;
-	width: 100%;
+.current-scope, .fail {
+	&:after {
+		content: ' ';
+		height: 7px;
+		margin-top: -30px;
+		position: absolute;
+		width: 100%;
+	}
 }
 
 .transitioning .current-scope:after {

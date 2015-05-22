@@ -35,10 +35,10 @@ $logger-mode-scoped-line-bg-color: $passed-function-hover-bg-color;
 
 $running-line-bg-color: #FFB57C;
 
-$fail-line-number-color: #FF2600;
+$fail-line-container-before-bg: #FFF;
 $fail-line-container-bg-color: #E2604C;
 $fail-line-container-border-color: #FFA191;
-$fail-line-container-before-bg: #FFF;
+$fail-line-number-color: #FF2600;
 
 // Error console & screenshot
 

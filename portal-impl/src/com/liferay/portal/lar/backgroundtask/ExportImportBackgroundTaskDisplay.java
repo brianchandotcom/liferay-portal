@@ -14,6 +14,7 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
+import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayJSONTransformer;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus;
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskDisplay;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -190,7 +191,8 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 		if (errorMessagesJSONArray != null) {
 			String message = backgroundTaskJSON.getString("message");
 
-			addDetailItem(detailItems, message, errorMessagesJSONArray);
+			BackgroundTaskDisplayJSONTransformer.addDetailItem(
+				detailItems, message, errorMessagesJSONArray);
 		}
 
 		JSONArray warningMessagesJSONArray = backgroundTaskJSON.getJSONArray(
@@ -207,12 +209,14 @@ public class ExportImportBackgroundTaskDisplay extends BaseBackgroundTaskDisplay
 						"published-either";
 			}
 
-			addDetailItem(detailItems, message, warningMessagesJSONArray);
+			BackgroundTaskDisplayJSONTransformer.addDetailItem(
+				detailItems, message, warningMessagesJSONArray);
 		}
 
 		int status = backgroundTaskJSON.getInt("status");
 
-		return createDetailsJSON(detailHeader, detailItems, status);
+		return BackgroundTaskDisplayJSONTransformer.createDetailsJSONObject(
+			detailHeader, detailItems, status);
 	}
 
 	protected String createMessage(Locale locale) {

@@ -12,45 +12,34 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.store;
+package com.liferay.portal.store.s3.test;
 
-import com.liferay.portal.jcr.JCRFactoryUtil;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.store.s3.S3Store;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Preston Crary
+ * @author Manuel de la Peña
  */
-public class JCRStoreTest extends BaseStoreTestCase {
+@RunWith(Arquillian.class)
+public class S3StoreTest extends BaseStoreTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
-
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		JCRFactoryUtil.prepare();
-
-		JCRFactoryUtil.initialize();
-	}
-
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		JCRFactoryUtil.shutdown();
-	}
+		new LiferayIntegrationTestRule();
 
 	@Override
 	protected Store getStore() {
-		return new JCRStore();
+		return new S3Store();
 	}
 
 }

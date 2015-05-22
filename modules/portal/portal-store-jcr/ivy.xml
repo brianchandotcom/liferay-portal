@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency conf="test->default" name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="jackrabbit-api" org="org.apache.jackrabbit" rev="2.1.6"/>
 		<dependency name="jackrabbit-core" org="org.apache.jackrabbit" rev="2.1.6"/>
 		<dependency name="jackrabbit-jcr-commons" org="org.apache.jackrabbit" rev="2.1.6"/>

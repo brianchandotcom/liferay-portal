@@ -12,45 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.store;
+package com.liferay.portal.store.jcr.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.store.jcr.JCRStore;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
+
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
- * @author Shuyang Zhou
- * @author Tina Tian
+ * @author Preston Crary
+ * @author Manuel de la Peña
  */
-public class DBStoreTest extends BaseStoreTestCase {
+@RunWith(Arquillian.class)
+public class JCRStoreTest extends BaseStoreTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
-	@Override
 	protected Store getStore() {
-		String dlStoreImpl = PropsValues.DL_STORE_IMPL;
-
-		PropsValues.DL_STORE_IMPL = DBStore.class.getName();
-
-		StoreFactory.setInstance(null);
-
-		try {
-			return StoreFactory.getInstance();
-		}
-		finally {
-			PropsValues.DL_STORE_IMPL = dlStoreImpl;
-
-			StoreFactory.setInstance(null);
-		}
+		return new JCRStore();
 	}
 
 }

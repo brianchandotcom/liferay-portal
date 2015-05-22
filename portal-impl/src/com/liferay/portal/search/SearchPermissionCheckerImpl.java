@@ -71,8 +71,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			String className = document.get(Field.ROOT_ENTRY_CLASS_NAME);
 
+			String classPK = document.get(Field.ROOT_ENTRY_CLASS_PK);
+
 			if (Validator.isNull(className)) {
 				className = document.get(Field.ENTRY_CLASS_NAME);
+			}
+
+			if (Validator.isNull(classPK)) {
+				classPK = document.get(Field.ENTRY_CLASS_PK);
 			}
 
 			boolean relatedEntry = GetterUtil.getBoolean(
@@ -83,23 +89,11 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					document.get(Field.CLASS_NAME_ID));
 
 				className = PortalUtil.getClassName(classNameId);
-			}
 
-			if (Validator.isNull(className)) {
-				return;
-			}
-
-			String classPK = document.get(Field.ROOT_ENTRY_CLASS_PK);
-
-			if (Validator.isNull(classPK)) {
-				classPK = document.get(Field.ENTRY_CLASS_PK);
-			}
-
-			if (relatedEntry) {
 				classPK = document.get(Field.CLASS_PK);
 			}
 
-			if (Validator.isNull(classPK)) {
+			if (Validator.isNull(className) || Validator.isNull(classPK)) {
 				return;
 			}
 

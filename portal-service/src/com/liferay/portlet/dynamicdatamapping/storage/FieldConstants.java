@@ -14,6 +14,8 @@
 
 package com.liferay.portlet.dynamicdatamapping.storage;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,6 +81,10 @@ public class FieldConstants {
 		String type, List<Serializable> values) {
 
 		if (Validator.isNull(type)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unknown Field type " + type);
+			}
+
 			return values.toArray(new String[values.size()]);
 		}
 
@@ -115,6 +121,10 @@ public class FieldConstants {
 		String type, String value) {
 
 		if (Validator.isNull(type)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Unknown Field type " + type);
+			}
+
 			return value;
 		}
 
@@ -160,5 +170,7 @@ public class FieldConstants {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(FieldConstants.class);
 
 }

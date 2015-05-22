@@ -33,6 +33,7 @@ import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import org.aopalliance.intercept.MethodInterceptor;
 
@@ -138,6 +139,24 @@ public class StoreFactory {
 
 	public static Store getStoreInstance(String key) {
 		return _serviceTrackerMap.getService(key);
+	}
+
+	public String[] getStoreTypes() {
+		Set<String> keySet = _serviceTrackerMap.keySet();
+
+		String[] storesTypes = new String[keySet.size()];
+
+		int i = 0;
+
+		for (String key : keySet) {
+			Store store = _serviceTrackerMap.getService(key);
+
+			storesTypes[i] = store.getType();
+
+			i++;
+		}
+
+		return storesTypes;
 	}
 
 	public void setStoreInstance(Store store) {

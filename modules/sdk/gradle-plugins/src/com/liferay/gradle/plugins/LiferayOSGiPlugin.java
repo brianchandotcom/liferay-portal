@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
@@ -46,6 +47,12 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureBundleExtension(project);
+	}
+
+	@Override
+	protected LiferayExtension addLiferayExtension(Project project) {
+		return GradleUtil.addExtension(
+			project, LiferayPlugin.PLUGIN_NAME, LiferayOSGiExtension.class);
 	}
 
 	@Override

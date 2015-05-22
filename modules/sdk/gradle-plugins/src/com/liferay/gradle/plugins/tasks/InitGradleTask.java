@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins.tasks;
 import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
@@ -300,6 +301,15 @@ public class InitGradleTask extends DefaultTask {
 			contents.add(wrapPropertyFile("deployDir", autoDeployDirName));
 		}
 
+		if (_liferayExtension instanceof LiferayOSGiExtension) {
+			String autoUpdateXml = getBuildXmlProperty("osgi.auto.update.xml");
+
+			if (Validator.isNotNull(autoUpdateXml)) {
+				contents.add(
+					wrapProperty("autoUpdateXml", autoUpdateXml, false));
+			}
+		}
+
 		if (_liferayExtension instanceof LiferayThemeExtension) {
 			String themeParent = getBuildXmlProperty("theme.parent");
 
@@ -452,13 +462,27 @@ public class InitGradleTask extends DefaultTask {
 	}
 
 	protected String wrapProperty(String name, String value) {
+		return wrapProperty(name, value, true);
+	}
+
+	protected String wrapProperty(
+		String name, String value, boolean quoteValue) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append('\t');
 		sb.append(name);
-		sb.append(" = \"");
+		sb.append(" = ");
+
+		if (quoteValue) {
+			sb.append('\"');
+		}
+
 		sb.append(value);
-		sb.append("\"");
+
+		if (quoteValue) {
+			sb.append('\"');
+		}
 
 		return sb.toString();
 	}

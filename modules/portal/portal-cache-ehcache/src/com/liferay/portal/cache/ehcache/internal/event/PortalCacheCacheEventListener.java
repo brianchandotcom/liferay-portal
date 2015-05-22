@@ -14,6 +14,8 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
+import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
+import com.liferay.portal.cache.ehcache.internal.SerializableObjectWrapper;
 import com.liferay.portal.kernel.cache.CacheListener;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.log.Log;
@@ -38,6 +40,14 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 		_cacheListener = cacheListener;
 		_portalCache = portalCache;
+
+		boolean requireSerialization = false;
+
+		if (_portalCache instanceof SerializableEhcachePortalCache) {
+			requireSerialization = true;
+		}
+
+		_requireSerialization = requireSerialization;
 	}
 
 	@Override
@@ -61,8 +71,8 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public void notifyElementEvicted(Ehcache ehcache, Element element) {
-		K key = (K)element.getObjectKey();
-		V value = (V)element.getObjectValue();
+		K key = getKey(element);
+		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
 		_cacheListener.notifyEntryEvicted(_portalCache, key, value, timeToLive);
@@ -74,8 +84,8 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	@Override
 	public void notifyElementExpired(Ehcache ehcache, Element element) {
-		K key = (K)element.getObjectKey();
-		V value = (V)element.getObjectValue();
+		K key = getKey(element);
+		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
 		_cacheListener.notifyEntryExpired(_portalCache, key, value, timeToLive);
@@ -89,8 +99,8 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementPut(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		K key = (K)element.getObjectKey();
-		V value = (V)element.getObjectValue();
+		K key = getKey(element);
+		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
 		_cacheListener.notifyEntryPut(_portalCache, key, value, timeToLive);
@@ -104,8 +114,8 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementRemoved(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		K key = (K)element.getObjectKey();
-		V value = (V)element.getObjectValue();
+		K key = getKey(element);
+		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
 		_cacheListener.notifyEntryRemoved(_portalCache, key, value, timeToLive);
@@ -119,8 +129,8 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 	public void notifyElementUpdated(Ehcache ehcache, Element element)
 		throws CacheException {
 
-		K key = (K)element.getObjectKey();
-		V value = (V)element.getObjectValue();
+		K key = getKey(element);
+		V value = getValue(element);
 		int timeToLive = element.getTimeToLive();
 
 		_cacheListener.notifyEntryUpdated(_portalCache, key, value, timeToLive);
@@ -139,10 +149,28 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 		}
 	}
 
+	protected K getKey(Element element) {
+		if (_requireSerialization) {
+			return (K)SerializableObjectWrapper.unwrap(element.getObjectKey());
+		}
+
+		return (K)element.getObjectKey();
+	}
+
+	protected V getValue(Element element) {
+		if (_requireSerialization) {
+			return (V)SerializableObjectWrapper.unwrap(
+				element.getObjectValue());
+		}
+
+		return (V)element.getObjectValue();
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		PortalCacheCacheEventListener.class);
 
 	private final CacheListener<K, V> _cacheListener;
 	private final PortalCache<K, V> _portalCache;
+	private final boolean _requireSerialization;
 
 }

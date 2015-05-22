@@ -359,20 +359,20 @@ public class InputEditorTag extends IncludeTag {
 
 	private static final ServiceTrackerMap<String, Editor>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-		Editor.class, null, new ServiceReferenceMapper<String, Editor>() {
+			Editor.class, null, new ServiceReferenceMapper<String, Editor>() {
 
-			@Override
-			public void map(
-				ServiceReference<Editor> serviceReference,
-				Emitter<String> emitter) {
+				@Override
+				public void map(
+					ServiceReference<Editor> serviceReference,
+					Emitter<String> emitter) {
 
-				Registry registry = RegistryUtil.getRegistry();
+					Registry registry = RegistryUtil.getRegistry();
 
-				Editor editor = registry.getService(serviceReference);
+					Editor editor = registry.getService(serviceReference);
 
-				emitter.emit(editor.getName());
-			}
-		});
+					emitter.emit(editor.getName());
+				}
+			});
 
 	static {
 		_serviceTrackerMap.open();

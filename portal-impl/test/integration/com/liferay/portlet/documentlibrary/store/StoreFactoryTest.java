@@ -38,7 +38,7 @@ public class StoreFactoryTest {
 
 	@Test
 	public void testGetStoreInstance() throws Exception {
-		StoreFactory storeFactory = new StoreFactory();
+		StoreFactory storeFactory = StoreFactory.getInstance();
 
 		Store testStore = storeFactory.getStoreInstance("test");
 

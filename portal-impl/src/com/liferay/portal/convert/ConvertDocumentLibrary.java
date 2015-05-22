@@ -145,7 +145,9 @@ public class ConvertDocumentLibrary
 
 	@Override
 	protected void doConvert() throws Exception {
-		_sourceStore = StoreFactory.getStoreInstance();
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		_sourceStore = storeFactory.getStoreInstance();
 
 		String targetStoreClassName = getTargetStoreClassName();
 
@@ -154,7 +156,7 @@ public class ConvertDocumentLibrary
 
 		migratePortlets();
 
-		StoreFactory.setStoreInstance(_targetStore);
+		storeFactory.setStoreInstance(_targetStore);
 
 		MaintenanceUtil.appendStatus(
 			"Please set " + PropsKeys.DL_STORE_IMPL +
@@ -173,7 +175,9 @@ public class ConvertDocumentLibrary
 	}
 
 	protected String getSourceStoreClassName() {
-		Store sourceStore = StoreFactory.getStoreInstance();
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		Store sourceStore = storeFactory.getStoreInstance();
 
 		return sourceStore.getClass().getName();
 	}

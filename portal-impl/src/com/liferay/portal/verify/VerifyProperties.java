@@ -99,7 +99,9 @@ public class VerifyProperties extends VerifyProcess {
 
 		// Document library
 
-		StoreFactory.checkProperties();
+		StoreFactory storeFactory = StoreFactory.getInstance();
+
+		storeFactory.checkProperties();
 
 		// LDAP
 

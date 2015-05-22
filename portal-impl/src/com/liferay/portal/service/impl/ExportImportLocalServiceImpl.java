@@ -243,7 +243,8 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public void importLayouts(
-			ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException {
 
 		File file = null;
@@ -251,7 +252,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			file = FileUtil.createTempFile("lar");
 
-			FileUtil.write(file, is);
+			FileUtil.write(file, inputStream);
 
 			importLayouts(exportImportConfiguration, file);
 		}
@@ -330,7 +331,7 @@ public class ExportImportLocalServiceImpl
 	@Override
 	public long importLayoutsInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
-			InputStream is)
+			InputStream inputStream)
 		throws PortalException {
 
 		File file = null;
@@ -338,7 +339,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			file = FileUtil.createTempFile("lar");
 
-			FileUtil.write(file, is);
+			FileUtil.write(file, inputStream);
 
 			return importLayoutsInBackground(
 				userId, exportImportConfiguration, file);
@@ -366,14 +367,16 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public long importLayoutsInBackground(
-			long userId, long exportImportConfigurationId, InputStream is)
+			long userId, long exportImportConfigurationId,
+			InputStream inputStream)
 		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			exportImportConfigurationLocalService.getExportImportConfiguration(
 				exportImportConfigurationId);
 
-		return importLayoutsInBackground(userId, exportImportConfiguration, is);
+		return importLayoutsInBackground(
+			userId, exportImportConfiguration, inputStream);
 	}
 
 	@Override
@@ -472,7 +475,8 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public void importPortletInfo(
-			ExportImportConfiguration exportImportConfiguration, InputStream is)
+			ExportImportConfiguration exportImportConfiguration,
+			InputStream inputStream)
 		throws PortalException {
 
 		File file = null;
@@ -480,7 +484,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			file = FileUtil.createTempFile("lar");
 
-			FileUtil.write(file, is);
+			FileUtil.write(file, inputStream);
 
 			importPortletInfo(exportImportConfiguration, file);
 		}
@@ -521,7 +525,7 @@ public class ExportImportLocalServiceImpl
 	@Override
 	public long importPortletInfoInBackground(
 			long userId, ExportImportConfiguration exportImportConfiguration,
-			InputStream is)
+			InputStream inputStream)
 		throws PortalException {
 
 		File file = null;
@@ -529,7 +533,7 @@ public class ExportImportLocalServiceImpl
 		try {
 			file = FileUtil.createTempFile("lar");
 
-			FileUtil.write(file, is);
+			FileUtil.write(file, inputStream);
 
 			return importPortletInfoInBackground(
 				userId, exportImportConfiguration, file);
@@ -557,7 +561,8 @@ public class ExportImportLocalServiceImpl
 
 	@Override
 	public long importPortletInfoInBackground(
-			long userId, long exportImportConfigurationId, InputStream is)
+			long userId, long exportImportConfigurationId,
+			InputStream inputStream)
 		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
@@ -565,7 +570,7 @@ public class ExportImportLocalServiceImpl
 				exportImportConfigurationId);
 
 		return importPortletInfoInBackground(
-			userId, exportImportConfiguration, is);
+			userId, exportImportConfiguration, inputStream);
 	}
 
 	@Override

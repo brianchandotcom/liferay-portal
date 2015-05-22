@@ -92,7 +92,7 @@ AUI.add(
 			{
 				ATTRS: {
 					availableLocales: {
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						valueFn: '_valueAvailableLocales'
 					},
 

@@ -34,7 +34,7 @@ AUI.add(
 			{
 				ATTRS: {
 					checkBoxesId: {
-						validator: Lang.isArray
+						validator: Array.isArray
 					},
 
 					displayStyle: {

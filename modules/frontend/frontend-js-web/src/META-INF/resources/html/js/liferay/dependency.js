@@ -6,7 +6,7 @@
 
 	var Dependency = {
 		provide: function(obj, methodName, methodFn, modules, proto) {
-			if (!A.Lang.isArray(modules)) {
+			if (!Array.isArray(modules)) {
 				modules = [modules];
 			}
 

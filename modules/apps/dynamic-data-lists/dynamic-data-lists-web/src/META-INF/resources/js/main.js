@@ -17,7 +17,7 @@ AUI.add(
 
 		var STR_EMPTY = '';
 
-		var isArray = Lang.isArray;
+		var isArray = Array.isArray;
 		var isNumber = Lang.isNumber;
 
 		var SpreadSheet = A.Component.create(

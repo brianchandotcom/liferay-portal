@@ -140,7 +140,7 @@ AUI.add(
 			{
 				ATTRS: {
 					controls: {
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						value: [
 							'Base.CONTROLS.PAN',
 							'Base.CONTROLS.TYPE',

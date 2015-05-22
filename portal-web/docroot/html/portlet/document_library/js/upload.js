@@ -172,7 +172,7 @@ AUI.add(
 
 							return val;
 						},
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						value: []
 					},
 

@@ -11,7 +11,7 @@ AUI.add(
 			{
 				ATTRS: {
 					filter: {
-						validator: A.Lang.isArray,
+						validator: Array.isArray,
 						value: [
 							KeyMap.ESC,
 							KeyMap.LEFT,

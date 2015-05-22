@@ -7,7 +7,7 @@ AUI.add(
 		var BODY = A.getBody();
 
 		var instanceOf = A.instanceOf;
-		var isArray = Lang.isArray;
+		var isArray = Array.isArray;
 		var isObject = Lang.isObject;
 		var isString = Lang.isString;
 		var isUndefined = Lang.isUndefined;

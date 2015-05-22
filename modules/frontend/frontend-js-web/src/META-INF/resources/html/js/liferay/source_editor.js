@@ -63,7 +63,7 @@ AUI.add(
 					},
 
 					themes: {
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						value: [
 							{
 								cssClass: '',

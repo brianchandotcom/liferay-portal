@@ -31,7 +31,7 @@ AUI().add(
 			{
 				ATTRS: {
 					children: {
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						value: []
 					},
 					cssClass: {
@@ -77,7 +77,7 @@ AUI().add(
 						if (token) {
 							var buffer = instance._buffer;
 
-							if (Lang.isArray(token)) {
+							if (Array.isArray(token)) {
 								instance._buffer = buffer.concat(token);
 							}
 							else {

@@ -69,7 +69,7 @@ AUI.add(
 					},
 
 					itemsError: {
-						validator: Lang.isArray
+						validator: Array.isArray
 					},
 
 					name: {

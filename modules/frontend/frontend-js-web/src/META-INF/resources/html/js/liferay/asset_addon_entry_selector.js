@@ -54,7 +54,7 @@ AUI.add(
 				ATTRS: {
 					assetAddonEntries: {
 						setter: '_setAssetAddonEntries',
-						validator: Lang.isArray
+						validator: Array.isArray
 					},
 
 					dialogTitle: {
@@ -63,7 +63,7 @@ AUI.add(
 					},
 
 					selectedAssetAddonEntries: {
-						validator: Lang.isArray
+						validator: Array.isArray
 					}
 				},
 

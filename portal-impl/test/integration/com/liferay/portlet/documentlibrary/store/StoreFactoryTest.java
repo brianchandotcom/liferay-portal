@@ -38,7 +38,9 @@ public class StoreFactoryTest {
 
 	@Test
 	public void testGetInstance() throws Exception {
-		Store testStore = StoreFactory.getInstance("test");
+		StoreFactory storeFactory = new StoreFactory();
+
+		Store testStore = storeFactory.getInstance("test");
 
 		Assert.assertNotNull(testStore);
 

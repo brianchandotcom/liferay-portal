@@ -44,6 +44,14 @@ import org.aopalliance.intercept.MethodInterceptor;
  */
 public class StoreFactory {
 
+	public StoreFactory() {
+		_serviceTrackerMap.open();
+	}
+
+	public void destroy() {
+		_serviceTrackerMap.close();
+	}
+
 	public static void checkProperties() {
 		if (_warned) {
 			return;
@@ -189,9 +197,5 @@ public class StoreFactory {
 
 	private static final ServiceTrackerMap<String, Store> _serviceTrackerMap =
 		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
-
-	static {
-		_serviceTrackerMap.open();
-	}
 
 }

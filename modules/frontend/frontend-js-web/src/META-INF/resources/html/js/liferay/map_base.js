@@ -217,7 +217,7 @@ AUI.add(
 
 						var position = instance.get('position');
 
-						var location = (position && position.location) ? position.location : {};
+						var location = position && position.location ? position.location : {};
 
 						if (!location.lat || !location.lng) {
 							Liferay.Util.getGeolocation(
@@ -433,7 +433,7 @@ AUI.add(
 									}
 								}
 
-								config[item] = (controlIndex !== -1);
+								config[item] = controlIndex !== -1;
 							}
 						);
 

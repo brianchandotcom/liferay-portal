@@ -247,7 +247,7 @@ AUI.add(
 
 						var useFallback = location.hash.indexOf(STR_PARAM_FALLBACK) > -1 && fallback;
 
-						if (useFallback || UPLOADER_TYPE == 'none' || UPLOADER_TYPE == 'flash' && !A.SWFDetect.isFlashVersionAtLeast(10, 1)) {
+						if (useFallback || UPLOADER_TYPE == 'none' || (UPLOADER_TYPE == 'flash' && !A.SWFDetect.isFlashVersionAtLeast(10, 1))) {
 							if (fallback) {
 								fallback.show();
 							}
@@ -923,14 +923,15 @@ AUI.add(
 					_renderControls: function() {
 						var instance = this;
 
+						var multipleFiles = instance.get('multipleFiles');
 						var strings = instance.get(STRINGS);
 
 						var templateConfig = {
 							$ns: instance.NS,
-							cancelUploadsText: instance.get('multipleFiles') ? strings.cancelUploadsText : strings.cancelFileText,
-							dropFileText: instance.get('multipleFiles') ? strings.dropFilesText : strings.dropFileText,
-							multipleFiles: instance.get('multipleFiles'),
-							selectFilesText: instance.get('multipleFiles') ? strings.selectFilesText : strings.selectFileText,
+							cancelUploadsText: multipleFiles ? strings.cancelUploadsText : strings.cancelFileText,
+							dropFileText: multipleFiles ? strings.dropFilesText : strings.dropFileText,
+							multipleFiles: multipleFiles,
+							selectFilesText: multipleFiles ? strings.selectFilesText : strings.selectFileText,
 							strings: strings,
 							uploaderType: UPLOADER_TYPE
 						};
@@ -946,7 +947,7 @@ AUI.add(
 
 						var uploadFragment = new A.Template(TPL_UPLOAD, templateConfig).render(
 							{
-								multipleFiles: instance.get('multipleFiles')
+								multipleFiles: multipleFiles
 							}
 						);
 

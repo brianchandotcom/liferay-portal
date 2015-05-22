@@ -1,10 +1,10 @@
 AUI.add(
 	'liferay-pagination',
 	function(A) {
-		var Lang = A.Lang;
 		var AArray = A.Array;
 		var ANode = A.Node;
 		var AObject = A.Object;
+		var Lang = A.Lang;
 
 		var BOUNDING_BOX = 'boundingBox';
 
@@ -275,6 +275,7 @@ AUI.add(
 						var instance = this;
 
 						var state = event.state;
+
 						var page = state.page;
 
 						var itemsPerPage = state.itemsPerPage;
@@ -342,7 +343,7 @@ AUI.add(
 
 						var itemsPerPageList = instance.get(ITEMS_PER_PAGE_LIST);
 
-						instance._paginationControls.toggleClass(hiddenClass, (results <= itemsPerPageList[0]));
+						instance._paginationControls.toggleClass(hiddenClass, results <= itemsPerPageList[0]);
 
 						instance._paginationContentNode.toggleClass(hiddenClass, !val);
 					}

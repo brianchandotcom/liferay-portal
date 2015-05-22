@@ -2,9 +2,9 @@ AUI.add(
 	'document-library-upload',
 	function(A) {
 		var AArray = A.Array;
+		var HistoryManager = Liferay.HistoryManager;
 		var Lang = A.Lang;
 		var LString = Lang.String;
-		var HistoryManager = Liferay.HistoryManager;
 		var UploaderQueue = A.Uploader.Queue;
 
 		var isNumber = Lang.isNumber;
@@ -209,7 +209,7 @@ AUI.add(
 
 					maxFileSize: {
 						validator: function(val) {
-							return (isNumber(val) && (val > 0));
+							return isNumber(val) && val > 0;
 						},
 						value: 0
 					},
@@ -312,8 +312,8 @@ AUI.add(
 
 						var handles = instance._handles;
 
-						var uploader = instance._getUploader();
 						var displayStyle = instance._getDisplayStyle();
+						var uploader = instance._getUploader();
 
 						if (data.folder) {
 							handles.push(
@@ -369,7 +369,7 @@ AUI.add(
 								if (dataTransfer && dataTransfer.types) {
 									var dataTransferTypes = dataTransfer.types || [];
 
-									if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') === -1)) {
+									if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
 										event.halt();
 
 										dataTransfer.dropEffect = 'copy';
@@ -378,7 +378,7 @@ AUI.add(
 
 										var target = event.target;
 
-										docElement.toggleClass('upload-drop-active', (target.compareTo(entriesContainer) || entriesContainer.contains(target)));
+										docElement.toggleClass('upload-drop-active', target.compareTo(entriesContainer) || entriesContainer.contains(target));
 
 										removeCssClassTask();
 									}
@@ -394,7 +394,7 @@ AUI.add(
 								if (dataTransfer) {
 									var dataTransferTypes = dataTransfer.types || [];
 
-									if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') === -1)) {
+									if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
 										event.halt();
 
 										var dragDropFiles = AArray(dataTransfer.files);
@@ -421,10 +421,10 @@ AUI.add(
 
 								var dataTransferTypes = dataTransfer.types;
 
-								if ((AArray.indexOf(dataTransferTypes, 'Files') > -1) && (AArray.indexOf(dataTransferTypes, 'text/html') === -1)) {
+								if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
 									var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
 
-									parentElement.toggleClass(CSS_ACTIVE_AREA, (event.type == 'dragover'));
+									parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');
 								}
 							},
 							SELECTOR_DATA_FOLDER
@@ -760,7 +760,7 @@ AUI.add(
 						var displayStyle = HistoryManager.get(displayStyleNamespace) || instance._displayStyle;
 
 						if (style) {
-							displayStyle = (style == displayStyle);
+							displayStyle = style == displayStyle;
 						}
 
 						return displayStyle;
@@ -874,7 +874,7 @@ AUI.add(
 
 						var dataFolder = folderEntry && folderEntry.one('[data-folder-id]');
 
-						return (dataFolder && Lang.toInt(dataFolder.attr('data-folder-id')) || instance.get(STR_FOLDER_ID));
+						return dataFolder && Lang.toInt(dataFolder.attr('data-folder-id')) || instance.get(STR_FOLDER_ID);
 					},
 
 					_getUploader: function() {
@@ -998,7 +998,7 @@ AUI.add(
 
 						var queue = uploader && uploader.queue;
 
-						return !!(queue && ((queue.queuedFiles.length > 0) || (queue.numberOfUploads > 0) || !A.Object.isEmpty(queue.currentFiles)) && (queue._currentState == UploaderQueue.UPLOADING));
+						return !!(queue && (queue.queuedFiles.length > 0 || queue.numberOfUploads > 0 || !A.Object.isEmpty(queue.currentFiles)) && queue._currentState == UploaderQueue.UPLOADING);
 					},
 
 					_onDataRequest: function(event) {
@@ -1048,7 +1048,7 @@ AUI.add(
 
 							var folderNode = null;
 
-							var folder = (key !== instance.get(STR_FOLDER_ID));
+							var folder = key !== instance.get(STR_FOLDER_ID);
 
 							if (folder) {
 								folderNode = instance._getFolderEntryNode(target);
@@ -1087,7 +1087,7 @@ AUI.add(
 								instance._displayEntryError(fileNode, response.message, displayStyle);
 							}
 							else {
-								var displayStyleList = (displayStyle == STR_LIST);
+								var displayStyleList = displayStyle == STR_LIST;
 
 								var fileEntryId = A.JSON.parse(event.data).fileEntryId;
 
@@ -1129,9 +1129,9 @@ AUI.add(
 
 						var invalidFilesLength = invalidFiles.length;
 
-						var hasErrors = (invalidFilesLength !== 0);
+						var hasErrors = invalidFilesLength !== 0;
 
-						if (hasErrors && (invalidFilesLength !== totalFilesLength)) {
+						if (hasErrors && invalidFilesLength !== totalFilesLength) {
 							hasErrors = ERROR_RESULTS_MIXED;
 						}
 
@@ -1258,7 +1258,7 @@ AUI.add(
 
 						var folderId = instance._getTargetFolderId(target);
 
-						var folder = (folderId !== instance.get(STR_FOLDER_ID));
+						var folder = folderId !== instance.get(STR_FOLDER_ID);
 
 						if (folder) {
 							var folderEntryNode = instance._getFolderEntryNode(target);
@@ -1321,7 +1321,7 @@ AUI.add(
 
 								var strings = instance._strings;
 
-								if ((maxFileSize !== 0) && (size > maxFileSize)) {
+								if (maxFileSize !== 0 && size > maxFileSize) {
 									errorMessage = sub(strings.invalidFileSize, [instance.formatStorage(instance._maxFileSize)]);
 								}
 								else if (size === 0) {

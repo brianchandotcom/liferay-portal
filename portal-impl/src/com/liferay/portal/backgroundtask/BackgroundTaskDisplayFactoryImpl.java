@@ -17,14 +17,10 @@ package com.liferay.portal.backgroundtask;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplay;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactory;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
-import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskDisplay;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-
-import java.util.Locale;
 
 /**
  * @author Andrew Betts
@@ -32,12 +28,9 @@ import java.util.Locale;
 public class BackgroundTaskDisplayFactoryImpl
 	implements BackgroundTaskDisplayFactory {
 
+	@Override
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
-		long backgroundTaskId, Locale locale) {
-
-		BackgroundTask backgroundTask =
-			BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
-				backgroundTaskId);
+		BackgroundTask backgroundTask) {
 
 		if (backgroundTask == null) {
 			return null;
@@ -46,22 +39,17 @@ public class BackgroundTaskDisplayFactoryImpl
 		BackgroundTaskExecutor backgroundTaskExecutor =
 			backgroundTask.getBackgroundTaskExecutor();
 
-		Class clazz = backgroundTaskExecutor.getBackgroundTaskDisplay();
+		return backgroundTaskExecutor.getBackgroundTaskDisplay(backgroundTask);
+	}
 
-		try {
-			Class[] parameterTypes = {BackgroundTask.class, Locale.class};
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		long backgroundTaskId) {
 
-			Object[] arguments = {backgroundTask, locale};
+		BackgroundTask backgroundTask =
+			BackgroundTaskLocalServiceUtil.fetchBackgroundTask(
+				backgroundTaskId);
 
-			return (BackgroundTaskDisplay)InstanceFactory.newInstance(
-				clazz.getName(), parameterTypes, arguments);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Unable to create BackgroundTaskDisplay " + e.getMessage(), e);
-		}
-
-		return new BaseBackgroundTaskDisplay(backgroundTask, locale);
+		return getBackgroundTaskDisplay(backgroundTask);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

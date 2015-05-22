@@ -14,14 +14,20 @@
 
 package com.liferay.portal.kernel.backgroundtask;
 
-import java.util.Locale;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.model.BackgroundTask;
 
 /**
  * @author Andrew Betts
  */
+@ProviderType
 public interface BackgroundTaskDisplayFactory {
 
 	public BackgroundTaskDisplay getBackgroundTaskDisplay(
-		long backgroundTaskId, Locale locale);
+		BackgroundTask backgroundTask);
+
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		long backgroundTaskId);
 
 }

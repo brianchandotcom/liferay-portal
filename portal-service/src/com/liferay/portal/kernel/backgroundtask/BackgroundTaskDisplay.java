@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.json.JSONObject;
 
 import java.io.Serializable;
 
+import java.util.Locale;
+
 /**
  * @author Andrew Betts
  */
@@ -25,7 +27,11 @@ public interface BackgroundTaskDisplay extends Serializable {
 
 	public JSONObject getDetails();
 
+	public JSONObject getDetails(Locale locale);
+
 	public String getMessage();
+
+	public String getMessage(Locale locale);
 
 	public int getPercentage();
 

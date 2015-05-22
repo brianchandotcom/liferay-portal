@@ -37,7 +37,7 @@ String backgroundTaskStatusMessage = backgroundTask.getStatusMessage();
 	<c:otherwise>
 
 		<%
-		JSONObject details = backgroundTaskDisplay.getDetails();
+		JSONObject details = backgroundTaskDisplay.getDetails(locale);
 
 		String detailsHeader = details.getString("detailHeader");
 		%>

@@ -1062,13 +1062,8 @@ public class LiferaySeleniumHelper {
 
 		// LPS-55835, temporary workaround while Brian Wulbern investigates it
 
-		if (line.contains("Current URL")) {
-			if (line.contains(
-					"java.lang.RuntimeException: Unable to get class name" +
-						" from id 0")) {
-
-				return true;
-			}
+		if (line.matches("Current URL.*add_panel generates exception:")) {
+			return true;
 		}
 
 		// LRQA-14442, temporary workaround until Kiyoshi Lee fixes it

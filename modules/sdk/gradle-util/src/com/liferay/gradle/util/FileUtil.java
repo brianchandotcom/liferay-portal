@@ -51,6 +51,23 @@ public class FileUtil {
 		return absolutePath.replace('\\', '/');
 	}
 
+	public static void jar(
+		Project project, final File destinationFile, final String duplicate,
+		final boolean update, final String[][] filesets) {
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall(AntBuilder antBuilder) {
+				_invokeAntMethodJar(
+					antBuilder, destinationFile, duplicate, update, filesets);
+			}
+
+		};
+
+		project.ant(closure);
+	}
+
 	public static Properties readProperties(File file) throws Exception {
 		Properties properties = new Properties();
 
@@ -78,6 +95,22 @@ public class FileUtil {
 		Path relativePath = startPath.relativize(path);
 
 		return relativePath.toString();
+	}
+
+	public static File replaceExtension(File file, String extension) {
+		String fileName = file.getPath();
+
+		int pos = fileName.lastIndexOf('.');
+
+		if (pos != -1) {
+			if (Validator.isNotNull(extension) && !extension.startsWith(".")) {
+				extension = "." + extension;
+			}
+
+			fileName = fileName.substring(0, pos) + extension;
+		}
+
+		return new File(fileName);
 	}
 
 	public static String stripExtension(String fileName) {
@@ -134,6 +167,41 @@ public class FileUtil {
 			paramName, paramValue);
 
 		antBuilder.invokeMethod(method, args);
+	}
+
+	private static void _invokeAntMethodFileset(
+		AntBuilder antBuilder, String[] fileset) {
+
+		Map<String, String> args = new HashMap<>();
+
+		args.put("dir", fileset[0]);
+		args.put("includes", fileset[1]);
+
+		antBuilder.invokeMethod("fileset", args);
+	}
+
+	private static void _invokeAntMethodJar(
+		final AntBuilder antBuilder, File destinationFile, String duplicate,
+		boolean update, final String[][] filesets) {
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("destfile", destinationFile);
+		args.put("duplicate", duplicate);
+		args.put("update", update);
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall() {
+				for (String[] fileset : filesets) {
+					_invokeAntMethodFileset(antBuilder, fileset);
+				}
+			}
+
+		};
+
+		antBuilder.invokeMethod("jar", new Object[] {args, closure});
 	}
 
 	private static void _invokeAntMethodPatternset(

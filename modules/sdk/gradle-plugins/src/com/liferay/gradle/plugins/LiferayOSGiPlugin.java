@@ -17,6 +17,7 @@ package com.liferay.gradle.plugins;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
+import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -26,21 +27,29 @@ import java.io.File;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Properties;
+import java.util.concurrent.Callable;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
 import org.dm.gradle.plugins.bundle.JarBuilder;
 
+import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
+import org.gradle.api.Task;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.bundling.War;
 import org.gradle.internal.Factory;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class LiferayOSGiPlugin extends LiferayJavaPlugin {
+
+	public static final String AUTO_UPDATE_XML_TASK_NAME = "autoUpdateXml";
 
 	@Override
 	public void apply(Project project) {
@@ -53,6 +62,141 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected LiferayExtension addLiferayExtension(Project project) {
 		return GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayOSGiExtension.class);
+	}
+
+	protected DirectDeployTask addTaskAutoUpdateXml(final Project project) {
+		DirectDeployTask directDeployTask = GradleUtil.addTask(
+			project, AUTO_UPDATE_XML_TASK_NAME, DirectDeployTask.class);
+
+		directDeployTask.setAppServerDeployDir(
+			directDeployTask.getTemporaryDir());
+		directDeployTask.setWebAppType("portlet");
+
+		directDeployTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					DirectDeployTask directDeployTask = (DirectDeployTask)task;
+
+					Jar jar = (Jar)GradleUtil.getTask(
+						directDeployTask.getProject(),
+						JavaPlugin.JAR_TASK_NAME);
+
+					File jarFile = jar.getArchivePath();
+
+					jarFile.renameTo(directDeployTask.getWebAppFile());
+				}
+
+			});
+
+		directDeployTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					DirectDeployTask directDeployTask = (DirectDeployTask)task;
+
+					Project project = directDeployTask.getProject();
+
+					File warFile = directDeployTask.getWebAppFile();
+
+					Jar jar = (Jar)GradleUtil.getTask(
+						project, JavaPlugin.JAR_TASK_NAME);
+
+					String deployedPluginDirName = jar.getArchiveName();
+
+					deployedPluginDirName = deployedPluginDirName.substring(
+						0, deployedPluginDirName.lastIndexOf('.'));
+
+					File deployedPluginDir = new File(
+						directDeployTask.getAppServerDeployDir(),
+						deployedPluginDirName);
+
+					if (!deployedPluginDir.exists()) {
+						deployedPluginDir = new File(
+							directDeployTask.getAppServerDeployDir(),
+							project.getName());
+					}
+
+					deployedPluginDirName = project.relativePath(
+						deployedPluginDir);
+
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
+					String[][] filesets = new String[][] {
+						{
+							project.relativePath(
+								liferayExtension.getAppServerPortalDir()),
+							"WEB-INF/tld/c.tld"
+						},
+						{
+							deployedPluginDirName,
+							"WEB-INF/liferay-web.xml,WEB-INF/web.xml"
+						},
+						{
+							deployedPluginDirName, "WEB-INF/tld/*"
+						}
+					};
+
+					FileUtil.jar(project, warFile, "preserve", true, filesets);
+
+					warFile.renameTo(jar.getArchivePath());
+				}
+
+			});
+
+		directDeployTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					LiferayOSGiExtension liferayOSGiExtension =
+						GradleUtil.getExtension(
+							project, LiferayOSGiExtension.class);
+
+					if (liferayOSGiExtension.isAutoUpdateXml() &&
+						FileUtil.exists(
+							project, "docroot/WEB-INF/portlet.xml")) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+			});
+
+		TaskInputs taskInputs = directDeployTask.getInputs();
+
+		taskInputs.file(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					Jar jar = (Jar)GradleUtil.getTask(
+						project, JavaPlugin.JAR_TASK_NAME);
+
+					return jar.getArchivePath();
+				}
+
+			});
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		jar.finalizedBy(directDeployTask);
+
+		return directDeployTask;
+	}
+
+	@Override
+	protected void addTasks(Project project) {
+		super.addTasks(project);
+
+		addTaskAutoUpdateXml(project);
 	}
 
 	@Override
@@ -110,6 +254,26 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		configureSourceSetMain(project, classesDir, srcDir);
 	}
 
+	protected void configureTaskAutoUpdateXml(Project project) {
+		DirectDeployTask directDeployTask =
+			(DirectDeployTask)GradleUtil.getTask(
+				project, AUTO_UPDATE_XML_TASK_NAME);
+
+		configureTaskAutoUpdateXmlWebAppFile(directDeployTask);
+	}
+
+	protected void configureTaskAutoUpdateXmlWebAppFile(
+		DirectDeployTask directDeployTask) {
+
+		Jar jar = (Jar)GradleUtil.getTask(
+			directDeployTask.getProject(), JavaPlugin.JAR_TASK_NAME);
+
+		File warFile = FileUtil.replaceExtension(
+			jar.getArchivePath(), War.WAR_EXTENSION);
+
+		directDeployTask.setWebAppFile(warFile);
+	}
+
 	@Override
 	protected void configureTaskBuildServiceOsgiModule(
 		BuildServiceTask buildServiceTask) {
@@ -163,6 +327,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.configureTasks(project, liferayExtension);
 
 		configureTaskJar(project);
+
+		configureTaskAutoUpdateXml(project);
 	}
 
 	@Override

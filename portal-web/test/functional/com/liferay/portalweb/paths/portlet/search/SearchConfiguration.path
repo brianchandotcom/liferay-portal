@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>SearchConfiguration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">SearchConfiguration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>BASIC_DISPLAY_SITE_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayScopeFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_DISPLAY_ASSET_TYPE_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayAssetTypeFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_DISPLAY_ASSET_TAGS_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayAssetTagsFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_DISPLAY_ASSET_CATEGORIES_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayAssetCategoriesFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_DISPLAY_FOLDER_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayFolderFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_DISPLAY_USER_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayUserFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC_DISPLAY_MODIFIED_RANGE_FACET_CHECKBOX</td>
+	<td>//input[contains(@id,'displayModifiedRangeFacet')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADVANCED_SEARCH_CONFIGURATION</td>
+	<td>//textarea[contains(@id,'searchConfiguration')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

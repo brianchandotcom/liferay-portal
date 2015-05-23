@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLEAR_SEARCH</td>
+	<td>//input[@type='image' and @title='Clear Search']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CLOSE</td>
 	<td>//button[contains(@class,'close')]</td>
 	<td></td>

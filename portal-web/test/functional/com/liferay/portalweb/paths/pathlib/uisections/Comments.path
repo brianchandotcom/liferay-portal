@@ -24,8 +24,33 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COMMENT_BODY</td>
+	<td>//div[@class='lfr-discussion-message']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>COMMENT_FIELD</td>
+	<td>//div[contains(@id,'postReplyBody')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COMMENT_LABEL</td>
 	<td>//label[contains(.,'Comment')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DELETE_LINK</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[contains(.,'Delete')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_LINK</td>
+	<td>//ul[@class='lfr-discussion-actions']/li[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_COUNT_PANEL</td>
+	<td>//div[@class='panel-toggle']/span[contains(.,'Comments')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -65,7 +90,7 @@
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//span[@class='user-name']</td>
+	<td>//header[@class='lfr-discussion-message-author']/a | //span[@class='user-name']</td>
 	<td></td>
 </tr>
 </tbody>

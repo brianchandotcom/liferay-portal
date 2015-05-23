@@ -259,6 +259,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REPLY_AS</td>
+	<td>//button[contains(.,'Reply As...')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REPLY_BUTTON</td>
 	<td>//button[contains(.,'Reply')]</td>
 	<td></td>

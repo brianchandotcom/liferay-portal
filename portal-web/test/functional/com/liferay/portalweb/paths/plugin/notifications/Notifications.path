@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Notifications</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Notifications</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>RETURN_TO_FULL_PAGE</td>
+	<td>//menu[contains(@id,'notificationsportlet')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UNREAD_COUNT</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[@class='count']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NAVIGATION-->
+<tr>
+	<td>NAVIGATION_NOTIFICATIONS</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Notifications')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_REQUESTS</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Requests')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAVIGATION_NOTIFICATION_DELIVERY</td>
+	<td>//div[contains(@class,'user-notifications-sidebar')]//a/span[contains(.,'Notification Delivery')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NOTIFICATIONS-->
+<tr>
+	<td>MARK_AS_READ</td>
+	<td>//div/a[contains(.,'Mark as Read')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_THUMBNAIL_1</td>
+	<td>xpath=(//li[contains(@class,'user-notification')]//span[@class='user-thumbnail'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_THUMBNAIL_2</td>
+	<td>xpath=(//li[contains(@class,'user-notification')]//span[@class='user-thumbnail'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_THUMBNAIL_3</td>
+	<td>xpath=(//li[contains(@class,'user-notification')]//span[@class='user-thumbnail'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_1</td>
+	<td>xpath=(//li[contains(@class,'user-notification')]//div[@class='body'])[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_2</td>
+	<td>xpath=(//li[contains(@class,'user-notification')]//div[@class='body'])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATIONS_CONTENT_3</td>
+	<td>xpath=(//li[contains(@class,'user-notification')]//div[@class='body'])[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--NOTIFICATIONS_DELIVERY-->
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr[contains(.,'${key_actionType}')]//label[contains(.,'${key_notificationType}')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_1</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr/td[2]//input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_2</td>
+	<td>//table[contains(.,'${key_contentType}')]//div[2]/div/label/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_LABEL_1</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr/td[2]//label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_CHECKBOX_LABEL_2</td>
+	<td>//table[contains(.,'${key_contentType}')]//div[2]/div/label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_TEXT_1</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr[1]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NOTIFICATION_DELIVERY_TEXT_2</td>
+	<td>//table[contains(.,'${key_contentType}')]//tr[2]/td</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

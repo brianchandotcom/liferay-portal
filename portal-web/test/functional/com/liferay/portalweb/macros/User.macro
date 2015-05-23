@@ -959,10 +959,7 @@
 	<command name="deleteCP">
 		<execute function="AssertClick" locator1="CPUsersandorganizations#SEARCH_ALL_USERS" value1="All Users" />
 
-		<execute function="Click" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_ADVANCED" />
-		<execute function="Type" locator1="CPUsersandorganizationsViewusers#ADVANCED_SEARCH_FIRST_NAME_FIELD" value1="${userFirstName}" />
-		<execute function="Select" locator1="CPUsersandorganizationsViewusers#ADVANCED_SEARCH_STATUS_SELECT" value1="Inactive" />
-		<execute function="AssertClick" locator1="CPUsersandorganizationsViewusers#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute function="Select" locator1="Select#USER_STATUS" value1="Inactive" />
 
 		<if>
 			<condition function="IsElementPresent" locator1="CPUsersandorganizationsViewusers#USER_TABLE_ALL_CHECKBOX" />

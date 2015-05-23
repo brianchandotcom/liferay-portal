@@ -58,6 +58,11 @@
 	<td>//div[label[contains(.,'Sites')]]/select</td>
 	<td></td>
 </tr>
+<tr>
+	<td>USER_STATUS</td>
+	<td>//select[contains(@id,'StatusSelect')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

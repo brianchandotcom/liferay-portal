@@ -5,44 +5,32 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
 		<execute function="Select" locator1="PGBlogsAggregatorConfiguration#SELECTION_METHOD_SELECT" value1="${selectionMethod}" />
-		<execute function="AssertClick" locator1="PGBlogsAggregatorConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGBlogsAggregatorConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
 	<command name="viewBlogsEntryViaBAPortletPG">
-		<if>
-			<isset var="viewEntryTitle" />
-			<then>
-				<for list="${viewEntryTitle}" param="entryTitle">
-					<var name="key_entryTitle" value="${entryTitle}" />
+		<for list="${viewEntryTitle}" param="entryTitle">
+			<var name="key_entryTitle" value="${entryTitle}" />
 
-					<execute function="AssertTextEquals" locator1="PGBlogsAggregator#ENTRY_TITLE" value1="${entryTitle}" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="viewNoEntryTitle" />
-			<then>
-				<for list="${viewNoEntryTitle}" param="entryTitle">
-					<var name="key_entryTitle" value="${entryTitle}" />
-
-					<execute function="AssertElementNotPresent" locator1="PGBlogsAggregator#ENTRY_TITLE" />
-				</for>
-			</then>
-		</if>
+			<execute function="AssertTextEquals" locator1="BlogsAggregator#ENTRY_TITLE" value1="${entryTitle}" />
+		</for>
 	</command>
 
 	<command name="viewEntryAsGuestViaBlogsAggregatorPG">
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="BlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
 
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewEntryViaBlogsAggregatorPG">
@@ -50,8 +38,18 @@
 
 		<execute function="AssertClick#assertPartialTextClickAt" locator1="BlogsAggregator#ENTRY_READ_MORE" value1="Read More" />
 
-		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="viewNoBlogsEntryViaBAPortletPG">
+		<for list="${viewNoEntryTitle}" param="entryTitle">
+			<var name="key_entryTitle" value="${entryTitle}" />
+
+			<execute function="AssertElementNotPresent" locator1="BlogsAggregator#ENTRY_TITLE" />
+		</for>
 	</command>
 
 	<command name="viewNoEntryViaBlogsAggregatorPG">
@@ -63,31 +61,18 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="PGBlogsAggregatorConfiguration#ORGANIZATION_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
 		<execute function="SelectFrame" value1="relative=top" />
-		<execute function="SelectFrame" locator1="PGBlogsAggregatorConfigurationSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
+
+		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
 
 		<var name="key_orgName" value="${orgName}" />
 
-		<if>
-			<equals arg1="${parentOrgExist}" arg2="true" />
-			<then>
-				<var name="key_orgName" value="${subOrgName}" />
-
-				<execute function="AssertTextEquals" locator1="PGBlogsAggregatorConfigurationSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${subOrgName}" />
-				<execute function="AssertTextEquals" locator1="PGBlogsAggregatorConfigurationSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
-			</then>
-			<elseif>
-				<equals arg1="${parentOrgExist}" arg2="false" />
-				<then>
-					<execute function="AssertTextEquals" locator1="PGBlogsAggregatorConfigurationSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
-					<execute function="AssertTextEquals" locator1="PGBlogsAggregatorConfigurationSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="" />
-				</then>
-			</elseif>
-		</if>
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -97,15 +82,37 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute function="AssertTextPresent" locator1="PGBlogsAggregatorConfiguration#CONFIGURATION_TITLE" value1="Blogs Aggregator" />
+		<execute function="AssertTextPresent" locator1="Portlet#TITLE" value1="Blogs Aggregator" />
 
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_SETUP" value1="Setup" />
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
 
-		<execute function="AssertClick" locator1="PGBlogsAggregatorConfiguration#ORGANIZATION_SELECT_BUTTON" value1="Select" />
+		<execute function="AssertClick" locator1="Configuration#NAVIGATION_SETUP" value1="Setup" />
+
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 		<execute function="SelectFrame" value1="relative=top" />
 
-		<execute function="SelectFrame" locator1="PGBlogsAggregatorConfigurationSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
-		<execute function="AssertElementPresent" locator1="PGBlogsAggregatorConfigurationSelectOrganization#NO_ORGANIZATIONS_MESSAGE" />
+		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
+		<execute function="AssertElementPresent" locator1="Message#INFO_1" />
+	</command>
+
+	<command name="viewSubOrganizationPG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
+
+		<var name="key_orgName" value="${subOrgName}" />
+
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${subOrgName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_PARENT_ORGANIZATION" value1="${parentOrgName}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

@@ -19,6 +19,36 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
 	</set-up>
 
 	<tear-down>
@@ -27,9 +57,15 @@
 		<execute macro="Page#tearDownPG" />
 
 		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
+
+		<execute macro="User#tearDownCP" />
 	</tear-down>
 
 	<command name="ViewNoWebsiteNotificationForNewDocumentInFolder" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery">
 			<var name="notificationCount" value="0" />
 		</execute>
@@ -56,14 +92,40 @@
 
 		<execute macro="DMFolder#subscribePG" />
 
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.docx" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewCount">
@@ -72,6 +134,10 @@
 	</command>
 
 	<command name="ViewNoWebsiteNotificationForUpdatedDocumentInFolder" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery">
 			<var name="notificationCount" value="0" />
 		</execute>
@@ -104,12 +170,19 @@
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
-			<var name="notificationCount" value="1" />
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="DMFolder#gotoPG">
@@ -121,12 +194,19 @@
 			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 
-		<execute macro="Notifications#viewCountAlert">
-			<var name="notificationCount" value="1" />
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
 		</execute>
 	</command>
 
@@ -146,14 +226,40 @@
 
 		<execute macro="DMFolder#subscribePG" />
 
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.docx" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewCountAlert">
@@ -163,9 +269,9 @@
 		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#viewNewContent">
-			<var name="assetType" value="Document" />
+			<var name="assetType" value="document" />
 			<var name="contentBody" value="DM Document Title" />
-			<var name="user" value="Test Test" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">
@@ -195,21 +301,47 @@
 			<var name="dmFolderName" value="DM Folder Name" />
 		</execute>
 
+		<execute macro="DMFolder#subscribePG" />
+
 		<execute macro="DMDocument#addPG">
 			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.docx" />
 			<var name="dmDocumentTitle" value="DM Document Title" />
 		</execute>
 
-		<execute macro="DMFolder#subscribePG" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMFolder#gotoPG">
+			<var name="dmFolderName" value="DM Folder Name" />
+		</execute>
 
 		<execute macro="DMDocument#editPG">
 			<var name="dmDocumentTitle" value="DM Document Title" />
 			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
 		</execute>
 
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+		<execute macro="Notifications#viewCount">
+			<var name="notificationCount" value="0" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginUserPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
 		</execute>
 
 		<execute macro="Notifications#viewCountAlert">
@@ -219,9 +351,9 @@
 		<execute macro="Notifications#gotoDockbar" />
 
 		<execute macro="Notifications#viewUpdatedContent">
-			<var name="assetType" value="Document" />
+			<var name="assetType" value="document" />
 			<var name="contentBody" value="DM Document Title Edit" />
-			<var name="user" value="Test Test" />
+			<var name="user" value="userfn userln" />
 		</execute>
 
 		<execute macro="Notifications#navigateToContent">

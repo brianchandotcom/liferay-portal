@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADVANCED</td>
+	<td>//input[contains(@id,'advanced') and @type='radio']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BASIC</td>
+	<td>//input[contains(@id,'basic') and @type='radio']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CONTENT_ALL_CONTENT</td>
 	<td>//input[@id='_156_allContent']</td>
 	<td></td>

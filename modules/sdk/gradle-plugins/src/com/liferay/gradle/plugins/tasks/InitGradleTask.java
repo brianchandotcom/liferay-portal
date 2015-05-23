@@ -246,9 +246,14 @@ public class InitGradleTask extends DefaultTask {
 			}
 		}
 
-		return wrapContents(
-			contents, 1, "(", WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-			")", true);
+		String configurationName =
+			WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME;
+
+		if (FileUtil.exists(_project, "bnd.bnd")) {
+			configurationName = LiferayJavaPlugin.PROVIDED_CONFIGURATION_NAME;
+		}
+
+		return wrapContents(contents, 1, "(", configurationName, ")", true);
 	}
 
 	protected List<String> getBuildDependenciesTestCompile() {

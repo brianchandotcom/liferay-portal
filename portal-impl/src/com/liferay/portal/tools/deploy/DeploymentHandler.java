@@ -16,7 +16,7 @@ package com.liferay.portal.tools.deploy;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.io.File;
 

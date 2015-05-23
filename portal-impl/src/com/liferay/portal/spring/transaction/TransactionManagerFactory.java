@@ -18,9 +18,9 @@ import com.liferay.portal.dao.shard.ShardLastSessionRecorderHibernateTransaction
 import com.liferay.portal.kernel.dao.shard.ShardSessionFactoryTargetSource;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.SortedProperties;
 import com.liferay.portal.spring.hibernate.LastSessionRecorderHibernateTransactionManager;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 

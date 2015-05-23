@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import com.liferay.portal.kernel.cache.PortalCacheManagerNames;
 import com.liferay.portal.kernel.cache.PortalCacheManagerTypes;
 import com.liferay.portal.kernel.cache.configurator.PortalCacheConfiguratorSettings;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.AggregateClassLoader;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.Serializable;
 
@@ -44,8 +46,8 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(
 	immediate = true,
 	property = {
-		"portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM,
-		"portal.cache.manager.type=" + PortalCacheManagerTypes.EHCACHE
+		PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.MULTI_VM,
+		PortalCacheManager.PORTAL_CACHE_MANAGER_TYPE + "=" + PortalCacheManagerTypes.EHCACHE
 	},
 	service = PortalCacheManager.class
 )
@@ -58,7 +60,7 @@ public class MultiVMEhcachePortalCacheManager
 	protected void activate(Map<String, Object> properties) {
 		setClusterAware(true);
 		setConfigFile(props.get(PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
-		setDefaultConfigFile("/ehcache/liferay-multi-vm-clustered.xml");
+		setDefaultConfigFile(_DEFAULT_CONFIG_FILE_NAME);
 		setMpiOnly(true);
 		setName(PortalCacheManagerNames.MULTI_VM);
 
@@ -78,6 +80,12 @@ public class MultiVMEhcachePortalCacheManager
 		finally {
 			ClassLoaderUtil.setContextClassLoader(contextClassLoader);
 		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Activated " + PortalCacheManagerNames.MULTI_VM + " " +
+					PortalCacheManagerTypes.EHCACHE);
+		}
 	}
 
 	@Deactivate
@@ -91,10 +99,10 @@ public class MultiVMEhcachePortalCacheManager
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
+		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(portal.cache.manager.name=" + PortalCacheManagerNames.MULTI_VM + ")"
+		target = "(" + PortalCacheManager.PORTAL_CACHE_MANAGER_NAME + "=" + PortalCacheManagerNames.MULTI_VM + ")"
 	)
 	protected void setPortalCacheConfiguratorSettings(
 		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
@@ -110,5 +118,11 @@ public class MultiVMEhcachePortalCacheManager
 	protected void unsetPortalCacheConfiguratorSettings(
 		PortalCacheConfiguratorSettings portalCacheConfiguratorSettings) {
 	}
+
+	private static final String _DEFAULT_CONFIG_FILE_NAME =
+		"/ehcache/liferay-multi-vm-clustered.xml";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MultiVMEhcachePortalCacheManager.class);
 
 }

@@ -27,6 +27,12 @@ import java.util.Set;
  */
 public interface PortalCacheManager<K extends Serializable, V> {
 
+	public static final String PORTAL_CACHE_MANAGER_NAME =
+		"portal.cache.manager.name";
+
+	public static final String PORTAL_CACHE_MANAGER_TYPE =
+		"portal.cache.manager.type";
+
 	@Proxy
 	public void clearAll() throws PortalCacheException;
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.json.web.service.extender.internal;
 
 import com.liferay.portal.kernel.jsonwebservice.JSONWebServiceActionsManager;
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;

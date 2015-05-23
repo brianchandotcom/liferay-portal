@@ -26,11 +26,11 @@ import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.DistributedRegistry;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ClassLoaderPool;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.ThreadLocalDistributor;
 import com.liferay.portal.kernel.util.ThreadLocalDistributorRegistry;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.util.ClassLoaderUtil;
 import com.liferay.portal.util.WebKeys;
 
 import java.io.EOFException;

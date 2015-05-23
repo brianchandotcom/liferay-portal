@@ -12,11 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.util;
-
-import com.liferay.portal.kernel.util.AggregateClassLoader;
-import com.liferay.portal.kernel.util.ClassLoaderPool;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+package com.liferay.portal.kernel.util;
 
 /**
  * @author Raymond Augé

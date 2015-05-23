@@ -34,7 +34,6 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	src/ehcache,\
 	@lib/ehcache.jar!/com/*,\
 	@lib/ehcache.jar!/net/*,\
 	@lib/ehcache.jar!/org/*,\

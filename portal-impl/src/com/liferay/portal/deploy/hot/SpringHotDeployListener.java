@@ -17,8 +17,8 @@ package com.liferay.portal.deploy.hot;
 import com.liferay.portal.kernel.deploy.hot.BaseHotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
 import com.liferay.portal.kernel.deploy.hot.HotDeployException;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.spring.context.PortletContextLoaderListener;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.HashMap;
 import java.util.Map;

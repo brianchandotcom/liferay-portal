@@ -14,7 +14,7 @@
 
 package com.liferay.portal.spring.util;
 
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 /**
  * @author Brian Wing Shun Chan

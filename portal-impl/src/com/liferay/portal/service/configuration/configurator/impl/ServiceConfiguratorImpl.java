@@ -217,6 +217,17 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 			return;
 		}
 		
+		String singleVMLocation = configuration.get(
+			PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION);
+		String multiVMLocation = configuration.get(
+			PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION);
+
+		if (Validator.isNull(singleVMLocation) &&
+			Validator.isNull(multiVMLocation)) {
+			
+			return;
+		}
+		
 		if (_serviceRegistrar == null) {
 			Registry registry = RegistryUtil.getRegistry();
 
@@ -224,35 +235,31 @@ public class ServiceConfiguratorImpl implements ServiceConfigurator {
 				PortalCacheConfiguratorSettings.class);
 		}
 
-		Map<String, Object> properties = new HashMap<>();
+		if (Validator.isNotNull(singleVMLocation)) {
+			Map<String, Object> properties = new HashMap<>();
 
-		properties.put(
-			"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
+			properties.put(
+				"portal.cache.manager.name", PortalCacheManagerNames.SINGLE_VM);
 
-		PortalCacheConfiguratorSettings
-			singleVMPortalCacheConfigurationSettings =
-			new PortalCacheConfiguratorSettings(
-				classLoader,
-				configuration.get(
-					PropsKeys.EHCACHE_SINGLE_VM_CONFIG_LOCATION));
+			_serviceRegistrar.registerService(
+				PortalCacheConfiguratorSettings.class,
+				new PortalCacheConfiguratorSettings(
+					classLoader, singleVMLocation),
+				properties);
+		}
 
-		_serviceRegistrar.registerService(
-			PortalCacheConfiguratorSettings.class,
-			singleVMPortalCacheConfigurationSettings, properties);
-		
-		properties = new HashMap<>();
+		if (Validator.isNotNull(multiVMLocation)) {
+			Map<String, Object> properties = new HashMap<>();
 
-		properties.put(
-			"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
-		
-		PortalCacheConfiguratorSettings multiVMPortalCacheConfiguratorSettings =
-			new PortalCacheConfiguratorSettings(
-				classLoader, configuration.get(
-					PropsKeys.EHCACHE_MULTI_VM_CONFIG_LOCATION));
+			properties.put(
+				"portal.cache.manager.name", PortalCacheManagerNames.MULTI_VM);
 
-		_serviceRegistrar.registerService(
-			PortalCacheConfiguratorSettings.class,
-			multiVMPortalCacheConfiguratorSettings, properties);
+			_serviceRegistrar.registerService(
+				PortalCacheConfiguratorSettings.class,
+				new PortalCacheConfiguratorSettings(
+					classLoader, multiVMLocation),
+				properties);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

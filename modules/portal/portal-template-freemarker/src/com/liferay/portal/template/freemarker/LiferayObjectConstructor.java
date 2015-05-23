@@ -14,7 +14,7 @@
 
 package com.liferay.portal.template.freemarker;
 
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 

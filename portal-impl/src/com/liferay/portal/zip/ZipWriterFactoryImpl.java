@@ -14,9 +14,9 @@
 
 package com.liferay.portal.zip;
 
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactory;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.io.File;
 

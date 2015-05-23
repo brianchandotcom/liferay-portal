@@ -39,13 +39,17 @@ public class MultiVMPoolImpl implements MultiVMPool {
 	public MultiVMPoolImpl() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("(&(objectClass=");
 		sb.append(PortalCacheManager.class.getName());
-		sb.append(")(portal.cache.manager.name=");
+		sb.append(")(");
+		sb.append(PortalCacheManager.PORTAL_CACHE_MANAGER_NAME);
+		sb.append("=");
 		sb.append(PortalCacheManagerNames.MULTI_VM);
-		sb.append(")(portal.cache.manager.type=");
+		sb.append(")(");
+		sb.append(PortalCacheManager.PORTAL_CACHE_MANAGER_TYPE);
+		sb.append("=");
 		sb.append(PropsValues.PORTAL_CACHE_MANAGER_TYPE_MULTI_VM);
 		sb.append("))");
 

@@ -16,8 +16,8 @@ package com.liferay.portal.template.freemarker;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.template.freemarker.configuration.FreeMarkerEngineConfiguration;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import freemarker.core.Environment;
 import freemarker.core.TemplateClassResolver;

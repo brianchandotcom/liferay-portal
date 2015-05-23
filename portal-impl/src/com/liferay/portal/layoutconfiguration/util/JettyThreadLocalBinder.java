@@ -14,9 +14,9 @@
 
 package com.liferay.portal.layoutconfiguration.util;
 
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.DefaultThreadLocalBinder;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 /**
  * @author Shuyang Zhou

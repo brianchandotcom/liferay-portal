@@ -14,9 +14,9 @@
 
 package com.liferay.portal.javadoc;
 
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.ClassLoaderUtil;
 
 import java.util.Arrays;
 

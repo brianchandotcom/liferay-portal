@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.pacl.servlet;
 
-import com.liferay.portal.util.ClassLoaderUtil;
+import com.liferay.portal.kernel.util.ClassLoaderUtil;
 
 import java.io.IOException;
 

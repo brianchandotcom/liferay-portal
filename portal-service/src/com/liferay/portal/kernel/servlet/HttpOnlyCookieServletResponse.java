@@ -55,25 +55,15 @@ public class HttpOnlyCookieServletResponse extends HttpServletResponseWrapper {
 
 	@Override
 	public void addCookie(Cookie cookie) {
-		Set<String> httpOnlyCookieNamesExcludes =
-			getCookieHttpOnlyCookieNamesExcludes();
-
-		if (!httpOnlyCookieNamesExcludes.contains(cookie.getName())) {
+		if (!_cookieHttpOnlyCookieNamesExcludes.contains(cookie.getName())) {
 			cookie.setHttpOnly(true);
 		}
 
 		super.addCookie(cookie);
 	}
 
-	private Set<String> getCookieHttpOnlyCookieNamesExcludes() {
-		if (_cookieHttpOnlyCookieNamesExcludes == null) {
-			_cookieHttpOnlyCookieNamesExcludes = SetUtil.fromArray(
-				PropsUtil.getArray(PropsKeys.COOKIE_HTTP_ONLY_NAMES_EXCLUDES));
-		}
-
-		return _cookieHttpOnlyCookieNamesExcludes;
-	}
-
-	private static Set<String> _cookieHttpOnlyCookieNamesExcludes;
+	private static final Set<String> _cookieHttpOnlyCookieNamesExcludes =
+		SetUtil.fromArray(
+			PropsUtil.getArray(PropsKeys.COOKIE_HTTP_ONLY_NAMES_EXCLUDES));
 
 }

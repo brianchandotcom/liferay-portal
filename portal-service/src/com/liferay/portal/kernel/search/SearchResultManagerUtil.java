@@ -23,6 +23,11 @@ import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 /**
  * @author Adolfo Pérez
  */
@@ -32,6 +37,15 @@ public class SearchResultManagerUtil {
 		throws PortalException {
 
 		return _instance._createSearchResult(document);
+	}
+
+	public static void updateSearchResult(
+			SearchResult searchResult, Document document, Locale locale,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
+
+		_instance._updateSearchResult(
+			searchResult, document, locale, portletRequest, portletResponse);
 	}
 
 	private SearchResultManagerUtil() {
@@ -69,6 +83,18 @@ public class SearchResultManagerUtil {
 		return searchResultManager;
 	}
 
+	private void _updateSearchResult(
+			SearchResult searchResult, Document document, Locale locale,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
+
+		SearchResultManager searchResultManager = _getSearchResultManager(
+			document);
+
+		searchResultManager.updateSearchResult(
+			searchResult, document, locale, portletRequest, portletResponse);
+	}
+
 	private static final SearchResultManagerUtil _instance =
 		new SearchResultManagerUtil();
 
@@ -91,7 +117,7 @@ public class SearchResultManagerUtil {
 			});
 
 	private static class DefaultSearchResultManagerImpl
-		implements SearchResultManager {
+		extends BaseSearchResultManager {
 
 		@Override
 		public SearchResult createSearchResult(Document document) {

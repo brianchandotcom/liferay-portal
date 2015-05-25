@@ -15,8 +15,21 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+
+import java.util.Locale;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Adolfo Pérez
@@ -44,5 +57,117 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 
 		return new SearchResult(entryClassName, entryClassPK);
 	}
+
+	@Override
+	public void updateSearchResult(
+			SearchResult searchResult, Document document, Locale locale,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
+
+		String entryClassName = GetterUtil.getString(
+			document.get(Field.ENTRY_CLASS_NAME));
+		long entryClassPK = GetterUtil.getLong(
+			document.get(Field.ENTRY_CLASS_PK));
+
+		FileEntry fileEntry = null;
+		MBMessage mbMessage = null;
+
+		if (entryClassName.equals(DLFileEntry.class.getName()) ||
+			entryClassName.equals(MBMessage.class.getName())) {
+
+			long classNameId = GetterUtil.getLong(
+				document.get(Field.CLASS_NAME_ID));
+			long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+
+			if ((classPK > 0) && (classNameId > 0)) {
+				if (entryClassName.equals(DLFileEntry.class.getName())) {
+					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+						entryClassPK);
+				}
+				else if (entryClassName.equals(MBMessage.class.getName())) {
+					mbMessage = MBMessageLocalServiceUtil.getMessage(
+						entryClassPK);
+				}
+			}
+		}
+
+		if (fileEntry != null) {
+			Summary summary = getSummary(
+				document, DLFileEntry.class.getName(),
+				fileEntry.getFileEntryId(), locale, portletRequest,
+				portletResponse);
+
+			searchResult.addFileEntry(fileEntry, summary);
+		}
+
+		if (mbMessage != null) {
+			searchResult.addMBMessage(mbMessage);
+		}
+
+		if ((mbMessage == null) && (fileEntry == null)) {
+			Summary summary = getSummary(
+				document, searchResult.getClassName(),
+				searchResult.getClassPK(), locale, portletRequest,
+				portletResponse);
+
+			searchResult.setSummary(summary);
+		}
+		else {
+			if (searchResult.getSummary() == null) {
+				Summary summary = getSummary(
+					searchResult.getClassName(), searchResult.getClassPK(),
+					locale);
+
+				searchResult.setSummary(summary);
+			}
+		}
+	}
+
+	protected static Summary getSummary(
+			Document document, String className, long classPK, Locale locale,
+			PortletRequest portletRequest, PortletResponse portletResponse)
+		throws PortalException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+
+		if (indexer != null) {
+			String snippet = document.get(Field.SNIPPET);
+
+			return indexer.getSummary(
+				document, snippet, portletRequest, portletResponse);
+		}
+
+		return getSummary(className, classPK, locale);
+	}
+
+	protected static Summary getSummary(
+			String className, long classPK, Locale locale)
+		throws PortalException {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				className);
+
+		if (assetRendererFactory == null) {
+			return null;
+		}
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			classPK);
+
+		if (assetRenderer == null) {
+			return null;
+		}
+
+		Summary summary = new Summary(
+			assetRenderer.getTitle(locale),
+			assetRenderer.getSearchSummary(locale));
+
+		summary.setMaxContentLength(SUMMARY_MAX_CONTENT_LENGTH);
+
+		return summary;
+	}
+
+	protected static final int SUMMARY_MAX_CONTENT_LENGTH = 200;
 
 }

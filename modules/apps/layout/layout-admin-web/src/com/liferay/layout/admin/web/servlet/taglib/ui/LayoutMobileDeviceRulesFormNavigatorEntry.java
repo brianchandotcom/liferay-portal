@@ -35,7 +35,7 @@ public class LayoutMobileDeviceRulesFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/mobile_device_rules.jsp";
+		return "/layout/mobile_device_rules.jsp";
 	}
 
 }

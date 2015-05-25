@@ -35,7 +35,7 @@ public class LayoutDetailsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/details.jsp";
+		return "/layout/details.jsp";
 	}
 
 }

@@ -35,7 +35,7 @@ public class LayoutCustomFieldsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/custom_fields.jsp";
+		return "/layout/custom_fields.jsp";
 	}
 
 }

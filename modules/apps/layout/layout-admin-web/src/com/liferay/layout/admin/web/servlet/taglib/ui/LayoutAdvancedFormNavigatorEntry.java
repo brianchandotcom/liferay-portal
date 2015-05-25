@@ -35,7 +35,7 @@ public class LayoutAdvancedFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/advanced.jsp";
+		return "/layout/advanced.jsp";
 	}
 
 }

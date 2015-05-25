@@ -35,7 +35,7 @@ public class LayoutSetJavaScriptFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout_set/javascript.jsp";
+		return "/layout_set/javascript.jsp";
 	}
 
 }

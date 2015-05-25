@@ -164,7 +164,7 @@ public class LayoutRevisionAssetRenderer extends BaseAssetRenderer {
 			portletRequest.setAttribute(
 				WebKeys.LAYOUT_REVISION, _layoutRevision);
 
-			return "/html/portlet/layouts_admin/asset/" + template + ".jsp";
+			return "/asset/" + template + ".jsp";
 		}
 		else {
 			return null;

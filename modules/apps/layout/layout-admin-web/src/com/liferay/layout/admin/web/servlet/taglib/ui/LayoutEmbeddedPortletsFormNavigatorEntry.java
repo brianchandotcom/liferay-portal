@@ -76,7 +76,7 @@ public class LayoutEmbeddedPortletsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/embedded_portlets.jsp";
+		return "/layout/embedded_portlets.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

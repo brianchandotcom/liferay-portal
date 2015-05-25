@@ -35,7 +35,7 @@ public class LayoutSetLookAndFeelFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout_set/look_and_feel.jsp";
+		return "/layout_set/look_and_feel.jsp";
 	}
 
 }

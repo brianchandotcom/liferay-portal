@@ -57,7 +57,7 @@ public class LayoutSetAdvancedFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout_set/advanced.jsp";
+		return "/layout_set/advanced.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

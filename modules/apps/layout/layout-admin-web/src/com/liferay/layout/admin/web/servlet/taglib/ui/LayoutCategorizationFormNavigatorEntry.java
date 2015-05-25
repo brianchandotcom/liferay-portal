@@ -35,7 +35,7 @@ public class LayoutCategorizationFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/categorization.jsp";
+		return "/layout/categorization.jsp";
 	}
 
 }

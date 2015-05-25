@@ -120,7 +120,7 @@ public class LayoutAssetRenderer extends BaseAssetRenderer {
 		if (template.equals(TEMPLATE_FULL_CONTENT)) {
 			portletRequest.setAttribute(WebKeys.LAYOUT, _layout);
 
-			return "/html/portlet/layouts_admin/asset/" + template + ".jsp";
+			return "/asset/" + template + ".jsp";
 		}
 		else {
 			return null;

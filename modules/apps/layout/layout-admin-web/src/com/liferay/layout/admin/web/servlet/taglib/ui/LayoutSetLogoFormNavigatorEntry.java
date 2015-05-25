@@ -60,7 +60,7 @@ public class LayoutSetLogoFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout_set/logo.jsp";
+		return "/layout_set/logo.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

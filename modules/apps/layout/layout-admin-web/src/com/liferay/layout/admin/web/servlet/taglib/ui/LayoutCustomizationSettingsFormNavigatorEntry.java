@@ -57,7 +57,7 @@ public class LayoutCustomizationSettingsFormNavigatorEntry
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/customization_settings.jsp";
+		return "/layout/customization_settings.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

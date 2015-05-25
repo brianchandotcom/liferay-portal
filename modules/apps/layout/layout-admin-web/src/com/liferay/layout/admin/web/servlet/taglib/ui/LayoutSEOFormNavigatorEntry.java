@@ -34,7 +34,7 @@ public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/layouts_admin/layout/seo.jsp";
+		return "/layout/seo.jsp";
 	}
 
 }

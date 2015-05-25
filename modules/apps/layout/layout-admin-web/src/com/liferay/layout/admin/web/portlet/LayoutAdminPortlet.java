@@ -605,8 +605,7 @@ public class LayoutAdminPortlet extends MVCPortlet {
 
 			PortletRequestDispatcher portletRequestDispatcher =
 				portletContext.getRequestDispatcher(
-					"/html/portlet/layouts_admin/layout/" +
-						"mobile_device_rules_rule_group_instances.jsp");
+					"/layout/mobile_device_rules_rule_group_instances.jsp");
 
 			portletRequestDispatcher.include(resourceRequest, resourceResponse);
 		}

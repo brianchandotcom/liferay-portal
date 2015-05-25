@@ -18,14 +18,44 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
  */
 public abstract class BaseEditorConfigContributor
 	implements EditorConfigContributor {
+
+	protected String getContentsLanguageDir(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		Locale contentsLocale = getContentsLocale(inputEditorTaglibAttributes);
+
+		return LanguageUtil.get(contentsLocale, "lang.dir");
+	}
+
+	protected String getContentsLanguageId(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		Locale contentsLocale = getContentsLocale(inputEditorTaglibAttributes);
+
+		return LocaleUtil.toLanguageId(contentsLocale);
+	}
+
+	protected Locale getContentsLocale(
+		Map<String, Object> inputEditorTaglibAttributes) {
+
+		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
+			"liferay-ui:input-editor:contentsLanguageId");
+
+		return LocaleUtil.fromLanguageId(contentsLanguageId);
+	}
 
 	protected JSONArray toJSONArray(String json) {
 		try {

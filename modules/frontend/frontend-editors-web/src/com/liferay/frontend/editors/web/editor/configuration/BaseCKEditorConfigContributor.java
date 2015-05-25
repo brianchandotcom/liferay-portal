@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributo
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -42,11 +41,12 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("allowedContent", Boolean.TRUE);
 
-		String cssClasses = (String)inputEditorTaglibAttributes.get(
-			"liferay-ui:input-editor:cssClasses");
+		String cssClasses = GetterUtil.getString(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:cssClasses"));
 
-		jsonObject.put("bodyClass", "html-editor " +
-			HtmlUtil.escape(cssClasses));
+		jsonObject.put(
+			"bodyClass", "html-editor " + HtmlUtil.escape(cssClasses));
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -57,18 +57,14 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("contentsCss", jsonArray);
 
-		String contentsLanguageId = (String)inputEditorTaglibAttributes.get(
-			"liferay-ui:input-editor:contentsLanguageId");
-
-		Locale contentsLocale = LocaleUtil.fromLanguageId(contentsLanguageId);
-
-		String contentsLanguageDir = LanguageUtil.get(
-			contentsLocale, "lang.dir");
-
-		contentsLanguageId = LocaleUtil.toLanguageId(contentsLocale);
+		String contentsLanguageDir = getContentsLanguageDir(
+			inputEditorTaglibAttributes);
 
 		jsonObject.put("contentsLangDirection",
 			HtmlUtil.escapeJS(contentsLanguageDir));
+
+		String contentsLanguageId = getContentsLanguageId(
+			inputEditorTaglibAttributes);
 
 		jsonObject.put("contentsLanguage",
 			contentsLanguageId.replace("iw_", "he_"));

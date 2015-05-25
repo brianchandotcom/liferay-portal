@@ -85,14 +85,11 @@ public class DeleteWorkflowInstanceActionCommand extends BaseActionCommand {
 		try {
 			WorkflowInstance workflowInstance = getWorkflowInstance(
 				portletRequest);
+
 			Map<String, Serializable> workflowContext =
 				workflowInstance.getWorkflowContext();
-			long companyId = GetterUtil.getLong(
-				workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
-			long userId = GetterUtil.getLong(
-				workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
-			validateUser(companyId, userId, workflowContext);
+			validateUser(workflowContext);
 
 			updateEntryStatus(workflowContext);
 
@@ -149,14 +146,18 @@ public class DeleteWorkflowInstanceActionCommand extends BaseActionCommand {
 			WorkflowConstants.STATUS_DRAFT, workflowContext);
 	}
 
-	protected void validateUser(
-			long companyId, long userId,
-			Map<String, Serializable> workflowContext)
+	protected void validateUser(Map<String, Serializable> workflowContext)
 		throws Exception {
+
+		long userId = GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
 
 		User user = UserLocalServiceUtil.fetchUser(userId);
 
 		if (user == null) {
+			long companyId = GetterUtil.getLong(
+				workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+
 			long defaultUserId = UserLocalServiceUtil.getDefaultUserId(
 				companyId);
 

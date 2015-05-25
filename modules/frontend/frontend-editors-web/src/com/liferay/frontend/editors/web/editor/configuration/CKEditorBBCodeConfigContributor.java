@@ -115,15 +115,6 @@ public class CKEditorBBCodeConfigContributor
 			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
-	}
-
 	protected JSONArray getToolbarsBBCodeJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 

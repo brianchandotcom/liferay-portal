@@ -95,21 +95,6 @@ public class CKEditorCreoleConfigContributor
 			inputEditorTaglibAttributes));
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-
-		jsonObject.put("customDialogDefinition", Boolean.TRUE);
-
-		jsonObject.put("customCellDialog", Boolean.TRUE);
-
-		jsonObject.put("customTableDialog", Boolean.TRUE);
-
-		jsonObject.put("useCustomDataProcessor", Boolean.TRUE);
-	}
-
 	protected JSONArray getToolbarsCreoleJSONArray(
 		Map<String, Object> inputEditorTaglibAttributes) {
 

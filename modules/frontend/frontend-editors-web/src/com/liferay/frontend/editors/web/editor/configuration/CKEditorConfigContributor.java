@@ -129,20 +129,6 @@ public class CKEditorConfigContributor extends BaseCKEditorConfigContributor {
 						getToolbarTabletJSONArray(inputEditorTaglibAttributes));
 		}
 
-		@Override
-		public void populateOptionsJSONObject(
-				JSONObject jsonObject,
-				Map<String, Object> inputEditorTaglibAttributes,
-				ThemeDisplay themeDisplay,
-				LiferayPortletResponse liferayPortletResponse) {
-
-				jsonObject.put("customDialogDefinition", Boolean.TRUE);
-
-				jsonObject.put("customOnShowFn", Boolean.TRUE);
-
-				jsonObject.put("useCustomDataProcessor", Boolean.FALSE);
-		}
-
 		protected JSONArray getStyleFormatsJSONArray() {
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 

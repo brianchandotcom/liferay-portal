@@ -97,13 +97,6 @@ public class BaseCKEditorConfigContributor extends BaseEditorConfigContributor {
 			.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 	}
 
-	@Override
-	public void populateOptionsJSONObject(
-		JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
-		ThemeDisplay themeDisplay,
-		LiferayPortletResponse liferayPortletResponse) {
-	}
-
 	protected boolean isShowSource(
 		Map<String, Object> inputEditorTaglibAttributes) {
 

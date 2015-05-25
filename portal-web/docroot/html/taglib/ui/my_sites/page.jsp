@@ -224,14 +224,12 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 						String publicAddPageHREF = null;
 						String privateAddPageHREF = null;
 
-						if (mySiteGroup.isSite() && GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.ADD_LAYOUT)) {
-							publicAddPageHREF = mySiteGroup.getDisplayURL(themeDisplay, false);
-							privateAddPageHREF = mySiteGroup.getDisplayURL(themeDisplay, true);
-						}
-						else if (mySiteGroup.isUser()) {
-							PortletURL publicAddPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
+						if ((mySiteGroup.isSite() || mySiteGroup.isUser()) && GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.ADD_LAYOUT)) {
+							long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-							publicAddPageURL.setParameter("struts_action", "/my_account/edit_layouts");
+							PortletURL publicAddPageURL = new PortletURLImpl(request, PortletKeys.GROUP_PAGES, controlPanelPlid, PortletRequest.RENDER_PHASE);
+
+							publicAddPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
 							publicAddPageURL.setParameter("tabs1", "public-pages");
 							publicAddPageURL.setParameter("redirect", currentURL);
 							publicAddPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));
@@ -240,9 +238,9 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 							publicAddPageHREF = publicAddPageURL.toString();
 
-							PortletURL privateAddPageURL = new PortletURLImpl(request, PortletKeys.MY_ACCOUNT, plid, PortletRequest.RENDER_PHASE);
+							PortletURL privateAddPageURL = new PortletURLImpl(request, PortletKeys.GROUP_PAGES, controlPanelPlid, PortletRequest.RENDER_PHASE);
 
-							privateAddPageURL.setParameter("struts_action", "/my_account/edit_layouts");
+							privateAddPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
 							privateAddPageURL.setParameter("tabs1", "private-pages");
 							privateAddPageURL.setParameter("redirect", currentURL);
 							privateAddPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));

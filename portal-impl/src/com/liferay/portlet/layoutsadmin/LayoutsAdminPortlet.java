@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -117,6 +116,153 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LayoutsAdminPortlet extends MVCPortlet {
 
+	public void addLayout(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		long stagingGroupId = ParamUtil.getLong(
+			actionRequest, "stagingGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+		long parentLayoutId = ParamUtil.getLong(
+			uploadPortletRequest, "parentLayoutId");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "keywords");
+		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "robots");
+		String type = ParamUtil.getString(uploadPortletRequest, "type");
+		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
+		Map<Locale, String> friendlyURLMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
+
+		long layoutPrototypeId = ParamUtil.getLong(
+			uploadPortletRequest, "layoutPrototypeId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Layout.class.getName(), actionRequest);
+
+		Layout layout = null;
+
+		boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
+			uploadPortletRequest, "inheritFromParentLayoutId");
+
+		UnicodeProperties typeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
+			Layout parentLayout = LayoutLocalServiceUtil.getLayout(
+				groupId, privateLayout, parentLayoutId);
+
+			layout = LayoutServiceUtil.addLayout(
+				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
+				parentLayout.getDescriptionMap(), parentLayout.getKeywordsMap(),
+				parentLayout.getRobotsMap(), parentLayout.getType(),
+				parentLayout.getTypeSettings(), hidden, friendlyURLMap,
+				serviceContext);
+
+			inheritMobileRuleGroups(layout, serviceContext);
+
+			if (parentLayout.isTypePortlet()) {
+				ActionUtil.copyPreferences(actionRequest, layout, parentLayout);
+
+				SitesUtil.copyLookAndFeel(layout, parentLayout);
+			}
+		}
+		else if (layoutPrototypeId > 0) {
+			LayoutPrototype layoutPrototype =
+				LayoutPrototypeServiceUtil.getLayoutPrototype(
+					layoutPrototypeId);
+
+			boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
+				uploadPortletRequest, "layoutPrototypeLinkEnabled");
+
+			serviceContext.setAttribute(
+				"layoutPrototypeLinkEnabled", layoutPrototypeLinkEnabled);
+
+			serviceContext.setAttribute(
+				"layoutPrototypeUuid", layoutPrototype.getUuid());
+
+			layout = LayoutServiceUtil.addLayout(
+				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
+				descriptionMap, keywordsMap, robotsMap,
+				LayoutConstants.TYPE_PORTLET, typeSettingsProperties.toString(),
+				hidden, friendlyURLMap, serviceContext);
+
+			// Force propagation from page template to page.
+			// See LPS-48430.
+
+			SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
+		}
+		else {
+			long copyLayoutId = ParamUtil.getLong(
+				uploadPortletRequest, "copyLayoutId");
+
+			Layout copyLayout = null;
+
+			String layoutTemplateId = ParamUtil.getString(
+					uploadPortletRequest, "layoutTemplateId",
+					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+			if (copyLayoutId > 0) {
+				copyLayout = LayoutLocalServiceUtil.fetchLayout(
+					groupId, privateLayout, copyLayoutId);
+
+				if ((copyLayout != null) && copyLayout.isTypePortlet()) {
+					LayoutTypePortlet copyLayoutTypePortlet =
+						(LayoutTypePortlet)copyLayout.getLayoutType();
+
+					layoutTemplateId =
+						copyLayoutTypePortlet.getLayoutTemplateId();
+
+					typeSettingsProperties =
+						copyLayout.getTypeSettingsProperties();
+				}
+			}
+
+			layout = LayoutServiceUtil.addLayout(
+				groupId, privateLayout, parentLayoutId, nameMap, titleMap,
+				descriptionMap, keywordsMap, robotsMap, type,
+				typeSettingsProperties.toString(), hidden, friendlyURLMap,
+				serviceContext);
+
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.setLayoutTemplateId(
+				themeDisplay.getUserId(), layoutTemplateId);
+
+			LayoutServiceUtil.updateLayout(
+				groupId, privateLayout, layout.getLayoutId(),
+				layout.getTypeSettings());
+
+			if ((copyLayout != null) && copyLayout.isTypePortlet()) {
+				ActionUtil.copyPreferences(actionRequest, layout, copyLayout);
+
+				SitesUtil.copyLookAndFeel(layout, copyLayout);
+			}
+		}
+
+		updateLookAndFeel(
+			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+			stagingGroupId, privateLayout, layout.getLayoutId(),
+			layout.getTypeSettingsProperties());
+	}
+
 	public void deleteLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -153,6 +299,139 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	public void editLayout(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		UploadPortletRequest uploadPortletRequest =
+			PortalUtil.getUploadPortletRequest(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		long stagingGroupId = ParamUtil.getLong(
+			actionRequest, "stagingGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "name");
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "keywords");
+		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "robots");
+		String type = ParamUtil.getString(uploadPortletRequest, "type");
+		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
+		Map<Locale, String> friendlyURLMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] iconBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(
+			uploadPortletRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			iconBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Layout.class.getName(), actionRequest);
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			groupId, privateLayout, layoutId);
+
+		layout = LayoutServiceUtil.updateLayout(
+			groupId, privateLayout, layoutId, layout.getParentLayoutId(),
+			nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
+			hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
+
+		UnicodeProperties layoutTypeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		UnicodeProperties formTypeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		if (type.equals(LayoutConstants.TYPE_PORTLET)) {
+			String layoutTemplateId = ParamUtil.getString(
+				uploadPortletRequest, "layoutTemplateId",
+				PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+
+			layoutTypePortlet.setLayoutTemplateId(
+				themeDisplay.getUserId(), layoutTemplateId);
+
+			long copyLayoutId = ParamUtil.getLong(
+				uploadPortletRequest, "copyLayoutId");
+
+			if ((copyLayoutId > 0) && (copyLayoutId != layout.getLayoutId())) {
+				Layout copyLayout = LayoutLocalServiceUtil.fetchLayout(
+					groupId, privateLayout, copyLayoutId);
+
+				if ((copyLayout != null) && copyLayout.isTypePortlet()) {
+					layoutTypeSettingsProperties =
+						copyLayout.getTypeSettingsProperties();
+
+					ActionUtil.removePortletIds(actionRequest, layout);
+
+					ActionUtil.copyPreferences(
+						actionRequest, layout, copyLayout);
+
+					SitesUtil.copyLookAndFeel(layout, copyLayout);
+				}
+			}
+			else {
+				layoutTypeSettingsProperties.putAll(formTypeSettingsProperties);
+
+				LayoutServiceUtil.updateLayout(
+					groupId, privateLayout, layoutId, layout.getTypeSettings());
+			}
+		}
+		else {
+			layout.setTypeSettingsProperties(formTypeSettingsProperties);
+
+			layoutTypeSettingsProperties.putAll(
+				layout.getTypeSettingsProperties());
+
+			LayoutServiceUtil.updateLayout(
+				groupId, privateLayout, layoutId, layout.getTypeSettings());
+		}
+
+		String[] removeEmbeddedPortletIds = ParamUtil.getParameterValues(
+			actionRequest, "removeEmbeddedPortletIds");
+
+		if (removeEmbeddedPortletIds.length > 0) {
+			PortletLocalServiceUtil.deletePortlets(
+				themeDisplay.getCompanyId(), removeEmbeddedPortletIds,
+				layout.getPlid());
+		}
+
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		EventsProcessorUtil.process(
+			PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
+			layoutTypePortlet.getConfigurationActionUpdate(),
+			uploadPortletRequest, response);
+
+		updateLookAndFeel(
+			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+			stagingGroupId, privateLayout, layout.getLayoutId(),
+			layoutTypeSettingsProperties);
 	}
 
 	public void enableLayout(
@@ -275,278 +554,6 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	public void updateLayout(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String cmd = ParamUtil.getString(uploadPortletRequest, Constants.CMD);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-		long stagingGroupId = ParamUtil.getLong(
-			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
-		long parentLayoutId = ParamUtil.getLong(
-			uploadPortletRequest, "parentLayoutId");
-		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "name");
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "title");
-		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "description");
-		Map<Locale, String> keywordsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "keywords");
-		Map<Locale, String> robotsMap = LocalizationUtil.getLocalizationMap(
-			actionRequest, "robots");
-		String type = ParamUtil.getString(uploadPortletRequest, "type");
-		boolean hidden = ParamUtil.getBoolean(uploadPortletRequest, "hidden");
-		Map<Locale, String> friendlyURLMap =
-			LocalizationUtil.getLocalizationMap(actionRequest, "friendlyURL");
-		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
-
-		byte[] iconBytes = null;
-
-		long fileEntryId = ParamUtil.getLong(
-			uploadPortletRequest, "fileEntryId");
-
-		if (fileEntryId > 0) {
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				fileEntryId);
-
-			iconBytes = FileUtil.getBytes(fileEntry.getContentStream());
-		}
-
-		long layoutPrototypeId = ParamUtil.getLong(
-			uploadPortletRequest, "layoutPrototypeId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			Layout.class.getName(), actionRequest);
-
-		Layout layout = null;
-		UnicodeProperties layoutTypeSettingsProperties = null;
-		String oldFriendlyURL = StringPool.BLANK;
-
-		if (cmd.equals(Constants.ADD)) {
-
-			// Add layout
-
-			boolean inheritFromParentLayoutId = ParamUtil.getBoolean(
-				uploadPortletRequest, "inheritFromParentLayoutId");
-
-			UnicodeProperties typeSettingsProperties =
-				PropertiesParamUtil.getProperties(
-					actionRequest, "TypeSettingsProperties--");
-
-			if (inheritFromParentLayoutId && (parentLayoutId > 0)) {
-				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-					groupId, privateLayout, parentLayoutId);
-
-				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					parentLayout.getDescriptionMap(),
-					parentLayout.getKeywordsMap(), parentLayout.getRobotsMap(),
-					parentLayout.getType(), parentLayout.getTypeSettings(),
-					hidden, friendlyURLMap, serviceContext);
-
-				inheritMobileRuleGroups(layout, serviceContext);
-
-				if (parentLayout.isTypePortlet()) {
-					ActionUtil.copyPreferences(
-						actionRequest, layout, parentLayout);
-
-					SitesUtil.copyLookAndFeel(layout, parentLayout);
-				}
-			}
-			else if (layoutPrototypeId > 0) {
-				LayoutPrototype layoutPrototype =
-					LayoutPrototypeServiceUtil.getLayoutPrototype(
-						layoutPrototypeId);
-
-				boolean layoutPrototypeLinkEnabled = ParamUtil.getBoolean(
-					uploadPortletRequest, "layoutPrototypeLinkEnabled");
-
-				serviceContext.setAttribute(
-					"layoutPrototypeLinkEnabled", layoutPrototypeLinkEnabled);
-
-				serviceContext.setAttribute(
-					"layoutPrototypeUuid", layoutPrototype.getUuid());
-
-				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					descriptionMap, keywordsMap, robotsMap,
-					LayoutConstants.TYPE_PORTLET,
-					typeSettingsProperties.toString(), hidden, friendlyURLMap,
-					serviceContext);
-
-				// Force propagation from page template to page.
-				// See LPS-48430.
-
-				SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
-			}
-			else {
-				long copyLayoutId = ParamUtil.getLong(
-					uploadPortletRequest, "copyLayoutId");
-
-				Layout copyLayout = null;
-
-				String layoutTemplateId = ParamUtil.getString(
-						uploadPortletRequest, "layoutTemplateId",
-						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
-				if (copyLayoutId > 0) {
-					copyLayout = LayoutLocalServiceUtil.fetchLayout(
-						groupId, privateLayout, copyLayoutId);
-
-					if ((copyLayout != null) && copyLayout.isTypePortlet()) {
-						LayoutTypePortlet copyLayoutTypePortlet =
-							(LayoutTypePortlet)copyLayout.getLayoutType();
-
-						layoutTemplateId =
-							copyLayoutTypePortlet.getLayoutTemplateId();
-
-						typeSettingsProperties =
-							copyLayout.getTypeSettingsProperties();
-					}
-				}
-
-				layout = LayoutServiceUtil.addLayout(
-					groupId, privateLayout, parentLayoutId, nameMap, titleMap,
-					descriptionMap, keywordsMap, robotsMap, type,
-					typeSettingsProperties.toString(), hidden, friendlyURLMap,
-					serviceContext);
-
-				LayoutTypePortlet layoutTypePortlet =
-					(LayoutTypePortlet)layout.getLayoutType();
-
-				layoutTypePortlet.setLayoutTemplateId(
-					themeDisplay.getUserId(), layoutTemplateId);
-
-				LayoutServiceUtil.updateLayout(
-					groupId, privateLayout, layout.getLayoutId(),
-					layout.getTypeSettings());
-
-				if (copyLayout != null) {
-					if (copyLayout.isTypePortlet()) {
-						ActionUtil.copyPreferences(
-							actionRequest, layout, copyLayout);
-
-						SitesUtil.copyLookAndFeel(layout, copyLayout);
-					}
-				}
-			}
-
-			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
-		}
-		else {
-
-			// Update layout
-
-			layout = LayoutLocalServiceUtil.getLayout(
-				groupId, privateLayout, layoutId);
-
-			oldFriendlyURL = layout.getFriendlyURL(themeDisplay.getLocale());
-
-			layout = LayoutServiceUtil.updateLayout(
-				groupId, privateLayout, layoutId, layout.getParentLayoutId(),
-				nameMap, titleMap, descriptionMap, keywordsMap, robotsMap, type,
-				hidden, friendlyURLMap, !deleteLogo, iconBytes, serviceContext);
-
-			layoutTypeSettingsProperties = layout.getTypeSettingsProperties();
-
-			if (!layout.isTypeURL() && !layout.isTypeLinkToLayout() &&
-				oldFriendlyURL.equals(
-					layout.getFriendlyURL(themeDisplay.getLocale()))) {
-
-				oldFriendlyURL = StringPool.BLANK;
-			}
-
-			UnicodeProperties formTypeSettingsProperties =
-				PropertiesParamUtil.getProperties(
-					actionRequest, "TypeSettingsProperties--");
-
-			LayoutTypePortlet layoutTypePortlet =
-				(LayoutTypePortlet)layout.getLayoutType();
-
-			if (type.equals(LayoutConstants.TYPE_PORTLET)) {
-				String layoutTemplateId = ParamUtil.getString(
-					uploadPortletRequest, "layoutTemplateId",
-					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
-
-				layoutTypePortlet.setLayoutTemplateId(
-					themeDisplay.getUserId(), layoutTemplateId);
-
-				long copyLayoutId = ParamUtil.getLong(
-					uploadPortletRequest, "copyLayoutId");
-
-				if ((copyLayoutId > 0) &&
-					(copyLayoutId != layout.getLayoutId())) {
-
-					Layout copyLayout = LayoutLocalServiceUtil.fetchLayout(
-						groupId, privateLayout, copyLayoutId);
-
-					if ((copyLayout != null) && copyLayout.isTypePortlet()) {
-						layoutTypeSettingsProperties =
-							copyLayout.getTypeSettingsProperties();
-
-						ActionUtil.removePortletIds(actionRequest, layout);
-
-						ActionUtil.copyPreferences(
-							actionRequest, layout, copyLayout);
-
-						SitesUtil.copyLookAndFeel(layout, copyLayout);
-					}
-				}
-				else {
-					layoutTypeSettingsProperties.putAll(
-						formTypeSettingsProperties);
-
-					LayoutServiceUtil.updateLayout(
-						groupId, privateLayout, layoutId,
-						layout.getTypeSettings());
-				}
-			}
-			else {
-				layout.setTypeSettingsProperties(formTypeSettingsProperties);
-
-				layoutTypeSettingsProperties.putAll(
-					layout.getTypeSettingsProperties());
-
-				LayoutServiceUtil.updateLayout(
-					groupId, privateLayout, layoutId, layout.getTypeSettings());
-			}
-
-			String[] removeEmbeddedPortletIds = ParamUtil.getParameterValues(
-				actionRequest, "removeEmbeddedPortletIds");
-
-			if (removeEmbeddedPortletIds.length > 0) {
-				PortletLocalServiceUtil.deletePortlets(
-					themeDisplay.getCompanyId(), removeEmbeddedPortletIds,
-					layout.getPlid());
-			}
-
-			HttpServletResponse response = PortalUtil.getHttpServletResponse(
-				actionResponse);
-
-			EventsProcessorUtil.process(
-				PropsKeys.LAYOUT_CONFIGURATION_ACTION_UPDATE,
-				layoutTypePortlet.getConfigurationActionUpdate(),
-				uploadPortletRequest, response);
-		}
-
-		updateLookAndFeel(
-			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layout.getLayoutId(),
-			layoutTypeSettingsProperties);
 	}
 
 	public void updateLayoutSet(

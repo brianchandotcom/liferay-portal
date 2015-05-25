@@ -12,19 +12,19 @@
  * details.
  */
 
-package com.liferay.portlet.grouppages.action;
+package com.liferay.portlet.grouppages;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.layoutsadmin.LayoutsAdminPortlet;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Jorge Ferrer
  */
-public class EditLayoutsAction
-	extends com.liferay.portlet.layoutsadmin.action.EditLayoutsAction {
+public class GroupPagesPortlet extends LayoutsAdminPortlet {
 
 	@Override
 	protected Group getGroup(PortletRequest portletRequest) throws Exception {

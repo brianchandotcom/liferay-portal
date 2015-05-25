@@ -972,7 +972,7 @@
 	<portlet>
 		<portlet-name>156</portlet-name>
 		<display-name>Group Pages</display-name>
-		<portlet-class>com.liferay.portlet.layoutsadmin.LayoutsAdminPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.grouppages.GroupPagesPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layouts_admin/</value>

@@ -758,7 +758,7 @@ AUI.add(
 							portletURL.setParameter('cmd', cmdNode.val());
 
 							if (instance._exportLAR) {
-								portletURL.setParameter('struts_action', '/group_pages/edit_export_configuration');
+								portletURL.setParameter('struts_action', '/export_import/edit_export_configuration');
 								portletURL.setParameter('tabs2', 'new-export-process');
 								portletURL.setParameter('exportConfigurationButtons', 'custom');
 							}

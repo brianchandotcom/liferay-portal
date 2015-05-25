@@ -93,7 +93,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 				%>
 
 				<portlet:actionURL var="deleteBackgroundTaskURL">
-					<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+					<portlet:param name="struts_action" value="/export_import/delete_background_task" />
 					<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 					<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
 				</portlet:actionURL>

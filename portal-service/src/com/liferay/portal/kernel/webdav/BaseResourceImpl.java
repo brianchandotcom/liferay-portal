@@ -80,7 +80,7 @@ public class BaseResourceImpl implements Resource {
 			_modifiedDate = new Date();
 		}
 		else {
-			_modifiedDate = _createDate;
+			_modifiedDate = modifiedDate;
 		}
 	}
 

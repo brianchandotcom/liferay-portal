@@ -399,27 +399,6 @@
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
 	</portlet>
 	<portlet>
-		<portlet-name>88</portlet-name>
-		<display-name>Layouts Admin</display-name>
-		<portlet-class>com.liferay.portlet.layoutsadmin.LayoutsAdminPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/layouts_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/layouts_admin/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-	</portlet>
-	<portlet>
 		<portlet-name>90</portlet-name>
 		<display-name>Portal</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
@@ -874,24 +853,6 @@
 		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
 	</portlet>
 	<portlet>
-		<portlet-name>140</portlet-name>
-		<display-name>My Pages</display-name>
-		<portlet-class>com.liferay.portlet.mypages.MyPagesPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/layouts_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/layouts_admin/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
-	</portlet>
-	<portlet>
 		<portlet-name>142</portlet-name>
 		<display-name>Flags</display-name>
 		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
@@ -968,24 +929,6 @@
 		<security-role-ref>
 			<role-name>user</role-name>
 		</security-role-ref>
-	</portlet>
-	<portlet>
-		<portlet-name>156</portlet-name>
-		<display-name>Group Pages</display-name>
-		<portlet-class>com.liferay.portlet.grouppages.GroupPagesPortlet</portlet-class>
-		<init-param>
-			<name>template-path</name>
-			<value>/html/portlet/layouts_admin/</value>
-		</init-param>
-		<init-param>
-			<name>view-template</name>
-			<value>/html/portlet/layouts_admin/view.jsp</value>
-		</init-param>
-		<expiration-cache>0</expiration-cache>
-		<supports>
-			<mime-type>text/html</mime-type>
-		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
 	</portlet>
 	<portlet>
 		<portlet-name>161</portlet-name>

@@ -361,21 +361,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>88</portlet-name>
-		<icon>/html/icons/default.png</icon>
-		<asset-renderer-factory>com.liferay.portal.asset.LayoutAssetRendererFactory</asset-renderer-factory>
-		<asset-renderer-factory>com.liferay.portal.asset.LayoutRevisionAssetRendererFactory</asset-renderer-factory>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-layouts-admin</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>90</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>portal</struts-path>
@@ -674,22 +659,6 @@
 		<system>true</system>
 	</portlet>
 	<portlet>
-		<portlet-name>140</portlet-name>
-		<icon>/html/icons/my_pages.png</icon>
-		<control-panel-entry-category>my</control-panel-entry-category>
-		<control-panel-entry-weight>2.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<single-page-application>false</single-page-application>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-layouts-admin</css-class-wrapper>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>142</portlet-name>
 		<icon>/html/icons/flags.png</icon>
 		<struts-path>flags</struts-path>
@@ -723,22 +692,6 @@
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>
 		<css-class-wrapper>portlet-dockbar</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>156</portlet-name>
-		<icon>/html/icons/group_pages.png</icon>
-		<control-panel-entry-category>site_administration.pages</control-panel-entry-category>
-		<control-panel-entry-weight>2.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portlet.grouppages.GroupPagesControlPanelEntry</control-panel-entry-class>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/layouts_admin/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-layouts-admin</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>

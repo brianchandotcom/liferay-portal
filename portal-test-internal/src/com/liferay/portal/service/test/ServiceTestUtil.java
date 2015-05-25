@@ -121,10 +121,6 @@ public class ServiceTestUtil {
 			roleName, roleType, resourceName, scope, primKey, actionId);
 	}
 
-	public static void destroyServices() {
-		_deleteDirectories();
-	}
-
 	public static void initPermissions() {
 		try {
 			PortalInstances.addCompanyId(TestPropsValues.getCompanyId());
@@ -288,10 +284,6 @@ public class ServiceTestUtil {
 
 		_setThreadLocals();
 
-		// Directories
-
-		_deleteDirectories();
-
 		// Search engine
 
 		try {
@@ -359,10 +351,6 @@ public class ServiceTestUtil {
 					modelName, modelActions);
 			}
 		}
-	}
-
-	private static void _deleteDirectories() {
-		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
 	}
 
 	private static void _replaceWithSynchronousDestination(String name) {

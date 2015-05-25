@@ -739,13 +739,9 @@ public interface PropsKeys {
 
 	public static final String DL_SHOW_HIDDEN_MOUNT_FOLDERS = "dl.show.hidden.mount.folders";
 
-	public static final String DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR = "dl.store.advanced.file.system.root.dir";
-
 	public static final String DL_STORE_ANTIVIRUS_ENABLED = "dl.store.antivirus.enabled";
 
 	public static final String DL_STORE_ANTIVIRUS_IMPL = "dl.store.antivirus.impl";
-
-	public static final String DL_STORE_FILE_SYSTEM_ROOT_DIR = "dl.store.file.system.root.dir";
 
 	public static final String DL_STORE_IMPL = "dl.store.impl";
 

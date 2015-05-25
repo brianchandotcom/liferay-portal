@@ -14,15 +14,18 @@
 
 package com.liferay.portal.store.filesystem;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.store.filesystem.configuration.AdvancedFileSystemConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
+import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -30,6 +33,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
 
 /**
  * <p>
@@ -39,7 +47,14 @@ import java.util.ListIterator;
  * @author Jorge Ferrer
  * @author Ryan Park
  * @author Brian Wing Shun Chan
+ * @author Manuel de la Peña
  */
+@Component(
+	configurationPid = "com.liferay.portal.store.filesystem.configuration.AdvancedFileSystemConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	property = "store.type=com.liferay.portal.store.filesystem.AdvancedFileSystemStore",
+	service = Store.class
+)
 public class AdvancedFileSystemStore extends FileSystemStore {
 
 	@Override
@@ -87,6 +102,13 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 							newFileNameVersionFile.getPath());
 			}
 		}
+	}
+
+	@Activate
+	@Override
+	protected void activate(Map<String, Object> properties) {
+		_advancedFileSystemConfiguration = Configurable.createConfigurable(
+			AdvancedFileSystemConfiguration.class, properties);
 	}
 
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
@@ -296,7 +318,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 	@Override
 	protected String getRootDirName() {
-		return PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR;
+		return _advancedFileSystemConfiguration.rootDir();
 	}
 
 	protected String unbuildPath(String path) {
@@ -324,6 +346,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		return path;
 	}
+
+	private static volatile AdvancedFileSystemConfiguration
+		_advancedFileSystemConfiguration;
 
 	private static final String _HOOK_EXTENSION = "afsh";
 

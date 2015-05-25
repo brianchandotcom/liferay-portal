@@ -104,22 +104,11 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			searchResult.addMBMessage(mbMessage);
 		}
 
-		if ((mbMessage == null) && (fileEntry == null)) {
+		if (searchResult.getSummary() == null) {
 			Summary summary = getSummary(
-				document, searchResult.getClassName(),
-				searchResult.getClassPK(), locale, portletRequest,
-				portletResponse);
+				searchResult.getClassName(), searchResult.getClassPK(), locale);
 
 			searchResult.setSummary(summary);
-		}
-		else {
-			if (searchResult.getSummary() == null) {
-				Summary summary = getSummary(
-					searchResult.getClassName(), searchResult.getClassPK(),
-					locale);
-
-				searchResult.setSummary(summary);
-			}
 		}
 	}
 

@@ -129,6 +129,20 @@ public class SearchResultManagerUtil {
 			return new SearchResult(entryClassName, entryClassPK);
 		}
 
+		@Override
+		public void updateSearchResult(
+				SearchResult searchResult, Document document, Locale locale,
+				PortletRequest portletRequest, PortletResponse portletResponse)
+			throws PortalException {
+
+			Summary summary = getSummary(
+				document, searchResult.getClassName(),
+				searchResult.getClassPK(), locale, portletRequest,
+				portletResponse);
+
+			searchResult.setSummary(summary);
+		}
+
 	}
 
 	private static class DLFileEntrySearchResultManager

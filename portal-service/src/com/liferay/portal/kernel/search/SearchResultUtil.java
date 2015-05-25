@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
@@ -60,22 +59,18 @@ public class SearchResultUtil {
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
-				String className = entryClassName;
-				long classPK = entryClassPK;
-
 				FileEntry fileEntry = null;
 				MBMessage mbMessage = null;
 
 				if (entryClassName.equals(DLFileEntry.class.getName()) ||
 					entryClassName.equals(MBMessage.class.getName())) {
 
-					classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 					long classNameId = GetterUtil.getLong(
 						document.get(Field.CLASS_NAME_ID));
+					long classPK = GetterUtil.getLong(
+						document.get(Field.CLASS_PK));
 
 					if ((classPK > 0) && (classNameId > 0)) {
-						className = PortalUtil.getClassName(classNameId);
-
 						if (entryClassName.equals(
 								DLFileEntry.class.getName())) {
 
@@ -88,10 +83,6 @@ public class SearchResultUtil {
 							mbMessage = MBMessageLocalServiceUtil.getMessage(
 								entryClassPK);
 						}
-					}
-					else {
-						className = entryClassName;
-						classPK = entryClassPK;
 					}
 				}
 

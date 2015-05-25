@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.ddm;
+package com.liferay.dynamic.data.lists.web.ddm;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.util.PortalUtil;

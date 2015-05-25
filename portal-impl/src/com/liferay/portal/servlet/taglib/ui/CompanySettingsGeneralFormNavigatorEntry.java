@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=70"})
+@OSGiBeanProperties(property = {"service.ranking:Integer=80"})
 public class CompanySettingsGeneralFormNavigatorEntry
 	extends BaseCompanySettingsFormNavigatorEntry {
 

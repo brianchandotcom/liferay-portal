@@ -18,10 +18,10 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 /**
- * @author Pei-Jung Lan
+ * @author Eduardo Garcia
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=70"})
-public class CompanySettingsAuthenticationFormNavigatorEntry
+@OSGiBeanProperties(property = {"service.ranking:Integer=50"})
+public class CompanySettingsTermsOfUseFormNavigatorEntry
 	extends BaseCompanySettingsFormNavigatorEntry {
 
 	@Override
@@ -32,12 +32,12 @@ public class CompanySettingsAuthenticationFormNavigatorEntry
 
 	@Override
 	public String getKey() {
-		return "authentication";
+		return "terms-of-use";
 	}
 
 	@Override
 	protected String getJspPath() {
-		return "/html/portlet/portal_settings/authentication.jsp";
+		return "/html/portlet/portal_settings/terms_of_use.jsp";
 	}
 
 }

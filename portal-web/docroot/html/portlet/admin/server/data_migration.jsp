@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="liferay-ui" uri="http://liferay.com/tld/ui" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -34,15 +36,17 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 		int i = 0;
 
 		for (ConvertProcess convertProcess : convertProcesses) {
+			String[] parameters = convertProcess.getParameterNames();
+			String parameterDescription = convertProcess.getParameterDescription();
 		%>
 
 			<liferay-ui:panel-container extended="<%= true %>" id='<%= "convert" + i + "PanelContainer" %>' persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "convert" + i + "Panel" %>' persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
-					<c:if test="<%= convertProcess.getParameterNames() != null %>">
-						<aui:fieldset label='<%= Validator.isNotNull(convertProcess.getParameterDescription()) ? convertProcess.getParameterDescription() : "" %>'>
+					<c:if test="<%= parameters != null %>">
+						<aui:fieldset label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
 
 							<%
-							for (String parameter : convertProcess.getParameterNames()) {
+							for (String parameter : parameters) {
 								if (parameter.contains(StringPool.EQUAL) && parameter.contains(StringPool.SEMICOLON)) {
 									String[] parameterPair = StringUtil.split(parameter, CharPool.EQUAL);
 									String[] parameterSelectEntries = StringUtil.split(parameterPair[1], CharPool.SEMICOLON);

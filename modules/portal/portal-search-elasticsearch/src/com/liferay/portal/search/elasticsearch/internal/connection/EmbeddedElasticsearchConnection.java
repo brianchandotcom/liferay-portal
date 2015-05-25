@@ -27,6 +27,7 @@ import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConne
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.util.Map;
 
@@ -41,6 +42,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -80,13 +84,19 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.addSettingsContributor(settingsContributor);
+	}
+
+	@Override
 	protected Client createClient(ImmutableSettings.Builder builder) {
-		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
-
-		nodeBuilder.settings(builder);
-
-		_node = nodeBuilder.node();
-
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -96,6 +106,12 @@ public class EmbeddedElasticsearchConnection
 				"Starting embedded Elasticsearch cluster " +
 					elasticsearchConfiguration.clusterName());
 		}
+
+		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
+
+		nodeBuilder.settings(builder);
+
+		_node = nodeBuilder.node();
 
 		_node.start();
 
@@ -126,6 +142,7 @@ public class EmbeddedElasticsearchConnection
 			"bootstrap.mlockall",
 			elasticsearchConfiguration.bootstrapMlockAll());
 		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
+		builder.put("discovery.zen.ping.multicast.enabled", false);
 		builder.put(
 			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
 		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
@@ -153,6 +170,13 @@ public class EmbeddedElasticsearchConnection
 			builder.put("index.translog.flush_threshold_ops", "1");
 			builder.put("index.translog.interval", "1ms");
 		}
+	}
+
+	@Override
+	protected void removeSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.removeSettingsContributor(settingsContributor);
 	}
 
 	@Reference(unbind = "-")

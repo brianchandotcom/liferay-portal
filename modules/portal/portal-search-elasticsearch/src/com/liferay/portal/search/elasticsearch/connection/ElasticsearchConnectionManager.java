@@ -125,6 +125,11 @@ public class ElasticsearchConnectionManager {
 			return;
 		}
 
+		if (!_elasticsearchConnections.containsKey(newOperationMode)) {
+			throw new IllegalArgumentException(
+				"No connection available for : " + newOperationMode);
+		}
+
 		if (_operationMode != null) {
 			ElasticsearchConnection elasticsearchConnection =
 				_elasticsearchConnections.get(_operationMode);
@@ -133,11 +138,6 @@ public class ElasticsearchConnectionManager {
 		}
 
 		_operationMode = newOperationMode;
-
-		ElasticsearchConnection newElasticsearchConnection =
-			_elasticsearchConnections.get(_operationMode);
-
-		newElasticsearchConnection.initialize();
 	}
 
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;

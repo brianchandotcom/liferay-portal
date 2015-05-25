@@ -155,30 +155,30 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		PortalCacheConfiguration defaultPortalCacheConfiguration = null;
+		Map<CallbackConfiguration, CacheListenerScope>
+			cacheListenerConfigurations = null;
+		CallbackConfiguration bootstrapLoaderConfiguration = null;
 
 		if (isClusterAware() && PropsValues.CLUSTER_LINK_ENABLED) {
 			CallbackConfiguration cacheListenerConfiguration =
 				new CallbackConfiguration(
 					ClusterLinkCallbackFactory.INSTANCE, new Properties());
 
-			Map<CallbackConfiguration, CacheListenerScope>
-				cacheListenerConfigurations = new HashMap<>();
+			cacheListenerConfigurations = new HashMap<>();
 
 			cacheListenerConfigurations.put(
 				cacheListenerConfiguration, CacheListenerScope.ALL);
 
-			CallbackConfiguration bootstrapLoaderConfiguration =
-				new CallbackConfiguration(
-					ClusterLinkCallbackFactory.INSTANCE, new Properties());
-
-			defaultPortalCacheConfiguration = new PortalCacheConfiguration(
-				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
-				cacheListenerConfigurations, bootstrapLoaderConfiguration);
+			bootstrapLoaderConfiguration = new CallbackConfiguration(
+				ClusterLinkCallbackFactory.INSTANCE, new Properties());
 		}
 
 		return new PortalCacheManagerConfiguration(
-			null, defaultPortalCacheConfiguration, null);
+			null,
+			new PortalCacheConfiguration(
+				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
+				cacheListenerConfigurations, bootstrapLoaderConfiguration),
+			null);
 	}
 
 	@Override

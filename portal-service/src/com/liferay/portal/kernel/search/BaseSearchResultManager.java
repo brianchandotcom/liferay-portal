@@ -135,10 +135,11 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 		return summary;
 	}
 
-	protected abstract void addRelatedModel(
+	protected void addRelatedModel(
 			SearchResult searchResult, Document document, Locale locale,
 			PortletRequest portletRequest, PortletResponse portletResponse)
-		throws PortalException;
+		throws PortalException {
+	}
 
 	protected abstract boolean isRelationSupported();
 

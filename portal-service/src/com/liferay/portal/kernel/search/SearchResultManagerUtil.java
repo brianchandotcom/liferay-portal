@@ -124,13 +124,6 @@ public class SearchResultManagerUtil {
 		extends BaseSearchResultManager {
 
 		@Override
-		protected void addRelatedModel(
-				SearchResult searchResult, Document document, Locale locale,
-				PortletRequest portletRequest, PortletResponse portletResponse)
-			throws PortalException {
-		}
-
-		@Override
 		protected boolean isRelationSupported() {
 			return false;
 		}

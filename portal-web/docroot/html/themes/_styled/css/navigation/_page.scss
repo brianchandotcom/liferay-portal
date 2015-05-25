@@ -29,7 +29,11 @@
 		.browse-folder, .nav-item-label {
 			@include ellipsis;
 
-			display: inline;
+			vertical-align: middle;
+		}
+
+		.nav-item-icon {
+			vertical-align: middle;
 		}
 
 		.overlay.entry-action {

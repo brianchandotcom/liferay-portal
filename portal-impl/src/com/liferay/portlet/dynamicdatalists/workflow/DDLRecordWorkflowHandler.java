@@ -15,6 +15,7 @@
 package com.liferay.portlet.dynamicdatalists.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -37,6 +38,11 @@ import java.util.Map;
 /**
  * @author Marcellus Tavares
  */
+@OSGiBeanProperties(
+	property = {
+		"model.class.name=com.liferay.portlet.dynamicdatalists.model.DDLRecord"
+	}
+)
 public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {
 
 	@Override

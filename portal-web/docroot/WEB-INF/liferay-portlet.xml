@@ -817,7 +817,6 @@
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
 		<control-panel-entry-weight>8.0</control-panel-entry-weight>
-		<workflow-handler>com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler</workflow-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>
 		<scopeable>true</scopeable>

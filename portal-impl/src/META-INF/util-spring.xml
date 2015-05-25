@@ -898,6 +898,7 @@
 			<bean class="com.liferay.portlet.dynamicdatalists.util.DDLImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler" class="com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil">
 		<property name="DDMFormFieldTypesJSONSerializer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerImpl" />

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
 import java.io.Serializable;
@@ -50,6 +51,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"action.command.name=deleteWorkflowInstance",
+		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE,
 		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},
 	service = ActionCommand.class

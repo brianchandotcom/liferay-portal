@@ -135,16 +135,18 @@ public class MBMessageServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
-		java.lang.String fileName, java.io.File file,
+		java.lang.String format,
+		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			java.io.FileNotFoundException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"addMessage", _addMessageParameterTypes2);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					categoryId, subject, body, fileName, file, serviceContext);
+					categoryId, subject, body, format, inputStreamOVPs,
+					anonymous, priority, allowPingbacks, serviceContext);
 
 			Object returnObj = null;
 
@@ -154,10 +156,6 @@ public class MBMessageServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof java.io.FileNotFoundException) {
-					throw (java.io.FileNotFoundException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -175,17 +173,17 @@ public class MBMessageServiceHttp {
 	public static com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		HttpPrincipal httpPrincipal, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
-		java.lang.String format,
-		java.util.List<com.liferay.portal.kernel.util.ObjectValuePair<java.lang.String, java.io.InputStream>> inputStreamOVPs,
+		java.lang.String format, java.lang.String fileName, java.io.File file,
 		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			java.io.FileNotFoundException {
 		try {
 			MethodKey methodKey = new MethodKey(MBMessageServiceUtil.class,
 					"addMessage", _addMessageParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					categoryId, subject, body, format, inputStreamOVPs,
+					categoryId, subject, body, format, fileName, file,
 					anonymous, priority, allowPingbacks, serviceContext);
 
 			Object returnObj = null;
@@ -196,6 +194,10 @@ public class MBMessageServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				if (e instanceof java.io.FileNotFoundException) {
+					throw (java.io.FileNotFoundException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -1052,13 +1054,15 @@ public class MBMessageServiceHttp {
 		};
 	private static final Class<?>[] _addMessageParameterTypes2 = new Class[] {
 			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.io.File.class,
+			java.lang.String.class, java.lang.String.class, java.util.List.class,
+			boolean.class, double.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes3 = new Class[] {
 			long.class, long.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class, java.util.List.class,
-			boolean.class, double.class, boolean.class,
+			java.lang.String.class, java.lang.String.class,
+			java.lang.String.class, java.io.File.class, boolean.class,
+			double.class, boolean.class,
 			com.liferay.portal.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addMessageParameterTypes4 = new Class[] {

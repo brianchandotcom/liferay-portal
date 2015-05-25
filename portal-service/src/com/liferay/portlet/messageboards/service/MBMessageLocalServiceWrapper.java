@@ -85,12 +85,14 @@ public class MBMessageLocalServiceWrapper implements MBMessageLocalService,
 	public com.liferay.portlet.messageboards.model.MBMessage addMessage(
 		long userId, java.lang.String userName, long groupId, long categoryId,
 		java.lang.String subject, java.lang.String body,
-		java.lang.String fileName, java.io.File file,
+		java.lang.String format, java.lang.String fileName, java.io.File file,
+		boolean anonymous, double priority, boolean allowPingbacks,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			java.io.FileNotFoundException {
 		return _mbMessageLocalService.addMessage(userId, userName, groupId,
-			categoryId, subject, body, fileName, file, serviceContext);
+			categoryId, subject, body, format, fileName, file, anonymous,
+			priority, allowPingbacks, serviceContext);
 	}
 
 	@Override

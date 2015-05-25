@@ -94,7 +94,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		<aui:nav cssClass="navbar-nav" id="layoutsNav">
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.ADD_LAYOUT) && showAddAction %>">
 				<portlet:renderURL var="addPagesURL">
-					<portlet:param name="struts_action" value="/layouts_admin/add_layout" />
+					<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/add_layout.jsp" />
 					<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 					<portlet:param name="groupId" value="<%= String.valueOf(selGroup.getGroupId()) %>" />
 					<portlet:param name="selPlid" value="<%= String.valueOf(selLayout.getPlid()) %>" />
@@ -115,16 +115,7 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 				<aui:nav-item href="<%= permissionURL %>" iconCssClass="icon-lock" label="permissions" useDialog="<%= true %>" />
 			</c:if>
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.DELETE) %>">
-				<aui:nav-item iconCssClass="icon-remove" id="deleteLayout" label="delete" />
-
-				<aui:script use="aui-base">
-					A.one('#<portlet:namespace />deleteLayout').on(
-						'click',
-						function() {
-							<portlet:namespace />saveLayout('<%= Constants.DELETE %>');
-						}
-					);
-				</aui:script>
+				<aui:nav-item cssClass="remove-layout" iconCssClass="icon-remove" label="delete" />
 			</c:if>
 			<c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
 				<aui:nav-item iconCssClass="icon-list-alt" id="copyApplications" label="copy-applications" />
@@ -158,9 +149,9 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 
 										if (form) {
 											form.append(content);
-										}
 
-										<portlet:namespace />saveLayout();
+											submitForm(form);
+										}
 									}
 								);
 							}
@@ -172,44 +163,50 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 	</aui:nav-bar>
 </c:if>
 
-<portlet:actionURL var="editLayoutURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-</portlet:actionURL>
+<c:choose>
+	<c:when test="<%= incomplete %>">
+		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 
-<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
-	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>' />
-	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
-	<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
-	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
-	<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
-	<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
-	<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
-	<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
+		<aui:button-row>
+			<aui:button id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
-	<c:if test="<%= layoutRevision != null && !incomplete %>">
-		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
-	</c:if>
+			<portlet:actionURL name="enable" var="enableLayoutURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
+				<portlet:param name="incompleteLayoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
+				<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+			</portlet:actionURL>
 
-	<c:choose>
-		<c:when test="<%= incomplete %>">
-			<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
+			<aui:script use="aui-base">
+				AUI.$('#<portlet:namespace />enableLayoutButton').on(
+					'click',
+					function(event) {
+						submitForm(document.hrefFm, '<%= enableLayoutURL %>');
+					}
+				);
+			</aui:script>
 
-			<aui:input name="incompleteLayoutRevisionId" type="hidden" value="<%= layoutRevision.getLayoutRevisionId() %>" />
+			<aui:button cssClass="remove-layout" name="deleteLayout" value="delete-in-all-pages-variations" />
+		</aui:button-row>
+	</c:when>
+	<c:otherwise>
+		<portlet:actionURL name="editLayout" var="editLayoutURL">
+			<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
+		</portlet:actionURL>
 
-			<%
-			String taglibEnableOnClick = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout('enable');";
+		<aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm">
+			<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>' />
+			<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
+			<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
+			<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />
+			<aui:input name="selPlid" type="hidden" value="<%= layoutsAdminDisplayContext.getSelPlid() %>" />
+			<aui:input name="privateLayout" type="hidden" value="<%= layoutsAdminDisplayContext.isPrivateLayout() %>" />
+			<aui:input name="layoutId" type="hidden" value="<%= layoutsAdminDisplayContext.getLayoutId() %>" />
+			<aui:input name="<%= PortletDataHandlerKeys.SELECTED_LAYOUTS %>" type="hidden" />
 
-			String taglibDeleteOnClick = "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout('" + Constants.DELETE + "');";
-			%>
+			<c:if test="<%= (layoutRevision != null) %>">
+				<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutRevision.getLayoutSetBranchId() %>" />
+			</c:if>
 
-			<aui:button-row>
-				<aui:button name="enableLayout" onClick="<%= taglibEnableOnClick %>" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
-
-				<aui:button name="deleteLayout" onClick="<%= taglibDeleteOnClick %>" value="delete-in-all-pages-variations" />
-			</aui:button-row>
-		</c:when>
-		<c:otherwise>
 			<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
 				<c:if test="<%= selGroup.hasLocalOrRemoteStagingGroup() && !selGroup.isStagingGroup() %>">
 					<div class="alert alert-warning">
@@ -254,26 +251,28 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 					showButtons="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>"
 				/>
 			</c:if>
-		</c:otherwise>
-	</c:choose>
-</aui:form>
+		</aui:form>
+	</c:otherwise>
+</c:choose>
 
-<aui:script>
-	function <portlet:namespace />saveLayout(action) {
-		action = action || '<%= Constants.UPDATE %>';
+<%
+redirectURL.setParameter("selPlid", String.valueOf(selLayout.getParentPlid()));
+%>
 
-		var form = AUI.$(document.<portlet:namespace />fm);
+<portlet:actionURL name="deleteLayout" var="deleteLayoutURL">
+	<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
+	<portlet:param name="plid" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+	<portlet:param name="redirect" value="<%= redirectURL.toString() %>" />
+</portlet:actionURL>
 
-		if (action == '<%= Constants.DELETE %>') {
-			if (!confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
-				return false;
+<aui:script use="aui-base">
+	A.one('#<portlet:namespace />layoutsNav').delegate(
+		'click',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-page") %>')) {
+				submitForm(document.hrefFm, '<%= deleteLayoutURL %>');
 			}
-
-			form.fm('redirect').val('<%= HttpUtil.setParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", selLayout.getParentPlid()) %>');
-		}
-
-		form.fm('<%= Constants.CMD %>').val(action);
-
-		submitForm(form);
-	}
+		},
+		'.remove-layout'
+	);
 </aui:script>

@@ -53,7 +53,7 @@ else {
 		</c:if>
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT) %>">
 			<portlet:renderURL var="addPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/add_layout" />
+				<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/add_layout.jsp" />
 				<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -64,12 +64,11 @@ else {
 	</aui:nav>
 </aui:nav-bar>
 
-<portlet:actionURL var="editLayoutSetURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+<portlet:actionURL name="editLayoutSet" var="editLayoutSetURL">
+	<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayoutset();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editLayoutSetURL %>" cssClass="edit-layoutset-form" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirectURL.toString() %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= liveGroupId %>" />
@@ -85,13 +84,3 @@ else {
 		showButtons="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>"
 	/>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveLayoutset(action) {
-		var form = AUI.$(document.<portlet:namespace />fm);
-
-		form.fm('<%= Constants.CMD %>').val(action ? action : 'update');
-
-		submitForm(form);
-	}
-</aui:script>

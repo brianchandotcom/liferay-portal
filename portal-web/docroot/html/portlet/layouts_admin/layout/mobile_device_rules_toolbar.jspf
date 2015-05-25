@@ -35,8 +35,7 @@
 		var $ = AUI.$;
 
 		$.ajax(
-			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="viewRuleGroupInstancesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/mobile_device_rules" />
+			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="getMobileDeviceRules" var="viewRuleGroupInstancesURL">
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />

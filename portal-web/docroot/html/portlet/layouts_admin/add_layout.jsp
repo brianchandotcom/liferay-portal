@@ -45,7 +45,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 %>
 
 <portlet:renderURL var="backURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+	<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
 	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
@@ -55,18 +55,17 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	title="add-new-page"
 />
 
-<portlet:actionURL var="editLayoutActionURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+<portlet:actionURL name="addLayout" var="addLayoutURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
+	<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/add_layout.jsp" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+	<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
 	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm">
-	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
+<aui:form action="<%= addLayoutURL %>" enctype="multipart/form-data" method="post" name="addPageFm">
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input id="addLayoutPrivateLayout" name="privateLayout" type="hidden" value="<%= privateLayout %>" />

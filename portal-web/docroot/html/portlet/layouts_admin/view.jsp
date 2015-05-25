@@ -76,25 +76,10 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 		/>
 	</c:if>
 
-	<%
-	String tabs1URL = String.valueOf(layoutsAdminDisplayContext.getRedirectURL());
-
-	if (liveGroup.isUser()) {
-		PortletURL userTabs1URL = renderResponse.createRenderURL();
-
-		userTabs1URL.setParameter("struts_action", "/my_pages/edit_layouts");
-		userTabs1URL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
-		userTabs1URL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
-		userTabs1URL.setParameter("showHeader", String.valueOf(showHeader));
-
-		tabs1URL = userTabs1URL.toString();
-	}
-	%>
-
 	<liferay-ui:tabs
 		names="<%= layoutsAdminDisplayContext.getTabs1Names() %>"
 		param="tabs1"
-		url="<%= tabs1URL %>"
+		url="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>"
 		value="<%= layoutsAdminDisplayContext.getTabs1() %>"
 	/>
 </c:if>
@@ -122,11 +107,7 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 					LayoutSetBranch layoutSetBranch = null;
 
 					if (layoutSetBranchId > 0) {
-						try {
-							layoutSetBranch = LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(layoutSetBranchId);
-						}
-						catch (NoSuchLayoutSetBranchException nslsbe) {
-						}
+						layoutSetBranch = LayoutSetBranchLocalServiceUtil.fetchLayoutSetBranch(layoutSetBranchId);
 					}
 
 					if (layoutSetBranch == null) {
@@ -153,14 +134,13 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 											boolean selected = (curLayoutSetBranch.getLayoutSetBranchId() == layoutSetBranch.getLayoutSetBranchId());
 										%>
 
-											<portlet:actionURL var="layoutSetBranchURL">
-												<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
-												<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
+											<portlet:renderURL var="layoutSetBranchURL">
+												<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
 												<portlet:param name="redirect" value="<%= String.valueOf(layoutsAdminDisplayContext.getRedirectURL()) %>" />
 												<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
 												<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 												<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(curLayoutSetBranch.getLayoutSetBranchId()) %>" />
-											</portlet:actionURL>
+											</portlet:renderURL>
 
 											<aui:nav-item cssClass='<%= selected ? "disabled" : StringPool.BLANK %>' href="<%= selected ? null : layoutSetBranchURL %>" label="<%= HtmlUtil.escape(curLayoutSetBranch.getName()) %>" />
 

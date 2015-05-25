@@ -28,15 +28,14 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 
 	<%
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_prototypes_merge_alert") + StringPool.UNDERLINE;
-
-	PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-	portletURL.setParameter("redirect", redirect);
-	portletURL.setParameter("layoutPrototypeId",String.valueOf(layoutPrototype.getLayoutPrototypeId()));
-	portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
-	portletURL.setParameter(Constants.CMD, "reset_merge_fail_count_and_merge");
-	portletURL.setParameter("selPlid", String.valueOf(selPlid));
 	%>
+
+	<portlet:actionURL name="layoutResetMergeFailCountAndMerge" var="portletURL">
+		<portlet:param name="mvcPath" value="/html/portlet/layouts_admin/view.jsp" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />
+		<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
+	</portlet:actionURL>
 
 	<span class="alert alert-warning">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "page-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />

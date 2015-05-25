@@ -17,7 +17,7 @@
 <%
 PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+portletURL.setParameter("mvcPath", "/html/portlet/layouts_admin/view.jsp");
 portletURL.setParameter("selPlid", String.valueOf(layoutsAdminDisplayContext.getSelPlid()));
 portletURL.setParameter("className", className);
 portletURL.setParameter("classPK", String.valueOf(classPK));

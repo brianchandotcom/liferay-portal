@@ -134,7 +134,7 @@ public class LayoutsAdminDisplayContext {
 		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
 
 		editLayoutURL.setParameter(
-			"struts_action", "/layouts_admin/edit_layouts");
+			"mvcPath", "/html/portlet/layouts_admin/view.jsp");
 		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
 		editLayoutURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
@@ -251,7 +251,8 @@ public class LayoutsAdminDisplayContext {
 	public PortletURL getRedirectURL() {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/layouts_admin/view.jsp");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("redirect", getRedirect());
 		portletURL.setParameter("groupId", String.valueOf(getLiveGroupId()));

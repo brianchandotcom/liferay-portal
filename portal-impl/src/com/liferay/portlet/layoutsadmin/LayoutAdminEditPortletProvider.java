@@ -44,7 +44,8 @@ public class LayoutAdminEditPortletProvider
 
 		PortletURL portletURL = super.getPortletURL(request);
 
-		portletURL.setParameter("struts_action", "/group_pages/edit_layouts");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/layouts_admin/view.jsp");
 
 		return portletURL;
 	}

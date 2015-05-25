@@ -3199,6 +3199,7 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Deprecated as of 7.0.0, replaced by <![CDATA[<code>liferay-ui:asset-display</code>]]>.</description>
 		<name>journal-article</name>
 		<tag-class>com.liferay.taglib.ui.JournalArticleTag</tag-class>
 		<body-content>JSP</body-content>

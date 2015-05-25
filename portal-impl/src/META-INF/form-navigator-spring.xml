@@ -25,6 +25,7 @@
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsRatingsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsRatingsFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsRecycleBinFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsRecycleBinFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsSocialFormNavigatorCategory" />
+	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsTermsOfUseFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsTermsOfUseFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsUsersFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsUsersFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsWebsitesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsWebsitesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutAdvancedFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutAdvancedFormNavigatorEntry" />

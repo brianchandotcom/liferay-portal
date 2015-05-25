@@ -68,6 +68,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.autopropagated-parameters=showManageTemplates",
 		"com.liferay.portlet.autopropagated-parameters=showToolbar",
 		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-mapping",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/custom_fields.js",

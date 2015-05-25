@@ -47,6 +47,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.control-panel-entry-category=my",
 		"com.liferay.portlet.control-panel-entry-weight=3.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-tasks",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.footer-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/my_workflow_task.png",

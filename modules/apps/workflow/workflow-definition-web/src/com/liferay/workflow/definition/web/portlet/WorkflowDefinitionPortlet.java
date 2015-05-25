@@ -50,6 +50,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
 		"com.liferay.portlet.css-class-wrapper=portlet-workflow-definitions",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.icon=/icons/workflow_definition.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",

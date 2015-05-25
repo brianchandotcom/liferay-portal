@@ -28,6 +28,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.control-panel-entry-category=my",
 		"com.liferay.portlet.control-panel-entry-weight=4.0",
+		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.icon=/icons/my_workflow_instance.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",

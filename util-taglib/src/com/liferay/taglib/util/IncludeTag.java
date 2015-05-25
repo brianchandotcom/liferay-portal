@@ -219,14 +219,6 @@ public class IncludeTag extends AttributesTagSupport {
 
 		Theme theme = (Theme)request.getAttribute(WebKeys.THEME);
 
-		if (_useCustomPage) {
-			String customPage = getCustomPage(servletContext, request, page);
-
-			if (Validator.isNotNull(customPage)) {
-				page = customPage;
-			}
-		}
-
 		ThemeUtil.include(servletContext, request, response, page, theme);
 	}
 
@@ -250,6 +242,10 @@ public class IncludeTag extends AttributesTagSupport {
 	protected String getCustomPage(
 		ServletContext servletContext, HttpServletRequest request,
 		String page) {
+
+		if (Validator.isNull(page)) {
+			return null;
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -311,14 +307,6 @@ public class IncludeTag extends AttributesTagSupport {
 	protected void include(String page, boolean doStartTag) throws Exception {
 		JspWriterHttpServletResponse jspWriterHttpServletResponse = null;
 
-		if (_useCustomPage) {
-			String customPage = getCustomPage(servletContext, request, page);
-
-			if (Validator.isNotNull(customPage)) {
-				page = customPage;
-			}
-		}
-
 		Class<?> clazz = getClass();
 
 		String tagClassName = clazz.getName();
@@ -347,6 +335,14 @@ public class IncludeTag extends AttributesTagSupport {
 			TagDynamicIncludeUtil.include(
 				request, jspWriterHttpServletResponse, tagClassName,
 				tagDynamicId, tagPointPrefix + "before", doStartTag);
+		}
+
+		if (_useCustomPage) {
+			String customPage = getCustomPage(servletContext, request, page);
+
+			if (Validator.isNotNull(customPage)) {
+				page = customPage;
+			}
 		}
 
 		RequestDispatcher requestDispatcher = getRequestDispatcher(page);

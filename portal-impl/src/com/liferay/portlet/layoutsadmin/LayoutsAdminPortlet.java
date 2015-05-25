@@ -14,7 +14,22 @@
 
 package com.liferay.portlet.layoutsadmin;
 
+import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.security.auth.PrincipalException;
+
+import java.io.IOException;
+
+import javax.portlet.PortletContext;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Eudaldo Alonso
@@ -22,46 +37,56 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 public class LayoutsAdminPortlet extends MVCPortlet {
 
 	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
 
-		try {
-			ActionUtil.getGroup(renderRequest);
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
+
+		if (resourceID.equals("getMobileDeviceRules")) {
+			PortletSession portletSession = resourceRequest.getPortletSession();
+
+			PortletContext portletContext = portletSession.getPortletContext();
+
+			PortletRequestDispatcher portletRequestDispatcher =
+				portletContext.getRequestDispatcher(
+					"/html/portlet/layouts_admin/layout/" +
+						"mobile_device_rules_rule_group_instances.jsp");
+
+			portletRequestDispatcher.include(resourceRequest, resourceResponse);
 		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.layouts_admin.error");
-			}
-			else {
-				throw e;
-			}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
 		}
-
-		return actionMapping.findForward("portlet.layouts_admin.edit_layouts");
 	}
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
-		PortletContext portletContext = portletConfig.getPortletContext();
+		if (SessionErrors.contains(
+				renderRequest, NoSuchGroupException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
 
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/portlet/layouts_admin/layout/" +
-					"mobile_device_rules_rule_group_instances.jsp");
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
 
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof NoSuchGroupException ||
+			cause instanceof PrincipalException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

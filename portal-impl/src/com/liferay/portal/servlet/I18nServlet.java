@@ -92,10 +92,10 @@ public class I18nServlet extends HttpServlet {
 					new NoSuchLayoutException(), request, response);
 			}
 			else {
-				String i18nLanguageCode = i18nData[0];
-				String i18nLanguageId = i18nData[1];
-				String i18nPath = i18nData[2];
-				String redirect = i18nData[3];
+				String i18nLanguageId = i18nData[0];
+				String i18nPath = i18nData[1];
+				String redirect = i18nData[2];
+				String i18nLanguageCode = i18nData[3];
 
 				request.setAttribute(
 					WebKeys.I18N_LANGUAGE_CODE, i18nLanguageCode);
@@ -174,7 +174,7 @@ public class I18nServlet extends HttpServlet {
 		}
 
 		return new String[] {
-			locale.getLanguage(), i18nLanguageId, i18nPath, redirect
+			i18nLanguageId, i18nPath, redirect, locale.getLanguage()
 		};
 	}
 

@@ -316,6 +316,10 @@
 
 		<action path="/dockbar/edit_layout_panel" forward="portlet.dockbar.edit_layout_panel" />
 
+		<action path="/dockbar/edit_layouts" type="com.liferay.portlet.dockbar.action.EditLayoutsAction">
+			<forward name="portlet.dockbar.view" path="portlet.dockbar.view" />
+		</action>
+
 		<action path="/dockbar/preview_panel" forward="portlet.dockbar.preview_panel" />
 
 		<action path="/dockbar/view" type="com.liferay.portlet.dockbar.action.ViewAction">

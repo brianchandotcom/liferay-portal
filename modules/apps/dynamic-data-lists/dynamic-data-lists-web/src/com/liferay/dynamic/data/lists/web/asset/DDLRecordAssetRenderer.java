@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -117,8 +119,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			getControlPanelPlid(liferayPortletRequest),
 			PortletKeys.DYNAMIC_DATA_LISTS, PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter(
-			"struts_action", "/dynamic_data_lists/edit_record");
+		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 		portletURL.setParameter(
 			"recordId", String.valueOf(_record.getRecordId()));
 		portletURL.setParameter("version", _recordVersion.getVersion());
@@ -133,10 +134,14 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			String noSuchEntryRedirect)
 		throws Exception {
 
-		return getURLViewInContext(
-			liferayPortletRequest, noSuchEntryRedirect,
-			"/dynamic_data_lists/find_record", "recordId",
-			_record.getRecordId());
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			liferayPortletRequest, DDLRecord.class.getName(),
+			PortletProvider.Action.VIEW);
+
+		portletURL.setParameter(
+			"recordId", String.valueOf(_record.getRecordId()));
+
+		return portletURL.toString();
 	}
 
 	@Override
@@ -180,10 +185,7 @@ public class DDLRecordAssetRenderer extends BaseAssetRenderer {
 			portletRequest.setAttribute(
 				WebKeys.DYNAMIC_DATA_LISTS_RECORD_VERSION, _recordVersion);
 
-			String path =
-				"/html/portlet/dynamic_data_lists/asset/full_content.jsp";
-
-			return path;
+			return "/asset/full_content.jsp";
 		}
 		else {
 			return null;

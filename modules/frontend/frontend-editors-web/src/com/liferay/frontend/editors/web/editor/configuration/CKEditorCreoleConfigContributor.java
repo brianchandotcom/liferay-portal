@@ -7,7 +7,7 @@
  * any later version.
  *
  * This library is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNES
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.*;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Map;
@@ -31,10 +31,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Ambrin Chaudhary
  */
 @Component(
-		property = {"editor.name=ckeditor_creole"},
-		service = EditorConfigContributor.class
+	property = {"editor.name=ckeditor_creole"},
+	service = EditorConfigContributor.class
 )
-
 public class CKEditorCreoleConfigContributor
 		extends BaseCKEditorConfigContributor {
 
@@ -45,15 +44,17 @@ public class CKEditorCreoleConfigContributor
 		LiferayPortletResponse liferayPortletResponse) {
 
 		super.populateConfigJSONObject(
-				jsonObject, inputEditorTaglibAttributes, themeDisplay,
-				liferayPortletResponse);
+			jsonObject, inputEditorTaglibAttributes, themeDisplay,
+			liferayPortletResponse);
 
-		jsonObject.put("allowedContent", "b strong i hr h1 h2 h3 h4 h5 h6" +
-			" em ul ol li pre table tr th; img a[*]");
+		jsonObject.put(
+			"allowedContent",
+			"b strong i hr h1 h2 h3 h4 h5 h6 em ul ol li pre table tr th; " +
+				"img a[*]");
 
 		Map<String, String> fileBrowserParams =
-				(Map<String, String>)inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:fileBrowserParams");
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
 
 		String attachmentURLPrefix = fileBrowserParams.get(
 			"attachmentURLPrefix");
@@ -65,29 +66,32 @@ public class CKEditorCreoleConfigContributor
 		jsonObject.put("disableObjectResizing", Boolean.TRUE);
 
 		jsonObject.put(
-            "extraPlugins",
-            "a11yhelpbtn,creole,imageselector,lfrpopup,wikilink");
+			"extraPlugins",
+			"a11yhelpbtn,creole,imageselector,lfrpopup,wikilink");
 
-		jsonObject.put("filebrowserWindowFeatures", "title=" +
-			LanguageUtil.get(themeDisplay.getLocale(), "browse"));
+		jsonObject.put(
+			"filebrowserWindowFeatures",
+			"title=" + LanguageUtil.get(themeDisplay.getLocale(), "browse"));
 
 		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
 
-		String removePlugins ="bidi,colorbutton,colordialog,div,elementspath," +
-			"flash,font,forms,indentblock,justify,keystrokes,link,maximize," +
-			"newpage,pagebreak,preview,print,save,showblocks,smiley," +
-			"stylescombo,templates,video";
+		String removePlugins =
+			"bidi,colorbutton,colordialog,div,elementspath,flash,font,forms," +
+				"indentblock,justify,keystrokes,link,maximize,newpage," +
+					"pagebreak,preview,print,save,showblocks,smiley," +
+						"stylescombo,templates,video";
 
 		jsonObject.put("removePlugins", removePlugins);
 
-		jsonObject.put("toolbar_creole", getToolbarsCreoleJSONArray(
-			inputEditorTaglibAttributes));
-
-		jsonObject.put("toolbar_phone", getToolbarsPhoneJSONArray(
-			inputEditorTaglibAttributes));
-
-		jsonObject.put("toolbar_tablet", getToolbarsTabletJSONArray(
-			inputEditorTaglibAttributes));
+		jsonObject.put(
+			"toolbar_creole",
+			getToolbarsCreoleJSONArray(inputEditorTaglibAttributes));
+		jsonObject.put(
+			"toolbar_phone",
+			getToolbarsPhoneJSONArray(inputEditorTaglibAttributes));
+		jsonObject.put(
+			"toolbar_tablet",
+			getToolbarsTabletJSONArray(inputEditorTaglibAttributes));
 	}
 
 	protected JSONArray getToolbarsCreoleJSONArray(
@@ -97,8 +101,9 @@ public class CKEditorCreoleConfigContributor
 
 		jsonArray.put(toJSONArray("['Bold', 'Italic', '-' ,'RemoveFormat']"));
 
-		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList', '-', " +
-			"'Outdent', 'Indent']"));
+		jsonArray.put(
+			toJSONArray(
+				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"));
 
 		jsonArray.put(toJSONArray("['Format']"));
 
@@ -107,17 +112,19 @@ public class CKEditorCreoleConfigContributor
 		String buttons = "['Table', '-',";
 
 		if (includeButtonImage(inputEditorTaglibAttributes)) {
-			buttons += "'ImageSelector', '-', ";
+			buttons = buttons.concat("'ImageSelector', '-', ");
 		}
 
-		buttons+= "'HorizontalRule', '-', 'SpecialChar' ]";
+		buttons = buttons.concat("'HorizontalRule', '-', 'SpecialChar']");
 
 		jsonArray.put(toJSONArray(buttons));
 
 		jsonArray.put("/");
 
-		jsonArray.put(toJSONArray("['Cut', 'Copy', 'Paste', '-', 'PasteText'," +
-			" 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo']"));
+		jsonArray.put(
+			toJSONArray(
+				"['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', " +
+					"'-', 'SelectAll', '-', 'Undo', 'Redo']"));
 
 		jsonArray.put(toJSONArray("['Find','Replace']"));
 
@@ -159,8 +166,9 @@ public class CKEditorCreoleConfigContributor
 
 		jsonArray.put(toJSONArray("['Bold', 'Italic']"));
 
-		jsonArray.put(toJSONArray("['NumberedList', 'BulletedList', '-', " +
-			"'Outdent', 'Indent']"));
+		jsonArray.put(
+			toJSONArray(
+				"['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent']"));
 
 		jsonArray.put(toJSONArray("['Format']"));
 
@@ -181,11 +189,16 @@ public class CKEditorCreoleConfigContributor
 		Map<String, Object> inputEditorTaglibAttributes) {
 
 		Map<String, String> fileBrowserParams =
-				(Map<String, String>)inputEditorTaglibAttributes.get(
-					"liferay-ui:input-editor:fileBrowserParams");
+			(Map<String, String>)inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:fileBrowserParams");
 
-		return GetterUtil.getLong(
-			fileBrowserParams.get("wikiPageResourcePrimKey")) > 0;
+		if (GetterUtil.getLong(
+				fileBrowserParams.get("wikiPageResourcePrimKey")) > 0) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

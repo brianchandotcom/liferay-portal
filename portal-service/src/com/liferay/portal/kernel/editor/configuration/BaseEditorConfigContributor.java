@@ -77,6 +77,16 @@ public abstract class BaseEditorConfigContributor
 		return JSONFactoryUtil.createJSONArray();
 	}
 
+	protected JSONArray toJSONArray(String... values) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (String value : values) {
+			jsonArray.put(value);
+		}
+
+		return jsonArray;
+	}
+
 	protected JSONObject toJSONObject(String json) {
 		try {
 			return JSONFactoryUtil.createJSONObject(json);

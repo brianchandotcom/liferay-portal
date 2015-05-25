@@ -42,7 +42,7 @@ public class EditorOptions {
 		_uploadURL = uploadURL;
 	}
 
-	private Map<String, Object> _dynamicAttributes = new HashMap<>();
+	private final Map<String, Object> _dynamicAttributes = new HashMap<>();
 	private boolean _textMode;
 	private String _uploadURL;
 

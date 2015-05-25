@@ -16,5 +16,4 @@
 
 <%@ include file="/html/editors/init.jsp" %>
 
-<liferay-util:include page='<%= themeDisplay.getPathEditors() + "/editors/ckeditor.jsp" %>'>
-</liferay-util:include>
+<liferay-util:include page='<%= themeDisplay.getPathEditors() + "/editors/ckeditor.jsp" %>' />

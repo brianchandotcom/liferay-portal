@@ -71,7 +71,9 @@ Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui
 
 JSONObject editorConfigJSONObject = (data != null) ? (JSONObject)data.get("editorConfig") : null;
 
-JSONObject editorOptionsJSONObject = (data != null) ? (JSONObject)data.get("editorOptions") : null;
+EditorOptions editorOptions = (data != null) ? (EditorOptions)data.get("editorOptions") : null;
+
+Map<String, Object> editorOptionsDynamicAttributes = (editorOptions != null) ? editorOptions.getDynamicAttributes() : null;
 %>
 
 <c:if test="<%= hideImageResizing %>">
@@ -455,7 +457,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			filebrowserImageBrowseUrl = '<%= imageItemSelectorURL %>';
 		</c:if>
 
-		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) %> ? <%= editorConfigJSONObject %> : {};
+		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 
 		var config = A.merge(
 			editorConfig,
@@ -480,9 +482,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-		var editorOptions = <%= Validator.isNotNull(editorOptionsJSONObject) %> ? <%= editorOptionsJSONObject %> : {};
-
-		<c:if test='<%= Validator.isNotNull(editorOptionsJSONObject) && editorOptionsJSONObject.getBoolean("customDialogDefinition") %>'>
+		<c:if test='<%= (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customDialogDefinition")) %>'>
 			ckEditor.on(
 				'dialogDefinition',
 				function(event) {
@@ -492,70 +492,70 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 					var infoTab;
 
-					<c:if test='<%= editorOptionsJSONObject.getBoolean("customOnShowFn") %>'>
-					var onShow = dialogDefinition.onShow;
+					<c:if test='<%= GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customOnShowFn")) %>'>
+						var onShow = dialogDefinition.onShow;
 
-					dialogDefinition.onShow = function() {
-						if (typeof onShow === 'function') {
-							onShow.apply(this, arguments);
-						}
+						dialogDefinition.onShow = function() {
+							if (typeof onShow === 'function') {
+								onShow.apply(this, arguments);
+							}
 
-						if (window.top != window.self) {
-							var editorElement = this.getParentEditor().container;
+							if (window.top != window.self) {
+								var editorElement = this.getParentEditor().container;
 
-							var documentPosition = editorElement.getDocumentPosition();
+								var documentPosition = editorElement.getDocumentPosition();
 
-							var dialogSize = this.getSize();
+								var dialogSize = this.getSize();
 
-							var x = documentPosition.x + ((editorElement.getSize('width', true) - dialogSize.width) / 2);
-							var y = documentPosition.y + ((editorElement.getSize('height', true) - dialogSize.height) / 2);
+								var x = documentPosition.x + ((editorElement.getSize('width', true) - dialogSize.width) / 2);
+								var y = documentPosition.y + ((editorElement.getSize('height', true) - dialogSize.height) / 2);
 
-							this.move(x, y, false);
-						}
-					};
+								this.move(x, y, false);
+							}
+						};
 					</c:if>
 
-					<c:if test='<%= editorOptionsJSONObject.getBoolean("customCellDialog") %>'>
-					if (dialogName === 'cellProperties') {
-						infoTab = dialogDefinition.getContents('info');
+					<c:if test='<%= GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customCellDialog")) %>'>
+						if (dialogName === 'cellProperties') {
+							infoTab = dialogDefinition.getContents('info');
 
-						infoTab.remove('bgColor');
-						infoTab.remove('bgColorChoose');
-						infoTab.remove('borderColor');
-						infoTab.remove('borderColorChoose');
-						infoTab.remove('colSpan');
-						infoTab.remove('hAlign');
-						infoTab.remove('height');
-						infoTab.remove('htmlHeightType');
-						infoTab.remove('rowSpan');
-						infoTab.remove('vAlign');
-						infoTab.remove('width');
-						infoTab.remove('widthType');
-						infoTab.remove('wordWrap');
+							infoTab.remove('bgColor');
+							infoTab.remove('bgColorChoose');
+							infoTab.remove('borderColor');
+							infoTab.remove('borderColorChoose');
+							infoTab.remove('colSpan');
+							infoTab.remove('hAlign');
+							infoTab.remove('height');
+							infoTab.remove('htmlHeightType');
+							infoTab.remove('rowSpan');
+							infoTab.remove('vAlign');
+							infoTab.remove('width');
+							infoTab.remove('widthType');
+							infoTab.remove('wordWrap');
 
-						dialogDefinition.minHeight = 40;
-						dialogDefinition.minWidth = 210;
-					}
+							dialogDefinition.minHeight = 40;
+							dialogDefinition.minWidth = 210;
+						}
 					</c:if>
 
-					<c:if test='<%= editorOptionsJSONObject.getBoolean("customTableDialog") %>'>
-					if (dialogName === 'table' || dialogName === 'tableProperties') {
-						infoTab = dialogDefinition.getContents('info');
+					<c:if test='<%= GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customTableDialog")) %>'>
+						if (dialogName === 'table' || dialogName === 'tableProperties') {
+							infoTab = dialogDefinition.getContents('info');
 
-						infoTab.remove('cmbAlign');
-						infoTab.remove('cmbWidthType');
-						infoTab.remove('cmbWidthType');
-						infoTab.remove('htmlHeightType');
-						infoTab.remove('txtBorder');
-						infoTab.remove('txtCellPad');
-						infoTab.remove('txtCellSpace');
-						infoTab.remove('txtHeight');
-						infoTab.remove('txtSummary');
-						infoTab.remove('txtWidth');
+							infoTab.remove('cmbAlign');
+							infoTab.remove('cmbWidthType');
+							infoTab.remove('cmbWidthType');
+							infoTab.remove('htmlHeightType');
+							infoTab.remove('txtBorder');
+							infoTab.remove('txtCellPad');
+							infoTab.remove('txtCellSpace');
+							infoTab.remove('txtHeight');
+							infoTab.remove('txtSummary');
+							infoTab.remove('txtWidth');
 
-						dialogDefinition.minHeight = 180;
-						dialogDefinition.minWidth = 210;
-					}
+							dialogDefinition.minHeight = 180;
+							dialogDefinition.minWidth = 210;
+						}
 					</c:if>
 				}
 			);
@@ -575,7 +575,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		var customDataProcessorLoaded = false;
 
 		<%
-		boolean useCustomDataProcessor = Validator.isNotNull(editorOptionsJSONObject) && editorOptionsJSONObject.getBoolean("useCustomDataProcessor");
+		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
 		%>
 
 		<c:if test="<%= useCustomDataProcessor %>">

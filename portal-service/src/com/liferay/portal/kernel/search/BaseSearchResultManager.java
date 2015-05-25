@@ -69,9 +69,6 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 		long entryClassPK = GetterUtil.getLong(
 			document.get(Field.ENTRY_CLASS_PK));
 
-		FileEntry fileEntry = null;
-		MBMessage mbMessage = null;
-
 		if (entryClassName.equals(DLFileEntry.class.getName()) ||
 			entryClassName.equals(MBMessage.class.getName())) {
 
@@ -81,27 +78,23 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 
 			if ((classPK > 0) && (classNameId > 0)) {
 				if (entryClassName.equals(DLFileEntry.class.getName())) {
-					fileEntry = DLAppLocalServiceUtil.getFileEntry(
+					FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 						entryClassPK);
+
+					Summary summary = getSummary(
+						document, DLFileEntry.class.getName(),
+						fileEntry.getFileEntryId(), locale, portletRequest,
+						portletResponse);
+
+					searchResult.addFileEntry(fileEntry, summary);
 				}
 				else if (entryClassName.equals(MBMessage.class.getName())) {
-					mbMessage = MBMessageLocalServiceUtil.getMessage(
+					MBMessage mbMessage = MBMessageLocalServiceUtil.getMessage(
 						entryClassPK);
+
+					searchResult.addMBMessage(mbMessage);
 				}
 			}
-		}
-
-		if (fileEntry != null) {
-			Summary summary = getSummary(
-				document, DLFileEntry.class.getName(),
-				fileEntry.getFileEntryId(), locale, portletRequest,
-				portletResponse);
-
-			searchResult.addFileEntry(fileEntry, summary);
-		}
-
-		if (mbMessage != null) {
-			searchResult.addMBMessage(mbMessage);
 		}
 
 		if (searchResult.getSummary() == null) {

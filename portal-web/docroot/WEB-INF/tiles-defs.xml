@@ -358,42 +358,6 @@
 		<put name="portlet_content" value="/portlet/document_library_display/view.jsp" />
 	</definition>
 
-	<!-- Dynamic Data Lists -->
-
-	<definition name="portlet.dynamic_data_lists" extends="portlet" />
-
-	<definition name="portlet.dynamic_data_lists.edit_record" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/edit_record.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.edit_record_set" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/edit_record_set.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.error" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/error.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.select_dynamic_data_mapping_structure" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/select_dynamic_data_mapping_structure.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.view" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/view.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.view_record" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/view_record.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.view_record_history" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/view_record_history.jsp" />
-	</definition>
-
-	<definition name="portlet.dynamic_data_lists.view_record_set" extends="portlet.dynamic_data_lists">
-		<put name="portlet_content" value="/portlet/dynamic_data_lists/view_record_set.jsp" />
-	</definition>
-
 	<!-- Expando -->
 
 	<definition name="portlet.expando" extends="portlet" />

@@ -62,7 +62,7 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
-<c:if test="<%= !selGroup.isLayoutSetPrototype() && showHeader %>">
+<c:if test="<%= !selGroup.isLayoutSetPrototype() || showHeader %>">
 
 	<%
 	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();

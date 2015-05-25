@@ -36,7 +36,7 @@ wikiAttachmentsSearchContainer.setResults(wikiPage.getAttachmentsFileEntries(wik
 <liferay-ui:item-selector-browser
 	displayStyle="<%= displayStyle %>"
 	idPrefix="wikiAttachments"
-	returnType="<%= ReturnType.parseFirst(wikiAttachmentItemSelectorCriterion.getDesiredReturnTypes()) %>"
+	returnType="<%= ItemSelectorBrowserTag.ReturnType.parseFirst(wikiAttachmentItemSelectorCriterion.getDesiredReturnTypes()) %>"
 	searchContainer="<%= wikiAttachmentsSearchContainer %>"
 	tabName="attachments"
 />

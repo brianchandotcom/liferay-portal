@@ -14,12 +14,7 @@
 
 package com.liferay.portal.kernel.portlet.configuration;
 
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -131,16 +126,5 @@ public abstract class BasePortletConfigurationIcon
 	public boolean isUseDialog() {
 		return false;
 	}
-
-	@Override
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
-
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	protected HttpServletRequest _request;
-	protected ThemeDisplay _themeDisplay;
 
 }

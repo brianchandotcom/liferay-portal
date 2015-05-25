@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -27,12 +29,12 @@
 >
 
 	<%
-	List<PortletConfigurationIcon> portletConfigurationIcons = ListUtil.copy(PortletConfigurationIconTracker.getPortletConfigurationIcons());
+	List<PortletConfigurationIconFactory> portletConfigurationIconFactories = ListUtil.copy(PortletConfigurationIconTracker.getPortletConfigurationIcons());
 
-	portletConfigurationIcons = ListUtil.sort(portletConfigurationIcons, new PropertyComparator("weight", false, false));
+	portletConfigurationIconFactories = ListUtil.sort(portletConfigurationIconFactories, new PropertyComparator("weight", false, false));
 
-	for (PortletConfigurationIcon portletConfigurationIcon : portletConfigurationIcons) {
-		portletConfigurationIcon.setRequest(request);
+	for (PortletConfigurationIconFactory portletConfigurationIconFactory : portletConfigurationIconFactories) {
+		PortletConfigurationIcon portletConfigurationIcon = portletConfigurationIconFactory.create(request);
 	%>
 
 		<c:if test="<%= portletConfigurationIcon.isShow() %>">

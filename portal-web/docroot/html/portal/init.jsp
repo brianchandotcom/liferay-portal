@@ -38,6 +38,8 @@ page import="com.liferay.portal.license.util.LicenseUtil" %><%@
 page import="com.liferay.portal.setup.SetupWizardUtil" %><%@
 page import="com.liferay.portal.struts.PortletRequestProcessor" %><%@
 page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
+page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
+page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
 page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %>
 
 <%@ page import="org.apache.struts.action.ActionMapping" %><%@

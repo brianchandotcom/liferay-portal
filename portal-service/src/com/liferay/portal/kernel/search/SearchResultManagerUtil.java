@@ -15,9 +15,13 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -143,14 +147,58 @@ public class SearchResultManagerUtil {
 			searchResult.setSummary(summary);
 		}
 
+		@Override
+		protected void addRelatedModel(
+				SearchResult searchResult, Document document, Locale locale,
+				PortletRequest portletRequest, PortletResponse portletResponse)
+			throws PortalException {
+		}
+
 	}
 
 	private static class DLFileEntrySearchResultManager
 		extends BaseSearchResultManager {
+
+		@Override
+		protected void addRelatedModel(
+				SearchResult searchResult, Document document, Locale locale,
+				PortletRequest portletRequest, PortletResponse portletResponse)
+			throws PortalException {
+
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				entryClassPK);
+
+			Summary summary = getSummary(
+				document, DLFileEntry.class.getName(),
+				fileEntry.getFileEntryId(), locale, portletRequest,
+				portletResponse);
+
+			searchResult.addFileEntry(fileEntry, summary);
+		}
+
 	}
 
 	private static class MBMessageSearchResultManager
 		extends BaseSearchResultManager {
+
+		@Override
+		protected void addRelatedModel(
+				SearchResult searchResult, Document document, Locale locale,
+				PortletRequest portletRequest, PortletResponse portletResponse)
+			throws PortalException {
+
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			MBMessage mbMessage = MBMessageLocalServiceUtil.getMessage(
+				entryClassPK);
+
+			searchResult.addMBMessage(mbMessage);
+		}
+
 	}
 
 }

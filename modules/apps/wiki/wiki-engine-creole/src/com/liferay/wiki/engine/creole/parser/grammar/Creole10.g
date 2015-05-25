@@ -698,10 +698,11 @@ table returns [TableNode table = new TableNode()]
 table_row  returns [CollectionNode row = new CollectionNode()]
 	:	( { input.LA(1) == PIPE && input.LA(2) == PIPE }? 
 		table_cell { 
-	    CollectionNode cn = new CollectionNode();
-	    cn.add(new UnformattedTextNode(StringEscapeUtils.unescapeHtml("&nbsp;")));
-	    TableCellNode space = new TableDataNode(cn);
-	    $row.add(space); } 
+			CollectionNode cn = new CollectionNode();
+			cn.add(new UnformattedTextNode(StringEscapeUtils.unescapeHtml("&nbsp;")));
+			TableCellNode space = new TableDataNode(cn);
+			$row.add(space);
+		}
 	|   tc = table_cell { $row.add($tc.cell); } 
 	)+  table_rowseparator
 	;

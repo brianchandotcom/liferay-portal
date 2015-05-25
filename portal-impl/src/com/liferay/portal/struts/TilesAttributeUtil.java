@@ -30,7 +30,7 @@ public class TilesAttributeUtil {
 
 		ServletRequest servletRequest = pageContext.getRequest();
 
-		String value = servletRequest.getParameter(tilesAttributeName);
+		Object value = servletRequest.getAttribute(tilesAttributeName);
 
 		if (value != null) {
 			return value;

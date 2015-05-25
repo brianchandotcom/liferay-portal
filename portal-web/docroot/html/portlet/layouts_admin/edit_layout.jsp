@@ -17,8 +17,6 @@
 <%@ include file="/html/portlet/layouts_admin/init.jsp" %>
 
 <%
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 Group selGroup = (Group)request.getAttribute(WebKeys.GROUP);
 
 Group group = layoutsAdminDisplayContext.getGroup();
@@ -181,7 +179,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 <aui:form action='<%= HttpUtil.addParameter(editLayoutURL, "refererPlid", plid) %>' cssClass="edit-layout-form" enctype="multipart/form-data" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + liferayPortletResponse.getNamespace() + "saveLayout();" %>'>
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value='<%= HttpUtil.addParameter(redirectURL.toString(), liferayPortletResponse.getNamespace() + "selPlid", layoutsAdminDisplayContext.getSelPlid()) %>' />
-	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= selGroup.getGroupId() %>" />
 	<aui:input name="liveGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getLiveGroupId() %>" />
 	<aui:input name="stagingGroupId" type="hidden" value="<%= layoutsAdminDisplayContext.getStagingGroupId() %>" />

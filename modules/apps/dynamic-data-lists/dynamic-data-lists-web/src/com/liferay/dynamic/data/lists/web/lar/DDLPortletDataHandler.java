@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.lar;
 
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
@@ -53,9 +55,15 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  */
+@Component(
+	property = {"javax.portlet.name=" + DDLPortletKeys.DDL},
+	service = PortletDataHandler.class
+)
 public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "dynamic_data_lists";

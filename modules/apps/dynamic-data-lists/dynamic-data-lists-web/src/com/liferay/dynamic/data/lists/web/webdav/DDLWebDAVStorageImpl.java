@@ -14,11 +14,13 @@
 
 package com.liferay.dynamic.data.lists.web.webdav;
 
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.webdav.BaseWebDAVStorageImpl;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
+import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -30,9 +32,15 @@ import com.liferay.portlet.dynamicdatamapping.webdav.DDMWebDavUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Juan Fernández
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + DDLPortletKeys.DDL},
+	service = WebDAVStorage.class
+)
 public class DDLWebDAVStorageImpl extends BaseWebDAVStorageImpl {
 
 	@Override

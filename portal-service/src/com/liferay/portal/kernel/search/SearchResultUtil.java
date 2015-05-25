@@ -95,8 +95,8 @@ public class SearchResultUtil {
 					}
 				}
 
-				SearchResult searchResult = new SearchResult(
-					className, classPK);
+				SearchResult searchResult =
+					SearchResultManagerUtil.createSearchResult(document);
 
 				int index = searchResults.indexOf(searchResult);
 
@@ -128,7 +128,8 @@ public class SearchResultUtil {
 
 				if ((mbMessage == null) && (fileEntry == null)) {
 					Summary summary = getSummary(
-						document, className, classPK, locale, portletRequest,
+						document, searchResult.getClassName(),
+						searchResult.getClassPK(), locale, portletRequest,
 						portletResponse);
 
 					searchResult.setSummary(summary);
@@ -136,7 +137,8 @@ public class SearchResultUtil {
 				else {
 					if (searchResult.getSummary() == null) {
 						Summary summary = getSummary(
-							className, classPK, locale);
+							searchResult.getClassName(),
+							searchResult.getClassPK(), locale);
 
 						searchResult.setSummary(summary);
 					}

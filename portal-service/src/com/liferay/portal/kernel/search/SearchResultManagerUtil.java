@@ -16,6 +16,9 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -85,7 +88,31 @@ public class SearchResultManagerUtil {
 
 		@Override
 		public SearchResult createSearchResult(Document document) {
-			throw new UnsupportedOperationException();
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			String className = entryClassName;
+			long classPK = entryClassPK;
+
+			if (entryClassName.equals(DLFileEntry.class.getName()) ||
+				entryClassName.equals(MBMessage.class.getName())) {
+
+				classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+				long classNameId = GetterUtil.getLong(
+					document.get(Field.CLASS_NAME_ID));
+
+				if ((classPK > 0) && (classNameId > 0)) {
+					className = PortalUtil.getClassName(classNameId);
+				}
+				else {
+					className = entryClassName;
+					classPK = entryClassPK;
+				}
+			}
+
+			return new SearchResult(className, classPK);
 		}
 
 	}

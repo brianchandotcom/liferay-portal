@@ -44,9 +44,6 @@ public class SearchResultUtil {
 		List<SearchResult> searchResults = new ArrayList<>();
 
 		for (Document document : hits.getDocs()) {
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
 			try {
 				SearchResult searchResult =
 					SearchResultManagerUtil.createSearchResult(document);
@@ -72,6 +69,9 @@ public class SearchResultUtil {
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
+					long entryClassPK = GetterUtil.getLong(
+						document.get(Field.ENTRY_CLASS_PK));
+
 					_log.warn(
 						"Search index is stale and contains entry {" +
 							entryClassPK + "}");

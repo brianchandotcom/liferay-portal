@@ -158,21 +158,8 @@ AUI.add(
 				var instance = this;
 
 				A.io.request(
-					themeDisplay.getPathMain() + '/o/ddm-web/render_structure_field.jsp',
+					instance._getTemplateResourceURL(),
 					{
-						data: {
-							controlPanelCategory: 'portlet',
-							definition: AJSON.stringify(instance.get('definition')),
-							doAsGroupId: instance.get('doAsGroupId'),
-							fieldName: instance.get('name'),
-							mode: instance.get('mode'),
-							namespace: instance.get('namespace'),
-							p_l_id: instance.get('p_l_id'),
-							p_p_id: 'com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet',
-							p_p_isolated: true,
-							portletNamespace: instance.get('portletNamespace'),
-							readOnly: instance.get('readOnly')
-						},
 						on: {
 							success: function(event, id, xhr) {
 								if (callback) {
@@ -182,6 +169,27 @@ AUI.add(
 						}
 					}
 				);
+			},
+
+			_getTemplateResourceURL: function() {
+				var instance = this;
+
+				var portletURL = Liferay.PortletURL.createResourceURL();
+
+				portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
+				portletURL.setParameter('controlPanelCategory', 'portlet');
+				portletURL.setParameter('definition', AJSON.stringify(instance.get('definition')));
+				portletURL.setParameter('fieldName', instance.get('name'));
+				portletURL.setParameter('javax.portlet.action', 'renderStructureField');
+				portletURL.setParameter('mode', instance.get('mode'));
+				portletURL.setParameter('namespace', instance.get('namespace'));
+				portletURL.setParameter('portletNamespace', instance.get('portletNamespace'));
+				portletURL.setParameter('readOnly', instance.get('readOnly'));
+				portletURL.setPlid(instance.get('p_l_id'));
+				portletURL.setPortletId('com_liferay_dynamic_data_mapping_web_portlet_DynamicDataMappingPortlet');
+				portletURL.setWindowState('pop_up');
+
+				return portletURL.toString();
 			},
 
 			_valueFields: function() {

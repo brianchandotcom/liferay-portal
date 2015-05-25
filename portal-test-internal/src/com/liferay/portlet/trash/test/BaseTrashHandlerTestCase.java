@@ -141,7 +141,47 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashDuplicate() throws Exception {
-		trashDuplicateBaseModel();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
+			parentBaseModel);
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount + 1,
+			getTrashEntriesCount(group.getGroupId()));
+
+		Assert.assertTrue(isBaseModelTrashName(baseModel));
+
+		BaseModel<?> duplicateBaseModel = addBaseModel(
+			parentBaseModel, true, serviceContext);
+
+		moveBaseModelToTrash((Long)duplicateBaseModel.getPrimaryKeyObj());
+
+		duplicateBaseModel = getBaseModel(
+			(Long)duplicateBaseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount + 2,
+			getTrashEntriesCount(group.getGroupId()));
+
+		Assert.assertTrue(isBaseModelTrashName(duplicateBaseModel));
 	}
 
 	@Test
@@ -685,50 +725,6 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertEquals(
 				0, getDeletionSystemEventCount(trashHandler, -1));
 		}
-	}
-
-	protected void trashDuplicateBaseModel() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
-			parentBaseModel);
-		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 1,
-			getTrashEntriesCount(group.getGroupId()));
-
-		Assert.assertTrue(isBaseModelTrashName(baseModel));
-
-		BaseModel<?> duplicateBaseModel = addBaseModel(
-			parentBaseModel, true, serviceContext);
-
-		moveBaseModelToTrash((Long)duplicateBaseModel.getPrimaryKeyObj());
-
-		duplicateBaseModel = getBaseModel(
-			(Long)duplicateBaseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 2,
-			getTrashEntriesCount(group.getGroupId()));
-
-		Assert.assertTrue(isBaseModelTrashName(duplicateBaseModel));
 	}
 
 	protected void trashGrandparentBaseModelAndRestoreParentModel()

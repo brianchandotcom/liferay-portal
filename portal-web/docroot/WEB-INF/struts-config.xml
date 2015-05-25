@@ -551,6 +551,8 @@
 			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
+		<action path="/export_import/view" forward="portlet.export_import.view" />
+
 		<!-- Flags -->
 
 		<action path="/flags/edit_entry" type="com.liferay.portlet.flags.action.EditEntryAction">

@@ -214,16 +214,6 @@ boolean showAddAction = ParamUtil.getBoolean(request, "showAddAction", true);
 		</c:when>
 		<c:otherwise>
 			<c:if test="<%= !group.isLayoutPrototype() && (selLayout != null) %>">
-				<c:if test="<%= selGroup.isStagingGroup() %>">
-					<%@ include file="/html/portlet/export_import/error_auth_exception.jspf" %>
-
-					<%@ include file="/html/portlet/export_import/error_remote_export_exception.jspf" %>
-
-					<div class="alert alert-warning">
-						<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />
-					</div>
-				</c:if>
-
 				<c:if test="<%= selGroup.hasLocalOrRemoteStagingGroup() && !selGroup.isStagingGroup() %>">
 					<div class="alert alert-warning">
 						<liferay-ui:message key="changes-are-immediately-available-to-end-users" />

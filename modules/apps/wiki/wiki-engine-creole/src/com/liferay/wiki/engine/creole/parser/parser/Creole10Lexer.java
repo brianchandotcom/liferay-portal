@@ -1,4 +1,4 @@
-// $ANTLR 3.0.1 Creole10.g 2015-04-30 14:33:43
+// $ANTLR 3.0.1 Creole10.g 2015-05-25 09:39:15
 
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -836,8 +836,8 @@ public class Creole10Lexer extends Lexer {
     public final void mESCAPE() throws RecognitionException {
 	try {
 	    int _type = ESCAPE;
-	    // Creole10.g:1139:12: ( '~' )
-	    // Creole10.g:1139:14: '~'
+	    // Creole10.g:1147:12: ( '~' )
+	    // Creole10.g:1147:14: '~'
 	    {
 	    match('~'); 
 
@@ -854,8 +854,8 @@ public class Creole10Lexer extends Lexer {
     public final void mNOWIKI_BLOCK_CLOSE() throws RecognitionException {
 	try {
 	    int _type = NOWIKI_BLOCK_CLOSE;
-	    // Creole10.g:1140:21: ( NEWLINE '}}}' )
-	    // Creole10.g:1140:23: NEWLINE '}}}'
+	    // Creole10.g:1148:21: ( NEWLINE '}}}' )
+	    // Creole10.g:1148:23: NEWLINE '}}}'
 	    {
 	    mNEWLINE(); 
 	    match("}}}"); 
@@ -874,7 +874,7 @@ public class Creole10Lexer extends Lexer {
     public final void mNEWLINE() throws RecognitionException {
 	try {
 	    int _type = NEWLINE;
-	    // Creole10.g:1141:13: ( ( CR )? LF | CR )
+	    // Creole10.g:1149:13: ( ( CR )? LF | CR )
 	    int alt2=2;
 	    int LA2_0 = input.LA(1);
 
@@ -892,15 +892,15 @@ public class Creole10Lexer extends Lexer {
 	    }
 	    else {
 		NoViableAltException nvae =
-		    new NoViableAltException("1141:1: NEWLINE : ( ( CR )? LF | CR );", 2, 0, input);
+		    new NoViableAltException("1149:1: NEWLINE : ( ( CR )? LF | CR );", 2, 0, input);
 
 		throw nvae;
 	    }
 	    switch (alt2) {
 		case 1 :
-		    // Creole10.g:1141:15: ( CR )? LF
+		    // Creole10.g:1149:15: ( CR )? LF
 		    {
-		    // Creole10.g:1141:15: ( CR )?
+		    // Creole10.g:1149:15: ( CR )?
 		    int alt1=2;
 		    int LA1_0 = input.LA(1);
 
@@ -909,7 +909,7 @@ public class Creole10Lexer extends Lexer {
 		    }
 		    switch (alt1) {
 			case 1 :
-			    // Creole10.g:1141:17: CR
+			    // Creole10.g:1149:17: CR
 			    {
 			    mCR(); 
 
@@ -923,7 +923,7 @@ public class Creole10Lexer extends Lexer {
 		    }
 		    break;
 		case 2 :
-		    // Creole10.g:1142:9: CR
+		    // Creole10.g:1150:9: CR
 		    {
 		    mCR(); 
 
@@ -941,8 +941,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start CR
     public final void mCR() throws RecognitionException {
 	try {
-	    // Creole10.g:1143:16: ( '\\r' )
-	    // Creole10.g:1143:18: '\\r'
+	    // Creole10.g:1151:16: ( '\\r' )
+	    // Creole10.g:1151:18: '\\r'
 	    {
 	    match('\r'); 
 
@@ -957,8 +957,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start LF
     public final void mLF() throws RecognitionException {
 	try {
-	    // Creole10.g:1144:16: ( '\\n' )
-	    // Creole10.g:1144:18: '\\n'
+	    // Creole10.g:1152:16: ( '\\n' )
+	    // Creole10.g:1152:18: '\\n'
 	    {
 	    match('\n'); 
 
@@ -974,10 +974,10 @@ public class Creole10Lexer extends Lexer {
     public final void mBLANKS() throws RecognitionException {
 	try {
 	    int _type = BLANKS;
-	    // Creole10.g:1146:12: ( ( SPACE | TABULATOR )+ )
-	    // Creole10.g:1146:14: ( SPACE | TABULATOR )+
+	    // Creole10.g:1154:12: ( ( SPACE | TABULATOR )+ )
+	    // Creole10.g:1154:14: ( SPACE | TABULATOR )+
 	    {
-	    // Creole10.g:1146:14: ( SPACE | TABULATOR )+
+	    // Creole10.g:1154:14: ( SPACE | TABULATOR )+
 	    int cnt3=0;
 	    loop3:
 	    do {
@@ -1029,8 +1029,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start SPACE
     public final void mSPACE() throws RecognitionException {
 	try {
-	    // Creole10.g:1147:18: ( ' ' )
-	    // Creole10.g:1147:20: ' '
+	    // Creole10.g:1155:18: ( ' ' )
+	    // Creole10.g:1155:20: ' '
 	    {
 	    match(' '); 
 
@@ -1045,8 +1045,8 @@ public class Creole10Lexer extends Lexer {
     // $ANTLR start TABULATOR
     public final void mTABULATOR() throws RecognitionException {
 	try {
-	    // Creole10.g:1148:21: ( '\\t' )
-	    // Creole10.g:1148:23: '\\t'
+	    // Creole10.g:1156:21: ( '\\t' )
+	    // Creole10.g:1156:23: '\\t'
 	    {
 	    match('\t'); 
 
@@ -1062,8 +1062,8 @@ public class Creole10Lexer extends Lexer {
     public final void mBRACE_CLOSE() throws RecognitionException {
 	try {
 	    int _type = BRACE_CLOSE;
-	    // Creole10.g:1150:16: ( NEWLINE '}' )
-	    // Creole10.g:1150:18: NEWLINE '}'
+	    // Creole10.g:1158:16: ( NEWLINE '}' )
+	    // Creole10.g:1158:18: NEWLINE '}'
 	    {
 	    mNEWLINE(); 
 	    match('}'); 
@@ -1081,8 +1081,8 @@ public class Creole10Lexer extends Lexer {
     public final void mCOLON_SLASH() throws RecognitionException {
 	try {
 	    int _type = COLON_SLASH;
-	    // Creole10.g:1151:16: ( ':' '/' )
-	    // Creole10.g:1151:18: ':' '/'
+	    // Creole10.g:1159:16: ( ':' '/' )
+	    // Creole10.g:1159:18: ':' '/'
 	    {
 	    match(':'); 
 	    match('/'); 
@@ -1100,8 +1100,8 @@ public class Creole10Lexer extends Lexer {
     public final void mITAL() throws RecognitionException {
 	try {
 	    int _type = ITAL;
-	    // Creole10.g:1152:10: ( '//' )
-	    // Creole10.g:1152:12: '//'
+	    // Creole10.g:1160:10: ( '//' )
+	    // Creole10.g:1160:12: '//'
 	    {
 	    match("//"); 
 
@@ -1119,8 +1119,8 @@ public class Creole10Lexer extends Lexer {
     public final void mNOWIKI_OPEN() throws RecognitionException {
 	try {
 	    int _type = NOWIKI_OPEN;
-	    // Creole10.g:1153:16: ( '{{{' )
-	    // Creole10.g:1153:18: '{{{'
+	    // Creole10.g:1161:16: ( '{{{' )
+	    // Creole10.g:1161:18: '{{{'
 	    {
 	    match("{{{"); 
 
@@ -1138,8 +1138,8 @@ public class Creole10Lexer extends Lexer {
     public final void mNOWIKI_CLOSE() throws RecognitionException {
 	try {
 	    int _type = NOWIKI_CLOSE;
-	    // Creole10.g:1154:16: ( '}}}' )
-	    // Creole10.g:1154:18: '}}}'
+	    // Creole10.g:1162:16: ( '}}}' )
+	    // Creole10.g:1162:18: '}}}'
 	    {
 	    match("}}}"); 
 
@@ -1157,8 +1157,8 @@ public class Creole10Lexer extends Lexer {
     public final void mLINK_OPEN() throws RecognitionException {
 	try {
 	    int _type = LINK_OPEN;
-	    // Creole10.g:1155:14: ( '[[' )
-	    // Creole10.g:1155:16: '[['
+	    // Creole10.g:1163:14: ( '[[' )
+	    // Creole10.g:1163:16: '[['
 	    {
 	    match("[["); 
 
@@ -1176,8 +1176,8 @@ public class Creole10Lexer extends Lexer {
     public final void mLINK_CLOSE() throws RecognitionException {
 	try {
 	    int _type = LINK_CLOSE;
-	    // Creole10.g:1156:15: ( ']]' )
-	    // Creole10.g:1156:17: ']]'
+	    // Creole10.g:1164:15: ( ']]' )
+	    // Creole10.g:1164:17: ']]'
 	    {
 	    match("]]"); 
 
@@ -1195,8 +1195,8 @@ public class Creole10Lexer extends Lexer {
     public final void mIMAGE_OPEN() throws RecognitionException {
 	try {
 	    int _type = IMAGE_OPEN;
-	    // Creole10.g:1157:15: ( '{{' )
-	    // Creole10.g:1157:17: '{{'
+	    // Creole10.g:1165:15: ( '{{' )
+	    // Creole10.g:1165:17: '{{'
 	    {
 	    match("{{"); 
 
@@ -1214,8 +1214,8 @@ public class Creole10Lexer extends Lexer {
     public final void mIMAGE_CLOSE() throws RecognitionException {
 	try {
 	    int _type = IMAGE_CLOSE;
-	    // Creole10.g:1158:16: ( '}}' )
-	    // Creole10.g:1158:18: '}}'
+	    // Creole10.g:1166:16: ( '}}' )
+	    // Creole10.g:1166:18: '}}'
 	    {
 	    match("}}"); 
 
@@ -1233,8 +1233,8 @@ public class Creole10Lexer extends Lexer {
     public final void mFORCED_LINEBREAK() throws RecognitionException {
 	try {
 	    int _type = FORCED_LINEBREAK;
-	    // Creole10.g:1159:19: ( '\\\\\\\\' )
-	    // Creole10.g:1159:21: '\\\\\\\\'
+	    // Creole10.g:1167:19: ( '\\\\\\\\' )
+	    // Creole10.g:1167:21: '\\\\\\\\'
 	    {
 	    match("\\\\"); 
 
@@ -1252,8 +1252,8 @@ public class Creole10Lexer extends Lexer {
     public final void mEQUAL() throws RecognitionException {
 	try {
 	    int _type = EQUAL;
-	    // Creole10.g:1160:11: ( '=' )
-	    // Creole10.g:1160:13: '='
+	    // Creole10.g:1168:11: ( '=' )
+	    // Creole10.g:1168:13: '='
 	    {
 	    match('='); 
 
@@ -1270,8 +1270,8 @@ public class Creole10Lexer extends Lexer {
     public final void mPIPE() throws RecognitionException {
 	try {
 	    int _type = PIPE;
-	    // Creole10.g:1161:10: ( '|' )
-	    // Creole10.g:1161:12: '|'
+	    // Creole10.g:1169:10: ( '|' )
+	    // Creole10.g:1169:12: '|'
 	    {
 	    match('|'); 
 
@@ -1288,8 +1288,8 @@ public class Creole10Lexer extends Lexer {
     public final void mPOUND() throws RecognitionException {
 	try {
 	    int _type = POUND;
-	    // Creole10.g:1162:11: ( '#' )
-	    // Creole10.g:1162:13: '#'
+	    // Creole10.g:1170:11: ( '#' )
+	    // Creole10.g:1170:13: '#'
 	    {
 	    match('#'); 
 
@@ -1306,8 +1306,8 @@ public class Creole10Lexer extends Lexer {
     public final void mDASH() throws RecognitionException {
 	try {
 	    int _type = DASH;
-	    // Creole10.g:1163:10: ( '-' )
-	    // Creole10.g:1163:12: '-'
+	    // Creole10.g:1171:10: ( '-' )
+	    // Creole10.g:1171:12: '-'
 	    {
 	    match('-'); 
 
@@ -1324,8 +1324,8 @@ public class Creole10Lexer extends Lexer {
     public final void mSTAR() throws RecognitionException {
 	try {
 	    int _type = STAR;
-	    // Creole10.g:1164:10: ( '*' )
-	    // Creole10.g:1164:12: '*'
+	    // Creole10.g:1172:10: ( '*' )
+	    // Creole10.g:1172:12: '*'
 	    {
 	    match('*'); 
 
@@ -1342,8 +1342,8 @@ public class Creole10Lexer extends Lexer {
     public final void mSLASH() throws RecognitionException {
 	try {
 	    int _type = SLASH;
-	    // Creole10.g:1165:11: ( '/' )
-	    // Creole10.g:1165:13: '/'
+	    // Creole10.g:1173:11: ( '/' )
+	    // Creole10.g:1173:13: '/'
 	    {
 	    match('/'); 
 
@@ -1360,8 +1360,8 @@ public class Creole10Lexer extends Lexer {
     public final void mEXTENSION() throws RecognitionException {
 	try {
 	    int _type = EXTENSION;
-	    // Creole10.g:1166:14: ( '@@' )
-	    // Creole10.g:1166:16: '@@'
+	    // Creole10.g:1174:14: ( '@@' )
+	    // Creole10.g:1174:16: '@@'
 	    {
 	    match("@@"); 
 
@@ -1379,8 +1379,8 @@ public class Creole10Lexer extends Lexer {
     public final void mINSIGNIFICANT_CHAR() throws RecognitionException {
 	try {
 	    int _type = INSIGNIFICANT_CHAR;
-	    // Creole10.g:1168:21: ( . )
-	    // Creole10.g:1168:23: .
+	    // Creole10.g:1176:21: ( . )
+	    // Creole10.g:1176:23: .
 	    {
 	    matchAny(); 
 

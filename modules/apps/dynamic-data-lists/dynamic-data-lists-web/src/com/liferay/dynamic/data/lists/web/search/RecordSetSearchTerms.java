@@ -12,38 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.search;
+package com.liferay.dynamic.data.lists.web.search;
 
-import com.liferay.portal.kernel.dao.search.DisplayTerms;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
 import javax.portlet.PortletRequest;
 
 /**
  * @author Marcellus Tavares
  */
-public class RecordSetDisplayTerms extends DisplayTerms {
+public class RecordSetSearchTerms extends RecordSetDisplayTerms {
 
-	public static final String DESCRIPTION = "description";
-
-	public static final String NAME = "name";
-
-	public RecordSetDisplayTerms(PortletRequest portletRequest) {
+	public RecordSetSearchTerms(PortletRequest portletRequest) {
 		super(portletRequest);
 
-		description = ParamUtil.getString(portletRequest, DESCRIPTION);
-		name = ParamUtil.getString(portletRequest, NAME);
+		description = DAOParamUtil.getString(portletRequest, DESCRIPTION);
+		name = DAOParamUtil.getString(portletRequest, NAME);
 	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	protected String description;
-	protected String name;
 
 }

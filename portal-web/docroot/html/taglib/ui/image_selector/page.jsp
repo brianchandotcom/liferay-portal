@@ -100,6 +100,7 @@ if (fileEntryId != 0) {
 	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
 	<portlet:param name="checkContentDisplayPage" value="true" />
 	<portlet:param name="eventName" value='<%= randomNamespace + "selectImage" %>' />
+	<portlet:param name="type" value="image" />
 </liferay-portlet:renderURL>
 
 <%

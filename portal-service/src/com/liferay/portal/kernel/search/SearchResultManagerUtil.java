@@ -17,7 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
@@ -56,7 +56,15 @@ public class SearchResultManagerUtil {
 			entryClassName);
 
 		if (searchResultManager == null) {
-			return new DefaultSearchResultManagerImpl();
+			if (entryClassName.equals(DLFileEntryConstants.getClassName())) {
+				return new DLFileEntrySearchResultManager();
+			}
+			else if (entryClassName.equals(MBMessage.class.getName())) {
+				return new MBMessageSearchResultManager();
+			}
+			else {
+				return new DefaultSearchResultManagerImpl();
+			}
 		}
 
 		return searchResultManager;
@@ -83,6 +91,33 @@ public class SearchResultManagerUtil {
 
 			});
 
+	private static class BaseSearchResultManager
+		implements SearchResultManager {
+
+		@Override
+		public SearchResult createSearchResult(Document document)
+			throws PortalException {
+
+			long classNameId = GetterUtil.getLong(
+				document.get(Field.CLASS_NAME_ID));
+			long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+
+			if ((classPK > 0) && (classNameId > 0)) {
+				String className = PortalUtil.getClassName(classNameId);
+
+				return new SearchResult(className, classPK);
+			}
+
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			return new SearchResult(entryClassName, entryClassPK);
+		}
+
+	}
+
 	private static class DefaultSearchResultManagerImpl
 		implements SearchResultManager {
 
@@ -93,28 +128,17 @@ public class SearchResultManagerUtil {
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			String className = entryClassName;
-			long classPK = entryClassPK;
-
-			if (entryClassName.equals(DLFileEntry.class.getName()) ||
-				entryClassName.equals(MBMessage.class.getName())) {
-
-				classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
-				long classNameId = GetterUtil.getLong(
-					document.get(Field.CLASS_NAME_ID));
-
-				if ((classPK > 0) && (classNameId > 0)) {
-					className = PortalUtil.getClassName(classNameId);
-				}
-				else {
-					className = entryClassName;
-					classPK = entryClassPK;
-				}
-			}
-
-			return new SearchResult(className, classPK);
+			return new SearchResult(entryClassName, entryClassPK);
 		}
 
+	}
+
+	private static class DLFileEntrySearchResultManager
+		extends BaseSearchResultManager {
+	}
+
+	private static class MBMessageSearchResultManager
+		extends BaseSearchResultManager {
 	}
 
 }

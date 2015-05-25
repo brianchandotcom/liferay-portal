@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.lists.web.asset;
 
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -22,6 +23,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.model.ClassTypeReader;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
@@ -32,9 +34,19 @@ import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermi
 
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"search.asset.type=com.liferay.portlet.dynamicdatalists.model.DDLRecord"
+	},
+	service = AssetRendererFactory.class
+)
 public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "record";

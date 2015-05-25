@@ -8,6 +8,13 @@
 			<entry key="json.web.service.context.path" value="SACPEntry" />
 		</osgi:service-properties>
 	</osgi:service>
+	<bean id="com.liferay.service.access.control.profile.service.SACPEntryService" class="com.liferay.service.access.control.profile.service.impl.SACPEntryServiceImpl" />
+	<osgi:service interface="com.liferay.service.access.control.profile.service.SACPEntryService" ref="com.liferay.service.access.control.profile.service.SACPEntryService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="sacp" />
+			<entry key="json.web.service.context.path" value="SACPEntry" />
+		</osgi:service-properties>
+	</osgi:service>
 	<bean id="com.liferay.service.access.control.profile.service.persistence.SACPEntryPersistence" class="com.liferay.service.access.control.profile.service.persistence.impl.SACPEntryPersistenceImpl" parent="basePersistence" />
 	<osgi:service interface="com.liferay.service.access.control.profile.service.persistence.SACPEntryPersistence" ref="com.liferay.service.access.control.profile.service.persistence.SACPEntryPersistence" />
 </beans>

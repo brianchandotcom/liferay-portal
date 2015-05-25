@@ -40,13 +40,16 @@ import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 
 import com.liferay.service.access.control.profile.model.SACPEntry;
 import com.liferay.service.access.control.profile.model.SACPEntryModel;
+import com.liferay.service.access.control.profile.model.SACPEntrySoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +68,7 @@ import java.util.TreeSet;
  * @see SACPEntryModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	implements SACPEntryModel {
@@ -106,6 +110,54 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	public static final long NAME_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long SACPENTRYID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static SACPEntry toModel(SACPEntrySoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		SACPEntry model = new SACPEntryImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setSacpEntryId(soapModel.getSacpEntryId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setAllowedServices(soapModel.getAllowedServices());
+		model.setName(soapModel.getName());
+		model.setTitle(soapModel.getTitle());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<SACPEntry> toModels(SACPEntrySoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<SACPEntry> models = new ArrayList<SACPEntry>(soapModels.length);
+
+		for (SACPEntrySoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.service.access.control.profile.model.SACPEntry"));
 
@@ -226,6 +278,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -249,6 +302,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getSacpEntryId() {
 		return _sacpEntryId;
@@ -259,6 +313,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		_sacpEntryId = sacpEntryId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -281,6 +336,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -307,6 +363,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -322,6 +379,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -332,6 +390,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -348,6 +407,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getAllowedServices() {
 		if (_allowedServices == null) {
@@ -363,6 +423,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		_allowedServices = allowedServices;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -388,6 +449,7 @@ public class SACPEntryModelImpl extends BaseModelImpl<SACPEntry>
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		if (_title == null) {

@@ -3,7 +3,7 @@
 
 <service-builder package-path="com.liferay.service.access.control.profile">
 	<namespace>SACP</namespace>
-	<entity name="SACPEntry" uuid="true" local-service="true" remote-service="false">
+	<entity name="SACPEntry" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
@@ -30,10 +30,12 @@
 		</finder>
 		<finder name="C_N" return-type="SACPEntry">
 			<finder-column name="companyId" />
-			<finder-column name="name" />
+			<finder-column name="name" case-sensitive="false" />
 		</finder>
 	</entity>
 	<exceptions>
 		<exception>DuplicateSACPEntryName</exception>
+		<exception>SACPEntryName</exception>
+		<exception>SACPEntryTitle</exception>
 	</exceptions>
 </service-builder>

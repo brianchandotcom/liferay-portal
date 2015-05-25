@@ -401,14 +401,14 @@
 	<portlet>
 		<portlet-name>88</portlet-name>
 		<display-name>Layouts Admin</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layouts_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/layouts_admin/edit_layouts</value>
+			<name>view-template</name>
+			<value>/html/portlet/layouts_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -876,14 +876,14 @@
 	<portlet>
 		<portlet-name>140</portlet-name>
 		<display-name>My Pages</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layouts_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/my_pages/view</value>
+			<name>view-template</name>
+			<value>/html/portlet/layouts_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
@@ -972,14 +972,14 @@
 	<portlet>
 		<portlet-name>156</portlet-name>
 		<display-name>Group Pages</display-name>
-		<portlet-class>com.liferay.portlet.StrutsPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layouts_admin/</value>
 		</init-param>
 		<init-param>
-			<name>view-action</name>
-			<value>/group_pages/edit_layouts</value>
+			<name>view-template</name>
+			<value>/html/portlet/layouts_admin/view.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.portlet.FriendlyURLMapper;
 import com.liferay.portal.kernel.portlet.LiferayPortletConfig;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletLayoutListener;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
@@ -87,6 +86,7 @@ import com.liferay.portlet.PortletContextFactory;
 import com.liferay.portlet.PortletInstanceFactoryUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.PortletQNameUtil;
+import com.liferay.portlet.UndeployedPortletImpl;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.util.ContentUtil;
 
@@ -540,11 +540,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			portlet.setPortletName(portletId);
 			portlet.setDisplayName(portletId);
-			portlet.setPortletClass(MVCPortlet.class.getName());
-
-			Map<String, String> initParams = portlet.getInitParams();
-
-			initParams.put("view-jsp", "/html/portal/undeployed_portlet.jsp");
+			portlet.setPortletClass(UndeployedPortletImpl.class.getName());
 
 			Set<String> mimeTypePortletModes = new HashSet<>();
 

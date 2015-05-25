@@ -39,7 +39,7 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			document.get(Field.CLASS_NAME_ID));
 		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
-		if ((classPK > 0) && (classNameId > 0)) {
+		if (isRelationSupported() && (classPK > 0) && (classNameId > 0)) {
 			String className = PortalUtil.getClassName(classNameId);
 
 			return new SearchResult(className, classPK);
@@ -63,13 +63,13 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			document.get(Field.CLASS_NAME_ID));
 		long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
-		if ((classPK > 0) && (classNameId > 0)) {
+		if (isRelationSupported() && (classPK > 0) && (classNameId > 0)) {
 			addRelatedModel(
 				searchResult, document, locale, portletRequest,
 				portletResponse);
 		}
 
-		if ((classPK == 0) || (classNameId == 0)) {
+		if (!isRelationSupported() || (classPK == 0) || (classNameId == 0)) {
 			String entryClassName = GetterUtil.getString(
 				document.get(Field.ENTRY_CLASS_NAME));
 			long entryClassPK = GetterUtil.getLong(
@@ -139,6 +139,8 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			SearchResult searchResult, Document document, Locale locale,
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException;
+
+	protected abstract boolean isRelationSupported();
 
 	protected static final int SUMMARY_MAX_CONTENT_LENGTH = 200;
 

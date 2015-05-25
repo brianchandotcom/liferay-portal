@@ -124,34 +124,15 @@ public class SearchResultManagerUtil {
 		extends BaseSearchResultManager {
 
 		@Override
-		public SearchResult createSearchResult(Document document) {
-			String entryClassName = GetterUtil.getString(
-				document.get(Field.ENTRY_CLASS_NAME));
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			return new SearchResult(entryClassName, entryClassPK);
-		}
-
-		@Override
-		public void updateSearchResult(
-				SearchResult searchResult, Document document, Locale locale,
-				PortletRequest portletRequest, PortletResponse portletResponse)
-			throws PortalException {
-
-			Summary summary = getSummary(
-				document, searchResult.getClassName(),
-				searchResult.getClassPK(), locale, portletRequest,
-				portletResponse);
-
-			searchResult.setSummary(summary);
-		}
-
-		@Override
 		protected void addRelatedModel(
 				SearchResult searchResult, Document document, Locale locale,
 				PortletRequest portletRequest, PortletResponse portletResponse)
 			throws PortalException {
+		}
+
+		@Override
+		protected boolean isRelationSupported() {
+			return false;
 		}
 
 	}
@@ -179,6 +160,11 @@ public class SearchResultManagerUtil {
 			searchResult.addFileEntry(fileEntry, summary);
 		}
 
+		@Override
+		protected boolean isRelationSupported() {
+			return true;
+		}
+
 	}
 
 	private static class MBMessageSearchResultManager
@@ -197,6 +183,11 @@ public class SearchResultManagerUtil {
 				entryClassPK);
 
 			searchResult.addMBMessage(mbMessage);
+		}
+
+		@Override
+		protected boolean isRelationSupported() {
+			return true;
 		}
 
 	}

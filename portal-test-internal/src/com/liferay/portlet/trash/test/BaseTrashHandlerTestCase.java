@@ -301,7 +301,59 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashMoveBaseModel() throws Exception {
-		trashMoveBaseModel();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		int initialBaseModelsSearchCount = 0;
+
+		if (isIndexableBaseModel()) {
+			initialBaseModelsSearchCount = searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId());
+		}
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertTrue(isInTrashContainer(baseModel));
+
+		if (isIndexableBaseModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		}
+
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
+		}
+
+		if (!isBaseModelMoveableFromTrash()) {
+			return;
+		}
+
+		moveBaseModelFromTrash(baseModel, group, serviceContext);
+
+		if (isIndexableBaseModel()) {
+			if (isBaseModelContainerModel()) {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 2,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
+			}
+			else {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 1,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
+			}
+		}
+
+		if (isAssetableModel()) {
+			Assert.assertTrue(isAssetEntryVisible(baseModel));
+		}
 	}
 
 	@Test
@@ -854,62 +906,6 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 		else {
 			Assert.assertTrue(restorable);
-		}
-	}
-
-	protected void trashMoveBaseModel() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		int initialBaseModelsSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-		}
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
-
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
-
-		Assert.assertTrue(isInTrashContainer(baseModel));
-
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-		}
-
-		if (isAssetableModel()) {
-			Assert.assertFalse(isAssetEntryVisible(baseModel));
-		}
-
-		if (!isBaseModelMoveableFromTrash()) {
-			return;
-		}
-
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
-
-		if (isIndexableBaseModel()) {
-			if (isBaseModelContainerModel()) {
-				Assert.assertEquals(
-					initialBaseModelsSearchCount + 2,
-					searchBaseModelsCount(
-						getBaseModelClass(), group.getGroupId()));
-			}
-			else {
-				Assert.assertEquals(
-					initialBaseModelsSearchCount + 1,
-					searchBaseModelsCount(
-						getBaseModelClass(), group.getGroupId()));
-			}
-		}
-
-		if (isAssetableModel()) {
-			Assert.assertTrue(isAssetEntryVisible(baseModel));
 		}
 	}
 

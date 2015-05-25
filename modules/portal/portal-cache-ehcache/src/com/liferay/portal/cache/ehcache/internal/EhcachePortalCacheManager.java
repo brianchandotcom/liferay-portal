@@ -189,7 +189,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 		URL configFileURL = EhcacheConfigurationHelperUtil.class.getResource(
 			_configFile);
 
-		if (!_usingDefault) {
+		if (configFileURL == null) {
 			ClassLoader classLoader = PortalClassLoaderUtil.getClassLoader();
 
 			configFileURL = classLoader.getResource(_configFile);

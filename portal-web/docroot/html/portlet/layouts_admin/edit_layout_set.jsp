@@ -24,7 +24,6 @@ Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 long groupId = layoutsAdminDisplayContext.getGroupId();
 long liveGroupId = layoutsAdminDisplayContext.getLiveGroupId();
 boolean privateLayout = layoutsAdminDisplayContext.isPrivateLayout();
-UnicodeProperties liveGroupTypeSettings = liveGroup.getTypeSettingsProperties();
 LayoutSet selLayoutSet = layoutsAdminDisplayContext.getSelLayoutSet();
 
 String rootNodeName = layoutsAdminDisplayContext.getRootNodeName();
@@ -71,34 +70,36 @@ boolean hasViewPagesPermission = (pagesCount > 0) && (liveGroup.isStaged() || se
 			<aui:nav-item href="<%= addPagesURL %>" iconCssClass="icon-plus" label="add-page" />
 		</c:if>
 		<c:if test="<%= hasExportImportLayoutsPermission %>">
-			<portlet:renderURL var="exportPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/export_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="exportPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_import/export_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="liveGroupId" value="<%= String.valueOf(liveGroupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</portlet:renderURL>
+				<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" />
+			<aui:nav-item href="<%= exportPagesURL %>" iconCssClass="icon-arrow-down" label="export" useDialog="<%= true %>" />
 
-			<portlet:renderURL var="importPagesURL">
-				<portlet:param name="struts_action" value="/layouts_admin/import_layouts" />
+			<liferay-portlet:renderURL portletName="<%= PortletKeys.EXPORT_IMPORT %>" var="importPagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+				<portlet:param name="struts_action" value="/export_import/import_layouts" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
 				<portlet:param name="rootNodeName" value="<%= rootNodeName %>" />
-			</portlet:renderURL>
+				<portlet:param name="showHeader" value="<%= Boolean.FALSE.toString() %>" />
+			</liferay-portlet:renderURL>
 
-			<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" />
+			<aui:nav-item href="<%= importPagesURL %>" iconCssClass="icon-arrow-up" label="import" useDialog="<%= true %>" />
 		</c:if>
 	</aui:nav>
 </aui:nav-bar>
 
 <c:if test="<%= liveGroup.isStaged() %>">
-	<%@ include file="/html/portlet/layouts_admin/error_auth_exception.jspf" %>
+	<%@ include file="/html/portlet/export_import/error_auth_exception.jspf" %>
 
-	<%@ include file="/html/portlet/layouts_admin/error_remote_export_exception.jspf" %>
+	<%@ include file="/html/portlet/export_import/error_remote_export_exception.jspf" %>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message key="the-staging-environment-is-activated-changes-have-to-be-published-to-make-them-available-to-end-users" />

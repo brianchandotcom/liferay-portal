@@ -69,6 +69,19 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 				portletResponse);
 		}
 
+		if ((classPK == 0) || (classNameId == 0)) {
+			String entryClassName = GetterUtil.getString(
+				document.get(Field.ENTRY_CLASS_NAME));
+			long entryClassPK = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			Summary summary = getSummary(
+				document, entryClassName, entryClassPK, locale, portletRequest,
+				portletResponse);
+
+			searchResult.setSummary(summary);
+		}
+
 		if (searchResult.getSummary() == null) {
 			Summary summary = getSummary(
 				searchResult.getClassName(), searchResult.getClassPK(), locale);

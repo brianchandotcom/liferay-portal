@@ -19,11 +19,16 @@ import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
@@ -38,6 +43,8 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -75,6 +82,9 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			else if (cmd.equals("merge_layout_set_branch")) {
 				mergeLayoutSetBranch(actionRequest);
 			}
+			else if (cmd.equals("select_layout_set_branch")) {
+				selectLayoutSetBranch(actionRequest);
+			}
 
 			if (SessionErrors.isEmpty(actionRequest)) {
 				SessionMessages.add(
@@ -88,10 +98,11 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 				data.put("preventNotification", Boolean.TRUE.toString());
 
 				SessionMessages.add(
-					actionRequest,
-					PortalUtil.getPortletId(actionRequest) +
-						SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
-					data);
+						actionRequest,
+						PortalUtil.getPortletId(actionRequest) +
+								SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
+						data
+				);
 			}
 
 			sendRedirect(actionRequest, actionResponse);
@@ -190,6 +201,33 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
 
 		SessionMessages.add(actionRequest, "sitePageVariationMerged");
+	}
+
+	protected void selectLayoutSetBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
+		// Ensure layout set branch exists
+
+		LayoutSetBranch layoutSetBranch =
+			LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+				layoutSetBranchId);
+
+		StagingUtil.setRecentLayoutSetBranchId(
+			request, layoutSet.getLayoutSetId(),
+			layoutSetBranch.getLayoutSetBranchId());
 	}
 
 	protected void updateLayoutSetBranch(ActionRequest actionRequest)

@@ -1,0 +1,7 @@
+Bundle-Name: Journal Terms Of Use
+Bundle-SymbolicName: com.liferay.journal.terms.of.use
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /journal-terms-of-use

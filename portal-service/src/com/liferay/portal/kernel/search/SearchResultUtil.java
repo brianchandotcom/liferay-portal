@@ -59,6 +59,18 @@ public class SearchResultUtil {
 				document.get(Field.ENTRY_CLASS_PK));
 
 			try {
+				SearchResult searchResult =
+					SearchResultManagerUtil.createSearchResult(document);
+
+				int index = searchResults.indexOf(searchResult);
+
+				if (index < 0) {
+					searchResults.add(searchResult);
+				}
+				else {
+					searchResult = searchResults.get(index);
+				}
+
 				FileEntry fileEntry = null;
 				MBMessage mbMessage = null;
 
@@ -86,18 +98,6 @@ public class SearchResultUtil {
 					}
 				}
 
-				SearchResult searchResult =
-					SearchResultManagerUtil.createSearchResult(document);
-
-				int index = searchResults.indexOf(searchResult);
-
-				if (index < 0) {
-					searchResults.add(searchResult);
-				}
-				else {
-					searchResult = searchResults.get(index);
-				}
-
 				if (fileEntry != null) {
 					Summary summary = getSummary(
 						document, DLFileEntry.class.getName(),
@@ -109,12 +109,6 @@ public class SearchResultUtil {
 
 				if (mbMessage != null) {
 					searchResult.addMBMessage(mbMessage);
-				}
-
-				String version = document.get(Field.VERSION);
-
-				if (Validator.isNotNull(version)) {
-					searchResult.addVersion(version);
 				}
 
 				if ((mbMessage == null) && (fileEntry == null)) {
@@ -133,6 +127,12 @@ public class SearchResultUtil {
 
 						searchResult.setSummary(summary);
 					}
+				}
+
+				String version = document.get(Field.VERSION);
+
+				if (Validator.isNotNull(version)) {
+					searchResult.addVersion(version);
 				}
 			}
 			catch (Exception e) {

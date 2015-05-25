@@ -876,7 +876,7 @@
 	<portlet>
 		<portlet-name>140</portlet-name>
 		<display-name>My Pages</display-name>
-		<portlet-class>com.liferay.portlet.layoutsadmin.LayoutsAdminPortlet</portlet-class>
+		<portlet-class>com.liferay.portlet.mypages.MyPagesPortlet</portlet-class>
 		<init-param>
 			<name>template-path</name>
 			<value>/html/portlet/layouts_admin/</value>

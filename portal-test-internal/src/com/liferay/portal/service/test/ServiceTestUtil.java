@@ -48,8 +48,6 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PortalInstances;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -119,10 +117,6 @@ public class ServiceTestUtil {
 
 		return RoleTestUtil.addRole(
 			roleName, roleType, resourceName, scope, primKey, actionId);
-	}
-
-	public static void destroyServices() {
-		_deleteDirectories();
 	}
 
 	public static void initMainServletServices() {
@@ -202,10 +196,6 @@ public class ServiceTestUtil {
 		// Thread locals
 
 		_setThreadLocals();
-
-		// Directories
-
-		_deleteDirectories();
 
 		// Search engine
 
@@ -351,10 +341,6 @@ public class ServiceTestUtil {
 					modelName, modelActions);
 			}
 		}
-	}
-
-	private static void _deleteDirectories() {
-		FileUtil.deltree(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR);
 	}
 
 	private static Filter _registerDestinationFilter(String destinationName) {

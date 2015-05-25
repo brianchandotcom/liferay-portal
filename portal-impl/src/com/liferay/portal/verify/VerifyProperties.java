@@ -732,6 +732,17 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.security.sso.facebook.connect"
 		},
 
+		// FileSystem Store
+
+		new String[] {
+			"dl.store.advanced.file.system.root.dir", "root.dir",
+			"com.liferay.portal.store.filesystem"
+		},
+		new String[] {
+			"dl.store.file.system.root.dir", "root.dir",
+			"com.liferay.portal.store.filesystem"
+		},
+
 		// FreeMarker Engine
 
 		new String[] {

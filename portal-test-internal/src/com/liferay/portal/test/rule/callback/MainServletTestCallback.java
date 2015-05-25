@@ -50,8 +50,6 @@ public class MainServletTestCallback extends BaseTestCallback<Object, Object> {
 
 	@Override
 	public void doAfterClass(Description description, Object object) {
-		ServiceTestUtil.destroyServices();
-
 		try {
 			SearchEngineUtil.removeCompany(TestPropsValues.getCompanyId());
 		}

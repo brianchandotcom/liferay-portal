@@ -14,15 +14,18 @@
 
 package com.liferay.portal.store.filesystem;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.store.filesystem.configuration.FileSystemConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.store.BaseStore;
+import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.io.File;
@@ -37,12 +40,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Sten Martinez
  * @author Alexander Chow
  * @author Edward Han
+ * @author Manuel de la Peña
  */
+@Component(
+	configurationPid = "com.liferay.portal.store.filesystem.configuration.FileSystemConfiguration",
+	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
+	property = "store.type=com.liferay.portal.store.filesystem.FileSystemStore",
+	service = Store.class
+)
 public class FileSystemStore extends BaseStore {
 
 	public FileSystemStore() {
@@ -431,6 +445,12 @@ public class FileSystemStore extends BaseStore {
 		}
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties) {
+		_fileSystemConfiguration = Configurable.createConfigurable(
+			FileSystemConfiguration.class, properties);
+	}
+
 	protected void deleteEmptyAncestors(File file) {
 		deleteEmptyAncestors(-1, -1, file);
 	}
@@ -577,12 +597,13 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected String getRootDirName() {
-		return PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR;
+		return _fileSystemConfiguration.rootDir();
 	}
 
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
 	private final File _rootDir;
+	private static volatile FileSystemConfiguration _fileSystemConfiguration;
 
 	private class RepositoryDirKey {
 

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 import java.util.Map;
@@ -55,6 +56,14 @@ public abstract class BaseEditorConfigContributor
 			"liferay-ui:input-editor:contentsLanguageId");
 
 		return LocaleUtil.fromLanguageId(contentsLanguageId);
+	}
+
+	protected String getLanguageId(ThemeDisplay themeDisplay) {
+		String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		return LocaleUtil.toLanguageId(locale);
 	}
 
 	protected JSONArray toJSONArray(String json) {

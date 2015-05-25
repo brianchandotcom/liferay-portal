@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.*;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.Locale;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -69,12 +68,8 @@ public class CKEditorCreoleConfigContributor
             "extraPlugins",
             "a11yhelpbtn,creole,imageselector,lfrpopup,wikilink");
 
-		String languageId = LocaleUtil.toLanguageId(themeDisplay.getLocale());
-
-		Locale locale = LocaleUtil.fromLanguageId(languageId);
-
 		jsonObject.put("filebrowserWindowFeatures", "title=" +
-			LanguageUtil.get(locale, "browse"));
+			LanguageUtil.get(themeDisplay.getLocale(), "browse"));
 
 		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;pre");
 

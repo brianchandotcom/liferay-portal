@@ -18,10 +18,18 @@
 
 <%
 boolean termsOfUseRequired = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.TERMS_OF_USE_REQUIRED, PropsValues.TERMS_OF_USE_REQUIRED);
+long termsOfUseGroupId = PrefsPropsUtil.getLong(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID);
+String termsOfUseArticleId = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID, PropsValues.TERMS_OF_USE_JOURNAL_ARTICLE_ID);
 %>
 
 <h3><liferay-ui:message key="terms-of-use" /></h3>
 
 <aui:fieldset>
 	<aui:input label="terms-of-use-required" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_REQUIRED + "--" %>' type="checkbox" value="<%= termsOfUseRequired %>" />
+
+	<aui:field-wrapper helpMessage="terms-of-use-web-content-help" label="terms-of-use-web-content">
+		<aui:input label="group-id" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID + "--" %>' type="text" value="<%= termsOfUseGroupId %>" />
+
+		<aui:input label="article-id" name='<%= "settings--" + PropsKeys.TERMS_OF_USE_JOURNAL_ARTICLE_ID + "--" %>' type="text" value="<%= termsOfUseArticleId %>" />
+	</aui:field-wrapper>
 </aui:fieldset>

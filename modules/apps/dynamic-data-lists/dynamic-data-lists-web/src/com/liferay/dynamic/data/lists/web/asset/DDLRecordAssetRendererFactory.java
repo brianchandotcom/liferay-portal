@@ -53,6 +53,8 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public DDLRecordAssetRendererFactory() {
 		setCategorizable(false);
+		setClassName(DDLRecord.class.getName());
+		setPortletId(DDLPortletKeys.DYNAMIC_DATA_LISTS);
 		setSelectable(true);
 	}
 
@@ -111,8 +113,7 @@ public class DDLRecordAssetRendererFactory extends BaseAssetRendererFactory {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL(
 			PortletKeys.DYNAMIC_DATA_LISTS);
 
-		portletURL.setParameter(
-			"struts_action", "/dynamic_data_lists/edit_record");
+		portletURL.setParameter("mvcPath", "/edit_record.jsp");
 
 		if (classTypeId > 0) {
 			portletURL.setParameter("recordSetId", String.valueOf(classTypeId));

@@ -64,17 +64,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class FileSystemStore extends BaseStore {
 
-	public FileSystemStore() {
-		_rootDir = new File(getRootDirName());
-
-		try {
-			FileUtil.mkdirs(_rootDir);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
 	@Override
 	public void addDirectory(
 		long companyId, long repositoryId, String dirName) {
@@ -469,6 +458,8 @@ public class FileSystemStore extends BaseStore {
 				"FileSystemConfiguration",
 			"com.liferay.portal.store.filesystem.configuration." +
 				"AdvancedFileSystemConfiguration");
+
+		initializeRootDir();
 	}
 
 	protected void deleteEmptyAncestors(File file) {
@@ -618,6 +609,17 @@ public class FileSystemStore extends BaseStore {
 
 	protected String getRootDirName() {
 		return _fileSystemConfiguration.rootDir();
+	}
+
+	protected void initializeRootDir() {
+		_rootDir = new File(getRootDirName());
+
+		try {
+			FileUtil.mkdirs(_rootDir);
+		}
+		catch (IOException ioe) {
+			throw new SystemException(ioe);
+		}
 	}
 
 	@Reference(unbind = "-")

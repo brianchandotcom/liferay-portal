@@ -128,6 +128,8 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 				"FileSystemConfiguration",
 			"com.liferay.portal.store.filesystem.configuration." +
 				"AdvancedFileSystemConfiguration");
+
+		initializeRootDir();
 	}
 
 	protected void buildPath(StringBundler sb, String fileNameFragment) {

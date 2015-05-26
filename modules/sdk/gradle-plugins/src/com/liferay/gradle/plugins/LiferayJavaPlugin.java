@@ -691,12 +691,18 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project = cleanTask.getProject();
 
 		for (Task task : project.getTasks()) {
+			String taskName = task.getName();
+
+			if (taskName.equals(DEPLOY_TASK_NAME)) {
+				continue;
+			}
+
 			TaskOutputs taskOutputs = task.getOutputs();
 
 			if (taskOutputs.getHasOutput()) {
-				String taskName =
+				taskName =
 					BasePlugin.CLEAN_TASK_NAME +
-						StringUtil.capitalize(task.getName());
+						StringUtil.capitalize(taskName);
 
 				cleanTask.dependsOn(taskName);
 			}

@@ -263,7 +263,7 @@ public class PortletTracker
 
 		portletModel.setPortletClass(portletClazz.getName());
 
-		configurePortletLog4J(portletClazz);
+		initLogger(bundleWiring.getClassLoader());
 
 		collectJxPortletFeatures(serviceReference, portletModel);
 		collectLiferayFeatures(serviceReference, portletModel);
@@ -908,10 +908,6 @@ public class PortletTracker
 		portletModel.setWindowStates(windowStates);
 	}
 
-	protected void configurePortletLog4J(Class<?> portletClazz) {
-		Log4JUtil.configureLog4J(portletClazz.getClassLoader());
-	}
-
 	protected BundlePortletApp createBundlePortletApp(
 		Bundle bundle, ClassLoader classLoader,
 		ServiceRegistrations serviceRegistrations) {
@@ -1101,6 +1097,11 @@ public class PortletTracker
 		}
 
 		return serviceRegistrations;
+	}
+
+	protected void initLogger(ClassLoader classLoader) {
+		Log4JUtil.configureLog4J(
+			classLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
 	protected void readResourceActions(

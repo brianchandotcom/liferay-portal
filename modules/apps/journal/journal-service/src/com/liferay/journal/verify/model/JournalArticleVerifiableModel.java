@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.journal.verify.model;
 
-import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan

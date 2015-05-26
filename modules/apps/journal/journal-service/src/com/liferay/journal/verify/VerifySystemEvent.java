@@ -12,8 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.journal.verify;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
@@ -25,10 +29,7 @@ import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
+import com.liferay.portal.verify.VerifyProcess;
 
 import java.util.List;
 

@@ -12,22 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.verify.model;
+package com.liferay.journal.verify.model;
+
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.portal.verify.model.VerifiableResourcedModel;
+import com.liferay.portal.verify.model.VerifiableUUIDModel;
 
 /**
- * @author Miguel Pastor
+ * @author Brian Wing Shun Chan
  */
-public class JournalArticleResourceVerifiableModel
-	implements VerifiableUUIDModel {
+public class JournalFeedVerifiableModel
+	implements VerifiableResourcedModel, VerifiableUUIDModel {
+
+	@Override
+	public String getModelName() {
+		return JournalFeed.class.getName();
+	}
 
 	@Override
 	public String getPrimaryKeyColumnName() {
-		return "resourcePrimKey";
+		return "id_";
 	}
 
 	@Override
 	public String getTableName() {
-		return "JournalArticleResource";
+		return "JournalFeed";
+	}
+
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
 	}
 
 }

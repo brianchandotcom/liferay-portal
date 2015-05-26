@@ -369,6 +369,14 @@ public class ComboServlet extends HttpServlet {
 			String modulePath)
 		throws Exception {
 
+		if (!PortalUtil.isValidResourceId(modulePath)) {
+			_log.error(
+				"Illegal access: " + request.getRequestURL() +
+					"?" + request.getQueryString());
+
+			return null;
+		}
+
 		String portletId = getModulePortletId(modulePath);
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);

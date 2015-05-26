@@ -17,7 +17,6 @@ package com.liferay.portlet.asset.service;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -26,9 +25,10 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetTagStats;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFolder;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -59,21 +59,22 @@ public class AssetTagStatsServiceTest {
 
 		serviceContext.setAssetTagNames(new String[] {"basketball"});
 
-		JournalArticle journalArticle = JournalTestUtil.addArticle(
-			_group.getGroupId(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(100), serviceContext);
+		DLFolder folder = DLTestUtil.addDLFolder(
+			_group.getGroupId(), serviceContext);
+
+		DLFileEntry fileEntry = DLTestUtil.addDLFileEntry(folder.getFolderId());
 
 		AssetTag tag = AssetTagLocalServiceUtil.getTag(
 			_group.getGroupId(), "basketball");
 
-		long classNameId = PortalUtil.getClassNameId(JournalArticle.class);
+		long classNameId = PortalUtil.getClassNameId(DLFileEntry.class);
 
 		AssetTagStats tagStats = AssetTagStatsLocalServiceUtil.getTagStats(
 			tag.getTagId(), classNameId);
 
 		Assert.assertEquals(1, tagStats.getAssetCount());
 
-		JournalArticleLocalServiceUtil.deleteArticle(journalArticle);
+		DLFileEntryLocalServiceUtil.deleteDLFileEntry(fileEntry);
 
 		tagStats = AssetTagStatsLocalServiceUtil.getTagStats(
 			tag.getTagId(), classNameId);

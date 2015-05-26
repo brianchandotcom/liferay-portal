@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/taglib/ui/item_selector_browser/init.jsp" %>
+<%@ include file="/taglib/ui/browser/init.jsp" %>
 
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "descriptive");
@@ -78,7 +78,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 								</span>
 							</a>
 
-							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+							<%@ include file="/taglib/ui/browser/metadata_view.jspf" %>
 						</liferay-ui:search-container-column-text>
 
 						<liferay-ui:search-container-column-text name="size" value="<%= TextFormatter.formatStorageSize(fileEntry.getSize(), locale) %>" />
@@ -123,7 +123,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 								<%= HtmlUtil.escape(title) %>
 							</a>
 
-							<%@ include file="/html/taglib/ui/item_selector_browser/metadata_view.jspf" %>
+							<%@ include file="/taglib/ui/browser/metadata_view.jspf" %>
 						</div>
 
 						<div class="status text-default">

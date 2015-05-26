@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util.comparator;
+package com.liferay.journal.util.comparator;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Brian Wing Shun Chan

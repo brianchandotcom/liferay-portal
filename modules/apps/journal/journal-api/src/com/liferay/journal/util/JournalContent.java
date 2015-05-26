@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.util;
 
+import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.journal.model.JournalArticleDisplay;
 
 /**
  * @author Raymond Augé

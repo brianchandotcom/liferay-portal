@@ -43,6 +43,13 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
  */
 public class PoshiRunnerPlugin implements Plugin<Project> {
 
+	public static final String CONFIGURATION_NAME = "poshiRunner";
+
+	public static final String EXPAND_POSHI_RUNNER_TASK_NAME =
+		"expandPoshiRunner";
+
+	public static final String RUN_POSHI_TASK_NAME = "runPoshi";
+
 	@Override
 	public void apply(Project project) {
 		final PoshiRunnerExtension poshiRunnerExtension =
@@ -71,7 +78,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		final PoshiRunnerExtension poshiRunnerExtension) {
 
 		final Configuration configuration = GradleUtil.addConfiguration(
-			project, _POSHI_RUNNER_CONFIGURATION_NAME);
+			project, CONFIGURATION_NAME);
 
 		configuration.setDescription(
 			"Configures Poshi Runner for this project.");
@@ -105,7 +112,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
 		GradleUtil.addDependency(
-			project, _POSHI_RUNNER_CONFIGURATION_NAME, "com.liferay",
+			project, CONFIGURATION_NAME, "com.liferay",
 			"com.liferay.poshi.runner", poshiRunnerExtension.getVersion(),
 			null);
 	}
@@ -134,28 +141,27 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		String classifier = os + "-" + bitMode;
 
 		GradleUtil.addDependency(
-			project, _POSHI_RUNNER_CONFIGURATION_NAME,
-			"org.bytedeco.javacpp-presets", "opencv",
-			poshiRunnerExtension.getOpenCVVersion(), classifier);
+			project, CONFIGURATION_NAME, "org.bytedeco.javacpp-presets",
+			"opencv", poshiRunnerExtension.getOpenCVVersion(), classifier);
 	}
 
 	protected void addTasksExpandPoshiRunner(Project project) {
 		Copy copy = GradleUtil.addTask(
-			project, _EXPAND_POSHI_RUNNER_TASK_NAME, Copy.class);
+			project, EXPAND_POSHI_RUNNER_TASK_NAME, Copy.class);
 
 		copy.into(getExpandedPoshiRunnerDir(project));
 	}
 
 	protected void addTasksRunPoshi(Project project) {
 		Test test = GradleUtil.addTask(
-			project, _RUN_POSHI_TASK_NAME, Test.class);
+			project, RUN_POSHI_TASK_NAME, Test.class);
 
-		test.dependsOn(_EXPAND_POSHI_RUNNER_TASK_NAME);
+		test.dependsOn(EXPAND_POSHI_RUNNER_TASK_NAME);
 
 		test.include("com/liferay/poshi/runner/PoshiRunner.class");
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			test.getProject(), _POSHI_RUNNER_CONFIGURATION_NAME);
+			test.getProject(), CONFIGURATION_NAME);
 
 		test.setClasspath(configuration);
 		test.setDescription("Execute tests using Poshi Runner.");
@@ -188,7 +194,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	protected void configureTasksExpandPoshiRunner(Project project) {
 		Copy copy = (Copy)GradleUtil.getTask(
-			project, _EXPAND_POSHI_RUNNER_TASK_NAME);
+			project, EXPAND_POSHI_RUNNER_TASK_NAME);
 
 		configureTasksExpandPoshiRunnerFrom(copy);
 	}
@@ -197,7 +203,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Project project = copy.getProject();
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			project, _POSHI_RUNNER_CONFIGURATION_NAME);
+			project, CONFIGURATION_NAME);
 
 		Iterator<File> iterator = configuration.iterator();
 
@@ -219,7 +225,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	protected void configureTasksRunPoshi(
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
-		Test test = (Test)GradleUtil.getTask(project, _RUN_POSHI_TASK_NAME);
+		Test test = (Test)GradleUtil.getTask(project, RUN_POSHI_TASK_NAME);
 
 		configureTasksRunPoshiBinResultsDir(test);
 		configureTasksRunPoshiReports(test);
@@ -234,7 +240,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Project project = test.getProject();
 
 		test.setBinResultsDir(
-			project.file("test-results/binary/" + _RUN_POSHI_TASK_NAME));
+			project.file("test-results/binary/" + RUN_POSHI_TASK_NAME));
 	}
 
 	protected void configureTasksRunPoshiReports(Test test) {
@@ -274,13 +280,5 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 	protected File getExpandedPoshiRunnerDir(Project project) {
 		return new File(project.getBuildDir(), "poshi-runner");
 	}
-
-	private static final String _EXPAND_POSHI_RUNNER_TASK_NAME =
-		"expandPoshiRunner";
-
-	private static final String _POSHI_RUNNER_CONFIGURATION_NAME =
-		"poshiRunner";
-
-	private static final String _RUN_POSHI_TASK_NAME = "runPoshi";
 
 }

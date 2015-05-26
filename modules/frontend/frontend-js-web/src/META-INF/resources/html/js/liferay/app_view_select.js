@@ -2,8 +2,8 @@ AUI.add(
 	'liferay-app-view-select',
 	function(A) {
 		var AArray = A.Array;
-		var Lang = A.Lang;
 		var History = Liferay.HistoryManager;
+		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
 		var ATTR_CHECKED = 'checked';
@@ -111,7 +111,7 @@ AUI.add(
 						var displayStyle = History.get(currentDisplayStyle) || instance.get(STR_DISPLAY_STYLE);
 
 						if (style) {
-							displayStyle = (displayStyle == style);
+							displayStyle = displayStyle == style;
 						}
 
 						return displayStyle;
@@ -197,7 +197,7 @@ AUI.add(
 							var articleDisplayStyle = event.target.ancestor(STR_DOT + instance._displayStyleCSSClass);
 
 							if (articleDisplayStyle) {
-								articleDisplayStyle.toggleClass('hover', (event.type == STR_FOCUS));
+								articleDisplayStyle.toggleClass('hover', event.type == STR_FOCUS);
 							}
 						}
 					},

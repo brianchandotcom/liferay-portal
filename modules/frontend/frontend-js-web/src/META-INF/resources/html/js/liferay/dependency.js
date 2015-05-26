@@ -1,8 +1,9 @@
 (function() {
 	var A = AUI().use('oop');
 
-	var usedModules = {};
 	var emptyFn = function() {};
+
+	var usedModules = {};
 
 	var Dependency = {
 		provide: function(obj, methodName, methodFn, modules, proto) {
@@ -10,8 +11,9 @@
 				modules = [modules];
 			}
 
-			var guid = A.guid();
 			var before;
+
+			var guid = A.guid();
 
 			if (A.Lang.isObject(methodFn, true)) {
 				var config = methodFn;
@@ -53,11 +55,13 @@
 					}
 				}
 
-				var queue = Dependency._proxyLoaders[guid];
 				var firstLoad = false;
+
+				var queue = Dependency._proxyLoaders[guid];
 
 				if (!queue) {
 					firstLoad = true;
+
 					Dependency._proxyLoaders[guid] = new A.Queue();
 
 					queue = Dependency._proxyLoaders[guid];
@@ -86,8 +90,9 @@
 		},
 
 		_proxy: function(obj, methodName, methodFn, context, guid, modules, A) {
-			var queue = Dependency._proxyLoaders[guid];
 			var args;
+
+			var queue = Dependency._proxyLoaders[guid];
 
 			Dependency._replaceMethod(obj, methodName, methodFn, context);
 

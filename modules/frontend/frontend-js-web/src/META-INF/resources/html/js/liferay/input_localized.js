@@ -235,8 +235,8 @@ AUI.add(
 
 						var selectedLanguageId = instance.getSelectedLanguageId();
 
-						var inputLanguage = instance._getInputLanguage(selectedLanguageId);
 						var defaultInputLanguage = instance._getInputLanguage(defaultLanguageId);
+						var inputLanguage = instance._getInputLanguage(selectedLanguageId);
 
 						instance.activateFlags();
 
@@ -361,7 +361,9 @@ AUI.add(
 									container: boundingBox,
 									formatter: function(title) {
 										var flagNode = this.get('trigger');
+
 										var value = flagNode.getData('value');
+
 										var formattedValue = availableLanguages[value];
 
 										if (value === defaultLanguageId) {

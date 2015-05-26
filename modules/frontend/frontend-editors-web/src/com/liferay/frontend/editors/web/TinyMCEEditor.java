@@ -14,9 +14,13 @@
 
 package com.liferay.frontend.editors.web;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.editor.Editor;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
@@ -30,9 +34,22 @@ public class TinyMCEEditor extends BaseEditor {
 		return "tinymce";
 	}
 
+	@Reference
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
+	}
+
+	@Override
+	public void setItemSelectorAttribute(HttpServletRequest request) {
+		request.setAttribute(
+			"liferay-ui:input-editor:itemSelector", _itemSelector);
+	}
+
 	@Override
 	protected String getJspPath() {
 		return "/editors/tinymce.jsp";
 	}
+
+	private ItemSelector _itemSelector;
 
 }

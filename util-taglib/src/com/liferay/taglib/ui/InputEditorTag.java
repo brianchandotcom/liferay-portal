@@ -330,6 +330,13 @@ public class InputEditorTag extends IncludeTag {
 			"liferay-ui:input-editor:inlineEdit", String.valueOf(_inlineEdit));
 		request.setAttribute(
 			"liferay-ui:input-editor:inlineEditSaveURL", _inlineEditSaveURL);
+
+		Editor editor = getEditor(request);
+
+		if (editor != null) {
+			editor.setItemSelectorAttribute(request);
+		}
+
 		request.setAttribute("liferay-ui:input-editor:name", _name);
 		request.setAttribute(
 			"liferay-ui:input-editor:onBlurMethod", _onBlurMethod);

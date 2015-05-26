@@ -221,8 +221,7 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 				if (!cachedResults) {
 					var queryChars = AArray.dedupe(query.toLowerCase().split(''));
 
-					cachedResults = AArray.map(
-						results,
+					cachedResults = results.map(
 						function(item, index) {
 							return A.Highlight.all(item.text, queryChars);
 						}

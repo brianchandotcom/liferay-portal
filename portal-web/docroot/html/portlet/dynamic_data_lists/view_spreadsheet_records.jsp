@@ -54,6 +54,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var structure = <%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;
+
 	var columns = Liferay.SpreadSheet.buildDataTableColumns(<%= DDLUtil.getRecordSetJSONArray(recordSet) %>, structure, <%= editable %>);
 
 	var ignoreEmptyRecordsNumericSort = function(recA, recB, desc, field) {
@@ -74,7 +75,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 					result = A.ArraySort.compare(a, b, desc);
 				}
 				else {
-					result = desc ? (num2 - num1) : (num1 - num2);
+					result = desc ? num2 - num1 : num1 - num2;
 				}
 
 				return result;
@@ -95,8 +96,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 		number: 1
 	};
 
-	var keys = A.Array.map(
-		columns,
+	var keys = columns.map(
 		function(item, index) {
 			var key = item.key;
 
@@ -127,7 +127,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 	records.sort(
 		function(a, b) {
-			return (a.displayIndex - b.displayIndex);
+			return a.displayIndex - b.displayIndex;
 		}
 	);
 

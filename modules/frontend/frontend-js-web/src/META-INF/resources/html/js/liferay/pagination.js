@@ -1,10 +1,10 @@
 AUI.add(
 	'liferay-pagination',
 	function(A) {
-		var Lang = A.Lang;
 		var AArray = A.Array;
 		var ANode = A.Node;
 		var AObject = A.Object;
+		var Lang = A.Lang;
 
 		var BOUNDING_BOX = 'boundingBox';
 
@@ -92,7 +92,7 @@ AUI.add(
 					'</div>',
 
 					TPL_ITEM: '<li id="{idLi}" role="presentation">' +
-						'<a href="javascript:;" class="lfr-pagination-link taglib-icon" id="{idLink}" role="menuitem">' +
+						'<a class="lfr-pagination-link taglib-icon" href="javascript:;" id="{idLink}" role="menuitem">' +
 							'<span class="taglib-text-icon" data-index="{index}" data-value="{value}">{value}</span>' +
 						'</a>' +
 					'</li>',
@@ -159,8 +159,7 @@ AUI.add(
 							)
 						);
 
-						var buffer = AArray.map(
-							instance.get(ITEMS_PER_PAGE_LIST),
+						var buffer = instance.get(ITEMS_PER_PAGE_LIST).map(
 							function(item, index) {
 								return Lang.sub(
 									instance.TPL_ITEM,
@@ -263,7 +262,7 @@ AUI.add(
 						if (results > itemsPerPage) {
 							var tmp = page * itemsPerPage;
 
-							resultsContent = Lang.sub(instance._resultsMessage, [((page - 1) * itemsPerPage) + 1, tmp < results ? tmp : results, results]);
+							resultsContent = Lang.sub(instance._resultsMessage, [(page - 1) * itemsPerPage + 1, tmp < results ? tmp : results, results]);
 						}
 						else {
 							resultsContent = Lang.sub(instance._resultsMessageShort, [results]);
@@ -276,6 +275,7 @@ AUI.add(
 						var instance = this;
 
 						var state = event.state;
+
 						var page = state.page;
 
 						var itemsPerPage = state.itemsPerPage;
@@ -343,7 +343,7 @@ AUI.add(
 
 						var itemsPerPageList = instance.get(ITEMS_PER_PAGE_LIST);
 
-						instance._paginationControls.toggleClass(hiddenClass, (results <= itemsPerPageList[0]));
+						instance._paginationControls.toggleClass(hiddenClass, results <= itemsPerPageList[0]);
 
 						instance._paginationContentNode.toggleClass(hiddenClass, !val);
 					}

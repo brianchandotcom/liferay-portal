@@ -423,8 +423,7 @@ AUI.add(
 								metadataExplanationContainer.show();
 							}
 
-							var files = AArray.map(
-								fileNames,
+							var files = fileNames.map(
 								function(item, index) {
 									var title = item;
 
@@ -541,8 +540,7 @@ AUI.add(
 						var dragDropFiles = dataTransfer && AArray(dataTransfer.files);
 
 						if (dragDropFiles && (target === uploaderBoundingBox || uploaderBoundingBox.contains(target))) {
-							event.fileList = AArray.map(
-								dragDropFiles,
+							event.fileList = dragDropFiles.map(
 								function(item, index) {
 									return new A.FileHTML5(item);
 								}
@@ -925,14 +923,15 @@ AUI.add(
 					_renderControls: function() {
 						var instance = this;
 
+						var multipleFiles = instance.get('multipleFiles');
 						var strings = instance.get(STRINGS);
 
 						var templateConfig = {
 							$ns: instance.NS,
-							cancelUploadsText: instance.get('multipleFiles') ? strings.cancelUploadsText : strings.cancelFileText,
-							dropFileText: instance.get('multipleFiles') ? strings.dropFilesText : strings.dropFileText,
-							multipleFiles: instance.get('multipleFiles'),
-							selectFilesText: instance.get('multipleFiles') ? strings.selectFilesText : strings.selectFileText,
+							cancelUploadsText: multipleFiles ? strings.cancelUploadsText : strings.cancelFileText,
+							dropFileText: multipleFiles ? strings.dropFilesText : strings.dropFileText,
+							multipleFiles: multipleFiles,
+							selectFilesText: multipleFiles ? strings.selectFilesText : strings.selectFileText,
 							strings: strings,
 							uploaderType: UPLOADER_TYPE
 						};
@@ -948,7 +947,7 @@ AUI.add(
 
 						var uploadFragment = new A.Template(TPL_UPLOAD, templateConfig).render(
 							{
-								multipleFiles: instance.get('multipleFiles')
+								multipleFiles: multipleFiles
 							}
 						);
 

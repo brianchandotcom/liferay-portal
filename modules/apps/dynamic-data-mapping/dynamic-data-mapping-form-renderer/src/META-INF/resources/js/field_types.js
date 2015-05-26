@@ -64,7 +64,7 @@ AUI.add(
 			register: function(fieldTypes) {
 				var instance = this;
 
-				instance._fieldTypes = AArray.map(AArray(fieldTypes), instance._getFieldType);
+				instance._fieldTypes = AArray(fieldTypes).map(instance._getFieldType);
 			}
 		};
 

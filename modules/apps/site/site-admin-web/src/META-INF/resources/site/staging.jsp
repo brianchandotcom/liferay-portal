@@ -50,7 +50,7 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 
 <c:if test="<%= (lastCompletedInitialPublicationBackgroundTask != null) && (lastCompletedInitialPublicationBackgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
 	<div class="alert alert-danger">
-		<liferay-ui:message key="an-unexpected-error-occurred--with-the-initial-staging-publication" />
+		<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
 
 		<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

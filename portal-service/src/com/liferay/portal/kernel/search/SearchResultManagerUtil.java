@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
@@ -173,6 +174,10 @@ public class SearchResultManagerUtil {
 					document, DLFileEntry.class.getName(),
 					fileEntry.getFileEntryId(), locale, portletRequest,
 					portletResponse);
+
+				if (Validator.isNull(summary.getContent())) {
+					summary.setContent(fileEntry.getTitle());
+				}
 
 				searchResult.addFileEntry(fileEntry, summary);
 			}

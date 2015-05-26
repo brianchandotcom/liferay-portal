@@ -59,7 +59,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 			</portlet:renderURL>
 
 			<liferay-ui:icon
-				cssClass="label label-submit publish-mode-switch"
+				cssClass="label publish-mode-switch"
 				iconCssClass="icon-cog"
 				label="<%= true %>"
 				message="switch-to-advanced-publication"

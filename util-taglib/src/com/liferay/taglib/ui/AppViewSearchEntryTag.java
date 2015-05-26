@@ -50,6 +50,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
+	public void setCommentTuples(List<Tuple> commentTuples) {
+		_commentTuples = commentTuples;
+	}
+
 	public void setContainerName(String containerName) {
 		_containerName = containerName;
 	}
@@ -93,11 +97,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 			mbMessageTuples.add(new Tuple(mbMessage, summary));
 		}
 
-		_mbMessageTuples = mbMessageTuples;
-	}
-
-	public void setMbMessageTuples(List<Tuple> mbMessageTuples) {
-		_mbMessageTuples = mbMessageTuples;
+		_commentTuples = mbMessageTuples;
 	}
 
 	public void setQueryTerms(String[] queryTerms) {
@@ -146,7 +146,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_fileEntryTuples = null;
 		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;
-		_mbMessageTuples = null;
+		_commentTuples = null;
 		_queryTerms = null;
 		_rowCheckerId = null;
 		_rowCheckerName = null;
@@ -200,8 +200,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:mbMessageTuples",
-			_mbMessageTuples);
+			"liferay-ui:app-view-search-entry:commentTuples", _commentTuples);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(
@@ -230,6 +229,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
+	private List<Tuple> _commentTuples;
 	private String _containerName;
 	private String _containerType;
 	private String _cssClass;
@@ -237,7 +237,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private List<Tuple> _fileEntryTuples;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
-	private List<Tuple> _mbMessageTuples;
 	private String[] _queryTerms;
 	private String _rowCheckerId;
 	private String _rowCheckerName;

@@ -447,65 +447,6 @@
 			<forward name="portlet.document_library.view" path="portlet.document_library_display.view" />
 		</action>
 
-		<!-- Dynamic Data List Display -->
-
-		<action path="/dynamic_data_list_display/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
-			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.edit_record" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_list_display/view" forward="portlet.dynamic_data_list_display.view" />
-
-		<action path="/dynamic_data_list_display/view_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
-			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.view_record" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_list_display/view_record_history" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
-			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.view_record_history" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_list_display/view_record_set" type="com.liferay.portlet.dynamicdatalists.action.EditRecordSetAction">
-			<forward name="portlet.dynamic_data_lists.edit_record_set" path="portlet.dynamic_data_list_display.view" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<!-- Dynamic Data Lists -->
-
-		<action path="/dynamic_data_lists/edit_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
-			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.edit_record" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_lists/edit_record_file" type="com.liferay.portlet.dynamicdatalists.action.EditRecordFileAction" />
-
-		<action path="/dynamic_data_lists/edit_record_set" type="com.liferay.portlet.dynamicdatalists.action.EditRecordSetAction">
-			<forward name="portlet.dynamic_data_lists.edit_record_set" path="portlet.dynamic_data_lists.edit_record_set" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_lists/export" type="com.liferay.portlet.dynamicdatalists.action.ExportRecordSetAction" />
-
-		<action path="/dynamic_data_lists/find_record" type="com.liferay.portlet.dynamicdatalists.action.FindRecordAction" />
-
-		<action path="/dynamic_data_lists/view" forward="portlet.dynamic_data_lists.view" />
-
-		<action path="/dynamic_data_lists/view_record" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
-			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.view_record" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_lists/view_record_history" type="com.liferay.portlet.dynamicdatalists.action.EditRecordAction">
-			<forward name="portlet.dynamic_data_lists.edit_record" path="portlet.dynamic_data_lists.view_record_history" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
-		<action path="/dynamic_data_lists/view_record_set" type="com.liferay.portlet.dynamicdatalists.action.EditRecordSetAction">
-			<forward name="portlet.dynamic_data_lists.edit_record_set" path="portlet.dynamic_data_lists.view_record_set" />
-			<forward name="portlet.dynamic_data_lists.error" path="portlet.dynamic_data_lists.error" />
-		</action>
-
 		<!-- Expando -->
 
 		<action path="/expando/edit_expando" type="com.liferay.portlet.expando.action.EditExpandoAction">

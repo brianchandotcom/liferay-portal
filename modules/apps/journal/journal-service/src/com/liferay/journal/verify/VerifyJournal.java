@@ -12,8 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.journal.verify;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalArticleImage;
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.model.JournalContentSearch;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalArticleImageLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleResourceLocalServiceUtil;
+import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
@@ -40,24 +52,13 @@ import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.util.PortalInstances;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleConstants;
-import com.liferay.portlet.journal.model.JournalArticleImage;
-import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.model.JournalContentSearch;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.service.JournalArticleImageLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

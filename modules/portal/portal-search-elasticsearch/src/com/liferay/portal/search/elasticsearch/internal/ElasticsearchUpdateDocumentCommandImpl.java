@@ -14,13 +14,17 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
@@ -31,6 +35,7 @@ import java.io.IOException;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 import org.elasticsearch.action.ActionResponse;
@@ -42,7 +47,9 @@ import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -106,6 +113,13 @@ public class ElasticsearchUpdateDocumentCommandImpl
 		}
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+	}
+
 	protected UpdateRequestBuilder buildUpdateRequestBuilder(
 			String documentType, SearchContext searchContext, Document document)
 		throws IOException {
@@ -121,6 +135,10 @@ public class ElasticsearchUpdateDocumentCommandImpl
 
 		updateRequestBuilder.setDoc(elasticSearchDocument);
 		updateRequestBuilder.setDocAsUpsert(true);
+		updateRequestBuilder.setRetryOnConflict(
+			_elasticsearchConfiguration.retryOnConflict());
+
+		document.get(Field.MODIFIED_DATE);
 
 		return updateRequestBuilder;
 	}
@@ -175,6 +193,7 @@ public class ElasticsearchUpdateDocumentCommandImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchUpdateDocumentCommandImpl.class);
 
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchDocumentFactory _elasticsearchDocumentFactory;
 

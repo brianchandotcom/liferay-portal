@@ -9,6 +9,101 @@ function macroHover(node, enter) {
 	}
 }
 
+function addChildLoggerElement(childLoggerAttributes, extraAttributes) {
+	var childNode = document.createElement(childLoggerAttributes.elementName);
+	var parentNode = document.getElementById(childLoggerAttributes.parentId);
+
+	if (childNode) {
+		childNode.setAttribute('class', childLoggerAttributes.elementClass);
+		childNode.setAttribute('id', childLoggerAttributes.elementId);
+
+		childNode.innerHTML = childLoggerAttributes.innerHTML;
+
+		for (var attribute in extraAttributes) {
+			childNode.setAttribute(attribute, extraAttributes.attribute);
+		}
+		if (parentNode) {
+			parentNode.appendChild(childNode);
+		}
+	}
+}
+
+function getClassName(id) {
+	var node = document.getElementById(id);
+
+	if (node) {
+		return node.getAttribute('class');
+	}
+}
+
+function getName(id) {
+	var node = document.getElementById(id);
+
+	if (node) {
+		return node.nodeName;
+	}
+}
+
+function getText(id) {
+	var node = document.getElementById(id);
+
+	if (node) {
+		return node.innerHTML;
+	}
+}
+
+function isWrittenToLogger(id) {
+	var node = document.getElementById(id);
+
+	if (node == null) {
+		return false;
+	}
+	return true;
+}
+
+function setAttribute(id, attrName, attrValue) {
+	var node = document.getElementById(id);
+
+	if (node) {
+		node.setAttribute(attrName, attrValue);
+	}
+}
+
+function setClassName(id, className) {
+	var node = document.getElementById(id);
+
+	if (node) {
+		node.setAttribute('class', className);
+	}
+}
+
+function setName(id, name) {
+	var oldNode = document.getElementById(id);
+
+	var newNode = document.createElement(name);
+
+	if (oldNode) {
+		newNode.innerHTML = oldNode.innerHTML;
+
+		newNode.setAttribute('class', oldNode.getAttribute('class'));
+		newNode.setAttribute('id', oldNode.getAttribute('id'));
+
+		oldNode.parentNode.insertBefore(newNode, oldNode.nextSibling);
+
+		var parentNode = oldNode.parentNode;
+
+		parentNode.removeChild(oldNode);
+	}
+}
+
+function setText(id, text) {
+	var node = document.getElementById(id);
+
+	if (node) {
+		node.innerHTML = text;
+	}
+}
+
 YUI.add(
 	'liferay-qa-poshi-logger',
 	function(A) {

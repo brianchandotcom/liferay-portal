@@ -158,7 +158,7 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 			super.contextDestroyed(servletContextEvent);
 
 			try {
-				ModuleFrameworkUtilAdapter.stopFramework();
+				ModuleFrameworkUtilAdapter.stopFramework(5000);
 			}
 			catch (Exception e) {
 				_log.error(e, e);

@@ -160,7 +160,7 @@ public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
 
 		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml);
 
 		Element rootElement = document.getRootElement();
 

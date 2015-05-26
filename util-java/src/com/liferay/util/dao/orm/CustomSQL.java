@@ -762,7 +762,7 @@ public class CustomSQL {
 			_log.debug("Loading " + source);
 		}
 
-		Document document = SAXReaderUtil.read(is);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(is);
 
 		Element rootElement = document.getRootElement();
 

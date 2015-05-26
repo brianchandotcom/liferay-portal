@@ -2002,7 +2002,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			File file = new File(srcDir + "/WEB-INF/" + fileName);
 
 			try {
-				Document doc = SAXReaderUtil.read(file);
+				Document doc = SAXReaderUtil.getUnsecureSAXReader().read(file);
 
 				String content = doc.formattedString(StringPool.TAB, true);
 
@@ -2026,7 +2026,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			return content;
 		}
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -2265,7 +2265,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			content = content.substring(0, x) + content.substring(y);
 		}
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(content);
 
 		Element rootElement = document.getRootElement();
 

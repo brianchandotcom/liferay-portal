@@ -289,7 +289,8 @@ public class ServiceComponentLocalServiceImpl
 			return;
 		}
 
-		Document document = SAXReaderUtil.read(inputStream);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(inputStream);
 
 		Element rootElement = document.getRootElement();
 
@@ -395,7 +396,7 @@ public class ServiceComponentLocalServiceImpl
 	protected List<String> getModelNames(String xml) throws DocumentException {
 		List<String> modelNames = new ArrayList<>();
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml);
 
 		Element rootElement = document.getRootElement();
 

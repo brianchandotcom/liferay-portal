@@ -115,7 +115,8 @@ public class ThemeLoader {
 		String themesPath = null;
 
 		try {
-			Document doc = SAXReaderUtil.read(xmls[0], true);
+			Document doc =
+				SAXReaderUtil.getUnsecureSAXReader().read(xmls[0], true);
 
 			Element root = doc.getRootElement();
 

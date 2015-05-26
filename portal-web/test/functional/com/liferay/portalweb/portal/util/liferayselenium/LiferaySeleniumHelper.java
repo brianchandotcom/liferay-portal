@@ -226,7 +226,8 @@ public class LiferaySeleniumHelper {
 		content = "<log4j>" + content + "</log4j>";
 		content = content.replaceAll("log4j:", "");
 
-		Document document = SAXReaderUtil.read(content, true);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(content, true);
 
 		Element rootElement = document.getRootElement();
 

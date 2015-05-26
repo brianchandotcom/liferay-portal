@@ -45,7 +45,7 @@ public class EARBuilder {
 		String portalContextPath) {
 
 		try {
-			Document document = SAXReaderUtil.read(
+			Document document = SAXReaderUtil.getUnsecureSAXReader().read(
 				new File(originalApplicationXML));
 
 			Element rootElement = document.getRootElement();

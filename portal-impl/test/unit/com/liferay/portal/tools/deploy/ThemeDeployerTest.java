@@ -86,7 +86,8 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 
 		Assert.assertNotNull(liferayLookAndFeelXML);
 
-		Document document = SAXReaderUtil.read(liferayLookAndFeelXML, true);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(
+			liferayLookAndFeelXML, true);
 
 		Element rootElement = document.getRootElement();
 

@@ -497,7 +497,8 @@ public class ThemeLocalServiceImpl extends ThemeLocalServiceBaseImpl {
 			return themes;
 		}
 
-		Document document = SAXReaderUtil.read(xml, true);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(xml, true);
 
 		Element rootElement = document.getRootElement();
 

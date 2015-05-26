@@ -57,7 +57,7 @@ public abstract class BaseTemplateHandler implements TemplateHandler {
 		String xml = StringUtil.read(
 			clazz.getClassLoader(), templatesConfigPath, false);
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml);
 
 		Element rootElement = document.getRootElement();
 

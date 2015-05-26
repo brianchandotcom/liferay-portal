@@ -289,7 +289,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
 
-		Document document = SAXReaderUtil.read(
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(
 			zipReader.getEntryAsString("manifest.xml"));
 
 		Element rootElement = document.getRootElement();

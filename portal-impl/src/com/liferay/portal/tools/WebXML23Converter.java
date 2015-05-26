@@ -44,7 +44,8 @@ public class WebXML23Converter {
 		try {
 			String webXML24 = FileUtil.read(input);
 
-			Document document = SAXReaderUtil.read(webXML24);
+			Document document =
+				SAXReaderUtil.getUnsecureSAXReader().read(webXML24);
 
 			Element rootElement = document.getRootElement();
 

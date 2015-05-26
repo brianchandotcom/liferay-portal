@@ -165,7 +165,8 @@ public class PortletDeployer extends BaseDeployer {
 
 		StringBundler sb = new StringBundler();
 
-		Document document = SAXReaderUtil.read(portletXML);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(portletXML);
 
 		Element rootElement = document.getRootElement();
 

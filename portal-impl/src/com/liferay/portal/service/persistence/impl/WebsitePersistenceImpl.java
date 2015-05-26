@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3980,25 +3981,27 @@ public class WebsitePersistenceImpl extends BasePersistenceImpl<Website>
 			website.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (website.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				website.setCreateDate(now);
+			if (isNew && (website.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					website.setCreateDate(now);
+				}
+				else {
+					website.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				website.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!websiteModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				website.setModifiedDate(now);
-			}
-			else {
-				website.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!websiteModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					website.setModifiedDate(now);
+				}
+				else {
+					website.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
 			}
 		}
 

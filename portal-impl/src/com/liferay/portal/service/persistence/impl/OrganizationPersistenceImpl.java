@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -6649,25 +6650,28 @@ public class OrganizationPersistenceImpl extends BasePersistenceImpl<Organizatio
 			organization.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (organization.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				organization.setCreateDate(now);
+			if (isNew && (organization.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					organization.setCreateDate(now);
+				}
+				else {
+					organization.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				organization.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!organizationModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				organization.setModifiedDate(now);
-			}
-			else {
-				organization.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!organizationModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					organization.setModifiedDate(now);
+				}
+				else {
+					organization.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
 			}
 		}
 

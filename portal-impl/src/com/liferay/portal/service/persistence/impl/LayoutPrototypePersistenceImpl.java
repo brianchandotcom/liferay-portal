@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3938,26 +3939,29 @@ public class LayoutPrototypePersistenceImpl extends BasePersistenceImpl<LayoutPr
 			layoutPrototype.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (layoutPrototype.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				layoutPrototype.setCreateDate(now);
+			if (isNew && (layoutPrototype.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					layoutPrototype.setCreateDate(now);
+				}
+				else {
+					layoutPrototype.setCreateDate(serviceContext.getCreateDate(
+							now));
+				}
 			}
-			else {
-				layoutPrototype.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!layoutPrototypeModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				layoutPrototype.setModifiedDate(now);
-			}
-			else {
-				layoutPrototype.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+			if (!layoutPrototypeModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					layoutPrototype.setModifiedDate(now);
+				}
+				else {
+					layoutPrototype.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
 			}
 		}
 

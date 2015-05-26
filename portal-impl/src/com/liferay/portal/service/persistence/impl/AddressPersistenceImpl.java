@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -4578,25 +4579,27 @@ public class AddressPersistenceImpl extends BasePersistenceImpl<Address>
 			address.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (address.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				address.setCreateDate(now);
+			if (isNew && (address.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					address.setCreateDate(now);
+				}
+				else {
+					address.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				address.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!addressModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				address.setModifiedDate(now);
-			}
-			else {
-				address.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!addressModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					address.setModifiedDate(now);
+				}
+				else {
+					address.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
 			}
 		}
 

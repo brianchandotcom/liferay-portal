@@ -69,9 +69,8 @@ public class UserGroupServiceSoap {
 	*
 	* @param groupId the primary key of the group
 	* @param userGroupIds the primary keys of the user groups
-	* @throws PortalException if a group or user group with the primary key
-	could not be found, or if the user did not have permission to
-	assign group members
+	* @throws PortalException if the user did not have permission to assign
+	group members
 	*/
 	public static void addGroupUserGroups(long groupId, long[] userGroupIds)
 		throws RemoteException {
@@ -90,9 +89,8 @@ public class UserGroupServiceSoap {
 	*
 	* @param teamId the primary key of the team
 	* @param userGroupIds the primary keys of the user groups
-	* @throws PortalException if a team or user group with the primary key
-	could not be found, or if the user did not have permission to
-	assign team members
+	* @throws PortalException if the user did not have permission to assign
+	team members
 	*/
 	public static void addTeamUserGroups(long teamId, long[] userGroupIds)
 		throws RemoteException {
@@ -193,6 +191,14 @@ public class UserGroupServiceSoap {
 		}
 	}
 
+	/**
+	* Fetches the user group with the primary key.
+	*
+	* @param userGroupId the primary key of the user group
+	* @return the user group with the primary key
+	* @throws PortalException if the user did not have permission to view the
+	user group
+	*/
 	public static com.liferay.portal.model.UserGroupSoap fetchUserGroup(
 		long userGroupId) throws RemoteException {
 		try {
@@ -211,7 +217,7 @@ public class UserGroupServiceSoap {
 	* Returns the user group with the primary key.
 	*
 	* @param userGroupId the primary key of the user group
-	* @return Returns the user group with the primary key
+	* @return the user group with the primary key
 	* @throws PortalException if a user group with the primary key could not be
 	found or if the user did not have permission to view the user
 	group
@@ -234,7 +240,7 @@ public class UserGroupServiceSoap {
 	* Returns the user group with the name.
 	*
 	* @param name the user group's name
-	* @return Returns the user group with the name
+	* @return the user group with the name
 	* @throws PortalException if a user group with the name could not be found
 	or if the user did not have permission to view the user group
 	*/

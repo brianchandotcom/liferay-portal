@@ -98,11 +98,10 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 				data.put("preventNotification", Boolean.TRUE.toString());
 
 				SessionMessages.add(
-						actionRequest,
-						PortalUtil.getPortletId(actionRequest) +
-								SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
-						data
-				);
+					actionRequest,
+					PortalUtil.getPortletId(actionRequest) +
+						SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
+					data);
 			}
 
 			sendRedirect(actionRequest, actionResponse);

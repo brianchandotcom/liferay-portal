@@ -1,9 +1,9 @@
 ;(function(A, $, _, Liferay) {
 	A.use('aui-base-lang');
 
-	var Lang = A.Lang;
-
 	var AArray = A.Array;
+
+	var Lang = A.Lang;
 
 	var EVENT_CLICK = 'click';
 
@@ -680,7 +680,7 @@
 		},
 
 		randomInt: function() {
-			return Math.ceil(Math.random() * new Date().getTime());
+			return Math.ceil(Math.random() * (new Date()).getTime());
 		},
 
 		removeEntitySelection: function(entityIdString, entityNameString, removeEntityButton, namespace) {
@@ -857,7 +857,7 @@
 
 			var display = 'none';
 
-			if ((keyCode >= 65 && keyCode <= 90 && !shiftKey) || (keyCode >= 97 && keyCode <= 122 && shiftKey)) {
+			if (keyCode >= 65 && keyCode <= 90 && !shiftKey || keyCode >= 97 && keyCode <= 122 && shiftKey) {
 				display = '';
 			}
 

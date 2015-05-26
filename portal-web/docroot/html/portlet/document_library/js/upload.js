@@ -998,7 +998,7 @@ AUI.add(
 
 						var queue = uploader && uploader.queue;
 
-						return !!(queue && (queue.queuedFiles.length > 0 || queue.numberOfUploads > 0 || !A.Object.isEmpty(queue.currentFiles)) && queue._currentState == UploaderQueue.UPLOADING);
+						return !!queue && (queue.queuedFiles.length > 0 || queue.numberOfUploads > 0 || !A.Object.isEmpty(queue.currentFiles)) && queue._currentState == UploaderQueue.UPLOADING;
 					},
 
 					_onDataRequest: function(event) {

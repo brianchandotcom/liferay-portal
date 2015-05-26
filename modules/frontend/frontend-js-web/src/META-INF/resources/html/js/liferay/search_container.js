@@ -134,7 +134,7 @@ AUI.add(
 							instance._hoverHandle = instance.get('contentBox').delegate(
 								['mouseenter', 'mouseleave'],
 								function(event) {
-									var mouseenter = (event.type == 'mouseenter');
+									var mouseenter = event.type == 'mouseenter';
 									var row = event.currentTarget;
 
 									var endAlternate = rowClassNameAlternateHover;

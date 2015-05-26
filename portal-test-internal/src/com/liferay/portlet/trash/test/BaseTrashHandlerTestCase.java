@@ -1343,12 +1343,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		Assert.assertEquals(
-			initialBaseModelsCount + 1,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
 		if (moveBaseModelToTrash) {
 			moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 

@@ -213,7 +213,11 @@ public class SearchResultManagerUtil {
 			MBMessage mbMessage = MBMessageLocalServiceUtil.getMessage(
 				entryClassPK);
 
-			searchResult.addMBMessage(mbMessage);
+			Summary summary = new Summary(null, mbMessage.getBody());
+
+			summary.setEscape(false);
+
+			searchResult.addMBMessage(mbMessage, summary);
 		}
 
 	}

@@ -49,8 +49,8 @@ public class DefaultCommentSectionDisplayContext
 		return _discussionPermission.hasAddPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionTaglibHelper.getPermissionClassName(),
-			_discussionTaglibHelper.getPermissionClassPK());
+			_discussionTaglibHelper.getClassName(),
+			_discussionTaglibHelper.getClassPK());
 	}
 
 	@Override
@@ -88,8 +88,8 @@ public class DefaultCommentSectionDisplayContext
 		return _discussionPermission.hasViewPermission(
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
-			_discussionTaglibHelper.getPermissionClassName(),
-			_discussionTaglibHelper.getPermissionClassPK());
+			_discussionTaglibHelper.getClassName(),
+			_discussionTaglibHelper.getClassPK());
 	}
 
 	private final DiscussionPermission _discussionPermission;

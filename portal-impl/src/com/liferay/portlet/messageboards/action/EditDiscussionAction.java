@@ -126,10 +126,6 @@ public class EditDiscussionAction extends PortletAction {
 		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
 		boolean hideControls = ParamUtil.getBoolean(
 			resourceRequest, "hideControls");
-		String permissionClassName = ParamUtil.getString(
-			resourceRequest, "permissionClassName");
-		long permissionClassPK = ParamUtil.getLong(
-			resourceRequest, "permissionClassPK");
 		boolean ratingsEnabled = ParamUtil.getBoolean(
 			resourceRequest, "ratingsEnabled");
 		long userId = ParamUtil.getLong(resourceRequest, "userId");
@@ -142,11 +138,6 @@ public class EditDiscussionAction extends PortletAction {
 			"liferay-ui:discussion:classPK", String.valueOf(classPK));
 		request.setAttribute(
 			"liferay-ui:discussion:hideControls", String.valueOf(hideControls));
-		request.setAttribute(
-			"liferay-ui:discussion:permissionClassName", permissionClassName);
-		request.setAttribute(
-			"liferay-ui:discussion:permissionClassPK",
-			String.valueOf(permissionClassPK));
 		request.setAttribute(
 			"liferay-ui:discussion:ratingsEnabled",
 			String.valueOf(ratingsEnabled));
@@ -184,18 +175,13 @@ public class EditDiscussionAction extends PortletAction {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String permissionClassName = ParamUtil.getString(
-			actionRequest, "permissionClassName");
-		long permissionClassPK = ParamUtil.getLong(
-			actionRequest, "permissionClassPK");
 		long commentId = ParamUtil.getLong(actionRequest, "commentId");
 
 		DiscussionPermission discussionPermission =
 			CommentManagerUtil.getDiscussionPermission(
 				themeDisplay.getPermissionChecker());
 
-		discussionPermission.checkDeletePermission(
-			permissionClassName, permissionClassPK, commentId);
+		discussionPermission.checkDeletePermission(commentId);
 
 		CommentManagerUtil.deleteComment(commentId);
 	}
@@ -232,10 +218,6 @@ public class EditDiscussionAction extends PortletAction {
 
 		long commentId = ParamUtil.getLong(actionRequest, "commentId");
 
-		String permissionClassName = ParamUtil.getString(
-			actionRequest, "permissionClassName");
-		long permissionClassPK = ParamUtil.getLong(
-			actionRequest, "permissionClassPK");
 		String className = ParamUtil.getString(actionRequest, "className");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long parentCommentId = ParamUtil.getLong(
@@ -280,7 +262,7 @@ public class EditDiscussionAction extends PortletAction {
 			try {
 				discussionPermission.checkAddPermission(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					permissionClassName, permissionClassPK);
+					className, classPK);
 
 				commentId = CommentManagerUtil.addComment(
 					user.getUserId(), className, classPK, user.getFullName(),
@@ -294,8 +276,7 @@ public class EditDiscussionAction extends PortletAction {
 
 			// Update message
 
-			discussionPermission.checkUpdatePermission(
-				permissionClassName, permissionClassPK, commentId);
+			discussionPermission.checkUpdatePermission(commentId);
 
 			commentId = CommentManagerUtil.updateComment(
 				themeDisplay.getUserId(), className, classPK, commentId,

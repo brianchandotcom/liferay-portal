@@ -26,13 +26,9 @@ public interface DiscussionPermission {
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException;
 
-	public void checkDeletePermission(
-			String className, long classPK, long commentId)
-		throws PortalException;
+	public void checkDeletePermission(long commentId) throws PortalException;
 
-	public void checkUpdatePermission(
-			String className, long classPK, long commentId)
-		throws PortalException;
+	public void checkUpdatePermission(long commentId) throws PortalException;
 
 	public void checkViewPermission(
 			long companyId, long groupId, String className, long classPK)
@@ -42,13 +38,9 @@ public interface DiscussionPermission {
 			long companyId, long groupId, String className, long classPK)
 		throws PortalException;
 
-	public boolean hasDeletePermission(
-			String className, long classPK, long commentId)
-		throws PortalException;
+	public boolean hasDeletePermission(long commentId) throws PortalException;
 
-	public boolean hasUpdatePermission(
-			String className, long classPK, long commentId)
-		throws PortalException;
+	public boolean hasUpdatePermission(long commentId) throws PortalException;
 
 	public boolean hasViewPermission(
 			long companyId, long groupId, String className, long classPK)

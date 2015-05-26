@@ -61,13 +61,11 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 	}
 
 	public static void check(
-			PermissionChecker permissionChecker, String className, long classPK,
-			long messageId, String actionId)
+			PermissionChecker permissionChecker, long messageId,
+			String actionId)
 		throws PortalException {
 
-		if (!contains(
-				permissionChecker, className, classPK, messageId, actionId)) {
-
+		if (!contains(permissionChecker, messageId, actionId)) {
 			throw new PrincipalException();
 		}
 	}
@@ -125,11 +123,14 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK,
-			long messageId, String actionId)
+			PermissionChecker permissionChecker, long messageId,
+			String actionId)
 		throws PortalException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+		String className = message.getClassName();
+		long classPK = message.getClassPK();
 
 		if (className.equals(WorkflowInstance.class.getName())) {
 			return permissionChecker.hasPermission(

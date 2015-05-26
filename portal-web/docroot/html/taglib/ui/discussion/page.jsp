@@ -49,8 +49,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<aui:input name="assetEntryVisible" type="hidden" value="<%= discussionTaglibHelper.isAssetEntryVisible() %>" />
 				<aui:input name="className" type="hidden" value="<%= discussionTaglibHelper.getClassName() %>" />
 				<aui:input name="classPK" type="hidden" value="<%= discussionTaglibHelper.getClassPK() %>" />
-				<aui:input name="permissionClassName" type="hidden" value="<%= discussionTaglibHelper.getPermissionClassName() %>" />
-				<aui:input name="permissionClassPK" type="hidden" value="<%= discussionTaglibHelper.getPermissionClassPK() %>" />
 				<aui:input name="commentId" type="hidden" />
 				<aui:input name="parentCommentId" type="hidden" />
 				<aui:input name="body" type="hidden" />
@@ -416,8 +414,6 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							classPK: <%= discussionTaglibHelper.getClassPK() %>,
 							hideControls: '<%= discussionTaglibHelper.isHideControls() %>',
 							index: form.fm('index').val(),
-							permissionClassName: '<%= discussionTaglibHelper.getPermissionClassName() %>',
-							permissionClassPK: '<%= discussionTaglibHelper.getPermissionClassPK() %>',
 							randomNamespace: '<%= randomNamespace %>',
 							ratingsEnabled: '<%= discussionTaglibHelper.isRatingsEnabled() %>',
 							rootIndexPage: form.fm('rootIndexPage').val(),

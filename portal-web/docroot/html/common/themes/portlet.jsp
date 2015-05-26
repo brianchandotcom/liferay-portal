@@ -19,7 +19,12 @@
 <portlet:defineObjects />
 
 <%
-String tilesPortletContent = GetterUtil.getString(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_content"));
+String tilesPortletContent = GetterUtil.getString(request.getAttribute(WebKeys.PORTLET_CONTENT_JSP));
+
+if (Validator.isBlank(tilesPortletContent)) {
+	tilesPortletContent = GetterUtil.getString(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_content"));
+}
+
 boolean tilesPortletDecorate = GetterUtil.getBoolean(TilesAttributeUtil.getTilesAttribute(pageContext, "portlet_decorate"), true);
 
 TilesAttributeUtil.removeComponentContext(pageContext);

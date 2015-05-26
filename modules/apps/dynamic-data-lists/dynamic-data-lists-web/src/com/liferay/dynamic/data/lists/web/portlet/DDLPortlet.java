@@ -15,11 +15,30 @@
 package com.liferay.dynamic.data.lists.web.portlet;
 
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.dynamicdatalists.NoSuchRecordException;
+import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordService;
+import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService;
+
+import java.io.IOException;
 
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -58,4 +77,96 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class DDLPortlet extends MVCPortlet {
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			setDDLRecordRequestAttribute(renderRequest);
+
+			setDDLRecordSetRequestAttribute(renderRequest);
+		}
+		catch (NoSuchRecordException | NoSuchRecordSetException nsre) {
+
+			// Let this slide because the user can manually input an record set
+			// key for a new record set that does not yet exist
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsre, nsre);
+			}
+		}
+		catch (PortalException pe) {
+			SessionErrors.add(renderRequest, pe.getClass());
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	public void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
+	}
+
+	@Reference
+	public void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchRecordException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchRecordSetException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	protected void setDDLRecordRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long recordId = ParamUtil.getLong(renderRequest, "recordId");
+
+		DDLRecord record = null;
+
+		if (recordId > 0) {
+			record = _ddlRecordService.getRecord(recordId);
+		}
+
+		renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
+	}
+
+	protected void setDDLRecordSetRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
+
+		long recordSetId = ParamUtil.getLong(renderRequest, "recordSetId");
+
+		DDLRecordSet recordSet = null;
+
+		if (recordSetId > 0) {
+			recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+		}
+
+		renderRequest.setAttribute(
+			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(DDLPortlet.class);
+
+	private DDLRecordService _ddlRecordService;
+	private DDLRecordSetService _ddlRecordSetService;
+
 }

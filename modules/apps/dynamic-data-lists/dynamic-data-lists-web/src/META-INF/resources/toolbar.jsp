@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute(WebKeys.SEARCH_CONTAINER);
@@ -26,7 +26,7 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 	<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 		<c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">
 			<portlet:renderURL var="addRecordSetURL">
-				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
+				<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 			</portlet:renderURL>
 
@@ -36,7 +36,9 @@ String toolbarItem = ParamUtil.getString(request, "toolbarItem");
 		</c:if>
 	</aui:nav>
 
-	<aui:nav-bar-search file="/html/portlet/dynamic_data_lists/record_set_search.jsp" searchContainer="<%= searchContainer %>" />
+	<aui:nav-bar-search>
+		<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
+	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <c:if test="<%= DDLPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_RECORD_SET) %>">

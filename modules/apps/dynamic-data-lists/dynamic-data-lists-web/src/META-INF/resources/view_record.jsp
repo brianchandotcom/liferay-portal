@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -80,8 +80,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 	<aui:button-row>
 		<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
 			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-				<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+				<portlet:param name="mvcPath" value="/edit_record.jsp" />
 				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
@@ -97,7 +96,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
+portletURL.setParameter("mvcPath", "/view_record_set.jsp");
 portletURL.setParameter("recordSetId", String.valueOf(recordSetId));
 
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());

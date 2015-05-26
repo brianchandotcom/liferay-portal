@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -81,12 +81,15 @@ if (translating) {
 	title='<%= (record != null) ? LanguageUtil.format(request, "edit-x", ddmStructure.getName(locale), false) : LanguageUtil.format(request, "new-x", ddmStructure.getName(locale), false) %>'
 />
 
-<portlet:actionURL var="editRecordURL">
-	<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+<portlet:actionURL name="addRecord" var="addRecordURL">
+	<portlet:param name="mvcPath" value="/edit_record.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<portlet:actionURL name="updateRecord" var="updateRecordURL">
+	<portlet:param name="mvcPath" value="/edit_record.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= (record == null) ? addRecordURL : updateRecordURL %>" cssClass="lfr-dynamic-form" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="recordId" type="hidden" value="<%= recordId %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -119,7 +122,7 @@ if (translating) {
 			<aui:workflow-status model="<%= DDLRecord.class %>" status="<%= recordVersion.getStatus() %>" version="<%= recordVersion.getVersion() %>" />
 		</c:if>
 
-		<liferay-util:include page="/html/portlet/dynamic_data_lists/record_toolbar.jsp" />
+		<liferay-util:include page="/record_toolbar.jsp" servletContext="<%= application %>" />
 	</c:if>
 
 	<aui:fieldset>
@@ -192,8 +195,6 @@ if (translating) {
 
 <aui:script>
 	function <portlet:namespace />setWorkflowAction(draft) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (record == null) ? Constants.ADD : Constants.UPDATE %>';
-
 		if (draft) {
 			document.<portlet:namespace />fm.<portlet:namespace />workflowAction.value = <%= WorkflowConstants.ACTION_SAVE_DRAFT %>;
 		}
@@ -206,7 +207,7 @@ if (translating) {
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
+portletURL.setParameter("mvcPath", "/view_record_set.jsp");
 portletURL.setParameter("recordSetId", String.valueOf(recordSetId));
 
 PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());

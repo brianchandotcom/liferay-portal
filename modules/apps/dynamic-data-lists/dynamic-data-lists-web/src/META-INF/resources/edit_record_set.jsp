@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -52,12 +52,15 @@ if (ddmStructureId > 0) {
 	title='<%= (recordSet == null) ? "new-list" : recordSet.getName(locale) %>'
 />
 
-<portlet:actionURL var="editRecordSetURL">
-	<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
+<portlet:actionURL name="addRecordSet" var="addRecordSetURL">
+	<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<portlet:actionURL name="updateRecordSet" var="updateRecordSetURL">
+	<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveRecordSet();" %>'>
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
@@ -179,8 +182,6 @@ if (ddmStructureId > 0) {
 	}
 
 	function <portlet:namespace />saveRecordSet() {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (recordSet == null) ? Constants.ADD : Constants.UPDATE %>';
-
 		submitForm(document.<portlet:namespace />fm);
 	}
 </aui:script>
@@ -189,7 +190,7 @@ if (ddmStructureId > 0) {
 if (recordSet != null) {
 	PortletURL portletURL = renderResponse.createRenderURL();
 
-	portletURL.setParameter("struts_action", "/dynamic_data_lists/edit_record_set");
+	portletURL.setParameter("mvcPath", "/edit_record_set.jsp");
 	portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 
 	PortalUtil.addPortletBreadcrumbEntry(request, recordSet.getName(locale), portletURL.toString());

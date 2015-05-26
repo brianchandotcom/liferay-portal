@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -32,7 +32,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 	var toolbarChildren = [
 		<c:if test="<%= record != null %>">
 			<portlet:renderURL var="viewHistoryURL">
-				<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_history" />
+				<portlet:param name="mvcPath" value="/view_record_history.jsp" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 				<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />

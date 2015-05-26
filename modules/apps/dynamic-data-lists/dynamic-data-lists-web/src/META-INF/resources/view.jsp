@@ -14,16 +14,15 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
+portletURL.setParameter("mvcPath", "/view.jsp");
 %>
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
 
 	<liferay-ui:search-container
@@ -37,10 +36,10 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 		request.setAttribute(WebKeys.SEARCH_CONTAINER, searchContainer);
 		%>
 
-		<liferay-util:include page="/html/portlet/dynamic_data_lists/toolbar.jsp" />
+		<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>" />
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/dynamic_data_lists/record_set_search_results.jspf" %>
+			<%@ include file="/record_set_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
@@ -50,7 +49,7 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 			modelVar="recordSet"
 		>
 			<liferay-portlet:renderURL varImpl="rowURL">
-				<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />
+				<portlet:param name="mvcPath" value="/view_record_set.jsp" />
 				<portlet:param name="redirect" value="<%= searchContainer.getIteratorURL().toString() %>" />
 				<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 			</liferay-portlet:renderURL>
@@ -61,12 +60,12 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 			}
 			%>
 
-			<%@ include file="/html/portlet/dynamic_data_lists/search_columns.jspf" %>
+			<%@ include file="/search_columns.jspf" %>
 
 			<liferay-ui:search-container-column-jsp
 				align="right"
 				cssClass="entry-action"
-				path="/html/portlet/dynamic_data_lists/record_set_action.jsp"
+				path="/record_set_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -74,4 +73,4 @@ portletURL.setParameter("struts_action", "/dynamic_data_lists/view");
 	</liferay-ui:search-container>
 </aui:form>
 
-<%@ include file="/html/portlet/dynamic_data_lists/export_record_set.jspf" %>
+<%@ include file="/export_record_set.jspf" %>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -34,15 +34,15 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 
 <c:choose>
 	<c:when test="<%= displayDDMTemplateId > 0 %>">
-		<liferay-util:include page="/html/portlet/dynamic_data_lists/view_template_records.jsp" />
+		<liferay-util:include page="/view_template_records.jsp" />
 	</c:when>
 	<c:otherwise>
 		<c:choose>
 			<c:when test="<%= spreadsheet %>">
-				<liferay-util:include page="/html/portlet/dynamic_data_lists/view_spreadsheet_records.jsp" />
+				<liferay-util:include page="/view_spreadsheet_records.jsp" servletContext="<%= application %>" />
 			</c:when>
 			<c:otherwise>
-				<liferay-util:include page="/html/portlet/dynamic_data_lists/view_records.jsp" />
+				<liferay-util:include page="/view_records.jsp" servletContext="<%= application %>" />
 			</c:otherwise>
 		</c:choose>
 	</c:otherwise>

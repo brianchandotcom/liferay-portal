@@ -99,7 +99,7 @@ AUI.add(
 
 						var target = event.target;
 
-						target.set('alwaysShowHitArea', (event.newVal.length > 0));
+						target.set('alwaysShowHitArea', event.newVal.length > 0);
 
 						target.eachChildren(A.bind(host.restoreSelectedNode, host));
 					},
@@ -155,7 +155,7 @@ AUI.add(
 							},
 							function(responseData) {
 								try {
-									paginationMap = A.JSON.parse(responseData);
+									paginationMap = JSON.parse(responseData);
 								}
 								catch (e) {
 								}
@@ -170,7 +170,7 @@ AUI.add(
 
 								var sessionClickData = {};
 
-								sessionClickData[key] = A.JSON.stringify(paginationMap);
+								sessionClickData[key] = JSON.stringify(paginationMap);
 
 								instance._invokeSessionClick(sessionClickData);
 							}

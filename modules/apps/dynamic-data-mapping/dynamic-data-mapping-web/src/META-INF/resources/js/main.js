@@ -226,7 +226,7 @@ AUI.add(
 
 						definition.fields = instance._getSerializedFields();
 
-						return A.JSON.stringify(definition, null, 4);
+						return JSON.stringify(definition, null, 4);
 					},
 
 					getContentValue: function() {

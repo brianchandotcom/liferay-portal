@@ -270,7 +270,7 @@ AUI.add(
 							{
 								after: {
 									success: function() {
-										var	response = A.JSON.parse(this.get('responseData'));
+										var	response = JSON.parse(this.get('responseData'));
 
 										if (response && response.layouts) {
 											instance._createOptionElements(response.layouts, options, STR_BLANK);

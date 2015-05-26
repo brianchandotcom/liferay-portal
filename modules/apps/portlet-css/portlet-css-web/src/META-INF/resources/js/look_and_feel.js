@@ -1204,7 +1204,7 @@ AUI.add(
 								updateLookAndFeelURL.toString(),
 								{
 									data: {
-										_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_css: A.JSON.stringify(instance._objData)
+										_com_liferay_portlet_css_web_portlet_PortletCSSPortlet_css: JSON.stringify(instance._objData)
 									},
 									on: {
 										complete: saveHandler

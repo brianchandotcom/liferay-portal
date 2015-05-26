@@ -2,18 +2,17 @@ AUI.add(
 	'liferay-poller',
 	function(A) {
 		var AObject = A.Object;
-		var AJSON = A.JSON;
 
 		var owns = AObject.owns;
 
 		var _browserKey = Liferay.Util.randomInt();
 		var _enabled = false;
-		var _supportsComet = false;
 		var _encryptedUserId = null;
+		var _supportsComet = false;
 
-		var _delays = [1, 2, 3, 4, 5, 7, 10];
-		var _delayIndex = 0;
 		var _delayAccessCount = 0;
+		var _delayIndex = 0;
+		var _delays = [1, 2, 3, 4, 5, 7, 10];
 
 		var _getEncryptedUserId = function() {
 			return _encryptedUserId;
@@ -41,13 +40,14 @@ AUI.add(
 		var _timerId = null;
 
 		var _url = themeDisplay.getPathContext() + '/poller';
+
 		var _receiveChannel = _url + '/receive';
 		var _sendChannel = _url + '/send';
 
 		var _closeCurlyBrace = '}';
-		var _escapedCloseCurlyBrace = '[$CLOSE_CURLY_BRACE$]';
-
 		var _openCurlyBrace = '{';
+
+		var _escapedCloseCurlyBrace = '[$CLOSE_CURLY_BRACE$]';
 		var _escapedOpenCurlyBrace = '[$OPEN_CURLY_BRACE$]';
 
 		var _cancelRequestTimer = function() {
@@ -84,7 +84,7 @@ AUI.add(
 		};
 
 		var _processResponse = function(id, obj) {
-			var response = AJSON.parse(obj.responseText);
+			var response = JSON.parse(obj.responseText);
 			var send = false;
 
 			if (A.Lang.isArray(response)) {
@@ -143,7 +143,7 @@ AUI.add(
 
 				AObject.each(_portlets, _updatePortletIdsMap);
 
-				var requestStr = AJSON.stringify([_metaData]);
+				var requestStr = JSON.stringify([_metaData]);
 
 				A.io(
 					_getReceiveUrl(),
@@ -180,7 +180,7 @@ AUI.add(
 
 				AObject.each(_portlets, _updatePortletIdsMap);
 
-				var requestStr = AJSON.stringify([_metaData].concat(data));
+				var requestStr = JSON.stringify([_metaData].concat(data));
 
 				A.io(
 					_getSendUrl(),
@@ -305,7 +305,7 @@ AUI.add(
 			},
 
 			submitRequest: function(key, data, chunkId) {
-				if (!_frozen && (key in _portlets)) {
+				if (!_frozen && key in _portlets) {
 					for (var i in data) {
 						if (owns(data, i)) {
 							var content = data[i];

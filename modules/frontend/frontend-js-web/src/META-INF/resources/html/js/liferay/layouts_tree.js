@@ -167,7 +167,7 @@ AUI.add(
 
 				var className = 'layout-tree ';
 
-				data.cssClass = data.cssClass ? (className + data.cssClass) : className;
+				data.cssClass = data.cssClass ? className + data.cssClass : className;
 
 				data.href = A.Lang.sub(
 					instance.get('layoutURL'),
@@ -191,7 +191,7 @@ AUI.add(
 				new Liferay.Notice(
 					{
 						closeText: false,
-						content: message + '<button type="button" class="close">&times;</button>',
+						content: message + '<button class="close" type="button">&times;</button>',
 						noticeClass: 'hide',
 						timeout: timeout || 10000,
 						toggleText: false,
@@ -226,10 +226,7 @@ AUI.add(
 				var nodeChildren = node.children;
 				var nodeType = node.type;
 
-				if ((nodeType === 'embedded') ||
-					(nodeType === 'link_to_layout') ||
-					(nodeType === 'url')) {
-
+				if (nodeType === 'embedded' || nodeType === 'link_to_layout' || nodeType === 'url') {
 					cssIcons = {
 						iconCollapsed: iconCssClassName,
 						iconExpanded: iconCssClassName,
@@ -242,7 +239,7 @@ AUI.add(
 					total = nodeChildren.total;
 				}
 
-				var expanded = (childLayouts.length > 0);
+				var expanded = childLayouts.length > 0;
 
 				var maxChildren = instance.get('maxChildren');
 
@@ -262,7 +259,7 @@ AUI.add(
 						start: Math.max(childLayouts.length - maxChildren, 0),
 						total: total
 					},
-					type: (total > 0) ? 'io' : 'node'
+					type: total > 0 ? 'io' : 'node'
 				};
 
 				if (nodeChildren && expanded) {
@@ -271,6 +268,7 @@ AUI.add(
 
 				var cssClass = STR_EMPTY;
 				var title = STR_EMPTY;
+
 				var name = LString.escapeHTML(node.name);
 
 				if (node.layoutRevisionId) {
@@ -380,7 +378,7 @@ AUI.add(
 								var response;
 
 								try {
-									response = A.JSON.parse(xhr.responseText);
+									response = JSON.parse(xhr.responseText);
 
 									this.get('paginator').total = response.total;
 
@@ -533,7 +531,7 @@ AUI.add(
 								var response;
 
 								try {
-									response = A.JSON.parse(xhr.responseText);
+									response = JSON.parse(xhr.responseText);
 
 									if (response.status === Liferay.STATUS_CODE.BAD_REQUEST) {
 										instance._restoreNodePosition(response);

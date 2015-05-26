@@ -396,8 +396,8 @@ String signature = ParamUtil.getString(request, "signature");
 
 			var tplDataTypes = Liferay.TPL_DATA_TYPES;
 
-			var stringType = tplDataTypes.string;
 			var arrayType = tplDataTypes.array;
+			var stringType = tplDataTypes.string;
 
 			var formatDataType = function(key, value, includeNull) {
 				value = decodeURIComponent(value.replace(/\+/g, ' '));
@@ -448,7 +448,7 @@ String signature = ParamUtil.getString(request, "signature");
 						'<%= jsonWebServiceActionMapping.getPath() %>',
 						formEl,
 						function(obj) {
-							serviceOutput.html(A.JSON.stringify(obj, null, 2));
+							serviceOutput.html(JSON.stringify(obj, null, 2));
 
 							output.removeClass('loading-results');
 

@@ -173,7 +173,7 @@ AUI.add(
 
 						var cropRegionNode = host.rootNode.one('#' + host.get('paramName') + 'CropRegion');
 
-						cropRegionNode.val(A.JSON.stringify(cropRegion));
+						cropRegionNode.val(JSON.stringify(cropRegion));
 					}
 				}
 			}

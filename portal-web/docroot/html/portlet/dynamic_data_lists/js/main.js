@@ -9,8 +9,6 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var AJSON = A.JSON;
-
 		var EMPTY_FN = A.Lang.emptyFn;
 
 		var FIELDS_DISPLAY_INSTANCE_SEPARATOR = '_INSTANCE_';
@@ -107,7 +105,7 @@ AUI.add(
 							{
 								minDisplayRows: minDisplayRows,
 								recordSetId: recordsetId,
-								serviceContext: AJSON.stringify(
+								serviceContext: JSON.stringify(
 									{
 										scopeGroupId: themeDisplay.getScopeGroupId(),
 										userId: themeDisplay.getUserId()
@@ -166,14 +164,14 @@ AUI.add(
 
 									delete value.name;
 
-									value = AJSON.stringify(value);
+									value = JSON.stringify(value);
 								}
 								else if (type === 'radio' || type === 'select') {
 									if (!isArray(value)) {
 										value = AArray(value);
 									}
 
-									value = AJSON.stringify(value);
+									value = JSON.stringify(value);
 								}
 
 								normalized[item.name] = instance._normalizeValue(value);
@@ -321,10 +319,10 @@ AUI.add(
 						'/ddlrecord/add-record',
 						{
 							displayIndex: displayIndex,
-							fieldsMap: AJSON.stringify(fieldsMap),
+							fieldsMap: JSON.stringify(fieldsMap),
 							groupId: themeDisplay.getScopeGroupId(),
 							recordSetId: recordsetId,
-							serviceContext: AJSON.stringify(
+							serviceContext: JSON.stringify(
 								{
 									scopeGroupId: themeDisplay.getScopeGroupId(),
 									userId: themeDisplay.getUserId(),
@@ -604,10 +602,10 @@ AUI.add(
 						'/ddlrecord/update-record',
 						{
 							displayIndex: displayIndex,
-							fieldsMap: AJSON.stringify(fieldsMap),
+							fieldsMap: JSON.stringify(fieldsMap),
 							mergeFields: merge,
 							recordId: recordId,
-							serviceContext: AJSON.stringify(
+							serviceContext: JSON.stringify(
 								{
 									scopeGroupId: themeDisplay.getScopeGroupId(),
 									userId: themeDisplay.getUserId(),

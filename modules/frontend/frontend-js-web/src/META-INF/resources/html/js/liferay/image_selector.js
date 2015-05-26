@@ -189,7 +189,7 @@ AUI.add(
 
 						instance._fileEntryId = fileEntryId;
 
-						var showImageControls = (fileEntryId !== 0 && fileEntryUrl !== '');
+						var showImageControls = fileEntryId !== 0 && fileEntryUrl !== '';
 
 						fileEntryImageNode.toggle(showImageControls);
 
@@ -306,19 +306,26 @@ AUI.add(
 
 						instance._stopProgress(event);
 
-						var data = event.data;
+						var data = JSON.parse(event.data);
 
-						data = A.JSON.parse(data);
+						var image = data.image;
+						var success = data.success;
 
-						if (data.success) {
+						var fireEvent = STR_IMAGE_DELETED;
+						var imageData = null;
+
+						if (success) {
+							fireEvent = STR_IMAGE_UPLOADED;
+							imageData = image;
+
 							instance.fire(
 								STR_IMAGE_DATA,
 								{
-									imageData: data.image
+									imageData: image
 								}
 							);
 						}
-						else if (!data.success) {
+						else {
 							instance.fire(
 								STR_ERROR_MESSAGE,
 								{
@@ -326,10 +333,6 @@ AUI.add(
 								}
 							);
 						}
-
-						var fireEvent = (data.success) ? STR_IMAGE_UPLOADED : STR_IMAGE_DELETED;
-
-						var imageData = (data.success) ? data.image : null;
 
 						Liferay.fire(
 							fireEvent,

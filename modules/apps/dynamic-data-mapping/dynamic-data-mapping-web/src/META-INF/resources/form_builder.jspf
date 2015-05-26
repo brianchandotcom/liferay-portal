@@ -179,7 +179,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 		content = content.replace(/nestedFields/g, 'fields');
 
-		content = formBuilder.deserializeDefinitionFields(A.JSON.parse(content));
+		content = formBuilder.deserializeDefinitionFields(JSON.parse(content));
 
 		formBuilder.set('fields', content);
 	};

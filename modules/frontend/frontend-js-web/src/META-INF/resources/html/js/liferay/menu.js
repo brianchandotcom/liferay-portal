@@ -4,8 +4,6 @@ AUI.add(
 		var Lang = A.Lang;
 		var Util = Liferay.Util;
 
-		var trim = Lang.trim;
-
 		var ARIA_ATTR_ROLE = 'role';
 
 		var ATTR_CLASS_NAME = 'className';
@@ -85,7 +83,7 @@ AUI.add(
 		var TPL_MENU = '<div class="open" />';
 
 		var TPL_SEARCH_BOX = '<div class="lfr-menu-list-search-container">' +
-				'<input autocomplete="off" aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" class="lfr-menu-list-search" id="{searchId}" role="combobox" type="text" />' +
+				'<input aria-autocomplete="list" aria-expanded="true" aria-labelledby="{searchLabeledBy}" aria-owns="{searchOwns}" autocomplete="off" class="lfr-menu-list-search" id="{searchId}" role="combobox" type="text" />' +
 			'</div>';
 
 		var Menu = function() {
@@ -151,7 +149,7 @@ AUI.add(
 					if (cssClass.indexOf(AUTO) === -1) {
 						var directionMatch = cssClass.match(REGEX_DIRECTION);
 
-						var direction = (directionMatch && directionMatch[1]) || AUTO;
+						var direction = directionMatch && directionMatch[1] || AUTO;
 
 						var overlayHorizontal = mapAlignHorizontalOverlay[direction] || defaultHorizontalAlign;
 						var overlayVertical = MAP_ALIGN_VERTICAL_OVERLAY[direction] || STR_TOP;
@@ -377,8 +375,8 @@ AUI.add(
 
 				var listNode = menu.one('ul');
 
-				var ariaListNodeAttr = 'menu';
 				var ariaLinksAttr = 'menuitem';
+				var ariaListNodeAttr = 'menu';
 
 				if (searchContainer) {
 					ariaListNodeAttr = 'listbox';
@@ -534,7 +532,7 @@ AUI.add(
 						function(node) {
 							results.push(
 								{
-									name: trim(node.one('.taglib-text-icon').text()),
+									name: node.one('.taglib-text-icon').text().trim(),
 									node: node
 								}
 							);

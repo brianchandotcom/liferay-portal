@@ -43,7 +43,7 @@ AUI.add(
 
 		var TPL_RADIO_ID = ' id="{0}" ';
 
-		var TPL_RADIO_IMAGE = '<div class="lfr-categories-selector-radio-image category{0}"></div>';
+		var TPL_RADIO_IMAGE = '<div class="category{0} lfr-categories-selector-radio-image"></div>';
 
 		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
 
@@ -320,7 +320,7 @@ AUI.add(
 							);
 						}
 						else {
-							if (!portalModelResource && (themeDisplay.getSiteGroupId() != themeDisplay.getCompanyGroupId())) {
+							if (!portalModelResource && themeDisplay.getSiteGroupId() != themeDisplay.getCompanyGroupId()) {
 								groupIds.push(themeDisplay.getSiteGroupId());
 							}
 
@@ -366,16 +366,18 @@ AUI.add(
 
 					_getTreeNodeAssetId: function(treeNode) {
 						var treeId = treeNode.get(ID);
+
 						var match = treeId.match(/(\d+)$/);
 
-						return (match ? match[1] : null);
+						return match ? match[1] : null;
 					},
 
 					_getTreeNodeAssetType: function(treeNode) {
 						var treeId = treeNode.get(ID);
+
 						var match = treeId.match(/^(vocabulary|category)/);
 
-						return (match ? match[1] : null);
+						return match ? match[1] : null;
 					},
 
 					_initSearch: function() {
@@ -383,8 +385,8 @@ AUI.add(
 
 						var popup = instance._popup;
 
-						var vocabularyIds = instance.get('vocabularyIds');
 						var vocabularyGroupIds = instance.get('vocabularyGroupIds');
+						var vocabularyIds = instance.get('vocabularyIds');
 
 						var searchResults = instance._searchResultsNode;
 
@@ -585,7 +587,7 @@ AUI.add(
 					_searchCategories: function(event, searchResults, vocabularyIds, vocabularyGroupIds, callback) {
 						var instance = this;
 
-						var searchValue = Lang.trim(event.currentTarget.val());
+						var searchValue = event.currentTarget.val().trim();
 
 						if (searchValue && !event.isNavKey()) {
 							searchResults.empty();
@@ -661,8 +663,8 @@ AUI.add(
 						var instance = this;
 
 						var popup = instance._popup;
-						var vocabularyTitle = LString.escapeHTML(item.titleCurrentValue);
 						var vocabularyId = item.vocabularyId;
+						var vocabularyTitle = LString.escapeHTML(item.titleCurrentValue);
 
 						if (item.groupId == themeDisplay.getCompanyGroupId()) {
 							vocabularyTitle += ' (' + Liferay.Language.get('global') + ')';

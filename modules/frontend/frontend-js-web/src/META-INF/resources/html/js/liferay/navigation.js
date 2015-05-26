@@ -3,8 +3,8 @@ AUI.add(
 	function(A) {
 		var ANode = A.Node;
 		var Dockbar = Liferay.Dockbar;
-		var Util = Liferay.Util;
 		var Lang = A.Lang;
+		var Util = Liferay.Util;
 
 		var STATUS_CODE = Liferay.STATUS_CODE;
 
@@ -184,9 +184,9 @@ AUI.add(
 						var instance = this;
 
 						var actionNode = event.actionNode;
-						var toolbar = event.toolbar;
 						var field = event.field;
 						var listItem = event.listItem;
+						var toolbar = event.toolbar;
 
 						var navBlock = instance.get('navBlock');
 
@@ -258,7 +258,7 @@ AUI.add(
 						new Liferay.Notice(
 							{
 								closeText: false,
-								content: message + '<button type="button" class="close">&times;</button>',
+								content: message + '<button class="close" type="button">&times;</button>',
 								noticeClass: 'hide',
 								timeout: timeout || 10000,
 								toggleText: false,
@@ -281,7 +281,7 @@ AUI.add(
 					_hoverNavItem: function(event) {
 						var instance = this;
 
-						event.currentTarget.toggleClass('lfr-nav-hover', (event.type == 'mouseenter'));
+						event.currentTarget.toggleClass('lfr-nav-hover', event.type == 'mouseenter');
 					},
 
 					_makeDeletable: function() {
@@ -341,7 +341,7 @@ AUI.add(
 										currentSpan.on(
 											'click',
 											function(event) {
-												if ((themeDisplay.isStateMaximized() && !event.shiftKey) || event.target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-updateable')) {
+												if (themeDisplay.isStateMaximized() && !event.shiftKey || event.target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-updateable')) {
 													return;
 												}
 
@@ -429,12 +429,13 @@ AUI.add(
 						var instance = this;
 
 						if (event.isKeyInSet('ENTER', 'ESC')) {
-							var listItem = event.currentTarget.ancestor('li');
 							var eventType = 'savePage';
 
 							if (event.isKey('ESC')) {
 								eventType = 'cancelPage';
 							}
+
+							var listItem = event.currentTarget.ancestor('li');
 
 							listItem._toolbar.fire(eventType);
 						}
@@ -486,7 +487,7 @@ AUI.add(
 
 				var prototypeTemplate = instance._prototypeMenuTemplate || STR_EMPTY;
 
-				var prevVal = Lang.trim(options.prevVal);
+				var prevVal = options.prevVal.trim();
 
 				if (options.actionNode) {
 					options.actionNode.hide();
@@ -774,16 +775,14 @@ AUI.add(
 				var instance = this;
 
 				var actionNode = event.actionNode;
-				var toolbar = event.toolbar;
 				var field = event.field;
 				var listItem = event.listItem;
 				var textNode = event.textNode;
+				var toolbar = event.toolbar;
 
-				var pageTitle = field.get('value');
+				var pageTitle = field.get('value').trim();
 
-				var prevVal = Lang.trim(event.prevVal);
-
-				pageTitle = Lang.trim(pageTitle);
+				var prevVal = event.prevVal.trim();
 
 				var data = null;
 				var onSuccess = null;

@@ -76,7 +76,7 @@ AUI.add(
 							return value;
 						},
 						validator: function(value) {
-							return (value instanceof RegExp || Lang.isString(value));
+							return value instanceof RegExp || Lang.isString(value);
 						}
 					},
 
@@ -239,7 +239,7 @@ AUI.add(
 							ddHandler.on(
 								['drag:start', 'drag:end'],
 								function(event) {
-									trashLink.toggleClass('app-view-drop-active', (event.type == 'drag:start'));
+									trashLink.toggleClass('app-view-drop-active', event.type == 'drag:start');
 								}
 							);
 						}
@@ -331,7 +331,7 @@ AUI.add(
 
 							var moveText = instance._getMoveText(selectedItemsCount, true);
 
-							var itemTitle = Lang.trim(dropTarget.attr('data-title'));
+							var itemTitle = dropTarget.attr('data-title').trim();
 
 							proxyNode.html(Lang.sub(moveText, [selectedItemsCount, A.Lang.String.escapeHTML(itemTitle)]));
 						}
@@ -407,7 +407,7 @@ AUI.add(
 
 						var redirectUrl = location.href;
 
-						if ((action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH) || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
+						if (action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 

@@ -178,7 +178,7 @@ Set<String> contextNames = JSONWebServiceActionsManagerUtil.getContextNames();
 				{
 					el: item._node,
 					node: item,
-					text: Lang.trim(item.text())
+					text: item.text().trim()
 				}
 			);
 		}

@@ -1,12 +1,10 @@
 AUI.add(
 	'liferay-menu-toggle',
 	function(A) {
-		var Lang = A.Lang;
 		var AArray = A.Array;
 		var AEvent = A.Event;
+		var Lang = A.Lang;
 		var Util = Liferay.Util;
-
-		var trim = Lang.trim;
 
 		var NAME = 'menutoggle';
 
@@ -105,7 +103,7 @@ AUI.add(
 							instance._triggerNode.on(
 								['keyup', 'tap'],
 								function(event) {
-									if ((event.type == 'tap') || event.isKeyInSet('ENTER', 'SPACE')) {
+									if (event.type == 'tap' || event.isKeyInSet('ENTER', 'SPACE')) {
 										instance._toggleMenu(event, event.currentTarget);
 									}
 								}
@@ -122,7 +120,7 @@ AUI.add(
 							function(node) {
 								results.push(
 									{
-										name: trim(node.one('.nav-item-label').text()),
+										name: node.one('.nav-item-label').text().trim(),
 										node: node
 									}
 								);
@@ -155,7 +153,7 @@ AUI.add(
 							eventOutside = 'mouseover';
 						}
 
-						eventOutside = eventOutside + 'outside';
+						eventOutside += 'outside';
 
 						return eventOutside;
 					},
@@ -173,9 +171,9 @@ AUI.add(
 					_isTouchEvent: function(event) {
 						var eventType = event._event.type;
 
-						var touchEvent = ((eventType === 'touchend') || (eventType === 'touchstart'));
+						var touchEvent = eventType === 'touchend' || eventType === 'touchstart';
 
-						return (touchEvent && Liferay.Util.isTablet());
+						return touchEvent && Liferay.Util.isTablet();
 					},
 
 					_toggleContent: function(force) {

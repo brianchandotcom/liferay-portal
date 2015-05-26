@@ -162,8 +162,6 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	function createLiveSearch() {
 		var instance = this;
 
-		var trim = A.Lang.trim;
-
 		var PermissionNavigationSearch = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
@@ -190,7 +188,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				function(item, index, collection) {
 					results.push(
 						{
-							data: trim(item.text()),
+							data: item.text().trim(),
 							node: item.ancestor()
 						}
 					);

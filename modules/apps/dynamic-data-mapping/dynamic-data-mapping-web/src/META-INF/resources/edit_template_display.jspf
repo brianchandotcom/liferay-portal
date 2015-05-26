@@ -141,8 +141,6 @@ if (Validator.isNotNull(scriptContent)) {
 		var paletteDataContainer = panelScriptContainer.one('#<portlet:namespace />paletteDataContainer');
 
 		function createLiveSearch() {
-			var trim = A.Lang.trim;
-
 			var PaletteSearch = A.Component.create(
 				{
 					AUGMENTS: [A.AutoCompleteBase],
@@ -169,7 +167,7 @@ if (Validator.isNotNull(scriptContent)) {
 					function(item, index) {
 						results.push(
 							{
-								data: trim(item.text()),
+								data: item.text().trim(),
 								node: item.ancestor()
 							}
 						);

@@ -1593,7 +1593,31 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureCalendarTimeZone" priority="5">
+	<command name="ConfigureDefaultView" priority="4">
+		<for list="Day,Week,Month" param="defaultView">
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="CalendarNavigator#gotoConfiguration" />
+
+			<execute macro="CalendarConfiguration#selectDefaultView">
+				<var name="defaultView" value="${defaultView}" />
+			</execute>
+
+			<execute macro="CalendarConfiguration#save" />
+
+			<execute macro="Page#gotoPG">
+				<var name="pageName" value="${pageName}" />
+			</execute>
+
+			<execute macro="CalendarScheduler#viewSelectedView">
+				<var name="view" value="${defaultView}" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="ConfigureDisplayTimeZone" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1702,30 +1726,6 @@
 			<var name="endDateTime" value="09:00 PM" />
 			<var name="startDateTime" value="08:00 PM" />
 		</execute>
-	</command>
-
-	<command name="ConfigureDefaultView" priority="4">
-		<for list="Day,Week,Month" param="defaultView">
-			<execute macro="Page#gotoPG">
-				<var name="pageName" value="${pageName}" />
-			</execute>
-
-			<execute macro="CalendarNavigator#gotoConfiguration" />
-
-			<execute macro="CalendarConfiguration#selectDefaultView">
-				<var name="defaultView" value="${defaultView}" />
-			</execute>
-
-			<execute macro="CalendarConfiguration#save" />
-
-			<execute macro="Page#gotoPG">
-				<var name="pageName" value="${pageName}" />
-			</execute>
-
-			<execute macro="CalendarScheduler#viewSelectedView">
-				<var name="view" value="${defaultView}" />
-			</execute>
-		</for>
 	</command>
 
 	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="5">

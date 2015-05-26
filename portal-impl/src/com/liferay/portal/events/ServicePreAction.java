@@ -1389,15 +1389,15 @@ public class ServicePreAction extends Action {
 	protected void addDefaultUserPrivateLayouts(User user)
 		throws PortalException {
 
-		Group userGroup = user.getGroup();
+		Group group = user.getGroup();
 
 		if (privateLARFile != null) {
 			addDefaultLayoutsByLAR(
-				user.getUserId(), userGroup.getGroupId(), true, privateLARFile);
+				user.getUserId(), group.getGroupId(), true, privateLARFile);
 		}
 		else {
 			addDefaultUserPrivateLayoutByProperties(
-				user.getUserId(), userGroup.getGroupId());
+				user.getUserId(), group.getGroupId());
 		}
 	}
 
@@ -1501,12 +1501,12 @@ public class ServicePreAction extends Action {
 	protected void deleteDefaultUserPrivateLayouts(User user)
 		throws PortalException {
 
-		Group userGroup = user.getGroup();
+		Group group = user.getGroup();
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		LayoutLocalServiceUtil.deleteLayouts(
-			userGroup.getGroupId(), true, serviceContext);
+			group.getGroupId(), true, serviceContext);
 	}
 
 	protected void deleteDefaultUserPublicLayouts(User user)
@@ -1525,15 +1525,14 @@ public class ServicePreAction extends Action {
 
 		Layout layout = null;
 
-		Group userGroup = user.getGroup();
+		Group group = user.getGroup();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			userGroup.getGroupId(), true,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			group.getGroupId(), true, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
 		if (layouts.isEmpty()) {
 			layouts = LayoutLocalServiceUtil.getLayouts(
-				userGroup.getGroupId(), false,
+				group.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 		}
 

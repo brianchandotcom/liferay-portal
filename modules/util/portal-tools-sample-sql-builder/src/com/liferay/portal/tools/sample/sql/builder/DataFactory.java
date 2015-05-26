@@ -17,6 +17,7 @@ package com.liferay.portal.tools.sample.sql.builder;
 import com.liferay.counter.model.Counter;
 import com.liferay.counter.model.CounterModel;
 import com.liferay.counter.model.impl.CounterModelImpl;
+import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessor;
@@ -1261,9 +1262,7 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid,
-				"com_liferay_dynamic_data_lists_display_web_portlet_" +
-					"DDLDisplayPortlet",
+				plid, DDLDisplayPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(

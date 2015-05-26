@@ -40,6 +40,9 @@ import com.liferay.portal.spring.aop.ServiceBeanAopCacheManagerUtil;
 import com.liferay.portal.util.InitUtil;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistrar;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.lang.annotation.Annotation;
@@ -51,6 +54,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.aopalliance.intercept.MethodInvocation;
@@ -270,13 +274,26 @@ public class DBUpgrader {
 			verified = true;
 		}
 
-		ReleaseLocalServiceUtil.updateRelease(
+		release = ReleaseLocalServiceUtil.updateRelease(
 			release.getReleaseId(), ReleaseInfo.getParentBuildNumber(),
 			ReleaseInfo.getBuildDate(), verified);
 
 		// Enable database caching after verify
 
 		CacheRegistryUtil.setActive(true);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		ServiceRegistrar<Release> serviceRegistrar =
+			registry.getServiceRegistrar(Release.class);
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("build.date", release.getBuildDate());
+		properties.put("build.number", release.getBuildNumber());
+		properties.put("servlet.context.name", release.getServletContextName());
+
+		serviceRegistrar.registerService(Release.class, release, properties);
 	}
 
 	private static void _checkPermissionAlgorithm() throws Exception {

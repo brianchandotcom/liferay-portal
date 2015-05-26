@@ -24,12 +24,15 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
+import com.liferay.portal.kernel.scheduler.SchedulerLifecycle;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.Role;
@@ -53,6 +56,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.dependency.ServiceDependencyListener;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
 import java.util.Calendar;
@@ -155,12 +159,37 @@ public class ServiceTestUtil {
 
 		// Scheduler
 
-		try {
-			SchedulerEngineHelperUtil.start();
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-		}
+		ServiceDependencyManager schedulerServiceDependencyManager =
+					new ServiceDependencyManager();
+
+		schedulerServiceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+
+				@Override
+				public void dependenciesFulfilled() {
+					try {
+						SchedulerEngineHelperUtil.start();
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
+				}
+
+				@Override
+				public void destroy() {
+				}
+
+			});
+
+		final Registry registry = RegistryUtil.getRegistry();
+
+		Filter filter = registry.getFilter(
+			"(objectClass=com.liferay.portal.scheduler.quartz.internal." +
+				"QuartzSchemaManager)");
+
+		schedulerServiceDependencyManager.registerDependencies(
+			new Class[]{SchedulerEngineHelper.class},
+			new Filter[]{filter});
 
 		// Verify
 

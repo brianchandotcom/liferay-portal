@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.resiliency.spi.SPIUtil;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Lock;
+import com.liferay.portal.model.Release;
 import com.liferay.portal.service.LockLocalService;
 
 import java.util.HashSet;
@@ -275,6 +276,10 @@ public class ClusterMasterExecutorImpl implements ClusterMasterExecutor {
 	@Reference(unbind = "-")
 	protected void setLockLocalService(LockLocalService localLocalService) {
 		_lockLocalService = localLocalService;
+	}
+
+	@Reference(target = "(servlet.context.name=portal)", unbind = "-")
+	protected void setRelease(Release release) {
 	}
 
 	private static final String _LOCK_CLASS_NAME =

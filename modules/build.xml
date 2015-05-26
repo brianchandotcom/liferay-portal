@@ -53,7 +53,7 @@
 		<dirset dir="core" includes="*" />
 		<dirset dir="frontend" includes="*" />
 		<dirset dir="portal" excludes="portal-search-lucene,portal-taglib-aui-form-extension-sample" includes="*" />
-		<dirset dir="util" includes="pmd,portal-tools-sample-sql-builder,sass-compiler-jni" />
+		<dirset dir="util" includes="pmd,portal-tools-sample-sql-builder,portal-tools-service-builder,sass-compiler-jni" />
 	</path>
 
 	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />

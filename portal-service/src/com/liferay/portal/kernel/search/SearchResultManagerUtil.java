@@ -217,7 +217,7 @@ public class SearchResultManagerUtil {
 
 			summary.setEscape(false);
 
-			searchResult.addMBMessage(mbMessage, summary);
+			searchResult.addComment(mbMessage, summary);
 		}
 
 	}

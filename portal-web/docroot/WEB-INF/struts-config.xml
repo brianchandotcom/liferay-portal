@@ -1271,7 +1271,7 @@
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 
-		<action path="/staging_bar/edit_layout_revision" type="com.liferay.portlet.exportconfiguration.action.EditLayoutRevisionAction">
+		<action path="/staging_bar/edit_layout_revision" type="com.liferay.portlet.stagingbar.action.EditLayoutRevisionAction">
 			<forward name="portlet.export_configuration.error" path="portlet.staging_bar.view" />
 		</action>
 

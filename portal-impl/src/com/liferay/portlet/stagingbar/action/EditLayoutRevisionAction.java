@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportconfiguration.action;
+package com.liferay.portlet.stagingbar.action;
 
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;

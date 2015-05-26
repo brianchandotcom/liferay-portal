@@ -16,6 +16,7 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory" %><%@
+<%@ page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon" %><%@
+page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory" %><%@
 page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" %><%@
 page import="com.liferay.util.PropertyComparator" %>

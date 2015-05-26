@@ -48,4 +48,7 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "EMBEDDED", required = false)
 	public String operationMode();
 
+	@Meta.AD(deflt = "5", required = false)
+	public int retryOnConflict();
+
 }

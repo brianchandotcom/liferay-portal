@@ -47,7 +47,6 @@ public class PoshiRunnerContext {
 		_actionExtendClassName.clear();
 		_commandElements.clear();
 		_commandSummaries.clear();
-		_componentNames.clear();
 		_filePaths.clear();
 		_functionLocatorCounts.clear();
 		_pathLocators.clear();
@@ -188,7 +187,7 @@ public class PoshiRunnerContext {
 	public static void main(String[] args) throws Exception {
 		readFiles();
 
-		_writeTestCaseMethodNamesFile();
+		_writeTestCaseMethodNamesPropertiesFile();
 	}
 
 	public static void readFiles() throws Exception {
@@ -202,6 +201,96 @@ public class PoshiRunnerContext {
 
 	public static void setTestCaseName(String testClassName) {
 		_testClassName = testClassName;
+	}
+
+	private static Map<String, Set<String>> _getClassCommandNamesMap() {
+		Map<String, Set<String>> classCommandNamesMap = new TreeMap<>();
+
+		Set<String> marketplaceKnownIssues = new TreeSet<>();
+		Set<String> portalKnownIssues = new TreeSet<>();
+		Set<String> socialOfficeKnownIssues = new TreeSet<>();
+
+		for (String testCaseClassName : _testCaseClassNames) {
+			Element rootElement = getTestCaseRootElement(testCaseClassName);
+
+			if (Validator.equals(
+					"true", rootElement.attributeValue("ignore"))) {
+
+				continue;
+			}
+
+			Set<String> classCommandNames = new TreeSet<>();
+
+			List<String> ignorableCommandNames = _getIgnorableCommandNames(
+				rootElement);
+
+			if (rootElement.attributeValue("extends") != null) {
+				String extendsTestCaseClassName = rootElement.attributeValue(
+					"extends");
+
+				Element extendsRootElement = getTestCaseRootElement(
+					extendsTestCaseClassName);
+
+				List<Element> extendsCommandElements =
+					extendsRootElement.elements("command");
+
+				for (Element extendsCommandElement : extendsCommandElements) {
+					String extendsCommandName =
+						extendsCommandElement.attributeValue("name");
+
+					if (ignorableCommandNames.contains(extendsCommandName)) {
+						continue;
+					}
+
+					classCommandNames.add(
+						testCaseClassName + "#" + extendsCommandName);
+				}
+			}
+
+			String componentName = rootElement.attributeValue("component-name");
+
+			List<Element> commandElements = rootElement.elements("command");
+
+			for (Element commandElement : commandElements) {
+				String commandName = commandElement.attributeValue("name");
+
+				if (ignorableCommandNames.contains(commandName)) {
+					continue;
+				}
+
+				String classCommandName = testCaseClassName + "#" + commandName;
+
+				if (commandElement.attributeValue("known-issues") != null) {
+					if (componentName.startsWith("marketplace")) {
+						marketplaceKnownIssues.add(classCommandName);
+					}
+					else if (componentName.startsWith("social-office")) {
+						socialOfficeKnownIssues.add(classCommandName);
+					}
+					else {
+						portalKnownIssues.add(classCommandName);
+					}
+				}
+				else {
+					classCommandNames.add(classCommandName);
+				}
+			}
+
+			if (classCommandNamesMap.containsKey(componentName)) {
+				classCommandNames.addAll(
+					classCommandNamesMap.get(componentName));
+			}
+
+			classCommandNamesMap.put(componentName, classCommandNames);
+		}
+
+		classCommandNamesMap.put(
+			"marketpace-known-issues", marketplaceKnownIssues);
+		classCommandNamesMap.put("portal-known-issues", portalKnownIssues);
+		classCommandNamesMap.put(
+			"social-office-known-issues", socialOfficeKnownIssues);
+
+		return classCommandNamesMap;
 	}
 
 	private static String _getCommandSummary(
@@ -234,6 +323,20 @@ public class PoshiRunnerContext {
 		return classCommandName;
 	}
 
+	private static List<String> _getIgnorableCommandNames(Element rootElement) {
+		List<String> ignorableCommandNames = new ArrayList<>();
+
+		if (rootElement.attributeValue("ignore-command-names") != null) {
+			String ignoreCommandNamesString = rootElement.attributeValue(
+				"ignore-command-names");
+
+			ignorableCommandNames = Arrays.asList(
+				ignoreCommandNamesString.split(","));
+		}
+
+		return ignorableCommandNames;
+	}
+
 	private static List<String> _getRelatedActionClassCommandNames(
 		String classCommandName) {
 
@@ -259,92 +362,6 @@ public class PoshiRunnerContext {
 		relatedClassCommandNames.add("BaseLiferay#" + commandName);
 
 		return relatedClassCommandNames;
-	}
-
-	private static Set<String> _getTestCaseCommandNames(
-		Element rootElement, String componentName, String className) {
-
-		Set<String> testCaseCommandNames = new TreeSet<>();
-
-		if (!Validator.equals("true", rootElement.attributeValue("ignore"))) {
-			String extendedTestCaseName = rootElement.attributeValue("extends");
-
-			if (Validator.isNotNull(extendedTestCaseName)) {
-				Element extendedTestCaseElement = getTestCaseRootElement(
-					extendedTestCaseName);
-
-				List<String> ignoreCommandNamesList = new ArrayList<>();
-
-				if (Validator.isNotNull(
-						rootElement.attributeValue("ignore-command-names"))) {
-
-					String ignoreCommandNames = rootElement.attributeValue(
-						"ignore-command-names");
-
-					ignoreCommandNamesList = Arrays.asList(
-						ignoreCommandNames.split(","));
-				}
-
-				List<Element> extendedCommandElements =
-					extendedTestCaseElement.elements("command");
-
-				for (Element extendedCommandElement : extendedCommandElements) {
-					String extendedCommandName =
-						extendedCommandElement.attributeValue("name");
-
-					if (ignoreCommandNamesList.contains(extendedCommandName)) {
-						continue;
-					}
-
-					testCaseCommandNames.add(
-						className + "TestCase#test" + extendedCommandName);
-				}
-			}
-
-			List<Element> testCaseCommandElements = rootElement.elements(
-				"command");
-
-			for (Element testCaseCommandElement : testCaseCommandElements) {
-				String classCommandName = testCaseCommandElement.attributeValue(
-					"name");
-
-				if (Validator.isNotNull(
-						testCaseCommandElement.attributeValue(
-							"known-issues"))) {
-
-					String knownIssuesComponent = "portal-known-issues";
-
-					if (componentName.startsWith("marketplace")) {
-						knownIssuesComponent = "marketplace-known-issues";
-					}
-					else if (componentName.startsWith("social-office")) {
-						knownIssuesComponent = "social-office-known-issues";
-					}
-
-					Set<String> knownIssuesTestCaseMethodNames =
-						new TreeSet<>();
-
-					if (_testCaseMethodNames.containsKey(
-							knownIssuesComponent)) {
-
-						knownIssuesTestCaseMethodNames =
-							_testCaseMethodNames.get(knownIssuesComponent);
-					}
-
-					knownIssuesTestCaseMethodNames.add(
-						className + "TestCase#test" + classCommandName);
-
-					_testCaseMethodNames.put(
-						knownIssuesComponent, knownIssuesTestCaseMethodNames);
-				}
-				else {
-					testCaseCommandNames.add(
-						className + "TestCase#test" + classCommandName);
-				}
-			}
-		}
-
-		return testCaseCommandNames;
 	}
 
 	private static void _readPathFile(
@@ -540,44 +557,27 @@ public class PoshiRunnerContext {
 		_seleniumParameterCounts.put("open", 1);
 	}
 
-	private static void _setTestCaseMethodNames() {
-		for (String testCaseClassName : _testCaseClassNames) {
-			Element rootElement = getTestCaseRootElement(testCaseClassName);
+	private static void _writeTestCaseMethodNamesPropertiesFile()
+		throws Exception {
 
-			String componentName = rootElement.attributeValue("component-name");
-
-			Set<String> testCaseCommandNames = _getTestCaseCommandNames(
-				rootElement, componentName, testCaseClassName);
-
-			if (!_testCaseMethodNames.containsKey(componentName)) {
-				_testCaseMethodNames.put(componentName, testCaseCommandNames);
-			}
-			else {
-				testCaseCommandNames.addAll(
-					_testCaseMethodNames.get(componentName));
-
-				_testCaseMethodNames.put(componentName, testCaseCommandNames);
-			}
-		}
-	}
-
-	private static void _writeTestCaseMethodNamesFile() throws Exception {
 		StringBuilder sb = new StringBuilder();
 
-		_setTestCaseMethodNames();
+		Map<String, Set<String>> classCommandNamesMap =
+			_getClassCommandNamesMap();
 
 		for (String componentName : _componentNames) {
-			String componentKey = componentName + "_TEST_CASE_METHOD_NAMES=";
+			String componentKey = componentName + "_TEST_CASE_METHOD_NAMES";
 
 			componentKey = StringUtil.upperCase(componentKey.replace("-", "_"));
 
-			Set<String> classCommandNames = _testCaseMethodNames.get(
+			sb.append(componentKey);
+			sb.append("=");
+
+			Set<String> classCommandNames = classCommandNamesMap.get(
 				componentName);
 
 			if (Validator.isNotNull(classCommandNames) &&
 				!classCommandNames.isEmpty()) {
-
-				sb.append(componentKey);
 
 				Iterator<String> iterator = classCommandNames.iterator();
 
@@ -588,17 +588,15 @@ public class PoshiRunnerContext {
 						sb.append(" ");
 					}
 				}
-
-				sb.append("\n");
 			}
 			else {
-				sb.append(componentKey);
-				sb.append("PortalSmokeTestCase#testSmoke");
-				sb.append("\n");
+				sb.append(PropsValues.TEST_NAME);
 			}
+
+			sb.append("\n");
 		}
 
-		FileUtil.write("test.case.method.names2.properties", sb.toString());
+		FileUtil.write("test.case.method.names.properties", sb.toString());
 	}
 
 	private static final String _BASE_DIR =
@@ -610,8 +608,7 @@ public class PoshiRunnerContext {
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
 		new HashMap<>();
-	private static final List<String> _componentNames = Arrays.asList(
-		StringUtil.split(PropsValues.COMPONENT_NAMES));
+	private static final List<String> _componentNames = new ArrayList<>();
 	private static final Map<String, String> _filePaths = new HashMap<>();
 	private static String[] _filePathsArray;
 	private static final Map<String, Integer> _functionLocatorCounts =
@@ -621,9 +618,14 @@ public class PoshiRunnerContext {
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
-	private static final Map<String, Set<String>> _testCaseMethodNames =
-		new TreeMap<>();
 	private static String _testClassCommandName;
 	private static String _testClassName;
+
+	static {
+		if (PropsValues.COMPONENT_NAMES != null) {
+			_componentNames.addAll(
+				Arrays.asList(StringUtil.split(PropsValues.COMPONENT_NAMES)));
+		}
+	}
 
 }

@@ -39,8 +39,21 @@ public class SearchResult {
 		_fileEntryTuples.add(tuple);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #addMBMessage(
+	 *             MBMessage, Summary)}
+	 */
+	@Deprecated
 	public void addMBMessage(MBMessage mbMessage) {
-		_mbMessages.add(mbMessage);
+		Summary summary = new Summary(null, mbMessage.getBody());
+
+		summary.setEscape(false);
+
+		addMBMessage(mbMessage, summary);
+	}
+
+	public void addMBMessage(MBMessage mbMessage, Summary summary) {
+		_mbMessageTuples.add(new Tuple(mbMessage, summary));
 	}
 
 	public void addVersion(String version) {
@@ -80,8 +93,22 @@ public class SearchResult {
 		return _fileEntryTuples;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public List<MBMessage> getMBMessages() {
-		return _mbMessages;
+		List<MBMessage> mbMessages = new ArrayList<>();
+
+		for (Tuple tuple : _mbMessageTuples) {
+			mbMessages.add((MBMessage)tuple.getObject(0));
+		}
+
+		return mbMessages;
+	}
+
+	public List<Tuple> getMBMessageTuples() {
+		return _mbMessageTuples;
 	}
 
 	public Summary getSummary() {
@@ -107,8 +134,16 @@ public class SearchResult {
 		_classPK = classPK;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public void setMessages(List<MBMessage> mbMessages) {
-		_mbMessages = mbMessages;
+		_mbMessageTuples.clear();
+
+		for (MBMessage mbMessage : mbMessages) {
+			addMBMessage(mbMessage);
+		}
 	}
 
 	public void setSummary(Summary summary) {
@@ -118,7 +153,7 @@ public class SearchResult {
 	private String _className;
 	private long _classPK;
 	private final List<Tuple> _fileEntryTuples = new ArrayList<>();
-	private List<MBMessage> _mbMessages = new ArrayList<>();
+	private final List<Tuple> _mbMessageTuples = new ArrayList<>();
 	private Summary _summary;
 	private final List<String> _versions = new ArrayList<>();
 

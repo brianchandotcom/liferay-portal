@@ -233,7 +233,7 @@ public class InitUtil {
 
 	public synchronized static void stopModuleFramework() {
 		try {
-			ModuleFrameworkUtilAdapter.stopFramework();
+			ModuleFrameworkUtilAdapter.stopFramework(0);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);

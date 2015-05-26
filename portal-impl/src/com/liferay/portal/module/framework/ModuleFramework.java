@@ -52,7 +52,7 @@ public interface ModuleFramework {
 
 	public void stopBundle(long bundleId, int options) throws PortalException;
 
-	public void stopFramework() throws Exception;
+	public void stopFramework(long timeout) throws Exception;
 
 	public void stopRuntime() throws Exception;
 

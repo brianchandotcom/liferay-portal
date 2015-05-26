@@ -88,8 +88,8 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.MANAGE_LAYOUTS) %>">
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.USERS_ADMIN %>" var="managePagesURL">
-			<portlet:param name="struts_action" value="/users_admin/edit_layouts" />
+		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" var="managePagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+			<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
 		</liferay-portlet:renderURL>
@@ -98,6 +98,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 			iconCssClass="icon-copy"
 			message="manage-site-pages"
 			url="<%= managePagesURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

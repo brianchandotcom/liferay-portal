@@ -43,6 +43,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Set;
 
+import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
+
 import org.gradle.api.Action;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
@@ -85,8 +87,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
-
-	public static final String PROVIDED_CONFIGURATION_NAME = "provided";
 
 	@Override
 	public void apply(Project project) {
@@ -148,27 +148,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return configuration;
 	}
 
-	protected Configuration addConfigurationProvided(Project project) {
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, PROVIDED_CONFIGURATION_NAME);
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		configuration.setDescription(
-			"Provided classpath for " + sourceSet + ".");
-		configuration.setVisible(false);
-
-		FileCollection fileCollection = sourceSet.getCompileClasspath();
-
-		sourceSet.setCompileClasspath(fileCollection.plus(configuration));
-
-		return configuration;
-	}
-
 	protected void addConfigurations(Project project) {
 		addConfigurationPortalWeb(project);
-		addConfigurationProvided(project);
 	}
 
 	protected void addDependenciesPortalWeb(Project project) {
@@ -257,6 +238,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void applyPlugins(Project project) {
 		GradleUtil.applyPlugin(project, JavaPlugin.class);
+
+		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);

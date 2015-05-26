@@ -14,7 +14,6 @@
 
 package com.liferay.gradle.plugins.tasks;
 
-import com.liferay.gradle.plugins.LiferayJavaPlugin;
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -37,6 +36,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+
+import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
@@ -214,8 +215,8 @@ public class InitGradleTask extends DefaultTask {
 		}
 
 		return wrapContents(
-			contents, 1, "(", LiferayJavaPlugin.PROVIDED_CONFIGURATION_NAME,
-			")", true);
+			contents, 1, "(",
+			ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(), ")", true);
 	}
 
 	protected List<String> getBuildDependenciesProvidedCompile() {
@@ -250,7 +251,8 @@ public class InitGradleTask extends DefaultTask {
 			WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME;
 
 		if (FileUtil.exists(_project, "bnd.bnd")) {
-			configurationName = LiferayJavaPlugin.PROVIDED_CONFIGURATION_NAME;
+			configurationName =
+				ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME();
 		}
 
 		return wrapContents(contents, 1, "(", configurationName, ")", true);

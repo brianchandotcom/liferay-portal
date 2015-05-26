@@ -74,11 +74,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 	public static final String DIRECT_DEPLOY_TASK_NAME = "directDeploy";
 
-	@Override
-	protected Configuration addConfigurationProvided(Project project) {
-		return null;
-	}
-
 	protected Task addTaskBuildServiceCompile(
 		BuildServiceTask buildServiceTask) {
 

@@ -1520,9 +1520,7 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
-	protected Object[] getDefaultUserPersonalLayout(User user)
-		throws PortalException {
-
+	protected Object[] getDefaultUserPersonalLayout(User user) {
 		Layout layout = null;
 		List<Layout> layouts = null;
 
@@ -1545,9 +1543,7 @@ public class ServicePreAction extends Action {
 		return new Object[] {layout, layouts};
 	}
 
-	protected Object[] getDefaultUserSitesLayout(User user)
-		throws PortalException {
-
+	protected Object[] getDefaultUserSitesLayout(User user) {
 		Layout layout = null;
 		List<Layout> layouts = null;
 

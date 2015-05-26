@@ -83,16 +83,12 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultUserPersonalLayout(User user)
-		throws PortalException {
-
+	public Object[] getDefaultUserPersonalLayout(User user) {
 		return super.getDefaultUserPersonalLayout(user);
 	}
 
 	@Override
-	public Object[] getDefaultUserSitesLayout(User user)
-		throws PortalException {
-
+	public Object[] getDefaultUserSitesLayout(User user) {
 		return super.getDefaultUserSitesLayout(user);
 	}
 

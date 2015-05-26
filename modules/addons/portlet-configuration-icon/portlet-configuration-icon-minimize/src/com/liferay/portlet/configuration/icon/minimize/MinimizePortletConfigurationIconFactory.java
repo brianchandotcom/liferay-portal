@@ -34,76 +34,78 @@ public class MinimizePortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "portlet-minimize portlet-minimize-icon";
-			}
-
-			@Override
-			public String getImage() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				if (portletDisplay.isStateMin()) {
-					return "../aui/resize-vertical";
-				}
-
-				return "../aui/minus";
-			}
-
-			@Override
-			public String getMessage() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				if (portletDisplay.isStateMin()) {
-					return "restore";
-				}
-
-				return "minimize";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return "Liferay.Portlet.minimize('#p_p_id_".concat(
-					portletDisplay.getId()).concat("_', this); return false;");
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLMin();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowMinIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new MinimizePortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 6.0;
+	}
+
+	private class MinimizePortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public MinimizePortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "portlet-minimize portlet-minimize-icon";
+		}
+
+		@Override
+		public String getImage() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			if (portletDisplay.isStateMin()) {
+				return "../aui/resize-vertical";
+			}
+
+			return "../aui/minus";
+		}
+
+		@Override
+		public String getMessage() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			if (portletDisplay.isStateMin()) {
+				return "restore";
+			}
+
+			return "minimize";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return "Liferay.Portlet.minimize('#p_p_id_".concat(
+				portletDisplay.getId()).concat("_', this); return false;");
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLMin();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowMinIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

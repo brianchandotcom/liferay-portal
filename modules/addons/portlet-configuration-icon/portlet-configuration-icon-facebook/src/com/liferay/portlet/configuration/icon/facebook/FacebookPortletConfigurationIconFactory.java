@@ -40,83 +40,87 @@ public class FacebookPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getIconCssClass() {
-				return "icon-facebook";
-			}
-
-			@Override
-			public String getMessage() {
-				return "add-to-facebook";
-			}
-
-			@Override
-			public String getMethod() {
-				return "get";
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				PortletPreferences portletSetup =
-					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-						themeDisplay.getLayout(), portletDisplay.getId());
-
-				String lfrFacebookAPIKey = portletSetup.getValue(
-					"lfrFacebookApiKey", StringPool.BLANK);
-
-				return "http://www.facebook.com/add.php?api_key=" +
-					lfrFacebookAPIKey + "&ref=pd";
-			}
-
-			@Override
-			public boolean isLabel() {
-				return true;
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				PortletPreferences portletSetup =
-					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-						themeDisplay.getLayout(), portletDisplay.getId());
-
-				String lfrFacebookAPIKey = portletSetup.getValue(
-					"lfrFacebookApiKey", StringPool.BLANK);
-				String lfrFacebookCanvasPageURL = portletSetup.getValue(
-					"lfrFacebookCanvasPageUrl", StringPool.BLANK);
-				boolean facebookShowAddAppLink = GetterUtil.getBoolean(
-					portletSetup.getValue("lfrFacebookShowAddAppLink", null),
-					true);
-
-				if (Validator.isNull(lfrFacebookCanvasPageURL) ||
-					Validator.isNull(lfrFacebookAPIKey)) {
-
-					facebookShowAddAppLink = false;
-				}
-
-				if (facebookShowAddAppLink) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
+		return new FacebookPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 4.0;
+	}
+
+	private class FacebookPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public FacebookPortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getIconCssClass() {
+			return "icon-facebook";
+		}
+
+		@Override
+		public String getMessage() {
+			return "add-to-facebook";
+		}
+
+		@Override
+		public String getMethod() {
+			return "get";
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					_themeDisplay.getLayout(), portletDisplay.getId());
+
+			String lfrFacebookAPIKey = portletSetup.getValue(
+				"lfrFacebookApiKey", StringPool.BLANK);
+
+			return "http://www.facebook.com/add.php?api_key=" +
+				lfrFacebookAPIKey + "&ref=pd";
+		}
+
+		@Override
+		public boolean isLabel() {
+			return true;
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					_themeDisplay.getLayout(), portletDisplay.getId());
+
+			String lfrFacebookAPIKey = portletSetup.getValue(
+				"lfrFacebookApiKey", StringPool.BLANK);
+			String lfrFacebookCanvasPageURL = portletSetup.getValue(
+				"lfrFacebookCanvasPageUrl", StringPool.BLANK);
+			boolean facebookShowAddAppLink = GetterUtil.getBoolean(
+				portletSetup.getValue("lfrFacebookShowAddAppLink", null), true);
+
+			if (Validator.isNull(lfrFacebookCanvasPageURL) ||
+				Validator.isNull(lfrFacebookAPIKey)) {
+
+				facebookShowAddAppLink = false;
+			}
+
+			if (facebookShowAddAppLink) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

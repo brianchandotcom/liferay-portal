@@ -34,67 +34,71 @@ public class PrintPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "portlet-print portlet-print-icon";
-			}
-
-			@Override
-			public String getImage() {
-				return "../aui/print";
-			}
-
-			@Override
-			public String getMessage() {
-				return "print";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return "location.href = '".concat(
-					portletDisplay.getURLPrint()).concat("'; return false;");
-			}
-
-			@Override
-			public String getTarget() {
-				return "_blank";
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLPrint();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowPrintIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new PrintPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 8.0;
+	}
+
+	private class PrintPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public PrintPortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "portlet-print portlet-print-icon";
+		}
+
+		@Override
+		public String getImage() {
+			return "../aui/print";
+		}
+
+		@Override
+		public String getMessage() {
+			return "print";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return "location.href = '".concat(
+				portletDisplay.getURLPrint()).concat("'; return false;");
+		}
+
+		@Override
+		public String getTarget() {
+			return "_blank";
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLPrint();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowPrintIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

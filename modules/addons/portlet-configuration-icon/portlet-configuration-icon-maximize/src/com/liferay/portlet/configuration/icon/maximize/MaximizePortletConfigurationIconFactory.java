@@ -35,67 +35,71 @@ public class MaximizePortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "portlet-maximize portlet-maximize-icon";
-			}
-
-			public String getImage() {
-				return "../aui/plus";
-			}
-
-			@Override
-			public String getMessage() {
-				return "maximize";
-			}
-
-			@Override
-			public String getMethod() {
-				return "get";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return "submitForm(document.hrefFm, '".concat(
-					HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
-						"'); return false;");
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLMax();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowMaxIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new MaximizePortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 7.0;
+	}
+
+	private class MaximizePortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public MaximizePortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "portlet-maximize portlet-maximize-icon";
+		}
+
+		public String getImage() {
+			return "../aui/plus";
+		}
+
+		@Override
+		public String getMessage() {
+			return "maximize";
+		}
+
+		@Override
+		public String getMethod() {
+			return "get";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return "submitForm(document.hrefFm, '".concat(
+				HtmlUtil.escapeJS(portletDisplay.getURLMax())).concat(
+					"'); return false;");
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLMax();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowMaxIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

@@ -34,48 +34,55 @@ public class EditDefaultsPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getImage() {
-				return "../aui/edit-sign";
-			}
-
-			@Override
-			public String getMessage() {
-				return "default-preferences";
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLEditDefaults();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowEditDefaultsIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new EditDefaultsPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 13.0;
+	}
+
+	private class EditDefaultsPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public EditDefaultsPortletConfigurationIcon(
+			HttpServletRequest request) {
+
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getImage() {
+			return "../aui/edit-sign";
+		}
+
+		@Override
+		public String getMessage() {
+			return "default-preferences";
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLEditDefaults();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowEditDefaultsIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

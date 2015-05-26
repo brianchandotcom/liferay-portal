@@ -37,81 +37,84 @@ public class StagingPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "portlet-export-import portlet-export-import-icon";
-			}
-
-			@Override
-			public String getImage() {
-				return "../aui/share";
-			}
-
-			@Override
-			public String getMessage() {
-				return "staging";
-			}
-
-			@Override
-			public String getMethod() {
-				return "get";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				StringBundler sb = new StringBundler(11);
-
-				sb.append("Liferay.Portlet.openWindow('#p_p_id_");
-				sb.append(portletDisplay.getId());
-				sb.append("_', '");
-				sb.append(portletDisplay.getId());
-				sb.append("', '");
-				sb.append(HtmlUtil.escapeJS(portletDisplay.getURLStaging()));
-				sb.append("', '");
-				sb.append(portletDisplay.getNamespace());
-				sb.append("', '");
-				sb.append(
-					LanguageUtil.get(themeDisplay.getLocale(), "staging"));
-				sb.append("'); return false;");
-
-				return sb.toString();
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLStaging();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowStagingIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new StagingPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 10.0;
+	}
+
+	private class StagingPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public StagingPortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "portlet-export-import portlet-export-import-icon";
+		}
+
+		@Override
+		public String getImage() {
+			return "../aui/share";
+		}
+
+		@Override
+		public String getMessage() {
+			return "staging";
+		}
+
+		@Override
+		public String getMethod() {
+			return "get";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			StringBundler sb = new StringBundler(11);
+
+			sb.append("Liferay.Portlet.openWindow('#p_p_id_");
+			sb.append(portletDisplay.getId());
+			sb.append("_', '");
+			sb.append(portletDisplay.getId());
+			sb.append("', '");
+			sb.append(HtmlUtil.escapeJS(portletDisplay.getURLStaging()));
+			sb.append("', '");
+			sb.append(portletDisplay.getNamespace());
+			sb.append("', '");
+			sb.append(LanguageUtil.get(_themeDisplay.getLocale(), "staging"));
+			sb.append("'); return false;");
+
+			return sb.toString();
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLStaging();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowStagingIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

@@ -47,79 +47,87 @@ public class WidgetPortletConfigurationIconFactory
 	implements PortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(final HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getIconCssClass() {
-				return "icon-plus-sign";
-			}
-
-			@Override
-			public String getMessage() {
-				return "add-to-any-website";
-			}
-
-			@Override
-			public String getURL() {
-				try {
-					Portlet portlet = (Portlet)request.getAttribute(
-						WebKeys.RENDER_PORTLET);
-
-					PortletURL basePortletURL = PortletURLFactoryUtil.create(
-						request, PortletKeys.PORTLET_SHARING,
-						themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
-
-					StringBundler sb = new StringBundler();
-
-					sb.append(
-						"javascript:Liferay.PortletSharing.showWidgetInfo('");
-					sb.append(PortalUtil.getWidgetURL(portlet, themeDisplay));
-					sb.append("', '");
-					sb.append(basePortletURL);
-					sb.append("');");
-
-					return sb.toString();
-				}
-				catch (PortalException pe) {
-					return StringPool.BLANK;
-				}
-			}
-
-			@Override
-			public boolean isLabel() {
-				return true;
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				PortletPreferences portletSetup =
-					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-						themeDisplay.getLayout(), portletDisplay.getId());
-
-				boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
-					portletSetup.getValue("lfrWidgetShowAddAppLink", null),
-					PropsValues.THEME_PORTLET_SHARING_DEFAULT);
-
-				if (lfrWidgetShowAddAppLink) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
+	public PortletConfigurationIcon create(HttpServletRequest request) {
+		return new WidgetPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 5.0;
+	}
+
+	private class WidgetPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public WidgetPortletConfigurationIcon(HttpServletRequest request) {
+			_request = request;
+
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getIconCssClass() {
+			return "icon-plus-sign";
+		}
+
+		@Override
+		public String getMessage() {
+			return "add-to-any-website";
+		}
+
+		@Override
+		public String getURL() {
+			try {
+				Portlet portlet = (Portlet)_request.getAttribute(
+					WebKeys.RENDER_PORTLET);
+
+				PortletURL basePortletURL = PortletURLFactoryUtil.create(
+					_request, PortletKeys.PORTLET_SHARING,
+					_themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+				StringBundler sb = new StringBundler();
+
+				sb.append("javascript:Liferay.PortletSharing.showWidgetInfo('");
+				sb.append(PortalUtil.getWidgetURL(portlet, _themeDisplay));
+				sb.append("', '");
+				sb.append(basePortletURL);
+				sb.append("');");
+
+				return sb.toString();
+			}
+			catch (PortalException pe) {
+				return StringPool.BLANK;
+			}
+		}
+
+		@Override
+		public boolean isLabel() {
+			return true;
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					_themeDisplay.getLayout(), portletDisplay.getId());
+
+			boolean lfrWidgetShowAddAppLink = GetterUtil.getBoolean(
+				portletSetup.getValue("lfrWidgetShowAddAppLink", null),
+				PropsValues.THEME_PORTLET_SHARING_DEFAULT);
+
+			if (lfrWidgetShowAddAppLink) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private final HttpServletRequest _request;
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

@@ -39,86 +39,93 @@ public class PortletCSSPortletConfigurationIconFactory
 	implements PortletConfigurationIconFactory {
 
 	@Override
-	public PortletConfigurationIcon create(final HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "lfr-js-required portlet-css portlet-css-icon";
-			}
-
-			@Override
-			public String getImage() {
-				return "../aui/picture";
-			}
-
-			@Override
-			public String getMessage() {
-				return "look-and-feel";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				PortletURL baseActionURL = PortletURLFactoryUtil.create(
-					request, PortletCSSPortletKeys.PORTLET_CSS,
-					themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
-
-				PortletURL baseRenderURL = PortletURLFactoryUtil.create(
-					request, PortletCSSPortletKeys.PORTLET_CSS,
-					themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
-
-				PortletURL baseResourceURL = PortletURLFactoryUtil.create(
-					request, PortletCSSPortletKeys.PORTLET_CSS,
-					themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
-
-				StringBundler sb = new StringBundler(9);
-
-				sb.append("Liferay.Portlet.loadCSSEditor('");
-				sb.append(portletDisplay.getId());
-				sb.append("', '");
-				sb.append(baseActionURL);
-				sb.append("', '");
-				sb.append(baseRenderURL);
-				sb.append("', '");
-				sb.append(baseResourceURL);
-				sb.append("'); return false;");
-
-				return sb.toString();
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLPortletCss();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowPortletCssIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+	public PortletConfigurationIcon create(HttpServletRequest request) {
+		return new PortletCSSPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 16.0;
+	}
+
+	private class PortletCSSPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public PortletCSSPortletConfigurationIcon(HttpServletRequest request) {
+			_request = request;
+
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "lfr-js-required portlet-css portlet-css-icon";
+		}
+
+		@Override
+		public String getImage() {
+			return "../aui/picture";
+		}
+
+		@Override
+		public String getMessage() {
+			return "look-and-feel";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletURL baseActionURL = PortletURLFactoryUtil.create(
+				_request, PortletCSSPortletKeys.PORTLET_CSS,
+				_themeDisplay.getPlid(), PortletRequest.ACTION_PHASE);
+
+			PortletURL baseRenderURL = PortletURLFactoryUtil.create(
+				_request, PortletCSSPortletKeys.PORTLET_CSS,
+				_themeDisplay.getPlid(), PortletRequest.RENDER_PHASE);
+
+			PortletURL baseResourceURL = PortletURLFactoryUtil.create(
+				_request, PortletCSSPortletKeys.PORTLET_CSS,
+				_themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+			StringBundler sb = new StringBundler(9);
+
+			sb.append("Liferay.Portlet.loadCSSEditor('");
+			sb.append(portletDisplay.getId());
+			sb.append("', '");
+			sb.append(baseActionURL);
+			sb.append("', '");
+			sb.append(baseRenderURL);
+			sb.append("', '");
+			sb.append(baseResourceURL);
+			sb.append("'); return false;");
+
+			return sb.toString();
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLPortletCss();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowPortletCssIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final HttpServletRequest _request;
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

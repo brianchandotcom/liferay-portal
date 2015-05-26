@@ -34,62 +34,66 @@ public class RefreshPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "portlet-refresh portlet-refresh-icon";
-			}
-
-			@Override
-			public String getImage() {
-				return "../aui/refresh";
-			}
-
-			@Override
-			public String getMessage() {
-				return "refresh";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return "Liferay.Portlet.refresh('#p_p_id_".concat(
-					portletDisplay.getId()).concat("_'); return false;");
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLRefresh();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowRefreshIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new RefreshPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 17.0;
+	}
+
+	private class RefreshPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public RefreshPortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "portlet-refresh portlet-refresh-icon";
+		}
+
+		@Override
+		public String getImage() {
+			return "../aui/refresh";
+		}
+
+		@Override
+		public String getMessage() {
+			return "refresh";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return "Liferay.Portlet.refresh('#p_p_id_".concat(
+				portletDisplay.getId()).concat("_'); return false;");
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLRefresh();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowRefreshIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

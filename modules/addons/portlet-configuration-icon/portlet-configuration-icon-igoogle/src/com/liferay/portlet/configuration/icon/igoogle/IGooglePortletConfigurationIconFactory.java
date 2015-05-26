@@ -42,76 +42,79 @@ public class IGooglePortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(final HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getNamespace() + "expose-as-widget";
-			}
-
-			@Override
-			public String getIconCssClass() {
-				return "icon-plus-sign";
-			}
-
-			@Override
-			public String getMessage() {
-				return "add-to-igoogle";
-			}
-
-			@Override
-			public String getURL() {
-				try {
-					Portlet portlet = (Portlet)request.getAttribute(
-						WebKeys.RENDER_PORTLET);
-
-					return
-						"http://fusion.google.com/add?source=atgs&moduleurl=" +
-							PortalUtil.getGoogleGadgetURL(
-								portlet, themeDisplay);
-				}
-				catch (PortalException pe) {
-					return StringPool.BLANK;
-				}
-			}
-
-			@Override
-			public boolean isLabel() {
-				return true;
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				PortletPreferences portletSetup =
-					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-						themeDisplay.getLayout(), portletDisplay.getId());
-
-				boolean lfrIgoogleShowAddAppLink = GetterUtil.getBoolean(
-					portletSetup.getValue(
-						"lfrIgoogleShowAddAppLink", StringPool.BLANK));
-
-				if (lfrIgoogleShowAddAppLink) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
+		return new IGooglePortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 3.0;
+	}
+
+	private class IGooglePortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public IGooglePortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_portlet = (Portlet)request.getAttribute(WebKeys.RENDER_PORTLET);
+		}
+
+		@Override
+		public String getCssClass() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getNamespace() + "expose-as-widget";
+		}
+
+		@Override
+		public String getIconCssClass() {
+			return "icon-plus-sign";
+		}
+
+		@Override
+		public String getMessage() {
+			return "add-to-igoogle";
+		}
+
+		@Override
+		public String getURL() {
+			try {
+				return "http://fusion.google.com/add?source=atgs&moduleurl=" +
+					PortalUtil.getGoogleGadgetURL(_portlet, _themeDisplay);
+			}
+			catch (PortalException pe) {
+				return StringPool.BLANK;
+			}
+		}
+
+		@Override
+		public boolean isLabel() {
+			return true;
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					_themeDisplay.getLayout(), portletDisplay.getId());
+
+			boolean lfrIgoogleShowAddAppLink = GetterUtil.getBoolean(
+				portletSetup.getValue(
+					"lfrIgoogleShowAddAppLink", StringPool.BLANK));
+
+			if (lfrIgoogleShowAddAppLink) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private final Portlet _portlet;
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

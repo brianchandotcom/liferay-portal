@@ -47,83 +47,92 @@ public class NetvibesPortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(final HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getIconCssClass() {
-				return "icon-plus-sign";
-			}
-
-			@Override
-			public String getMessage() {
-				return "add-to-netvibes";
-			}
-
-			@Override
-			public String getMethod() {
-				return "get";
-			}
-
-			@Override
-			public String getURL() {
-				try {
-					Portlet portlet = (Portlet)request.getAttribute(
-						WebKeys.RENDER_PORTLET);
-
-					PortletURL basePortletURL = PortletURLFactoryUtil.create(
-						request, PortletKeys.PORTLET_SHARING,
-						themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
-
-					StringBundler sb = new StringBundler(5);
-
-					sb.append(
-						"javascript:Liferay.PortletSharing.showNetvibesInfo('");
-					sb.append(PortalUtil.getNetvibesURL(portlet, themeDisplay));
-					sb.append("', '");
-					sb.append(basePortletURL);
-					sb.append("');");
-
-					return sb.toString();
-				}
-				catch (PortalException pe) {
-					return StringPool.BLANK;
-				}
-			}
-
-			@Override
-			public boolean isLabel() {
-				return true;
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				PortletPreferences portletSetup =
-					PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-						themeDisplay.getLayout(), portletDisplay.getId());
-
-				boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
-					portletSetup.getValue(
-						"lfrNetvibesShowAddAppLink", StringPool.BLANK));
-
-				if (lfrNetvibesShowAddAppLink) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
+		return new NetvibesPortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 2.0;
+	}
+
+	private class NetvibesPortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public NetvibesPortletConfigurationIcon(HttpServletRequest request) {
+			_request = request;
+
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getIconCssClass() {
+			return "icon-plus-sign";
+		}
+
+		@Override
+		public String getMessage() {
+			return "add-to-netvibes";
+		}
+
+		@Override
+		public String getMethod() {
+			return "get";
+		}
+
+		@Override
+		public String getURL() {
+			try {
+				Portlet portlet = (Portlet)_request.getAttribute(
+					WebKeys.RENDER_PORTLET);
+
+				PortletURL basePortletURL = PortletURLFactoryUtil.create(
+					_request, PortletKeys.PORTLET_SHARING,
+					_themeDisplay.getPlid(), PortletRequest.RESOURCE_PHASE);
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(
+					"javascript:Liferay.PortletSharing.showNetvibesInfo('");
+				sb.append(PortalUtil.getNetvibesURL(portlet, _themeDisplay));
+				sb.append("', '");
+				sb.append(basePortletURL);
+				sb.append("');");
+
+				return sb.toString();
+			}
+			catch (PortalException pe) {
+				return StringPool.BLANK;
+			}
+		}
+
+		@Override
+		public boolean isLabel() {
+			return true;
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
+					_themeDisplay.getLayout(), portletDisplay.getId());
+
+			boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
+				portletSetup.getValue(
+					"lfrNetvibesShowAddAppLink", StringPool.BLANK));
+
+			if (lfrNetvibesShowAddAppLink) {
+				return true;
+			}
+
+			return false;
+		}
+
+		private final HttpServletRequest _request;
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

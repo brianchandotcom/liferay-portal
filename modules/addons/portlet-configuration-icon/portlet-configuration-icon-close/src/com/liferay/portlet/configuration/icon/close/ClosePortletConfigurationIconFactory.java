@@ -34,62 +34,66 @@ public class ClosePortletConfigurationIconFactory
 
 	@Override
 	public PortletConfigurationIcon create(HttpServletRequest request) {
-		final ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return new BasePortletConfigurationIcon() {
-
-			@Override
-			public String getCssClass() {
-				return "item-remove portlet-close portlet-close-icon";
-			}
-
-			@Override
-			public String getImage() {
-				return "../aui/remove";
-			}
-
-			@Override
-			public String getMessage() {
-				return "remove";
-			}
-
-			@Override
-			public String getOnClick() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return "Liferay.Portlet.close('#p_p_id_".concat(
-					portletDisplay.getId()).concat("_'); return false;");
-			}
-
-			@Override
-			public String getURL() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.getURLClose();
-			}
-
-			@Override
-			public boolean isShow() {
-				PortletDisplay portletDisplay =
-					themeDisplay.getPortletDisplay();
-
-				return portletDisplay.isShowCloseIcon();
-			}
-
-			@Override
-			public boolean isToolTip() {
-				return false;
-			}
-
-		};
+		return new ClosePortletConfigurationIcon(request);
 	}
 
 	@Override
 	public double getWeight() {
 		return 1.0;
+	}
+
+	private class ClosePortletConfigurationIcon
+		extends BasePortletConfigurationIcon {
+
+		public ClosePortletConfigurationIcon(HttpServletRequest request) {
+			_themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+		}
+
+		@Override
+		public String getCssClass() {
+			return "item-remove portlet-close portlet-close-icon";
+		}
+
+		@Override
+		public String getImage() {
+			return "../aui/remove";
+		}
+
+		@Override
+		public String getMessage() {
+			return "remove";
+		}
+
+		@Override
+		public String getOnClick() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return "Liferay.Portlet.close('#p_p_id_".concat(
+				portletDisplay.getId()).concat("_'); return false;");
+		}
+
+		@Override
+		public String getURL() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.getURLClose();
+		}
+
+		@Override
+		public boolean isShow() {
+			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+
+			return portletDisplay.isShowCloseIcon();
+		}
+
+		@Override
+		public boolean isToolTip() {
+			return false;
+		}
+
+		private final ThemeDisplay _themeDisplay;
+
 	}
 
 }

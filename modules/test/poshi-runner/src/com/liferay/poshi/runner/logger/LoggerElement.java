@@ -170,10 +170,12 @@ public class LoggerElement {
 	}
 
 	public void setID(String id) {
+		String oldID = _id;
+
 		_id = id;
 
 		if (_writtenToLogger) {
-			LoggerUtil.setID(this);
+			LoggerUtil.setID(id, oldID);
 		}
 	}
 

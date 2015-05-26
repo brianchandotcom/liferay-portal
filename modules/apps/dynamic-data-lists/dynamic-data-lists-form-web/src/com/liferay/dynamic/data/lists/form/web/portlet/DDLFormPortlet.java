@@ -35,7 +35,6 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.util.log4j.Log4JUtil;
 
 import java.io.IOException;
 
@@ -44,7 +43,6 @@ import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -106,13 +104,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
-	@Activate
-	protected void activate() {
-		Class<? extends MVCPortlet> clazz = getClass();
-
-		initLogger(clazz.getClassLoader());
-	}
-
 	protected DDMFormRenderingContext createDDMFormRenderingContext(
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
@@ -168,11 +159,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		return _ddmFormRenderer.render(
 			ddmStructure.getDDMForm(), ddmStructure.getDDMFormLayout(),
 			ddmFormRenderingContext);
-	}
-
-	protected void initLogger(ClassLoader classLoader) {
-		Log4JUtil.configureLog4J(
-			classLoader.getResource("META-INF/portal-log4j.xml"));
 	}
 
 	@Override

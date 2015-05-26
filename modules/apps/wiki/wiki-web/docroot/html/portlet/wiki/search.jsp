@@ -114,7 +114,7 @@ portletURL.setParameter("keywords", keywords);
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : wikiPage.getSummary() %>"
 				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
-				mbMessages="<%= searchResult.getMBMessages() %>"
+				mbMessageTuples="<%= searchResult.getMBMessageTuples() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
 				url="<%= rowURL %>"

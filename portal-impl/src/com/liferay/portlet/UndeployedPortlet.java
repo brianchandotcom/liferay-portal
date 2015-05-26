@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public class UndeployedPortletImpl extends GenericPortlet {
+public class UndeployedPortlet extends GenericPortlet {
 
 	@Override
 	public void processAction(ActionRequest request, ActionResponse response) {

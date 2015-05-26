@@ -558,8 +558,7 @@ AUI.add(
 				findStructureFieldByAttribute: function(structure, attributeName, attributeValue) {
 					var found = null;
 
-					AArray.some(
-						structure,
+					structure.some(
 						function(item, index) {
 							found = item;
 

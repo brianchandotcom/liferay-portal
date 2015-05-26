@@ -1497,8 +1497,7 @@ AUI.add(
 
 						var oldIndex = -1;
 
-						AArray.some(
-							parentField.get('fields'),
+						parentField.get('fields').some(
 							function(item, index) {
 								oldIndex = index;
 

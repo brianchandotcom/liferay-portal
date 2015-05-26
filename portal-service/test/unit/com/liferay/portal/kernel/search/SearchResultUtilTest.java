@@ -95,7 +95,7 @@ public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_CONTENT, summary.getContent());
 		Assert.assertEquals(
-			SearchResultUtil.SUMMARY_MAX_CONTENT_LENGTH,
+			BaseSearchResultManager.SUMMARY_MAX_CONTENT_LENGTH,
 			summary.getMaxContentLength());
 		Assert.assertEquals(SearchTestUtil.SUMMARY_TITLE, summary.getTitle());
 

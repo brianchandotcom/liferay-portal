@@ -58,15 +58,17 @@ SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPages
 
 <%
 Group selGroup = layoutsAdminDisplayContext.getSelGroup();
+
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 %>
 
-<c:if test="<%= !selGroup.isLayoutSetPrototype() && (portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
+<c:if test="<%= !selGroup.isLayoutSetPrototype() %>">
 
 	<%
 	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
 	%>
 
-	<c:if test="<%= (portletName.equals(PortletKeys.GROUP_PAGES) && !layout.isTypeControlPanel()) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
+	<c:if test="<%= showHeader %>">
 		<liferay-ui:header
 			backURL="<%= layoutsAdminDisplayContext.getBackURL() %>"
 			escapeXml="<%= false %>"
@@ -85,6 +87,7 @@ Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 		userTabs1URL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
 		userTabs1URL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
 		userTabs1URL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
+		userTabs1URL.setParameter("showHeader", String.valueOf(showHeader));
 
 		tabs1URL = userTabs1URL.toString();
 	}

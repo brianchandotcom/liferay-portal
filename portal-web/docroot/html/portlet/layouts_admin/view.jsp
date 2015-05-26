@@ -60,53 +60,43 @@ SitesUtil.addPortletBreadcrumbEntries(group, layoutsAdminDisplayContext.getPages
 Group selGroup = layoutsAdminDisplayContext.getSelGroup();
 %>
 
-<c:choose>
-	<c:when test="<%= !selGroup.isLayoutSetPrototype() && (portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
+<c:if test="<%= !selGroup.isLayoutSetPrototype() && (portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.MY_PAGES) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
 
-		<%
-		Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
-		%>
+	<%
+	Group liveGroup = layoutsAdminDisplayContext.getLiveGroup();
+	%>
 
-		<c:if test="<%= (portletName.equals(PortletKeys.GROUP_PAGES) && !layout.isTypeControlPanel()) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
-			<liferay-ui:header
-				backURL="<%= layoutsAdminDisplayContext.getBackURL() %>"
-				escapeXml="<%= false %>"
-				localizeTitle="<%= false %>"
-				title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
-			/>
-		</c:if>
-
-		<%
-		String tabs1URL = String.valueOf(layoutsAdminDisplayContext.getRedirectURL());
-
-		if (liveGroup.isUser()) {
-			PortletURL userTabs1URL = renderResponse.createRenderURL();
-
-			userTabs1URL.setParameter("struts_action", "/my_pages/edit_layouts");
-			userTabs1URL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
-			userTabs1URL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
-			userTabs1URL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
-
-			tabs1URL = userTabs1URL.toString();
-		}
-		%>
-
-		<liferay-ui:tabs
-			names="<%= layoutsAdminDisplayContext.getTabs1Names() %>"
-			param="tabs1"
-			url="<%= tabs1URL %>"
-			value="<%= layoutsAdminDisplayContext.getTabs1() %>"
+	<c:if test="<%= (portletName.equals(PortletKeys.GROUP_PAGES) && !layout.isTypeControlPanel()) || portletName.equals(PortletKeys.USER_GROUPS_ADMIN) || portletName.equals(PortletKeys.USERS_ADMIN) %>">
+		<liferay-ui:header
+			backURL="<%= layoutsAdminDisplayContext.getBackURL() %>"
+			escapeXml="<%= false %>"
+			localizeTitle="<%= false %>"
+			title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
 		/>
+	</c:if>
 
-		<%
-		PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, TextFormatter.format(layoutsAdminDisplayContext.getTabs1(), TextFormatter.O)), String.valueOf(layoutsAdminDisplayContext.getRedirectURL()));
-		%>
+	<%
+	String tabs1URL = String.valueOf(layoutsAdminDisplayContext.getRedirectURL());
 
-	</c:when>
-	<c:otherwise>
-		<liferay-ui:breadcrumb showGuestGroup="<%= false %>" showLayout="<%= false %>" showParentGroups="<%= false %>" showPortletBreadcrumb="<%= true %>" />
-	</c:otherwise>
-</c:choose>
+	if (liveGroup.isUser()) {
+		PortletURL userTabs1URL = renderResponse.createRenderURL();
+
+		userTabs1URL.setParameter("struts_action", "/my_pages/edit_layouts");
+		userTabs1URL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
+		userTabs1URL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
+		userTabs1URL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
+
+		tabs1URL = userTabs1URL.toString();
+	}
+	%>
+
+	<liferay-ui:tabs
+		names="<%= layoutsAdminDisplayContext.getTabs1Names() %>"
+		param="tabs1"
+		url="<%= tabs1URL %>"
+		value="<%= layoutsAdminDisplayContext.getTabs1() %>"
+	/>
+</c:if>
 
 <div class="container-fluid">
 	<div class="lfr-app-column-view manage-view row">

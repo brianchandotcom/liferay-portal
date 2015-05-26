@@ -13,12 +13,12 @@
 	var htmlUnescapedValues = [];
 
 	var MAP_HTML_CHARS_ESCAPED = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
 		'"': '&#034;',
+		'&': '&amp;',
 		'\'': '&#039;',
 		'/': '&#047;',
+		'<': '&lt;',
+		'>': '&gt;',
 		'`': '&#096;'
 	};
 
@@ -97,7 +97,6 @@
 					var nodeType = target.get('type');
 
 					if (tagName == 'input' && (/text|password/).test(nodeType) || tagName == 'textarea') {
-
 						var action = 'addClass';
 
 						if (/blur|focusout/.test(event.type)) {

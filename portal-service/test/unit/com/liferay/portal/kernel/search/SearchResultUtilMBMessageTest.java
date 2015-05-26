@@ -19,6 +19,7 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest( {
 	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	MBMessageLocalServiceUtil.class
+	MBMessageLocalServiceUtil.class, ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest

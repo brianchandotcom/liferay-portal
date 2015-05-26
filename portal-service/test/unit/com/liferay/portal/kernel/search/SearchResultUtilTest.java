@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
 import java.util.Locale;
@@ -39,7 +40,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class
+	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
+	ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilTest extends BaseSearchResultUtilTestCase {

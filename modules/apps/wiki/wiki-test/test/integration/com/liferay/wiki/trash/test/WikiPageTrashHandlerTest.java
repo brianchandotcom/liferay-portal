@@ -58,18 +58,9 @@ public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Before
 	@Override
 	public void setUp() throws Exception {
-		_testMode = PortalRunMode.isTestMode();
-
-		PortalRunMode.setTestMode(true);
-
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		super.setUp();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Ignore()

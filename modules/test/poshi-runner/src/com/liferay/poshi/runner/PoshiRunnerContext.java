@@ -592,7 +592,7 @@ public class PoshiRunnerContext {
 				}
 			}
 			else {
-				sb.append("PortalSmokeTestCase#testSmoke");
+				sb.append(PropsValues.TEST_NAME);
 			}
 
 			sb.append("\n");

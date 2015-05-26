@@ -14,7 +14,7 @@
 
 package com.liferay.portal.security.sso.bundle.ssoutil;
 
-import com.liferay.portal.security.sso.SSO;
+import com.liferay.portal.kernel.security.sso.SSO;
 
 import org.osgi.service.component.annotations.Component;
 

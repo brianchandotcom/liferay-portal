@@ -16,10 +16,10 @@ package com.liferay.portal.sso.cas;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsException;
 import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.security.sso.SSO;
 import com.liferay.portal.sso.cas.configuration.CASConfiguration;
 import com.liferay.portal.sso.cas.constants.CASConstants;
 

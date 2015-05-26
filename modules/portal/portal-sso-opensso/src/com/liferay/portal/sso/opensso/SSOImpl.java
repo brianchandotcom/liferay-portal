@@ -16,10 +16,10 @@ package com.liferay.portal.sso.opensso;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.SSO;
 import com.liferay.portal.sso.opensso.configuration.OpenSSOConfiguration;
 
 import java.util.Map;

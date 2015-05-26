@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso;
+package com.liferay.portal.kernel.security.sso;
 
 /**
  * @author Raymond Augé

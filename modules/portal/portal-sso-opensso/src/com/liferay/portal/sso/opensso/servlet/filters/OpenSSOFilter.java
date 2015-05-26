@@ -16,6 +16,7 @@ package com.liferay.portal.sso.opensso.servlet.filters;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.sso.OpenSSO;
 import com.liferay.portal.kernel.servlet.BaseFilter;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.OpenSSO;
 import com.liferay.portal.sso.opensso.configuration.OpenSSOConfiguration;
 import com.liferay.portal.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.util.PortalUtil;

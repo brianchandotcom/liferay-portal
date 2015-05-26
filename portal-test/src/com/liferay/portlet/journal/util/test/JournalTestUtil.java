@@ -74,17 +74,7 @@ public class JournalTestUtil {
 	public static JournalArticle addArticle(long groupId, long folderId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addArticle(
-			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
-			false, serviceContext);
+		return addArticle(groupId, folderId, StringPool.BLANK, true);
 	}
 
 	public static JournalArticle addArticle(
@@ -247,6 +237,26 @@ public class JournalTestUtil {
 			_getLocalizedMap(description), _getLocalizedMap(content),
 			defaultLocale, expirationDate, workflowEnabled, approved,
 			serviceContext);
+	}
+
+	public static JournalArticle addArticle(
+			long groupId, long folderId, String articleId,
+			boolean autoArticleId)
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
+
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
+
+		return addArticle(
+			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			articleId, autoArticleId,
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()), null,
+			LocaleUtil.getSiteDefault(), null, false, false, serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -741,8 +751,8 @@ public class JournalTestUtil {
 		throws Exception {
 
 		return updateArticle(
-			article, _getLocalizedMap(title), content, workflowEnabled, approved,
-			serviceContext);
+			article, _getLocalizedMap(title), content, workflowEnabled,
+			approved, serviceContext);
 	}
 
 	public static JournalArticle updateArticle(

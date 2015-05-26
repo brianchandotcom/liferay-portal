@@ -1349,7 +1349,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFolders(
 			repositoryId, parentFolderId, includeMountFolders, start, end,
-			null);
+			new RepositoryModelNameComparator(true));
 	}
 
 	/**
@@ -1455,7 +1455,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long repositoryId, long parentFolderId, int start, int end)
 		throws PortalException {
 
-		return getFolders(repositoryId, parentFolderId, start, end, null);
+		return getFolders(
+			repositoryId, parentFolderId, start, end,
+			new RepositoryModelNameComparator(true));
 	}
 
 	/**
@@ -1527,7 +1529,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 
 		return getFoldersAndFileEntriesAndFileShortcuts(
 			repositoryId, folderId, status, includeMountFolders, start, end,
-			null);
+			new RepositoryModelNameComparator(true));
 	}
 
 	/**
@@ -1968,7 +1970,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			long repositoryId, long parentFolderId, int start, int end)
 		throws PortalException {
 
-		return getMountFolders(repositoryId, parentFolderId, start, end, null);
+		return getMountFolders(
+			repositoryId, parentFolderId, start, end,
+			new RepositoryModelNameComparator(true));
 	}
 
 	/**

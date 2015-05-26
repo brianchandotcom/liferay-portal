@@ -16,8 +16,6 @@ package com.liferay.portal.kernel.portlet.configuration;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author Eudaldo Alonso
  */
@@ -57,8 +55,6 @@ public interface PortletConfigurationIcon {
 
 	public String getURL();
 
-	public double getWeight();
-
 	public boolean isLabel();
 
 	public boolean isLocalizeMessage();
@@ -68,7 +64,5 @@ public interface PortletConfigurationIcon {
 	public boolean isToolTip();
 
 	public boolean isUseDialog();
-
-	public void setRequest(HttpServletRequest request);
 
 }

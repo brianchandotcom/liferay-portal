@@ -708,15 +708,13 @@ YUI.add(
 							var scopeNames = currentScope.all('> .line-container .name');
 							var scopeTypes = currentScope.all('> .line-container .tag-type');
 
-							var scopeName = scopeNames.first() || currentScope.one('.testCaseCommand');
+							var scopeName = scopeNames.first();
 
 							scopeName = scopeName.html();
 
-							var scopeType = scopeTypes.first() || currentScope.one('> .line-container .action-type') || 'test-case';
+							var scopeType = scopeTypes.first();
 
-							if (!Lang.isString(scopeType)) {
-								scopeType = scopeType.html();
-							}
+							scopeType = scopeType.html();
 
 							sidebar.one('.scope-type .scope-name').html(scopeName);
 							sidebar.one('.scope-type .title').html(scopeType);
@@ -729,19 +727,17 @@ YUI.add(
 
 							sidebarParameterTitle.removeClass(CSS_HIDDEN);
 
-							var i;
-
-							if (scopeType != 'function' || scopeType != 'macro') {
+							if (scopeType !== 'function' && scopeType !== 'macro') {
 								sidebarParameterTitle.addClass(CSS_HIDDEN);
 							}
 							else {
 								var buffer = [];
 
 								if (scopeType === 'macro') {
-									var parameters = currentScope.all('> .line-container .parameter-container .parameter-value');
+									var parameters = currentScope.all('> .line-container .child-container .name');
 									var parameterSize = parameters.size();
 
-									for (i = 0; i < parameterSize; i += 2) {
+									for (var i = 0; i < parameterSize; i += 2) {
 										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,
@@ -766,7 +762,7 @@ YUI.add(
 								else if (scopeType === 'function') {
 									var parameterCount = scopeNames.size() - 1;
 
-									for (i = 1; i <= parameterCount; i++) {
+									for (var i = 1; i <= parameterCount; i++) {
 										buffer.push(
 											A.Lang.sub(
 												TPL_PARAMETER,

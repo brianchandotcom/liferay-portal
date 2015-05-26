@@ -63,7 +63,7 @@ public class UpdateRecordActionCommand extends BaseActionCommand {
 	}
 
 	@Reference
-	public void setDDMFormValuesFactory(
+	public void setDDMFormValuesJSONDeserializer(
 		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
 
 		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;

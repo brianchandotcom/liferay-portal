@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.kernel.repository.capabilities.BulkOperationCapability;
 import com.liferay.portal.kernel.repository.capabilities.CommentCapability;
 import com.liferay.portal.kernel.repository.capabilities.ProcessorCapability;
+import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.SyncCapability;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.repository.util.ModelValidatorUtil;
 import com.liferay.portal.repository.capabilities.LiferayBulkOperationCapability;
 import com.liferay.portal.repository.capabilities.LiferayCommentCapability;
 import com.liferay.portal.repository.capabilities.LiferayProcessorCapability;
+import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
 import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayThumbnailCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
@@ -74,13 +76,22 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class, bulkOperationCapability);
-		ThumbnailCapability thumbnailCapability =
-			new LiferayThumbnailCapability(
-				new RepositoryEntryConverter(),
-				new RepositoryEntryChecker(documentRepository));
+
+		RepositoryEntryConverter repositoryEntryConverter =
+			new RepositoryEntryConverter();
+
+		RepositoryEntryChecker repositoryEntryChecker =
+			new RepositoryEntryChecker(documentRepository);
 
 		capabilityRegistry.addExportedCapability(
-			ThumbnailCapability.class, thumbnailCapability);
+			RelatedModelCapability.class,
+			new LiferayRelatedModelCapability(
+				repositoryEntryConverter, repositoryEntryChecker));
+
+		capabilityRegistry.addExportedCapability(
+			ThumbnailCapability.class,
+			new LiferayThumbnailCapability(
+				repositoryEntryConverter, repositoryEntryChecker));
 
 		capabilityRegistry.addExportedCapability(
 			WorkflowCapability.class, _workflowCapability);

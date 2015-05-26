@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -8537,25 +8538,27 @@ public class RolePersistenceImpl extends BasePersistenceImpl<Role>
 			role.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (role.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				role.setCreateDate(now);
+			if (isNew && (role.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					role.setCreateDate(now);
+				}
+				else {
+					role.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				role.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!roleModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				role.setModifiedDate(now);
-			}
-			else {
-				role.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!roleModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					role.setModifiedDate(now);
+				}
+				else {
+					role.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
 			}
 		}
 

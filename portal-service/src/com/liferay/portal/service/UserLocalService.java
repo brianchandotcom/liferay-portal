@@ -449,7 +449,7 @@ public interface UserLocalService extends BaseLocalService,
 	<code>0</code> otherwise
 	* @throws PortalException if a portal exception occurred
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public long authenticateForBasic(long companyId, java.lang.String authType,
 		java.lang.String login, java.lang.String password)
 		throws PortalException;
@@ -471,7 +471,7 @@ public interface UserLocalService extends BaseLocalService,
 	<code>0</code> otherwise
 	* @throws PortalException if a portal exception occurred
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	@Transactional(propagation = Propagation.SUPPORTS)
 	public long authenticateForDigest(long companyId,
 		java.lang.String username, java.lang.String realm,
 		java.lang.String nonce, java.lang.String method, java.lang.String uri,

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2514,25 +2515,28 @@ public class RepositoryPersistenceImpl extends BasePersistenceImpl<Repository>
 			repository.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (repository.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				repository.setCreateDate(now);
+			if (isNew && (repository.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					repository.setCreateDate(now);
+				}
+				else {
+					repository.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				repository.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!repositoryModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				repository.setModifiedDate(now);
-			}
-			else {
-				repository.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!repositoryModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					repository.setModifiedDate(now);
+				}
+				else {
+					repository.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
 			}
 		}
 

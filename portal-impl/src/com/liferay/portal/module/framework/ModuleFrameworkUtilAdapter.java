@@ -107,8 +107,8 @@ public class ModuleFrameworkUtilAdapter {
 		_moduleFramework.stopBundle(bundleId, options);
 	}
 
-	public static void stopFramework() throws Exception {
-		_moduleFramework.stopFramework();
+	public static void stopFramework(long timeout) throws Exception {
+		_moduleFramework.stopFramework(timeout);
 	}
 
 	public static void stopRuntime() throws Exception {

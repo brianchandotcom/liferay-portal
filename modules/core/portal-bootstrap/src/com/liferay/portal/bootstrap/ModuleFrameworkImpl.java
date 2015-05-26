@@ -374,14 +374,14 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	@Override
-	public void stopFramework() throws Exception {
+	public void stopFramework(long timeout) throws Exception {
 		if (_framework == null) {
 			return;
 		}
 
 		_framework.stop();
 
-		FrameworkEvent frameworkEvent = _framework.waitForStop(5000);
+		FrameworkEvent frameworkEvent = _framework.waitForStop(timeout);
 
 		if (_log.isInfoEnabled()) {
 			_log.info(frameworkEvent);

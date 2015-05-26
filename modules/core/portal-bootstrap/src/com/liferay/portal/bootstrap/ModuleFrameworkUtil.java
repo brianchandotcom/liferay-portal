@@ -98,8 +98,8 @@ public class ModuleFrameworkUtil {
 		getModuleFramework().stopBundle(bundleId, options);
 	}
 
-	public static void stopFramework() throws Exception {
-		getModuleFramework().stopFramework();
+	public static void stopFramework(long timeout) throws Exception {
+		getModuleFramework().stopFramework(timeout);
 	}
 
 	public static void stopRuntime() throws Exception {

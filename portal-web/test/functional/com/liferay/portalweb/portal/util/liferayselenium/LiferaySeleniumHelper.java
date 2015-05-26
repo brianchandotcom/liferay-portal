@@ -1054,12 +1054,6 @@ public class LiferaySeleniumHelper {
 			return true;
 		}
 
-		// LPS-55491, temporary workaround until Michael Han fixes it
-
-		if (line.contains("failure in bulk execution")) {
-			return true;
-		}
-
 		// LPS-55835, temporary workaround while Brian Wulbern investigates it
 
 		if (line.matches(

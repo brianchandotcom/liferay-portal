@@ -67,6 +67,12 @@ public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Ignore()
+	@Override
+	@Test
+	public void testAddBaseModelTrashInitialConditionsDraft() throws Exception {
+	}
+
 	@Test
 	public void testCategoryMessageCount() throws Exception {
 		ServiceContext serviceContext =

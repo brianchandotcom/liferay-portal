@@ -109,7 +109,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		URL resourceURL = _servletContext.getResource(requestPath);
 
-		ServletContext currentThreadServletContext = _servletContext;
+		ServletContext currentServletContext = _servletContext;
 
 		boolean bundleResource = false;
 
@@ -121,9 +121,8 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				return null;
 			}
 
-			currentThreadServletContext =
-				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+			currentServletContext = PortalWebResourcesUtil.getServletContext(
+				PortalWebResourceConstants.RESOURCE_TYPE_CSS);
 
 			bundleResource = true;
 		}
@@ -162,11 +161,11 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 				if (bundleResource) {
 					dynamicContent = DynamicCSSUtil.replaceToken(
-						currentThreadServletContext, request, content);
+						currentServletContext, request, content);
 				}
 				else {
 					dynamicContent = DynamicCSSUtil.parseSass(
-						currentThreadServletContext, request, requestPath,
+						currentServletContext, request, requestPath,
 						content);
 				}
 
@@ -191,7 +190,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 				content = bufferCacheServletResponse.getString();
 
 				dynamicContent = DynamicCSSUtil.parseSass(
-					currentThreadServletContext, request, requestPath, content);
+					currentServletContext, request, requestPath, content);
 
 				FileUtil.write(
 					cacheContentTypeFile,

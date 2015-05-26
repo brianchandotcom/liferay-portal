@@ -7123,12 +7123,6 @@ public class PortalImpl implements Portal {
 			throw new ImageSizeException();
 		}
 
-		if (imageId <= 0) {
-			imageId = CounterLocalServiceUtil.increment();
-
-			BeanPropertiesUtil.setProperty(baseModel, fieldName, imageId);
-		}
-
 		if ((maxHeight > 0) || (maxWidth > 0)) {
 			try {
 				ImageBag imageBag = ImageToolUtil.read(bytes);
@@ -7150,7 +7144,15 @@ public class PortalImpl implements Portal {
 			}
 		}
 
-		ImageLocalServiceUtil.updateImage(imageId, bytes);
+		long newImageId = CounterLocalServiceUtil.increment();
+
+		ImageLocalServiceUtil.updateImage(newImageId, bytes);
+
+		if (imageId > 0) {
+			ImageLocalServiceUtil.deleteImage(imageId);
+		}
+
+		BeanPropertiesUtil.setProperty(baseModel, fieldName, newImageId);
 	}
 
 	@Override

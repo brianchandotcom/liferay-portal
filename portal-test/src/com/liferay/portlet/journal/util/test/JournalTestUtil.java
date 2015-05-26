@@ -74,17 +74,7 @@ public class JournalTestUtil {
 	public static JournalArticle addArticle(long groupId, long folderId)
 		throws Exception {
 
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(groupId);
-
-		serviceContext.setCommand(Constants.ADD);
-		serviceContext.setLayoutFullURL("http://localhost");
-
-		return addArticle(
-			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), LocaleUtil.getSiteDefault(), false,
-			false, serviceContext);
+		return addArticle(groupId, folderId, StringPool.BLANK, true);
 	}
 
 	public static JournalArticle addArticle(
@@ -242,28 +232,31 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<>();
+		return addArticle(
+			groupId, folderId, classNameId, _getLocalizedMap(title),
+			_getLocalizedMap(description), _getLocalizedMap(content),
+			defaultLocale, expirationDate, workflowEnabled, approved,
+			serviceContext);
+	}
 
-		for (Locale locale : _locales) {
-			titleMap.put(locale, title);
-		}
+	public static JournalArticle addArticle(
+			long groupId, long folderId, String articleId,
+			boolean autoArticleId)
+		throws Exception {
 
-		Map<Locale, String> descriptionMap = new HashMap<>();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(groupId);
 
-		for (Locale locale : _locales) {
-			descriptionMap.put(locale, description);
-		}
-
-		Map<Locale, String> contentMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			contentMap.put(locale, content);
-		}
+		serviceContext.setCommand(Constants.ADD);
+		serviceContext.setLayoutFullURL("http://localhost");
 
 		return addArticle(
-			groupId, folderId, classNameId, titleMap, descriptionMap,
-			contentMap, defaultLocale, expirationDate, workflowEnabled,
-			approved, serviceContext);
+			groupId, folderId, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
+			articleId, autoArticleId,
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()),
+			_getLocalizedMap(RandomTestUtil.randomString()), null,
+			LocaleUtil.getSiteDefault(), null, false, false, serviceContext);
 	}
 
 	public static JournalArticle addArticle(
@@ -410,27 +403,10 @@ public class JournalTestUtil {
 			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, title);
-		}
-
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			descriptionMap.put(locale, RandomTestUtil.randomString(50));
-		}
-
-		Map<Locale, String> contentMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			contentMap.put(locale, content);
-		}
-
 		return addArticleWithWorkflow(
-			groupId, folderId, titleMap, descriptionMap, contentMap, true,
-			approved, serviceContext);
+			groupId, folderId, _getLocalizedMap(title),
+			_getLocalizedMap(RandomTestUtil.randomString(50)),
+			_getLocalizedMap(content), true, approved, serviceContext);
 	}
 
 	public static JournalArticle addArticleWithWorkflow(
@@ -774,15 +750,9 @@ public class JournalTestUtil {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		Map<Locale, String> titleMap = new HashMap<>();
-
-		for (Locale locale : _locales) {
-			titleMap.put(locale, title);
-		}
-
 		return updateArticle(
-			article, titleMap, content, workflowEnabled, approved,
-			serviceContext);
+			article, _getLocalizedMap(title), content, workflowEnabled,
+			approved, serviceContext);
 	}
 
 	public static JournalArticle updateArticle(
@@ -888,6 +858,16 @@ public class JournalTestUtil {
 		friendlyURL = friendlyURL.concat(layout.getFriendlyURL());
 
 		return friendlyURL;
+	}
+
+	private static Map<Locale, String> _getLocalizedMap(String value) {
+		Map<Locale, String> valuesMap = new HashMap<>();
+
+		for (Locale locale : _locales) {
+			valuesMap.put(locale, value);
+		}
+
+		return valuesMap;
 	}
 
 	private static Map<String, String> _getMap(Element dynamicElementElement) {

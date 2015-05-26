@@ -14,6 +14,7 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -76,8 +78,26 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_locked = locked;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #setMbMessageTuples(List)}
+	 */
+	@Deprecated
 	public void setMbMessages(List<MBMessage> mbMessages) {
-		_mbMessages = mbMessages;
+		List<Tuple> mbMessageTuples = new ArrayList<>();
+
+		for (MBMessage mbMessage : mbMessages) {
+			Summary summary = new Summary(null, mbMessage.getBody());
+
+			summary.setEscape(false);
+
+			mbMessageTuples.add(new Tuple(mbMessage, summary));
+		}
+
+		_mbMessageTuples = mbMessageTuples;
+	}
+
+	public void setMbMessageTuples(List<Tuple> mbMessageTuples) {
+		_mbMessageTuples = mbMessageTuples;
 	}
 
 	public void setQueryTerms(String[] queryTerms) {
@@ -126,7 +146,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_fileEntryTuples = null;
 		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;
-		_mbMessages = null;
+		_mbMessageTuples = null;
 		_queryTerms = null;
 		_rowCheckerId = null;
 		_rowCheckerName = null;
@@ -180,7 +200,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:mbMessages", _mbMessages);
+			"liferay-ui:app-view-search-entry:mbMessageTuples",
+			_mbMessageTuples);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(
@@ -216,7 +237,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private List<Tuple> _fileEntryTuples;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
-	private List<MBMessage> _mbMessages;
+	private List<Tuple> _mbMessageTuples;
 	private String[] _queryTerms;
 	private String _rowCheckerId;
 	private String _rowCheckerName;

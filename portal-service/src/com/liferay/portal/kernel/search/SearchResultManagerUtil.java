@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
@@ -145,12 +146,27 @@ public class SearchResultManagerUtil {
 			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
 				entryClassPK);
 
-			Summary summary = getSummary(
-				document, DLFileEntry.class.getName(),
-				fileEntry.getFileEntryId(), locale, portletRequest,
-				portletResponse);
+			if (fileEntry != null) {
+				Summary summary = getSummary(
+					document, DLFileEntry.class.getName(),
+					fileEntry.getFileEntryId(), locale, portletRequest,
+					portletResponse);
 
-			searchResult.addFileEntry(fileEntry, summary);
+				searchResult.addFileEntry(fileEntry, summary);
+			}
+			else {
+				long classNameId = GetterUtil.getLong(
+					document.get(Field.CLASS_NAME_ID));
+				long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
+
+				String className = PortalUtil.getClassName(classNameId);
+
+				Summary summary = getSummary(
+					document, className, classPK, locale, portletRequest,
+					portletResponse);
+
+				searchResult.setSummary(summary);
+			}
 		}
 
 		@Override

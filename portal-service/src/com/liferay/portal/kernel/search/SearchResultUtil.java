@@ -57,15 +57,15 @@ public class SearchResultUtil {
 					searchResult = searchResults.get(index);
 				}
 
-				SearchResultManagerUtil.updateSearchResult(
-					searchResult, document, locale, portletRequest,
-					portletResponse);
-
 				String version = document.get(Field.VERSION);
 
 				if (Validator.isNotNull(version)) {
 					searchResult.addVersion(version);
 				}
+
+				SearchResultManagerUtil.updateSearchResult(
+					searchResult, document, locale, portletRequest,
+					portletResponse);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {

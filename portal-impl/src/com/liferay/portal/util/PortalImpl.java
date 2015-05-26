@@ -203,7 +203,6 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
-import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.login.util.LoginUtil;
 import com.liferay.portlet.messageboards.action.EditDiscussionAction;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -2778,7 +2777,7 @@ public class PortalImpl implements Portal {
 
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+				_JOURNAL_CANONICAL_URL_SEPARATOR);
 
 		if (friendlyURLResolver == null) {
 			return null;
@@ -2805,7 +2804,7 @@ public class PortalImpl implements Portal {
 
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
-				JournalArticleConstants.CANONICAL_URL_SEPARATOR);
+				_JOURNAL_CANONICAL_URL_SEPARATOR);
 
 		if (friendlyURLResolver == null) {
 			return null;
@@ -8373,6 +8372,8 @@ public class PortalImpl implements Portal {
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
 
+	private static final String _JOURNAL_CANONICAL_URL_SEPARATOR = "/-/";
+
 	private static final String _LOCALHOST = "localhost";
 
 	private static final String _PRIVATE_GROUP_SERVLET_MAPPING =
@@ -8387,8 +8388,6 @@ public class PortalImpl implements Portal {
 	private static final Log _log = LogFactoryUtil.getLog(PortalImpl.class);
 
 	private static final Map<Long, String> _cdnHostHttpMap =
-		new ConcurrentHashMap<>();
-	private static final Map<Long, String> _cdnHostHttpsMap =
 		new ConcurrentHashMap<>();
 	private static final MethodHandler _resetCDNHostsMethodHandler =
 		new MethodHandler(new MethodKey(PortalUtil.class, "resetCDNHosts"));
@@ -8570,4 +8569,6 @@ public class PortalImpl implements Portal {
 
 	}
 
+	private static final Map<Long, String> _cdnHostHttpsMap =
+		new ConcurrentHashMap<>();
 }

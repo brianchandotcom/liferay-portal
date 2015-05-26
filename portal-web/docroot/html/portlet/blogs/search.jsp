@@ -98,7 +98,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			<liferay-ui:app-view-search-entry
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : entry.getDescription() %>"
-				mbMessages="<%= searchResult.getMBMessages() %>"
+				mbMessageTuples="<%= searchResult.getMBMessageTuples() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				thumbnailSrc="<%= Validator.isNotNull(entry.getSmallImageURL(themeDisplay)) ? entry.getSmallImageURL(themeDisplay) : StringPool.BLANK %>"
 				title="<%= (summary != null) ? summary.getTitle() : entry.getTitle() %>"

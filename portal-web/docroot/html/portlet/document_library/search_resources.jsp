@@ -198,7 +198,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getDescription() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
-								mbMessages="<%= searchResult.getMBMessages() %>"
+								mbMessageTuples="<%= searchResult.getMBMessageTuples() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 								rowCheckerName="<%= FileEntry.class.getSimpleName() %>"

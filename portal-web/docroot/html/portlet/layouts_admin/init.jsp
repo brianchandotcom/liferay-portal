@@ -28,7 +28,6 @@ page import="com.liferay.portal.SitemapChangeFrequencyException" %><%@
 page import="com.liferay.portal.SitemapIncludeException" %><%@
 page import="com.liferay.portal.SitemapPagePriorityException" %><%@
 page import="com.liferay.portal.kernel.servlet.DynamicServletRequest" %><%@
-page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portal.theme.NavItem" %><%@
 page import="com.liferay.portal.util.LayoutTypeControllerTracker" %><%@
 page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %><%@

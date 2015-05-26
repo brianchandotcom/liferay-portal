@@ -492,6 +492,8 @@
 			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
+		<action path="/export_import/view" forward="portlet.export_import.view" />
+
 		<!-- Flags -->
 
 		<action path="/flags/edit_entry" type="com.liferay.portlet.flags.action.EditEntryAction">
@@ -1210,13 +1212,13 @@
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 
+		<action path="/staging_bar/edit_layout_revision" type="com.liferay.portlet.stagingbar.action.EditLayoutRevisionAction">
+			<forward name="portlet.export_configuration.error" path="portlet.staging_bar.view" />
+		</action>
+
 		<action path="/staging_bar/edit_layout_set_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutSetBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_set_branch" path="portlet.staging_bar.edit_layout_set_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
-		</action>
-
-		<action path="/staging_bar/edit_layouts" type="com.liferay.portlet.grouppages.action.EditLayoutsAction">
-			<forward name="portlet.layouts_admin.error" path="portlet.staging_bar.view" />
 		</action>
 
 		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.exportimport.action.EditPublishConfigurationAction">

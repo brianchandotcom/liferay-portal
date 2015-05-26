@@ -402,6 +402,10 @@
 		<put name="portlet_content" value="/portlet/export_import/publish_layouts_simple.jsp" />
 	</definition>
 
+	<definition name="portlet.export_import.view" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/view.jsp" />
+	</definition>
+
 	<!-- Flags -->
 
 	<definition name="portlet.flags.edit_entry" path="/portlet/flags/edit_entry.jsp" />

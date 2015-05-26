@@ -50,13 +50,12 @@ BackgroundTask lastCompletedInitialPublicationBackgroundTask = BackgroundTaskLoc
 
 <c:if test="<%= (lastCompletedInitialPublicationBackgroundTask != null) && (lastCompletedInitialPublicationBackgroundTask.getStatus() == BackgroundTaskConstants.STATUS_FAILED) %>">
 	<div class="alert alert-danger">
-		<liferay-ui:message key="an-unexpected-error-occurred--with-the-initial-staging-publication" />
+		<liferay-ui:message key="an-unexpected-error-occurred-with-the-initial-staging-publication" />
 
-		<liferay-portlet:actionURL portletName="<%= PortletKeys.GROUP_PAGES %>" var="deleteBackgroundTaskURL">
-			<portlet:param name="struts_action" value="/group_pages/delete_background_task" />
+		<portlet:actionURL name="deleteBackgroundTask" var="deleteBackgroundTaskURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="backgroundTaskId" value="<%= String.valueOf(lastCompletedInitialPublicationBackgroundTask.getBackgroundTaskId()) %>" />
-		</liferay-portlet:actionURL>
+		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
 			confirmation="are-you-sure-you-want-to-remove-the-initial-staging-publication"

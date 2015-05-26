@@ -1039,6 +1039,9 @@
 			</trigger>
 		</scheduler-entry>
 		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
+		<control-panel-entry-weight>2.0</control-panel-entry-weight>
+		<control-panel-entry-class>com.liferay.portlet.exportimport.ExportImportControlPanelEntry</control-panel-entry-class>
 		<trash-handler>com.liferay.portlet.exportimport.trash.ExportImportConfigurationTrashHandler</trash-handler>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
 		<use-default-template>false</use-default-template>

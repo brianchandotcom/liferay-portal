@@ -146,7 +146,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			<c:if test="<%= !backgroundTask.isInProgress() %>">
 				<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 					<portlet:actionURL var="relaunchURL">
-						<portlet:param name="struts_action" value="/group_pages/edit_export_configuration" />
+						<portlet:param name="struts_action" value="/export_import/edit_export_configuration" />
 						<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
 						<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 						<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />

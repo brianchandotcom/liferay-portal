@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.upload.UploadException;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
@@ -58,8 +57,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.ThemeSetting;
@@ -73,8 +70,6 @@ import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
-import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -116,7 +111,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
@@ -222,9 +216,6 @@ public class EditLayoutsAction extends PortletAction {
 			else if (cmd.equals("display_order")) {
 				updateDisplayOrder(actionRequest);
 			}
-			else if (cmd.equals("delete_layout_revision")) {
-				deleteLayoutRevision(actionRequest);
-			}
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
 			}
@@ -244,15 +235,6 @@ public class EditLayoutsAction extends PortletAction {
 			}
 			else if (cmd.equals("reset_prototype")) {
 				SitesUtil.resetPrototype(themeDisplay.getLayout());
-			}
-			else if (cmd.equals("select_layout_set_branch")) {
-				selectLayoutSetBranch(actionRequest);
-			}
-			else if (cmd.equals("select_layout_branch")) {
-				selectLayoutBranch(actionRequest);
-			}
-			else if (cmd.equals("update_layout_revision")) {
-				updateLayoutRevision(actionRequest, themeDisplay);
 			}
 
 			MultiSessionMessages.add(
@@ -472,31 +454,6 @@ public class EditLayoutsAction extends PortletAction {
 		}
 	}
 
-	protected void deleteLayoutRevision(ActionRequest actionRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		long layoutRevisionId = ParamUtil.getLong(
-			actionRequest, "layoutRevisionId");
-
-		LayoutRevision layoutRevision =
-			LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
-
-		LayoutRevisionLocalServiceUtil.deleteLayoutRevision(layoutRevision);
-
-		boolean updateRecentLayoutRevisionId = ParamUtil.getBoolean(
-			actionRequest, "updateRecentLayoutRevisionId");
-
-		if (updateRecentLayoutRevisionId) {
-			StagingUtil.setRecentLayoutRevisionId(
-				request, layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getPlid(),
-				layoutRevision.getParentLayoutRevisionId());
-		}
-	}
-
 	protected void deleteThemeSettingsProperties(
 		UnicodeProperties typeSettingsProperties, String device) {
 
@@ -678,52 +635,6 @@ public class EditLayoutsAction extends PortletAction {
 		if (mergeFailCountAfterMerge > 0) {
 			SessionErrors.add(actionRequest, "resetMergeFailCountAndMerge");
 		}
-	}
-
-	protected void selectLayoutBranch(ActionRequest actionRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId");
-
-		StagingUtil.setRecentLayoutBranchId(
-			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
-	}
-
-	protected void selectLayoutSetBranch(ActionRequest actionRequest)
-		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			groupId, privateLayout);
-
-		long layoutSetBranchId = ParamUtil.getLong(
-			actionRequest, "layoutSetBranchId");
-
-		// Ensure layout set branch exists
-
-		LayoutSetBranch layoutSetBranch =
-			LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
-				layoutSetBranchId);
-
-		StagingUtil.setRecentLayoutSetBranchId(
-			request, layoutSet.getLayoutSetId(),
-			layoutSetBranch.getLayoutSetBranchId());
 	}
 
 	protected void setThemeSettingProperties(
@@ -1083,75 +994,6 @@ public class EditLayoutsAction extends PortletAction {
 			layoutTypeSettingsProperties);
 
 		return new Object[] {layout, oldFriendlyURL};
-	}
-
-	protected void updateLayoutRevision(
-			ActionRequest actionRequest, ThemeDisplay themeDisplay)
-		throws Exception {
-
-		long layoutRevisionId = ParamUtil.getLong(
-			actionRequest, "layoutRevisionId");
-
-		LayoutRevision layoutRevision =
-			LayoutRevisionLocalServiceUtil.getLayoutRevision(layoutRevisionId);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		LayoutRevision enableLayoutRevision =
-			LayoutRevisionLocalServiceUtil.updateLayoutRevision(
-				serviceContext.getUserId(), layoutRevisionId,
-				layoutRevision.getLayoutBranchId(), layoutRevision.getName(),
-				layoutRevision.getTitle(), layoutRevision.getDescription(),
-				layoutRevision.getKeywords(), layoutRevision.getRobots(),
-				layoutRevision.getTypeSettings(), layoutRevision.getIconImage(),
-				layoutRevision.getIconImageId(), layoutRevision.getThemeId(),
-				layoutRevision.getColorSchemeId(),
-				layoutRevision.getWapThemeId(),
-				layoutRevision.getWapColorSchemeId(), layoutRevision.getCss(),
-				serviceContext);
-
-		if (layoutRevision.getStatus() != WorkflowConstants.STATUS_INCOMPLETE) {
-			StagingUtil.setRecentLayoutRevisionId(
-				themeDisplay.getUser(), layoutRevision.getLayoutSetBranchId(),
-				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
-
-			return;
-		}
-
-		LayoutRevision lastLayoutRevision =
-			LayoutRevisionLocalServiceUtil.fetchLastLayoutRevision(
-				enableLayoutRevision.getPlid(), true);
-
-		if (lastLayoutRevision != null) {
-			LayoutRevision newLayoutRevision =
-				LayoutRevisionLocalServiceUtil.addLayoutRevision(
-					serviceContext.getUserId(),
-					layoutRevision.getLayoutSetBranchId(),
-					layoutRevision.getLayoutBranchId(),
-					enableLayoutRevision.getLayoutRevisionId(), false,
-					layoutRevision.getPlid(),
-					lastLayoutRevision.getLayoutRevisionId(),
-					lastLayoutRevision.isPrivateLayout(),
-					lastLayoutRevision.getName(), lastLayoutRevision.getTitle(),
-					lastLayoutRevision.getDescription(),
-					lastLayoutRevision.getKeywords(),
-					lastLayoutRevision.getRobots(),
-					lastLayoutRevision.getTypeSettings(),
-					lastLayoutRevision.isIconImage(),
-					lastLayoutRevision.getIconImageId(),
-					lastLayoutRevision.getThemeId(),
-					lastLayoutRevision.getColorSchemeId(),
-					lastLayoutRevision.getWapThemeId(),
-					lastLayoutRevision.getWapColorSchemeId(),
-					lastLayoutRevision.getCss(), serviceContext);
-
-			StagingUtil.setRecentLayoutRevisionId(
-				themeDisplay.getUser(),
-				newLayoutRevision.getLayoutSetBranchId(),
-				newLayoutRevision.getPlid(),
-				newLayoutRevision.getLayoutRevisionId());
-		}
 	}
 
 	protected void updateLookAndFeel(

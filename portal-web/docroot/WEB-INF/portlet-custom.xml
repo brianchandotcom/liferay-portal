@@ -1444,6 +1444,10 @@
 			<name>template-path</name>
 			<value>/html/portlet/export_import/</value>
 		</init-param>
+		<init-param>
+			<name>view-action</name>
+			<value>/export_import/view</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>

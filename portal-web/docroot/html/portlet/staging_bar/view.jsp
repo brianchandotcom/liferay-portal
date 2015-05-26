@@ -101,10 +101,6 @@ if (layout != null) {
 											<liferay-util:include page="/html/portlet/staging_bar/view_layout_branch_details.jsp" />
 										</c:if>
 
-										<portlet:actionURL var="editLayoutRevisionURL">
-											<portlet:param name="struts_action" value="/staging_bar/edit_layouts" />
-										</portlet:actionURL>
-
 										<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 

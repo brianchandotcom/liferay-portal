@@ -27,7 +27,7 @@ String[] tempFileNames = LayoutServiceUtil.getTempFileNames(groupId, ExportImpor
 
 <c:if test="<%= showHeader %>">
 	<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="backURL">
-		<portlet:param name="struts_action" value="/export_configuration/edit_layout_set" />
+		<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
 		<portlet:param name="tabs1" value='<%= privateLayout ? "my-dashboard" : "my-profile" %>' />
 		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 	</liferay-portlet:renderURL>

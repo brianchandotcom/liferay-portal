@@ -21,6 +21,7 @@ import com.liferay.portal.GroupKeyException;
 import com.liferay.portal.GroupParentException;
 import com.liferay.portal.LayoutSetVirtualHostException;
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.NoSuchBackgroundTaskException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PendingBackgroundTaskException;
@@ -61,6 +62,7 @@ import com.liferay.portal.model.Team;
 import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.RemoteAuthException;
+import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -151,6 +153,16 @@ public class SiteAdminPortlet extends MVCPortlet {
 		throws Exception {
 
 		updateActive(actionRequest, false);
+	}
+
+	public void deleteBackgroundTask(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long backgroundTaskId = ParamUtil.getLong(
+			actionRequest, "backgroundTaskId");
+
+		BackgroundTaskLocalServiceUtil.deleteBackgroundTask(backgroundTaskId);
 	}
 
 	public void deleteGroups(
@@ -268,6 +280,8 @@ public class SiteAdminPortlet extends MVCPortlet {
 
 		if (SessionErrors.contains(
 				renderRequest, NoSuchGroupException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchBackgroundTaskException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 
@@ -405,6 +419,7 @@ public class SiteAdminPortlet extends MVCPortlet {
 			cause instanceof GroupParentException ||
 			cause instanceof LayoutSetVirtualHostException ||
 			cause instanceof LocaleException ||
+			cause instanceof NoSuchBackgroundTaskException ||
 			cause instanceof PendingBackgroundTaskException ||
 			cause instanceof RemoteAuthException ||
 			cause instanceof RemoteExportException ||

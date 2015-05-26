@@ -1,5 +1,12 @@
 Bundle-Name: Liferay Journal API
 Bundle-SymbolicName: com.liferay.journal.api
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.journal,\
+	com.liferay.journal.exception,\
+	com.liferay.journal.model,\
+	com.liferay.journal.service,\
+	com.liferay.journal.service.persistence,\
+	com.liferay.journal.util.comparator
 Include-Resource:\
 	classes

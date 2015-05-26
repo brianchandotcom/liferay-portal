@@ -3,22 +3,31 @@ Bundle-SymbolicName: com.liferay.journal.service
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.journal.atom,\
+	com.liferay.journal.configuration,\
 	com.liferay.journal.lar,\
 	com.liferay.journal.model.impl,\
 	com.liferay.journal.model.listener,\
 	com.liferay.journal.search,\
-	com.liferay.journal.service.model.listener,\
+	com.liferay.journal.service.configuration.configurator,\
+	com.liferay.journal.service.impl,\
+	com.liferay.journal.service.permission,\
+	com.liferay.journal.social,\
 	com.liferay.journal.trash,\
 	com.liferay.journal.util,\
+	com.liferay.journal.verify,\
 	com.liferay.journal.workflow
-Include-Resource: classesInclude-Resource:\
+Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
+	resource-actions/default.xml=classes/META-INF/resource-actions/default.xml,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/FiniteUniqueStack.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/FiniteStack.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSThreadLocal.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
-	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/xml/XMLUtil.class
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

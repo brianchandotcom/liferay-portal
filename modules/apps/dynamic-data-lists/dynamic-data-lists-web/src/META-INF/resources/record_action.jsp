@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
@@ -40,7 +40,7 @@ if (hasUpdatePermission) {
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.VIEW) %>">
 		<portlet:renderURL var="viewRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
+			<portlet:param name="mvcPath" value="/view_record.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 			<portlet:param name="version" value="<%= recordVersion.getVersion() %>" />
@@ -56,8 +56,7 @@ if (hasUpdatePermission) {
 
 	<c:if test="<%= hasUpdatePermission %>">
 		<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="mvcPath" value="/edit_record.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 			<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
@@ -71,9 +70,7 @@ if (hasUpdatePermission) {
 	</c:if>
 
 	<c:if test="<%= hasDeletePermission %>">
-		<portlet:actionURL var="deleteRecordURL">
-			<portlet:param name="struts_action" value="/dynamic_data_mapping_list/edit_record" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteRecord" var="deleteRecordURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="recordId" value="<%= String.valueOf(record.getRecordId()) %>" />
 		</portlet:actionURL>

@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
@@ -26,7 +26,7 @@ long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTem
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="viewRecordVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="struts_action" value="/dynamic_data_lists/view_record" />
+		<portlet:param name="mvcPath" value="/view_record.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="recordId" value="<%= String.valueOf(recordVersion.getRecordId()) %>" />
 		<portlet:param name="version" value="<%= recordVersion.getVersion() %>" />
@@ -39,9 +39,8 @@ long formDDMTemplateId = GetterUtil.getLong((String)row.getParameter("formDDMTem
 		url="<%= viewRecordVersionURL %>"
 	/>
 
-	<portlet:actionURL var="revertURL">
-		<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.REVERT %>" />
+	<portlet:actionURL name="revertRecord" var="revertURL">
+		<portlet:param name="mvcPath" value="/edit_record.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="recordId" value="<%= String.valueOf(recordVersion.getRecordId()) %>" />
 		<portlet:param name="version" value="<%= String.valueOf(recordVersion.getVersion()) %>" />

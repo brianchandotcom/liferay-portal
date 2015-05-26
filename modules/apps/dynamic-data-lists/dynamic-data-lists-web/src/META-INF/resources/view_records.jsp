@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -36,7 +36,7 @@ if (editable || portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS)) {
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_set");
+portletURL.setParameter("mvcPath", "/view_record_set.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()));
 %>
@@ -75,7 +75,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			<aui:nav cssClass="navbar-nav" searchContainer="<%= searchContainer %>">
 				<c:if test="<%= showAddRecordButton %>">
 					<portlet:renderURL var="addRecordURL">
-						<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record" />
+						<portlet:param name="mvcPath" value="/edit_record.jsp" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 						<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 						<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
@@ -84,10 +84,10 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 					<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
 				</c:if>
 
-				<portlet:resourceURL var="exportRecordSetURL">
-					<portlet:param name="struts_action" value="/dynamic_data_lists/export" />
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportRecordSetURL">
+					<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="exportRecordSet" />
 					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-				</portlet:resourceURL>
+				</liferay-portlet:resourceURL>
 
 				<%
 				StringBundler sb = new StringBundler(6);
@@ -103,11 +103,18 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 				<aui:nav-item href="<%= sb.toString() %>" iconCssClass="icon-arrow-down" label="export" />
 			</aui:nav>
 
-			<aui:nav-bar-search file="/html/portlet/dynamic_data_lists/record_search.jsp" searchContainer="<%= searchContainer %>" />
+			<aui:nav-bar-search searchContainer="<%= searchContainer %>">
+
+				<%
+				request.setAttribute("liferay-ui:search:searchContainer", searchContainer);
+				%>
+
+				<liferay-util:include page="/record_search.jsp" servletContext="<%= application %>" />
+			</aui:nav-bar-search>
 		</aui:nav-bar>
 
 		<liferay-ui:search-container-results>
-			<%@ include file="/html/portlet/dynamic_data_lists/record_search_results.jspf" %>
+			<%@ include file="/record_search_results.jspf" %>
 		</liferay-ui:search-container-results>
 
 		<%
@@ -134,7 +141,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 			PortletURL rowURL = renderResponse.createRenderURL();
 
-			rowURL.setParameter("struts_action", "/dynamic_data_lists/view_record");
+			rowURL.setParameter("mvcPath", "/view_record.jsp");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 			rowURL.setParameter("version", recordVersion.getVersion());
@@ -145,7 +152,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			for (DDMFormField ddmFormField : ddmFormfields) {
 			%>
 
-				<%@ include file="/html/portlet/dynamic_data_lists/record_row_value.jspf" %>
+				<%@ include file="/record_row_value.jspf" %>
 
 			<%
 			}
@@ -158,7 +165,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 			// Action
 
-			row.addJSP("/html/portlet/dynamic_data_lists/record_action.jsp", "entry-action");
+			row.addJSP("/record_action.jsp", "entry-action", application, request, response);
 
 			// Add result row
 
@@ -170,7 +177,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 	</liferay-ui:search-container>
 </aui:form>
 
-<%@ include file="/html/portlet/dynamic_data_lists/export_record_set.jspf" %>
+<%@ include file="/export_record_set.jspf" %>
 
 <aui:script>
 	AUI().use('liferay-portlet-dynamic-data-lists');

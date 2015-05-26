@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 DDLRecordSet recordSet = (DDLRecordSet)request.getAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
@@ -50,7 +50,7 @@ DDMStructure ddmStructure = recordSet.getDDMStructure();
 	</c:if>
 </div>
 
-<%@ include file="/html/portlet/dynamic_data_lists/custom_spreadsheet_editors.jspf" %>
+<%@ include file="/custom_spreadsheet_editors.jspf" %>
 
 <aui:script use="liferay-portlet-dynamic-data-lists">
 	var structure = <%= DDMUtil.getDDMFormFieldsJSONArray(ddmStructure, ddmStructure.getDefinition()) %>;

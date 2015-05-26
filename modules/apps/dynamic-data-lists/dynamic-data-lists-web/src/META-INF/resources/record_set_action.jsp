@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:search:searchContainer");
@@ -33,8 +33,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= hasViewPermission %>">
 		<portlet:renderURL var="viewRecordSetURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
+			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</portlet:renderURL>
@@ -46,8 +45,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 		/>
 
 		<portlet:renderURL var="viewRecordSetURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/view_record_set" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
+			<portlet:param name="mvcPath" value="/view_record_set.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 			<portlet:param name="spreadsheet" value="true" />
@@ -62,8 +60,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 
 	<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.UPDATE) %>">
 		<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="editRecordSetURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+			<portlet:param name="mvcPath" value="/edit_record_set.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:renderURL>
@@ -76,10 +73,10 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 	</c:if>
 
 	<c:if test="<%= hasViewPermission %>">
-		<portlet:resourceURL var="exportRecordSetURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/export" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportRecordSetURL">
+			<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="exportRecordSet" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		</portlet:resourceURL>
+		</liferay-portlet:resourceURL>
 
 		<%
 		StringBundler sb = new StringBundler(6);
@@ -118,9 +115,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 	</c:if>
 
 	<c:if test="<%= ((selRecordSet == null) || (selRecordSet.getRecordSetId() != recordSet.getRecordSetId())) && DDLRecordSetPermission.contains(permissionChecker, recordSet, ActionKeys.DELETE) %>">
-		<liferay-portlet:actionURL portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="deleteRecordSetURL">
-			<portlet:param name="struts_action" value="/dynamic_data_lists/edit_record_set" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<liferay-portlet:actionURL name="deleteRecordSet" portletName="<%= PortletKeys.DYNAMIC_DATA_LISTS %>" var="deleteRecordSetURL">
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:actionURL>

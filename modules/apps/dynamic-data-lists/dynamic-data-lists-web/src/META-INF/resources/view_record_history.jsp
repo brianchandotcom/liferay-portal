@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -29,7 +29,7 @@ long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/dynamic_data_lists/view_record_history");
+portletURL.setParameter("mvcPath", "/view_record_history.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 %>
@@ -73,7 +73,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 		PortletURL rowURL = renderResponse.createRenderURL();
 
-		rowURL.setParameter("struts_action", "/dynamic_data_lists/view_record");
+		rowURL.setParameter("mvcPath", "/view_record.jsp");
 		rowURL.setParameter("redirect", currentURL);
 		rowURL.setParameter("recordId", String.valueOf(recordVersion.getRecordId()));
 		rowURL.setParameter("version", recordVersion.getVersion());
@@ -97,7 +97,7 @@ portletURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 
 		// Action
 
-		row.addJSP("/html/portlet/dynamic_data_lists/record_version_action.jsp", "entry-action");
+		row.addJSP("/record_version_action.jsp", "entry-action", application, request, response);
 
 		// Add result row
 

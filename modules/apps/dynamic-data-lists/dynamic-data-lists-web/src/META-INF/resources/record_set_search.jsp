@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/dynamic_data_lists/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 RecordSetDisplayTerms displayTerms = new RecordSetDisplayTerms(renderRequest);

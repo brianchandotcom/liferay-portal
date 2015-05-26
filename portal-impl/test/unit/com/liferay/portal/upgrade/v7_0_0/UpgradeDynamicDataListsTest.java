@@ -33,8 +33,6 @@ import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLImplTest;
-import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -249,15 +247,6 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 			props.get(PropsKeys.XML_SECURITY_ENABLED)
 		).thenReturn(
 			Boolean.TRUE.toString()
-		);
-
-		when(
-			props.getArray(PropsKeys.XML_SECURITY_WHITELIST)
-		).thenReturn(
-			new String[] {
-				DDMStructureTestUtil.class.getName(),
-				DDMXMLImplTest.class.getName()
-			}
 		);
 
 		PropsUtil.setProps(props);

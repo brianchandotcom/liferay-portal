@@ -33,6 +33,10 @@ public class SearchResult {
 		_classPK = classPK;
 	}
 
+	public void addComment(MBMessage mbMessage, Summary summary) {
+		_commentTuples.add(new Tuple(mbMessage, summary));
+	}
+
 	public void addFileEntry(FileEntry fileEntry, Summary summary) {
 		Tuple tuple = new Tuple(fileEntry, summary);
 
@@ -40,7 +44,7 @@ public class SearchResult {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addMBMessage(
+	 * @deprecated As of 7.0.0, replaced by {@link #addComment(
 	 *             MBMessage, Summary)}
 	 */
 	@Deprecated
@@ -49,11 +53,7 @@ public class SearchResult {
 
 		summary.setEscape(false);
 
-		addMBMessage(mbMessage, summary);
-	}
-
-	public void addMBMessage(MBMessage mbMessage, Summary summary) {
-		_mbMessageTuples.add(new Tuple(mbMessage, summary));
+		addComment(mbMessage, summary);
 	}
 
 	public void addVersion(String version) {
@@ -89,6 +89,10 @@ public class SearchResult {
 		return _classPK;
 	}
 
+	public List<Tuple> getCommentTuples() {
+		return _commentTuples;
+	}
+
 	public List<Tuple> getFileEntryTuples() {
 		return _fileEntryTuples;
 	}
@@ -100,15 +104,11 @@ public class SearchResult {
 	public List<MBMessage> getMBMessages() {
 		List<MBMessage> mbMessages = new ArrayList<>();
 
-		for (Tuple tuple : _mbMessageTuples) {
+		for (Tuple tuple : _commentTuples) {
 			mbMessages.add((MBMessage)tuple.getObject(0));
 		}
 
 		return mbMessages;
-	}
-
-	public List<Tuple> getMBMessageTuples() {
-		return _mbMessageTuples;
 	}
 
 	public Summary getSummary() {
@@ -147,7 +147,7 @@ public class SearchResult {
 	 */
 	@Deprecated
 	public void setMessages(List<MBMessage> mbMessages) {
-		_mbMessageTuples.clear();
+		_commentTuples.clear();
 
 		for (MBMessage mbMessage : mbMessages) {
 			addMBMessage(mbMessage);
@@ -160,8 +160,8 @@ public class SearchResult {
 
 	private String _className;
 	private long _classPK;
+	private final List<Tuple> _commentTuples = new ArrayList<>();
 	private final List<Tuple> _fileEntryTuples = new ArrayList<>();
-	private final List<Tuple> _mbMessageTuples = new ArrayList<>();
 	private Summary _summary;
 	private final List<String> _versions = new ArrayList<>();
 

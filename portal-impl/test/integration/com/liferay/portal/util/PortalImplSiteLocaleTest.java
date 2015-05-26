@@ -66,8 +66,9 @@ public class PortalImplSiteLocaleTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsValues.LOCALES_ENABLED =
-			new String[] {"ca_ES", "en_US", "fr_FR", "de_DE", "pt_BR", "es_ES", "en_GB"};
+		PropsValues.LOCALES_ENABLED = new String[] {
+			"ca_ES", "en_US", "fr_FR", "de_DE", "pt_BR", "es_ES", "en_GB"
+		};
 
 		LanguageUtil.init();
 
@@ -87,6 +88,7 @@ public class PortalImplSiteLocaleTest {
 	public void tearDown() throws Exception {
 		PropsValues.LOCALES_ENABLED = PropsUtil.getArray(
 			PropsKeys.LOCALES_ENABLED);
+
 		LanguageUtil.init();
 	}
 
@@ -149,13 +151,15 @@ public class PortalImplSiteLocaleTest {
 		throws IOException, ServletException {
 
 		MockServletContext mockServletContext = new MockServletContext() {};
+
 		mockServletContext.setContextPath(StringPool.BLANK);
 		mockServletContext.setServletContextName(StringPool.BLANK);
 
 		MockHttpServletRequest httpServletRequest = createHttpRequest(
 			mockServletContext, i18nLanguageId, pathInfo);
+
 		MockHttpServletResponse httpServletResponse =
-						new MockHttpServletResponse();
+			new MockHttpServletResponse();
 
 		_i18nServlet.init(new MockServletConfig(mockServletContext));
 		_i18nServlet.service(httpServletRequest, httpServletResponse);
@@ -175,8 +179,7 @@ public class PortalImplSiteLocaleTest {
 	@DeleteAfterTestRun
 	private Group _group;
 
-	private final I18nServlet _i18nServlet =
-					new I18nServlet();
+	private final I18nServlet _i18nServlet = new I18nServlet();
 
 	@DeleteAfterTestRun
 	private Layout _layout;

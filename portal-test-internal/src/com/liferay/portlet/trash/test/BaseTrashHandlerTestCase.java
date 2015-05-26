@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
@@ -275,12 +274,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		String uniqueTitle = getUniqueTitle(baseModel);
-
-		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
-
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
@@ -299,26 +292,12 @@ public abstract class BaseTrashHandlerTestCase {
 				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 		}
 
-		if (uniqueTitle != null) {
-			Assert.assertEquals(uniqueTitle, getUniqueTitle(baseModel));
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 
 		TrashEntry trashEntry = TrashEntryLocalServiceUtil.getEntry(
 			getBaseModelClassName(), getTrashEntryClassPK(baseModel));
-
-		Assert.assertEquals(
-			getTrashEntryClassPK(baseModel),
-			GetterUtil.getLong(trashEntry.getClassPK()));
-
-		workflowedModel = getWorkflowedModel(
-			getBaseModel((Long)baseModel.getPrimaryKeyObj()));
-
-		Assert.assertEquals(
-			WorkflowConstants.STATUS_IN_TRASH, workflowedModel.getStatus());
-
-		if (isAssetableModel()) {
-			Assert.assertFalse(isAssetEntryVisible(baseModel));
-		}
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -327,6 +306,50 @@ public abstract class BaseTrashHandlerTestCase {
 			1,
 			getDeletionSystemEventCount(
 				trashHandler, trashEntry.getSystemEventSetKey()));
+	}
+
+	@Test
+	public void testMoveBaseModelToTrashStatusIsInTrash() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		workflowedModel = getWorkflowedModel(
+			getBaseModel((Long)baseModel.getPrimaryKeyObj()));
+
+		Assert.assertEquals(
+			WorkflowConstants.STATUS_IN_TRASH, workflowedModel.getStatus());
+	}
+
+	@Test
+	public void testMoveBaseModelToTrashUniqueTitleNotChange()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		String uniqueTitle = getUniqueTitle(baseModel);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		if (uniqueTitle != null) {
+			Assert.assertEquals(uniqueTitle, getUniqueTitle(baseModel));
+		}
 	}
 
 	@Test

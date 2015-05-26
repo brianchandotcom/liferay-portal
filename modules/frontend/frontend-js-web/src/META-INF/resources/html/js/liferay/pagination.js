@@ -92,7 +92,7 @@ AUI.add(
 					'</div>',
 
 					TPL_ITEM: '<li id="{idLi}" role="presentation">' +
-						'<a href="javascript:;" class="lfr-pagination-link taglib-icon" id="{idLink}" role="menuitem">' +
+						'<a class="lfr-pagination-link taglib-icon" href="javascript:;" id="{idLink}" role="menuitem">' +
 							'<span class="taglib-text-icon" data-index="{index}" data-value="{value}">{value}</span>' +
 						'</a>' +
 					'</li>',
@@ -262,7 +262,7 @@ AUI.add(
 						if (results > itemsPerPage) {
 							var tmp = page * itemsPerPage;
 
-							resultsContent = Lang.sub(instance._resultsMessage, [((page - 1) * itemsPerPage) + 1, tmp < results ? tmp : results, results]);
+							resultsContent = Lang.sub(instance._resultsMessage, [(page - 1) * itemsPerPage + 1, tmp < results ? tmp : results, results]);
 						}
 						else {
 							resultsContent = Lang.sub(instance._resultsMessageShort, [results]);

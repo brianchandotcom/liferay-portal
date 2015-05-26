@@ -247,7 +247,7 @@ AUI.add(
 
 						var useFallback = location.hash.indexOf(STR_PARAM_FALLBACK) > -1 && fallback;
 
-						if (useFallback || UPLOADER_TYPE == 'none' || (UPLOADER_TYPE == 'flash' && !A.SWFDetect.isFlashVersionAtLeast(10, 1))) {
+						if (useFallback || UPLOADER_TYPE == 'none' || UPLOADER_TYPE == 'flash' && !A.SWFDetect.isFlashVersionAtLeast(10, 1)) {
 							if (fallback) {
 								fallback.show();
 							}

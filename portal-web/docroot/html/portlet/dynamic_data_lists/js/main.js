@@ -98,7 +98,7 @@ AUI.add(
 					updateMinDisplayRows: function(minDisplayRows, callback) {
 						var instance = this;
 
-						callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
+						callback = callback && A.bind(callback, instance) || EMPTY_FN;
 
 						var recordsetId = instance.get('recordsetId');
 
@@ -138,7 +138,7 @@ AUI.add(
 
 						var scrollTo = scrollLeft;
 
-						if ((scrollLeft + scrollableWidth) < activeCellOffsetRight) {
+						if (scrollLeft + scrollableWidth < activeCellOffsetRight) {
 							scrollTo = activeCellOffsetRight - scrollableWidth;
 						}
 						else if (activeCellOffsetLeft < scrollLeft) {
@@ -315,7 +315,7 @@ AUI.add(
 				addRecord: function(recordsetId, displayIndex, fieldsMap, callback) {
 					var instance = this;
 
-					callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
+					callback = callback && A.bind(callback, instance) || EMPTY_FN;
 
 					Liferay.Service(
 						'/ddlrecord/add-record',
@@ -599,7 +599,7 @@ AUI.add(
 				updateRecord: function(recordId, displayIndex, fieldsMap, merge, callback) {
 					var instance = this;
 
-					callback = (callback && A.bind(callback, instance)) || EMPTY_FN;
+					callback = callback && A.bind(callback, instance) || EMPTY_FN;
 
 					Liferay.Service(
 						'/ddlrecord/update-record',

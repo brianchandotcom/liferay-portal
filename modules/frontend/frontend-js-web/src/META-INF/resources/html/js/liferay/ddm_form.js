@@ -1543,7 +1543,9 @@ AUI.add(
 
 								liferayForm.formValidator.resetField(field.getInputNode());
 
-								instance.unregisterRepeatable(field);
+								if (field.get('repeatable')) {
+									instance.unregisterRepeatable(field);
+								}
 							}
 
 							liferayForm.formValidator.set('rules', validatorRules);

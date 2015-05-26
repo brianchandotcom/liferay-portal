@@ -1522,11 +1522,10 @@ public class ServicePreAction extends Action {
 
 	protected Object[] getDefaultUserPersonalLayout(User user) {
 		Layout layout = null;
-		List<Layout> layouts = null;
 
 		Group userGroup = user.getGroup();
 
-		layouts = LayoutLocalServiceUtil.getLayouts(
+		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
 			userGroup.getGroupId(), true,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 

@@ -229,21 +229,14 @@ public class DynamicCSSUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Theme theme = null;
+		Theme theme = _getTheme(request);
 
-		if (themeDisplay == null) {
-			theme = _getTheme(request);
-
-			if (theme != null) {
-				return replaceToken(
-					servletContext, request, themeDisplay, theme, content);
-			}
-			else {
-				return content;
-			}
+		if (theme == null) {
+			return content;
 		}
 
-		return content;
+		return replaceToken(
+			servletContext, request, themeDisplay, theme, content);
 	}
 
 	public static String replaceToken(

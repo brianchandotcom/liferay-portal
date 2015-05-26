@@ -84,20 +84,15 @@ AUI.add(
 						valueFn: function() {
 							var instance = this;
 
-							var items = instance.get(STR_ITEMS);
-
 							var itemsError = instance.get(STR_ITEMS_ERROR);
 
-							var selectedIndex;
+							var itemIndex = instance.get('defaultLanguageId');
 
 							if (itemsError.length) {
-								selectedIndex = items.indexOf(itemsError[0]);
-							}
-							else {
-								selectedIndex = items.indexOf(instance.get('defaultLanguageId'));
+								itemIndex = itemsError[0];
 							}
 
-							return selectedIndex;
+							return instance.get(STR_ITEMS).indexOf(itemIndex);
 						}
 					},
 

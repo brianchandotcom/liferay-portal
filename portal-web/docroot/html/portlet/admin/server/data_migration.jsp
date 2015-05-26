@@ -42,6 +42,11 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 
 			<liferay-ui:panel-container extended="<%= true %>" id='<%= "convert" + i + "PanelContainer" %>' persistState="<%= true %>">
 				<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id='<%= "convert" + i + "Panel" %>' persistState="<%= true %>" title="<%= convertProcess.getDescription() %>">
+					<c:if test="<%= parameters == null %>">
+						<div class="alert alert-info">
+							<liferay-ui:message key="<%= convertProcess.getConfigurationDescription() %>" />
+						</div>
+					</c:if>
 					<c:if test="<%= parameters != null %>">
 						<aui:fieldset label='<%= Validator.isNotNull(parameterDescription) ? parameterDescription : "" %>'>
 
@@ -91,11 +96,11 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 							%>
 
 						</aui:fieldset>
-					</c:if>
 
-					<aui:button-row>
-						<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + convertProcess.getClass().getName() %>' value="execute" />
-					</aui:button-row>
+						<aui:button-row>
+							<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + convertProcess.getClass().getName() %>' value="execute" />
+						</aui:button-row>
+					</c:if>
 				</liferay-ui:panel>
 			</liferay-ui:panel-container>
 

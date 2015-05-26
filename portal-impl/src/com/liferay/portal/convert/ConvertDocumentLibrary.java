@@ -63,6 +63,12 @@ public class ConvertDocumentLibrary
 	extends BaseConvertProcess implements DLStoreConverter {
 
 	@Override
+	public String getConfigurationDescription() {
+		return "there-are-no-valid-configuration-for-any-store-please-" +
+			"configure-a-store-using-configuration-admin";
+	}
+
+	@Override
 	public String getDescription() {
 		return "migrate-documents-from-one-repository-to-another";
 	}
@@ -80,11 +86,17 @@ public class ConvertDocumentLibrary
 
 		StringBundler sb = new StringBundler(hooks.length * 2 + 2);
 
+		Store store = storeFactory.getStoreInstance();
+
+		if (store == null) {
+			return null;
+		}
+
 		sb.append(PropsKeys.DL_STORE_IMPL);
 		sb.append(StringPool.EQUAL);
 
 		for (String hook : hooks) {
-			if (!hook.equals(PropsValues.DL_STORE_IMPL)) {
+			if (!hook.equals(store.getClass().getName())) {
 				sb.append(hook);
 				sb.append(StringPool.SEMICOLON);
 			}
@@ -153,8 +165,7 @@ public class ConvertDocumentLibrary
 
 		String targetStoreClassName = getTargetStoreClassName();
 
-		_targetStore = (Store)InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(), targetStoreClassName);
+		_targetStore = storeFactory.getStoreInstance(targetStoreClassName);
 
 		migratePortlets();
 

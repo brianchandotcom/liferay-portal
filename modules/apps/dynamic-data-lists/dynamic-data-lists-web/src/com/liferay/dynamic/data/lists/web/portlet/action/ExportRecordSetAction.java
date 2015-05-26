@@ -14,12 +14,14 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.action;
 
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -29,43 +31,47 @@ import com.liferay.portlet.dynamicdatalists.util.DDLExportFormat;
 import com.liferay.portlet.dynamicdatalists.util.DDLExporter;
 import com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory;
 
-import javax.portlet.PortletConfig;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marcellus Tavares
  */
-public class ExportRecordSetAction extends PortletAction {
+@Component(
+	immediate = true,
+	property = {
+		"action.command.name=exportRecordSet",
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS
+	},
+	service = ActionCommand.class
+)
+public class ExportRecordSetAction extends BaseActionCommand {
 
 	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
+	protected void doProcessCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
+			portletRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			resourceResponse);
+			portletResponse);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
+		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
 
 		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
 			recordSetId);
 
 		String fileExtension = ParamUtil.getString(
-			resourceRequest, "fileExtension");
+			portletRequest, "fileExtension");
 
 		String fileName =
 			recordSet.getName(themeDisplay.getLocale()) + CharPool.PERIOD +

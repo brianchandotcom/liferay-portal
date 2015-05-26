@@ -26,7 +26,7 @@ String description = (String)request.getAttribute("liferay-ui:app-view-search-en
 List<Tuple> fileEntryTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryTuples");
 boolean highlightEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:highlightEnabled"));
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
-List<Tuple> mbMessageTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:mbMessageTuples");
+List<Tuple> commentTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:commentTuples");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
 String rowCheckerId = (String)request.getAttribute("liferay-ui:app-view-search-entry:rowCheckerId");
 String rowCheckerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:rowCheckerName");
@@ -140,15 +140,15 @@ summary.setQueryTerms(queryTerms);
 
 	</c:if>
 
-	<c:if test="<%= mbMessageTuples != null %>">
+	<c:if test="<%= commentTuples != null %>">
 
 		<%
-		for (Tuple mbMessageTuple : mbMessageTuples) {
-			MBMessage mbMessage = (MBMessage)mbMessageTuple.getObject(0);
+		for (Tuple commentTuple : commentTuples) {
+			MBMessage mbMessage = (MBMessage)commentTuple.getObject(0);
 
 			User userDisplay = UserLocalServiceUtil.getUser(mbMessage.getUserId());
 
-			summary = (Summary)mbMessageTuple.getObject(1);
+			summary = (Summary)commentTuple.getObject(1);
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);

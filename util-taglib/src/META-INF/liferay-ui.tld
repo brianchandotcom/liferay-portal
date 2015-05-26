@@ -420,14 +420,14 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>Deprecated as of 7.0.0, replaced by mbMessageTuples</description>
+			<description>Deprecated as of 7.0.0, replaced by commentTuples</description>
 			<name>mbMessages</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>A list of objects containing information such as content, author, and status of entry messages. An example would be a comment made2 by one user on another user's blog post.</description>
-			<name>mbMessageTuples</name>
+			<description>A list of objects containing information such as content, author, and status of entry messages. An example would be a comment made by one user on another user's blog post.</description>
+			<name>commentTuples</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

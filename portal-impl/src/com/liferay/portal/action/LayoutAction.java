@@ -247,12 +247,13 @@ public class LayoutAction extends Action {
 			}
 
 			Long previousPlid = (Long)session.getAttribute(
-				WebKeys.PREVIOUS_LAYOUT);
+				WebKeys.PREVIOUS_LAYOUT_PLID);
 
 			if ((previousPlid == null) ||
 				(layout.getPlid() != previousPlid.longValue())) {
 
-				session.setAttribute(WebKeys.PREVIOUS_LAYOUT, layout.getPlid());
+				session.setAttribute(
+					WebKeys.PREVIOUS_LAYOUT_PLID, layout.getPlid());
 
 				if (themeDisplay.isSignedIn() &&
 					PropsValues.

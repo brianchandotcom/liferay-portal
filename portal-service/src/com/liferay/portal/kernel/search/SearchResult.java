@@ -43,19 +43,6 @@ public class SearchResult {
 		_fileEntryTuples.add(tuple);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addComment(
-	 *             MBMessage, Summary)}
-	 */
-	@Deprecated
-	public void addMBMessage(MBMessage mbMessage) {
-		Summary summary = new Summary(null, mbMessage.getBody());
-
-		summary.setEscape(false);
-
-		addComment(mbMessage, summary);
-	}
-
 	public void addVersion(String version) {
 		_versions.add(version);
 	}
@@ -97,20 +84,6 @@ public class SearchResult {
 		return _fileEntryTuples;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement.
-	 */
-	@Deprecated
-	public List<MBMessage> getMBMessages() {
-		List<MBMessage> mbMessages = new ArrayList<>();
-
-		for (Tuple tuple : _commentTuples) {
-			mbMessages.add((MBMessage)tuple.getObject(0));
-		}
-
-		return mbMessages;
-	}
-
 	public Summary getSummary() {
 		return _summary;
 	}
@@ -140,18 +113,6 @@ public class SearchResult {
 	@Deprecated
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement.
-	 */
-	@Deprecated
-	public void setMessages(List<MBMessage> mbMessages) {
-		_commentTuples.clear();
-
-		for (MBMessage mbMessage : mbMessages) {
-			addMBMessage(mbMessage);
-		}
 	}
 
 	public void setSummary(Summary summary) {

@@ -14,16 +14,13 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -80,24 +77,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	public void setLocked(boolean locked) {
 		_locked = locked;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #setMbMessageTuples(List)}
-	 */
-	@Deprecated
-	public void setMbMessages(List<MBMessage> mbMessages) {
-		List<Tuple> mbMessageTuples = new ArrayList<>();
-
-		for (MBMessage mbMessage : mbMessages) {
-			Summary summary = new Summary(null, mbMessage.getBody());
-
-			summary.setEscape(false);
-
-			mbMessageTuples.add(new Tuple(mbMessage, summary));
-		}
-
-		_commentTuples = mbMessageTuples;
 	}
 
 	public void setQueryTerms(String[] queryTerms) {

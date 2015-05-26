@@ -45,6 +45,7 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 			serviceContext.getUserId());
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
+		Date now = new Date();
 
 		long ruleId = counterLocalService.increment();
 
@@ -63,7 +64,7 @@ public class MDRRuleLocalServiceImpl extends MDRRuleLocalServiceBaseImpl {
 
 		rule = updateMDRRule(rule);
 
-		ruleGroup.setModifiedDate(new Date());
+		ruleGroup.setModifiedDate(now);
 
 		mdrRuleGroupPersistence.update(ruleGroup);
 

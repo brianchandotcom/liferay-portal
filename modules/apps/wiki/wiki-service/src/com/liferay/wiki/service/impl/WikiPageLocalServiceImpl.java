@@ -2022,12 +2022,14 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		User user = userPersistence.findByPrimaryKey(userId);
 
+		Date now = new Date();
+
 		int oldStatus = page.getStatus();
 
 		page.setStatus(status);
 		page.setStatusByUserId(userId);
 		page.setStatusByUserName(user.getFullName());
-		page.setStatusDate(new Date());
+		page.setStatusDate(now);
 
 		wikiPagePersistence.update(page);
 

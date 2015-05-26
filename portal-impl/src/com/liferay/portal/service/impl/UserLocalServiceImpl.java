@@ -1473,9 +1473,11 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 	 */
 	@Override
 	public void checkLoginFailure(User user) {
+		Date now = new Date();
+
 		int failedLoginAttempts = user.getFailedLoginAttempts();
 
-		user.setLastFailedLoginDate(new Date());
+		user.setLastFailedLoginDate(now);
 		user.setFailedLoginAttempts(++failedLoginAttempts);
 
 		userPersistence.update(user);
@@ -5973,7 +5975,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			birthdayMonth, birthdayDay, birthdayYear,
 			ContactBirthdayException.class);
 
-		if (birthday.after(new Date())) {
+		Date now = new Date();
+
+		if (birthday.after(now)) {
 			throw new ContactBirthdayException();
 		}
 

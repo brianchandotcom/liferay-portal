@@ -57,6 +57,7 @@ public class
 		throws PortalException {
 
 		User user = userPersistence.findByPrimaryKey(userId);
+		Date now = new Date();
 
 		validate(comments);
 
@@ -67,7 +68,7 @@ public class
 
 		membershipRequest.setCompanyId(user.getCompanyId());
 		membershipRequest.setUserId(userId);
-		membershipRequest.setCreateDate(new Date());
+		membershipRequest.setCreateDate(now);
 		membershipRequest.setGroupId(groupId);
 		membershipRequest.setComments(comments);
 		membershipRequest.setStatusId(

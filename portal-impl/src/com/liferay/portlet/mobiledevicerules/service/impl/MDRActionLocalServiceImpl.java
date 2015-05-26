@@ -46,6 +46,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 		MDRRuleGroupInstance ruleGroupInstance =
 			mdrRuleGroupInstancePersistence.findByPrimaryKey(
 				ruleGroupInstanceId);
+		Date now = new Date();
 
 		long actionId = counterLocalService.increment();
 
@@ -66,7 +67,7 @@ public class MDRActionLocalServiceImpl extends MDRActionLocalServiceBaseImpl {
 
 		action = updateMDRAction(action);
 
-		ruleGroupInstance.setModifiedDate(new Date());
+		ruleGroupInstance.setModifiedDate(now);
 
 		mdrRuleGroupInstancePersistence.update(ruleGroupInstance);
 

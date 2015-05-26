@@ -16,6 +16,7 @@ package com.liferay.portal.store.filesystem;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.convert.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -36,13 +37,17 @@ import java.io.InputStream;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -449,6 +454,21 @@ public class FileSystemStore extends BaseStore {
 	protected void activate(Map<String, Object> properties) {
 		_fileSystemConfiguration = Configurable.createConfigurable(
 			FileSystemConfiguration.class, properties);
+
+		if (Validator.isBlank(_fileSystemConfiguration.rootDir())) {
+			throw new IllegalArgumentException(
+				"File System Root Directory Configuration is not set",
+				new FileSystemStoreRootDirException());
+		}
+
+		FileSystemConfigurationValidator fileSystemConfigurationValidator =
+			new FileSystemConfigurationValidator();
+
+		fileSystemConfigurationValidator.validate(
+			"com.liferay.portal.store.filesystem.configuration." +
+				"FileSystemConfiguration",
+			"com.liferay.portal.store.filesystem.configuration." +
+				"AdvancedFileSystemConfiguration");
 	}
 
 	protected void deleteEmptyAncestors(File file) {
@@ -600,10 +620,64 @@ public class FileSystemStore extends BaseStore {
 		return _fileSystemConfiguration.rootDir();
 	}
 
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		this.configurationAdmin = configurationAdmin;
+	}
+
+	protected ConfigurationAdmin configurationAdmin;
+
 	private final Map<RepositoryDirKey, File> _repositoryDirs =
 		new ConcurrentHashMap<>();
-	private final File _rootDir;
+	private File _rootDir;
+
 	private static volatile FileSystemConfiguration _fileSystemConfiguration;
+
+	protected class FileSystemConfigurationValidator {
+
+		public void validate(
+			String fileSystemPid, String advancedFileSystemPid) {
+
+			try {
+				Configuration advancedFileSystemConfiguration =
+					configurationAdmin.getConfiguration(advancedFileSystemPid);
+
+				Configuration fileSystemConfiguration =
+					configurationAdmin.getConfiguration(fileSystemPid);
+
+				Dictionary<String, Object> advancedFileSystemDictionary =
+					advancedFileSystemConfiguration.getProperties();
+
+				Dictionary<String, Object> fileSystemDictionary =
+					fileSystemConfiguration.getProperties();
+
+				if (advancedFileSystemDictionary != null &&
+					fileSystemDictionary != null) {
+
+					String advancedFileSystemRootDir =
+						(String) advancedFileSystemDictionary.get("rootdir");
+
+					String fileSystemRootDir =
+						(String) fileSystemDictionary.get("rootdir");
+
+					if (Validator.equals(
+							advancedFileSystemRootDir, fileSystemRootDir)) {
+
+						throw new IllegalArgumentException(
+							"Advanced File System Root Dir and File System" +
+								" Root Dir have the same value",
+							new FileSystemStoreRootDirException());
+					}
+				}
+			}
+			catch (IOException ioe) {
+				throw new IllegalArgumentException(ioe);
+			}
+		}
+
+	}
 
 	private class RepositoryDirKey {
 

@@ -16,12 +16,14 @@ package com.liferay.portal.store.filesystem;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
+import com.liferay.portal.convert.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.filesystem.configuration.AdvancedFileSystemConfiguration;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
@@ -35,9 +37,11 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * <p>
@@ -109,6 +113,21 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	protected void activate(Map<String, Object> properties) {
 		_advancedFileSystemConfiguration = Configurable.createConfigurable(
 			AdvancedFileSystemConfiguration.class, properties);
+
+		if (Validator.isBlank(_advancedFileSystemConfiguration.rootDir())) {
+			throw new IllegalArgumentException(
+				"Advanced File System Root Dir is not set",
+				new FileSystemStoreRootDirException());
+		}
+
+		FileSystemConfigurationValidator fileSystemConfigurationValidator =
+			new FileSystemConfigurationValidator();
+
+		fileSystemConfigurationValidator.validate(
+			"com.liferay.portal.store.filesystem.configuration." +
+				"FileSystemConfiguration",
+			"com.liferay.portal.store.filesystem.configuration." +
+				"AdvancedFileSystemConfiguration");
 	}
 
 	protected void buildPath(StringBundler sb, String fileNameFragment) {
@@ -319,6 +338,13 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 	@Override
 	protected String getRootDirName() {
 		return _advancedFileSystemConfiguration.rootDir();
+	}
+
+	@Reference(unbind = "-")
+	protected void setConfigurationAdmin(
+		ConfigurationAdmin configurationAdmin) {
+
+		this.configurationAdmin = configurationAdmin;
 	}
 
 	protected String unbuildPath(String path) {

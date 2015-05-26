@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
@@ -141,48 +140,6 @@ public class ConvertDocumentLibrary
 
 		if (!targetStoreClassName.endsWith(_FILE_SYSTEM_STORE_SUFFIX)) {
 			return;
-		}
-
-		if (Validator.isBlank(
-				PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR)) {
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Property \"" +
-						PropsKeys.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR +
-							" is not set");
-			}
-
-			throw new FileSystemStoreRootDirException();
-		}
-
-		if (Validator.isBlank(PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR)) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Property \"" +
-						PropsKeys.DL_STORE_FILE_SYSTEM_ROOT_DIR +
-							" is not set");
-			}
-
-			throw new FileSystemStoreRootDirException();
-		}
-
-		if (PropsValues.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR.equals(
-				PropsValues.DL_STORE_FILE_SYSTEM_ROOT_DIR)) {
-
-			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(5);
-
-				sb.append("Both properties \"");
-				sb.append(PropsKeys.DL_STORE_ADVANCED_FILE_SYSTEM_ROOT_DIR);
-				sb.append("\" and \"");
-				sb.append(PropsKeys.DL_STORE_FILE_SYSTEM_ROOT_DIR);
-				sb.append("\" have the same value");
-
-				_log.warn(sb.toString());
-			}
-
-			throw new FileSystemStoreRootDirException();
 		}
 	}
 

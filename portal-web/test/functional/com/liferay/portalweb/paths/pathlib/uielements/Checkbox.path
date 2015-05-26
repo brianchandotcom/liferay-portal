@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ALLOW_DICTIONARY_WORDS</td>
+	<td>//label[contains(.,'Allow Dictionary Words')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ALLOW_MANUAL_MEMBERSHIP_MANAGEMENT</td>
 	<td>//label[contains(.,'Allow Manual Membership Management')]/input[@type='checkbox']</td>
 	<td></td>
@@ -21,6 +26,16 @@
 <tr>
 	<td>ALLOW_SITE_ADMIN_MODIFY_PAGES</td>
 	<td>//label[contains(.,'Allow site administrators to modify')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGEABLE</td>
+	<td>//label[contains(.,'Changeable')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CHANGE_REQUIRED</td>
+	<td>//label[contains(.,'Change Required')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -129,8 +144,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXPIRATION_ENABLED</td>
+	<td>//label[contains(.,'Expiration Enabled')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HIDE_FROM_NAVIGATION_MENU</td>
 	<td>//label[contains(.,'Hide from Navigation Menu')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>HISTORY_ENABLED</td>
+	<td>//label[contains(.,'History Enabled')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOCKOUT_ENABLED</td>
+	<td>//label[contains(.,'Lockout Enabled')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -191,6 +221,11 @@
 <tr>
 	<td>SITE_OWNER</td>
 	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SYNTAX_CHECKING_ENABLED</td>
+	<td>//label[contains(.,'Syntax Checking Enabled')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

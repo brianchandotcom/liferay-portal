@@ -109,6 +109,36 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MINIMUM_ALPHA_NUMERIC</td>
+	<td>//div[label[contains(.,' Minimum Alpha Numeric')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMUM_LENGTH</td>
+	<td>//div[label[contains(.,'Minimum Length')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMUM_LOWER_CASE</td>
+	<td>//div[label[contains(.,'Minimum Lower Case')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMUM_NUMBERS</td>
+	<td>//div[label[contains(.,'Minimum Numbers')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMUM_SYMBOLS</td>
+	<td>//div[label[contains(.,'Minimum Symbols')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMUM_UPPER_CASE</td>
+	<td>//div[label[contains(.,'Minimum Upper Case')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME</td>
 	<td>//div[label[contains(.,'Name')]]//input[@type='text']</td>
 	<td></td>
@@ -136,6 +166,11 @@
 <tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>REGULAR_EXPRESSION</td>
+	<td>//div[label[contains(.,'Regular Expression')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>

@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ADD</td>
+	<td>//div[contains(@class,'navbar-default')]//a/span[contains(.,'Add')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>APPLICATION_SEARCH_FIELD</td>
 	<td>//input[contains(@id,'searchApplication')]</td>
 	<td>Application Search Field</td>

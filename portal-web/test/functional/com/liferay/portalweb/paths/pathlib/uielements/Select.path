@@ -34,6 +34,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOCKOUT_DURATION</td>
+	<td>//div[label[contains(.,'Lockout Duration')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAXIMUM_FAILURE</td>
+	<td>//div[label[contains(.,'Maximum Failure')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MINIMUM_AGE</td>
+	<td>//div[label[contains(.,'Minimum Age')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NESTED_CHILDREN</td>
 	<td>//div[label[contains(.,'Nested Children')]]/select</td>
 	<td></td>
@@ -41,6 +56,16 @@
 <tr>
 	<td>QUESTION</td>
 	<td>//div[label[contains(.,'Question')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESET_FAILURE_COUNT</td>
+	<td>//div[label[contains(.,'Reset Failure Count')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESET_TICKET_MAX_AGE</td>
+	<td>//div[label[contains(.,'Reset Ticket Max Age')]]/select</td>
 	<td></td>
 </tr>
 <tr>

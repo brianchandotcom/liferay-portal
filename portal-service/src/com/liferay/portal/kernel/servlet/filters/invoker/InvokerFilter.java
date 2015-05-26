@@ -22,9 +22,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpOnlyCookieServletResponse;
 import com.liferay.portal.kernel.servlet.NonSerializableObjectRequestWrapper;
 import com.liferay.portal.kernel.servlet.SanitizedServletResponse;
-import com.liferay.portal.kernel.servlet.ServletVersionDetector;
 import com.liferay.portal.kernel.util.BasePortalLifecycle;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -95,11 +93,9 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		request = handleNonSerializableRequest(request);
 
-		if (ServletVersionDetector.is3_0()) {
-			response =
-				HttpOnlyCookieServletResponse.getHttpOnlyCookieServletResponse(
-					response);
-		}
+		response =
+			HttpOnlyCookieServletResponse.getHttpOnlyCookieServletResponse(
+				response);
 
 		response = secureResponseHeaders(request, response);
 
@@ -129,7 +125,7 @@ public class InvokerFilter extends BasePortalLifecycle implements Filter {
 
 		ServletContext servletContext = _filterConfig.getServletContext();
 
-		_contextPath = ContextPathUtil.getContextPath(servletContext);
+		_contextPath = servletContext.getContextPath();
 
 		boolean registerPortalLifecycle = GetterUtil.getBoolean(
 			_filterConfig.getInitParameter("register-portal-lifecycle"), true);

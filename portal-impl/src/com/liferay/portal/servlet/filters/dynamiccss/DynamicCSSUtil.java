@@ -17,7 +17,6 @@ package com.liferay.portal.servlet.filters.dynamiccss;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -256,7 +255,7 @@ public class DynamicCSSUtil {
 
 		String baseURL = portalContextPath;
 
-		String contextPath = ContextPathUtil.getContextPath(servletContext);
+		String contextPath = servletContext.getContextPath();
 
 		if (!contextPath.equals(portalContextPath)) {
 			if (!theme.isWARFile()) {

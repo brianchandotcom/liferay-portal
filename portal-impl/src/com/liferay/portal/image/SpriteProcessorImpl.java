@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PropertiesUtil;
@@ -178,8 +177,7 @@ public class SpriteProcessorImpl implements SpriteProcessor {
 						key = key.substring(rootPath.length());
 					}
 
-					String contextPath = ContextPathUtil.getContextPath(
-						servletContext);
+					String contextPath = servletContext.getContextPath();
 
 					key = contextPath.concat(key);
 

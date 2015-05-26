@@ -15,7 +15,6 @@
 package com.liferay.taglib.servlet;
 
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -74,8 +73,7 @@ public class JspFactoryWrapper extends JspFactory {
 
 				ServletContext servletContext = pageContext.getServletContext();
 
-				String contextPath = ContextPathUtil.getContextPath(
-					servletContext);
+				String contextPath = servletContext.getContextPath();
 
 				DirectServletRegistryUtil.putServlet(
 					contextPath.concat(servletPath), servlet);

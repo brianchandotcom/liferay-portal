@@ -66,6 +66,7 @@ import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 
 /**
@@ -690,11 +691,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Project project = cleanTask.getProject();
 
 		for (Task task : project.getTasks()) {
-			String taskName =
-				BasePlugin.CLEAN_TASK_NAME +
-					StringUtil.capitalize(task.getName());
+			TaskOutputs taskOutputs = task.getOutputs();
 
-			cleanTask.dependsOn(taskName);
+			if (taskOutputs.getHasOutput()) {
+				String taskName =
+					BasePlugin.CLEAN_TASK_NAME +
+						StringUtil.capitalize(task.getName());
+
+				cleanTask.dependsOn(taskName);
+			}
 		}
 
 		Configuration compileConfiguration = GradleUtil.getConfiguration(

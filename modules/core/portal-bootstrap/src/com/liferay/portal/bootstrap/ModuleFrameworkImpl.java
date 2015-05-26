@@ -383,7 +383,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		FrameworkEvent frameworkEvent = _framework.waitForStop(timeout);
 
-		if (_log.isInfoEnabled()) {
+		if (frameworkEvent.getType() == FrameworkEvent.WAIT_TIMEDOUT) {
+			_log.error(
+				"Module framework shutdown timeout after waiting " + timeout +
+					"ms, " + frameworkEvent);
+		}
+		else if (_log.isInfoEnabled()) {
 			_log.info(frameworkEvent);
 		}
 

@@ -78,7 +78,7 @@
 
 			var onDestroyPortlet = function(event) {
 				if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
-					liferayDDMForm.destructor();
+					liferayDDMForm.destroy();
 
 					Liferay.detach('destroyPortlet', onDestroyPortlet);
 				}

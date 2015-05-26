@@ -1155,7 +1155,7 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(value);
 
-						return (parsedValue.hasOwnProperty('data') && parsedValue.data !== '') || parsedValue.hasOwnProperty('uuid');
+						return parsedValue.hasOwnProperty('data') && parsedValue.data !== '' || parsedValue.hasOwnProperty('uuid');
 					},
 
 					setValue: function(value) {
@@ -1406,6 +1406,14 @@ AUI.add(
 						valueFn: '_valueDisplayLocale'
 					},
 
+					formNode: {
+						valueFn: '_valueFormNode'
+					},
+
+					liferayForm: {
+						valueFn: '_valueLiferayForm'
+					},
+
 					repeatable: {
 						validator: Lang.isBoolean,
 						value: false
@@ -1443,11 +1451,9 @@ AUI.add(
 					bindUI: function() {
 						var instance = this;
 
-						var container = instance.get('container');
+						var formNode = instance.get('formNode');
 
-						instance.formNode = container.ancestor('form', true);
-
-						if (instance.formNode) {
+						if (formNode) {
 							instance.eventHandlers.push(
 								instance.after('liferay-ddm-field:render', instance._afterRenderField, instance),
 								instance.after(
@@ -1455,7 +1461,7 @@ AUI.add(
 									instance._afterUpdateRepeatableFields,
 									instance
 								),
-								instance.formNode.on('submit', instance._onSubmitForm, instance),
+								formNode.on('submit', instance._onSubmitForm, instance),
 								Liferay.after('form:registered', instance._afterFormRegistered, instance),
 								Liferay.on('submitForm', instance._onLiferaySubmitForm, instance)
 							);
@@ -1468,15 +1474,15 @@ AUI.add(
 						AArray.invoke(instance.eventHandlers, 'detach');
 
 						instance.eventHandlers = null;
-
-						instance.formNode = null;
 					},
 
 					_afterFormRegistered: function(event) {
 						var instance = this;
 
-						if (event.formName === instance.formNode.attr('name')) {
-							instance.liferayForm = event.form;
+						var formNode = instance.get('formNode');
+
+						if (event.formName === formNode.attr('name')) {
+							instance.set('liferayForm', event.form);
 						}
 					},
 
@@ -1515,7 +1521,7 @@ AUI.add(
 
 						var field = event.field;
 
-						var liferayForm = instance.liferayForm;
+						var liferayForm = instance.get('liferayForm');
 
 						if (liferayForm) {
 							var validatorRules = liferayForm.formValidator.get('rules');
@@ -1536,7 +1542,9 @@ AUI.add(
 
 								liferayForm.formValidator.resetField(field.getInputNode());
 
-								instance.unregisterRepeatable(field);
+								if (field.get('repeatable')) {
+									instance.unregisterRepeatable(field);
+								}
 							}
 
 							liferayForm.formValidator.set('rules', validatorRules);
@@ -1546,7 +1554,9 @@ AUI.add(
 					_onLiferaySubmitForm: function(event) {
 						var instance = this;
 
-						if (event.form.attr('name') === instance.formNode.attr('name')) {
+						var formNode = instance.get('formNode');
+
+						if (event.form.attr('name') === formNode.attr('name')) {
 							instance.updateDDMFormInputValue();
 						}
 					},
@@ -1563,6 +1573,22 @@ AUI.add(
 						var translationManager = instance.get('translationManager');
 
 						return translationManager.get('editingLocale');
+					},
+
+					_valueFormNode: function() {
+						var instance = this;
+
+						var container = instance.get('container');
+
+						return container.ancestor('form', true);
+					},
+
+					_valueLiferayForm: function() {
+						var instance = this;
+
+						var formNode = instance.get('formNode');
+
+						return Liferay.Form.get(formNode.attr('name'));
 					},
 
 					_valueTranslationManager: function() {

@@ -71,6 +71,9 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceRegistrar;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -3524,6 +3527,31 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void setReady(boolean ready) {
 		_readyMap.put(getRootPortletId(), ready);
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		synchronized (_serviceRegistrarMap) {
+			if (ready) {
+				ServiceRegistrar<Portlet> portletServiceRegistrar =
+					registry.getServiceRegistrar(Portlet.class);
+
+				Map<String, Object> properties = new HashMap<>();
+
+				properties.put("javax.portlet.name", getPortletName());
+
+				portletServiceRegistrar.registerService(
+					Portlet.class, this, properties);
+
+				_serviceRegistrarMap.put(
+					getRootPortletId(), portletServiceRegistrar);
+			}
+			else {
+				ServiceRegistrar<Portlet> portletServiceRegistrar =
+					_serviceRegistrarMap.remove(getRootPortletId());
+
+				portletServiceRegistrar.destroy();
+			}
+		}
 	}
 
 	/**
@@ -3971,6 +3999,13 @@ public class PortletImpl extends PortletBaseImpl {
 	@Override
 	public void unsetReady() {
 		_readyMap.remove(getRootPortletId());
+
+		synchronized (_serviceRegistrarMap) {
+			ServiceRegistrar<Portlet> portletServiceRegistrar =
+				_serviceRegistrarMap.remove(getRootPortletId());
+
+			portletServiceRegistrar.destroy();
+		}
 	}
 
 	/**
@@ -3983,6 +4018,9 @@ public class PortletImpl extends PortletBaseImpl {
 	 */
 	private static final Map<String, Boolean> _readyMap =
 		new ConcurrentHashMap<>();
+
+	private static final Map<String, ServiceRegistrar<Portlet>>
+		_serviceRegistrarMap = new HashMap<>();
 
 	/**
 	 * The action timeout of the portlet.

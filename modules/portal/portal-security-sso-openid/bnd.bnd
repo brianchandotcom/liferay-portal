@@ -18,4 +18,4 @@ Include-Resource:\
 	@lib/nekohtml.jar,\
 	@lib/openid4java.jar,\
 	@lib/org.apache.xml.resolver.jar
-Web-ContextPath: /portal-sso-openid
+Web-ContextPath: /portal-security-sso-openid

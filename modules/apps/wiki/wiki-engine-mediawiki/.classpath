@@ -12,7 +12,6 @@
 	<classpathentry kind="lib" path="/portal-master/lib/global/portlet.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/bnd.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/commons-logging.jar" />
-	<classpathentry kind="lib" path="/portal-master/lib/portal/jamwiki-core.jar" />
 	<classpathentry kind="lib" path="/portal-master/lib/portal/log4j.jar" />
 	<classpathentry kind="lib" path="/portal-master/portal-service/portal-service.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
@@ -20,8 +19,9 @@
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.portal.settings.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.wiki.api.jar" />
+	<classpathentry kind="lib" path="lib/com.liferay.wiki.engine.input.editor.common.jar" />
+	<classpathentry kind="lib" path="lib/org.jamwiki.jamwiki-core.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.compendium.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
-	<classpathentry kind="lib" path="lib/wiki-engine-input-editor-common.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

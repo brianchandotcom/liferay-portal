@@ -17,7 +17,8 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="org.jamwiki.jamwiki-core" org="com.liferay" rev="1.0.7" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
-		<dependency name="jamwiki-core" org="org.jamwiki" rev="1.0.7" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

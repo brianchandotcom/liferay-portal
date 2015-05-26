@@ -10,5 +10,5 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	@./lib/jamwiki-core.jar
+	@lib/org.jamwiki.jamwiki-core.jar
 Web-ContextPath: /wiki-engine-mediawiki

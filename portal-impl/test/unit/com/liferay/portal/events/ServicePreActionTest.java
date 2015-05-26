@@ -76,10 +76,11 @@ public class ServicePreActionTest {
 
 		long plid = getThemeDisplayPlid(false, true);
 
-		Object[] defaultLayout =
-			TestServicePreAction.INSTANCE.getDefaultUserPersonalLayout(_user);
+		ServicePreAction.LayoutComposite defaultLayoutComposite =
+			TestServicePreAction.INSTANCE.getDefaultUserPersonalLayoutComposite(
+				_user);
 
-		Layout layout = (Layout)defaultLayout[0];
+		Layout layout = defaultLayoutComposite.getLayout();
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -99,10 +100,11 @@ public class ServicePreActionTest {
 		try {
 			long plid = getThemeDisplayPlid(false, true);
 
-			Object[] defaultLayout =
-				TestServicePreAction.INSTANCE.getDefaultUserSitesLayout(_user);
+			ServicePreAction.LayoutComposite defaultLayoutComposite =
+				TestServicePreAction.INSTANCE.
+					getDefaultUserSitesLayoutComposite(_user);
 
-			Layout layout = (Layout)defaultLayout[0];
+			Layout layout = defaultLayoutComposite.getLayout();
 
 			Assert.assertEquals(layout.getPlid(), plid);
 		}
@@ -118,10 +120,10 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidGuestSiteLayout() throws Exception {
 		long plid = getThemeDisplayPlid(false, false);
 
-		Object[] defaultLayout =
-			TestServicePreAction.INSTANCE.getGuestSiteLayout(_user);
+		ServicePreAction.LayoutComposite defaultLayoutComposite =
+			TestServicePreAction.INSTANCE.getGuestSiteLayoutComposite(_user);
 
-		Layout layout = (Layout)defaultLayout[0];
+		Layout layout = defaultLayoutComposite.getLayout();
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}
@@ -130,10 +132,11 @@ public class ServicePreActionTest {
 	public void testInitThemeDisplayPlidVirtualHostLayout() throws Exception {
 		long plid = getThemeDisplayPlid(true, false);
 
-		Object[] defaultLayout =
-			TestServicePreAction.INSTANCE.getDefaultVirtualHostLayout(_request);
+		ServicePreAction.LayoutComposite defaultLayoutComposite =
+			TestServicePreAction.INSTANCE.getDefaultVirtualHostLayoutComposite(
+				_request);
 
-		Layout layout = (Layout)defaultLayout[0];
+		Layout layout = defaultLayoutComposite.getLayout();
 
 		Assert.assertEquals(layout.getPlid(), plid);
 	}

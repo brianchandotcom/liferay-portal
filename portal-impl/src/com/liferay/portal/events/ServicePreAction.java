@@ -482,25 +482,25 @@ public class ServicePreAction extends Action {
 
 		List<Layout> unfilteredLayouts = layouts;
 
-		Object[] viewableLayouts = null;
+		LayoutComposite viewableLayoutComposite = null;
 
 		if (layout == null) {
-			viewableLayouts = getDefaultViewableLayouts(
+			viewableLayoutComposite = getDefaultViewableLayoutComposite(
 				request, user, permissionChecker, doAsGroupId,
 				controlPanelCategory, signedIn);
 
 			request.setAttribute(WebKeys.LAYOUT_DEFAULT, Boolean.TRUE);
 		}
 		else {
-			viewableLayouts = getViewableLayouts(
+			viewableLayoutComposite = getViewableLayoutComposite(
 				request, user, permissionChecker, layout, layouts, doAsGroupId,
 				controlPanelCategory);
 		}
 
 		String layoutSetLogo = null;
 
-		layout = (Layout)viewableLayouts[0];
-		layouts = (List<Layout>)viewableLayouts[1];
+		layout = viewableLayoutComposite.getLayout();
+		layouts = viewableLayoutComposite.getLayouts();
 
 		Group group = null;
 
@@ -1520,7 +1520,7 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
-	protected Object[] getDefaultUserPersonalLayout(User user) {
+	protected LayoutComposite getDefaultUserPersonalLayoutComposite(User user) {
 		Layout layout = null;
 
 		Group userGroup = user.getGroup();
@@ -1539,10 +1539,10 @@ public class ServicePreAction extends Action {
 			layout = layouts.get(0);
 		}
 
-		return new Object[] {layout, layouts};
+		return new LayoutComposite(layout, layouts);
 	}
 
-	protected Object[] getDefaultUserSitesLayout(User user) {
+	protected LayoutComposite getDefaultUserSitesLayoutComposite(User user) {
 		Layout layout = null;
 		List<Layout> layouts = null;
 
@@ -1572,49 +1572,53 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		return new Object[] {layout, layouts};
+		return new LayoutComposite(layout, layouts);
 	}
 
-	protected Object[] getDefaultViewableLayouts(
+	protected LayoutComposite getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, long doAsGroupId,
 			String controlPanelCategory, boolean signedIn)
 		throws PortalException {
 
-		Object[] defaultLayout = getDefaultVirtualHostLayout(request);
+		LayoutComposite defaultLayoutComposite =
+			getDefaultVirtualHostLayoutComposite(request);
 
-		defaultLayout = getViewableLayouts(
-			request, user, permissionChecker, defaultLayout, doAsGroupId,
-			controlPanelCategory);
+		defaultLayoutComposite = getViewableLayoutComposite(
+			request, user, permissionChecker, defaultLayoutComposite,
+			doAsGroupId, controlPanelCategory);
 
-		if (defaultLayout[1] != null) {
-			return defaultLayout;
+		if (defaultLayoutComposite.getLayouts() != null) {
+			return defaultLayoutComposite;
 		}
 
 		if (signedIn) {
-			defaultLayout = getDefaultUserPersonalLayout(user);
+			defaultLayoutComposite = getDefaultUserPersonalLayoutComposite(
+				user);
 
-			if (defaultLayout[0] == null) {
-				defaultLayout = getDefaultUserSitesLayout(user);
+			if (defaultLayoutComposite.getLayout() == null) {
+				defaultLayoutComposite = getDefaultUserSitesLayoutComposite(
+					user);
 			}
 
-			defaultLayout = getViewableLayouts(
-				request, user, permissionChecker, defaultLayout, doAsGroupId,
-				controlPanelCategory);
+			defaultLayoutComposite = getViewableLayoutComposite(
+				request, user, permissionChecker, defaultLayoutComposite,
+				doAsGroupId, controlPanelCategory);
 
-			if (defaultLayout[1] != null) {
-				return defaultLayout;
+			if (defaultLayoutComposite.getLayouts() != null) {
+				return defaultLayoutComposite;
 			}
 		}
 
-		defaultLayout = getGuestSiteLayout(user);
+		defaultLayoutComposite = getGuestSiteLayoutComposite(user);
 
-		return getViewableLayouts(
-			request, user, permissionChecker, defaultLayout, doAsGroupId,
-			controlPanelCategory);
+		return getViewableLayoutComposite(
+			request, user, permissionChecker, defaultLayoutComposite,
+			doAsGroupId, controlPanelCategory);
 	}
 
-	protected Object[] getDefaultVirtualHostLayout(HttpServletRequest request)
+	protected LayoutComposite getDefaultVirtualHostLayoutComposite(
+			HttpServletRequest request)
 		throws PortalException {
 
 		Layout layout = null;
@@ -1666,7 +1670,7 @@ public class ServicePreAction extends Action {
 			}
 		}
 
-		return new Object[] {layout, layouts};
+		return new LayoutComposite(layout, layouts);
 	}
 
 	protected String getFriendlyURL(String friendlyURL) {
@@ -1675,7 +1679,9 @@ public class ServicePreAction extends Action {
 		return FriendlyURLNormalizerUtil.normalize(friendlyURL);
 	}
 
-	protected Object[] getGuestSiteLayout(User user) throws PortalException {
+	protected LayoutComposite getGuestSiteLayoutComposite(User user)
+		throws PortalException {
+
 		Layout layout = null;
 		List<Layout> layouts = null;
 
@@ -1690,17 +1696,17 @@ public class ServicePreAction extends Action {
 			layout = layouts.get(0);
 		}
 
-		return new Object[] {layout, layouts};
+		return new LayoutComposite(layout, layouts);
 	}
 
-	protected Object[] getViewableLayouts(
+	protected LayoutComposite getViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
 		throws PortalException {
 
 		if ((layouts == null) || layouts.isEmpty()) {
-			return new Object[] {layout, layouts};
+			return new LayoutComposite(layout, layouts);
 		}
 
 		Group group = layout.getGroup();
@@ -1757,19 +1763,20 @@ public class ServicePreAction extends Action {
 			layouts = accessibleLayouts;
 		}
 
-		return new Object[] {layout, layouts};
+		return new LayoutComposite(layout, layouts);
 	}
 
-	protected Object[] getViewableLayouts(
+	protected LayoutComposite getViewableLayoutComposite(
 			HttpServletRequest request, User user,
-			PermissionChecker permissionChecker, Object[] defaultLayout,
-			long doAsGroupId, String controlPanelCategory)
+			PermissionChecker permissionChecker,
+			LayoutComposite defaultLayoutComposite, long doAsGroupId,
+			String controlPanelCategory)
 		throws PortalException {
 
-		Layout layout = (Layout)defaultLayout[0];
-		List<Layout> layouts = (List<Layout>)defaultLayout[1];
+		Layout layout = defaultLayoutComposite.getLayout();
+		List<Layout> layouts = defaultLayoutComposite.getLayouts();
 
-		return getViewableLayouts(
+		return getViewableLayoutComposite(
 			request, user, permissionChecker, layout, layouts, doAsGroupId,
 			controlPanelCategory);
 	}
@@ -1944,11 +1951,12 @@ public class ServicePreAction extends Action {
 				guestGroup.getGroupId(), false,
 				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-			Object[] viewableLayouts = getViewableLayouts(
-				request, user, permissionChecker, layout, guestLayouts,
+			LayoutComposite viewableLayoutComposite =
+				getViewableLayoutComposite(
+					request, user, permissionChecker, layout, guestLayouts,
 				doAsGroupId, controlPanelCategory);
 
-			guestLayouts = (List<Layout>)viewableLayouts[1];
+			guestLayouts = viewableLayoutComposite.getLayouts();
 
 			if (layouts == null) {
 				return guestLayouts;
@@ -1995,11 +2003,12 @@ public class ServicePreAction extends Action {
 						previousGroupId.longValue(), false,
 						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
 
-				Object[] viewableLayouts = getViewableLayouts(
-					request, user, permissionChecker, layout, previousLayouts,
-					doAsGroupId, controlPanelCategory);
+				LayoutComposite viewableLayoutComposite =
+					getViewableLayoutComposite(
+						request, user, permissionChecker, layout,
+						previousLayouts, doAsGroupId, controlPanelCategory);
 
-				previousLayouts = (List<Layout>)viewableLayouts[1];
+				previousLayouts = viewableLayoutComposite.getLayouts();
 
 				if (previousLayouts != null) {
 					layouts.addAll(previousLayouts);
@@ -2339,6 +2348,26 @@ public class ServicePreAction extends Action {
 
 	protected File privateLARFile;
 	protected File publicLARFile;
+
+	protected class LayoutComposite {
+
+		protected LayoutComposite(Layout layout, List<Layout> layouts) {
+			_layout = layout;
+			_layouts = layouts;
+		}
+
+		protected Layout getLayout() {
+			return _layout;
+		}
+
+		protected List<Layout> getLayouts() {
+			return _layouts;
+		}
+
+		private final Layout _layout;
+		private final List<Layout> _layouts;
+
+	}
 
 	private static final String _PATH_PORTAL_LAYOUT = "/portal/layout";
 

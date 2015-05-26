@@ -83,47 +83,50 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultUserPersonalLayout(User user) {
-		return super.getDefaultUserPersonalLayout(user);
+	public LayoutComposite getDefaultUserPersonalLayoutComposite(User user) {
+		return super.getDefaultUserPersonalLayoutComposite(user);
 	}
 
 	@Override
-	public Object[] getDefaultUserSitesLayout(User user) {
-		return super.getDefaultUserSitesLayout(user);
+	public LayoutComposite getDefaultUserSitesLayoutComposite(User user) {
+		return super.getDefaultUserSitesLayoutComposite(user);
 	}
 
 	@Override
-	public Object[] getDefaultViewableLayouts(
+	public LayoutComposite getDefaultViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, long doAsGroupId,
 			String controlPanelCategory, boolean signedIn)
 		throws PortalException {
 
-		return super.getDefaultViewableLayouts(
+		return super.getDefaultViewableLayoutComposite(
 			request, user, permissionChecker, doAsGroupId, controlPanelCategory,
 			signedIn);
 	}
 
 	@Override
-	public Object[] getDefaultVirtualHostLayout(HttpServletRequest request)
+	public LayoutComposite getDefaultVirtualHostLayoutComposite(
+			HttpServletRequest request)
 		throws PortalException {
 
-		return super.getDefaultVirtualHostLayout(request);
+		return super.getDefaultVirtualHostLayoutComposite(request);
 	}
 
 	@Override
-	public Object[] getGuestSiteLayout(User user) throws PortalException {
-		return super.getGuestSiteLayout(user);
+	public LayoutComposite getGuestSiteLayoutComposite(User user)
+		throws PortalException {
+
+		return super.getGuestSiteLayoutComposite(user);
 	}
 
 	@Override
-	public Object[] getViewableLayouts(
+	public LayoutComposite getViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
 		throws PortalException {
 
-		return super.getViewableLayouts(
+		return super.getViewableLayoutComposite(
 			request, user, permissionChecker, layout, layouts, doAsGroupId,
 			controlPanelCategory);
 	}

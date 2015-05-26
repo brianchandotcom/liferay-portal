@@ -222,8 +222,9 @@ public class DynamicCSSUtil {
 	}
 
 	public static String replaceToken(
-		ServletContext servletContext,
-		HttpServletRequest request, String content) throws Exception {
+			ServletContext servletContext, HttpServletRequest request,
+			String content)
+		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

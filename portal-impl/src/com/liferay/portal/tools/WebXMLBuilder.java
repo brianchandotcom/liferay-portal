@@ -53,7 +53,7 @@ public class WebXMLBuilder {
 
 		webXML = HtmlUtil.stripComments(webXML);
 
-		Document document = SAXReaderUtil.read(webXML);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(webXML);
 
 		Element rootElement = document.getRootElement();
 

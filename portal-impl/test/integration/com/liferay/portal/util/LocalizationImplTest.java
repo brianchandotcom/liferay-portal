@@ -119,7 +119,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetAvailableLanguageIds() throws DocumentException {
-		Document document = SAXReaderUtil.read(_xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(_xml);
 
 		String[] documentAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(document);
@@ -142,7 +142,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetDefaultLanguageId() throws DocumentException {
-		Document document = SAXReaderUtil.read(_xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(_xml);
 
 		String languageIdsFromDoc = LocalizationUtil.getDefaultLanguageId(
 			document);

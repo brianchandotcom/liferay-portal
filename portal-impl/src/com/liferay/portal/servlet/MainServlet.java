@@ -606,7 +606,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void checkWebSettings(String xml) throws DocumentException {
-		Document doc = SAXReaderUtil.read(xml);
+		Document doc = SAXReaderUtil.getUnsecureSAXReader().read(xml);
 
 		Element root = doc.getRootElement();
 

@@ -69,7 +69,7 @@ public class UpgradeMVCC extends UpgradeProcess {
 		InputStream inputStream = classLoader.getResourceAsStream(
 			"META-INF/portal-hbm.xml");
 
-		Document document = SAXReaderUtil.read(inputStream);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(inputStream);
 
 		Element rootElement = document.getRootElement();
 

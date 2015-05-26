@@ -119,14 +119,14 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 
 		String xml = read(fileName);
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml);
 
 		List<Node> structureNodes = document.selectNodes("//structure");
 
 		for (Node structureNode : structureNodes) {
 			String structureXML = structureNode.asXML();
 
-			Document structureDocument = SAXReaderUtil.read(structureXML);
+			Document structureDocument = SAXReaderUtil.getUnsecureSAXReader().read(structureXML);
 
 			Element rootElement = (Element)structureDocument.selectSingleNode(
 				"/structure/root");
@@ -141,7 +141,7 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 			structureXML = _ddmXML.updateXMLDefaultLocale(
 				rootXML, contentDefaultLocale, availableDefaultLocale);
 
-			Document updatedXMLDocument = SAXReaderUtil.read(structureXML);
+			Document updatedXMLDocument = SAXReaderUtil.getUnsecureSAXReader().read(structureXML);
 
 			rootElement = updatedXMLDocument.getRootElement();
 

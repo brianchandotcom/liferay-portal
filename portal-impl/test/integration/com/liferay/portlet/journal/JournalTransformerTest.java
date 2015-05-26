@@ -91,12 +91,12 @@ public class JournalTransformerTest {
 		Map<String, String> tokens = getTokens();
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, xsl, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml);
 
 		Element element = (Element)document.selectSingleNode(
 			"//dynamic-content");
@@ -120,7 +120,7 @@ public class JournalTransformerTest {
 		String script = "${name.getData()} - ${viewMode}";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.PRINT, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.PRINT, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_FTL);
 
 		Assert.assertEquals("Joe Bloggs - print", content);
@@ -141,19 +141,19 @@ public class JournalTransformerTest {
 		String script = "$name.getData()";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "pt_BR", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "pt_BR", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joao da Silva", content);
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "fr_CA", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "fr_CA", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals("Joe Bloggs", content);
@@ -169,7 +169,7 @@ public class JournalTransformerTest {
 		String script = "Hello $name.getData(), Welcome to beta.sample.com.";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
@@ -185,7 +185,7 @@ public class JournalTransformerTest {
 		String script = "@company_id@";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
@@ -194,7 +194,7 @@ public class JournalTransformerTest {
 		script = "@@company_id@@";
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		Assert.assertEquals(
@@ -212,7 +212,7 @@ public class JournalTransformerTest {
 		String script = "@view_counter@";
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null, script, TemplateConstants.LANG_TYPE_VM);
 
 		StringBundler sb = new StringBundler(6);
@@ -242,7 +242,7 @@ public class JournalTransformerTest {
 			"name", "Joe Bloggs");
 
 		String content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null,
 			"#parse(\"$templatesPath/" +
 				_ddmTemplate.getTemplateKey() + "\")",
@@ -251,7 +251,7 @@ public class JournalTransformerTest {
 		Assert.assertEquals("Joe Bloggs", content);
 
 		content = JournalUtil.transform(
-			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.read(xml),
+			null, tokens, Constants.VIEW, "en_US", SAXReaderUtil.getUnsecureSAXReader().read(xml),
 			null,
 			"#parse(\"$journalTemplatesPath/" +
 				_ddmTemplate.getTemplateKey() + "\")",

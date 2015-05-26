@@ -295,7 +295,7 @@ public class DDMStructureTestUtil {
 
 		Map<String, Map<String, String>> map = new HashMap<>();
 
-		Document document = SAXReaderUtil.read(xsd);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xsd);
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-element");
 

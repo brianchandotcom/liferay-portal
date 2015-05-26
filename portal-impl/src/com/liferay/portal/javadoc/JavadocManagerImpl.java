@@ -155,7 +155,7 @@ public class JavadocManagerImpl implements JavadocManager {
 
 			inputStream = url.openStream();
 
-			return SAXReaderUtil.read(inputStream, true);
+			return SAXReaderUtil.getUnsecureSAXReader().read(inputStream, true);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

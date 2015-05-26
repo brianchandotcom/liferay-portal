@@ -79,7 +79,7 @@ public class PortalClientBuilder {
 
 		_axisHttpServlet = _createAxisHttpServlet(parentFile.getParentFile());
 
-		Document document = SAXReaderUtil.read(new File(fileName));
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(new File(fileName));
 
 		Element rootElement = document.getRootElement();
 

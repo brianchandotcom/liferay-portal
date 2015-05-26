@@ -104,7 +104,7 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 
 		String content = FileUtil.read(file);
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(content);
 
 		Element rootElement = document.getRootElement();
 
@@ -124,7 +124,7 @@ public class PortletSandboxHandler extends BaseSandboxHandler {
 
 		String content = FileUtil.read(file);
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = SAXReaderUtil.getUnsecureSAXReader().read(content);
 
 		Element rootElement = document.getRootElement();
 

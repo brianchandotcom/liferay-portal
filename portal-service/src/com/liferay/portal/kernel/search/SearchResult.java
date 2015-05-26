@@ -126,10 +126,18 @@ public class SearchResult {
 		return HashUtil.hash(hash, _className);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public void setClassName(String className) {
 		_className = className;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
 	}

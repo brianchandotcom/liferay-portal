@@ -1520,7 +1520,9 @@ public class ServicePreAction extends Action {
 			userGroup.getGroupId(), false, serviceContext);
 	}
 
-	protected LayoutComposite getDefaultUserPersonalLayoutComposite(User user) {
+	protected LayoutComposite getDefaultUserPersonalSiteLayoutComposite(
+		User user) {
+
 		Layout layout = null;
 
 		Group userGroup = user.getGroup();
@@ -1593,7 +1595,7 @@ public class ServicePreAction extends Action {
 		}
 
 		if (signedIn) {
-			defaultLayoutComposite = getDefaultUserPersonalLayoutComposite(
+			defaultLayoutComposite = getDefaultUserPersonalSiteLayoutComposite(
 				user);
 
 			if (defaultLayoutComposite.getLayout() == null) {

@@ -83,8 +83,8 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public LayoutComposite getDefaultUserPersonalLayoutComposite(User user) {
-		return super.getDefaultUserPersonalLayoutComposite(user);
+	public LayoutComposite getDefaultUserPersonalSiteLayoutComposite(User user) {
+		return super.getDefaultUserPersonalSiteLayoutComposite(user);
 	}
 
 	@Override

@@ -1155,7 +1155,7 @@ AUI.add(
 
 						var parsedValue = instance.getParsedValue(value);
 
-						return (parsedValue.hasOwnProperty('data') && parsedValue.data !== '') || parsedValue.hasOwnProperty('uuid');
+						return parsedValue.hasOwnProperty('data') && parsedValue.data !== '' || parsedValue.hasOwnProperty('uuid');
 					},
 
 					setValue: function(value) {

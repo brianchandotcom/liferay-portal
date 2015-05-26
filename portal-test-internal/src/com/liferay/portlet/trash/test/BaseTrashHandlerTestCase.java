@@ -476,13 +476,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		String uniqueTitle = getUniqueTitle(baseModel);
-
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
-
-		int oldStatus = workflowedModel.getStatus();
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
@@ -508,19 +502,96 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
-		workflowedModel = getWorkflowedModel(baseModel);
+		Assert.assertEquals(0, getDeletionSystemEventCount(trashHandler, -1));
+	}
 
-		Assert.assertEquals(oldStatus, workflowedModel.getStatus());
+	@Test
+	public void testTrashAndRestoreApprovedRestoreIsVisible() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
 		}
+	}
+
+	@Test
+	public void testTrashAndRestoreApprovedRestoreStatus() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		int oldStatus = workflowedModel.getStatus();
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		Assert.assertEquals(oldStatus, workflowedModel.getStatus());
+	}
+
+	@Test
+	public void testTrashAndRestoreApprovedRestoreUniqueTitle()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		String uniqueTitle = getUniqueTitle(baseModel);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
 		if (uniqueTitle != null) {
 			Assert.assertEquals(uniqueTitle, getUniqueTitle(baseModel));
 		}
-
-		Assert.assertEquals(0, getDeletionSystemEventCount(trashHandler, -1));
 	}
 
 	@Test

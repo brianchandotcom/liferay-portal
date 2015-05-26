@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3335,25 +3336,27 @@ public class MBBanPersistenceImpl extends BasePersistenceImpl<MBBan>
 			mbBan.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (mbBan.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				mbBan.setCreateDate(now);
+			if (isNew && (mbBan.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					mbBan.setCreateDate(now);
+				}
+				else {
+					mbBan.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				mbBan.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!mbBanModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				mbBan.setModifiedDate(now);
-			}
-			else {
-				mbBan.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!mbBanModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					mbBan.setModifiedDate(now);
+				}
+				else {
+					mbBan.setModifiedDate(serviceContext.getModifiedDate(now));
+				}
 			}
 		}
 

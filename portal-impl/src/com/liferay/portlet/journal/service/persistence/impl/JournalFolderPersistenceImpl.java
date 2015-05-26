@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -7367,29 +7366,26 @@ public class JournalFolderPersistenceImpl extends BasePersistenceImpl<JournalFol
 			journalFolder.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (journalFolder.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					journalFolder.setCreateDate(now);
-				}
-				else {
-					journalFolder.setCreateDate(serviceContext.getCreateDate(
-							now));
-				}
+		if (isNew && (journalFolder.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				journalFolder.setCreateDate(now);
 			}
+			else {
+				journalFolder.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!journalFolderModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					journalFolder.setModifiedDate(now);
-				}
-				else {
-					journalFolder.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!journalFolderModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				journalFolder.setModifiedDate(now);
+			}
+			else {
+				journalFolder.setModifiedDate(serviceContext.getModifiedDate(
+						now));
 			}
 		}
 

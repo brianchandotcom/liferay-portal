@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2146,27 +2145,25 @@ public class MDRRulePersistenceImpl extends BasePersistenceImpl<MDRRule>
 			mdrRule.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (mdrRule.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					mdrRule.setCreateDate(now);
-				}
-				else {
-					mdrRule.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (mdrRule.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				mdrRule.setCreateDate(now);
 			}
+			else {
+				mdrRule.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!mdrRuleModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					mdrRule.setModifiedDate(now);
-				}
-				else {
-					mdrRule.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!mdrRuleModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				mdrRule.setModifiedDate(now);
+			}
+			else {
+				mdrRule.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

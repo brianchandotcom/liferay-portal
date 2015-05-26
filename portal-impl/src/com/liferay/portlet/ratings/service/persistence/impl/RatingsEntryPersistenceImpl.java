@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -2746,28 +2745,25 @@ public class RatingsEntryPersistenceImpl extends BasePersistenceImpl<RatingsEntr
 			ratingsEntry.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (ratingsEntry.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					ratingsEntry.setCreateDate(now);
-				}
-				else {
-					ratingsEntry.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (ratingsEntry.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ratingsEntry.setCreateDate(now);
 			}
+			else {
+				ratingsEntry.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!ratingsEntryModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					ratingsEntry.setModifiedDate(now);
-				}
-				else {
-					ratingsEntry.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!ratingsEntryModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				ratingsEntry.setModifiedDate(now);
+			}
+			else {
+				ratingsEntry.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

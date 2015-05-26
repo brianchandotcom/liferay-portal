@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3957,27 +3956,25 @@ public class PhonePersistenceImpl extends BasePersistenceImpl<Phone>
 			phone.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (phone.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					phone.setCreateDate(now);
-				}
-				else {
-					phone.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (phone.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				phone.setCreateDate(now);
 			}
+			else {
+				phone.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!phoneModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					phone.setModifiedDate(now);
-				}
-				else {
-					phone.setModifiedDate(serviceContext.getModifiedDate(now));
-				}
+		if (!phoneModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				phone.setModifiedDate(now);
+			}
+			else {
+				phone.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

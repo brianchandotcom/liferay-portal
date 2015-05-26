@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -3278,29 +3277,26 @@ public class DLFileEntryTypePersistenceImpl extends BasePersistenceImpl<DLFileEn
 			dlFileEntryType.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (dlFileEntryType.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					dlFileEntryType.setCreateDate(now);
-				}
-				else {
-					dlFileEntryType.setCreateDate(serviceContext.getCreateDate(
-							now));
-				}
+		if (isNew && (dlFileEntryType.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				dlFileEntryType.setCreateDate(now);
 			}
+			else {
+				dlFileEntryType.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!dlFileEntryTypeModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					dlFileEntryType.setModifiedDate(now);
-				}
-				else {
-					dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!dlFileEntryTypeModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				dlFileEntryType.setModifiedDate(now);
+			}
+			else {
+				dlFileEntryType.setModifiedDate(serviceContext.getModifiedDate(
+						now));
 			}
 		}
 

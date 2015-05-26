@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -5024,29 +5023,27 @@ public class LayoutFriendlyURLPersistenceImpl extends BasePersistenceImpl<Layout
 			layoutFriendlyURL.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (layoutFriendlyURL.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					layoutFriendlyURL.setCreateDate(now);
-				}
-				else {
-					layoutFriendlyURL.setCreateDate(serviceContext.getCreateDate(
-							now));
-				}
+		if (isNew && (layoutFriendlyURL.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				layoutFriendlyURL.setCreateDate(now);
 			}
+			else {
+				layoutFriendlyURL.setCreateDate(serviceContext.getCreateDate(
+						now));
+			}
+		}
 
-			if (!layoutFriendlyURLModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					layoutFriendlyURL.setModifiedDate(now);
-				}
-				else {
-					layoutFriendlyURL.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!layoutFriendlyURLModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				layoutFriendlyURL.setModifiedDate(now);
+			}
+			else {
+				layoutFriendlyURL.setModifiedDate(serviceContext.getModifiedDate(
+						now));
 			}
 		}
 

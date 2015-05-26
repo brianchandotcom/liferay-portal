@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -6025,29 +6024,26 @@ public class DLFileShortcutPersistenceImpl extends BasePersistenceImpl<DLFileSho
 			dlFileShortcut.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (dlFileShortcut.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					dlFileShortcut.setCreateDate(now);
-				}
-				else {
-					dlFileShortcut.setCreateDate(serviceContext.getCreateDate(
-							now));
-				}
+		if (isNew && (dlFileShortcut.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				dlFileShortcut.setCreateDate(now);
 			}
+			else {
+				dlFileShortcut.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!dlFileShortcutModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					dlFileShortcut.setModifiedDate(now);
-				}
-				else {
-					dlFileShortcut.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!dlFileShortcutModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				dlFileShortcut.setModifiedDate(now);
+			}
+			else {
+				dlFileShortcut.setModifiedDate(serviceContext.getModifiedDate(
+						now));
 			}
 		}
 

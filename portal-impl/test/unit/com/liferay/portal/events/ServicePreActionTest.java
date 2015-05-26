@@ -77,8 +77,8 @@ public class ServicePreActionTest {
 		long plid = getThemeDisplayPlid(false, true);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
-			TestServicePreAction.INSTANCE.getDefaultUserPersonalSiteLayoutComposite(
-				_user);
+			TestServicePreAction.INSTANCE.
+				getDefaultUserPersonalSiteLayoutComposite(_user);
 
 		Layout layout = defaultLayoutComposite.getLayout();
 

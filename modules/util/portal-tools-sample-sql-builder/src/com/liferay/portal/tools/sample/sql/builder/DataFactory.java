@@ -1261,7 +1261,9 @@ public class DataFactory {
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(
-				plid, PortletKeys.DYNAMIC_DATA_LIST_DISPLAY,
+				plid,
+				"com_liferay_dynamic_data_lists_display_web_portlet_" +
+					"DDLDisplayPortlet",
 				PortletConstants.DEFAULT_PREFERENCES));
 		portletPreferencesModels.add(
 			newPortletPreferencesModel(

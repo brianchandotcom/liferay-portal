@@ -43,7 +43,7 @@ AUI.add(
 
 		var TPL_RADIO_ID = ' id="{0}" ';
 
-		var TPL_RADIO_IMAGE = '<div class="lfr-categories-selector-radio-image category{0}"></div>';
+		var TPL_RADIO_IMAGE = '<div class="category{0} lfr-categories-selector-radio-image"></div>';
 
 		var TPL_SEARCH_RESULTS = '<div class="lfr-categories-selector-search-results"></div>';
 

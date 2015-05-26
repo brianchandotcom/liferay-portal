@@ -407,7 +407,7 @@ AUI.add(
 
 						var redirectUrl = location.href;
 
-						if ((action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH) || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
+						if (action === STR_DELETE || action === STR_DELETE_ENTRIES || action === STR_MOVE_TO_TRASH || action === STR_MOVE_ENTRIES_TO_TRASH && !History.HTML5 && location.hash) {
 							redirectUrl = instance._updateFolderIdRedirectUrl(redirectUrl);
 						}
 

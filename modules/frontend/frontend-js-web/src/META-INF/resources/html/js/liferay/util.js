@@ -36,7 +36,7 @@
 				}
 			);
 
-			Util.addInputCancel = function(){};
+			Util.addInputCancel = function() {};
 		},
 
 		addParams: function(params, url) {
@@ -857,7 +857,7 @@
 
 			var display = 'none';
 
-			if (((keyCode >= 65 && keyCode <= 90) && !shiftKey) || ((keyCode >= 97 && keyCode <= 122) && shiftKey)) {
+			if ((keyCode >= 65 && keyCode <= 90 && !shiftKey) || (keyCode >= 97 && keyCode <= 122 && shiftKey)) {
 				display = '';
 			}
 

@@ -751,8 +751,7 @@ AUI.add(
 				if (portlet && portlet != portletBoundary) {
 					portletClasses = portlet.attr(CLASS_NAME).replace(REGEX_IGNORED_CLASSES_PORTLET, EMPTY);
 
-					portletClasses = portletClasses.replace(/\s+/g, '.');
-					portletClasses = portletClasses.trim();
+					portletClasses = portletClasses.replace(/\s+/g, '.').trim();
 
 					if (portletClasses) {
 						portletClasses = ' .' + portletClasses;

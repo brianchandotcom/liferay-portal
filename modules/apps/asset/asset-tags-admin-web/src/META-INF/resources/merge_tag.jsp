@@ -91,53 +91,49 @@ for (long mergeTagId : mergeTagIds) {
 	</aui:button-row>
 </aui:form>
 
-<aui:script use="aui-base,aui-selector">
-	var form = A.one('#<portlet:namespace />fm');
+<aui:script sandbox="<%= true %>">
+	var form = $('#<portlet:namespace />fm');
 
 	window['<portlet:namespace />onAddTag'] = function(item) {
-		if (item.value === undefined) {
-			return;
+		if (item.value !== undefined) {
+			var targetTag = $('#<portlet:namespace />targetTagName');
+
+			var addedValue = item.value;
+
+			targetTag.append(
+				$(
+					'<option>',
+					{
+						text: addedValue,
+						value: addedValue
+					}
+				)
+			);
 		}
-
-		var targetTag = AUI.$('#<portlet:namespace />targetTagName');
-
-		var addedValue = item.value;
-
-		targetTag.append(
-			$(
-				'<option>',
-				{
-					text: addedValue,
-					value: addedValue
-				}
-			)
-		);
 	};
 
 	window['<portlet:namespace />onRemoveTag'] = function(item) {
-		if (item.value === undefined) {
-			return;
+		if (item.value !== undefined) {
+			var removedValue = item.value;
+
+			$('#<portlet:namespace />targetTagName option[value="' + removedValue + '"]').remove();
 		}
-
-		var removedValue = item.value;
-
-		AUI.$('#<portlet:namespace />targetTagName option[value="' + removedValue + '"]').remove();
 	};
 
 	form.on(
 		'submit',
 		function(event) {
-			var mergeTagNames = A.one('#<portlet:namespace />mergeTagNames').val();
+			var mergeTagNames = $('#<portlet:namespace />mergeTagNames').val();
 
 			var mergeText = '<liferay-ui:message key="are-you-sure-you-want-to-merge-x-into-x" />';
 
-			var targetTag = A.one('#<portlet:namespace />targetTagName');
+			var targetTag = $('#<portlet:namespace />targetTagName');
 
-			var tag = targetTag.one(':selected');
+			var tag = targetTag.find(':selected');
 
-			tag = tag.html().trim();
+			tag = String(tag.html()).trim();
 
-			mergeText = A.Lang.sub(mergeText, [mergeTagNames.split(','), tag]);
+			mergeText = _.sub(mergeText, mergeTagNames.split(','), tag);
 
 			if (confirm(mergeText)) {
 				submitForm(form, form.attr('action'));

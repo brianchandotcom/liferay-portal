@@ -258,7 +258,7 @@ AUI.add(
 						new Liferay.Notice(
 							{
 								closeText: false,
-								content: message + '<button type="button" class="close">&times;</button>',
+								content: message + '<button class="close" type="button">&times;</button>',
 								noticeClass: 'hide',
 								timeout: timeout || 10000,
 								toggleText: false,
@@ -341,7 +341,7 @@ AUI.add(
 										currentSpan.on(
 											'click',
 											function(event) {
-												if ((themeDisplay.isStateMaximized() && !event.shiftKey) || event.target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-updateable')) {
+												if (themeDisplay.isStateMaximized() && !event.shiftKey || event.target.ancestor('.lfr-nav-child-toggle', true, '.lfr-nav-updateable')) {
 													return;
 												}
 

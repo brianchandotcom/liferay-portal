@@ -14,10 +14,14 @@
 
 package com.liferay.gradle.plugins;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
+import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
+import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -25,23 +29,30 @@ import com.liferay.gradle.util.Validator;
 import java.io.File;
 
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
+import org.dm.gradle.plugins.bundle.BundleUtils;
 import org.dm.gradle.plugins.bundle.JarBuilder;
 
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.FileCollection;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
+import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.TaskInputs;
+import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
 import org.gradle.api.tasks.bundling.War;
+import org.gradle.api.tasks.compile.CompileOptions;
+import org.gradle.api.tasks.compile.JavaCompile;
 import org.gradle.internal.Factory;
 
 /**
@@ -50,6 +61,9 @@ import org.gradle.internal.Factory;
 public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	public static final String AUTO_UPDATE_XML_TASK_NAME = "autoUpdateXml";
+
+	public static final String BUILD_WSDD_JAR_TASK_NAME =
+		WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME + "Jar";
 
 	@Override
 	public void apply(Project project) {
@@ -192,18 +206,99 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return directDeployTask;
 	}
 
+	protected Task addTaskBuildWSDDJar(final Project project) {
+		Task task = project.task(BUILD_WSDD_JAR_TASK_NAME);
+
+		TaskOutputs taskOutputs = task.getOutputs();
+
+		taskOutputs.file(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					Jar jar = (Jar)GradleUtil.getTask(
+						project, JavaPlugin.JAR_TASK_NAME);
+
+					String bundleSymbolicName = getBundleInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+
+					String fileName =
+						bundleSymbolicName + "-wsdd-" + project.getVersion() +
+							"." + Jar.DEFAULT_EXTENSION;
+
+					return new File(jar.getDestinationDir(), fileName);
+				}
+
+			});
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					BundleExtension bundleExtension = GradleUtil.getExtension(
+						project, BundleExtension.class);
+
+					Factory<JarBuilder> jarBuilderFactory =
+						bundleExtension.getJarBuilderFactory();
+
+					JarBuilder jarBuilder = jarBuilderFactory.create();
+
+					jarBuilder.withBase(BundleUtils.getBase(project));
+					jarBuilder.withClasspath(BundleUtils.getClasspath(project));
+
+					Map<String, String> properties =
+						getBundleDefaultInstructions(project);
+
+					String bundleName = getBundleInstruction(
+						project, Constants.BUNDLE_NAME);
+
+					properties.put(
+						Constants.BUNDLE_NAME,
+						bundleName + " WSDD descriptors");
+
+					String bundleSymbolicName = getBundleInstruction(
+						project, Constants.BUNDLE_SYMBOLICNAME);
+
+					properties.put(
+						Constants.BUNDLE_SYMBOLICNAME, bundleSymbolicName +
+							".wsdd");
+					properties.put(Constants.FRAGMENT_HOST, bundleSymbolicName);
+					properties.put(
+						Constants.INCLUDE_RESOURCE,
+						"WEB-INF/=server-config.wsdd,classes;filter:=*.wsdd");
+
+					jarBuilder.withProperties(properties);
+
+					jarBuilder.withSourcepath(BundleUtils.getSources(project));
+					jarBuilder.withTrace(bundleExtension.isTrace());
+					jarBuilder.withVersion(BundleUtils.getVersion(project));
+
+					TaskOutputs taskOutputs = task.getOutputs();
+
+					FileCollection fileCollection = taskOutputs.getFiles();
+
+					jarBuilder.writeJarTo(fileCollection.getSingleFile());
+				}
+
+			});
+
+		BuildWSDDTask buildWSDDTask = (BuildWSDDTask)GradleUtil.getTask(
+			project, WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME);
+
+		buildWSDDTask.finalizedBy(task);
+
+		return task;
+	}
+
 	@Override
 	protected void addTasks(Project project) {
 		super.addTasks(project);
 
 		addTaskAutoUpdateXml(project);
-	}
-
-	@Override
-	protected void applyConfigScripts(Project project) {
-		super.applyConfigScripts(project);
-
-		GradleUtil.applyScript(project, "config-bundle.gradle", project);
+		addTaskBuildWSDDJar(project);
 	}
 
 	@Override
@@ -217,6 +312,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	protected void configureBundleExtension(Project project) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
+
+		bundleInstructions.putAll(getBundleDefaultInstructions(project));
 
 		Properties bundleProperties;
 
@@ -295,6 +392,16 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		buildServiceTask.setSpringNamespaces(new String[] {"beans", "osgi"});
 	}
 
+	@Override
+	protected void configureTaskDeployFrom(Copy deployTask) {
+		super.configureTaskDeployFrom(deployTask);
+
+		Task task = GradleUtil.getTask(
+			deployTask.getProject(), BUILD_WSDD_JAR_TASK_NAME);
+
+		deployTask.from(task.getOutputs());
+	}
+
 	protected void configureTaskJar(Project project) {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
@@ -303,7 +410,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	protected void configureTaskJarArchiveName(Jar jar) {
 		String bundleSymbolicName = getBundleInstruction(
-			jar.getProject(), "Bundle-SymbolicName");
+			jar.getProject(), Constants.BUNDLE_SYMBOLICNAME);
 
 		if (Validator.isNull(bundleSymbolicName)) {
 			return;
@@ -335,7 +442,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected void configureVersion(
 		Project project, LiferayExtension liferayExtension) {
 
-		String bundleVersion = getBundleInstruction(project, "Bundle-Version");
+		String bundleVersion = getBundleInstruction(
+			project, Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
 			project.setVersion(bundleVersion);
@@ -344,6 +452,43 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		super.configureVersion(project, liferayExtension);
+	}
+
+	protected Map<String, String> getBundleDefaultInstructions(
+		Project project) {
+
+		Map<String, String> map = new HashMap<>();
+
+		map.put(Constants.BUNDLE_SYMBOLICNAME, project.getName());
+		map.put(Constants.BUNDLE_VENDOR, "Liferay, Inc.");
+
+		map.put(
+			"Git-Descriptor",
+			"${system-allow-fail;git describe --dirty --always}");
+		map.put("Git-SHA", "${system-allow-fail;git rev-list -1 HEAD}");
+
+		JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+			project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
+
+		CompileOptions compileOptions = javaCompile.getOptions();
+
+		map.put("Javac-Debug", getOnOffValue(compileOptions.isDebug()));
+		map.put(
+			"Javac-Deprecation", getOnOffValue(compileOptions.isDeprecation()));
+
+		String encoding = compileOptions.getEncoding();
+
+		if (Validator.isNull(encoding)) {
+			encoding = System.getProperty("file.encoding");
+		}
+
+		map.put("Javac-Encoding", encoding);
+
+		map.put(Constants.DONOTCOPY, "(.touch)");
+		map.put(Constants.DSANNOTATIONS, "*");
+		map.put(Constants.SOURCES, "false");
+
+		return map;
 	}
 
 	protected String getBundleInstruction(Project project, String key) {
@@ -368,6 +513,14 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		return new File(docrootDir, "WEB-INF/lib");
+	}
+
+	protected String getOnOffValue(boolean b) {
+		if (b) {
+			return "on";
+		}
+
+		return "off";
 	}
 
 	@Override

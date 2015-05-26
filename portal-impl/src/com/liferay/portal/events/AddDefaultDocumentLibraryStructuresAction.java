@@ -178,7 +178,8 @@ public class AddDefaultDocumentLibraryStructuresAction
 		String xsd = buildDLRawMetadataXML(
 			RawMetadataProcessorUtil.getFields(), locale);
 
-		Document document = SAXReaderUtil.getUnsecureSAXReader().read(new StringReader(xsd));
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(new StringReader(xsd));
 
 		Element rootElement = document.getRootElement();
 

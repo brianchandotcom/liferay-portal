@@ -359,7 +359,8 @@ public class SeleniumBuilderFileUtil {
 		String content = getNormalizedContent(fileName);
 
 		try {
-			Document document = SAXReaderUtil.getUnsecureSAXReader().read(content, true);
+			Document document =
+				SAXReaderUtil.getUnsecureSAXReader().read(content, true);
 
 			Element rootElement = document.getRootElement();
 

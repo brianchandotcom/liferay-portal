@@ -289,7 +289,8 @@ public class ServiceComponentLocalServiceImpl
 			return;
 		}
 
-		Document document = SAXReaderUtil.getUnsecureSAXReader().read(inputStream);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(inputStream);
 
 		Element rootElement = document.getRootElement();
 

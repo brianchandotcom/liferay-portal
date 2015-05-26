@@ -1148,7 +1148,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				"com/liferay/portal/deploy/dependencies/liferay-display.xml");
 		}
 
-		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml, true);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(xml, true);
 
 		Element rootElement = document.getRootElement();
 
@@ -1796,7 +1797,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return liferayPortletIds;
 		}
 
-		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xml, true);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(xml, true);
 
 		Element rootElement = document.getRootElement();
 

@@ -47,7 +47,8 @@ public class SPIConfiguration implements Serializable {
 	public static SPIConfiguration fromXMLString(String xmlString)
 		throws DocumentException {
 
-		Document document = SAXReaderUtil.getUnsecureSAXReader().read(xmlString);
+		Document document =
+			SAXReaderUtil.getUnsecureSAXReader().read(xmlString);
 
 		Element rootElement = document.getRootElement();
 

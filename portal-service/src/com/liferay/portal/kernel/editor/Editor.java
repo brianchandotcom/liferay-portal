@@ -12,34 +12,18 @@
  * details.
  */
 
-package com.liferay.frontend.editors.web;
-
-import com.liferay.portal.kernel.editor.Editor;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
+package com.liferay.portal.kernel.editor;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
- * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component
-public class TinyMCEEditor implements Editor {
 
-	@Override
-	public String getEditorJspPath(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+public interface Editor {
 
-		return themeDisplay.getPathEditors() + "/editors/tinymce.jsp";
-	}
+	public String getEditorJspPath(HttpServletRequest request);
 
-	@Override
-	public String getName() {
-		return "tinymce";
-	}
+	public String getName();
 
 }

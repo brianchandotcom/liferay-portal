@@ -1,0 +1,179 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.events;
+
+import com.liferay.portal.events.test.TestServicePreAction;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.util.test.LayoutTestUtil;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
+
+/**
+ * @author Preston Crary
+ */
+public class ServicePreActionTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			TransactionalTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		_group = GroupTestUtil.addGroup();
+
+		LayoutTestUtil.addLayout(_group);
+
+		_request.setRequestURI(PortalUtil.getPathMain() + "/portal/login");
+
+		_request.setAttribute(
+			WebKeys.VIRTUAL_HOST_LAYOUT_SET, _group.getPublicLayoutSet());
+	}
+
+	@Test
+	public void testInitThemeDisplayPlidDefaultUserPersonalLayout()
+		throws Exception {
+
+		long plid = getThemeDisplayPlid(false, true);
+
+		Object[] defaultLayout =
+			TestServicePreAction.INSTANCE.getDefaultUserPersonalLayout(_user);
+
+		Layout layout = (Layout)defaultLayout[0];
+
+		Assert.assertEquals(layout.getPlid(), plid);
+	}
+
+	@Test
+	public void testInitThemeDisplayPlidDefaultUserSitesLayout()
+		throws Exception {
+
+		boolean publicLayoutsAutoCreate =
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE;
+		boolean privateLayoutsAutoCreate =
+			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE;
+
+		PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE = false;
+		PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE = false;
+
+		try {
+			long plid = getThemeDisplayPlid(false, true);
+
+			Object[] defaultLayout =
+				TestServicePreAction.INSTANCE.getDefaultUserSitesLayout(_user);
+
+			Layout layout = (Layout)defaultLayout[0];
+
+			Assert.assertEquals(layout.getPlid(), plid);
+		}
+		finally {
+			PropsValues.LAYOUT_USER_PUBLIC_LAYOUTS_AUTO_CREATE =
+				publicLayoutsAutoCreate;
+			PropsValues.LAYOUT_USER_PRIVATE_LAYOUTS_AUTO_CREATE =
+				privateLayoutsAutoCreate;
+		}
+	}
+
+	@Test
+	public void testInitThemeDisplayPlidGuestSiteLayout() throws Exception {
+		long plid = getThemeDisplayPlid(false, false);
+
+		Object[] defaultLayout =
+			TestServicePreAction.INSTANCE.getGuestSiteLayout(_user);
+
+		Layout layout = (Layout)defaultLayout[0];
+
+		Assert.assertEquals(layout.getPlid(), plid);
+	}
+
+	@Test
+	public void testInitThemeDisplayPlidVirtualHostLayout() throws Exception {
+		long plid = getThemeDisplayPlid(true, false);
+
+		Object[] defaultLayout =
+			TestServicePreAction.INSTANCE.getDefaultVirtualHostLayout(_request);
+
+		Layout layout = (Layout)defaultLayout[0];
+
+		Assert.assertEquals(layout.getPlid(), plid);
+	}
+
+	protected long getThemeDisplayPlid(
+			boolean hasGuestViewPermission, boolean signedIn)
+		throws Exception {
+
+		if (!hasGuestViewPermission) {
+			Role role = RoleLocalServiceUtil.getRole(
+				_group.getCompanyId(), RoleConstants.GUEST);
+
+			ResourcePermissionLocalServiceUtil.removeResourcePermissions(
+				_group.getCompanyId(), Layout.class.getName(),
+				ResourceConstants.SCOPE_INDIVIDUAL, role.getRoleId(),
+				ActionKeys.VIEW);
+		}
+
+		if (signedIn) {
+			_user = UserTestUtil.addUser();
+		}
+		else {
+			_user = PortalUtil.initUser(_request);
+		}
+
+		_request.setAttribute(WebKeys.USER, _user);
+
+		ThemeDisplay themeDisplay =
+			TestServicePreAction.INSTANCE.initThemeDisplay(_request, _response);
+
+		return themeDisplay.getPlid();
+	}
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private final MockHttpServletRequest _request =
+		new MockHttpServletRequest();
+	private final MockHttpServletResponse _response =
+		new MockHttpServletResponse();
+	private User _user;
+
+}

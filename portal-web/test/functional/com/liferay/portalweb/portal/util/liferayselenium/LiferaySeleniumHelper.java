@@ -1062,7 +1062,7 @@ public class LiferaySeleniumHelper {
 
 		// LPS-55835, temporary workaround while Brian Wulbern investigates it
 
-		if (line.matches("Current URL.*add_panel generates exception:")) {
+		if (line.matches("Current URL.*add_panel generates exception:.*")) {
 			return true;
 		}
 

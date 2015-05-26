@@ -306,14 +306,18 @@ AUI.add(
 
 						instance._stopProgress(event);
 
-						var data = event.data;
-
-						data = JSON.parse(data);
+						var data = JSON.parse(event.data);
 
 						var image = data.image;
 						var success = data.success;
 
+						var fireEvent = STR_IMAGE_DELETED;
+						var imageData = null;
+
 						if (success) {
+							fireEvent = STR_IMAGE_UPLOADED;
+							imageData = image;
+
 							instance.fire(
 								STR_IMAGE_DATA,
 								{
@@ -321,7 +325,7 @@ AUI.add(
 								}
 							);
 						}
-						else if (!success) {
+						else {
 							instance.fire(
 								STR_ERROR_MESSAGE,
 								{
@@ -329,10 +333,6 @@ AUI.add(
 								}
 							);
 						}
-
-						var fireEvent = success ? STR_IMAGE_UPLOADED : STR_IMAGE_DELETED;
-
-						var imageData = success ? image : null;
 
 						Liferay.fire(
 							fireEvent,

@@ -107,7 +107,7 @@ AUI.add(
 
 		var TPL_BUTTON_HOLDER = '<button class="' + [STR_SETTINGS_BUTTON_HOLDER].join(STR_SPACE) + ' btn btn-submit">' + STR_SAVE + '</button>';
 
-		var TPL_BOUNDING_BOX_SETTINGS_FIELD = '<li class="' + [CSS_TOKEN, STR_SETTINGS_FIELD, STR_ACTION_FIELD].join(STR_SPACE) + '"></li>';
+		var TPL_BOUNDING_BOX_SETTINGS_FIELD = '<li class="' + [CSS_TOKEN, STR_ACTION_FIELD, STR_SETTINGS_FIELD].join(STR_SPACE) + '"></li>';
 
 		var TPL_CONTRIBUTION_INCREMENT = '<span class="contribution-increment"></span>';
 
@@ -118,7 +118,7 @@ AUI.add(
 				'<div class="field-values">',
 					'<span class="field field-text">{firstText}</span>',
 
-					'<select id="{languageKey}_participationIncrement" class="settings-field-node">',
+					'<select class="settings-field-node" id="{languageKey}_participationIncrement">',
 						'<tpl for="participationIncrements">',
 							'<option {[ (values == parent.participationIncrement) ? "selected" : "" ]} title="{.}" value="{.}">{.}</option>',
 						'</tpl>',
@@ -126,14 +126,14 @@ AUI.add(
 
 					'<span class="field field-text">{secondText}</span>',
 
-					'<select id="{languageKey}_contributionIncrement" class="settings-field-node">',
+					'<select class="settings-field-node" id="{languageKey}_contributionIncrement">',
 						'<tpl for="contributionIncrements">',
 							'<option {[ (values == parent.contributionIncrement) ? "selected" : "" ]} title="{.}" value="{.}">{.}</option>',
 						'</tpl>',
 					'</select>',
 
 					'<span class="field field-text">{thirdText}</span> ',
-					'<span class="field field-text field-contribution-text">{fourthText}</span>',
+					'<span class="field field-contribution-text field-text">{fourthText}</span>',
 				'</div>',
 
 				'<tpl if="rows.length">',
@@ -151,13 +151,13 @@ AUI.add(
 						'<div class="settings-limit-row">',
 							'<span class="field field-text">{limitFirstText}</span>',
 
-							'<select id="{parent.languageKey}_{type}LimitValue" class="settings-field-node">',
+							'<select class="settings-field-node" id="{parent.languageKey}_{type}LimitValue">',
 								'<tpl for="limitValues">',
 									'<option {[ (values == parent.limitValue) ? "selected" : "" ]} title="{.}" value="{.}">{.}</option>',
 								'</tpl>',
 							'</select>',
 
-							'<select id="{parent.languageKey}_{type}LimitPeriod" class="settings-field-node">',
+							'<select class="settings-field-node" id="{parent.languageKey}_{type}LimitPeriod">',
 								'<tpl for="limitPeriods">',
 									'<option {[ ($index == parent.limitPeriod) ? "selected" : "" ]} title="{.}" value="{$index}">{.}</option>',
 								'</tpl>',

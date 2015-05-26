@@ -191,7 +191,7 @@ AUI.add(
 				new Liferay.Notice(
 					{
 						closeText: false,
-						content: message + '<button type="button" class="close">&times;</button>',
+						content: message + '<button class="close" type="button">&times;</button>',
 						noticeClass: 'hide',
 						timeout: timeout || 10000,
 						toggleText: false,

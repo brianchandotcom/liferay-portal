@@ -263,8 +263,6 @@ public class PortletTracker
 
 		portletModel.setPortletClass(portletClazz.getName());
 
-		initLogger(bundleWiring.getClassLoader());
-
 		collectJxPortletFeatures(serviceReference, portletModel);
 		collectLiferayFeatures(serviceReference, portletModel);
 
@@ -927,6 +925,7 @@ public class PortletTracker
 			bundle, portalPortletModel, _httpServiceEndpoint);
 
 		createContext(bundle, bundlePortletApp, serviceRegistrations);
+		initLogger(classLoader);
 
 		serviceRegistrations.setBundlePortletApp(bundlePortletApp);
 

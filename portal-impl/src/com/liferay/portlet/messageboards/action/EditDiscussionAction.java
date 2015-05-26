@@ -189,16 +189,13 @@ public class EditDiscussionAction extends PortletAction {
 		long permissionClassPK = ParamUtil.getLong(
 			actionRequest, "permissionClassPK");
 		long commentId = ParamUtil.getLong(actionRequest, "commentId");
-		long permissionOwnerId = ParamUtil.getLong(
-			actionRequest, "permissionOwnerId");
 
 		DiscussionPermission discussionPermission =
 			CommentManagerUtil.getDiscussionPermission(
 				themeDisplay.getPermissionChecker());
 
 		discussionPermission.checkDeletePermission(
-			permissionClassName, permissionClassPK, commentId,
-			permissionOwnerId);
+			permissionClassName, permissionClassPK, commentId);
 
 		CommentManagerUtil.deleteComment(commentId);
 	}
@@ -239,8 +236,6 @@ public class EditDiscussionAction extends PortletAction {
 			actionRequest, "permissionClassName");
 		long permissionClassPK = ParamUtil.getLong(
 			actionRequest, "permissionClassPK");
-		long permissionOwnerId = ParamUtil.getLong(
-			actionRequest, "permissionOwnerId");
 		String className = ParamUtil.getString(actionRequest, "className");
 		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 		long parentCommentId = ParamUtil.getLong(
@@ -285,7 +280,7 @@ public class EditDiscussionAction extends PortletAction {
 			try {
 				discussionPermission.checkAddPermission(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-					permissionClassName, permissionClassPK, permissionOwnerId);
+					permissionClassName, permissionClassPK);
 
 				commentId = CommentManagerUtil.addComment(
 					user.getUserId(), className, classPK, user.getFullName(),
@@ -300,8 +295,7 @@ public class EditDiscussionAction extends PortletAction {
 			// Update message
 
 			discussionPermission.checkUpdatePermission(
-				permissionClassName, permissionClassPK, commentId,
-				permissionOwnerId);
+				permissionClassName, permissionClassPK, commentId);
 
 			commentId = CommentManagerUtil.updateComment(
 				themeDisplay.getUserId(), className, classPK, commentId,

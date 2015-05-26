@@ -50,8 +50,7 @@ public class DefaultCommentSectionDisplayContext
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
-			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId());
+			_discussionTaglibHelper.getPermissionClassPK());
 	}
 
 	@Override
@@ -90,8 +89,7 @@ public class DefaultCommentSectionDisplayContext
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
-			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId());
+			_discussionTaglibHelper.getPermissionClassPK());
 	}
 
 	private final DiscussionPermission _discussionPermission;

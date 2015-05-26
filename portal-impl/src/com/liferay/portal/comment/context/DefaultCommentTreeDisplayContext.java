@@ -89,7 +89,7 @@ public class DefaultCommentTreeDisplayContext
 		return _discussionPermission.hasDeletePermission(
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionComment.getCommentId(), _discussionComment.getUserId());
+			_discussionComment.getCommentId());
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class DefaultCommentTreeDisplayContext
 		return _discussionPermission.hasUpdatePermission(
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionComment.getCommentId(), _discussionComment.getUserId());
+			_discussionComment.getCommentId());
 	}
 
 	@Override
@@ -135,8 +135,7 @@ public class DefaultCommentTreeDisplayContext
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
-			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId());
+			_discussionTaglibHelper.getPermissionClassPK());
 	}
 
 	@Override
@@ -163,7 +162,7 @@ public class DefaultCommentTreeDisplayContext
 		return _discussionPermission.hasUpdatePermission(
 			_discussionTaglibHelper.getPermissionClassName(),
 			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionComment.getCommentId(), _discussionComment.getUserId());
+			_discussionComment.getCommentId());
 	}
 
 	protected boolean hasViewPermission() throws PortalException {
@@ -171,8 +170,7 @@ public class DefaultCommentTreeDisplayContext
 			_discussionRequestHelper.getCompanyId(),
 			_discussionRequestHelper.getScopeGroupId(),
 			_discussionTaglibHelper.getPermissionClassName(),
-			_discussionTaglibHelper.getPermissionClassPK(),
-			_discussionTaglibHelper.getUserId());
+			_discussionTaglibHelper.getPermissionClassPK());
 	}
 
 	protected boolean isCommentApproved() {

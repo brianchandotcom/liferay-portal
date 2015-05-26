@@ -110,10 +110,6 @@ summary.setQueryTerms(queryTerms);
 
 			summary = (Summary)fileEntryTuple.getObject(1);
 
-			if (Validator.isNull(summary.getContent())) {
-				summary.setContent(fileEntry.getTitle());
-			}
-
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);
 		%>

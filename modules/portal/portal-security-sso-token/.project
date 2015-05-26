@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <projectDescription>
-	<name>portal-sso-token-master</name>
+	<name>portal-security-sso-token-master</name>
 	<comment></comment>
 	<projects></projects>
 	<buildSpec>

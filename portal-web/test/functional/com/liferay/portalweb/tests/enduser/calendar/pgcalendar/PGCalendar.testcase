@@ -1598,6 +1598,16 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="CalendarNavigator#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#editTimeZonePacific" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="CalendarNavigator#gotoAdd" />
 
 		<execute macro="CalendarEvent#editTitle">
@@ -1607,19 +1617,13 @@
 		<execute macro="CalendarEvent#setDatesToday" />
 
 		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="01:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
+			<var name="endDateTime" value="02:00 PM" />
+			<var name="startDateTime" value="01:00 PM" />
 		</execute>
 
 		<execute macro="CalendarEvent#save">
 			<var name="pageName" value="${pageName}" />
 		</execute>
-
-		<execute macro="CalendarNavigator#gotoConfiguration" />
-
-		<execute macro="CalendarConfiguration#editTimeZonePacific" />
-
-		<execute macro="CalendarConfiguration#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1631,15 +1635,15 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="6:00am" />
-			<var name="startDateTime" value="5:00am" />
+			<var name="endDateTime" value="2:00pm" />
+			<var name="startDateTime" value="1:00pm" />
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="06:00 AM" />
-			<var name="startDateTime" value="05:00 AM" />
+			<var name="endDateTime" value="02:00 PM" />
+			<var name="startDateTime" value="01:00 PM" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1651,8 +1655,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="06:00 AM" />
-			<var name="startDateTime" value="05:00 AM" />
+			<var name="endDateTime" value="02:00 PM" />
+			<var name="startDateTime" value="01:00 PM" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1675,15 +1679,15 @@
 		</execute>
 
 		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="1:00pm" />
-			<var name="startDateTime" value="12:00pm" />
+			<var name="endDateTime" value="9:00pm" />
+			<var name="startDateTime" value="8:00pm" />
 		</execute>
 
 		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
 
 		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="01:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="startDateTime" value="08:00 PM" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -1695,8 +1699,8 @@
 		</execute>
 
 		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="01:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="startDateTime" value="08:00 PM" />
 		</execute>
 	</command>
 

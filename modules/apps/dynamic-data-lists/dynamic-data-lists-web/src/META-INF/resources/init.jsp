@@ -68,6 +68,7 @@ page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
+page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetNameException" %><%@

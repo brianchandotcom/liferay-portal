@@ -118,7 +118,7 @@ public class InitGradleTask extends DefaultTask {
 
 				String conf = (String)dependencyNode.attribute("conf");
 
-				if (Validator.isNotNull(conf) && !conf.equals("default")) {
+				if (Validator.isNotNull(conf) && !conf.startsWith("default")) {
 					continue;
 				}
 
@@ -126,7 +126,15 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 				String version = (String)dependencyNode.attribute("rev");
 
-				contents.add(wrapDependency(group, name, version));
+				boolean transitive = true;
+
+				if (Validator.isNotNull(conf) &&
+					conf.equals("default->master")) {
+
+					transitive = false;
+				}
+
+				contents.add(wrapDependency(group, name, version, transitive));
 			}
 		}
 
@@ -202,7 +210,7 @@ public class InitGradleTask extends DefaultTask {
 
 				String conf = (String)dependencyNode.attribute("conf");
 
-				if (Validator.isNull(conf) || !conf.contains("provided")) {
+				if (Validator.isNull(conf) || !conf.startsWith("provided")) {
 					continue;
 				}
 
@@ -210,7 +218,7 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 				String version = (String)dependencyNode.attribute("rev");
 
-				contents.add(wrapDependency(group, name, version));
+				contents.add(wrapDependency(group, name, version, false));
 			}
 		}
 
@@ -242,7 +250,7 @@ public class InitGradleTask extends DefaultTask {
 					String name = portalDependencyNotation[1];
 					String version = portalDependencyNotation[2];
 
-					contents.add(wrapDependency(group, name, version));
+					contents.add(wrapDependency(group, name, version, false));
 				}
 			}
 		}
@@ -277,7 +285,7 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 				String version = (String)dependencyNode.attribute("rev");
 
-				contents.add(wrapDependency(group, name, version));
+				contents.add(wrapDependency(group, name, version, true));
 			}
 		}
 
@@ -450,7 +458,9 @@ public class InitGradleTask extends DefaultTask {
 		return contents;
 	}
 
-	protected String wrapDependency(String group, String name, String version) {
+	protected String wrapDependency(
+		String group, String name, String version, boolean transitive) {
+
 		StringBuilder sb = new StringBuilder();
 
 		sb.append("\t\t[group: \"");
@@ -459,7 +469,13 @@ public class InitGradleTask extends DefaultTask {
 		sb.append(name);
 		sb.append("\", version: \"");
 		sb.append(version);
-		sb.append("\"],");
+		sb.append("\"");
+
+		if (!transitive) {
+			sb.append(", transitive: false");
+		}
+
+		sb.append("],");
 
 		return sb.toString();
 	}

@@ -71,7 +71,7 @@ public class ServicePreActionTest {
 	}
 
 	@Test
-	public void testInitThemeDisplayPlidDefaultUserPersonalLayout()
+	public void testInitThemeDisplayPlidDefaultUserPersonalSiteLayoutComposite()
 		throws Exception {
 
 		long plid = getThemeDisplayPlid(false, true);
@@ -86,7 +86,7 @@ public class ServicePreActionTest {
 	}
 
 	@Test
-	public void testInitThemeDisplayPlidDefaultUserSitesLayout()
+	public void testInitThemeDisplayPlidDefaultUserSitesLayoutComposite()
 		throws Exception {
 
 		boolean publicLayoutsAutoCreate =
@@ -117,7 +117,9 @@ public class ServicePreActionTest {
 	}
 
 	@Test
-	public void testInitThemeDisplayPlidGuestSiteLayout() throws Exception {
+	public void testInitThemeDisplayPlidGuestSiteLayoutComposite()
+		throws Exception {
+
 		long plid = getThemeDisplayPlid(false, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =
@@ -129,7 +131,9 @@ public class ServicePreActionTest {
 	}
 
 	@Test
-	public void testInitThemeDisplayPlidVirtualHostLayout() throws Exception {
+	public void testInitThemeDisplayPlidVirtualHostLayoutComposite()
+		throws Exception {
+
 		long plid = getThemeDisplayPlid(true, false);
 
 		ServicePreAction.LayoutComposite defaultLayoutComposite =

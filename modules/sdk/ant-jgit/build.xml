@@ -3,8 +3,6 @@
 
 <project>
 	<property name="auto.deploy.dir" value="../../../tools/sdk/dependencies/com.liferay.ant.bnd/lib" />
-	<property name="javac.source" value="1.6" />
-	<property name="javac.target" value="1.6" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 

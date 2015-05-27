@@ -44,209 +44,191 @@ public class SAXReaderUtil {
 	public static Attribute createAttribute(
 		Element element, QName qName, String value) {
 
-		return getSecureSAXReader().createAttribute(element, qName, value);
+		return getSAXReader().createAttribute(element, qName, value);
 	}
 
 	public static Attribute createAttribute(
 		Element element, String name, String value) {
 
-		return getSecureSAXReader().createAttribute(element, name, value);
+		return getSAXReader().createAttribute(element, name, value);
 	}
 
 	public static Document createDocument() {
-		return getSecureSAXReader().createDocument();
+		return getSAXReader().createDocument();
 	}
 
 	public static Document createDocument(Element rootElement) {
-		return getSecureSAXReader().createDocument(rootElement);
+		return getSAXReader().createDocument(rootElement);
 	}
 
 	public static Document createDocument(String encoding) {
-		return getSecureSAXReader().createDocument(encoding);
+		return getSAXReader().createDocument(encoding);
 	}
 
 	public static Element createElement(QName qName) {
-		return getSecureSAXReader().createElement(qName);
+		return getSAXReader().createElement(qName);
 	}
 
 	public static Element createElement(String name) {
-		return getSecureSAXReader().createElement(name);
+		return getSAXReader().createElement(name);
 	}
 
 	public static Entity createEntity(String name, String text) {
-		return getSecureSAXReader().createEntity(name, text);
+		return getSAXReader().createEntity(name, text);
 	}
 
 	public static Namespace createNamespace(String uri) {
-		return getSecureSAXReader().createNamespace(uri);
+		return getSAXReader().createNamespace(uri);
 	}
 
 	public static Namespace createNamespace(String prefix, String uri) {
-		return getSecureSAXReader().createNamespace(prefix, uri);
+		return getSAXReader().createNamespace(prefix, uri);
 	}
 
 	public static ProcessingInstruction createProcessingInstruction(
 		String target, Map<String, String> data) {
 
-		return getSecureSAXReader().createProcessingInstruction(target, data);
+		return getSAXReader().createProcessingInstruction(target, data);
 	}
 
 	public static ProcessingInstruction createProcessingInstruction(
 		String target, String data) {
 
-		return getSecureSAXReader().createProcessingInstruction(target, data);
+		return getSAXReader().createProcessingInstruction(target, data);
 	}
 
 	public static QName createQName(String localName) {
-		return getSecureSAXReader().createQName(localName);
+		return getSAXReader().createQName(localName);
 	}
 
 	public static QName createQName(String localName, Namespace namespace) {
-		return getSecureSAXReader().createQName(localName, namespace);
+		return getSAXReader().createQName(localName, namespace);
 	}
 
 	public static Text createText(String text) {
-		return getSecureSAXReader().createText(text);
+		return getSAXReader().createText(text);
 	}
 
 	public static XPath createXPath(String xPathExpression) {
-		return getSecureSAXReader().createXPath(xPathExpression);
+		return getSAXReader().createXPath(xPathExpression);
 	}
 
 	public static XPath createXPath(
 		String xPathExpression, Map<String, String> namespaceContextMap) {
 
-		return getSecureSAXReader().createXPath(
-			xPathExpression, namespaceContextMap);
+		return getSAXReader().createXPath(xPathExpression, namespaceContextMap);
 	}
 
 	public static XPath createXPath(
 		String xPathExpression, String prefix, String namespace) {
 
-		return getSecureSAXReader().createXPath(
-			xPathExpression, prefix, namespace);
+		return getSAXReader().createXPath(xPathExpression, prefix, namespace);
 	}
 
-	public static SAXReader getSecureSAXReader() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			SAXReaderUtil.class, "secureSAXReader");
+	public static SAXReader getSAXReader() {
+		PortalRuntimePermission.checkGetBeanProperty(SAXReaderUtil.class);
 
 		if (isCallerWhitelisted()) {
-			return getUnsecureSAXReader();
+			return UnsecureSAXReaderUtil.getSAXReader();
 		}
 
 		return _saxReader;
 	}
 
-	public static SAXReader getUnsecureSAXReader() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			SAXReaderUtil.class, "unsecureSAXReader");
-
-		return _unsecureSAXReader;
-	}
-
 	public static Document read(File file) throws DocumentException {
-		return getSecureSAXReader().read(file);
+		return getSAXReader().read(file);
 	}
 
 	public static Document read(File file, boolean validate)
 		throws DocumentException {
 
-		return getSecureSAXReader().read(file, validate);
+		return getSAXReader().read(file, validate);
 	}
 
 	public static Document read(InputStream is) throws DocumentException {
-		return getSecureSAXReader().read(is);
+		return getSAXReader().read(is);
 	}
 
 	public static Document read(InputStream is, boolean validate)
 		throws DocumentException {
 
-		return getSecureSAXReader().read(is, validate);
+		return getSAXReader().read(is, validate);
 	}
 
 	public static Document read(Reader reader) throws DocumentException {
-		return getSecureSAXReader().read(reader);
+		return getSAXReader().read(reader);
 	}
 
 	public static Document read(Reader reader, boolean validate)
 		throws DocumentException {
 
-		return getSecureSAXReader().read(reader, validate);
+		return getSAXReader().read(reader, validate);
 	}
 
 	public static Document read(String xml) throws DocumentException {
-		return getSecureSAXReader().read(xml);
+		return getSAXReader().read(xml);
 	}
 
 	public static Document read(String xml, boolean validate)
 		throws DocumentException {
 
-		return getSecureSAXReader().read(xml, validate);
+		return getSAXReader().read(xml, validate);
 	}
 
 	public static Document read(String xml, XMLSchema xmlSchema)
 		throws DocumentException {
 
-		return getSecureSAXReader().read(xml, xmlSchema);
+		return getSAXReader().read(xml, xmlSchema);
 	}
 
 	public static Document read(URL url) throws DocumentException {
-		return getSecureSAXReader().read(url);
+		return getSAXReader().read(url);
 	}
 
 	public static Document read(URL url, boolean validate)
 		throws DocumentException {
 
-		return getSecureSAXReader().read(url, validate);
+		return getSAXReader().read(url, validate);
 	}
 
 	public static Document readURL(String url)
 		throws DocumentException, MalformedURLException {
 
-		return getSecureSAXReader().readURL(url);
+		return getSAXReader().readURL(url);
 	}
 
 	public static Document readURL(String url, boolean validate)
 		throws DocumentException, MalformedURLException {
 
-		return getSecureSAXReader().readURL(url, validate);
+		return getSAXReader().readURL(url, validate);
 	}
 
 	public static List<Node> selectNodes(
 		String xPathFilterExpression, List<Node> nodes) {
 
-		return getSecureSAXReader().selectNodes(xPathFilterExpression, nodes);
+		return getSAXReader().selectNodes(xPathFilterExpression, nodes);
 	}
 
 	public static List<Node> selectNodes(
 		String xPathFilterExpression, Node node) {
 
-		return getSecureSAXReader().selectNodes(xPathFilterExpression, node);
+		return getSAXReader().selectNodes(xPathFilterExpression, node);
 	}
 
 	public static void sort(List<Node> nodes, String xPathExpression) {
-		getSecureSAXReader().sort(nodes, xPathExpression);
+		getSAXReader().sort(nodes, xPathExpression);
 	}
 
 	public static void sort(
 		List<Node> nodes, String xPathExpression, boolean distinct) {
 
-		getSecureSAXReader().sort(nodes, xPathExpression, distinct);
+		getSAXReader().sort(nodes, xPathExpression, distinct);
 	}
 
-	public void setSecureSAXReader(SAXReader saxReader) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "secureSAXReader");
+	public void setSAXReader(SAXReader saxReader) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_saxReader = saxReader;
-	}
-
-	public void setUnsecureSAXReader(SAXReader unsecureSAXReader) {
-		PortalRuntimePermission.checkSetBeanProperty(
-			getClass(), "unsecureSAXReader");
-
-		_unsecureSAXReader = unsecureSAXReader;
 	}
 
 	protected static boolean isCallerWhitelisted() {
@@ -305,6 +287,5 @@ public class SAXReaderUtil {
 	private static final Log _log = LogFactoryUtil.getLog(SAXReaderUtil.class);
 
 	private static SAXReader _saxReader;
-	private static SAXReader _unsecureSAXReader;
 
 }

@@ -1,4 +1,4 @@
-<definition>
+<definition component-name="test">
 	<command name="test">
 		<execute function="Open" value="http://www.google.com" />
 	</command>

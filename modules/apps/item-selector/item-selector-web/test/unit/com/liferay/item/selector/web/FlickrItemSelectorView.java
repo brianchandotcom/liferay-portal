@@ -46,7 +46,7 @@ public class FlickrItemSelectorView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			FlickrItemSelectorCriterion flickrItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedCallback)
+			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();

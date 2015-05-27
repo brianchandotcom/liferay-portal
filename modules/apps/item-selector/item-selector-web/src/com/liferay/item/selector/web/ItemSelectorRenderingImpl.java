@@ -25,17 +25,17 @@ import java.util.List;
 public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 
 	public ItemSelectorRenderingImpl(
-		String itemSelectedCallback, String selectedTab,
+		String itemSelectedEventName, String selectedTab,
 		List<ItemSelectorViewRenderer> itemSelectorViewRenderers) {
 
-		_itemSelectedCallback = itemSelectedCallback;
+		_itemSelectedEventName = itemSelectedEventName;
 		_selectedTab = selectedTab;
 		_itemSelectorViewRenderers = itemSelectorViewRenderers;
 	}
 
 	@Override
-	public String getItemSelectedCallback() {
-		return _itemSelectedCallback;
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ItemSelectorRenderingImpl implements ItemSelectorRendering {
 		return _selectedTab;
 	}
 
-	private final String _itemSelectedCallback;
+	private final String _itemSelectedEventName;
 	private final List<ItemSelectorViewRenderer> _itemSelectorViewRenderers;
 	private final String _selectedTab;
 

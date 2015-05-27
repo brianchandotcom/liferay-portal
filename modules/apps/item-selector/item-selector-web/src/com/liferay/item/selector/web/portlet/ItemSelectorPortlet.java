@@ -138,7 +138,8 @@ public class ItemSelectorPortlet extends MVCPortlet {
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ItemSelectorRendering itemSelectorRendering =
-			_itemSelector.getItemSelectorRendering(actionRequest);
+			_itemSelector.getItemSelectorRendering(
+				actionRequest, actionResponse);
 
 		LocalizedItemSelectorRendering localizedItemSelectorRendering =
 			new LocalizedItemSelectorRendering(

@@ -46,7 +46,7 @@ public class MediaItemSelectorView
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			MediaItemSelectorCriterion mediaItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedCallback)
+			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException {
 
 		PrintWriter printWriter = response.getWriter();

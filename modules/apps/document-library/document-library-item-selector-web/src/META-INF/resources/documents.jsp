@@ -18,7 +18,8 @@
 
 <%
 DLItemSelectorCriterion dlItemSelectorCriterion = (DLItemSelectorCriterion)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_CRITERION);
-String itemSelectedCallback = (String)request.getAttribute(DLItemSelectorView.ITEM_SELECTED_CALLBACK);
+String itemSelectedEventName = HtmlUtil.escape(ParamUtil.getString(request, DLItemSelectorView.ITEM_SELECTED_EVENT_NAME));
+
 PortletURL portletURL = (PortletURL)request.getAttribute(DLItemSelectorView.PORTLET_URL);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
@@ -348,7 +349,7 @@ if (folderId > 0) {
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("fileEntryid", fileEntry.getFileEntryId());
+				data.put("fileEntryId", fileEntry.getFileEntryId());
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -368,9 +369,15 @@ if (folderId > 0) {
 		'click',
 		'.selector-button',
 		function(event) {
-			var fileEntryId = event.target.getAttribute('data-fileEntryId');
+			Util.getOpener().Liferay.fire(
+				'<%= itemSelectedEventName %>',
+				{
+					returnType : '<%= FileEntry.class.getName() %>',
+					value : event.target.getAttribute('data-fileEntryId')
+				}
+			);
 
-			<%= itemSelectedCallback %>('<%= FileEntry.class.getName() %>', fileEntryId);
+			Util.getWindow().destroy();
 		}
 	);
 </aui:script>

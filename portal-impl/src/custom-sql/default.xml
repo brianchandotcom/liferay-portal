@@ -7,7 +7,6 @@
 	<sql file="custom-sql/blogs.xml" />
 	<sql file="custom-sql/calendar.xml" />
 	<sql file="custom-sql/documentlibrary.xml" />
-	<sql file="custom-sql/dynamicdatalists.xml" />
 	<sql file="custom-sql/dynamicdatamapping.xml" />
 	<sql file="custom-sql/expando.xml" />
 	<sql file="custom-sql/journal.xml" />

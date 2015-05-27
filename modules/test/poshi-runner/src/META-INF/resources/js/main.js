@@ -1,21 +1,10 @@
-function macroHover(node, enter) {
-	var lineGroup = node.parentNode;
-
-	if (enter) {
-		lineGroup.classList.add('hover');
-	}
-	else {
-		lineGroup.classList.remove('hover');
-	}
-}
-
 function addChildLoggerElement(childLoggerAttributes, extraAttributes) {
-	var childNode = document.createElement(childLoggerAttributes.elementName);
+	var childNode = document.createElement(childLoggerAttributes.name);
 	var parentNode = document.getElementById(childLoggerAttributes.parentId);
 
 	if (childNode) {
-		childNode.setAttribute('class', childLoggerAttributes.elementClass);
-		childNode.setAttribute('id', childLoggerAttributes.elementId);
+		childNode.setAttribute('class', childLoggerAttributes.cssClass);
+		childNode.setAttribute('id', childLoggerAttributes.id);
 
 		childNode.innerHTML = childLoggerAttributes.innerHTML;
 
@@ -31,34 +20,60 @@ function addChildLoggerElement(childLoggerAttributes, extraAttributes) {
 function getClassName(id) {
 	var node = document.getElementById(id);
 
+	var val = null;
+
 	if (node) {
-		return node.getAttribute('class');
+		val = node.getAttribute('class');
 	}
+
+	return val;
 }
 
 function getName(id) {
 	var node = document.getElementById(id);
 
+	var val = null;
+
 	if (node) {
-		return node.nodeName;
+		val = node.nodeName;
 	}
+
+	return val;
 }
 
 function getText(id) {
 	var node = document.getElementById(id);
 
+	var val = null;
+
 	if (node) {
-		return node.innerHTML;
+		val = node.innerHTML;
 	}
+
+	return val;
 }
 
 function isWrittenToLogger(id) {
 	var node = document.getElementById(id);
 
-	if (node == null) {
-		return false;
+	var val = false;
+
+	if (node) {
+		val = true;
 	}
-	return true;
+
+	return val;
+}
+
+function macroHover(node, enter) {
+	var lineGroup = node.parentNode;
+
+	if (enter) {
+		lineGroup.classList.add('hover');
+	}
+	else {
+		lineGroup.classList.remove('hover');
+	}
 }
 
 function setAttribute(id, attrName, attrValue) {
@@ -80,13 +95,16 @@ function setClassName(id, className) {
 function setName(id, name) {
 	var oldNode = document.getElementById(id);
 
-	var newNode = document.createElement(name);
-
 	if (oldNode) {
+		var newNode = document.createElement(name);
+
 		newNode.innerHTML = oldNode.innerHTML;
 
-		newNode.setAttribute('class', oldNode.getAttribute('class'));
-		newNode.setAttribute('id', oldNode.getAttribute('id'));
+		var oldNodeClassName = oldNode.getAttribute('class');
+		var oldNodeId = oldNode.getAttribute('id');
+
+		newNode.setAttribute('class', oldNodeClassName);
+		newNode.setAttribute('id', oldNodeId);
 
 		oldNode.parentNode.insertBefore(newNode, oldNode.nextSibling);
 

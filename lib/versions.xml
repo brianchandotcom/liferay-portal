@@ -2073,18 +2073,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jamwiki-core.jar</file-name>
-				<version>1.0.7</version>
-				<project-name>JAMWiki</project-name>
-				<project-url>http://jamwiki.org</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/portal/java-diff.jar</file-name>
 				<version>1.0.5</version>
 				<project-name>Java Diff</project-name>

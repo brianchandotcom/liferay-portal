@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.POPServerUtil;
 import com.liferay.portal.spring.context.PortalContextLoaderListener;
@@ -57,8 +56,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-
-import org.jamwiki.Environment;
 
 /**
  * @author Brian Wing Shun Chan
@@ -255,17 +252,6 @@ public class GlobalStartupAction extends SimpleAction {
 		// Authentication
 
 		AuthPublicPathRegistry.register(PropsValues.AUTH_PUBLIC_PATHS);
-
-		// JAMWiki
-
-		try {
-			String tmpDir = SystemProperties.get(SystemProperties.TMP_DIR);
-
-			Environment.setValue(Environment.PROP_BASE_FILE_DIR, tmpDir);
-		}
-		catch (Throwable t) {
-			_log.error(t);
-		}
 
 		// Javadoc
 

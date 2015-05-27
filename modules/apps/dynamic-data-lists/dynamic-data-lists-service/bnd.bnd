@@ -1,0 +1,19 @@
+Bundle-Name: Liferay Dynamic Data Lists Service
+Bundle-SymbolicName: com.liferay.dynamic.data.lists.service
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.dynamic.data.lists.lar,\
+	com.liferay.dynamic.data.lists.model.impl,\
+	com.liferay.dynamic.data.lists.service.permission,\
+	com.liferay.dynamic.data.lists.util
+Include-Resource:\
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/*-spring.xml;timeout:=${spring.extender.time.to.wait}

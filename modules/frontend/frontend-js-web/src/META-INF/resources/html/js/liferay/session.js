@@ -134,7 +134,7 @@ AUI.add(
 
 						var src = null;
 
-						if (('src' in event) && event.details.length) {
+						if ('src' in event && event.details.length) {
 							src = event.details[0];
 						}
 
@@ -256,7 +256,7 @@ AUI.add(
 						A.on(
 							'io:complete',
 							function(transactionId, response, args) {
-								if (!args || (args && (args.sessionExtend || !Lang.isBoolean(args.sessionExtend)))) {
+								if (!args || args && args.sessionExtend || !Lang.isBoolean(args.sessionExtend)) {
 									instance.resetInterval();
 								}
 							}
@@ -294,25 +294,26 @@ AUI.add(
 					_startTimer: function() {
 						var instance = this;
 
-						var warningTime = instance.get('warningTime');
 						var sessionLength = instance.get('sessionLength');
+						var warningTime = instance.get('warningTime');
 
 						instance._elapsed = 0;
 
-						var registered = instance._registered;
 						var interval = 1000;
+
+						var registered = instance._registered;
 
 						instance._intervalId = A.setInterval(
 							function() {
-								var elapsed = (instance._elapsed += 1000);
+								var elapsed = instance._elapsed += 1000;
 
 								var extend = false;
 
-								var expirationMoment = (elapsed == sessionLength);
-								var warningMoment = (elapsed == warningTime);
+								var expirationMoment = elapsed == sessionLength;
+								var warningMoment = elapsed == warningTime;
 
-								var hasExpired = (elapsed >= sessionLength);
-								var hasWarned = (elapsed >= warningTime);
+								var hasExpired = elapsed >= sessionLength;
+								var hasWarned = elapsed >= warningTime;
 
 								var updateSessionState = true;
 

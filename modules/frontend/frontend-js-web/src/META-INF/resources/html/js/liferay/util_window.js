@@ -8,7 +8,7 @@ AUI.add(
 		var Util = Liferay.Util;
 		var Window = Util.Window;
 
-		var IE9 = (UA.ie == 9);
+		var IE9 = UA.ie == 9;
 
 		var setWidth = function(modal, width) {
 			if (IE9) {

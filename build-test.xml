@@ -4228,7 +4228,11 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 		</if>
 
 		<if>
-			<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+			<or>
+				<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+				<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
+				<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
+			</or>
 			<then>
 				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
 
@@ -4601,7 +4605,11 @@ plugins.includes=marketplace-portlet</echo>
 				<if>
 					<and>
 						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+						<or>
+							<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+							<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
+							<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
+						</or>
 					</and>
 					<then>
 						<echo file="app.server.${user.name}.properties" append="true">

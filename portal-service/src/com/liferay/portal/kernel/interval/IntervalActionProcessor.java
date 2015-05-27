@@ -65,6 +65,10 @@ public class IntervalActionProcessor<T> {
 	}
 
 	public T performIntervalActions() throws PortalException {
+		if (_total == 0) {
+			return null;
+		}
+
 		int pages = _total / _interval;
 
 		for (int i = 0; i <= pages; i++) {

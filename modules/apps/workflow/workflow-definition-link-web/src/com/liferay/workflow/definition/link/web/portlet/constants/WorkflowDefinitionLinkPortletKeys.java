@@ -26,4 +26,5 @@ public class WorkflowDefinitionLinkPortletKeys {
 	public static final String WORKFLOW_DEFINITION_LINK_CONTROL_PANEL =
 		"com_liferay_workflow_definition_link_web_portlet_" +
 			"WorkflowDefinitionLinkControlPanelPortlet";
+
 }

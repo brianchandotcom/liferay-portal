@@ -50,7 +50,6 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcPath", "/view.jsp");
 portletURL.setParameter("tabs1", "default-configuration");
-
 %>
 
 <portlet:actionURL name="updateWorkflowDefinitionLink" var="updateWorkflowDefinitionLinkURL"  />

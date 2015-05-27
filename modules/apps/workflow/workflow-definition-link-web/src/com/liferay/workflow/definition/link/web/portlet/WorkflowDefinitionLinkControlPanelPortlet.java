@@ -14,12 +14,12 @@
 
 package com.liferay.workflow.definition.link.web.portlet;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
+
 import javax.portlet.Portlet;
 
 import org.osgi.service.component.annotations.Component;
-
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefinitionLinkPortletKeys;
 
 /**
  * @author Leonardo Barros
@@ -50,5 +50,4 @@ import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefini
 	service = Portlet.class
 )
 public class WorkflowDefinitionLinkControlPanelPortlet extends MVCPortlet {
-
 }

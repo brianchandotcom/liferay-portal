@@ -1599,8 +1599,8 @@ property files. First name is required and always present.
 #### What changed?
 
 The methods `getGroupLocalRepositoryImpl(...)` and `getLocalRepositoryImpl(...)`
-have been removed from `RepositoryLocalService` and `RepositoryService` because,
-although they are related to that service, they should be placed in a different
+have been removed from `RepositoryLocalService` and `RepositoryService`.
+Although the methods are related to the service, they belong in a different
 level of abstraction.
 
 #### Who is affected?
@@ -1609,20 +1609,20 @@ This affects anyone who uses those methods.
 
 #### How should I update my code?
 
-The removed methods were generic and had a long signature with optional
-parameters. Now they have one specialized version per parameter and are placed
-in the `RepositoryProvider` service. For instance, if you called:
+The removed methods were generic and had long signatures with optional
+parameters. They now have one specialized version per parameter and are
+in the `RepositoryProvider` service. For instance, if you called ...
 
     RepositoryLocalServiceUtil.getRepositoryImpl(0, fileEntryId, 0)
 
-now you must call:
+... you must now call ...
 
     RepositoryProviderUtil.getLocalRepositoryByFileEntryId(fileEntryId)
 
 #### Why was this change made?
 
-This change was made to enhance the Repository API and make decoupling from the
-Document Library easier when modularizing the portal.
+This change was made to enhance the Repository API and facilitate decoupling the
+API from the Document Library, as a part of the portal modularization effort.
 
 ---------------------------------------
 
@@ -1649,8 +1649,8 @@ methods used by `addFileEntry`.
 
 #### Why was this change made?
 
-The logic inside the `addFileEntry` method was moved out from
-`DLAppHelperLocalService` and into repository capabilities to further decouple
+The logic inside the `addFileEntry` method was moved, out from
+`DLAppHelperLocalService` and into repository capabilities, to further decouple
 core repository implementations from additional (optional) functionality.
 
 ---------------------------------------

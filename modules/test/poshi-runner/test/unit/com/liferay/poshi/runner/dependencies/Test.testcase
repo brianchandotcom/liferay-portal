@@ -1,4 +1,4 @@
-<definition component-name="test">
+<definition component-name="portal-acceptance">
 	<command name="test">
 		<execute function="Open" value="http://www.google.com" />
 	</command>

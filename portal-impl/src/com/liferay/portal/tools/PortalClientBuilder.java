@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.util.ant.Wsdl2JavaTask;
 import com.liferay.util.axis.AxisServlet;
 
@@ -79,7 +79,7 @@ public class PortalClientBuilder {
 
 		_axisHttpServlet = _createAxisHttpServlet(parentFile.getParentFile());
 
-		Document document = SAXReaderUtil.read(new File(fileName));
+		Document document = UnsecureSAXReaderUtil.read(new File(fileName));
 
 		Element rootElement = document.getRootElement();
 

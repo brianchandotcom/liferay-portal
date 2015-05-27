@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.User;
@@ -351,7 +352,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		XPath xPathSelector = SAXReaderUtil.createXPath("//dynamic-content");
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element element = (Element)xPathSelector.selectSingleNode(document);
 
@@ -635,7 +636,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 
 		Map<String, Map<Locale, List<String>>> fieldsMap = new HashMap<>();
 
-		Document document = SAXReaderUtil.read(content);
+		Document document = UnsecureSAXReaderUtil.read(content);
 
 		Element rootElement = document.getRootElement();
 

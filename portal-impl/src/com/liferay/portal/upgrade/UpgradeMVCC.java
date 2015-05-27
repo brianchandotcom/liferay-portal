@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.io.InputStream;
 
@@ -69,7 +69,7 @@ public class UpgradeMVCC extends UpgradeProcess {
 		InputStream inputStream = classLoader.getResourceAsStream(
 			"META-INF/portal-hbm.xml");
 
-		Document document = SAXReaderUtil.read(inputStream);
+		Document document = UnsecureSAXReaderUtil.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 

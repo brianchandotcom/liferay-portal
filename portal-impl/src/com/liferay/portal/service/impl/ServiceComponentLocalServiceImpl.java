@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.ServiceComponent;
 import com.liferay.portal.service.base.ServiceComponentLocalServiceBaseImpl;
@@ -289,7 +290,7 @@ public class ServiceComponentLocalServiceImpl
 			return;
 		}
 
-		Document document = SAXReaderUtil.read(inputStream);
+		Document document = UnsecureSAXReaderUtil.read(inputStream);
 
 		Element rootElement = document.getRootElement();
 
@@ -395,7 +396,7 @@ public class ServiceComponentLocalServiceImpl
 	protected List<String> getModelNames(String xml) throws DocumentException {
 		List<String> modelNames = new ArrayList<>();
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = UnsecureSAXReaderUtil.read(xml);
 
 		Element rootElement = document.getRootElement();
 

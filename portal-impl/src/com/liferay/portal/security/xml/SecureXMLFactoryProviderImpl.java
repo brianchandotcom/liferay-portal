@@ -98,11 +98,13 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 
 	@Override
 	public XMLReader newXMLReader() {
-		XMLReader xmlReader = new StripDoctypeXMLReader(new SAXParser());
+		XMLReader xmlReader = new SAXParser();
 
 		if (!PropsValues.XML_SECURITY_ENABLED) {
 			return xmlReader;
 		}
+
+		xmlReader = new StripDoctypeXMLReader(xmlReader);
 
 		try {
 			xmlReader.setFeature(_FEATURES_DISALLOW_DOCTYPE_DECL, true);

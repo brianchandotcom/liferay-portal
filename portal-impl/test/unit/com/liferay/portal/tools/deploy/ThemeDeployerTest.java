@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.plugin.PluginPackage;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.plugin.PluginPackageUtil;
 
 import java.io.File;
@@ -86,7 +86,8 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 
 		Assert.assertNotNull(liferayLookAndFeelXML);
 
-		Document document = SAXReaderUtil.read(liferayLookAndFeelXML, true);
+		Document document = UnsecureSAXReaderUtil.read(
+			liferayLookAndFeelXML, true);
 
 		Element rootElement = document.getRootElement();
 

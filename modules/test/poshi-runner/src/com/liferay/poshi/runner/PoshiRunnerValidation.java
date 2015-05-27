@@ -93,7 +93,8 @@ public class PoshiRunnerValidation {
 	}
 
 	private static String _getPrimaryAttributeName(
-		Element element, List<String> primaryAttributeNames, String filePath) {
+		Element element, List<String> multiplePrimaryAttributeNames,
+		List<String> primaryAttributeNames, String filePath) {
 
 		_validateHasPrimaryAttributeName(
 			element, primaryAttributeNames, filePath);
@@ -107,6 +108,13 @@ public class PoshiRunnerValidation {
 		}
 
 		return null;
+	}
+
+	private static String _getPrimaryAttributeName(
+		Element element, List<String> primaryAttributeNames, String filePath) {
+
+		return _getPrimaryAttributeName(element, null, primaryAttributeNames,
+			filePath);
 	}
 
 	private static void _parseElements(Element element, String filePath) {
@@ -608,7 +616,8 @@ public class PoshiRunnerValidation {
 	}
 
 	private static void _validateHasPrimaryAttributeName(
-		Element element, List<String> primaryAttributeNames, String filePath) {
+		Element element, List<String> multiplePrimaryAttributeNames,
+		List<String> primaryAttributeNames, String filePath) {
 
 		boolean found = false;
 
@@ -634,6 +643,13 @@ public class PoshiRunnerValidation {
 					"Invalid or missing attribute\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
+	}
+
+	private static void _validateHasPrimaryAttributeName(
+		Element element, List<String> primaryAttributeNames, String filePath) {
+
+		_validateHasPrimaryAttributeName(element, null, primaryAttributeNames,
+			filePath);
 	}
 
 	private static void _validateIfElement(Element element, String filePath) {

@@ -93,6 +93,8 @@ public class PropsValues {
 	public static final String PORTAL_URL = PropsUtil.get(
 		"portal.url");
 
+	public static final String PRODUCT_NAMES = PropsUtil.get("product.names");
+
 	public static final boolean SAVE_SCREENSHOT = GetterUtil.getBoolean(
 		PropsUtil.get("save.screenshot"));
 

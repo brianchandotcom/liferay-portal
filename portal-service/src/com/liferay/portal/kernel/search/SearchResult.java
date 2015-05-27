@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +33,8 @@ public class SearchResult {
 		_classPK = classPK;
 	}
 
-	public void addComment(MBMessage mbMessage, Summary summary) {
-		_commentTuples.add(new Tuple(mbMessage, summary));
+	public void addComment(Comment comment, Summary summary) {
+		_commentTuples.add(new Tuple(comment, summary));
 	}
 
 	public void addFileEntry(FileEntry fileEntry, Summary summary) {

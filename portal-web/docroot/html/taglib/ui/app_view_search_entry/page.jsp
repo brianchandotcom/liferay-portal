@@ -144,9 +144,9 @@ summary.setQueryTerms(queryTerms);
 
 		<%
 		for (Tuple commentTuple : commentTuples) {
-			MBMessage mbMessage = (MBMessage)commentTuple.getObject(0);
+			Comment comment = (Comment)commentTuple.getObject(0);
 
-			User userDisplay = UserLocalServiceUtil.getUser(mbMessage.getUserId());
+			User userDisplay = comment.getUser();
 
 			summary = (Summary)commentTuple.getObject(1);
 

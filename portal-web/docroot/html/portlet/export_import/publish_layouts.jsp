@@ -187,7 +187,7 @@ else if (!quickPublish) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<c:if test="<%= !quickPublish %>">
+<c:if test="<%= !quickPublish && !layout.isTypeControlPanel() %>">
 	<div class="export-dialog-tree">
 		<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 			<portlet:param name="struts_action" value="/export_import/publish_layouts" />

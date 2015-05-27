@@ -280,7 +280,7 @@ public class PoshiRunnerContext {
 			Element rootElement = getTestCaseRootElement(testCaseClassName);
 
 			if (Validator.equals(
-					"true", rootElement.attributeValue("ignore"))) {
+					rootElement.attributeValue("ignore"), "true")) {
 
 				continue;
 			}

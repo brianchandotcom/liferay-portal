@@ -6,6 +6,6 @@ Import-Package:\
 	javax.servlet;version='[2.3.0,4.0.0)',\
 	javax.servlet.http;version='[2.3.0,4.0.0)',\
 	*
-Include-Resource:
+Include-Resource:\
 	classes,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class

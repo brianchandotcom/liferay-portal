@@ -190,7 +190,7 @@ else if (!quickPublish) {
 <c:if test="<%= !quickPublish %>">
 	<div class="export-dialog-tree">
 		<portlet:renderURL var="simplePublishRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+			<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 			<portlet:param name="tabs2" value="current-and-previous" />
 			<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />
@@ -198,7 +198,7 @@ else if (!quickPublish) {
 		</portlet:renderURL>
 
 		<portlet:renderURL var="simplePublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/staging_bar/publish_layouts_simple" />
+			<portlet:param name="struts_action" value="/export_import/publish_layouts_simple" />
 			<portlet:param name="redirect" value="<%= simplePublishRedirectURL %>" />
 			<portlet:param name="localPublishing" value="<%= String.valueOf(localPublishing) %>" />
 			<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

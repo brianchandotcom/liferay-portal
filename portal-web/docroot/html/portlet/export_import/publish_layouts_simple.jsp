@@ -51,7 +51,7 @@ GroupDisplayContextHelper groupDisplayContextHelper = new GroupDisplayContextHel
 	<div class="export-dialog-tree">
 		<ul class="lfr-tree list-unstyled">
 			<portlet:renderURL var="advancedPublishURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/staging_bar/publish_layouts" />
+				<portlet:param name="struts_action" value="/export_import/publish_layouts" />
 				<portlet:param name="tabs2" value="new-publication-process" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getGroupId()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(privateLayout) %>" />

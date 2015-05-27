@@ -251,7 +251,7 @@ AUI.add(
 					_validateContent: function(value) {
 						var instance = this;
 
-						return Lang.isString(value) || Lang.isArray(value) || A.instanceOf(value, A.Node);
+						return Lang.isString(value) || Array.isArray(value) || A.instanceOf(value, A.Node);
 					}
 				}
 			}

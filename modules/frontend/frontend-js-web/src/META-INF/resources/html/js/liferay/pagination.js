@@ -31,7 +31,7 @@ AUI.add(
 					},
 
 					itemsPerPageList: {
-						validator: Lang.isArray,
+						validator: Array.isArray,
 						value: [5, 10, 20, 30, 50, 75]
 					},
 

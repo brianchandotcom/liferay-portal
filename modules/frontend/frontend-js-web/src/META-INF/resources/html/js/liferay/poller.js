@@ -87,7 +87,7 @@ AUI.add(
 			var response = JSON.parse(obj.responseText);
 			var send = false;
 
-			if (A.Lang.isArray(response)) {
+			if (Array.isArray(response)) {
 				var meta = response.shift();
 
 				for (var i = 0; i < response.length; i++) {

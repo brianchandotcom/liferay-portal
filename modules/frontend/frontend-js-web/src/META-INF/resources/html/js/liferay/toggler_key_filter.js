@@ -11,7 +11,7 @@ AUI.add(
 			{
 				ATTRS: {
 					filter: {
-						validator: A.Lang.isArray,
+						validator: Array.isArray,
 						value: [
 							KeyMap.ESC,
 							KeyMap.LEFT,
@@ -41,10 +41,10 @@ AUI.add(
 					_headerEventHandler: function(event) {
 						var instance = this;
 
-						var validAction = (event.type === instance._toggleEvent);
+						var validAction = event.type === instance._toggleEvent;
 
 						if (!validAction) {
-							validAction = (AArray.indexOf(instance.get('filter'), event.keyCode) > -1);
+							validAction = AArray.indexOf(instance.get('filter'), event.keyCode) > -1;
 						}
 
 						if (!validAction) {

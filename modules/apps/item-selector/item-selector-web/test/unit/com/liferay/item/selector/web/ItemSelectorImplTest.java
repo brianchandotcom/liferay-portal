@@ -32,8 +32,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -118,11 +116,12 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void testGetItemSelectorRendering() {
 		setUpItemSelectionCriterionHandlers();
 
-		PortletRequest request = getMockPortletRequest();
-		PortletResponse response = getMockPortletResponse();
+		PortletRequest portletRequest = getMockPortletRequest();
+		PortletResponse portletResponse = getMockPortletResponse();
 
 		ItemSelectorRendering itemSelectorRendering =
-			_itemSelectorImpl.getItemSelectorRendering(request, response);
+			_itemSelectorImpl.getItemSelectorRendering(
+				portletRequest, portletResponse);
 
 		Assert.assertEquals(
 			"itemSelectedEventName",
@@ -147,7 +146,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertTrue(
 			(ItemSelectorView<?>)
 				mediaItemSelectorViewRenderer.getItemSelectorView()
-				instanceof MediaItemSelectorView);
+					instanceof MediaItemSelectorView);
 
 		ItemSelectorViewRenderer flickrItemSelectorViewRenderer =
 			itemSelectorViewRenderers.get(1);
@@ -162,7 +161,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		Assert.assertTrue(
 			(ItemSelectorView<?>)
 				flickrItemSelectorViewRenderer.getItemSelectorView()
-				instanceof FlickrItemSelectorView);
+					instanceof FlickrItemSelectorView);
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());
 	}
 

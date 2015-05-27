@@ -77,9 +77,9 @@ public class SeleniumBuilderFileUtil {
 
 		_componentNames = ListUtil.fromArray(
 			StringUtil.split(properties.getProperty("component.names")));
-		_testcaseAvailablePropertyNames = ListUtil.fromArray(
+		_testCaseAvailablePropertyNames = ListUtil.fromArray(
 			StringUtil.split(
-				properties.getProperty("testcase.available.property.names")));
+				properties.getProperty("test.case.available.property.names")));
 		_testrayAvailableComponentNames = ListUtil.fromArray(
 			StringUtil.split(
 				properties.getProperty("testray.available.component.names")));
@@ -1656,7 +1656,7 @@ public class SeleniumBuilderFileUtil {
 
 		String propertyName = propertyElement.attributeValue("name");
 
-		if (!_testcaseAvailablePropertyNames.contains(propertyName)) {
+		if (!_testCaseAvailablePropertyNames.contains(propertyName)) {
 			throwValidationException(
 				3003, fileName, propertyElement, propertyName);
 		}
@@ -2137,7 +2137,7 @@ public class SeleniumBuilderFileUtil {
 	private final Pattern _pathTrElementWordPattern2 = Pattern.compile(
 		"[A-Z0-9][A-Za-z0-9\\-]*");
 	private final Pattern _tagPattern = Pattern.compile("<[a-z\\-]+");
-	private final List<String> _testcaseAvailablePropertyNames;
+	private final List<String> _testCaseAvailablePropertyNames;
 	private final List<String> _testrayAvailableComponentNames;
 	private final Pattern _varElementFunctionPattern = Pattern.compile(
 		"\\$\\{(locator|value)[0-9]+\\}");

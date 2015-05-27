@@ -592,6 +592,18 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateHasMultiplePrimaryAttributeNames(
+		Element element, List<String> attributeNames,
+		List<String> multiplePrimaryAttributeNames, String filePath) {
+
+		if (!multiplePrimaryAttributeNames.equals((attributeNames))) {
+			_exceptions.add(
+				new Exception(
+					"Too many attributes: " + "\n" + filePath + ":" +
+							element.attributeValue("line-number")));
+		}
+	}
+
 	private static void _validateHasNoAttributes(
 		Element element, String filePath) {
 

@@ -18,11 +18,11 @@ import com.liferay.portal.LayoutPermissionException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchUserException;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
+import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
@@ -1543,37 +1543,58 @@ public class ServicePreAction extends Action {
 		return new LayoutComposite(layout, layouts);
 	}
 
-	protected LayoutComposite getDefaultUserSitesLayoutComposite(User user) {
-		Layout layout = null;
-		List<Layout> layouts = null;
+	protected LayoutComposite getDefaultUserSitesLayoutComposite(
+			final User user)
+		throws PortalException {
 
-		LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
+		final LinkedHashMap<String, Object> groupParams = new LinkedHashMap<>();
 
 		groupParams.put("usersGroups", new Long(user.getUserId()));
 
-		List<Group> groups = GroupLocalServiceUtil.search(
-			user.getCompanyId(), null, null, groupParams, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+		int count = GroupLocalServiceUtil.searchCount(
+			user.getCompanyId(), null, null, groupParams);
 
-		for (Group group : groups) {
-			layouts = LayoutLocalServiceUtil.getLayouts(
-				group.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		IntervalActionProcessor<LayoutComposite> intervalActionProcessor =
+			new IntervalActionProcessor<>(count);
 
-			if (layouts.isEmpty()) {
-				layouts = LayoutLocalServiceUtil.getLayouts(
-					group.getGroupId(), false,
-					LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+		intervalActionProcessor.setPerformIntervalActionMethod(
+			new IntervalActionProcessor.PerformIntervalActionMethod
+				<LayoutComposite>() {
+
+			@Override
+			public LayoutComposite performIntervalAction(int start, int end) {
+				List<Group> groups = GroupLocalServiceUtil.search(
+					user.getCompanyId(), null, null, groupParams, start, end);
+
+				for (Group group : groups) {
+					List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
+						group.getGroupId(), true,
+						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+					if (layouts.isEmpty()) {
+						layouts = LayoutLocalServiceUtil.getLayouts(
+							group.getGroupId(), false,
+							LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+					}
+
+					if (!layouts.isEmpty()) {
+						return new LayoutComposite(layouts.get(0), layouts);
+					}
+				}
+
+				return null;
 			}
 
-			if (!layouts.isEmpty()) {
-				layout = layouts.get(0);
+		});
 
-				break;
-			}
+		LayoutComposite layoutComposite =
+			intervalActionProcessor.performIntervalActions();
+
+		if (layoutComposite == null) {
+			return new LayoutComposite(null, new ArrayList<Layout>());
 		}
 
-		return new LayoutComposite(layout, layouts);
+		return layoutComposite;
 	}
 
 	protected LayoutComposite getDefaultViewableLayoutComposite(

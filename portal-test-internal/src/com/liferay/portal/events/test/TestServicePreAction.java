@@ -90,7 +90,9 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public LayoutComposite getDefaultUserSitesLayoutComposite(User user) {
+	public LayoutComposite getDefaultUserSitesLayoutComposite(User user)
+		throws PortalException {
+
 		return super.getDefaultUserSitesLayoutComposite(user);
 	}
 

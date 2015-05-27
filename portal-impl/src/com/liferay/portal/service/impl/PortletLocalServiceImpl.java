@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.QName;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.EventDefinition;
 import com.liferay.portal.model.Portlet;
@@ -1148,7 +1148,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				"com/liferay/portal/deploy/dependencies/liferay-display.xml");
 		}
 
-		Document document = SAXReaderUtil.read(xml, true);
+		Document document = UnsecureSAXReaderUtil.read(xml, true);
 
 		Element rootElement = document.getRootElement();
 
@@ -1796,7 +1796,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return liferayPortletIds;
 		}
 
-		Document document = SAXReaderUtil.read(xml, true);
+		Document document = UnsecureSAXReaderUtil.read(xml, true);
 
 		Element rootElement = document.getRootElement();
 
@@ -2133,7 +2133,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return portletsMap;
 		}
 
-		Document document = SAXReaderUtil.read(
+		Document document = UnsecureSAXReaderUtil.read(
 			xml, PropsValues.PORTLET_XML_VALIDATE);
 
 		Element rootElement = document.getRootElement();
@@ -2321,7 +2321,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			return servletURLPatterns;
 		}
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = UnsecureSAXReaderUtil.read(xml);
 
 		Element rootElement = document.getRootElement();
 

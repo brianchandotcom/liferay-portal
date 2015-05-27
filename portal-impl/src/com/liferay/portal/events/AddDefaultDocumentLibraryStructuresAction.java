@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -178,7 +178,7 @@ public class AddDefaultDocumentLibraryStructuresAction
 		String xsd = buildDLRawMetadataXML(
 			RawMetadataProcessorUtil.getFields(), locale);
 
-		Document document = SAXReaderUtil.read(new StringReader(xsd));
+		Document document = UnsecureSAXReaderUtil.read(new StringReader(xsd));
 
 		Element rootElement = document.getRootElement();
 

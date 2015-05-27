@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceReference;
@@ -307,7 +307,7 @@ public class InvokerFilterHelper {
 			return;
 		}
 
-		Document document = SAXReaderUtil.read(inputStream, true);
+		Document document = UnsecureSAXReaderUtil.read(inputStream, true);
 
 		Element rootElement = document.getRootElement();
 

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.lar.test.BaseStagedModelDataHandlerTestCase;
@@ -289,7 +289,7 @@ public class LayoutSetPrototypeStagedModelDataHandlerTest
 
 		ZipReader zipReader = ZipReaderFactoryUtil.getZipReader(inputStream);
 
-		Document document = SAXReaderUtil.read(
+		Document document = UnsecureSAXReaderUtil.read(
 			zipReader.getEntryAsString("manifest.xml"));
 
 		Element rootElement = document.getRootElement();

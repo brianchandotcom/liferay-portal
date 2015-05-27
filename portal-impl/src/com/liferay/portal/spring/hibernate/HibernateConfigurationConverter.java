@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Converter;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -56,7 +56,7 @@ public class HibernateConfigurationConverter implements Converter<String> {
 			return input;
 		}
 
-		Document document = SAXReaderUtil.read(input);
+		Document document = UnsecureSAXReaderUtil.read(input);
 
 		Element rootElement = document.getRootElement();
 

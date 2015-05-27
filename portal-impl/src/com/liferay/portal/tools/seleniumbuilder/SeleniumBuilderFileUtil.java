@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.tools.servicebuilder.ServiceBuilder;
 
 import java.io.ByteArrayInputStream;
@@ -359,7 +359,7 @@ public class SeleniumBuilderFileUtil {
 		String content = getNormalizedContent(fileName);
 
 		try {
-			Document document = SAXReaderUtil.read(content, true);
+			Document document = UnsecureSAXReaderUtil.read(content, true);
 
 			Element rootElement = document.getRootElement();
 

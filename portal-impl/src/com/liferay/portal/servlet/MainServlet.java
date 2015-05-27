@@ -49,7 +49,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -606,7 +606,7 @@ public class MainServlet extends ActionServlet {
 	}
 
 	protected void checkWebSettings(String xml) throws DocumentException {
-		Document doc = SAXReaderUtil.read(xml);
+		Document doc = UnsecureSAXReaderUtil.read(xml);
 
 		Element root = doc.getRootElement();
 

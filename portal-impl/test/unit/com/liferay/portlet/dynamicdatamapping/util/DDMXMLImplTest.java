@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 
 import java.util.List;
@@ -119,14 +119,15 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 
 		String xml = read(fileName);
 
-		Document document = SAXReaderUtil.read(xml);
+		Document document = UnsecureSAXReaderUtil.read(xml);
 
 		List<Node> structureNodes = document.selectNodes("//structure");
 
 		for (Node structureNode : structureNodes) {
 			String structureXML = structureNode.asXML();
 
-			Document structureDocument = SAXReaderUtil.read(structureXML);
+			Document structureDocument = UnsecureSAXReaderUtil.read(
+				structureXML);
 
 			Element rootElement = (Element)structureDocument.selectSingleNode(
 				"/structure/root");
@@ -141,7 +142,8 @@ public class DDMXMLImplTest extends BaseDDMTestCase {
 			structureXML = _ddmXML.updateXMLDefaultLocale(
 				rootXML, contentDefaultLocale, availableDefaultLocale);
 
-			Document updatedXMLDocument = SAXReaderUtil.read(structureXML);
+			Document updatedXMLDocument = UnsecureSAXReaderUtil.read(
+				structureXML);
 
 			rootElement = updatedXMLDocument.getRootElement();
 

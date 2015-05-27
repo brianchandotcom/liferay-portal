@@ -35,7 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -762,7 +762,7 @@ public class CustomSQL {
 			_log.debug("Loading " + source);
 		}
 
-		Document document = SAXReaderUtil.read(is);
+		Document document = UnsecureSAXReaderUtil.read(is);
 
 		Element rootElement = document.getRootElement();
 

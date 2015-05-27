@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletApp;
 import com.liferay.registry.Filter;
@@ -183,7 +183,7 @@ public class FriendlyURLMapperTrackerImpl implements FriendlyURLMapperTracker {
 
 			String xml = StringUtil.read(classLoader, friendlyURLRoutes);
 
-			Document document = SAXReaderUtil.read(xml, true);
+			Document document = UnsecureSAXReaderUtil.read(xml, true);
 
 			Element rootElement = document.getRootElement();
 

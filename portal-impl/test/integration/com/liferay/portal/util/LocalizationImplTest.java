@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.PortletPreferencesImpl;
 
@@ -119,7 +119,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetAvailableLanguageIds() throws DocumentException {
-		Document document = SAXReaderUtil.read(_xml);
+		Document document = UnsecureSAXReaderUtil.read(_xml);
 
 		String[] documentAvailableLanguageIds =
 			LocalizationUtil.getAvailableLanguageIds(document);
@@ -142,7 +142,7 @@ public class LocalizationImplTest {
 
 	@Test
 	public void testGetDefaultLanguageId() throws DocumentException {
-		Document document = SAXReaderUtil.read(_xml);
+		Document document = UnsecureSAXReaderUtil.read(_xml);
 
 		String languageIdsFromDoc = LocalizationUtil.getDefaultLanguageId(
 			document);

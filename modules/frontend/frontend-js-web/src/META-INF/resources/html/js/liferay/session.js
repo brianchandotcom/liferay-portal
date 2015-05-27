@@ -114,7 +114,7 @@ AUI.add(
 
 						var registered = instance._registered;
 
-						if (A.Object.owns(registered, fnId)) {
+						if (registered.hasOwnProperty(fnId)) {
 							delete registered[fnId];
 						}
 
@@ -130,12 +130,13 @@ AUI.add(
 					_afterSessionStateChange: function(event) {
 						var instance = this;
 
+						var details = event.details;
 						var newVal = event.newVal;
 
 						var src = null;
 
-						if ('src' in event && event.details.length) {
-							src = event.details[0];
+						if ('src' in event && details.length) {
+							src = details[0];
 						}
 
 						instance.fire(MAP_SESSION_STATE_EVENTS[newVal] || newVal, src);
@@ -299,9 +300,9 @@ AUI.add(
 
 						instance._elapsed = 0;
 
-						var interval = 1000;
-
 						var registered = instance._registered;
+
+						var interval = 1000;
 
 						instance._intervalId = A.setInterval(
 							function() {

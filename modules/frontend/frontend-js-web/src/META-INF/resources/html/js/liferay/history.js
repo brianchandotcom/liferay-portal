@@ -1,12 +1,10 @@
 AUI.add(
 	'liferay-history',
 	function(A) {
-		var AObject = A.Object;
 		var Lang = A.Lang;
 		var QueryString = A.QueryString;
 
 		var isValue = Lang.isValue;
-		var owns = AObject.owns;
 
 		var WIN = A.config.win;
 
@@ -29,7 +27,7 @@ AUI.add(
 
 							var queryMap = instance._parse(query.substr(1));
 
-							if (owns(queryMap, key)) {
+							if (queryMap.hasOwnProperty(key)) {
 								value = queryMap[key];
 							}
 						}

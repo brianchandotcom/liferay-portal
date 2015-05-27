@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Roberto Díaz
  */
 
-public interface Editor {
+public interface LiferayEditor {
 
 	public String getEditorJspPath(HttpServletRequest request);
 

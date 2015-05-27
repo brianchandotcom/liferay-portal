@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.editors.web;
 
-import com.liferay.portal.kernel.editor.Editor;
+import com.liferay.portal.kernel.editor.LiferayEditor;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component
-public class TinyMCEEditor implements Editor {
+public class TinyMCEEditor implements LiferayEditor {
 
 	@Override
 	public String getEditorJspPath(HttpServletRequest request) {

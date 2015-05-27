@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.ui;
 
-import com.liferay.portal.kernel.editor.Editor;
+import com.liferay.portal.kernel.editor.LiferayEditor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfiguration;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigurationFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -265,7 +265,7 @@ public class InputEditorTag extends IncludeTag {
 		return data;
 	}
 
-	protected Editor getEditor(HttpServletRequest request) {
+	protected LiferayEditor getEditor(HttpServletRequest request) {
 		String editorName = _editorName;
 
 		if (!BrowserSnifferUtil.isRtf(request)) {
@@ -284,14 +284,14 @@ public class InputEditorTag extends IncludeTag {
 	}
 
 	protected String getEditorName(HttpServletRequest request) {
-		Editor editor = getEditor(request);
+		LiferayEditor editor = getEditor(request);
 
 		return editor.getName();
 	}
 
 	@Override
 	protected String getPage() {
-		Editor editor = getEditor(request);
+		LiferayEditor editor = getEditor(request);
 
 		return editor.getEditorJspPath(request);
 	}
@@ -357,18 +357,20 @@ public class InputEditorTag extends IncludeTag {
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
 		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
 
-	private static final ServiceTrackerMap<String, Editor>
+	private static final ServiceTrackerMap<String, LiferayEditor>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
-			Editor.class, null, new ServiceReferenceMapper<String, Editor>() {
+			LiferayEditor.class, null,
+			new ServiceReferenceMapper<String, LiferayEditor>() {
 
 				@Override
 				public void map(
-					ServiceReference<Editor> serviceReference,
+					ServiceReference<LiferayEditor> serviceReference,
 					Emitter<String> emitter) {
 
 					Registry registry = RegistryUtil.getRegistry();
 
-					Editor editor = registry.getService(serviceReference);
+					LiferayEditor editor = registry.getService(
+						serviceReference);
 
 					emitter.emit(editor.getName());
 				}

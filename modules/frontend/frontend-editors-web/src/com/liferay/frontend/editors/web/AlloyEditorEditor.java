@@ -14,11 +14,25 @@
 
 package com.liferay.frontend.editors.web;
 
+import com.liferay.portal.kernel.editor.LiferayEditor;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
-@Component(property = {"editor.name=alloyeditor"}, service = Object.class)
-public class AlloyEditorEditor {
+@Component(service = LiferayEditor.class)
+public class AlloyEditorEditor extends BaseLiferayEditor {
+
+	@Override
+	public String getName() {
+		return "alloyeditor";
+	}
+
+	@Override
+	protected String getEditorJspPath() {
+		return "/editors/alloyeditor.jsp";
+	}
+
 }

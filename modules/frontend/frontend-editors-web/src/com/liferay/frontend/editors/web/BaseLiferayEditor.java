@@ -15,24 +15,24 @@
 package com.liferay.frontend.editors.web;
 
 import com.liferay.portal.kernel.editor.LiferayEditor;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(service = LiferayEditor.class)
-public class CKEditorBBCodeEditor extends BaseLiferayEditor {
+public abstract class BaseLiferayEditor implements LiferayEditor {
 
 	@Override
-	public String getName() {
-		return "ckeditor_bbcode";
+	public String getEditorJspPath(HttpServletRequest request) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getPathEditors() + getEditorJspPath();
 	}
 
-	@Override
-	protected String getEditorJspPath() {
-		return "/editors/ckeditor_bbcode.jsp";
-	}
+	protected abstract String getEditorJspPath();
 
 }

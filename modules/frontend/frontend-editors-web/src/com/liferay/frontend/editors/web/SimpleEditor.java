@@ -14,11 +14,25 @@
 
 package com.liferay.frontend.editors.web;
 
+import com.liferay.portal.kernel.editor.LiferayEditor;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
-@Component(property = {"editor.name=simple"}, service = Object.class)
-public class SimpleEditor {
+@Component(service = LiferayEditor.class)
+public class SimpleEditor extends BaseLiferayEditor {
+
+	@Override
+	public String getName() {
+		return "simple";
+	}
+
+	@Override
+	protected String getEditorJspPath() {
+		return "/editors/simple.jsp";
+	}
+
 }

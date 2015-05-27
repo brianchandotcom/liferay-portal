@@ -14,11 +14,25 @@
 
 package com.liferay.frontend.editors.web;
 
+import com.liferay.portal.kernel.editor.LiferayEditor;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
+ * @author Roberto Díaz
  */
-@Component(property = {"editor.name=ckeditor"}, service = Object.class)
-public class CKEditorEditor {
+@Component(service = LiferayEditor.class)
+public class CKEditorEditor extends BaseLiferayEditor {
+
+	@Override
+	public String getName() {
+		return "ckeditor";
+	}
+
+	@Override
+	protected String getEditorJspPath() {
+		return "/editors/ckeditor.jsp";
+	}
+
 }

@@ -12,27 +12,18 @@
  * details.
  */
 
-package com.liferay.frontend.editors.web;
+package com.liferay.portal.kernel.editor;
 
-import com.liferay.portal.kernel.editor.LiferayEditor;
-
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component(service = LiferayEditor.class)
-public class CKEditorBBCodeEditor extends BaseLiferayEditor {
 
-	@Override
-	public String getName() {
-		return "ckeditor_bbcode";
-	}
+public interface LiferayEditor {
 
-	@Override
-	protected String getEditorJspPath() {
-		return "/editors/ckeditor_bbcode.jsp";
-	}
+	public String getEditorJspPath(HttpServletRequest request);
+
+	public String getName();
 
 }

@@ -66,6 +66,19 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</then>
 		</if>
 
+		<if>
+			<or>
+				<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+				<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
+				<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
+			</or>
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
+			</then>
+		</if>
+
 		<for list="${plugins.includes}" param="plugin">
 			<sequential>
 				<get-testcase-property property.name="portlet.properties.@{plugin}" />

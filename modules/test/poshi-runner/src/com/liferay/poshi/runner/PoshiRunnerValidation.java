@@ -18,6 +18,7 @@ import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -637,20 +638,23 @@ public class PoshiRunnerValidation {
 		Element element, List<String> multiplePrimaryAttributeNames,
 		List<String> primaryAttributeNames, String filePath) {
 
+		List<String> attributeNames = new ArrayList<String>();
+
 		boolean found = false;
 
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
 					element.attributeValue(primaryAttributeName))) {
 
+				attributeNames.add(primaryAttributeName);
+
 				if (!found) {
 					found = true;
 				}
 				else {
-					_exceptions.add(
-						new Exception(
-							"Too many attributes: " + "\n" + filePath + ":" +
-								element.attributeValue("line-number")));
+					_validateHasMultiplePrimaryAttributeNames(
+						element, attributeNames, multiplePrimaryAttributeNames,
+						filePath);
 				}
 			}
 		}

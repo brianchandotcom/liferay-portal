@@ -5385,30 +5385,45 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<if>
-			<contains string="${test.class}" substring="#" />
+			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
-				<get-test-method-name />
+				<get-poshi-test-name />
 
-				<get-test-simple-class-name />
-
-				<var name="test.class" unset="true" />
-				<var name="test.methods" unset="true" />
-
-				<ant dir="portal-web" target="test-method">
-					<property name="test.class" value="${test.simple.class.name}" />
-					<property name="test.dir" value="functional-generated" />
-					<property name="test.methods" value="${test.method.name}" />
-				</ant>
+				<gradle-execute failonerror="false" task="runPoshi">
+					<arg value="--build-file=portal-web/build-test.gradle" />
+					<arg value="-PposhiTestName=${poshi.test.name}" />
+					<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
+					<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+				</gradle-execute>
 			</then>
 			<else>
-				<get-test-simple-class-name />
+				<if>
+					<contains string="${test.class}" substring="#" />
+					<then>
+						<get-test-method-name />
 
-				<var name="test.class" unset="true" />
+						<get-test-simple-class-name />
 
-				<ant dir="portal-web" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.simple.class.name}" />
-					<property name="test.dir" value="functional-generated" />
-				</ant>
+						<var name="test.class" unset="true" />
+						<var name="test.methods" unset="true" />
+
+						<ant dir="portal-web" target="test-method">
+							<property name="test.class" value="${test.simple.class.name}" />
+							<property name="test.dir" value="functional-generated" />
+							<property name="test.methods" value="${test.method.name}" />
+						</ant>
+					</then>
+					<else>
+						<get-test-simple-class-name />
+
+						<var name="test.class" unset="true" />
+
+						<ant dir="portal-web" target="test-class" inheritAll="false">
+							<property name="test.class" value="${test.simple.class.name}" />
+							<property name="test.dir" value="functional-generated" />
+						</ant>
+					</else>
+				</if>
 			</else>
 		</if>
 

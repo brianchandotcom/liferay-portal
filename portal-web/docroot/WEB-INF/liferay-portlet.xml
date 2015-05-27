@@ -168,7 +168,6 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
 		<header-portlet-css>/o/ddm-web/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/html/portlet/document_library/js/main.js</footer-portlet-javascript>
@@ -1018,7 +1017,6 @@
 		<render-weight>50</render-weight>
 		<header-portlet-css>/html/portlet/document_library/css/main.css</header-portlet-css>
 		<header-portlet-css>/o/ddm-web/css/main.css</header-portlet-css>
-		<footer-portlet-javascript>/html/portlet/dynamic_data_lists/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/o/ddm-web/js/main.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/o/ddm-web/js/custom_fields.js</footer-portlet-javascript>
 		<footer-portlet-javascript>/html/portlet/document_library/js/main.js</footer-portlet-javascript>

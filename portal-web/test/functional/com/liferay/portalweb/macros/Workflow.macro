@@ -422,6 +422,13 @@
 
 		<var name="defaultWorkflow" value="Default: No Workflow" />
 
+		<if>
+			<condition function="IsElementPresent" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" />
+			<then>
+				<execute function="Select" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_KNOWLEDGE_BASE_ARTICLE_SELECT" value1="${defaultWorkflow}" />
+			</then>
+		</if>
+
 		<execute function="Select" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${defaultWorkflow}" />
 		<execute function="Select" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_BLOGS_ENTRY_SELECT" value1="${defaultWorkflow}" />
 		<execute function="Select" locator1="CPSiteWorkflowconfiguration#RESOURCE_TABLE_COMMENTS_SELECT" value1="${defaultWorkflow}" />

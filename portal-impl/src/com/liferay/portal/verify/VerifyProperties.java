@@ -406,6 +406,27 @@ public class VerifyProperties extends VerifyProcess {
 		// Auth Verifiers
 
 		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
+			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
+			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
+			"com.liferay.portal.security.auth"
+		},
+
+		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth",
 			"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth",
 			"com.liferay.portal.security.auth"

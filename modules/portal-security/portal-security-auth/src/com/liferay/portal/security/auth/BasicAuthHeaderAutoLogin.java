@@ -17,7 +17,6 @@ package com.liferay.portal.security.auth;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,6 +30,8 @@ import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * <p>
@@ -65,11 +66,17 @@ import javax.servlet.http.HttpServletResponse;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  */
-@OSGiBeanProperties(
-	portalPropertyPrefix = "auth.verifier.BasicAuthHeaderAutoLogin."
+@Component(
+	immediate = true,
+	property = {
+		"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth=false",
+		"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed=",
+		"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes=/api/liferay/*",
+		"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes=/api/*,/xmlrpc/*"
+	},
+	service = {AuthVerifier.class, AutoLogin.class}
 )
-public class BasicAuthHeaderAutoLogin
-	extends BaseAutoLogin implements AuthVerifier {
+public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 	@Override
 	public String getAuthType() {

@@ -25,8 +25,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.StringUtils;
-
 import org.dom4j.Attribute;
 import org.dom4j.Element;
 
@@ -304,7 +302,7 @@ public class PoshiRunnerValidation {
 
 		String elementName = element.getName();
 
-		if (!StringUtils.equals(elementName, "definition")) {
+		if (!Validator.equals(elementName, "definition")) {
 			_exceptions.add(
 				new Exception(
 					"Invalid " + elementName + " element\n" + filePath + ":" +
@@ -389,7 +387,7 @@ public class PoshiRunnerValidation {
 
 		Element thenElement = childElements.get(1);
 
-		if (StringUtils.equals("then", thenElement.getName())) {
+		if (Validator.equals("then", thenElement.getName())) {
 			_validateHasChildElements(thenElement, filePath);
 			_validateHasNoAttributes(thenElement, filePath);
 
@@ -475,7 +473,7 @@ public class PoshiRunnerValidation {
 				element, primaryAttributeNames, filePath);
 
 			for (Element childElement : childElements) {
-				if (StringUtils.equals(childElement.getName(), "var")) {
+				if (Validator.equals(childElement.getName(), "var")) {
 					_validateVarElement(childElement, filePath);
 
 					continue;
@@ -786,7 +784,7 @@ public class PoshiRunnerValidation {
 			filePath);
 		String rootElementName = element.getName();
 
-		if (!StringUtils.equals(rootElementName, "html")) {
+		if (!Validator.equals(rootElementName, "html")) {
 			_exceptions.add(
 				new Exception(
 					"Invalid " + rootElementName + " element\n" + filePath +
@@ -806,19 +804,19 @@ public class PoshiRunnerValidation {
 
 		Element tableElement = bodyElement.element("table");
 
-		List<String> requiredTableAttributes = Arrays.asList(
+		List<String> requiredTableAttributeNames = Arrays.asList(
 			"border", "cellpadding", "cellspacing", "line-number");
 
 		_validateHasChildElements(tableElement, filePath);
 		_validateNumberofChildElements(tableElement, 2, filePath);
 		_validateRequiredAttributeNames(
-			tableElement, requiredTableAttributes, filePath);
+			tableElement, requiredTableAttributeNames, filePath);
 		_validateRequiredChildElementNames(
 			tableElement, Arrays.asList("tbody", "thead"), filePath);
 
 		Element tBodyElement = tableElement.element("tbody");
 
-		if (!className.equals("BaseLiferay")) {
+		if (!Validator.equals(className, "BaseLiferay")) {
 			_validateHasChildElements(tBodyElement, filePath);
 			_validateRequiredChildElementName(tBodyElement, "tr", filePath);
 
@@ -878,7 +876,7 @@ public class PoshiRunnerValidation {
 					"Missing thead class name\n" + filePath + ":" +
 						trElement.attributeValue("line-number")));
 		}
-		else if (!theadClassName.equals(className)) {
+		else if (!Validator.equals(theadClassName, className)) {
 			_exceptions.add(
 				new Exception(
 					"Thead class name does not match file name\n" +
@@ -894,15 +892,7 @@ public class PoshiRunnerValidation {
 
 		Element titleElement = headElement.element("title");
 
-		String name = titleElement.getName();
-
-		if (!StringUtils.equals(name, "title")) {
-			_exceptions.add(
-				new Exception(
-					"Invalid " + name + " element\n"+ filePath + ":" +
-						titleElement.attributeValue("line-number")));
-		}
-		else if (!StringUtils.equals(titleElement.getText(), className)) {
+		if (!Validator.equals(titleElement.getText(), className)) {
 			_exceptions.add(
 				new Exception(
 					"File name and title are different\n" + filePath + ":" +
@@ -949,9 +939,7 @@ public class PoshiRunnerValidation {
 		List<Element> childElements = element.elements();
 
 		for (Element childElement : childElements) {
-			if (StringUtils.equals(
-					childElement.getName(), requiredElementName)) {
-
+			if (Validator.equals(childElement.getName(), requiredElementName)) {
 				found = true;
 
 				break;

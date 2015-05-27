@@ -37,7 +37,13 @@ public class PathUtil {
 
 		Path relativePath = projectPath.relativize(path);
 
-		return relativePath.toString();
+		String relativePathString = relativePath.toString();
+
+		if (File.separatorChar == '\\') {
+			relativePathString = relativePathString.replace('\\', '/');
+		}
+
+		return relativePathString;
 	}
 
 }

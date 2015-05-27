@@ -7153,7 +7153,7 @@ public class PortalImpl implements Portal {
 	@Override
 	public PortletMode updatePortletMode(
 		String portletId, User user, Layout layout, PortletMode portletMode,
-		HttpServletRequest request) {
+		HttpServletRequest request) throws PortalException {
 
 		LayoutTypePortlet layoutType =
 			(LayoutTypePortlet)layout.getLayoutType();
@@ -7188,6 +7188,22 @@ public class PortalImpl implements Portal {
 			}
 		}
 		else {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				getCompanyId(request), portletId);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			PermissionChecker permissionChecker =
+				themeDisplay.getPermissionChecker();
+
+			if (!PortletPermissionUtil.contains(
+					permissionChecker, getScopeGroupId(request), layout,
+					portlet, ActionKeys.VIEW)) {
+
+				return portletMode;
+			}
+
 			boolean updateLayout = false;
 
 			if (portletMode.equals(LiferayPortletMode.ABOUT) &&
@@ -7198,28 +7214,40 @@ public class PortalImpl implements Portal {
 				updateLayout = true;
 			}
 			else if (portletMode.equals(LiferayPortletMode.CONFIG) &&
-					 !layoutType.hasModeConfigPortletId(portletId)) {
+					 !layoutType.hasModeConfigPortletId(portletId) &&
+					 PortletPermissionUtil.contains(
+						 permissionChecker, getScopeGroupId(request), layout,
+						 portlet, ActionKeys.CONFIGURATION)) {
 
 				layoutType.addModeConfigPortletId(portletId);
 
 				updateLayout = true;
 			}
 			else if (portletMode.equals(PortletMode.EDIT) &&
-					 !layoutType.hasModeEditPortletId(portletId)) {
+					 !layoutType.hasModeEditPortletId(portletId) &&
+					 PortletPermissionUtil.contains(
+						 permissionChecker, getScopeGroupId(request), layout,
+						 portlet, ActionKeys.PREFERENCES)) {
 
 				layoutType.addModeEditPortletId(portletId);
 
 				updateLayout = true;
 			}
 			else if (portletMode.equals(LiferayPortletMode.EDIT_DEFAULTS) &&
-					 !layoutType.hasModeEditDefaultsPortletId(portletId)) {
+					 !layoutType.hasModeEditDefaultsPortletId(portletId) &&
+					 PortletPermissionUtil.contains(
+						 permissionChecker, getScopeGroupId(request), layout,
+						 portlet, ActionKeys.PREFERENCES)) {
 
 				layoutType.addModeEditDefaultsPortletId(portletId);
 
 				updateLayout = true;
 			}
 			else if (portletMode.equals(LiferayPortletMode.EDIT_GUEST) &&
-					 !layoutType.hasModeEditGuestPortletId(portletId)) {
+					 !layoutType.hasModeEditGuestPortletId(portletId) &&
+					 PortletPermissionUtil.contains(
+						 permissionChecker, getScopeGroupId(request), layout,
+						 portlet, ActionKeys.GUEST_PREFERENCES)) {
 
 				layoutType.addModeEditGuestPortletId(portletId);
 

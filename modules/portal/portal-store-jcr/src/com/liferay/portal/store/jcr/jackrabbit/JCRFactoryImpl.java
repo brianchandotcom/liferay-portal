@@ -14,8 +14,6 @@
 
 package com.liferay.portal.store.jcr.jackrabbit;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -27,8 +25,6 @@ import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.Map;
-
 import javax.jcr.Credentials;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
@@ -36,32 +32,46 @@ import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.core.TransientRepository;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
-
 /**
  * @author Michael Young
  * @author Manuel de la Peña
  */
-@Component(
-	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
-)
 public class JCRFactoryImpl implements JCRFactory {
+
+	public JCRFactoryImpl(JCRStoreConfiguration configuration)
+		throws RepositoryException {
+
+		_configuration = configuration;
+
+		try {
+			_transientRepository = new TransientRepository(
+				_configuration.jackrabbitConfigFilePath(),
+				_configuration.jackrabbitRepositoryHome());
+		}
+		catch (Exception e) {
+			_log.error("Problem initializing Jackrabbit JCR.", e);
+
+			throw e;
+		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Jackrabbit JCR intialized with config file path " +
+					_configuration.jackrabbitConfigFilePath() +
+					" and repository home " +
+					_configuration.jackrabbitRepositoryHome());
+		}
+	}
 
 	@Override
 	public Session createSession(String workspaceName)
 		throws RepositoryException {
 
 		char[] credentialsPassword =
-			_jcrStoreConfiguration.jackrabbitCredentialsPassword().
-				toCharArray();
+			_configuration.jackrabbitCredentialsPassword().toCharArray();
 
 		Credentials credentials = new SimpleCredentials(
-			_jcrStoreConfiguration.jackrabbitCredentialsUsername(),
+			_configuration.jackrabbitCredentialsUsername(),
 			credentialsPassword);
 
 		Session session = null;
@@ -102,8 +112,7 @@ public class JCRFactoryImpl implements JCRFactory {
 	@Override
 	public void prepare() throws RepositoryException {
 		try {
-			FileUtil.mkdirs(
-				_jcrStoreConfiguration.jackrabbitRepositoryRoot());
+			FileUtil.mkdirs(_configuration.jackrabbitRepositoryRoot());
 
 			File tempFile = new File(
 				SystemProperties.get(SystemProperties.TMP_DIR) +
@@ -125,8 +134,7 @@ public class JCRFactoryImpl implements JCRFactory {
 				tempFile, classLoader.getResourceAsStream(repositoryXmlPath));
 
 			FileUtil.copyFile(
-				tempFile,
-				new File(_jcrStoreConfiguration.jackrabbitConfigFilePath()));
+				tempFile, new File(_configuration.jackrabbitConfigFilePath()));
 
 			tempFile.delete();
 		}
@@ -146,54 +154,10 @@ public class JCRFactoryImpl implements JCRFactory {
 		_initialized = false;
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties)
-		throws RepositoryException {
-
-		_jcrStoreConfiguration = Configurable.createConfigurable(
-			JCRStoreConfiguration.class, properties);
-
-		String repositoryHome =
-			_jcrStoreConfiguration.jackrabbitRepositoryHome();
-
-		try {
-			_transientRepository = new TransientRepository(
-				_jcrStoreConfiguration.jackrabbitConfigFilePath(),
-				repositoryHome);
-		}
-		catch (Exception e) {
-			_log.error("Problem initializing Jackrabbit JCR.", e);
-
-			throw e;
-		}
-
-		if (_log.isInfoEnabled()) {
-			_log.info(
-				"Jackrabbit JCR intialized with config file path " +
-					_jcrStoreConfiguration.jackrabbitConfigFilePath() +
-						" and repository home " + repositoryHome);
-		}
-
-		prepare();
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		shutdown();
-	}
-
-	@Modified
-	protected void modified(Map<String, Object> properties)
-		throws RepositoryException {
-
-		deactivate();
-		activate(properties);
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(JCRFactoryImpl.class);
 
+	private JCRStoreConfiguration _configuration;
 	private boolean _initialized;
-	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 	private TransientRepository _transientRepository;
 
 }

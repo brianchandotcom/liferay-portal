@@ -9,6 +9,7 @@ Export-Package:\
 Include-Resource:\
 	classes,\
 	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class

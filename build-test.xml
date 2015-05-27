@@ -4227,6 +4227,15 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
 			</then>
 		</if>
 
+		<if>
+			<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+			<then>
+				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
+
+app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
+			</then>
+		</if>
+
 		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
 
 		<property name="plugins.includes" value="so-portlet,${dependent-apps}" />
@@ -4588,6 +4597,22 @@ plugins.includes=marketplace-portlet</echo>
 						<var name="test.app.server.bin.dir" unset="true" />
 
 						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
+					</then>
+				</if>
+
+				<if>
+					<and>
+						<equals arg1="${app.server.type}" arg2="tomcat" />
+						<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+					</and>
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.42
+						</echo>
+
+						<var name="test.app.server.bin.dir" unset="true" />
+
+						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
 					</then>
 				</if>
 

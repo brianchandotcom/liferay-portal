@@ -16,19 +16,21 @@ package com.liferay.portlet.configuration.icon.exportimport;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.theme.PortletDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class ExportImportPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	public ExportImportPortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+	}
 
 	@Override
 	public String getCssClass() {
@@ -52,7 +54,7 @@ public class ExportImportPortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		StringBundler sb = new StringBundler(11);
 
@@ -65,7 +67,7 @@ public class ExportImportPortletConfigurationIcon
 		sb.append("', '");
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
-		sb.append(LanguageUtil.get(_themeDisplay.getLocale(), "export-import"));
+		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "export-import"));
 		sb.append("'); return false;");
 
 		return sb.toString();
@@ -73,19 +75,14 @@ public class ExportImportPortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLExportImport();
 	}
 
 	@Override
-	public double getWeight() {
-		return 11.0;
-	}
-
-	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowExportImportIcon();
 	}

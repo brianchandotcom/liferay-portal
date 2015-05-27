@@ -112,6 +112,11 @@ public abstract class BasePortletConfigurationIcon
 		return null;
 	}
 
+	public void init(HttpServletRequest request) {
+		themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+	}
+
 	@Override
 	public boolean isLabel() {
 		return false;
@@ -132,15 +137,6 @@ public abstract class BasePortletConfigurationIcon
 		return false;
 	}
 
-	@Override
-	public void setRequest(HttpServletRequest request) {
-		_request = request;
-
-		_themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-	}
-
-	protected HttpServletRequest _request;
-	protected ThemeDisplay _themeDisplay;
+	protected ThemeDisplay themeDisplay;
 
 }

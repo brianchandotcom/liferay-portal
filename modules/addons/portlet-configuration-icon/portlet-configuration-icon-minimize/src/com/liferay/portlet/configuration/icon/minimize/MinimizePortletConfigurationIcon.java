@@ -15,17 +15,19 @@
 package com.liferay.portlet.configuration.icon.minimize;
 
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.theme.PortletDisplay;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class MinimizePortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	public MinimizePortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+	}
 
 	@Override
 	public String getCssClass() {
@@ -34,7 +36,7 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getImage() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (portletDisplay.isStateMin()) {
 			return "../aui/resize-vertical";
@@ -45,7 +47,7 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getMessage() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		if (portletDisplay.isStateMin()) {
 			return "restore";
@@ -56,7 +58,7 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getOnClick() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return "Liferay.Portlet.minimize('#p_p_id_".concat(
 			portletDisplay.getId()).concat("_', this); return false;");
@@ -64,19 +66,14 @@ public class MinimizePortletConfigurationIcon
 
 	@Override
 	public String getURL() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.getURLMin();
 	}
 
 	@Override
-	public double getWeight() {
-		return 6.0;
-	}
-
-	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		return portletDisplay.isShowMinIcon();
 	}

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,11 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/html/taglib/init.jsp" %>
+package com.liferay.portal.kernel.portlet.configuration;
 
-<%@ page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconFactory" %><%@
-page import="com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIconTracker" %><%@
-page import="com.liferay.util.PropertyComparator" %>
+import javax.servlet.http.HttpServletRequest;
+
+/**
+ * @author Eudaldo Alonso
+ */
+public interface PortletConfigurationIconFactory {
+
+	public PortletConfigurationIcon create(HttpServletRequest request);
+
+	public double getWeight();
+
+}

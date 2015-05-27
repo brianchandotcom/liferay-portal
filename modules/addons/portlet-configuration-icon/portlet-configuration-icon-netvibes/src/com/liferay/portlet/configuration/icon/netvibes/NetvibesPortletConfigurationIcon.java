@@ -16,7 +16,6 @@ package com.liferay.portlet.configuration.icon.netvibes;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
-import com.liferay.portal.kernel.portlet.configuration.PortletConfigurationIcon;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -32,14 +31,19 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
-import org.osgi.service.component.annotations.Component;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-@Component(immediate = true, service = PortletConfigurationIcon.class)
 public class NetvibesPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
+
+	public NetvibesPortletConfigurationIcon(HttpServletRequest request) {
+		init(request);
+
+		_request = request;
+	}
 
 	@Override
 	public String getIconCssClass() {
@@ -63,13 +67,13 @@ public class NetvibesPortletConfigurationIcon
 				WebKeys.RENDER_PORTLET);
 
 			PortletURL basePortletURL = PortletURLFactoryUtil.create(
-				_request, PortletKeys.PORTLET_SHARING, _themeDisplay.getPlid(),
+				_request, PortletKeys.PORTLET_SHARING, themeDisplay.getPlid(),
 				PortletRequest.RESOURCE_PHASE);
 
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("javascript:Liferay.PortletSharing.showNetvibesInfo('");
-			sb.append(PortalUtil.getNetvibesURL(portlet, _themeDisplay));
+			sb.append(PortalUtil.getNetvibesURL(portlet, themeDisplay));
 			sb.append("', '");
 			sb.append(basePortletURL);
 			sb.append("');");
@@ -82,22 +86,17 @@ public class NetvibesPortletConfigurationIcon
 	}
 
 	@Override
-	public double getWeight() {
-		return 2.0;
-	}
-
-	@Override
 	public boolean isLabel() {
 		return true;
 	}
 
 	@Override
 	public boolean isShow() {
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
 		PortletPreferences portletSetup =
 			PortletPreferencesFactoryUtil.getStrictLayoutPortletSetup(
-				_themeDisplay.getLayout(), portletDisplay.getId());
+				themeDisplay.getLayout(), portletDisplay.getId());
 
 		boolean lfrNetvibesShowAddAppLink = GetterUtil.getBoolean(
 			portletSetup.getValue(
@@ -109,5 +108,7 @@ public class NetvibesPortletConfigurationIcon
 
 		return false;
 	}
+
+	private final HttpServletRequest _request;
 
 }

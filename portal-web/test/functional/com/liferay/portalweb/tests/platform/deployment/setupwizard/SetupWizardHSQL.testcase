@@ -2,7 +2,7 @@
 	<property name="setup.wizard.enabled" value="true" />
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
-	<command name="HSQLtoDB2" priority="5">
+	<command known-issues="LPS-54934" name="HSQLtoDB2" priority="5">
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
@@ -32,7 +32,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="HSQLtoDB2SampleDataDisabled" priority="5">
+	<command known-issues="LPS-54934" name="HSQLtoDB2SampleDataDisabled" priority="5">
 		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />

@@ -1,6 +1,7 @@
 Bundle-Name: Liferay Dynamic Data Lists Display Web
 Bundle-SymbolicName: com.liferay.dynamic.data.lists.display.web
 Bundle-Version: 1.0.0
+Export-Package: com.liferay.dynamic.data.lists.display.web.constants
 Import-Package:\
 	com.liferay.dynamic.data.mapping.form.renderer,\
 	*

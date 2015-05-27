@@ -384,9 +384,11 @@ public class ComboServlet extends HttpServlet {
 		String resourcePath = getResourcePath(modulePath);
 
 		if (!PortalUtil.isValidResourceId(resourcePath)) {
-			_log.error(
-				"Illegal access: " + request.getRequestURL() +
-					"?" + request.getQueryString());
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Illegal access: " + request.getRequestURL() +
+						"?" + request.getQueryString());
+			}
 
 			return null;
 		}

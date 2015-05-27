@@ -142,6 +142,9 @@ public class PoshiRunnerValidation {
 			else if (elementName.equals("if")) {
 				_validateIfElement(childElement, filePath);
 			}
+			else if (elementName.equals("property")) {
+				_validatePropertyElement(childElement, filePath);
+			}
 			else if (elementName.equals("take-screenshot")) {
 				_validateTakeScreenshotElement(childElement, filePath);
 			}
@@ -792,6 +795,28 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validatePropertyElement(
+		Element element, String filePath) {
+
+		List<String> attributeNames = Arrays.asList(
+			"line-number", "name", "value");
+
+		_validatePossibleAttributeNames(element, attributeNames, filePath);
+		_validateRequiredAttributeNames(element, attributeNames, filePath);
+
+		List<String> availablePropertyNames =
+			PoshiRunnerContext.getAvailablePropertyNames();
+
+		String propertyName = element.attributeValue("name");
+
+		if (!availablePropertyNames.contains(propertyName)) {
+			_exceptions.add(
+				new Exception(
+					"Invalid property name " + propertyName + "\n" + filePath +
+						":" + element.attributeValue("line-number")));
+		}
+	}
+
 	private static void _validateRequiredAttributeNames(
 		Element element, List<String> requiredAttributeNames, String filePath) {
 
@@ -913,13 +938,7 @@ public class PoshiRunnerValidation {
 				_parseElements(childElement, filePath);
 			}
 			else if (childElementName.equals("property")) {
-				List<String> attributeNames = Arrays.asList(
-					"line-number", "name", "value");
-
-				_validatePossibleAttributeNames(
-					childElement, attributeNames, filePath);
-				_validateRequiredAttributeNames(
-					childElement, attributeNames, filePath);
+				_validatePropertyElement(childElement, filePath);
 			}
 			else if (childElementName.equals("set-up") ||
 					 childElementName.equals("tear-down")) {

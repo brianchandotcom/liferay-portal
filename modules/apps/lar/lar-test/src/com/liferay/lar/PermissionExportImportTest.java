@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.lar;
+package com.liferay.lar;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -21,6 +22,9 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.lar.LayoutCache;
+import com.liferay.portal.lar.PermissionExporter;
+import com.liferay.portal.lar.PermissionImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -52,12 +56,14 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Mate Thurzo
  */
+@RunWith(Arquillian.class)
 public class PermissionExportImportTest extends PowerMockito {
 
 	@ClassRule

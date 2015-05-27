@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.lar.lifecycle;
+package com.liferay.lar.lifecycle;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
@@ -37,10 +39,8 @@ import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -51,12 +51,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.powermock.api.mockito.PowerMockito;
 
 /**
  * @author Daniel Kocsis
  */
+@RunWith(Arquillian.class)
 @Sync(cleanTransaction = true)
 public class ExportImportLifecycleEventTest extends PowerMockito {
 
@@ -64,7 +66,7 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before

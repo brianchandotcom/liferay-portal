@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.lar;
+package com.liferay.lar;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,6 +31,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import org.mockito.Mockito;
 
@@ -38,6 +40,7 @@ import org.powermock.api.mockito.PowerMockito;
 /**
  * @author Mate Thurzo
  */
+@RunWith(Arquillian.class)
 public class PortletDataContextZipWriterTest extends PowerMockito {
 
 	@ClassRule

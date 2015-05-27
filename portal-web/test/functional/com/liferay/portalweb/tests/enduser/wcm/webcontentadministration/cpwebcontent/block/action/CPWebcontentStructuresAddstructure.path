@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_166_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>NAME_FIELD_REQUIRED</td>
-	<td>//span[@id='_166_nameBoundingBox']/div/div[@class='required']</td>
+	<td>//span[contains(@id,'nameBoundingBox')]/div/div[@class='required']</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_166_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>

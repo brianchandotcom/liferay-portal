@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_166_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -61,7 +61,7 @@
 <!--DETAILS-->
 <tr>
 	<td>DETAILS_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_166_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>DETAILS_PARENT_REMOVE_BUTTON</td>
-	<td>//button[@id='_166_removeParentStructureButton']</td>
+	<td>//button[contains(@id,'removeParentStructureButton')]</td>
 	<td></td>
 </tr>
 <!---->

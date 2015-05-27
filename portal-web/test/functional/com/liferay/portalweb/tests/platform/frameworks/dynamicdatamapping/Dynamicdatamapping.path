@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>IFRAME</td>
-	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'_166_eventName=_167_selectDDMStructure')] | //div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'_166_eventName=selectStructure')]</td>
+	<td>//div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'selectDDMStructure')] | //div[contains(@class,'dialog-iframe-bd')]/iframe[contains(@src,'eventName=selectStructure')]</td>
 	<td></td>
 </tr>
 <tr>

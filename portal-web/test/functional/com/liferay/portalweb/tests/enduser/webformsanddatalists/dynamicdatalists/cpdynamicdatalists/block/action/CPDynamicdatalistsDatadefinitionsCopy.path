@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>COPY_STRUCTURE_IFRAME</td>
-	<td>//iframe[@id='_166_copyStructure_iframe_']</td>
+	<td>//iframe[contains(@id,'copyStructure_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -30,22 +30,22 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//span[@id='_166_nameBoundingBox']/input[@id='_166_name']</td>
+	<td>//span[contains(@id,'nameBoundingBox')]/input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_166_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COPY_FORM_TEMPLATES_CHECKBOX</td>
-	<td>//input[@id='_166_copyFormTemplates']</td>
+	<td>//input[contains(@id,'copyFormTemplates')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>COPY_DISPLAY_TEMPLATES_CHECKBOX</td>
-	<td>//input[@id='_166_copyDisplayTemplates']</td>
+	<td>//input[contains(@id,'copyDisplayTemplates')]</td>
 	<td></td>
 </tr>
 <tr>

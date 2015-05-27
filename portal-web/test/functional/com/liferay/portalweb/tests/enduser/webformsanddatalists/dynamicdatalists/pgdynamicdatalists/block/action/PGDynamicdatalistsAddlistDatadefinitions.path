@@ -52,22 +52,22 @@
 <!--DATA_DEFINITION_TABLE-->
 <tr>
 	<td>DATA_DEFINITION_TABLE_ID_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[1])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[2])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[2])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[3])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[3])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_CHOOSE_BUTTON_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[5]/button[contains(.,'Choose')])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[5]/button[contains(.,'Choose')])[1]</td>
 	<td></td>
 </tr>
 </tbody>

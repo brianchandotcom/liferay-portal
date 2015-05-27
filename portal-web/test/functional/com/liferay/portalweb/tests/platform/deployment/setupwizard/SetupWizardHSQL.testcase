@@ -120,4 +120,64 @@
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
+
+	<command known-issues="LPS-55222" name="HSQLtoOracle" priority="5">
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databaseNameDefault" value="false" />
+			<var name="databasePassword" property-value="database.oracle.password" />
+			<var name="databaseType" value="Oracle" />
+			<var name="databaseUserName" property-value="database.oracle.username" />
+			<var name="jdbcDriverClassName" property-value="database.oracle.driver" />
+			<var name="jdbcURL" property-value="database.oracle.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command known-issues="LPS-55222" name="HSQLtoOracleSampleDataDisabled" priority="5">
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databaseNameDefault" value="false" />
+			<var name="databasePassword" property-value="database.oracle.password" />
+			<var name="databaseType" value="Oracle" />
+			<var name="databaseUserName" property-value="database.oracle.username" />
+			<var name="jdbcDriverClassName" property-value="database.oracle.driver" />
+			<var name="jdbcURL" property-value="database.oracle.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
 </definition>

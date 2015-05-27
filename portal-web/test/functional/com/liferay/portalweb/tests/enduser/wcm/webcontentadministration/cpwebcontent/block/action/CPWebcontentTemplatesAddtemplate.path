@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_166_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_FIELDS_1</td>
-	<td>//div[@id='_166_paletteData']/div[2]/ul/li/span</td>
+	<td>//div[contains(@id,'paletteData')]/div[2]/ul/li/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,7 +107,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_CHOOSE_FILE</td>
-	<td>//input[@id='_166_script']</td>
+	<td>//input[contains(@id,'script')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -222,7 +222,15 @@
 	<command name="startServer">
 		<description message="This will start the server at ${base_branch}-bundles\tomcat." />
 
-		<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server" />
+		<if>
+			<equals arg1="${deleteLiferayHome}" arg2="false" />
+			<then>
+				<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server -Ddelete.liferay.home=false" />
+			</then>
+			<else>
+				<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server" />
+			</else>
+		</if>
 	</command>
 
 	<command name="tearDownPG">

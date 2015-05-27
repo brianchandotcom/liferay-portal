@@ -72,42 +72,42 @@
 <!--DATA_DEFINITION_TABLE-->
 <tr>
 	<td>DATA_DEFINITION_TABLE_ALL_CHECKBOX</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainer']//input[@name='_166_allRowIds']</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_CHECKBOX_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[1]/input[@name='_166_rowIds'])[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[1]/input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_ID_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[@id='_166_ddmStructuresSearchContainer']//tr/td[4]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddmStructuresSearchContainer')]//tr/td[4]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_ACTIONS_1</td>
-	<td>xpath=(//a[contains(@id,'_166_ddmStructuresSearchContainer')])[1]</td>
+	<td>xpath=(//a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_NAME</td>
-	<td>//div[@id='_166_ddmStructuresSearchContainer']//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[3]/a[1]</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[3]/a[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_TABLE_ACTIONS</td>
-	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[7]/div/a[contains(@id,'_166_ddmStructuresSearchContainer')])[1]</td>
+	<td>xpath=(//tr[contains(.,'${key_ddlDataDefinitionName}')]/td[7]/div/a[contains(@id,'ddmStructuresSearchContainer')])[1]</td>
 	<td></td>
 </tr>
 <tr>

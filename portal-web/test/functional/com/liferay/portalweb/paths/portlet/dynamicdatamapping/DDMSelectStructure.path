@@ -47,7 +47,7 @@
 <!--DDM_STRUCTURE_TABLE-->
 <tr>
 	<td>DDM_STRUCTURE_TABLE</td>
-	<td>//div[contains(@id,'_166_ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
+	<td>//div[contains(@id,'ddmStructuresSearchContainer')]/table/tbody/tr[1]</td>
 	<td></td>
 </tr>
 <tr>

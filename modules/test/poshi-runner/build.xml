@@ -7,6 +7,8 @@
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<target name="generate-properties" depends="prepare-poshi-runner">
+		<fail message="Please set the property ${test.name}." unless="test.name" />
+
 		<java classname="com.liferay.poshi.runner.PoshiRunnerContext" classpath="classes">
 			<classpath refid="plugin.classpath" />
 		</java>
@@ -166,6 +168,44 @@
 			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
 
 			test.name=${test.name}
+
+			testcase.available.property.names=\
+				app.server.bundles.size,\
+				captcha.max.challenges,\
+				cluster.enabled,\
+				custom.properties,\
+				data.archive.type,\
+				database.jndi.enabled,\
+				database.minimal.enabled,\
+				database.sharding,\
+				databases.size,\
+				default.layout.template.id,\
+				hook.plugins.includes,\
+				ignore.errors,\
+				ignore.errors.delimiter,\
+				layouttpl.plugins.includes,\
+				legacy.plugin.includes,\
+				legacy.plugins.social.office.version,\
+				marketplace.staging.enabled,\
+				mobile.device.enabled,\
+				plugins.deployment.type,\
+				portal.version,\
+				portlet.plugins.includes,\
+				portlet.properties.knowledge-base-portlet,\
+				portlet.properties.marketplace-portlet,\
+				portlet.properties.private-messaging-portlet,\
+				setup.wizard.enabled,\
+				sharepoint.enabled,\
+				solr.enabled,\
+				test.assert.javascript.errors,\
+				testcase.url,\
+				testray.component.names,\
+				testray.main.component.name,\
+				testray.testcase.product.edition,\
+				timeout.explicit.wait,\
+				theme.plugins.includes,\
+				web.plugins.includes,\
+				web.xml.timeout
 		</echo>
 
 		<if>

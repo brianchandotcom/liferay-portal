@@ -97,6 +97,10 @@ public class PoshiRunnerContext {
 		return _rootElements.get("action#" + className);
 	}
 
+	public static List<String> getAvailablePropertyNames() {
+		return _availablePropertyNames;
+	}
+
 	public static String getFilePathFromClassKey(String classKey) {
 		String fileName = PoshiRunnerGetterUtil.getFileNameFromClassKey(
 			classKey);
@@ -187,7 +191,10 @@ public class PoshiRunnerContext {
 	public static void main(String[] args) throws Exception {
 		readFiles();
 
+		PoshiRunnerValidation.validate();
+
 		_writeTestCaseMethodNamesProperties();
+		_writeTestGeneratedPropertiesFile();
 	}
 
 	public static void readFiles() throws Exception {
@@ -246,6 +253,66 @@ public class PoshiRunnerContext {
 		}
 
 		return classCommandName;
+	}
+
+	private static Map<String, Set<String>> _getPropertiesMap() {
+		Map<String, Set<String>> propertiesMap = new HashMap<>();
+
+		for (String testCaseClassName : _testCaseClassNames) {
+			Element rootElement = getTestCaseRootElement(testCaseClassName);
+
+			List<Element> rootPropertyElements = rootElement.elements(
+				"property");
+
+			Set<String> rootProperties = new TreeSet<>();
+
+			for (Element rootPropertyElement : rootPropertyElements) {
+				StringBuilder sb = new StringBuilder();
+
+				sb.append(".all.");
+				sb.append(rootPropertyElement.attributeValue("name"));
+				sb.append("=");
+				sb.append(rootPropertyElement.attributeValue("value"));
+
+				rootProperties.add(sb.toString());
+			}
+
+			List<Element> commandElements = rootElement.elements("command");
+
+			Set<String> allCommandProperties = new TreeSet<>();
+
+			for (Element commandElement : commandElements) {
+				List<Element> commandPropertyElements = commandElement.elements(
+					"property");
+
+				Set<String> commandProperties = new TreeSet<>();
+
+				for (Element commandPropertyElement : commandPropertyElements) {
+					StringBuilder sb = new StringBuilder();
+
+					sb.append(".");
+					sb.append(commandPropertyElement.attributeValue("name"));
+					sb.append("=");
+					sb.append(commandPropertyElement.attributeValue("value"));
+
+					commandProperties.add(sb.toString());
+				}
+
+				allCommandProperties.addAll(commandProperties);
+				commandProperties.addAll(rootProperties);
+
+				propertiesMap.put(
+					testCaseClassName + "#" +
+						commandElement.attributeValue("name"),
+					commandProperties);
+			}
+
+			allCommandProperties.addAll(rootProperties);
+
+			propertiesMap.put(testCaseClassName, allCommandProperties);
+		}
+
+		return propertiesMap;
 	}
 
 	private static List<String> _getRelatedActionClassCommandNames(
@@ -596,11 +663,45 @@ public class PoshiRunnerContext {
 		FileUtil.write("test.case.method.names.properties", sb.toString());
 	}
 
+	private static void _writeTestGeneratedPropertiesFile() throws Exception {
+		String testName = PropsValues.TEST_NAME;
+		String testCaseProperty = testName + "TestCase";
+
+		if (testName.contains("#")) {
+			testCaseProperty = testName.replace("#", "TestCase.test");
+		}
+
+		StringBuilder sb = new StringBuilder();
+
+		Map<String, Set<String>> propertiesMap = _getPropertiesMap();
+
+		Set<String> properties = propertiesMap.get(testName);
+
+		for (String property : properties) {
+			if (property.startsWith(".all")) {
+				sb.append(
+					PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+						testName));
+				sb.append("TestCase");
+			}
+			else {
+				sb.append(testCaseProperty);
+			}
+
+			sb.append(property);
+			sb.append("\n");
+		}
+
+		FileUtil.write("generated.properties", sb.toString());
+	}
+
 	private static final String _BASE_DIR =
 		PoshiRunnerGetterUtil.getCanonicalPath(PropsValues.TEST_BASE_DIR_NAME);
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();
+	private static final List<String> _availablePropertyNames =
+		new ArrayList<>();
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
@@ -622,6 +723,14 @@ public class PoshiRunnerContext {
 	private static String _testClassName;
 
 	static {
+		String testCaseAvailablePropertyNames =
+			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
+
+		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
+			_availablePropertyNames = Arrays.asList(
+				StringUtil.split(testCaseAvailablePropertyNames));
+		}
+
 		_componentNames.addAll(
 			Arrays.asList(StringUtil.split(PropsValues.COMPONENT_NAMES)));
 

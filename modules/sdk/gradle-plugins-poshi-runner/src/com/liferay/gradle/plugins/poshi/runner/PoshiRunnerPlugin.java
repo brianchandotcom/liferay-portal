@@ -53,9 +53,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	public static final String VALIDATE_POSHI_TASK_NAME = "validatePoshi";
 
-	public static final String
-		WRITE_POSHI_TEST_CASE_METHOD_NAMES_FILES_TASK_NAME =
-			"writePoshiTestCaseMethodNamesFiles";
+	public static final String WRITE_POSHI_PROPERTIES_TASK_NAME =
+		"writePoshiProperties";
 
 	@Override
 	public void apply(Project project) {
@@ -68,7 +67,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		addTasksExpandPoshiRunner(project);
 		addTasksRunPoshi(project);
 		addTasksValidatePoshi(project);
-		addTasksWritePoshiTestCaseMethodNamesFiles(project);
+		addTasksWritePoshiProperties(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -78,7 +77,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					configureTasksExpandPoshiRunner(project);
 					configureTasksRunPoshi(project, poshiRunnerExtension);
 					configureTasksValidatePoshi(project, poshiRunnerExtension);
-					configureTasksWritePoshiTestCaseMethodNamesFiles(
+					configureTasksWritePoshiProperties(
 						project, poshiRunnerExtension);
 				}
 
@@ -217,16 +216,15 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerValidation");
 	}
 
-	protected void addTasksWritePoshiTestCaseMethodNamesFiles(Project project) {
+	protected void addTasksWritePoshiProperties(Project project) {
 		JavaExec javaExec = GradleUtil.addTask(
-			project, WRITE_POSHI_TEST_CASE_METHOD_NAMES_FILES_TASK_NAME,
-			JavaExec.class);
+			project, WRITE_POSHI_PROPERTIES_TASK_NAME, JavaExec.class);
 
 		Configuration configuration = GradleUtil.getConfiguration(
 			project, CONFIGURATION_NAME);
 
 		javaExec.setClasspath(configuration);
-		javaExec.setDescription("Write the test case method names files.");
+		javaExec.setDescription("Write the Poshi properties files.");
 		javaExec.setGroup("verification");
 		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerContext");
 	}
@@ -324,11 +322,11 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 			javaExec.getSystemProperties(), poshiRunnerExtension);
 	}
 
-	protected void configureTasksWritePoshiTestCaseMethodNamesFiles(
+	protected void configureTasksWritePoshiProperties(
 		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
 		JavaExec javaExec = (JavaExec)GradleUtil.getTask(
-			project, WRITE_POSHI_TEST_CASE_METHOD_NAMES_FILES_TASK_NAME);
+			project, WRITE_POSHI_PROPERTIES_TASK_NAME);
 
 		populateSystemProperties(
 			javaExec.getSystemProperties(), poshiRunnerExtension);

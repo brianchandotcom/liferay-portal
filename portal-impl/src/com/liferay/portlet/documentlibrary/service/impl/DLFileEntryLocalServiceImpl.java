@@ -603,14 +603,14 @@ public class DLFileEntryLocalServiceImpl
 
 		int total = dlFileEntryFinder.countByExtraSettings();
 
-		final IntervalActionProcessor intervalActionProcessor =
-			new IntervalActionProcessor(total);
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(total);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod() {
+			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
+				public Void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<DLFileEntry> dlFileEntries =
@@ -622,6 +622,8 @@ public class DLFileEntryLocalServiceImpl
 
 					intervalActionProcessor.incrementStart(
 						dlFileEntries.size());
+
+					return null;
 				}
 
 			});
@@ -962,14 +964,14 @@ public class DLFileEntryLocalServiceImpl
 
 		int total = dlFileEntryPersistence.countByR_F(repositoryId, folderId);
 
-		final IntervalActionProcessor intervalActionProcessor =
-			new IntervalActionProcessor(total);
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(total);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod() {
+			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
+				public Void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<DLFileEntry> dlFileEntries =
@@ -987,6 +989,8 @@ public class DLFileEntryLocalServiceImpl
 							intervalActionProcessor.incrementStart();
 						}
 					}
+
+					return null;
 				}
 
 			});

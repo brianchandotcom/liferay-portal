@@ -19,8 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 /**
  * @author Jonathan McCann
  * @author Sergio González
+ * @author Preston Crary
  */
-public class IntervalActionProcessor {
+public class IntervalActionProcessor<T> {
 
 	public static final int INTERVAL_DEFAULT = 100;
 
@@ -55,7 +56,7 @@ public class IntervalActionProcessor {
 		_start += increment;
 	}
 
-	public void performIntervalActions() throws PortalException {
+	public T performIntervalActions() throws PortalException {
 		int pages = _total / _interval;
 
 		for (int i = 0; i <= pages; i++) {
@@ -65,33 +66,42 @@ public class IntervalActionProcessor {
 				end = _total;
 			}
 
-			performIntervalActions(_start, end);
+			T result = performIntervalActions(_start, end);
+
+			if (result != null) {
+				return result;
+			}
 		}
+
+		return null;
 	}
 
 	public void setPerformIntervalActionMethod(
-		PerformIntervalActionMethod performIntervalActionMethod) {
+		PerformIntervalActionMethod<T> performIntervalActionMethod) {
 
 		_performIntervalActionMethod = performIntervalActionMethod;
 	}
 
-	public interface PerformIntervalActionMethod {
+	public interface PerformIntervalActionMethod<T> {
 
-		public void performIntervalAction(int start, int end)
+		public T performIntervalAction(int start, int end)
 			throws PortalException;
 
 	}
 
-	protected void performIntervalActions(int start, int end)
+	protected T performIntervalActions(int start, int end)
 		throws PortalException {
 
 		if (_performIntervalActionMethod != null) {
-			_performIntervalActionMethod.performIntervalAction(start, end);
+			return _performIntervalActionMethod.performIntervalAction(
+				start, end);
 		}
+
+		return null;
 	}
 
 	private final int _interval;
-	private PerformIntervalActionMethod _performIntervalActionMethod;
+	private PerformIntervalActionMethod<T> _performIntervalActionMethod;
 	private int _start;
 	private final int _total;
 

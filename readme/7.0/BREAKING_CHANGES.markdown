@@ -1693,3 +1693,31 @@ should be replaced by:
 This change was made to enhance the Repository API and make decoupling from Document Library easier when modularizing the portal.
 
 ---------------------------------------
+
+### Removed permissionClassName, permissionClassPK and permissionOwner parameters from MBMessage API
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55877
+
+#### What changed?
+
+The parameters `permissionClassName`, `permissionClassPK` and
+`permissionOwner` have been removed from Message Boards API and
+Discussion taglib.
+
+#### Who is affected?
+
+Any code that invokes the affected methods (locally or remotely) as
+well as any view that uses the Discusion taglib.
+
+#### How should I update my code?
+
+It suffices to remove the parameters from the method calls (for
+consumers of the API) or the attributes in taglib invocations.
+
+#### Why was this change made?
+
+Those API methods were exposed in the remote services, allowing any
+cosumer to bypass the permission system by providing customized
+className, classPK or ownerId.
+
+---------------------------------------

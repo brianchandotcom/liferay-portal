@@ -97,7 +97,8 @@ public class PoshiRunnerValidation {
 		List<String> primaryAttributeNames, String filePath) {
 
 		_validateHasPrimaryAttributeName(
-			element, primaryAttributeNames, filePath);
+			element, multiplePrimaryAttributeNames, primaryAttributeNames,
+			filePath);
 
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
@@ -113,8 +114,8 @@ public class PoshiRunnerValidation {
 	private static String _getPrimaryAttributeName(
 		Element element, List<String> primaryAttributeNames, String filePath) {
 
-		return _getPrimaryAttributeName(element, null, primaryAttributeNames,
-			filePath);
+		return _getPrimaryAttributeName(
+			element, null, primaryAttributeNames, filePath);
 	}
 
 	private static void _parseElements(Element element, String filePath) {
@@ -423,7 +424,8 @@ public class PoshiRunnerValidation {
 			"test-case");
 
 		String primaryAttributeName = _getPrimaryAttributeName(
-			element, primaryAttributeNames, filePath);
+			element, multiplePrimaryAttributeNames, primaryAttributeNames,
+			filePath);
 
 		if (primaryAttributeName.equals("function")) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -484,7 +486,8 @@ public class PoshiRunnerValidation {
 				"function", "macro", "macro-desktop", "macro-mobile");
 
 			_validateHasPrimaryAttributeName(
-				element, primaryAttributeNames, filePath);
+				element, multiplePrimaryAttributeNames, primaryAttributeNames,
+				filePath);
 
 			for (Element childElement : childElements) {
 				if (Validator.equals(childElement.getName(), "var")) {
@@ -651,8 +654,8 @@ public class PoshiRunnerValidation {
 	private static void _validateHasPrimaryAttributeName(
 		Element element, List<String> primaryAttributeNames, String filePath) {
 
-		_validateHasPrimaryAttributeName(element, null, primaryAttributeNames,
-			filePath);
+		_validateHasPrimaryAttributeName(
+			element, null, primaryAttributeNames, filePath);
 	}
 
 	private static void _validateIfElement(Element element, String filePath) {

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseSearchResultManager;
@@ -24,12 +25,13 @@ import com.liferay.portal.kernel.search.SearchResultManager;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.model.ClassName;
+import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -67,6 +69,15 @@ public class SearchResultManagerImpl implements SearchResultManager {
 		searchResultManager.updateSearchResult(
 			searchResult, document, locale, portletRequest, portletResponse);
 	}
+
+	@BeanReference(type = ClassNameLocalService.class)
+	protected ClassNameLocalService classNameLocalService;
+
+	@BeanReference(type = DLAppLocalService.class)
+	protected DLAppLocalService dlAppLocalService;
+
+	@BeanReference(type = MBMessageLocalService.class)
+	protected MBMessageLocalService mbMessageLocalService;
 
 	private SearchResultManager _getSearchResultManager(Document document) {
 		String entryClassName = GetterUtil.getString(
@@ -142,7 +153,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 	}
 
-	private static class DLFileEntrySearchResultManager
+	private class DLFileEntrySearchResultManager
 		extends BaseSearchResultManager {
 
 		@Override
@@ -154,8 +165,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
-				entryClassPK);
+			FileEntry fileEntry = dlAppLocalService.getFileEntry(entryClassPK);
 
 			if (fileEntry != null) {
 				Summary summary = getSummary(
@@ -174,11 +184,12 @@ public class SearchResultManagerImpl implements SearchResultManager {
 					document.get(Field.CLASS_NAME_ID));
 				long classPK = GetterUtil.getLong(document.get(Field.CLASS_PK));
 
-				String className = PortalUtil.getClassName(classNameId);
+				ClassName className = classNameLocalService.getClassName(
+					classNameId);
 
 				Summary summary = getSummary(
-					document, className, classPK, locale, portletRequest,
-					portletResponse);
+					document, className.getClassName(), classPK, locale,
+					portletRequest, portletResponse);
 
 				searchResult.setSummary(summary);
 			}
@@ -186,8 +197,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 
 	}
 
-	private static class MBMessageSearchResultManager
-		extends BaseSearchResultManager {
+	private class MBMessageSearchResultManager extends BaseSearchResultManager {
 
 		@Override
 		protected void addRelatedModel(
@@ -198,7 +208,7 @@ public class SearchResultManagerImpl implements SearchResultManager {
 			long entryClassPK = GetterUtil.getLong(
 				document.get(Field.ENTRY_CLASS_PK));
 
-			MBMessage mbMessage = MBMessageLocalServiceUtil.getMessage(
+			MBMessage mbMessage = mbMessageLocalService.getMessage(
 				entryClassPK);
 
 			Summary summary = new Summary(null, mbMessage.getBody());

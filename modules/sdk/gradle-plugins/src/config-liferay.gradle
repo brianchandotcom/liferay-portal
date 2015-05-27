@@ -93,7 +93,7 @@ liferay {
 			managerUser = "tomcat"
 			name = "tomcat"
 			portalDirName = "webapps/ROOT"
-			version = "7.0.42"
+			version = "7.0.62"
 		}
 
 		weblogic {

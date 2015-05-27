@@ -113,58 +113,54 @@ public class RatingsDataTransformerUtilTest {
 	public void testTransformGroupRatingsData() throws Exception {
 		_atomicState.reset();
 
-			UnicodeProperties oldUnicodeProperties = new UnicodeProperties();
+		UnicodeProperties oldUnicodeProperties = new UnicodeProperties();
 
-			oldUnicodeProperties.setProperty(
-				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
-				"like");
-			oldUnicodeProperties.setProperty(
-				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
-				"like");
-			oldUnicodeProperties.setProperty(
-				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
-					"_RatingsType",
-				"like");
-			oldUnicodeProperties.setProperty(
-				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
-				"like");
-			oldUnicodeProperties.setProperty(
-				"com.liferay.portlet.messageboards.model.MBDiscussion" +
-					"_RatingsType",
-				"like");
-			oldUnicodeProperties.setProperty(
-				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
-				"like");
-			oldUnicodeProperties.setProperty(
-				"com.liferay.wiki.model.WikiPage_RatingsType", "like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType", "like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+				"_RatingsType",
+			"like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
+			"like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.portlet.messageboards.model.MBDiscussion" +
+				"_RatingsType",
+			"like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
+			"like");
+		oldUnicodeProperties.setProperty(
+			"com.liferay.wiki.model.WikiPage_RatingsType", "like");
 
-			UnicodeProperties unicodeProperties = new UnicodeProperties();
+		UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.bookmarks.model.BookmarksEntry_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
-					"_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.messageboards.model.MBDiscussion" +
-					"_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
-				"stars");
-			unicodeProperties.setProperty(
-				"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.blogs.model.BlogsEntry_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.bookmarks.model.BookmarksEntry_RatingsType", "stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.documentlibrary.model.DLFileEntry" +
+				"_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.journal.model.JournalArticle_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.messageboards.model.MBDiscussion" +
+				"_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.portlet.messageboards.model.MBMessage_RatingsType",
+			"stars");
+		unicodeProperties.setProperty(
+			"com.liferay.wiki.model.WikiPage_RatingsType", "stars");
 
-			RatingsDataTransformerUtil.transformGroupRatingsData(
-				1, oldUnicodeProperties, unicodeProperties);
+		RatingsDataTransformerUtil.transformGroupRatingsData(
+			1, oldUnicodeProperties, unicodeProperties);
 
 		Assert.assertTrue(_atomicState.isSet());
 	}

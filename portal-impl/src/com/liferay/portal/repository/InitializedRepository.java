@@ -293,8 +293,9 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status, includeMountFolders);
+		return getDocumentRepository().
+			getFoldersAndFileEntriesAndFileShortcutsCount(
+				folderId, status, includeMountFolders);
 	}
 
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
@@ -304,8 +305,9 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
-			folderId, status, mimetypes, includeMountFolders);
+		return getDocumentRepository().
+			getFoldersAndFileEntriesAndFileShortcutsCount(
+				folderId, status, mimetypes, includeMountFolders);
 	}
 
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
@@ -332,7 +334,8 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().getFoldersFileEntriesCount(folderIds, status);
+		return getDocumentRepository().getFoldersFileEntriesCount(
+			folderIds, status);
 	}
 
 	public List<Folder> getMountFolders(
@@ -494,7 +497,8 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().search(creatorUserId, status, start, end);
+		return getDocumentRepository().search(
+			creatorUserId, status, start, end);
 	}
 
 	public Hits search(
@@ -592,7 +596,8 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().verifyFileEntryLock(fileEntryId, lockUuid);
+		return getDocumentRepository().verifyFileEntryLock(
+			fileEntryId, lockUuid);
 	}
 
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
@@ -600,7 +605,8 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().verifyInheritableLock(folderId, lockUuid);
+		return getDocumentRepository().verifyInheritableLock(
+			folderId, lockUuid);
 	}
 
 }

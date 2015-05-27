@@ -184,7 +184,8 @@ public abstract class InitializedDocumentRepository
 
 		checkDocumentRepository();
 
-		return getDocumentRepository().getFileEntries(folderId, start, end, obc);
+		return getDocumentRepository().getFileEntries(
+			folderId, start, end, obc);
 	}
 
 	@Override

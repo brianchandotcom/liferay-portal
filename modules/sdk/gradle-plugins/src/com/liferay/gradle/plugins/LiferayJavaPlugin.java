@@ -37,10 +37,14 @@ import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
@@ -52,8 +56,12 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.DependencyResolveDetails;
+import org.gradle.api.artifacts.ModuleVersionIdentifier;
 import org.gradle.api.artifacts.ModuleVersionSelector;
 import org.gradle.api.artifacts.ResolutionStrategy;
+import org.gradle.api.artifacts.ResolvedArtifact;
+import org.gradle.api.artifacts.ResolvedConfiguration;
+import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
 import org.gradle.api.file.FileCollection;
@@ -921,6 +929,86 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.eclipse.persistence:javax.persistence:2.0.0",
 		"postgresql:postgresql:9.2-1002.jdbc4"
 	};
+
+	protected static class RenameDependencyClosure extends Closure<String> {
+
+		public RenameDependencyClosure(
+			Project project, String ... configurationNames) {
+
+			super(null);
+
+			_configurationNames = configurationNames;
+			_project = project;
+		}
+
+		public String doCall(String name) {
+			Map<String, String> newDependencyNames = _getNewDependencyNames();
+
+			String newDependencyName = newDependencyNames.get(name);
+
+			if (Validator.isNotNull(newDependencyName)) {
+				return newDependencyName;
+			}
+
+			return name;
+		}
+
+		private Map<String, String> _getNewDependencyNames() {
+			if (_newDependencyNames != null) {
+				return _newDependencyNames;
+			}
+
+			_newDependencyNames = new HashMap<>();
+
+			for (String configurationName : _configurationNames) {
+				Configuration configuration = GradleUtil.getConfiguration(
+					_project, configurationName);
+
+				ResolvedConfiguration resolvedConfiguration =
+					configuration.getResolvedConfiguration();
+
+				for (ResolvedArtifact resolvedArtifact :
+						resolvedConfiguration.getResolvedArtifacts()) {
+
+					ResolvedModuleVersion resolvedModuleVersion =
+						resolvedArtifact.getModuleVersion();
+
+					ModuleVersionIdentifier moduleVersionIdentifier =
+						resolvedModuleVersion.getId();
+
+					File file = resolvedArtifact.getFile();
+
+					String oldDependencyName = file.getName();
+
+					String newDependencyName;
+
+					String suffix =
+						"-" + moduleVersionIdentifier.getVersion() + ".jar";
+
+					if (oldDependencyName.endsWith(suffix)) {
+						newDependencyName = oldDependencyName.substring(
+							0, oldDependencyName.length() - suffix.length());
+
+						newDependencyName += ".jar";
+					}
+					else {
+						newDependencyName =
+							moduleVersionIdentifier.getName() + ".jar";
+					}
+
+					_newDependencyNames.put(
+						oldDependencyName, newDependencyName);
+				}
+			}
+
+			return _newDependencyNames;
+		}
+
+		private final String[] _configurationNames;
+		private Map<String, String> _newDependencyNames;
+		private final Project _project;
+
+	}
 
 	private static final String _REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";

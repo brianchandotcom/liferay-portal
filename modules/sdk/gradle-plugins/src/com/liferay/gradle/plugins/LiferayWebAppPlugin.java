@@ -32,9 +32,7 @@ import groovy.lang.Closure;
 
 import java.io.File;
 
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 
@@ -42,11 +40,6 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
-import org.gradle.api.artifacts.Configuration;
-import org.gradle.api.artifacts.ModuleVersionIdentifier;
-import org.gradle.api.artifacts.ResolvedArtifact;
-import org.gradle.api.artifacts.ResolvedConfiguration;
-import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
@@ -479,63 +472,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	protected void configureTaskWarRenameDependencies(War war) {
-		final Project project = war.getProject();
-
-		Closure<String> closure = new Closure<String>(null) {
-
-			@SuppressWarnings("unused")
-			public String doCall(String name) {
-				Map<String, String> newDependencyNames =
-					_getNewDependencyNames();
-
-				String newDependencyName = newDependencyNames.get(name);
-
-				if (Validator.isNotNull(newDependencyName)) {
-					return newDependencyName;
-				}
-
-				return name;
-			}
-
-			private Map<String, String> _getNewDependencyNames() {
-				if (_newDependencyNames != null) {
-					return _newDependencyNames;
-				}
-
-				_newDependencyNames = new HashMap<>();
-
-				Configuration compileConfiguration =
-					GradleUtil.getConfiguration(
-						project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
-
-				ResolvedConfiguration resolvedConfiguration =
-					compileConfiguration.getResolvedConfiguration();
-
-				for (ResolvedArtifact resolvedArtifact :
-						resolvedConfiguration.getResolvedArtifacts()) {
-
-					ResolvedModuleVersion resolvedModuleVersion =
-						resolvedArtifact.getModuleVersion();
-
-					ModuleVersionIdentifier moduleVersionIdentifier =
-						resolvedModuleVersion.getId();
-
-					String oldDependencyName =
-						moduleVersionIdentifier.getName() + "-" +
-							moduleVersionIdentifier.getVersion() + ".jar";
-					String newDependencyName =
-						moduleVersionIdentifier.getName() + ".jar";
-
-					_newDependencyNames.put(
-						oldDependencyName, newDependencyName);
-				}
-
-				return _newDependencyNames;
-			}
-
-			private Map<String, String> _newDependencyNames;
-
-		};
+		Closure<String> closure = new RenameDependencyClosure(
+			war.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME);
 
 		CopySpecInternal copySpecInternal = war.getRootSpec();
 

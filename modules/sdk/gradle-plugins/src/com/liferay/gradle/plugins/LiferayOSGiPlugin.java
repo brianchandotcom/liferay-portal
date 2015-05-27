@@ -26,13 +26,19 @@ import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
 
+import groovy.lang.Closure;
+
 import java.io.File;
 
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 import java.util.concurrent.Callable;
+
+import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.dm.gradle.plugins.bundle.BundleExtension;
 import org.dm.gradle.plugins.bundle.BundlePlugin;
@@ -43,7 +49,12 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
+import org.gradle.api.artifacts.ProjectDependency;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.file.FileTreeElement;
+import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
@@ -64,6 +75,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 	public static final String BUILD_WSDD_JAR_TASK_NAME =
 		WSDDBuilderPlugin.BUILD_WSDD_TASK_NAME + "Jar";
+
+	public static final String COPY_LIBS_TASK_NAME = "copyLibs";
 
 	@Override
 	public void apply(Project project) {
@@ -293,11 +306,136 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		return task;
 	}
 
+	protected Copy addTaskCopyLibs(final Project project) {
+		Copy copy = GradleUtil.addTask(
+			project, COPY_LIBS_TASK_NAME, Copy.class);
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+
+		copy.from(configuration);
+
+		configuration = GradleUtil.getConfiguration(
+			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+
+		copy.from(configuration);
+
+		copy.include(
+			new Spec<FileTreeElement>() {
+
+				@Override
+				public boolean isSatisfiedBy(FileTreeElement fileTreeElement) {
+					File file = fileTreeElement.getFile();
+
+					Gradle gradle = project.getGradle();
+
+					Set<File> projectDependencyDirs =
+						_getProjectDependencyDirs();
+
+					if (FileUtil.isChild(file, gradle.getGradleUserHomeDir()) ||
+						projectDependencyDirs.contains(file.getParentFile())) {
+
+						return true;
+					}
+
+					return false;
+				}
+
+				private Set<File> _getProjectDependencyDirs() {
+					if (_projectDependencyDirs != null) {
+						return _projectDependencyDirs;
+					}
+
+					_projectDependencyDirs = new HashSet<>();
+
+					Configuration configuration = GradleUtil.getConfiguration(
+						project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+
+					DependencySet dependencySet =
+						configuration.getAllDependencies();
+
+					Set<ProjectDependency> projectDependencies =
+						dependencySet.withType(ProjectDependency.class);
+
+					for (ProjectDependency projectDependency :
+							projectDependencies) {
+
+						Jar dependencyJar = (Jar)GradleUtil.getTask(
+							projectDependency.getDependencyProject(),
+							JavaPlugin.JAR_TASK_NAME);
+
+						_projectDependencyDirs.add(
+							dependencyJar.getDestinationDir());
+					}
+
+					return _projectDependencyDirs;
+				}
+
+				private Set<File> _projectDependencyDirs;
+
+			});
+
+		copy.into(getLibDir(project));
+
+		copy.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					String[] includeResourceArray = new String[2];
+
+					includeResourceArray[0] = getBundleInstruction(
+						project, Constants.INCLUDERESOURCE);
+					includeResourceArray[1] = getBundleInstruction(
+						project, Constants.INCLUDE_RESOURCE);
+
+					for (String includeResource : includeResourceArray) {
+						if (Validator.isNull(includeResource)) {
+							continue;
+						}
+
+						String[] resources = includeResource.split(",");
+
+						String libDirName = project.relativePath(
+							getLibDir(project));
+
+						libDirName = libDirName.replace('\\', '/') + "/";
+
+						for (String resource : resources) {
+							if (resource.startsWith(libDirName) ||
+								resource.startsWith("@" + libDirName)) {
+
+								return true;
+							}
+						}
+					}
+
+					return false;
+				}
+
+			});
+
+		Closure<String> closure = new RenameDependencyClosure(
+			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME,
+			ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+
+		copy.rename(closure);
+
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		jar.dependsOn(copy);
+
+		return copy;
+	}
+
 	@Override
 	protected void addTasks(Project project) {
 		super.addTasks(project);
 
 		addTaskAutoUpdateXml(project);
+		addTaskCopyLibs(project);
 		addTaskBuildWSDDJar(project);
 	}
 

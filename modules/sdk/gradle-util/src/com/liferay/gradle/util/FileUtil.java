@@ -51,6 +51,20 @@ public class FileUtil {
 		return absolutePath.replace('\\', '/');
 	}
 
+	public static boolean isChild(File file, File parentFile) {
+		Path path = file.toPath();
+		Path parentPath = parentFile.toPath();
+
+		path = path.toAbsolutePath();
+		parentPath = parentPath.toAbsolutePath();
+
+		if (path.startsWith(parentPath)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void jar(
 		Project project, final File destinationFile, final String duplicate,
 		final boolean update, final String[][] filesets) {

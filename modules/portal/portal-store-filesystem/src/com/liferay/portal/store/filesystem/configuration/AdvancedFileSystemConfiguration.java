@@ -26,7 +26,7 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface AdvancedFileSystemConfiguration {
 
 	@Meta.AD(deflt = "data/document_library",
-		description = "%filesystem.store.configuration.description",
+		description = "%filesystem.store.configuration.root.dir.description",
 		required = true)
 	public String rootDir();
 

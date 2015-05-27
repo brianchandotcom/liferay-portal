@@ -20,6 +20,8 @@ import com.liferay.portal.convert.FileSystemStoreRootDirException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.store.filesystem.configuration.FileSystemConfiguration;
@@ -612,7 +614,13 @@ public class FileSystemStore extends BaseStore {
 	}
 
 	protected void initializeRootDir() {
-		_rootDir = new File(getRootDirName());
+		String path = getRootDirName();
+
+		_rootDir = new File(path);
+
+		if (!_rootDir.isAbsolute()) {
+			_rootDir = new File(PropsUtil.get(PropsKeys.LIFERAY_HOME), path);
+		}
 
 		try {
 			FileUtil.mkdirs(_rootDir);

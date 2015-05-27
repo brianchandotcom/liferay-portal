@@ -829,14 +829,10 @@ public class JournalArticleLocalServiceImpl
 			newArticle.setStatus(oldArticle.getStatus());
 		}
 
-		newArticle.setExpandoBridgeAttributes(oldArticle);
-
-		journalArticlePersistence.update(newArticle);
-
-		// Expando
-
 		ExpandoBridgeUtil.copyExpandoBridgeAttributes(
 			oldArticle.getExpandoBridge(), newArticle.getExpandoBridge());
+
+		journalArticlePersistence.update(newArticle);
 
 		// Resources
 

@@ -415,6 +415,9 @@ public class PoshiRunnerValidation {
 	private static void _validateExecuteElement(
 		Element element, String filePath) {
 
+		List<String> multiplePrimaryAttributeNames = Arrays.asList(
+			"macro-desktop", "macro-mobile");
+
 		List<String> primaryAttributeNames = Arrays.asList(
 			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
 			"test-case");

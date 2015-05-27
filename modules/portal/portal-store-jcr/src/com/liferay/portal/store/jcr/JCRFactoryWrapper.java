@@ -14,13 +14,12 @@
 
 package com.liferay.portal.store.jcr;
 
-import aQute.bnd.annotation.metatype.Configurable;
-
 import com.liferay.portal.kernel.memory.FinalizeManager;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration;
+import com.liferay.portal.store.jcr.jackrabbit.JCRFactoryImpl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,20 +27,19 @@ import java.util.Map;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
-import org.osgi.service.component.annotations.Reference;
-
 /**
  * @author Michael Young
  * @author Manuel de la Peña
  */
-@Component(
-	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true
-)
 public class JCRFactoryWrapper {
+
+	public JCRFactoryWrapper(JCRStoreConfiguration configuration)
+		throws RepositoryException {
+
+		_configuration = configuration;
+
+		_jcrFactory = new JCRFactoryImpl(configuration);
+	}
 
 	public void closeSession(Session session) {
 		if (session != null) {
@@ -57,10 +55,10 @@ public class JCRFactoryWrapper {
 		throws RepositoryException {
 
 		if (workspaceName == null) {
-			workspaceName = _jcrStoreConfiguration.workspaceName();
+			workspaceName = _configuration.workspaceName();
 		}
 
-		if (!_jcrStoreConfiguration.wrapSession()) {
+		if (!_configuration.wrapSession()) {
 			JCRFactory jcrFactory = getJCRFactory();
 
 			return jcrFactory.createSession(workspaceName);
@@ -113,28 +111,14 @@ public class JCRFactoryWrapper {
 		jcrFactory.prepare();
 	}
 
-	@Reference
-	public void setJCRFactory(JCRFactory jcrFactory) {
-		_jcrFactory = jcrFactory;
-	}
-
 	public void shutdown() {
 		JCRFactory jcrFactory = getJCRFactory();
 
 		jcrFactory.shutdown();
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties)
-		throws RepositoryException {
-
-		_jcrStoreConfiguration = Configurable.createConfigurable(
-			JCRStoreConfiguration.class, properties);
-	}
-
+	private JCRStoreConfiguration _configuration;
 	private JCRFactory _jcrFactory;
-
-	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 
 	private static final ThreadLocal<Map<String, Session>> _sessions =
 		new AutoResetThreadLocal<Map<String, Session>>(

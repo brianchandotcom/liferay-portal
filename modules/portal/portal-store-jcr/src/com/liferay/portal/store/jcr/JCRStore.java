@@ -60,7 +60,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael Young
@@ -647,11 +646,6 @@ public class JCRStore extends BaseStore {
 		}
 	}
 
-	@Reference
-	public void setJCRFactoryWrapper(JCRFactoryWrapper jcrFactoryWrapper) {
-		_jcrFactoryWrapper = jcrFactoryWrapper;
-	}
-
 	@Override
 	public void updateFile(
 			long companyId, long repositoryId, long newRepositoryId,
@@ -885,6 +879,8 @@ public class JCRStore extends BaseStore {
 			JCRStoreConfiguration.class, properties);
 
 		try {
+			_jcrFactoryWrapper = new JCRFactoryWrapper(_jcrStoreConfiguration);
+
 			_jcrFactoryWrapper.prepare();
 
 			if (_jcrStoreConfiguration.initializeOnStartup()) {
@@ -899,6 +895,8 @@ public class JCRStore extends BaseStore {
 	@Deactivate
 	protected void deactivate() {
 		_jcrFactoryWrapper.shutdown();
+
+		_jcrFactoryWrapper = null;
 	}
 
 	protected Node getFileContentNode(

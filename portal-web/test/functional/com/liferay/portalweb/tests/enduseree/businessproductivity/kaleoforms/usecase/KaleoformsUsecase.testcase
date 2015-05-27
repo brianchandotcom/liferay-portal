@@ -2362,7 +2362,7 @@
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -6015,7 +6015,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
@@ -6273,7 +6273,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_FIELDS_TEXT_FIELD" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLTemplate#deleteTemplateCP">
@@ -6738,7 +6738,7 @@
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -6874,7 +6874,7 @@
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -7040,7 +7040,7 @@
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -8506,7 +8506,7 @@
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -8925,7 +8925,7 @@
 		<var name="workflowDefinitionTitle" value="Single Approver" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">

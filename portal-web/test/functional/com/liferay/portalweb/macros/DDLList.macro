@@ -161,7 +161,7 @@
 
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<while>

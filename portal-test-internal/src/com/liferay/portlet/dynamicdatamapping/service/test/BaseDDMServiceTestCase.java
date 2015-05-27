@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service;
+package com.liferay.portlet.dynamicdatamapping.service.test;
 
 import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -30,6 +30,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureLayoutTestHelper;
@@ -156,12 +157,12 @@ public class BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
-			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-			classPK, sourceClassNameId, templateKey,
-			LocaleTestUtil.getDefaultLocaleMap(name),
-			LocaleTestUtil.getDefaultLocaleMap(description), type, mode,
-			language, script, false, false, null, null,
-			ServiceContextTestUtil.getServiceContext());
+				TestPropsValues.getUserId(), group.getGroupId(), classNameId,
+				classPK, sourceClassNameId, templateKey,
+				LocaleTestUtil.getDefaultLocaleMap(name),
+				LocaleTestUtil.getDefaultLocaleMap(description), type, mode,
+				language, script, false, false, null, null,
+				ServiceContextTestUtil.getServiceContext());
 	}
 
 	protected DDMTemplate addTemplate(

@@ -65,6 +65,12 @@
 		</junit>
 	</target>
 
+	<target name="test">
+		<delete file="classes/poshi-runner-ext.properties" />
+
+		<test module.dir="." />
+	</target>
+
 	<target name="validate" depends="prepare-poshi-runner">
 	    <java classname="com.liferay.poshi.runner.PoshiRunnerValidation" classpath="classes">
 	    	<classpath refid="plugin.classpath" />

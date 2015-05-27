@@ -236,4 +236,58 @@
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
+
+	<command name="HSQLtoPostgreSQL" priority="5">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=postgresql -Ddelete.liferay.home=false" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.postgresql.password" />
+			<var name="databaseType" value="PostgreSQL" />
+			<var name="databaseUserName" property-value="database.postgresql.username" />
+			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
+			<var name="jdbcURL" property-value="database.postgresql.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoPostgreSQLSampleDataDisabled" priority="5">
+		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=postgresql -Ddelete.liferay.home=false" />
+
+		<execute macro="Portlet#shutdownServer" />
+
+		<execute macro="Portlet#startServer">
+			<var name="deleteLiferayHome" value="false" />
+		</execute>
+
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />t
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.postgresql.password" />
+			<var name="databaseType" value="PostgreSQL" />
+			<var name="databaseUserName" property-value="database.postgresql.username" />
+			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
+			<var name="jdbcURL" property-value="database.postgresql.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
 </definition>

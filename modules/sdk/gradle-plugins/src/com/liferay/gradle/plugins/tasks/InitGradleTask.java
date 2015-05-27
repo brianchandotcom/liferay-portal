@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.gradle.api.DefaultTask;
@@ -118,7 +119,9 @@ public class InitGradleTask extends DefaultTask {
 
 				String conf = (String)dependencyNode.attribute("conf");
 
-				if (Validator.isNotNull(conf) && !conf.startsWith("default")) {
+				if (Validator.isNotNull(conf) && !conf.startsWith("default") &&
+					!conf.startsWith("internal")) {
+
 					continue;
 				}
 
@@ -126,15 +129,22 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 				String version = (String)dependencyNode.attribute("rev");
 
+				boolean optional = false;
 				boolean transitive = true;
 
-				if (Validator.isNotNull(conf) &&
-					conf.equals("default->master")) {
-
-					transitive = false;
+				if (Validator.isNotNull(conf)) {
+					if (conf.equals("default->master")) {
+						transitive = false;
+					}
+					else if (conf.equals("internal->master")) {
+						optional = true;
+					}
 				}
 
-				contents.add(wrapDependency(group, name, version, transitive));
+				contents.add(
+					wrapDependency(
+						JavaPlugin.COMPILE_CONFIGURATION_NAME, group, name,
+						version, transitive, optional));
 			}
 		}
 
@@ -151,7 +161,10 @@ public class InitGradleTask extends DefaultTask {
 					deploymentContext);
 
 				if (FileUtil.exists(_project, serviceJarFileName)) {
-					contents.add(wrapServiceJarDependency(serviceJarFileName));
+					contents.add(
+						wrapServiceJarDependency(
+							JavaPlugin.COMPILE_CONFIGURATION_NAME,
+							serviceJarFileName));
 				}
 			}
 		}
@@ -191,12 +204,15 @@ public class InitGradleTask extends DefaultTask {
 						"Unable to find project dependency " + projectFileName);
 				}
 
-				contents.add(wrapProjectDependency(projectPath));
+				contents.add(
+					wrapProjectDependency(
+						JavaPlugin.COMPILE_CONFIGURATION_NAME, projectPath));
 			}
 		}
 
-		return wrapContents(
-			contents, 1, "(", JavaPlugin.COMPILE_CONFIGURATION_NAME, ")", true);
+		Collections.sort(contents);
+
+		return contents;
 	}
 
 	protected List<String> getBuildDependenciesProvided() {
@@ -218,13 +234,16 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 				String version = (String)dependencyNode.attribute("rev");
 
-				contents.add(wrapDependency(group, name, version, false));
+				contents.add(
+					wrapDependency(
+						ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
+						group, name, version, false));
 			}
 		}
 
-		return wrapContents(
-			contents, 1, "(",
-			ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(), ")", true);
+		Collections.sort(contents);
+
+		return contents;
 	}
 
 	protected List<String> getBuildDependenciesProvidedCompile() {
@@ -236,6 +255,14 @@ public class InitGradleTask extends DefaultTask {
 		if (Validator.isNotNull(portalDependencyJars)) {
 			String[] portalDependencyJarsArray = portalDependencyJars.split(
 				",");
+
+			String configurationName =
+				WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME;
+
+			if (FileUtil.exists(_project, "bnd.bnd")) {
+				configurationName =
+					ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME();
+			}
 
 			for (String fileName : portalDependencyJarsArray) {
 				String[] portalDependencyNotation =
@@ -250,20 +277,16 @@ public class InitGradleTask extends DefaultTask {
 					String name = portalDependencyNotation[1];
 					String version = portalDependencyNotation[2];
 
-					contents.add(wrapDependency(group, name, version, false));
+					contents.add(
+						wrapDependency(
+							configurationName, group, name, version, false));
 				}
 			}
 		}
 
-		String configurationName =
-			WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME;
+		Collections.sort(contents);
 
-		if (FileUtil.exists(_project, "bnd.bnd")) {
-			configurationName =
-				ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME();
-		}
-
-		return wrapContents(contents, 1, "(", configurationName, ")", true);
+		return contents;
 	}
 
 	protected List<String> getBuildDependenciesTestCompile() {
@@ -285,13 +308,16 @@ public class InitGradleTask extends DefaultTask {
 				String name = (String)dependencyNode.attribute("name");
 				String version = (String)dependencyNode.attribute("rev");
 
-				contents.add(wrapDependency(group, name, version, true));
+				contents.add(
+					wrapDependency(
+						JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, group, name,
+						version, true));
 			}
 		}
 
-		return wrapContents(
-			contents, 1, "(", JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME, ")",
-			true);
+		Collections.sort(contents);
+
+		return contents;
 	}
 
 	protected List<String> getBuildGradleDependencies() {
@@ -459,29 +485,53 @@ public class InitGradleTask extends DefaultTask {
 	}
 
 	protected String wrapDependency(
-		String group, String name, String version, boolean transitive) {
+		String configurationName, String group, String name, String version,
+		boolean transitive) {
+
+		return wrapDependency(
+			configurationName, group, name, version, transitive, false);
+	}
+
+	protected String wrapDependency(
+		String configurationName, String group, String name, String version,
+		boolean transitive, boolean optional) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("\t\t[group: \"");
+		sb.append('\t');
+		sb.append(configurationName);
+		sb.append(" group: \"");
 		sb.append(group);
 		sb.append("\", name: \"");
 		sb.append(name);
 		sb.append("\", version: \"");
 		sb.append(version);
-		sb.append("\"");
+		sb.append('\"');
 
 		if (!transitive) {
 			sb.append(", transitive: false");
 		}
 
-		sb.append("],");
+		if (optional) {
+			sb.append(", ");
+			sb.append(OptionalBasePlugin.getOPTIONAL_IDENTIFIER());
+		}
 
 		return sb.toString();
 	}
 
-	protected String wrapProjectDependency(String projectPath) {
-		return "\t\tproject(\"" + projectPath + "\"),";
+	protected String wrapProjectDependency(
+		String configurationName, String projectPath) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append('\t');
+		sb.append(configurationName);
+		sb.append(" project(\"");
+		sb.append(projectPath);
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	protected String wrapProperty(String name, String value) {
@@ -522,8 +572,18 @@ public class InitGradleTask extends DefaultTask {
 		return sb.toString();
 	}
 
-	protected String wrapServiceJarDependency(String serviceJarFileName) {
-		return "\t\tfiles(\"" + serviceJarFileName + "\"),";
+	protected String wrapServiceJarDependency(
+		String configurationName, String serviceJarFileName) {
+
+		StringBuilder sb = new StringBuilder();
+
+		sb.append('\t');
+		sb.append(configurationName);
+		sb.append(" files(\"");
+		sb.append(serviceJarFileName);
+		sb.append("\")");
+
+		return sb.toString();
 	}
 
 	private static final PortalDependencyNotations _portalDependencyNotations =

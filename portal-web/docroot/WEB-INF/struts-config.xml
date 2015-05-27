@@ -73,6 +73,8 @@
 
 		<action path="/portal/rest_proxy" type="com.liferay.portal.action.RESTProxyAction" />
 
+		<action path="/portal/robots" type="com.liferay.portal.action.RobotsAction" />
+
 		<action path="/portal/session_click" type="com.liferay.portal.action.SessionClickAction" />
 
 		<action path="/portal/session_tree_js_click" type="com.liferay.portal.action.SessionTreeJSClickAction" />
@@ -80,6 +82,8 @@
 		<action path="/portal/setup_wizard" type="com.liferay.portal.action.SetupWizardAction">
 			<forward name="portal.setup_wizard" path="portal.setup_wizard" />
 		</action>
+
+		<action path="/portal/sitemap" type="com.liferay.portal.action.SitemapAction" />
 
 		<action path="/portal/status" forward="portal.status" />
 
@@ -588,10 +592,6 @@
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
-
-		<action path="/layouts_admin/robots" type="com.liferay.portlet.layoutsadmin.action.RobotsAction" />
-
-		<action path="/layouts_admin/sitemap" type="com.liferay.portlet.layoutsadmin.action.SitemapAction" />
 
 		<action path="/layouts_admin/update_page" type="com.liferay.portlet.layoutsadmin.action.UpdateLayoutAction" />
 

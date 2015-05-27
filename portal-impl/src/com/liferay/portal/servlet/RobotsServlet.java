@@ -39,7 +39,7 @@ public class RobotsServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			String redirect = Portal.PATH_MAIN + "/layouts_admin/robots";
+			String redirect = Portal.PATH_MAIN + "/portal/robots";
 
 			ServletContext servletContext = getServletContext();
 

@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portal.action;
 
+import com.liferay.portal.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.VirtualHost;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.VirtualHostLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portal.util.RobotsUtil;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.layoutsadmin.util.SitemapUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,9 +45,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 /**
- * @author David Truong
+ * @author Jorge Ferrer
  */
-public class RobotsAction extends Action {
+public class SitemapAction extends Action {
 
 	@Override
 	public ActionForward execute(
@@ -52,36 +56,65 @@ public class RobotsAction extends Action {
 		throws Exception {
 
 		try {
-			String host = GetterUtil.getString(PortalUtil.getHost(request));
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			long groupId = ParamUtil.getLong(request, "groupId");
+			boolean privateLayout = ParamUtil.getBoolean(
+				request, "privateLayout");
 
 			LayoutSet layoutSet = null;
 
-			VirtualHost virtualHost =
-				VirtualHostLocalServiceUtil.fetchVirtualHost(host);
+			if (groupId > 0) {
+				Group group = GroupLocalServiceUtil.getGroup(groupId);
 
-			if ((virtualHost != null) && (virtualHost.getLayoutSetId() > 0)) {
-				layoutSet = LayoutSetLocalServiceUtil.fetchLayoutSet(host);
+				if (group.isStagingGroup()) {
+					groupId = group.getLiveGroupId();
+				}
+
+				layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+					groupId, privateLayout);
 			}
 			else {
-				Company company = PortalUtil.getCompany(request);
+				String host = PortalUtil.getHost(request);
 
-				if (host.equals(company.getVirtualHostname()) &&
-					Validator.isNotNull(
-						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME)) {
+				host = StringUtil.toLowerCase(host);
+				host = host.trim();
 
-					Group defaultGroup = GroupLocalServiceUtil.getGroup(
-						company.getCompanyId(),
-						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME);
+				VirtualHost virtualHost =
+					VirtualHostLocalServiceUtil.getVirtualHost(host);
 
-					layoutSet = defaultGroup.getPublicLayoutSet();
+				if (virtualHost.getLayoutSetId() != 0) {
+					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+						virtualHost.getLayoutSetId());
+				}
+				else {
+					String groupName =
+						PropsValues.VIRTUAL_HOSTS_DEFAULT_SITE_NAME;
+
+					if (Validator.isNull(groupName)) {
+						groupName = GroupConstants.GUEST;
+					}
+
+					Group group = GroupLocalServiceUtil.getGroup(
+						themeDisplay.getCompanyId(), groupName);
+
+					layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+						group.getGroupId(), false);
 				}
 			}
 
-			String robots = RobotsUtil.getRobots(layoutSet);
+			String sitemap = SitemapUtil.getSitemap(
+				layoutSet.getGroupId(), layoutSet.isPrivateLayout(),
+				themeDisplay);
 
 			ServletResponseUtil.sendFile(
-				request, response, null, robots.getBytes(StringPool.UTF8),
-				ContentTypes.TEXT_PLAIN_UTF8);
+				request, response, null, sitemap.getBytes(StringPool.UTF8),
+				ContentTypes.TEXT_XML_UTF8);
+		}
+		catch (NoSuchLayoutSetException nslse) {
+			PortalUtil.sendError(
+				HttpServletResponse.SC_NOT_FOUND, nslse, request, response);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -96,6 +129,6 @@ public class RobotsAction extends Action {
 		return null;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(RobotsAction.class);
+	private static final Log _log = LogFactoryUtil.getLog(SitemapAction.class);
 
 }

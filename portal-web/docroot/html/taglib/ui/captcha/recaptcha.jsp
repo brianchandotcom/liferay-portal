@@ -16,19 +16,19 @@
 
 <%@ include file="/html/taglib/ui/captcha/init.jsp" %>
 
+<script src="<%= PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT %>?hl=<%= locale.getLanguage() %>" type="text/javascript"></script>
+
+<div class="g-recaptcha" data-sitekey="<%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>"></div>
+
 <noscript>
-	<iframe frameborder="0" height="300" src="<%= HttpUtil.protocolize(PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT, request.isSecure()) %><%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" width="500"></iframe><br />
-
-	<textarea cols="40" name="recaptcha_challenge_field" rows="3"></textarea>
-
-	<input name="recaptcha_response_field" type="hidden" value="manual_challenge" />
+	<div style="width: 302px; height: 525px;">
+		<div style="width: 302px; height: 525px; position: relative;">
+			<div style="width: 302px; height: 525px; position: absolute;">
+				<iframe frameborder="0" scrolling="no" src="<%= PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_NOSCRIPT %><%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" style="width: 302px; height:525px; border-style: none;"></iframe>
+			</div>
+			<div style="width: 300px; height: 60px; position: absolute; bottom: 25px; left: 0px; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px;">
+				<textarea class="g-recaptcha-response" id="g-recaptcha-response" name="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;"></textarea>
+			</div>
+		</div>
+	</div>
 </noscript>
-
-<aui:script position="inline">
-	var RecaptchaOptions = {
-		lang : '<%= locale.getLanguage() %>',
-		theme : 'white'
-	};
-</aui:script>
-
-<script src="<%= HttpUtil.protocolize(PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_SCRIPT, request.isSecure()) %><%= PrefsPropsUtil.getString(PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC, PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PUBLIC) %>" type="text/javascript"></script>

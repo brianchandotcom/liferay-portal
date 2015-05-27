@@ -18,13 +18,19 @@ import com.liferay.portal.captcha.simplecaptcha.SimpleCaptchaImpl;
 import com.liferay.portal.kernel.captcha.CaptchaException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
@@ -69,18 +75,14 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 	protected boolean validateChallenge(HttpServletRequest request)
 		throws CaptchaException {
 
-		String reCaptchaChallenge = ParamUtil.getString(
-			request, "recaptcha_challenge_field");
 		String reCaptchaResponse = ParamUtil.getString(
-			request, "recaptcha_response_field");
+			request, "g-recaptcha-response");
 
 		Http.Options options = new Http.Options();
 
-		options.addPart("challenge", reCaptchaChallenge);
-
 		try {
 			options.addPart(
-				"privatekey",
+				"secret",
 				PrefsPropsUtil.getString(
 					PropsKeys.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE,
 					PropsValues.CAPTCHA_ENGINE_RECAPTCHA_KEY_PRIVATE));
@@ -91,10 +93,7 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 
 		options.addPart("remoteip", request.getRemoteAddr());
 		options.addPart("response", reCaptchaResponse);
-		options.setLocation(
-			HttpUtil.protocolize(
-				PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY,
-				request.isSecure()));
+		options.setLocation(PropsValues.CAPTCHA_ENGINE_RECAPTCHA_URL_VERIFY);
 		options.setPost(true);
 
 		String content = null;
@@ -114,15 +113,40 @@ public class ReCaptchaImpl extends SimpleCaptchaImpl {
 			throw new CaptchaTextException();
 		}
 
-		String[] messages = content.split("\r?\n");
+		try {
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject(content);
 
-		if (messages.length < 1) {
+			String success = jsonObject.getString("success");
+
+			if (StringUtil.equalsIgnoreCase(success, "true")) {
+				return true;
+			}
+
+			JSONArray jsonArray = jsonObject.getJSONArray("error-codes");
+
+			if ((jsonArray == null) || (jsonArray.length() == 0)) {
+				return false;
+			}
+
+			StringBundler sb = new StringBundler(jsonArray.length() * 2 - 1);
+
+			for (int i = 0; i < jsonArray.length(); i++) {
+				sb.append(jsonArray.getString(i));
+
+				if (i < (jsonArray.length() - 1)) {
+					sb.append(StringPool.COMMA_AND_SPACE);
+				}
+			}
+
+			_log.error("reCAPTCHA encountered an error: " + sb.toString());
+
+			return false;
+		}
+		catch (JSONException jsone) {
 			_log.error("reCAPTCHA did not return a valid result: " + content);
 
 			throw new CaptchaTextException();
 		}
-
-		return GetterUtil.getBoolean(messages[0]);
 	}
 
 	@Override

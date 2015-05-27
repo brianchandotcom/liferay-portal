@@ -381,7 +381,19 @@ public class ComboServlet extends HttpServlet {
 
 		ServletContext servletContext = portletApp.getServletContext();
 
-		return servletContext.getRequestDispatcher(getResourcePath(modulePath));
+		String resourcePath = getResourcePath(modulePath);
+
+		if (!PortalUtil.isValidResourceId(resourcePath)) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Illegal access: " + request.getRequestURL() +
+						"?" + request.getQueryString());
+			}
+
+			return null;
+		}
+
+		return servletContext.getRequestDispatcher(resourcePath);
 	}
 
 	protected String translate(

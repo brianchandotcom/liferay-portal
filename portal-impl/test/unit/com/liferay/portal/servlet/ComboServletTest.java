@@ -21,12 +21,16 @@ import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.tools.ToolDependencies;
+import com.liferay.portal.util.Portal;
+import com.liferay.portal.util.PortalImpl;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -60,6 +64,15 @@ public class ComboServletTest extends PowerMockito {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		ToolDependencies.wireCaches();
+
+		_portal = PortalUtil.getPortal();
+
+		_portalUtil.setPortal(new PortalImpl());
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_portalUtil.setPortal(_portal);
 	}
 
 	@Before
@@ -201,6 +214,9 @@ public class ComboServletTest extends PowerMockito {
 
 		_pluginServletContext.getRequestDispatcher("/js/javascript.js");
 	}
+
+	private static Portal _portal;
+	private static final PortalUtil _portalUtil = new PortalUtil();
 
 	@Mock
 	private Portlet _adminPortlet;

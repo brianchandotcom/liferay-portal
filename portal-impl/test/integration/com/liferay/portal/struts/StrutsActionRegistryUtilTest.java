@@ -22,6 +22,7 @@ import com.liferay.portal.util.test.AtomicState;
 
 import java.util.Map;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
@@ -43,6 +44,11 @@ public class StrutsActionRegistryUtilTest {
 	@BeforeClass
 	public static void setUpClass() {
 		_atomicState = new AtomicState();
+	}
+
+	@AfterClass
+	public static void tearDownClass() {
+		_atomicState.close();
 	}
 
 	@Test

@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import org.junit.Assert;
@@ -41,12 +39,6 @@ public class ItemSelectorCriterionSerializerTest {
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
 
-		Set<Class<?>> desiredReturnTypes = new HashSet<>();
-
-		desiredReturnTypes.add(URL.class);
-
-		_flickrItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
-
 		_itemSelectorCriterionSerializer =
 			new ItemSelectorCriterionSerializer<>(
 				_flickrItemSelectorCriterion, _PREFIX);
@@ -58,6 +50,12 @@ public class ItemSelectorCriterionSerializerTest {
 
 	@Test
 	public void testGetProperties() {
+		Set<Class<?>> desiredReturnTypes = new HashSet<>();
+
+		desiredReturnTypes.add(URL.class);
+
+		_flickrItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+
 		Map<String, String[]> properties =
 			_itemSelectorCriterionSerializer.getProperties();
 
@@ -80,8 +78,8 @@ public class ItemSelectorCriterionSerializerTest {
 			_PREFIX + ItemSelectorCriterionSerializer.JSON,
 			new String[] {
 				"{\"tags\":[\"tag1\",\"tag2\",\"tag3\"],\"user\":" +
-					"\"Joe Bloggs\"," +
-					"\"desiredReturnTypes\":[\"" + URL.class.getName() + "\"]}"
+					"\"Joe Bloggs\",\"desiredReturnTypes\":[\"" +
+						URL.class.getName() + "\"]}"
 			});
 
 		_itemSelectorCriterionSerializer.setProperties(properties);
@@ -91,14 +89,14 @@ public class ItemSelectorCriterionSerializerTest {
 		Assert.assertArrayEquals(
 			new String[] {"tag1", "tag2", "tag3"},
 			_flickrItemSelectorCriterion.getTags());
+
+		Set<Class<?>> expectedDesiredReturnTypes = new HashSet<>();
+
+		expectedDesiredReturnTypes.add(URL.class);
+
 		Assert.assertEquals(
-			1, _flickrItemSelectorCriterion.getDesiredReturnTypes().size());
-
-		for (Class<?> desiredReturnType :
-				_flickrItemSelectorCriterion.getDesiredReturnTypes()) {
-
-			Assert.assertEquals(URL.class, desiredReturnType);
-		}
+			expectedDesiredReturnTypes,
+			_flickrItemSelectorCriterion.getDesiredReturnTypes());
 	}
 
 	private String _assert(String expected, String json) {

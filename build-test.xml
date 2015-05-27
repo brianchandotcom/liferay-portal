@@ -359,19 +359,39 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-poshi-class-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="poshi.class.name" unset="true" />
+
+			<get-test-simple-class-name />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testSimpleClassName = project.getProperty("test.simple.class.name");
+
+					String poshiClassName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+
+					project.setProperty("poshi.class.name", poshiClassName);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
 
 			<var name="test.class.name" unset="true" />
 
-			<get-test-name />
+			<get-poshi-class-name />
 
 			<script classpathref="project.classpath" language="beanshell">
 				<![CDATA[
 					import org.apache.tools.ant.DirectoryScanner;
 
-					String testName = project.getProperty("test.name");
+					String poshiClassName = project.getProperty("poshi.class.name");
 
 					try {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -383,7 +403,7 @@
 							directoryScanner.setBasedir(project.getBaseDir());
 						}
 
-						directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + testName + ".testcase"});
+						directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + poshiClassName + ".testcase"});
 
 						directoryScanner.scan();
 
@@ -430,26 +450,6 @@
 
 						project.setProperty("test.method.name", testMethodName);
 					}
-				]]>
-			</script>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-test-name">
-		<sequential>
-			<fail message="Please set the property ${test.class}." unless="test.class" />
-
-			<var name="test.name" unset="true" />
-
-			<get-test-simple-class-name />
-
-			<script classpathref="project.classpath" language="beanshell">
-				<![CDATA[
-					String testSimpleClassName = project.getProperty("test.simple.class.name");
-
-					String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
-
-					project.setProperty("test.name", testName);
 				]]>
 			</script>
 		</sequential>

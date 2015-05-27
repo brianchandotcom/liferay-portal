@@ -1,4 +1,3 @@
-
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -64,7 +63,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 		properties.put(
 			_prefix + JSON,
-			new String[]{jsonSerializer.serialize(_itemSelectorCriterion)});
+			new String[] {jsonSerializer.serialize(_itemSelectorCriterion)});
 
 		return properties;
 	}
@@ -78,11 +77,11 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 			Map<String, ?> map = jsonDeserializer.deserialize(json);
 
-			for (String internalProperties : _externalProperties) {
+			for (String externalProperty : _externalProperties) {
 				Class<?> serializableFieldClass = PropertyUtils.getPropertyType(
-					_itemSelectorCriterion, internalProperties);
+					_itemSelectorCriterion, externalProperty);
 
-				Object value = map.get(internalProperties);
+				Object value = map.get(externalProperty);
 
 				if (serializableFieldClass.isArray() &&
 					List.class.isInstance(value)) {
@@ -96,7 +95,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 				}
 
 				PropertyUtils.setProperty(
-					_itemSelectorCriterion, internalProperties, value);
+					_itemSelectorCriterion, externalProperty, value);
 			}
 
 			_setDesiredReturnTypes(map);
@@ -145,16 +144,16 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private void _setDesiredReturnTypes(Map<String, ?> map) {
-		Set<Class<?>> set = new LinkedHashSet<>();
+		Set<Class<?>> desiredReturnTypes = new LinkedHashSet<>();
 
-		List<String> desiredReturnTypesNames = (List<String>)map.remove(
+		List<String> desiredReturnTypeNames = (List<String>)map.get(
 			"desiredReturnTypes");
 
-		for (String desiredReturnTypeName : desiredReturnTypesNames) {
+		for (String desiredReturnTypeName : desiredReturnTypeNames) {
 			try {
 				Class<?> clazz = Class.forName(desiredReturnTypeName);
 
-				set.add(clazz);
+				desiredReturnTypes.add(clazz);
 			}
 			catch (ClassNotFoundException cnfe) {
 				if (_log.isWarnEnabled()) {
@@ -163,7 +162,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			}
 		}
 
-		_itemSelectorCriterion.setDesiredReturnTypes(set);
+		_itemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
@@ -62,9 +63,14 @@ public abstract class BaseDeployerTestCase {
 
 		secureSAXReader.setSecure(true);
 
-		saxReaderUtil.setSecureSAXReader(secureSAXReader);
+		saxReaderUtil.setSAXReader(secureSAXReader);
 
-		saxReaderUtil.setUnsecureSAXReader(new SAXReaderImpl());
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
+
+		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
 
 		setUpLiferayPluginPackageProperties();
 	}

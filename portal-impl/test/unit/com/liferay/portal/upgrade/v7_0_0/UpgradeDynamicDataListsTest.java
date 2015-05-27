@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.util.LocalizationImpl;
@@ -269,9 +270,14 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 
 		secureSAXReader.setSecure(true);
 
-		saxReaderUtil.setSecureSAXReader(secureSAXReader);
+		saxReaderUtil.setSAXReader(secureSAXReader);
 
-		saxReaderUtil.setUnsecureSAXReader(new SAXReaderImpl());
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
+
+		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
 	}
 
 	protected void setUpSecureXMLFactoryProviderUtil() {

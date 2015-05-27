@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.microsofttranslator.MicrosoftTranslatorFactoryImpl;
 import com.liferay.portal.model.DefaultModelHintsImpl;
 import com.liferay.portal.model.ModelHintsUtil;
@@ -132,9 +133,14 @@ public class ToolDependencies {
 
 		secureSAXReader.setSecure(true);
 
-		saxReaderUtil.setSecureSAXReader(secureSAXReader);
+		saxReaderUtil.setSAXReader(secureSAXReader);
 
-		saxReaderUtil.setUnsecureSAXReader(new SAXReaderImpl());
+		UnsecureSAXReaderUtil unsecureSAXReaderUtil =
+			new UnsecureSAXReaderUtil();
+
+		SAXReaderImpl unsecureSAXReader = new SAXReaderImpl();
+
+		unsecureSAXReaderUtil.setSAXReader(unsecureSAXReader);
 
 		SecureXMLFactoryProviderUtil secureXMLFactoryProviderUtil =
 			new SecureXMLFactoryProviderUtil();

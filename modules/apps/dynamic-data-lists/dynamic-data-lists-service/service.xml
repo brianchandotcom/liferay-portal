@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.dynamicdatalists" auto-import-default-references="false">
+<service-builder package-path="com.liferay.dynamic.data.lists" auto-import-default-references="false">
 	<namespace>DDL</namespace>
 	<entity name="DDLRecord" uuid="true" local-service="true" remote-service="true">
 
@@ -45,11 +45,11 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecordSet" />
+		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecordVersion" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="WorkflowInstanceLink" />
 		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
-		<reference package-path="com.liferay.portlet.dynamicdatalists" entity="DDLRecordSet" />
-		<reference package-path="com.liferay.portlet.dynamicdatalists" entity="DDLRecordVersion" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 	</entity>
 	<entity name="DDLRecordSet" uuid="true" local-service="true" remote-service="true">
@@ -91,11 +91,11 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.dynamic.data.lists" entity="DDLRecord" />
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portal" entity="WorkflowDefinitionLink" />
-		<reference package-path="com.liferay.portlet.dynamicdatalists" entity="DDLRecord" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructure" />
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 	</entity>

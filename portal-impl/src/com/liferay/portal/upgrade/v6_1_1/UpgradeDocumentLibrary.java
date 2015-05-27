@@ -131,7 +131,8 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 	}
 
 	protected void updateFileEntry(
-		long fileEntryId, String version, String newTitle) throws SQLException {
+			long fileEntryId, String version, String newTitle)
+		throws SQLException {
 
 		Connection con = null;
 		PreparedStatement ps = null;

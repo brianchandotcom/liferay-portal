@@ -8,7 +8,7 @@ AUI.add(
 		var Util = Liferay.Util;
 		var Window = Util.Window;
 
-		var IE9 = (UA.ie == 9);
+		var IE9 = UA.ie == 9;
 
 		var setWidth = function(modal, width) {
 			if (IE9) {
@@ -219,7 +219,7 @@ AUI.add(
 
 					if (uri) {
 						if (config.cache === false) {
-							uri = Liferay.Util.addParams(A.guid() + '=' + Lang.now(), uri);
+							uri = Liferay.Util.addParams(A.guid() + '=' + Date.now(), uri);
 						}
 
 						dialogIframeConfig = A.merge(

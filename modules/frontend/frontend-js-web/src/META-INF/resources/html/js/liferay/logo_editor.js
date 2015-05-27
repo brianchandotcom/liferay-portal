@@ -117,7 +117,7 @@ AUI.add(
 								var previewURL = instance.get('previewURL');
 
 								previewURL = Liferay.Util.addParams(instance.get('namespace') + 'tempImageFileName=' + responseText.tempImageFileName, previewURL);
-								previewURL = Liferay.Util.addParams('t=' + Lang.now(), previewURL);
+								previewURL = Liferay.Util.addParams('t=' + Date.now(), previewURL);
 
 								portraitPreviewImg.attr('src', previewURL);
 

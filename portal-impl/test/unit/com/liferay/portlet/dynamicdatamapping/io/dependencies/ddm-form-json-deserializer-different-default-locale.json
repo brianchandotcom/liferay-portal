@@ -46,7 +46,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "select"
+			"type": "select",
+			"visibilityExpression": "true"
 		}
 	]
 }

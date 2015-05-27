@@ -87,10 +87,10 @@ public class StagingBackgroundTaskDisplayHelperImpl
 
 			if (className.equals(StagedTheme.class.getName())) {
 				info = LanguageUtil.format(
-						locale,
-						"the-referenced-theme-x-is-not-deployed-in-the-" +
-							"current-environment",
-						missingReference.getClassPK(), false);
+					locale,
+					"the-referenced-theme-x-is-not-deployed-in-the-" +
+						"current-environment",
+					missingReference.getClassPK(), false);
 			}
 			else if (referrers.size() == 1) {
 				Set<Map.Entry<String, String>> referrerDisplayNames =
@@ -110,12 +110,12 @@ public class StagingBackgroundTaskDisplayHelperImpl
 				}
 
 				info = LanguageUtil.format(
-						locale, "referenced-by-a-x-x",
-						new String[] {
-							ResourceActionsUtil.getModelResource(
-								locale, referrerClassName),
-							referrerDisplayName
-						}, false);
+					locale, "referenced-by-a-x-x",
+					new String[] {
+						ResourceActionsUtil.getModelResource(
+							locale, referrerClassName),
+						referrerDisplayName
+					}, false);
 			}
 			else {
 				info = LanguageUtil.format(

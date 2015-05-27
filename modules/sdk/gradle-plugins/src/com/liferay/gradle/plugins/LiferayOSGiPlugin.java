@@ -58,6 +58,8 @@ import org.gradle.api.invocation.Gradle;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.specs.Spec;
 import org.gradle.api.tasks.Copy;
+import org.gradle.api.tasks.SourceSet;
+import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskInputs;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
@@ -677,17 +679,26 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			project, BundleExtension.class);
 
 		bundleExtension.setJarBuilderFactory(
-			new Factory<JarBuilder>() {
-
-				@Override
-				public JarBuilder create() {
-					return new LiferayJarBuilder();
-				}
-
-			});
+			new LiferayJarBuilderFactory(project));
 	}
 
 	private static class LiferayJarBuilder extends JarBuilder {
+
+		public void addClasspath(File file) {
+			try {
+				builder.addClasspath(file);
+			}
+			catch (Exception e) {
+				throw new GradleException(e.getMessage(), e);
+			}
+		}
+
+		@Override
+		public JarBuilder withClasspath(Object files) {
+			builder.clear();
+
+			return super.withClasspath(files);
+		}
 
 		@Override
 		public JarBuilder withResources(Object files) {
@@ -697,6 +708,31 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 			return this;
 		}
+
+	}
+
+	private static class LiferayJarBuilderFactory
+		implements Factory<JarBuilder> {
+
+		public LiferayJarBuilderFactory(Project project) {
+			_project = project;
+		}
+
+		@Override
+		public JarBuilder create() {
+			LiferayJarBuilder liferayJarBuilder = new LiferayJarBuilder();
+
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				_project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+			SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+			liferayJarBuilder.addClasspath(sourceSetOutput.getClassesDir());
+
+			return liferayJarBuilder;
+		}
+
+		private final Project _project;
 
 	}
 

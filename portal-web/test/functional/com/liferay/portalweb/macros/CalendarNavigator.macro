@@ -10,7 +10,7 @@
 	</command>
 
 	<command name="gotoAdd">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -22,7 +22,7 @@
 	</command>
 
 	<command name="gotoAddOnSpecifcDayOfWeekViaWeekView">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -91,7 +91,7 @@
 	</command>
 
 	<command name="gotoNextDay">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -103,7 +103,7 @@
 	</command>
 
 	<command name="gotoPreviousDay">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -123,7 +123,7 @@
 
 		<execute function="Click" locator1="PGCalendar#SMALL_CALENDAR_SPECIFIC_DAY" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 	</command>

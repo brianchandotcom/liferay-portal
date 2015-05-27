@@ -97,10 +97,6 @@ public class PoshiRunnerContext {
 		return _rootElements.get("action#" + className);
 	}
 
-	public static List<String> getAvailablePropertyNames() {
-		return _availablePropertyNames;
-	}
-
 	public static String getFilePathFromClassKey(String classKey) {
 		String fileName = PoshiRunnerGetterUtil.getFileNameFromClassKey(
 			classKey);
@@ -160,6 +156,10 @@ public class PoshiRunnerContext {
 		return _seleniumParameterCounts.get(commandName);
 	}
 
+	public static List<String> getTestCaseAvailablePropertyNames() {
+		return _testCaseAvailablePropertyNames;
+	}
+
 	public static Element getTestCaseCommandElement(String classCommandName) {
 		return _commandElements.get("test-case#" + classCommandName);
 	}
@@ -194,7 +194,7 @@ public class PoshiRunnerContext {
 		PoshiRunnerValidation.validate();
 
 		_writeTestCaseMethodNamesProperties();
-		_writeTestGeneratedPropertiesFile();
+		_writeTestGeneratedProperties();
 	}
 
 	public static void readFiles() throws Exception {
@@ -663,7 +663,7 @@ public class PoshiRunnerContext {
 		FileUtil.write("test.case.method.names.properties", sb.toString());
 	}
 
-	private static void _writeTestGeneratedPropertiesFile() throws Exception {
+	private static void _writeTestGeneratedProperties() throws Exception {
 		String testName = PropsValues.TEST_NAME;
 		String testCaseProperty = testName + "TestCase";
 
@@ -692,7 +692,7 @@ public class PoshiRunnerContext {
 			sb.append("\n");
 		}
 
-		FileUtil.write("generated.properties", sb.toString());
+		FileUtil.write("test.generated.properties", sb.toString());
 	}
 
 	private static final String _BASE_DIR =
@@ -700,8 +700,6 @@ public class PoshiRunnerContext {
 
 	private static final Map<String, String> _actionExtendClassName =
 		new HashMap<>();
-	private static final List<String> _availablePropertyNames =
-		new ArrayList<>();
 	private static final Map<String, Element> _commandElements =
 		new HashMap<>();
 	private static final Map<String, String> _commandSummaries =
@@ -716,6 +714,8 @@ public class PoshiRunnerContext {
 	private static final Map<String, Element> _rootElements = new HashMap<>();
 	private static final Map<String, Integer> _seleniumParameterCounts =
 		new HashMap<>();
+	private static final List<String> _testCaseAvailablePropertyNames =
+		new ArrayList<>();
 	private static final Map<String, Set<String>> _testCaseClassCommandNames =
 		new TreeMap<>();
 	private static final List<String> _testCaseClassNames = new ArrayList<>();
@@ -723,14 +723,6 @@ public class PoshiRunnerContext {
 	private static String _testClassName;
 
 	static {
-		String testCaseAvailablePropertyNames =
-			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
-
-		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
-			_availablePropertyNames = Arrays.asList(
-				StringUtil.split(testCaseAvailablePropertyNames));
-		}
-
 		_componentNames.addAll(
 			Arrays.asList(StringUtil.split(PropsValues.COMPONENT_NAMES)));
 
@@ -740,6 +732,15 @@ public class PoshiRunnerContext {
 		for (String productName : _productNames) {
 			_componentNames.add(productName);
 			_componentNames.add(productName + "-known-issues");
+		}
+
+		String testCaseAvailablePropertyNames =
+			PropsValues.TEST_CASE_AVAILABLE_PROPERTY_NAMES;
+
+		if (Validator.isNotNull(testCaseAvailablePropertyNames)) {
+			_testCaseAvailablePropertyNames.addAll(
+				Arrays.asList(
+					StringUtil.split(testCaseAvailablePropertyNames)));
 		}
 	}
 

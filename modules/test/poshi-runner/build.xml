@@ -167,9 +167,7 @@
 
 			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
 
-			test.name=${test.name}
-
-			testcase.available.property.names=\
+			test.case.available.property.names=\
 				app.server.bundles.size,\
 				captcha.max.challenges,\
 				cluster.enabled,\
@@ -206,6 +204,8 @@
 				theme.plugins.includes,\
 				web.plugins.includes,\
 				web.xml.timeout
+
+			test.name=${test.name}
 		</echo>
 
 		<if>

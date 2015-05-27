@@ -804,12 +804,12 @@ public class PoshiRunnerValidation {
 		_validatePossibleAttributeNames(element, attributeNames, filePath);
 		_validateRequiredAttributeNames(element, attributeNames, filePath);
 
-		List<String> availablePropertyNames =
-			PoshiRunnerContext.getAvailablePropertyNames();
+		List<String> testCaseAvailablePropertyNames =
+			PoshiRunnerContext.getTestCaseAvailablePropertyNames();
 
 		String propertyName = element.attributeValue("name");
 
-		if (!availablePropertyNames.contains(propertyName)) {
+		if (!testCaseAvailablePropertyNames.contains(propertyName)) {
 			_exceptions.add(
 				new Exception(
 					"Invalid property name " + propertyName + "\n" + filePath +

@@ -45,6 +45,8 @@ public interface ImageLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link ImageLocalServiceUtil} to access the image local service. Add custom service methods to {@link com.liferay.portal.service.impl.ImageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portal.model.Image addImage(byte[] bytes)
+		throws PortalException;
 
 	/**
 	* Adds the image to the database. Also notifies the appropriate model listeners.

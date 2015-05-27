@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <liferay-staging:defineObjects />
 
@@ -70,7 +70,7 @@ PortletURL portletURL = currentURLObj;
 portletURL.setParameter("tabs3", "current-and-previous");
 %>
 
-<liferay-util:include page="/html/portlet/portlet_configuration/export_import_error.jsp" />
+<liferay-util:include page="/html/portlet/export_import/export_import_error.jsp" />
 
 <c:choose>
 	<c:when test="<%= (themeDisplay.getURLPublishToLive() == null) && !layout.isTypeControlPanel() %>">
@@ -97,7 +97,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 				</div>
 
 				<portlet:actionURL var="publishPortletURL">
-					<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+					<portlet:param name="struts_action" value="/export_import/export_import" />
 				</portlet:actionURL>
 
 				<aui:form action="<%= publishPortletURL %>" cssClass="lfr-export-dialog" method="post" name="fm1" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "publishToLive();" %>'>
@@ -452,14 +452,14 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 			<liferay-ui:section>
 				<div class="process-list" id="<portlet:namespace />publishProcesses">
-					<liferay-util:include page="/html/portlet/portlet_configuration/publish_portlet_processes.jsp" />
+					<liferay-util:include page="/html/portlet/export_import/publish_portlet_processes.jsp" />
 				</div>
 			</liferay-ui:section>
 		</liferay-ui:tabs>
 
 		<aui:script use="liferay-export-import">
 			<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="publishProcessesURL">
-				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+				<portlet:param name="struts_action" value="/export_import/export_import" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.PUBLISH %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />
 				<portlet:param name="<%= SearchContainer.DEFAULT_DELTA_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_DELTA_PARAM) %>" />

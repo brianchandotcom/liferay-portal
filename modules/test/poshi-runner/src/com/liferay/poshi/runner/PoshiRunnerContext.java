@@ -255,66 +255,6 @@ public class PoshiRunnerContext {
 		return classCommandName;
 	}
 
-	private static Map<String, Set<String>> _getPropertiesMap() {
-		Map<String, Set<String>> propertiesMap = new HashMap<>();
-
-		for (String testCaseClassName : _testCaseClassNames) {
-			Element rootElement = getTestCaseRootElement(testCaseClassName);
-
-			List<Element> rootPropertyElements = rootElement.elements(
-				"property");
-
-			Set<String> rootProperties = new TreeSet<>();
-
-			for (Element rootPropertyElement : rootPropertyElements) {
-				StringBuilder sb = new StringBuilder();
-
-				sb.append(".all.");
-				sb.append(rootPropertyElement.attributeValue("name"));
-				sb.append("=");
-				sb.append(rootPropertyElement.attributeValue("value"));
-
-				rootProperties.add(sb.toString());
-			}
-
-			List<Element> commandElements = rootElement.elements("command");
-
-			Set<String> allCommandProperties = new TreeSet<>();
-
-			for (Element commandElement : commandElements) {
-				List<Element> commandPropertyElements = commandElement.elements(
-					"property");
-
-				Set<String> commandProperties = new TreeSet<>();
-
-				for (Element commandPropertyElement : commandPropertyElements) {
-					StringBuilder sb = new StringBuilder();
-
-					sb.append(".");
-					sb.append(commandPropertyElement.attributeValue("name"));
-					sb.append("=");
-					sb.append(commandPropertyElement.attributeValue("value"));
-
-					commandProperties.add(sb.toString());
-				}
-
-				allCommandProperties.addAll(commandProperties);
-				commandProperties.addAll(rootProperties);
-
-				propertiesMap.put(
-					testCaseClassName + "#" +
-						commandElement.attributeValue("name"),
-					commandProperties);
-			}
-
-			allCommandProperties.addAll(rootProperties);
-
-			propertiesMap.put(testCaseClassName, allCommandProperties);
-		}
-
-		return propertiesMap;
-	}
-
 	private static List<String> _getRelatedActionClassCommandNames(
 		String classCommandName) {
 
@@ -665,31 +605,55 @@ public class PoshiRunnerContext {
 
 	private static void _writeTestGeneratedProperties() throws Exception {
 		String testName = PropsValues.TEST_NAME;
-		String testCaseProperty = testName + "TestCase";
 
-		if (testName.contains("#")) {
-			testCaseProperty = testName.replace("#", "TestCase.test");
-		}
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
+
+		String testCasePropertyKey = className + "TestCase";
 
 		StringBuilder sb = new StringBuilder();
 
-		Map<String, Set<String>> propertiesMap = _getPropertiesMap();
+		Element rootElement = getTestCaseRootElement(className);
 
-		Set<String> properties = propertiesMap.get(testName);
+		List<Element> rootPropertyElements = rootElement.elements("property");
 
-		for (String property : properties) {
-			if (property.startsWith(".all")) {
-				sb.append(
-					PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
-						testName));
-				sb.append("TestCase");
-			}
-			else {
-				sb.append(testCaseProperty);
-			}
-
-			sb.append(property);
+		for (Element rootPropertyElement : rootPropertyElements) {
+			sb.append(testCasePropertyKey);
+			sb.append(".all.");
+			sb.append(rootPropertyElement.attributeValue("name"));
+			sb.append("=");
+			sb.append(rootPropertyElement.attributeValue("value"));
 			sb.append("\n");
+		}
+
+		List<Element> commandElements = rootElement.elements("command");
+
+		if (testName.contains("#")) {
+			String commandName =
+				PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(
+					testName);
+
+			Element commandElement = getTestCaseCommandElement(testName);
+
+			commandElements = Arrays.asList(commandElement);
+		}
+
+		for (Element commandElement : commandElements) {
+			String commandName = commandElement.attributeValue("name");
+
+			List<Element> commandPropertyElements = commandElement.elements(
+				"property");
+
+			for (Element commandPropertyElement : commandPropertyElements) {
+				sb.append(testCasePropertyKey);
+				sb.append(".test");
+				sb.append(commandName);
+				sb.append(".");
+				sb.append(commandPropertyElement.attributeValue("name"));
+				sb.append("=");
+				sb.append(commandPropertyElement.attributeValue("value"));
+				sb.append("\n");
+			}
 		}
 
 		FileUtil.write("test.generated.properties", sb.toString());

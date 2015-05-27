@@ -262,7 +262,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 					JarBuilder jarBuilder = jarBuilderFactory.create();
 
 					jarBuilder.withBase(BundleUtils.getBase(project));
-					jarBuilder.withClasspath(BundleUtils.getClasspath(project));
 
 					Map<String, String> properties =
 						getBundleDefaultInstructions(project);
@@ -695,15 +694,17 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 		@Override
 		public JarBuilder withClasspath(Object files) {
-			builder.clear();
 
-			return super.withClasspath(files);
+			// Prevent JarBuilderFactoryDecorator from adding
+			// configurations.runtime.files.
+
+			return this;
 		}
 
 		@Override
 		public JarBuilder withResources(Object files) {
 
-			// Prevent BundlePlugin from adding
+			// Prevent JarBuilderFactoryDecorator from adding
 			// sourceSets.main.output.classesDir/resourcesDir.
 
 			return this;

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Ant JGIT
+Bundle-SymbolicName: com.liferay.ant.jgit
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.ant.jgit
+Include-Resource: classes

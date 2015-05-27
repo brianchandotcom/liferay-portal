@@ -66,9 +66,7 @@ public class GitHeadHashTask extends Task {
 		String relativePath = PathUtil.toRelativePath(
 			fileRepositoryBuilder.getGitDir(), _path);
 
-		try {
-			Repository repository = fileRepositoryBuilder.build();
-
+		try (Repository repository = fileRepositoryBuilder.build()) {
 			RevWalk revWalk = new RevWalk(repository);
 
 			RevCommit headRevCommit = revWalk.lookupCommit(

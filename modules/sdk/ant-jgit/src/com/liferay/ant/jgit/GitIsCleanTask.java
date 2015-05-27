@@ -25,6 +25,7 @@ import org.apache.tools.ant.taskdefs.condition.Condition;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
+import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 /**
@@ -52,8 +53,8 @@ public class GitIsCleanTask extends Task implements Condition {
 
 		fileRepositoryBuilder.findGitDir(_gitDir);
 
-		try {
-			Git git = new Git(fileRepositoryBuilder.build());
+		try (Repository repository = fileRepositoryBuilder.build()) {
+			Git git = new Git(repository);
 
 			StatusCommand statusCommand = git.status();
 

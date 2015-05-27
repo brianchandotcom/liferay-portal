@@ -183,6 +183,7 @@ else {
 		<liferay-ui:message key="<%= ase.getMessageKey() %>" />
 	</liferay-ui:error>
 
+	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 	<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= DuplicateFileException.class %>" message="please-enter-a-unique-document-name" />
@@ -213,6 +214,7 @@ else {
 	<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
 	<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
+	<liferay-ui:error exception="<%= ReCaptchaException.class %>" message="recaptcha-verification-failed" />
 
 	<liferay-ui:asset-categories-error />
 

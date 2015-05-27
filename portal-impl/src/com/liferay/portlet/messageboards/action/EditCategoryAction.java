@@ -14,9 +14,11 @@
 
 package com.liferay.portlet.messageboards.action;
 
+import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.captcha.ReCaptchaException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -100,7 +102,8 @@ public class EditCategoryAction extends PortletAction {
 
 				setForward(actionRequest, "portlet.message_boards.error");
 			}
-			else if (e instanceof CaptchaMaxChallengesException ||
+			else if (e instanceof CaptchaConfigurationException ||
+					 e instanceof CaptchaMaxChallengesException ||
 					 e instanceof CaptchaTextException ||
 					 e instanceof CategoryNameException ||
 					 e instanceof MailingListEmailAddressException ||
@@ -108,7 +111,8 @@ public class EditCategoryAction extends PortletAction {
 					 e instanceof MailingListInUserNameException ||
 					 e instanceof MailingListOutEmailAddressException ||
 					 e instanceof MailingListOutServerNameException ||
-					 e instanceof MailingListOutUserNameException) {
+					 e instanceof MailingListOutUserNameException ||
+					 e instanceof ReCaptchaException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

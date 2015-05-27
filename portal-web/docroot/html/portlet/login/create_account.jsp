@@ -42,6 +42,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<liferay-ui:error exception="<%= AddressCityException.class %>" message="please-enter-a-valid-city" />
 	<liferay-ui:error exception="<%= AddressStreetException.class %>" message="please-enter-a-valid-street" />
 	<liferay-ui:error exception="<%= AddressZipException.class %>" message="please-enter-a-valid-postal-code" />
+	<liferay-ui:error exception="<%= CaptchaConfigurationException.class %>" message="a-captcha-error-occurred-please-contact-an-administrator" />
 	<liferay-ui:error exception="<%= CaptchaMaxChallengesException.class %>" message="maximum-number-of-captcha-attempts-exceeded" />
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
@@ -67,6 +68,7 @@ birthdayCalendar.set(Calendar.YEAR, 1970);
 	<liferay-ui:error exception="<%= NoSuchListTypeException.class %>" message="please-select-a-type" />
 	<liferay-ui:error exception="<%= NoSuchRegionException.class %>" message="please-select-a-region" />
 	<liferay-ui:error exception="<%= PhoneNumberException.class %>" message="please-enter-a-valid-phone-number" />
+	<liferay-ui:error exception="<%= ReCaptchaException.class %>" message="recaptcha-verification-failed" />
 	<liferay-ui:error exception="<%= RequiredFieldException.class %>" message="please-fill-out-all-required-fields" />
 	<liferay-ui:error exception="<%= TermsOfUseException.class %>" message="you-must-agree-to-the-terms-of-use" />
 	<liferay-ui:error exception="<%= UserEmailAddressException.MustNotBeDuplicate.class %>" message="the-email-address-you-requested-is-already-taken" />

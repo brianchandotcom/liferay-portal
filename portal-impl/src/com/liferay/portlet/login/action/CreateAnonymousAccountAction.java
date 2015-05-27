@@ -19,8 +19,10 @@ import com.liferay.portal.ContactNameException;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.GroupFriendlyURLException;
 import com.liferay.portal.UserEmailAddressException;
+import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
+import com.liferay.portal.kernel.captcha.ReCaptchaException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -130,11 +132,13 @@ public class CreateAnonymousAccountAction extends PortletAction {
 
 				writeJSON(actionRequest, actionResponse, jsonObject);
 			}
-			else if (e instanceof CaptchaTextException ||
+			else if (e instanceof CaptchaConfigurationException ||
+					 e instanceof CaptchaTextException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactNameException ||
 					 e instanceof EmailAddressException ||
 					 e instanceof GroupFriendlyURLException ||
+					 e instanceof ReCaptchaException ||
 					 e instanceof UserEmailAddressException) {
 
 				SessionErrors.add(actionRequest, e.getClass(), e);

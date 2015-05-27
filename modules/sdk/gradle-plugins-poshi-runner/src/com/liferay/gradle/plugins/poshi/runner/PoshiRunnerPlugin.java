@@ -53,6 +53,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	public static final String VALIDATE_POSHI_TASK_NAME = "validatePoshi";
 
+	public static final String
+		WRITE_POSHI_TEST_CASE_METHOD_NAMES_FILES_TASK_NAME =
+			"writePoshiTestCaseMethodNamesFiles";
+
 	@Override
 	public void apply(Project project) {
 		final PoshiRunnerExtension poshiRunnerExtension =
@@ -64,6 +68,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		addTasksExpandPoshiRunner(project);
 		addTasksRunPoshi(project);
 		addTasksValidatePoshi(project);
+		addTasksWritePoshiTestCaseMethodNamesFiles(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -73,6 +78,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 					configureTasksExpandPoshiRunner(project);
 					configureTasksRunPoshi(project, poshiRunnerExtension);
 					configureTasksValidatePoshi(project, poshiRunnerExtension);
+					configureTasksWritePoshiTestCaseMethodNamesFiles(
+						project, poshiRunnerExtension);
 				}
 
 			});
@@ -208,6 +215,20 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		javaExec.setDescription("Validates the Poshi files syntax.");
 		javaExec.setGroup("verification");
 		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerValidation");
+	}
+
+	protected void addTasksWritePoshiTestCaseMethodNamesFiles(Project project) {
+		JavaExec javaExec = GradleUtil.addTask(
+			project, WRITE_POSHI_TEST_CASE_METHOD_NAMES_FILES_TASK_NAME,
+			JavaExec.class);
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, CONFIGURATION_NAME);
+
+		javaExec.setClasspath(configuration);
+		javaExec.setDescription("Write the test case method names files.");
+		javaExec.setGroup("verification");
+		javaExec.setMain("com.liferay.poshi.runner.PoshiRunnerContext");
 	}
 
 	protected void configureTasksExpandPoshiRunner(Project project) {

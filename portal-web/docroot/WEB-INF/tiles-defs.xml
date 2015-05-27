@@ -386,6 +386,10 @@
 		<put name="portlet_content" value="/portlet/export_import/error.jsp" />
 	</definition>
 
+	<definition name="portlet.export_import.export_import" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/export_import.jsp" />
+	</definition>
+
 	<definition name="portlet.export_import.export_layouts" extends="portlet.export_import">
 		<put name="portlet_content" value="/portlet/export_import/export_layouts.jsp" />
 	</definition>
@@ -400,6 +404,10 @@
 
 	<definition name="portlet.export_import.publish_layouts_simple" extends="portlet.export_import">
 		<put name="portlet_content" value="/portlet/export_import/publish_layouts_simple.jsp" />
+	</definition>
+
+	<definition name="portlet.export_import.staging" extends="portlet.export_import">
+		<put name="portlet_content" value="/portlet/export_import/publish_portlet.jsp" />
 	</definition>
 
 	<definition name="portlet.export_import.view" extends="portlet.export_import">
@@ -770,14 +778,6 @@
 
 	<definition name="portlet.portlet_configuration.error" extends="portlet.portlet_configuration">
 		<put name="portlet_content" value="/portlet/portlet_configuration/error.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.export_import" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/export_import.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.staging" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/publish_portlet.jsp" />
 	</definition>
 
 	<!-- Portlet Sharing -->

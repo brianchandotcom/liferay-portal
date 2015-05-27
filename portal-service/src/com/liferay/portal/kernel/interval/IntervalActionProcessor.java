@@ -27,7 +27,8 @@ public class IntervalActionProcessor<T> {
 
 	public IntervalActionProcessor(int total) {
 		if (total < 0) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(
+				"Total " + total + " is less than zero");
 		}
 
 		_total = total;
@@ -36,8 +37,14 @@ public class IntervalActionProcessor<T> {
 	}
 
 	public IntervalActionProcessor(int total, int interval) {
-		if ((total < 0) || (interval <= 0)) {
-			throw new IllegalArgumentException();
+		if (total < 0) {
+			throw new IllegalArgumentException(
+				"Total " + total + " is less than zero");
+		}
+
+		if (interval <= 0) {
+			throw new IllegalArgumentException(
+				"Interval " + interval + " is less than or equal to zero");
 		}
 
 		_total = total;
@@ -50,7 +57,8 @@ public class IntervalActionProcessor<T> {
 
 	public void incrementStart(int increment) {
 		if (increment < 0) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException(
+				"Increment " + increment + " is less than zero");
 		}
 
 		_start += increment;

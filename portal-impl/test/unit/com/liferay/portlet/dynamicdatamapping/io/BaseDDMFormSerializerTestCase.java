@@ -93,6 +93,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setDDMFormFieldOptions(createDDMFormFieldOptions());
 		ddmFormField.setRequired(true);
 		ddmFormField.setShowLabel(false);
+		ddmFormField.setVisibilityExpression("true");
 
 		return ddmFormField;
 	}
@@ -104,6 +105,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setIndexType("");
 		ddmFormField.setMultiple(true);
 		ddmFormField.setShowLabel(true);
+		ddmFormField.setVisibilityExpression("true");
 
 		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions();
 
@@ -123,6 +125,7 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 			createTextDDMFormFieldPredefinedValue());
 		ddmFormField.setRepeatable(true);
 		ddmFormField.setShowLabel(true);
+		ddmFormField.setVisibilityExpression("true");
 
 		return ddmFormField;
 	}

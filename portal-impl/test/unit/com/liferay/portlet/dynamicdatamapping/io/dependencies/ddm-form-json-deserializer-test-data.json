@@ -24,7 +24,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "checkbox"
+			"type": "checkbox",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "date",
@@ -49,7 +50,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-date"
+			"type": "ddm-date",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "double",
@@ -73,7 +75,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-decimal"
+			"type": "ddm-decimal",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "document-library",
@@ -98,7 +101,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-documentlibrary"
+			"type": "ddm-documentlibrary",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "geolocation",
@@ -123,7 +127,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-geolocation"
+			"type": "ddm-geolocation",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "html",
@@ -148,7 +153,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-text-html"
+			"type": "ddm-text-html",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "image",
@@ -173,7 +179,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-image"
+			"type": "ddm-image",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "integer",
@@ -199,6 +206,7 @@
 				"pt_BR": ""
 			},
 			"type": "ddm-integer",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "link-to-page",
@@ -223,7 +231,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-link-to-page"
+			"type": "ddm-link-to-page",
+			"visibilityExpression": "true"
 		},
 		{
 
@@ -249,7 +258,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-number"
+			"type": "ddm-number",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -296,7 +306,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "radio"
+			"type": "radio",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -343,7 +354,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "select"
+			"type": "select",
+			"visibilityExpression": "true"
 		},
 		{
 			"fieldNamespace": "ddm",
@@ -371,7 +383,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "ddm-separator"
+			"type": "ddm-separator",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -395,7 +408,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "text"
+			"type": "text",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -419,7 +433,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "textarea"
+			"type": "textarea",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -489,7 +504,8 @@
 								"en_US": "",
 								"pt_BR": ""
 							},
-							"type": "select"
+							"type": "select",
+							"visibilityExpression": "true"
 						}
 					],
 					"predefinedValue": {
@@ -508,7 +524,8 @@
 						"en_US": "",
 						"pt_BR": ""
 					},
-					"type": "ddm-separator"
+					"type": "ddm-separator",
+					"visibilityExpression": "true"
 				}
 			],
 			"predefinedValue": {
@@ -523,7 +540,8 @@
 				"en_US": "",
 				"pt_BR": ""
 			},
-			"type": "text"
+			"type": "text",
+			"visibilityExpression": "true"
 		}
 	]
 }

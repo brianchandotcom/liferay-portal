@@ -39,7 +39,8 @@
 					"repeatable": false,
 					"required": false,
 					"showLabel": true,
-					"type": "select"
+					"type": "select",
+					"visibilityExpression": "true"
 				}
 		     ],
 			"predefinedValue": {
@@ -50,7 +51,8 @@
 			"repeatable": true,
 			"required": false,
 			"showLabel": true,
-			"type": "text"
+			"type": "text",
+			"visibilityExpression": "true"
 		}, 
 		{
 			"dataType": "string",
@@ -77,7 +79,8 @@
 			"repeatable": false,
 			"required": true,
 			"showLabel": false,
-			"type": "radio"
+			"type": "radio",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -105,7 +108,8 @@
 			"repeatable": false,
 			"required": false,
 			"showLabel": true,
-			"type": "select"
+			"type": "select",
+			"visibilityExpression": "true"
 		},
 		{
 			"dataType": "string",
@@ -125,7 +129,8 @@
 			"repeatable": true,
 			"required": false,
 			"showLabel": true,
-			"type": "text"
+			"type": "text",
+			"visibilityExpression": "true"
 		}
 	]
 }

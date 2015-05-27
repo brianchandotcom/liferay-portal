@@ -28,6 +28,9 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.collections.ServiceReferenceMapper;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
 
@@ -49,6 +52,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	public void setUp() {
 		MockitoAnnotations.initMocks(this);
 
+		setUpServiceTrackerMap();
 		setUpFastDateFormatFactoryUtil();
 		setUpPortalUtil();
 		setUpPropsUtil();
@@ -114,6 +118,22 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 	}
 
+	protected void setUpServiceTrackerMap() {
+		stub(
+			method(
+				ServiceTrackerCollections.class, "singleValueMap", Class.class,
+				String.class, ServiceReferenceMapper.class)
+		).toReturn(
+			_serviceTrackerMap
+		);
+
+		when(
+			_serviceTrackerMap.getService(Mockito.anyString())
+		).thenReturn(
+			null
+		);
+	}
+
 	@Mock
 	protected AssetRenderer assetRenderer;
 
@@ -125,5 +145,8 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	@Mock
 	protected Props props;
+
+	@Mock
+	private ServiceTrackerMap<String, SearchResultManager> _serviceTrackerMap;
 
 }

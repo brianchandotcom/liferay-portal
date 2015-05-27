@@ -15,10 +15,6 @@
 package com.liferay.frontend.editors.web;
 
 import com.liferay.portal.kernel.editor.LiferayEditor;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -26,20 +22,17 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Roberto Díaz
  */
-@Component
-public class AlloyEditorEditor implements LiferayEditor {
-
-	@Override
-	public String getEditorJspPath(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return themeDisplay.getPathEditors() + "/editors/alloyeditor.jsp";
-	}
+@Component(service = LiferayEditor.class)
+public class AlloyEditorEditor extends BaseLiferayEditor {
 
 	@Override
 	public String getName() {
 		return "alloyeditor";
+	}
+
+	@Override
+	protected String getEditorJspPath() {
+		return "/editors/alloyeditor.jsp";
 	}
 
 }

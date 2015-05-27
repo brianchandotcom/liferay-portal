@@ -147,15 +147,12 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public PortletURL getEditLayoutURL() {
-		String closeRedirect = ParamUtil.getString(_request, "closeRedirect");
-
 		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
 
 		editLayoutURL.setParameter(
 			"struts_action", "/layouts_admin/edit_layouts");
 		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
-		editLayoutURL.setParameter("closeRedirect", closeRedirect);
 
 		String portletName = getPortletName();
 

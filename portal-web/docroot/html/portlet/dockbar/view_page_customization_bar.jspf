@@ -39,8 +39,8 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 					</div>
 
 					<div class="page-customization-bar-form">
-						<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetPrototypeURL">
-							<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+						<liferay-portlet:actionURL var="resetPrototypeURL">
+							<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
 						</liferay-portlet:actionURL>
 
 						<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
@@ -114,8 +114,8 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 						<liferay-ui:icon id="toggleCustomizedView" label="<%= true %>" message="<%= taglibMessage %>" url="javascript:;" />
 
 						<c:if test="<%= layoutTypePortlet.isCustomizedView() %>">
-							<liferay-portlet:actionURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="resetCustomizationViewURL">
-								<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
+							<liferay-portlet:actionURL var="resetCustomizationViewURL">
+								<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
 								<portlet:param name="groupId" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />
 								<portlet:param name="<%= Constants.CMD %>" value="reset_customized_view" />
 							</liferay-portlet:actionURL>

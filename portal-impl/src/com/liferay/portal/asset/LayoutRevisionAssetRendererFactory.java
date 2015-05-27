@@ -15,6 +15,7 @@
 package com.liferay.portal.asset;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.LayoutRevision;
@@ -33,6 +34,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 /**
  * @author Raymond Augé
  */
+@OSGiBeanProperties
 public class LayoutRevisionAssetRendererFactory
 	extends BaseAssetRendererFactory {
 

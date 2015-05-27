@@ -40,6 +40,7 @@ public class InitializedRepository
 	extends InitializedDocumentRepository<Repository> implements Repository {
 
 	@Deprecated
+	@Override
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, File file,
@@ -54,6 +55,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public FileEntry addFileEntry(
 			long folderId, String sourceFileName, String mimeType, String title,
 			String description, String changeLog, InputStream is, long size,
@@ -68,6 +70,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public Folder addFolder(
 			long parentFolderId, String name, String description,
 			ServiceContext serviceContext)
@@ -79,6 +82,7 @@ public class InitializedRepository
 			parentFolderId, name, description, serviceContext);
 	}
 
+	@Override
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		checkDocumentRepository();
 
@@ -86,6 +90,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public void checkInFileEntry(
 			long fileEntryId, boolean major, String changeLog,
 			ServiceContext serviceContext)
@@ -98,6 +103,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public void checkInFileEntry(long fileEntryId, String lockUuid)
 		throws PortalException {
 
@@ -107,6 +113,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public void checkInFileEntry(
 			long fileEntryId, String lockUuid, ServiceContext serviceContext)
 		throws PortalException {
@@ -117,6 +124,7 @@ public class InitializedRepository
 			fileEntryId, lockUuid, serviceContext);
 	}
 
+	@Override
 	public FileEntry checkOutFileEntry(
 			long fileEntryId, ServiceContext serviceContext)
 		throws PortalException {
@@ -127,6 +135,7 @@ public class InitializedRepository
 			fileEntryId, serviceContext);
 	}
 
+	@Override
 	public FileEntry checkOutFileEntry(
 			long fileEntryId, String owner, long expirationTime,
 			ServiceContext serviceContext)
@@ -139,6 +148,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public FileEntry copyFileEntry(
 			long groupId, long fileEntryId, long destFolderId,
 			ServiceContext serviceContext)
@@ -150,6 +160,7 @@ public class InitializedRepository
 			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
+	@Override
 	public void deleteFileEntry(long folderId, String title)
 		throws PortalException {
 
@@ -158,6 +169,7 @@ public class InitializedRepository
 		getDocumentRepository().deleteFileEntry(folderId, title);
 	}
 
+	@Override
 	public void deleteFileVersion(long fileEntryId, String version)
 		throws PortalException {
 
@@ -166,6 +178,7 @@ public class InitializedRepository
 		getDocumentRepository().deleteFileVersion(fileEntryId, version);
 	}
 
+	@Override
 	public void deleteFolder(long parentFolderId, String name)
 		throws PortalException {
 
@@ -174,6 +187,7 @@ public class InitializedRepository
 		getDocumentRepository().deleteFolder(parentFolderId, name);
 	}
 
+	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, long fileEntryTypeId, int start, int end,
 			OrderByComparator<FileEntry> obc)
@@ -185,6 +199,7 @@ public class InitializedRepository
 			folderId, fileEntryTypeId, start, end, obc);
 	}
 
+	@Override
 	public List<FileEntry> getFileEntries(
 			long folderId, String[] mimeTypes, int start, int end,
 			OrderByComparator<FileEntry> obc)
@@ -196,6 +211,7 @@ public class InitializedRepository
 			folderId, mimeTypes, start, end, obc);
 	}
 
+	@Override
 	public List<RepositoryEntry> getFileEntriesAndFileShortcuts(
 			long folderId, int status, int start, int end)
 		throws PortalException {
@@ -206,6 +222,7 @@ public class InitializedRepository
 			folderId, status, start, end);
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(long folderId, int status)
 		throws PortalException {
 
@@ -215,6 +232,7 @@ public class InitializedRepository
 			folderId, status);
 	}
 
+	@Override
 	public int getFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimeTypes)
 		throws PortalException {
@@ -225,6 +243,7 @@ public class InitializedRepository
 			folderId, status, mimeTypes);
 	}
 
+	@Override
 	public int getFileEntriesCount(long folderId, long fileEntryTypeId)
 		throws PortalException {
 
@@ -234,6 +253,7 @@ public class InitializedRepository
 			folderId, fileEntryTypeId);
 	}
 
+	@Override
 	public int getFileEntriesCount(long folderId, String[] mimeTypes)
 		throws PortalException {
 
@@ -242,6 +262,7 @@ public class InitializedRepository
 		return getDocumentRepository().getFileEntriesCount(folderId, mimeTypes);
 	}
 
+	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, boolean includeMountFolders, int start,
 			int end, OrderByComparator<Folder> obc)
@@ -253,6 +274,7 @@ public class InitializedRepository
 			parentFolderId, includeMountFolders, start, end, obc);
 	}
 
+	@Override
 	public List<Folder> getFolders(
 			long parentFolderId, int status, boolean includeMountFolders,
 			int start, int end, OrderByComparator<Folder> obc)
@@ -264,6 +286,7 @@ public class InitializedRepository
 			parentFolderId, status, includeMountFolders, start, end, obc);
 	}
 
+	@Override
 	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, boolean includeMountFolders, int start,
 			int end, OrderByComparator<?> obc)
@@ -275,6 +298,7 @@ public class InitializedRepository
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
+	@Override
 	public List<RepositoryEntry> getFoldersAndFileEntriesAndFileShortcuts(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders, int start, int end,
@@ -287,6 +311,7 @@ public class InitializedRepository
 			folderId, status, mimetypes, includeMountFolders, start, end, obc);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, boolean includeMountFolders)
 		throws PortalException {
@@ -298,6 +323,7 @@ public class InitializedRepository
 				folderId, status, includeMountFolders);
 	}
 
+	@Override
 	public int getFoldersAndFileEntriesAndFileShortcutsCount(
 			long folderId, int status, String[] mimetypes,
 			boolean includeMountFolders)
@@ -310,6 +336,7 @@ public class InitializedRepository
 				folderId, status, mimetypes, includeMountFolders);
 	}
 
+	@Override
 	public int getFoldersCount(long parentFolderId, boolean includeMountfolders)
 		throws PortalException {
 
@@ -319,6 +346,7 @@ public class InitializedRepository
 			parentFolderId, includeMountfolders);
 	}
 
+	@Override
 	public int getFoldersCount(
 			long parentFolderId, int status, boolean includeMountfolders)
 		throws PortalException {
@@ -329,6 +357,7 @@ public class InitializedRepository
 			parentFolderId, status, includeMountfolders);
 	}
 
+	@Override
 	public int getFoldersFileEntriesCount(List<Long> folderIds, int status)
 		throws PortalException {
 
@@ -338,6 +367,7 @@ public class InitializedRepository
 			folderIds, status);
 	}
 
+	@Override
 	public List<Folder> getMountFolders(
 			long parentFolderId, int start, int end,
 			OrderByComparator<Folder> obc)
@@ -349,6 +379,7 @@ public class InitializedRepository
 			parentFolderId, start, end, obc);
 	}
 
+	@Override
 	public int getMountFoldersCount(long parentFolderId)
 		throws PortalException {
 
@@ -357,6 +388,7 @@ public class InitializedRepository
 		return getDocumentRepository().getMountFoldersCount(parentFolderId);
 	}
 
+	@Override
 	public List<FileEntry> getRepositoryFileEntries(
 			long userId, long rootFolderId, String[] mimeTypes, int status,
 			int start, int end, OrderByComparator<FileEntry> obc)
@@ -368,6 +400,7 @@ public class InitializedRepository
 			userId, rootFolderId, mimeTypes, status, start, end, obc);
 	}
 
+	@Override
 	public int getRepositoryFileEntriesCount(long userId, long rootFolderId)
 		throws PortalException {
 
@@ -377,6 +410,7 @@ public class InitializedRepository
 			userId, rootFolderId);
 	}
 
+	@Override
 	public int getRepositoryFileEntriesCount(
 			long userId, long rootFolderId, String[] mimeTypes, int status)
 		throws PortalException {
@@ -387,6 +421,7 @@ public class InitializedRepository
 			userId, rootFolderId, mimeTypes, status);
 	}
 
+	@Override
 	public void getSubfolderIds(List<Long> folderIds, long folderId)
 		throws PortalException {
 
@@ -395,6 +430,7 @@ public class InitializedRepository
 		getDocumentRepository().getSubfolderIds(folderIds, folderId);
 	}
 
+	@Override
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
 		throws PortalException {
 
@@ -404,6 +440,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public Lock lockFileEntry(long fileEntryId) throws PortalException {
 		checkDocumentRepository();
 
@@ -411,6 +448,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public Lock lockFileEntry(
 			long fileEntryId, String owner, long expirationTime)
 		throws PortalException {
@@ -421,12 +459,14 @@ public class InitializedRepository
 			fileEntryId, owner, expirationTime);
 	}
 
+	@Override
 	public Lock lockFolder(long folderId) throws PortalException {
 		checkDocumentRepository();
 
 		return getDocumentRepository().lockFolder(folderId);
 	}
 
+	@Override
 	public Lock lockFolder(
 			long folderId, String owner, boolean inheritable,
 			long expirationTime)
@@ -439,6 +479,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public FileEntry moveFileEntry(
 			long fileEntryId, long newFolderId, ServiceContext serviceContext)
 		throws PortalException {
@@ -450,6 +491,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public Folder moveFolder(
 			long folderId, long newParentFolderId,
 			ServiceContext serviceContext)
@@ -461,6 +503,7 @@ public class InitializedRepository
 			folderId, newParentFolderId, serviceContext);
 	}
 
+	@Override
 	public Lock refreshFileEntryLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException {
@@ -471,6 +514,7 @@ public class InitializedRepository
 			lockUuid, companyId, expirationTime);
 	}
 
+	@Override
 	public Lock refreshFolderLock(
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException {
@@ -482,6 +526,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public void revertFileEntry(
 			long fileEntryId, String version, ServiceContext serviceContext)
 		throws PortalException {
@@ -492,6 +537,7 @@ public class InitializedRepository
 			fileEntryId, version, serviceContext);
 	}
 
+	@Override
 	public Hits search(long creatorUserId, int status, int start, int end)
 		throws PortalException {
 
@@ -501,6 +547,7 @@ public class InitializedRepository
 			creatorUserId, status, start, end);
 	}
 
+	@Override
 	public Hits search(
 			long creatorUserId, long folderId, String[] mimeTypes, int status,
 			int start, int end)
@@ -512,12 +559,14 @@ public class InitializedRepository
 			creatorUserId, folderId, mimeTypes, status, start, end);
 	}
 
+	@Override
 	public Hits search(SearchContext searchContext) throws SearchException {
 		checkDocumentRepository();
 
 		return getDocumentRepository().search(searchContext);
 	}
 
+	@Override
 	public Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 
@@ -526,6 +575,7 @@ public class InitializedRepository
 		return getDocumentRepository().search(searchContext, query);
 	}
 
+	@Override
 	public void unlockFolder(long folderId, String lockUuid)
 		throws PortalException {
 
@@ -534,6 +584,7 @@ public class InitializedRepository
 		getDocumentRepository().unlockFolder(folderId, lockUuid);
 	}
 
+	@Override
 	public void unlockFolder(long parentFolderId, String name, String lockUuid)
 		throws PortalException {
 
@@ -543,6 +594,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
@@ -557,6 +609,7 @@ public class InitializedRepository
 	}
 
 	@Deprecated
+	@Override
 	public FileEntry updateFileEntry(
 			long fileEntryId, String sourceFileName, String mimeType,
 			String title, String description, String changeLog,
@@ -571,6 +624,7 @@ public class InitializedRepository
 			changeLog, majorVersion, is, size, serviceContext);
 	}
 
+	@Override
 	public Folder updateFolder(
 			long folderId, String name, String description,
 			ServiceContext serviceContext)
@@ -582,6 +636,7 @@ public class InitializedRepository
 			folderId, name, description, serviceContext);
 	}
 
+	@Override
 	public boolean verifyFileEntryCheckOut(long fileEntryId, String lockUuid)
 		throws PortalException {
 
@@ -591,6 +646,7 @@ public class InitializedRepository
 			fileEntryId, lockUuid);
 	}
 
+	@Override
 	public boolean verifyFileEntryLock(long fileEntryId, String lockUuid)
 		throws PortalException {
 
@@ -600,6 +656,7 @@ public class InitializedRepository
 			fileEntryId, lockUuid);
 	}
 
+	@Override
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
 		throws PortalException {
 

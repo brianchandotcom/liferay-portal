@@ -26,6 +26,7 @@ public class InitializedLocalRepository
 	extends InitializedDocumentRepository<LocalRepository>
 	implements LocalRepository {
 
+	@Deprecated
 	@Override
 	public void updateAsset(
 			long userId, FileEntry fileEntry, FileVersion fileVersion,

@@ -6,7 +6,7 @@
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<target name="generate-test-case-method-names-file" depends="prepare-poshi-runner">
+	<target name="generate-properties" depends="prepare-poshi-runner">
 		<java classname="com.liferay.poshi.runner.PoshiRunnerContext" classpath="classes">
 			<classpath refid="plugin.classpath" />
 		</java>
@@ -14,22 +14,15 @@
 
 	<target name="prepare-poshi-runner" depends="jar">
 		<echo file="classes/poshi-runner-ext.properties">
-			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
-
-			test.name=${test.name}
-
 			component.names=\
 				extra-apps-content-targeting,\
 				\
 				liferay-connected-services-fix-packs,\
-				liferay-connected-services-known-issues,\
 				liferay-connected-services-notifications,\
 				liferay-connected-services-project-administration,\
 				liferay-connected-services-subscriptions,\
 				liferay-connected-services-user-management,\
 				\
-				marketplace,\
-				marketplace-known-issues,\
 				marketplace-plugins-1-2-1-columns-layouttpl,\
 				marketplace-plugins-1-3-1-columns-layouttpl,\
 				marketplace-plugins-1-3-2-columns-layouttpl,\
@@ -117,7 +110,6 @@
 				portal-infrastructure,\
 				portal-integrations,\
 				portal-knowledge-base,\
-				portal-known-issues,\
 				portal-language,\
 				portal-legacy,\
 				portal-opensocial,\
@@ -156,7 +148,6 @@
 				social-office-communication,\
 				social-office-document-management,\
 				social-office-environment,\
-				social-office-known-issues,\
 				social-office-legacy,\
 				social-office-microblogs,\
 				social-office-notifications,\
@@ -164,6 +155,17 @@
 				social-office-upgrades,\
 				social-office-user-information,\
 				social-office-wcm
+
+			product.names=\
+				extra-apps,\
+				liferay-connected-services,\
+				marketplace,\
+				portal,\
+				social-office
+
+			test.basedir=../../../portal-web/test/functional/com/liferay/portalweb/
+
+			test.name=${test.name}
 		</echo>
 
 		<if>

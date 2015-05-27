@@ -2038,6 +2038,63 @@
 		</execute>
 	</command>
 
+	<command name="DeleteEventAndViewRSSFeed" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="11:59 PM" />
+			<var name="startDateTime" value="11:58 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventNotPresent">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+	</command>
+
 	<command name="DisableRSSFeedForSiteCalendar" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

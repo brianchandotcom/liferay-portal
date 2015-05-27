@@ -10,6 +10,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd"
 >
 	<bean id="com.liferay.mail.util.DummyHook" class="com.liferay.mail.util.DummyHook" />
+	<bean id="com.liferay.portal.asset.LayoutAssetRendererFactory" class="com.liferay.portal.asset.LayoutAssetRendererFactory" />
+	<bean id="com.liferay.portal.asset.LayoutRevisionAssetRendererFactory" class="com.liferay.portal.asset.LayoutRevisionAssetRendererFactory" />
 	<bean class="com.liferay.portal.convert.ConvertDatabase" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibrary" />
 	<bean class="com.liferay.portal.convert.ConvertDocumentLibraryExtraSettings" />
@@ -1111,6 +1113,9 @@
 	</bean>
 	<bean id="com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler" class="com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler" />
 	<bean id="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler" />
+	<bean id="com.liferay.portlet.layoutsadmin.lar.StagedThemeStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.StagedThemeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.util.SitemapUtil" class="com.liferay.portlet.layoutsadmin.util.SitemapUtil">
 		<property name="sitemap">
 			<bean class="com.liferay.portlet.layoutsadmin.util.SitemapImpl" />

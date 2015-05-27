@@ -280,8 +280,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 			ExportImportConfiguration exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
 					addExportImportConfiguration(
-						themeDisplay.getUserId(), groupId, StringPool.BLANK,
-						StringPool.BLANK,
+						themeDisplay.getUserId(), groupId,
+						portlet.getPortletId(), StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
@@ -355,7 +355,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					themeDisplay.getUserId(), groupId, portlet.getPortletId(),
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,

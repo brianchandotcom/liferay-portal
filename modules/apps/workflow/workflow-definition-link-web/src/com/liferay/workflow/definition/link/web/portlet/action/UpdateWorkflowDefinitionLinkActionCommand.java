@@ -37,7 +37,9 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"action.command.name=updateWorkflowDefinitionLink",
 		"javax.portlet.name=" +
-			WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK
+			WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK,
+		"javax.portlet.name=" +
+			WorkflowDefinitionLinkPortletKeys.WORKFLOW_DEFINITION_LINK_CONTROL_PANEL
 	},
 	service = ActionCommand.class
 )

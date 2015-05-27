@@ -218,6 +218,15 @@ public class UpdateLayoutAction extends JSONAction {
 						"not-vieweable-by-unathenticated-users-and-so-cannot-" +
 							"be-the-first-page");
 			}
+
+			if ((cmd.equals("parent_layout_id")) &&
+				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
+
+				return themeDisplay.translate(
+					"you-cannot-move-this-page-because-the-resulting-order-" +
+						"would-place-a-page-of-type-x-as-the-first-page",
+					"layout.types." + lte.getLayoutType());
+			}
 		}
 
 		if (lte.getType() == LayoutTypeException.FIRST_LAYOUT ) {

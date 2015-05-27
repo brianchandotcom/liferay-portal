@@ -309,7 +309,7 @@
 	</command>
 
 	<command name="addRSVP">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -343,7 +343,7 @@
 	</command>
 
 	<command name="addSetTime">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -486,7 +486,7 @@
 	</command>
 
 	<command name="delete">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -529,13 +529,13 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_GENERIC" />
 		<execute function="AssertElementNotPresent" locator1="PGCalendarAgendaView#SCHEDULER_EVENT_REPEATING" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 	</command>
 
 	<command name="deleteComment">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -571,7 +571,7 @@
 	</command>
 
 	<command name="deleteRepeatingEventViaAgendaView">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -630,7 +630,7 @@
 	</command>
 
 	<command name="deleteSpecific">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -653,7 +653,7 @@
 	<command name="deleteViaAgendaView">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -692,7 +692,7 @@
 			</else>
 		</if>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -823,7 +823,7 @@
 	</command>
 
 	<command name="editComment">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -876,7 +876,7 @@
 			</else>
 		</if>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -915,7 +915,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -1147,7 +1147,7 @@
 	</command>
 
 	<command name="tearDownOnBusyDayInCurrentMonth">
-		<execute macro="CalendarNavigation#gotoBusyDayViaSmallCalendar" />
+		<execute macro="CalendarNavigator#gotoBusyDayViaSmallCalendar" />
 
 		<execute macro="CalendarEvent#delete" />
 	</command>
@@ -1160,7 +1160,7 @@
 		<execute macro="CalendarScheduler#viewMonth" />
 		<execute macro="CalendarScheduler#viewAgenda" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 	</command>
@@ -1210,7 +1210,7 @@
 	</command>
 
 	<command name="viewDetails">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -1364,7 +1364,7 @@
 	</command>
 
 	<command name="viewUsers">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 

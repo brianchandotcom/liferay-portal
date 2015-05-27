@@ -59,7 +59,7 @@
 	</command>
 
 	<command name="add">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -109,7 +109,7 @@
 	</command>
 
 	<command name="changeColor">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -162,7 +162,7 @@
 	</command>
 
 	<command name="delete">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -193,7 +193,7 @@
 	</command>
 
 	<command name="edit">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -257,7 +257,7 @@
 	</command>
 
 	<command name="editEmailTemplate">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -387,7 +387,7 @@
 	</command>
 
 	<command name="enableComments">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -448,7 +448,7 @@
 	</command>
 
 	<command name="enableRating">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -508,7 +508,7 @@
 	</command>
 
 	<command name="enableViewEventDetailsPermissions">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -579,7 +579,7 @@
 	</command>
 
 	<command name="removeViewPermissions">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -632,7 +632,7 @@
 	</command>
 
 	<command name="tearDown">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -672,7 +672,7 @@
 	</command>
 
 	<command name="tearDownColor">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -773,7 +773,7 @@
 	</command>
 
 	<command name="viewMonth">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
@@ -848,7 +848,7 @@
 			<var name="menuListOption" value="Calendar Settings" />
 		</execute>
 
-		<execute macro="CalendarNavigation#_selectCalendarSettingsIframe" />
+		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
 
 		<execute macro="Calendar#_viewCalendarSettingsIframe">
 			<var name="calendarName" value="${calendarName}" />
@@ -863,7 +863,7 @@
 			<var name="menuListOption" value="Permissions" />
 		</execute>
 
-		<execute macro="CalendarNavigation#_selectPermissionsIframe" />
+		<execute macro="CalendarNavigator#_selectPermissionsIframe" />
 
 		<execute macro="Calendar#_viewPermissionsIframe">
 			<var name="calendarName" value="${calendarName}" />
@@ -959,7 +959,7 @@
 	</command>
 
 	<command name="viewWeekStartDayViaMonthView">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 

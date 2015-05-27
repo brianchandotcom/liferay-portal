@@ -30,7 +30,7 @@
 	</command>
 
 	<command name="_viewRegularEventTitleViaMonthView">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
@@ -44,7 +44,7 @@
 	</command>
 
 	<command name="addAllDayEvent">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -67,7 +67,7 @@
 	</command>
 
 	<command name="addEventToday">
-		<execute macro="CalendarNavigation#gotoAddToday">
+		<execute macro="CalendarNavigator#gotoAddToday">
 			<var name="viewType" value="${viewType}" />
 		</execute>
 
@@ -79,7 +79,7 @@
 	</command>
 
 	<command name="changeCalendar">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -110,7 +110,7 @@
 	</command>
 
 	<command name="editAllDayEvent">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -139,7 +139,7 @@
 	</command>
 
 	<command name="gotoEdit">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -175,7 +175,7 @@
 	</command>
 
 	<command name="viewAgenda">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -195,7 +195,7 @@
 	</command>
 
 	<command name="viewDay">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -222,7 +222,7 @@
 	<command name="viewDefault">
 		<var name="key_eventTitle" value="${eventTitle}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -232,7 +232,7 @@
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -240,7 +240,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
@@ -252,7 +252,7 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 
@@ -262,13 +262,13 @@
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 	</command>
 
 	<command name="viewDefaultDay">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
@@ -280,7 +280,7 @@
 	</command>
 
 	<command name="viewDefaultWeek">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -362,7 +362,7 @@
 	</command>
 
 	<command name="viewEventWithReminders">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -373,13 +373,13 @@
 	</command>
 
 	<command name="viewFirstHour">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_FIRST_HOUR" value1="${firstHour}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -387,13 +387,13 @@
 	</command>
 
 	<command name="viewLastHour">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_LAST_HOUR" value1="${lastHour}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -401,7 +401,7 @@
 	</command>
 
 	<command name="viewMonth">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
@@ -472,7 +472,7 @@
 	</command>
 
 	<command name="viewWeek">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -490,7 +490,7 @@
 	</command>
 
 	<command name="viewWeekStartDayViaWeekView">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 

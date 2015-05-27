@@ -97,7 +97,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -512,7 +512,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -612,7 +612,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 

@@ -59,7 +59,7 @@
 	</command>
 
 	<command name="tearDown">
-		<execute macro="CalendarNavigation#gotoConfiguration" />
+		<execute macro="CalendarNavigator#gotoConfiguration" />
 
 		<execute macro="CalendarConfiguration#selectDefaultDuration">
 			<var name="defaultDuration" value="60 Minutes" />

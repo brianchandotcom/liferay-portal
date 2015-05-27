@@ -40,7 +40,7 @@
 	</command>
 
 	<command name="delete">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -57,7 +57,7 @@
 	</command>
 
 	<command name="tearDown">
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 

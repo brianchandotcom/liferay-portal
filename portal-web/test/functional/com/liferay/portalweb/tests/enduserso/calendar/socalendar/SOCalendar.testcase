@@ -581,7 +581,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -1166,7 +1166,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
@@ -1736,25 +1736,25 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Day" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Month" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="${eventTitle}" />
 
-		<execute macro="CalendarNavigation#gotoView">
+		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Agenda" />
 		</execute>
 

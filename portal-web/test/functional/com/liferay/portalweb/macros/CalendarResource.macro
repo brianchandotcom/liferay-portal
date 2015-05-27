@@ -1,5 +1,5 @@
 <definition>
-	<command name="addPG">
+	<command name="add">
 		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
 
 		<execute function="AssertClick" locator1="PGCalendarResource#ADD_RESOURCE_BUTTON" value1="Add Resource" />
@@ -14,7 +14,7 @@
 		<execute function="AssertTextEquals" locator1="PGCalendarResource#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 	</command>
 
-	<command name="deletePG">
+	<command name="delete">
 		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
 		<var name="key_calendarResourceName" value="${calendarResourceName}" />
 
@@ -28,7 +28,7 @@
 		<execute function="AssertTextNotPresent" value1="${calendarResourceName}" />
 	</command>
 
-	<command name="editPG">
+	<command name="edit">
 		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
 
 		<var name="key_calendarResourceName" value="${calendarResourceName}" />
@@ -47,7 +47,7 @@
 		<execute function="AssertTextEquals" locator1="PGCalendarResource#RESOURCE_TABLE_NAME" value1="${calendarResourceNameEdit}" />
 	</command>
 
-	<command name="tearDownPG">
+	<command name="tearDown">
 		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
 
 		<while>
@@ -65,16 +65,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGCalendarResource#RESOURCE_TABLE_ACTIONS_GENERIC" />
 	</command>
 
-	<command name="viewDefaultPG">
-		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
-
-		<var name="key_calendarResourceName" value="${calendarResourceName}" />
-
-		<execute function="AssertTextEquals" locator1="PGCalendarResource#INFO_MESSAGE" value1="No resources were found." />
-		<execute function="AssertElementNotPresent" locator1="PGCalendarResource#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
-	</command>
-
-	<command name="viewPG">
+	<command name="view">
 		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
 
 		<var name="key_calendarResourceName" value="${calendarResourceName}" />
@@ -83,5 +74,14 @@
 		<execute function="AssertTextEquals" locator1="PGCalendarResource#RESOURCE_TABLE_DESCRIPTION" value1="" />
 		<execute function="AssertTextEquals" locator1="PGCalendarResource#RESOURCE_TABLE_ACTIVE" value1="Yes" />
 		<execute function="AssertElementPresent" locator1="PGCalendarResource#RESOURCE_TABLE_ACTIONS" />
+	</command>
+
+	<command name="viewDefault">
+		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
+
+		<var name="key_calendarResourceName" value="${calendarResourceName}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarResource#INFO_MESSAGE" value1="No resources were found." />
+		<execute function="AssertElementNotPresent" locator1="PGCalendarResource#RESOURCE_TABLE_NAME" value1="${calendarResourceName}" />
 	</command>
 </definition>

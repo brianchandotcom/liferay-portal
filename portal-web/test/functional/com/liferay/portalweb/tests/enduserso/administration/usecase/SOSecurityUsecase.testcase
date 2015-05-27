@@ -1077,7 +1077,7 @@
 
 		<execute function="AssertAlertNotPresent" />
 
-		<execute macro="CalendarEvent#addPG">
+		<execute macro="CalendarEvent#add">
 			<var name="eventTitle" value="${eventTitle}" />
 			<var name="eventType" value="${eventType}" />
 			<var name="pageName" value="Calendar" />

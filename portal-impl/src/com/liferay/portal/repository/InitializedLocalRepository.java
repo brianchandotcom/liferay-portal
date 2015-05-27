@@ -35,7 +35,7 @@ public class InitializedLocalRepository
 
 		checkDocumentRepository();
 
-		documentRepository.updateAsset(
+		getDocumentRepository().updateAsset(
 			userId, fileEntry, fileVersion, assetCategoryIds, assetTagNames,
 			assetLinkEntryIds);
 	}

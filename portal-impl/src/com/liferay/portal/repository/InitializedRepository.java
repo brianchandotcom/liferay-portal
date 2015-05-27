@@ -48,7 +48,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.addFileEntry(
+		return getDocumentRepository().addFileEntry(
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			file, serviceContext);
 	}
@@ -62,7 +62,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.addFileEntry(
+		return getDocumentRepository().addFileEntry(
 			folderId, sourceFileName, mimeType, title, description, changeLog,
 			is, size, serviceContext);
 	}
@@ -75,14 +75,14 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.addFolder(
+		return getDocumentRepository().addFolder(
 			parentFolderId, name, description, serviceContext);
 	}
 
 	public FileVersion cancelCheckOut(long fileEntryId) throws PortalException {
 		checkDocumentRepository();
 
-		return documentRepository.cancelCheckOut(fileEntryId);
+		return getDocumentRepository().cancelCheckOut(fileEntryId);
 	}
 
 	@Deprecated
@@ -93,7 +93,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.checkInFileEntry(
+		getDocumentRepository().checkInFileEntry(
 			fileEntryId, major, changeLog, serviceContext);
 	}
 
@@ -103,7 +103,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.checkInFileEntry(fileEntryId, lockUuid);
+		getDocumentRepository().checkInFileEntry(fileEntryId, lockUuid);
 	}
 
 	@Deprecated
@@ -113,7 +113,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.checkInFileEntry(
+		getDocumentRepository().checkInFileEntry(
 			fileEntryId, lockUuid, serviceContext);
 	}
 
@@ -123,7 +123,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.checkOutFileEntry(
+		return getDocumentRepository().checkOutFileEntry(
 			fileEntryId, serviceContext);
 	}
 
@@ -134,7 +134,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.checkOutFileEntry(
+		return getDocumentRepository().checkOutFileEntry(
 			fileEntryId, owner, expirationTime, serviceContext);
 	}
 
@@ -146,7 +146,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.copyFileEntry(
+		return getDocumentRepository().copyFileEntry(
 			groupId, fileEntryId, destFolderId, serviceContext);
 	}
 
@@ -155,7 +155,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.deleteFileEntry(folderId, title);
+		getDocumentRepository().deleteFileEntry(folderId, title);
 	}
 
 	public void deleteFileVersion(long fileEntryId, String version)
@@ -163,7 +163,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.deleteFileVersion(fileEntryId, version);
+		getDocumentRepository().deleteFileVersion(fileEntryId, version);
 	}
 
 	public void deleteFolder(long parentFolderId, String name)
@@ -171,7 +171,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.deleteFolder(parentFolderId, name);
+		getDocumentRepository().deleteFolder(parentFolderId, name);
 	}
 
 	public List<FileEntry> getFileEntries(
@@ -181,7 +181,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntries(
+		return getDocumentRepository().getFileEntries(
 			folderId, fileEntryTypeId, start, end, obc);
 	}
 
@@ -192,7 +192,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntries(
+		return getDocumentRepository().getFileEntries(
 			folderId, mimeTypes, start, end, obc);
 	}
 
@@ -202,7 +202,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntriesAndFileShortcuts(
+		return getDocumentRepository().getFileEntriesAndFileShortcuts(
 			folderId, status, start, end);
 	}
 
@@ -211,7 +211,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntriesAndFileShortcutsCount(
+		return getDocumentRepository().getFileEntriesAndFileShortcutsCount(
 			folderId, status);
 	}
 
@@ -221,7 +221,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntriesAndFileShortcutsCount(
+		return getDocumentRepository().getFileEntriesAndFileShortcutsCount(
 			folderId, status, mimeTypes);
 	}
 
@@ -230,7 +230,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntriesCount(
+		return getDocumentRepository().getFileEntriesCount(
 			folderId, fileEntryTypeId);
 	}
 
@@ -239,7 +239,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFileEntriesCount(folderId, mimeTypes);
+		return getDocumentRepository().getFileEntriesCount(folderId, mimeTypes);
 	}
 
 	public List<Folder> getFolders(
@@ -249,7 +249,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFolders(
+		return getDocumentRepository().getFolders(
 			parentFolderId, includeMountFolders, start, end, obc);
 	}
 
@@ -260,7 +260,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFolders(
+		return getDocumentRepository().getFolders(
 			parentFolderId, status, includeMountFolders, start, end, obc);
 	}
 
@@ -271,7 +271,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersAndFileEntriesAndFileShortcuts(
+		return getDocumentRepository().getFoldersAndFileEntriesAndFileShortcuts(
 			folderId, status, includeMountFolders, start, end, obc);
 	}
 
@@ -283,7 +283,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersAndFileEntriesAndFileShortcuts(
+		return getDocumentRepository().getFoldersAndFileEntriesAndFileShortcuts(
 			folderId, status, mimetypes, includeMountFolders, start, end, obc);
 	}
 
@@ -293,7 +293,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
+		return getDocumentRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, includeMountFolders);
 	}
 
@@ -304,7 +304,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersAndFileEntriesAndFileShortcutsCount(
+		return getDocumentRepository().getFoldersAndFileEntriesAndFileShortcutsCount(
 			folderId, status, mimetypes, includeMountFolders);
 	}
 
@@ -313,7 +313,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersCount(
+		return getDocumentRepository().getFoldersCount(
 			parentFolderId, includeMountfolders);
 	}
 
@@ -323,7 +323,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersCount(
+		return getDocumentRepository().getFoldersCount(
 			parentFolderId, status, includeMountfolders);
 	}
 
@@ -332,7 +332,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getFoldersFileEntriesCount(folderIds, status);
+		return getDocumentRepository().getFoldersFileEntriesCount(folderIds, status);
 	}
 
 	public List<Folder> getMountFolders(
@@ -342,7 +342,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getMountFolders(
+		return getDocumentRepository().getMountFolders(
 			parentFolderId, start, end, obc);
 	}
 
@@ -351,7 +351,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getMountFoldersCount(parentFolderId);
+		return getDocumentRepository().getMountFoldersCount(parentFolderId);
 	}
 
 	public List<FileEntry> getRepositoryFileEntries(
@@ -361,7 +361,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getRepositoryFileEntries(
+		return getDocumentRepository().getRepositoryFileEntries(
 			userId, rootFolderId, mimeTypes, status, start, end, obc);
 	}
 
@@ -370,7 +370,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getRepositoryFileEntriesCount(
+		return getDocumentRepository().getRepositoryFileEntriesCount(
 			userId, rootFolderId);
 	}
 
@@ -380,7 +380,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getRepositoryFileEntriesCount(
+		return getDocumentRepository().getRepositoryFileEntriesCount(
 			userId, rootFolderId, mimeTypes, status);
 	}
 
@@ -389,7 +389,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.getSubfolderIds(folderIds, folderId);
+		getDocumentRepository().getSubfolderIds(folderIds, folderId);
 	}
 
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
@@ -397,14 +397,14 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.getSubfolderIds(folderId, recurse);
+		return getDocumentRepository().getSubfolderIds(folderId, recurse);
 	}
 
 	@Deprecated
 	public Lock lockFileEntry(long fileEntryId) throws PortalException {
 		checkDocumentRepository();
 
-		return documentRepository.lockFileEntry(fileEntryId);
+		return getDocumentRepository().lockFileEntry(fileEntryId);
 	}
 
 	@Deprecated
@@ -414,14 +414,14 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.lockFileEntry(
+		return getDocumentRepository().lockFileEntry(
 			fileEntryId, owner, expirationTime);
 	}
 
 	public Lock lockFolder(long folderId) throws PortalException {
 		checkDocumentRepository();
 
-		return documentRepository.lockFolder(folderId);
+		return getDocumentRepository().lockFolder(folderId);
 	}
 
 	public Lock lockFolder(
@@ -431,7 +431,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.lockFolder(
+		return getDocumentRepository().lockFolder(
 			folderId, owner, inheritable, expirationTime);
 	}
 
@@ -442,7 +442,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.moveFileEntry(
+		return getDocumentRepository().moveFileEntry(
 			fileEntryId, newFolderId, serviceContext);
 	}
 
@@ -454,7 +454,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.moveFolder(
+		return getDocumentRepository().moveFolder(
 			folderId, newParentFolderId, serviceContext);
 	}
 
@@ -464,7 +464,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.refreshFileEntryLock(
+		return getDocumentRepository().refreshFileEntryLock(
 			lockUuid, companyId, expirationTime);
 	}
 
@@ -474,7 +474,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.refreshFolderLock(
+		return getDocumentRepository().refreshFolderLock(
 			lockUuid, companyId, expirationTime);
 	}
 
@@ -485,7 +485,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.revertFileEntry(
+		getDocumentRepository().revertFileEntry(
 			fileEntryId, version, serviceContext);
 	}
 
@@ -494,7 +494,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.search(creatorUserId, status, start, end);
+		return getDocumentRepository().search(creatorUserId, status, start, end);
 	}
 
 	public Hits search(
@@ -504,14 +504,14 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.search(
+		return getDocumentRepository().search(
 			creatorUserId, folderId, mimeTypes, status, start, end);
 	}
 
 	public Hits search(SearchContext searchContext) throws SearchException {
 		checkDocumentRepository();
 
-		return documentRepository.search(searchContext);
+		return getDocumentRepository().search(searchContext);
 	}
 
 	public Hits search(SearchContext searchContext, Query query)
@@ -519,7 +519,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.search(searchContext, query);
+		return getDocumentRepository().search(searchContext, query);
 	}
 
 	public void unlockFolder(long folderId, String lockUuid)
@@ -527,7 +527,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.unlockFolder(folderId, lockUuid);
+		getDocumentRepository().unlockFolder(folderId, lockUuid);
 	}
 
 	public void unlockFolder(long parentFolderId, String name, String lockUuid)
@@ -535,7 +535,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		documentRepository.unlockFolder(parentFolderId, name, lockUuid);
+		getDocumentRepository().unlockFolder(parentFolderId, name, lockUuid);
 	}
 
 	@Deprecated
@@ -547,7 +547,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.updateFileEntry(
+		return getDocumentRepository().updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, file, serviceContext);
 	}
@@ -562,7 +562,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.updateFileEntry(
+		return getDocumentRepository().updateFileEntry(
 			fileEntryId, sourceFileName, mimeType, title, description,
 			changeLog, majorVersion, is, size, serviceContext);
 	}
@@ -574,7 +574,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.updateFolder(
+		return getDocumentRepository().updateFolder(
 			folderId, name, description, serviceContext);
 	}
 
@@ -583,7 +583,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.verifyFileEntryCheckOut(
+		return getDocumentRepository().verifyFileEntryCheckOut(
 			fileEntryId, lockUuid);
 	}
 
@@ -592,7 +592,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.verifyFileEntryLock(fileEntryId, lockUuid);
+		return getDocumentRepository().verifyFileEntryLock(fileEntryId, lockUuid);
 	}
 
 	public boolean verifyInheritableLock(long folderId, String lockUuid)
@@ -600,7 +600,7 @@ public class InitializedRepository
 
 		checkDocumentRepository();
 
-		return documentRepository.verifyInheritableLock(folderId, lockUuid);
+		return getDocumentRepository().verifyInheritableLock(folderId, lockUuid);
 	}
 
 }

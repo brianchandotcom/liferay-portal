@@ -76,6 +76,11 @@ public @interface OSGiBeanProperties {
 	 */
 	public String[] property() default {};
 
+	/**
+	 * Returns the types under which the bean is published as a service.
+	 *
+	 * @return the service types
+	 */
 	public Class<?>[] service() default {};
 
 	/**
@@ -172,8 +177,20 @@ public @interface OSGiBeanProperties {
 
 	}
 
+	/**
+	 * Obtains types under which the bean is published as a service.
+	 */
 	public static class Service {
 
+		/**
+		 * Returns the types under which the bean is published as a service.
+		 * If no types are specified, they are calculated through class
+		 * introspection. If the bean is not assignable to a specified service
+		 * type, a {@link ClassCastException} is thrown.
+		 *
+		 * @param  object the object (bean)
+		 * @return the service types
+		 */
 		public static Set<Class<?>> interfaces(Object object) {
 			Class<? extends Object> clazz = object.getClass();
 

@@ -76,7 +76,7 @@ public abstract class BaseTestCase {
 		PropsUtil.set(
 			PropsKeys.SYNC_LOGGER_CONFIGURATION_FILE, "sync-test-logback.xml");
 
-		LoggerUtil.initLogger();
+		LoggerUtil.init();
 
 		UpgradeUtil.upgrade();
 

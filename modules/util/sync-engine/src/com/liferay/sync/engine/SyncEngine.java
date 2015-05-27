@@ -238,7 +238,7 @@ public class SyncEngine {
 		SyncEngineUtil.fireSyncEngineStateChanged(
 			SyncEngineUtil.SYNC_ENGINE_STATE_STARTING);
 
-		LoggerUtil.initLogger();
+		LoggerUtil.init();
 
 		_logger.info("Starting {}", PropsValues.SYNC_PRODUCT_NAME);
 
@@ -270,6 +270,8 @@ public class SyncEngine {
 		_remoteEventsScheduledExecutorService.shutdownNow();
 
 		FileLockRetryUtil.shutdown();
+
+		LoggerUtil.shutdown();
 
 		SyncAccountPersistence syncAccountPersistence =
 			SyncAccountService.getSyncAccountPersistence();

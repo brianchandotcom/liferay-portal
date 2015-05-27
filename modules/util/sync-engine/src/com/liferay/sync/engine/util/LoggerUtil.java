@@ -29,19 +29,18 @@ import org.slf4j.LoggerFactory;
  */
 public class LoggerUtil {
 
-	public static void initLogger() {
+	public static void init() {
 		String loggerConfigurationFilePathName = FileUtil.getFilePathName(
 			PropsValues.SYNC_CONFIGURATION_DIRECTORY,
 			PropsValues.SYNC_LOGGER_CONFIGURATION_FILE);
 
-		LoggerContext loggerContext =
-			(LoggerContext)LoggerFactory.getILoggerFactory();
+		_loggerContext = (LoggerContext)LoggerFactory.getILoggerFactory();
 
-		loggerContext.reset();
+		_loggerContext.reset();
 
 		JoranConfigurator joranConfigurator = new JoranConfigurator();
 
-		joranConfigurator.setContext(loggerContext);
+		joranConfigurator.setContext(_loggerContext);
 
 		try {
 			if (Files.exists(Paths.get(loggerConfigurationFilePathName))) {
@@ -59,5 +58,11 @@ public class LoggerUtil {
 		catch (Exception e) {
 		}
 	}
+
+	public static void shutdown() {
+		_loggerContext.stop();
+	}
+
+	private static LoggerContext _loggerContext;
 
 }

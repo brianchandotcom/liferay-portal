@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,10 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.portlet.dynamicdatalists.service.http.DDLRecordSetServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.dynamic.data.lists.service.http.DDLRecordSetServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.portlet.dynamicdatalists.service.http.DDLRecordSetServiceSoap
+ * @see com.liferay.dynamic.data.lists.service.http.DDLRecordSetServiceSoap
  * @generated
  */
 @ProviderType

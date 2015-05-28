@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordSetModel
- * @see com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl
- * @see com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetModelImpl
+ * @see com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl
+ * @see com.liferay.dynamic.data.lists.model.impl.DDLRecordSetModelImpl
  * @generated
  */
 @ProviderType
@@ -32,7 +32,7 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordSetImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -41,5 +41,5 @@ public interface DDLRecordSet extends DDLRecordSetModel, PersistedModel {
 		long formDDMTemplateId)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getRecords();
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords();
 }

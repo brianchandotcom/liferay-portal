@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for DDLRecordSet. This utility wraps
- * {@link com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetServiceImpl} and is the
+ * {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -29,8 +31,8 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordSetService
- * @see com.liferay.portlet.dynamicdatalists.service.base.DDLRecordSetServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetServiceImpl
+ * @see com.liferay.dynamic.data.lists.service.base.DDLRecordSetServiceBaseImpl
+ * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl
  * @generated
  */
 @ProviderType
@@ -38,9 +40,9 @@ public class DDLRecordSetServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet addRecordSet(
 		long groupId, long ddmStructureId, java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -66,31 +68,31 @@ public class DDLRecordSetServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
 		long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordSet(recordSetId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getRecordSets(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
 		long[] groupIds) {
 		return getService().getRecordSets(groupIds);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		long companyId, long groupId, java.lang.String keywords, int scope,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator) {
 		return getService()
 				   .search(companyId, groupId, keywords, scope, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		long companyId, long groupId, java.lang.String name,
 		java.lang.String description, int scope, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator) {
 		return getService()
 				   .search(companyId, groupId, name, description, scope,
 			andOperator, start, end, orderByComparator);
@@ -118,7 +120,7 @@ public class DDLRecordSetServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -127,7 +129,7 @@ public class DDLRecordSetServiceUtil {
 			serviceContext);
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		long groupId, long ddmStructureId, java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -139,7 +141,7 @@ public class DDLRecordSetServiceUtil {
 			nameMap, descriptionMap, minDisplayRows, serviceContext);
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		long recordSetId, long ddmStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -152,14 +154,7 @@ public class DDLRecordSetServiceUtil {
 	}
 
 	public static DDLRecordSetService getService() {
-		if (_service == null) {
-			_service = (DDLRecordSetService)PortalBeanLocatorUtil.locate(DDLRecordSetService.class.getName());
-
-			ReferenceRegistry.registerReference(DDLRecordSetServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -169,5 +164,14 @@ public class DDLRecordSetServiceUtil {
 	public void setService(DDLRecordSetService service) {
 	}
 
-	private static DDLRecordSetService _service;
+	private static ServiceTracker<DDLRecordSetService, DDLRecordSetService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDLRecordSetServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDLRecordSetService, DDLRecordSetService>(bundle.getBundleContext(),
+				DDLRecordSetService.class, null);
+
+		_serviceTracker.open();
+	}
 }

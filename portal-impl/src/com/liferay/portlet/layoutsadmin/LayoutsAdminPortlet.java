@@ -14,16 +14,90 @@
 
 package com.liferay.portlet.layoutsadmin;
 
+import com.liferay.portal.ImageTypeException;
+import com.liferay.portal.LayoutFriendlyURLException;
+import com.liferay.portal.LayoutFriendlyURLsException;
+import com.liferay.portal.LayoutNameException;
+import com.liferay.portal.LayoutParentLayoutIdException;
+import com.liferay.portal.LayoutSetVirtualHostException;
+import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.RequiredLayoutException;
+import com.liferay.portal.SitemapChangeFrequencyException;
+import com.liferay.portal.SitemapIncludeException;
+import com.liferay.portal.SitemapPagePriorityException;
+import com.liferay.portal.events.EventsProcessorUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadException;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.ThemeFactoryUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.ColorScheme;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
+import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutTypePortlet;
+import com.liferay.portal.model.Theme;
+import com.liferay.portal.model.ThemeSetting;
+import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeServiceUtil;
+import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
+import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.ThemeLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.model.MDRAction;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroupInstance;
+import com.liferay.portlet.mobiledevicerules.service.MDRActionLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRActionServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceLocalServiceUtil;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupInstanceServiceUtil;
+import com.liferay.portlet.sites.action.ActionUtil;
+import com.liferay.portlet.sites.util.SitesUtil;
 
 import java.io.IOException;
+import java.io.InputStream;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -31,14 +105,57 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * @author Eudaldo Alonso
  */
 public class LayoutsAdminPortlet extends MVCPortlet {
 
-	public void enableLayout(ActionRequest actionRequest) throws Exception {
+	public void deleteLayout(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		long plid = ParamUtil.getLong(actionRequest, "plid");
+
+		if (plid <= 0) {
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			boolean privateLayout = ParamUtil.getBoolean(
+				actionRequest, "privateLayout");
+			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+
+			Layout layout = LayoutLocalServiceUtil.getLayout(
+				groupId, privateLayout, layoutId);
+
+			plid = layout.getPlid();
+		}
+
+		Object[] returnValue = SitesUtil.deleteLayout(
+			actionRequest, actionResponse);
+
+		if (plid == themeDisplay.getRefererPlid()) {
+			long newRefererPlid = (Long)returnValue[2];
+
+			redirect = HttpUtil.setParameter(
+				redirect, "refererPlid", newRefererPlid);
+			redirect = HttpUtil.setParameter(
+				redirect, actionResponse.getNamespace() + "selPlid", 0);
+		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	public void enableLayout(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long incompleteLayoutRevisionId = ParamUtil.getLong(
-				actionRequest, "incompleteLayoutRevisionId");
+			actionRequest, "incompleteLayoutRevisionId");
 
 		LayoutRevision incompleteLayoutRevision =
 			LayoutRevisionLocalServiceUtil.getLayoutRevision(
@@ -73,128 +190,14 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 	@Override
 	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		super.processAction(actionRequest, actionResponse);
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateLayout(actionRequest, actionResponse);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				long plid = ParamUtil.getLong(actionRequest, "plid");
-
-				if (plid <= 0) {
-					long groupId = ParamUtil.getLong(actionRequest, "groupId");
-					boolean privateLayout = ParamUtil.getBoolean(
-						actionRequest, "privateLayout");
-					long layoutId = ParamUtil.getLong(
-						actionRequest, "layoutId");
-
-					Layout layout = LayoutLocalServiceUtil.getLayout(
-						groupId, privateLayout, layoutId);
-
-					plid = layout.getPlid();
-				}
-
-				Object[] returnValue = SitesUtil.deleteLayout(
-					actionRequest, actionResponse);
-
-				if (plid == themeDisplay.getRefererPlid()) {
-					long newRefererPlid = (Long)returnValue[2];
-
-					redirect = HttpUtil.setParameter(
-						redirect, "refererPlid", newRefererPlid);
-					redirect = HttpUtil.setParameter(
-						redirect, actionResponse.getNamespace() + "selPlid", 0);
-				}
-			}
-			else if (cmd.equals("enable")) {
-				enableLayout(actionRequest);
-			}
-			else if (cmd.equals("reset_merge_fail_count_and_merge")) {
-				resetMergeFailCountAndMerge(actionRequest);
-			}
-
-			MultiSessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) + "requestProcessed");
-
-			sendRedirect(actionRequest, actionResponse, redirect);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchLayoutException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.layouts_admin.error");
-			}
-			else if (e instanceof ImageTypeException ||
-					 e instanceof LayoutFriendlyURLException ||
-					 e instanceof LayoutFriendlyURLsException ||
-					 e instanceof LayoutNameException ||
-					 e instanceof LayoutParentLayoutIdException ||
-					 e instanceof LayoutSetVirtualHostException ||
-					 e instanceof LayoutTypeException ||
-					 e instanceof RequiredLayoutException ||
-					 e instanceof SitemapChangeFrequencyException ||
-					 e instanceof SitemapIncludeException ||
-					 e instanceof SitemapPagePriorityException ||
-					 e instanceof UploadException) {
-
-				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				if (cmd.equals(Constants.ADD)) {
-					SessionMessages.add(
-						actionRequest,
-						PortalUtil.getPortletId(actionRequest) + "addError", e);
-				}
-			}
-			else if (e instanceof SystemException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			getGroup(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.layouts_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
+		MultiSessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 	}
 
 	/**
@@ -212,7 +215,8 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 	 * @param  actionRequest the action request
 	 * @throws Exception if an exception occurred
 	 */
-	public void resetMergeFailCountAndMerge(ActionRequest actionRequest)
+	public void resetMergeFailCountAndMerge(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutPrototypeId = ParamUtil.getLong(
@@ -379,7 +383,8 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 					typeSettingsProperties.toString(), hidden, friendlyURLMap,
 					serviceContext);
 
-				// Force propagation from page template to page. See LPS-48430.
+				// Force propagation from page template to page.
+				// See LPS-48430.
 
 				SitesUtil.mergeLayoutPrototypeLayout(layout.getGroup(), layout);
 			}
@@ -390,26 +395,22 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 				Layout copyLayout = null;
 
 				String layoutTemplateId = ParamUtil.getString(
-					uploadPortletRequest, "layoutTemplateId",
-					PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
+						uploadPortletRequest, "layoutTemplateId",
+						PropsValues.DEFAULT_LAYOUT_TEMPLATE_ID);
 
 				if (copyLayoutId > 0) {
-					try {
-						copyLayout = LayoutLocalServiceUtil.getLayout(
-							groupId, privateLayout, copyLayoutId);
+					copyLayout = LayoutLocalServiceUtil.fetchLayout(
+						groupId, privateLayout, copyLayoutId);
 
-						if (copyLayout.isTypePortlet()) {
-							LayoutTypePortlet copyLayoutTypePortlet =
-								(LayoutTypePortlet)copyLayout.getLayoutType();
+					if ((copyLayout != null) && copyLayout.isTypePortlet()) {
+						LayoutTypePortlet copyLayoutTypePortlet =
+							(LayoutTypePortlet)copyLayout.getLayoutType();
 
-							layoutTemplateId =
-								copyLayoutTypePortlet.getLayoutTemplateId();
+						layoutTemplateId =
+							copyLayoutTypePortlet.getLayoutTemplateId();
 
-							typeSettingsProperties =
-								copyLayout.getTypeSettingsProperties();
-						}
-					}
-					catch (NoSuchLayoutException nsle) {
+						typeSettingsProperties =
+							copyLayout.getTypeSettingsProperties();
 					}
 				}
 
@@ -485,23 +486,19 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 				if ((copyLayoutId > 0) &&
 					(copyLayoutId != layout.getLayoutId())) {
 
-					try {
-						Layout copyLayout = LayoutLocalServiceUtil.getLayout(
-							groupId, privateLayout, copyLayoutId);
+					Layout copyLayout = LayoutLocalServiceUtil.fetchLayout(
+						groupId, privateLayout, copyLayoutId);
 
-						if (copyLayout.isTypePortlet()) {
-							layoutTypeSettingsProperties =
-								copyLayout.getTypeSettingsProperties();
+					if ((copyLayout != null) && copyLayout.isTypePortlet()) {
+						layoutTypeSettingsProperties =
+							copyLayout.getTypeSettingsProperties();
 
-							ActionUtil.removePortletIds(actionRequest, layout);
+						ActionUtil.removePortletIds(actionRequest, layout);
 
-							ActionUtil.copyPreferences(
-								actionRequest, layout, copyLayout);
+						ActionUtil.copyPreferences(
+							actionRequest, layout, copyLayout);
 
-							SitesUtil.copyLookAndFeel(layout, copyLayout);
-						}
-					}
-					catch (NoSuchLayoutException nsle) {
+						SitesUtil.copyLookAndFeel(layout, copyLayout);
 					}
 				}
 				else {
@@ -662,14 +659,21 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 	}
 
 	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof NoSuchGroupException ||
-			cause instanceof PrincipalException) {
+		if (cause instanceof ImageTypeException ||
+			cause instanceof LayoutFriendlyURLException ||
+			cause instanceof LayoutFriendlyURLsException ||
+			cause instanceof LayoutNameException ||
+			cause instanceof LayoutParentLayoutIdException ||
+			cause instanceof LayoutSetVirtualHostException ||
+			cause instanceof LayoutTypeException ||
+			cause instanceof NoSuchGroupException ||
+			cause instanceof RequiredLayoutException ||
+			cause instanceof SitemapChangeFrequencyException ||
+			cause instanceof SitemapIncludeException ||
+			cause instanceof SitemapPagePriorityException ||
+			cause instanceof PrincipalException ||
+			cause instanceof UploadException) {
 
 			return true;
 		}
@@ -789,8 +793,6 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 		return typeSettingsProperties;
 	}
-
-	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutsAdminPortlet.class);

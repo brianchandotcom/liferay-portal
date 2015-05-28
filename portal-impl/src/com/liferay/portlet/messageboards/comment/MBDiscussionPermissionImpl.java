@@ -22,6 +22,7 @@ import com.liferay.portlet.messageboards.service.permission.MBDiscussionPermissi
 
 /**
  * @author Adolfo Pérez
+ * @author Sergio González
  */
 public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 
@@ -31,41 +32,31 @@ public class MBDiscussionPermissionImpl extends BaseDiscussionPermission {
 
 	@Override
 	public boolean hasAddPermission(
-		long companyId, long groupId, String className, long classPK,
-		long userId) {
+		long companyId, long groupId, String className, long classPK) {
 
 		return MBDiscussionPermission.contains(
-			_permissionChecker, companyId, groupId, className, classPK, userId,
+			_permissionChecker, companyId, groupId, className, classPK,
 			ActionKeys.ADD_DISCUSSION);
 	}
 
 	@Override
-	public boolean hasDeletePermission(
-			String className, long classPK, long commentId, long userId)
-		throws PortalException {
-
+	public boolean hasDeletePermission(long commentId) throws PortalException {
 		return MBDiscussionPermission.contains(
-			_permissionChecker, className, classPK, commentId, userId,
-			ActionKeys.DELETE_DISCUSSION);
+			_permissionChecker, commentId, ActionKeys.DELETE_DISCUSSION);
 	}
 
 	@Override
-	public boolean hasUpdatePermission(
-			String className, long classPK, long commentId, long userId)
-		throws PortalException {
-
+	public boolean hasUpdatePermission(long commentId) throws PortalException {
 		return MBDiscussionPermission.contains(
-			_permissionChecker, className, classPK, commentId, userId,
-			ActionKeys.UPDATE_DISCUSSION);
+			_permissionChecker, commentId, ActionKeys.UPDATE_DISCUSSION);
 	}
 
 	@Override
 	public boolean hasViewPermission(
-		long companyId, long groupId, String className, long classPK,
-		long userId) {
+		long companyId, long groupId, String className, long classPK) {
 
 		return MBDiscussionPermission.contains(
-			_permissionChecker, companyId, groupId, className, classPK, userId,
+			_permissionChecker, companyId, groupId, className, classPK,
 			ActionKeys.VIEW);
 	}
 

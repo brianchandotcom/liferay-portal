@@ -19,49 +19,40 @@ import com.liferay.portal.security.auth.PrincipalException;
 
 /**
  * @author Adolfo Pérez
+ * @author Sergio González
  */
 public abstract class BaseDiscussionPermission implements DiscussionPermission {
 
 	@Override
 	public void checkAddPermission(
-			long companyId, long groupId, String className, long classPK,
-			long userId)
+			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		if (!hasAddPermission(companyId, groupId, className, classPK, userId)) {
+		if (!hasAddPermission(companyId, groupId, className, classPK)) {
 			throw new PrincipalException();
 		}
 	}
 
 	@Override
-	public void checkDeletePermission(
-			String className, long classPK, long commentId, long userId)
-		throws PortalException {
-
-		if (!hasDeletePermission(className, classPK, commentId, userId)) {
+	public void checkDeletePermission(long commentId) throws PortalException {
+		if (!hasDeletePermission(commentId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	@Override
-	public void checkUpdatePermission(
-			String className, long classPK, long commentId, long userId)
-		throws PortalException {
-
-		if (!hasUpdatePermission(className, classPK, commentId, userId)) {
+	public void checkUpdatePermission(long commentId) throws PortalException {
+		if (!hasUpdatePermission(commentId)) {
 			throw new PrincipalException();
 		}
 	}
 
 	@Override
 	public void checkViewPermission(
-			long companyId, long groupId, String className, long classPK,
-			long userId)
+			long companyId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		if (!hasViewPermission(
-				companyId, groupId, className, classPK, userId)) {
-
+		if (!hasViewPermission(companyId, groupId, className, classPK)) {
 			throw new PrincipalException();
 		}
 	}

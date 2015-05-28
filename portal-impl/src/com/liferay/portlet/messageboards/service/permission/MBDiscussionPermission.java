@@ -38,6 +38,7 @@ import java.util.List;
 /**
  * @author Charles May
  * @author Roberto Díaz
+ * @author Sergio González
  */
 @OSGiBeanProperties(
 	property = {
@@ -48,33 +49,30 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long companyId, long groupId,
-			String className, long classPK, long ownerId, String actionId)
+			String className, long classPK, String actionId)
 		throws PortalException {
 
 		if (!contains(
 				permissionChecker, companyId, groupId, className, classPK,
-				ownerId, actionId)) {
-
-			throw new PrincipalException();
-		}
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, String className, long classPK,
-			long messageId, long ownerId, String actionId)
-		throws PortalException {
-
-		if (!contains(
-				permissionChecker, className, classPK, messageId, ownerId,
 				actionId)) {
 
 			throw new PrincipalException();
 		}
 	}
 
+	public static void check(
+			PermissionChecker permissionChecker, long messageId,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, messageId, actionId)) {
+			throw new PrincipalException();
+		}
+	}
+
 	public static boolean contains(
 		PermissionChecker permissionChecker, long companyId, long groupId,
-		String className, long classPK, long ownerId, String actionId) {
+		String className, long classPK, String actionId) {
 
 		if (MBBanLocalServiceUtil.hasBan(
 				groupId, permissionChecker.getUserId())) {
@@ -97,9 +95,17 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			return true;
 		}
 
-		if ((ownerId > 0) &&
+		MBDiscussion mbDiscussion =
+			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);
+
+		if (mbDiscussion == null) {
+			return false;
+		}
+
+		if ((mbDiscussion.getUserId() > 0) &&
 			permissionChecker.hasOwnerPermission(
-				companyId, className, classPK, ownerId, actionId)) {
+				companyId, className, classPK, mbDiscussion.getUserId(),
+				actionId)) {
 
 			return true;
 		}
@@ -117,11 +123,14 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, String className, long classPK,
-			long messageId, long ownerId, String actionId)
+			PermissionChecker permissionChecker, long messageId,
+			String actionId)
 		throws PortalException {
 
 		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+
+		String className = message.getClassName();
+		long classPK = message.getClassPK();
 
 		if (className.equals(WorkflowInstance.class.getName())) {
 			return permissionChecker.hasPermission(
@@ -148,7 +157,7 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 		return contains(
 			permissionChecker, message.getCompanyId(), message.getGroupId(),
-			className, classPK, ownerId, actionId);
+			className, classPK, actionId);
 	}
 
 	@Override
@@ -162,8 +171,7 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
 		check(
 			permissionChecker, mbDiscussion.getCompanyId(), groupId,
-			mbDiscussion.getClassName(), mbDiscussion.getClassPK(), primaryKey,
-			actionId);
+			mbDiscussion.getClassName(), mbDiscussion.getClassPK(), actionId);
 	}
 
 }

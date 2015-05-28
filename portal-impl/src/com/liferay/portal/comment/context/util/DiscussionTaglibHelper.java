@@ -82,29 +82,6 @@ public class DiscussionTaglibHelper {
 		return _paginationURL;
 	}
 
-	public String getPermissionClassName() {
-		if (_permissionClassName == null) {
-			HttpServletRequest request = getRequest();
-
-			_permissionClassName = (String)request.getAttribute(
-				"liferay-ui:discussion:permissionClassName");
-		}
-
-		return _permissionClassName;
-	}
-
-	public long getPermissionClassPK() {
-		if (_permissionClassPK == null) {
-			HttpServletRequest request = getRequest();
-
-			_permissionClassPK = GetterUtil.getLong(
-				(String)request.getAttribute(
-					"liferay-ui:discussion:permissionClassPK"));
-		}
-
-		return _permissionClassPK;
-	}
-
 	public String getRedirect() {
 		if (_redirect == null) {
 			HttpServletRequest request = getRequest();
@@ -174,8 +151,6 @@ public class DiscussionTaglibHelper {
 	private String _formName;
 	private Boolean _hideControls;
 	private String _paginationURL;
-	private String _permissionClassName;
-	private Long _permissionClassPK;
 	private Boolean _ratingsEnabled;
 	private String _redirect;
 	private final HttpServletRequest _request;

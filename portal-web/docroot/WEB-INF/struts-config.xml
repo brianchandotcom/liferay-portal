@@ -936,53 +936,6 @@
 
 		<action path="/portal_settings/view" forward="portlet.portal_settings.edit_company" />
 
-		<!-- Portlet Configuration -->
-
-		<action path="/portlet_configuration/add_group_statistics_activity_counter" forward="portlet.group_statistics.add_activity_counter" />
-
-		<action path="/portlet_configuration/add_user_statistics_activity_counter" forward="portlet.user_statistics.add_activity_counter" />
-
-		<action path="/portlet_configuration/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
-
-		<action path="/portlet_configuration/edit_archived_setups" type="com.liferay.portlet.portletconfiguration.action.EditArchivedSetupsAction">
-			<forward name="portlet.portlet_configuration.edit_archived_setups" path="portlet.portlet_configuration.edit_archived_setups" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/edit_configuration" type="com.liferay.portlet.portletconfiguration.action.EditConfigurationAction">
-			<forward name="portlet.portlet_configuration.edit_configuration" path="portlet.portlet_configuration.edit_configuration" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/edit_permissions" type="com.liferay.portlet.portletconfiguration.action.EditPermissionsAction">
-			<forward name="portlet.portlet_configuration.edit_permissions" path="portlet.portlet_configuration.edit_permissions" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/edit_public_render_parameters" type="com.liferay.portlet.portletconfiguration.action.EditPublicRenderParametersAction">
-			<forward name="portlet.portlet_configuration.edit_public_render_parameters" path="portlet.portlet_configuration.edit_public_render_parameters" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/edit_scope" type="com.liferay.portlet.portletconfiguration.action.EditScopeAction">
-			<forward name="portlet.portlet_configuration.edit_scope" path="portlet.portlet_configuration.edit_scope" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/edit_sharing" type="com.liferay.portlet.portletconfiguration.action.EditSharingAction">
-			<forward name="portlet.portlet_configuration.edit_sharing" path="portlet.portlet_configuration.edit_sharing" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/edit_supported_clients" type="com.liferay.portlet.portletconfiguration.action.EditSupportedClientsAction">
-			<forward name="portlet.portlet_configuration.edit_supported_clients" path="portlet.portlet_configuration.edit_supported_clients" />
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-		</action>
-
-		<action path="/portlet_configuration/select_organization" forward="portlet.users_admin.select_organization" />
-
-		<action path="/portlet_configuration/update_title" type="com.liferay.portlet.portletconfiguration.action.UpdateTitleAction" />
-
 		<!-- Portlet Sharing -->
 
 		<action path="/portlet_sharing/view" type="com.liferay.portlet.portletsharing.action.ViewAction">

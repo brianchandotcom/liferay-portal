@@ -392,7 +392,7 @@ AUI.add(
 						}
 					},
 					formatter: A.bind(instance._formatJSONResults, instance),
-					url: themeDisplay.getPathMain() + '/layouts_admin/get_layouts'
+					url: themeDisplay.getPathMain() + '/portal/get_layouts'
 				};
 
 				return ioCfg;

@@ -266,7 +266,7 @@ AUI.add(
 						LinkToPageCellEditor.superclass.renderUI.apply(instance, arguments);
 
 						A.io.request(
-							themeDisplay.getPathMain() + '/layouts_admin/get_layouts',
+							themeDisplay.getPathMain() + '/portal/get_layouts',
 							{
 								after: {
 									success: function() {

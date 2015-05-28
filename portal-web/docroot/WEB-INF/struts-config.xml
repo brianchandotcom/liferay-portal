@@ -37,6 +37,8 @@
 
 		<action path="/portal/flash" forward="/portal/flash.jsp" />
 
+		<action path="/portal/get_layouts" type="com.liferay.portal.action.GetLayoutsAction" />
+
 		<action path="/portal/j_login" forward="/portal/j_login.jsp" />
 
 		<action path="/portal/j_login_error" forward="portal.j_login_error" />
@@ -585,8 +587,6 @@
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
-
-		<action path="/layouts_admin/get_layouts" type="com.liferay.portlet.layoutsadmin.action.GetLayoutsAction" />
 
 		<action path="/layouts_admin/mobile_device_rules" type="com.liferay.portlet.layoutsadmin.action.MobileDeviceRulesAction">
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />

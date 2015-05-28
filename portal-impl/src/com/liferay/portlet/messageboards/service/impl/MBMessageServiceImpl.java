@@ -245,8 +245,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 	@Override
 	public void addMessageAttachment(
-			long messageId, String fileName, File file, String mimeType,
-			boolean indexingEnabled)
+			long messageId, String fileName, File file, String mimeType)
 		throws PortalException {
 
 		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
@@ -262,7 +261,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			message.getCategoryId(), ActionKeys.ADD_FILE);
 
 		mbMessageLocalService.addMessageAttachment(
-			messageId, fileName, file, mimeType, indexingEnabled);
+			getUserId(), messageId, fileName, file, mimeType);
 	}
 
 	/**

@@ -12,11 +12,21 @@ repositories {
 	mavenLocal()
 }
 
+configurations {
+	portal
+}
+
 dependencies {
-	compile files(appServerClassesPortalDir)
-	compile fileTree(dir: appServerLibPortalDir, include: "*.jar")
-	compile fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
-	compile fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
+	portal files(appServerClassesPortalDir)
+	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
+	portal fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
+	portal fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
+}
+
+sourceSets {
+	main {
+		compileClasspath = configurations.compile + configurations.portal
+	}
 }
 
 bundle {

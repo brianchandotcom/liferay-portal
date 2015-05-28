@@ -107,7 +107,7 @@ AUI.add(
 
 								var res = regExp.exec(val);
 
-								if (res && ((res.index + res[1].length + item.length) === val.length) && (!result || val.length < result.length)) {
+								if (res && res.index + res[1].length + item.length === val.length && (!result || val.length < result.length)) {
 									result = val;
 								}
 							}

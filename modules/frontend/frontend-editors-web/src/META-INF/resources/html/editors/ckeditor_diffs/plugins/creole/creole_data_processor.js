@@ -137,8 +137,8 @@
 			}
 
 			var children = node.childNodes;
-			var pushTagList = instance._pushTagList;
 			var length = children.length;
+			var pushTagList = instance._pushTagList;
 
 			for (var i = 0; i < length; i++) {
 				var listTagsIn = [];
@@ -185,7 +185,7 @@
 
 				listTagsIn.push(newLineCharacter);
 			}
-			else if (element.previousSibling && element.nextSibling && (element.nextSibling !== NEW_LINE)) {
+			else if (element.previousSibling && element.nextSibling && element.nextSibling !== NEW_LINE) {
 				listTagsIn.push(newLineCharacter);
 			}
 		},
@@ -223,7 +223,7 @@
 
 									var lastResultCharacter = lastResultString[lastResultString.length - 1];
 
-									if ( lastResultCharacter !== '~' && lastResultCharacter !== p1[0]) {
+									if (lastResultCharacter !== '~' && lastResultCharacter !== p1[0]) {
 										res += '~';
 									}
 
@@ -284,8 +284,8 @@
 		_handleElementStart: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			var tagName = element.tagName;
 			var params;
+			var tagName = element.tagName;
 
 			if (tagName) {
 				tagName = tagName.toLowerCase();
@@ -326,7 +326,7 @@
 				else if (tagName == TAG_TELETYPETEXT) {
 					instance._handleTT(element, listTagsIn, listTagsOut);
 				}
-				else if ((params = REGEX_HEADER.exec(tagName))) {
+				else if (params == REGEX_HEADER.exec(tagName)) {
 					instance._handleHeader(element, listTagsIn, listTagsOut, params);
 				}
 				else if (tagName == 'th') {
@@ -562,8 +562,7 @@
 
 			var nodeType = node.nodeType;
 
-			return (node.isElementContentWhitespace || nodeType == 8) ||
-				((nodeType == 3) && instance._isWhitespace(node));
+			return node.isElementContentWhitespace || nodeType == 8 || nodeType == 3 && instance._isWhitespace(node);
 		},
 
 		_isLastItemNewLine: function(node) {
@@ -581,7 +580,7 @@
 		},
 
 		_isWhitespace: function(node) {
-			return node.isElementContentWhitespace || !(REGEX_NOT_WHITESPACE.test(node.data));
+			return node.isElementContentWhitespace || !REGEX_NOT_WHITESPACE.test(node.data);
 		},
 
 		_pushTagList: function(tagsList) {
@@ -603,7 +602,7 @@
 		},
 
 		_tagNameMatch: function(tagSrc, tagDest) {
-			return (tagDest instanceof RegExp && tagDest.test(tagSrc)) || (tagSrc === tagDest);
+			return tagDest instanceof RegExp && tagDest.test(tagSrc) || tagSrc === tagDest;
 		},
 
 		_endResult: null,

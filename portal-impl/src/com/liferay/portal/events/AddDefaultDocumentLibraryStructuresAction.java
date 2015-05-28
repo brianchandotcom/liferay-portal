@@ -61,7 +61,7 @@ import java.util.Map;
  * @author Roberto Díaz
  */
 public class AddDefaultDocumentLibraryStructuresAction
-	extends BaseDefaultDDMStructureAction {
+	extends DefaultDDMStructureUtil {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

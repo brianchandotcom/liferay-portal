@@ -27,8 +27,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 /**
  * @author Michael C. Han
  */
-public class AddDefaultDDMStructuresAction
-	extends BaseDefaultDDMStructureAction {
+public class AddDefaultDDMStructuresAction extends DefaultDDMStructureUtil {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

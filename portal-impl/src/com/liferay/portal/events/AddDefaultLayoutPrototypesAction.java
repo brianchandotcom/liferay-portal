@@ -36,7 +36,7 @@ import java.util.Map;
  * @author Juan Fernández
  */
 public class AddDefaultLayoutPrototypesAction
-	extends BaseDefaultLayoutPrototypesAction {
+	extends DefaultLayoutPrototypesUtil {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

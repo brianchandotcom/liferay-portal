@@ -39,7 +39,7 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
+public abstract class DefaultLayoutPrototypesUtil extends SimpleAction {
 
 	protected Layout addLayout(
 			LayoutSet layoutSet, String nameKey, String friendlyURL,

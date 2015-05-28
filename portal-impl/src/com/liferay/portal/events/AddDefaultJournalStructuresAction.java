@@ -26,8 +26,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 /**
  * @author Eudaldo Alonso
  */
-public class AddDefaultJournalStructuresAction
-	extends BaseDefaultDDMStructureAction {
+public class AddDefaultJournalStructuresAction extends DefaultDDMStructureUtil {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

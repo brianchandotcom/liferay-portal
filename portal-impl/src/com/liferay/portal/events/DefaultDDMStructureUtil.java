@@ -51,7 +51,7 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
-public abstract class BaseDefaultDDMStructureAction extends SimpleAction {
+public abstract class DefaultDDMStructureUtil extends SimpleAction {
 
 	protected void addDDMStructures(
 			long userId, long groupId, long classNameId, String fileName,

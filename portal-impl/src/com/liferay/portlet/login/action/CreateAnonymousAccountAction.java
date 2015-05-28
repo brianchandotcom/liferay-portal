@@ -88,7 +88,8 @@ public class CreateAnonymousAccountAction extends PortletAction {
 		String portletName = portletConfig.getPortletName();
 
 		if (!portletName.equals(PortletKeys.FAST_LOGIN)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeValidPortlet(
+				portletName, PortletKeys.FAST_LOGIN);
 		}
 
 		if (actionRequest.getRemoteUser() != null) {

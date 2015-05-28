@@ -199,6 +199,25 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeValidPortlet extends PrincipalException {
+
+		public MustBeValidPortlet(
+			String currentPortletName, String validPortletName) {
+			
+			super(
+				String.format(
+					"Action is only supported in %s and is not allowed in %s",
+					validPortletName, currentPortletName));
+
+			this.currentPortletName = currentPortletName;
+			this.validPortletName = validPortletName;
+		}
+
+		public final String currentPortletName;
+		public final String validPortletName;
+
+	}
+
 	public static class MustHavePermission extends PrincipalException {
 
 		public MustHavePermission(long userId, String ... actionId) {
@@ -339,5 +358,4 @@ public class PrincipalException extends PortalException {
 		}
 
 	}
-
 }

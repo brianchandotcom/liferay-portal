@@ -82,7 +82,7 @@ public class SearchContext implements Serializable {
 		return _attributes;
 	}
 
-	public BooleanClause[] getBooleanClauses() {
+	public BooleanClause<Query>[] getBooleanClauses() {
 		return _booleanClauses;
 	}
 
@@ -269,7 +269,7 @@ public class SearchContext implements Serializable {
 		_attributes = attributes;
 	}
 
-	public void setBooleanClauses(BooleanClause[] booleanClauses) {
+	public void setBooleanClauses(BooleanClause<Query>[] booleanClauses) {
 		_booleanClauses = booleanClauses;
 	}
 
@@ -404,7 +404,7 @@ public class SearchContext implements Serializable {
 	private long[] _assetCategoryIds;
 	private String[] _assetTagNames;
 	private Map<String, Serializable> _attributes;
-	private BooleanClause[] _booleanClauses;
+	private BooleanClause<Query>[] _booleanClauses;
 	private long[] _categoryIds;
 	private long[] _classTypeIds;
 	private boolean _commitImmediately;

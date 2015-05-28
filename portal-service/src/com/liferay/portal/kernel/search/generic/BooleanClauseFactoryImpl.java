@@ -30,17 +30,17 @@ import com.liferay.portal.kernel.search.TermQueryFactory;
 public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 
 	@Override
-	public BooleanClause create(
+	public BooleanClause<Query> create(
 		SearchContext searchContext, Query query, String occur) {
 
 		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
 			occur);
 
-		return new BooleanClauseImpl(query, booleanClauseOccur);
+		return new BooleanClauseImpl<>(query, booleanClauseOccur);
 	}
 
 	@Override
-	public BooleanClause create(
+	public BooleanClause<Query> create(
 		SearchContext searchContext, String field, String value, String occur) {
 
 		String searchEngineId = searchContext.getSearchEngineId();
@@ -55,7 +55,7 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
 			occur);
 
-		return new BooleanClauseImpl(query, booleanClauseOccur);
+		return new BooleanClauseImpl<>(query, booleanClauseOccur);
 	}
 
 }

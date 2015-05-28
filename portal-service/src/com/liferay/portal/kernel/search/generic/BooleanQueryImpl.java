@@ -47,7 +47,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 
 	@Override
 	public Query add(Query query, BooleanClauseOccur booleanClauseOccur) {
-		_booleanClauses.add(new BooleanClauseImpl(query, booleanClauseOccur));
+		_booleanClauses.add(new BooleanClauseImpl<>(query, booleanClauseOccur));
 
 		return query;
 	}
@@ -413,7 +413,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
-	public List<BooleanClause> clauses() {
+	public List<BooleanClause<Query>> clauses() {
 		return Collections.unmodifiableList(_booleanClauses);
 	}
 
@@ -430,6 +430,7 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	private static final Log _log = LogFactoryUtil.getLog(
 		BooleanQueryImpl.class);
 
-	private final List<BooleanClause> _booleanClauses = new ArrayList<>();
+	private final List<BooleanClause<Query>> _booleanClauses =
+		new ArrayList<>();
 
 }

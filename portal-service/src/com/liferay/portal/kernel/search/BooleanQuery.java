@@ -126,7 +126,7 @@ public interface BooleanQuery extends Query {
 			String[] fields, String value, boolean like)
 		throws ParseException;
 
-	public List<BooleanClause> clauses();
+	public List<BooleanClause<Query>> clauses();
 
 	public boolean hasClauses();
 

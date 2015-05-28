@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.Query;
 /**
  * @author Brian Wing Shun Chan
  */
-public class BooleanClauseImpl implements BooleanClause {
+public class BooleanClauseImpl implements BooleanClause<Query> {
 
 	public BooleanClauseImpl(
 		org.apache.lucene.search.BooleanClause booleanClause) {
@@ -39,6 +39,14 @@ public class BooleanClauseImpl implements BooleanClause {
 	}
 
 	@Override
+	public Query getClause() {
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClause}
+	 */
+	@Deprecated
 	public Query getQuery() {
 		throw new UnsupportedOperationException();
 	}

@@ -16,17 +16,15 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Query;
 
 /**
  * @author Michael C. Han
  */
-public class BooleanClauseImpl implements BooleanClause {
+public class BooleanClauseImpl<T> implements BooleanClause<T> {
 
-	public BooleanClauseImpl(
-		Query query, BooleanClauseOccur booleanClauseOccur) {
+	public BooleanClauseImpl(T t, BooleanClauseOccur booleanClauseOccur) {
+		_t = t;
 
-		_query = query;
 		_booleanClauseOccur = booleanClauseOccur;
 	}
 
@@ -36,11 +34,19 @@ public class BooleanClauseImpl implements BooleanClause {
 	}
 
 	@Override
-	public Query getQuery() {
-		return _query;
+	public T getClause() {
+		return _t;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getClause}
+	 */
+	@Deprecated
+	public T getQuery() {
+		return getClause();
 	}
 
 	private final BooleanClauseOccur _booleanClauseOccur;
-	private final Query _query;
+	private final T _t;
 
 }

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
@@ -26,24 +27,33 @@ import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
+@Component(
+	immediate = true,
+	property = {"request.header.auth.hosts.allowed=255.255.255.255"},
+	service = AutoLogin.class
+)
 public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
-	public RequestHeaderAutoLogin() {
-		String[] hostsAllowedArray = PropsUtil.getArray(
-			"request.header.auth.hosts.allowed");
+	@Activate
+	public void activate(Map<String, String> properties) {
+		String[] hostsAllowedArray = StringUtil.split(
+			properties.get("request.header.auth.hosts.allowed"));
 
 		for (int i = 0; i < hostsAllowedArray.length; i++) {
 			_hostsAllowed.add(hostsAllowedArray[i]);

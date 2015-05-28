@@ -495,6 +495,14 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.security.auth"
 		},
 
+		// Auto Logins
+
+		new String[] {
+			"request.header.auth.hosts.allowed",
+			"request.header.auth.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+
 		// Bookmarks
 
 		new String[] {

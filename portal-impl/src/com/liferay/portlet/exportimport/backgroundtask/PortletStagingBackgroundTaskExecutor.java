@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.backgroundtask;
+package com.liferay.portlet.exportimport.backgroundtask;
 
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_FAILED;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_PUBLICATION_PORTLET_LOCAL_STARTED;

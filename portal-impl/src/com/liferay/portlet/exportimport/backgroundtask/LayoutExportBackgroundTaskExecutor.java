@@ -12,10 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.lar.backgroundtask;
+package com.liferay.portlet.exportimport.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
@@ -29,19 +34,18 @@ import java.util.Map;
 /**
  * @author Daniel Kocsis
  * @author Michael C. Han
- * @author Akos Thurzo
  */
-public class PortletExportBackgroundTaskExecutor
+public class LayoutExportBackgroundTaskExecutor
 	extends BaseExportImportBackgroundTaskExecutor {
 
-	public PortletExportBackgroundTaskExecutor() {
+	public LayoutExportBackgroundTaskExecutor() {
 		setBackgroundTaskStatusMessageTranslator(
-			new PortletExportImportBackgroundTaskStatusMessageTranslator());
+			new LayoutExportImportBackgroundTaskStatusMessageTranslator());
 	}
 
 	@Override
 	public BackgroundTaskResult execute(BackgroundTask backgroundTask)
-		throws Exception {
+		throws PortalException {
 
 		ExportImportConfiguration exportImportConfiguration =
 			getExportImportConfiguration(backgroundTask);
@@ -50,13 +54,23 @@ public class PortletExportBackgroundTaskExecutor
 			exportImportConfiguration.getSettingsMap();
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
-		String fileName = MapUtil.getString(settingsMap, "fileName");
 
-		File larFile = ExportImportLocalServiceUtil.exportPortletInfoAsFile(
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(
+			StringUtil.replace(
+				exportImportConfiguration.getName(), StringPool.SPACE,
+				StringPool.UNDERLINE));
+		sb.append(StringPool.DASH);
+		sb.append(Time.getShortTimestamp());
+		sb.append(".lar");
+
+		File larFile = ExportImportLocalServiceUtil.exportLayoutsAsFile(
 			exportImportConfiguration);
 
 		BackgroundTaskLocalServiceUtil.addBackgroundTaskAttachment(
-			userId, backgroundTask.getBackgroundTaskId(), fileName, larFile);
+			userId, backgroundTask.getBackgroundTaskId(), sb.toString(),
+			larFile);
 
 		return BackgroundTaskResult.SUCCESS;
 	}

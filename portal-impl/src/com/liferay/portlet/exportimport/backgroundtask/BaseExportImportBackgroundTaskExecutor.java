@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.backgroundtask;
+package com.liferay.portlet.exportimport.backgroundtask;
 
 import com.liferay.portal.kernel.backgroundtask.BaseBackgroundTaskExecutor;
 import com.liferay.portal.kernel.json.JSONObject;

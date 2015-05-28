@@ -15,6 +15,9 @@
 package com.liferay.dynamic.data.lists.display.web.portlet;
 
 import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
+import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,9 +26,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService;
 
 import java.io.IOException;
 

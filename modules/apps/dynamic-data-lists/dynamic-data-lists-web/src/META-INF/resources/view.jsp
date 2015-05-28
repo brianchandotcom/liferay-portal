@@ -43,7 +43,7 @@ portletURL.setParameter("mvcPath", "/view.jsp");
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"
+			className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
 			escapedModel="<%= true %>"
 			keyProperty="recordSetId"
 			modelVar="recordSet"

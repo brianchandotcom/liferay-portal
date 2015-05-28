@@ -23,7 +23,11 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormDisplayContext" %><%@
+<%@ page import="com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordSetConstants" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -37,10 +41,6 @@ page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException" %>
 

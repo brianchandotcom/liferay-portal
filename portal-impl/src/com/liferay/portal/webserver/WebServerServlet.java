@@ -695,7 +695,7 @@ public class WebServerServlet extends HttpServlet {
 			ThumbnailCapability thumbnailCapability = repository.getCapability(
 				ThumbnailCapability.class);
 
-			FileEntry fileEntry = thumbnailCapability.fetchFileEntryByImageId(
+			FileEntry fileEntry = thumbnailCapability.fetchImageFileEntry(
 				imageId);
 
 			if (fileEntry == null) {

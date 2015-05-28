@@ -37,9 +37,7 @@ public class LiferayThumbnailCapability implements ThumbnailCapability {
 	}
 
 	@Override
-	public FileEntry fetchFileEntryByImageId(long imageId)
-		throws PortalException {
-
+	public FileEntry fetchImageFileEntry(long imageId) throws PortalException {
 		DLFileEntry dlFileEntry =
 			DLFileEntryLocalServiceUtil.fetchFileEntryByAnyImageId(imageId);
 

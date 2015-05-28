@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,251 +41,335 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
-	public void add(Query query, BooleanClauseOccur booleanClauseOccur)
+	public Query add(Query query, BooleanClauseOccur booleanClauseOccur)
 		throws ParseException {
 
 		_booleanQuery.add(
 			(org.apache.lucene.search.Query)_queryTranslator.translate(query),
 			BooleanClauseOccurTranslator.translate(booleanClauseOccur));
+
+		return query;
 	}
 
 	@Override
-	public void add(Query query, String occur) throws ParseException {
+	public Query add(Query query, String occur) throws ParseException {
 		BooleanClauseOccur booleanClauseOccur = new BooleanClauseOccurImpl(
 			occur);
 
-		add(query, booleanClauseOccur);
+		return add(query, booleanClauseOccur);
 	}
 
 	@Override
-	public void addExactTerm(String field, boolean value) {
+	public Query addExactTerm(String field, boolean value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, Boolean value) {
+	public Query addExactTerm(String field, Boolean value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, double value) {
+	public Query addExactTerm(String field, double value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, Double value) {
+	public Query addExactTerm(String field, Double value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, int value) {
+	public Query addExactTerm(String field, int value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, Integer value) {
+	public Query addExactTerm(String field, Integer value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, long value) {
+	public Query addExactTerm(String field, long value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, Long value) {
+	public Query addExactTerm(String field, Long value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, short value) {
+	public Query addExactTerm(String field, short value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, Short value) {
+	public Query addExactTerm(String field, Short value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addExactTerm(String field, String value) {
+	public Query addExactTerm(String field, String value) {
 		_luceneQueryHelper.addExactTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addNumericRangeTerm(
+	public Collection<Query> addNumericRangeTerm(
 		String field, int startValue, int endValue) {
 
 		_luceneQueryHelper.addNumericRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void addNumericRangeTerm(
+	public Collection<Query> addNumericRangeTerm(
 		String field, Integer startValue, Integer endValue) {
 
 		_luceneQueryHelper.addNumericRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void addNumericRangeTerm(
+	public Collection<Query> addNumericRangeTerm(
 		String field, long startValue, long endValue) {
 
 		_luceneQueryHelper.addNumericRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void addNumericRangeTerm(
+	public Collection<Query> addNumericRangeTerm(
 		String field, Long startValue, Long endValue) {
 
 		_luceneQueryHelper.addNumericRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void addNumericRangeTerm(
+	public Collection<Query> addNumericRangeTerm(
 		String field, short startValue, short endValue) {
 
 		_luceneQueryHelper.addNumericRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void addNumericRangeTerm(
+	public Collection<Query> addNumericRangeTerm(
 		String field, Short startValue, Short endValue) {
 
 		_luceneQueryHelper.addNumericRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return Collections.emptyList();
 	}
 
 	@Override
-	public void addRangeTerm(String field, int startValue, int endValue) {
+	public Query addRangeTerm(String field, int startValue, int endValue) {
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRangeTerm(
+	public Query addRangeTerm(
 		String field, Integer startValue, Integer endValue) {
 
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRangeTerm(String field, long startValue, long endValue) {
+	public Query addRangeTerm(String field, long startValue, long endValue) {
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRangeTerm(String field, Long startValue, Long endValue) {
+	public Query addRangeTerm(String field, Long startValue, Long endValue) {
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRangeTerm(String field, short startValue, short endValue) {
+	public Query addRangeTerm(String field, short startValue, short endValue) {
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRangeTerm(String field, Short startValue, Short endValue) {
+	public Query addRangeTerm(String field, Short startValue, Short endValue) {
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRangeTerm(String field, String startValue, String endValue) {
+	public Query addRangeTerm(
+		String field, String startValue, String endValue) {
+
 		_luceneQueryHelper.addRangeTerm(
 			_booleanQuery, field, startValue, endValue);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, boolean value) {
+	public Query addRequiredTerm(String field, boolean value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, Boolean value) {
+	public Query addRequiredTerm(String field, Boolean value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, double value) {
+	public Query addRequiredTerm(String field, double value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, Double value) {
+	public Query addRequiredTerm(String field, Double value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, int value) {
+	public Query addRequiredTerm(String field, int value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, Integer value) {
+	public Query addRequiredTerm(String field, Integer value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, long value) {
+	public Query addRequiredTerm(String field, long value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, Long value) {
+	public Query addRequiredTerm(String field, Long value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, short value) {
+	public Query addRequiredTerm(String field, short value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, Short value) {
+	public Query addRequiredTerm(String field, Short value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, String value) {
+	public Query addRequiredTerm(String field, String value) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addRequiredTerm(String field, String value, boolean like) {
+	public Query addRequiredTerm(String field, String value, boolean like) {
 		_luceneQueryHelper.addRequiredTerm(_booleanQuery, field, value, like);
+
+		return this;
 	}
 
 	@Override
-	public void addTerm(String field, long value) {
+	public Query addTerm(String field, long value) {
 		_luceneQueryHelper.addTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addTerm(String field, String value) {
+	public Query addTerm(String field, String value) {
 		_luceneQueryHelper.addTerm(_booleanQuery, field, value);
+
+		return this;
 	}
 
 	@Override
-	public void addTerm(String field, String value, boolean like) {
+	public Query addTerm(String field, String value, boolean like) {
 		_luceneQueryHelper.addTerm(_booleanQuery, field, value, like);
+
+		return this;
 	}
 
 	@Override
-	public void addTerm(
+	public Query addTerm(
 		String field, String value, boolean like,
 		BooleanClauseOccur booleanClauseOccur) {
 
 		_luceneQueryHelper.addTerm(
 			_booleanQuery, field, value, like, booleanClauseOccur);
+
+		return this;
 	}
 
 	@Override

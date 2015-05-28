@@ -34,6 +34,35 @@
 		<execute function="AssertTextEquals" locator1="CPApplicationdisplaytemplates#ADT_TABLE_NAME_1" value1="${adtType} Test ADT" />
 	</command>
 
+	<command name="addManualViaRSS">
+		<execute function="SelectFrame" locator1="PGADTConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<if>
+			<condition function="IsElementPresent" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" />
+			<then>
+				<execute function="AssertClick" locator1="PGADTConfiguration#NAVIGATION_DISPLAY_SETTINGS" value1="Display Settings" />
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="PGADTConfiguration#MANAGE_DISPLAY_TEMPLATES_LINK" value1="Manage Display Templates for ${siteName}" />
+
+		<var name="key_adtType" value="RSS" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
+		<execute function="AssertClick#assertTextClick" locator1="PGApplicationdisplaytemplates#ADD" value1="Add" />
+		<execute function="AssertClick" locator1="PGApplicationdisplaytemplates#ADD_MENULIST_ADT_TEMPLATE" value1="RSS Template" />
+
+		<execute function="Type#mouseOverFocusType" locator1="PGApplicationdisplaytemplatesAdd#NAME_FIELD" value1="RSS Test ADT" />
+		<execute function="Click" locator1="PGApplicationdisplaytemplatesAdd#RSS_FEEDS" />
+
+		<execute function="AssertClick" locator1="PGApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="PGApplicationdisplaytemplates#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="addPG">
 		<execute function="AssertClick#pauseAssertTextClickAt" locator1="BasePortlet#OPTIONS_ICON" value1="Options" />
 		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />

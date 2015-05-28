@@ -307,7 +307,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 		throws PortalException {
 
 		MBMessagePermission.check(
-			getPermissionChecker(), messageId, ActionKeys.DELETE);
+			getPermissionChecker(), messageId, ActionKeys.UPDATE);
 
 		mbMessageLocalService.deleteMessageAttachment(messageId, fileName);
 	}

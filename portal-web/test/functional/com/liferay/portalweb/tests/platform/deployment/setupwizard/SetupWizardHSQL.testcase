@@ -82,7 +82,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.hsql.password" />
 			<var name="databaseType" value="Hypersonic" />
 			<var name="databaseUserName" property-value="database.hsql.username" />
@@ -104,7 +104,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.hsql.password" />
 			<var name="databaseType" value="Hypersonic" />
 			<var name="databaseUserName" property-value="database.hsql.username" />
@@ -142,7 +142,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
@@ -166,7 +166,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />

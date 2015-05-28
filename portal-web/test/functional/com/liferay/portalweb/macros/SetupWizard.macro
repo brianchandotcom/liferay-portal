@@ -69,6 +69,7 @@
 		</execute>
 
 		<execute macro="SetupWizard#configureDatabasePG">
+			<var name="databaseNameDefault" value="${databaseNameDefault}" />
 			<var name="databasePassword" value="${databasePassword}" />
 			<var name="databaseType" value="${databaseType}" />
 			<var name="databaseUserName" value="${databaseUserName}" />

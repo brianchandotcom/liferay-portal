@@ -27,48 +27,11 @@ import com.liferay.taglib.util.IncludeTag;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
 
 /**
  * @author Juan Fernández
  */
 public class DDMTemplateSelectorTag extends IncludeTag {
-
-	@Override
-	public int doStartTag() throws JspException {
-		if (_displayStyleGroupId == 0) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
-		}
-
-		_portletDisplayDDMTemplate =
-			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
-				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
-				_displayStyle);
-
-		if (_portletDisplayDDMTemplate == null) {
-			_portletDisplayDDMTemplate =
-				PortletDisplayTemplateUtil.
-					getDefaultPortletDisplayTemplateDDMTemplate(
-						_displayStyleGroupId,
-						PortalUtil.getClassNameId(_className));
-		}
-
-		if(Validator.isNull(_displayStyle)) {
-			_displayStyle = _defaultDisplayStyle;
-		}
-
-		if (Validator.isNull(_displayStyle) &&
-			(_portletDisplayDDMTemplate != null)) {
-				_displayStyle =
-					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-						_portletDisplayDDMTemplate.getTemplateKey();
-		}
-
-		return super.doStartTag();
-	}
 
 	public void setClassName(String className) {
 		_className = className;
@@ -127,6 +90,37 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		if (_displayStyleGroupId == 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		_portletDisplayDDMTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
+				_displayStyle);
+
+		if (_portletDisplayDDMTemplate == null) {
+			_portletDisplayDDMTemplate =
+				PortletDisplayTemplateUtil.
+					getDefaultPortletDisplayTemplateDDMTemplate(
+						_displayStyleGroupId,
+						PortalUtil.getClassNameId(_className));
+		}
+
+		if (Validator.isNull(_displayStyle)) {
+			_displayStyle = _defaultDisplayStyle;
+		}
+
+		if (Validator.isNull(_displayStyle) &&
+			(_portletDisplayDDMTemplate != null)) {
+				_displayStyle =
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						_portletDisplayDDMTemplate.getTemplateKey();
+		}
+
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:classNameId",
 			String.valueOf(PortalUtil.getClassNameId(_className)));

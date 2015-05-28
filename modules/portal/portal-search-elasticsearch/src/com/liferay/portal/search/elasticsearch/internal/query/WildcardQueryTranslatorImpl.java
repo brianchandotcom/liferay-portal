@@ -20,6 +20,7 @@ import com.liferay.portal.search.elasticsearch.query.WildcardQueryTranslator;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -33,8 +34,14 @@ public class WildcardQueryTranslatorImpl implements WildcardQueryTranslator {
 	public QueryBuilder translate(WildcardQuery wildcardQuery) {
 		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
 
-		return QueryBuilders.wildcardQuery(
+		WildcardQueryBuilder wildcardQueryBuilder = QueryBuilders.wildcardQuery(
 			queryTerm.getField(), queryTerm.getValue());
+
+		if (!wildcardQuery.isDefaultBoost()) {
+			wildcardQueryBuilder.boost(wildcardQuery.getBoost());
+		}
+
+		return wildcardQueryBuilder;
 	}
 
 }

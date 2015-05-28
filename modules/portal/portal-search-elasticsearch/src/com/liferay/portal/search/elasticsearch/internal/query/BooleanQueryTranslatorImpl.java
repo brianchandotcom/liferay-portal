@@ -44,6 +44,10 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 			_addClause(clause, boolQueryBuilder, queryVisitor);
 		}
 
+		if (!booleanQuery.isDefaultBoost()) {
+			boolQueryBuilder.boost(booleanQuery.getBoost());
+		}
+
 		return boolQueryBuilder;
 	}
 

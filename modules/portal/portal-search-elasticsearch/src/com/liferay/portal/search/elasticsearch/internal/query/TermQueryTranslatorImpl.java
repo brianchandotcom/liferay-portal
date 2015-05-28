@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.query.TermQueryTranslator;
 
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -47,10 +49,24 @@ public class TermQueryTranslatorImpl implements TermQueryTranslator {
 		if ((_queryPreProcessConfiguration != null) &&
 			_queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
 
-			return _toCaseInsensitiveSubstringQuery(field, value);
+			WildcardQueryBuilder wildcardQueryBuilder =
+				toCaseInsensitiveSubstringQuery(field, value);
+
+			if (!termQuery.isDefaultBoost()) {
+				wildcardQueryBuilder.boost(termQuery.getBoost());
+			}
+
+			return wildcardQueryBuilder;
 		}
 
-		return QueryBuilders.matchQuery(field, value);
+		MatchQueryBuilder matchQueryBuilder = QueryBuilders.matchQuery(
+			field, value);
+
+		if (!termQuery.isDefaultBoost()) {
+			matchQueryBuilder.boost(termQuery.getBoost());
+		}
+
+		return matchQueryBuilder;
 	}
 
 	@Reference(
@@ -64,13 +80,7 @@ public class TermQueryTranslatorImpl implements TermQueryTranslator {
 		_queryPreProcessConfiguration = queryPreProcessConfiguration;
 	}
 
-	protected void unsetQueryPreProcessConfiguration(
-		QueryPreProcessConfiguration queryPreProcessConfiguration) {
-
-		_queryPreProcessConfiguration = null;
-	}
-
-	private QueryBuilder _toCaseInsensitiveSubstringQuery(
+	protected WildcardQueryBuilder toCaseInsensitiveSubstringQuery(
 		String field, String value) {
 
 		value = StringUtil.replace(value, StringPool.PERCENT, StringPool.BLANK);
@@ -78,6 +88,12 @@ public class TermQueryTranslatorImpl implements TermQueryTranslator {
 		value = StringPool.STAR + value + StringPool.STAR;
 
 		return QueryBuilders.wildcardQuery(field, value);
+	}
+
+	protected void unsetQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = null;
 	}
 
 	private QueryPreProcessConfiguration _queryPreProcessConfiguration;

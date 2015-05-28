@@ -150,67 +150,6 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
-	<command name="tearDownConfigurationDisplaySettingsCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<execute function="Click" locator1="BasePortlet#OPTIONS_ICON" />
-		<execute function="AssertClick" locator1="BasePortlet#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute function="SelectFrame" locator1="CPBlogsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Select" locator1="CPBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
-		<execute function="AssertClick" locator1="CPBlogsConfiguration#SAVE_BUTTON" value1="Save" />
-
-		<execute function="AssertTextEquals" locator1="CPBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-	</command>
-
-	<command name="tearDownConfigurationDisplaySettingsPG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<if>
-			<equals arg1="${soPage}" arg2="true" />
-			<then>
-				<execute macro="SOPortlet#gotoPortletOptions">
-					<var name="portletName" value="Blogs" />
-					<var name="portletOption" value="Configuration" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletOption" value="Configuration" />
-				</execute>
-			</else>
-		</if>
-
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="Select" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="Full Content" />
-		<execute function="AssertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
-
-		<execute function="AssertElementPresent" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-	</command>
-
-	<command name="tearDownConfigurationScopePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="BlogsPortlet#configureScopePG">
-			<var name="scopeSelection" value="Liferay" />
-		</execute>
-	</command>
-
-	<command name="tearDownSubscribePG">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute function="AssertClick" locator1="PGBlogs#UNSUBSCRIBE_LINK" value1="Unsubscribe" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="viewDefaultConfigurationDisplaySettingsPG">
 		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
 

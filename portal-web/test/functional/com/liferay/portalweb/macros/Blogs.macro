@@ -306,6 +306,38 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="tearDownConfigurationDisplaySettingsPG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="soPage" value="${soPage}" />
+		</execute>
+
+		<execute macro="BlogsConfiguration#selectDisplayTemplate">
+			<var name="displayTemplate" value="Abstract" />
+		</execute>
+
+		<execute macro="IFrame#saveConfiguration" />
+	</command>
+
+	<command name="tearDownConfigurationScopePG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="soPage" value="${soPage}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
+
+		<execute macro="BlogsConfiguration#selectScopePG">
+			<var name="scopeSelection" value="Liferay" />
+		</execute>
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />

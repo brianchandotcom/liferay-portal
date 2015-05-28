@@ -6,4 +6,19 @@
 		<execute function="AssertTextEquals" locator1="PGIFrameConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
+
+	<command name="gotoTop">
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="saveConfiguration">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="selectConfigurationFrame">
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+	</command>
 </definition>

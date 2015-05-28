@@ -98,13 +98,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		_portletResourceGuestUnsupportedActions = new HashMap<>();
 		_portletResourceLayoutManagerActions = new HashMap<>();
 		_portletRootModelResource = new HashMap<>();
-		_modelPortletResources = new HashMap<>();
-		_modelResourceActions = new HashMap<>();
-		_modelResourceGroupDefaultActions = new HashMap<>();
-		_modelResourceGuestDefaultActions = new HashMap<>();
-		_modelResourceGuestUnsupportedActions = new HashMap<>();
-		_modelResourceOwnerDefaultActions = new HashMap<>();
-		_modelResourceWeights = new HashMap<>();
+		_modelResourceActionsBagMap = new HashMap<>();
 
 		try {
 			ClassLoader classLoader = getClass().getClassLoader();
@@ -219,12 +213,15 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelNames() {
-		return ListUtil.fromMapKeys(_modelPortletResources);
+		return ListUtil.fromMapKeys(_modelResourceActionsBagMap);
 	}
 
 	@Override
 	public List<String> getModelPortletResources(String name) {
-		Set<String> resources = _modelPortletResources.get(name);
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
+		Set<String> resources = modelResourceActionsBag.getResources();
 
 		if (resources == null) {
 			return new ArrayList<>();
@@ -270,25 +267,37 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceActions(String name) {
-		return new ArrayList<>(getActions(_modelResourceActions, name));
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
+		return new ArrayList<>(modelResourceActionsBag.getResourceActions());
 	}
 
 	@Override
 	public List<String> getModelResourceGroupDefaultActions(String name) {
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
 		return new ArrayList<>(
-			getActions(_modelResourceGroupDefaultActions, name));
+			modelResourceActionsBag.getResourceGroupDefaultActions());
 	}
 
 	@Override
 	public List<String> getModelResourceGuestDefaultActions(String name) {
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
 		return new ArrayList<>(
-			getActions(_modelResourceGuestDefaultActions, name));
+			modelResourceActionsBag.getResourceGuestDefaultActions());
 	}
 
 	@Override
 	public List<String> getModelResourceGuestUnsupportedActions(String name) {
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
 		return new ArrayList<>(
-			getActions(_modelResourceGuestUnsupportedActions, name));
+			modelResourceActionsBag.getResourceGuestUnsupportedActions());
 	}
 
 	@Override
@@ -298,13 +307,22 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public List<String> getModelResourceOwnerDefaultActions(String name) {
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
 		return new ArrayList<>(
-			getActions(_modelResourceOwnerDefaultActions, name));
+			modelResourceActionsBag.getResourceOwnerDefaultActions());
 	}
 
 	@Override
 	public Double getModelResourceWeight(String name) {
-		return _modelResourceWeights.get(name);
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
+		Map<String, Double> modelResourceWeights =
+			modelResourceActionsBag.getResourceWeights();
+
+		return modelResourceWeights.get(name);
 	}
 
 	@Override
@@ -579,7 +597,10 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@Override
 	public boolean hasModelResourceActions(String name) {
-		Set<String> actions = _modelResourceActions.get(name);
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
+		Set<String> actions = modelResourceActionsBag.getResourceActions();
 
 		if ((actions != null) && !actions.isEmpty()) {
 			return true;
@@ -760,6 +781,32 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		return actions;
+	}
+
+	protected ModelResourceActionsBag getModelResourceActionsBag(
+		String modelName) {
+
+		ModelResourceActionsBag modelResourceActionsBag =
+			_modelResourceActionsBagMap.get(modelName);
+
+		if (modelResourceActionsBag != null) {
+			return modelResourceActionsBag;
+		}
+
+		synchronized(_modelResourceActionsBagMap) {
+			modelResourceActionsBag = _modelResourceActionsBagMap.get(
+				modelName);
+
+			if (modelResourceActionsBag != null) {
+				return modelResourceActionsBag;
+			}
+
+			modelResourceActionsBag = new ModelResourceActionsBagImpl();
+
+			_modelResourceActionsBagMap.put(modelName, modelResourceActionsBag);
+		}
+
+		return modelResourceActionsBag;
 	}
 
 	protected Element getPermissionsChildElement(
@@ -969,6 +1016,9 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		String name = modelResourceElement.elementTextTrim("model-name");
 
+		ModelResourceActionsBag modelResourceActionsBag =
+			getModelResourceActionsBag(name);
+
 		Element portletRefElement = modelResourceElement.element("portlet-ref");
 
 		for (Element portletNameElement :
@@ -998,13 +1048,8 @@ public class ResourceActionsImpl implements ResourceActions {
 
 			// Reference for a model to parent portlets
 
-			Set<String> portletResources = _modelPortletResources.get(name);
-
-			if (portletResources == null) {
-				portletResources = new HashSet<>();
-
-				_modelPortletResources.put(name, portletResources);
-			}
+			Set<String> portletResources =
+				modelResourceActionsBag.getResources();
 
 			portletResources.add(portletName);
 
@@ -1021,10 +1066,16 @@ public class ResourceActionsImpl implements ResourceActions {
 		double weight = GetterUtil.getDouble(
 			modelResourceElement.elementTextTrim("weight"), 100);
 
-		_modelResourceWeights.put(name, weight);
+		Map<String, Double> modelResourceWeights =
+			modelResourceActionsBag.getResourceWeights();
+
+		modelResourceWeights.put(name, weight);
+
+		Set<String> modelResourceActions =
+			modelResourceActionsBag.getResourceActions();
 
 		Set<String> supportsActions = readSupportsActions(
-			modelResourceElement, _modelResourceActions, name);
+			modelResourceElement, modelResourceActions, name);
 
 		checkModelActions(supportsActions);
 
@@ -1033,22 +1084,32 @@ public class ResourceActionsImpl implements ResourceActions {
 				"There are more than 64 actions for resource " + name);
 		}
 
-		_modelResourceActions.put(name, supportsActions);
+		modelResourceActions.addAll(supportsActions);
+
+		Set<String> modelResourceGroupDefaultActions =
+			modelResourceActionsBag.getResourceGroupDefaultActions();
 
 		readGroupDefaultActions(
-			modelResourceElement, _modelResourceGroupDefaultActions, name);
+			modelResourceElement, modelResourceGroupDefaultActions, name);
+
+		Set<String> modelResourceGuestDefaultActions =
+			modelResourceActionsBag.getResourceGuestDefaultActions();
 
 		Set<String> guestDefaultActions = readGuestDefaultActions(
-			modelResourceElement, _modelResourceGuestDefaultActions, name);
+			modelResourceElement, modelResourceGuestDefaultActions, name);
+
+		Set<String> modelResourceGuestUnsupportedActions =
+			modelResourceActionsBag.getResourceGuestUnsupportedActions();
 
 		readGuestUnsupportedActions(
-			modelResourceElement, _modelResourceGuestUnsupportedActions, name,
+			modelResourceElement, modelResourceGuestUnsupportedActions, name,
 			guestDefaultActions);
 
-		_modelResourceGuestDefaultActions.put(name, guestDefaultActions);
+		Set<String> modelResourceOwnerDefaultActions =
+			modelResourceActionsBag.getResourceOwnerDefaultActions();
 
 		readOwnerDefaultActions(
-			modelResourceElement, _modelResourceOwnerDefaultActions, name);
+			modelResourceElement, modelResourceOwnerDefaultActions, name);
 	}
 
 	protected void readOwnerDefaultActions(
@@ -1157,13 +1218,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ResourceActionsImpl.class);
 
-	private Map<String, Set<String>> _modelPortletResources;
-	private Map<String, Set<String>> _modelResourceActions;
-	private Map<String, Set<String>> _modelResourceGroupDefaultActions;
-	private Map<String, Set<String>> _modelResourceGuestDefaultActions;
-	private Map<String, Set<String>> _modelResourceGuestUnsupportedActions;
-	private Map<String, Set<String>> _modelResourceOwnerDefaultActions;
-	private Map<String, Double> _modelResourceWeights;
+	private Map<String, ModelResourceActionsBag> _modelResourceActionsBagMap;
 	private Set<String> _organizationModelResources;
 	private Set<String> _portalModelResources;
 	private Map<String, Set<String>> _portletModelResources;

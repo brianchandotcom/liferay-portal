@@ -12,11 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter.impl;
 
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,18 +32,27 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverter;
 
 import java.io.Serializable;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
+@Component(immediate = true, service = DDLExporter.class)
 public class DDLXMLExporter extends BaseDDLExporter {
+
+	@Override
+	public String getFormat() {
+		return "xml";
+	}
 
 	protected void addFieldElement(
 		Element fieldsElement, String label, Serializable value) {
@@ -62,7 +74,9 @@ public class DDLXMLExporter extends BaseDDLExporter {
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception {
 
-		DDMStructure ddmStructure = getDDMStructure(recordSetId);
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		List<DDMFormField> ddmFormFields = getDDMFormFields(ddmStructure);
 
@@ -70,7 +84,7 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 		Element rootElement = document.addElement("root");
 
-		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
+		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
 		for (DDLRecord record : records) {
@@ -78,10 +92,10 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 			DDLRecordVersion recordVersion = record.getRecordVersion();
 
-			DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 				recordVersion.getDDMStorageId());
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			for (DDMFormField ddmFormField : ddmFormFields) {
@@ -110,5 +124,36 @@ public class DDLXMLExporter extends BaseDDLExporter {
 
 		return xml.getBytes();
 	}
+
+	@Reference
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Reference
+	protected void setDDMFormValuesToFieldsConverter(
+		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+
+		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+	}
+
+	@Reference
+	protected void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
+	}
+
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordSetService _ddlRecordSetService;
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private StorageEngine _storageEngine;
 
 }

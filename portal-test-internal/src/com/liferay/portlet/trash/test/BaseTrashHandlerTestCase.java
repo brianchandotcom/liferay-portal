@@ -1141,16 +1141,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
-		int initialBaseModelsSearchCount = 0;
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
@@ -1162,15 +1153,6 @@ public abstract class BaseTrashHandlerTestCase {
 			getNotInTrashBaseModelsCount(parentBaseModel));
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
@@ -1184,15 +1166,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialTrashEntriesCount + 1,
 			getTrashEntriesCount(group.getGroupId()));
-
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount + 1,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
 
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
@@ -1303,6 +1276,50 @@ public abstract class BaseTrashHandlerTestCase {
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
+		}
+	}
+
+	@Test
+	public void testTrashVersionBaseModelIndexable() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsSearchCount = 0;
+		int initialTrashEntriesSearchCount = 0;
+
+		if (isIndexableBaseModel()) {
+			initialBaseModelsSearchCount = searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId());
+			initialTrashEntriesSearchCount = searchTrashEntriesCount(
+				getSearchKeywords(), serviceContext);
+		}
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		if (isIndexableBaseModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount + 1,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount,
+				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
+		}
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		if (isIndexableBaseModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount + 1,
+				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 		}
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,8 +23,8 @@ import com.liferay.portal.model.PersistedModel;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordModel
- * @see com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl
- * @see com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordModelImpl
+ * @see com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl
+ * @see com.liferay.dynamic.data.lists.model.impl.DDLRecordModelImpl
  * @generated
  */
 @ProviderType
@@ -32,7 +32,7 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue> getDDMFormFieldValues(
 		java.lang.String fieldName)
@@ -47,16 +47,16 @@ public interface DDLRecord extends DDLRecordModel, PersistedModel {
 	public java.io.Serializable getFieldType(java.lang.String fieldName)
 		throws java.lang.Exception;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion()
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet()
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion()
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException;
 

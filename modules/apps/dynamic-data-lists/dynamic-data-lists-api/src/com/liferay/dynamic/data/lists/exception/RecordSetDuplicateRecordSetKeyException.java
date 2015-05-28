@@ -12,28 +12,43 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists;
+package com.liferay.dynamic.data.lists.exception;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class RecordSetDDMStructureIdException extends PortalException {
+@ProviderType
+public class RecordSetDuplicateRecordSetKeyException extends PortalException {
 
-	public RecordSetDDMStructureIdException() {
+	public RecordSetDuplicateRecordSetKeyException() {
 	}
 
-	public RecordSetDDMStructureIdException(String msg) {
+	public RecordSetDuplicateRecordSetKeyException(String msg) {
 		super(msg);
 	}
 
-	public RecordSetDDMStructureIdException(String msg, Throwable cause) {
+	public RecordSetDuplicateRecordSetKeyException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 
-	public RecordSetDDMStructureIdException(Throwable cause) {
+	public RecordSetDuplicateRecordSetKeyException(Throwable cause) {
 		super(cause);
 	}
+
+	public String getRecordSetKey() {
+		return _recordSetKey;
+	}
+
+	public void setRecordSetKey(String recordSetKey) {
+		_recordSetKey = recordSetKey;
+	}
+
+	private String _recordSetKey;
 
 }

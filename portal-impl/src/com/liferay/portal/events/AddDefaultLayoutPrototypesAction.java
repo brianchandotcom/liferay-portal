@@ -16,6 +16,7 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -35,8 +36,7 @@ import java.util.Map;
  * @author Sergio González
  * @author Juan Fernández
  */
-public class AddDefaultLayoutPrototypesAction
-	extends DefaultLayoutPrototypesUtil {
+public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {

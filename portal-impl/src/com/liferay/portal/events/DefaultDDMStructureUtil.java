@@ -14,7 +14,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -51,9 +50,9 @@ import java.util.Map;
 /**
  * @author Michael C. Han
  */
-public abstract class DefaultDDMStructureUtil extends SimpleAction {
+public class DefaultDDMStructureUtil {
 
-	protected void addDDMStructures(
+	public static void addDDMStructures(
 			long userId, long groupId, long classNameId, String fileName,
 			ServiceContext serviceContext)
 		throws Exception {
@@ -148,26 +147,7 @@ public abstract class DefaultDDMStructureUtil extends SimpleAction {
 		}
 	}
 
-	protected String getContent(String fileName) {
-		return ContentUtil.get(
-			"com/liferay/portal/events/dependencies/" + fileName);
-	}
-
-	protected List<Element> getDDMStructures(String fileName, Locale locale)
-		throws DocumentException {
-
-		String xml = getContent(fileName);
-
-		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
-
-		Document document = UnsecureSAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		return rootElement.elements("structure");
-	}
-
-	protected String getDynamicDDMStructureDefinition(
+	public static String getDynamicDDMStructureDefinition(
 			String fileName, String dynamicDDMStructureName, Locale locale)
 		throws DocumentException {
 
@@ -194,6 +174,26 @@ public abstract class DefaultDDMStructureUtil extends SimpleAction {
 		}
 
 		return null;
+	}
+
+	protected static String getContent(String fileName) {
+		return ContentUtil.get(
+			"com/liferay/portal/events/dependencies/" + fileName);
+	}
+
+	protected static List<Element> getDDMStructures(
+			String fileName, Locale locale)
+		throws DocumentException {
+
+		String xml = getContent(fileName);
+
+		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
+
+		Document document = UnsecureSAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.elements("structure");
 	}
 
 }

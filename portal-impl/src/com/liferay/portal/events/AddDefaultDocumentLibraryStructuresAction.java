@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.metadata.RawMetadataProcessorUtil;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
@@ -60,8 +61,7 @@ import java.util.Map;
  * @author Miguel Pastor
  * @author Roberto Díaz
  */
-public class AddDefaultDocumentLibraryStructuresAction
-	extends DefaultDDMStructureUtil {
+public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -99,8 +99,9 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
-		String definition = getDynamicDDMStructureDefinition(
-			"document-library-structures.xml", languageKey, locale);
+		String definition =
+			DefaultDDMStructureUtil.getDynamicDDMStructureDefinition(
+				"document-library-structures.xml", languageKey, locale);
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
 
@@ -313,10 +314,10 @@ public class AddDefaultDocumentLibraryStructuresAction
 
 		serviceContext.setUserId(defaultUserId);
 
-		addDDMStructures(
-			defaultUserId, group.getGroupId(),
-			PortalUtil.getClassNameId(DLFileEntryMetadata.class),
-			"document-library-structures.xml", serviceContext);
+		DefaultDDMStructureUtil.addDDMStructures(
+				defaultUserId, group.getGroupId(),
+				PortalUtil.getClassNameId(DLFileEntryMetadata.class),
+				"document-library-structures.xml", serviceContext);
 		addDLFileEntryTypes(defaultUserId, group.getGroupId(), serviceContext);
 		addDLRawMetadataStructures(
 			defaultUserId, group.getGroupId(), serviceContext);

@@ -16,6 +16,7 @@ package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,8 +37,7 @@ import java.util.Map;
 /**
  * @author Sergio González
  */
-public class AddDefaultLayoutSetPrototypesAction
-	extends DefaultLayoutPrototypesUtil {
+public class AddDefaultLayoutSetPrototypesAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -111,21 +111,23 @@ public class AddDefaultLayoutSetPrototypesAction
 
 		// Home layout
 
-		Layout layout = addLayout(layoutSet, "home", "/home", "2_columns_i");
+		DefaultLayoutPrototypesUtil.addLayout(
+			layoutSet, "home", "/home", "2_columns_i");
 
 		// Documents layout
 
-		layout = addLayout(
+		Layout layout = DefaultLayoutPrototypesUtil.addLayout(
 			layoutSet, "documents-and-media", "/documents", "1_column");
 
-		String portletId = addPortletId(
+		String portletId = DefaultLayoutPrototypesUtil.addPortletId(
 			layout, PortletKeys.DOCUMENT_LIBRARY, "column-1");
 
 		Map<String, String> preferences = new HashMap<>();
 
 		preferences.put("portletSetupShowBorders", Boolean.FALSE.toString());
 
-		updatePortletSetup(layout, portletId, preferences);
+		DefaultLayoutPrototypesUtil.updatePortletSetup(
+			layout, portletId, preferences);
 	}
 
 	protected void addPublicSite(
@@ -145,15 +147,19 @@ public class AddDefaultLayoutSetPrototypesAction
 
 		// Home layout
 
-		Layout layout = addLayout(layoutSet, "home", "/home", "2_columns_iii");
+		Layout layout = DefaultLayoutPrototypesUtil.addLayout(
+			layoutSet, "home", "/home", "2_columns_iii");
 
-		addPortletId(layout, PortletKeys.MESSAGE_BOARDS, "column-1");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, PortletKeys.MESSAGE_BOARDS, "column-1");
 
-		addPortletId(layout, PortletKeys.USER_STATISTICS, "column-2");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, PortletKeys.USER_STATISTICS, "column-2");
 
 		// Wiki layout
 
-		addLayout(layoutSet, "wiki", "/wiki", "2_columns_iii");
+		DefaultLayoutPrototypesUtil.addLayout(
+			layoutSet, "wiki", "/wiki", "2_columns_iii");
 	}
 
 	protected void doRun(long companyId) throws Exception {

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.events;
 
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,9 +38,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class DefaultLayoutPrototypesUtil extends SimpleAction {
+public class DefaultLayoutPrototypesUtil {
 
-	protected Layout addLayout(
+	public static Layout addLayout(
 			LayoutSet layoutSet, String nameKey, String friendlyURL,
 			String layouteTemplateId)
 		throws Exception {
@@ -75,7 +74,7 @@ public abstract class DefaultLayoutPrototypesUtil extends SimpleAction {
 		return layout;
 	}
 
-	protected String addPortletId(
+	public static String addPortletId(
 			Layout layout, String portletId, String columnId)
 		throws Exception {
 
@@ -92,23 +91,7 @@ public abstract class DefaultLayoutPrototypesUtil extends SimpleAction {
 		return portletId;
 	}
 
-	protected void addResourcePermissions(Layout layout, String portletId)
-		throws Exception {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			layout.getCompanyId(), portletId);
-
-		PortalUtil.addPortletDefaultResource(
-			layout.getCompanyId(), layout, portlet);
-	}
-
-	protected void updateLayout(Layout layout) throws Exception {
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-	}
-
-	protected PortletPreferences updatePortletSetup(
+	public static PortletPreferences updatePortletSetup(
 			Layout layout, String portletId, Map<String, String> preferences)
 		throws Exception {
 
@@ -126,6 +109,23 @@ public abstract class DefaultLayoutPrototypesUtil extends SimpleAction {
 		portletSetup.store();
 
 		return portletSetup;
+	}
+
+	protected static void addResourcePermissions(
+			Layout layout, String portletId)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			layout.getCompanyId(), portletId);
+
+		PortalUtil.addPortletDefaultResource(
+			layout.getCompanyId(), layout, portlet);
+	}
+
+	protected static void updateLayout(Layout layout) throws Exception {
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 }

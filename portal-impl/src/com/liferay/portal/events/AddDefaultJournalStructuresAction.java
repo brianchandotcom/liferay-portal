@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -26,7 +27,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 /**
  * @author Eudaldo Alonso
  */
-public class AddDefaultJournalStructuresAction extends DefaultDDMStructureUtil {
+public class AddDefaultJournalStructuresAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -52,7 +53,7 @@ public class AddDefaultJournalStructuresAction extends DefaultDDMStructureUtil {
 
 		serviceContext.setUserId(defaultUserId);
 
-		addDDMStructures(
+		DefaultDDMStructureUtil.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			"basic-web-content-structure.xml", serviceContext);

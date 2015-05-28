@@ -15,6 +15,7 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
@@ -27,7 +28,7 @@ import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 /**
  * @author Michael C. Han
  */
-public class AddDefaultDDMStructuresAction extends DefaultDDMStructureUtil {
+public class AddDefaultDDMStructuresAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -51,7 +52,7 @@ public class AddDefaultDDMStructuresAction extends DefaultDDMStructureUtil {
 
 		serviceContext.setUserId(defaultUserId);
 
-		addDDMStructures(
+		DefaultDDMStructureUtil.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
 			"dynamic-data-mapping-structures.xml", serviceContext);

@@ -239,7 +239,7 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
-		moveParentBaseModelToTrash((Long) parentBaseModel.getPrimaryKeyObj());
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -328,7 +328,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
@@ -350,7 +350,7 @@ public abstract class BaseTrashHandlerTestCase {
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		workflowedModel = getWorkflowedModel(
-			getBaseModel((Long) baseModel.getPrimaryKeyObj()));
+			getBaseModel((Long)baseModel.getPrimaryKeyObj()));
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_IN_TRASH, workflowedModel.getStatus());
@@ -372,7 +372,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		String uniqueTitle = getUniqueTitle(baseModel);
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		if (uniqueTitle != null) {
 			Assert.assertEquals(uniqueTitle, getUniqueTitle(baseModel));
@@ -434,7 +434,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -577,7 +577,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -670,7 +670,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		String uniqueTitle = getUniqueTitle(baseModel);
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -733,7 +733,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
 			getBaseModelClassName());
@@ -916,7 +916,96 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashBaseModelAndParentAndDeleteParent() throws Exception {
-		trashParentBaseModelWithMoveBaseNodeToTrashAndNotDeleteGroupTrashEntriesAndDeleteTrashEntries();
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
+			parentBaseModel);
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount + 1,
+			getTrashEntriesCount(group.getGroupId()));
+
+		Assert.assertFalse(isInTrashContainer(baseModel));
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertTrue(isInTrashContainer(baseModel));
+
+		Assert.assertEquals(
+			initialTrashEntriesCount + 2,
+			getTrashEntriesCount(group.getGroupId()));
+
+		TrashHandler parentTrashHandler =
+			TrashHandlerRegistryUtil.getTrashHandler(
+				getParentBaseModelClassName());
+
+		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
+			Assert.assertEquals(
+				0,
+				parentTrashHandler.getTrashContainedModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+			Assert.assertEquals(
+				1,
+				parentTrashHandler.getTrashContainerModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+		}
+		else {
+			Assert.assertEquals(
+				1,
+				parentTrashHandler.getTrashContainedModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+			Assert.assertEquals(
+				0,
+				parentTrashHandler.getTrashContainerModelsCount(
+					(Long)parentBaseModel.getPrimaryKeyObj()));
+		}
+
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
+		}
+
+		parentTrashHandler.deleteTrashEntry(
+			(Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+
+		if (isBaseModelMoveableFromTrash()) {
+			Assert.assertEquals(
+				initialTrashEntriesCount + 1,
+				getTrashEntriesCount(group.getGroupId()));
+
+			TrashHandler trashHandler =
+				TrashHandlerRegistryUtil.getTrashHandler(
+					getBaseModelClassName());
+
+			trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+		}
+		else {
+			try {
+				getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+				Assert.fail();
+			}
+			catch (NoSuchModelException nsme) {
+			}
+		}
+
+		Assert.assertEquals(
+			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 	}
 
 	@Test
@@ -938,7 +1027,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
 
@@ -954,7 +1043,7 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> duplicateBaseModel = addBaseModel(
 			parentBaseModel, true, serviceContext);
 
-		moveBaseModelToTrash((Long) duplicateBaseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)duplicateBaseModel.getPrimaryKeyObj());
 
 		duplicateBaseModel = getBaseModel(
 			(Long)duplicateBaseModel.getPrimaryKeyObj());
@@ -1194,7 +1283,7 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsCount + 1,
 			getRecentBaseModelsCount(group.getGroupId()));
 
-		moveParentBaseModelToTrash((Long) parentBaseModel.getPrimaryKeyObj());
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
@@ -1216,7 +1305,7 @@ public abstract class BaseTrashHandlerTestCase {
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
 		baseModel = updateBaseModel(
-			(Long) baseModel.getPrimaryKeyObj(), serviceContext);
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
 		Assert.assertEquals(
 			initialBaseModelsCount + 1,
@@ -1228,7 +1317,7 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
 		}
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		Assert.assertEquals(
 			initialBaseModelsCount,
@@ -1381,7 +1470,7 @@ public abstract class BaseTrashHandlerTestCase {
 				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 		}
 
-		moveBaseModelToTrash((Long) baseModel.getPrimaryKeyObj());
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
 		if (isIndexableBaseModel()) {
 			Assert.assertEquals(
@@ -1733,101 +1822,6 @@ public abstract class BaseTrashHandlerTestCase {
 		else {
 			Assert.assertTrue(restorable);
 		}
-	}
-
-	protected void trashParentBaseModelWithMoveBaseNodeToTrashAndNotDeleteGroupTrashEntriesAndDeleteTrashEntries()
-		throws Exception {
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
-			parentBaseModel);
-		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
-
-		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 1,
-			getTrashEntriesCount(group.getGroupId()));
-
-		Assert.assertFalse(isInTrashContainer(baseModel));
-
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
-
-		Assert.assertTrue(isInTrashContainer(baseModel));
-
-		Assert.assertEquals(
-			initialTrashEntriesCount + 2,
-			getTrashEntriesCount(group.getGroupId()));
-
-		TrashHandler parentTrashHandler =
-			TrashHandlerRegistryUtil.getTrashHandler(
-				getParentBaseModelClassName());
-
-		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
-			Assert.assertEquals(
-				0,
-				parentTrashHandler.getTrashContainedModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-			Assert.assertEquals(
-				1,
-				parentTrashHandler.getTrashContainerModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-		}
-		else {
-			Assert.assertEquals(
-				1,
-				parentTrashHandler.getTrashContainedModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-			Assert.assertEquals(
-				0,
-				parentTrashHandler.getTrashContainerModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-		}
-
-		if (isAssetableModel()) {
-			Assert.assertFalse(isAssetEntryVisible(baseModel));
-		}
-
-		parentTrashHandler.deleteTrashEntry(
-			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-
-		if (isBaseModelMoveableFromTrash()) {
-			Assert.assertEquals(
-				initialTrashEntriesCount + 1,
-				getTrashEntriesCount(group.getGroupId()));
-
-			TrashHandler trashHandler =
-				TrashHandlerRegistryUtil.getTrashHandler(
-					getBaseModelClassName());
-
-			trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
-		}
-		else {
-			try {
-				getBaseModel((Long)baseModel.getPrimaryKeyObj());
-
-				Assert.fail();
-			}
-			catch (NoSuchModelException nsme) {
-			}
-		}
-
-		Assert.assertEquals(
-			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
 	}
 
 	protected void trashParentBaseModelWithMoveBaseNodeToTrashAndNotDeleteGroupTrashEntriesAndNotDeleteTrashEntries()

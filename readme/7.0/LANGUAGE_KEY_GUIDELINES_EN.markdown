@@ -52,14 +52,14 @@ for the remaining selectors/fields.
 The *Portal Settings* &rarr; *Authentication* &rarr; *General* page consistently
 uses phrases (in this case, question phrases) for all of its checkboxes:
 
-![ ](./images/common-images/language/authentication-checkboxes.png)
+![ ](./images/common_images/language/authentication_checkboxes.png)
 
 **Example 2:**
 
 The *Portal Settings* &rarr; *Users* &rarr; *Fields* page consistently uses
 concise titles for all of its checkboxes:
 
-![ ](./images/common-images/language/user-fields-checkboxes.png)
+![ ](./images/common_images/language/user_fields_checkboxes.png)
 
 More examples of radio/checkbox/selector/text field labels that are titles
 include:
@@ -124,15 +124,15 @@ Use sentences to inform or warn a user. Here are some example messages:
 - Help messages. Portal's keys ending in *-help*, except *hide-syntax-help*,
   use sentences.
 
-    ![ ](./images/common-images/language/help-message.png)
+    ![ ](./images/common_images/language/help_message.png)
 
 - Success and error messages
 
-    ![ ](./images/common-images/language/success-error-messages.png)
+    ![ ](./images/common_images/language/success_error_messages.png)
 
 - Empty results messages (*emptyResultsMessage=*)
 
-    ![ ](./images/common-images/language/empty-results-messages.png)
+    ![ ](./images/common_images/language/empty_results_messages.png)
 
 ### 4. Instructions
 
@@ -144,7 +144,7 @@ button, selector, or field.
 - *Please enter JDBC information for new database.*
 - *Configure the file upload settings.*
 
-    ![ ](./images/common-images/language/file-upload-settings.png)
+    ![ ](./images/common_images/language/file_upload_settings.png)
 
 ### 5. UI Component Labels
 
@@ -155,21 +155,21 @@ Use titles to label UI components. Labels are defined in a JSP as *label=""*.
 The UI label for *Maximum Items to Display* is
 *label="maximum-items-to-display"*
 
-![ ](./images/common-images/language/max-items-to-display.png)
+![ ](./images/common_images/language/max_items_to_display.png)
 
 ### 6. Menus and Higher Level Tabs
 
 Use titles to label menus and high level tabs.
 
-![ ](./images/common-images/language/menu-example.png)
+![ ](./images/common_images/language/menu_example.png)
 
-![ ](./images/common-images/language/control-panel-menu.png)
+![ ](./images/common_images/language/control_panel_menu.png)
 
 ### 7. Section and Text Area Descriptions
 
 Use sentences to describe sections and text areas.
 
-![ ](./images/common-images/language/portal-settings-analytics.png)
+![ ](./images/common_images/language/portal_settings_analytics.png)
 
 ### 8. Omit Needless Words
 

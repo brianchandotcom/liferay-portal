@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.staging.permission;
+package com.liferay.portlet.exportimport.staging.permission;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

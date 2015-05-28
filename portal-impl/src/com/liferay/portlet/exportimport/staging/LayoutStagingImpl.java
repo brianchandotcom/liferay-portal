@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.staging;
+package com.liferay.portlet.exportimport.staging;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;

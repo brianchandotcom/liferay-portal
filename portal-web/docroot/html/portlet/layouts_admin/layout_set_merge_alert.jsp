@@ -73,7 +73,6 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 				<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
 				<portlet:param name="tabs1" value='<%= layoutSet.isPrivateLayout() ? "private-pages" : "public-pages" %>' />
 				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="closeRedirect" value="<%= redirect %>" />
 				<portlet:param name="backURL" value="<%= redirect %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 			</liferay-portlet:renderURL>

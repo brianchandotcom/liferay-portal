@@ -98,7 +98,6 @@ import com.liferay.portal.service.permission.PortalPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.service.persistence.LayoutSetUtil;
 import com.liferay.portal.service.persistence.LayoutUtil;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -197,19 +196,12 @@ public class SitesImpl implements Sites {
 			HttpServletRequest request, RenderResponse renderResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		String portletName = portletDisplay.getPortletName();
-
-		if ((renderResponse == null) ||
-			portletName.equals(PortletKeys.GROUP_PAGES) ||
-			portletName.equals(PortletKeys.MY_PAGES)) {
-
+		if (renderResponse == null) {
 			return;
 		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			com.liferay.portal.kernel.util.WebKeys.THEME_DISPLAY);
 
 		Group unescapedGroup = group.toUnescapedModel();
 

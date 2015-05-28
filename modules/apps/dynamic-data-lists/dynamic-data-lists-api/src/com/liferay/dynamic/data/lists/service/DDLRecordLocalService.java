@@ -311,7 +311,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getLatestRecordVersion(
+	com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getLatestRecordVersion(
 	long)}
 	*/
 	@java.lang.Deprecated
@@ -339,7 +339,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersion(
+	com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersion(
 	long, String)}
 	*/
 	@java.lang.Deprecated
@@ -349,7 +349,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersion(
+	com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersion(
 	long)}
 	*/
 	@java.lang.Deprecated
@@ -359,7 +359,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersions(
+	com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersions(
 	long, int, int, OrderByComparator)}
 	*/
 	@java.lang.Deprecated
@@ -370,7 +370,7 @@ public interface DDLRecordLocalService extends BaseLocalService,
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersionsCount(
+	com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersionsCount(
 	long)}
 	*/
 	@java.lang.Deprecated

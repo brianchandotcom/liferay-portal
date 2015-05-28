@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.util;
+package com.liferay.dynamic.data.lists.util;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
 
 import java.util.Locale;
 

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.util.comparator;
+package com.liferay.dynamic.data.lists.util.comparator;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
 
 import java.util.Comparator;
 

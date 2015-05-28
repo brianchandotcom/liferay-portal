@@ -382,15 +382,6 @@
 	<cache
 		eternal="false"
 		maxElementsInMemory="10000"
-		name="com.liferay.portlet.journal.util.JournalContent"
-		overflowToDisk="false"
-		timeToIdleSeconds="600"
-	>
-		<terracotta />
-	</cache>
-	<cache
-		eternal="false"
-		maxElementsInMemory="10000"
 		name="com.liferay.portlet.social.service.impl.SocialActivitySettingLocalServiceImpl"
 		overflowToDisk="false"
 		timeToIdleSeconds="600"

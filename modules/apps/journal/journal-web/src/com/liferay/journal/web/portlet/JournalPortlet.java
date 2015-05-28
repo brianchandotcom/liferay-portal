@@ -372,16 +372,17 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response)
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String path = getPath(request);
+		String path = getPath(renderRequest);
 
-		if (Validator.isNotNull(path) && path.equals("/edit_article.jsp")) {
-			request.setAttribute("itemSelector", _itemSelector);
+		if (Validator.equals(path, "/edit_article.jsp")) {
+			renderRequest.setAttribute("itemSelector", _itemSelector);
 		}
 
-		super.render(request, response);
+		super.render(renderRequest, renderResponse);
 	}
 
 	public void restoreTrashEntries(

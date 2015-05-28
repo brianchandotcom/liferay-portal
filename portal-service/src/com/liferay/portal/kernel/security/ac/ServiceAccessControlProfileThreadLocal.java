@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.ac;
+package com.liferay.portal.kernel.security.ac;
 
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 

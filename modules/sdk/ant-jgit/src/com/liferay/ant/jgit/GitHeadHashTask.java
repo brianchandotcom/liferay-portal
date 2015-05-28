@@ -16,6 +16,9 @@ package com.liferay.ant.jgit;
 
 import java.io.File;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -53,6 +56,18 @@ public class GitHeadHashTask extends Task {
 		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
 		String relativePath = PathUtil.toRelativePath(gitDir, _path);
+
+		if (_useCache) {
+			String hash = _hashes.get(relativePath);
+
+			if (hash != null) {
+				Project currentProject = getProject();
+
+				currentProject.setNewProperty(_property, hash);
+
+				return;
+			}
+		}
 
 		try (Repository repository = RepositoryCache.open(
 				FileKey.exact(gitDir, FS.DETECTED))) {
@@ -93,9 +108,15 @@ public class GitHeadHashTask extends Task {
 				}
 			}
 
+			String hash = revCommit.name();
+
 			Project currentProject = getProject();
 
-			currentProject.setNewProperty(_property, revCommit.name());
+			currentProject.setNewProperty(_property, hash);
+
+			if (_useCache) {
+				_hashes.put(relativePath, hash);
+			}
 
 			revWalk.dispose();
 		}
@@ -121,6 +142,10 @@ public class GitHeadHashTask extends Task {
 		_property = property;
 	}
 
+	public void setUseCache(boolean useCache) {
+		_useCache = useCache;
+	}
+
 	protected boolean hasIgnoreFile(
 			Repository repository, RevCommit revCommit, String relativePath)
 		throws Exception {
@@ -138,9 +163,13 @@ public class GitHeadHashTask extends Task {
 		}
 	}
 
+	private static final Map<String, String> _hashes =
+		new ConcurrentHashMap<>();
+
 	private File _gitDir;
 	private String _ignoreFileName;
 	private String _path;
 	private String _property;
+	private boolean _useCache = true;
 
 }

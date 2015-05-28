@@ -17,6 +17,9 @@ package com.liferay.ant.jgit;
 
 import java.io.File;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -44,6 +47,16 @@ public class GitIsCleanTask extends Task implements Condition {
 
 		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
+		String relativePath = PathUtil.toRelativePath(gitDir, _path);
+
+		if (_useCache) {
+			Boolean cleanFlag = _cleanFlags.get(relativePath);
+
+			if (cleanFlag != null) {
+				return cleanFlag;
+			}
+		}
+
 		try (Repository repository = RepositoryCache.open(
 				RepositoryCache.FileKey.exact(gitDir, FS.DETECTED))) {
 
@@ -53,11 +66,17 @@ public class GitIsCleanTask extends Task implements Condition {
 
 			statusCommand.setIgnoreSubmodules(IgnoreSubmoduleMode.ALL);
 
-			statusCommand.addPath(PathUtil.toRelativePath(gitDir, _path));
+			statusCommand.addPath(relativePath);
 
 			Status status = statusCommand.call();
 
-			return status.isClean();
+			Boolean cleanFlag = status.isClean();
+
+			if (_useCache) {
+				_cleanFlags.put(relativePath, cleanFlag);
+			}
+
+			return cleanFlag;
 		}
 		catch (Exception e) {
 			throw new BuildException(
@@ -96,13 +115,21 @@ public class GitIsCleanTask extends Task implements Condition {
 		_property = property;
 	}
 
+	public void setUseCache(boolean useCache) {
+		_useCache = useCache;
+	}
+
 	public void setValue(String value) {
 		_value = value;
 	}
 
+	private static final Map<String, Boolean> _cleanFlags =
+		new ConcurrentHashMap<>();
+
 	private File _gitDir;
 	private String _path;
 	private String _property;
+	private boolean _useCache = true;
 	private String _value;
 
 }

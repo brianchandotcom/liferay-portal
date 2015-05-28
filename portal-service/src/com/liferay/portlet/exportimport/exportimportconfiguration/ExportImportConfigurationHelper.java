@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lar.exportimportconfiguration;
+package com.liferay.portlet.exportimport.exportimportconfiguration;
 
 import aQute.bnd.annotation.ProviderType;
 

@@ -71,6 +71,12 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashAndDeleteDraftIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashAndRestoreDraft() throws Exception {
 	}
 

@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.auth.verifier;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AccessControlContext;
+import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.AuthVerifier;
+import com.liferay.portal.security.auth.AuthVerifierResult;
+import com.liferay.portal.security.auth.RemoteAuthException;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.http.TunnelUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -40,11 +44,18 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Zsolt Berentey
  */
-@OSGiBeanProperties(
-	portalPropertyPrefix = "auth.verifier.TunnelingServletAuthVerifier."
+@Component(
+	immediate = true,
+	property = {
+		"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=255.255.255.255",
+		"auth.verifier.TunnelingServletAuthVerifier.urls.excludes=",
+		"auth.verifier.TunnelingServletAuthVerifier.urls.includes=/api/liferay/do"
+	}
 )
 public class TunnelingServletAuthVerifier implements AuthVerifier {
 

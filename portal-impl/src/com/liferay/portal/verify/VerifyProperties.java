@@ -462,6 +462,22 @@ public class VerifyProperties extends VerifyProcess {
 			"com.liferay.portal.security.auth"
 		},
 
+		new String[] {
+			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
+			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
+			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
+			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
+			"com.liferay.portal.security.auth"
+		},
+
 		// Bookmarks
 
 		new String[] {

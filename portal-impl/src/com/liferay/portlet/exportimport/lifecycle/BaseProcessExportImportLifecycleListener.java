@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.lifecycle;
+package com.liferay.portlet.exportimport.lifecycle;
 
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_FAILED;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_LAYOUT_EXPORT_STARTED;

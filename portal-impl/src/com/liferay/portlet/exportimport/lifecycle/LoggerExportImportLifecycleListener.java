@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.lifecycle;
+package com.liferay.portlet.exportimport.lifecycle;
 
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;

@@ -349,6 +349,7 @@ if (folderId > 0) {
 				Map<String, Object> data = new HashMap<String, Object>();
 
 				data.put("fileEntryId", fileEntry.getFileEntryId());
+				data.put("url", DLUtil.getPreviewURL(fileEntry, fileEntry.getFileVersion(), themeDisplay, StringPool.BLANK, false, false));
 				%>
 
 				<aui:button cssClass="selector-button" data="<%= data %>" value="choose" />
@@ -359,7 +360,9 @@ if (folderId > 0) {
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
+<aui:script use="aui-base">
+	var Util = Liferay.Util;
+
 	var container = $('#<portlet:namespace />selectDocumentFm');
 
 	var selectorButtons = container.find('.selector-button');
@@ -371,8 +374,17 @@ if (folderId > 0) {
 			Util.getOpener().Liferay.fire(
 				'<%= itemSelectedEventName %>',
 				{
+
+					<%
+					String ckEditorFuncNum = ParamUtil.getString(request, "CKEditorFuncNum");
+					%>
+
+					<c:if test="<%= Validator.isNotNull(ckEditorFuncNum) %>">
+						ckeditorfuncnum: <%= ckEditorFuncNum %>,
+					</c:if>
+
 					returnType : '<%= FileEntry.class.getName() %>',
-					value : event.target.getAttribute('data-fileEntryId')
+					url : event.target.getAttribute('data-url')
 				}
 			);
 

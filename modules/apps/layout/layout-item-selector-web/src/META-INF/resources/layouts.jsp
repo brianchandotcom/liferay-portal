@@ -157,10 +157,13 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					String ckEditorFuncNum = ParamUtil.getString(request, "CKEditorFuncNum");
 					%>
 
-					ckeditorfuncnum: <%= ckEditorFuncNum %>,
+					<c:if test="<%= Validator.isNotNull(ckEditorFuncNum) %>">
+						ckeditorfuncnum: <%= ckEditorFuncNum %>,
+					</c:if>
+
 					layoutpath: event.target.getAttribute('data-layoutpath'),
 					returnType : event.target.getAttribute('data-returnType'),
-					value : event.target.getAttribute('data-value')
+					value : event.target.getAttribute('data-url')
 				}
 			);
 

@@ -94,16 +94,16 @@ if (fileEntryId != 0) {
 	</div>
 </div>
 
-<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="itemSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-	<portlet:param name="mvcPath" value="/view.jsp" />
-	<portlet:param name="tabs1Names" value="documents" />
-	<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-	<portlet:param name="checkContentDisplayPage" value="true" />
-	<portlet:param name="type" value="image" />
-	<portlet:param name="eventName" value='<%= randomNamespace + "selectImage" %>' />
-</liferay-portlet:renderURL>
-
 <%
+PortletURL itemSelectorURL = liferayPortletResponse.createActionURL();
+
+itemSelectorURL.setParameter(ActionRequest.ACTION_NAME, "showItemSelector");
+itemSelectorURL.setParameter("criteria", "com.liferay.document.library.item.selector.web.DLItemSelectorCriterion");
+itemSelectorURL.setParameter("itemSelectedEventName", liferayPortletResponse.getNamespace() + "selectImage");
+itemSelectorURL.setParameter("0_json", "{\"desiredReturnTypes\":[\"java.net.URL\",\"com.liferay.portal.kernel.repository.model.FileEntry\"],\"folderId\":0,\"mimeTypes\":[\"image\\/bmp\",\"image\\/gif\",\"image\\/jpeg\",\"image\\/pjpeg\",\"image\\/png\",\"image\\/tiff\",\"image\\/x-citrix-jpeg\",\"image\\/x-citrix-png\",\"image\\/x-ms-bmp\",\"image\\/x-png\",\"image\\/x-tiff\"],\"repositoryId\":20230,\"showGroupsSelector\":false,\"type\":\"images\"}");
+itemSelectorURL.setPortletMode(PortletMode.VIEW);
+itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);
+
 String modules = "liferay-image-selector";
 
 if (!draggableImage.equals("none")) {

@@ -24,6 +24,8 @@ long groupId = BeanParamUtil.getLong(article, request, "groupId", scopeGroupId);
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
 boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_article.jsp-changeStructure"));
+
+ItemSelector itemSelector = (ItemSelector)request.getAttribute("itemSelector");
 %>
 
 <c:choose>
@@ -106,13 +108,13 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 			</c:if>
 		</c:if>
 
-		<liferay-portlet:renderURL portletName="<%= PortletKeys.ITEM_SELECTOR %>" varImpl="documentSelectorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="mvcPath" value="/view.jsp" />
-			<portlet:param name="tabs1Names" value="pages" />
-			<portlet:param name="groupId" value="<%= String.valueOf(scopeGroupId) %>" />
-			<portlet:param name="checkContentDisplayPage" value="true" />
-			<portlet:param name="eventName" value='<%= renderResponse.getNamespace() + "selectDisplayPage" %>' />
-		</liferay-portlet:renderURL>
+		<%
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(scopeGroupId);
+
+		String eventName = liferayPortletResponse.getNamespace() + "selectDisplayPage";
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, layoutItemSelectorCriterion);
+		%>
 
 		<aui:script sandbox="<%= true %>">
 			var displayPageItemContainer = $('#<portlet:namespace />displayPageItemContainer');
@@ -129,10 +131,10 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 								destroyOnHide: true,
 								modal: true
 							},
-							eventName: '<portlet:namespace />selectDisplayPage',
+							eventName: '<%= eventName %>',
 							id: '<portlet:namespace />selectDisplayPage',
 							title: '<liferay-ui:message key="select-page" />',
-							uri: '<%= documentSelectorURL.toString() %>'
+							uri: '<%= itemSelectorURL.toString() %>'
 						},
 						function(event) {
 							pagesContainerInput.val(event.uuid);

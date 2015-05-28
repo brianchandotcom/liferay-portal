@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.portlet;
 
+import com.liferay.item.selector.ItemSelector;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.journal.web.portlet.action.ActionUtil;
@@ -370,6 +371,20 @@ public class JournalPortlet extends MVCPortlet {
 		updateArticle(actionRequest, actionResponse);
 	}
 
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		String path = getPath(renderRequest);
+
+		if (Validator.equals(path, "/edit_article.jsp")) {
+			renderRequest.setAttribute("itemSelector", _itemSelector);
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
+
 	public void restoreTrashEntries(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -464,6 +479,11 @@ public class JournalPortlet extends MVCPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
+	}
+
+	@Reference
+	public void setItemSelector(ItemSelector itemSelector) {
+		_itemSelector = itemSelector;
 	}
 
 	public void subscribeFolder(
@@ -1326,6 +1346,7 @@ public class JournalPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(JournalPortlet.class);
 
 	private DDMStructureLocalService _ddmStructureLocalService;
+	private ItemSelector _itemSelector;
 	private JournalArticleService _journalArticleService;
 	private JournalContentSearchLocalService _journalContentSearchLocalService;
 	private JournalFeedService _journalFeedService;

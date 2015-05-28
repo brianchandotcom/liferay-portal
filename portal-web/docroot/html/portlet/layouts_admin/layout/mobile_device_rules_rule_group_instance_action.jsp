@@ -21,8 +21,6 @@ SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay
 
 String redirect = currentURL;
 
-String closeRedirect = ParamUtil.getString(request, "closeRedirect");
-
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 MDRRuleGroupInstance mdrRuleGroupInstance = (MDRRuleGroupInstance)row.getObject();

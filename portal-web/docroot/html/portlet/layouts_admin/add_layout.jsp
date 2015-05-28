@@ -44,25 +44,23 @@ else {
 String[] types = LayoutTypeControllerTracker.getTypes();
 %>
 
-<c:if test="<%= !portletName.equals(PortletKeys.DOCKBAR) %>">
-	<portlet:renderURL var="backURL">
-		<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
-		<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	</portlet:renderURL>
+<portlet:renderURL var="backURL">
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
+	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+</portlet:renderURL>
 
-	<liferay-ui:header
-		backURL="<%= backURL %>"
-		title="add-new-page"
-	/>
-</c:if>
+<liferay-ui:header
+	backURL="<%= backURL %>"
+	title="add-new-page"
+/>
 
 <portlet:actionURL var="editLayoutActionURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
-	<portlet:param name="struts_action" value='<%= portletName.equals(PortletKeys.DOCKBAR) ? "/layouts_admin/add_layout" : "/layouts_admin/edit_layouts" %>' />
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 </portlet:actionURL>
 
 <portlet:renderURL var="editLayoutRenderURL" windowState="<%= themeDisplay.isStateExclusive() ? LiferayWindowState.EXCLUSIVE.toString() : WindowState.NORMAL.toString() %>">
-	<portlet:param name="struts_action" value='<%= portletName.equals(PortletKeys.DOCKBAR) ? "/layouts_admin/add_layout" : "/layouts_admin/edit_layouts" %>' />
+	<portlet:param name="struts_action" value="/layouts_admin/edit_layouts" />
 	<portlet:param name="tabs1" value="<%= layoutsAdminDisplayContext.getTabs1() %>" />
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
@@ -224,49 +222,3 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 		<aui:button id="cancelAddOperation" value="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<c:if test="<%= portletName.equals(PortletKeys.DOCKBAR) %>">
-
-	<%
-	Layout addedLayout = (Layout)SessionMessages.get(liferayPortletRequest, portletDisplay.getId() + "pageAdded");
-	%>
-
-	<c:if test="<%= addedLayout != null && !addedLayout.isHidden() %>">
-
-		<%
-		NavItem navItem = new NavItem(request, addedLayout, null);
-		%>
-
-		<aui:script>
-			Liferay.fire(
-				'dockbaraddpage:addPage',
-				{
-					data: {
-						layoutId: <%= addedLayout.getLayoutId() %>,
-						parentLayoutId: <%= addedLayout.getParentLayoutId() %>,
-						title: '<%= navItem.getName() %>',
-						url: '<%= navItem.getURL() %>'
-					}
-				}
-			);
-		</aui:script>
-	</c:if>
-</c:if>
-
-<aui:script use="liferay-dockbar-add-page">
-	var addPage = new Liferay.Dockbar.AddPage(
-		{
-			createPageMessage: '<liferay-ui:message key="loading" />',
-			focusItem: A.one('#<portlet:namespace />addLayoutName'),
-			namespace: '<portlet:namespace />',
-			nodeList: A.one('#<portlet:namespace />templateList'),
-			nodeSelector: '.lfr-page-template',
-			parentLayoutId: <%= parentLayoutId %>,
-			refresh: <%= layout.isTypeControlPanel() %>,
-			selected: !A.one('#<portlet:namespace />addPageFm').ancestor().hasClass('hide'),
-			toggleOnCancel: <%= portletName.equals(PortletKeys.DOCKBAR) %>
-		}
-	);
-
-	Liferay.component('<portlet:namespace />addPage', addPage);
-</aui:script>

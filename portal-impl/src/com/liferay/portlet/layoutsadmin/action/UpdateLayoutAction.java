@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
@@ -81,17 +80,11 @@ public class UpdateLayoutAction extends JSONAction {
 			else if (cmd.equals("delete")) {
 				SitesUtil.deleteLayout(request, response);
 			}
-			else if (cmd.equals("display_order")) {
-				updateDisplayOrder(request);
-			}
 			else if (cmd.equals("name")) {
 				updateName(request);
 			}
 			else if (cmd.equals("parent_layout_id")) {
 				updateParentLayoutId(request);
-			}
-			else if (cmd.equals("priority")) {
-				updatePriority(request);
 			}
 
 			jsonObject.put("status", HttpServletResponse.SC_OK);
@@ -226,7 +219,7 @@ public class UpdateLayoutAction extends JSONAction {
 							"be-the-first-page");
 			}
 
-			if ((cmd.equals("display_order") || cmd.equals("priority")) &&
+			if (cmd.equals("parent_layout_id") &&
 				(lte.getType() == LayoutTypeException.FIRST_LAYOUT)) {
 
 				return themeDisplay.translate(
@@ -248,22 +241,6 @@ public class UpdateLayoutAction extends JSONAction {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	protected void updateDisplayOrder(HttpServletRequest request)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long parentLayoutId = ParamUtil.getLong(request, "parentLayoutId");
-		long[] layoutIds = StringUtil.split(
-			ParamUtil.getString(request, "layoutIds"), 0L);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
-
-		LayoutServiceUtil.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
 	}
 
 	protected void updateName(HttpServletRequest request) throws Exception {
@@ -293,26 +270,6 @@ public class UpdateLayoutAction extends JSONAction {
 
 		LayoutServiceUtil.updateParentLayoutIdAndPriority(
 			plid, parentPlid, priority);
-	}
-
-	protected void updatePriority(HttpServletRequest request) throws Exception {
-		long plid = ParamUtil.getLong(request, "plid");
-
-		long groupId = ParamUtil.getLong(request, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
-		long layoutId = ParamUtil.getLong(request, "layoutId");
-		long nextLayoutId = ParamUtil.getLong(request, "nextLayoutId");
-		long previousLayoutId = ParamUtil.getLong(request, "previousLayoutId");
-		int priority = ParamUtil.getInteger(request, "priority");
-
-		if (plid <= 0) {
-			LayoutServiceUtil.updatePriority(
-				groupId, privateLayout, layoutId, nextLayoutId,
-				previousLayoutId);
-		}
-		else {
-			LayoutServiceUtil.updatePriority(plid, priority);
-		}
 	}
 
 }

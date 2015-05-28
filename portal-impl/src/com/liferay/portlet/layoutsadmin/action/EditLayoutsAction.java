@@ -143,33 +143,10 @@ public class EditLayoutsAction extends PortletAction {
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		String redirect = ParamUtil.getString(actionRequest, "redirect");
-		String closeRedirect = ParamUtil.getString(
-			actionRequest, "closeRedirect");
 
 		try {
-			Layout layout = null;
-			String oldFriendlyURL = StringPool.BLANK;
-
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				Object[] returnValue = updateLayout(
-					actionRequest, actionResponse);
-
-				layout = (Layout)returnValue[0];
-				oldFriendlyURL = (String)returnValue[1];
-
-				if (cmd.equals(Constants.ADD)) {
-					SessionMessages.add(
-						actionRequest,
-						PortalUtil.getPortletId(actionRequest) + "pageAdded",
-						layout);
-				}
-				else if (cmd.equals(Constants.UPDATE)) {
-					redirect = updateRedirect(
-						themeDisplay, redirect, null, layout, oldFriendlyURL);
-					closeRedirect = updateCloseRedirect(
-						themeDisplay, closeRedirect, null, layout,
-						oldFriendlyURL);
-				}
+				updateLayout(actionRequest, actionResponse);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
 				long plid = ParamUtil.getLong(actionRequest, "plid");
@@ -181,7 +158,7 @@ public class EditLayoutsAction extends PortletAction {
 					long layoutId = ParamUtil.getLong(
 						actionRequest, "layoutId");
 
-					layout = LayoutLocalServiceUtil.getLayout(
+					Layout layout = LayoutLocalServiceUtil.getLayout(
 						groupId, privateLayout, layoutId);
 
 					plid = layout.getPlid();
@@ -190,60 +167,27 @@ public class EditLayoutsAction extends PortletAction {
 				Object[] returnValue = SitesUtil.deleteLayout(
 					actionRequest, actionResponse);
 
-				Group group = (Group)returnValue[0];
-				oldFriendlyURL = (String)returnValue[1];
-				long newRefererPlid = (Long)returnValue[2];
+				if (plid == themeDisplay.getRefererPlid()) {
+					long newRefererPlid = (Long)returnValue[2];
 
-				redirect = updateCloseRedirect(
-					themeDisplay, redirect, group, null, oldFriendlyURL);
-
-				long refererPlid = themeDisplay.getRefererPlid();
-
-				if (plid == refererPlid) {
 					redirect = HttpUtil.setParameter(
 						redirect, "refererPlid", newRefererPlid);
 					redirect = HttpUtil.setParameter(
 						redirect, actionResponse.getNamespace() + "selPlid", 0);
 				}
-
-				closeRedirect = updateCloseRedirect(
-					themeDisplay, closeRedirect, group, null, oldFriendlyURL);
-
-				redirect = HttpUtil.addParameter(
-					redirect, actionResponse.getNamespace() + "closeRedirect",
-					closeRedirect);
-			}
-			else if (cmd.equals("display_order")) {
-				updateDisplayOrder(actionRequest);
 			}
 			else if (cmd.equals("enable")) {
 				enableLayout(actionRequest);
 			}
-			else if (cmd.equals("reset_customized_view")) {
-				LayoutTypePortlet layoutTypePortlet =
-					themeDisplay.getLayoutTypePortlet();
-
-				if ((layoutTypePortlet != null) &&
-					layoutTypePortlet.isCustomizable() &&
-					layoutTypePortlet.isCustomizedView()) {
-
-					layoutTypePortlet.resetUserPreferences();
-				}
-			}
 			else if (cmd.equals("reset_merge_fail_count_and_merge")) {
 				resetMergeFailCountAndMerge(actionRequest);
-			}
-			else if (cmd.equals("reset_prototype")) {
-				SitesUtil.resetPrototype(themeDisplay.getLayout());
 			}
 
 			MultiSessionMessages.add(
 				actionRequest,
 				PortalUtil.getPortletId(actionRequest) + "requestProcessed");
 
-			sendRedirect(
-				portletConfig, actionRequest, actionResponse, redirect,
-				closeRedirect);
+			sendRedirect(actionRequest, actionResponse, redirect);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchLayoutException ||
@@ -277,9 +221,7 @@ public class EditLayoutsAction extends PortletAction {
 			else if (e instanceof SystemException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
-				sendRedirect(
-					portletConfig, actionRequest, actionResponse, redirect,
-					closeRedirect);
+				sendRedirect(actionRequest, actionResponse, redirect);
 			}
 			else {
 				throw e;
@@ -671,51 +613,7 @@ public class EditLayoutsAction extends PortletAction {
 		}
 	}
 
-	protected String updateCloseRedirect(
-		ThemeDisplay themeDisplay, String closeRedirect, Group group,
-		Layout layout, String oldLayoutFriendlyURL) {
-
-		if (Validator.isNull(closeRedirect) ||
-			Validator.isNull(oldLayoutFriendlyURL)) {
-
-			return closeRedirect;
-		}
-
-		if (layout != null) {
-			String oldPath = oldLayoutFriendlyURL;
-			String newPath = layout.getFriendlyURL(themeDisplay.getLocale());
-
-			return PortalUtil.updateRedirect(closeRedirect, oldPath, newPath);
-		}
-		else if (group != null) {
-			String oldPath = group.getFriendlyURL() + oldLayoutFriendlyURL;
-			String newPath = group.getFriendlyURL();
-
-			return PortalUtil.updateRedirect(closeRedirect, oldPath, newPath);
-		}
-
-		return closeRedirect;
-	}
-
-	protected void updateDisplayOrder(ActionRequest actionRequest)
-		throws Exception {
-
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long parentLayoutId = ParamUtil.getLong(
-			actionRequest, "parentLayoutId");
-		long[] layoutIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "layoutIds"), 0L);
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		LayoutServiceUtil.setLayouts(
-			groupId, privateLayout, parentLayoutId, layoutIds, serviceContext);
-	}
-
-	protected Object[] updateLayout(
+	protected void updateLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -992,8 +890,6 @@ public class EditLayoutsAction extends PortletAction {
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layoutTypeSettingsProperties);
-
-		return new Object[] {layout, oldFriendlyURL};
 	}
 
 	protected void updateLookAndFeel(
@@ -1048,49 +944,6 @@ public class EditLayoutsAction extends PortletAction {
 				groupId, privateLayout, layoutId, deviceThemeId,
 				deviceColorSchemeId, deviceCss, deviceWapTheme);
 		}
-	}
-
-	protected String updateRedirect(
-		ThemeDisplay themeDisplay, String redirect, Group group, Layout layout,
-		String oldLayoutFriendlyURL) {
-
-		if (Validator.isNull(redirect) ||
-			Validator.isNull(oldLayoutFriendlyURL)) {
-
-			return redirect;
-		}
-
-		if (layout != null) {
-			String oldPath = oldLayoutFriendlyURL;
-
-			if (layout.isTypeLinkToLayout() || layout.isTypeURL()) {
-				try {
-					layout = LayoutLocalServiceUtil.fetchFirstLayout(
-						layout.getGroupId(), layout.getPrivateLayout(),
-						LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
-				}
-				catch (Exception e) {
-				}
-
-				if (layout == null) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Unable to fetch first layout");
-					}
-				}
-			}
-
-			String newPath = layout.getFriendlyURL(themeDisplay.getLocale());
-
-			return PortalUtil.updateRedirect(redirect, oldPath, newPath);
-		}
-		else if (group != null) {
-			String oldPath = group.getFriendlyURL() + oldLayoutFriendlyURL;
-			String newPath = group.getFriendlyURL();
-
-			return PortalUtil.updateRedirect(redirect, oldPath, newPath);
-		}
-
-		return redirect;
 	}
 
 	protected UnicodeProperties updateThemeSettingsProperties(

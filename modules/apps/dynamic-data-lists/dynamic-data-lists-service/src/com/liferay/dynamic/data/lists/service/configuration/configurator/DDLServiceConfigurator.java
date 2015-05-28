@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.service.configuration;
+package com.liferay.dynamic.data.lists.service.configuration.configurator;
 
 import com.liferay.dynamic.data.lists.upgrade.DDLServiceUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
@@ -56,8 +56,7 @@ public class DDLServiceConfigurator {
 	}
 
 	@Reference(unbind = "-")
-	protected void setBookmarksServicesUpgrade(
-		DDLServiceUpgrade ddlServiceUpgrade) {
+	protected void setDDLServiceUpgrade(DDLServiceUpgrade ddlServiceUpgrade) {
 	}
 
 	@Reference(unbind = "-")

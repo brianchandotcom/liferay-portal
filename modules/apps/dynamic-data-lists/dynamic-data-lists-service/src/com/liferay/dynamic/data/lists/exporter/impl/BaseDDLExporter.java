@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -30,6 +31,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -99,8 +102,7 @@ public abstract class BaseDDLExporter implements DDLExporter {
 	}
 
 	protected DDMStructure getDDMStructure(long recordSetId) throws Exception {
-		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
-			recordSetId);
+		DDLRecordSet recordSet = _ddlRecordService.getRecordSet(recordSetId);
 
 		return recordSet.getDDMStructure();
 	}
@@ -111,6 +113,14 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		return LanguageUtil.get(_locale, statusLabel);
 	}
 
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordService = ddlRecordSetService;
+	}
+
+	private DDLRecordSetService _ddlRecordService;
 	private Locale _locale;
 
 }

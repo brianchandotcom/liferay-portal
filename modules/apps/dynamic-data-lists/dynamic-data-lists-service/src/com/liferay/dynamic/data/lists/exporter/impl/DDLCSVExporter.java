@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter.impl;
 
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -29,19 +30,20 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
+import com.liferay.portlet.dynamicdatamapping.storage.StorageEngine;
+import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverter;
 
 import java.util.Iterator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
-@Component(service = DDLExporter.class)
+@Component(immediate = true, service = DDLExporter.class)
 public class DDLCSVExporter extends BaseDDLExporter {
 
 	@Override
@@ -71,7 +73,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 		sb.append(LanguageUtil.get(getLocale(), "status"));
 		sb.append(StringPool.NEW_LINE);
 
-		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
+		List<DDLRecord> records = _ddlRecordLocalService.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
 		Iterator<DDLRecord> iterator = records.iterator();
@@ -81,10 +83,10 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 			DDLRecordVersion recordVersion = record.getRecordVersion();
 
-			DDMFormValues ddmFormValues = StorageEngineUtil.getDDMFormValues(
+			DDMFormValues ddmFormValues = _storageEngine.getDDMFormValues(
 				recordVersion.getDDMStorageId());
 
-			Fields fields = DDMFormValuesToFieldsConverterUtil.convert(
+			Fields fields = _ddmFormValuesToFieldsConverter.convert(
 				ddmStructure, ddmFormValues);
 
 			for (DDMFormField ddmFormField : ddmFormFields) {
@@ -112,5 +114,28 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 		return csv.getBytes();
 	}
+
+	@Reference
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
+
+		_ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	@Reference
+	protected void setDDMFormValuesToFieldsConverter(
+		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
+
+		_ddmFormValuesToFieldsConverter = ddmFormValuesToFieldsConverter;
+	}
+
+	@Reference
+	protected void setStorageEngine(StorageEngine storageEngine) {
+		_storageEngine = storageEngine;
+	}
+
+	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
+	private StorageEngine _storageEngine;
 
 }

@@ -358,4 +358,28 @@ public class PrincipalException extends PortalException {
 		}
 
 	}
+
+	public static class MustNotBeGroupAdmin extends PrincipalException {
+
+		public MustNotBeGroupAdmin(
+			long userId, String resourceName, long resourceId,
+			String actionId) {
+			
+			super(
+				String.format(
+					"User %s is not allowed to perform action %s on the " +
+						"group administrator in %s %s", userId, actionId,
+						resourceName, resourceId));
+
+			this.actionId = actionId;
+			this.resourceId = resourceId;
+			this.resourceName = resourceName;
+			this.userId = userId;
+		}
+
+		public final String actionId;
+		public final long resourceId;
+		public final String resourceName;
+		public final long userId;
+	}
 }

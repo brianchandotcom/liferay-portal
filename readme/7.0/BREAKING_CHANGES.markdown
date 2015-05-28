@@ -1876,3 +1876,39 @@ should pass the new userId parameter.
 In order to add support to structure and template versions, audit columns were
 also added to such models. For the service to keep track which the user is
 modifying the structure or template, the `userId` parameter is required.
+
+---------------------------------------
+
+### Removed mbMessages attribute from app-view-search-entry tag
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55886
+
+#### What changed?
+
+The `mbMessages` attribute from the `app-view-search-entry` tag has
+been removed, as well as the `getMbMessages` and `addMbMessage`
+methods from `SearchResult`.
+
+#### Who is affected?
+
+Any developers that use the `app-view-search-entry` tag in their
+views, or that have developed hooks to customize the taglib JSP or any
+portlet that uses that taglib. Also, any custom code that uses the
+`SearchResult` class may be affected as well.
+
+#### How should I update my code?
+
+The new attribute `commentTuples` should be used instead. The expected
+value is the one returned by the `getCommentTuples` method in
+`SearchResult` (which itself replaces the `getMbMessages` method).
+
+When adding messages to the `SearchResult` the new `addComment` method
+should be used instead of `addMbMessage`.
+
+#### Why was this change made?
+
+As part of the modularization efforts, references to `MBMessage`
+needed to be removed for the Message Boards portlet to be placed into
+its own OSGi bundle.
+
+---------------------------------------

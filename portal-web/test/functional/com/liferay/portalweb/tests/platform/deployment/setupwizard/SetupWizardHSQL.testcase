@@ -279,7 +279,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="HSQLtoSybase" priority="5">
+	<command known-issues="LPS-52571" name="HSQLtoSybase" priority="5">
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
@@ -299,7 +299,7 @@
 		<execute macro="Smoke#runSmoke" />
 	</command>
 
-	<command name="HSQLtoSybaseSampleDataDisabled" priority="5">
+	<command known-issues="LPS-52571" name="HSQLtoSybaseSampleDataDisabled" priority="5">
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />
 			<var name="administratorEmail" value="test@liferay.com" />

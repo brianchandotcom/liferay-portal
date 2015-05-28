@@ -4,22 +4,22 @@ All English language keys must conform to the following guidelines.
 
 ## Text Styles
 
-The three types of text styles that can be applied to Liferay's language keys
-are:
+Title, phrase, and sentence are the three types of text styles used in Liferay's
+language keys. They're described described below.
 
 ### Title
 
-- All words capitalized, except for articles (*a*, *the*), prepositions (*to*,
-*at*, *in*, *with*), and coordinating conjunctions (*and*, *but*, *or*)
-- No punctuation
+- Capitalize all words, except articles (*a*, *the*), prepositions (*to*, *at*,
+  *in*, *with*), and coordinating conjunctions (*and*, *but*, *or*).
+- Omit any trailing period.
 - Examples:
     - *Account Created Notification*
     - *Private Pages*
 
 ### Phrase
 
-- Only first word and all proper nouns after are capitalized
-- No periods, but can use question mark if the phrase is a question
+- Capitalize only its first word and all proper nouns.
+- Omit any trailing period; use a question mark if it's a question.
 - Examples:
     - *Reset preview and thumbnail files for Documents and Media portlet*
     - *Maximum file size*
@@ -27,99 +27,102 @@ are:
 
 ### Sentence
 
-- First word and all proper nouns after are capitalized       
-- Uses proper punctuation (including periods) 
-- Examples: 
+- Capitalize only its first word and all proper nouns.
+- Use normal punctuation (including periods).
+- Examples:
     - *Enabling ImageMagick and GhostScript provides document preview
     functionality.*
     - *Email address and type are required fields.*
 
-## Where to Use Text Styles
+## Applying Text Styles
 
-### 1. Radio/Checkbox/Drop-Down/Text Fields
+This section provides rules for applying the text styles and writing the
+language keys.
 
-These should follow the *Title* text style. However, if any of these uses an
-action word, use the *Phrase* text style. Handling this decision will be on a
-page by page basis.
+### 1. Radio/Checkbox/Selectors/Text Fields
 
-**Note:** If a page requires a phrase, then the remaining selectors/fields
-should also be phrases to be consistent on that specific page. Examples for
-pages using all phrases and all titles, respectively, are below:
+Typically, use titles. Use a phrase, however, if the key starts with an action
+word.
 
-**Examples:**
+For consistency in a page, if a selector/field requires a phrase, use phrases
+for the remaining selectors/fields.
 
-The *Portal Settings* &rarr; *Authentication* &rarr; *General* page is
-consistent by using phrases (in this case, question phrases) for all of its
-checkboxes:
+**Example 1:**
+
+The *Portal Settings* &rarr; *Authentication* &rarr; *General* page consistently
+uses phrases (in this case, question phrases) for all of its checkboxes:
 
 ![ ](./images/common-images/language/authentication-checkboxes.png)
 
-The *Portal Settings* &rarr; *Users* &rarr; *Fields* page is consistent by
-using concise titles for all of its checkboxes:
+**Example 2:**
+
+The *Portal Settings* &rarr; *Users* &rarr; *Fields* page consistently uses
+concise titles for all of its checkboxes:
 
 ![ ](./images/common-images/language/user-fields-checkboxes.png)
 
-More examples of radio/checkbox/drop-down/text field labels that are titles
+More examples of radio/checkbox/selector/text field labels that are titles
 include:
 
 - *Membership Type*
 - *Trash Entries Max Age*
 
-More examples of radio/checkbox/drop-down/text field labels that are phrases
+More examples of radio/checkbox/selector/text field labels that are phrases
 include:
 
 - *Allow subsites to display content from this site*
 - *Use the default language options*
 
-If a radio or checkbox provides more options once selected, use an action word
-to make that obvious to the user. For example, the following checkbox labels
-hint that more options will be presented when you select their associated
-checkbox:
+If a radio or checkbox provides more options on select it, make that obvious by
+starting its label with an action word. For example, a checkbox using one of the
+labels below hints that selecting it brings up more options:
 
 - *Define social interactions for users*
 - *Define a custom default language and additional available languages for this
-site*
+  site*
 
-In rare cases, like the Social Activity portlet, a mix of text styles are used
-on the same page. In Social Activity, text fields are used mid-sentence *inline*
-to give them proper context. These special cases require mixed text styles to
-look stylistically pleasing. Mix text styles with caution.
+There are cases that require mixing text styles. For example, the mid-sentence
+*inline* text fields in the Social Activity portlet mix text styles to improve
+readability. If you need to mix text styles, do so cautiously.
 
 ### 2. Action Word Tense
 
-Use present tense when using an action word to do something:
+Use present tense when describing actions that do something:
 
 - *Enable* this functionality
 - *Require* this functionality
 
-Use past tense when only using the single action word or pairing action word
-with by *default*:
+Use past tense, when applicable, to describe state:
 
 - *Required*
 - *Enabled* by default
 
-**Avoid** using past tense action words at the end of phrases, like:
+**Avoid** using past tense action words at the end of phrases.
+
+Incorrect way:
 
 *CDN dynamic resources enabled*
 
-and, instead, describe the phrase like:
+Correct way:
 
 *Enable CDN dynamic resources*
-    
-**Avoid** using future tense for any text style. For example:
+
+**Avoid** using future tense anywhere.
+
+Incorrect way:
 
 *Checking this box will enable users to view...*
 
-should be modified to say:
+Correct way:
 
 *Checking this box lets users view...*
 
-### 3. Portal Messages 
+### 3. Help, Error, Success, and Empty Results Messages
 
-Any insightful message given to update or warn a user should use the *Sentence*
-text style. The following are examples of messages in the portal:
+Use sentences to inform or warn a user. Here are some example messages:
 
-- Help messages, (for example: *-help=*) except for *hide-syntax-help*.
+- Help messages. Portal's keys ending in *-help*, except *hide-syntax-help*,
+  use sentences.
 
     ![ ](./images/common-images/language/help-message.png)
 
@@ -133,9 +136,8 @@ text style. The following are examples of messages in the portal:
 
 ### 4. Instructions
 
-When you're displaying instructions, use the *Sentence* text style. Instructions
-are not associated with one particular button/selector/field, but with a group
-of them.
+Use sentences to instruct the user about a user interface, but not a particular
+button, selector, or field.
 
 **Examples:**
 
@@ -146,8 +148,7 @@ of them.
 
 ### 5. UI Component Labels
 
-Labels for any UI component should follow the *Title* text style. Labels are
-defined in a JSP as *label=""*.
+Use titles to label UI components. Labels are defined in a JSP as *label=""*.
 
 **Example:**
 
@@ -158,7 +159,7 @@ The UI label for *Maximum Items to Display* is
 
 ### 6. Menus and Higher Level Tabs
 
-For menu and higher level tabs, use the *Title* text style.
+Use titles to label menus and high level tabs.
 
 ![ ](./images/common-images/language/menu-example.png)
 
@@ -166,27 +167,27 @@ For menu and higher level tabs, use the *Title* text style.
 
 ### 7. Section and Text Area Descriptions
 
-For section descriptions or text area descriptions, use the *Sentence* text
-style.
+Use sentences to describe sections and text areas.
 
 ![ ](./images/common-images/language/portal-settings-analytics.png)
 
 ### 8. Omit Needless Words
 
-There are tendencies to include words that have no meaning in Liferay's language
-keys. Make sure to omit these needless words.
+Omit needless words from your language keys.
 
-**Example:** In some programming languages, you need if/then. In English, you
-often do not:
+**Example:** In some programming languages, you need *if*/*then*. In English,
+you often do not.
+
+*Incorrect way:*
 
 *If this is checked, then the site administrator...*
 
-should be changed to:
-        
+*Correct way:*
+
 *If this is checked, the site administrator...*
 
-A list of common phrases with unnecessary words can be viewed below with their
-more direct conversions:
+Here are some commonly used needless phrases and words that you can
+remove/replace:
 
 - just = (remove)
 - simply = (remove)
@@ -196,14 +197,13 @@ more direct conversions:
 
 ### 9. Consider Other Languages
 
-Be conscientious of other languages. Not all languages have the same word order
-for phrases/sentences. Make sure the language key is designed to work with other
-languages.
+To accommodate languages that arrange words differently in a phrase/sentence,
+use complete phrases/sentences.
 
-**Example:** Assume you'd like to create a language key that displays in the
-Portal as: *You have attempted [number] times.*
+**Example:** Assume you'd like to create a language key that displays this:
+*You have attempted [number] times.*
 
-**Incorrect Way:**
+**Incorrect way:**
 
 *JSP:*
 
@@ -215,7 +215,7 @@ Portal as: *You have attempted [number] times.*
 
         times=times.
 
-**Correct Way:**
+**Correct way:**
 
 *JSP:*
 

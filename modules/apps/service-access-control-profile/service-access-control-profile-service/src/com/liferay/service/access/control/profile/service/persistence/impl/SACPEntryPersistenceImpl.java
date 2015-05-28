@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -3331,25 +3332,28 @@ public class SACPEntryPersistenceImpl extends BasePersistenceImpl<SACPEntry>
 			sacpEntry.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-		Date now = new Date();
+			Date now = new Date();
 
-		if (isNew && (sacpEntry.getCreateDate() == null)) {
-			if (serviceContext == null) {
-				sacpEntry.setCreateDate(now);
+			if (isNew && (sacpEntry.getCreateDate() == null)) {
+				if (serviceContext == null) {
+					sacpEntry.setCreateDate(now);
+				}
+				else {
+					sacpEntry.setCreateDate(serviceContext.getCreateDate(now));
+				}
 			}
-			else {
-				sacpEntry.setCreateDate(serviceContext.getCreateDate(now));
-			}
-		}
 
-		if (!sacpEntryModelImpl.hasSetModifiedDate()) {
-			if (serviceContext == null) {
-				sacpEntry.setModifiedDate(now);
-			}
-			else {
-				sacpEntry.setModifiedDate(serviceContext.getModifiedDate(now));
+			if (!sacpEntryModelImpl.hasSetModifiedDate()) {
+				if (serviceContext == null) {
+					sacpEntry.setModifiedDate(now);
+				}
+				else {
+					sacpEntry.setModifiedDate(serviceContext.getModifiedDate(
+							now));
+				}
 			}
 		}
 

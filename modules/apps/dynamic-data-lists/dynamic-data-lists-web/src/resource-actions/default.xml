@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>167</portlet-name>
+		<portlet-name>com_liferay_dynamic_data_lists_web_portlet_DDLPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
@@ -24,9 +24,9 @@
 		</permissions>
 	</portlet-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.dynamicdatalists</model-name>
+		<model-name>com.liferay.dynamic.data.lists</model-name>
 		<portlet-ref>
-			<portlet-name>167</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_lists_web_portlet_DDLPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
@@ -46,9 +46,9 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.dynamicdatalists.model.DDLRecordSet</model-name>
+		<model-name>com.liferay.dynamic.data.lists.model.DDLRecordSet</model-name>
 		<portlet-ref>
-			<portlet-name>167</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_lists_web_portlet_DDLPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

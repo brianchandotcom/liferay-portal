@@ -27,7 +27,7 @@ public interface FileSystemConfiguration {
 
 	@Meta.AD(deflt = "data/document_library",
 		description = "%filesystem.store.configuration.root.dir.description",
-		required = true)
+		required = false)
 	public String rootDir();
 
 }

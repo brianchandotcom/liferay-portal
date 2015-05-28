@@ -482,7 +482,7 @@ public class JournalPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	public void set_itemSelector(ItemSelector itemSelector) {
+	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}
 

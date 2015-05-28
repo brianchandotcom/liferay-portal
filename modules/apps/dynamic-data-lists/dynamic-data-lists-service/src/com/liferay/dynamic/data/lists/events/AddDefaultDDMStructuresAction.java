@@ -12,23 +12,35 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.dynamic.data.lists.events;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.util.DefaultDDMStructureUtil;
+
+import java.util.List;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Michael C. Han
  */
+@Component(immediate = true)
 public class AddDefaultDDMStructuresAction extends SimpleAction {
 
 	@Override
@@ -41,15 +53,33 @@ public class AddDefaultDDMStructuresAction extends SimpleAction {
 		}
 	}
 
+	@Activate
+	protected void activate() throws ActionException {
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			List<Company> companys = _companyLocalService.getCompanies();
+
+			for (Company company : companys) {
+				CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+				run(new String[] {String.valueOf(company.getCompanyId())});
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
+		}
+	}
+
 	protected void doRun(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		Group group = GroupLocalServiceUtil.getGroup(
+		Group group = _groupLocalService.getGroup(
 			companyId, GroupConstants.GUEST);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		serviceContext.setUserId(defaultUserId);
 
@@ -57,9 +87,40 @@ public class AddDefaultDDMStructuresAction extends SimpleAction {
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
 			AddDefaultDDMStructuresAction.class.getClassLoader(),
-			"com/liferay/portal/events/dependencies" +
+			"com/liferay/dynamic/data/lists/events/dependencies/" +
 				"/dynamic-data-mapping-structures.xml",
 			serviceContext);
 	}
+
+	@Reference(
+		target =
+			"(org.springframework.context.service.name=" +
+				"com.liferay.dynamic.data.lists.service)",
+		unbind = "-"
+	)
+	protected void setApplicationContext(
+		ApplicationContext applicationContext) {
+	}
+
+	@Reference
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private CompanyLocalService _companyLocalService;
+	private GroupLocalService _groupLocalService;
+	private UserLocalService _userLocalService;
 
 }

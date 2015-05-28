@@ -52,7 +52,7 @@
 					contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
 					fieldIndexes: '<portlet:namespace />preferences--displayActivityCounterNameIndexes--',
 					namespace: '<portlet:namespace />',
-					url: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/add_group_statistics_activity_counter" /></portlet:renderURL>'
+					url: '<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="struts_action" value="/group_statistics/add_group_statistics_activity_counter" /></portlet:renderURL>'
 				}
 			).render();
 		</aui:script>

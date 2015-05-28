@@ -150,7 +150,8 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 					SETTINGS_SCOPE_PORTLET_INSTANCE);
 
 			liferayPortletURL.setParameter(
-				"struts_action", "/portlet_configuration/edit_configuration");
+				"mvcPath",
+				"/html/portlet/portlet_configuration/edit_configuration.jsp");
 			liferayPortletURL.setParameter(
 				"returnToFullPageURL", returnToFullPageURL);
 			liferayPortletURL.setParameter("portletResource", portletResource);

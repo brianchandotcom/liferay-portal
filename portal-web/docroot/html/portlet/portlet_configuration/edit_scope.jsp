@@ -78,11 +78,10 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				}
 			%>
 
-				<liferay-portlet:actionURL var="setScopeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
+				<liferay-portlet:actionURL name="editScope" var="setScopeURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="struts_action" value="/portlet_configuration/edit_scope" />
+					<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_scope.jsp" />
 					<portlet:param name="scopeType" value="<%= availableGroupScopeType %>" />
 					<portlet:param name="scopeLayoutUuid" value="<%= availableGroupScopeLayoutUuid %>" />
 				</liferay-portlet:actionURL>
@@ -102,11 +101,10 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 			%>
 
 			<c:if test="<%= !layout.hasScopeGroup() %>">
-				<liferay-portlet:actionURL var="createNewScopeURL">
-					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.SAVE %>" />
+				<liferay-portlet:actionURL name="editScope" var="createNewScopeURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="struts_action" value="/portlet_configuration/edit_scope" />
+					<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_scope.jsp" />
 					<portlet:param name="scopeType" value="layout" />
 					<portlet:param name="scopeLayoutUuid" value="<%= layout.getUuid() %>" />
 				</liferay-portlet:actionURL>

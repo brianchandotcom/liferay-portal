@@ -27,8 +27,8 @@ Set<String> allPortletModes = selPortlet.getAllPortletModes();
 	<liferay-util:param name="tabs1" value="supported-clients" />
 </liferay-util:include>
 
-<portlet:actionURL var="editSupportedClientsURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/edit_supported_clients" />
+<portlet:actionURL name="editSupportedClients" var="editSupportedClientsURL">
+	<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_supported_clients.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editSupportedClientsURL %>" method="post" name=">fm">

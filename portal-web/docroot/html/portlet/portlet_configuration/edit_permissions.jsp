@@ -103,32 +103,6 @@ if (Validator.isNotNull(roleTypesParam)) {
 	roleTypes = StringUtil.split(roleTypesParam, 0);
 }
 
-PortletURL actionPortletURL = renderResponse.createActionURL();
-
-actionPortletURL.setParameter("struts_action", "/portlet_configuration/edit_permissions");
-actionPortletURL.setParameter("tabs2", tabs2);
-actionPortletURL.setParameter("redirect", redirect);
-actionPortletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-actionPortletURL.setParameter("portletResource", portletResource);
-actionPortletURL.setParameter("modelResource", modelResource);
-actionPortletURL.setParameter("modelResourceDescription", modelResourceDescription);
-actionPortletURL.setParameter("resourceGroupId", String.valueOf(resourceGroupId));
-actionPortletURL.setParameter("resourcePrimKey", resourcePrimKey);
-actionPortletURL.setParameter("roleTypes", roleTypesParam);
-
-PortletURL renderPortletURL = renderResponse.createRenderURL();
-
-renderPortletURL.setParameter("struts_action", "/portlet_configuration/edit_permissions");
-renderPortletURL.setParameter("tabs2", tabs2);
-renderPortletURL.setParameter("redirect", redirect);
-renderPortletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
-renderPortletURL.setParameter("portletResource", portletResource);
-renderPortletURL.setParameter("modelResource", modelResource);
-renderPortletURL.setParameter("modelResourceDescription", modelResourceDescription);
-renderPortletURL.setParameter("resourceGroupId", String.valueOf(resourceGroupId));
-renderPortletURL.setParameter("resourcePrimKey", resourcePrimKey);
-renderPortletURL.setParameter("roleTypes", roleTypesParam);
-
 long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
 PortletURLImpl definePermissionsURL = new PortletURLImpl(request, PortletKeys.ROLES_ADMIN, controlPanelPlid, PortletRequest.RENDER_PHASE);
@@ -140,8 +114,20 @@ definePermissionsURL.setRefererPlid(plid);
 %>
 
 <div class="edit-permissions">
-	<aui:form action="<%= actionPortletURL.toString() %>" method="post" name="fm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="role_permissions" />
+
+	<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
+		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_permissions.jsp" />
+		<portlet:param name="tabs2" value="<%= tabs2 %>" />
+		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
+		<portlet:param name="portletResource" value="<%= portletResource %>" />
+		<portlet:param name="modelResource" value="<%= modelResource %>" />
+		<portlet:param name="modelResourceDescription" value="<%= modelResourceDescription %>" />
+		<portlet:param name="resourceGroupId" value="<%= String.valueOf(resourceGroupId) %>" />
+		<portlet:param name="resourcePrimKey" value="<%= resourcePrimKey %>" />
+		<portlet:param name="roleTypes" value="<%= roleTypesParam %>" />
+	</portlet:actionURL>
+
+	<aui:form action="<%= updateRolePermissionsURL.toString() %>" method="post" name="fm">
 		<aui:input name="resourceId" type="hidden" value="<%= resource.getResourceId() %>" />
 
 		<c:choose>

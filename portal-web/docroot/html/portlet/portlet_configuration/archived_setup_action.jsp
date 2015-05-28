@@ -26,9 +26,8 @@ portletResource = (String)objects[1];
 %>
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
-	<portlet:actionURL var="restoreURL">
-		<portlet:param name="struts_action" value="/portlet_configuration/edit_archived_setups" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
+	<portlet:actionURL name="restoreArchivedSetup" var="restoreArchivedSetupURL">
+		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 		<portlet:param name="name" value="<%= archivedSettings.getName() %>" />
@@ -37,18 +36,17 @@ portletResource = (String)objects[1];
 	<liferay-ui:icon
 		iconCssClass="icon-undo"
 		message="restore"
-		url="<%= restoreURL %>"
+		url="<%= restoreArchivedSetupURL %>"
 	/>
 
-	<portlet:actionURL var="deleteURL">
-		<portlet:param name="struts_action" value="/portlet_configuration/edit_archived_setups" />
-		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+	<portlet:actionURL name="deleteArchivedSetup" var="deleteArchivedBackupURL">
+		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
 		<portlet:param name="name" value="<%= archivedSettings.getName() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon-delete
-		url="<%= deleteURL %>"
+		url="<%= deleteArchivedBackupURL %>"
 	/>
 </liferay-ui:icon-menu>

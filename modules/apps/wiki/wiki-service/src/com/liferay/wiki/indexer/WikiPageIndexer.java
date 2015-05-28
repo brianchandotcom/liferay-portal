@@ -20,6 +20,10 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProvider;
+import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
@@ -37,7 +41,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
@@ -52,6 +55,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -84,10 +88,16 @@ public class WikiPageIndexer extends BaseIndexer {
 
 			classPK = comment.getClassPK();
 		}
-		else if (obj instanceof DLFileEntry) {
-			DLFileEntry dlFileEntry = (DLFileEntry)obj;
+		else if (obj instanceof FileEntry) {
+			FileEntry fileEntry = (FileEntry)obj;
 
-			classPK = dlFileEntry.getClassPK();
+			Repository repository = _repositoryProvider.getRepository(
+				fileEntry.getRepositoryId());
+
+			RelatedModelCapability relatedModelCapability =
+				repository.getCapability(RelatedModelCapability.class);
+
+			classPK = relatedModelCapability.getClassPK(fileEntry);
 		}
 
 		WikiPage page = null;
@@ -309,5 +319,14 @@ public class WikiPageIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	protected void setRepositoryProvider(
+		RepositoryProvider repositoryProvider) {
+
+		_repositoryProvider = repositoryProvider;
+	}
+
+	private RepositoryProvider _repositoryProvider;
 
 }

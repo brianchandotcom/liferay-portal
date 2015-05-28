@@ -12,15 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.repository.capabilities;
+package com.liferay.portal.repository.capabilities.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 
 /**
- * @author Adolfo Pérez
+ * @author Iván Zaera
  */
-public interface WorkflowCapability extends Capability {
+public class RepositoryEntryConverter {
 
-	public int getStatus(FileEntry fileEntry);
+	public DLFileEntry getDLFileEntry(FileEntry fileEntry) {
+		Object model = fileEntry.getModel();
+
+		if (model instanceof DLFileEntry) {
+			return (DLFileEntry)model;
+		}
+
+		throw new IllegalArgumentException(
+			"Invalid file entry model " + model.getClass());
+	}
 
 }

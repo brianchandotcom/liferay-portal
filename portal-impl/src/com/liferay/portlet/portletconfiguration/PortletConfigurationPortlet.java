@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.portletconfiguration;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
@@ -40,6 +41,8 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PublicRenderParameter;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -47,13 +50,16 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
@@ -78,6 +84,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -272,6 +279,44 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		portletPreferences.store();
+	}
+
+	public void editTitle(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
+		String portletId = ParamUtil.getString(actionRequest, "portletId");
+
+		if (!PortletPermissionUtil.contains(
+				permissionChecker, layout, portletId,
+				ActionKeys.CONFIGURATION)) {
+
+			return;
+		}
+
+		String languageId = LanguageUtil.getLanguageId(actionRequest);
+		String title = ParamUtil.getString(actionRequest, "title");
+
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				layout, portletId);
+
+		portletSetup.setValue("portletSetupTitle_" + languageId, title);
+		portletSetup.setValue("portletSetupUseCustomTitle", "true");
+
+		portletSetup.store();
+
+		PortletSession portletSession = actionRequest.getPortletSession();
+
+		InvokerPortletImpl.clearResponses(portletSession);
 	}
 
 	@Override

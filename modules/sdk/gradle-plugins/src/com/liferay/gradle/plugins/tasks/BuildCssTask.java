@@ -178,6 +178,8 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 		addDependency("com.liferay", "com.liferay.rtl.css", "1.0.0-SNAPSHOT");
 		addDependency("com.liferay", "com.liferay.ruby.gems", "1.0.0-SNAPSHOT");
+		addDependency(
+			"com.liferay", "com.liferay.sass.compiler.ruby", "1.0.0-SNAPSHOT");
 		addDependency("com.liferay.portal", "util-slf4j", "default");
 		addDependency("javax.portlet", "portlet-api", "2.0");
 		addDependency("org.apache.ant", "ant", "1.8.2");

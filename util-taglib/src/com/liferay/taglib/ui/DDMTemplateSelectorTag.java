@@ -15,17 +15,60 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.JspException;
 
 /**
  * @author Juan Fernández
  */
 public class DDMTemplateSelectorTag extends IncludeTag {
+
+	@Override
+	public int doStartTag() throws JspException {
+		if (_displayStyleGroupId == 0) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+		}
+
+		_portletDisplayDDMTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+				_displayStyleGroupId, PortalUtil.getClassNameId(_className),
+				_displayStyle);
+
+		if (_portletDisplayDDMTemplate == null) {
+			_portletDisplayDDMTemplate =
+				PortletDisplayTemplateUtil.
+					getDefaultPortletDisplayTemplateDDMTemplate(
+						_displayStyleGroupId,
+						PortalUtil.getClassNameId(_className));
+		}
+
+		if(Validator.isNull(_displayStyle)) {
+			_displayStyle = _defaultDisplayStyle;
+		}
+
+		if (Validator.isNull(_displayStyle) &&
+			(_portletDisplayDDMTemplate != null)) {
+				_displayStyle =
+					PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
+						_portletDisplayDDMTemplate.getTemplateKey();
+		}
+
+		return super.doStartTag();
+	}
 
 	public void setClassName(String className) {
 		_className = className;
@@ -72,6 +115,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		_displayStyles = null;
 		_icon = null;
 		_label = "display-template";
+		_portletDisplayDDMTemplate = null;
 		_refreshURL = null;
 		_showEmptyOption = false;
 	}
@@ -89,15 +133,15 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyle", _displayStyle);
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:defaultDisplayStyle",
-			_defaultDisplayStyle);
-		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyleGroupId",
 			String.valueOf(_displayStyleGroupId));
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyles", _displayStyles);
 		request.setAttribute("liferay-ui:ddm-template-select:icon", _icon);
 		request.setAttribute("liferay-ui:ddm-template-select:label", _label);
+		request.setAttribute(
+			"liferay-ui:ddm-template-select:portletDisplayDDMTemplate",
+			_portletDisplayDDMTemplate);
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:refreshURL", _refreshURL);
 		request.setAttribute(
@@ -115,6 +159,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 	private List<String> _displayStyles;
 	private String _icon;
 	private String _label = "display-template";
+	private DDMTemplate _portletDisplayDDMTemplate;
 	private String _refreshURL;
 	private boolean _showEmptyOption;
 

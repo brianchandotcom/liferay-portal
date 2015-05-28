@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.CSVUtil;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
@@ -32,8 +32,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageEngineUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil;
 
-import java.io.Serializable;
-
+import java.util.Iterator;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,26 +41,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
-@Component(service = DDLExporter.class)
-public class DDLXMLExporter extends BaseDDLExporter {
+@Component(immediate = true, service = DDLExporter.class)
+public class DDLCSVExporter extends BaseDDLExporter {
 
 	@Override
 	public String getFormat() {
-		return "xml";
-	}
-
-	protected void addFieldElement(
-		Element fieldsElement, String label, Serializable value) {
-
-		Element fieldElement = fieldsElement.addElement("field");
-
-		Element labelElement = fieldElement.addElement("label");
-
-		labelElement.addText(label);
-
-		Element valueElement = fieldElement.addElement("value");
-
-		valueElement.addText(String.valueOf(value));
+		return "csv";
 	}
 
 	@Override
@@ -70,19 +55,29 @@ public class DDLXMLExporter extends BaseDDLExporter {
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception {
 
+		StringBundler sb = new StringBundler();
+
 		DDMStructure ddmStructure = getDDMStructure(recordSetId);
 
 		List<DDMFormField> ddmFormFields = getDDMFormFields(ddmStructure);
 
-		Document document = SAXReaderUtil.createDocument();
+		for (DDMFormField ddmFormField : ddmFormFields) {
+			LocalizedValue label = ddmFormField.getLabel();
 
-		Element rootElement = document.addElement("root");
+			sb.append(label.getString(getLocale()));
+			sb.append(CharPool.COMMA);
+		}
+
+		sb.append(LanguageUtil.get(getLocale(), "status"));
+		sb.append(StringPool.NEW_LINE);
 
 		List<DDLRecord> records = DDLRecordLocalServiceUtil.getRecords(
 			recordSetId, status, start, end, orderByComparator);
 
-		for (DDLRecord record : records) {
-			Element fieldsElement = rootElement.addElement("fields");
+		Iterator<DDLRecord> iterator = records.iterator();
+
+		while (iterator.hasNext()) {
+			DDLRecord record = iterator.next();
 
 			DDLRecordVersion recordVersion = record.getRecordVersion();
 
@@ -93,10 +88,7 @@ public class DDLXMLExporter extends BaseDDLExporter {
 				ddmStructure, ddmFormValues);
 
 			for (DDMFormField ddmFormField : ddmFormFields) {
-				LocalizedValue label = ddmFormField.getLabel();
-
 				String name = ddmFormField.getName();
-
 				String value = StringPool.BLANK;
 
 				if (fields.contains(name)) {
@@ -105,18 +97,20 @@ public class DDLXMLExporter extends BaseDDLExporter {
 					value = field.getRenderedValue(getLocale());
 				}
 
-				addFieldElement(
-					fieldsElement, label.getString(getLocale()), value);
+				sb.append(CSVUtil.encode(value));
+				sb.append(CharPool.COMMA);
 			}
 
-			addFieldElement(
-				fieldsElement, LanguageUtil.get(getLocale(), "status"),
-				getStatusMessage(recordVersion.getStatus()));
+			sb.append(getStatusMessage(recordVersion.getStatus()));
+
+			if (iterator.hasNext()) {
+				sb.append(StringPool.NEW_LINE);
+			}
 		}
 
-		String xml = document.asXML();
+		String csv = sb.toString();
 
-		return xml.getBytes();
+		return csv.getBytes();
 	}
 
 }

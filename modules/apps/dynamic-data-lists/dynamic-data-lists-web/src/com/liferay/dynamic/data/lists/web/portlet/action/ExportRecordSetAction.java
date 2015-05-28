@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.action;
 
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
+import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
-import com.liferay.dynamic.data.lists.util.DDLExporter;
-import com.liferay.dynamic.data.lists.util.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
@@ -32,6 +32,7 @@ import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -89,11 +90,11 @@ public class ExportRecordSetAction extends BaseActionCommand {
 		ServletResponseUtil.sendFile(
 			request, response, fileName, bytes, contentType);
 	}
-	
+
 	@Reference
 	protected void setDDLExporterFactory(
 		DDLExporterFactory ddlExporterFactory) {
-		
+
 		_ddlExporterFactory = ddlExporterFactory;
 	}
 

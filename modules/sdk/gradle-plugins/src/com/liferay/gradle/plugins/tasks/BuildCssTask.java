@@ -99,7 +99,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 	public Iterable<File> getCssFiles() {
 		FileCollection rootDirs = getRootDirs();
 
-		if ((rootDirs == null) || rootDirs.isEmpty()) {
+		if (rootDirs.isEmpty()) {
 			return Collections.emptyList();
 		}
 
@@ -127,7 +127,11 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	@InputFiles
 	public FileCollection getRootDirs() {
-		return _rootDirs;
+		if (_rootDirs == null) {
+			return project.files();
+		}
+
+		return project.files(_rootDirs);
 	}
 
 	@OutputDirectory
@@ -154,7 +158,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	public void setRootDirs(Object rootDirs) {
-		_rootDirs = project.files(rootDirs);
+		_rootDirs = rootDirs;
 	}
 
 	@Override
@@ -230,7 +234,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	private boolean _legacy;
 	private File _portalWebFile;
-	private FileCollection _rootDirs;
+	private Object _rootDirs;
 	private File _tmpDir;
 
 }

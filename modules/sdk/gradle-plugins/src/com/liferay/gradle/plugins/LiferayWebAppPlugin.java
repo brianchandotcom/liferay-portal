@@ -251,7 +251,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
 		FileCollection rootDirs = buildCssTask.getRootDirs();
 
-		if ((rootDirs != null) && !rootDirs.isEmpty()) {
+		if (!rootDirs.isEmpty()) {
 			return;
 		}
 

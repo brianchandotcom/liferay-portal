@@ -19,6 +19,7 @@ import aQute.bnd.osgi.Constants;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
+import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
@@ -508,6 +509,26 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			jar.getArchivePath(), War.WAR_EXTENSION);
 
 		directDeployTask.setWebAppFile(warFile);
+	}
+
+	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
+		FileCollection rootDirs = buildCssTask.getRootDirs();
+
+		if (!rootDirs.isEmpty()) {
+			return;
+		}
+
+		Project project = buildCssTask.getProject();
+
+		File docrootDir = project.file("docroot");
+
+		if (!docrootDir.exists()) {
+			super.configureTaskBuildCssRootDirs(buildCssTask);
+
+			return;
+		}
+
+		buildCssTask.setRootDirs(docrootDir);
 	}
 
 	@Override

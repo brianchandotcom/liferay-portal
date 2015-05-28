@@ -506,6 +506,7 @@
 
 			var canEditTitle = options.canEditTitle;
 			var columnPos = options.columnPos;
+			var editTitleURL = options.editTitleURL;
 			var isStatic = options.isStatic == 'no' ? null : options.isStatic;
 			var namespacedId = options.namespacedId;
 			var portletId = options.portletId;
@@ -539,6 +540,7 @@
 							Util.portletTitleEdit(
 								{
 									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+									editTitleURL: editTitleURL,
 									obj: portlet,
 									plid: themeDisplay.getPlid(),
 									portletId: portletId

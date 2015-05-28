@@ -1003,11 +1003,15 @@ else {
 %>
 
 <c:if test="<%= renderPortletBoundary %>">
+
+		<liferay-portlet:actionURL name="editTitle" portletName="<%= PortletKeys.PORTLET_CONFIGURATION %>" var="editTitleURL" />
+
 		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
 			Liferay.Portlet.onLoad(
 				{
 					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
 					columnPos: <%= columnPos %>,
+					editTitleURL: '<%= HtmlUtil.escapeJS(editTitleURL.toString()) %>',
 					isStatic: '<%= staticVar %>',
 					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
 					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',

@@ -751,21 +751,12 @@
 					plid: 0,
 					portletId: 0,
 					title: '',
-					url: themeDisplay.getPathMain() + '/portlet_configuration/update_title'
+					url: params.editTitleURL
 				}
 			);
 
 			$.ajax(
-				params.url,
-				{
-					data: {
-						doAsUserId: params.doAsUserId,
-						p_auth: Liferay.authToken,
-						p_l_id: params.plid,
-						portletId: params.portletId,
-						title: params.title
-					}
-				}
+				params.url
 			);
 		},
 
@@ -1079,12 +1070,16 @@
 
 									var portletTitleEditOptions = title.getData('portletTitleEditOptions');
 
+									var portletURL = Liferay.PortletURL.createURL(portletTitleEditOptions.editTitleURL);
+
+									portletURL.setDoAsUserId(portletTitleEditOptions.doAsUserId);
+									portletURL.setParameter('plid', portletTitleEditOptions.plid);
+									portletURL.setParameter('portletId', portletTitleEditOptions.portletId);
+									portletURL.setParameter('title', event.newVal);
+
 									Util.savePortletTitle(
 										{
-											doAsUserId: portletTitleEditOptions.doAsUserId,
-											plid: portletTitleEditOptions.plid,
-											portletId: portletTitleEditOptions.portletId,
-											title: event.newVal
+											editTitleURL: portletURL.toString()
 										}
 									);
 								}

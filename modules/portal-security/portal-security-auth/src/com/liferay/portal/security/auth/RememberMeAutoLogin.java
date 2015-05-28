@@ -30,9 +30,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = AutoLogin.class)
 public class RememberMeAutoLogin extends BaseAutoLogin {
 
 	@Override

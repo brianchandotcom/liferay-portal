@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.impl;
+package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordServiceBaseImpl;
-import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordPermission;
-import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 

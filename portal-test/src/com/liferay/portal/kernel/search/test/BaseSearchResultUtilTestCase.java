@@ -28,7 +28,6 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceReferenceMapper;
@@ -69,9 +68,9 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected void assertEmptyMBMessages(SearchResult searchResult) {
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
+		List<Tuple> commentTuples = searchResult.getCommentTuples();
 
-		Assert.assertTrue(mbMessages.isEmpty());
+		Assert.assertTrue(commentTuples.isEmpty());
 	}
 
 	protected void assertEmptyVersions(SearchResult searchResult) {

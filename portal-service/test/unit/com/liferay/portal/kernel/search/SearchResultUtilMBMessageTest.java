@@ -15,7 +15,9 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBMessageLocalService;
@@ -65,9 +67,9 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
+		List<Tuple> commentTuples = searchResult.getCommentTuples();
 
-		Assert.assertTrue(mbMessages.isEmpty());
+		Assert.assertTrue(commentTuples.isEmpty());
 
 		verifyZeroInteractions(_mbMessageLocalService);
 
@@ -99,10 +101,13 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
+		List<Tuple> commentTuples = searchResult.getCommentTuples();
 
-		Assert.assertSame(_mbMessage, mbMessages.get(0));
-		Assert.assertEquals(1, mbMessages.size());
+		Tuple commentTuple = commentTuples.get(0);
+		Comment comment = (Comment)commentTuple.getObject(0);
+
+		Assert.assertSame(_mbMessage.getMessageId(), comment.getCommentId());
+		Assert.assertEquals(1, commentTuples.size());
 
 		Assert.assertNull(searchResult.getSummary());
 

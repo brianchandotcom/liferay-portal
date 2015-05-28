@@ -29,7 +29,7 @@ import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -173,7 +173,7 @@ public class FileEntryAtomCollectionAdapter
 		return DLAppServiceUtil.getFileEntries(
 			repositoryId, folderId, atomPager.getStart(),
 			atomPager.getEnd() + 1,
-			new RepositoryModelNameComparator<FileEntry>());
+			new RepositoryModelTitleComparator<FileEntry>());
 	}
 
 	@Override

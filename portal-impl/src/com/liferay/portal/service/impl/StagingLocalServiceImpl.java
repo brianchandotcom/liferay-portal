@@ -63,7 +63,7 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -768,7 +768,7 @@ public class StagingLocalServiceImpl extends StagingLocalServiceBaseImpl {
 			List<FileEntry> fileEntries =
 				PortletFileRepositoryUtil.getPortletFileEntries(
 					folder.getGroupId(), folder.getFolderId(),
-					new RepositoryModelNameComparator<FileEntry>(true));
+					new RepositoryModelTitleComparator<FileEntry>(true));
 
 			for (FileEntry fileEntry : fileEntries) {
 				try {

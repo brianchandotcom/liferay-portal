@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model.impl;
+package com.liferay.dynamic.data.lists.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 
 /**
  * The extended model base implementation for the DDLRecord service. Represents a row in the &quot;DDLRecord&quot; database table, with each column mapped to a property of this class.

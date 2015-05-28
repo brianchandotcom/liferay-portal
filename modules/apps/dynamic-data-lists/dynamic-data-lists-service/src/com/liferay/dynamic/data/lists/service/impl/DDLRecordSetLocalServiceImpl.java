@@ -12,8 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.impl;
+package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException;
+import com.liferay.dynamic.data.lists.exception.RecordSetDuplicateRecordSetKeyException;
+import com.liferay.dynamic.data.lists.exception.RecordSetNameException;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -23,11 +28,6 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException;
-import com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException;
-import com.liferay.portlet.dynamicdatalists.RecordSetNameException;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordSetLocalServiceBaseImpl;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructureLink;
 

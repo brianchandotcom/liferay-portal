@@ -103,6 +103,10 @@ public class PortletDisplayTemplateUtil {
 					groupId, classNameId);
 	}
 
+	public static String getDisplayStyle(String ddmTemplateKey) {
+		return getPortletDisplayTemplate().getDisplayStyle(ddmTemplateKey);
+	}
+
 	public static PortletDisplayTemplate getPortletDisplayTemplate() {
 		PortalRuntimePermission.checkGetBeanProperty(
 			PortletDisplayTemplate.class);
@@ -128,6 +132,15 @@ public class PortletDisplayTemplateUtil {
 		return
 			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
 				groupId, classNameId, displayStyle);
+	}
+
+	public static DDMTemplate getPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId, String displayStyle,
+		boolean useDefault) {
+
+		return
+			getPortletDisplayTemplate().getPortletDisplayTemplateDDMTemplate(
+				groupId, classNameId, displayStyle, useDefault);
 	}
 
 	/**

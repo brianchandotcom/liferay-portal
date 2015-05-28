@@ -22,8 +22,6 @@ import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.lang.reflect.InvocationHandler;
@@ -36,7 +34,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,20 +48,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, DLAppLocalServiceUtil.class,
-	IndexerRegistryUtil.class, ServiceTrackerCollections.class
+	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
+	ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilDLFileEntryTest
 	extends BaseSearchResultUtilTestCase {
-
-	@Before
-	@Override
-	public void setUp() {
-		super.setUp();
-
-		setUpDLAppLocalServiceUtil();
-	}
 
 	@Test
 	public void testDLFileEntry() throws Exception {
@@ -80,7 +69,7 @@ public class SearchResultUtilDLFileEntryTest
 
 		Assert.assertNull(searchResult.getSummary());
 
-		verifyZeroInteractions(_dlAppLocalService);
+		verifyZeroInteractions(dlAppLocalService);
 
 		assertEmptyMBMessages(searchResult);
 		assertEmptyVersions(searchResult);
@@ -138,7 +127,7 @@ public class SearchResultUtilDLFileEntryTest
 		);
 
 		when(
-			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_fileEntry
 		);
@@ -228,7 +217,7 @@ public class SearchResultUtilDLFileEntryTest
 	@Test
 	public void testDLFileEntryMissing() throws Exception {
 		when(
-			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			null
 		);
@@ -246,7 +235,7 @@ public class SearchResultUtilDLFileEntryTest
 		assertEmptyFileEntryTuples(searchResult);
 
 		Mockito.verify(
-			_dlAppLocalService
+			dlAppLocalService
 		).getFileEntry(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
@@ -270,7 +259,7 @@ public class SearchResultUtilDLFileEntryTest
 	@Test
 	public void testDLFileEntryWithBrokenIndexer() throws Exception {
 		when(
-			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_fileEntry
 		);
@@ -321,7 +310,7 @@ public class SearchResultUtilDLFileEntryTest
 		assertEmptyFileEntryTuples(searchResult);
 
 		Mockito.verify(
-			_dlAppLocalService
+			dlAppLocalService
 		).getFileEntry(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
@@ -330,21 +319,8 @@ public class SearchResultUtilDLFileEntryTest
 		assertEmptyVersions(searchResult);
 	}
 
-	protected void setUpDLAppLocalServiceUtil() {
-		mockStatic(DLAppLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(DLAppLocalServiceUtil.class, "getService")
-		).toReturn(
-			_dlAppLocalService
-		);
-	}
-
 	private static final String _DL_FILE_ENTRY_CLASS_NAME =
 		DLFileEntry.class.getName();
-
-	@Mock
-	private DLAppLocalService _dlAppLocalService;
 
 	@Mock
 	private FileEntry _fileEntry;

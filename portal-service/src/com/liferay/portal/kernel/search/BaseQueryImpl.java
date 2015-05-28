@@ -27,6 +27,11 @@ public abstract class BaseQueryImpl implements Query {
 	}
 
 	@Override
+	public float getBoost() {
+		return _boost;
+	}
+
+	@Override
 	public QueryConfig getQueryConfig() {
 		if (_queryConfig == null) {
 			_queryConfig = new QueryConfig();
@@ -39,10 +44,25 @@ public abstract class BaseQueryImpl implements Query {
 	public abstract Object getWrappedQuery();
 
 	@Override
+	public boolean isDefaultBoost() {
+		if (_boost == DEFAULT_BOOST) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public void setBoost(float boost) {
+		_boost = boost;
+	}
+
+	@Override
 	public void setQueryConfig(QueryConfig queryConfig) {
 		_queryConfig = queryConfig;
 	}
 
+	private float _boost = DEFAULT_BOOST;
 	private QueryConfig _queryConfig;
 
 }

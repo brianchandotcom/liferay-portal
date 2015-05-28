@@ -12,8 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.impl;
+package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordConstants;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.base.DDLRecordLocalServiceBaseImpl;
+import com.liferay.dynamic.data.lists.util.DDL;
+import com.liferay.dynamic.data.lists.util.DDLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -38,13 +45,6 @@ import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatalists.util.DDL;
-import com.liferay.portlet.dynamicdatalists.util.DDLUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -273,7 +273,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getLatestRecordVersion(
+	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getLatestRecordVersion(
 	 *             long)}
 	 */
 	@Deprecated
@@ -331,7 +331,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersion(
+	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersion(
 	 *             long)}
 	 */
 	@Deprecated
@@ -344,7 +344,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersion(
+	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersion(
 	 *             long, String)}
 	 */
 	@Deprecated
@@ -357,7 +357,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersions(
+	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersions(
 	 *             long, int, int, OrderByComparator)}
 	 */
 	@Deprecated
@@ -372,7 +372,7 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService#getRecordVersionsCount(
+	 *             com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService#getRecordVersionsCount(
 	 *             long)}
 	 */
 	@Deprecated

@@ -159,7 +159,7 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
-	public <T extends Capability> T getCapability(Class<T> capabilityClass) {
+	public <C extends Capability> C getCapability(Class<C> capabilityClass) {
 		checkDocumentRepository();
 
 		return documentRepository.getCapability(capabilityClass);

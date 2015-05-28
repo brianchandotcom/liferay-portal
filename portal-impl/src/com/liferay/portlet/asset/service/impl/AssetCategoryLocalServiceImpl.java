@@ -241,7 +241,7 @@ public class AssetCategoryLocalServiceImpl
 				rebuildTreeGroupIds.add(groupId);
 			}
 
-			deleteCategory(category, true);
+			assetCategoryLocalService.deleteCategory(category, true);
 		}
 	}
 
@@ -260,7 +260,6 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
-	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetCategory deleteCategory(AssetCategory category)
 		throws PortalException {
 
@@ -269,6 +268,7 @@ public class AssetCategoryLocalServiceImpl
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
 	public AssetCategory deleteCategory(
 			AssetCategory category, boolean skipRebuildTree)
 		throws PortalException {

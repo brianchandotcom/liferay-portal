@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search.facet;
 
 import com.liferay.portal.kernel.search.BooleanClause;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
@@ -25,7 +26,7 @@ import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
  */
 public interface Facet {
 
-	public BooleanClause getFacetClause();
+	public BooleanClause<Query> getFacetClause();
 
 	public FacetCollector getFacetCollector();
 

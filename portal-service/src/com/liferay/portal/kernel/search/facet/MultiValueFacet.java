@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
@@ -132,7 +133,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	@Override
-	protected BooleanClause doGetFacetClause() {
+	protected BooleanClause<Query> doGetFacetClause() {
 		SearchContext searchContext = getSearchContext();
 
 		FacetConfiguration facetConfiguration = getFacetConfiguration();

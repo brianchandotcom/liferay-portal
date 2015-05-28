@@ -30,17 +30,7 @@ StructureDisplayTerms displayTerms = new StructureDisplayTerms(renderRequest);
 
 		<aui:input inlineField="<%= true %>" name="<%= StructureDisplayTerms.DESCRIPTION %>" size="20" value="<%= displayTerms.getDescription() %>" />
 
-		<c:choose>
-			<c:when test="<%= scopeClassNameId == 0 %>">
-				<aui:select inlineField="<%= true %>" label="type" name="<%= StructureDisplayTerms.CLASS_NAME_ID %>">
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
-					<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" selected='<%= "datalist".equals(displayTerms.getStorageType()) %>' value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
-				</aui:select>
-			</c:when>
-			<c:otherwise>
-				<aui:input name="<%= StructureDisplayTerms.CLASS_NAME_ID %>" type="hidden" value="<%= scopeClassNameId %>" />
-			</c:otherwise>
-		</c:choose>
+		<aui:input name="<%= StructureDisplayTerms.CLASS_NAME_ID %>" type="hidden" value="<%= scopeClassNameId %>" />
 
 		<c:choose>
 			<c:when test="<%= Validator.isNull(storageTypeValue) %>">

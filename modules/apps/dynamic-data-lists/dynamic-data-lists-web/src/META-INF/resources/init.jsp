@@ -26,7 +26,22 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.lists.web.search.RecordSetDisplayTerms" %><%@
+<%@ page import="com.liferay.dynamic.data.lists.exception.NoSuchRecordException" %><%@
+page import="com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException" %><%@
+page import="com.liferay.dynamic.data.lists.exception.RecordSetDDMStructureIdException" %><%@
+page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordConstants" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordSetConstants" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordVersion" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil" %><%@
+page import="com.liferay.dynamic.data.lists.service.permission.DDLPermission" %><%@
+page import="com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission" %><%@
+page import="com.liferay.dynamic.data.lists.util.DDLUtil" %><%@
+page import="com.liferay.dynamic.data.lists.web.search.RecordSetDisplayTerms" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.web.search.RecordSetSearchTerms" %><%@
 page import="com.liferay.portal.NoSuchWorkflowDefinitionLinkException" %><%@
@@ -68,21 +83,6 @@ page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.documentlibrary.DuplicateFileException" %><%@
 page import="com.liferay.portlet.documentlibrary.FileSizeException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.RecordSetDDMStructureIdException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.RecordSetNameException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecord" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordConstants" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLPermission" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordSetPermission" %><%@
-page import="com.liferay.portlet.dynamicdatalists.util.DDLUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@

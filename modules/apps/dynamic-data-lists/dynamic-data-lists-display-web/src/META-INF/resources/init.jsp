@@ -25,6 +25,12 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.dynamic.data.lists.display.web.context.DDLDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecord" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
+page import="com.liferay.dynamic.data.lists.model.DDLRecordSetConstants" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil" %><%@
+page import="com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -47,12 +53,6 @@ page import="com.liferay.portal.service.PortletLocalServiceUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.NoSuchRecordSetException" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecord" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" %><%@
-page import="com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil" %><%@
-page import="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMFormField" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@

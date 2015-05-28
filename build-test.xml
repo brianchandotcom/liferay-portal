@@ -5446,14 +5446,32 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<antelope:replace regex="," replacement="_" />
 				</antelope:stringutil>
 
+				<get-poshi-class-name />
+				<get-poshi-method-name />
+
+				<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+
 				<if>
 					<and>
-						<available file="portal-web/test-results/functional/report.html" />
+						<or>
+							<available file="portal-web/test-results/functional/report.html" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+						</or>
 						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
 					</and>
 					<then>
+						<if>
+							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+							<then>
+								<property name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+							</then>
+							<else>
+								<property name="result.file" value="portal-web/test-results/functional/report.html" />
+							</else>
+						</if>
+
 						<copy
-							file="portal-web/test-results/functional/report.html"
+							file="${result.file}"
 							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
@@ -5461,14 +5479,29 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 				<if>
 					<and>
-						<available file="portal-web/test-results/functional/screenshots" />
+						<or>
+							<available file="portal-web/test-results/functional/screenshots" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+						</or>
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
-							<fileset
-								dir="portal-web/test-results/functional/screenshots"
-							/>
+						<if>
+							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+							<then>
+								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+
+								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshot" />
+							</then>
+							<else>
+								<property name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
+
+								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots" />
+							</else>
+						</if>
+
+						<copy todir="${screenshot.dest.dir}">
+							<fileset dir="${screenshot.dir}" erroronmissingdir="false" />
 						</copy>
 					</then>
 				</if>
@@ -5476,7 +5509,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<antcall target="build-test-results-xml" />
 
 				<first id="first">
-					<fileset dir="portal-web/test-results/functional/" includes="TEST-com.liferay.portalweb.*.xml,TEST-com.liferay.portalweb2.*.xml" />
+					<fileset dir="portal-web/test-results/" includes="**/TEST-com.liferay.portalweb.*.xml,**/TEST-com.liferay.portalweb2.*.xml,**/TEST-com.liferay.poshi.runner.*.xml" />
 				</first>
 
 				<property name="jenkins.results.xml.file" value="${toString:first}" />

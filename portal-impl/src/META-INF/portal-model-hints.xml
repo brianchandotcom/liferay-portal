@@ -1662,62 +1662,6 @@
 		<field name="type" type="String" />
 		<field name="typePK" type="long" />
 	</model>
-	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecord">
-		<field name="uuid" type="String" />
-		<field name="recordId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="versionUserId" type="long" />
-		<field name="versionUserName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="DDMStorageId" type="long" />
-		<field name="recordSetId" type="long" />
-		<field name="version" type="String" />
-		<field name="displayIndex" type="int" />
-	</model>
-	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet">
-		<field name="uuid" type="String" />
-		<field name="recordSetId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="DDMStructureId" type="long" />
-		<field name="recordSetKey" type="String">
-			<hint name="upper-case">true</hint>
-			<hint name="auto-escape">false</hint>
-		</field>
-		<field name="name" type="String" localized="true">
-			<validator name="required" />
-		</field>
-		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="minDisplayRows" type="int" />
-		<field name="scope" type="int" />
-	</model>
-	<model name="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion">
-		<field name="recordVersionId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="DDMStorageId" type="long" />
-		<field name="recordSetId" type="long" />
-		<field name="recordId" type="long" />
-		<field name="version" type="String" />
-		<field name="displayIndex" type="int" />
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMContent">
 		<field name="uuid" type="String" />
 		<field name="contentId" type="long" />

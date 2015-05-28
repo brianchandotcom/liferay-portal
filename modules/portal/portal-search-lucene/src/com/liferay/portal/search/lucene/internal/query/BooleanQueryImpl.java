@@ -373,11 +373,11 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
-	public List<BooleanClause> clauses() {
+	public List<BooleanClause<Query>> clauses() {
 		List<org.apache.lucene.search.BooleanClause> luceneBooleanClauses =
 			_booleanQuery.clauses();
 
-		List<BooleanClause> booleanClauses = new ArrayList<>(
+		List<BooleanClause<Query>> booleanClauses = new ArrayList<>(
 			luceneBooleanClauses.size());
 
 		for (int i = 0; i < luceneBooleanClauses.size(); i++) {

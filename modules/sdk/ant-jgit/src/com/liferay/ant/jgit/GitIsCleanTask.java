@@ -47,7 +47,7 @@ public class GitIsCleanTask extends Task implements Condition {
 		try (Repository repository = RepositoryCache.open(
 				RepositoryCache.FileKey.exact(gitDir, FS.DETECTED))) {
 
-			Git git = new Git(repository);
+			Git git = new Git(new DirCacheCachedRepositoryWrapper(repository));
 
 			StatusCommand statusCommand = git.status();
 

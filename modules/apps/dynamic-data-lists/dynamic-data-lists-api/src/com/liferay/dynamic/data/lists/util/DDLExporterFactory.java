@@ -14,42 +14,76 @@
 
 package com.liferay.dynamic.data.lists.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import java.util.Collection;
+import java.util.List;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+
+import com.liferay.osgi.service.tracker.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.map.ServiceTrackerMapFactory;
 
 /**
  * @author Marcellus Tavares
  */
+@Component(immediate = true, service = DDLExporterFactory.class)
 public class DDLExporterFactory {
 
-	public static DDLExporter getDDLExporter(DDLExportFormat exportFormat)
-		throws PortalException {
-
-		DDLExporter exporter = _exporters.get(exportFormat);
-
-		if (exporter == null) {
-			throw new PortalException("Invalid format type " + exportFormat);
+	public Collection<String> getExporterFormats() {
+		return _serviceTrackerMap.keySet();
+	}
+	
+	public DDLExporter getDDLExporter(String exportFormat) {
+		List<DDLExporter> ddlExporters = _serviceTrackerMap.getService(
+			exportFormat);
+		
+		if (ddlExporters == null) {
+			throw new IllegalArgumentException(
+				"There is no DDLExporter registered that supports the format " + 
+					exportFormat);
 		}
+		
+		return ddlExporters.get(0);
+	}
+	
+	@Activate
+	protected void activate(final BundleContext bundleContext) 
+		throws InvalidSyntaxException  {
+		
+		_serviceTrackerMap = ServiceTrackerMapFactory.multiValueMap(
+			bundleContext, DDLExporter.class, null,
+			new ServiceReferenceMapper<String, DDLExporter>() {
 
-		return exporter;
+				@Override
+				public void map(
+					ServiceReference<DDLExporter> serviceReference,
+					Emitter<String> emmitter) {
+					
+					DDLExporter ddlExporter = bundleContext.getService(
+						serviceReference);
+					
+					try {
+						emmitter.emit(ddlExporter.getFormat());
+					}
+					finally {
+						bundleContext.ungetService(serviceReference);
+					}
+				}
+			});
+
+		_serviceTrackerMap.open();
 	}
 
-	public void setDDLExporters(Map<String, DDLExporter> exporters) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_exporters = new HashMap<>();
-
-		for (Map.Entry<String, DDLExporter> entry : exporters.entrySet()) {
-			DDLExportFormat exportFormat = DDLExportFormat.parse(
-				entry.getKey());
-
-			_exporters.put(exportFormat, entry.getValue());
-		}
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerMap.close();
 	}
 
-	private static Map<DDLExportFormat, DDLExporter> _exporters;
+	private ServiceTrackerMap<String, List<DDLExporter>> _serviceTrackerMap;
 
 }

@@ -16,7 +16,6 @@ package com.liferay.dynamic.data.lists.web.portlet.action;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
-import com.liferay.dynamic.data.lists.util.DDLExportFormat;
 import com.liferay.dynamic.data.lists.util.DDLExporter;
 import com.liferay.dynamic.data.lists.util.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
@@ -33,11 +32,11 @@ import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -77,9 +76,8 @@ public class ExportRecordSetAction extends BaseActionCommand {
 			recordSet.getName(themeDisplay.getLocale()) + CharPool.PERIOD +
 				fileExtension;
 
-		DDLExportFormat exportFormat = DDLExportFormat.parse(fileExtension);
-
-		DDLExporter exporter = DDLExporterFactory.getDDLExporter(exportFormat);
+		DDLExporter exporter = _ddlExporterFactory.getDDLExporter(
+			fileExtension);
 
 		exporter.setLocale(themeDisplay.getLocale());
 
@@ -91,5 +89,14 @@ public class ExportRecordSetAction extends BaseActionCommand {
 		ServletResponseUtil.sendFile(
 			request, response, fileName, bytes, contentType);
 	}
+	
+	@Reference
+	protected void setDDLExporterFactory(
+		DDLExporterFactory ddlExporterFactory) {
+		
+		_ddlExporterFactory = ddlExporterFactory;
+	}
+
+	private DDLExporterFactory _ddlExporterFactory;
 
 }

@@ -1,23 +1,11 @@
 Bundle-Name: Liferay Sass Compiler Ruby
 Bundle-SymbolicName: com.liferay.sass.compiler.ruby
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.sass.compiler.ruby
 Include-Resource:\
 	classes,\
-	@lib/asm-commons.jar,\
-	@lib/asm.jar,\
-	@lib/bytelist.jar,\
 	@lib/com.liferay.ruby.gems.jar,\
-	@lib/jcodings.jar,\
-	@lib/jnr-constants.jar,\
-	@lib/jnr-enxio.jar,\
-	@lib/jnr-ffi.jar,\
-	@lib/jnr-posix.jar,\
-	@lib/jnr-unixsocket.jar,\
-	@lib/joda-time.jar,\
-	@lib/joni.jar,\
-	@lib/jruby-core.jar,\
-	@lib/jruby-stdlib.jar,\
-	@lib/jzlib.jar,\
-	@lib/options.jar
+	@lib/jruby-complete.jar
 Main-Class: com.liferay.sass.compiler.ruby.internal.RubySassCompiler
+-fixupmessages:\
+	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\
+	"While setting properties ...";is:=ignore

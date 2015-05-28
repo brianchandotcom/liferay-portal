@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.impl;
+package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.exception.NoSuchRecordVersionException;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.base.DDLRecordVersionLocalServiceBaseImpl;
+import com.liferay.dynamic.data.lists.util.comparator.DDLRecordVersionVersionComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portlet.dynamicdatalists.NoSuchRecordVersionException;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordVersionLocalServiceBaseImpl;
-import com.liferay.portlet.dynamicdatalists.util.comparator.DDLRecordVersionVersionComparator;
 
 import java.util.Collections;
 import java.util.List;

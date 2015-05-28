@@ -24,6 +24,7 @@ import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
+import com.liferay.gradle.util.ArrayUtil;
 import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.Validator;
@@ -324,15 +325,18 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		Copy copy = GradleUtil.addTask(
 			project, COPY_LIBS_TASK_NAME, Copy.class);
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+		copy.from(
+			new Callable<FileCollection>() {
 
-		copy.from(configuration);
+				@Override
+				public FileCollection call() throws Exception {
+					JavaCompile javaCompile = (JavaCompile)GradleUtil.getTask(
+						project, JavaPlugin.COMPILE_JAVA_TASK_NAME);
 
-		configuration = GradleUtil.getConfiguration(
-			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+					return javaCompile.getClasspath();
+				}
 
-		copy.from(configuration);
+			});
 
 		copy.include(
 			new Spec<FileTreeElement>() {
@@ -341,14 +345,22 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 				public boolean isSatisfiedBy(FileTreeElement fileTreeElement) {
 					File file = fileTreeElement.getFile();
 
+					if (ArrayUtil.contains(
+							_COPY_LIBS_FILE_NAMES, file.getName())) {
+
+						return true;
+					}
+
 					Gradle gradle = project.getGradle();
+
+					if (FileUtil.isChild(file, gradle.getGradleUserHomeDir())) {
+						return true;
+					}
 
 					Set<File> projectDependencyDirs =
 						_getProjectDependencyDirs();
 
-					if (FileUtil.isChild(file, gradle.getGradleUserHomeDir()) ||
-						projectDependencyDirs.contains(file.getParentFile())) {
-
+					if (projectDependencyDirs.contains(file.getParentFile())) {
 						return true;
 					}
 
@@ -419,7 +431,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 						for (String resource : resources) {
 							if (resource.startsWith(libDirName) ||
-								resource.startsWith("@" + libDirName)) {
+								resource.startsWith("@" + libDirName) ||
+								resource.contains("=@" + libDirName)) {
 
 								return true;
 							}
@@ -744,6 +757,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		bundleExtension.setJarBuilderFactory(
 			new LiferayJarBuilderFactory(project));
 	}
+
+	private static final String[] _COPY_LIBS_FILE_NAMES = {
+		"util-bridges.jar", "util-java.jar", "util-taglib.jar"
+	};
 
 	private static class LiferayJarBuilder extends JarBuilder {
 

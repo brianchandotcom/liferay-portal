@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for DDLRecordVersion. This utility wraps
- * {@link com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionServiceImpl} and is the
+ * {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
@@ -29,8 +31,8 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordVersionService
- * @see com.liferay.portlet.dynamicdatalists.service.base.DDLRecordVersionServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionServiceImpl
+ * @see com.liferay.dynamic.data.lists.service.base.DDLRecordVersionServiceBaseImpl
+ * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl
  * @generated
  */
 @ProviderType
@@ -38,7 +40,7 @@ public class DDLRecordVersionServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 
 	/**
@@ -50,21 +52,21 @@ public class DDLRecordVersionServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersion(recordId, version);
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRecordVersion(recordVersionId);
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getRecordVersions(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getRecordVersions(recordId, start, end, orderByComparator);
@@ -85,14 +87,7 @@ public class DDLRecordVersionServiceUtil {
 	}
 
 	public static DDLRecordVersionService getService() {
-		if (_service == null) {
-			_service = (DDLRecordVersionService)PortalBeanLocatorUtil.locate(DDLRecordVersionService.class.getName());
-
-			ReferenceRegistry.registerReference(DDLRecordVersionServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -102,5 +97,14 @@ public class DDLRecordVersionServiceUtil {
 	public void setService(DDLRecordVersionService service) {
 	}
 
-	private static DDLRecordVersionService _service;
+	private static ServiceTracker<DDLRecordVersionService, DDLRecordVersionService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDLRecordVersionServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<DDLRecordVersionService, DDLRecordVersionService>(bundle.getBundleContext(),
+				DDLRecordVersionService.class, null);
+
+		_serviceTracker.open();
+	}
 }

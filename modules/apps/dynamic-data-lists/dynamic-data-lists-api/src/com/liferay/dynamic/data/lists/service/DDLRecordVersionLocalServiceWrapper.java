@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -41,8 +41,8 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @return the d d l record version that was added
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion addDDLRecordVersion(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion) {
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion addDDLRecordVersion(
+		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
 		return _ddlRecordVersionLocalService.addDDLRecordVersion(ddlRecordVersion);
 	}
 
@@ -53,7 +53,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @return the new d d l record version
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion createDDLRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion createDDLRecordVersion(
 		long recordVersionId) {
 		return _ddlRecordVersionLocalService.createDDLRecordVersion(recordVersionId);
 	}
@@ -65,8 +65,8 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @return the d d l record version that was removed
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion deleteDDLRecordVersion(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion) {
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion deleteDDLRecordVersion(
+		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
 		return _ddlRecordVersionLocalService.deleteDDLRecordVersion(ddlRecordVersion);
 	}
 
@@ -78,7 +78,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @throws PortalException if a d d l record version with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion deleteDDLRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion deleteDDLRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionLocalService.deleteDDLRecordVersion(recordVersionId);
@@ -115,7 +115,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -135,7 +135,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -181,7 +181,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion fetchDDLRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion fetchDDLRecordVersion(
 		long recordVersionId) {
 		return _ddlRecordVersionLocalService.fetchDDLRecordVersion(recordVersionId);
 	}
@@ -209,7 +209,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @throws PortalException if a d d l record version with the primary key could not be found
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getDDLRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getDDLRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionLocalService.getDDLRecordVersion(recordVersionId);
@@ -219,7 +219,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* Returns a range of all the d d l record versions.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.dynamic.data.lists.model.impl.DDLRecordVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of d d l record versions
@@ -227,7 +227,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @return the range of d d l record versions
 	*/
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getDDLRecordVersions(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getDDLRecordVersions(
 		int start, int end) {
 		return _ddlRecordVersionLocalService.getDDLRecordVersions(start, end);
 	}
@@ -243,7 +243,7 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion(
 		long recordId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionLocalService.getLatestRecordVersion(recordId);
@@ -257,23 +257,23 @@ public class DDLRecordVersionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionLocalService.getRecordVersion(recordId, version);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionLocalService.getRecordVersion(recordVersionId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getRecordVersions(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator) {
 		return _ddlRecordVersionLocalService.getRecordVersions(recordId, start,
 			end, orderByComparator);
 	}
@@ -300,8 +300,8 @@ public class DDLRecordVersionLocalServiceWrapper
 	* @return the d d l record version that was updated
 	*/
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion updateDDLRecordVersion(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion) {
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion updateDDLRecordVersion(
+		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
 		return _ddlRecordVersionLocalService.updateDDLRecordVersion(ddlRecordVersion);
 	}
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -32,8 +32,8 @@ import com.liferay.portal.service.BaseService;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordServiceUtil
- * @see com.liferay.portlet.dynamicdatalists.service.base.DDLRecordServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordServiceImpl
+ * @see com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl
+ * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordServiceImpl
  * @generated
  */
 @AccessControlled
@@ -45,21 +45,21 @@ public interface DDLRecordService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDLRecordServiceUtil} to access the d d l record remote service. Add custom service methods to {@link com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDLRecordServiceUtil} to access the d d l record remote service. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord addRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord addRecord(
 		long groupId, long recordSetId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -67,7 +67,7 @@ public interface DDLRecordService extends BaseService {
 
 	public void deleteRecord(long recordId) throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord deleteRecordLocale(
+	public com.liferay.dynamic.data.lists.model.DDLRecord deleteRecordLocale(
 		long recordId, java.util.Locale locale,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
@@ -80,7 +80,7 @@ public interface DDLRecordService extends BaseService {
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord getRecord(
 		long recordId) throws PortalException;
 
 	public void revertRecord(long recordId, java.lang.String version,
@@ -103,20 +103,20 @@ public interface DDLRecordService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, int displayIndex,
 		java.util.Map<java.lang.String, java.io.Serializable> fieldsMap,
 		boolean mergeFields,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord updateRecord(
+	public com.liferay.dynamic.data.lists.model.DDLRecord updateRecord(
 		long recordId, boolean majorVersion, int displayIndex,
 		com.liferay.portlet.dynamicdatamapping.storage.Fields fields,
 		boolean mergeFields,

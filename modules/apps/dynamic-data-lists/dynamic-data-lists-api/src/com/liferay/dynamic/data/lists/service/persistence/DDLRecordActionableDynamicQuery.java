@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.persistence;
+package com.liferay.dynamic.data.lists.service.persistence;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.persistence;
+package com.liferay.dynamic.data.lists.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.util.PortalUtil;
 
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 
 /**
  * @author Brian Wing Shun Chan

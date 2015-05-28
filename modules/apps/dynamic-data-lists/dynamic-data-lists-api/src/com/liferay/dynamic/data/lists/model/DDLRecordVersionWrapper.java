@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -172,7 +172,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion ddlRecordVersion) {
+		com.liferay.dynamic.data.lists.model.DDLRecordVersion ddlRecordVersion) {
 		return _ddlRecordVersion.compareTo(ddlRecordVersion);
 	}
 
@@ -256,7 +256,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord getRecord()
+	public com.liferay.dynamic.data.lists.model.DDLRecord getRecord()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersion.getRecord();
 	}
@@ -272,7 +272,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet()
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersion.getRecordSet();
 	}
@@ -706,12 +706,12 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecordVersion> toCacheModel() {
 		return _ddlRecordVersion.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion toEscapedModel() {
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion toEscapedModel() {
 		return new DDLRecordVersionWrapper(_ddlRecordVersion.toEscapedModel());
 	}
 
@@ -721,7 +721,7 @@ public class DDLRecordVersionWrapper implements DDLRecordVersion,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion toUnescapedModel() {
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion toUnescapedModel() {
 		return new DDLRecordVersionWrapper(_ddlRecordVersion.toUnescapedModel());
 	}
 

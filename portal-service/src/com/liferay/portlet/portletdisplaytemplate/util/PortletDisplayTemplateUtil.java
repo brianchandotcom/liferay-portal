@@ -103,6 +103,14 @@ public class PortletDisplayTemplateUtil {
 					groupId, classNameId);
 	}
 
+	/**
+	 * Returns the display style stored in the portlet configuration from the
+	 * template key of the portlet display template's DDM template.
+	 *
+	 * @param  ddmTemplateKey the template key of the portlet display
+	 *         template's DDM template
+	 * @return the display style stored in the portlet configuration
+	 */
 	public static String getDisplayStyle(String ddmTemplateKey) {
 		return getPortletDisplayTemplate().getDisplayStyle(ddmTemplateKey);
 	}
@@ -134,6 +142,23 @@ public class PortletDisplayTemplateUtil {
 				groupId, classNameId, displayStyle);
 	}
 
+	/**
+	 * Returns the portlet display template's DDM template that's associated
+	 * with the class name ID and that matches the group and display style
+	 * stored in the portlet configuration. Optionally returns the default
+	 * portlet display template's DDM template that's associated with the class
+	 * name ID if none are found for the given parameters.
+	 *
+	 * @param  groupId the primary key of the group
+	 * @param  classNameId the primary key of the class name of the model the
+	 *         display style is related to
+	 * @param  displayStyle the display style stored in the portlet
+	 *         configuration
+	 * @param  useDefault whether to return the default portlet display
+	 *         template's DDM template that's associated with the class name ID
+	 *         if none are found for the given parameters.
+	 * @return the portlet display template's DDM template
+	 */
 	public static DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle,
 		boolean useDefault) {

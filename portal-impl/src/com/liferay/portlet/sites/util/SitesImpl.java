@@ -1586,7 +1586,9 @@ public class SitesImpl implements Sites {
 		else if (group.isUser() &&
 				 (permissionChecker.getUserId() != group.getClassPK())) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOwnedByCurrentUser(
+				permissionChecker.getUserId(), group.getName(),
+				group.getClassPK(), ActionKeys.UPDATE);
 		}
 	}
 

@@ -141,6 +141,30 @@ public class PrincipalException extends PortalException {
 
 	}
 
+	public static class MustBeOwnedByCurrentUser extends PrincipalException {
+
+		public MustBeOwnedByCurrentUser(
+			long userId, String resourceName, long resourceId,
+			String actionId) {
+			
+			super(
+				String.format(
+					"User %s must be the owner of %s %s to perform action %s",
+					userId, resourceName, resourceId, actionId));
+
+			this.actionId = actionId;
+			this.resourceId = resourceId;
+			this.resourceName = resourceName;
+			this.userId = userId;
+		}
+
+		public final long userId;
+		public final String resourceName;
+		public final long resourceId;
+		public final String actionId;
+
+	}
+
 	public static class MustBePortletStrutsPath extends PrincipalException {
 
 		public MustBePortletStrutsPath(String strutsPath, String portletId) {

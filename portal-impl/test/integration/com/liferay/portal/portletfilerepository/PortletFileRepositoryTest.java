@@ -15,6 +15,9 @@
 package com.liferay.portal.portletfilerepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -31,7 +34,6 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
@@ -72,10 +74,15 @@ public class PortletFileRepositoryTest {
 		FileEntry fileEntry = _addPortletFileEntry(
 			RandomTestUtil.randomString());
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+		Repository repository = RepositoryProviderUtil.getRepository(
+			fileEntry.getRepositoryId());
+
+		WorkflowCapability workflowCapability = repository.getCapability(
+			WorkflowCapability.class);
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_APPROVED, dlFileEntry.getStatus());
+			WorkflowConstants.STATUS_APPROVED,
+			workflowCapability.getStatus(fileEntry));
 	}
 
 	@Test(expected = DuplicateFileException.class)

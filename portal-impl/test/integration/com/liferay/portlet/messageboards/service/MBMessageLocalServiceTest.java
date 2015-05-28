@@ -14,6 +14,9 @@
 
 package com.liferay.portlet.messageboards.service;
 
+import com.liferay.portal.kernel.repository.Repository;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -35,7 +38,6 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -122,10 +124,15 @@ public class MBMessageLocalServiceTest {
 
 		FileEntry fileEntry = fileEntries.get(0);
 
-		DLFileEntry dlFileEntry = ((DLFileEntry)fileEntry.getModel());
+		Repository repository = RepositoryProviderUtil.getRepository(
+			fileEntry.getRepositoryId());
+
+		WorkflowCapability workflowCapability = repository.getCapability(
+			WorkflowCapability.class);
 
 		Assert.assertEquals(
-			WorkflowConstants.STATUS_IN_TRASH, dlFileEntry.getStatus());
+			WorkflowConstants.STATUS_IN_TRASH,
+			workflowCapability.getStatus(fileEntry));
 	}
 
 	@Test

@@ -25,6 +25,7 @@ import com.liferay.portal.repository.liferayrepository.LiferayWorkflowLocalRepos
 import com.liferay.portal.repository.liferayrepository.LiferayWorkflowRepositoryWrapper;
 import com.liferay.portal.repository.util.RepositoryWrapperAware;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 
 import java.io.Serializable;
@@ -36,7 +37,7 @@ import java.util.Map;
  * @author Adolfo Pérez
  */
 public class MinimalWorkflowCapability
-	implements RepositoryWrapperAware, WorkflowCapability {
+	implements RepositoryWrapperAware, WorkflowCapability, WorkflowSupport {
 
 	@Override
 	public void addFileEntry(
@@ -52,6 +53,13 @@ public class MinimalWorkflowCapability
 		throws PortalException {
 
 		doUpdateStatus(userId, fileEntry, serviceContext);
+	}
+
+	@Override
+	public int getStatus(FileEntry fileEntry) {
+		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
+
+		return dlFileEntry.getStatus();
 	}
 
 	@Override

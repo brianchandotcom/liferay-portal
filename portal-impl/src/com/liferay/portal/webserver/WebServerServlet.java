@@ -23,7 +23,10 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
+import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.RepositoryException;
+import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
+import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -62,8 +65,6 @@ import com.liferay.portal.model.ImageConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
-import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -82,11 +83,9 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.util.AudioProcessorUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.DocumentConversionUtil;
@@ -325,13 +324,11 @@ public class WebServerServlet extends HttpServlet {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			uuid, groupId);
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
 		int status = ParamUtil.getInteger(
 			request, "status", WorkflowConstants.STATUS_APPROVED);
 
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-			dlFileEntry.isInTrash()) {
+			fileEntry.isInTrash()) {
 
 			return null;
 		}
@@ -688,10 +685,20 @@ public class WebServerServlet extends HttpServlet {
 				return false;
 			}
 
-			DLFileEntry dlFileEntry =
-				DLFileEntryServiceUtil.fetchFileEntryByImageId(imageId);
+			Repository repository = RepositoryProviderUtil.getImageRepository(
+				imageId);
 
-			if (dlFileEntry == null) {
+			if (!repository.isCapabilityProvided(ThumbnailCapability.class)) {
+				return false;
+			}
+
+			ThumbnailCapability thumbnailCapability = repository.getCapability(
+				ThumbnailCapability.class);
+
+			FileEntry fileEntry = thumbnailCapability.fetchFileEntryByImageId(
+				imageId);
+
+			if (fileEntry == null) {
 				return false;
 			}
 
@@ -700,20 +707,21 @@ public class WebServerServlet extends HttpServlet {
 
 			String queryString = StringPool.BLANK;
 
-			if (imageId == dlFileEntry.getSmallImageId()) {
+			if (imageId == thumbnailCapability.getSmallImageId(fileEntry)) {
 				queryString = "&imageThumbnail=1";
 			}
-			else if (imageId == dlFileEntry.getCustom1ImageId()) {
+			else if (imageId ==
+						thumbnailCapability.getCustom1ImageId(fileEntry)) {
+
 				queryString = "&imageThumbnail=2";
 			}
-			else if (imageId == dlFileEntry.getCustom2ImageId()) {
+			else if (imageId ==
+						thumbnailCapability.getCustom2ImageId(fileEntry)) {
+
 				queryString = "&imageThumbnail=3";
 			}
 
-			FileEntry fileEntry = new LiferayFileEntry(dlFileEntry);
-
-			FileVersion fileVersion = new LiferayFileVersion(
-				dlFileEntry.getFileVersion());
+			FileVersion fileVersion = fileEntry.getFileVersion();
 
 			if (PropsValues.DL_FILE_ENTRY_IG_THUMBNAIL_GENERATION &&
 				Validator.isNotNull(queryString)) {

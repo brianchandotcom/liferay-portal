@@ -17,10 +17,12 @@ package com.liferay.portal.kernel.repository.capabilities;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
- * @author Adolfo Pérez
+ * @author Iván Zaera
  */
-public interface WorkflowCapability extends Capability {
+public interface RelatedModelCapability extends Capability {
 
-	public int getStatus(FileEntry fileEntry);
+	public String getClassName(FileEntry fileEntry);
+
+	public long getClassPK(FileEntry fileEntry);
 
 }

@@ -16,13 +16,17 @@ package com.liferay.portal.repository.portletrepository;
 
 import com.liferay.portal.kernel.repository.DocumentRepository;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
+import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.registry.BaseRepositoryDefiner;
 import com.liferay.portal.kernel.repository.registry.CapabilityRegistry;
 import com.liferay.portal.kernel.repository.registry.RepositoryFactoryRegistry;
+import com.liferay.portal.repository.capabilities.LiferayRelatedModelCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.MinimalWorkflowCapability;
+import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
+import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 
 /**
  * @author Adolfo Pérez
@@ -43,11 +47,19 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	public void registerCapabilities(
 		CapabilityRegistry<DocumentRepository> capabilityRegistry) {
 
-		capabilityRegistry.addSupportedCapability(
-			WorkflowCapability.class, _workflowCapability);
+		DocumentRepository documentRepository = capabilityRegistry.getTarget();
+
+		capabilityRegistry.addExportedCapability(
+			RelatedModelCapability.class,
+			new LiferayRelatedModelCapability(
+				new RepositoryEntryConverter(),
+				new RepositoryEntryChecker(documentRepository)));
 
 		capabilityRegistry.addExportedCapability(
 			TrashCapability.class, new LiferayTrashCapability());
+
+		capabilityRegistry.addExportedCapability(
+			WorkflowCapability.class, new MinimalWorkflowCapability());
 	}
 
 	@Override
@@ -62,7 +74,5 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 	}
 
 	private RepositoryFactory _repositoryFactory;
-	private final WorkflowCapability _workflowCapability =
-		new MinimalWorkflowCapability();
 
 }

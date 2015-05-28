@@ -347,7 +347,7 @@ public class InitGradleTask extends DefaultTask {
 
 			if (Validator.isNotNull(autoUpdateXml)) {
 				contents.add(
-					wrapProperty("autoUpdateXml", autoUpdateXml, false));
+					wrapProperty("autoUpdateXml", autoUpdateXml, 1, false));
 			}
 		}
 
@@ -355,12 +355,12 @@ public class InitGradleTask extends DefaultTask {
 			String themeParent = getBuildXmlProperty("theme.parent");
 
 			if (Validator.isNotNull(themeParent)) {
-				contents.add(wrapProperty("themeParent", themeParent));
+				contents.add(wrapProperty("themeParent", themeParent, 1));
 			}
 
 			String themeType = getBuildXmlProperty("theme.type", "vm");
 
-			contents.add(wrapProperty("themeType", themeType));
+			contents.add(wrapProperty("themeType", themeType, 1));
 		}
 
 		if (!contents.isEmpty()) {
@@ -374,10 +374,26 @@ public class InitGradleTask extends DefaultTask {
 	protected List<String> getBuildGradleProperties() {
 		List<String> contents = new ArrayList<>();
 
+		String javacSource = getBuildXmlProperty("javac.source");
+
+		if (Validator.isNotNull(javacSource)) {
+			contents.add(wrapProperty("sourceCompatibility", javacSource, 0));
+		}
+
+		String javacTarget = getBuildXmlProperty("javac.target");
+
+		if (Validator.isNotNull(javacSource)) {
+			contents.add(wrapProperty("targetCompatibility", javacTarget, 0));
+		}
+
 		String pluginVersion = getBuildXmlProperty("plugin.version");
 
 		if (Validator.isNotNull(pluginVersion)) {
-			contents.add("version = \"" + pluginVersion + "\"");
+			if (!contents.isEmpty()) {
+				contents.add("");
+			}
+
+			contents.add(wrapProperty("version", pluginVersion, 0));
 		}
 
 		return contents;
@@ -534,16 +550,19 @@ public class InitGradleTask extends DefaultTask {
 		return sb.toString();
 	}
 
-	protected String wrapProperty(String name, String value) {
-		return wrapProperty(name, value, true);
+	protected String wrapProperty(String name, String value, int indentCount) {
+		return wrapProperty(name, value, indentCount, true);
 	}
 
 	protected String wrapProperty(
-		String name, String value, boolean quoteValue) {
+		String name, String value, int indentCount, boolean quoteValue) {
 
 		StringBuilder sb = new StringBuilder();
 
-		sb.append('\t');
+		for (int i = 0; i < indentCount; i++) {
+			sb.append('\t');
+		}
+
 		sb.append(name);
 		sb.append(" = ");
 

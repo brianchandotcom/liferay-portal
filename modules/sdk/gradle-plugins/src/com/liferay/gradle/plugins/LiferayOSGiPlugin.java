@@ -86,6 +86,16 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.apply(project);
 
 		configureBundleExtension(project);
+
+		project.afterEvaluate(
+			new Action<Project>() {
+
+				@Override
+				public void execute(Project project) {
+					configureBundleExtensionDefaults(project);
+				}
+
+			});
 	}
 
 	@Override
@@ -453,8 +463,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	protected void configureBundleExtension(Project project) {
 		Map<String, String> bundleInstructions = getBundleInstructions(project);
 
-		bundleInstructions.putAll(getBundleDefaultInstructions(project));
-
 		Properties bundleProperties;
 
 		try {
@@ -472,6 +480,23 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			String value = bundleProperties.getProperty(key);
 
 			bundleInstructions.put(key, value);
+		}
+	}
+
+	protected void configureBundleExtensionDefaults(Project project) {
+		Map<String, String> bundleInstructions = getBundleInstructions(project);
+
+		Map<String, String> bundleDefaultInstructions =
+			getBundleDefaultInstructions(project);
+
+		for (Map.Entry<String, String> entry :
+				bundleDefaultInstructions.entrySet()) {
+
+			String key = entry.getKey();
+
+			if (!bundleInstructions.containsKey(key)) {
+				bundleInstructions.put(key, entry.getValue());
+			}
 		}
 	}
 

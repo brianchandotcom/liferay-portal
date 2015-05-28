@@ -28,6 +28,11 @@ bundle {
 	instruction "-sass", "*"
 }
 
+compileJava {
+	options.encoding = "ISO-8859-1"
+	options.warnings = false
+}
+
 jar {
 	destinationDir = new File(sdkDir, "dist2")
 }

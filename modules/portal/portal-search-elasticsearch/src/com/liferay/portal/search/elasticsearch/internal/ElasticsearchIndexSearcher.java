@@ -26,14 +26,14 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
-import com.liferay.portal.kernel.search.QuerySuggester;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.search.query.QueryTranslator;
-import com.liferay.portal.kernel.search.util.SearchUtil;
+import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -247,9 +247,9 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		}
 
 		searchRequestBuilder.setHighlighterPostTags(
-			SearchUtil.HIGHLIGHT_TAG_CLOSE);
+			HighlightUtil.HIGHLIGHT_TAG_CLOSE);
 		searchRequestBuilder.setHighlighterPreTags(
-			SearchUtil.HIGHLIGHT_TAG_OPEN);
+			HighlightUtil.HIGHLIGHT_TAG_OPEN);
 		searchRequestBuilder.setHighlighterRequireFieldMatch(
 			queryConfig.isHighlightRequireFieldMatch());
 	}
@@ -310,7 +310,8 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 			snippet = sb.toString();
 		}
 
-		SearchUtil.addSnippet(document, queryTerms, snippet, snippetFieldName);
+		HighlightUtil.addSnippet(
+			document, queryTerms, snippet, snippetFieldName);
 	}
 
 	protected void addSnippets(

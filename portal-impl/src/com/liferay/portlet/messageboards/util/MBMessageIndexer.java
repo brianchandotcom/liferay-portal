@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BaseRelatedEntryIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.RelatedEntryIndexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
@@ -67,7 +69,8 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  */
 @OSGiBeanProperties
-public class MBMessageIndexer extends BaseIndexer {
+public class MBMessageIndexer
+	extends BaseIndexer implements RelatedEntryIndexer {
 
 	public static final String CLASS_NAME = MBMessage.class.getName();
 
@@ -79,6 +82,14 @@ public class MBMessageIndexer extends BaseIndexer {
 			Field.SCOPE_GROUP_ID, Field.TITLE, Field.UID);
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public void addRelatedClassNames(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		_relatedEntryIndexer.addRelatedClassNames(contextQuery, searchContext);
 	}
 
 	@Override
@@ -245,10 +256,13 @@ public class MBMessageIndexer extends BaseIndexer {
 			Indexer indexer = IndexerRegistryUtil.getIndexer(
 				message.getClassName());
 
-			if (indexer != null) {
+			if ((indexer != null) && (indexer instanceof RelatedEntryIndexer)) {
+				RelatedEntryIndexer relatedEntryIndexer =
+					(RelatedEntryIndexer)indexer;
+
 				Comment comment = new MBCommentImpl(message);
 
-				indexer.addRelatedEntryFields(document, comment);
+				relatedEntryIndexer.addRelatedEntryFields(document, comment);
 
 				document.addKeyword(Field.RELATED_ENTRY, true);
 			}
@@ -469,5 +483,8 @@ public class MBMessageIndexer extends BaseIndexer {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBMessageIndexer.class);
+
+	private final RelatedEntryIndexer _relatedEntryIndexer =
+		new BaseRelatedEntryIndexer();
 
 }

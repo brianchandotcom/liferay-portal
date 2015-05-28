@@ -132,13 +132,13 @@ for (int i = 0; i < openSearchInstances.size(); i++) {
 					%>
 
 					<a class="entry-title" href="<%= com.liferay.search.web.util.SearchUtil.getSearchResultViewURL(renderRequest, renderResponse, entryClassName, entryClassPK, searchDisplayContext.isViewInContext(), currentURL) %>">
-						<%= SearchUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
+						<%= HighlightUtil.highlight(HtmlUtil.escape(entryTitle), queryTerms) %>
 					</a>
 
 					<c:if test="<%= Validator.isNotNull(summary) %>">
 						<br />
 
-						<%= SearchUtil.highlight(HtmlUtil.escape(summary), queryTerms) %>
+						<%= HighlightUtil.highlight(HtmlUtil.escape(summary), queryTerms) %>
 					</c:if>
 
 					<br />

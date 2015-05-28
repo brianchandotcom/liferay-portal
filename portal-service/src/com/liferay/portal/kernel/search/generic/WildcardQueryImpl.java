@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.QueryTerm;
-import com.liferay.portal.kernel.search.QueryVisitor;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
  * @author Michael C. Han

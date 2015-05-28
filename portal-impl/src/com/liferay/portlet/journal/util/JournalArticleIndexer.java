@@ -23,11 +23,13 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
+import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.CharPool;
@@ -80,7 +82,8 @@ import javax.portlet.PortletResponse;
  * @author Tibor Lipusz
  */
 @OSGiBeanProperties
-public class JournalArticleIndexer extends BaseIndexer {
+public class JournalArticleIndexer
+	extends BaseIndexer implements DDMStructureIndexer {
 
 	public static final String CLASS_NAME = JournalArticle.class.getName();
 
@@ -229,6 +232,40 @@ public class JournalArticleIndexer extends BaseIndexer {
 			if (Validator.isNotNull(expandoAttributes)) {
 				addSearchExpando(searchQuery, searchContext, expandoAttributes);
 			}
+		}
+	}
+
+	@Override
+	public void reindexDDMStructures(List<Long> ddmStructureIds)
+		throws SearchException {
+
+		if (SearchEngineUtil.isIndexReadOnly() || !isIndexerEnabled()) {
+			return;
+		}
+
+		try {
+			String[] ddmStructureKeys = new String[ddmStructureIds.size()];
+
+			for (int i = 0; i < ddmStructureIds.size(); i++) {
+				long ddmStructureId = ddmStructureIds.get(i);
+
+				DDMStructure ddmStructure =
+					DDMStructureLocalServiceUtil.getDDMStructure(
+						ddmStructureId);
+
+				ddmStructureKeys[i] = ddmStructure.getStructureKey();
+			}
+
+			List<JournalArticle> articles =
+				JournalArticleLocalServiceUtil.
+					getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
+
+			for (JournalArticle article : articles) {
+				doReindex(article, false);
+			}
+		}
+		catch (Exception e) {
+			throw new SearchException(e);
 		}
 	}
 
@@ -518,30 +555,6 @@ public class JournalArticleIndexer extends BaseIndexer {
 		long companyId = GetterUtil.getLong(ids[0]);
 
 		reindexArticles(companyId);
-	}
-
-	@Override
-	protected void doReindexDDMStructures(List<Long> ddmStructureIds)
-		throws Exception {
-
-		String[] ddmStructureKeys = new String[ddmStructureIds.size()];
-
-		for (int i = 0; i < ddmStructureIds.size(); i++) {
-			long ddmStructureId = ddmStructureIds.get(i);
-
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.getDDMStructure(ddmStructureId);
-
-			ddmStructureKeys[i] = ddmStructure.getStructureKey();
-		}
-
-		List<JournalArticle> articles =
-			JournalArticleLocalServiceUtil.
-				getIndexableArticlesByDDMStructureKey(ddmStructureKeys);
-
-		for (JournalArticle article : articles) {
-			doReindex(article, false);
-		}
 	}
 
 	protected String extractDDMContent(

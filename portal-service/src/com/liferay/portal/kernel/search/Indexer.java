@@ -16,7 +16,6 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.security.permission.PermissionChecker;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -31,9 +30,6 @@ public interface Indexer {
 
 	public static final int DEFAULT_INTERVAL = 10000;
 
-	public void addRelatedEntryFields(Document document, Object obj)
-		throws Exception;
-
 	public void delete(long companyId, String uid) throws SearchException;
 
 	public void delete(Object obj) throws SearchException;
@@ -45,8 +41,6 @@ public interface Indexer {
 	 */
 	@Deprecated
 	public String[] getClassNames();
-
-	public int getDatabaseCount() throws Exception;
 
 	public Document getDocument(Object obj) throws SearchException;
 
@@ -64,9 +58,6 @@ public interface Indexer {
 	 */
 	@Deprecated
 	public String getPortletId();
-
-	public String getQueryString(SearchContext searchContext, Query query)
-		throws SearchException;
 
 	public String[] getSearchClassNames();
 
@@ -124,9 +115,6 @@ public interface Indexer {
 
 	public void reindex(String[] ids) throws SearchException;
 
-	public void reindexDDMStructures(List<Long> ddmStructureIds)
-		throws SearchException;
-
 	public Hits search(SearchContext searchContext) throws SearchException;
 
 	public Hits search(
@@ -135,7 +123,5 @@ public interface Indexer {
 
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);
-
-	public void updateFullQuery(SearchContext searchContext);
 
 }

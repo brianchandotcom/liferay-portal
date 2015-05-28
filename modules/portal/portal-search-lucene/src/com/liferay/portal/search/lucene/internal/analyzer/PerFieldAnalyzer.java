@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.Tokenizer;
+import com.liferay.portal.kernel.search.analysis.Tokenizer;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 

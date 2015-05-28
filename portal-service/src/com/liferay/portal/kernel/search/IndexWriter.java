@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
+
 import java.util.Collection;
 
 /**

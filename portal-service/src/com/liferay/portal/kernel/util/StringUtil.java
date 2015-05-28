@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.util.SearchUtil;
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.security.RandomUtil;
 
 import java.io.IOException;
@@ -680,23 +680,23 @@ public class StringUtil {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, moved to {@link SearchUtil#highlight(String,
+	 * @deprecated As of 7.0.0, moved to {@link HighlightUtil#highlight(String,
 	 *             String[])}}
 	 */
 	@Deprecated
 	public static String highlight(String s, String[] queryTerms) {
-		return SearchUtil.highlight(s, queryTerms);
+		return HighlightUtil.highlight(s, queryTerms);
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, moved to {@link SearchUtil#highlight(String,
+	 * @deprecated As of 7.0.0, moved to {@link HighlightUtil#highlight(String,
 	 *             String[], String, String)}}
 	 */
 	@Deprecated
 	public static String highlight(
 		String s, String[] queryTerms, String highlight1, String highlight2) {
 
-		return SearchUtil.highlight(s, queryTerms, highlight1, highlight2);
+		return HighlightUtil.highlight(s, queryTerms, highlight1, highlight2);
 	}
 
 	/**

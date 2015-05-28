@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.search.util.SearchUtil;
+import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -132,7 +132,7 @@ public class Summary {
 			return text;
 		}
 
-		text = SearchUtil.highlight(
+		text = HighlightUtil.highlight(
 			text, _queryTerms, _ESCAPE_SAFE_HIGHLIGHTS[0],
 			_ESCAPE_SAFE_HIGHLIGHTS[1]);
 
@@ -141,7 +141,7 @@ public class Summary {
 		}
 
 		return StringUtil.replace(
-			text, _ESCAPE_SAFE_HIGHLIGHTS, SearchUtil.HIGHLIGHTS);
+			text, _ESCAPE_SAFE_HIGHLIGHTS, HighlightUtil.HIGHLIGHTS);
 	}
 
 	private static final String[] _ESCAPE_SAFE_HIGHLIGHTS =

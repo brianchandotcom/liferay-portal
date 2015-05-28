@@ -320,7 +320,7 @@
 		<priority value="INFO" />
 	</category>
 
-	<category name="com.liferay.portal.kernel.search.BaseSpellCheckIndexWriter">
+	<category name="com.liferay.portal.kernel.search.suggest.BaseSpellCheckIndexWriter">
 		<priority value="INFO" />
 	</category>
 

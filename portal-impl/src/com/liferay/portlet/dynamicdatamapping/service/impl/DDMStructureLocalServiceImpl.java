@@ -18,6 +18,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -1487,10 +1488,15 @@ public class DDMStructureLocalServiceImpl
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			structure.getClassName());
 
-		List<Long> ddmStructureIds = getChildrenStructureIds(
-			structure.getGroupId(), structure.getStructureId());
+		if (indexer instanceof DDMStructureIndexer) {
+			DDMStructureIndexer ddmStructureIndexer =
+				(DDMStructureIndexer)indexer;
 
-		indexer.reindexDDMStructures(ddmStructureIds);
+			List<Long> ddmStructureIds = getChildrenStructureIds(
+				structure.getGroupId(), structure.getStructureId());
+
+			ddmStructureIndexer.reindexDDMStructures(ddmStructureIds);
+		}
 
 		return structure;
 	}

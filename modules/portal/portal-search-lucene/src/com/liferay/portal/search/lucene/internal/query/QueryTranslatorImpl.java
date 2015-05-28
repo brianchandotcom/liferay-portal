@@ -16,7 +16,7 @@ package com.liferay.portal.search.lucene.internal.query;
 
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.Query;
-import com.liferay.portal.kernel.search.StringQueryImpl;
+import com.liferay.portal.kernel.search.generic.StringQueryImpl;
 import com.liferay.portal.kernel.util.StringPool;
 
 import org.apache.lucene.analysis.Analyzer;

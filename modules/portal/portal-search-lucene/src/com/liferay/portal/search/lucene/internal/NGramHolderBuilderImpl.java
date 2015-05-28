@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.lucene.internal;
 
-import com.liferay.portal.kernel.search.NGramHolder;
-import com.liferay.portal.kernel.search.NGramHolderBuilder;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.suggest.NGramHolder;
+import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
 
 import java.io.StringReader;
 

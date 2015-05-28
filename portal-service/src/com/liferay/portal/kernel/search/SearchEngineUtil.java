@@ -46,27 +46,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SearchEngineUtil {
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}
-	 */
-	@Deprecated
-	public static final int ALL_POS = -1;
-
 	public static final String GENERIC_ENGINE_ID = "GENERIC_ENGINE";
 
 	public static final String SYSTEM_ENGINE_ID = "SYSTEM_ENGINE";
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addDocument(String, long,
-	 *             Document, boolean)}
-	 */
-	@Deprecated
-	public static void addDocument(long companyId, Document document)
-		throws SearchException {
-
-		addDocument(getSearchEngineId(document), companyId, document, true);
-	}
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #addDocument(String, long,
@@ -106,18 +88,6 @@ public class SearchEngineUtil {
 		searchContext.setSearchEngineId(searchEngineId);
 
 		indexWriter.addDocument(searchContext, document);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #addDocuments(String, long,
-	 *             Collection, boolean)}
-	 */
-	@Deprecated
-	public static void addDocuments(
-			long companyId, Collection<Document> documents)
-		throws SearchException {
-
-		addDocuments(getSearchEngineId(documents), companyId, documents, false);
 	}
 
 	/**
@@ -163,19 +133,6 @@ public class SearchEngineUtil {
 		indexWriter.addDocuments(searchContext, documents);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #setSearchEngine(String,
-	 *             SearchEngine)}
-	 */
-	@Deprecated
-	public static void addSearchEngine(SearchEngine searchEngine) {
-		String searchEngineId = getDefaultSearchEngineId();
-
-		PortalRuntimePermission.checkSearchEngine(searchEngineId);
-
-		setSearchEngine(searchEngineId, searchEngine);
-	}
-
 	public synchronized static void backup(long companyId, String backupName)
 		throws SearchException {
 
@@ -200,19 +157,6 @@ public class SearchEngineUtil {
 			for (long companyId : _companyIds) {
 				searchEngine.backup(companyId, backupName);
 			}
-		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteDocument(String, long,
-	 *             String)}
-	 */
-	@Deprecated
-	public static void deleteDocument(long companyId, String uid)
-		throws SearchException {
-
-		for (String searchEngineId : _searchEngines.keySet()) {
-			deleteDocument(searchEngineId, companyId, uid, true);
 		}
 	}
 
@@ -248,19 +192,6 @@ public class SearchEngineUtil {
 		searchContext.setSearchEngineId(searchEngineId);
 
 		indexWriter.deleteDocument(searchContext, uid);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteDocuments(String,
-	 *             long, Collection, boolean)}
-	 */
-	@Deprecated
-	public static void deleteDocuments(long companyId, Collection<String> uids)
-		throws SearchException {
-
-		for (String searchEngineId : _searchEngines.keySet()) {
-			deleteDocuments(searchEngineId, companyId, uids, true);
-		}
 	}
 
 	/**
@@ -324,19 +255,6 @@ public class SearchEngineUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             #deleteEntityDocuments(String, long, String, boolean)}
-	 */
-	@Deprecated
-	public static void deletePortletDocuments(long companyId, String portletId)
-		throws SearchException {
-
-		for (String searchEngineId : _searchEngines.keySet()) {
-			deleteEntityDocuments(searchEngineId, companyId, portletId, true);
-		}
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #deleteEntityDocuments(String, long, String, boolean)}
 	 */
@@ -389,14 +307,6 @@ public class SearchEngineUtil {
 		}
 
 		return StringPool.BLANK;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #getSearchEngine(String)}
-	 */
-	@Deprecated
-	public static SearchEngine getSearchEngine() {
-		return getSearchEngine(getDefaultSearchEngineId());
 	}
 
 	public static SearchEngine getSearchEngine(String searchEngineId) {
@@ -701,107 +611,6 @@ public class SearchEngineUtil {
 		}
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public static Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			Query query, int start, int end)
-		throws SearchException {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(getDefaultSearchEngineId());
-
-		if (userId > 0) {
-			query = _searchPermissionChecker.getPermissionQuery(
-				companyId, groupIds, userId, className, query, searchContext);
-		}
-
-		return search(
-			companyId, query, SortFactoryUtil.getDefaultSorts(), start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public static Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			Query query, Sort sort, int start, int end)
-		throws SearchException {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(getDefaultSearchEngineId());
-
-		if (userId > 0) {
-			query = _searchPermissionChecker.getPermissionQuery(
-				companyId, groupIds, userId, className, query, searchContext);
-		}
-
-		return search(companyId, query, sort, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public static Hits search(
-			long companyId, long[] groupIds, long userId, String className,
-			Query query, Sort[] sorts, int start, int end)
-		throws SearchException {
-
-		SearchContext searchContext = new SearchContext();
-
-		searchContext.setSearchEngineId(getDefaultSearchEngineId());
-
-		if (userId > 0) {
-			query = _searchPermissionChecker.getPermissionQuery(
-				companyId, groupIds, userId, className, query, searchContext);
-		}
-
-		return search(companyId, query, sorts, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(String, long, Query,
-	 *             int, int)}
-	 */
-	@Deprecated
-	public static Hits search(long companyId, Query query, int start, int end)
-		throws SearchException {
-
-		return search(getDefaultSearchEngineId(), companyId, query, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(String, long, Query,
-	 *             Sort, int, int)}
-	 */
-	@Deprecated
-	public static Hits search(
-			long companyId, Query query, Sort sort, int start, int end)
-		throws SearchException {
-
-		return search(
-			getDefaultSearchEngineId(), companyId, query, sort, start, end);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #search(String, long, Query,
-	 *             Sort[], int, int)}
-	 */
-	@Deprecated
-	public static Hits search(
-			long companyId, Query query, Sort[] sorts, int start, int end)
-		throws SearchException {
-
-		return search(
-			getDefaultSearchEngineId(), companyId, query, sorts, start, end);
-	}
-
 	public static Hits search(SearchContext searchContext, Query query)
 		throws SearchException {
 
@@ -942,17 +751,6 @@ public class SearchEngineUtil {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateDocument(String, long,
-	 *             Document)}
-	 */
-	@Deprecated
-	public static void updateDocument(long companyId, Document document)
-		throws SearchException {
-
-		updateDocument(getSearchEngineId(document), companyId, document, true);
-	}
-
-	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #updateDocument(String, long,
 	 *             Document, boolean)}
 	 */
@@ -990,19 +788,6 @@ public class SearchEngineUtil {
 		searchContext.setSearchEngineId(searchEngineId);
 
 		indexWriter.updateDocument(searchContext, document);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #updateDocuments(String,
-	 *             long, Collection)}
-	 */
-	@Deprecated
-	public static void updateDocuments(
-			long companyId, Collection<Document> documents)
-		throws SearchException {
-
-		updateDocuments(
-			getSearchEngineId(documents), companyId, documents, true);
 	}
 
 	/**
@@ -1067,19 +852,6 @@ public class SearchEngineUtil {
 			getClass(), "excludedEntryClassNames");
 
 		_excludedEntryClassNames.addAll(excludedEntryClassNames);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #setSearchEngine(String,
-	 *             SearchEngine)}
-	 */
-	@Deprecated
-	public void setSearchEngine(SearchEngine searchEngine) {
-		String searchEngineId = getDefaultSearchEngineId();
-
-		PortalRuntimePermission.checkSearchEngine(searchEngineId);
-
-		setSearchEngine(searchEngineId, searchEngine);
 	}
 
 	public void setSearchPermissionChecker(

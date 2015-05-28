@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.query.QueryVisitor;
+
 import java.io.Serializable;
 
 /**

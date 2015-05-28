@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
+import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
 import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;

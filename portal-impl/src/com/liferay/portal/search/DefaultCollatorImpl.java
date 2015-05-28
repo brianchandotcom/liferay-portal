@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search;
 
-import com.liferay.portal.kernel.search.Collator;
+import com.liferay.portal.kernel.search.suggest.Collator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

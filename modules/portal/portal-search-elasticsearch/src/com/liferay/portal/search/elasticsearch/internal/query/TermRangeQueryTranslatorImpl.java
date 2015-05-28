@@ -39,6 +39,10 @@ public class TermRangeQueryTranslatorImpl implements TermRangeQueryTranslator {
 		rangeQueryBuilder.includeUpper(termRangeQuery.includesUpper());
 		rangeQueryBuilder.to(termRangeQuery.getUpperTerm());
 
+		if (!termRangeQuery.isDefaultBoost()) {
+			rangeQueryBuilder.boost(termRangeQuery.getBoost());
+		}
+
 		return rangeQueryBuilder;
 	}
 

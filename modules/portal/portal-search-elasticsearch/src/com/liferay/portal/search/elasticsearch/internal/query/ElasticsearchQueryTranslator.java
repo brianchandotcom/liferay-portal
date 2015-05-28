@@ -74,7 +74,7 @@ public class ElasticsearchQueryTranslator
 		QueryBuilder queryBuilder = query.accept(this);
 
 		if (queryBuilder == null) {
-			queryBuilder = QueryBuilders.queryString(query.toString());
+			queryBuilder = QueryBuilders.queryStringQuery(query.toString());
 		}
 
 		return queryBuilder;

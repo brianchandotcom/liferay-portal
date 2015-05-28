@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.portlet.dynamicdatamapping.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -39,9 +38,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
-import com.liferay.util.ContentUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -141,7 +137,7 @@ public class DefaultDDMStructureUtil {
 			boolean templateCacheable = GetterUtil.getBoolean(
 				templateElement.elementText("cacheable"));
 
-			String templateContent = ContentUtil.get(
+			String templateContent = StringUtil.read(
 				classLoader, templateFilePath + templateFileName);
 
 			DDMTemplateLocalServiceUtil.addTemplate(
@@ -158,7 +154,7 @@ public class DefaultDDMStructureUtil {
 	public static String getDynamicDDMStructureDefinition(
 			ClassLoader classLoader, String filePath,
 			String dynamicDDMStructureName, Locale locale)
-		throws DocumentException {
+		throws Exception {
 
 		List<Element> structureElements = getDDMStructures(
 			classLoader, filePath, locale);
@@ -188,9 +184,9 @@ public class DefaultDDMStructureUtil {
 
 	protected static List<Element> getDDMStructures(
 			ClassLoader classLoader, String filePath, Locale locale)
-		throws DocumentException {
+		throws Exception {
 
-		String xml = ContentUtil.get(classLoader, filePath);
+		String xml = StringUtil.read(classLoader, filePath);
 
 		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
 

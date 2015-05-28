@@ -27,6 +27,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.PortletKeys;
 
 import java.util.HashMap;

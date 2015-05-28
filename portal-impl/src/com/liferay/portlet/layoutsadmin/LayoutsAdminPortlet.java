@@ -57,16 +57,21 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutRevision;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.model.ThemeSetting;
 import com.liferay.portal.model.impl.ThemeSettingImpl;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutPrototypeServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
+import com.liferay.portal.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.service.LayoutSetServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -190,42 +195,6 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 	@Override
 	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.UPDATE)) {
-				updateLayoutSet(actionRequest, actionResponse);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof PrincipalException ||
-				e instanceof SystemException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.layouts_admin.error");
-			}
-			else if (e instanceof FileSizeException ||
-					 e instanceof ImageTypeException ||
-					 e instanceof UploadException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
@@ -234,33 +203,6 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		MultiSessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			getGroup(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchGroupException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.layouts_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
 	}
 
 	/**
@@ -661,6 +603,20 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		try {
+			getGroup(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchGroupException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+			}
+			else {
+				throw new PortletException(e);
+			}
+		}
+
 		if (SessionErrors.contains(
 				renderRequest, NoSuchGroupException.class.getName()) ||
 			SessionErrors.contains(
@@ -775,43 +731,24 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Override
-	protected void setThemeSettingProperties(
-		ActionRequest actionRequest, UnicodeProperties typeSettingsProperties,
-		Map<String, ThemeSetting> themeSettings, String device,
-		String deviceThemeId) {
-
-		for (String key : themeSettings.keySet()) {
-			ThemeSetting themeSetting = themeSettings.get(key);
-
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
-
-			String value = ParamUtil.getString(
-				actionRequest, property, themeSetting.getValue());
-
-			if (!value.equals(themeSetting.getValue())) {
-				typeSettingsProperties.setProperty(
-					ThemeSettingImpl.namespaceProperty(device, key), value);
-			}
-		}
-	}
-
 	protected void setThemeSettingProperties(
 			ActionRequest actionRequest,
 			UnicodeProperties typeSettingsProperties,
 			Map<String, ThemeSetting> themeSettings, String device,
-			String deviceThemeId)
+			boolean isLayout)
 		throws PortalException {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+		Layout layout = null;
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
+		if (isLayout) {
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			boolean privateLayout = ParamUtil.getBoolean(
+				actionRequest, "privateLayout");
+			long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+
+			layout = LayoutLocalServiceUtil.getLayout(
+				groupId, privateLayout, layoutId);
+		}
 
 		for (String key : themeSettings.keySet()) {
 			ThemeSetting themeSetting = themeSettings.get(key);
@@ -823,8 +760,11 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 			String value = ParamUtil.getString(
 				actionRequest, property, themeSetting.getValue());
 
-			if (!Validator.equals(
-					value, layout.getDefaultThemeSetting(key, device, false))) {
+			if ((isLayout &&
+				 !Validator.equals(
+					 value,
+					 layout.getDefaultThemeSetting(key, device, false))) ||
+				(!isLayout && !value.equals(themeSetting.getValue()))) {
 
 				typeSettingsProperties.setProperty(
 					ThemeSettingImpl.namespaceProperty(device, key), value);
@@ -895,7 +835,7 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 				updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, deviceWapTheme);
+					deviceThemeId, deviceWapTheme, true);
 			}
 
 			long groupId = liveGroupId;
@@ -939,7 +879,7 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 				updateThemeSettingsProperties(
 					actionRequest, companyId, typeSettingsProperties, device,
-					deviceThemeId, deviceWapTheme);
+					deviceThemeId, deviceWapTheme, false);
 			}
 
 			long groupId = liveGroupId;
@@ -996,7 +936,7 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 	protected UnicodeProperties updateThemeSettingsProperties(
 			ActionRequest actionRequest, long companyId,
 			UnicodeProperties typeSettingsProperties, String device,
-			String deviceThemeId, boolean wapTheme)
+			String deviceThemeId, boolean wapTheme, boolean isLayout)
 		throws Exception {
 
 		Theme theme = ThemeLocalServiceUtil.getTheme(
@@ -1013,7 +953,7 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 		setThemeSettingProperties(
 			actionRequest, typeSettingsProperties, themeSettings, device,
-			deviceThemeId);
+			isLayout);
 
 		return typeSettingsProperties;
 	}

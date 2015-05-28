@@ -15,10 +15,40 @@
 package com.liferay.staging.bar.web.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import org.osgi.service.component.annotations.Component;
+
+import javax.portlet.Portlet;
 
 /**
  * @author Levente Hudák
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=portlet-staging-bar",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/staging.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/staging_branch.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/staging_version.js",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.show-portlet-access-denied=false",
+		"com.liferay.portlet.show-portlet-inactive=false",
+		"com.liferay.portlet.system=true",
+		"com.liferay.portlet.use-default-template=false",
+		"javax.portlet.display-name=Staging Bar",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class StagingBarPortlet extends MVCPortlet {
 
 }

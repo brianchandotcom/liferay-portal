@@ -17,6 +17,7 @@ package com.liferay.portlet.layoutsadmin.lar;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Theme;
@@ -29,6 +30,7 @@ import java.util.List;
 /**
  * @author Mate Thurzo
  */
+@OSGiBeanProperties
 public class StagedThemeStagedModelDataHandler
 	extends BaseStagedModelDataHandler<StagedTheme> {
 

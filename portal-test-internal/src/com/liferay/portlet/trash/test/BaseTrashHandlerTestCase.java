@@ -389,6 +389,37 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+
+		if (isAssetableModel()) {
+			Assert.assertNull(fetchAssetEntry(baseModel));
+		}
+
+		Assert.assertEquals(1, getDeletionSystemEventCount(trashHandler, -1));
+	}
+
+	@Test
+	public void testTrashAndDeleteApprovedIndexable() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
 		int initialBaseModelsSearchCount = 0;
 		int initialTrashEntriesSearchCount = 0;
 
@@ -410,10 +441,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-
 		if (isIndexableBaseModel()) {
 			Assert.assertEquals(
 				initialBaseModelsSearchCount,
@@ -422,12 +449,6 @@ public abstract class BaseTrashHandlerTestCase {
 				initialTrashEntriesSearchCount,
 				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 		}
-
-		if (isAssetableModel()) {
-			Assert.assertNull(fetchAssetEntry(baseModel));
-		}
-
-		Assert.assertEquals(1, getDeletionSystemEventCount(trashHandler, -1));
 	}
 
 	@Test
@@ -440,6 +461,37 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
+
+		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+
+		Assert.assertEquals(
+			initialBaseModelsCount,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+
+		if (isAssetableModel()) {
+			Assert.assertNull(fetchAssetEntry(baseModel));
+		}
+
+		Assert.assertEquals(1, getDeletionSystemEventCount(trashHandler, -1));
+	}
+
+	@Test
+	public void testTrashAndDeleteDraftIndexable() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
 		int initialBaseModelsSearchCount = 0;
 		int initialTrashEntriesSearchCount = 0;
 
@@ -461,10 +513,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-
 		if (isIndexableBaseModel()) {
 			Assert.assertEquals(
 				initialBaseModelsSearchCount,
@@ -473,12 +521,6 @@ public abstract class BaseTrashHandlerTestCase {
 				initialTrashEntriesSearchCount,
 				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 		}
-
-		if (isAssetableModel()) {
-			Assert.assertNull(fetchAssetEntry(baseModel));
-		}
-
-		Assert.assertEquals(1, getDeletionSystemEventCount(trashHandler, -1));
 	}
 
 	@Test

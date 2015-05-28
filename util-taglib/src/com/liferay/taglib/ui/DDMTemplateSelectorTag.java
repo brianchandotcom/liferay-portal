@@ -114,7 +114,7 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		DDMTemplate portletDisplayDDMTemplate =
 			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
 				displayStyleGroupId, PortalUtil.getClassNameId(_className),
-				displayStyle, false);
+				displayStyle, true);
 
 		if (Validator.isNull(displayStyle) &&
 			(portletDisplayDDMTemplate != null)) {

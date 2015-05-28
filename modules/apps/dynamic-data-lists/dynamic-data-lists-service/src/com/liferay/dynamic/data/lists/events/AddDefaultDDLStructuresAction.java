@@ -41,7 +41,7 @@ import org.springframework.context.ApplicationContext;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class AddDefaultDDMStructuresAction
+public class AddDefaultDDLStructuresAction
 	extends BaseDefaultDDMStructureAction {
 
 	@Override
@@ -87,7 +87,7 @@ public class AddDefaultDDMStructuresAction
 		addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
-			"dynamic-data-mapping-structures.xml", serviceContext);
+			"default-dynamic-data-lists-structures.xml", serviceContext);
 	}
 
 	@Override

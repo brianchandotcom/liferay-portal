@@ -335,6 +335,19 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
+	<command name="viewAsSiteMemberPG">
+		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
+	</command>
+
+	<command name="viewControlsPG">
+		<execute function="AssertTextEquals" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute function="AssertTextEquals" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
+	</command>
+
 	<command name="viewDetailsPG">
 		<var name="key_entryTitle" value="${entryTitle}" />
 
@@ -351,5 +364,31 @@
 			<var name="entrySubtitle" value="${entrySubtitle}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+	</command>
+
+	<command name="viewNoEntryCP">
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
+	</command>
+
+	<command name="viewNoPermissionCP">
+		<execute function="AssertTextEquals" locator1="BasePortlet#CONTROL_PANEL_TITLE" value1="Blogs" />
+		<execute function="AssertElementPresent" locator1="NavBar#NAVBAR_CONTAINER" />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
+	</command>
+
+	<command name="viewNoPermissionPG">
+		<execute function="AssertTextEquals" locator1="BasePortlet#CONTROL_PANEL_TITLE" value1="Blogs" />
+		<execute function="AssertElementNotPresent" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
+		<execute function="AssertElementNotPresent" locator1="Button#PERMISSIONS" value1="Permissions" />
+		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />
+		<execute function="AssertTextEquals" locator1="Link#RSS" value1="RSS" />
+	</command>
+
+	<command name="viewNoSubscribePG">
+		<execute function="AssertElementNotPresent" locator1="Link#SUBSCRIBE" />
+	</command>
+
+	<command name="viewPermissionCP">
+		<execute function="AssertTextEquals" locator1="Blogs#PERMISSIONS" value1="Permissions" />
 	</command>
 </definition>

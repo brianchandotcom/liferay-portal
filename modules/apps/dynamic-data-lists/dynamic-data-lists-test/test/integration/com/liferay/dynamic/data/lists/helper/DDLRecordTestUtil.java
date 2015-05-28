@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.util.test;
+package com.liferay.dynamic.data.lists.helper;
 
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,7 +25,7 @@ import com.liferay.portal.service.ServiceContext;
 public class DDLRecordTestUtil {
 
 	public static String getBasePath() {
-		return "com/liferay/portlet/dynamicdatalists/dependencies/";
+		return "com/liferay/dynamic/data/lists/dependencies/";
 	}
 
 	public static ServiceContext getServiceContext(int workflowAction)

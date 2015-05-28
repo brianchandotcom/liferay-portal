@@ -113,6 +113,9 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 				companyId, groupId, className, classPK, document);
 		}
 		catch (NoSuchResourceException nsre) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsre, nsre);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);

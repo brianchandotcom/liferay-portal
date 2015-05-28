@@ -41,8 +41,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth=false",
 		"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed=",
-		"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes=N/A"
+		"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes=*",
+		"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes="
 	}
 )
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {

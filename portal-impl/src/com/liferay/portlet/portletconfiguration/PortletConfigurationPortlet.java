@@ -39,6 +39,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -55,6 +56,7 @@ import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
+import com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration;
 
 import java.io.IOException;
 
@@ -105,6 +107,60 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				name);
 
 		archivedSettings.delete();
+	}
+
+	public void editPublicRenderParameters(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		Enumeration<String> enu = portletPreferences.getNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.startsWith(
+					PublicRenderParameterConfiguration.IGNORE_PREFIX) ||
+				name.startsWith(
+					PublicRenderParameterConfiguration.MAPPING_PREFIX)) {
+
+				portletPreferences.reset(name);
+			}
+		}
+
+		for (PublicRenderParameter publicRenderParameter :
+				portlet.getPublicRenderParameters()) {
+
+			String ignoreKey = PublicRenderParameterConfiguration.getIgnoreKey(
+				publicRenderParameter);
+
+			boolean ignoreValue = ParamUtil.getBoolean(
+				actionRequest, ignoreKey);
+
+			if (ignoreValue) {
+				portletPreferences.setValue(
+					ignoreKey, String.valueOf(Boolean.TRUE));
+			}
+			else {
+				String mappingKey =
+					PublicRenderParameterConfiguration.getMappingKey(
+						publicRenderParameter);
+
+				String mappingValue = ParamUtil.getString(
+					actionRequest, mappingKey);
+
+				if (Validator.isNotNull(mappingValue)) {
+					portletPreferences.setValue(mappingKey, mappingValue);
+				}
+			}
+		}
+
+		if (SessionErrors.isEmpty(actionRequest)) {
+			portletPreferences.store();
+		}
 	}
 
 	public void editScope(

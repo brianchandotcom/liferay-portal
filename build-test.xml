@@ -4405,6 +4405,31 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
 			<then>
+				<if>
+					<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.27
+						</echo>
+
+						<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
+					</then>
+					<elseif>
+						<or>
+							<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+							<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
+							<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
+						</or>
+						<then>
+							<echo file="app.server.${user.name}.properties" append="true">
+								app.server.tomcat.version=7.0.42
+							</echo>
+
+							<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
+						</then>
+					</elseif>
+				</if>
+
 				<antcall target="prepare-test-bundle">
 					<param name="app.server.type" value="tomcat" />
 					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
@@ -4587,38 +4612,6 @@ plugins.includes=marketplace-portlet</echo>
 				</unzip>
 
 				<delete file="${tstamp.value}.zip" />
-
-				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-					</and>
-					<then>
-						<echo file="app.server.${user.name}.properties" append="true">
-							app.server.tomcat.version=7.0.27
-						</echo>
-
-						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
-					</then>
-				</if>
-
-				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="tomcat" />
-						<or>
-							<contains string="${liferay.portal.bundle}" substring="6.2.10" />
-							<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
-							<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
-						</or>
-					</and>
-					<then>
-						<echo file="app.server.${user.name}.properties" append="true">
-							app.server.tomcat.version=7.0.42
-						</echo>
-
-						<var name="test.app.server.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
-					</then>
-				</if>
 
 				<chmod perm="a+x">
 					<fileset dir="${test.app.server.bin.dir}">

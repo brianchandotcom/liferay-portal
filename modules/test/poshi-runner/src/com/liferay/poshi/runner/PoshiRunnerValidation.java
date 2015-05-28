@@ -601,7 +601,7 @@ public class PoshiRunnerValidation {
 			_exceptions.add(
 				new Exception(
 					"Too many attributes: " + "\n" + filePath + ":" +
-							element.attributeValue("line-number")));
+						element.attributeValue("line-number")));
 		}
 	}
 
@@ -638,7 +638,7 @@ public class PoshiRunnerValidation {
 		Element element, List<String> multiplePrimaryAttributeNames,
 		List<String> primaryAttributeNames, String filePath) {
 
-		List<String> attributeNames = new ArrayList<String>();
+		List<String> attributeNames = new ArrayList<>();
 
 		boolean found = false;
 

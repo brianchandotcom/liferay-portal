@@ -34,6 +34,47 @@
 		</execute>
 	</set-up>
 
+	<command name="AddRSSADTViaPortletConfiguration" priority="3">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addManualViaRSS">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="RSS" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="RSS#viewCustomADT">
+			<var name="feedContentTitle" value="Liferay Blogs - General NYT > Technology" />
+		</execute>
+	</command>
+
 	<command name="AddRSSADTWithCorruptScript" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />

@@ -69,8 +69,8 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolder;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelCreateDateComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifiedDateComparator;
-import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelNameComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
+import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 
 import java.io.InputStream;
 
@@ -2151,8 +2151,8 @@ public class CMISRepository extends BaseCmisRepository {
 		if ((obc != null) &&
 			((obc instanceof RepositoryModelCreateDateComparator) ||
 			 (obc instanceof RepositoryModelModifiedDateComparator) ||
-			 (obc instanceof RepositoryModelNameComparator) ||
-			 (obc instanceof RepositoryModelSizeComparator))) {
+			 (obc instanceof RepositoryModelSizeComparator) ||
+			 (obc instanceof RepositoryModelTitleComparator))) {
 
 			list = ListUtil.sort(list, obc);
 		}

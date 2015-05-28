@@ -26,7 +26,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolder;
  * @author Brian Wing Shun Chan
  * @author Alexander Chow
  */
-public class RepositoryModelNameComparator<T> extends OrderByComparator<T> {
+public class RepositoryModelTitleComparator<T> extends OrderByComparator<T> {
 
 	public static final String ORDER_BY_ASC = "title ASC";
 
@@ -34,11 +34,11 @@ public class RepositoryModelNameComparator<T> extends OrderByComparator<T> {
 
 	public static final String[] ORDER_BY_FIELDS = {"title"};
 
-	public RepositoryModelNameComparator() {
+	public RepositoryModelTitleComparator() {
 		this(false);
 	}
 
-	public RepositoryModelNameComparator(boolean ascending) {
+	public RepositoryModelTitleComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 

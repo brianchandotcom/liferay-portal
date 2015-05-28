@@ -12,8 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.workflow;
+package com.liferay.dynamic.data.lists.workflow;
 
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,11 +29,6 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecord;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalServiceUtil;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -40,7 +40,7 @@ import java.util.Map;
  */
 @OSGiBeanProperties(
 	property = {
-		"model.class.name=com.liferay.portlet.dynamicdatalists.model.DDLRecord"
+		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"
 	}
 )
 public class DDLRecordWorkflowHandler extends BaseWorkflowHandler<DDLRecord> {

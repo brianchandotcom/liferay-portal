@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.http;
+package com.liferay.dynamic.data.lists.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionServiceUtil;
  */
 @ProviderType
 public class DDLRecordVersionServiceHttp {
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		HttpPrincipal httpPrincipal, long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -78,7 +78,7 @@ public class DDLRecordVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -87,7 +87,7 @@ public class DDLRecordVersionServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		HttpPrincipal httpPrincipal, long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -110,7 +110,7 @@ public class DDLRecordVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordVersion)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -119,9 +119,9 @@ public class DDLRecordVersionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getRecordVersions(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		HttpPrincipal httpPrincipal, long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordVersionServiceUtil.class,
@@ -143,7 +143,7 @@ public class DDLRecordVersionServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

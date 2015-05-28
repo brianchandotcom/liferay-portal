@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.http;
+package com.liferay.dynamic.data.lists.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordVersionServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -33,10 +33,10 @@ import java.rmi.RemoteException;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap}.
+ * is translated to an array of {@link com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion}, that is translated to a
- * {@link com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap}. Methods that SOAP cannot
+ * {@link com.liferay.dynamic.data.lists.model.DDLRecordVersion}, that is translated to a
+ * {@link com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -59,19 +59,18 @@ import java.rmi.RemoteException;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordVersionServiceHttp
- * @see com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap
+ * @see com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap
  * @see DDLRecordVersionServiceUtil
  * @generated
  */
 @ProviderType
 public class DDLRecordVersionServiceSoap {
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap getRecordVersion(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap getRecordVersion(
 		long recordVersionId) throws RemoteException {
 		try {
-			com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion returnValue =
-				DDLRecordVersionServiceUtil.getRecordVersion(recordVersionId);
+			com.liferay.dynamic.data.lists.model.DDLRecordVersion returnValue = DDLRecordVersionServiceUtil.getRecordVersion(recordVersionId);
 
-			return com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -80,13 +79,13 @@ public class DDLRecordVersionServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap getRecordVersion(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap getRecordVersion(
 		long recordId, java.lang.String version) throws RemoteException {
 		try {
-			com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion returnValue =
-				DDLRecordVersionServiceUtil.getRecordVersion(recordId, version);
+			com.liferay.dynamic.data.lists.model.DDLRecordVersion returnValue = DDLRecordVersionServiceUtil.getRecordVersion(recordId,
+					version);
 
-			return com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap.toSoapModel(returnValue);
+			return com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -95,16 +94,16 @@ public class DDLRecordVersionServiceSoap {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap[] getRecordVersions(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap[] getRecordVersions(
 		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> returnValue =
+			java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> returnValue =
 				DDLRecordVersionServiceUtil.getRecordVersions(recordId, start,
 					end, orderByComparator);
 
-			return com.liferay.portlet.dynamicdatalists.model.DDLRecordVersionSoap.toSoapModels(returnValue);
+			return com.liferay.dynamic.data.lists.model.DDLRecordVersionSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

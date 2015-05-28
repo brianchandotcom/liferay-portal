@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.util;
+package com.liferay.dynamic.data.lists.util;
 
 /**
  * @author Marcellus Tavares

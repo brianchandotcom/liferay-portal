@@ -23,14 +23,19 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.AggregateResourceBundle;
+import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.security.permission.PermissionPropagator;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
@@ -44,6 +49,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
+import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
 
 import java.io.IOException;
 
@@ -69,12 +75,51 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Carlos Sierra Andrés
  */
 public class PortletConfigurationPortlet extends MVCPortlet {
+
+	public void editScope(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
+
+		updateScope(actionRequest, portlet);
+
+		if (SessionErrors.isEmpty(actionRequest)) {
+			String portletResource = ParamUtil.getString(
+				actionRequest, "portletResource");
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+				portletResource);
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
+
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(actionRequest, "redirect"));
+
+			if (Validator.isNotNull(redirect)) {
+				actionResponse.sendRedirect(redirect);
+			}
+		}
+	}
 
 	public void editSharing(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -360,6 +405,125 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		return configurationAction;
 	}
 
+	protected Tuple getNewScope(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		String scopeType = ParamUtil.getString(actionRequest, "scopeType");
+
+		long scopeGroupId = 0;
+		String scopeName = null;
+
+		if (Validator.isNull(scopeType)) {
+			scopeGroupId = layout.getGroupId();
+		}
+		else if (scopeType.equals("company")) {
+			scopeGroupId = themeDisplay.getCompanyGroupId();
+			scopeName = themeDisplay.translate("global");
+		}
+		else if (scopeType.equals("layout")) {
+			String scopeLayoutUuid = ParamUtil.getString(
+				actionRequest, "scopeLayoutUuid");
+
+			Layout scopeLayout =
+				LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+					scopeLayoutUuid, layout.getGroupId(),
+					layout.isPrivateLayout());
+
+			if (!scopeLayout.hasScopeGroup()) {
+				Map<Locale, String> nameMap = new HashMap<>();
+
+				String name = String.valueOf(scopeLayout.getPlid());
+
+				nameMap.put(LocaleUtil.getDefault(), name);
+
+				GroupLocalServiceUtil.addGroup(
+					themeDisplay.getUserId(),
+					GroupConstants.DEFAULT_PARENT_GROUP_ID,
+					Layout.class.getName(), scopeLayout.getPlid(),
+					GroupConstants.DEFAULT_LIVE_GROUP_ID, nameMap, null, 0,
+					true, GroupConstants.DEFAULT_MEMBERSHIP_RESTRICTION, null,
+					false, true, null);
+			}
+
+			scopeGroupId = scopeLayout.getGroupId();
+			scopeName = scopeLayout.getName(themeDisplay.getLocale());
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Scope type " + scopeType + " is invalid");
+		}
+
+		return new Tuple(scopeGroupId, scopeName);
+	}
+
+	protected String getOldScopeName(
+			ActionRequest actionRequest, Portlet portlet)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		String scopeType = GetterUtil.getString(
+			portletPreferences.getValue("lfrScopeType", null));
+
+		if (Validator.isNull(scopeType)) {
+			return null;
+		}
+
+		String scopeName = null;
+
+		if (scopeType.equals("company")) {
+			scopeName = themeDisplay.translate("global");
+		}
+		else if (scopeType.equals("layout")) {
+			String scopeLayoutUuid = GetterUtil.getString(
+				portletPreferences.getValue("lfrScopeLayoutUuid", null));
+
+			Layout scopeLayout =
+				LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+					scopeLayoutUuid, layout.getGroupId(),
+					layout.isPrivateLayout());
+
+			if (scopeLayout != null) {
+				scopeName = scopeLayout.getName(themeDisplay.getLocale());
+			}
+		}
+		else {
+			throw new IllegalArgumentException(
+				"Scope type " + scopeType + " is invalid");
+		}
+
+		return scopeName;
+	}
+
+	protected String getPortletTitle(
+		PortletRequest portletRequest, Portlet portlet,
+		PortletPreferences portletPreferences) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletTitle = PortletConfigurationUtil.getPortletTitle(
+			portletPreferences, themeDisplay.getLanguageId());
+
+		if (Validator.isNull(portletTitle)) {
+			ServletContext servletContext =
+				(ServletContext)portletRequest.getAttribute(WebKeys.CTX);
+
+			portletTitle = PortalUtil.getPortletTitle(
+				portlet, servletContext, themeDisplay.getLocale());
+		}
+
+		return portletTitle;
+	}
+
 	protected void renderEditConfiguration(
 			RenderRequest renderRequest, RenderResponse renderResponse,
 			Portlet portlet)
@@ -489,6 +653,50 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		portletPreferences.setValue(
 			"lfrNetvibesShowAddAppLink",
 			String.valueOf(netvibesShowAddAppLink));
+	}
+
+	protected void updateScope(ActionRequest actionRequest, Portlet portlet)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String oldScopeName = getOldScopeName(actionRequest, portlet);
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		String scopeType = ParamUtil.getString(actionRequest, "scopeType");
+
+		portletPreferences.setValue("lfrScopeType", scopeType);
+
+		String scopeLayoutUuid = ParamUtil.getString(
+			actionRequest, "scopeLayoutUuid");
+
+		if (!scopeType.equals("layout")) {
+			scopeLayoutUuid = StringPool.BLANK;
+		}
+
+		portletPreferences.setValue("lfrScopeLayoutUuid", scopeLayoutUuid);
+
+		String portletTitle = getPortletTitle(
+			actionRequest, portlet, portletPreferences);
+
+		Tuple newScopeTuple = getNewScope(actionRequest);
+
+		String newScopeName = (String)newScopeTuple.getObject(1);
+
+		String newPortletTitle = PortalUtil.getNewPortletTitle(
+			portletTitle, oldScopeName, newScopeName);
+
+		if (!newPortletTitle.equals(portletTitle)) {
+			portletPreferences.setValue(
+				"portletSetupTitle_" + themeDisplay.getLanguageId(),
+				newPortletTitle);
+			portletPreferences.setValue(
+				"portletSetupUseCustomTitle", Boolean.TRUE.toString());
+		}
+
+		portletPreferences.store();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

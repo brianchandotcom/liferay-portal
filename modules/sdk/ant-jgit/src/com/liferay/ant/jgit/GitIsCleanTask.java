@@ -27,6 +27,7 @@ import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
 import org.eclipse.jgit.util.FS;
 
 /**
@@ -49,6 +50,8 @@ public class GitIsCleanTask extends Task implements Condition {
 			Git git = new Git(repository);
 
 			StatusCommand statusCommand = git.status();
+
+			statusCommand.setIgnoreSubmodules(IgnoreSubmoduleMode.ALL);
 
 			statusCommand.addPath(PathUtil.toRelativePath(gitDir, _path));
 

@@ -16,16 +16,20 @@ package com.liferay.portlet.portletconfiguration;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.AggregateResourceBundle;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
-import com.liferay.portlet.StrutsPortlet;
+import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 
 import java.io.IOException;
 
@@ -49,7 +53,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Carlos Sierra Andrés
  */
-public class PortletConfigurationPortlet extends StrutsPortlet {
+public class PortletConfigurationPortlet extends MVCPortlet {
 
 	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
@@ -116,6 +120,81 @@ public class PortletConfigurationPortlet extends StrutsPortlet {
 			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
 
 		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		try {
+			String mvcPath = renderRequest.getParameter("mvcPath");
+
+			Portlet portlet = ActionUtil.getPortlet(renderRequest);
+
+			if (mvcPath.endsWith("edit_configuration.jsp")) {
+				renderEditConfiguration(renderRequest, renderResponse, portlet);
+			}
+
+			renderResponse.setTitle(
+				ActionUtil.getTitle(portlet, renderRequest));
+		}
+		catch (Exception ex) {
+			_log.error(ex.getMessage());
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+
+		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	protected ConfigurationAction getConfigurationAction(Portlet portlet)
+		throws Exception {
+
+		if (portlet == null) {
+			return null;
+		}
+
+		ConfigurationAction configurationAction =
+			portlet.getConfigurationActionInstance();
+
+		if (configurationAction == null) {
+			_log.error(
+				"Configuration action for portlet " + portlet.getPortletId() +
+					" is null");
+		}
+
+		return configurationAction;
+	}
+
+	protected void renderEditConfiguration(
+			RenderRequest renderRequest, RenderResponse renderResponse,
+			Portlet portlet)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
+
+		ConfigurationAction configurationAction = getConfigurationAction(
+			portlet);
+
+		if (configurationAction != null) {
+			String path = configurationAction.render(
+				portletConfig, renderRequest, renderResponse);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Configuration action returned render path " + path);
+			}
+
+			if (Validator.isNotNull(path)) {
+				renderRequest.setAttribute(
+					WebKeys.CONFIGURATION_ACTION_PATH, path);
+			}
+			else {
+				_log.error("Configuration action returned a null path");
+			}
+		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

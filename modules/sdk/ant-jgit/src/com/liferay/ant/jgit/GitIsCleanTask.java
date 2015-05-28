@@ -17,6 +17,9 @@ package com.liferay.ant.jgit;
 
 import java.io.File;
 
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -26,7 +29,9 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.submodule.SubmoduleWalk.IgnoreSubmoduleMode;
+import org.eclipse.jgit.util.FS;
 
 /**
  * @author Shuyang Zhou
@@ -35,36 +40,43 @@ public class GitIsCleanTask extends Task implements Condition {
 
 	@Override
 	public boolean eval() throws BuildException {
-		if (_gitDir == null) {
-			Project currentProject = getProject();
-
-			_gitDir = currentProject.getBaseDir();
-		}
-
 		if (_path == null) {
 			throw new BuildException(
 				"Path attribute is required", getLocation());
 		}
 
-		FileRepositoryBuilder fileRepositoryBuilder =
-			new FileRepositoryBuilder();
+		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
-		fileRepositoryBuilder.readEnvironment();
+		String relativePath = PathUtil.toRelativePath(gitDir, _path);
 
-		fileRepositoryBuilder.findGitDir(_gitDir);
+		if (_useCache) {
+			Boolean cleanFlag = _cleanFlags.get(relativePath);
 
-		try (Repository repository = fileRepositoryBuilder.build()) {
-			Git git = new Git(repository);
+			if (cleanFlag != null) {
+				return cleanFlag;
+			}
+		}
+
+		try (Repository repository = RepositoryCache.open(
+				RepositoryCache.FileKey.exact(gitDir, FS.DETECTED))) {
+
+			Git git = new Git(new DirCacheCachedRepositoryWrapper(repository));
 
 			StatusCommand statusCommand = git.status();
 
-			statusCommand.addPath(
-				PathUtil.toRelativePath(
-					fileRepositoryBuilder.getGitDir(), _path));
+			statusCommand.setIgnoreSubmodules(IgnoreSubmoduleMode.ALL);
+
+			statusCommand.addPath(relativePath);
 
 			Status status = statusCommand.call();
 
-			return status.isClean();
+			Boolean cleanFlag = status.isClean();
+
+			if (_useCache) {
+				_cleanFlags.put(relativePath, cleanFlag);
+			}
+
+			return cleanFlag;
 		}
 		catch (Exception e) {
 			throw new BuildException(
@@ -103,13 +115,21 @@ public class GitIsCleanTask extends Task implements Condition {
 		_property = property;
 	}
 
+	public void setUseCache(boolean useCache) {
+		_useCache = useCache;
+	}
+
 	public void setValue(String value) {
 		_value = value;
 	}
 
+	private static final Map<String, Boolean> _cleanFlags =
+		new ConcurrentHashMap<>();
+
 	private File _gitDir;
 	private String _path;
 	private String _property;
+	private boolean _useCache = true;
 	private String _value;
 
 }

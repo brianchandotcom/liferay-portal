@@ -16,7 +16,8 @@ package com.liferay.ant.jgit;
 
 import java.io.File;
 
-import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -24,14 +25,16 @@ import org.apache.tools.ant.Task;
 
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.MaxCountRevFilter;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.util.FS;
 
 /**
  * @author Shuyang Zhou
@@ -50,60 +53,69 @@ public class GitHeadHashTask extends Task {
 				"Path attribute is required", getLocation());
 		}
 
-		if (_gitDir == null) {
-			Project currentProject = getProject();
+		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
-			_gitDir = currentProject.getBaseDir();
+		String relativePath = PathUtil.toRelativePath(gitDir, _path);
+
+		if (_useCache) {
+			String hash = _hashes.get(relativePath);
+
+			if (hash != null) {
+				Project currentProject = getProject();
+
+				currentProject.setNewProperty(_property, hash);
+
+				return;
+			}
 		}
 
-		FileRepositoryBuilder fileRepositoryBuilder =
-			new FileRepositoryBuilder();
+		try (Repository repository = RepositoryCache.open(
+				FileKey.exact(gitDir, FS.DETECTED))) {
 
-		fileRepositoryBuilder.readEnvironment();
-
-		fileRepositoryBuilder.findGitDir(_gitDir);
-
-		String relativePath = PathUtil.toRelativePath(
-			fileRepositoryBuilder.getGitDir(), _path);
-
-		try (Repository repository = fileRepositoryBuilder.build()) {
 			RevWalk revWalk = new RevWalk(repository);
 
 			RevCommit headRevCommit = revWalk.lookupCommit(
 				repository.resolve(Constants.HEAD));
 
 			revWalk.markStart(headRevCommit);
-			revWalk.setRevFilter(MaxCountRevFilter.create(2));
+
+			if (_ignoreFileName == null) {
+				revWalk.setRevFilter(MaxCountRevFilter.create(1));
+			}
+			else {
+				revWalk.setRevFilter(MaxCountRevFilter.create(2));
+			}
+
 			revWalk.setTreeFilter(
 				AndTreeFilter.create(
 					PathFilter.create(relativePath), TreeFilter.ANY_DIFF
 				));
 
-			Iterator<RevCommit> iterator = revWalk.iterator();
+			RevCommit revCommit = revWalk.next();
 
-			while (iterator.hasNext()) {
-				RevCommit revCommit = iterator.next();
+			if (revCommit == null) {
+				throw new IllegalStateException(
+					"Unable to find any commit under " + _path);
+			}
 
-				TreeWalk treeWalk = new TreeWalk(repository);
+			if ((_ignoreFileName != null) &&
+				hasIgnoreFile(repository, revCommit, relativePath)) {
 
-				treeWalk.addTree(revCommit.getTree());
-				treeWalk.setRecursive(true);
+				RevCommit secondRevCommit = revWalk.next();
 
-				if (_ignoreFileName != null) {
-					treeWalk.setFilter(
-						AndTreeFilter.create(
-							PathFilter.create(
-								relativePath + "/" + _ignoreFileName),
-							TreeFilter.ANY_DIFF));
+				if (secondRevCommit != null) {
+					revCommit = secondRevCommit;
 				}
+			}
 
-				if (!treeWalk.next()) {
-					Project currentProject = getProject();
+			String hash = revCommit.name();
 
-					currentProject.setNewProperty(_property, revCommit.name());
+			Project currentProject = getProject();
 
-					break;
-				}
+			currentProject.setNewProperty(_property, hash);
+
+			if (_useCache) {
+				_hashes.put(relativePath, hash);
 			}
 
 			revWalk.dispose();
@@ -130,9 +142,34 @@ public class GitHeadHashTask extends Task {
 		_property = property;
 	}
 
+	public void setUseCache(boolean useCache) {
+		_useCache = useCache;
+	}
+
+	protected boolean hasIgnoreFile(
+			Repository repository, RevCommit revCommit, String relativePath)
+		throws Exception {
+
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(revCommit.getTree());
+			treeWalk.setRecursive(true);
+
+			treeWalk.setFilter(
+				AndTreeFilter.create(
+					PathFilter.create(relativePath + "/" + _ignoreFileName),
+					TreeFilter.ANY_DIFF));
+
+			return treeWalk.next();
+		}
+	}
+
+	private static final Map<String, String> _hashes =
+		new ConcurrentHashMap<>();
+
 	private File _gitDir;
 	private String _ignoreFileName;
 	private String _path;
 	private String _property;
+	private boolean _useCache = true;
 
 }

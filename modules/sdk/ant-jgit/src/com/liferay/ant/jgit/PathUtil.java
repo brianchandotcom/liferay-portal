@@ -19,10 +19,44 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Location;
+import org.apache.tools.ant.Project;
+
 /**
  * @author Shuyang Zhou
  */
 public class PathUtil {
+
+	public static File getGitDir(
+		File gitDir, Project project, Location location) {
+
+		if (gitDir != null) {
+			return gitDir;
+		}
+
+		String projectDir = project.getProperty("project.dir");
+
+		if (projectDir == null) {
+			projectDir = project.getProperty("lp.portal.project.dir");
+		}
+
+		if (projectDir == null) {
+			StringBuilder sb = new StringBuilder();
+
+			sb.append("Unable to locate .git folder.\n");
+			sb.append("You need to at least do one of the followings :\n");
+			sb.append(
+				"1) Set \"gitDir\" attribute explicitly on the ant task\n");
+			sb.append("2) For portal project, set property \"project.dir\"\n");
+			sb.append(
+				"3) For SDK project, set property \"lp.portal.project.dir\"\n");
+
+			throw new BuildException(sb.toString(), location);
+		}
+
+		return new File(projectDir, ".git");
+	}
 
 	public static String toRelativePath(File gitDir, String pathString) {
 		File projectDir = gitDir.getParentFile();

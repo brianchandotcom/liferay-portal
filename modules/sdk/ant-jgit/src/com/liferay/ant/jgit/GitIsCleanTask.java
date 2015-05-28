@@ -26,7 +26,8 @@ import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.util.FS;
 
 /**
  * @author Shuyang Zhou
@@ -35,32 +36,21 @@ public class GitIsCleanTask extends Task implements Condition {
 
 	@Override
 	public boolean eval() throws BuildException {
-		if (_gitDir == null) {
-			Project currentProject = getProject();
-
-			_gitDir = currentProject.getBaseDir();
-		}
-
 		if (_path == null) {
 			throw new BuildException(
 				"Path attribute is required", getLocation());
 		}
 
-		FileRepositoryBuilder fileRepositoryBuilder =
-			new FileRepositoryBuilder();
+		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
-		fileRepositoryBuilder.readEnvironment();
+		try (Repository repository = RepositoryCache.open(
+				RepositoryCache.FileKey.exact(gitDir, FS.DETECTED))) {
 
-		fileRepositoryBuilder.findGitDir(_gitDir);
-
-		try (Repository repository = fileRepositoryBuilder.build()) {
 			Git git = new Git(repository);
 
 			StatusCommand statusCommand = git.status();
 
-			statusCommand.addPath(
-				PathUtil.toRelativePath(
-					fileRepositoryBuilder.getGitDir(), _path));
+			statusCommand.addPath(PathUtil.toRelativePath(gitDir, _path));
 
 			Status status = statusCommand.call();
 

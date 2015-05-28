@@ -24,14 +24,16 @@ import org.apache.tools.ant.Task;
 
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.lib.RepositoryCache;
+import org.eclipse.jgit.lib.RepositoryCache.FileKey;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.revwalk.filter.MaxCountRevFilter;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.AndTreeFilter;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 import org.eclipse.jgit.treewalk.filter.TreeFilter;
+import org.eclipse.jgit.util.FS;
 
 /**
  * @author Shuyang Zhou
@@ -50,23 +52,13 @@ public class GitHeadHashTask extends Task {
 				"Path attribute is required", getLocation());
 		}
 
-		if (_gitDir == null) {
-			Project currentProject = getProject();
+		File gitDir = PathUtil.getGitDir(_gitDir, getProject(), getLocation());
 
-			_gitDir = currentProject.getBaseDir();
-		}
+		String relativePath = PathUtil.toRelativePath(gitDir, _path);
 
-		FileRepositoryBuilder fileRepositoryBuilder =
-			new FileRepositoryBuilder();
+		try (Repository repository = RepositoryCache.open(
+				FileKey.exact(gitDir, FS.DETECTED))) {
 
-		fileRepositoryBuilder.readEnvironment();
-
-		fileRepositoryBuilder.findGitDir(_gitDir);
-
-		String relativePath = PathUtil.toRelativePath(
-			fileRepositoryBuilder.getGitDir(), _path);
-
-		try (Repository repository = fileRepositoryBuilder.build()) {
 			RevWalk revWalk = new RevWalk(repository);
 
 			RevCommit headRevCommit = revWalk.lookupCommit(

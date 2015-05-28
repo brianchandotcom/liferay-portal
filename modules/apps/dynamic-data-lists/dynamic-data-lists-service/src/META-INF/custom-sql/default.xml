@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder.countByR_S">
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.countByR_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DDLRecord.recordId) AS COUNT_VALUE
@@ -15,7 +15,7 @@
 				(DDLRecord.recordSetId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder.countByC_S_S">
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.countByC_S_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DDLRecord.recordId) AS COUNT_VALUE
@@ -33,7 +33,7 @@
 				(DDLRecord.companyId = ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder.findByR_S">
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.findByR_S">
 		<![CDATA[
 			SELECT
 				DISTINCT {DDLRecord.*}
@@ -49,7 +49,7 @@
 				DDLRecord.recordId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder.findByC_S_S">
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.findByC_S_S">
 		<![CDATA[
 			SELECT
 				DISTINCT {DDLRecord.*}
@@ -69,7 +69,7 @@
 				DDLRecord.recordId DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.countByC_G_N_D_S">
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder.countByC_G_N_D_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT DDLRecordSet.recordSetId) AS COUNT_VALUE
@@ -85,7 +85,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder.findByC_G_N_D_S">
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder.findByC_G_N_D_S">
 		<![CDATA[
 			SELECT
 				{DDLRecordSet.*}

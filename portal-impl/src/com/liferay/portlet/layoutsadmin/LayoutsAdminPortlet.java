@@ -36,6 +36,41 @@ import javax.portlet.ResourceResponse;
  */
 public class LayoutsAdminPortlet extends MVCPortlet {
 
+	public void enableLayout(ActionRequest actionRequest) throws Exception {
+		long incompleteLayoutRevisionId = ParamUtil.getLong(
+				actionRequest, "incompleteLayoutRevisionId");
+
+		LayoutRevision incompleteLayoutRevision =
+			LayoutRevisionLocalServiceUtil.getLayoutRevision(
+				incompleteLayoutRevisionId);
+
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId",
+			incompleteLayoutRevision.getLayoutBranchId());
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		LayoutRevisionLocalServiceUtil.updateLayoutRevision(
+			serviceContext.getUserId(),
+			incompleteLayoutRevision.getLayoutRevisionId(), layoutBranchId,
+			incompleteLayoutRevision.getName(),
+			incompleteLayoutRevision.getTitle(),
+			incompleteLayoutRevision.getDescription(),
+			incompleteLayoutRevision.getKeywords(),
+			incompleteLayoutRevision.getRobots(),
+			incompleteLayoutRevision.getTypeSettings(),
+			incompleteLayoutRevision.getIconImage(),
+			incompleteLayoutRevision.getIconImageId(),
+			incompleteLayoutRevision.getThemeId(),
+			incompleteLayoutRevision.getColorSchemeId(),
+			incompleteLayoutRevision.getWapThemeId(),
+			incompleteLayoutRevision.getWapColorSchemeId(),
+			incompleteLayoutRevision.getCss(), serviceContext);
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -162,196 +197,6 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
 	}
 
-	@Override
-	public void serveResource(
-			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
-		throws IOException, PortletException {
-
-		String resourceID = GetterUtil.getString(
-			resourceRequest.getResourceID());
-
-		if (resourceID.equals("getMobileDeviceRules")) {
-			PortletSession portletSession = resourceRequest.getPortletSession();
-
-			PortletContext portletContext = portletSession.getPortletContext();
-
-			PortletRequestDispatcher portletRequestDispatcher =
-				portletContext.getRequestDispatcher(
-					"/html/portlet/layouts_admin/layout/" +
-						"mobile_device_rules_rule_group_instances.jsp");
-
-			portletRequestDispatcher.include(resourceRequest, resourceResponse);
-		}
-		else {
-			super.serveResource(resourceRequest, resourceResponse);
-		}
-	}
-
-	protected void deleteThemeSettingsProperties(
-		UnicodeProperties typeSettingsProperties, String device) {
-
-		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
-
-		Set<String> keys = typeSettingsProperties.keySet();
-
-		Iterator<String> itr = keys.iterator();
-
-		while (itr.hasNext()) {
-			String key = itr.next();
-
-			if (key.startsWith(keyPrefix)) {
-				itr.remove();
-			}
-		}
-	}
-
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (SessionErrors.contains(
-				renderRequest, NoSuchGroupException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
-
-			include("/error.jsp", renderRequest, renderResponse);
-		}
-		else {
-			super.doDispatch(renderRequest, renderResponse);
-		}
-	}
-
-	protected void enableLayout(ActionRequest actionRequest) throws Exception {
-		long incompleteLayoutRevisionId = ParamUtil.getLong(
-			actionRequest, "incompleteLayoutRevisionId");
-
-		LayoutRevision incompleteLayoutRevision =
-			LayoutRevisionLocalServiceUtil.getLayoutRevision(
-				incompleteLayoutRevisionId);
-
-		long layoutBranchId = ParamUtil.getLong(
-			actionRequest, "layoutBranchId",
-			incompleteLayoutRevision.getLayoutBranchId());
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
-		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
-
-		LayoutRevisionLocalServiceUtil.updateLayoutRevision(
-			serviceContext.getUserId(),
-			incompleteLayoutRevision.getLayoutRevisionId(), layoutBranchId,
-			incompleteLayoutRevision.getName(),
-			incompleteLayoutRevision.getTitle(),
-			incompleteLayoutRevision.getDescription(),
-			incompleteLayoutRevision.getKeywords(),
-			incompleteLayoutRevision.getRobots(),
-			incompleteLayoutRevision.getTypeSettings(),
-			incompleteLayoutRevision.getIconImage(),
-			incompleteLayoutRevision.getIconImageId(),
-			incompleteLayoutRevision.getThemeId(),
-			incompleteLayoutRevision.getColorSchemeId(),
-			incompleteLayoutRevision.getWapThemeId(),
-			incompleteLayoutRevision.getWapColorSchemeId(),
-			incompleteLayoutRevision.getCss(), serviceContext);
-	}
-
-	protected String getColorSchemeId(
-			long companyId, String themeId, String colorSchemeId,
-			boolean wapTheme)
-		throws Exception {
-
-		Theme theme = ThemeLocalServiceUtil.getTheme(
-			companyId, themeId, wapTheme);
-
-		if (!theme.hasColorSchemes()) {
-			colorSchemeId = StringPool.BLANK;
-		}
-
-		if (Validator.isNull(colorSchemeId)) {
-			ColorScheme colorScheme = ThemeLocalServiceUtil.getColorScheme(
-				companyId, themeId, colorSchemeId, wapTheme);
-
-			colorSchemeId = colorScheme.getColorSchemeId();
-		}
-
-		return colorSchemeId;
-	}
-
-	protected Group getGroup(PortletRequest portletRequest) throws Exception {
-		return ActionUtil.getGroup(portletRequest);
-	}
-
-	protected byte[] getIconBytes(
-		UploadPortletRequest uploadPortletRequest, String iconFileName) {
-
-		InputStream inputStream = null;
-
-		try {
-			inputStream = uploadPortletRequest.getFileAsStream(iconFileName);
-
-			if (inputStream != null) {
-				return FileUtil.getBytes(inputStream);
-			}
-		}
-		catch (IOException ioe) {
-			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to retrieve icon", ioe);
-			}
-		}
-
-		return new byte[0];
-	}
-
-	protected void inheritMobileRuleGroups(
-			Layout layout, ServiceContext serviceContext)
-		throws PortalException {
-
-		List<MDRRuleGroupInstance> parentMDRRuleGroupInstances =
-			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstances(
-				Layout.class.getName(), layout.getParentPlid());
-
-		for (MDRRuleGroupInstance parentMDRRuleGroupInstance :
-				parentMDRRuleGroupInstances) {
-
-			MDRRuleGroupInstance mdrRuleGroupInstance =
-				MDRRuleGroupInstanceServiceUtil.addRuleGroupInstance(
-					layout.getGroupId(), Layout.class.getName(),
-					layout.getPlid(),
-					parentMDRRuleGroupInstance.getRuleGroupId(),
-					parentMDRRuleGroupInstance.getPriority(), serviceContext);
-
-			List<MDRAction> parentMDRActions =
-				MDRActionLocalServiceUtil.getActions(
-					parentMDRRuleGroupInstance.getRuleGroupInstanceId());
-
-			for (MDRAction mdrAction : parentMDRActions) {
-				MDRActionServiceUtil.addAction(
-					mdrRuleGroupInstance.getRuleGroupInstanceId(),
-					mdrAction.getNameMap(), mdrAction.getDescriptionMap(),
-					mdrAction.getType(), mdrAction.getTypeSettings(),
-					serviceContext);
-			}
-		}
-	}
-
-	@Override
-	protected boolean isCheckMethodOnProcessAction() {
-		return _CHECK_METHOD_ON_PROCESS_ACTION;
-	}
-
-	@Override
-	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof NoSuchGroupException ||
-			cause instanceof PrincipalException) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	/**
 	 * Resets the number of failed merge attempts for the page template, which
 	 * is accessed from the action request's <code>layoutPrototypeId</code>
@@ -367,7 +212,7 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 	 * @param  actionRequest the action request
 	 * @throws Exception if an exception occurred
 	 */
-	protected void resetMergeFailCountAndMerge(ActionRequest actionRequest)
+	public void resetMergeFailCountAndMerge(ActionRequest actionRequest)
 		throws Exception {
 
 		long layoutPrototypeId = ParamUtil.getLong(
@@ -398,41 +243,32 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	protected void setThemeSettingProperties(
-			ActionRequest actionRequest,
-			UnicodeProperties typeSettingsProperties,
-			Map<String, ThemeSetting> themeSettings, String device,
-			String deviceThemeId)
-		throws PortalException {
+	@Override
+	public void serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+		throws IOException, PortletException {
 
-		long groupId = ParamUtil.getLong(actionRequest, "groupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+		String resourceID = GetterUtil.getString(
+			resourceRequest.getResourceID());
 
-		Layout layout = LayoutLocalServiceUtil.getLayout(
-			groupId, privateLayout, layoutId);
+		if (resourceID.equals("getMobileDeviceRules")) {
+			PortletSession portletSession = resourceRequest.getPortletSession();
 
-		for (String key : themeSettings.keySet()) {
-			ThemeSetting themeSetting = themeSettings.get(key);
+			PortletContext portletContext = portletSession.getPortletContext();
 
-			String property =
-				device + "ThemeSettingsProperties--" + key +
-					StringPool.DOUBLE_DASH;
+			PortletRequestDispatcher portletRequestDispatcher =
+				portletContext.getRequestDispatcher(
+					"/html/portlet/layouts_admin/layout/" +
+						"mobile_device_rules_rule_group_instances.jsp");
 
-			String value = ParamUtil.getString(
-				actionRequest, property, themeSetting.getValue());
-
-			if (!Validator.equals(
-					value, layout.getDefaultThemeSetting(key, device, false))) {
-
-				typeSettingsProperties.setProperty(
-					ThemeSettingImpl.namespaceProperty(device, key), value);
-			}
+			portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		}
+		else {
+			super.serveResource(resourceRequest, resourceResponse);
 		}
 	}
 
-	protected void updateLayout(
+	public void updateLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -709,6 +545,170 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
 			stagingGroupId, privateLayout, layout.getLayoutId(),
 			layoutTypeSettingsProperties);
+	}
+
+	protected void deleteThemeSettingsProperties(
+		UnicodeProperties typeSettingsProperties, String device) {
+
+		String keyPrefix = ThemeSettingImpl.namespaceProperty(device);
+
+		Set<String> keys = typeSettingsProperties.keySet();
+
+		Iterator<String> itr = keys.iterator();
+
+		while (itr.hasNext()) {
+			String key = itr.next();
+
+			if (key.startsWith(keyPrefix)) {
+				itr.remove();
+			}
+		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchGroupException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	protected String getColorSchemeId(
+			long companyId, String themeId, String colorSchemeId,
+			boolean wapTheme)
+		throws Exception {
+
+		Theme theme = ThemeLocalServiceUtil.getTheme(
+			companyId, themeId, wapTheme);
+
+		if (!theme.hasColorSchemes()) {
+			colorSchemeId = StringPool.BLANK;
+		}
+
+		if (Validator.isNull(colorSchemeId)) {
+			ColorScheme colorScheme = ThemeLocalServiceUtil.getColorScheme(
+				companyId, themeId, colorSchemeId, wapTheme);
+
+			colorSchemeId = colorScheme.getColorSchemeId();
+		}
+
+		return colorSchemeId;
+	}
+
+	protected Group getGroup(PortletRequest portletRequest) throws Exception {
+		return ActionUtil.getGroup(portletRequest);
+	}
+
+	protected byte[] getIconBytes(
+		UploadPortletRequest uploadPortletRequest, String iconFileName) {
+
+		InputStream inputStream = null;
+
+		try {
+			inputStream = uploadPortletRequest.getFileAsStream(iconFileName);
+
+			if (inputStream != null) {
+				return FileUtil.getBytes(inputStream);
+			}
+		}
+		catch (IOException ioe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to retrieve icon", ioe);
+			}
+		}
+
+		return new byte[0];
+	}
+
+	protected void inheritMobileRuleGroups(
+			Layout layout, ServiceContext serviceContext)
+		throws PortalException {
+
+		List<MDRRuleGroupInstance> parentMDRRuleGroupInstances =
+			MDRRuleGroupInstanceLocalServiceUtil.getRuleGroupInstances(
+				Layout.class.getName(), layout.getParentPlid());
+
+		for (MDRRuleGroupInstance parentMDRRuleGroupInstance :
+				parentMDRRuleGroupInstances) {
+
+			MDRRuleGroupInstance mdrRuleGroupInstance =
+				MDRRuleGroupInstanceServiceUtil.addRuleGroupInstance(
+					layout.getGroupId(), Layout.class.getName(),
+					layout.getPlid(),
+					parentMDRRuleGroupInstance.getRuleGroupId(),
+					parentMDRRuleGroupInstance.getPriority(), serviceContext);
+
+			List<MDRAction> parentMDRActions =
+				MDRActionLocalServiceUtil.getActions(
+					parentMDRRuleGroupInstance.getRuleGroupInstanceId());
+
+			for (MDRAction mdrAction : parentMDRActions) {
+				MDRActionServiceUtil.addAction(
+					mdrRuleGroupInstance.getRuleGroupInstanceId(),
+					mdrAction.getNameMap(), mdrAction.getDescriptionMap(),
+					mdrAction.getType(), mdrAction.getTypeSettings(),
+					serviceContext);
+			}
+		}
+	}
+
+	@Override
+	protected boolean isCheckMethodOnProcessAction() {
+		return _CHECK_METHOD_ON_PROCESS_ACTION;
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof NoSuchGroupException ||
+			cause instanceof PrincipalException) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void setThemeSettingProperties(
+			ActionRequest actionRequest,
+			UnicodeProperties typeSettingsProperties,
+			Map<String, ThemeSetting> themeSettings, String device,
+			String deviceThemeId)
+		throws PortalException {
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+		long layoutId = ParamUtil.getLong(actionRequest, "layoutId");
+
+		Layout layout = LayoutLocalServiceUtil.getLayout(
+			groupId, privateLayout, layoutId);
+
+		for (String key : themeSettings.keySet()) {
+			ThemeSetting themeSetting = themeSettings.get(key);
+
+			String property =
+				device + "ThemeSettingsProperties--" + key +
+					StringPool.DOUBLE_DASH;
+
+			String value = ParamUtil.getString(
+				actionRequest, property, themeSetting.getValue());
+
+			if (!Validator.equals(
+					value, layout.getDefaultThemeSetting(key, device, false))) {
+
+				typeSettingsProperties.setProperty(
+					ThemeSettingImpl.namespaceProperty(device, key), value);
+			}
+		}
 	}
 
 	protected void updateLookAndFeel(

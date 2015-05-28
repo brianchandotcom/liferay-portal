@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.messaging;
+package com.liferay.portlet.exportimport.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

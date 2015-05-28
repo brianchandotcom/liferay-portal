@@ -57,12 +57,12 @@
 <!--ADVANCED_SEARCH-->
 <tr>
 	<td>ADVANCED_SEARCH_MATCH_SELECT</td>
-	<td>//select[@id='_167_andOperator']</td>
+	<td>//select[contains(@id,'andOperator')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADVANCED_SEARCH_FIELD</td>
-	<td>//input[@id='_167_keywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -78,42 +78,42 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_NAME</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//thead/tr/th[1])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[1])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_RECORD_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_PREVIEW_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a[contains(.,'Preview')])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a[contains(.,'Preview')])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_NAME</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//thead/tr/th[2])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[2])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2]/a)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/a)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2]/span)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/span)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_THREE_NAME</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//thead/tr/th[3])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//thead/tr/th[3])</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_THREE_RECORD_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[3]/a)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[3]/a)</td>
 	<td></td>
 </tr>
 <tr>

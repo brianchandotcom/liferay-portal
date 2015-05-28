@@ -306,6 +306,10 @@ public class AuthVerifierPipeline {
 
 			AuthVerifier authVerifier = registry.getService(serviceReference);
 
+			if (authVerifier == null) {
+				return null;
+			}
+
 			Class<?> authVerifierClass = authVerifier.getClass();
 
 			AuthVerifierConfiguration authVerifierConfiguration =

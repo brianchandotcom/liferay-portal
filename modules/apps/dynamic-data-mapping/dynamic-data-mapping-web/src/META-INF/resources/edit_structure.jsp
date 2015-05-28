@@ -72,6 +72,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
+	<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
 	<aui:input name="definition" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
 
@@ -131,22 +132,6 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		<liferay-ui:panel-container cssClass="lfr-structure-entry-details-container" extended="<%= false %>" id="structureDetailsPanelContainer" persistState="<%= true %>">
 			<liferay-ui:panel collapsible="<%= true %>" defaultState="closed" extended="<%= false %>" id="structureDetailsSectionPanel" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
 				<aui:row cssClass="lfr-ddm-types-form-column">
-					<c:choose>
-						<c:when test="<%= scopeClassNameId == 0 %>">
-							<aui:col width="<%= 50 %>">
-								<aui:field-wrapper>
-									<aui:select disabled="<%= structure != null %>" label="type" name="scopeClassNameId">
-										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DDLRecordSet.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DDLRecordSet.class.getName()) %>" />
-										<aui:option label="<%= ResourceActionsUtil.getModelResource(locale, DLFileEntryMetadata.class.getName()) %>" value="<%= PortalUtil.getClassNameId(DLFileEntryMetadata.class.getName()) %>" />
-									</aui:select>
-								</aui:field-wrapper>
-							</aui:col>
-						</c:when>
-						<c:otherwise>
-							<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
-						</c:otherwise>
-					</c:choose>
-
 					<c:choose>
 						<c:when test="<%= Validator.isNull(storageTypeValue) %>">
 							<aui:col width="<%= 50 %>">

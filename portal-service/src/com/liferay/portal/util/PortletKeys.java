@@ -177,7 +177,8 @@ public class PortletKeys {
 
 	public static final String SOFTWARE_CATALOG = "98";
 
-	public static final String STAGING_BAR = "170";
+	public static final String STAGING_BAR =
+		"com_liferay_staging_bar_web_portlet_StagingBarPortlet";
 
 	public static final String STOCKS = "12";
 

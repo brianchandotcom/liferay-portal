@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -165,7 +165,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecord ddlRecord) {
+		com.liferay.dynamic.data.lists.model.DDLRecord ddlRecord) {
 		return _ddlRecord.compareTo(ddlRecord);
 	}
 
@@ -250,7 +250,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getLatestRecordVersion()
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getLatestRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getLatestRecordVersion();
 	}
@@ -291,7 +291,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet()
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getRecordSet();
 	}
@@ -307,13 +307,13 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion()
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getRecordVersion();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecord.getRecordVersion(version);
@@ -634,12 +634,12 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatalists.model.DDLRecord> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecord> toCacheModel() {
 		return _ddlRecord.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord toEscapedModel() {
+	public com.liferay.dynamic.data.lists.model.DDLRecord toEscapedModel() {
 		return new DDLRecordWrapper(_ddlRecord.toEscapedModel());
 	}
 
@@ -649,7 +649,7 @@ public class DDLRecordWrapper implements DDLRecord, ModelWrapper<DDLRecord> {
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecord toUnescapedModel() {
+	public com.liferay.dynamic.data.lists.model.DDLRecord toUnescapedModel() {
 		return new DDLRecordWrapper(_ddlRecord.toUnescapedModel());
 	}
 

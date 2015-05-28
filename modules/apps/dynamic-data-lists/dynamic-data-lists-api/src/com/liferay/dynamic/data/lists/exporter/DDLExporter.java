@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -36,6 +36,8 @@ public interface DDLExporter {
 			long recordSetId, int status, int start, int end,
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception;
+
+	public String getFormat();
 
 	public Locale getLocale();
 

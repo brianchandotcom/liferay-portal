@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,44 +33,70 @@ public abstract class BaseBooleanQueryImpl
 	extends BaseQueryImpl implements BooleanQuery {
 
 	@Override
-	public void addTerms(String[] fields, String values) throws ParseException {
+	public Map<String, Query> addTerms(String[] fields, String values)
+		throws ParseException {
+
 		if (Validator.isNull(values)) {
-			return;
+			return Collections.emptyMap();
 		}
 
 		if (fields == null) {
 			fields = new String[0];
 		}
 
+		Map<String, Query> queries = new HashMap<>((int)(fields.length / .75));
+
 		for (String field : fields) {
-			addTerm(field, values);
+			Query query = addTerm(field, values);
+
+			queries.put(field, query);
 		}
+
+		return queries;
 	}
 
 	@Override
-	public void addTerms(String[] fields, String value, boolean like)
+	public Map<String, Query> addTerms(
+			String[] fields, String value, boolean like)
 		throws ParseException {
 
 		if (Validator.isNull(value)) {
-			return;
+			return Collections.emptyMap();
 		}
+
+		Map<String, Query> queries = new HashMap<>((int)(fields.length / .75));
 
 		for (String field : fields) {
-			addTerm(field, value, like);
+			Query query = addTerm(field, value, like);
+
+			queries.put(field, query);
 		}
+
+		return queries;
 	}
 
-	protected void addTerms(
+	protected Map<String, List<Query>> addTerms(
 			String[] fields, Map<String, List<String>> termFieldsValuesMap)
 		throws ParseException {
+
+		Map<String, List<Query>> queries = new HashMap<>(
+			(int)(fields.length / .75));
 
 		for (String field : fields) {
 			List<String> valuesList = termFieldsValuesMap.get(field);
 
+			List<Query> queryList = new ArrayList<>(valuesList.size());
+
+			queries.put(field, queryList);
+
 			for (String value : valuesList) {
-				addTerm(field, value);
+				Query query = addTerm(field, value);
+
+				queryList.add(query);
 			}
 		}
+
+		return queries;
 	}
 
 	protected String[] parseKeywords(String values) {

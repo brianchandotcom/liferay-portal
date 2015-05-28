@@ -29,7 +29,7 @@ import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil#getExportActionableDynamicQuery(PortletDataContext)}
+ * @deprecated As of 7.0.0, replaced by {@link com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil#getExportActionableDynamicQuery(PortletDataContext)}
  * @generated
  */
 @Deprecated

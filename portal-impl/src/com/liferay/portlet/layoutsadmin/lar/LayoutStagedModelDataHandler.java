@@ -16,7 +16,6 @@ package com.liferay.portlet.layoutsadmin.lar;
 
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.NoSuchLayoutException;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -191,6 +190,12 @@ public class LayoutStagedModelDataHandler
 			referenceElement.attributeValue("class-pk"));
 
 		layoutPlids.put(plid, existingLayout.getPlid());
+	}
+
+	public void setLayoutLocalServiceHelper(
+		LayoutLocalServiceHelper layoutLocalServiceHelper) {
+
+		_layoutLocalServiceHelper = layoutLocalServiceHelper;
 	}
 
 	@Override
@@ -1272,8 +1277,6 @@ public class LayoutStagedModelDataHandler
 	private static final Log _log = LogFactoryUtil.getLog(
 		LayoutStagedModelDataHandler.class);
 
-	private final LayoutLocalServiceHelper _layoutLocalServiceHelper =
-		(LayoutLocalServiceHelper)PortalBeanLocatorUtil.locate(
-			LayoutLocalServiceHelper.class.getName());
+	private LayoutLocalServiceHelper _layoutLocalServiceHelper;
 
 }

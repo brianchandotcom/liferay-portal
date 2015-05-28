@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -96,13 +95,6 @@ public abstract class BaseDDLExporter implements DDLExporter {
 		}
 
 		return ddmFormFields;
-	}
-
-	protected DDMStructure getDDMStructure(long recordSetId) throws Exception {
-		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
-			recordSetId);
-
-		return recordSet.getDDMStructure();
 	}
 
 	protected String getStatusMessage(int status) {

@@ -72,7 +72,7 @@ public class VelocityServletResourceParser extends URLResourceParser {
 		URL url = servletContext.getResource(name);
 
 		if (url == null) {
-			url = PortalWebResourcesUtil.getServletContextResource(name);
+			url = PortalWebResourcesUtil.getResource(name);
 		}
 
 		if ((url == null) && name.endsWith("/init_custom.vm")) {

@@ -278,4 +278,42 @@
 
 		<execute macro="Smoke#runSmoke" />
 	</command>
+
+	<command name="HSQLtoSybase" priority="5">
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.sybase.password" />
+			<var name="databaseType" value="Sybase" />
+			<var name="databaseUserName" property-value="database.sybase.username" />
+			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
+			<var name="jdbcURL" property-value="database.sybase.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command name="HSQLtoSybaseSampleDataDisabled" priority="5">
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.sybase.password" />
+			<var name="databaseType" value="Sybase" />
+			<var name="databaseUserName" property-value="database.sybase.username" />
+			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
+			<var name="jdbcURL" property-value="database.sybase.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
 </definition>

@@ -221,9 +221,9 @@
 								else {
 									var lastResultString = instance._endResult[instance._endResult.length - 1];
 
-									var lastResultCharacter = lastResultString.charAt(lastResultString.length - 1);
+									var lastResultCharacter = lastResultString[lastResultString.length - 1];
 
-									if ( lastResultCharacter !== '~' && lastResultCharacter !== p1.charAt(0)) {
+									if ( lastResultCharacter !== '~' && lastResultCharacter !== p1[0]) {
 										res += '~';
 									}
 

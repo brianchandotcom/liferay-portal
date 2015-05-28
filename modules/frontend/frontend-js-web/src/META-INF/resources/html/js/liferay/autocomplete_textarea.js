@@ -70,7 +70,7 @@ AUI.add(
 				var triggers = instance._getTriggers();
 
 				for (var i = position; i >= 0; --i) {
-					var triggerIndex = AArray.indexOf(triggers, content.charAt(i));
+					var triggerIndex = AArray.indexOf(triggers, content[i]);
 
 					if (triggerIndex >= 0) {
 						result = i;
@@ -167,7 +167,7 @@ AUI.add(
 
 								var spaceAdded = 1;
 
-								if (restText.length === 0 || restText.charAt(0) !== STR_SPACE) {
+								if (restText.length === 0 || restText[0] !== STR_SPACE) {
 									text += STR_SPACE;
 
 									spaceAdded = 0;

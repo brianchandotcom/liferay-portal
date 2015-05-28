@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -253,23 +252,7 @@ public class DynamicCSSUtil {
 
 		String portalContextPath = PortalUtil.getPathContext();
 
-		String baseURL = portalContextPath;
-
-		String contextPath = servletContext.getContextPath();
-
-		if (!contextPath.equals(portalContextPath)) {
-			if (!theme.isWARFile()) {
-				baseURL = PortalImpl.PATH_MODULE.concat(
-						GetterUtil.getString(
-							StringPool.SLASH +
-						servletContext.getServletContextName()));
-			}
-			else {
-				baseURL = StringPool.SLASH.concat(
-					GetterUtil.getString(
-				servletContext.getServletContextName()));
-			}
-		}
+		String baseURL = servletContext.getContextPath();
 
 		if (baseURL.endsWith(StringPool.SLASH)) {
 			baseURL = baseURL.substring(0, baseURL.length() - 1);

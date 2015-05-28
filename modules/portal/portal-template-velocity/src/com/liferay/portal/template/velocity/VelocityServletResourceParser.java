@@ -80,11 +80,11 @@ public class VelocityServletResourceParser extends URLResourceParser {
 				_log.warn("The template " + name + " should be created");
 			}
 
-			ServletContext cssServletContext =
+			ServletContext themesServletContext =
 				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+					PortalWebResourceConstants.RESOURCE_TYPE_THEMES);
 
-			url = cssServletContext.getResource(
+			url = themesServletContext.getResource(
 				"/html/themes/_unstyled/templates/init_custom.vm");
 		}
 

@@ -178,7 +178,12 @@ AUI.add(
 						var selectAllCheckbox = instance._selectAllCheckbox;
 
 						for (var i = 0; i < instance._checkBoxesId.length; i++) {
-							Util.checkAll(instance._portletContainer, instance._checkBoxesId[i], selectAllCheckbox, CSS_RESULT_ROW);
+							Util.checkAll(
+								instance._portletContainer,
+								instance._checkBoxesId[i],
+								selectAllCheckbox,
+								CSS_RESULT_ROW
+							);
 						}
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();

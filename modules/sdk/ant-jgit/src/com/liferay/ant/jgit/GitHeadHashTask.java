@@ -16,8 +16,6 @@ package com.liferay.ant.jgit;
 
 import java.io.File;
 
-import java.util.Iterator;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -65,38 +63,39 @@ public class GitHeadHashTask extends Task {
 				repository.resolve(Constants.HEAD));
 
 			revWalk.markStart(headRevCommit);
-			revWalk.setRevFilter(MaxCountRevFilter.create(2));
+
+			if (_ignoreFileName == null) {
+				revWalk.setRevFilter(MaxCountRevFilter.create(1));
+			}
+			else {
+				revWalk.setRevFilter(MaxCountRevFilter.create(2));
+			}
+
 			revWalk.setTreeFilter(
 				AndTreeFilter.create(
 					PathFilter.create(relativePath), TreeFilter.ANY_DIFF
 				));
 
-			Iterator<RevCommit> iterator = revWalk.iterator();
+			RevCommit revCommit = revWalk.next();
 
-			while (iterator.hasNext()) {
-				RevCommit revCommit = iterator.next();
+			if (revCommit == null) {
+				throw new IllegalStateException(
+					"Unable to find any commit under " + _path);
+			}
 
-				TreeWalk treeWalk = new TreeWalk(repository);
+			if ((_ignoreFileName != null) &&
+				hasIgnoreFile(repository, revCommit, relativePath)) {
 
-				treeWalk.addTree(revCommit.getTree());
-				treeWalk.setRecursive(true);
+				RevCommit secondRevCommit = revWalk.next();
 
-				if (_ignoreFileName != null) {
-					treeWalk.setFilter(
-						AndTreeFilter.create(
-							PathFilter.create(
-								relativePath + "/" + _ignoreFileName),
-							TreeFilter.ANY_DIFF));
-				}
-
-				if (!treeWalk.next()) {
-					Project currentProject = getProject();
-
-					currentProject.setNewProperty(_property, revCommit.name());
-
-					break;
+				if (secondRevCommit != null) {
+					revCommit = secondRevCommit;
 				}
 			}
+
+			Project currentProject = getProject();
+
+			currentProject.setNewProperty(_property, revCommit.name());
 
 			revWalk.dispose();
 		}
@@ -120,6 +119,23 @@ public class GitHeadHashTask extends Task {
 
 	public void setProperty(String property) {
 		_property = property;
+	}
+
+	protected boolean hasIgnoreFile(
+			Repository repository, RevCommit revCommit, String relativePath)
+		throws Exception {
+
+		try (TreeWalk treeWalk = new TreeWalk(repository)) {
+			treeWalk.addTree(revCommit.getTree());
+			treeWalk.setRecursive(true);
+
+			treeWalk.setFilter(
+				AndTreeFilter.create(
+					PathFilter.create(relativePath + "/" + _ignoreFileName),
+					TreeFilter.ANY_DIFF));
+
+			return treeWalk.next();
+		}
 	}
 
 	private File _gitDir;

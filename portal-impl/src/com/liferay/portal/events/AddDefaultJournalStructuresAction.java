@@ -56,7 +56,12 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 		DefaultDDMStructureUtil.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			"basic-web-content-structure.xml", serviceContext);
+			AddDefaultJournalStructuresAction.class.getClassLoader(),
+			_STRUCTURES_FILE_PATH, serviceContext);
 	}
+
+	private static final String _STRUCTURES_FILE_PATH =
+		"com/liferay/portal/events/dependencies/" +
+			"basic-web-content-structure.xml";
 
 }

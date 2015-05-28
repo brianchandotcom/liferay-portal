@@ -55,7 +55,12 @@ public class AddDefaultDDMStructuresAction extends SimpleAction {
 		DefaultDDMStructureUtil.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
-			"dynamic-data-mapping-structures.xml", serviceContext);
+			AddDefaultDDMStructuresAction.class.getClassLoader(),
+			_STRUCTURES_FILE_PATH, serviceContext);
 	}
+
+	private static final String _STRUCTURES_FILE_PATH =
+		"com/liferay/portal/events/dependencies/" +
+			"dynamic-data-mapping-structures.xml";
 
 }

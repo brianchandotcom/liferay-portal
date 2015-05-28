@@ -17,6 +17,7 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.upgrade.util.UpgradeProcessUtil;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -53,13 +54,17 @@ import java.util.Map;
 public class DefaultDDMStructureUtil {
 
 	public static void addDDMStructures(
-			long userId, long groupId, long classNameId, String fileName,
+			long userId, long groupId, long classNameId,
+			ClassLoader classLoader, String filePath,
 			ServiceContext serviceContext)
 		throws Exception {
 
 		Locale locale = PortalUtil.getSiteDefaultLocale(groupId);
 
-		List<Element> structureElements = getDDMStructures(fileName, locale);
+		List<Element> structureElements = getDDMStructures(
+			classLoader, filePath, locale);
+
+		String templateFilePath = FileUtil.getPath(filePath) + StringPool.SLASH;
 
 		for (Element structureElement : structureElements) {
 			boolean dynamicStructure = GetterUtil.getBoolean(
@@ -136,22 +141,27 @@ public class DefaultDDMStructureUtil {
 			boolean templateCacheable = GetterUtil.getBoolean(
 				templateElement.elementText("cacheable"));
 
+			String templateContent = ContentUtil.get(
+				classLoader, templateFilePath + templateFileName);
+
 			DDMTemplateLocalServiceUtil.addTemplate(
 				userId, groupId, PortalUtil.getClassNameId(DDMStructure.class),
 				ddmStructure.getStructureId(), ddmStructure.getClassNameId(),
 				null, nameMap, null, DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY,
 				DDMTemplateConstants.TEMPLATE_MODE_CREATE,
-				TemplateConstants.LANG_TYPE_FTL, getContent(templateFileName),
+				TemplateConstants.LANG_TYPE_FTL, templateContent,
 				templateCacheable, false, StringPool.BLANK, null,
 				serviceContext);
 		}
 	}
 
 	public static String getDynamicDDMStructureDefinition(
-			String fileName, String dynamicDDMStructureName, Locale locale)
+			ClassLoader classLoader, String filePath,
+			String dynamicDDMStructureName, Locale locale)
 		throws DocumentException {
 
-		List<Element> structureElements = getDDMStructures(fileName, locale);
+		List<Element> structureElements = getDDMStructures(
+			classLoader, filePath, locale);
 
 		for (Element structureElement : structureElements) {
 			boolean dynamicStructure = GetterUtil.getBoolean(
@@ -176,16 +186,11 @@ public class DefaultDDMStructureUtil {
 		return null;
 	}
 
-	protected static String getContent(String fileName) {
-		return ContentUtil.get(
-			"com/liferay/portal/events/dependencies/" + fileName);
-	}
-
 	protected static List<Element> getDDMStructures(
-			String fileName, Locale locale)
+			ClassLoader classLoader, String filePath, Locale locale)
 		throws DocumentException {
 
-		String xml = getContent(fileName);
+		String xml = ContentUtil.get(classLoader, filePath);
 
 		xml = StringUtil.replace(xml, "[$LOCALE_DEFAULT$]", locale.toString());
 

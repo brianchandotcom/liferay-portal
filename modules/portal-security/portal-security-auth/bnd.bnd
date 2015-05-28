@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Portal Security Auth
 Bundle-SymbolicName: com.liferay.portal.security.auth
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.security.auth.*;version=${plugin.full.version}
 Include-Resource: \
 	classes,\
 	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\

@@ -915,15 +915,14 @@ AUI.add(
 
 						var portletNamespace = instance.get('portletNamespace');
 
-						var portletURL = Liferay.PortletURL.createURL(themeDisplay.getURLControlPanel());
+						var portletURL = Liferay.PortletURL.createActionURL();
 
-						portletURL.setDoAsGroupId(instance.get('doAsGroupId'));
-						portletURL.setParameter('eventName', portletNamespace + 'selectDocumentLibrary');
-						portletURL.setParameter('groupId', themeDisplay.getScopeGroupId());
-						portletURL.setParameter('refererPortletName', '');
-						portletURL.setParameter('mvcPath', '/view.jsp');
-						portletURL.setParameter('tabs1Names', 'documents');
+						portletURL.setParameter('javax.portlet.action', 'showItemSelector');
+						portletURL.setParameter('criteria', 'com.liferay.document.library.item.selector.web.DLItemSelectorCriterion');
+						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+						portletURL.setParameter('0_json', '{"desiredReturnTypes":["java.net.URL","com.liferay.portal.kernel.repository.model.FileEntry"],"folderId":0,"mimeTypes":["image\/bmp","image\/gif","image\/jpeg","image\/pjpeg","image\/png","image\/tiff","image\/x-citrix-jpeg","image\/x-citrix-png","image\/x-ms-bmp","image\/x-png","image\/x-tiff"],"repositoryId":20230,"showGroupsSelector":false,"type":"images"}');
 						portletURL.setPortletId(Liferay.PortletKeys.ITEM_SELECTOR);
+						portletURL.setPortletMode('view');
 						portletURL.setWindowState('pop_up');
 
 						return portletURL.toString();
@@ -1122,9 +1121,7 @@ AUI.add(
 					getDocumentLibraryURL: function() {
 						var instance = this;
 
-						var portletURL = ImageField.superclass.getDocumentLibraryURL.apply(instance, arguments);
-
-						return portletURL + '&Type=image';
+						return ImageField.superclass.getDocumentLibraryURL.apply(instance, arguments);
 					},
 
 					getValue: function() {

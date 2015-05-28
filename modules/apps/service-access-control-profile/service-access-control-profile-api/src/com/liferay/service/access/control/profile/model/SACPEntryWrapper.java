@@ -152,6 +152,11 @@ public class SACPEntryWrapper implements SACPEntry, ModelWrapper<SACPEntry> {
 	}
 
 	@Override
+	public java.util.List<java.lang.String> getAllowedServicesList() {
+		return _sacpEntry.getAllowedServicesList();
+	}
+
+	@Override
 	public java.lang.String[] getAvailableLanguageIds() {
 		return _sacpEntry.getAvailableLanguageIds();
 	}

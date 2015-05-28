@@ -37,6 +37,8 @@ public interface DDLExporter {
 			OrderByComparator<DDLRecord> orderByComparator)
 		throws Exception;
 
+	public String getFormat();
+
 	public Locale getLocale();
 
 	public void setLocale(Locale locale);

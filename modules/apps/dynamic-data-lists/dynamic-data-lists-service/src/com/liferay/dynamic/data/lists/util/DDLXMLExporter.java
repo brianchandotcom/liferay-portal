@@ -36,11 +36,19 @@ import java.io.Serializable;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
+@Component(service = DDLExporter.class)
 public class DDLXMLExporter extends BaseDDLExporter {
+
+	@Override
+	public String getFormat() {
+		return "xml";
+	}
 
 	protected void addFieldElement(
 		Element fieldsElement, String label, Serializable value) {

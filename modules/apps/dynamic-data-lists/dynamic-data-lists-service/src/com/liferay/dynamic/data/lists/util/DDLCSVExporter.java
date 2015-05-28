@@ -35,11 +35,19 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverte
 import java.util.Iterator;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  * @author Manuel de la Peña
  */
+@Component(service = DDLExporter.class)
 public class DDLCSVExporter extends BaseDDLExporter {
+
+	@Override
+	public String getFormat() {
+		return "csv";
+	}
 
 	@Override
 	protected byte[] doExport(

@@ -49,6 +49,19 @@ import javax.portlet.PortletResponse;
  */
 public class SearchResultManagerImpl implements SearchResultManager {
 
+	public SearchResultManagerImpl() {
+	}
+
+	public SearchResultManagerImpl(
+		ClassNameLocalService classNameLocalService,
+		DLAppLocalService dlAppLocalService,
+		MBMessageLocalService mbMessageLocalService) {
+
+		this.classNameLocalService = classNameLocalService;
+		this.dlAppLocalService = dlAppLocalService;
+		this.mbMessageLocalService = mbMessageLocalService;
+	}
+
 	@Override
 	public SearchResult createSearchResult(Document document)
 		throws PortalException {

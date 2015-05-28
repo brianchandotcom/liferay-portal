@@ -23,11 +23,19 @@ import java.io.Serializable;
  */
 public interface Query extends Serializable {
 
+	public static final float DEFAULT_BOOST = 1.0f;
+
 	public <T> T accept(QueryVisitor<T> queryVisitor);
+
+	public float getBoost();
 
 	public QueryConfig getQueryConfig();
 
 	public Object getWrappedQuery();
+
+	public boolean isDefaultBoost();
+
+	public void setBoost(float boost);
 
 	public void setQueryConfig(QueryConfig queryConfig);
 

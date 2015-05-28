@@ -18,9 +18,9 @@
 		</if>
 
 		<if>
-			<equals arg1="${databaseNameDefault}" arg2="false" />
+			<equals arg1="${databaseName}" arg2="lportal1" />
 			<then>
-				<var method="StringUtil#replace('${jdbcURL}', 'lportal', 'lportal1')" name="jdbcURL" />
+				<var method="StringUtil#replace('${jdbcURL}', 'lportal', '${databaseName}')" name="jdbcURL" />
 			</then>
 		</if>
 
@@ -69,7 +69,7 @@
 		</execute>
 
 		<execute macro="SetupWizard#configureDatabasePG">
-			<var name="databaseNameDefault" value="${databaseNameDefault}" />
+			<var name="databaseName" value="${databaseName}" />
 			<var name="databasePassword" value="${databasePassword}" />
 			<var name="databaseType" value="${databaseType}" />
 			<var name="databaseUserName" value="${databaseUserName}" />

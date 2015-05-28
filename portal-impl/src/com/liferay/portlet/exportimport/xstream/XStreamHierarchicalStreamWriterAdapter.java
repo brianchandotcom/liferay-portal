@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.xstream;
+package com.liferay.portlet.exportimport.xstream;
 
 import com.liferay.portal.kernel.lar.xstream.XStreamHierarchicalStreamWriter;
 

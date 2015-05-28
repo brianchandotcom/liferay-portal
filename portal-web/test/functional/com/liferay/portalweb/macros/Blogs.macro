@@ -300,6 +300,12 @@
 		<execute macro="BlogsEntry#publish" />
 	</command>
 
+	<command name="subscribePG">
+		<execute function="AssertClick" locator1="Link#SUBSCRIBE" value1="Subscribe" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -321,6 +327,12 @@
 		</execute>
 
 		<execute macro="RecycleBin#emptyCP" />
+	</command>
+
+	<command name="unsubscribePG">
+		<execute function="AssertClick" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request completed successfully." />
 	</command>
 
 	<command name="viewDetailsPG">

@@ -150,11 +150,6 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
-	<command name="subscribePG">
-		<execute function="AssertClick" locator1="PGBlogs#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
 	<command name="tearDownConfigurationDisplaySettingsCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />

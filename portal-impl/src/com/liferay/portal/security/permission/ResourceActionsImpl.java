@@ -950,10 +950,7 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	protected void readGroupDefaultActions(
-		Element parentElement, Map<String, Set<String>> actionsMap,
-		String name) {
-
-		Set<String> groupDefaultActions = getActions(actionsMap, name);
+		Element parentElement, Set<String> groupDefaultActions) {
 
 		Element groupDefaultsElement = getPermissionsChildElement(
 			parentElement, "site-member-defaults");
@@ -970,29 +967,20 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		groupDefaultActions.addAll(readActionKeys(groupDefaultsElement));
-
-		actionsMap.put(name, groupDefaultActions);
 	}
 
-	protected Set<String> readGuestDefaultActions(
-		Element parentElement, Map<String, Set<String>> actionsMap,
-		String name) {
-
-		Set<String> guestDefaultActions = getActions(actionsMap, name);
+	protected void readGuestDefaultActions(
+		Element parentElement, Set<String> guestDefaultActions) {
 
 		Element guestDefaultsElement = getPermissionsChildElement(
 			parentElement, "guest-defaults");
 
 		guestDefaultActions.addAll(readActionKeys(guestDefaultsElement));
-
-		return guestDefaultActions;
 	}
 
 	protected void readGuestUnsupportedActions(
-		Element parentElement, Map<String, Set<String>> actionsMap, String name,
+		Element parentElement, Set<String> guestUnsupportedActions,
 		Set<String> guestDefaultActions) {
-
-		Set<String> guestUnsupportedActions = getActions(actionsMap, name);
 
 		Element guestUnsupportedElement = getPermissionsChildElement(
 			parentElement, "guest-unsupported");
@@ -1001,15 +989,11 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		checkGuestUnsupportedActions(
 			guestUnsupportedActions, guestDefaultActions);
-
-		actionsMap.put(name, guestUnsupportedActions);
 	}
 
 	protected void readLayoutManagerActions(
-		Element parentElement, Map<String, Set<String>> actionsMap, String name,
+		Element parentElement, Set<String> layoutManagerActions,
 		Set<String> supportsActions) {
-
-		Set<String> layoutManagerActions = getActions(actionsMap, name);
 
 		Element layoutManagerElement = getPermissionsChildElement(
 			parentElement, "layout-manager");
@@ -1020,8 +1004,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		else {
 			layoutManagerActions.addAll(supportsActions);
 		}
-
-		actionsMap.put(name, layoutManagerActions);
 	}
 
 	protected void readModelResource(
@@ -1088,49 +1070,43 @@ public class ResourceActionsImpl implements ResourceActions {
 		Set<String> modelResourceActions =
 			modelResourceActionsBag.getResourceActions();
 
-		Set<String> supportsActions = readSupportsActions(
-			modelResourceElement, modelResourceActions, name);
+		readSupportsActions(modelResourceElement, modelResourceActions);
 
-		checkModelActions(supportsActions);
+		checkModelActions(modelResourceActions);
 
-		if (supportsActions.size() > 64) {
+		if (modelResourceActions.size() > 64) {
 			throw new ResourceActionsException(
 				"There are more than 64 actions for resource " + name);
 		}
-
-		modelResourceActions.addAll(supportsActions);
 
 		Set<String> modelResourceGroupDefaultActions =
 			modelResourceActionsBag.getResourceGroupDefaultActions();
 
 		readGroupDefaultActions(
-			modelResourceElement, modelResourceGroupDefaultActions, name);
+			modelResourceElement, modelResourceGroupDefaultActions);
 
 		Set<String> modelResourceGuestDefaultActions =
 			modelResourceActionsBag.getResourceGuestDefaultActions();
 
-		Set<String> guestDefaultActions = readGuestDefaultActions(
-			modelResourceElement, modelResourceGuestDefaultActions, name);
+		readGuestDefaultActions(
+			modelResourceElement, modelResourceGuestDefaultActions);
 
 		Set<String> modelResourceGuestUnsupportedActions =
 			modelResourceActionsBag.getResourceGuestUnsupportedActions();
 
 		readGuestUnsupportedActions(
-			modelResourceElement, modelResourceGuestUnsupportedActions, name,
-			guestDefaultActions);
+			modelResourceElement, modelResourceGuestUnsupportedActions,
+			modelResourceGuestDefaultActions);
 
 		Set<String> modelResourceOwnerDefaultActions =
 			modelResourceActionsBag.getResourceOwnerDefaultActions();
 
 		readOwnerDefaultActions(
-			modelResourceElement, modelResourceOwnerDefaultActions, name);
+			modelResourceElement, modelResourceOwnerDefaultActions);
 	}
 
 	protected void readOwnerDefaultActions(
-		Element parentElement, Map<String, Set<String>> actionsMap,
-		String name) {
-
-		Set<String> ownerDefaultActions = getActions(actionsMap, name);
+		Element parentElement, Set<String> ownerDefaultActions) {
 
 		Element ownerDefaultsElement = getPermissionsChildElement(
 			parentElement, "owner-defaults");
@@ -1140,8 +1116,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		ownerDefaultActions.addAll(readActionKeys(ownerDefaultsElement));
-
-		actionsMap.put(name, ownerDefaultActions);
 	}
 
 	protected void readPortletResource(
@@ -1199,15 +1173,12 @@ public class ResourceActionsImpl implements ResourceActions {
 			portletResourceActionsBag.getResourceLayoutManagerActions();
 
 		readLayoutManagerActions(
-			portletResourceElement, portletResourceLayoutManagerActions, name,
+			portletResourceElement, portletResourceLayoutManagerActions,
 			portletResourceActions);
 	}
 
 	protected Set<String> readSupportsActions(
-		Element parentElement, Map<String, Set<String>> actionsMap,
-		String name) {
-
-		Set<String> supportsActions = getActions(actionsMap, name);
+		Element parentElement, Set<String> supportsActions) {
 
 		Element supportsElement = getPermissionsChildElement(
 			parentElement, "supports");

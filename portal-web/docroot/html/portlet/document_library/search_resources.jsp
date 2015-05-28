@@ -196,7 +196,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
+								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getDescription() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								mbMessages="<%= searchResult.getMBMessages() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
@@ -205,7 +205,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"
 								status="<%= latestFileVersion.getStatus() %>"
 								thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
-								title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
+								title="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getTitle() : fileEntry.getTitle() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
 						</c:when>
@@ -240,13 +240,13 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								actionJsp="/html/portlet/document_library/folder_action.jsp"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, curFolder.getParentFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
-								description="<%= (summary != null) ? summary.getContent() : curFolder.getDescription() %>"
+								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : curFolder.getDescription() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
 								rowCheckerId="<%= String.valueOf(curFolder.getFolderId()) %>"
 								rowCheckerName="<%= Folder.class.getSimpleName() %>"
 								showCheckbox="<%= DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.DELETE) || DLFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE) %>"
 								thumbnailSrc='<%= themeDisplay.getPathThemeImages() + "/file_system/large/" + folderImage + ".png" %>'
-								title="<%= (summary != null) ? summary.getTitle() : curFolder.getName() %>"
+								title="<%= ((summary != null) && Validator.isNotNull(summary.getTitle())) ? summary.getTitle() : curFolder.getName() %>"
 								url="<%= tempRowURL.toString() %>"
 							/>
 						</c:when>

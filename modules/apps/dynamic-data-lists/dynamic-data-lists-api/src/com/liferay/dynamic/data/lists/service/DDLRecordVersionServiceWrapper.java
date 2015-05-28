@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -44,23 +44,23 @@ public class DDLRecordVersionServiceWrapper implements DDLRecordVersionService,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordId, java.lang.String version)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionService.getRecordVersion(recordId, version);
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion getRecordVersion(
+	public com.liferay.dynamic.data.lists.model.DDLRecordVersion getRecordVersion(
 		long recordVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionService.getRecordVersion(recordVersionId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> getRecordVersions(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordVersion> getRecordVersions(
 		long recordId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion> orderByComparator)
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordVersion> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddlRecordVersionService.getRecordVersions(recordId, start, end,
 			orderByComparator);

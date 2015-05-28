@@ -95,7 +95,7 @@ if (fileEntryId != 0) {
 </div>
 
 <%
-PortletURL itemSelectorURL = liferayPortletResponse.createActionURL();
+PortletURL itemSelectorURL = liferayPortletResponse.createRenderURL();
 
 itemSelectorURL.setParameter(ActionRequest.ACTION_NAME, "showItemSelector");
 itemSelectorURL.setParameter("criteria", "com.liferay.document.library.item.selector.web.DLItemSelectorCriterion");

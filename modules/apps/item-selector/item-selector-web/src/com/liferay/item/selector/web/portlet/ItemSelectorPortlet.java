@@ -53,11 +53,15 @@ import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.StorageFieldRequiredException;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -134,20 +138,22 @@ public class ItemSelectorPortlet extends MVCPortlet {
 		}
 	}
 
-	public void showItemSelector(
-		ActionRequest actionRequest, ActionResponse actionResponse) {
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
 
 		ItemSelectorRendering itemSelectorRendering =
 			_itemSelector.getItemSelectorRendering(
-				actionRequest, actionResponse);
+				renderRequest, renderResponse);
 
 		LocalizedItemSelectorRendering localizedItemSelectorRendering =
 			new LocalizedItemSelectorRendering(
-				actionRequest.getLocale(), itemSelectorRendering);
+				renderRequest.getLocale(), itemSelectorRendering);
 
-		localizedItemSelectorRendering.store(actionRequest);
+		localizedItemSelectorRendering.store(renderRequest);
 
-		actionResponse.setRenderParameter("mvcPath", "/item_selector.jsp");
+		super.render(renderRequest, renderResponse);
 	}
 
 	protected FileEntry doAddFileEntryAction(ActionRequest actionRequest)

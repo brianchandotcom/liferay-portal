@@ -41,7 +41,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletModeException;
 import javax.portlet.PortletRequest;
@@ -133,7 +132,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		LiferayPortletResponse liferayPortletResponse =
 			(LiferayPortletResponse)portletResponse;
 
-		LiferayPortletURL portletURL = liferayPortletResponse.createActionURL(
+		LiferayPortletURL portletURL = liferayPortletResponse.createRenderURL(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
 		try {
@@ -149,8 +148,6 @@ public class ItemSelectorImpl implements ItemSelector {
 		catch (WindowStateException wse) {
 			throw new SystemException(wse);
 		}
-
-		portletURL.setParameter(ActionRequest.ACTION_NAME, "showItemSelector");
 
 		Map<String, String[]> parameters = getItemSelectorParameters(
 			itemSelectedEventName, itemSelectorCriteria);

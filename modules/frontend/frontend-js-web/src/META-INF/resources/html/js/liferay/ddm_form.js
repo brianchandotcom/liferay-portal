@@ -915,7 +915,7 @@ AUI.add(
 
 						var portletNamespace = instance.get('portletNamespace');
 
-						var portletURL = Liferay.PortletURL.createActionURL();
+						var portletURL = Liferay.PortletURL.createRenderURL();
 
 						portletURL.setParameter('javax.portlet.action', 'showItemSelector');
 						portletURL.setParameter('criteria', 'com.liferay.document.library.item.selector.web.DLItemSelectorCriterion');

@@ -46,6 +46,12 @@
 		<execute function="AssertConsoleTextPresentNoError" value1="freemarker.core.ParseException: Unexpected end of file reached._Unclosed if directive." />
 	</command>
 
+	<command name="viewCustomADT">
+		<var name="key_feedContentTitle" value="${feedContentTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CUSTOM_ADT_TITLE" value1="${feedContentTitle}" />
+	</command>
+
 	<command name="viewDefaultDisplayFeedTitle">
 		<var name="key_feedTitle" value="${feedTitle}" />
 

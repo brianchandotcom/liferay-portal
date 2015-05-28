@@ -19,13 +19,25 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.language.AggregateResourceBundle;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.security.permission.PermissionPropagator;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
+import com.liferay.portal.service.ResourceBlockServiceUtil;
+import com.liferay.portal.service.ResourcePermissionServiceUtil;
+import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
@@ -33,7 +45,13 @@ import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -42,6 +60,7 @@ import javax.portlet.EventRequest;
 import javax.portlet.EventResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -122,6 +141,75 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		super.serveResource(resourceRequest, resourceResponse);
 	}
 
+	public void updateRolePermissions(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+		String modelResource = ParamUtil.getString(
+			actionRequest, "modelResource");
+		long[] roleIds = StringUtil.split(
+			ParamUtil.getString(
+				actionRequest, "rolesSearchContainerPrimaryKeys"), 0L);
+
+		String selResource = PortletConstants.getRootPortletId(portletResource);
+
+		if (Validator.isNotNull(modelResource)) {
+			selResource = modelResource;
+		}
+
+		long resourceGroupId = ParamUtil.getLong(
+			actionRequest, "resourceGroupId", themeDisplay.getScopeGroupId());
+		String resourcePrimKey = ParamUtil.getString(
+			actionRequest, "resourcePrimKey");
+
+		Map<Long, String[]> roleIdsToActionIds = new HashMap<>();
+
+		if (ResourceBlockLocalServiceUtil.isSupported(selResource)) {
+			for (long roleId : roleIds) {
+				List<String> actionIds = getActionIdsList(
+					actionRequest, roleId, true);
+
+				roleIdsToActionIds.put(
+					roleId, actionIds.toArray(new String[actionIds.size()]));
+			}
+
+			ResourceBlockServiceUtil.setIndividualScopePermissions(
+				themeDisplay.getCompanyId(), resourceGroupId, selResource,
+				GetterUtil.getLong(resourcePrimKey), roleIdsToActionIds);
+		}
+		else {
+			for (long roleId : roleIds) {
+				String[] actionIds = getActionIds(actionRequest, roleId, false);
+
+				roleIdsToActionIds.put(roleId, actionIds);
+			}
+
+			ResourcePermissionServiceUtil.setIndividualResourcePermissions(
+				resourceGroupId, themeDisplay.getCompanyId(), selResource,
+				resourcePrimKey, roleIdsToActionIds);
+		}
+
+		updateLayoutModifiedDate(selResource, resourcePrimKey);
+
+		if (PropsValues.PERMISSIONS_PROPAGATION_ENABLED) {
+			Portlet portlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletResource);
+
+			PermissionPropagator permissionPropagator =
+				portlet.getPermissionPropagatorInstance();
+
+			if (permissionPropagator != null) {
+				permissionPropagator.propagateRolePermissions(
+					actionRequest, modelResource, resourcePrimKey, roleIds);
+			}
+		}
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -135,6 +223,9 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			if (mvcPath.endsWith("edit_configuration.jsp")) {
 				renderEditConfiguration(renderRequest, renderResponse, portlet);
 			}
+			else if (mvcPath.endsWith("edit_public_render_parameters.jsp")) {
+				renderEditPublicParameters(renderRequest, portlet);
+			}
 
 			renderResponse.setTitle(
 				ActionUtil.getTitle(portlet, renderRequest));
@@ -145,6 +236,48 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		super.doDispatch(renderRequest, renderResponse);
+	}
+
+	protected String[] getActionIds(
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+
+		List<String> actionIds = getActionIdsList(
+			actionRequest, roleId, includePreselected);
+
+		return actionIds.toArray(new String[actionIds.size()]);
+	}
+
+	protected List<String> getActionIdsList(
+		ActionRequest actionRequest, long roleId, boolean includePreselected) {
+
+		List<String> actionIds = new ArrayList<>();
+
+		Enumeration<String> enu = actionRequest.getParameterNames();
+
+		while (enu.hasMoreElements()) {
+			String name = enu.nextElement();
+
+			if (name.startsWith(roleId + ActionUtil.ACTION)) {
+				int pos = name.indexOf(ActionUtil.ACTION);
+
+				String actionId = name.substring(
+					pos + ActionUtil.ACTION.length());
+
+				actionIds.add(actionId);
+			}
+			else if (includePreselected &&
+					 name.startsWith(roleId + ActionUtil.PRESELECTED)) {
+
+				int pos = name.indexOf(ActionUtil.PRESELECTED);
+
+				String actionId = name.substring(
+					pos + ActionUtil.PRESELECTED.length());
+
+				actionIds.add(actionId);
+			}
+		}
+
+		return actionIds;
 	}
 
 	protected ConfigurationAction getConfigurationAction(Portlet portlet)
@@ -194,6 +327,52 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			else {
 				_log.error("Configuration action returned a null path");
 			}
+		}
+	}
+
+	protected void renderEditPublicParameters(
+			RenderRequest renderRequest, Portlet portlet)
+		throws Exception {
+
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+		renderRequest = ActionUtil.getWrappedRenderRequest(
+			renderRequest, portletPreferences);
+
+		ActionUtil.getLayoutPublicRenderParameters(renderRequest);
+
+		ActionUtil.getPublicRenderParameterConfigurationList(
+			renderRequest, portlet);
+	}
+
+	protected void updateLayoutModifiedDate(
+			String selResource, String resourcePrimKey)
+		throws Exception {
+
+		long plid = 0;
+
+		int pos = resourcePrimKey.indexOf(PortletConstants.LAYOUT_SEPARATOR);
+
+		if (pos != -1) {
+			plid = GetterUtil.getLong(resourcePrimKey.substring(0, pos));
+		}
+		else if (selResource.equals(Layout.class.getName())) {
+			plid = GetterUtil.getLong(resourcePrimKey);
+		}
+
+		if (plid <= 0) {
+			return;
+		}
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout != null) {
+			layout.setModifiedDate(new Date());
+
+			LayoutLocalServiceUtil.updateLayout(layout);
+
+			CacheUtil.clearCache(layout.getCompanyId());
 		}
 	}
 

@@ -34,7 +34,7 @@ public class BBCodeEditor extends BaseEditor {
 		return "bbcode";
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}

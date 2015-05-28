@@ -102,7 +102,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("toolbars", getToolbarsJSONObject());
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}

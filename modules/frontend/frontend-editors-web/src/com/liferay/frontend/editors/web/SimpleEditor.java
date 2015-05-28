@@ -34,7 +34,7 @@ public class SimpleEditor extends BaseEditor {
 		return "simple";
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}

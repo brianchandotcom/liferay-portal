@@ -34,7 +34,7 @@ public class TinyMCESimpleEditor extends BaseEditor {
 		return "tinymce_simple";
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}

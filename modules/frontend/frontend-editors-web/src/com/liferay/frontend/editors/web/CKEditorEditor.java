@@ -34,7 +34,7 @@ public class CKEditorEditor extends BaseEditor {
 		return "ckeditor";
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}

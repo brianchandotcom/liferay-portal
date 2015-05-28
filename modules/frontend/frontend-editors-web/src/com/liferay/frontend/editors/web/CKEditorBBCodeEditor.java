@@ -34,7 +34,7 @@ public class CKEditorBBCodeEditor extends BaseEditor {
 		return "ckeditor_bbcode";
 	}
 
-	@Reference
+	@Reference(unbind = "-")
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
 	}

@@ -68,6 +68,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -247,6 +248,30 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
 		}
+	}
+
+	public void editSupportedClients(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
+
+		Set<String> allPortletModes = portlet.getAllPortletModes();
+
+		for (String portletMode : allPortletModes) {
+			String mobileDevicesParam =
+				"portletSetupSupportedClientsMobileDevices_" + portletMode;
+
+			boolean mobileDevices = ParamUtil.getBoolean(
+				actionRequest, mobileDevicesParam);
+
+			portletPreferences.setValue(
+				mobileDevicesParam, String.valueOf(mobileDevices));
+		}
+
+		portletPreferences.store();
 	}
 
 	@Override

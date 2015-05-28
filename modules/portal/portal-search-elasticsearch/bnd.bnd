@@ -1,3 +1,36 @@
+Bundle-ClassPath: \
+	.,\
+	lib/antlr-runtime.jar,\
+	lib/asm.jar,\
+	lib/asm-commons.jar,\
+	lib/elasticsearch.jar,\
+	lib/elasticsearch-analysis-icu.jar,\
+	lib/elasticsearch-analysis-kuromoji.jar,\
+	lib/elasticsearch-analysis-phonetic.jar,\
+	lib/elasticsearch-analysis-smartcn.jar,\
+	lib/elasticsearch-analysis-stempel.jar,\
+	lib/elasticsearch-groovy.jar,\
+	lib/groovy-all.jar,\
+	lib/icu4j.jar,\
+	lib/jts.jar,\
+	lib/lucene-analyzers-common.jar,\
+	lib/lucene-analyzers-icu.jar,\
+	lib/lucene-analyzers-kuromoji.jar,\
+	lib/lucene-analyzers-phonetic.jar,\
+	lib/lucene-analyzers-smartcn.jar,\
+	lib/lucene-analyzers-stempel.jar,\
+	lib/lucene-core.jar,\
+	lib/lucene-grouping.jar,\
+	lib/lucene-highlighter.jar,\
+	lib/lucene-join.jar,\
+	lib/lucene-memory.jar,\
+	lib/lucene-misc.jar,\
+	lib/lucene-queries.jar,\
+	lib/lucene-queryparser.jar,\
+	lib/lucene-sandbox.jar,\
+	lib/lucene-spatial.jar,\
+	lib/lucene-suggest.jar,\
+	lib/spatial4j.jar
 Bundle-Name: Liferay Portal Search Elasticsearch
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
 Bundle-Version: 1.0.0
@@ -35,6 +68,7 @@ Import-Package:\
 	!org.apache.tomcat.jni.*,\
 	!org.bouncycastle.*,\
 	!org.eclipse.jetty.npn.*,\
+	!org.elasticsearch.index.shard.service.*,\
 	!org.fusesource.*,\
 	!org.hyperic.sigar.*,\
 	!org.jboss.logging.*,\
@@ -44,35 +78,34 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
-	@lib/antlr-runtime.jar,\
-	@lib/asm.jar,\
-	@lib/asm-commons.jar,\
-	@lib/elasticsearch.jar,\
-	@lib/elasticsearch-analysis-icu.jar,\
-	@lib/elasticsearch-analysis-kuromoji.jar,\
-	@lib/elasticsearch-analysis-phonetic.jar,\
-	@lib/elasticsearch-analysis-smartcn.jar,\
-	@lib/elasticsearch-analysis-stempel.jar,\
-	@lib/elasticsearch-groovy.jar,\
-	@lib/groovy-all.jar,\
-	@lib/icu4j.jar,\
-	@lib/jts.jar,\
-	@lib/lucene-analyzers-common.jar,\
-	@lib/lucene-analyzers-icu.jar,\
-	@lib/lucene-analyzers-kuromoji.jar,\
-	@lib/lucene-analyzers-phonetic.jar,\
-	@lib/lucene-analyzers-smartcn.jar,\
-	@lib/lucene-analyzers-stempel.jar,\
-	@lib/lucene-core.jar,\
-	@lib/lucene-grouping.jar,\
-	@lib/lucene-highlighter.jar,\
-	@lib/lucene-join.jar,\
-	@lib/lucene-memory.jar,\
-	@lib/lucene-misc.jar,\
-	@lib/lucene-queries.jar,\
-	@lib/lucene-queryparser.jar,\
-	@lib/lucene-sandbox.jar,\
-	@lib/lucene-spatial.jar,\
-	@lib/lucene-suggest.jar,\
-	@lib/spatial4j.jar,\
-	META-INF/services=src/META-INF/services
+	lib/antlr-runtime.jar=lib/antlr-runtime.jar,\
+	lib/asm.jar=lib/asm.jar,\
+	lib/asm-commons.jar=lib/asm-commons.jar,\
+	lib/elasticsearch.jar=lib/elasticsearch.jar,\
+	lib/elasticsearch-analysis-icu.jar=lib/elasticsearch-analysis-icu.jar,\
+	lib/elasticsearch-analysis-kuromoji.jar=lib/elasticsearch-analysis-kuromoji.jar,\
+	lib/elasticsearch-analysis-phonetic.jar=lib/elasticsearch-analysis-phonetic.jar,\
+	lib/elasticsearch-analysis-smartcn.jar=lib/elasticsearch-analysis-smartcn.jar,\
+	lib/elasticsearch-analysis-stempel.jar=lib/elasticsearch-analysis-stempel.jar,\
+	lib/elasticsearch-groovy.jar=lib/elasticsearch-groovy.jar,\
+	lib/groovy-all.jar=lib/groovy-all.jar,\
+	lib/icu4j.jar=lib/icu4j.jar,\
+	lib/jts.jar=lib/jts.jar,\
+	lib/lucene-analyzers-common.jar=lib/lucene-analyzers-common.jar,\
+	lib/lucene-analyzers-icu.jar=lib/lucene-analyzers-icu.jar,\
+	lib/lucene-analyzers-kuromoji.jar=lib/lucene-analyzers-kuromoji.jar,\
+	lib/lucene-analyzers-phonetic.jar=lib/lucene-analyzers-phonetic.jar,\
+	lib/lucene-analyzers-smartcn.jar=lib/lucene-analyzers-smartcn.jar,\
+	lib/lucene-analyzers-stempel.jar=lib/lucene-analyzers-stempel.jar,\
+	lib/lucene-core.jar=lib/lucene-core.jar,\
+	lib/lucene-grouping.jar=lib/lucene-grouping.jar,\
+	lib/lucene-highlighter.jar=lib/lucene-highlighter.jar,\
+	lib/lucene-join.jar=lib/lucene-join.jar,\
+	lib/lucene-memory.jar=lib/lucene-memory.jar,\
+	lib/lucene-misc.jar=lib/lucene-misc.jar,\
+	lib/lucene-queries.jar=lib/lucene-queries.jar,\
+	lib/lucene-queryparser.jar=lib/lucene-queryparser.jar,\
+	lib/lucene-sandbox.jar=lib/lucene-sandbox.jar,\
+	lib/lucene-spatial.jar=lib/lucene-spatial.jar,\
+	lib/lucene-suggest.jar=lib/lucene-suggest.jar,\
+	lib/spatial4j.jar=lib/spatial4j.jar

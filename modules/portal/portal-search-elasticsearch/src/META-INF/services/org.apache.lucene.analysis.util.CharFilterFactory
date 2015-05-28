@@ -1,6 +1,0 @@
-org.apache.lucene.analysis.charfilter.HTMLStripCharFilterFactory
-org.apache.lucene.analysis.charfilter.MappingCharFilterFactory
-org.apache.lucene.analysis.fa.PersianCharFilterFactory
-org.apache.lucene.analysis.icu.ICUNormalizer2CharFilterFactory
-org.apache.lucene.analysis.ja.JapaneseIterationMarkCharFilterFactory
-org.apache.lucene.analysis.pattern.PatternReplaceCharFilterFactory

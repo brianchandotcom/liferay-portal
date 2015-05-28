@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.messaging;
+package com.liferay.portlet.exportimport.messaging;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.Message;
@@ -20,6 +20,9 @@ import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 
@@ -29,10 +32,9 @@ import java.util.Map;
 
 /**
  * @author Bruno Farache
- * @author Raymond Augé
  * @author Daniel Kocsis
  */
-public class LayoutsLocalPublisherMessageListener
+public class LayoutsRemotePublisherMessageListener
 	extends BasePublisherMessageListener {
 
 	@Override
@@ -53,20 +55,33 @@ public class LayoutsLocalPublisherMessageListener
 
 		long userId = MapUtil.getLong(settingsMap, "userId");
 		long sourceGroupId = MapUtil.getLong(settingsMap, "sourceGroupId");
-		long targetGroupId = MapUtil.getLong(settingsMap, "targetGroupId");
 		boolean privateLayout = MapUtil.getBoolean(
 			settingsMap, "privateLayout");
-		long[] layoutIds = GetterUtil.getLongValues(
-			settingsMap.get("layoutIds"));
+		Map<Long, Boolean> layoutIdMap = (Map<Long, Boolean>)settingsMap.get(
+			"layoutIdMap");
 		Map<String, String[]> parameterMap =
 			(Map<String, String[]>)settingsMap.get("parameterMap");
+		String remoteAddress = MapUtil.getString(settingsMap, "remoteAddress");
+		int remotePort = MapUtil.getInteger(settingsMap, "remotePort");
+		String remotePathContext = MapUtil.getString(
+			settingsMap, "remotePathContext");
+		boolean secureConnection = MapUtil.getBoolean(
+			settingsMap, "secureConnection");
+		long remoteGroupId = MapUtil.getLong(settingsMap, "remoteGroupId");
+		boolean remotePrivateLayout = MapUtil.getBoolean(
+			settingsMap, "remotePrivateLayout");
 
 		initThreadLocals(userId, parameterMap);
 
+		User user = UserLocalServiceUtil.getUserById(userId);
+
+		CompanyThreadLocal.setCompanyId(user.getCompanyId());
+
 		try {
-			StagingUtil.publishLayouts(
-				userId, sourceGroupId, targetGroupId, privateLayout, layoutIds,
-				parameterMap);
+			StagingUtil.copyRemoteLayouts(
+				sourceGroupId, privateLayout, layoutIdMap, parameterMap,
+				remoteAddress, remotePort, remotePathContext, secureConnection,
+				remoteGroupId, remotePrivateLayout);
 		}
 		finally {
 			resetThreadLocals();

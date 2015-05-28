@@ -465,30 +465,6 @@
 		<property name="service" ref="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 		<property name="serviceInterface" value="com.liferay.portlet.documentlibrary.service.DLFolderService" />
 	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordSetService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordSetService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordVersionService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService" />
-	</bean>
-	<bean name="/com_liferay_portlet_dynamicdatalists_service_spring_DDLRecordVersionService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService" />
-		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService" />
-	</bean>
 	<bean name="/com_liferay_portlet_dynamicdatamapping_service_spring_DDMStructureService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />
 		<property name="serviceInterface" value="com.liferay.portlet.dynamicdatamapping.service.DDMStructureService" />

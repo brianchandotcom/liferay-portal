@@ -758,12 +758,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
-	<target name="build-service-portlet-dynamicdatalists">
-		<antcall target="build-service">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/dynamicdatalists/service.xml" />
-		</antcall>
-	</target>
-
 	<target name="build-service-portlet-dynamicdatamapping">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/dynamicdatamapping/service.xml" />
@@ -952,12 +946,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	<target name="build-wsdd-portlet-documentlibrary">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/documentlibrary/service.xml" />
-		</antcall>
-	</target>
-
-	<target name="build-wsdd-portlet-dynamicdatalists">
-		<antcall target="build-wsdd">
-			<param name="service.file" value="${basedir}/src/com/liferay/portlet/dynamicdatalists/service.xml" />
 		</antcall>
 	</target>
 

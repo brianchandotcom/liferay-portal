@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.http;
+package com.liferay.dynamic.data.lists.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
 
 /**
  * Provides the HTTP utility for the
@@ -55,7 +55,7 @@ import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetServiceUtil;
  */
 @ProviderType
 public class DDLRecordSetServiceHttp {
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet addRecordSet(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
 		java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -84,7 +84,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordSet)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -121,7 +121,7 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
 		HttpPrincipal httpPrincipal, long recordSetId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -144,7 +144,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordSet)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -153,7 +153,7 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getRecordSets(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
 		HttpPrincipal httpPrincipal, long[] groupIds) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
@@ -170,7 +170,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -179,10 +179,10 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		java.lang.String keywords, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"search", _searchParameterTypes4);
@@ -200,7 +200,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -209,11 +209,11 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+	public static java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		HttpPrincipal httpPrincipal, long companyId, long groupId,
 		java.lang.String name, java.lang.String description, int scope,
 		boolean andOperator, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator) {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(DDLRecordSetServiceUtil.class,
 					"search", _searchParameterTypes5);
@@ -231,7 +231,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet>)returnObj;
+			return (java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -295,7 +295,7 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
 		HttpPrincipal httpPrincipal, long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -319,7 +319,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordSet)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -328,7 +328,7 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		HttpPrincipal httpPrincipal, long recordSetId, long ddmStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -356,7 +356,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordSet)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -365,7 +365,7 @@ public class DDLRecordSetServiceHttp {
 		}
 	}
 
-	public static com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+	public static com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		HttpPrincipal httpPrincipal, long groupId, long ddmStructureId,
 		java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -394,7 +394,7 @@ public class DDLRecordSetServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portlet.dynamicdatalists.model.DDLRecordSet)returnObj;
+			return (com.liferay.dynamic.data.lists.model.DDLRecordSet)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

@@ -14,8 +14,8 @@
 
 package com.liferay.dynamic.data.lists.web.search;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 
 import java.util.ArrayList;
 import java.util.List;

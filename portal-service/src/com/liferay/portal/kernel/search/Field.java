@@ -199,6 +199,11 @@ public class Field implements Serializable {
 		_fields.add(field);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 index time boosting is highly inflexible and thus feature is
+	 *             replaced by query time boosting instead
+	 * @return
+	 */
 	public float getBoost() {
 		return _boost;
 	}
@@ -273,6 +278,12 @@ public class Field implements Serializable {
 		return _tokenized;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0 index time boosting is highly inflexible and thus feature is
+	 *             replaced by query time boosting instead
+	 * @param boost
+	 */
+	@Deprecated
 	public void setBoost(float boost) {
 		_boost = boost;
 	}

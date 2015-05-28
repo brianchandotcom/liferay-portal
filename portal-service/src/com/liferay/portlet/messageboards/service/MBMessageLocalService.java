@@ -113,6 +113,10 @@ public interface MBMessageLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
+	public void addMessageAttachment(long userId, long messageId,
+		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
+		throws PortalException;
+
 	public void addMessageResources(
 		com.liferay.portlet.messageboards.model.MBMessage message,
 		boolean addGroupPermissions, boolean addGuestPermissions)

@@ -114,6 +114,14 @@ public class MBMessageServiceWrapper implements MBMessageService,
 			serviceContext);
 	}
 
+	@Override
+	public void addMessageAttachment(long messageId, java.lang.String fileName,
+		java.io.File file, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageService.addMessageAttachment(messageId, fileName, file,
+			mimeType);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
 	String, long, long, long)}
@@ -141,6 +149,13 @@ public class MBMessageServiceWrapper implements MBMessageService,
 	public void deleteMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_mbMessageService.deleteMessage(messageId);
+	}
+
+	@Override
+	public void deleteMessageAttachment(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbMessageService.deleteMessageAttachment(messageId, fileName);
 	}
 
 	@Override

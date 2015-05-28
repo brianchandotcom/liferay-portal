@@ -117,6 +117,12 @@ public class MBMessageServiceUtil {
 			inputStreamOVPs, anonymous, priority, allowPingbacks, serviceContext);
 	}
 
+	public static void addMessageAttachment(long messageId,
+		java.lang.String fileName, java.io.File file, java.lang.String mimeType)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().addMessageAttachment(messageId, fileName, file, mimeType);
+	}
+
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
 	String, long, long, long)}
@@ -144,6 +150,12 @@ public class MBMessageServiceUtil {
 	public static void deleteMessage(long messageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteMessage(messageId);
+	}
+
+	public static void deleteMessageAttachment(long messageId,
+		java.lang.String fileName)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteMessageAttachment(messageId, fileName);
 	}
 
 	public static void deleteMessageAttachments(long messageId)

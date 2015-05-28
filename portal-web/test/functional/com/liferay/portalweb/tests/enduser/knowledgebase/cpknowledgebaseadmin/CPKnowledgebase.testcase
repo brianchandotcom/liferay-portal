@@ -243,6 +243,21 @@
 		</execute>
 	</command>
 
+	<command known-issues="LPS-54125" name="AddKBArticleWithInvalidAttachmentSize" priority="5">
+		<property name="custom.properties" value="com.liferay.portal.upload.UploadServletRequestImpl.max.size=1024" />
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Knowledge Base" />
+		</execute>
+
+		<execute macro="KBArticle#addCP">
+			<var name="kbArticleAttachment" value="Document_1.mp3" />
+			<var name="kbArticleContent" value="Knowledge Base Article Content" />
+			<var name="kbArticleInvalidAttachmentSize" value="true" />
+			<var name="kbArticleTitle" value="Knowledge Base Article Title" />
+		</execute>
+	</command>
+
 	<command name="AddKBArticleWithoutRequiredCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />

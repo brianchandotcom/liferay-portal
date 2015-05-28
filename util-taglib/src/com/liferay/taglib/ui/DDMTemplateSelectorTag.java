@@ -15,7 +15,12 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -76,6 +81,25 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 		_showEmptyOption = false;
 	}
 
+	protected String getDisplayStyle() {
+		if (Validator.isNull(_displayStyle)) {
+			return _defaultDisplayStyle;
+		}
+
+		return _displayStyle;
+	}
+
+	protected long getDisplayStyleGroupId() {
+		if (_displayStyleGroupId > 0) {
+			return _displayStyleGroupId;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getScopeGroupId();
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
@@ -83,21 +107,37 @@ public class DDMTemplateSelectorTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		String displayStyle = getDisplayStyle();
+
+		long displayStyleGroupId = getDisplayStyleGroupId();
+
+		DDMTemplate portletDisplayDDMTemplate =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplate(
+				displayStyleGroupId, PortalUtil.getClassNameId(_className),
+				displayStyle, true);
+
+		if (Validator.isNull(displayStyle) &&
+			(portletDisplayDDMTemplate != null)) {
+
+			displayStyle = PortletDisplayTemplateUtil.getDisplayStyle(
+				portletDisplayDDMTemplate.getTemplateKey());
+		}
+
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:classNameId",
 			String.valueOf(PortalUtil.getClassNameId(_className)));
 		request.setAttribute(
-			"liferay-ui:ddm-template-select:displayStyle", _displayStyle);
-		request.setAttribute(
-			"liferay-ui:ddm-template-select:defaultDisplayStyle",
-			_defaultDisplayStyle);
+			"liferay-ui:ddm-template-select:displayStyle", displayStyle);
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyleGroupId",
-			String.valueOf(_displayStyleGroupId));
+			String.valueOf(displayStyleGroupId));
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:displayStyles", _displayStyles);
 		request.setAttribute("liferay-ui:ddm-template-select:icon", _icon);
 		request.setAttribute("liferay-ui:ddm-template-select:label", _label);
+		request.setAttribute(
+			"liferay-ui:ddm-template-select:portletDisplayDDMTemplate",
+			portletDisplayDDMTemplate);
 		request.setAttribute(
 			"liferay-ui:ddm-template-select:refreshURL", _refreshURL);
 		request.setAttribute(

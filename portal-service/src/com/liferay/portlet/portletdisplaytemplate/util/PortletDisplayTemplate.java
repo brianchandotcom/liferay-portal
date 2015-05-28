@@ -43,8 +43,14 @@ public interface PortletDisplayTemplate {
 	public DDMTemplate getDefaultPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId);
 
+	public String getDisplayStyle(String ddmTemplateKey);
+
 	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle);
+
+	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId, String displayStyle,
+		boolean useDefault);
 
 	@Deprecated
 	public long getPortletDisplayTemplateDDMTemplateId(

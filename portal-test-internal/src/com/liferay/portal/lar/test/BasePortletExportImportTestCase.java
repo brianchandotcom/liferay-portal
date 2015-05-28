@@ -51,7 +51,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetLinkLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 
 import java.io.Serializable;
 
@@ -441,9 +441,8 @@ public abstract class BasePortletExportImportTestCase
 
 		Map<String, String[]> preferenceMap = new HashMap<>();
 
-		String displayStyle =
-			PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				ddmTemplate.getTemplateKey();
+		String displayStyle = PortletDisplayTemplateUtil.getDisplayStyle(
+			ddmTemplate.getTemplateKey());
 
 		preferenceMap.put("displayStyle", new String[] {displayStyle});
 

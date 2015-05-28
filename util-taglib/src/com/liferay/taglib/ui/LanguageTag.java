@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate;
+import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil;
 import com.liferay.taglib.aui.AUIUtil;
 import com.liferay.taglib.util.IncludeTag;
 
@@ -99,8 +99,7 @@ public class LanguageTag extends IncludeTag {
 
 	protected String getDisplayStyle() {
 		if (Validator.isNotNull(_ddmTemplateKey)) {
-			return PortletDisplayTemplate.DISPLAY_STYLE_PREFIX +
-				_ddmTemplateKey;
+			return PortletDisplayTemplateUtil.getDisplayStyle(_ddmTemplateKey);
 		}
 
 		return null;

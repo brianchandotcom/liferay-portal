@@ -170,12 +170,26 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 
 		return getPortletDisplayTemplateDDMTemplate(
 			groupId, classNameId,
-			DISPLAY_STYLE_PREFIX + templateHandler.getDefaultTemplateKey());
+			getDisplayStyle(templateHandler.getDefaultTemplateKey()));
+	}
+
+	@Override
+	public String getDisplayStyle(String ddmTemplateKey) {
+		return DISPLAY_STYLE_PREFIX + ddmTemplateKey;
 	}
 
 	@Override
 	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
 		long groupId, long classNameId, String displayStyle) {
+
+		return getPortletDisplayTemplateDDMTemplate(
+			groupId, classNameId, displayStyle, false);
+	}
+
+	@Override
+	public DDMTemplate getPortletDisplayTemplateDDMTemplate(
+		long groupId, long classNameId, String displayStyle,
+		boolean useDefault) {
 
 		long portletDisplayDDMTemplateGroupId = getDDMTemplateGroupId(groupId);
 
@@ -194,6 +208,12 @@ public class PortletDisplayTemplateImpl implements PortletDisplayTemplate {
 				catch (PortalException e) {
 				}
 			}
+		}
+
+		if ((portletDisplayDDMTemplate == null) && useDefault) {
+			portletDisplayDDMTemplate =
+				getDefaultPortletDisplayTemplateDDMTemplate(
+					groupId, classNameId);
 		}
 
 		return portletDisplayDDMTemplate;

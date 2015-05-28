@@ -215,14 +215,14 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 
 		int total = UserLocalServiceUtil.getGroupUsersCount(group.getGroupId());
 
-		final IntervalActionProcessor intervalActionProcessor =
-			new IntervalActionProcessor(total);
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(total);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod() {
+			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
+				public Void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<User> users = UserLocalServiceUtil.getGroupUsers(
@@ -240,6 +240,8 @@ public class DefaultSiteMembershipPolicy extends BaseSiteMembershipPolicy {
 							intervalActionProcessor.incrementStart();
 						}
 					}
+
+					return null;
 				}
 
 			});

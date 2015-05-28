@@ -467,14 +467,14 @@ public class AnnouncementsEntryLocalServiceImpl
 				params);
 		}
 
-		final IntervalActionProcessor intervalActionProcessor =
-			new IntervalActionProcessor(total);
+		final IntervalActionProcessor<Void> intervalActionProcessor =
+			new IntervalActionProcessor<>(total);
 
 		intervalActionProcessor.setPerformIntervalActionMethod(
-			new IntervalActionProcessor.PerformIntervalActionMethod() {
+			new IntervalActionProcessor.PerformIntervalActionMethod<Void>() {
 
 				@Override
-				public void performIntervalAction(int start, int end)
+				public Void performIntervalAction(int start, int end)
 					throws PortalException {
 
 					List<User> users = null;
@@ -494,6 +494,8 @@ public class AnnouncementsEntryLocalServiceImpl
 						users, entry, company.getLocale(), toAddress, toName);
 
 					intervalActionProcessor.incrementStart(users.size());
+
+					return null;
 				}
 
 			});

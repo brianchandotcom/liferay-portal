@@ -83,21 +83,54 @@ public class TestServicePreAction extends ServicePreAction {
 	}
 
 	@Override
-	public Object[] getDefaultLayout(
-			HttpServletRequest request, User user, boolean signedIn)
-		throws PortalException {
+	public LayoutComposite getDefaultUserPersonalSiteLayoutComposite(
+		User user) {
 
-		return super.getDefaultLayout(request, user, signedIn);
+		return super.getDefaultUserPersonalSiteLayoutComposite(user);
 	}
 
 	@Override
-	public Object[] getViewableLayouts(
+	public LayoutComposite getDefaultUserSitesLayoutComposite(User user)
+		throws PortalException {
+
+		return super.getDefaultUserSitesLayoutComposite(user);
+	}
+
+	@Override
+	public LayoutComposite getDefaultViewableLayoutComposite(
+			HttpServletRequest request, User user,
+			PermissionChecker permissionChecker, long doAsGroupId,
+			String controlPanelCategory, boolean signedIn)
+		throws PortalException {
+
+		return super.getDefaultViewableLayoutComposite(
+			request, user, permissionChecker, doAsGroupId, controlPanelCategory,
+			signedIn);
+	}
+
+	@Override
+	public LayoutComposite getDefaultVirtualHostLayoutComposite(
+			HttpServletRequest request)
+		throws PortalException {
+
+		return super.getDefaultVirtualHostLayoutComposite(request);
+	}
+
+	@Override
+	public LayoutComposite getGuestSiteLayoutComposite(User user)
+		throws PortalException {
+
+		return super.getGuestSiteLayoutComposite(user);
+	}
+
+	@Override
+	public LayoutComposite getViewableLayoutComposite(
 			HttpServletRequest request, User user,
 			PermissionChecker permissionChecker, Layout layout,
 			List<Layout> layouts, long doAsGroupId, String controlPanelCategory)
 		throws PortalException {
 
-		return super.getViewableLayouts(
+		return super.getViewableLayoutComposite(
 			request, user, permissionChecker, layout, layouts, doAsGroupId,
 			controlPanelCategory);
 	}

@@ -799,7 +799,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (stagedModel instanceof WorkflowedModel) {
+		if (!portletDataContext.isInitialPublication() &&
+			(stagedModel instanceof WorkflowedModel)) {
+
 			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
 
 			if (!ArrayUtil.contains(

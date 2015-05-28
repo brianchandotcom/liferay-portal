@@ -735,7 +735,8 @@ public class FileEntryStagedModelDataHandler
 		try {
 			FileVersion fileVersion = fileEntry.getFileVersion();
 
-			if (!ArrayUtil.contains(
+			if (!portletDataContext.isInitialPublication() &&
+				!ArrayUtil.contains(
 					getExportableStatuses(), fileVersion.getStatus())) {
 
 				throw new PortletDataException(

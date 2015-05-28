@@ -189,7 +189,9 @@ public class DDLRecordStagedModelDataHandler
 			throw new PortletDataException(e);
 		}
 
-		if (!ArrayUtil.contains(getExportableStatuses(), status)) {
+		if (!portletDataContext.isInitialPublication() &&
+			!ArrayUtil.contains(getExportableStatuses(), status)) {
+
 			PortletDataException pde = new PortletDataException(
 				PortletDataException.STATUS_UNAVAILABLE);
 

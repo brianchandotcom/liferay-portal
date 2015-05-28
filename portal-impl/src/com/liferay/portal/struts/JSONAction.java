@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.access.control.AccessControlUtil;
 import com.liferay.portal.security.auth.AuthTokenUtil;
-import com.liferay.portal.security.auth.PortalSessionAuthVerifier;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.servlet.SharedSessionServletRequest;
 import com.liferay.portal.util.PortalUtil;
@@ -156,7 +155,7 @@ public abstract class JSONAction extends Action {
 			// The new web service should only check auth tokens when the user
 			// is authenticated using portal session cookies
 
-			if (!authType.equals(PortalSessionAuthVerifier.AUTH_TYPE)) {
+			if (!authType.equals(HttpServletRequest.FORM_AUTH)) {
 				return;
 			}
 		}

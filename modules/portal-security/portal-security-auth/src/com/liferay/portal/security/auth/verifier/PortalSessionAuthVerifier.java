@@ -12,28 +12,36 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.auth.verifier;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AccessControlContext;
+import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.AuthVerifier;
+import com.liferay.portal.security.auth.AuthVerifierResult;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Tomas Polesovsky
  */
-@OSGiBeanProperties(
-	portalPropertyPrefix = "auth.verifier.PortalSessionAuthVerifier."
+@Component(
+	immediate = true,
+	property = {
+		"auth.verifier.PortalSessionAuthVerifier.hosts.allowed=",
+		"auth.verifier.PortalSessionAuthVerifier.urls.includes=/api/json/*,/api/jsonws/*,/c/portal/json_service/*"
+	}
 )
 public class PortalSessionAuthVerifier implements AuthVerifier {
 
-	public static final String AUTH_TYPE =
-		PortalSessionAuthVerifier.class.getSimpleName();
+	public static final String AUTH_TYPE = HttpServletRequest.FORM_AUTH;
 
 	@Override
 	public String getAuthType() {

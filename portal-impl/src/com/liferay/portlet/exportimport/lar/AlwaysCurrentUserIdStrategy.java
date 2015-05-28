@@ -12,23 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.lar;
+package com.liferay.portlet.exportimport.lar;
 
-import com.liferay.portal.kernel.lar.ExportImportProcessCallbackRegistry;
-import com.liferay.portal.kernel.security.pacl.DoPrivileged;
-
-import java.util.concurrent.Callable;
+import com.liferay.portal.kernel.lar.UserIdStrategy;
+import com.liferay.portal.model.User;
 
 /**
- * @author Daniel Kocsis
+ * @author Bruno Farache
  */
-@DoPrivileged
-public class ExportImportProcessCallbackRegistryImpl
-	implements ExportImportProcessCallbackRegistry {
+public class AlwaysCurrentUserIdStrategy implements UserIdStrategy {
+
+	public AlwaysCurrentUserIdStrategy(User user) {
+		_user = user;
+	}
 
 	@Override
-	public void registerCallback(Callable<?> callable) {
-		ExportImportProcessCallbackUtil.registerCallback(callable);
+	public long getUserId(String userUuid) {
+		return _user.getUserId();
 	}
+
+	private final User _user;
 
 }

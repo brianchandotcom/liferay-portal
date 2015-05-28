@@ -20,6 +20,11 @@ import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.settings.ArchivedSettings;
+import com.liferay.portal.kernel.settings.ModifiableSettings;
+import com.liferay.portal.kernel.settings.PortletInstanceSettingsLocator;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -82,6 +87,25 @@ import javax.servlet.http.HttpServletRequest;
  * @author Carlos Sierra Andrés
  */
 public class PortletConfigurationPortlet extends MVCPortlet {
+
+	public void deleteArchivedSetup(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		ArchivedSettings archivedSettings =
+			SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
+				name);
+
+		archivedSettings.delete();
+	}
 
 	public void editScope(
 			ActionRequest actionRequest, ActionResponse actionResponse)
@@ -223,6 +247,34 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		super.render(renderRequest, renderResponse);
 	}
 
+	public void restoreArchivedSetup(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
+			new PortletInstanceSettingsLocator(
+				themeDisplay.getLayout(), portlet.getPortletId()));
+
+		ModifiableSettings portletInstanceModifiableSettings =
+			portletInstanceSettings.getModifiableSettings();
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		ArchivedSettings archivedSettings =
+			SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
+				name);
+
+		portletInstanceModifiableSettings.setValues(archivedSettings);
+
+		portletInstanceModifiableSettings.store();
+	}
+
 	@Override
 	public void serveResource(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -245,6 +297,34 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		portletPreferences.setValue(
 			"lfrWidgetShowAddAppLink", String.valueOf(widgetShowAddAppLink));
+	}
+
+	public void updateArchivedSetup(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		ArchivedSettings archivedSettings =
+			SettingsFactoryUtil.getPortletInstanceArchivedSettings(
+				themeDisplay.getSiteGroupId(), portlet.getRootPortletId(),
+				name);
+
+		Settings portletInstanceSettings = SettingsFactoryUtil.getSettings(
+			new PortletInstanceSettingsLocator(
+				themeDisplay.getLayout(), portlet.getPortletId()));
+
+		ModifiableSettings portletInstanceModifiableSettings =
+			portletInstanceSettings.getModifiableSettings();
+
+		archivedSettings.setValues(portletInstanceModifiableSettings);
+
+		archivedSettings.store();
 	}
 
 	public void updateRolePermissions(

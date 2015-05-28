@@ -137,13 +137,12 @@
 			}
 
 			var children = node.childNodes;
-			var length = children.length;
+
 			var pushTagList = instance._pushTagList;
 
-			for (var i = 0; i < length; i++) {
+			for (var i = 0; i < children.length; i++) {
 				var listTagsIn = [];
 				var listTagsOut = [];
-
 				var stylesTagsIn = [];
 				var stylesTagsOut = [];
 
@@ -180,12 +179,14 @@
 
 			var newLineCharacter = STR_LIST_ITEM_ESCAPE_CHARACTERS;
 
+			var nextSibling = element.nextSibling;
+
 			if (instance._skipParse) {
 				newLineCharacter = NEW_LINE;
 
 				listTagsIn.push(newLineCharacter);
 			}
-			else if (element.previousSibling && element.nextSibling && element.nextSibling !== NEW_LINE) {
+			else if (element.previousSibling && nextSibling && nextSibling !== NEW_LINE) {
 				listTagsIn.push(newLineCharacter);
 			}
 		},
@@ -199,13 +200,7 @@
 
 					var isHeader;
 
-					if (instance._isParentNode(element, 'h1') ||
-						instance._isParentNode(element, 'h2') ||
-						instance._isParentNode(element, 'h3') ||
-						instance._isParentNode(element, 'h4') ||
-						instance._isParentNode(element, 'h5') ||
-						instance._isParentNode(element, 'h6')) {
-
+					if (instance._isParentNode(element, 'h1') || instance._isParentNode(element, 'h2') || instance._isParentNode(element, 'h3') || instance._isParentNode(element, 'h4') || instance._isParentNode(element, 'h5') || instance._isParentNode(element, 'h6')) {
 						isHeader = true;
 					}
 
@@ -284,11 +279,12 @@
 		_handleElementStart: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			var params;
 			var tagName = element.tagName;
 
 			if (tagName) {
 				tagName = tagName.toLowerCase();
+
+				var regexHeader = REGEX_HEADER.exec(tagName);
 
 				if (tagName == TAG_PARAGRAPH) {
 					instance._handleParagraph(element, listTagsIn, listTagsOut);
@@ -326,8 +322,8 @@
 				else if (tagName == TAG_TELETYPETEXT) {
 					instance._handleTT(element, listTagsIn, listTagsOut);
 				}
-				else if (params == REGEX_HEADER.exec(tagName)) {
-					instance._handleHeader(element, listTagsIn, listTagsOut, params);
+				else if (regexHeader) {
+					instance._handleHeader(element, listTagsIn, listTagsOut, regexHeader);
 				}
 				else if (tagName == 'th') {
 					instance._handleTableHeader(element, listTagsIn, listTagsOut);
@@ -441,23 +437,20 @@
 
 			instance._skipParse = true;
 
-			var endResult = instance._endResult;
-
 			if (instance._isDataAvailable() && !instance._isLastItemNewLine()) {
-				endResult.push(NEW_LINE);
+				instance._endResult.push(NEW_LINE);
 			}
 
 			listTagsIn.push('{{{', NEW_LINE);
-
 			listTagsOut.push('}}}', NEW_LINE);
 		},
 
 		_handleStrong: function(element, listTagsIn, listTagsOut) {
 			var instance = this;
 
-			if (instance._isParentNode(element, TAG_LIST_ITEM) &&
-				(!element.previousSibling || instance._isIgnorable(element.previousSibling))) {
+			var previousSibling = element.previousSibling;
 
+			if (instance._isParentNode(element, TAG_LIST_ITEM) && (!previousSibling || instance._isIgnorable(previousSibling))) {
 				listTagsIn.push(STR_SPACE);
 			}
 
@@ -505,7 +498,6 @@
 			instance._skipParse = true;
 
 			listTagsIn.push('{{{');
-
 			listTagsOut.push('}}}');
 		},
 
@@ -554,7 +546,9 @@
 		_isDataAvailable: function() {
 			var instance = this;
 
-			return instance._endResult && instance._endResult.length;
+			var endResult = instance._endResult;
+
+			return endResult && endResult.length;
 		},
 
 		_isIgnorable: function(node) {

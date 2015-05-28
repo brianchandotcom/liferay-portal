@@ -12,27 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists;
+package com.liferay.dynamic.data.lists.exception;
 
-import com.liferay.portal.NoSuchModelException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchRecordSetException extends NoSuchModelException {
+@ProviderType
+public class RecordSetNameException extends PortalException {
 
-	public NoSuchRecordSetException() {
+	public RecordSetNameException() {
 	}
 
-	public NoSuchRecordSetException(String msg) {
+	public RecordSetNameException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchRecordSetException(String msg, Throwable cause) {
+	public RecordSetNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchRecordSetException(Throwable cause) {
+	public RecordSetNameException(Throwable cause) {
 		super(cause);
 	}
 

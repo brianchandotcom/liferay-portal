@@ -12,27 +12,30 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists;
+package com.liferay.dynamic.data.lists.exception;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchRecordVersionException extends NoSuchModelException {
+@ProviderType
+public class NoSuchRecordException extends NoSuchModelException {
 
-	public NoSuchRecordVersionException() {
+	public NoSuchRecordException() {
 	}
 
-	public NoSuchRecordVersionException(String msg) {
+	public NoSuchRecordException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchRecordVersionException(String msg, Throwable cause) {
+	public NoSuchRecordException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchRecordVersionException(Throwable cause) {
+	public NoSuchRecordException(Throwable cause) {
 		super(cause);
 	}
 

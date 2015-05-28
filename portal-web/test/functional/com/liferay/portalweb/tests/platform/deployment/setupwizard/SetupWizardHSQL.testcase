@@ -194,7 +194,6 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
 			<var name="databasePassword" property-value="database.oracle.password" />
 			<var name="databaseType" value="Oracle" />
 			<var name="databaseUserName" property-value="database.oracle.username" />
@@ -226,7 +225,6 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
 			<var name="databasePassword" property-value="database.oracle.password" />
 			<var name="databaseType" value="Oracle" />
 			<var name="databaseUserName" property-value="database.oracle.username" />

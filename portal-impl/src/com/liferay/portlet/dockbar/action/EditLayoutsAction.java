@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.service.permission.LayoutPermissionUtil;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -36,8 +39,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Eudaldo Alonso
  */
-public class EditLayoutsAction
-	extends com.liferay.portlet.layoutsadmin.action.EditLayoutsAction {
+public class EditLayoutsAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -46,13 +48,6 @@ public class EditLayoutsAction
 			ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			checkPermissions(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			return;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -60,6 +55,13 @@ public class EditLayoutsAction
 
 		try {
 			if (cmd.equals("reset_customized_view")) {
+				if (!LayoutPermissionUtil.contains(
+						themeDisplay.getPermissionChecker(),
+						themeDisplay.getLayout(), ActionKeys.CUSTOMIZE)) {
+
+					throw new PrincipalException();
+				}
+
 				LayoutTypePortlet layoutTypePortlet =
 					themeDisplay.getLayoutTypePortlet();
 

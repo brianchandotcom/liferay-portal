@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 /**
  * @author Brian Wing Shun Chan

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.model;
+package com.liferay.dynamic.data.lists.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -166,7 +166,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 
 	@Override
 	public int compareTo(
-		com.liferay.portlet.dynamicdatalists.model.DDLRecordSet ddlRecordSet) {
+		com.liferay.dynamic.data.lists.model.DDLRecordSet ddlRecordSet) {
 		return _ddlRecordSet.compareTo(ddlRecordSet);
 	}
 
@@ -449,7 +449,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> getRecords() {
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> getRecords() {
 		return _ddlRecordSet.getRecords();
 	}
 
@@ -840,12 +840,12 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.dynamic.data.lists.model.DDLRecordSet> toCacheModel() {
 		return _ddlRecordSet.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet toEscapedModel() {
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet toEscapedModel() {
 		return new DDLRecordSetWrapper(_ddlRecordSet.toEscapedModel());
 	}
 
@@ -855,7 +855,7 @@ public class DDLRecordSetWrapper implements DDLRecordSet,
 	}
 
 	@Override
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet toUnescapedModel() {
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet toUnescapedModel() {
 		return new DDLRecordSetWrapper(_ddlRecordSet.toUnescapedModel());
 	}
 

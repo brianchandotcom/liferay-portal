@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service;
+package com.liferay.dynamic.data.lists.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -32,8 +32,8 @@ import com.liferay.portal.service.BaseService;
  *
  * @author Brian Wing Shun Chan
  * @see DDLRecordSetServiceUtil
- * @see com.liferay.portlet.dynamicdatalists.service.base.DDLRecordSetServiceBaseImpl
- * @see com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetServiceImpl
+ * @see com.liferay.dynamic.data.lists.service.base.DDLRecordSetServiceBaseImpl
+ * @see com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl
  * @generated
  */
 @AccessControlled
@@ -45,9 +45,9 @@ public interface DDLRecordSetService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetServiceUtil} to access the d d l record set remote service. Add custom service methods to {@link com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link DDLRecordSetServiceUtil} to access the d d l record set remote service. Add custom service methods to {@link com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet addRecordSet(
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet addRecordSet(
 		long groupId, long ddmStructureId, java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -65,25 +65,25 @@ public interface DDLRecordSetService extends BaseService {
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet getRecordSet(
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet getRecordSet(
 		long recordSetId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> getRecordSets(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> getRecordSets(
 		long[] groupIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		long companyId, long groupId, java.lang.String keywords, int scope,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> search(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecordSet> search(
 		long companyId, long groupId, java.lang.String name,
 		java.lang.String description, int scope, boolean andOperator,
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecordSet> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecordSet> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long companyId, long groupId,
@@ -100,12 +100,12 @@ public interface DDLRecordSetService extends BaseService {
 	*/
 	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateMinDisplayRows(
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateMinDisplayRows(
 		long recordSetId, int minDisplayRows,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		long groupId, long ddmStructureId, java.lang.String recordSetKey,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -113,7 +113,7 @@ public interface DDLRecordSetService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portlet.dynamicdatalists.model.DDLRecordSet updateRecordSet(
+	public com.liferay.dynamic.data.lists.model.DDLRecordSet updateRecordSet(
 		long recordSetId, long ddmStructureId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.persistence;
+package com.liferay.dynamic.data.lists.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -26,18 +26,18 @@ public interface DDLRecordFinder {
 
 	public int countByC_S_S(long companyId, int status, int scope);
 
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByR_S(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByR_S(
 		long recordSetId, int status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator);
 
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByC_S_S(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByC_S_S(
 		long companyId, int status, int scope, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.portlet.dynamicdatalists.model.DDLRecord> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.lists.model.DDLRecord> orderByComparator);
 
 	public java.lang.Long[] findByC_S_S_MinAndMax(long companyId, int status,
 		int scope);
 
-	public java.util.List<com.liferay.portlet.dynamicdatalists.model.DDLRecord> findByC_S_S_MinAndMax(
+	public java.util.List<com.liferay.dynamic.data.lists.model.DDLRecord> findByC_S_S_MinAndMax(
 		long companyId, int status, int scope, long minRecordId,
 		long maxRecordId);
 }

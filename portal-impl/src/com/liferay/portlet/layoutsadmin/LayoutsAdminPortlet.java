@@ -190,6 +190,42 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 
 	@Override
 	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.UPDATE)) {
+				updateLayoutSet(actionRequest, actionResponse);
+			}
+
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof PrincipalException ||
+				e instanceof SystemException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.layouts_admin.error");
+			}
+			else if (e instanceof FileSizeException ||
+					 e instanceof ImageTypeException ||
+					 e instanceof UploadException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortletException {
 
@@ -198,6 +234,33 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		MultiSessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		try {
+			getGroup(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchGroupException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return actionMapping.findForward("portlet.layouts_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		return actionMapping.findForward(
+			getForward(renderRequest, "portlet.layouts_admin.edit_layouts"));
 	}
 
 	/**
@@ -681,6 +744,29 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		return false;
 	}
 
+	@Override
+	protected void setThemeSettingProperties(
+		ActionRequest actionRequest, UnicodeProperties typeSettingsProperties,
+		Map<String, ThemeSetting> themeSettings, String device,
+		String deviceThemeId) {
+
+		for (String key : themeSettings.keySet()) {
+			ThemeSetting themeSetting = themeSettings.get(key);
+
+			String property =
+				device + "ThemeSettingsProperties--" + key +
+					StringPool.DOUBLE_DASH;
+
+			String value = ParamUtil.getString(
+				actionRequest, property, themeSetting.getValue());
+
+			if (!value.equals(themeSetting.getValue())) {
+				typeSettingsProperties.setProperty(
+					ThemeSettingImpl.namespaceProperty(device, key), value);
+			}
+		}
+	}
+
 	protected void setThemeSettingProperties(
 			ActionRequest actionRequest,
 			UnicodeProperties typeSettingsProperties,
@@ -713,6 +799,65 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 					ThemeSettingImpl.namespaceProperty(device, key), value);
 			}
 		}
+	}
+
+	protected void updateLayoutSet(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long layoutSetId = ParamUtil.getLong(actionRequest, "layoutSetId");
+
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		long stagingGroupId = ParamUtil.getLong(
+			actionRequest, "stagingGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSetId);
+
+		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
+
+		updateLookAndFeel(
+			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
+
+		updateMergePages(actionRequest, liveGroupId);
+
+		updateSettings(
+			actionRequest, liveGroupId, stagingGroupId, privateLayout,
+			layoutSet.getSettingsProperties());
+	}
+
+	protected void updateLogo(
+			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
+			boolean privateLayout)
+		throws Exception {
+
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		long groupId = liveGroupId;
+
+		if (stagingGroupId > 0) {
+			groupId = stagingGroupId;
+		}
+
+		LayoutSetServiceUtil.updateLogo(
+			groupId, privateLayout, !deleteLogo, logoBytes);
 	}
 
 	protected void updateLookAndFeel(
@@ -767,6 +912,85 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 				groupId, privateLayout, layoutId, deviceThemeId,
 				deviceColorSchemeId, deviceCss, deviceWapTheme);
 		}
+	}
+
+	protected void updateLookAndFeel(
+			ActionRequest actionRequest, long companyId, long liveGroupId,
+			long stagingGroupId, boolean privateLayout,
+			UnicodeProperties typeSettingsProperties)
+		throws Exception {
+
+		String[] devices = StringUtil.split(
+			ParamUtil.getString(actionRequest, "devices"));
+
+		for (String device : devices) {
+			String deviceThemeId = ParamUtil.getString(
+				actionRequest, device + "ThemeId");
+			String deviceColorSchemeId = ParamUtil.getString(
+				actionRequest, device + "ColorSchemeId");
+			String deviceCss = ParamUtil.getString(
+				actionRequest, device + "Css");
+			boolean deviceWapTheme = device.equals("wap");
+
+			if (Validator.isNotNull(deviceThemeId)) {
+				deviceColorSchemeId = getColorSchemeId(
+					companyId, deviceThemeId, deviceColorSchemeId,
+					deviceWapTheme);
+
+				updateThemeSettingsProperties(
+					actionRequest, companyId, typeSettingsProperties, device,
+					deviceThemeId, deviceWapTheme);
+			}
+
+			long groupId = liveGroupId;
+
+			if (stagingGroupId > 0) {
+				groupId = stagingGroupId;
+			}
+
+			LayoutSetServiceUtil.updateLookAndFeel(
+				groupId, privateLayout, deviceThemeId, deviceColorSchemeId,
+				deviceCss, deviceWapTheme);
+		}
+	}
+
+	protected void updateMergePages(
+			ActionRequest actionRequest, long liveGroupId)
+		throws Exception {
+
+		boolean mergeGuestPublicPages = ParamUtil.getBoolean(
+			actionRequest, "mergeGuestPublicPages");
+
+		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		UnicodeProperties typeSettingsProperties =
+			liveGroup.getTypeSettingsProperties();
+
+		typeSettingsProperties.setProperty(
+			"mergeGuestPublicPages", String.valueOf(mergeGuestPublicPages));
+
+		GroupServiceUtil.updateGroup(liveGroupId, liveGroup.getTypeSettings());
+	}
+
+	protected void updateSettings(
+			ActionRequest actionRequest, long liveGroupId, long stagingGroupId,
+			boolean privateLayout, UnicodeProperties settingsProperties)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties =
+			PropertiesParamUtil.getProperties(
+				actionRequest, "TypeSettingsProperties--");
+
+		settingsProperties.putAll(typeSettingsProperties);
+
+		long groupId = liveGroupId;
+
+		if (stagingGroupId > 0) {
+			groupId = stagingGroupId;
+		}
+
+		LayoutSetServiceUtil.updateSettings(
+			groupId, privateLayout, settingsProperties.toString());
 	}
 
 	protected UnicodeProperties updateThemeSettingsProperties(

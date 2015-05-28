@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -73,6 +75,54 @@ import javax.servlet.http.HttpServletRequest;
  * @author Carlos Sierra Andrés
  */
 public class PortletConfigurationPortlet extends MVCPortlet {
+
+	public void editSharing(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = null;
+
+		portlet = ActionUtil.getPortlet(actionRequest);
+
+		PortletPreferences portletPreferences =
+			ActionUtil.getLayoutPortletSetup(actionRequest, portlet);
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
+
+		updateAnyWebsite(actionRequest, portletPreferences);
+		updateFacebook(actionRequest, portletPreferences);
+		updateFriends(actionRequest, portletPreferences);
+		updateGoogleGadget(actionRequest, portletPreferences);
+		updateNetvibes(actionRequest, portletPreferences);
+
+		portletPreferences.store();
+
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			return;
+		}
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
+
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		if (Validator.isNotNull(redirect)) {
+			actionResponse.sendRedirect(redirect);
+		}
+	}
 
 	@Override
 	public void init(PortletConfig portletConfig) throws PortletException {
@@ -139,6 +189,17 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			JavaConstants.JAVAX_PORTLET_CONFIG, getPortletConfig());
 
 		super.serveResource(resourceRequest, resourceResponse);
+	}
+
+	public void updateAnyWebsite(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		boolean widgetShowAddAppLink = ParamUtil.getBoolean(
+			actionRequest, "widgetShowAddAppLink");
+
+		portletPreferences.setValue(
+			"lfrWidgetShowAddAppLink", String.valueOf(widgetShowAddAppLink));
 	}
 
 	public void updateRolePermissions(
@@ -346,6 +407,48 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			renderRequest, portlet);
 	}
 
+	protected void updateFacebook(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		String facebookAPIKey = ParamUtil.getString(
+			actionRequest, "facebookAPIKey");
+		String facebookCanvasPageURL = ParamUtil.getString(
+			actionRequest, "facebookCanvasPageURL");
+		boolean facebookShowAddAppLink = ParamUtil.getBoolean(
+			actionRequest, "facebookShowAddAppLink");
+
+		portletPreferences.setValue("lfrFacebookApiKey", facebookAPIKey);
+		portletPreferences.setValue(
+			"lfrFacebookCanvasPageUrl", facebookCanvasPageURL);
+		portletPreferences.setValue(
+			"lfrFacebookShowAddAppLink",
+			String.valueOf(facebookShowAddAppLink));
+	}
+
+	protected void updateFriends(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		boolean appShowShareWithFriendsLink = ParamUtil.getBoolean(
+			actionRequest, "appShowShareWithFriendsLink");
+
+		portletPreferences.setValue(
+			"lfrAppShowShareWithFriendsLink",
+			String.valueOf(appShowShareWithFriendsLink));
+	}
+
+	protected void updateGoogleGadget(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		boolean iGoogleShowAddAppLink = ParamUtil.getBoolean(
+			actionRequest, "iGoogleShowAddAppLink");
+
+		portletPreferences.setValue(
+			"lfrIgoogleShowAddAppLink", String.valueOf(iGoogleShowAddAppLink));
+	}
+
 	protected void updateLayoutModifiedDate(
 			String selResource, String resourcePrimKey)
 		throws Exception {
@@ -374,6 +477,18 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 			CacheUtil.clearCache(layout.getCompanyId());
 		}
+	}
+
+	protected void updateNetvibes(
+			ActionRequest actionRequest, PortletPreferences portletPreferences)
+		throws Exception {
+
+		boolean netvibesShowAddAppLink = ParamUtil.getBoolean(
+			actionRequest, "netvibesShowAddAppLink");
+
+		portletPreferences.setValue(
+			"lfrNetvibesShowAddAppLink",
+			String.valueOf(netvibesShowAddAppLink));
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -118,7 +118,7 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 
 			Team team = teamLocalService.fetchTeam(classPK);
 
-			groupId = team.getGroupId();
+			classPK = team.getGroupId();
 
 			actionId = ActionKeys.MANAGE_TEAMS;
 		}

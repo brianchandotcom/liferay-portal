@@ -333,9 +333,7 @@ public class InputEditorTag extends IncludeTag {
 
 		Editor editor = getEditor(request);
 
-		if (editor != null) {
-			editor.setItemSelectorAttribute(request);
-		}
+		editor.setItemSelectorAttribute(request);
 
 		request.setAttribute("liferay-ui:input-editor:name", _name);
 		request.setAttribute(

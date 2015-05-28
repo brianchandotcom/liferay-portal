@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.impl.verifier;
+package com.liferay.portal.security.auth.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

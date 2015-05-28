@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -32,7 +33,9 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
@@ -284,22 +287,27 @@ public class AssetSearcher extends BaseSearcher {
 	}
 
 	@Override
-	protected void addSearchKeywords(
+	protected Map<String, Query> addSearchKeywords(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
 		String keywords = searchContext.getKeywords();
 
 		if (Validator.isNull(keywords)) {
-			return;
+			return Collections.emptyMap();
 		}
 
-		super.addSearchKeywords(searchQuery, searchContext);
+		Map<String, Query> queries = super.addSearchKeywords(
+			searchQuery, searchContext);
 
 		String field = DocumentImpl.getLocalizedName(
 			searchContext.getLocale(), "localized_title");
 
-		searchQuery.addTerm(field, keywords, true);
+		Query query = searchQuery.addTerm(field, keywords, true);
+
+		queries.put(field, query);
+
+		return queries;
 	}
 
 	@Override

@@ -171,8 +171,8 @@
 					</and>
 				</not>
 				<then>
-					<delete dir="${app.server.portal.dir}" />
-					<delete file="${app.server.portal.dir}" />
+					<delete dir="${app.server.portal.dir}" failonerror="false" />
+					<delete file="${app.server.portal.dir}" failonerror="false" />
 				</then>
 				<else>
 					<delete failonerror="false">

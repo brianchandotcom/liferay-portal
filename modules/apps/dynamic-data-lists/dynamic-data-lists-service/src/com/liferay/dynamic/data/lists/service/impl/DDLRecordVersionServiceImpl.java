@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.impl;
+package com.liferay.dynamic.data.lists.service.impl;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
+import com.liferay.dynamic.data.lists.service.base.DDLRecordVersionServiceBaseImpl;
+import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion;
-import com.liferay.portlet.dynamicdatalists.service.base.DDLRecordVersionServiceBaseImpl;
-import com.liferay.portlet.dynamicdatalists.service.permission.DDLRecordPermission;
 
 import java.util.List;
 

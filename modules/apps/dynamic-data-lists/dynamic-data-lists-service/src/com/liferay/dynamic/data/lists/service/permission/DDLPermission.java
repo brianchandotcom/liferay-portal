@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatalists.service.permission;
+package com.liferay.dynamic.data.lists.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.staging.permission.StagingPermissionUtil;
@@ -26,8 +26,7 @@ import com.liferay.portal.util.PortletKeys;
  */
 public class DDLPermission {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.portlet.dynamicdatalists";
+	public static final String RESOURCE_NAME = "com.liferay.dynamic.data.lists";
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)

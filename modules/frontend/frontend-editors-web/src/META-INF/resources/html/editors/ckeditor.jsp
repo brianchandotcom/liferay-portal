@@ -434,10 +434,24 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		var filebrowserBrowseUrl = '';
 		var filebrowserFlashBrowseUrl = '';
-		var filebrowserImageBrowseUrl = '';
 		var filebrowserImageBrowseLinkUrl = '';
+		var filebrowserImageBrowseUrl = '';
 
 		<c:if test="<%= allowBrowseDocuments %>">
+
+			<%
+			ItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(themeDisplay.getScopeGroupId());
+
+			Set<Class<?>> desiredReturnTypes = new HashSet<Class<?>>();
+
+			desiredReturnTypes.add(URL.class);
+
+			layoutItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+
+			PortletURL layoutItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", layoutItemSelectorCriterion);
+			%>
+
+			filebrowserBrowseUrl = '<%= layoutItemSelectorURL %>';
 
 			<%
 			String tabs1Names = null;
@@ -449,28 +463,19 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			ItemSelectorCriterion imageItemSelectorCriterion = null;
 
 			if (Validator.isNotNull(tabs1Names) && tabs1Names.equals("attachments")) {
-				imageItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(Long.valueOf(fileBrowserParamsMap.get("wikiPageResourcePrimKey")));
+				imageItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(GetterUtil.getLong(fileBrowserParamsMap.get("wikiPageResourcePrimKey")));
 			}
 			else {
 				imageItemSelectorCriterion = new DLItemSelectorCriterion(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, themeDisplay.getScopeGroupId(), "images", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES, false);
 			}
 
-			ItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(themeDisplay.getScopeGroupId());
-
-			Set<Class<?>> desiredReturnTypes = new HashSet<Class<?>>();
-
-			desiredReturnTypes.add(URL.class);
-
 			imageItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
-			layoutItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
 
 			PortletURL imageItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", imageItemSelectorCriterion);
-			PortletURL layoutItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", layoutItemSelectorCriterion);
 			%>
 
-			filebrowserBrowseUrl = '<%= layoutItemSelectorURL %>';
-			filebrowserImageBrowseUrl = '<%= imageItemSelectorURL %>';
 			filebrowserImageBrowseLinkUrl = '<%= imageItemSelectorURL %>';
+			filebrowserImageBrowseUrl = '<%= imageItemSelectorURL %>';
 		</c:if>
 
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>(

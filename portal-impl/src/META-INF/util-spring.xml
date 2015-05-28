@@ -874,27 +874,6 @@
 			<bean class="com.liferay.portlet.documentlibrary.util.DLValidatorImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler" class="com.liferay.portlet.dynamicdatalists.lar.DDLRecordSetStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.dynamicdatalists.lar.DDLRecordStagedModelDataHandler" class="com.liferay.portlet.dynamicdatalists.lar.DDLRecordStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory" class="com.liferay.portlet.dynamicdatalists.util.DDLExporterFactory">
-		<property name="DDLExporters">
-			<map>
-				<entry key="csv">
-					<bean class="com.liferay.portlet.dynamicdatalists.util.DDLCSVExporter" />
-				</entry>
-				<entry key="xml">
-					<bean class="com.liferay.portlet.dynamicdatalists.util.DDLXMLExporter" />
-				</entry>
-			</map>
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLIndexer" class="com.liferay.portlet.dynamicdatalists.util.DDLIndexer" />
-	<bean id="com.liferay.portlet.dynamicdatalists.util.DDLUtil" class="com.liferay.portlet.dynamicdatalists.util.DDLUtil">
-		<property name="DDL">
-			<bean class="com.liferay.portlet.dynamicdatalists.util.DDLImpl" />
-		</property>
-	</bean>
-	<bean id="com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler" class="com.liferay.portlet.dynamicdatalists.workflow.DDLRecordWorkflowHandler" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil" class="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil">
 		<property name="DDMFormFieldTypesJSONSerializer">
 			<bean class="com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerImpl" />

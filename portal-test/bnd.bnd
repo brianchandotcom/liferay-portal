@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.portal.kernel.test.util,\
 	com.liferay.portlet.asset.service.persistence.test,\
 	com.liferay.portlet.documentlibrary.util.test,\
-	com.liferay.portlet.dynamicdatalists.util.test,\
 	com.liferay.portlet.dynamicdatamapping.util.test,\
 	com.liferay.portlet.expando.util.test,\
 	com.liferay.portlet.journal.util.test,\

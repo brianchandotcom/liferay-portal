@@ -92,27 +92,9 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 						(String)inputEditorTaglibAttributes.get(
 							"liferay-ui:input-editor:name"));
 
-			String eventName = name + "selectDocument";
-
-			long scopeGroupId = themeDisplay.getScopeGroupId();
-
-			jsonObject.put(
-				"filebrowserBrowseUrl",
-				getItemSelectorURL(
-					liferayPortletResponse, scopeGroupId, eventName,
-					new LayoutItemSelectorCriterion(scopeGroupId), URL.class));
-
-			String imageItemSelectorURL = getItemSelectorURL(
-				liferayPortletResponse, scopeGroupId, eventName,
-				new DLItemSelectorCriterion(
-					DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, scopeGroupId,
-					"images",
-					PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES, false),
-				URL.class);
-
-			jsonObject.put(
-				"filebrowserImageBrowseLinkUrl", imageItemSelectorURL);
-			jsonObject.put("filebrowserImageBrowseUrl", imageItemSelectorURL);
+			populateFileBrowserURL(
+				jsonObject, liferayPortletResponse,
+				themeDisplay.getScopeGroupId(), name + "selectDocument");
 
 			jsonObject.put("srcNode", name);
 		}
@@ -123,25 +105,6 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	@Reference
 	public void setItemSelector(ItemSelector itemSelector) {
 		_itemSelector = itemSelector;
-	}
-
-	protected String getItemSelectorURL(
-		LiferayPortletResponse liferayPortletResponse, long groupId,
-		String eventName, ItemSelectorCriterion itemSelectorCriterion,
-		Class<?>... desiredReturnTypes) {
-
-		Set<Class<?>> desiredReturnTypesSet = new HashSet<>();
-
-		for (Class<?> desiredReturnType : desiredReturnTypes) {
-			desiredReturnTypesSet.add(desiredReturnType);
-		}
-
-		itemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypesSet);
-
-		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, itemSelectorCriterion);
-
-		return itemSelectorURL.toString();
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {
@@ -231,6 +194,42 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
 		return jsonObject;
+	}
+
+	protected void populateFileBrowserURL(
+		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
+		long scopeGroupId, String eventName) {
+
+		Set<Class<?>> desiredReturnTypes = new HashSet<>();
+
+		desiredReturnTypes.add(URL.class);
+
+		ItemSelectorCriterion layoutItemSelectorCriterion =
+			new LayoutItemSelectorCriterion(scopeGroupId);
+
+		layoutItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+
+		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
+			liferayPortletResponse, eventName, layoutItemSelectorCriterion);
+
+		jsonObject.put(
+			"filebrowserBrowseUrl", layoutItemSelectorURL.toString());
+
+		ItemSelectorCriterion dlItemSelectorCriterion =
+			new DLItemSelectorCriterion(
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, scopeGroupId,
+				"images", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
+				false);
+
+		dlItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+
+		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
+			liferayPortletResponse, eventName, dlItemSelectorCriterion);
+
+		jsonObject.put(
+			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());
+		jsonObject.put(
+			"filebrowserImageBrowseUrl", dlItemSelectorURL.toString());
 	}
 
 	private ItemSelector _itemSelector;

@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
@@ -103,7 +103,7 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 				layout, portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
+			throw new ConfigurationException.MustBeStrictPortlet(portletId);
 		}
 
 		return portletPreferences;

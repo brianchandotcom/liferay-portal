@@ -3,9 +3,9 @@
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command known-issues="LPS-54934" name="HSQLtoDB2" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -33,9 +33,9 @@
 	</command>
 
 	<command known-issues="LPS-54934" name="HSQLtoDB2SampleDataDisabled" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -180,9 +180,9 @@
 	</command>
 
 	<command known-issues="LPS-55222" name="HSQLtoOracle" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -210,9 +210,9 @@
 	</command>
 
 	<command known-issues="LPS-55222" name="HSQLtoOracleSampleDataDisabled" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 

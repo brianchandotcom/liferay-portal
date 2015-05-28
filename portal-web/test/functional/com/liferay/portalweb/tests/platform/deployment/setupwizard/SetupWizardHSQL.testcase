@@ -240,12 +240,6 @@
 	<command name="HSQLtoPostgreSQL" priority="5">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=postgresql -Ddelete.liferay.home=false" />
 
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
-
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
@@ -267,12 +261,6 @@
 
 	<command name="HSQLtoPostgreSQLSampleDataDisabled" priority="5">
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=postgresql -Ddelete.liferay.home=false" />
-
-		<execute macro="Portlet#shutdownServer" />
-
-		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
-		</execute>
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="addSampleData" value="false" />

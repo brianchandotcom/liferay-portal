@@ -70,7 +70,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 	<c:if test="<%= showHeader %>">
 		<liferay-ui:header
-			backURL="<%= layoutsAdminDisplayContext.getBackURL() %>"
 			escapeXml="<%= false %>"
 			localizeTitle="<%= false %>"
 			title="<%= HtmlUtil.escape(liveGroup.getDescriptiveName(locale)) %>"
@@ -85,7 +84,6 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 
 		userTabs1URL.setParameter("struts_action", "/my_pages/edit_layouts");
 		userTabs1URL.setParameter("tabs1", layoutsAdminDisplayContext.getTabs1());
-		userTabs1URL.setParameter("backURL", layoutsAdminDisplayContext.getBackURL());
 		userTabs1URL.setParameter("groupId", String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()));
 		userTabs1URL.setParameter("showHeader", String.valueOf(showHeader));
 

@@ -16,9 +16,7 @@ package com.liferay.portlet.layoutsadmin.context;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -36,16 +34,13 @@ import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.LayoutDescription;
 import com.liferay.portal.util.LayoutListUtil;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
-import javax.portlet.PortletConfig;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,29 +116,9 @@ public class LayoutsAdminDisplayContext {
 		_privateLayout = privateLayout;
 		_tabs1 = tabs1;
 
-		String portletName = getPortletName();
-
-		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
-			portletName.equals(PortletKeys.MY_ACCOUNT)) {
-
-			PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-			portletDisplay.setURLBack(getBackURL());
-		}
-
 		_request.setAttribute(
 			com.liferay.portal.util.WebKeys.LAYOUT_DESCRIPTIONS,
 			getLayoutDescriptions());
-	}
-
-	public String getBackURL() {
-		if (_backURL != null) {
-			return _backURL;
-		}
-
-		_backURL = ParamUtil.getString(_request, "backURL", getRedirect());
-
-		return _backURL;
 	}
 
 	public PortletURL getEditLayoutURL() {
@@ -153,16 +128,6 @@ public class LayoutsAdminDisplayContext {
 			"struts_action", "/layouts_admin/edit_layouts");
 		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
-
-		String portletName = getPortletName();
-
-		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
-			portletName.equals(PortletKeys.MY_ACCOUNT) ||
-			portletName.equals(PortletKeys.USERS_ADMIN)) {
-
-			editLayoutURL.setParameter("backURL", getBackURL());
-		}
-
 		editLayoutURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
 		editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 
@@ -280,16 +245,6 @@ public class LayoutsAdminDisplayContext {
 		portletURL.setParameter("struts_action", "/layouts_admin/edit_layouts");
 		portletURL.setParameter("tabs1", getTabs1());
 		portletURL.setParameter("redirect", getRedirect());
-
-		String portletName = getPortletName();
-
-		if (portletName.equals(PortletKeys.LAYOUTS_ADMIN) ||
-			portletName.equals(PortletKeys.MY_ACCOUNT) ||
-			portletName.equals(PortletKeys.USERS_ADMIN)) {
-
-			portletURL.setParameter("backURL", getBackURL());
-		}
-
 		portletURL.setParameter("groupId", String.valueOf(getLiveGroupId()));
 
 		return portletURL;
@@ -416,17 +371,6 @@ public class LayoutsAdminDisplayContext {
 		return _privateLayout;
 	}
 
-	protected String getPortletName() {
-		PortletConfig portletConfig = (PortletConfig)_request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
-
-		if (portletConfig == null) {
-			return StringPool.BLANK;
-		}
-
-		return portletConfig.getPortletName();
-	}
-
 	protected boolean hasPowerUserRole() {
 		try {
 			User selUser = getSelUser();
@@ -463,7 +407,6 @@ public class LayoutsAdminDisplayContext {
 		return false;
 	}
 
-	private String _backURL;
 	private final GroupDisplayContextHelper _groupDisplayContextHelper;
 	private List<LayoutDescription> _layoutDescriptions;
 	private Long _layoutId;

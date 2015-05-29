@@ -4,7 +4,7 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
 
 	<property name="alloyeditor.version" value="0.2.7" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />

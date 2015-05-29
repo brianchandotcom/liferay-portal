@@ -528,7 +528,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		File classesDir = new File(docrootDir, "WEB-INF/classes");
 		File srcDir = new File(docrootDir, "WEB-INF/src");
 
-		configureSourceSetMain(project, classesDir, srcDir);
+		configureSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
 	protected void configureTaskAutoUpdateXml(Project project) {

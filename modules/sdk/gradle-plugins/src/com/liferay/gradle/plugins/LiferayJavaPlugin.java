@@ -345,18 +345,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 	}
 
-	protected void configureSourceSetMain(Project project) {
-		File classesDir = project.file("classes");
-		File srcDir = project.file("src");
+	protected void configureSourceSet(
+		Project project, String name, File classesDir, File srcDir) {
 
-		configureSourceSetMain(project, classesDir, srcDir);
-	}
-
-	protected void configureSourceSetMain(
-		Project project, File classesDir, File srcDir) {
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
+		SourceSet sourceSet = GradleUtil.getSourceSet(project, name);
 
 		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
 
@@ -375,8 +367,25 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		resourcesSourceDirectorySet.setSrcDirs(srcDirs);
 	}
 
+	protected void configureSourceSetMain(Project project) {
+		File classesDir = project.file("classes");
+		File srcDir = project.file("src");
+
+		configureSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
+	}
+
 	protected void configureSourceSets(Project project) {
 		configureSourceSetMain(project);
+		configureSourceSetTest(project);
+	}
+
+	protected void configureSourceSetTest(Project project) {
+		File classesDir = project.file("test-classes/unit");
+		File srcDir = project.file("test/unit");
+
+		configureSourceSet(
+			project, SourceSet.TEST_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
 	protected void configureTaskBuildCss(

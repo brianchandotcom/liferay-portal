@@ -1373,7 +1373,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-15498" name="WebcontentAdministrationTemplateValidation" priority="4">
+	<command known-issues="LRQA-15496" name="WebcontentAdministrationTemplateValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

@@ -315,6 +315,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 					boundingBox: '#<portlet:namespace /><%= id %>BoundingBox',
 					columns: 20,
 					contentBox: '#<portlet:namespace /><%= id %>ContentBox',
+					defaultLanguageId: defaultLanguageId,
 
 					<c:if test='<%= type.equals("editor") %>'>
 						editor: window['<portlet:namespace /><%= fieldName %>'],

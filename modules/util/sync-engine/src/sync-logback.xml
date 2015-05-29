@@ -45,6 +45,8 @@
 
 	<logger level="ERROR" name="com.liferay.nativity" />
 
+	<logger level="ERROR" name="io.netty" />
+
 	<logger level="ERROR" name="org.apache" />
 
 	<logger level="INFO" name="com.j256.ormlite" />

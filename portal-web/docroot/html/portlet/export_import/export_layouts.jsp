@@ -123,15 +123,8 @@ if (!cmd.equals(Constants.ADD)) {
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-portlet:renderURL portletName="<%= PortletKeys.LAYOUTS_ADMIN %>" var="backURL">
-	<portlet:param name="struts_action" value="/layouts_admin/edit_layout_set" />
-	<portlet:param name="tabs1" value='<%= privateLayout ? "my-dashboard" : "my-profile" %>' />
-	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-</liferay-portlet:renderURL>
-
 <c:if test="<%= showHeader %>">
 	<liferay-ui:header
-		backURL="<%= backURL %>"
 		title='<%= privateLayout ? LanguageUtil.get(request, "export-private-pages") : LanguageUtil.get(request, "export-public-pages") %>'
 	/>
 </c:if>

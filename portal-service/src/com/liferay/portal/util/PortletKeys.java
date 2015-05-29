@@ -74,8 +74,6 @@ public class PortletKeys {
 
 	public static final String FRIENDS_DIRECTORY = "186";
 
-	public static final String GROUP_PAGES = "156";
-
 	public static final String GROUP_STATISTICS = "181";
 
 	public static final String IMAGE_UPLOADER = "195";
@@ -86,7 +84,8 @@ public class PortletKeys {
 	public static final String JOURNAL =
 		"com_liferay_journal_web_portlet_JournalPortlet";
 
-	public static final String LAYOUTS_ADMIN = "88";
+	public static final String LAYOUTS_ADMIN =
+		"com_liferay_layout_admin_web_portlet_LayoutAdminPortlet";
 
 	public static final String LIFERAY_PORTAL = "LIFERAY_PORTAL";
 
@@ -111,7 +110,8 @@ public class PortletKeys {
 
 	public static final String MY_ACCOUNT = "2";
 
-	public static final String MY_PAGES = "140";
+	public static final String MY_PAGES =
+		"com_liferay_layout_admin_web_portlet_MyPagesPortlet";
 
 	public static final String MY_SITES_DIRECTORY = "188";
 

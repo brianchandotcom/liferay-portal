@@ -14,12 +14,12 @@
 
 package com.liferay.layout.admin.web.panel;
 
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.productivity.center.panel.BaseControlPanelEntryPanelApp;
 import com.liferay.productivity.center.panel.PanelApp;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
@@ -56,7 +56,7 @@ public class MyPagesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_PAGES;
+		return LayoutAdminPortletKeys.MY_PAGES;
 	}
 
 	@Override

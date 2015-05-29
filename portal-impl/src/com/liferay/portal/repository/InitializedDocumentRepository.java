@@ -280,8 +280,8 @@ public abstract class InitializedDocumentRepository
 	}
 
 	@Override
-	public <T extends Capability> boolean isCapabilityProvided(
-		Class<T> capabilityClass) {
+	public <C extends Capability> boolean isCapabilityProvided(
+		Class<C> capabilityClass) {
 
 		checkDocumentRepository();
 

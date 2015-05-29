@@ -466,7 +466,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 				imageItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(GetterUtil.getLong(fileBrowserParamsMap.get("wikiPageResourcePrimKey")));
 			}
 			else {
-				imageItemSelectorCriterion = new DLItemSelectorCriterion(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, themeDisplay.getScopeGroupId(), "images", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES, false);
+				imageItemSelectorCriterion = new DLItemSelectorCriterion(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, themeDisplay.getScopeGroupId(), PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
 			}
 
 			imageItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);

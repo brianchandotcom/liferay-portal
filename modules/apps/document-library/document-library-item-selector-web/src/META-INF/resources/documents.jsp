@@ -56,12 +56,6 @@ if (folderId > 0) {
 }
 %>
 
-<c:if test="<%= dlItemSelectorCriterion.isShowGroupsSelector() %>">
-	<liferay-util:include page="/group_selector.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="documents" />
-	</liferay-util:include>
-</c:if>
-
 <aui:form method="post" name="selectDocumentFm">
 
 	<%
@@ -115,7 +109,6 @@ if (folderId > 0) {
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="type" value="<%= dlItemSelectorCriterion.getType() %>" />
 						</liferay-portlet:renderURL>
 
 						<%
@@ -140,7 +133,6 @@ if (folderId > 0) {
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
-							<portlet:param name="type" value="<%= dlItemSelectorCriterion.getType() %>" />
 						</liferay-portlet:renderURL>
 
 						<%

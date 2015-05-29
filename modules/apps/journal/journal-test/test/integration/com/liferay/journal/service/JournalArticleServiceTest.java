@@ -27,12 +27,14 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ClassNameServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -94,12 +96,20 @@ public class JournalArticleServiceTest {
 			_group.getGroupId(),
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Version 1",
 			"This is a test article.");
+
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@After
 	public void tearDown() throws Exception {
 		JournalArticleLocalServiceUtil.deleteArticle(
 			_group.getGroupId(), _article.getArticleId(), new ServiceContext());
+
+		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Test
@@ -612,7 +622,7 @@ public class JournalArticleServiceTest {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portlet/journal/dependencies/" + fileName);
+			"com/liferay/journal/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}
@@ -707,5 +717,6 @@ public class JournalArticleServiceTest {
 
 	private String _keyword;
 	private JournalArticle _latestArticle;
+	private boolean _testMode;
 
 }

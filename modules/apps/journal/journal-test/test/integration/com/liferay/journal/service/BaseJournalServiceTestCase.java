@@ -75,7 +75,7 @@ public class BaseJournalServiceTestCase {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portlet/journal/dependencies/" + fileName);
+			"com/liferay/journal/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}

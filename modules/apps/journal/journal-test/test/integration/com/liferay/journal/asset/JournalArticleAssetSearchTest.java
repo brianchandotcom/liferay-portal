@@ -19,10 +19,13 @@ import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.asset.search.test.BaseAssetSearchTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -37,6 +40,8 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -54,6 +59,23 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
+	}
 
 	@Override
 	protected BaseModel<?> addBaseModel(
@@ -143,5 +165,7 @@ public class JournalArticleAssetSearchTest extends BaseAssetSearchTestCase {
 
 	protected DDMStructure _ddmStructure;
 	protected DDMTemplate _ddmTemplate;
+
+	private boolean _testMode;
 
 }

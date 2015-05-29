@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.BaseModel;
@@ -32,6 +33,7 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -55,7 +57,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,6 +79,23 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Before
+	@Override
+	public void setUp() throws Exception {
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+
+		super.setUp();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		PortalRunMode.setTestMode(_testMode);
+	}
+
 	@Test
 	public void testArticleImages() throws Exception {
 		ServiceContext serviceContext =
@@ -90,7 +111,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		String definition = StringUtil.read(
 			classLoader,
-			"com/liferay/portlet/journal/dependencies" +
+			"com/liferay/journal/dependencies" +
 				"/test-ddm-structure-image-field.xml");
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(definition);
@@ -104,7 +125,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 		String content = StringUtil.read(
 			classLoader,
-			"com/liferay/portlet/journal/dependencies" +
+			"com/liferay/journal/dependencies" +
 				"/test-journal-content-image-field.xml");
 
 		Map<String, byte[]> images = new HashMap<>();
@@ -112,8 +133,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 		images.put(
 			"_image_1_0_en_US",
 			FileUtil.getBytes(
-				clazz,
-				"/com/liferay/portlet/journal/dependencies/liferay.png"));
+				clazz, "/com/liferay/journal/dependencies/liferay.png"));
 
 		baseModel = JournalTestUtil.addArticleWithXMLContent(
 			JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID, content,
@@ -356,5 +376,7 @@ public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
 	}
 
 	private static final int _FOLDER_NAME_MAX_LENGTH = 100;
+
+	private boolean _testMode;
 
 }

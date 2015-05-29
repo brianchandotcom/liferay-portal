@@ -87,7 +87,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(new LiferayIntegrationTestRule());
+		new LiferayIntegrationTestRule();
 
 	@Before
 	@Override
@@ -875,7 +875,7 @@ public class JournalConverterUtilTest extends BaseDDMServiceTestCase {
 		ClassLoader classLoader = clazz.getClassLoader();
 
 		InputStream inputStream = classLoader.getResourceAsStream(
-			"com/liferay/portlet/journal/dependencies/" + fileName);
+			"com/liferay/journal/dependencies/" + fileName);
 
 		return StringUtil.read(inputStream);
 	}

@@ -27,12 +27,15 @@ import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -60,19 +63,27 @@ public class JournalArticleIndexVersionsTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(new LiferayIntegrationTestRule());
+		new LiferayIntegrationTestRule();
 
 	@Before
 	public void setUp() throws Exception {
 		PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = false;
 
 		_group = GroupTestUtil.addGroup();
+
+		_testMode = PortalRunMode.isTestMode();
+
+		PortalRunMode.setTestMode(true);
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 	}
 
 	@After
 	public void tearDown() {
 		PropsValues.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = GetterUtil.getBoolean(
 			PropsUtil.get(PropsKeys.JOURNAL_ARTICLE_INDEX_ALL_VERSIONS));
+
+		PortalRunMode.setTestMode(_testMode);
 	}
 
 	@Test
@@ -247,5 +258,7 @@ public class JournalArticleIndexVersionsTest {
 
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private boolean _testMode;
 
 }

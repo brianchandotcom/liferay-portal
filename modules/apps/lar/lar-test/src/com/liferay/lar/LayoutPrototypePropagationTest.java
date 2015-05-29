@@ -23,7 +23,6 @@ import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
 import java.util.Locale;
@@ -44,8 +43,7 @@ public class LayoutPrototypePropagationTest
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testAddLayoutFromLayoutPrototypeWithLinkDisabled()

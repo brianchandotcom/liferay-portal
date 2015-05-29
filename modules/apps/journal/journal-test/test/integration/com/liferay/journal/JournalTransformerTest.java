@@ -58,7 +58,7 @@ public class JournalTransformerTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(new LiferayIntegrationTestRule());
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testContentTransformerListener() throws Exception {

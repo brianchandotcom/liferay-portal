@@ -138,7 +138,7 @@
 			<var name="portletName" value="My Submissions" />
 		</execute>
 
-		<execute macro="Workflow#withdrawTaskCompletedNoByActions">
+		<execute macro="Workflow#viewCannotWithdrawTaskByActions">
 			<var name="workflowAssetTitle" value="FrontPage" />
 			<var name="workflowAssetType" value="Wiki Page" />
 			<var name="workflowDefinition" value="Single Approver" />

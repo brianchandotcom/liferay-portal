@@ -759,7 +759,7 @@
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
-	<command name="withdrawTaskCompletedNoByActions">
+	<command name="viewCannotWithdrawTaskByActions">
 		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
 
 		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />

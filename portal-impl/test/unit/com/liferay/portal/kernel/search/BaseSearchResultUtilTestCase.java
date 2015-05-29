@@ -20,12 +20,16 @@ import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.model.ClassName;
+import com.liferay.portal.search.SearchResultManagerImpl;
+import com.liferay.portal.service.ClassNameLocalService;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
+import com.liferay.portlet.messageboards.service.MBMessageLocalService;
 import com.liferay.registry.BasicRegistryImpl;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.collections.ServiceReferenceMapper;
@@ -49,7 +53,7 @@ import org.powermock.api.mockito.PowerMockito;
 public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 
 		setUpFastDateFormatFactoryUtil();
@@ -57,6 +61,8 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpPropsUtil();
 		setUpRegistryUtil();
 		setUpServiceTrackerMap();
+		setUpSearchResultManagerUtil();
+		setUpClassNameLocalService();
 	}
 
 	protected void assertEmptyFileEntryTuples(SearchResult searchResult) {
@@ -66,9 +72,9 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected void assertEmptyMBMessages(SearchResult searchResult) {
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
+		List<Tuple> commentTuples = searchResult.getCommentTuples();
 
-		Assert.assertTrue(mbMessages.isEmpty());
+		Assert.assertTrue(commentTuples.isEmpty());
 	}
 
 	protected void assertEmptyVersions(SearchResult searchResult) {
@@ -84,6 +90,21 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		Assert.assertEquals(1, searchResults.size());
 
 		return searchResults.get(0);
+	}
+
+	protected void setUpClassNameLocalService() throws Exception {
+		when(
+			classNameLocalService.getClassName(
+				SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME_ID)
+		).thenReturn(
+			className
+		);
+
+		when(
+			className.getClassName()
+		).thenReturn(
+			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME
+		);
 	}
 
 	protected void setUpFastDateFormatFactoryUtil() {
@@ -118,6 +139,14 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		mockStatic(IndexerRegistryUtil.class, Mockito.CALLS_REAL_METHODS);
 	}
 
+	protected void setUpSearchResultManagerUtil() {
+		SearchResultManager searchResultManager = new SearchResultManagerImpl(
+			classNameLocalService, dlAppLocalService, mbMessageLocalService);
+
+		new SearchResultManagerUtil().setSearchResultManager(
+			searchResultManager);
+	}
+
 	protected void setUpServiceTrackerMap() {
 		stub(
 			method(
@@ -139,6 +168,18 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	@Mock
 	protected AssetRendererFactory assetRendererFactory;
+
+	@Mock
+	protected ClassName className;
+
+	@Mock
+	protected ClassNameLocalService classNameLocalService;
+
+	@Mock
+	protected DLAppLocalService dlAppLocalService;
+
+	@Mock
+	protected MBMessageLocalService mbMessageLocalService;
 
 	@Mock
 	protected Portal portal;

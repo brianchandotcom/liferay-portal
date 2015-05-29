@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -48,6 +47,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
+	public void setCommentTuples(List<Tuple> commentTuples) {
+		_commentTuples = commentTuples;
+	}
+
 	public void setContainerName(String containerName) {
 		_containerName = containerName;
 	}
@@ -74,10 +77,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	public void setLocked(boolean locked) {
 		_locked = locked;
-	}
-
-	public void setMbMessages(List<MBMessage> mbMessages) {
-		_mbMessages = mbMessages;
 	}
 
 	public void setQueryTerms(String[] queryTerms) {
@@ -126,7 +125,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_fileEntryTuples = null;
 		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;
-		_mbMessages = null;
+		_commentTuples = null;
 		_queryTerms = null;
 		_rowCheckerId = null;
 		_rowCheckerName = null;
@@ -180,7 +179,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:mbMessages", _mbMessages);
+			"liferay-ui:app-view-search-entry:commentTuples", _commentTuples);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(
@@ -209,6 +208,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
+	private List<Tuple> _commentTuples;
 	private String _containerName;
 	private String _containerType;
 	private String _cssClass;
@@ -216,7 +216,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private List<Tuple> _fileEntryTuples;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
-	private List<MBMessage> _mbMessages;
 	private String[] _queryTerms;
 	private String _rowCheckerId;
 	private String _rowCheckerName;

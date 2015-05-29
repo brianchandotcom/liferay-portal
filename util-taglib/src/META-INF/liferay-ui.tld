@@ -421,7 +421,7 @@
 		</attribute>
 		<attribute>
 			<description>A list of objects containing information such as content, author, and status of entry messages. An example would be a comment made by one user on another user's blog post.</description>
-			<name>mbMessages</name>
+			<name>commentTuples</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

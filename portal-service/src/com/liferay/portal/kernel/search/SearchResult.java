@@ -14,11 +14,11 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.messageboards.model.MBMessage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +33,14 @@ public class SearchResult {
 		_classPK = classPK;
 	}
 
+	public void addComment(Comment comment, Summary summary) {
+		_commentTuples.add(new Tuple(comment, summary));
+	}
+
 	public void addFileEntry(FileEntry fileEntry, Summary summary) {
 		Tuple tuple = new Tuple(fileEntry, summary);
 
 		_fileEntryTuples.add(tuple);
-	}
-
-	public void addMBMessage(MBMessage mbMessage) {
-		_mbMessages.add(mbMessage);
 	}
 
 	public void addVersion(String version) {
@@ -76,12 +76,12 @@ public class SearchResult {
 		return _classPK;
 	}
 
-	public List<Tuple> getFileEntryTuples() {
-		return _fileEntryTuples;
+	public List<Tuple> getCommentTuples() {
+		return _commentTuples;
 	}
 
-	public List<MBMessage> getMBMessages() {
-		return _mbMessages;
+	public List<Tuple> getFileEntryTuples() {
+		return _fileEntryTuples;
 	}
 
 	public Summary getSummary() {
@@ -99,16 +99,20 @@ public class SearchResult {
 		return HashUtil.hash(hash, _className);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public void setClassName(String className) {
 		_className = className;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement.
+	 */
+	@Deprecated
 	public void setClassPK(long classPK) {
 		_classPK = classPK;
-	}
-
-	public void setMessages(List<MBMessage> mbMessages) {
-		_mbMessages = mbMessages;
 	}
 
 	public void setSummary(Summary summary) {
@@ -117,8 +121,8 @@ public class SearchResult {
 
 	private String _className;
 	private long _classPK;
+	private final List<Tuple> _commentTuples = new ArrayList<>();
 	private final List<Tuple> _fileEntryTuples = new ArrayList<>();
-	private List<MBMessage> _mbMessages = new ArrayList<>();
 	private Summary _summary;
 	private final List<String> _versions = new ArrayList<>();
 

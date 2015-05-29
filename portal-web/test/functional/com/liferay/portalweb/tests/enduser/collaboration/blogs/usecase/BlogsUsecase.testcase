@@ -28,7 +28,7 @@
 
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="BlogsPortlet#tearDownConfigurationScopePG" />
+		<execute macro="Blogs#tearDownConfigurationScopePG" />
 
 		<execute macro="Organization#tearDownCP" />
 
@@ -165,9 +165,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewDefaultConfigurationDisplaySettingsPG" />
+		<execute macro="BlogsPortlet#viewDefaultConfiguration" />
 
-		<execute macro="BlogsPortlet#viewDefaultConfigurationRSSPG" />
+		<execute macro="BlogsPortlet#viewDefaultConfigurationRSS" />
 	</command>
 
 	<command name="DemoTrackbackURL" priority="5">

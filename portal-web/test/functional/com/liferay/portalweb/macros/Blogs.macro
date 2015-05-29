@@ -315,7 +315,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsConfiguration#selectDisplayTemplate">
+		<execute macro="BlogsPortlet#selectDisplayTemplate">
 			<var name="displayTemplate" value="Abstract" />
 		</execute>
 
@@ -333,7 +333,7 @@
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
-		<execute macro="BlogsConfiguration#selectScopePG">
+		<execute macro="BlogsPortlet#selectScopePG">
 			<var name="scopeSelection" value="Liferay" />
 		</execute>
 	</command>
@@ -413,7 +413,7 @@
 
 	<command name="viewNoPermissionCP">
 		<execute function="AssertTextEquals" locator1="BasePortlet#CONTROL_PANEL_TITLE" value1="Blogs" />
-		<execute function="AssertElementPresent" locator1="NavBar#NAVBAR_CONTAINER" />
+		<execute function="AssertElementPresent" locator1="CPBlogs#NAVBAR_CONTAINER" />
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
 	</command>
 

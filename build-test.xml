@@ -4416,7 +4416,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 					</then>
 					<elseif>
 						<or>
-							<contains string="${liferay.portal.bundle}" substring="6.2.10" />
+							<equals arg1="${liferay.portal.branch}" arg2="ee-6.2.10" />
 							<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
 							<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
 						</or>

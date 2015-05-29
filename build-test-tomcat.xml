@@ -8,6 +8,8 @@
 			app.server.type=tomcat
 		</app-server-properties-update>
 
+		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
+
 		<if>
 			<not>
 				<isset property="build.app.server" />

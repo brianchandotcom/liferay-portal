@@ -14,7 +14,6 @@
 
 package com.liferay.portal.service.test;
 
-import com.liferay.portal.asset.LayoutRevisionAssetRendererFactory;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
@@ -141,7 +140,6 @@ public class PortalRegisterTestUtil {
 		BlogsEntryAssetRendererFactory.class,
 		DLFileEntryAssetRendererFactory.class,
 		DLFolderAssetRendererFactory.class,
-		LayoutRevisionAssetRendererFactory.class,
 		MBCategoryAssetRendererFactory.class,
 		MBDiscussionAssetRendererFactory.class,
 		MBMessageAssetRendererFactory.class, UserAssetRendererFactory.class

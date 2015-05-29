@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.asset;
 
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -27,12 +28,20 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Raymond Augé
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.LAYOUT_ADMIN},
+	service = AssetRendererFactory.class
+)
 public class LayoutRevisionAssetRendererFactory
 	extends BaseAssetRendererFactory {
 

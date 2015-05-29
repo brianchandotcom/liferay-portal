@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.trash.util.TrashUtil;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
@@ -90,16 +89,14 @@ public class GetPageAttachmentAction extends BaseStrutsAction {
 		FileEntry fileEntry = PortletFileRepositoryUtil.getPortletFileEntry(
 			wikiPage.getGroupId(), wikiPage.getAttachmentsFolderId(), fileName);
 
-		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
-
 		if ((status != WorkflowConstants.STATUS_IN_TRASH) &&
-			dlFileEntry.isInTrash()) {
+			fileEntry.isInTrash()) {
 
 			return;
 		}
 
-		if (dlFileEntry.isInTrash()) {
-			fileName = TrashUtil.getOriginalTitle(dlFileEntry.getTitle());
+		if (fileEntry.isInTrash()) {
+			fileName = TrashUtil.getOriginalTitle(fileEntry.getTitle());
 		}
 
 		InputStream is = fileEntry.getContentStream();

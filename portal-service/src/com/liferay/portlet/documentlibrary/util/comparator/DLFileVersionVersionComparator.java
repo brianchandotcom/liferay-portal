@@ -14,27 +14,30 @@
 
 package com.liferay.portlet.documentlibrary.util.comparator;
 
-import com.liferay.portal.kernel.repository.model.FileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFileVersion;
 
 import java.util.Comparator;
 
 /**
- * @author Iván Zaera
+ * @author Bruno Farache
  */
-public class FileVersionVersionComparator implements Comparator<FileVersion> {
+public class DLFileVersionVersionComparator
+	implements Comparator<DLFileVersion> {
 
-	public FileVersionVersionComparator() {
+	public DLFileVersionVersionComparator() {
 		this(false);
 	}
 
-	public FileVersionVersionComparator(boolean ascending) {
+	public DLFileVersionVersionComparator(boolean ascending) {
 		_versionNumberComparator = new VersionNumberComparator(ascending);
 	}
 
 	@Override
-	public int compare(FileVersion fileVersion1, FileVersion fileVersion2) {
+	public int compare(
+		DLFileVersion dlFileVersion1, DLFileVersion dlFileVersion2) {
+
 		return _versionNumberComparator.compare(
-			fileVersion1.getVersion(), fileVersion2.getVersion());
+			dlFileVersion1.getVersion(), dlFileVersion2.getVersion());
 	}
 
 	public boolean isAscending() {

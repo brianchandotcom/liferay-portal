@@ -150,72 +150,30 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
-	<command name="viewDefaultConfigurationDisplaySettingsPG">
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="full-content" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_FLAGS_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RATINGS_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENT_RATINGS_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="menu" />
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="bottom" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_TWITTER_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_FACEBOOK_CHECKBOX" />
-		<execute function="AssertChecked" locator1="PGBlogsConfiguration#SOCIAL_BOOKMARKS_GOOGLE_PLUS_CHECKBOX" />
-		<execute function="SelectFrame" value1="relative=top" />
+	<command name="viewDefaultConfiguration">
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="full-content" />
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_FLAGS" />
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RATINGS" />
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENTS" />
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_STYLE_SELECT" value1="Menu" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_SOCIAL_BOOKMARKS_DISPLAY_POSITION_SELECT" value1="Bottom" />
+		<execute function="AssertChecked" locator1="Checkbox#TWITTER" />
+		<execute function="AssertChecked" locator1="Checkbox#FACEBOOK" />
+		<execute function="AssertChecked" locator1="Checkbox#GOOGLE_PLUS" />
 	</command>
 
-	<command name="viewDefaultConfigurationRSSPG">
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsConfigurationSetupRSS#NAVIGATION_SETUP_RSS" value1="RSS" />
-			</then>
-		</if>
-
-		<execute function="AssertChecked" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfigurationSetupRSS#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfigurationSetupRSS#RSS_DISPLAY_STYLE_SELECT" value1="full-content" />
-		<execute function="AssertTextEquals#assertValue" locator1="PGBlogsConfigurationSetupRSS#FORMAT_SELECT" value1="atom_1.0" />
-		<execute function="SelectFrame" value1="relative=top" />
+	<command name="viewDefaultConfigurationRSS">
+		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RSS_SUBSCRIPTION" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_RSS_DISPLAY_STYLE_SELECT" value1="full-content" />
+		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_RSS_FORMAT_SELECT" value1="atom_1.0" />
 	</command>
 
-	<command name="viewScopeCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-
-		<var name="key_entryTitle" value="${entryTitle}" />
-
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals" locator1="CPBlogs#ENTRY_TABLE_AUTHOR" value1="${entryAuthor}" />
-	</command>
-
-	<command name="viewScopePG">
-		<if>
-			<equals arg1="${soPage}" arg2="true" />
-			<then>
-				<execute macro="SOPortlet#gotoPortletOptions">
-					<var name="portletName" value="Blogs" />
-					<var name="portletOption" value="Configuration" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletOption" value="Configuration" />
-				</execute>
-			</else>
-		</if>
-
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
-
-		<execute function="AssertClick" locator1="PGBlogsConfigurationScope#NAVIGATION_SCOPE" value1="Scope" />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+	<command name="viewScopeSelection">
+		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
 	</command>
 </definition>

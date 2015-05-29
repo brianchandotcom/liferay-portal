@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.journal" auto-import-default-references="false">
+<service-builder package-path="com.liferay.journal" auto-import-default-references="false">
 	<namespace>Journal</namespace>
 	<entity name="JournalArticle" uuid="true" local-service="true" remote-service="true" trash-enabled="true">
 

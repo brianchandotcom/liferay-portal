@@ -756,20 +756,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	protected Set<String> getActions(
-		Map<String, Set<String>> actionsMap, String name) {
-
-		Set<String> actions = actionsMap.get(name);
-
-		if (actions == null) {
-			actions = new LinkedHashSet<>();
-
-			actionsMap.put(name, actions);
-		}
-
-		return actions;
-	}
-
 	protected ModelResourceActionsBag getModelResourceActionsBag(
 		String modelName) {
 

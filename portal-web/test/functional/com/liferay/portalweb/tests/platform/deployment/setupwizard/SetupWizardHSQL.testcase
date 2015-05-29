@@ -3,9 +3,9 @@
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command known-issues="LPS-54934" name="HSQLtoDB2" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -33,9 +33,9 @@
 	</command>
 
 	<command known-issues="LPS-54934" name="HSQLtoDB2SampleDataDisabled" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=db2 -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=db2 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -82,7 +82,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.hsql.password" />
 			<var name="databaseType" value="Hypersonic" />
 			<var name="databaseUserName" property-value="database.hsql.username" />
@@ -104,7 +104,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.hsql.password" />
 			<var name="databaseType" value="Hypersonic" />
 			<var name="databaseUserName" property-value="database.hsql.username" />
@@ -142,7 +142,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
@@ -166,7 +166,7 @@
 			<var name="administratorEmail" value="test@liferay.com" />
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
-			<var name="databaseNameDefault" value="false" />
+			<var name="databaseName" value="lportal1" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
@@ -180,9 +180,9 @@
 	</command>
 
 	<command known-issues="LPS-55222" name="HSQLtoOracle" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -210,9 +210,9 @@
 	</command>
 
 	<command known-issues="LPS-55222" name="HSQLtoOracleSampleDataDisabled" priority="5">
-		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
-
 		<execute function="AntCommand" locator1="build-test.xml" value1="rebuild-database -Ddatabase.type=oracle -Ddelete.liferay.home=false" />
+
+		<execute function="AntCommand" locator1="build-test.xml" value1="copy-optional-jars -Ddatabase.type=oracle -Ddatabase.version=11 -Dtodir=${app.server.lib.global.dir}" />
 
 		<execute macro="Portlet#shutdownServer" />
 
@@ -272,6 +272,44 @@
 			<var name="databaseUserName" property-value="database.postgresql.username" />
 			<var name="jdbcDriverClassName" property-value="database.postgresql.driver" />
 			<var name="jdbcURL" property-value="database.postgresql.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage" />
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command known-issues="LPS-52571" name="HSQLtoSybase" priority="5">
+		<execute macro="SetupWizard#configurePG">
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.sybase.password" />
+			<var name="databaseType" value="Sybase" />
+			<var name="databaseUserName" property-value="database.sybase.username" />
+			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
+			<var name="jdbcURL" property-value="database.sybase.url" />
+		</execute>
+
+		<execute macro="Smoke#viewWelcomePage">
+			<var name="userFirstName" value="Joe" />
+			<var name="userLastName" value="Bloggs" />
+		</execute>
+
+		<execute macro="Smoke#runSmoke" />
+	</command>
+
+	<command known-issues="LPS-52571" name="HSQLtoSybaseSampleDataDisabled" priority="5">
+		<execute macro="SetupWizard#configurePG">
+			<var name="addSampleData" value="false" />
+			<var name="administratorEmail" value="test@liferay.com" />
+			<var name="administratorFirstName" value="Test" />
+			<var name="administratorLastName" value="Test" />
+			<var name="databasePassword" property-value="database.sybase.password" />
+			<var name="databaseType" value="Sybase" />
+			<var name="databaseUserName" property-value="database.sybase.username" />
+			<var name="jdbcDriverClassName" property-value="database.sybase.driver" />
+			<var name="jdbcURL" property-value="database.sybase.url" />
 		</execute>
 
 		<execute macro="Smoke#viewWelcomePage" />

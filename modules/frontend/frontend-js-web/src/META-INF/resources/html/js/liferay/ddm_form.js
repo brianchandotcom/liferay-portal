@@ -922,9 +922,26 @@ AUI.add(
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
 
 						var criterionJSON = {
-							desiredReturnTypes: ['java.net.URL','com.liferay.portal.kernel.repository.model.FileEntry'],
+							desiredReturnTypes:
+								[
+									'java.net.URL',
+									'com.liferay.portal.kernel.repository.model.FileEntry'
+								],
 							folderId: 0,
-							mimeTypes: ['image\/bmp','image\/gif','image\/jpeg','image\/pjpeg','image\/png','image\/tiff','image\/x-citrix-jpeg','image\/x-citrix-png','image\/x-ms-bmp','image\/x-png','image\/x-tiff'],
+							mimeTypes:
+								[
+									'image\/bmp',
+									'image\/gif',
+									'image\/jpeg',
+									'image\/pjpeg',
+									'image\/png',
+									'image\/tiff',
+									'image\/x-citrix-jpeg',
+									'image\/x-citrix-png',
+									'image\/x-ms-bmp',
+									'image\/x-png',
+									'image\/x-tiff'
+								],
 							repositoryId: Lang.toInt(themeDisplay.getScopeGroupId())
 						};
 

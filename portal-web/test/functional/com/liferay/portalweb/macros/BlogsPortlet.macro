@@ -1,159 +1,71 @@
 <definition>
-	<command name="configureDisplaySettingsPG">
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-
-		<if>
-			<isset var="maximumItemsToDisplay" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="displayTemplate" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${enableDisplaySettingsRelatedAssets}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDisplaySettingsRelatedAssets}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<equals arg1="${enableDisplaySettingsComments}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDisplaySettingsComments}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<equals arg1="${enableDisplaySettingsSocialBookmarks}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDisplaySettingsSocialBookmarks}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="SelectFrame" value1="relative=top" />
+	<command name="checkComments">
+		<execute function="Check" locator1="Checkbox#ENABLE_COMMENTS" />
 	</command>
 
-	<command name="configureRSSPG">
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
+	<command name="checkRelatedAssets">
+		<execute function="Check" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
+	</command>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsConfigurationSetupRSS#NAVIGATION_SETUP_RSS" value1="RSS" />
-			</then>
-		</if>
+	<command name="checkRSSSubscriptionCheckbox">
+		<execute function="Check" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" />
+	</command>
 
-		<if>
-			<equals arg1="${enableRSSSubscriptionCheckbox}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableRSSSubscriptionCheckbox}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfigurationSetupRSS#ENABLE_RSS_SUBSCRIPTION_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
+	<command name="checkSocialBookmarks">
+		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
+	</command>
 
-		<if>
-			<isset var="maximumItemsToDisplay" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfigurationSetupRSS#MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
-			</then>
-		</if>
+	<command name="selectDisplayTemplate">
+		<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
+	</command>
 
-		<if>
-			<isset var="displayStyle" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfigurationSetupRSS#RSS_DISPLAY_STYLE_SELECT" value1="${displayStyle}" />
-			</then>
-		</if>
+	<command name="selectMaximumItemstoDisplay">
+		<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
+	</command>
 
-		<if>
-			<isset var="format" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfigurationSetupRSS#FORMAT_SELECT" value1="${format}" />
-			</then>
-		</if>
+	<command name="selectRSSDisplayStyle">
+		<execute function="Select" locator1="Configuration#SETUP_RSS_DISPLAY_STYLE_SELECT" value1="${displayStyle}" />
+	</command>
 
-		<execute function="AssertClick" locator1="PGBlogsConfigurationSetupRSS#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationSetupRSS#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="SelectFrame" value1="relative=top" />
+	<command name="selectRSSFormat">
+		<execute function="Select" locator1="Configuration#SETUP_RSS_FORMAT_SELECT" value1="${format}" />
+	</command>
+
+	<command name="selectRSSMaximumItemsToDisplay">
+		<execute function="Select" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
+	</command>
+
+	<command name="selectScopePG">
+		<var name="key_scopeSelection" value="${scopeSelection}" />
+
+		<execute function="Click#pauseClickAt" locator1="MenuItem#SCOPE" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
 	</command>
 
 	<command name="configureScopeCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
-
-		<var name="key_contentScopeName" value="${contentScopeName}" />
-
-		<execute function="Click" locator1="Home#CONTENT_SCOPE_SELECTOR" />
-		<execute function="AssertClick" locator1="Home#CONTENT_SCOPE_SELECTOR_MENULIST_ITEM" value1="${contentScopeName}" />
-		<execute function="AssertTextEquals" locator1="Home#CONTENT_SCOPE_SELECTOR" value1="${contentScopeName}" />
 	</command>
 
-	<command name="configureScopePG">
-		<if>
-			<equals arg1="${soPage}" arg2="true" />
-			<then>
-				<execute macro="SOPortlet#gotoPortletOptions">
-					<var name="portletName" value="Blogs" />
-					<var name="portletOption" value="Configuration" />
-				</execute>
-			</then>
-			<else>
-				<execute macro="Portlet#gotoPortletOptions">
-					<var name="portletOption" value="Configuration" />
-				</execute>
-			</else>
-		</if>
-
-		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
-
-		<execute function="AssertClick" locator1="PGBlogsConfigurationScope#NAVIGATION_SCOPE" value1="Scope" />
-
-		<var name="key_scopeSelection" value="${scopeSelection}" />
-
-		<execute function="Click#pauseClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" />
-		<execute function="AssertClick#assertPartialTextClickAt" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST_SELECTION" value1="${scopeSelection}" />
-
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
+	<command name="uncheckComments">
+		<execute function="Uncheck" locator1="Checkbox#ENABLE_COMMENTS" />
 	</command>
 
-	<command name="tearDownScope">
-		<execute macro="BlogsConfiguration#selectScopePG">
-			<var name="scopeSelection" value="Liferay" />
-		</execute>
+	<command name="uncheckRelatedAssets">
+		<execute function="Uncheck" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
+	</command>
+
+	<command name="uncheckRSSSubscriptionCheckbox">
+		<execute function="Uncheck" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" />
+	</command>
+
+	<command name="uncheckSocialBookmarks">
+		<execute function="Uncheck" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 	</command>
 	
 	<command name="viewDefaultConfiguration">

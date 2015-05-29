@@ -55,7 +55,7 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//div[contains(@class,'entry-body')]/p[contains(.,'${key_entryContent}')]</td>
+	<td>//div[contains(@class,'entry-body')]//p[contains(.,'${key_entryContent}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.portlet;
 
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.RoleConstants;
@@ -23,12 +24,20 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.BaseControlPanelEntry;
+import com.liferay.portlet.ControlPanelEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Jorge Ferrer
  * @author Sergio González
  * @author Tibor Lipusz
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES},
+	service = ControlPanelEntry.class
+)
 public class GroupPagesControlPanelEntry extends BaseControlPanelEntry {
 
 	@Override

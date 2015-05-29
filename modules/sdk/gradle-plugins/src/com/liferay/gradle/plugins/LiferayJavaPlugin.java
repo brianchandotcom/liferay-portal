@@ -33,6 +33,7 @@ import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
@@ -70,6 +71,7 @@ import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -395,6 +397,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureProperties(Project project) {
+		configureTestResultsDir(project);
 	}
 
 	protected void configureRepositories(Project project) {
@@ -959,6 +962,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void configureTestResultsDir(Project project) {
+		JavaPluginConvention javaPluginConvention = GradleUtil.getConvention(
+			project, JavaPluginConvention.class);
+
+		File testResultsDir = project.file("test-results/unit");
+
+		javaPluginConvention.setTestResultsDirName(
+			FileUtil.relativize(testResultsDir, project.getBuildDir()));
 	}
 
 	protected void configureVersion(

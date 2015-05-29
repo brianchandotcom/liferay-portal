@@ -31,6 +31,7 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.concurrent.Callable;
@@ -235,6 +236,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 	@Override
 	protected void configureProperties(Project project) {
+		super.configureProperties(project);
+
 		configureWebAppDirName(project);
 	}
 

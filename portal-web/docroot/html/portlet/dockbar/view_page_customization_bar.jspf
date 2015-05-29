@@ -39,11 +39,11 @@ boolean modifiedLayout = (layoutSet != null) && layoutSet.isLayoutSetPrototypeLi
 					</div>
 
 					<div class="page-customization-bar-form">
-						<liferay-portlet:actionURL var="resetPrototypeURL">
+						<portlet:actionURL var="resetPrototypeURL">
 							<portlet:param name="struts_action" value="/dockbar/edit_layouts" />
-						</liferay-portlet:actionURL>
+						</portlet:actionURL>
 
-						<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm" portletNamespace="<%= PortalUtil.getPortletNamespace(PortletKeys.LAYOUTS_ADMIN) %>">
+						<aui:form action="<%= resetPrototypeURL %>" cssClass="reset-prototype" name="resetFm">
 							<aui:input name="<%= Constants.CMD %>" type="hidden" value="reset_prototype" />
 							<aui:input name="redirect" type="hidden" value="<%= PortalUtil.getLayoutURL(themeDisplay) %>" />
 							<aui:input name="groupId" type="hidden" value="<%= String.valueOf(themeDisplay.getSiteGroupId()) %>" />

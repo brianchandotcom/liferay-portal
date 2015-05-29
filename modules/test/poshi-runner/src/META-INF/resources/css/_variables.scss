@@ -15,10 +15,10 @@ $line-number-text-color: #222;
 
 $parameter-container-border-color: #777;
 
-$macro-child-container-bg-color: rgba(248, 203, 155, 0.38);
+$macro-child-container-bg-color: transparentize(#F8CB9B, 0.62);
 $macro-child-container-box-shadow: inset 0 0 0 0 darken($macro-child-container-bg-color, 46);
 
-$scoped-line-bg-color: rgba(255, 250, 97, 0.4);
+$scoped-line-bg-color: transparentize(#FFFA61, 0.6);
 
 // Command-logger mode
 
@@ -98,8 +98,8 @@ $button-toggle-bg-color: adjust_hue(darken($button-hover-bg-color, 1), 7);
 $button-error-color: #FF5335;
 
 $global-button-color: #444; // These are the buttons floating on the top right
-$global-button-hover-bg-color: rgba(220, 220, 220, 0.7);
-$global-button-toggle-bg-color: rgba(220, 220, 220, 0.6);
+$global-button-hover-bg-color: transparentize(#DCDCDC, 0.3);
+$global-button-toggle-bg-color: transparentize(#DCDCDC, 0.4);
 
 $command-log-toggle-button-toggle-color: #CCC;
 

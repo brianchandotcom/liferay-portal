@@ -186,7 +186,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		return _configurationPair.getValue();
+		return _portalCacheManagerConfiguration;
 	}
 
 	@Override
@@ -224,10 +224,13 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 		_usingDefault = _configFile.equals(_defaultConfigFile);
 
-		_configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
-			configFileURL, isClusterAware(), _usingDefault, props);
+		ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
+			configurationPair = EhcacheConfigurationHelperUtil.getConfiguration(
+				configFileURL, isClusterAware(), _usingDefault, props);
 
-		_cacheManager = new CacheManager(_configurationPair.getKey());
+		_cacheManager = new CacheManager(configurationPair.getKey());
+
+		_portalCacheManagerConfiguration = configurationPair.getValue();
 
 		_cacheManager.setName(getName());
 
@@ -370,8 +373,7 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	private CacheManager _cacheManager;
 	private String _configFile;
-	private ObjectValuePair<Configuration, PortalCacheManagerConfiguration>
-		_configurationPair;
+	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _defaultConfigFile;
 	private ManagementService _managementService;
 	private boolean _registerCacheConfigurations = true;

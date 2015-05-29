@@ -17,7 +17,7 @@ Export-Package:\
 	com.liferay.portal.plugin,\
 	com.liferay.portal.resiliency.service,\
 	com.liferay.portal.search,\
-	com.liferay.portal.security.ac,\
+	com.liferay.portal.security.access.control,\
 	com.liferay.portal.security.lang,\
 	com.liferay.portal.service.http,\
 	com.liferay.portal.servlet.filters.authverifier,\

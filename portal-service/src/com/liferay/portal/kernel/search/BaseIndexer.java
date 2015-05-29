@@ -947,8 +947,7 @@ public abstract class BaseIndexer implements Indexer {
 
 		Map<String, Query> queries = new HashMap<>();
 
-		Query query = addSearchTerm(
-			searchQuery, searchContext, field, like);
+		Query query = addSearchTerm(searchQuery, searchContext, field, like);
 
 		queries.put(field, query);
 

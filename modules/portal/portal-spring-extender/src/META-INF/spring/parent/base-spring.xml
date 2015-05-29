@@ -23,9 +23,9 @@
 	<bean id="serviceAdvice" class="com.liferay.portal.spring.aop.SkipAdvice">
 		<property name="nextMethodInterceptor" ref="accessControlAdvice" />
 	</bean>
-	<bean id="accessControlAdvice" class="com.liferay.portal.security.ac.AccessControlAdvice">
+	<bean id="accessControlAdvice" class="com.liferay.portal.security.access.control.AccessControlAdvice">
 		<property name="accessControlAdvisor">
-			<bean class="com.liferay.portal.security.ac.AccessControlAdvisorImpl" />
+			<bean class="com.liferay.portal.security.access.control.AccessControlAdvisorImpl" />
 		</property>
 		<property name="nextMethodInterceptor" ref="portalResiliencyAdvice" />
 	</bean>

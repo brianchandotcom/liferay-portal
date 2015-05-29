@@ -23,7 +23,7 @@ Import-Package:\
 	com.liferay.portal.monitoring.statistics.service,\
 	com.liferay.portal.resiliency.service,\
 	com.liferay.portal.search,\
-	com.liferay.portal.security.ac,\
+	com.liferay.portal.security.access.control,\
 	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.configuration,\

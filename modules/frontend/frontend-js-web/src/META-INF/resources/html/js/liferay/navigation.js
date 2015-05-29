@@ -107,7 +107,7 @@ AUI.add(
 						var navBlock = instance.get('navBlock');
 
 						if (navBlock) {
-							instance._updateURL = themeDisplay.getPathMain() + '/layouts_admin/update_page?p_auth=' + Liferay.authToken;
+							instance._updateURL = themeDisplay.getPathMain() + '/portal/edit_layout?p_auth=' + Liferay.authToken;
 
 							var navListSelector = Liferay.Data.NAV_LIST_SELECTOR || '> ul';
 

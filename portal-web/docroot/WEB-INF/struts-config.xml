@@ -27,6 +27,8 @@
 
 		<action path="/portal/api/jsonws" forward="portal.api.jsonws" />
 
+		<action path="/portal/edit_layout" type="com.liferay.portal.action.EditLayoutAction" />
+
 		<action path="/portal/emoticons" forward="/portal/emoticons.jsp" />
 
 		<action path="/portal/error" forward="portal.error" />
@@ -523,8 +525,6 @@
 
 		<action path="/group_pages/sitemap" type="com.liferay.portlet.layoutsadmin.action.SitemapAction" />
 
-		<action path="/group_pages/update_page" type="com.liferay.portlet.layoutsadmin.action.UpdateLayoutAction" />
-
 		<!-- Image Gallery Display -->
 
 		<action path="/image_gallery_display/edit_folder" type="com.liferay.portlet.documentlibrary.action.EditFolderAction">
@@ -602,8 +602,6 @@
 			<forward name="portlet.layouts_admin.edit_layouts" path="portlet.layouts_admin.edit_layouts" />
 			<forward name="portlet.layouts_admin.error" path="portlet.layouts_admin.error" />
 		</action>
-
-		<action path="/layouts_admin/update_page" type="com.liferay.portlet.layoutsadmin.action.UpdateLayoutAction" />
 
 		<!-- Login -->
 

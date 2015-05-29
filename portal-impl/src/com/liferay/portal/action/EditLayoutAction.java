@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.layoutsadmin.action;
+package com.liferay.portal.action;
 
 import com.liferay.portal.LayoutTypeException;
 import com.liferay.portal.events.EventsProcessorUtil;
@@ -52,7 +52,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Ming-Gih Lam
  * @author Hugo Huijser
  */
-public class UpdateLayoutAction extends JSONAction {
+public class EditLayoutAction extends JSONAction {
 
 	@Override
 	public String getJSON(

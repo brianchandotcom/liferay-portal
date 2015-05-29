@@ -94,7 +94,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2281" name="AddTaskAssignedToConnectionCommentBySOUser" priority="5">
+	<command name="AddTaskAssignedToConnectionCommentBySOUser" priority="5">
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -641,7 +641,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2281" name="DeleteTaskAssignedToConnectionCommentBySOUser" priority="5">
+	<command name="DeleteTaskAssignedToConnectionCommentBySOUser" priority="5">
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskDescription" value="Task Description" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -860,7 +860,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2281" name="EditTaskAssignedToConnectionCommentBySOUser" priority="5">
+	<command name="EditTaskAssignedToConnectionCommentBySOUser" priority="5">
 		<var name="taskComment" value="Task Comment" />
 		<var name="taskCommentEdit" value="Task Comment Edit" />
 		<var name="taskDescription" value="Task Description" />

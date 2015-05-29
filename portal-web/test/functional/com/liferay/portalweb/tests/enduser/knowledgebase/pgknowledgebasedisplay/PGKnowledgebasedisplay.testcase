@@ -252,7 +252,7 @@
 		<execute function="AssertElementNotPresent" locator1="//div[contains(@class,'breadcrumb')]//a[contains(.,'Home')]/following-sibling::ul[contains(@class,'breadcrumb')]" />
 	</command>
 
-	<command known-issues="LPS-54435" name="ChangeSocialBookmarkSitesForKBArticle" priority="5">
+	<command name="ChangeSocialBookmarkSitesForKBArticle" priority="5">
 		<property name="hook.plugins.includes" value="social-bookmark-hook" />
 
 		<execute macro="Page#gotoContentCP">

@@ -204,7 +204,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54025" name="ApplicationAdapter" priority="5">
+	<command name="ApplicationAdapter" priority="5">
 		<property name="hook.plugins.includes" value="sample-application-adapter-hook" />
 
 		<execute macro="Page#gotoCP">

@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55465" name="AddWebContentWithGlobalScopeViaCPToLiferayAP" priority="4">
+	<command name="AddWebContentWithGlobalScopeViaCPToLiferayAP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -340,7 +340,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGAssetpublisher#ASSET_ABSTRACT_READ_MORE" value1="Read More" />
 	</command>
 
-	<command known-issues="LPS-55465" name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="4">
+	<command name="AddWebContentWithStructureAndGlobalScopeViaCPToLiferayAP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />

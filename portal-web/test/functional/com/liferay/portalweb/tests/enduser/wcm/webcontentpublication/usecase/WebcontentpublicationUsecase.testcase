@@ -619,7 +619,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55464" name="AssetPublisherFilterAndOrderByFieldType" priority="5">
+	<command name="AssetPublisherFilterAndOrderByFieldType" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1219,7 +1219,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55060,LPS-55061" name="ValidateRelatedAssetsAdvancedSearchFunction" priority="3">
+	<command name="ValidateRelatedAssetsAdvancedSearchFunction" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

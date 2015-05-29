@@ -1445,7 +1445,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2482" name="SearchBookmarksEntrySOSiteOpen" priority="4">
+	<command name="SearchBookmarksEntrySOSiteOpen" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1595,7 +1595,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSiteOpenDeleted" priority="4">
+	<command name="SearchBookmarksEntrySOSiteOpenDeleted" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1707,7 +1707,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2482" name="SearchBookmarksEntrySOSitePrivate" priority="4">
+	<command name="SearchBookmarksEntrySOSitePrivate" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1859,7 +1859,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateDeleted" priority="3">
+	<command name="SearchBookmarksEntrySOSitePrivateDeleted" priority="3">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -1987,7 +1987,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2482" name="SearchBookmarksEntrySOSitePrivateRestricted" priority="4">
+	<command name="SearchBookmarksEntrySOSitePrivateRestricted" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -2139,7 +2139,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePrivateRestrictedDeleted" priority="3">
+	<command name="SearchBookmarksEntrySOSitePrivateRestrictedDeleted" priority="3">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -2267,7 +2267,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2482" name="SearchBookmarksEntrySOSitePublicRestricted" priority="4">
+	<command name="SearchBookmarksEntrySOSitePublicRestricted" priority="4">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />
@@ -2417,7 +2417,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="SOS-2355" name="SearchBookmarksEntrySOSitePublicRestrictedDeleted" priority="3">
+	<command name="SearchBookmarksEntrySOSitePublicRestrictedDeleted" priority="3">
 		<var name="bookmarksEntryDescription" value="Bookmarks Entry Description" />
 		<var name="bookmarksEntryName" value="Bookmarks Entry Name" />
 		<var name="bookmarksEntryUrl" value="http://www.google.com" />

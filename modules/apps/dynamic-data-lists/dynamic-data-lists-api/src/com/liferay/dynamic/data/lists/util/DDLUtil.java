@@ -33,6 +33,10 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
+
 /**
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
@@ -43,7 +47,7 @@ public class DDLUtil {
 	public static DDL getDDL() {
 		PortalRuntimePermission.checkGetBeanProperty(DDLUtil.class);
 
-		return _ddl;
+		return _serviceTracker.getService();
 	}
 
 	public static JSONObject getRecordJSONObject(DDLRecord record)
@@ -134,12 +138,15 @@ public class DDLUtil {
 			recordId, recordSetId, mergeFields, serviceContext);
 	}
 
-	public void setDDL(DDL ddl) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
+	private static ServiceTracker<DDL, DDL> _serviceTracker;
 
-		_ddl = ddl;
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(DDLUtil.class);
+
+		_serviceTracker = new ServiceTracker<>(
+			bundle.getBundleContext(), DDL.class, null);
+
+		_serviceTracker.open();
 	}
-
-	private static DDL _ddl;
 
 }

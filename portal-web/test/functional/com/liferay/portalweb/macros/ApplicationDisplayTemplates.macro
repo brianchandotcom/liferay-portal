@@ -51,11 +51,15 @@
 		<var name="key_adtType" value="RSS" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />
+
 		<execute function="SelectFrame" locator1="PGApplicationdisplaytemplates#ADT_IFRAME" />
+
 		<execute function="AssertClick#assertTextClick" locator1="PGApplicationdisplaytemplates#ADD" value1="Add" />
+
 		<execute function="AssertClick" locator1="PGApplicationdisplaytemplates#ADD_MENULIST_ADT_TEMPLATE" value1="RSS Template" />
 
 		<execute function="Type#mouseOverFocusType" locator1="PGApplicationdisplaytemplatesAdd#NAME_FIELD" value1="RSS Test ADT" />
+
 		<execute function="Click" locator1="PGApplicationdisplaytemplatesAdd#RSS_FEEDS" />
 
 		<execute function="AssertClick" locator1="PGApplicationdisplaytemplatesAdd#SAVE_BUTTON" value1="Save" />

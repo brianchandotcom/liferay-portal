@@ -7,10 +7,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="selectTopFrame">
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="saveConfiguration">
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 
@@ -20,5 +16,9 @@
 
 	<command name="selectConfigurationFrame">
 		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+	</command>
+
+	<command name="selectTopFrame">
+		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 </definition>

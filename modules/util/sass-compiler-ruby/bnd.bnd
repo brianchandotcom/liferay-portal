@@ -3,9 +3,5 @@ Bundle-SymbolicName: com.liferay.sass.compiler.ruby
 Bundle-Version: 1.0.0
 Include-Resource:\
 	classes,\
-	@lib/com.liferay.ruby.gems.jar,\
-	@lib/jruby-complete.jar
+	@lib/com.liferay.ruby.gems.jar
 Main-Class: com.liferay.sass.compiler.ruby.internal.RubySassCompiler
--fixupmessages:\
-	"The default package '.' is not permitted by the Import-Package ...";is:=ignore,\
-	"While setting properties ...";is:=ignore

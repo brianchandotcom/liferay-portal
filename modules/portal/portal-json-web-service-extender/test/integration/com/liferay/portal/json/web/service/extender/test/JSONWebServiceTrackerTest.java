@@ -14,7 +14,6 @@
 
 package com.liferay.portal.json.web.service.extender.test;
 
-import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
@@ -35,6 +34,8 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+
+import org.arquillian.liferay.deploymentscenario.annotations.BndFile;
 
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;

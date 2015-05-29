@@ -163,7 +163,8 @@ public class ReflectionServiceTrackerTest {
 
 		@Test
 		public void
-			shouldInjectNextServiceWithHighestRankingWhenUnregisteringServices() {
+			shouldInjectNextServiceWithHighestRankingWhenUnregisteringServices(
+				) {
 
 			TestInterface testInterface = new TestInterface();
 

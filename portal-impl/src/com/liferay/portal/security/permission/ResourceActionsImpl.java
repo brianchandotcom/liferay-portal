@@ -1031,14 +1031,11 @@ public class ResourceActionsImpl implements ResourceActions {
 
 			// Reference for a portlet to child models
 
-			Set<String> modelResources = _portletModelResources.get(
-				portletName);
+			PortletResourceActionsBag portletResourceActionsBag =
+				getPortletResourceActionsBag(portletName);
 
-			if (modelResources == null) {
-				modelResources = new HashSet<>();
-
-				_portletModelResources.put(portletName, modelResources);
-			}
+			Set<String> modelResources =
+				portletResourceActionsBag.getResources();
 
 			modelResources.add(name);
 
@@ -1055,7 +1052,10 @@ public class ResourceActionsImpl implements ResourceActions {
 				modelResourceElement.elementText("root"));
 
 			if (root) {
-				_portletRootModelResource.put(portletName, name);
+				Map<String, String> portletRootModelResource =
+					portletResourceActionsBag.getPortletRootModelResources();
+
+				portletRootModelResource.put(portletName, name);
 			}
 		}
 

@@ -693,6 +693,8 @@
 					}
 				}
 
+				titleHtml += '<span class="portlet-id-text">Portlet ID: ' + portletId + '</id>';
+
 				Liferay.Util.openWindow(
 					{
 						cache: false,

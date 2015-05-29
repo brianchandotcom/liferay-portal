@@ -221,23 +221,6 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>140</portlet-name>
-		<permissions>
-			<supports>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</supports>
-			<site-member-defaults />
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
-				<action-key>CONFIGURATION</action-key>
-				<action-key>VIEW</action-key>
-			</guest-unsupported>
-		</permissions>
-	</portlet-resource>
-	<portlet-resource>
 		<portlet-name>186</portlet-name>
 		<permissions>
 			<supports>
@@ -288,7 +271,7 @@
 		<model-name>com.liferay.portal.model.Group</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_site_admin_web_portlet_SiteAdminPortlet</portlet-name>
-			<portlet-name>156</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 			<portlet-name>com_liferay_site_admin_web_portlet_SiteSettingsPortlet</portlet-name>
 			<portlet-name>com_liferay_site_memberships_web_portlet_SiteMembershipsPortlet</portlet-name>
 		</portlet-ref>
@@ -353,7 +336,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.LayoutBranch</model-name>
 		<portlet-ref>
-			<portlet-name>156</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>3</weight>
 		<permissions>
@@ -374,7 +357,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.LayoutSetBranch</model-name>
 		<portlet-ref>
-			<portlet-name>156</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>4</weight>
 		<permissions>

@@ -72,7 +72,7 @@ public class EditLayoutRevisionAction extends PortletAction {
 			if (e instanceof PrincipalException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				setForward(actionRequest, "portlet.layouts_admin.error");
+				setForward(actionRequest, "portlet.export_import.error");
 			}
 			else if (e instanceof SystemException) {
 				SessionErrors.add(actionRequest, e.getClass(), e);

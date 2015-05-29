@@ -18,7 +18,7 @@
 
 <%
 DLItemSelectorCriterion dlItemSelectorCriterion = (DLItemSelectorCriterion)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_CRITERION);
-String itemSelectedEventName = HtmlUtil.escape(ParamUtil.getString(request, DLItemSelectorView.ITEM_SELECTED_EVENT_NAME));
+String itemSelectedEventName = GetterUtil.getString(request.getAttribute(DLItemSelectorView.ITEM_SELECTED_EVENT_NAME));
 PortletURL portletURL = (PortletURL)request.getAttribute(DLItemSelectorView.PORTLET_URL);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
@@ -376,7 +376,7 @@ if (folderId > 0) {
 					</c:if>
 
 					returnType : '<%= FileEntry.class.getName() %>',
-					url : event.target.getAttribute('data-url')
+					value : event.target.getAttribute('data-url')
 				}
 			);
 

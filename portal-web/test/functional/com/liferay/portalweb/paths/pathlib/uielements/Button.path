@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACCEPT</td>
+	<td>//button[contains(.,'Accept')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD</td>
 	<td>//a[contains(.,'Add')]|//button[contains(.,'Add')]</td>
 	<td></td>

@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_LOGIN</td>
+	<td>//span[contains(.,'Google')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MOVE_TO_THE_RECYCLING_BIN</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Move to the Recycle Bin')]</td>
 	<td></td>

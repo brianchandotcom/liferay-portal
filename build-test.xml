@@ -4249,27 +4249,7 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-so-plugins">
-		<if>
-			<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
-
-app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<contains string="${liferay.portal.bundle}" substring="6.2.10" />
-				<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
-				<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
-			</or>
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
-
-app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
-			</then>
-		</if>
+		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
 		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
 
@@ -4436,30 +4416,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
 			<then>
-				<if>
-					<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-					<then>
-						<echo file="app.server.${user.name}.properties" append="true">
-							app.server.tomcat.version=7.0.27
-						</echo>
-
-						<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
-					</then>
-					<elseif>
-						<or>
-							<contains string="${liferay.portal.bundle}" substring="6.2.10" />
-							<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
-							<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
-						</or>
-						<then>
-							<echo file="app.server.${user.name}.properties" append="true">
-								app.server.tomcat.version=7.0.42
-							</echo>
-
-							<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
-						</then>
-					</elseif>
-				</if>
+				<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
 				<antcall target="prepare-test-bundle">
 					<param name="app.server.type" value="tomcat" />

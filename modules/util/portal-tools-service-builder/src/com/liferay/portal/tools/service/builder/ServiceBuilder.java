@@ -80,6 +80,10 @@ import java.io.InputStream;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -98,8 +102,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.commons.io.FileUtils;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -523,7 +525,7 @@ public class ServiceBuilder {
 
 		File tempFile = new File(_TMP_DIR, "ServiceBuilder.temp");
 
-		FileUtils.write(tempFile, content);
+		_write(tempFile, content);
 
 		// Beautify
 
@@ -637,10 +639,8 @@ public class ServiceBuilder {
 
 		// Write file if and only if the file has changed
 
-		if (!file.exists() ||
-			!content.equals(FileUtils.readFileToString(file))) {
-
-			FileUtils.write(file, content);
+		if (!file.exists() || !content.equals(_read(file))) {
+			_write(file, content);
 
 			modifiedFileNames.add(file.getAbsolutePath());
 
@@ -1293,7 +1293,7 @@ public class ServiceBuilder {
 						ListUtil.toString(_ejbList, Entity.NAME_ACCESSOR));
 			}
 
-			FileUtils.write(refFile, refContent);
+			_write(refFile, refContent);
 
 			useTempFile = true;
 		}
@@ -1988,6 +1988,20 @@ public class ServiceBuilder {
 		return SAXReaderFactory.getSAXReader(null, false, false);
 	}
 
+	private static void _move(File source, File destination)
+		throws IOException {
+
+		Files.move(source.toPath(), destination.toPath());
+	}
+
+	private static String _read(File file) throws IOException {
+		String s = new String(
+			Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+	}
+
 	private static URL _readJalopyXmlFromClassLoader() {
 		ClassLoader classLoader = ServiceBuilder.class.getClassLoader();
 
@@ -2083,6 +2097,18 @@ public class ServiceBuilder {
 		}
 
 		return content;
+	}
+
+	private static void _touch(File file) throws IOException {
+		Files.createFile(file.toPath());
+	}
+
+	private static void _write(File file, String s) throws IOException {
+		Path path = file.toPath();
+
+		Files.createDirectories(path.getParent());
+
+		Files.write(path, s.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private void _addIndexMetadata(
@@ -2246,7 +2272,7 @@ public class ServiceBuilder {
 			}
 
 			if (exception.startsWith("NoSuch")) {
-				String content = FileUtils.readFileToString(exceptionFile);
+				String content = _read(exceptionFile);
 
 				if (!content.contains("NoSuchModelException")) {
 					content = StringUtil.replace(
@@ -2361,7 +2387,7 @@ public class ServiceBuilder {
 			_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 
 		if (modelFile.exists()) {
-			content = FileUtils.readFileToString(modelFile);
+			content = _read(modelFile);
 
 			content = content.replaceAll(
 				"extends\\s+" + entity.getName() +
@@ -2483,10 +2509,10 @@ public class ServiceBuilder {
 				"<hibernate-mapping default-lazy=\"false\" auto-import=\"false\">\n" +
 				"</hibernate-mapping>";
 
-			FileUtils.write(xmlFile, xml);
+			_write(xmlFile, xml);
 		}
 
-		String oldContent = FileUtils.readFileToString(xmlFile);
+		String oldContent = _read(xmlFile);
 		String newContent = _fixHbmXml(oldContent);
 
 		int firstImport = newContent.indexOf(
@@ -2651,10 +2677,10 @@ public class ServiceBuilder {
 				"<model-hints>\n" +
 				"</model-hints>";
 
-			FileUtils.write(xmlFile, xml);
+			_write(xmlFile, xml);
 		}
 
-		String oldContent = FileUtils.readFileToString(xmlFile);
+		String oldContent = _read(xmlFile);
 		String newContent = oldContent;
 
 		int firstModel = newContent.indexOf(
@@ -2895,8 +2921,7 @@ public class ServiceBuilder {
 		long buildDate = System.currentTimeMillis();
 
 		if (propsFile.exists()) {
-			Properties properties = PropertiesUtil.load(
-				FileUtils.readFileToString(propsFile));
+			Properties properties = PropertiesUtil.load(_read(propsFile));
 
 			if (!_buildNumberIncrement) {
 				buildDate = GetterUtil.getLong(
@@ -2980,7 +3005,7 @@ public class ServiceBuilder {
 			return;
 		}
 
-		String content = FileUtils.readFileToString(outputFile);
+		String content = _read(outputFile);
 		String newContent = content;
 
 		int x = content.indexOf("<bean ");
@@ -3458,10 +3483,10 @@ public class ServiceBuilder {
 			"</beans>";
 
 		if (!xmlFile.exists()) {
-			FileUtils.write(xmlFile, xml);
+			_write(xmlFile, xml);
 		}
 
-		String oldContent = FileUtils.readFileToString(xmlFile);
+		String oldContent = _read(xmlFile);
 
 		if (Validator.isNotNull(_pluginName) &&
 			oldContent.contains("DOCTYPE beans PUBLIC")) {
@@ -3518,7 +3543,7 @@ public class ServiceBuilder {
 		File sqlFile = new File(_sqlDirName + "/" + _sqlIndexesFileName);
 
 		if (!sqlFile.exists()) {
-			FileUtils.touch(sqlFile);
+			_touch(sqlFile);
 		}
 
 		Map<String, List<IndexMetadata>> indexMetadataMap = new TreeMap<>();
@@ -3637,10 +3662,10 @@ public class ServiceBuilder {
 		throws IOException {
 
 		if (!sqlFile.exists()) {
-			FileUtils.touch(sqlFile);
+			_touch(sqlFile);
 		}
 
-		String content = FileUtils.readFileToString(sqlFile);
+		String content = _read(sqlFile);
 
 		int x = content.indexOf(
 			_SQL_CREATE_TABLE + entityMapping.getTable() + " (");
@@ -3705,7 +3730,7 @@ public class ServiceBuilder {
 		File sqlFile = new File(_sqlDirName + "/" + _sqlSequencesFileName);
 
 		if (!sqlFile.exists()) {
-			FileUtils.touch(sqlFile);
+			_touch(sqlFile);
 		}
 
 		Set<String> sequenceSQLs = new TreeSet<>();
@@ -3788,7 +3813,7 @@ public class ServiceBuilder {
 		File sqlFile = new File(_sqlDirName + "/" + _sqlFileName);
 
 		if (!sqlFile.exists()) {
-			FileUtils.touch(sqlFile);
+			_touch(sqlFile);
 		}
 
 		for (int i = 0; i < _ejbList.size(); i++) {
@@ -3826,7 +3851,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		String content = FileUtils.readFileToString(sqlFile);
+		String content = _read(sqlFile);
 
 		writeFileRaw(sqlFile, content.trim(), _modifiedFileNames);
 	}
@@ -3837,10 +3862,10 @@ public class ServiceBuilder {
 		throws IOException {
 
 		if (!sqlFile.exists()) {
-			FileUtils.touch(sqlFile);
+			_touch(sqlFile);
 		}
 
-		String content = FileUtils.readFileToString(sqlFile);
+		String content = _read(sqlFile);
 
 		int x = content.indexOf(_SQL_CREATE_TABLE + entity.getTable() + " (");
 		int y = content.indexOf(");", x);
@@ -3853,7 +3878,7 @@ public class ServiceBuilder {
 					content.substring(0, x) + newCreateTableString +
 						content.substring(y + 2);
 
-				FileUtils.write(sqlFile, content);
+				_write(sqlFile, content);
 			}
 		}
 		else if (addMissingTables) {
@@ -4576,7 +4601,7 @@ public class ServiceBuilder {
 				_outputPath + "/model/impl/" + entity.getName() + "Impl.java");
 		}
 
-		String content = FileUtils.readFileToString(modelFile);
+		String content = _read(modelFile);
 
 		Matcher matcher = _getterPattern.matcher(content);
 
@@ -4819,9 +4844,9 @@ public class ServiceBuilder {
 				"FinderImpl.java");
 
 		if (originalFinderImpl.exists()) {
-			FileUtils.moveFile(originalFinderImpl, newFinderImpl);
+			_move(originalFinderImpl, newFinderImpl);
 
-			String content = FileUtils.readFileToString(newFinderImpl);
+			String content = _read(newFinderImpl);
 
 			StringBundler sb = new StringBundler();
 

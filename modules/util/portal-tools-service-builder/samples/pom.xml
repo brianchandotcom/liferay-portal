@@ -18,15 +18,15 @@
 				<artifactId>com.liferay.portal.tools.service.builder</artifactId>
 				<version>1.0.0</version>
 				<configuration>
-					<apiDir>../tmp/api</apiDir>
+					<apiDirName>../tmp/api</apiDirName>
 					<hbmFileName>../tmp/src/META-INF/portal-hbm.xml</hbmFileName>
-					<implDir>../tmp/src</implDir>
+					<implDirName>../tmp/src</implDirName>
 					<inputFileName>service.xml</inputFileName>
 					<modelHintsFileName>../tmp/src/META-INF/portal-model-hints.xml</modelHintsFileName>
-					<resourcesDir>../tmp/src</resourcesDir>
+					<resourcesDirName>../tmp/src</resourcesDirName>
 					<springFileName>../tmp/src/META-INF/portal-spring.xml</springFileName>
-					<sqlDir>../tmp/sql</sqlDir>
-					<testDir>../tmp/test/integration</testDir>
+					<sqlDirName>../tmp/sql</sqlDirName>
+					<testDirName>../tmp/test/integration</testDirName>
 				</configuration>
 			</plugin>
 		</plugins>

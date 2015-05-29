@@ -17,7 +17,6 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="commons-io" org="commons-io" rev="2.1" />
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
 		<dependency conf="default->master" name="dom4j" org="dom4j" rev="1.6.1" />
 		<dependency conf="default->master" name="jalopy" org="jalopy" rev="1.5rc3" />

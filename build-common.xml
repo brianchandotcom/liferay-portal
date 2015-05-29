@@ -1122,7 +1122,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		<attribute name="test.type" />
 
 		<sequential>
-			<ivy:resolve log="download-only">
+			<ivy:resolve log="${ivy.log.level}">
 				<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.8.Final" />
 				<dependency name="com.liferay.arquillian.extension" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 				<exclude org="junit" />
@@ -1459,7 +1459,7 @@ rerun your task.
 			</sequential>
 		</for>
 
-		<ivy:resolve log="quiet">
+		<ivy:resolve log="${ivy.log.level}">
 			<dependency conf="default" name="sonar-ant-task" org="org.codehaus.sonar-plugins" rev="2.1" />
 		</ivy:resolve>
 

@@ -885,10 +885,6 @@ public abstract class BaseTrashHandlerTestCase {
 				parentTrashHandler.getTrashContainerModelsCount(
 					(Long)parentBaseModel.getPrimaryKeyObj()));
 		}
-
-		if (isAssetableModel()) {
-			Assert.assertFalse(isAssetEntryVisible(baseModel));
-		}
 	}
 
 	@Test
@@ -1098,6 +1094,25 @@ public abstract class BaseTrashHandlerTestCase {
 			if (isAssetableModel()) {
 				Assert.assertTrue(isAssetEntryVisible(baseModel));
 			}
+		}
+	}
+
+	@Test
+	public void testTrashBaseModelAndParentIsNotVisible() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 	}
 

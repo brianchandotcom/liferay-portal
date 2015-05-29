@@ -99,6 +99,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>GOOGLE_CLIENT_ID</td>
+	<td>//input[contains(@id,'google-client-id')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GOOGLE_CLIENT_SECRET</td>
+	<td>//input[contains(@id,'google-client-secret')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAIL_DOMAIN_FIELD</td>
 	<td>//input[contains(@id,'mx') and contains(@class,'input-text')]</td>
 	<td></td>

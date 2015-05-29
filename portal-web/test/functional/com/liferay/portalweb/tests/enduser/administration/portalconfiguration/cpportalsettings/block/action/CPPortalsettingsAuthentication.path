@@ -50,6 +50,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NAVIGATION_GOOGLE</td>
+	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Google')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAVIGATION_NTLM</td>
 	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'NTLM')]</td>
 	<td></td>

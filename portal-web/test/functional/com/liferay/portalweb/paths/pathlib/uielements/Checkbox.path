@@ -74,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_GOOGLE_AUTHENTICATION</td>
+	<td>//input[contains(@id,'google-auth')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_PAGE_RATINGS</td>
 	<td>//label[contains(.,'Enable Page Ratings')]//input[@type='checkbox']</td>
 	<td></td>

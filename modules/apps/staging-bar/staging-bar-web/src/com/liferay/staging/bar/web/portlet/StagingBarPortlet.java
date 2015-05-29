@@ -51,4 +51,70 @@ import javax.portlet.Portlet;
 )
 public class StagingBarPortlet extends MVCPortlet {
 
+	protected void deleteLayoutBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId");
+
+		long currentLayoutBranchId = ParamUtil.getLong(
+			actionRequest, "currentLayoutBranchId");
+
+		LayoutBranchServiceUtil.deleteLayoutBranch(layoutBranchId);
+
+		SessionMessages.add(actionRequest, "pageVariationDeleted");
+
+		if (layoutBranchId == currentLayoutBranchId) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE);
+		}
+	}
+
+	protected void selectLayoutBranch(ActionRequest actionRequest) {
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId");
+
+		StagingUtil.setRecentLayoutBranchId(
+			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
+	}
+
+	protected void updateLayoutBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutBranchId = ParamUtil.getLong(
+			actionRequest, "layoutBranchId");
+
+		long layoutRevisionId = ParamUtil.getLong(
+			actionRequest, "copyLayoutRevisionId");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		if (layoutBranchId <= 0) {
+			LayoutBranchServiceUtil.addLayoutBranch(
+				layoutRevisionId, name, description, false, serviceContext);
+
+			SessionMessages.add(actionRequest, "pageVariationAdded");
+		}
+		else {
+			LayoutBranchServiceUtil.updateLayoutBranch(
+				layoutBranchId, name, description, serviceContext);
+
+			SessionMessages.add(actionRequest, "pageVariationUpdated");
+		}
+	}
+
 }

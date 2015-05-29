@@ -127,7 +127,7 @@ public class LiferayExtension {
 			return null;
 		}
 
-		return appServerParentDir.getParentFile();
+		return appServerParentDir;
 	}
 
 	public String getPortalVersion() {

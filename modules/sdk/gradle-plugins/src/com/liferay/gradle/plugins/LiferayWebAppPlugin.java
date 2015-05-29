@@ -243,7 +243,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 		File classesDir = project.file("docroot/WEB-INF/classes");
 		File srcDir = project.file("docroot/WEB-INF/src");
 
-		configureSourceSetMain(project, classesDir, srcDir);
+		configureSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
 	@Override

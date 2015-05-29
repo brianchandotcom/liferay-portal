@@ -528,7 +528,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		File classesDir = new File(docrootDir, "WEB-INF/classes");
 		File srcDir = new File(docrootDir, "WEB-INF/src");
 
-		configureSourceSetMain(project, classesDir, srcDir);
+		configureSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
 	protected void configureTaskAutoUpdateXml(Project project) {
@@ -619,7 +620,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		deployTask.from(task.getOutputs());
 	}
 
+	@Override
 	protected void configureTaskJar(Project project) {
+		super.configureTaskJar(project);
+
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		configureTaskJarArchiveName(jar);
@@ -651,7 +655,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.configureTasks(project, liferayExtension);
 
 		configureTaskBuildXSD(project);
-		configureTaskJar(project);
 
 		configureTaskAutoUpdateXml(project);
 	}

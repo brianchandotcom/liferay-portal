@@ -97,6 +97,45 @@ public class StagingBarPortlet extends MVCPortlet {
 		}
 	}
 
+	protected void deleteLayoutSetBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
+		long currentLayoutBranchId = ParamUtil.getLong(
+			actionRequest, "currentLayoutBranchId");
+
+		if (layoutSetBranchId == currentLayoutBranchId) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE);
+		}
+
+		LayoutSetBranchServiceUtil.deleteLayoutSetBranch(layoutSetBranchId);
+
+		SessionMessages.add(actionRequest, "sitePageVariationDeleted");
+	}
+
+	protected void mergeLayoutSetBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
+		long mergeLayoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "mergeLayoutSetBranchId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		LayoutSetBranchServiceUtil.mergeLayoutSetBranch(
+			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
+
+		SessionMessages.add(actionRequest, "sitePageVariationMerged");
+	}
+
 	protected void selectLayoutBranch(ActionRequest actionRequest) {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
@@ -112,6 +151,33 @@ public class StagingBarPortlet extends MVCPortlet {
 
 		StagingUtil.setRecentLayoutBranchId(
 			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
+	}
+
+	protected void selectLayoutSetBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			groupId, privateLayout);
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
+		// Ensure layout set branch exists
+
+		LayoutSetBranch layoutSetBranch =
+			LayoutSetBranchLocalServiceUtil.getLayoutSetBranch(
+				layoutSetBranchId);
+
+		StagingUtil.setRecentLayoutSetBranchId(
+			request, layoutSet.getLayoutSetId(),
+			layoutSetBranch.getLayoutSetBranchId());
 	}
 
 	protected void updateLayoutBranch(ActionRequest actionRequest)
@@ -210,6 +276,39 @@ public class StagingBarPortlet extends MVCPortlet {
 				newLayoutRevision.getLayoutSetBranchId(),
 				newLayoutRevision.getPlid(),
 				newLayoutRevision.getLayoutRevisionId());
+		}
+	}
+
+	protected void updateLayoutSetBranch(ActionRequest actionRequest)
+		throws Exception {
+
+		long layoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "layoutSetBranchId");
+
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		long copyLayoutSetBranchId = ParamUtil.getLong(
+			actionRequest, "copyLayoutSetBranchId",
+			LayoutSetBranchConstants.ALL_BRANCHES);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
+		if (layoutSetBranchId <= 0) {
+			LayoutSetBranchServiceUtil.addLayoutSetBranch(
+				groupId, privateLayout, name, description, false,
+				copyLayoutSetBranchId, serviceContext);
+
+			SessionMessages.add(actionRequest, "sitePageVariationAdded");
+		}
+		else {
+			LayoutSetBranchServiceUtil.updateLayoutSetBranch(
+				groupId, layoutSetBranchId, name, description, serviceContext);
+
+			SessionMessages.add(actionRequest, "sitePageVariationUpdated");
 		}
 	}
 

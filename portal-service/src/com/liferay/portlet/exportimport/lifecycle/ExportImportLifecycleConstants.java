@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lar.lifecycle;
+package com.liferay.portlet.exportimport.lifecycle;
 
 /**
  * @author Daniel Kocsis

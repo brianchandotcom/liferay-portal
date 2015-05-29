@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
-import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.ThumbnailCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -129,11 +127,8 @@ public class ExportImportHelperUtilTest extends PowerMockito {
 			RandomTestUtil.randomString() + ".txt", ContentTypes.TEXT_PLAIN,
 			RandomTestUtil.randomBytes(), serviceContext);
 
-		Repository repository = RepositoryProviderUtil.getRepository(
-			_fileEntry.getRepositoryId());
-
-		ThumbnailCapability thumbnailCapability = repository.getCapability(
-			ThumbnailCapability.class);
+		ThumbnailCapability thumbnailCapability =
+			_fileEntry.getRepositoryCapability(ThumbnailCapability.class);
 
 		_fileEntry = thumbnailCapability.setLargeImageId(
 			_fileEntry, _fileEntry.getFileEntryId());

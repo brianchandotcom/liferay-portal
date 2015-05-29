@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<category name="com.liferay.journal">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.journal.lar">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.journal.service.impl.JournalContentSearchLocalServiceImpl">
+		<priority value="INFO" />
+	</category>
+
+	<category name="com.liferay.journal.util.JournalContentUtil">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.journal.util.JournalUtil">
+		<priority value="ERROR" />
+	</category>
+
+	<category name="com.liferay.journal.util.PropertiesTransformerListener">
+		<priority value="WARN" />
+	</category>
+
+	<category name="com.liferay.journal.util.RegexTransformerUtil">
+		<priority value="INFO" />
+	</category>
+</log4j:configuration>

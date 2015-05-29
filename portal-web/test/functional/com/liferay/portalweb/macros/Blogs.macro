@@ -24,7 +24,7 @@
 	</command>
 
 	<command name="addEntry">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -36,7 +36,7 @@
 	</command>
 
 	<command name="addScheduled">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -92,7 +92,7 @@
 	</command>
 
 	<command name="addWithCategory">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -111,7 +111,7 @@
 	</command>
 
 	<command name="addWithCustomAbstract">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -145,7 +145,7 @@
 	</command>
 
 	<command name="addWithInvalidContent">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryInvalidContent}" />
@@ -157,7 +157,7 @@
 	</command>
 
 	<command name="addWithInvalidTitle">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -169,7 +169,7 @@
 	</command>
 
 	<command name="addWithInvalidTitleLength">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -183,7 +183,7 @@
 	</command>
 
 	<command name="addWithTag">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -215,7 +215,7 @@
 	</command>
 
 	<command name="addWithWorkflow">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />

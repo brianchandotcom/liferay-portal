@@ -6,6 +6,7 @@ liferay {
 
 File appServerClassesPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/classes")
 File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
+File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
 File sdkDir = rootProject.file("../tools/sdk")
 
 repositories {
@@ -14,6 +15,10 @@ repositories {
 
 configurations {
 	portal
+
+	portalTest {
+		extendsFrom portal
+	}
 }
 
 dependencies {
@@ -21,11 +26,17 @@ dependencies {
 	portal fileTree(dir: appServerLibPortalDir, include: "*.jar")
 	portal fileTree(dir: liferay.appServerLibGlobalDir, include: "*.jar")
 	portal fileTree(dir: new File(sdkDir, "lib"), includes: ["activation.jar", "javax.servlet-api.jar", "jsp-api.jar", "net.sf.jargs.jar", "qdox.jar"])
+
+	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
 }
 
 sourceSets {
 	main {
-		compileClasspath = configurations.compile + configurations.portal
+		compileClasspath += configurations.portal
+	}
+
+	testIntegration {
+		compileClasspath += configurations.portalTest
 	}
 }
 

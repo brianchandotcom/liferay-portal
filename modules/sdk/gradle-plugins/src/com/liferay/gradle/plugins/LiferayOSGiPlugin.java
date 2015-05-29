@@ -620,7 +620,10 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		deployTask.from(task.getOutputs());
 	}
 
+	@Override
 	protected void configureTaskJar(Project project) {
+		super.configureTaskJar(project);
+
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		configureTaskJarArchiveName(jar);
@@ -652,7 +655,6 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		super.configureTasks(project, liferayExtension);
 
 		configureTaskBuildXSD(project);
-		configureTaskJar(project);
 
 		configureTaskAutoUpdateXml(project);
 	}

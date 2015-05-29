@@ -108,6 +108,16 @@ public class GradleUtil {
 		return extensionContainer.create(name, clazz, project);
 	}
 
+	public static SourceSet addSourceSet(Project project, String name) {
+		JavaPluginConvention javaPluginConvention = getConvention(
+			project, JavaPluginConvention.class);
+
+		SourceSetContainer sourceSetContainer =
+			javaPluginConvention.getSourceSets();
+
+		return sourceSetContainer.create(name);
+	}
+
 	public static <T extends Task> T addTask(
 		Project project, String name, Class<T> clazz) {
 

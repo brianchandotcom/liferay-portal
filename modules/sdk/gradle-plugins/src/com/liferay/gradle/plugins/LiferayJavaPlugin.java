@@ -86,6 +86,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
 		"com.liferay.adddefaultdependencies";
 
+	public static final String ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
+		"com.liferay.addtestdefaultdependencies";
+
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
@@ -97,6 +100,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
+
+	public static final String TEST_INTEGRATION_SOURCE_SET_NAME =
+		"testIntegration";
 
 	@Override
 	public void apply(Project project) {
@@ -171,6 +177,52 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected LiferayExtension addLiferayExtension(Project project) {
 		return GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayExtension.class);
+	}
+
+	protected SourceSet addSourceSetTestIntegration(Project project) {
+		SourceSet testIntegrationSourceSet = GradleUtil.addSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		Configuration testIntegrationCompileConfiguration =
+			GradleUtil.getConfiguration(
+				project,
+				testIntegrationSourceSet.getCompileConfigurationName());
+
+		Configuration compileConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.COMPILE_CONFIGURATION_NAME);
+		Configuration testCompileConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME);
+
+		testIntegrationCompileConfiguration.extendsFrom(
+			compileConfiguration, testCompileConfiguration);
+
+		Configuration testIntegrationRuntimeConfiguration =
+			GradleUtil.getConfiguration(
+				project,
+				testIntegrationSourceSet.getRuntimeConfigurationName());
+
+		Configuration runtimeConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.RUNTIME_CONFIGURATION_NAME);
+		Configuration testRuntimeConfiguration = GradleUtil.getConfiguration(
+			project, JavaPlugin.TEST_RUNTIME_CONFIGURATION_NAME);
+
+		testIntegrationRuntimeConfiguration.extendsFrom(
+			runtimeConfiguration, testRuntimeConfiguration,
+			testIntegrationCompileConfiguration);
+
+		SourceSet mainSourceSet = GradleUtil.getSourceSet(
+			project, SourceSet.MAIN_SOURCE_SET_NAME);
+
+		testIntegrationSourceSet.setCompileClasspath(
+			project.files(
+				mainSourceSet.getOutput(),
+				testIntegrationCompileConfiguration));
+		testIntegrationSourceSet.setRuntimeClasspath(
+			project.files(
+				testIntegrationSourceSet.getOutput(), mainSourceSet.getOutput(),
+				testIntegrationRuntimeConfiguration));
+
+		return testIntegrationSourceSet;
 	}
 
 	protected BuildCssTask addTaskBuildCss(Project project) {
@@ -309,6 +361,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void configureDependencies(Project project) {
 		configureDependenciesCompile(project);
+		configureDependenciesTestCompile(project);
 	}
 
 	protected void configureDependenciesCompile(Project project) {
@@ -322,6 +375,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
 				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				dependencyNotation);
+		}
+	}
+
+	protected void configureDependenciesTestCompile(Project project) {
+		boolean addTestDefaultDependencies = getProperty(
+			project, ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+
+		if (!addTestDefaultDependencies) {
+			return;
+		}
+
+		for (String dependencyNotation : _TEST_COMPILE_DEPENDENCY_NOTATIONS) {
+			GradleUtil.addDependency(
+				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
 		}
 	}
@@ -376,8 +444,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureSourceSets(Project project) {
+		addSourceSetTestIntegration(project);
+
 		configureSourceSetMain(project);
 		configureSourceSetTest(project);
+		configureSourceSetTestIntegration(project);
 	}
 
 	protected void configureSourceSetTest(Project project) {
@@ -386,6 +457,14 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureSourceSet(
 			project, SourceSet.TEST_SOURCE_SET_NAME, classesDir, srcDir);
+	}
+
+	protected void configureSourceSetTestIntegration(Project project) {
+		File classesDir = project.file("test-classes/integration");
+		File srcDir = project.file("test/integration");
+
+		configureSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
 	protected void configureTaskBuildCss(
@@ -826,6 +905,25 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		formatXMLTask.include("**/*.xsd");
 	}
 
+	protected void configureTaskJar(Project project) {
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		configureTaskJarDependsOn(jar);
+	}
+
+	protected void configureTaskJarDependsOn(Jar jar) {
+		Project project = jar.getProject();
+
+		if (isTestProject(project)) {
+			jar.dependsOn(JavaPlugin.TEST_CLASSES_TASK_NAME);
+
+			SourceSet sourceSet = GradleUtil.getSourceSet(
+				project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+			jar.dependsOn(sourceSet.getClassesTaskName());
+		}
+	}
+
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -836,6 +934,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskDeploy(project, liferayExtension);
 		configureTaskFormatWSDL(project);
 		configureTaskFormatXSD(project);
+		configureTaskJar(project);
 		configureTasksDirectDeploy(project);
 	}
 
@@ -922,6 +1021,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected File getServiceBaseDir(Project project) {
 		return project.getProjectDir();
+	}
+
+	protected boolean isTestProject(Project project) {
+		String projectName = project.getName();
+
+		if (projectName.endsWith("-test")) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected static final String[] COMPILE_DEPENDENCY_NOTATIONS = {
@@ -1023,5 +1132,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	private static final String _REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
+	private static final String[] _TEST_COMPILE_DEPENDENCY_NOTATIONS = {
+		"junit:junit:4.12", "org.mockito:mockito-all:1.9.5",
+		"org.powermock:powermock-api-mockito:1.6.1",
+		"org.powermock:powermock-api-support:1.6.1",
+		"org.powermock:powermock-core:1.6.1",
+		"org.powermock:powermock-module-junit4:1.6.1",
+		"org.powermock:powermock-module-junit4-common:1.6.1",
+		"org.powermock:powermock-reflect:1.6.1",
+		"org.springframework:spring-test:3.0.7.RELEASE"
+	};
 
 }

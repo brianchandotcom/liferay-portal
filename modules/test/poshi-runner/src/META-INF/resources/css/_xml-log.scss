@@ -42,8 +42,9 @@
 	border-left: 1px solid $child-container-left-border-color;
 	height: 0;
 	list-style-type: none;
+	margin-left: 20px;
 	overflow: visible;
-	padding: 1px 0 1px 20px;
+	padding: 1px 0;
 
 	&.root-container {
 		border-width: 0;

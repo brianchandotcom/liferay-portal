@@ -18,7 +18,7 @@
 		</if>
 
 		<if>
-			<equals arg1="${databaseName}" arg2="lportal1" />
+			<isset var="databaseName" />
 			<then>
 				<var method="StringUtil#replace('${jdbcURL}', 'lportal', '${databaseName}')" name="jdbcURL" />
 			</then>

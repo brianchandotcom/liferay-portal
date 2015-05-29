@@ -16,7 +16,6 @@ package com.liferay.portal.servlet.filters.dynamiccss;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ContextPathUtil;
@@ -34,13 +33,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
-import com.liferay.portal.scripting.ruby.RubyExecutor;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.sass.compiler.jni.JniSassCompiler;
+import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
+import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
 
@@ -63,26 +63,22 @@ import org.apache.commons.lang.time.StopWatch;
  */
 public class DynamicCSSUtil {
 
-	public static void init() {
+	public static void init(ServletContext servletContext) {
 		try {
 			if (_initialized) {
 				return;
 			}
 
 			try {
-				_jniSassCompiler = new JniSassCompiler();
+				_sassCompiler = new JniSassCompiler();
 			}
 			catch (Throwable t) {
-				RubyExecutor rubyExecutor = new RubyExecutor();
+				File sassTempDir = _getSassTempDir(servletContext);
 
-				_scriptingContainer = rubyExecutor.getScriptingContainer();
-
-				String rubyScript = StringUtil.read(
-					ClassLoaderUtil.getPortalClassLoader(),
-					"com/liferay/portal/servlet/filters/dynamiccss" +
-						"/dependencies/main.rb");
-
-				_scriptObject = _scriptingContainer.runScriptlet(rubyScript);
+				_sassCompiler = new RubySassCompiler(
+					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
+					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD,
+					sassTempDir.getCanonicalPath());
 			}
 
 			_initialized = true;
@@ -182,8 +178,7 @@ public class DynamicCSSUtil {
 			}
 			else {
 				parsedContent = _parseSass(
-					servletContext, request, themeDisplay, theme, resourcePath,
-					content);
+					servletContext, request, themeDisplay, theme, content);
 			}
 
 			if (PortalUtil.isRightToLeft(request) &&
@@ -206,7 +201,7 @@ public class DynamicCSSUtil {
 
 					String parsedRtlCustomContent = _parseSass(
 						servletContext, request, themeDisplay, theme,
-						resourcePath, rtlCustomContent);
+						rtlCustomContent);
 
 					parsedContent += parsedRtlCustomContent;
 				}
@@ -521,8 +516,7 @@ public class DynamicCSSUtil {
 
 	private static String _parseSass(
 			ServletContext servletContext, HttpServletRequest request,
-			ThemeDisplay themeDisplay, Theme theme, String resourcePath,
-			String content)
+			ThemeDisplay themeDisplay, Theme theme, String content)
 		throws Exception {
 
 		String portalWebDir = PortalUtil.getPortalWebDir();
@@ -546,26 +540,13 @@ public class DynamicCSSUtil {
 			}
 		}
 
-		if (_jniSassCompiler != null) {
-			content = _jniSassCompiler.compileString(
+		try {
+			content = _sassCompiler.compileString(
 				content, commonSassPath + File.pathSeparator + cssThemePath,
 				"");
 		}
-		else {
-			File sassTempDir = _getSassTempDir(servletContext);
-
-			Object[] arguments = new Object[] {
-				content, commonSassPath, resourcePath, cssThemePath,
-				sassTempDir.getCanonicalPath(), _log.isDebugEnabled()
-			};
-
-			try {
-				content = _scriptingContainer.callMethod(
-					_scriptObject, "process", arguments, String.class);
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+		catch (Exception e) {
+			_log.error(e, e);
 		}
 
 		return content;
@@ -585,12 +566,10 @@ public class DynamicCSSUtil {
 	private static final Log _log = LogFactoryUtil.getLog(DynamicCSSUtil.class);
 
 	private static boolean _initialized;
-	private static JniSassCompiler _jniSassCompiler;
 	private static final Pattern _pluginThemePattern = Pattern.compile(
 		"\\/([^\\/]+)-theme\\/", Pattern.CASE_INSENSITIVE);
 	private static final Pattern _portalThemePattern = Pattern.compile(
 		"themes\\/([^\\/]+)\\/css", Pattern.CASE_INSENSITIVE);
-	private static ScriptingContainer<?> _scriptingContainer;
-	private static Object _scriptObject;
+	private static SassCompiler _sassCompiler;
 
 }

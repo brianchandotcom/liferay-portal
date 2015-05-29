@@ -65,7 +65,7 @@ public class DynamicCSSFilter extends IgnoreModuleRequestFilter {
 
 		_tempDir.mkdirs();
 
-		DynamicCSSUtil.init();
+		DynamicCSSUtil.init(_servletContext);
 	}
 
 	protected String getCacheFileName(HttpServletRequest request) {

@@ -17,21 +17,15 @@ package com.liferay.portal.events;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutPrototype;
-import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.util.DefaultLayoutPrototypesUtil;
 import com.liferay.portal.util.PortletKeys;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Sergio González
@@ -54,7 +48,7 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 			List<LayoutPrototype> layoutPrototypes)
 		throws Exception {
 
-		Layout layout = addLayoutPrototype(
+		Layout layout = DefaultLayoutPrototypesUtil.addLayoutPrototype(
 			companyId, defaultUserId, "layout-prototype-blog-title",
 			"layout-prototype-blog-description", "2_columns_iii",
 			layoutPrototypes);
@@ -63,53 +57,11 @@ public class AddDefaultLayoutPrototypesAction extends SimpleAction {
 			return;
 		}
 
-		addPortletId(layout, PortletKeys.BLOGS, "column-1");
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, PortletKeys.BLOGS, "column-1");
 
-		addPortletId(layout, PortletKeys.RECENT_BLOGGERS, "column-2");
-	}
-
-	protected Layout addLayoutPrototype(
-			long companyId, long defaultUserId, String nameKey,
-			String descriptionKey, String layouteTemplateId,
-			List<LayoutPrototype> layoutPrototypes)
-		throws Exception {
-
-		String name = LanguageUtil.get(LocaleUtil.getDefault(), nameKey);
-		String description = LanguageUtil.get(
-			LocaleUtil.getDefault(), descriptionKey);
-
-		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
-			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
-			String curDescription = layoutPrototype.getDescription(
-				LocaleUtil.getDefault());
-
-			if (name.equals(curName) && description.equals(curDescription)) {
-				return null;
-			}
-		}
-
-		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		for (Locale locale : LanguageUtil.getAvailableLocales()) {
-			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
-			descriptionMap.put(
-				locale, LanguageUtil.get(locale, descriptionKey));
-		}
-
-		LayoutPrototype layoutPrototype =
-			LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
-				defaultUserId, companyId, nameMap, descriptionMap, true,
-				new ServiceContext());
-
-		Layout layout = layoutPrototype.getLayout();
-
-		LayoutTypePortlet layoutTypePortlet =
-			(LayoutTypePortlet)layout.getLayoutType();
-
-		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
-
-		return layout;
+		DefaultLayoutPrototypesUtil.addPortletId(
+			layout, PortletKeys.RECENT_BLOGGERS, "column-2");
 	}
 
 	protected void doRun(long companyId) throws Exception {

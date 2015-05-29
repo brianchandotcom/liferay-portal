@@ -215,14 +215,7 @@ public class ResourceActionsImpl implements ResourceActions {
 		ModelResourceActionsBag modelResourceActionsBag =
 			getModelResourceActionsBag(name);
 
-		Set<String> resources = modelResourceActionsBag.getResources();
-
-		if (resources == null) {
-			return new ArrayList<>();
-		}
-		else {
-			return new ArrayList<>(resources);
-		}
+		return new ArrayList<>(modelResourceActionsBag.getResources());
 	}
 
 	@Override

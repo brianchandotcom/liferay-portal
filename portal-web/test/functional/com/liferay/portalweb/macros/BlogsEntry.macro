@@ -5,7 +5,7 @@
 		<if>
 			<condition function="IsElementPresent#pauseIsElementPresent" locator1="PGBlogsAdd#ABSTRACT_DROPDOWN_COLLAPSED" />
 			<then>
-				<execute function="AssertClick" locator1="PGBlogsAdd#ABSTRACT_DROPDOWN" value1="Abstract" />>
+				<execute function="AssertClick" locator1="PGBlogsAdd#ABSTRACT_DROPDOWN" value1="Abstract" />
 			</then>
 		</if>
 

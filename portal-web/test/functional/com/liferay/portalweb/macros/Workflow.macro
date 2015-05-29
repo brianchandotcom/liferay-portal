@@ -543,6 +543,21 @@
 		<execute function="AssertElementPresent" locator1="CPMyworkflowtasks#ASSIGNED_TO_MY_ROLES_TABLE_ACTIONS" />
 	</command>
 
+	<command name="viewCannotWithdrawTaskByActions">
+		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
+
+		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
+
+		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
+		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
+		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
+		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
+		<execute function="AssertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
+		<execute function="AssertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_END_DATE" />
+		<execute function="AssertElementNotPresent" locator1="//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span" />
+		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
+	</command>
+
 	<command name="viewCompletedTask">
 		<execute function="Click" locator1="CPMyworkflowtasks#NAVIGATION_COMPLETED" value1="Completed" />
 
@@ -757,21 +772,6 @@
 		<execute function="AssertClick" locator1="CPMysubmissionsTask#MENU_WITHDRAW_SUBMISSION" value1="Withdraw Submission" />
 
 		<execute function="AssertTextEquals" locator1="CPMysubmissions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-	</command>
-
-	<command name="viewCannotWithdrawTaskByActions">
-		<execute function="AssertClick"  locator1="CPMysubmissionsCompleted#NAVIGATION_COMPLETED" value1="Completed" />
-
-		<var name="key_workflowAssetTitle" value="${workflowAssetTitle}" />
-
-		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_DEFINITION" value1="${workflowDefinition}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TITLE" value1="${workflowAssetTitle}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_ASSET_TYPE" value1="${workflowAssetType}" />
-		<execute function="AssertTextEquals" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_STATUS" value1="${workflowTask}" />
-		<execute function="AssertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_LAST_ACTIVITY_DATE" />
-		<execute function="AssertElementPresent" locator1="CPMysubmissionsCompleted#COMPLETED_TABLE_END_DATE" />
-		<execute function="AssertElementNotPresent" locator1="//div[@id='_158_workflowInstancesSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a[contains(@id,'menu_withdraw-submission')]/span" />
-		<execute function="AssertTextNotPresent" value1="Withdraw Submission" />
 	</command>
 
 	<command name="withdrawTaskCompletedNoByDetails">

@@ -9,8 +9,23 @@ File appServerLibPortalDir = new File(liferay.appServerPortalDir, "WEB-INF/lib")
 File moduleFrameworkBaseDir = new File(liferay.liferayHome, "osgi")
 File sdkDir = rootProject.file("../tools/sdk")
 
-repositories {
-	mavenLocal()
+afterEvaluate {
+	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
+	project.ext.set("plugin.full.version", project.version.toString())
+}
+
+bundle {
+	instruction "-jsp", "*.jsp"
+	instruction "-jsp", "*.jspf"
+	instruction "-metatype", "*"
+	instruction "-plugin", "com.liferay.ant.bnd.plugin.JspAnalyzerPlugin"
+	instruction "-plugin", "com.liferay.ant.bnd.plugin.SassAnalyzerPlugin"
+	instruction "-sass", "*"
+}
+
+compileJava {
+	options.encoding = "ISO-8859-1"
+	options.warnings = false
 }
 
 configurations {
@@ -30,6 +45,14 @@ dependencies {
 	portalTest fileTree(dir: new File(moduleFrameworkBaseDir, "test"), include: "portal-test*.jar")
 }
 
+jar {
+	destinationDir = new File(sdkDir, "dist2")
+}
+
+repositories {
+	mavenLocal()
+}
+
 sourceSets {
 	main {
 		compileClasspath += configurations.portal
@@ -38,27 +61,4 @@ sourceSets {
 	testIntegration {
 		compileClasspath += configurations.portalTest
 	}
-}
-
-bundle {
-	instruction "-jsp", "*.jsp"
-	instruction "-jsp", "*.jspf"
-	instruction "-metatype", "*"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.JspAnalyzerPlugin"
-	instruction "-plugin", "com.liferay.ant.bnd.plugin.SassAnalyzerPlugin"
-	instruction "-sass", "*"
-}
-
-compileJava {
-	options.encoding = "ISO-8859-1"
-	options.warnings = false
-}
-
-jar {
-	destinationDir = new File(sdkDir, "dist2")
-}
-
-afterEvaluate {
-	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
-	project.ext.set("plugin.full.version", project.version.toString())
 }

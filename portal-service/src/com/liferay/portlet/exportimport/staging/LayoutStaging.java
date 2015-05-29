@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.staging;
+package com.liferay.portlet.exportimport.staging;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;

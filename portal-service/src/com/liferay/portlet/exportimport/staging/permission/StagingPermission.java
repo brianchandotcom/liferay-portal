@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.staging.permission;
+package com.liferay.portlet.exportimport.staging.permission;
 
 import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;

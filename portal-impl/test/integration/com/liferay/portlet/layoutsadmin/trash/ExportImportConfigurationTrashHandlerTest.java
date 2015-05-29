@@ -82,6 +82,13 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashBaseModelAndParentAndRestoreModelIsVisible()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashBaseModelAndParentIsNotVisible() throws Exception {
 	}
 

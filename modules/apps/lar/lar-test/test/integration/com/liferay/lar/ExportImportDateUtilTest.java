@@ -73,7 +73,7 @@ public class ExportImportDateUtilTest {
 		_layoutSet = _layout.getLayoutSet();
 
 		_portletPreferences = PortletPreferencesFactoryUtil.getPortletSetup(
-			_layout, PortletKeys.LAYOUTS_ADMIN, null);
+			_layout, PortletKeys.EXPORT_IMPORT, null);
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			PortletKeys.LAYOUTS_ADMIN, _portletPreferences, dateRange, endDate);
+			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, endDate);
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			_portletPreferences);
@@ -253,7 +253,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			PortletKeys.LAYOUTS_ADMIN, _portletPreferences, dateRange, endDate);
+			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, endDate);
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			_portletPreferences);
@@ -301,7 +301,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			PortletKeys.LAYOUTS_ADMIN, _portletPreferences, dateRange, endDate);
+			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, endDate);
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			_portletPreferences);
@@ -345,7 +345,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			PortletKeys.LAYOUTS_ADMIN, _portletPreferences, dateRange, endDate);
+			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, endDate);
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			_portletPreferences);
@@ -415,7 +415,7 @@ public class ExportImportDateUtilTest {
 		DateRange dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			PortletKeys.LAYOUTS_ADMIN, _portletPreferences, dateRange, endDate);
+			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, endDate);
 
 		Date lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			_portletPreferences);
@@ -432,7 +432,7 @@ public class ExportImportDateUtilTest {
 		dateRange = new DateRange(startDate, endDate);
 
 		ExportImportDateUtil.updateLastPublishDate(
-			PortletKeys.LAYOUTS_ADMIN, _portletPreferences, dateRange, endDate);
+			PortletKeys.EXPORT_IMPORT, _portletPreferences, dateRange, endDate);
 
 		lastPublishDate = ExportImportDateUtil.getLastPublishDate(
 			_portletPreferences);

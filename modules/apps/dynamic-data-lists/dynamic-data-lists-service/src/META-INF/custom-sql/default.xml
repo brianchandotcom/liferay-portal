@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.countByR_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDLRecord.recordId) AS COUNT_VALUE
+			FROM
+				DDLRecord
+			INNER JOIN
+				DDLRecordVersion ON
+					(DDLRecordVersion.recordId = DDLRecord.recordId)
+			WHERE
+				(DDLRecordVersion.status = ?) AND
+				(DDLRecord.recordSetId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.countByC_S_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDLRecord.recordId) AS COUNT_VALUE
+			FROM
+				DDLRecord
+			INNER JOIN
+				DDLRecordVersion ON
+					(DDLRecordVersion.recordId = DDLRecord.recordId)
+			INNER JOIN
+				DDLRecordSet ON
+					(DDLRecordSet.recordSetId = DDLRecord.recordSetId)
+			WHERE
+				(DDLRecordVersion.status = ?) AND
+				(DDLRecordSet.scope = ?) AND
+				(DDLRecord.companyId = ?)
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.findByR_S">
+		<![CDATA[
+			SELECT
+				DISTINCT {DDLRecord.*}
+			FROM
+				DDLRecord
+			INNER JOIN
+				DDLRecordVersion ON
+					(DDLRecordVersion.recordId = DDLRecord.recordId)
+			WHERE
+				(DDLRecordVersion.status = ?) AND
+				(DDLRecord.recordSetId = ?)
+			ORDER BY
+				DDLRecord.recordId DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder.findByC_S_S">
+		<![CDATA[
+			SELECT
+				DISTINCT {DDLRecord.*}
+			FROM
+				DDLRecord
+			INNER JOIN
+				DDLRecordVersion ON
+					(DDLRecordVersion.recordId = DDLRecord.recordId)
+			INNER JOIN
+				DDLRecordSet ON
+					(DDLRecordSet.recordSetId = DDLRecord.recordSetId)
+			WHERE
+				(DDLRecordVersion.status = ?) AND
+				(DDLRecordSet.scope = ?) AND
+				(DDLRecord.companyId = ?)
+			ORDER BY
+				DDLRecord.recordId DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder.countByC_G_N_D_S">
+		<![CDATA[
+			SELECT
+				COUNT(DISTINCT DDLRecordSet.recordSetId) AS COUNT_VALUE
+			FROM
+				DDLRecordSet
+			WHERE
+				(DDLRecordSet.companyId = ?) AND
+				(DDLRecordSet.groupId = ?) AND
+				(DDLRecordSet.scope = ?) AND
+				(
+					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+		]]>
+	</sql>
+	<sql id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder.findByC_G_N_D_S">
+		<![CDATA[
+			SELECT
+				{DDLRecordSet.*}
+			FROM
+				DDLRecordSet
+			WHERE
+				(DDLRecordSet.companyId = ?) AND
+				(DDLRecordSet.groupId = ?) AND
+				(DDLRecordSet.scope = ?) AND
+				(
+					(lower(DDLRecordSet.name) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
+					(DDLRecordSet.description LIKE ? [$AND_OR_NULL_CHECK$])
+				)
+			ORDER BY
+				DDLRecordSet.recordSetId DESC
+		]]>
+	</sql>
+</custom-sql>

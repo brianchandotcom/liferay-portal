@@ -100,9 +100,6 @@
 	<import class="com.liferay.portlet.documentlibrary.model.DLFileVersion" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLFolder" />
 	<import class="com.liferay.portlet.documentlibrary.model.DLSyncEvent" />
-	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecord" />
-	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet" />
-	<import class="com.liferay.portlet.dynamicdatalists.model.DDLRecordVersion" />
 	<import class="com.liferay.portlet.dynamicdatamapping.model.DDMContent" />
 	<import class="com.liferay.portlet.dynamicdatamapping.model.DDMStorageLink" />
 	<import class="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" />
@@ -1621,61 +1618,6 @@
 		<property name="event" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
 		<property name="typePK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-	</class>
-	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordImpl" table="DDLRecord">
-		<id name="recordId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="versionUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="versionUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="DDMStorageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="recordSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="displayIndex" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordSetImpl" table="DDLRecordSet">
-		<id name="recordSetId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="DDMStructureId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="recordSetKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="minDisplayRows" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="scope" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-	</class>
-	<class name="com.liferay.portlet.dynamicdatalists.model.impl.DDLRecordVersionImpl" table="DDLRecordVersion">
-		<id name="recordVersionId" type="long">
-			<generator class="assigned" />
-		</id>
-		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="DDMStorageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="recordSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="recordId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="displayIndex" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="statusByUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portlet.dynamicdatamapping.model.impl.DDMContentImpl" table="DDMContent">
 		<id name="contentId" type="long">

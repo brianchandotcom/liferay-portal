@@ -612,7 +612,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryName" value="Category Name 2" />
+			<var name="categoryNameList" value="Category Name 2" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -651,20 +651,18 @@
 			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
 		</execute>
 
-		<for list="Category Name 1,Category Name 2" param="categoryName">
-			<execute macro="Page#gotoContentCP">
-				<var name="portletName" value="Web Content" />
-			</execute>
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
 
-			<execute macro="WebContentNavigator#gotoEditCP">
-				<var name="webContentTitle" value="Web Content Title Multiple Categories" />
-			</execute>
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
+		</execute>
 
-			<execute macro="WebContent#viewCategorizationCategoryCP">
-				<var name="categoryName" value="${categoryName}" />
-				<var name="webContentTitle" value="Web Content Title Multiple Categories" />
-			</execute>
-		</for>
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2" />
+			<var name="webContentTitle" value="Web Content Title Multiple Categories" />
+		</execute>
 	</command>
 
 	<command known-issues="LPS-54823" name="DuplicateCategoriesViaWebContentCopy" priority="3">
@@ -852,7 +850,7 @@
 		</execute>
 
 		<execute macro="WebContent#viewCategorizationCategoryCP">
-			<var name="categoryName" value="Category Name" />
+			<var name="categoryNameList" value="Category Name" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 	</command>

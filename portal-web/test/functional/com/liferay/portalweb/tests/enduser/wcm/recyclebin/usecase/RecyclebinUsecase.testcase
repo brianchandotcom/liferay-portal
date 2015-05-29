@@ -83,7 +83,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinBookmarks" priority="3">
+	<command known-issues="LPS-55978" name="RecycleBinBookmarks" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -273,7 +273,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinGeneralRestoring" priority="5">
+	<command known-issues="LPS-55978" name="RecycleBinGeneralRestoring" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -418,7 +418,7 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
-	<command name="RecycleBinMBAttachment" priority="3">
+	<command known-issues="LPS-55978" name="RecycleBinMBAttachment" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 			<var name="siteScopeName" value="Site Name" />
@@ -623,7 +623,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinSearchDMEntriesInFolder" priority="3">
+	<command known-issues="LPS-55978" name="RecycleBinSearchDMEntriesInFolder" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -816,7 +816,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinWebContent" priority="3">
+	<command known-issues="LPS-55978" name="RecycleBinWebContent" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -930,7 +930,7 @@
 		</execute>
 	</command>
 
-	<command name="RecycleBinWiki" priority="3">
+	<command known-issues="LPS-55978" name="RecycleBinWiki" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1040,7 +1040,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreDMDocumentFromFolderCP" priority="5">
+	<command known-issues="LPS-55978" name="RestoreDMDocumentFromFolderCP" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1129,7 +1129,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreMessageboardsThreadViaRBCP" priority="3">
+	<command known-issues="LPS-55978" name="RestoreMessageboardsThreadViaRBCP" priority="3">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Message Boards" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1282,7 +1282,7 @@
 		</execute>
 	</command>
 
-	<command name="RestoreWebContentWithArticleVersions" priority="4">
+	<command known-issues="LPS-55978" name="RestoreWebContentWithArticleVersions" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

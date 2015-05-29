@@ -104,6 +104,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENABLE_RSS_SUBSCRIPTION</td>
+	<td>//label[contains(.,'RSS Subscription')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENABLE_SOCIAL_BOOKMARKS</td>
 	<td>//label[contains(.,'Enable Social Bookmarks')]/input[@type='checkbox']</td>
 	<td></td>
@@ -111,6 +116,16 @@
 <tr>
 	<td>ENABLE_VIEW_COUNT_INCREMENT</td>
 	<td>//label[contains(.,'Enable View Count Increment')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FACEBOOK</td>
+	<td>//input[contains(@id,'facebook')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GOOGLE_PLUS</td>
+	<td>//input[contains(@id,'plusone')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -181,6 +196,11 @@
 <tr>
 	<td>THIS_IS_A_MINOR_EDIT</td>
 	<td>//label[contains(.,'This is a minor edit.')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TWITTER</td>
+	<td>//input[contains(@id,'twitter')]</td>
 	<td></td>
 </tr>
 </tbody>

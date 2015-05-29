@@ -316,7 +316,7 @@
 		<execute function="AssertTextNotPresent" locator1="PGNavigation#PORTLET_BODY" value1="This was modified by the Sample Application Adapter." />
 	</command>
 
-	<command name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
+	<command known-issues="LPS-55978" name="MySitesDropDownDoesNotShowUserOrganizationOnTop" priority="4">
 		<for list="Site1 Name,Site2 Name,Site3 Name,Site4 Name,Site5 Name,Site6 Name,Site7 Name,Site8 Name,Site9 Name,Site10 Name" param="siteNameListsCount" >
 
 			<execute macro="Page#gotoCP">
@@ -849,7 +849,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesDeactivated" priority="3">
+	<command known-issues="LPS-55978" name="SitesDeactivated" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1169,7 +1169,7 @@
 		</for>
 	</command>
 
-	<command name="SiteTeams" priority="4">
+	<command known-issues="LPS-55978" name="SiteTeams" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1474,7 +1474,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteTeamsXSS" priority="5">
+	<command known-issues="LPS-55978" name="SiteTeamsXSS" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

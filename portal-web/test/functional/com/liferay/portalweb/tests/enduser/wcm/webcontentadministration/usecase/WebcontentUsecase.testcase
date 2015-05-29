@@ -146,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
+	<command known-issues="LPS-55978" name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="EditArticleMadeFromGlobalStructure" priority="5">
+	<command known-issues="LPS-55977" name="EditArticleMadeFromGlobalStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
+	<command known-issues="LPS-55977" name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -971,6 +971,85 @@
 		</execute>
 	</command>
 
+	<command name="ViewMultipleCategoriesViaWebContent" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<for list="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" param="categoryName">
+			<execute macro="Category#addCP">
+				<var name="categoryName" value="${categoryName}" />
+				<var name="vocabularyName" value="Vocabulary Name" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithMultipleCategories">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="webContentContent" value="WC Content Body" />
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCategorizationCategoryCP">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewCategoryDescriptiveCP">
+			<var name="categoryNameList" value="Category Name 1,Category Name 2,Category Name 3,Category Name 4,Category Name 5" />
+			<var name="webContentTitle" value="WC Content Title" />
+		</execute>
+	</command>
+
+	<command name="ViewMultipleVocabulariesViaAddWebContent" priority="4">
+		<for list="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" param="vocabularyName">
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Categories" />
+			</execute>
+
+			<execute macro="Vocabulary#addCP">
+				<var name="vocabularyName" value="${vocabularyName}" />
+			</execute>
+
+			<execute macro="Category#addCP">
+				<var name="categoryName" value="Category Name" />
+				<var name="vocabularyName" value="${vocabularyName}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#viewCategorizationVocabularyCP">
+			<var name="vocabularyNameList" value="Vocabulary Name 1,Vocabulary Name 2,Vocabulary Name 3,Vocabulary Name 4,Vocabulary Name 5" />
+		</execute>
+	</command>
+
 	<command name="WebContentAdministrationDataValidation" priority="5">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentContentEdit" value="WC WebContent Content Edit" />
@@ -1045,7 +1124,7 @@
 		<execute macro="WebContentStructures#addNullCP" />
 	</command>
 
-	<command name="WebContentAdministrationLocalization" priority="5">
+	<command known-issues="LPS-55977" name="WebContentAdministrationLocalization" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

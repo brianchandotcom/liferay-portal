@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PERMISSIONS</td>
+	<td>//a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

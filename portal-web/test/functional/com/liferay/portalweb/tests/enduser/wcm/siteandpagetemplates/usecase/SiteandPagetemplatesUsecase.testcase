@@ -77,7 +77,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteTemplateGuestPermissions" priority="4">
+	<command known-issues="LPS-55978" name="EditSiteTemplateGuestPermissions" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>
@@ -790,7 +790,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesTemplateResourceInheritance" priority="4">
+	<command known-issues="LPS-55859" name="SitesTemplateResourceInheritance" priority="4">
 		<property name="portlet.plugins.includes" value="tasks-portlet" />
 
 		<execute macro="Page#gotoCP">

@@ -99,8 +99,16 @@
 		<var name="key_categoryName" value="${categoryName}" />
 		<var name="key_vocabularyName" value="${vocabularyName}" />
 
-		<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
-		<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+		<if>
+			<condition function="IsElementPresent" locator1="CPCategories#VOCABULARY_HEADER" />
+			<then>
+				<execute function="AssertClick" locator1="CPCategories#ADD_CATEGORY_BUTTON" value1="Add Category" />
+			</then>
+			<else>
+				<execute function="Click" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ARROW" value1="${vocabularyName}" />
+				<execute function="AssertClick" locator1="CPCategories#VOCABULARY_ENTRY_MENULIST_ADD_CATEGORY" value1="Add Category" />
+			</else>
+		</if>
 
 		<execute function="Type" locator1="CPCategoriesAdd#NAME_FIELD" value1="${categoryName}" />
 

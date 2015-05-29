@@ -38,6 +38,11 @@
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Subscribe')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>UNSUBSCRIBE</td>
+	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Unsubscribe')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

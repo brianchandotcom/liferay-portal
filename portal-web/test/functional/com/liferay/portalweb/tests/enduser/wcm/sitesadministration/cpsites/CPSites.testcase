@@ -9,7 +9,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AddChildChildSite" priority="5">
+	<command known-issues="LPS-55978" name="AddChildChildSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -51,7 +51,7 @@
 		</execute>
 	</command>
 
-	<command name="AddChildSite" priority="5">
+	<command known-issues="LPS-55978" name="AddChildSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -79,7 +79,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPublicVirtualHostsSiteURL" priority="4">
+	<command known-issues="LPS-55978" name="AddPublicVirtualHostsSiteURL" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSite" priority="5">
+	<command known-issues="LPS-55978" name="AddSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -138,7 +138,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitesMultiple" priority="5">
+	<command known-issues="LPS-55978" name="AddSitesMultiple" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -188,7 +188,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteWithCommaInName" priority="3">
+	<command known-issues="LPS-55978" name="AddSiteWithCommaInName" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -206,7 +206,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteWithInvalidDuplicateName" priority="3">
+	<command known-issues="LPS-55978" name="AddSiteWithInvalidDuplicateName" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -225,7 +225,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSiteWithInvalidName" priority="3">
+	<command known-issues="LPS-55978" name="AddSiteWithInvalidName" priority="3">
 		<for list="Site Name*,22222" param="siteName" >
 			<execute macro="Page#gotoCP">
 				<var name="portletName" value="Sites" />
@@ -238,7 +238,7 @@
 		</for>
 	</command>
 
-	<command name="AddSiteWithNullName" priority="3">
+	<command known-issues="LPS-55978" name="AddSiteWithNullName" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -249,7 +249,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSite" priority="5">
+	<command known-issues="LPS-55978" name="DeleteSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSite" priority="5">
+	<command known-issues="LPS-55978" name="EditSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -295,7 +295,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteFriendlyURL" priority="4">
+	<command known-issues="LPS-55978" name="EditSiteFriendlyURL" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -350,7 +350,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSiteFriendlyURLInvalid" priority="4">
+	<command known-issues="LPS-55978" name="EditSiteFriendlyURLInvalid" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -392,7 +392,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSite" priority="5">
+	<command known-issues="LPS-55978" name="SearchSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -469,7 +469,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
+	<command known-issues="LPS-55978" name="ViewDisplayParentSiteViaSitesDirectory" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -565,7 +565,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
+	<command known-issues="LPS-55978" name="ViewSiteHierarchiesViaSitesDirectory" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

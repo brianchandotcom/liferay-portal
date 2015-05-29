@@ -16,8 +16,10 @@ package com.liferay.dynamic.data.lists.exporter.impl;
 
 import com.liferay.dynamic.data.lists.exporter.DDLExporter;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CSVUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -59,7 +61,9 @@ public class DDLCSVExporter extends BaseDDLExporter {
 
 		StringBundler sb = new StringBundler();
 
-		DDMStructure ddmStructure = getDDMStructure(recordSetId);
+		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
+
+		DDMStructure ddmStructure = recordSet.getDDMStructure();
 
 		List<DDMFormField> ddmFormFields = getDDMFormFields(ddmStructure);
 
@@ -123,6 +127,13 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	}
 
 	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Reference
 	protected void setDDMFormValuesToFieldsConverter(
 		DDMFormValuesToFieldsConverter ddmFormValuesToFieldsConverter) {
 
@@ -135,6 +146,7 @@ public class DDLCSVExporter extends BaseDDLExporter {
 	}
 
 	private DDLRecordLocalService _ddlRecordLocalService;
+	private DDLRecordSetService _ddlRecordSetService;
 	private DDMFormValuesToFieldsConverter _ddmFormValuesToFieldsConverter;
 	private StorageEngine _storageEngine;
 

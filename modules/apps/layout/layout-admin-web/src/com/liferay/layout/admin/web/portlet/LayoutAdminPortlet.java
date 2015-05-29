@@ -14,6 +14,7 @@
 
 package com.liferay.layout.admin.web.portlet;
 
+import com.liferay.layout.admin.web.upgrade.LayoutAdminWebUpgrade;
 import com.liferay.portal.ImageTypeException;
 import com.liferay.portal.LayoutFriendlyURLException;
 import com.liferay.portal.LayoutFriendlyURLsException;
@@ -113,6 +114,7 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -762,6 +764,11 @@ public class LayoutAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLayoutAdminWebUpgrade(
+		LayoutAdminWebUpgrade layoutAdminWebUpgrade) {
 	}
 
 	protected void setThemeSettingProperties(

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Journal Service
+Bundle-SymbolicName: com.liferay.journal.service
+Bundle-Version: 1.0.0
+Include-Resource:\
+	classes

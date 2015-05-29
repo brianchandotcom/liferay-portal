@@ -87,16 +87,17 @@
 							%>
 
 							<liferay-ui:section>
-								<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="newPageURL" windowState="<%= WindowState.NORMAL.toString() %>">
-									<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
-									<portlet:param name="tabs1" value='<%= layout.isPrivateLayout() ? "private-pages" : "public-pages" %>' />
-									<portlet:param name="groupId" value="<%= String.valueOf(groupDisplayContextHelper.getLiveGroupId()) %>" />
-									<portlet:param name="selPlid" value="<%= String.valueOf(selPlid) %>" />
-									<portlet:param name="treeId" value="layoutsTree" />
-									<portlet:param name="viewLayout" value="true" />
-								</liferay-portlet:renderURL>
 
 								<%
+								PortletURL newPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
+
+								newPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
+								newPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
+								newPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
+								newPageURL.setParameter("selPlid", String.valueOf(selPlid));
+								newPageURL.setParameter("treeId", "layoutsTree");
+								newPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
+
 								String newPageURLString = HttpUtil.setParameter(newPageURL.toString(), "controlPanelCategory", "current_site");
 
 								newPageURLString = HttpUtil.setParameter(newPageURLString, "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));

@@ -225,9 +225,8 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 						String privateAddPageHREF = null;
 
 						if ((mySiteGroup.isSite() || mySiteGroup.isUser()) && GroupPermissionUtil.contains(permissionChecker, mySiteGroup, ActionKeys.ADD_LAYOUT)) {
-							long controlPanelPlid = PortalUtil.getControlPanelPlid(company.getCompanyId());
 
-							PortletURL publicAddPageURL = new PortletURLImpl(request, PortletKeys.GROUP_PAGES, controlPanelPlid, PortletRequest.RENDER_PHASE);
+							PortletURL publicAddPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
 
 							publicAddPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
 							publicAddPageURL.setParameter("tabs1", "public-pages");
@@ -238,7 +237,7 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 							publicAddPageHREF = publicAddPageURL.toString();
 
-							PortletURL privateAddPageURL = new PortletURLImpl(request, PortletKeys.GROUP_PAGES, controlPanelPlid, PortletRequest.RENDER_PHASE);
+							PortletURL privateAddPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
 
 							privateAddPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
 							privateAddPageURL.setParameter("tabs1", "private-pages");

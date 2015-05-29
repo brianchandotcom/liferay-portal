@@ -88,16 +88,19 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	</c:if>
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.MANAGE_LAYOUTS) %>">
-		<liferay-portlet:renderURL plid="<%= PortalUtil.getControlPanelPlid(company.getCompanyId()) %>" portletName="<%= PortletKeys.GROUP_PAGES %>" var="managePagesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-			<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="groupId" value="<%= String.valueOf(userGroupGroup.getGroupId()) %>" />
-		</liferay-portlet:renderURL>
+
+		<%
+		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
+
+		managePagesURL.setParameter("struts_action", "/group_pages/edit_layouts");
+		managePagesURL.setParameter("redirect", redirect);
+		managePagesURL.setParameter("groupId", String.valueOf(userGroupGroup.getGroupId()));
+		%>
 
 		<liferay-ui:icon
 			iconCssClass="icon-copy"
 			message="manage-site-pages"
-			url="<%= managePagesURL %>"
+			url="<%= managePagesURL.toString() %>"
 			useDialog="<%= true %>"
 		/>
 	</c:if>

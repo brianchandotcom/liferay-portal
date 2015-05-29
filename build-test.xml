@@ -4270,7 +4270,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="glassfish" />
 					<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
@@ -4287,7 +4287,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="jboss" />
 					<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
@@ -4324,7 +4324,7 @@ module.framework.properties.osgi.console=11312</echo>
 					app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
 				</app-server-properties-update>
 
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.lib.global.dir" value="${app.server.parent.dir}/jboss-eap-6.1/modules/com/liferay/portal/main" />
 					<param name="app.server.portal.dir" value="${app.server.parent.dir}/jboss-eap-6.1/standalone/deployments/ROOT.war" />
 					<param name="app.server.type" value="jboss" />
@@ -4345,7 +4345,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="jetty" />
 					<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
@@ -4362,7 +4362,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="jonas" />
 					<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
@@ -4379,7 +4379,7 @@ module.framework.properties.osgi.console=11312</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="resin" />
 					<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
@@ -4399,7 +4399,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
 					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
 					<param name="app.server.type" value="tcserver" />
@@ -4418,7 +4418,7 @@ module.framework.properties.osgi.console=11312</echo>
 			<then>
 				<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="tomcat" />
 					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
@@ -4453,7 +4453,7 @@ module.framework.properties.osgi.console=11312</echo>
 				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
 					<param name="app.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
 					<param name="app.server.type" value="weblogic" />

@@ -905,7 +905,7 @@ public class ThemeDisplay
 
 	public String getURLLayoutTemplates() {
 		if (Validator.isNull(_urlLayoutTemplates)) {
-			return _urlPageSettings + "#layout";
+			return getURLPageSettings() + "#layout";
 		}
 
 		return _urlLayoutTemplates;
@@ -930,7 +930,18 @@ public class ThemeDisplay
 
 	@JSON(include = false)
 	public PortletURL getURLPageSettings() {
-		return _urlPageSettings;
+		try {
+			if (_urlPageSettings == null) {
+				_urlPageSettings = PortletProviderUtil.getPortletURL(
+					getRequest(), Layout.class.getName(),
+					PortletProvider.Action.VIEW);
+			}
+
+			return _urlPageSettings;
+		}
+		catch (PortalException pe) {
+			throw new SystemException(pe);
+		}
 	}
 
 	public String getURLPortal() {
@@ -1746,6 +1757,10 @@ public class ThemeDisplay
 		_urlMyAccount = urlMyAccount;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	public void setURLPageSettings(PortletURL urlPageSettings) {
 		_urlPageSettings = urlPageSettings;
 	}

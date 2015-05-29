@@ -1318,7 +1318,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="User#logoutPG" />
 

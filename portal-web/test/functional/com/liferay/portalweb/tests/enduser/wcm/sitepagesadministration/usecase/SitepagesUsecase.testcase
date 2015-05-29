@@ -509,7 +509,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="MessageboardsPortlet#subscribePG" />
 
@@ -734,7 +734,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="MessageboardsPortlet#subscribePG" />
 
@@ -976,7 +976,7 @@
 			<var name="pageName" value="Blog and Message Board Page" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="MessageboardsPortlet#subscribePG" />
 

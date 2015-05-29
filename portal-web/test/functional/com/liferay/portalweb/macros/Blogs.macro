@@ -361,6 +361,15 @@
 		<execute macro="RecycleBin#emptyCP" />
 	</command>
 
+	<command name="tearDownSubscribePG">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="PGBlogs#UNSUBSCRIBE_LINK" value1="Unsubscribe" />
+		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="unsubscribePG">
 		<execute function="AssertClick" locator1="Link#UNSUBSCRIBE" value1="Unsubscribe" />
 

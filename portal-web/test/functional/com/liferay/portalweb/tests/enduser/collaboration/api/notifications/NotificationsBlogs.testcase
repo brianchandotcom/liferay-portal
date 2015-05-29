@@ -22,7 +22,7 @@
 	</set-up>
 
 	<tear-down>
-		<execute macro="BlogsPortlet#tearDownSubscribePG" />
+		<execute macro="Blogs#tearDownSubscribePG" />
 
 		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
 
@@ -36,7 +36,7 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<for list="${blogsEntryCounterList}" param="entryCount" >
 			<execute macro="BlogsEntry#addPG">
@@ -80,7 +80,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="Blogs Entry Content" />
@@ -119,7 +119,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="BlogsEntry#editPG">
 			<var name="entryContent" value="Blogs Entry Content" />
@@ -142,7 +142,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="BlogsEntry#addPG">
 			<var name="entryContent" value="Blogs Entry Content" />
@@ -266,7 +266,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#subscribePG" />
+		<execute macro="Blogs#subscribePG" />
 
 		<execute macro="BlogsEntry#editPG">
 			<var name="entryContent" value="Blogs Entry Content" />

@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `59f8239`.*
+*This document has been reviewed through commit `a7e9290`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1648,51 +1648,47 @@ core repository implementations from additional (optional) functionality.
 
 ---------------------------------------
 
-### Indexers called from Document Library no longer receive a DLFileEntry, but a FileEntry 
+### Indexers Called from Document Library Now Receive FileEntry Instead of DLFileEntry
 - **Date:** 2015-May-20
 - **JIRA Ticket:** LPS-55613
 
 #### What changed?
 
-Indexers that previously received a DLFileEntry object (for example in the
-addRelatedEntryFields() method) will no longer receive a DLFileEntry but a
-FileEntry.
+Indexers that previously received a `DLFileEntry` object (e.g., the
+`addRelatedEntryFields` method) no longer receive a `DLFileEntry`, but a
+`FileEntry`.
 
 #### Who is affected?
 
-This affects anyone who implements an Indexer handling DLFileEntry objects.
+This affects anyone who implements an Indexer handling `DLFileEntry` objects.
 
 #### How should I update my code?
 
-You should try to use methods in FileEntry or exported repository capabilities
-to obtain the value you were using. If no capability exist for your use case you
-can resort to fileEntry.getModel() and cast the result to a DLFileEntry, but
-this breaks all encapsulation and may result in future failures or compatibility
-problems.
+You should try to use methods in `FileEntry` or exported repository capabilities
+to obtain the value you were using. If no capability exists for your use case,
+you can resort to `fileEntry.getModel()` and cast the result to a `DLFileEntry`.
+However, this breaks all encapsulation and may result in future failures or
+compatibility problems.
 
-Example of old code:
+Old code:
 
-```
-	@Override
-	public void addRelatedEntryFields(Document document, Object obj)
-		throws Exception {
-		
+    @Override
+    public void addRelatedEntryFields(Document document, Object obj)
+        throws Exception {
+
         DLFileEntry dlFileEntry = (DLFileEntry)obj;
-        
+
         long fileEntryId = dlFileEntry.getFileEntryId();
-```
 
-should be replaced by:
+New Code:
 
-```
-	@Override
-	public void addRelatedEntryFields(Document document, Object obj)
-		throws Exception {
-		
+    @Override
+    public void addRelatedEntryFields(Document document, Object obj)
+        throws Exception {
+
         FileEntry fileEntry = (FileEntry)obj;
-        
+
         long fileEntryId = fileEntry.getFileEntryId();
-```
 
 #### Why was this change made?
 

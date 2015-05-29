@@ -2847,10 +2847,12 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a component allowing users to make an event repeat over any given interval.</description>
 		<name>input-repeat</name>
 		<tag-class>com.liferay.taglib.ui.InputRepeatTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>A CSS class for styling the component.</description>
 			<name>cssClass</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

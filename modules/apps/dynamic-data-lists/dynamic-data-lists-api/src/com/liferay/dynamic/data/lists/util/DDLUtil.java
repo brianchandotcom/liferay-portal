@@ -33,6 +33,8 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
@@ -134,9 +136,8 @@ public class DDLUtil {
 			recordId, recordSetId, mergeFields, serviceContext);
 	}
 
-	public void setDDL(DDL ddl) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
+	@Reference
+	protected void setDDL(DDL ddl) {
 		_ddl = ddl;
 	}
 

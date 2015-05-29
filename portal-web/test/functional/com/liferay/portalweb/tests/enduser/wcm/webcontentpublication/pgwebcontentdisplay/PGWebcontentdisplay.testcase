@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="AddPortletWCDSite" priority="5">
+	<command known-issues="LPS-55978,LPS-53627" name="AddPortletWCDSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -559,7 +559,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAllFileTypesEnabled" priority="5">
+	<command known-issues="LPS-53627" name="ViewAllFileTypesEnabled" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -594,7 +594,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
+	<command known-issues="LPS-53627" name="ViewAllSettingsEnabledWCDConfiguration" priority="5">
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
 			<var name="wcdConfigurationSettings" value="Enable Print,Enable Related Assets,Enable Ratings,Enable Comments,Enable Comment Ratings,Enable View Count Increment" />
 		</execute>
@@ -786,7 +786,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewPortletWCDShowAvailableLocales" priority="5">
+	<command known-issues="LPS-53627" name="ViewPortletWCDShowAvailableLocales" priority="5">
 		<execute macro="WebContentDisplayPortlet#configureSetupPG">
 			<var name="wcdConfigurationSettings" value="Show Available Locales" />
 		</execute>

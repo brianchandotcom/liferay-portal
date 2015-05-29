@@ -109,7 +109,7 @@
 		<execute macro="SitePage#deletePublicPageCP" />
 	</command>
 
-	<command name="ChangingPageTypeLayoutToLinkToAPageOfThisSiteHidesChildPages" priority="3">
+	<command known-issues="LPS-55978" name="ChangingPageTypeLayoutToLinkToAPageOfThisSiteHidesChildPages" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -281,7 +281,7 @@
 		</execute>
 	</command>
 
-	<command name="SitesPrivatePagesPermissions" priority="4">
+	<command known-issues="LPS-55978" name="SitesPrivatePagesPermissions" priority="4">
 		<var name="sitePageName" value="Site Page" />
 
 		<execute macro="Page#gotoCP">
@@ -1167,7 +1167,7 @@
 		</execute>
 	</command>
 
-	<command name="WebContentAdministrationSitesPageTypes" priority="3">
+	<command known-issues="LPS-55978" name="WebContentAdministrationSitesPageTypes" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

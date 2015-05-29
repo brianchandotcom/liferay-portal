@@ -27,7 +27,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="AddPageAndChildPageTranslations" priority="5">
+	<command known-issues="LPS-55978" name="AddPageAndChildPageTranslations" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -554,7 +554,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="PGAssetpublisher#ASSET_ABSTRACT_DESCRIPTION" value1="WC WebContent Text" />
 	</command>
 
-	<command name="ViewDefaultGlobalScopeLandingPage" priority="4">
+	<command known-issues="LPS-55978" name="ViewDefaultGlobalScopeLandingPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

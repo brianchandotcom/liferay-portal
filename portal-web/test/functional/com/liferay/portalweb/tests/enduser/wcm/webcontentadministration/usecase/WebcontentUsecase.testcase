@@ -146,7 +146,7 @@
 		</execute>
 	</command>
 
-	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
+	<command known-issues="LPS-55978" name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="EditArticleMadeFromGlobalStructure" priority="5">
+	<command known-issues="LPS-55977" name="EditArticleMadeFromGlobalStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
+	<command known-issues="LPS-55977" name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1124,7 +1124,7 @@
 		<execute macro="WebContentStructures#addNullCP" />
 	</command>
 
-	<command name="WebContentAdministrationLocalization" priority="5">
+	<command known-issues="LPS-55977" name="WebContentAdministrationLocalization" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

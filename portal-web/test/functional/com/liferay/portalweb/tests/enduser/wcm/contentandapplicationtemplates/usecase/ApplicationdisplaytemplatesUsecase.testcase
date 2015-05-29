@@ -75,7 +75,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRSSADTWithCorruptScript" priority="3">
+	<command known-issues="LPS-55978" name="AddRSSADTWithCorruptScript" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -106,7 +106,7 @@
 		<execute macro="RSS#viewCorruptScriptConsoleError" />
 	</command>
 
-	<command name="AddRSSADTWithScript" priority="3">
+	<command known-issues="LPS-55978" name="AddRSSADTWithScript" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -255,7 +255,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTBreadcrumb" priority="3">
+	<command known-issues="LPS-55978" name="ADTBreadcrumb" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -286,7 +286,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTCategoriesNavigation" priority="3">
+	<command known-issues="LPS-55978" name="ADTCategoriesNavigation" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoContentCP">
@@ -510,7 +510,7 @@
 		<execute macro="MGPortlet#viewCustomADTCarouselPG" />
 	</command>
 
-	<command name="ADTSiteMap" priority="3">
+	<command known-issues="LPS-55978" name="ADTSiteMap" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -790,7 +790,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTWiki" priority="3">
+	<command known-issues="LPS-55978" name="ADTWiki" priority="3">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

@@ -12,9 +12,12 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.exporter;
+package com.liferay.dynamic.data.lists.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
+import com.liferay.dynamic.data.lists.exporter.impl.DDLCSVExporter;
+import com.liferay.dynamic.data.lists.exporter.impl.DDLXMLExporter;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;

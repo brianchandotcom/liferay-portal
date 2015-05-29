@@ -17,16 +17,21 @@ package com.liferay.layout.admin.web.servlet.taglib.ui;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=40"})
+@Component(
+	property = {"service.ranking:Integer=40"},
+	service = FormNavigatorEntry.class
+)
 public class LayoutSetLogoFormNavigatorEntry
 	extends BaseLayoutSetFormNavigatorEntry {
 

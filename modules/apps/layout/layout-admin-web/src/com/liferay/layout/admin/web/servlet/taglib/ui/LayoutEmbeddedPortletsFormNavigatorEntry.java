@@ -17,7 +17,7 @@ package com.liferay.layout.admin.web.servlet.taglib.ui;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
@@ -26,10 +26,15 @@ import com.liferay.portal.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=20"})
+@Component(
+	property = {"service.ranking:Integer=20"},
+	service = FormNavigatorEntry.class
+)
 public class LayoutEmbeddedPortletsFormNavigatorEntry
 	extends BaseLayoutFormNavigatorEntry {
 

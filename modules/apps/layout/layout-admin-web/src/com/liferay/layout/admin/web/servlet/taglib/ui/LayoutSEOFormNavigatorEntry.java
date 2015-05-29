@@ -14,12 +14,17 @@
 
 package com.liferay.layout.admin.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
  */
-@OSGiBeanProperties(property = {"service.ranking:Integer=80"})
+@Component(
+	property = {"service.ranking:Integer=80"},
+	service = FormNavigatorEntry.class
+)
 public class LayoutSEOFormNavigatorEntry extends BaseLayoutFormNavigatorEntry {
 
 	@Override

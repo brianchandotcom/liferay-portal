@@ -18,8 +18,12 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.servlet.taglib.ui.BaseFormNavigatorEntry;
 
 import java.util.Locale;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Pei-Jung Lan
@@ -40,6 +44,11 @@ public abstract class BaseLayoutFormNavigatorEntry
 	@Override
 	public String getLabel(Locale locale) {
 		return LanguageUtil.get(locale, getKey());
+	}
+
+	@Override
+	protected ServletContext getServletContext(HttpServletRequest request) {
+		return request.getServletContext();
 	}
 
 }

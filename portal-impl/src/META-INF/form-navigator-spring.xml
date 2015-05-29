@@ -28,21 +28,6 @@
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsTermsOfUseFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsTermsOfUseFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsUsersFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsUsersFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.CompanySettingsWebsitesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.CompanySettingsWebsitesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutAdvancedFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutAdvancedFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutCategorizationFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutCategorizationFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutCustomFieldsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutCustomFieldsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutCustomizationSettingsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutCustomizationSettingsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutDetailsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutDetailsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutEmbeddedPortletsFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutEmbeddedPortletsFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutJavaScriptFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutJavaScriptFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutLookAndFeelFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutLookAndFeelFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutMobileDeviceRulesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutMobileDeviceRulesFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSEOFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSEOFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetAdvancedFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetAdvancedFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetJavaScriptFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetJavaScriptFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetLogoFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetLogoFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetLookAndFeelFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetLookAndFeelFormNavigatorEntry" />
-	<bean id="com.liferay.portal.servlet.taglib.ui.LayoutSetMobileDeviceRulesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.LayoutSetMobileDeviceRulesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationAdditionalEmailAddressesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.OrganizationAdditionalEmailAddressesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationAddressesFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.OrganizationAddressesFormNavigatorEntry" />
 	<bean id="com.liferay.portal.servlet.taglib.ui.OrganizationCategorizationFormNavigatorEntry" class="com.liferay.portal.servlet.taglib.ui.OrganizationCategorizationFormNavigatorEntry" />

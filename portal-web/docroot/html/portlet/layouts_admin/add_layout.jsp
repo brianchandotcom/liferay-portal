@@ -65,7 +65,7 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm" onSubmit="event.preventDefault()">
+<aui:form action="<%= editLayoutActionURL %>" enctype="multipart/form-data" method="post" name="addPageFm">
 	<aui:input id="addLayoutCMD" name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD %>" />
 	<aui:input id="addLayoutRedirect" name="redirect" type="hidden" value="<%= editLayoutRenderURL %>" />
 	<aui:input id="addLayoutGroupId" name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
@@ -217,8 +217,8 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 	</aui:fieldset>
 
 	<aui:button-row cssClass="lfr-add-page-toolbar">
-		<aui:button id="addLayoutSubmit" type="submit" value="add-page" />
+		<aui:button type="submit" value="add-page" />
 
-		<aui:button id="cancelAddOperation" value="cancel" />
+		<aui:button href="<%= editLayoutRenderURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

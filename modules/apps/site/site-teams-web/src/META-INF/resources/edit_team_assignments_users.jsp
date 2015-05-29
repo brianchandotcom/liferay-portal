@@ -24,6 +24,8 @@ int cur = (Integer)request.getAttribute("edit_team_assignments.jsp-cur");
 
 String redirect = (String)request.getAttribute("edit_team_assignments.jsp-redirect");
 
+Group group = (Group)request.getAttribute("edit_team_assignments.jsp-group");
+
 Team team = (Team)request.getAttribute("edit_team_assignments.jsp-team");
 
 PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.jsp-portletURL");
@@ -58,7 +60,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 	LinkedHashMap<String, Object> userParams = new LinkedHashMap<String, Object>();
 
 	userParams.put("inherit", Boolean.TRUE);
-	userParams.put("usersGroups", team.getGroupId());
+	userParams.put("usersGroups", group.getGroupId());
 
 	if (tabs2.equals("current")) {
 		userParams.put("usersTeams", team.getTeamId());

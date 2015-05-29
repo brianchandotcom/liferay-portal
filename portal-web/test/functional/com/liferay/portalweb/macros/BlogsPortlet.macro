@@ -150,6 +150,12 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
+	<command name="tearDownScope">
+		<execute macro="BlogsConfiguration#selectScopePG">
+			<var name="scopeSelection" value="Liferay" />
+		</execute>
+	</command>
+	
 	<command name="viewDefaultConfiguration">
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="full-content" />

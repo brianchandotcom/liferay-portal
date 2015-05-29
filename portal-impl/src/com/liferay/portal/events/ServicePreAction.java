@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ColorSchemeFactoryUtil;
@@ -830,10 +831,19 @@ public class ServicePreAction extends Action {
 		themeDisplay.setPathFriendlyURLPublic(friendlyURLPublicPath);
 		themeDisplay.setPathImage(imagePath);
 
-		String editorsPath = PortalWebResourcesUtil.getContextPath(
-			PortalWebResourceConstants.RESOURCE_TYPE_EDITORS);
+		PortalWebResources portalWebResources =
+			PortalWebResourcesUtil.getPortalWebResources(
+				PortalWebResourceConstants.RESOURCE_TYPE_EDITORS);
 
-		themeDisplay.setPathEditors(editorsPath.concat("/html"));
+		if (portalWebResources != null) {
+
+			// It's really strange that this is here since the only consumer is
+			// the frontend-* modules.
+
+			String editorsPath = portalWebResources.getContextPath();
+
+			themeDisplay.setPathEditors(editorsPath.concat("/html"));
+		}
 
 		String javaScriptPath = PortalWebResourcesUtil.getContextPath(
 			PortalWebResourceConstants.RESOURCE_TYPE_JS);

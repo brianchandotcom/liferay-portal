@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.DDMStructureIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.SearchException;
@@ -66,9 +67,12 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -303,13 +307,13 @@ public class JournalArticleIndexer
 	}
 
 	@Override
-	protected void addSearchLocalizedTerm(
+	protected Map<String, Query> addSearchLocalizedTerm(
 			BooleanQuery searchQuery, SearchContext searchContext, String field,
 			boolean like)
 		throws Exception {
 
 		if (Validator.isNull(field)) {
-			return;
+			return Collections.emptyMap();
 		}
 
 		String value = String.valueOf(searchContext.getAttribute(field));
@@ -319,18 +323,26 @@ public class JournalArticleIndexer
 		}
 
 		if (Validator.isNull(value)) {
-			return;
+			return Collections.emptyMap();
 		}
 
 		String localizedField = DocumentImpl.getLocalizedName(
 			searchContext.getLocale(), field);
 
+		Map<String, Query> queries = new HashMap<>();
+
 		if (Validator.isNull(searchContext.getKeywords())) {
 			BooleanQuery localizedQuery = BooleanQueryFactoryUtil.create(
 				searchContext);
 
-			localizedQuery.addTerm(field, value, like);
-			localizedQuery.addTerm(localizedField, value, like);
+			Query query = localizedQuery.addTerm(field, value, like);
+
+			queries.put(field, query);
+
+			Query localizedFieldQuery = localizedQuery.addTerm(
+				localizedField, value, like);
+
+			queries.put(field, localizedFieldQuery);
 
 			BooleanClauseOccur booleanClauseOccur = BooleanClauseOccur.SHOULD;
 
@@ -341,8 +353,12 @@ public class JournalArticleIndexer
 			searchQuery.add(localizedQuery, booleanClauseOccur);
 		}
 		else {
-			searchQuery.addTerm(localizedField, value, like);
+			Query query = searchQuery.addTerm(localizedField, value, like);
+
+			queries.put(field, query);
 		}
+
+		return queries;
 	}
 
 	@Override

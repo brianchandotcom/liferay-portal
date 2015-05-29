@@ -82,9 +82,9 @@ public class RepositorySearchQueryBuilderImpl
 			BooleanClause[] booleanClauses = searchContext.getBooleanClauses();
 
 			if (booleanClauses != null) {
-				for (BooleanClause booleanClause : booleanClauses) {
+				for (BooleanClause<Query> booleanClause : booleanClauses) {
 					fullQuery.add(
-						booleanClause.getQuery(),
+						booleanClause.getClause(),
 						booleanClause.getBooleanClauseOccur());
 				}
 			}
@@ -178,10 +178,10 @@ public class RepositorySearchQueryBuilderImpl
 		if (query1 instanceof BooleanQuery) {
 			BooleanQuery booleanQuery = (BooleanQuery)query1;
 
-			for (com.liferay.portal.kernel.search.BooleanClause booleanClause :
-					booleanQuery.clauses()) {
+			for (com.liferay.portal.kernel.search.BooleanClause<Query>
+					booleanClause : booleanQuery.clauses()) {
 
-				if (contains(booleanClause.getQuery(), query2)) {
+				if (contains(booleanClause.getClause(), query2)) {
 					return true;
 				}
 			}
@@ -191,10 +191,10 @@ public class RepositorySearchQueryBuilderImpl
 		else if (query2 instanceof BooleanQuery) {
 			BooleanQuery booleanQuery = (BooleanQuery)query2;
 
-			for (com.liferay.portal.kernel.search.BooleanClause booleanClause :
-					booleanQuery.clauses()) {
+			for (com.liferay.portal.kernel.search.BooleanClause<Query>
+					booleanClause : booleanQuery.clauses()) {
 
-				if (contains(query1, booleanClause.getQuery())) {
+				if (contains(query1, booleanClause.getClause())) {
 					return true;
 				}
 			}

@@ -40,20 +40,24 @@ public class BooleanQueryTranslatorImpl implements BooleanQueryTranslator {
 
 		BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
 
-		for (BooleanClause clause : booleanQuery.clauses()) {
+		for (BooleanClause<Query> clause : booleanQuery.clauses()) {
 			_addClause(clause, boolQueryBuilder, queryVisitor);
+		}
+
+		if (!booleanQuery.isDefaultBoost()) {
+			boolQueryBuilder.boost(booleanQuery.getBoost());
 		}
 
 		return boolQueryBuilder;
 	}
 
 	private void _addClause(
-		BooleanClause clause, BoolQueryBuilder boolQuery,
+		BooleanClause<Query> clause, BoolQueryBuilder boolQuery,
 		QueryVisitor<QueryBuilder> queryVisitor) {
 
 		BooleanClauseOccur booleanClauseOccur = clause.getBooleanClauseOccur();
 
-		Query query = clause.getQuery();
+		Query query = clause.getClause();
 
 		QueryBuilder queryBuilder = query.accept(queryVisitor);
 

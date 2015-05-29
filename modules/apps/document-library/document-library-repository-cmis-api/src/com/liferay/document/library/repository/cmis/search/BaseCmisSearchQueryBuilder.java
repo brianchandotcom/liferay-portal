@@ -259,7 +259,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		if (query instanceof BooleanQuery) {
 			BooleanQuery booleanQuery = (BooleanQuery)query;
 
-			List<BooleanClause> booleanClauses = booleanQuery.clauses();
+			List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
 
 			CMISFullTextConjunction anyCMISConjunction =
 				new CMISFullTextConjunction();
@@ -267,7 +267,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 			CMISFullTextConjunction notCMISConjunction =
 				new CMISFullTextConjunction();
 
-			for (BooleanClause booleanClause : booleanClauses) {
+			for (BooleanClause<Query> booleanClause : booleanClauses) {
 				CMISJunction currentCMISJunction = cmisDisjunction;
 
 				BooleanClauseOccur booleanClauseOccur =
@@ -282,7 +282,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					currentCMISJunction = notCMISConjunction;
 				}
 
-				Query booleanClauseQuery = booleanClause.getQuery();
+				Query booleanClauseQuery = booleanClause.getClause();
 
 				traverseContentQuery(
 					currentCMISJunction, booleanClauseQuery, queryConfig);
@@ -360,13 +360,13 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		if (query instanceof BooleanQuery) {
 			BooleanQuery booleanQuery = (BooleanQuery)query;
 
-			List<BooleanClause> booleanClauses = booleanQuery.clauses();
+			List<BooleanClause<Query>> booleanClauses = booleanQuery.clauses();
 
 			CMISConjunction anyCMISConjunction = new CMISConjunction();
 			CMISDisjunction cmisDisjunction = new CMISDisjunction();
 			CMISConjunction notCMISConjunction = new CMISConjunction();
 
-			for (BooleanClause booleanClause : booleanClauses) {
+			for (BooleanClause<Query> booleanClause : booleanClauses) {
 				CMISJunction currentCMISJunction = cmisDisjunction;
 
 				BooleanClauseOccur booleanClauseOccur =
@@ -381,7 +381,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 					currentCMISJunction = notCMISConjunction;
 				}
 
-				Query booleanClauseQuery = booleanClause.getQuery();
+				Query booleanClauseQuery = booleanClause.getClause();
 
 				traversePropertiesQuery(
 					currentCMISJunction, booleanClauseQuery, queryConfig);

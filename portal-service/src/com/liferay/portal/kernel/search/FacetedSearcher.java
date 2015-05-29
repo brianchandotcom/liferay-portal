@@ -127,11 +127,11 @@ public class FacetedSearcher extends BaseSearcher {
 		Map<String, Facet> facets = searchContext.getFacets();
 
 		for (Facet facet : facets.values()) {
-			BooleanClause facetClause = facet.getFacetClause();
+			BooleanClause<Query> facetClause = facet.getFacetClause();
 
 			if (facetClause != null) {
 				contextQuery.add(
-					facetClause.getQuery(),
+					facetClause.getClause(),
 					facetClause.getBooleanClauseOccur());
 			}
 		}
@@ -144,12 +144,13 @@ public class FacetedSearcher extends BaseSearcher {
 			fullQuery.add(searchQuery, BooleanClauseOccur.MUST);
 		}
 
-		BooleanClause[] booleanClauses = searchContext.getBooleanClauses();
+		BooleanClause<Query>[] booleanClauses =
+			searchContext.getBooleanClauses();
 
 		if (booleanClauses != null) {
-			for (BooleanClause booleanClause : booleanClauses) {
+			for (BooleanClause<Query> booleanClause : booleanClauses) {
 				fullQuery.add(
-					booleanClause.getQuery(),
+					booleanClause.getClause(),
 					booleanClause.getBooleanClauseOccur());
 			}
 		}

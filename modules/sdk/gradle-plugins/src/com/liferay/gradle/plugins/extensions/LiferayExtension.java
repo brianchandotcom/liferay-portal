@@ -15,6 +15,7 @@
 package com.liferay.gradle.plugins.extensions;
 
 import com.liferay.gradle.util.ClosureBackedScript;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -23,6 +24,9 @@ import groovy.util.ConfigSlurper;
 
 import java.io.File;
 
+import java.util.Map;
+
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 
 /**
@@ -44,15 +48,38 @@ public class LiferayExtension {
 	}
 
 	public File getAppServerDeployDir() {
-		return _appServerDeployDir;
+		if (_appServerDeployDir != null) {
+			return _appServerDeployDir;
+		}
+
+		return getAppServerDir("deployDirName");
 	}
 
 	public File getAppServerDir() {
-		return _appServerDir;
+		if (_appServerDir != null) {
+			return _appServerDir;
+		}
+
+		File appServerParentDir = getAppServerParentDir();
+		String appServerName = getAppServerProperty("name");
+		String appServerVersion = getAppServerProperty("version");
+
+		if ((appServerParentDir == null) || Validator.isNull(appServerName) ||
+			Validator.isNull(appServerVersion)) {
+
+			return null;
+		}
+
+		return new File(
+			appServerParentDir, appServerName + "-" + appServerVersion);
 	}
 
 	public File getAppServerLibGlobalDir() {
-		return _appServerLibGlobalDir;
+		if (_appServerLibGlobalDir != null) {
+			return _appServerLibGlobalDir;
+		}
+
+		return getAppServerDir("libGlobalDirName");
 	}
 
 	public File getAppServerParentDir() {
@@ -60,7 +87,11 @@ public class LiferayExtension {
 	}
 
 	public File getAppServerPortalDir() {
-		return _appServerPortalDir;
+		if (_appServerPortalDir != null) {
+			return _appServerPortalDir;
+		}
+
+		return getAppServerDir("portalDirName");
 	}
 
 	public ConfigObject getAppServers() {
@@ -72,11 +103,31 @@ public class LiferayExtension {
 	}
 
 	public File getDeployDir() {
-		return _deployDir;
+		if (_deployDir != null) {
+			return _deployDir;
+		}
+
+		File appServerParentDir = getAppServerParentDir();
+
+		if (appServerParentDir == null) {
+			return null;
+		}
+
+		return new File(appServerParentDir, "deploy");
 	}
 
 	public File getLiferayHome() {
-		return _liferayHome;
+		if (_liferayHome != null) {
+			return _liferayHome;
+		}
+
+		File appServerParentDir = getAppServerParentDir();
+
+		if (appServerParentDir == null) {
+			return null;
+		}
+
+		return appServerParentDir.getParentFile();
 	}
 
 	public String getPortalVersion() {
@@ -137,6 +188,38 @@ public class LiferayExtension {
 
 	public void setTmpDir(File tmpDir) {
 		_tmpDir = tmpDir;
+	}
+
+	protected File getAppServerDir(String dirNameKey) {
+		File appServerDir = getAppServerDir();
+
+		if (appServerDir == null) {
+			return null;
+		}
+
+		String dirName = getAppServerProperty(dirNameKey);
+
+		return new File(appServerDir, dirName);
+	}
+
+	protected String getAppServerProperty(String key) {
+		String appServerType = getAppServerType();
+
+		if (Validator.isNull(appServerType)) {
+			return null;
+		}
+
+		Map<String, String> appServerProperties =
+			(Map<String, String>)_appServers.getProperty(appServerType);
+
+		String value = appServerProperties.get(key);
+
+		if (Validator.isNull(value)) {
+			throw new GradleException(
+				"Unable to get property " + key + " for " + appServerType);
+		}
+
+		return value;
 	}
 
 	protected final Project project;

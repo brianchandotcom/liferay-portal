@@ -93,7 +93,7 @@ liferay {
 			managerUser = "tomcat"
 			name = "tomcat"
 			portalDirName = "webapps/ROOT"
-			version = "7.0.42"
+			version = "7.0.62"
 		}
 
 		weblogic {
@@ -113,10 +113,10 @@ liferay {
 		}
 	}
 
-	appServerParentDir = file("${rootDir}/../bundles")
+	appServerParentDir = rootProject.file("../bundles")
 	appServerType = "tomcat"
 
 	portalVersion = "7.0.0-SNAPSHOT"
 
-	tmpDir = file("${rootDir}/tmp")
+	tmpDir = rootProject.file("tmp")
 }

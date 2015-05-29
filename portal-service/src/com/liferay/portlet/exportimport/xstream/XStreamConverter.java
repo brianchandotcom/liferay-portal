@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lar.xstream;
+package com.liferay.portlet.exportimport.xstream;
 
 /**
  * @author Daniel Kocsis

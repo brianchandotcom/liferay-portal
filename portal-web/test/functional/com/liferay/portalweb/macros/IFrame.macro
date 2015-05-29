@@ -7,7 +7,7 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="gotoTop">
+	<command name="selectTopFrame">
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 

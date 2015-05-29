@@ -95,12 +95,23 @@ if (fileEntryId != 0) {
 </div>
 
 <%
-PortletURL itemSelectorURL = liferayPortletResponse.createRenderURL();
+PortletURL itemSelectorURL = liferayPortletResponse.createRenderURL(PortletKeys.ITEM_SELECTOR);
 
-itemSelectorURL.setParameter(ActionRequest.ACTION_NAME, "showItemSelector");
 itemSelectorURL.setParameter("criteria", "com.liferay.document.library.item.selector.web.DLItemSelectorCriterion");
 itemSelectorURL.setParameter("itemSelectedEventName", liferayPortletResponse.getNamespace() + "selectImage");
-itemSelectorURL.setParameter("0_json", "{\"desiredReturnTypes\":[\"java.net.URL\",\"com.liferay.portal.kernel.repository.model.FileEntry\"],\"folderId\":0,\"mimeTypes\":[\"image\\/bmp\",\"image\\/gif\",\"image\\/jpeg\",\"image\\/pjpeg\",\"image\\/png\",\"image\\/tiff\",\"image\\/x-citrix-jpeg\",\"image\\/x-citrix-png\",\"image\\/x-ms-bmp\",\"image\\/x-png\",\"image\\/x-tiff\"],\"repositoryId\":20230,\"showGroupsSelector\":false,\"type\":\"images\"}");
+
+StringBundler sb = new StringBundler(8);
+
+sb.append("{");
+sb.append("\"desiredReturnTypes\":[\"java.net.URL\",\"com.liferay.portal.kernel.repository.model.FileEntry\"],");
+sb.append("\"folderId\":");
+sb.append(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+sb.append(",\"mimeTypes\":[\"image\\/bmp\",\"image\\/gif\",\"image\\/jpeg\",\"image\\/pjpeg\",\"image\\/png\",\"image\\/tiff\",\"image\\/x-citrix-jpeg\",\"image\\/x-citrix-png\",\"image\\/x-ms-bmp\",\"image\\/x-png\",\"image\\/x-tiff\"],");
+sb.append("\"repositoryId\":");
+sb.append(scopeGroupId);
+sb.append("}");
+
+itemSelectorURL.setParameter("0_json", sb.toString());
 itemSelectorURL.setPortletMode(PortletMode.VIEW);
 itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);
 

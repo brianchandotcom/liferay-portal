@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
 
@@ -125,6 +126,8 @@ public class DDLPortlet extends MVCPortlet {
 				renderRequest, NoSuchRecordException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, NoSuchRecordSetException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, ConfigurationException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 

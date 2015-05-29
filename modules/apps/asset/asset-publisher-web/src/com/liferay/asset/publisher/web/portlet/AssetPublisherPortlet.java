@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
@@ -265,6 +266,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		if (SessionErrors.contains(
+				renderRequest, ConfigurationException.class.getName()) ||
+			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
@@ -276,7 +279,8 @@ public class AssetPublisherPortlet extends MVCPortlet {
 
 	@Override
 	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof PrincipalException) {
+		if (cause instanceof ConfigurationException ||
+			cause instanceof PrincipalException) {
 			return true;
 		}
 

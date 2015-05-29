@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.auth.impl;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AutoLogin;
+import com.liferay.portal.security.auth.AutoLoginException;
+import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -30,9 +33,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
+@Component(immediate = true, service = AutoLogin.class)
 public class RememberMeAutoLogin extends BaseAutoLogin {
 
 	@Override

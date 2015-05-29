@@ -406,14 +406,101 @@ public class VerifyProperties extends VerifyProcess {
 		// Auth Verifiers
 
 		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
+			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
+			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
+			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
+			"com.liferay.portal.security.auth"
+		},
+
+		new String[] {
+			"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth",
+			"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed",
 			"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed",
-			"com.liferay.portal.security.auth.verifier"
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes",
+			"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes",
+			"com.liferay.portal.security.auth"
 		},
 		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes",
 			"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes",
-			"com.liferay.portal.security.auth.verifier"
+			"com.liferay.portal.security.auth"
+		},
+
+		new String[] {
+			"auth.verifier.ParameterAutoLogin.hosts.allowed",
+			"auth.verifier.ParameterAutoLogin.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.ParameterAutoLogin.urls.excludes",
+			"auth.verifier.ParameterAutoLogin.urls.excludes",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.ParameterAutoLogin.urls.includes",
+			"auth.verifier.ParameterAutoLogin.urls.includes",
+			"com.liferay.portal.security.auth"
+		},
+
+		new String[] {
+			"auth.verifier.PortalSessionAuthVerifier.hosts.allowed",
+			"auth.verifier.PortalSessionAuthVerifier.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.PortalSessionAuthVerifier.urls.excludes",
+			"auth.verifier.PortalSessionAuthVerifier.urls.excludes",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.PortalSessionAuthVerifier.urls.includes",
+			"auth.verifier.PortalSessionAuthVerifier.urls.includes",
+			"com.liferay.portal.security.auth"
+		},
+
+		new String[] {
+			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
+			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
+			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
+			"com.liferay.portal.security.auth"
+		},
+		new String[] {
+			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
+			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
+			"com.liferay.portal.security.auth"
+		},
+
+		// Auto Logins
+
+		new String[] {
+			"request.header.auth.hosts.allowed",
+			"request.header.auth.hosts.allowed",
+			"com.liferay.portal.security.auth"
 		},
 
 		// Bookmarks

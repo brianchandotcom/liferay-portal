@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.security.auth.impl;
 
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AuthVerifier;
+import com.liferay.portal.security.auth.AutoLogin;
+import com.liferay.portal.security.auth.BaseAutoLogin;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -28,11 +30,21 @@ import com.liferay.portal.util.PortalUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Minhchau Dang
  * @author Tomas Polesovsky
  */
-@OSGiBeanProperties(portalPropertyPrefix = "auth.verifier.ParameterAutoLogin.")
+@Component(
+	immediate = true,
+	property = {
+		"auth.verifier.ParameterAutoLogin.hosts.allowed=255.255.255.255",
+		"auth.verifier.ParameterAutoLogin.urls.excludes=*",
+		"auth.verifier.ParameterAutoLogin.urls.includes="
+	},
+	service = {AutoLogin.class, AuthVerifier.class}
+)
 public class ParameterAutoLogin extends BaseAutoLogin {
 
 	@Override

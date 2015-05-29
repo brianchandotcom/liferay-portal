@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier;
+package com.liferay.portal.security.auth.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -41,8 +41,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
+		"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth=false",
 		"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed=",
-		"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes=N/A"
+		"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes=*",
+		"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes="
 	}
 )
 public class DigestAuthenticationAuthVerifier implements AuthVerifier {

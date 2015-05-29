@@ -285,6 +285,10 @@ public class AutoLoginFilter extends BasePortalFilter {
 
 			AutoLogin autoLogin = registry.getService(serviceReference);
 
+			if (autoLogin == null) {
+				return null;
+			}
+
 			_autoLogins.add(autoLogin);
 
 			return autoLogin;

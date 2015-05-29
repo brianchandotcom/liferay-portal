@@ -30,6 +30,10 @@ Team team = TeamLocalServiceUtil.fetchTeam(teamId);
 
 Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 
+if (group != null) {
+	group = StagingUtil.getLiveGroup(group.getGroupId());
+}
+
 Organization organization = null;
 
 if (group.isOrganization()) {

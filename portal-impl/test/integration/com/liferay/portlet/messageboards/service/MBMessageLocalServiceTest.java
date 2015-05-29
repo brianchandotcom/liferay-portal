@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.messageboards.service;
 
-import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -136,11 +134,8 @@ public class MBMessageLocalServiceTest {
 
 		FileEntry fileEntry = fileEntries.get(0);
 
-		Repository repository = RepositoryProviderUtil.getRepository(
-			fileEntry.getRepositoryId());
-
-		WorkflowCapability workflowCapability = repository.getCapability(
-			WorkflowCapability.class);
+		WorkflowCapability workflowCapability =
+			fileEntry.getRepositoryCapability(WorkflowCapability.class);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_IN_TRASH,

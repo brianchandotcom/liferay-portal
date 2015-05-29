@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.RepositoryProvider;
 import com.liferay.portal.kernel.repository.capabilities.RelatedModelCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -57,7 +55,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -102,11 +99,8 @@ public class WikiPageIndexer
 		else if (obj instanceof FileEntry) {
 			FileEntry fileEntry = (FileEntry)obj;
 
-			Repository repository = _repositoryProvider.getRepository(
-				fileEntry.getRepositoryId());
-
 			RelatedModelCapability relatedModelCapability =
-				repository.getCapability(RelatedModelCapability.class);
+				fileEntry.getRepositoryCapability(RelatedModelCapability.class);
 
 			classPK = relatedModelCapability.getClassPK(fileEntry);
 		}
@@ -335,15 +329,7 @@ public class WikiPageIndexer
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference
-	protected void setRepositoryProvider(
-		RepositoryProvider repositoryProvider) {
-
-		_repositoryProvider = repositoryProvider;
-	}
-
 	private final RelatedEntryIndexer _relatedEntryIndexer =
 		new BaseRelatedEntryIndexer();
-	private RepositoryProvider _repositoryProvider;
 
 }

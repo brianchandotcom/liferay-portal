@@ -15,8 +15,6 @@
 package com.liferay.portal.portletfilerepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.repository.Repository;
-import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.WorkflowCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -74,11 +72,8 @@ public class PortletFileRepositoryTest {
 		FileEntry fileEntry = _addPortletFileEntry(
 			RandomTestUtil.randomString());
 
-		Repository repository = RepositoryProviderUtil.getRepository(
-			fileEntry.getRepositoryId());
-
-		WorkflowCapability workflowCapability = repository.getCapability(
-			WorkflowCapability.class);
+		WorkflowCapability workflowCapability =
+			fileEntry.getRepositoryCapability(WorkflowCapability.class);
 
 		Assert.assertEquals(
 			WorkflowConstants.STATUS_APPROVED,

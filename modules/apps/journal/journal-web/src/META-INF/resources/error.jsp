@@ -18,6 +18,7 @@
 
 <liferay-ui:error-header />
 
+<liferay-ui:error exception="<%= ConfigurationException.MustBeStrictPortlet.class %>" message="the-portlet-is-not-configured-correctly" />
 <liferay-ui:error exception="<%= NoSuchArticleException.class %>" message="the-web-content-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchStructureException.class %>" message="the-structure-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchTemplateException.class %>" message="the-template-could-not-be-found" />

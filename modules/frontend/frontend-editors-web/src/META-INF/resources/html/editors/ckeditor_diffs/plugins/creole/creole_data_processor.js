@@ -198,13 +198,9 @@
 				if (!instance._skipParse) {
 					data = data.replace(REGEX_NEWLINE, STR_BLANK);
 
-					var isHeader;
+					var header = instance._isParentNode(element, 'h1') || instance._isParentNode(element, 'h2') || instance._isParentNode(element, 'h3') || instance._isParentNode(element, 'h4') || instance._isParentNode(element, 'h5') || instance._isParentNode(element, 'h6');
 
-					if (instance._isParentNode(element, 'h1') || instance._isParentNode(element, 'h2') || instance._isParentNode(element, 'h3') || instance._isParentNode(element, 'h4') || instance._isParentNode(element, 'h5') || instance._isParentNode(element, 'h6')) {
-						isHeader = true;
-					}
-
-					if (!isHeader) {
+					if (!header) {
 						data = data.replace(
 							REGEX_CREOLE_RESERVED_CHARACTERS,
 							function(match, p1, offset, string) {

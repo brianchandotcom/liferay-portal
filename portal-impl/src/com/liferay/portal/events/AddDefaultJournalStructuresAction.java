@@ -15,19 +15,20 @@
 package com.liferay.portal.events;
 
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.dynamicdatamapping.util.DefaultDDMStructureUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * @author Eudaldo Alonso
  */
-public class AddDefaultJournalStructuresAction
-	extends BaseDefaultDDMStructureAction {
+public class AddDefaultJournalStructuresAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -53,10 +54,15 @@ public class AddDefaultJournalStructuresAction
 
 		serviceContext.setUserId(defaultUserId);
 
-		addDDMStructures(
+		DefaultDDMStructureUtil.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
-			"basic-web-content-structure.xml", serviceContext);
+			AddDefaultJournalStructuresAction.class.getClassLoader(),
+			_STRUCTURES_FILE_PATH, serviceContext);
 	}
+
+	private static final String _STRUCTURES_FILE_PATH =
+		"com/liferay/portal/events/dependencies/" +
+			"basic-web-content-structure.xml";
 
 }

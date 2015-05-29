@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.events;
+package com.liferay.portal.util;
 
-import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -27,7 +26,6 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashMap;
@@ -39,9 +37,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eudaldo Alonso
  */
-public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
+public class DefaultLayoutPrototypesUtil {
 
-	protected Layout addLayout(
+	public static Layout addLayout(
 			LayoutSet layoutSet, String nameKey, String friendlyURL,
 			String layouteTemplateId)
 		throws Exception {
@@ -75,7 +73,7 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 		return layout;
 	}
 
-	protected String addPortletId(
+	public static String addPortletId(
 			Layout layout, String portletId, String columnId)
 		throws Exception {
 
@@ -92,23 +90,7 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 		return portletId;
 	}
 
-	protected void addResourcePermissions(Layout layout, String portletId)
-		throws Exception {
-
-		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			layout.getCompanyId(), portletId);
-
-		PortalUtil.addPortletDefaultResource(
-			layout.getCompanyId(), layout, portlet);
-	}
-
-	protected void updateLayout(Layout layout) throws Exception {
-		LayoutLocalServiceUtil.updateLayout(
-			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
-			layout.getTypeSettings());
-	}
-
-	protected PortletPreferences updatePortletSetup(
+	public static PortletPreferences updatePortletSetup(
 			Layout layout, String portletId, Map<String, String> preferences)
 		throws Exception {
 
@@ -126,6 +108,23 @@ public abstract class BaseDefaultLayoutPrototypesAction extends SimpleAction {
 		portletSetup.store();
 
 		return portletSetup;
+	}
+
+	protected static void addResourcePermissions(
+			Layout layout, String portletId)
+		throws Exception {
+
+		Portlet portlet = PortletLocalServiceUtil.getPortletById(
+			layout.getCompanyId(), portletId);
+
+		PortalUtil.addPortletDefaultResource(
+			layout.getCompanyId(), layout, portlet);
+	}
+
+	protected static void updateLayout(Layout layout) throws Exception {
+		LayoutLocalServiceUtil.updateLayout(
+			layout.getGroupId(), layout.isPrivateLayout(), layout.getLayoutId(),
+			layout.getTypeSettings());
 	}
 
 }

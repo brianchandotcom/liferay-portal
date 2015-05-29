@@ -34,7 +34,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
-import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.service.CompanyLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -701,13 +701,13 @@ public class AssetPublisherPortletDataHandler
 						nsle);
 				}
 			}
-			catch (PrincipalException pe) {
+			catch (ConfigurationException ce) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
 							"referenced parent group no longer allows " +
 								"sharing content with child sites",
-						pe);
+						ce);
 				}
 			}
 		}

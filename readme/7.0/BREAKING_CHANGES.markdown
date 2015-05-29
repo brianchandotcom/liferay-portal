@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `a7e9290`.*
+*This document has been reviewed through commit `f7b331c`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1697,29 +1697,29 @@ Document Library easier when modularizing the portal.
 
 ---------------------------------------
 
-### Removed permissionClassName, permissionClassPK and permissionOwner parameters from MBMessage API
+### Removed permissionClassName, permissionClassPK, and permissionOwner Parameters from MBMessage API
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55877
 
 #### What changed?
 
-The parameters `permissionClassName`, `permissionClassPK` and `permissionOwner`
-have been removed from Message Boards API and Discussion taglib.
+The parameters `permissionClassName`, `permissionClassPK`, and `permissionOwner`
+have been removed from the Message Boards API and Discussion tag.
 
 #### Who is affected?
 
-Any code that invokes the affected methods (locally or remotely) as well as any
-view that uses the Discusion taglib.
+This affects anyone that invokes the affected methods (locally or remotely) and
+any view that uses the Discussion tag.
 
 #### How should I update my code?
 
 It suffices to remove the parameters from the method calls (for consumers of the
-API) or the attributes in taglib invocations.
+API) or the attributes in tag invocations.
 
 #### Why was this change made?
 
-Those API methods were exposed in the remote services, allowing any cosumer to
-bypass the permission system by providing customized className, classPK or
-ownerId.
+Those API methods were exposed in the remote services, allowing any consumer to
+bypass the permission system by providing customized `className`, `classPK`, or
+`ownerId`.
 
 ---------------------------------------

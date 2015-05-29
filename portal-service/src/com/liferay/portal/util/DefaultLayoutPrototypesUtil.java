@@ -20,15 +20,18 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.LayoutPrototypeLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -64,6 +67,50 @@ public class DefaultLayoutPrototypesUtil {
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, nameMap, null, null, null,
 			null, LayoutConstants.TYPE_PORTLET, StringPool.BLANK, false,
 			friendlyURLMap, serviceContext);
+
+		LayoutTypePortlet layoutTypePortlet =
+			(LayoutTypePortlet)layout.getLayoutType();
+
+		layoutTypePortlet.setLayoutTemplateId(0, layouteTemplateId, false);
+
+		return layout;
+	}
+
+	public static Layout addLayoutPrototype(
+			long companyId, long defaultUserId, String nameKey,
+			String descriptionKey, String layouteTemplateId,
+			List<LayoutPrototype> layoutPrototypes)
+		throws Exception {
+
+		String name = LanguageUtil.get(LocaleUtil.getDefault(), nameKey);
+		String description = LanguageUtil.get(
+			LocaleUtil.getDefault(), descriptionKey);
+
+		for (LayoutPrototype layoutPrototype : layoutPrototypes) {
+			String curName = layoutPrototype.getName(LocaleUtil.getDefault());
+			String curDescription = layoutPrototype.getDescription(
+				LocaleUtil.getDefault());
+
+			if (name.equals(curName) && description.equals(curDescription)) {
+				return null;
+			}
+		}
+
+		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		for (Locale locale : LanguageUtil.getAvailableLocales()) {
+			nameMap.put(locale, LanguageUtil.get(locale, nameKey));
+			descriptionMap.put(
+				locale, LanguageUtil.get(locale, descriptionKey));
+		}
+
+		LayoutPrototype layoutPrototype =
+			LayoutPrototypeLocalServiceUtil.addLayoutPrototype(
+				defaultUserId, companyId, nameMap, descriptionMap, true,
+				new ServiceContext());
+
+		Layout layout = layoutPrototype.getLayout();
 
 		LayoutTypePortlet layoutTypePortlet =
 			(LayoutTypePortlet)layout.getLayoutType();

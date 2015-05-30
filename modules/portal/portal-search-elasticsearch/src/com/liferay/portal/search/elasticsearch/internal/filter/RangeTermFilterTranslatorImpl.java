@@ -33,7 +33,7 @@ public class RangeTermFilterTranslatorImpl
 	@Override
 	public FilterBuilder translate(RangeTermFilter rangeTermFilter) {
 		RangeFilterBuilder rangeFilterBuilder = FilterBuilders.rangeFilter(
-			rangeTermFilter.getFieldName());
+			rangeTermFilter.getField());
 
 		rangeFilterBuilder.cache(rangeTermFilter.isCached());
 		rangeFilterBuilder.from(rangeTermFilter.getLowerBound());

@@ -23,11 +23,11 @@ import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 public class GeoDistanceRangeFilter extends RangeTermFilter {
 
 	public GeoDistanceRangeFilter(
-		String fieldName, boolean includesLower, boolean includesUpper,
+		String field, boolean includesLower, boolean includesUpper,
 		GeoDistance lowerBoundGeoDistance, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance upperBoundGeoDistance) {
 
-		super(fieldName, includesLower, includesUpper);
+		super(field, includesLower, includesUpper);
 
 		_lowerBoundGeoDistance = lowerBoundGeoDistance;
 		_pinGeoLocationPoint = pinGeoLocationPoint;

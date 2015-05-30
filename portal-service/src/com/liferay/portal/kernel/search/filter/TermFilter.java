@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.StringBundler;
  */
 public class TermFilter extends BaseFilter {
 
-	public TermFilter(String fieldName, String value) {
-		_fieldName = fieldName;
+	public TermFilter(String field, String value) {
+		_field = field;
 		_value = value;
 	}
 
@@ -31,8 +31,8 @@ public class TermFilter extends BaseFilter {
 		return filterVisitor.visit(this);
 	}
 
-	public String getFieldName() {
-		return _fieldName;
+	public String getField() {
+		return _field;
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class TermFilter extends BaseFilter {
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("{(");
-		sb.append(_fieldName);
+		sb.append(_field);
 		sb.append("=");
 		sb.append(_value);
 		sb.append("), ");
@@ -59,7 +59,7 @@ public class TermFilter extends BaseFilter {
 		return sb.toString();
 	}
 
-	private final String _fieldName;
+	private final String _field;
 	private final String _value;
 
 }

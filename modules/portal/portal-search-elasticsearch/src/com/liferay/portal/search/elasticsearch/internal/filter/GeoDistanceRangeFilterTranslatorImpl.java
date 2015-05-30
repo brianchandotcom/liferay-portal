@@ -37,7 +37,7 @@ public class GeoDistanceRangeFilterTranslatorImpl
 
 		GeoDistanceRangeFilterBuilder geoDistanceRangeFilterBuilder =
 			FilterBuilders.geoDistanceRangeFilter(
-				geoDistanceRangeFilter.getFieldName());
+				geoDistanceRangeFilter.getField());
 
 		geoDistanceRangeFilterBuilder.cache(geoDistanceRangeFilter.isCached());
 		geoDistanceRangeFilterBuilder.from(

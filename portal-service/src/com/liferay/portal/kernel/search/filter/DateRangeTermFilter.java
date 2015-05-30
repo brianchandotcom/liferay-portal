@@ -25,10 +25,10 @@ import java.util.TimeZone;
 public class DateRangeTermFilter extends RangeTermFilter {
 
 	public DateRangeTermFilter(
-		String fieldName, boolean includesLower, boolean includesUpper,
+		String field, boolean includesLower, boolean includesUpper,
 		String startDate, String endDate) {
 
-		super(fieldName, includesLower, includesUpper, startDate, endDate);
+		super(field, includesLower, includesUpper, startDate, endDate);
 	}
 
 	public String getDateFormat() {

@@ -34,7 +34,7 @@ public class GeoPolygonFilterTranslatorImpl
 	@Override
 	public FilterBuilder translate(GeoPolygonFilter geoPolygonFilter) {
 		GeoPolygonFilterBuilder geoPolygonFilterBuilder =
-			FilterBuilders.geoPolygonFilter(geoPolygonFilter.getFieldName());
+			FilterBuilders.geoPolygonFilter(geoPolygonFilter.getField());
 
 		for (GeoLocationPoint geoLocationPoint :
 				geoPolygonFilter.getGeoLocationPoints()) {

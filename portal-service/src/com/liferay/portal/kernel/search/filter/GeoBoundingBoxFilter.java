@@ -22,10 +22,10 @@ import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 public class GeoBoundingBoxFilter extends BaseFilter {
 
 	public GeoBoundingBoxFilter(
-		String fieldName, GeoLocationPoint topLeftGeoLocationPoint,
+		String field, GeoLocationPoint topLeftGeoLocationPoint,
 		GeoLocationPoint bottomRightGeoLocationPoint) {
 
-		_fieldName = fieldName;
+		_field = field;
 		_topLeftGeoLocationPoint = topLeftGeoLocationPoint;
 		_bottomRightGeoLocationPoint = bottomRightGeoLocationPoint;
 	}
@@ -39,8 +39,8 @@ public class GeoBoundingBoxFilter extends BaseFilter {
 		return _bottomRightGeoLocationPoint;
 	}
 
-	public String getFieldName() {
-		return _fieldName;
+	public String getField() {
+		return _field;
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class GeoBoundingBoxFilter extends BaseFilter {
 	}
 
 	private final GeoLocationPoint _bottomRightGeoLocationPoint;
-	private final String _fieldName;
+	private final String _field;
 	private final GeoLocationPoint _topLeftGeoLocationPoint;
 
 }

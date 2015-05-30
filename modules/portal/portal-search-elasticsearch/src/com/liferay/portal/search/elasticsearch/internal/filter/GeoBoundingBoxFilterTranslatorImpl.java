@@ -36,7 +36,7 @@ public class GeoBoundingBoxFilterTranslatorImpl
 	public FilterBuilder translate(GeoBoundingBoxFilter geoBoundingBoxFilter) {
 		GeoBoundingBoxFilterBuilder geoBoundingBoxFilterBuilder =
 			FilterBuilders.geoBoundingBoxFilter(
-				geoBoundingBoxFilter.getFieldName());
+				geoBoundingBoxFilter.getField());
 
 		GeoLocationPoint bottomRightGeoLocationPoint =
 			geoBoundingBoxFilter.getBottomRightGeoLocationPoint();

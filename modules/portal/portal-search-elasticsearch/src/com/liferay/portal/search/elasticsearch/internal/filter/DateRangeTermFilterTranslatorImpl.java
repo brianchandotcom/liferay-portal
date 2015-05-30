@@ -37,7 +37,7 @@ public class DateRangeTermFilterTranslatorImpl
 	@Override
 	public FilterBuilder translate(DateRangeTermFilter dateRangeTermFilter) {
 		RangeFilterBuilder rangeFilterBuilder = FilterBuilders.rangeFilter(
-			dateRangeTermFilter.getFieldName());
+			dateRangeTermFilter.getField());
 
 		rangeFilterBuilder.cache(dateRangeTermFilter.isCached());
 

@@ -23,10 +23,10 @@ import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 public class GeoDistanceFilter extends BaseFilter {
 
 	public GeoDistanceFilter(
-		String fieldName, GeoLocationPoint pinGeoLocationPoint,
+		String field, GeoLocationPoint pinGeoLocationPoint,
 		GeoDistance geoDistance) {
 
-		_fieldName = fieldName;
+		_field = field;
 		_pinGeoLocationPoint = pinGeoLocationPoint;
 		_geoDistance = geoDistance;
 	}
@@ -36,8 +36,8 @@ public class GeoDistanceFilter extends BaseFilter {
 		return filterVisitor.visit(this);
 	}
 
-	public String getFieldName() {
-		return _fieldName;
+	public String getField() {
+		return _field;
 	}
 
 	public GeoDistance getGeoDistance() {
@@ -53,7 +53,7 @@ public class GeoDistanceFilter extends BaseFilter {
 		return 100;
 	}
 
-	private final String _fieldName;
+	private final String _field;
 	private final GeoDistance _geoDistance;
 	private final GeoLocationPoint _pinGeoLocationPoint;
 

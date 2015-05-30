@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.util.StringPool;
 public class RangeTermFilter extends BaseFilter {
 
 	public RangeTermFilter(
-		String fieldName, boolean includesLower, boolean includesUpper) {
+		String field, boolean includesLower, boolean includesUpper) {
 
-		_fieldName = fieldName;
+		_field = field;
 		_includesLower = includesLower;
 		_includesUpper = includesUpper;
 
@@ -33,10 +33,10 @@ public class RangeTermFilter extends BaseFilter {
 	}
 
 	public RangeTermFilter(
-		String fieldName, boolean includesLower, boolean includesUpper,
+		String field, boolean includesLower, boolean includesUpper,
 		String lowerBound, String upperBound) {
 
-		_fieldName = fieldName;
+		_field = field;
 		_includesLower = includesLower;
 		_includesUpper = includesUpper;
 		_lowerBound = lowerBound;
@@ -50,8 +50,8 @@ public class RangeTermFilter extends BaseFilter {
 		return filterVisitor.visit(this);
 	}
 
-	public String getFieldName() {
-		return _fieldName;
+	public String getField() {
+		return _field;
 	}
 
 	public String getLowerBound() {
@@ -98,7 +98,7 @@ public class RangeTermFilter extends BaseFilter {
 		sb.append("{(");
 		sb.append(_lowerBound);
 		sb.append(_lowerBoundOperator);
-		sb.append(_fieldName);
+		sb.append(_field);
 		sb.append(_upperBoundOperator);
 		sb.append(_upperBound);
 		sb.append("), ");
@@ -150,7 +150,7 @@ public class RangeTermFilter extends BaseFilter {
 		}
 	}
 
-	private final String _fieldName;
+	private final String _field;
 	private final boolean _includesLower;
 	private final boolean _includesUpper;
 	private String _lowerBound;

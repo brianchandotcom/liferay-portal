@@ -34,7 +34,7 @@ public class GeoDistanceFilterTranslatorImpl
 	@Override
 	public FilterBuilder translate(GeoDistanceFilter geoDistanceFilter) {
 		GeoDistanceFilterBuilder geoDistanceFilterBuilder =
-			FilterBuilders.geoDistanceFilter(geoDistanceFilter.getFieldName());
+			FilterBuilders.geoDistanceFilter(geoDistanceFilter.getField());
 
 		geoDistanceFilterBuilder.cache(geoDistanceFilter.isCached());
 		geoDistanceFilterBuilder.distance(

@@ -32,7 +32,7 @@ public class TermFilterTranslatorImpl implements TermFilterTranslator {
 	@Override
 	public FilterBuilder translate(TermFilter termFilter) {
 		TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
-			termFilter.getFieldName(), termFilter.getValue());
+			termFilter.getField(), termFilter.getValue());
 
 		termFilterBuilder.cache(termFilter.isCached());
 

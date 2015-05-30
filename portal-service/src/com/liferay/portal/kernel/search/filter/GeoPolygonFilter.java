@@ -25,8 +25,8 @@ import java.util.Set;
  */
 public class GeoPolygonFilter extends BaseFilter {
 
-	public GeoPolygonFilter(String fieldName) {
-		_fieldName = fieldName;
+	public GeoPolygonFilter(String field) {
+		_field = field;
 	}
 
 	@Override
@@ -38,8 +38,8 @@ public class GeoPolygonFilter extends BaseFilter {
 		_geoLocationPoints.add(geoLocationPoint);
 	}
 
-	public String getFieldName() {
-		return _fieldName;
+	public String getField() {
+		return _field;
 	}
 
 	public Set<GeoLocationPoint> getGeoLocationPoints() {
@@ -51,7 +51,7 @@ public class GeoPolygonFilter extends BaseFilter {
 		return 140;
 	}
 
-	private final String _fieldName;
+	private final String _field;
 	private final Set<GeoLocationPoint> _geoLocationPoints = new HashSet<>();
 
 }

@@ -19,12 +19,12 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
-import com.liferay.poshi.runner.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringEscapeUtils;
@@ -38,6 +38,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 /**
  * @author Michael Hashimoto
  */
+
 public final class LoggerUtil {
 
 	public static void addChildLoggerElement(
@@ -47,54 +48,60 @@ public final class LoggerUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		StringBuilder defaultAttr = new StringBuilder();
 
-		sb.append("var parentNode = document.getElementById('");
-		sb.append(parentLoggerElement.getID());
-		sb.append("');");
+		defaultAttr.append("{");
+		defaultAttr.append("cssClass : '");
+		defaultAttr.append(
+			StringEscapeUtils.escapeEcmaScript(
+				childLoggerElement.getClassName()));
+		defaultAttr.append("',");
+		defaultAttr.append("id : '");
+		defaultAttr.append(
+			StringEscapeUtils.escapeEcmaScript(childLoggerElement.getID()));
+		defaultAttr.append("',");
+		defaultAttr.append("innerHTML : '");
+		defaultAttr.append(
+			StringEscapeUtils.escapeEcmaScript(childLoggerElement.getText()));
+		defaultAttr.append("',");
+		defaultAttr.append("name : '");
+		defaultAttr.append(
+			StringEscapeUtils.escapeEcmaScript(childLoggerElement.getName()));
+		defaultAttr.append("',");
+		defaultAttr.append("parentId : '");
+		defaultAttr.append(
+			StringEscapeUtils.escapeEcmaScript(parentLoggerElement.getID()));
+		defaultAttr.append("'");
+		defaultAttr.append("}");
 
-		sb.append("var childNode = document.createElement('");
-		sb.append(childLoggerElement.getName());
-		sb.append("');");
+		StringBuilder extraAttr = new StringBuilder();
 
-		if (Validator.isNotNull(childLoggerElement.getClassName())) {
-			sb.append("childNode.setAttribute('class', '");
-			sb.append(
-				StringEscapeUtils.escapeEcmaScript(
-					childLoggerElement.getClassName()));
-			sb.append("');");
-		}
-
-		if (Validator.isNotNull(childLoggerElement.getText())) {
-			sb.append("childNode.innerHTML = '");
-			sb.append(
-				StringEscapeUtils.escapeEcmaScript(
-					childLoggerElement.getText()));
-			sb.append("';");
-		}
+		extraAttr.append("{");
 
 		List<String> attributeNames = childLoggerElement.getAttributeNames();
 
-		if (!attributeNames.isEmpty()) {
-			for (String attributeName : attributeNames) {
-				sb.append("childNode.setAttribute('");
-				sb.append(StringEscapeUtils.escapeEcmaScript(attributeName));
-				sb.append("', '");
-				sb.append(
-					StringEscapeUtils.escapeEcmaScript(
-						childLoggerElement.getAttributeValue(attributeName)));
-				sb.append("');");
+		Iterator<String> iterator = attributeNames.iterator();
+
+		while (iterator.hasNext()) {
+			String attributeName = iterator.next();
+
+			String strAttributeName = StringEscapeUtils.escapeEcmaScript(
+				attributeName);
+			String strAttributeValue = StringEscapeUtils.escapeEcmaScript(
+				childLoggerElement.getAttributeValue(attributeName));
+
+			extraAttr.append(
+				"'" + strAttributeName + "' : '" + strAttributeValue + "'");
+
+			if (iterator.hasNext()) {
+				extraAttr.append(",");
 			}
 		}
 
-		sb.append("childNode.setAttribute('id', '");
-		sb.append(
-			StringEscapeUtils.escapeEcmaScript(childLoggerElement.getID()));
-		sb.append("');");
+		extraAttr.append("}");
 
-		sb.append("parentNode.appendChild(childNode);");
-
-		_javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(
+			"addChildLoggerElement(" + defaultAttr + ", " + extraAttr + ");");
 	}
 
 	public static void executeJavaScript(String script) {
@@ -110,15 +117,8 @@ public final class LoggerUtil {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("return node.getAttribute('class');");
-
-		return (String)_javascriptExecutor.executeScript(sb.toString());
+		return (String)_javascriptExecutor.executeScript(
+			"getClassName(" + loggerElement.getID() + ");");
 	}
 
 	public static String getName(LoggerElement loggerElement) {
@@ -126,15 +126,8 @@ public final class LoggerUtil {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("return node.nodeName;");
-
-		return (String)_javascriptExecutor.executeScript(sb.toString());
+		return (String)_javascriptExecutor.executeScript(
+			"getName(" + loggerElement.getID() + ");");
 	}
 
 	public static String getText(LoggerElement loggerElement) {
@@ -142,15 +135,8 @@ public final class LoggerUtil {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("return node.innerHTML;");
-
-		return (String)_javascriptExecutor.executeScript(sb.toString());
+		return (String)_javascriptExecutor.executeScript(
+			"getText(" + loggerElement.getID() + ");");
 	}
 
 	public static boolean isLoggerStarted() {
@@ -166,19 +152,13 @@ public final class LoggerUtil {
 			return false;
 		}
 
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("if (node == null) {");
-		sb.append("return false;");
-		sb.append("}");
-
-		sb.append("return true;");
-
-		return (boolean)_javascriptExecutor.executeScript(sb.toString());
+		try {
+			return (boolean)_javascriptExecutor.executeScript(
+				"isWrittenToLogger(" + loggerElement.getID() + ");");
+		}
+		catch (Exception e) {
+			return false;
+		}
 	}
 
 	public static void setAttribute(
@@ -189,19 +169,14 @@ public final class LoggerUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String strAttributeName = StringEscapeUtils.escapeEcmaScript(
+			attributeName);
+		String strAttributeValue = StringEscapeUtils.escapeEcmaScript(
+			attributeValue);
 
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("node.setAttribute('");
-		sb.append(StringEscapeUtils.escapeEcmaScript(attributeName));
-		sb.append("', '");
-		sb.append(StringEscapeUtils.escapeEcmaScript(attributeValue));
-		sb.append("');");
-
-		_javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(
+			"setAttribute(" + loggerElement.getID() + ", '" + strAttributeName +
+				"', '" + strAttributeValue + "');");
 	}
 
 	public static void setClassName(LoggerElement loggerElement) {
@@ -209,18 +184,12 @@ public final class LoggerUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String className = StringEscapeUtils.escapeEcmaScript(
+			loggerElement.getClassName());
 
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("node.setAttribute('class', '");
-		sb.append(
-			StringEscapeUtils.escapeEcmaScript(loggerElement.getClassName()));
-		sb.append("');");
-
-		_javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(
+			"setClassName(" + loggerElement.getID() + ", '" + className +
+				"');");
 	}
 
 	public static void setID(LoggerElement loggerElement) {
@@ -228,17 +197,10 @@ public final class LoggerUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String id = StringEscapeUtils.escapeEcmaScript(loggerElement.getID());
 
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("node.setAttribute('id', '");
-		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getID()));
-		sb.append("');");
-
-		_javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(
+			"setID(" + loggerElement.getID() + ", '" + id + "');");
 	}
 
 	public static void setName(LoggerElement loggerElement) {
@@ -246,29 +208,11 @@ public final class LoggerUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String name = StringEscapeUtils.escapeEcmaScript(
+			loggerElement.getName());
 
-		sb.append("var oldNode = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("var newNode = document.createElement('");
-		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getName()));
-		sb.append("');");
-
-		sb.append("newNode.innerHTML = oldNode.innerHTML;");
-		sb.append(
-			"newNode.setAttribute('class', oldNode.getAttribute('class'));");
-		sb.append("newNode.setAttribute('id', oldNode.getAttribute('id'));");
-
-		sb.append(
-			"oldNode.parentNode.insertBefore(newNode, oldNode.nextSibling);");
-
-		sb.append("var parentNode = oldNode.parentNode;");
-
-		sb.append("parentNode.removeChild(oldNode);");
-
-		_javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(
+			"setName(" + loggerElement.getID() + ", '" + name + "');");
 	}
 
 	public static void setText(LoggerElement loggerElement) {
@@ -276,17 +220,11 @@ public final class LoggerUtil {
 			return;
 		}
 
-		StringBuilder sb = new StringBuilder();
+		String text = StringEscapeUtils.escapeEcmaScript(
+			loggerElement.getText());
 
-		sb.append("var node = document.getElementById('");
-		sb.append(loggerElement.getID());
-		sb.append("');");
-
-		sb.append("node.innerHTML = '");
-		sb.append(StringEscapeUtils.escapeEcmaScript(loggerElement.getText()));
-		sb.append("';");
-
-		_javascriptExecutor.executeScript(sb.toString());
+		_javascriptExecutor.executeScript(
+			"setText(" + loggerElement.getID() + ", '" + text + "');");
 	}
 
 	public static void startLogger() throws Exception {
@@ -309,9 +247,15 @@ public final class LoggerUtil {
 
 		FileUtil.write(_CURRENT_DIR + "/test-results/css/main.css", cssContent);
 
-		String jsContent = _readResource("META-INF/resources/js/main.js");
+		String jsMain = _readResource("META-INF/resources/js/main.js");
 
-		FileUtil.write(_CURRENT_DIR + "/test-results/js/main.js", jsContent);
+		FileUtil.write(_CURRENT_DIR + "/test-results/js/main.js", jsMain);
+
+		String jsComponent = _readResource(
+			"META-INF/resources/js/component.js");
+
+		FileUtil.write(
+			_CURRENT_DIR + "/test-results/js/component.js", jsComponent);
 
 		String htmlContent = _readResource(
 			"META-INF/resources/html/index.html");
@@ -337,10 +281,15 @@ public final class LoggerUtil {
 			FileUtil.write(
 				_CURRENT_DIR + "/test-results/css/main.css", cssContent);
 
-			String jsContent = _readResource("META-INF/resources/js/main.js");
+			String jsMain = _readResource("META-INF/resources/js/main.js");
+
+			FileUtil.write(_CURRENT_DIR + "/test-results/js/main.js", jsMain);
+
+			String jsComponent = _readResource(
+				"META-INF/resources/js/component.js");
 
 			FileUtil.write(
-				_CURRENT_DIR + "/test-results/js/main.js", jsContent);
+				_CURRENT_DIR + "/test-results/js/component.js", jsComponent);
 		}
 
 		String htmlContent = _readResource(
@@ -367,6 +316,9 @@ public final class LoggerUtil {
 			htmlContent = StringUtil.replace(
 				htmlContent, "<script src=\"../js/main.js\"",
 				"<script src=\"" + sb.toString() + "/js/main.js\"");
+			htmlContent = StringUtil.replace(
+				htmlContent, "<script src=\"../js/component.js\"",
+				"<script src=\"" + sb.toString() + "/js/component.js\"");
 		}
 
 		FileUtil.write(_getHtmlFilePath(), htmlContent);

@@ -55,6 +55,11 @@ public class BooleanClauseOccurImpl implements BooleanClauseOccur {
 		return _name.hashCode();
 	}
 
+	@Override
+	public String toString() {
+		return _name;
+	}
+
 	private final String _name;
 
 }

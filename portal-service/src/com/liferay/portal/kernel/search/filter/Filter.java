@@ -12,25 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
-
-import com.liferay.portal.kernel.search.filter.Filter;
+package com.liferay.portal.kernel.search.filter;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public interface BooleanClauseFactory {
+public interface Filter {
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, Query query, String occur);
+	public <T> T accept(FilterVisitor<T> filterVisitor);
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur);
+	public String getExecutionOption();
 
-	public BooleanClause<Filter> createFilter(
-		Filter filter, BooleanClauseOccur booleanClauseOccur);
+	public int getSortOrder();
 
-	public BooleanClause<Filter> createFilter(
-		String field, String value, BooleanClauseOccur booleanClauseOccur);
+	public boolean isCached();
+
+	public void setCached(boolean cached);
+
+	public void setExecutionOption(String executionOption);
 
 }

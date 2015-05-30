@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
 import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
 import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
+import com.liferay.portal.kernel.search.generic.WildcardQueryFactoryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
@@ -92,6 +93,15 @@ public class BaseSearchEngine implements SearchEngine {
 	}
 
 	@Override
+	public WildcardQueryFactory getWildcardQueryFactory() {
+		if (_wildcardQueryFactory == null) {
+			_wildcardQueryFactory = new WildcardQueryFactoryImpl();
+		}
+
+		return _wildcardQueryFactory;
+	}
+
+	@Override
 	public void initialize(long companyId) {
 	}
 
@@ -156,5 +166,6 @@ public class BaseSearchEngine implements SearchEngine {
 	private TermQueryFactory _termQueryFactory;
 	private TermRangeQueryFactory _termRangeQueryFactory;
 	private String _vendor;
+	private WildcardQueryFactory _wildcardQueryFactory;
 
 }

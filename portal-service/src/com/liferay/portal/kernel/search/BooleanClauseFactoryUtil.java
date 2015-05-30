@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.filter.Filter;
+
 /**
  * @author Bruno Farache
  */
@@ -31,6 +33,22 @@ public class BooleanClauseFactoryUtil {
 
 		return getBooleanClauseFactory(searchContext).create(
 			searchContext, field, value, occur);
+	}
+
+	public static BooleanClause<Filter> createFilter(
+		SearchContext searchContext, Filter filter,
+		BooleanClauseOccur booleanClauseOccur) {
+
+		return getBooleanClauseFactory(searchContext).createFilter(
+			filter, booleanClauseOccur);
+	}
+
+	public static BooleanClause<Filter> createFilter(
+		SearchContext searchContext, String field, String value,
+		BooleanClauseOccur booleanClauseOccur) {
+
+		return getBooleanClauseFactory(searchContext).createFilter(
+			field, value, booleanClauseOccur);
 	}
 
 	public static BooleanClauseFactory getBooleanClauseFactory(

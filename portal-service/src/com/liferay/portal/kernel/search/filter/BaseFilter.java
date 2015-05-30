@@ -12,57 +12,51 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.generic;
+package com.liferay.portal.kernel.search.filter;
 
-import com.liferay.portal.kernel.search.BooleanClause;
-import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.util.StringBundler;
 
 /**
  * @author Michael C. Han
  */
-public class BooleanClauseImpl<T> implements BooleanClause<T> {
+public abstract class BaseFilter implements Filter {
 
-	public BooleanClauseImpl(T t, BooleanClauseOccur booleanClauseOccur) {
-		_t = t;
-
-		_booleanClauseOccur = booleanClauseOccur;
+	@Override
+	public String getExecutionOption() {
+		return _executionOption;
 	}
 
 	@Override
-	public BooleanClauseOccur getBooleanClauseOccur() {
-		return _booleanClauseOccur;
+	public boolean isCached() {
+		return _cached;
 	}
 
 	@Override
-	public T getClause() {
-		return _t;
+	public void setCached(boolean cached) {
+		_cached = cached;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getClause}
-	 */
-	@Deprecated
 	@Override
-	public T getQuery() {
-		return getClause();
+	public void setExecutionOption(String executionOption) {
+		_executionOption = executionOption;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("{");
-		sb.append(_booleanClauseOccur);
 		sb.append("(");
-		sb.append(_t);
+		sb.append("executionOption=");
+		sb.append(_executionOption);
+		sb.append(", ");
+		sb.append("cached=");
+		sb.append(_cached);
 		sb.append(")");
-		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private final BooleanClauseOccur _booleanClauseOccur;
-	private final T _t;
+	private boolean _cached;
+	private String _executionOption;
 
 }

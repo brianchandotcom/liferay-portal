@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
-
-import com.liferay.portal.kernel.search.filter.Filter;
+package com.liferay.portal.kernel.search.filter;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public interface BooleanClauseFactory {
+public interface FilterVisitor<T> {
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, Query query, String occur);
+	public T visit(BooleanFilter booleanFilter);
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur);
+	public T visit(DateRangeTermFilter dateRangeTermFilter);
 
-	public BooleanClause<Filter> createFilter(
-		Filter filter, BooleanClauseOccur booleanClauseOccur);
+	public T visit(GeoBoundingBoxFilter geoBoundingBoxFilter);
 
-	public BooleanClause<Filter> createFilter(
-		String field, String value, BooleanClauseOccur booleanClauseOccur);
+	public T visit(GeoDistanceFilter geoDistanceFilter);
+
+	public T visit(GeoDistanceRangeFilter geoDistanceRangeFilter);
+
+	public T visit(GeoPolygonFilter geoPolygonFilter);
+
+	public T visit(QueryFilter queryFilter);
+
+	public T visit(RangeTermFilter rangeTermFilter);
+
+	public T visit(TermFilter termFilter);
 
 }

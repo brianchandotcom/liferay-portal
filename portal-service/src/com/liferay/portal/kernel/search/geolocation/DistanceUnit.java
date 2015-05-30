@@ -12,25 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
-
-import com.liferay.portal.kernel.search.filter.Filter;
+package com.liferay.portal.kernel.search.geolocation;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public interface BooleanClauseFactory {
+public enum DistanceUnit {
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, Query query, String occur);
+	CENTIMETERS("cm"), FEET("ft"), INCHES("in"), KILOMETERS("km"), METERS("m"),
+	MILES("mi"), MILLIMETERS("mm"), YARDS("yd");
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur);
+	public String getUnit() {
+		return _unit;
+	}
 
-	public BooleanClause<Filter> createFilter(
-		Filter filter, BooleanClauseOccur booleanClauseOccur);
+	@Override
+	public String toString() {
+		return _unit;
+	}
 
-	public BooleanClause<Filter> createFilter(
-		String field, String value, BooleanClauseOccur booleanClauseOccur);
+	private DistanceUnit(String unit) {
+		_unit = unit;
+	}
+
+	private final String _unit;
 
 }

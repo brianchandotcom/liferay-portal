@@ -12,36 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.elasticsearch.filter;
 
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.query.QueryVisitor;
+import com.liferay.portal.kernel.search.filter.FilterVisitor;
 
-import java.io.Serializable;
+import org.elasticsearch.index.query.FilterBuilder;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface Query extends Serializable {
+public interface BooleanFilterTranslator {
 
-	public static final float BOOST_DEFAULT = 1.0f;
-
-	public <T> T accept(QueryVisitor<T> queryVisitor);
-
-	public float getBoost();
-
-	public BooleanFilter getPreFilter();
-
-	public QueryConfig getQueryConfig();
-
-	public Object getWrappedQuery();
-
-	public boolean isDefaultBoost();
-
-	public void setBoost(float boost);
-
-	public void setPreFilter(BooleanFilter preFilter);
-
-	public void setQueryConfig(QueryConfig queryConfig);
+	public FilterBuilder translate(
+		BooleanFilter booleanFilter,
+		FilterVisitor<FilterBuilder> filterVisitor);
 
 }

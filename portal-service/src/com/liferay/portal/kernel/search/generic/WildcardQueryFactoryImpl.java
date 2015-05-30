@@ -12,25 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.generic;
 
-import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.WildcardQueryFactory;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public interface BooleanClauseFactory {
+public class WildcardQueryFactoryImpl implements WildcardQueryFactory {
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, Query query, String occur);
-
-	public BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur);
-
-	public BooleanClause<Filter> createFilter(
-		Filter filter, BooleanClauseOccur booleanClauseOccur);
-
-	public BooleanClause<Filter> createFilter(
-		String field, String value, BooleanClauseOccur booleanClauseOccur);
+	@Override
+	public WildcardQuery create(String field, String value) {
+		return new WildcardQueryImpl(
+			new QueryTermImpl(field, String.valueOf(value)));
+	}
 
 }

@@ -14,34 +14,26 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.query.QueryVisitor;
-
-import java.io.Serializable;
-
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface Query extends Serializable {
+public class WildcardQueryFactoryUtil {
 
-	public static final float BOOST_DEFAULT = 1.0f;
+	public static WildcardQuery create(
+		SearchContext searchContext, String field, String value) {
 
-	public <T> T accept(QueryVisitor<T> queryVisitor);
+		return getWildcardQueryFactory(searchContext).create(field, value);
+	}
 
-	public float getBoost();
+	public static WildcardQueryFactory getWildcardQueryFactory(
+		SearchContext searchContext) {
 
-	public BooleanFilter getPreFilter();
+		String searchEngineId = searchContext.getSearchEngineId();
 
-	public QueryConfig getQueryConfig();
+		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
+			searchEngineId);
 
-	public Object getWrappedQuery();
-
-	public boolean isDefaultBoost();
-
-	public void setBoost(float boost);
-
-	public void setPreFilter(BooleanFilter preFilter);
-
-	public void setQueryConfig(QueryConfig queryConfig);
+		return searchEngine.getWildcardQueryFactory();
+	}
 
 }

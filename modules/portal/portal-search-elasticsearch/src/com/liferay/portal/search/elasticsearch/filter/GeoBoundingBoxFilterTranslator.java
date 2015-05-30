@@ -12,25 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.elasticsearch.filter;
 
-import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
+
+import org.elasticsearch.index.query.FilterBuilder;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public interface BooleanClauseFactory {
+public interface GeoBoundingBoxFilterTranslator {
 
-	public BooleanClause<Query> create(
-		SearchContext searchContext, Query query, String occur);
-
-	public BooleanClause<Query> create(
-		SearchContext searchContext, String field, String value, String occur);
-
-	public BooleanClause<Filter> createFilter(
-		Filter filter, BooleanClauseOccur booleanClauseOccur);
-
-	public BooleanClause<Filter> createFilter(
-		String field, String value, BooleanClauseOccur booleanClauseOccur);
+	public FilterBuilder translate(GeoBoundingBoxFilter geoBoundingBoxFilter);
 
 }

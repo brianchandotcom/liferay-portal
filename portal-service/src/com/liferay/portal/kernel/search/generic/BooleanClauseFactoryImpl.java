@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.TermQueryFactory;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 
 /**
  * @author Bruno Farache
@@ -56,6 +58,22 @@ public class BooleanClauseFactoryImpl implements BooleanClauseFactory {
 			occur);
 
 		return new BooleanClauseImpl<>(query, booleanClauseOccur);
+	}
+
+	@Override
+	public BooleanClause<Filter> createFilter(
+		Filter filter, BooleanClauseOccur booleanClauseOccur) {
+
+		return new BooleanClauseImpl<>(filter, booleanClauseOccur);
+	}
+
+	@Override
+	public BooleanClause<Filter> createFilter(
+		String field, String value, BooleanClauseOccur booleanClauseOccur) {
+
+		TermFilter termFilter = new TermFilter(field, value);
+
+		return new BooleanClauseImpl<Filter>(termFilter, booleanClauseOccur);
 	}
 
 }

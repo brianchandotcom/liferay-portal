@@ -104,7 +104,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS",
 			new String[][] {
-				new String[] {migratedSystemKey,migratedSystemKey}
+				new String[] {migratedSystemKey, migratedSystemKey}
 			});
 
 		try (CaptureAppender captureAppender =
@@ -142,6 +142,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 		Properties properties = verifyProperties.loadPortalProperties();
 
 		Set<Object> modularizedPortalKeys = properties.keySet();
+
 		String modularizedPortalKey =
 			(String)modularizedPortalKeys.iterator().next();
 
@@ -149,7 +150,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS",
 			new String[][] {
 				new String[] {
-					modularizedPortalKey,modularizedPortalKey,
+					modularizedPortalKey, modularizedPortalKey,
 					modularizedPortalKey
 				}
 			});
@@ -278,7 +279,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			VerifyProperties.class, "_RENAMED_PORTAL_KEYS",
 			new String[][] {
 				new String[] {
-					renamedPortalPropertyKey,renamedPortalPropertyKey}
+					renamedPortalPropertyKey, renamedPortalPropertyKey
+				}
 			});
 
 		try (CaptureAppender captureAppender =
@@ -312,6 +314,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		Set<Object> renamedSystemPropertyKeys =
 			SystemProperties.getProperties().keySet();
+
 		String renamedSystemPropertyKey =
 			(String)renamedSystemPropertyKeys.iterator().next();
 
@@ -319,7 +322,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			VerifyProperties.class, "_RENAMED_SYSTEM_KEYS",
 			new String[][] {
 				new String[] {
-					renamedSystemPropertyKey,renamedSystemPropertyKey}
+					renamedSystemPropertyKey, renamedSystemPropertyKey
+				}
 			});
 
 		try (CaptureAppender captureAppender =

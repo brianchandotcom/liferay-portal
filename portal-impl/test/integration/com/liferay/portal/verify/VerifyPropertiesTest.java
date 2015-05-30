@@ -118,7 +118,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 				"System property \"" + migratedSystemKey +
 					"\" was migrated to the " + "portal property \"" +
 						migratedSystemKey + "\"",
-				loggingEvent.getMessage().toString());
+				loggingEvent.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
@@ -197,7 +197,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			Assert.assertEquals(
 				"Portal property \"" + obsoletePortalKey +
 					"\" is obsolete",
-				loggingEvent.getMessage().toString());
+				loggingEvent.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(

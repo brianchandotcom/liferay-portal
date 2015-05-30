@@ -23,6 +23,7 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -48,17 +49,11 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testMigratedPortalProperty() throws Exception {
-		VerifyProperties verifyProperties = getVerifyProcess();
-
 		String[][] originalMigratedPortalKeys =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_MIGRATED_PORTAL_KEYS");
 
-		Properties properties = verifyProperties.loadPortalProperties();
-
-		Set<Object> migratedPortalKeys = properties.keySet();
-
-		String migratedPortalKey = (String)migratedPortalKeys.iterator().next();
+		String migratedPortalKey = getFirstExistPortalPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MIGRATED_PORTAL_KEYS",
@@ -96,10 +91,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS");
 
-		Set<Object> migratedSystemKeys =
-			SystemProperties.getProperties().keySet();
-
-		String migratedSystemKey = (String)migratedSystemKeys.iterator().next();
+		String migratedSystemKey = getFirstExistSystemPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS",
@@ -133,18 +125,11 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testModularizedPortalProperty() throws Exception {
-		VerifyProperties verifyProperties = getVerifyProcess();
-
 		String[][] originalModularizedPortalKeys =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS");
 
-		Properties properties = verifyProperties.loadPortalProperties();
-
-		Set<Object> modularizedPortalKeys = properties.keySet();
-
-		String modularizedPortalKey =
-			(String)modularizedPortalKeys.iterator().next();
+		String modularizedPortalKey = getFirstExistPortalPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS",
@@ -181,18 +166,11 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testObsoletePortalProperty() throws Exception {
-		VerifyProperties verifyProperties = getVerifyProcess();
-
 		String[] originalObsoletePortalProperty =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS");
 
-		Properties properties = verifyProperties.loadPortalProperties();
-
-		Set<Object> obsoletePortalPropertyKeys = properties.keySet();
-
-		String obsoletePortalPropertyKey =
-			(String)obsoletePortalPropertyKeys.iterator().next();
+		String obsoletePortalPropertyKey = getFirstExistPortalPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS",
@@ -227,11 +205,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS");
 
-		Set<Object> obsoleteSystemPropertyKeys =
-			SystemProperties.getProperties().keySet();
-
-		String obsoleteSystemPropertyKey =
-			(String)obsoleteSystemPropertyKeys.iterator().next();
+		String obsoleteSystemPropertyKey = getFirstExistSystemPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS",
@@ -262,18 +236,11 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 	@Test
 	public void testRenamedPortalProperty() throws Exception {
-		VerifyProperties verifyProperties = getVerifyProcess();
-
 		String[][] originalRenamedPortalProperty =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_RENAMED_PORTAL_KEYS");
 
-		Properties properties = verifyProperties.loadPortalProperties();
-
-		Set<Object> renamedPortalPropertyKeys = properties.keySet();
-
-		String renamedPortalPropertyKey =
-			(String)renamedPortalPropertyKeys.iterator().next();
+		String renamedPortalPropertyKey = getFirstExistPortalPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_RENAMED_PORTAL_KEYS",
@@ -312,11 +279,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_RENAMED_SYSTEM_KEYS");
 
-		Set<Object> renamedSystemPropertyKeys =
-			SystemProperties.getProperties().keySet();
-
-		String renamedSystemPropertyKey =
-			(String)renamedSystemPropertyKeys.iterator().next();
+		String renamedSystemPropertyKey = getFirstExistSystemPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_RENAMED_SYSTEM_KEYS",
@@ -363,6 +326,32 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 			Assert.assertTrue(loggingEvents.isEmpty());
 		}
+	}
+
+	protected String getFirstExistPortalPropertyName() {
+		VerifyProperties verifyProperties = getVerifyProcess();
+
+		Properties portalProperties = verifyProperties.loadPortalProperties();
+
+		Set<String> propertyNames = portalProperties.stringPropertyNames();
+
+		Assert.assertFalse(propertyNames.isEmpty());
+
+		Iterator<String> iterator = propertyNames.iterator();
+
+		return iterator.next();
+	}
+
+	protected String getFirstExistSystemPropertyName() {
+		Properties systemProperties = SystemProperties.getProperties();
+
+		Set<String> propertyNames = systemProperties.stringPropertyNames();
+
+		Assert.assertFalse(propertyNames.isEmpty());
+
+		Iterator<String> iterator = propertyNames.iterator();
+
+		return iterator.next();
 	}
 
 	@Override

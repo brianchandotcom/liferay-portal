@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
@@ -319,21 +318,23 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 					Property recordIdProperty = PropertyFactoryUtil.forName(
 						"recordId");
 
+					StagedModelDataHandler<?> stagedModelDataHandler =
+						StagedModelDataHandlerRegistryUtil.
+							getStagedModelDataHandler(
+								DDLRecord.class.getName());
+
+					Class<?> clazz = stagedModelDataHandler.getClass();
+
 					DynamicQuery recordVersionDynamicQuery =
 						DynamicQueryFactoryUtil.forClass(
 							DDLRecordVersion.class, "recordVersion",
-							PortalClassLoaderUtil.getClassLoader());
+							clazz.getClassLoader());
 
 					recordVersionDynamicQuery.setProjection(
 						ProjectionFactoryUtil.property("recordId"));
 
 					Property statusProperty = PropertyFactoryUtil.forName(
 						"status");
-
-					StagedModelDataHandler<?> stagedModelDataHandler =
-						StagedModelDataHandlerRegistryUtil.
-							getStagedModelDataHandler(
-								DDLRecord.class.getName());
 
 					recordVersionDynamicQuery.add(
 						statusProperty.in(

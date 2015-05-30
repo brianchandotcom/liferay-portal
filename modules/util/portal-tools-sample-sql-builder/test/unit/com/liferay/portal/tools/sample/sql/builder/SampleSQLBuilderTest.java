@@ -24,16 +24,17 @@ import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.test.rule.LogAssertionTestRule;
 import com.liferay.portal.tools.DBLoader;
 import com.liferay.portal.tools.ToolDependencies;
-import com.liferay.portal.tools.sql.SQLQueryProvider;
 
 import java.io.File;
+
+import java.net.URL;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import java.util.Enumeration;
 import java.util.Properties;
-import java.util.ServiceLoader;
 
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -69,19 +70,26 @@ public class SampleSQLBuilderTest {
 		}
 	}
 
-	private void _executeSQLQueryProvider(
-			Connection connection, SQLQueryProvider sqlQueryProvider)
+	private ClassLoader _getClassLoader() {
+		Class<?> clazz = getClass();
+
+		return clazz.getClassLoader();
+	}
+
+	private Enumeration<URL> _getServiceComponentsIndexesSQLURLs()
 		throws Exception {
 
-		DB db = DBFactoryUtil.getDB();
+		ClassLoader classLoader = _getClassLoader();
 
-		String tablesSQL = StringUtil.read(sqlQueryProvider.getTablesSQL());
+		return classLoader.getResources("META-INF/sql/indexes.sql");
+	}
 
-		db.runSQLTemplateString(connection, tablesSQL, false, true);
+	private Enumeration<URL> _getServiceComponentsTablesSQLURLs()
+		throws Exception {
 
-		String indexesSQL = StringUtil.read(sqlQueryProvider.getIndexesSQL());
+		ClassLoader classLoader = _getClassLoader();
 
-		db.runSQLTemplateString(connection, indexesSQL, false, true);
+		return classLoader.getResources("META-INF/sql/tables.sql");
 	}
 
 	private void _initProperties(Properties properties, String outputDir) {
@@ -149,7 +157,7 @@ public class SampleSQLBuilderTest {
 			DBLoader.loadHypersonic(
 				connection, sqlDir + "/indexes/indexes-hypersonic.sql");
 
-			_loadSQLQueryProviders(connection);
+			_loadServiceComponentsSQL(connection);
 
 			DBLoader.loadHypersonic(
 				connection, outputDir + "/sample-hypersonic.sql");
@@ -163,17 +171,30 @@ public class SampleSQLBuilderTest {
 		}
 	}
 
-	private void _loadSQLQueryProviders(Connection connection)
+	private void _loadServiceComponentsSQL(Connection connection)
 		throws Exception {
-
-		ServiceLoader<SQLQueryProvider> serviceLoader = ServiceLoader.load(
-			SQLQueryProvider.class);
 
 		DBFactoryUtil.setDB(DB.TYPE_HYPERSONIC);
 
-		for (SQLQueryProvider sqlQueryProvider : serviceLoader) {
-			_executeSQLQueryProvider(connection, sqlQueryProvider);
+		Enumeration<URL> tablesURLs = _getServiceComponentsTablesSQLURLs();
+
+		while (tablesURLs.hasMoreElements()) {
+			_runSQL(connection, tablesURLs.nextElement());
 		}
+
+		Enumeration<URL> indexesURLs = _getServiceComponentsIndexesSQLURLs();
+
+		while (tablesURLs.hasMoreElements()) {
+			_runSQL(connection, indexesURLs.nextElement());
+		}
+	}
+
+	private void _runSQL(Connection connection, URL url) throws Exception {
+		DB db = DBFactoryUtil.getDB();
+
+		String sql = StringUtil.read(url.openStream());
+
+		db.runSQLTemplateString(connection, sql, false, true);
 	}
 
 }

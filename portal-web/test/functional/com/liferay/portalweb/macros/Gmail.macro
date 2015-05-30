@@ -42,12 +42,17 @@
 					<condition function="IsElementPresent" locator1="Gmail#LOGIN_EMAIL_FIELD" />
 					<then>
 						<execute function="Type" locator1="Gmail#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+
+						<execute function="Click" locator1="Gmail#LOGIN_NEXT_BUTTON" />
 					</then>
 				</if>
 
 				<execute function="Type" locator1="Gmail#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
 				<execute function="Check" locator1="Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+
 				<execute function="Click" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+
 				<execute function="Pause" locator1="5000" />
 			</then>
 			<elseif>
@@ -74,6 +79,7 @@
 			<condition function="IsElementPresent" locator1="Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT" />
 			<then>
 				<execute function="AssertClick" locator1="Gmail#SIGN_IN_WITH_DIFFERENT_ACCOUNT" value1="Sign in with a different account" />
+
 				<execute function="AssertClick" locator1="Gmail#ADD_ACCOUNT_BUTTON" value1="Add account" />
 			</then>
 			<elseif>
@@ -85,9 +91,15 @@
 		</if>
 
 		<execute function="Type" locator1="Gmail#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+
+		<execute function="Click" locator1="Gmail#LOGIN_NEXT_BUTTON" />
+
 		<execute function="Type" locator1="Gmail#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
 		<execute function="Check" locator1="Gmail#LOGIN_STAY_SIGNED_IN_CHECKBOX" />
+
 		<execute function="Click" locator1="Gmail#LOGIN_SIGN_IN_BUTTON" />
+
 		<execute function="Pause" locator1="5000" />
 	</command>
 

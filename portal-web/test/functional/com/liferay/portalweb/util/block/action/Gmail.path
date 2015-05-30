@@ -45,6 +45,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOGIN_NEXT_BUTTON</td>
+	<td>//input[@id='next']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LOGIN_SIGN_IN_BUTTON</td>
 	<td>//input[@id='signIn']</td>
 	<td></td>

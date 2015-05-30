@@ -513,6 +513,7 @@ public class InitGradleTask extends DefaultTask {
 		sb.append(group);
 		sb.append("\", name: \"");
 		sb.append(name);
+		sb.append('\"');
 
 		if (optional) {
 			sb.append(", ");
@@ -523,7 +524,7 @@ public class InitGradleTask extends DefaultTask {
 			sb.append(", transitive: false");
 		}
 
-		sb.append("\", version: \"");
+		sb.append(", version: \"");
 		sb.append(version);
 		sb.append('\"');
 

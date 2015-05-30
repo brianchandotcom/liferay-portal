@@ -993,15 +993,13 @@
 			<bean class="com.liferay.portlet.dynamicdatamapping.storage.query.ConditionFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverter" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterUtil">
-		<property name="DDMFormValuesToFieldsConverter">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverterImpl" />
-		</property>
+		<property name="DDMFormValuesToFieldsConverter" ref="com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverter" />
 	</bean>
+	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexer" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerUtil">
-		<property name="DDMIndexer">
-			<bean class="com.liferay.portlet.dynamicdatamapping.util.DDMIndexerImpl" />
-		</property>
+		<property name="DDMIndexer" ref="com.liferay.portlet.dynamicdatamapping.util.DDMIndexer" />
 	</bean>
 	<bean id="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil" class="com.liferay.portlet.dynamicdatamapping.util.DDMTemplateHelperUtil">
 		<property name="DDMTemplateHelper">

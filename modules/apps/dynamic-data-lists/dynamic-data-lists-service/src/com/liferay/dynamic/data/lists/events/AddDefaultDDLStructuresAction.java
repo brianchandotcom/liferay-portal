@@ -41,7 +41,7 @@ import org.springframework.context.ApplicationContext;
  * @author Michael C. Han
  */
 @Component(immediate = true)
-public class AddDefaultDDMStructuresAction extends SimpleAction {
+public class AddDefaultDDLStructuresAction extends SimpleAction {
 
 	@Override
 	public void run(String[] ids) throws ActionException {
@@ -58,9 +58,9 @@ public class AddDefaultDDMStructuresAction extends SimpleAction {
 		Long companyId = CompanyThreadLocal.getCompanyId();
 
 		try {
-			List<Company> companys = _companyLocalService.getCompanies();
+			List<Company> companies = _companyLocalService.getCompanies();
 
-			for (Company company : companys) {
+			for (Company company : companies) {
 				CompanyThreadLocal.setCompanyId(company.getCompanyId());
 
 				run(new String[] {String.valueOf(company.getCompanyId())});
@@ -86,9 +86,9 @@ public class AddDefaultDDMStructuresAction extends SimpleAction {
 		DefaultDDMStructureUtil.addDDMStructures(
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(DDLRecordSet.class),
-			AddDefaultDDMStructuresAction.class.getClassLoader(),
+			AddDefaultDDLStructuresAction.class.getClassLoader(),
 			"com/liferay/dynamic/data/lists/events/dependencies/" +
-				"/default-dynamic-data-lists-structures.xml",
+				"default-dynamic-data-lists-structures.xml",
 			serviceContext);
 	}
 

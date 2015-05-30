@@ -397,7 +397,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test="<%= curArticle != null %>">
 
 						<%
-						row.setClassName("entry-display-style");
+						row.setClassName("entry-display-style selectable");
 
 						Map<String, Object> rowData = new HashMap<String, Object>();
 
@@ -414,7 +414,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<c:when test="<%= curFolder != null %>">
 
 						<%
-						row.setClassName("entry-display-style");
+						row.setClassName("entry-display-style selectable");
 
 						Map<String, Object> rowData = new HashMap<String, Object>();
 

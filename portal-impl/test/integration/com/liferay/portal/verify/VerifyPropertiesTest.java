@@ -48,7 +48,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
 
 	@Test
-	public void testMigratedPortalProperty() throws Exception {
+	public void testMigratedPortalKeys() throws Exception {
 		String[][] originalMigratedPortalKeys =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_MIGRATED_PORTAL_KEYS");
@@ -88,7 +88,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Test
-	public void testMigratedSystemProperty() throws Exception {
+	public void testMigratedSystemKeys() throws Exception {
 		String[][] originalMigratedSystemKeys =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_MIGRATED_SYSTEM_KEYS");
@@ -128,7 +128,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Test
-	public void testModularizedPortalProperty() throws Exception {
+	public void testModularizedPortalKeys() throws Exception {
 		String[][] originalModularizedPortalKeys =
 			ReflectionTestUtil.getFieldValue(
 				VerifyProperties.class, "_MODULARIZED_PORTAL_KEYS");
@@ -171,16 +171,15 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 	}
 
 	@Test
-	public void testObsoletePortalProperty() throws Exception {
-		String[] originalObsoletePortalProperty =
-			ReflectionTestUtil.getFieldValue(
-				VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS");
+	public void testObsoletePortalKeys() throws Exception {
+		String[] originalObsoletePortalKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS");
 
-		String obsoletePortalPropertyKey = getFirstExistPortalPropertyName();
+		String obsoletePortalKey = getFirstExistPortalPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS",
-			new String[] {obsoletePortalPropertyKey});
+			new String[] {obsoletePortalKey});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -196,28 +195,27 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + obsoletePortalPropertyKey +
+				"Portal property \"" + obsoletePortalKey +
 					"\" is obsolete",
 				loggingEvent.getMessage().toString());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				VerifyProperties.class, "_OBSOLETE_PORTAL_KEYS",
-				originalObsoletePortalProperty);
+				originalObsoletePortalKeys);
 		}
 	}
 
 	@Test
-	public void testObsoleteSystemProperty() throws Exception {
-		String[] originalObsoleteSystemProperty =
-			ReflectionTestUtil.getFieldValue(
-				VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS");
+	public void testObsoleteSystemKeys() throws Exception {
+		String[] originalObsoleteSystemKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS");
 
-		String obsoleteSystemPropertyKey = getFirstExistSystemPropertyName();
+		String obsoleteSystemKey = getFirstExistSystemPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS",
-			new String[] {obsoleteSystemPropertyKey});
+			new String[] {obsoleteSystemKey});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -233,32 +231,27 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"System property \"" + obsoleteSystemPropertyKey +
+				"System property \"" + obsoleteSystemKey +
 					"\" is obsolete",
 				loggingEvent.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				VerifyProperties.class, "_OBSOLETE_SYSTEM_KEYS",
-				originalObsoleteSystemProperty);
+				originalObsoleteSystemKeys);
 		}
 	}
 
 	@Test
-	public void testRenamedPortalProperty() throws Exception {
-		String[][] originalRenamedPortalProperty =
-			ReflectionTestUtil.getFieldValue(
-				VerifyProperties.class, "_RENAMED_PORTAL_KEYS");
+	public void testRenamedPortalKeys() throws Exception {
+		String[][] originalRenamedPortalKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_RENAMED_PORTAL_KEYS");
 
-		String renamedPortalPropertyKey = getFirstExistPortalPropertyName();
+		String renamedPortalKey = getFirstExistPortalPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_RENAMED_PORTAL_KEYS",
-			new String[][] {
-				new String[] {
-					renamedPortalPropertyKey, renamedPortalPropertyKey
-				}
-			});
+			new String[][] {new String[] {renamedPortalKey, renamedPortalKey}});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -274,32 +267,27 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"Portal property \"" + renamedPortalPropertyKey +
-					"\" was renamed to \"" + renamedPortalPropertyKey + "\"",
+				"Portal property \"" + renamedPortalKey +
+					"\" was renamed to \"" + renamedPortalKey + "\"",
 				loggingEvent.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				VerifyProperties.class, "_RENAMED_PORTAL_KEYS",
-				originalRenamedPortalProperty);
+				originalRenamedPortalKeys);
 		}
 	}
 
 	@Test
-	public void testRenamedSystemProperty() throws Exception {
-		String[][] originalRenamedSystemProperty =
-			ReflectionTestUtil.getFieldValue(
-				VerifyProperties.class, "_RENAMED_SYSTEM_KEYS");
+	public void testRenamedSystemKeys() throws Exception {
+		String[][] originalRenamedSystemKeys = ReflectionTestUtil.getFieldValue(
+			VerifyProperties.class, "_RENAMED_SYSTEM_KEYS");
 
-		String renamedSystemPropertyKey = getFirstExistSystemPropertyName();
+		String renamedSystemKey = getFirstExistSystemPropertyName();
 
 		ReflectionTestUtil.setFieldValue(
 			VerifyProperties.class, "_RENAMED_SYSTEM_KEYS",
-			new String[][] {
-				new String[] {
-					renamedSystemPropertyKey, renamedSystemPropertyKey
-				}
-			});
+			new String[][] {new String[] {renamedSystemKey, renamedSystemKey}});
 
 		try (CaptureAppender captureAppender =
 				Log4JLoggerTestUtil.configureLog4JLogger(
@@ -315,14 +303,14 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
-				"System property \"" + renamedSystemPropertyKey +
-					"\" was renamed to \"" + renamedSystemPropertyKey + "\"",
+				"System property \"" + renamedSystemKey +
+					"\" was renamed to \"" + renamedSystemKey + "\"",
 				loggingEvent.getMessage());
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				VerifyProperties.class, "_RENAMED_SYSTEM_KEYS",
-				originalRenamedSystemProperty);
+				originalRenamedSystemKeys);
 		}
 	}
 

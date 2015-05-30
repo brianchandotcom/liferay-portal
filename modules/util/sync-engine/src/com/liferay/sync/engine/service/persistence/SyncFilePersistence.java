@@ -173,15 +173,23 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return queryForFieldValues(fieldValues);
 	}
 
-	public List<SyncFile> findByS_U(long syncAccountId, int uiEvent)
+	public List<SyncFile> findByS_U(
+			long syncAccountId, int uiEvent, String orderByColumn,
+			boolean ascending)
 		throws SQLException {
 
-		Map<String, Object> fieldValues = new HashMap<>();
+		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
 
-		fieldValues.put("syncAccountId", syncAccountId);
-		fieldValues.put("uiEvent", uiEvent);
+		Where<SyncFile, Long> where = queryBuilder.where();
 
-		return queryForFieldValues(fieldValues);
+		where.eq("syncAccountId", syncAccountId);
+		where.eq("uiEvent", uiEvent);
+
+		where.and(2);
+
+		queryBuilder.orderBy(orderByColumn, ascending);
+
+		return query(queryBuilder.prepare());
 	}
 
 	public void renameByFilePathName(

@@ -285,7 +285,7 @@ public class FileEventUtil {
 		throws IOException {
 
 		List<SyncFile> downloadingSyncFiles = SyncFileService.findSyncFiles(
-			syncAccountId, SyncFile.UI_EVENT_DOWNLOADING);
+			syncAccountId, SyncFile.UI_EVENT_DOWNLOADING, "size", true);
 
 		for (SyncFile downloadingSyncFile : downloadingSyncFiles) {
 			downloadFile(syncAccountId, downloadingSyncFile);
@@ -297,7 +297,7 @@ public class FileEventUtil {
 		batchDownloadEvent.fireBatchEvent();
 
 		List<SyncFile> uploadingSyncFiles = SyncFileService.findSyncFiles(
-			syncAccountId, SyncFile.UI_EVENT_UPLOADING);
+			syncAccountId, SyncFile.UI_EVENT_UPLOADING, "size", true);
 
 		for (SyncFile uploadingSyncFile : uploadingSyncFiles) {
 			Path filePath = Paths.get(uploadingSyncFile.getFilePathName());
@@ -343,7 +343,7 @@ public class FileEventUtil {
 		}
 
 		List<SyncFile> movingSyncFiles = SyncFileService.findSyncFiles(
-			syncAccountId, SyncFile.UI_EVENT_MOVED_LOCAL);
+			syncAccountId, SyncFile.UI_EVENT_MOVED_LOCAL, "syncFileId", true);
 
 		for (SyncFile movingSyncFile : movingSyncFiles) {
 			if (movingSyncFile.isFolder()) {

@@ -279,10 +279,12 @@ public class SyncFileService {
 	}
 
 	public static List<SyncFile> findSyncFiles(
-		long syncAccountId, int uiEvent) {
+		long syncAccountId, int uiEvent, String orderByColumn,
+		boolean ascending) {
 
 		try {
-			return _syncFilePersistence.findByS_U(syncAccountId, uiEvent);
+			return _syncFilePersistence.findByS_U(
+				syncAccountId, uiEvent, orderByColumn, ascending);
 		}
 		catch (SQLException sqle) {
 			if (_logger.isDebugEnabled()) {

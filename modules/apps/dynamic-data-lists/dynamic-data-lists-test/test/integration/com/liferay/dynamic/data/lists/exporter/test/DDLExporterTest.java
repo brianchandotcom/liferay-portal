@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.util;
+package com.liferay.dynamic.data.lists.exporter.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.dynamic.data.lists.exporter.DDLExporter;
+import com.liferay.dynamic.data.lists.exporter.DDLExporterFactoryUtil;
 import com.liferay.dynamic.data.lists.helper.DDLRecordSetTestHelper;
 import com.liferay.dynamic.data.lists.helper.DDLRecordTestHelper;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -128,7 +130,7 @@ public class DDLExporterTest {
 		recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
 
-		DDLExporter ddlExporter = new DDLCSVExporter();
+		DDLExporter ddlExporter = DDLExporterFactoryUtil.getDDLExporter("csv");
 
 		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
 
@@ -162,7 +164,7 @@ public class DDLExporterTest {
 		recordTestHelper.addRecord(
 			ddmFormValues, WorkflowConstants.ACTION_PUBLISH);
 
-		DDLExporter ddlExporter = new DDLXMLExporter();
+		DDLExporter ddlExporter = DDLExporterFactoryUtil.getDDLExporter("xml");
 
 		byte[] bytes = ddlExporter.export(recordSet.getRecordSetId());
 

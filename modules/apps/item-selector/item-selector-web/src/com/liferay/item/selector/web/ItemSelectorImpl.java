@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -245,18 +244,7 @@ public class ItemSelectorImpl implements ItemSelector {
 			new String[] {itemSelectedEventName});
 
 		populateCriteria(parameters, itemSelectorCriteria);
-
-		for (int i = 0; i < itemSelectorCriteria.length; i++) {
-			ItemSelectorCriterion itemSelectorCriterion =
-				itemSelectorCriteria[i];
-
-			String prefix = i + "_";
-
-			populateDesiredReturnTypes(
-				parameters, prefix, itemSelectorCriterion);
-			populateItemSelectorCriteria(
-				parameters, prefix, itemSelectorCriterion);
-		}
+		populateItemSelectorCriteria(parameters, itemSelectorCriteria);
 
 		return parameters;
 	}
@@ -302,62 +290,6 @@ public class ItemSelectorImpl implements ItemSelector {
 			new String[] {ArrayUtil.toString(itemSelectorCriteria, accessor)});
 	}
 
-	protected void populateDesiredReturnTypes(
-		Map<String, String[]> parameters, String prefix,
-		ItemSelectorCriterion itemSelectorCriterion) {
-
-		Set<Class<?>> desiredReturnTypes =
-			itemSelectorCriterion.getDesiredReturnTypes();
-
-		Set<Class<?>> availableReturnTypes =
-			itemSelectorCriterion.getAvailableReturnTypes();
-
-		if (desiredReturnTypes.size() == availableReturnTypes.size()) {
-			return;
-		}
-
-		Accessor<Class<?>, String> accessor = new Accessor<Class<?>, String>() {
-
-			@Override
-			public String get(Class<?> clazz) {
-				return clazz.getName();
-			}
-
-			@Override
-			public Class<String> getAttributeClass() {
-				return String.class;
-			}
-
-			@Override
-			@SuppressWarnings("rawtypes")
-			public Class<Class<?>> getTypeClass() {
-				return (Class)Class.class;
-			}
-
-		};
-
-		parameters.put(
-			prefix + "desiredReturnTypes",
-			new String[] {
-				ArrayUtil.toString(
-					desiredReturnTypes.toArray(
-						new Class<?>[desiredReturnTypes.size()]),
-					accessor)
-			});
-	}
-
-	protected void populateItemSelectorCriteria(
-		Map<String, String[]> parameters, String prefix,
-		ItemSelectorCriterion itemSelectorCriterion) {
-
-		ItemSelectorCriterionSerializer<ItemSelectorCriterion>
-			itemSelectorCriterionSerializer =
-				new ItemSelectorCriterionSerializer<>(
-					itemSelectorCriterion, prefix);
-
-		parameters.putAll(itemSelectorCriterionSerializer.getProperties());
-	}
-
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC
@@ -384,6 +316,23 @@ public class ItemSelectorImpl implements ItemSelector {
 
 		_itemSelectionCriterionHandlers.remove(
 			itemSelectorCriterionClass.getName());
+	}
+
+	private void populateItemSelectorCriteria(
+		Map<String, String[]> parameters,
+		ItemSelectorCriterion[] itemSelectorCriteria) {
+
+		for (int i = 0; i < itemSelectorCriteria.length; i++) {
+			ItemSelectorCriterion itemSelectorCriterion =
+				itemSelectorCriteria[i];
+
+			ItemSelectorCriterionSerializer<ItemSelectorCriterion>
+				itemSelectorCriterionSerializer =
+					new ItemSelectorCriterionSerializer<>(
+						itemSelectorCriterion, i + "_");
+
+			parameters.putAll(itemSelectorCriterionSerializer.getProperties());
+		}
 	}
 
 	private final ConcurrentMap

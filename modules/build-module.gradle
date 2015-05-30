@@ -34,6 +34,14 @@ configurations {
 	portalTest {
 		extendsFrom portal
 	}
+
+	testCompile {
+		extendsFrom portalTest
+	}
+
+	testIntegrationCompile {
+		extendsFrom portalTest
+	}
 }
 
 dependencies {
@@ -56,9 +64,5 @@ repositories {
 sourceSets {
 	main {
 		compileClasspath += configurations.portal
-	}
-
-	testIntegration {
-		compileClasspath += configurations.portalTest
 	}
 }

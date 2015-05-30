@@ -8,7 +8,7 @@ AUI.add(
 
 		var ATTR_CHECKED = 'checked';
 
-		var CSS_RESULT_ROW = 'tr.selectable';
+		var CSS_SELECTABLE = 'selectable';
 
 		var CSS_SELECTED = 'selected';
 
@@ -27,6 +27,12 @@ AUI.add(
 		var STR_FOCUS = 'focus';
 
 		var STR_TOGGLE_ACTIONS_BUTTON = 'toggleActionsButton';
+
+		var STR_TR = 'tr';
+
+		var SELECTOR_SELECTABLE = STR_DOT + CSS_SELECTABLE;
+
+		var SELECTOR_TR_SELECTABLE = STR_TR + STR_DOT + CSS_SELECTABLE;
 
 		var WIN = A.config.win;
 
@@ -182,22 +188,21 @@ AUI.add(
 								instance._portletContainer,
 								instance._checkBoxesId[i],
 								selectAllCheckbox,
-								CSS_RESULT_ROW
+								SELECTOR_TR_SELECTABLE
 							);
 						}
 
 						WIN[instance.ns(STR_TOGGLE_ACTIONS_BUTTON)]();
 
-						var articleDisplayStyle;
+						var articleDisplayStyle = STR_DOT + instance._displayStyleCSSClass + SELECTOR_SELECTABLE;
 
 						if (instance._getDisplayStyle(instance._displayStyle, DISPLAY_STYLE_LIST)) {
-							articleDisplayStyle = A.all(CSS_RESULT_ROW + STR_DOT + instance._displayStyleCSSClass);
-						}
-						else {
-							articleDisplayStyle = A.all(STR_DOT + instance._displayStyleCSSClass + '.selectable');
+							articleDisplayStyle = SELECTOR_TR_SELECTABLE + STR_DOT + instance._displayStyleCSSClass;
 						}
 
-						articleDisplayStyle.toggleClass(CSS_SELECTED, instance._selectAllCheckbox.attr(ATTR_CHECKED));
+						var articleDisplayNodes = A.all(articleDisplayStyle);
+
+						articleDisplayNodes.toggleClass(CSS_SELECTED, instance._selectAllCheckbox.attr(ATTR_CHECKED));
 					},
 
 					_toggleHovered: function(event) {
@@ -222,7 +227,7 @@ AUI.add(
 								input.attr(ATTR_CHECKED, !input.attr(ATTR_CHECKED));
 							}
 
-							node = node.ancestor(CSS_RESULT_ROW) || node;
+							node = node.ancestor(SELECTOR_TR_SELECTABLE) || node;
 						}
 						else {
 							node = node.ancestor(STR_DOT + instance._displayStyleCSSClass) || node;

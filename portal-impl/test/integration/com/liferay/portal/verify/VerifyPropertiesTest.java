@@ -70,6 +70,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
+			Assert.assertEquals(1, loggingEvents.size());
+
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
@@ -107,6 +109,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
@@ -149,6 +153,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
+			Assert.assertEquals(1, loggingEvents.size());
+
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
@@ -185,6 +191,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
+			Assert.assertEquals(1, loggingEvents.size());
+
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
@@ -219,6 +227,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
@@ -259,6 +269,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
+			Assert.assertEquals(1, loggingEvents.size());
+
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 
 			Assert.assertEquals(
@@ -297,6 +309,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(1, loggingEvents.size());
 
 			LoggingEvent loggingEvent = loggingEvents.get(0);
 

@@ -1036,6 +1036,37 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="set-tomcat-version-number">
+		<attribute name="liferay.portal.bundle" />
+
+		<sequential>
+			<if>
+				<equals arg1="@{liferay.portal.bundle}" arg2="6.1.20" />
+				<then>
+					<echo file="app.server.${user.name}.properties" append="true">
+						app.server.tomcat.version=7.0.27
+					</echo>
+
+					<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
+				</then>
+				<elseif>
+					<or>
+						<contains string="@{liferay.portal.bundle}" substring="6.2.10" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.2" />
+						<equals arg1="@{liferay.portal.bundle}" arg2="6.2.3" />
+					</or>
+					<then>
+						<echo file="app.server.${user.name}.properties" append="true">
+							app.server.tomcat.version=7.0.42
+						</echo>
+
+						<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
+					</then>
+				</elseif>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="setup-testable-tomcat">
 		<sequential>
 			<setup-testable-tomcat-logging />
@@ -4218,27 +4249,7 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-so-plugins">
-		<if>
-			<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
-
-app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.27</echo>
-			</then>
-		</if>
-
-		<if>
-			<or>
-				<contains string="${liferay.portal.bundle}" substring="6.2.10" />
-				<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
-				<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
-			</or>
-			<then>
-				<echo file="${lp.plugins.dir}/build.${user.name}.properties" append="true">
-
-app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
-			</then>
-		</if>
+		<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
 		<property file="${lp.plugins.dir}/portlets/so-portlet/docroot/WEB-INF/liferay-releng.properties" />
 
@@ -4259,7 +4270,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.glassfish.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="glassfish" />
 					<param name="test.app.server.bin.dir" value="${app.server.glassfish.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.glassfish.zip.url}" />
@@ -4276,7 +4287,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jboss.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="jboss" />
 					<param name="test.app.server.bin.dir" value="${app.server.jboss.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jboss.zip.url}" />
@@ -4313,7 +4324,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 					app.server.jboss.zip.url=http://www.jboss.org/jbossas/downloads/jboss-eap-6.1.0.zip
 				</app-server-properties-update>
 
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.lib.global.dir" value="${app.server.parent.dir}/jboss-eap-6.1/modules/com/liferay/portal/main" />
 					<param name="app.server.portal.dir" value="${app.server.parent.dir}/jboss-eap-6.1/standalone/deployments/ROOT.war" />
 					<param name="app.server.type" value="jboss" />
@@ -4334,7 +4345,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jetty.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="jetty" />
 					<param name="test.app.server.bin.dir" value="${app.server.jetty.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jetty.zip.url}" />
@@ -4351,7 +4362,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.jonas.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="jonas" />
 					<param name="test.app.server.bin.dir" value="${app.server.jonas.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.jonas.zip.url}" />
@@ -4368,7 +4379,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.resin.zip.url}" />
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="resin" />
 					<param name="test.app.server.bin.dir" value="${app.server.resin.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.resin.zip.url}" />
@@ -4388,7 +4399,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.lib.global.dir" value="${app.server.tcserver.lib.global.dir}" />
 					<param name="app.server.portal.dir" value="${app.server.tcserver.portal.dir}" />
 					<param name="app.server.type" value="tcserver" />
@@ -4405,32 +4416,9 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 		<if>
 			<matches pattern="http" string="${test.build.bundle.tomcat.zip.url}" />
 			<then>
-				<if>
-					<equals arg1="${liferay.portal.bundle}" arg2="6.1.20" />
-					<then>
-						<echo file="app.server.${user.name}.properties" append="true">
-							app.server.tomcat.version=7.0.27
-						</echo>
+				<set-tomcat-version-number liferay.portal.bundle="${liferay.portal.bundle}" />
 
-						<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.27/bin" />
-					</then>
-					<elseif>
-						<or>
-							<contains string="${liferay.portal.bundle}" substring="6.2.10" />
-							<equals arg1="${liferay.portal.bundle}" arg2="6.2.2" />
-							<equals arg1="${liferay.portal.bundle}" arg2="6.2.3" />
-						</or>
-						<then>
-							<echo file="app.server.${user.name}.properties" append="true">
-								app.server.tomcat.version=7.0.42
-							</echo>
-
-							<var name="app.server.tomcat.bin.dir" value="${app.server.parent.dir}/tomcat-7.0.42/bin" />
-						</then>
-					</elseif>
-				</if>
-
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.type" value="tomcat" />
 					<param name="test.app.server.bin.dir" value="${app.server.tomcat.bin.dir}" />
 					<param name="test.build.bundle.zip.url" value="${test.build.bundle.tomcat.zip.url}" />
@@ -4465,7 +4453,7 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 				<matches pattern="http" string="${test.build.portal.war.url}" />
 			</and>
 			<then>
-				<antcall target="prepare-test-bundle">
+				<antcall target="prepare-test-bundle" inheritAll="false">
 					<param name="app.server.lib.global.dir" value="${app.server.weblogic.lib.global.dir}" />
 					<param name="app.server.portal.dir" value="${app.server.weblogic.portal.dir}" />
 					<param name="app.server.type" value="weblogic" />

@@ -38,5 +38,6 @@
 		<dependency conf="provided->default" name="org.gradle.gradle-model-core" org="com.liferay" rev="2.3" />
 		<dependency conf="provided->default" name="org.gradle.gradle-platform-jvm" org="com.liferay" rev="2.3" />
 		<dependency conf="provided->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-reporting" org="com.liferay" rev="2.3" />
 	</dependencies>
 </ivy-module>

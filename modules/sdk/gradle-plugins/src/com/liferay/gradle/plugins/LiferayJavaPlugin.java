@@ -33,6 +33,7 @@ import com.liferay.gradle.plugins.xml.formatter.FormatXMLTask;
 import com.liferay.gradle.plugins.xml.formatter.XMLFormatterPlugin;
 import com.liferay.gradle.plugins.xsd.builder.BuildXSDTask;
 import com.liferay.gradle.plugins.xsd.builder.XSDBuilderPlugin;
+import com.liferay.gradle.util.FileUtil;
 import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.StringUtil;
 import com.liferay.gradle.util.Validator;
@@ -40,6 +41,8 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+
+import java.nio.charset.StandardCharsets;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -70,6 +73,7 @@ import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
+import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.plugins.WarPlugin;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.SourceSet;
@@ -77,6 +81,8 @@ import org.gradle.api.tasks.SourceSetOutput;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
 import org.gradle.api.tasks.bundling.Jar;
+import org.gradle.api.tasks.testing.Test;
+import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
 
 /**
  * @author Andrea Di Giorgi
@@ -125,6 +131,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
+		configureTaskTest(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -395,6 +402,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureProperties(Project project) {
+		configureTestResultsDir(project);
 	}
 
 	protected void configureRepositories(Project project) {
@@ -959,6 +967,39 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void configureTaskTest(Project project) {
+		Test test = (Test)GradleUtil.getTask(
+			project, JavaPlugin.TEST_TASK_NAME);
+
+		configureTaskTestDefaultCharacterEncoding(test);
+		configureTaskTestForkEvery(test);
+		configureTaskTestLogging(test);
+	}
+
+	protected void configureTaskTestDefaultCharacterEncoding(Test test) {
+		test.setDefaultCharacterEncoding(StandardCharsets.UTF_8.name());
+	}
+
+	protected void configureTaskTestForkEvery(Test test) {
+		test.setForkEvery(1L);
+	}
+
+	protected void configureTaskTestLogging(Test test) {
+		TestLoggingContainer testLoggingContainer = test.getTestLogging();
+
+		testLoggingContainer.setShowStandardStreams(true);
+	}
+
+	protected void configureTestResultsDir(Project project) {
+		JavaPluginConvention javaPluginConvention = GradleUtil.getConvention(
+			project, JavaPluginConvention.class);
+
+		File testResultsDir = project.file("test-results/unit");
+
+		javaPluginConvention.setTestResultsDirName(
+			FileUtil.relativize(testResultsDir, project.getBuildDir()));
 	}
 
 	protected void configureVersion(

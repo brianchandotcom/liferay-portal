@@ -236,6 +236,8 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 	@Override
 	protected void configureProperties(Project project) {
+		super.configureProperties(project);
+
 		configureWebAppDirName(project);
 	}
 

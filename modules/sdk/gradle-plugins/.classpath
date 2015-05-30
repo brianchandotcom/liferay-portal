@@ -39,6 +39,7 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-model-core.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-platform-jvm.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-reporting.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

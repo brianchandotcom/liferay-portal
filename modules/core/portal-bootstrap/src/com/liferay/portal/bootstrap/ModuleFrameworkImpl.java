@@ -64,6 +64,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.jar.Attributes;
 import java.util.jar.JarInputStream;
 import java.util.jar.Manifest;
@@ -72,6 +73,7 @@ import javax.servlet.ServletContext;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.BundleEvent;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkEvent;
@@ -80,6 +82,7 @@ import org.osgi.framework.launch.FrameworkFactory;
 import org.osgi.framework.startlevel.BundleStartLevel;
 import org.osgi.framework.startlevel.FrameworkStartLevel;
 import org.osgi.framework.wiring.BundleRevision;
+import org.osgi.util.tracker.BundleTracker;
 
 import org.springframework.beans.factory.BeanIsAbstractException;
 import org.springframework.context.ApplicationContext;
@@ -730,7 +733,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				return;
 			}
 
-			Bundle bundle = _addBundle(
+			final Bundle bundle = _addBundle(
 				initialBundleURL.toString(), inputStream, false);
 
 			if ((bundle == null) || _isFragmentBundle(bundle)) {
@@ -743,6 +746,34 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				return;
 			}
 
+			if (start) {
+				bundle.start();
+
+				final CountDownLatch countDownLatch = new CountDownLatch(1);
+
+				BundleTracker<Void> bundleTracker = new BundleTracker<Void>(
+					_framework.getBundleContext(), Bundle.ACTIVE, null) {
+
+						@Override
+						public Void addingBundle(
+							Bundle trackedBundle, BundleEvent bundleEvent) {
+
+							if (trackedBundle == bundle) {
+								countDownLatch.countDown();
+
+								close();
+							}
+
+							return null;
+						}
+
+					};
+
+				bundleTracker.open();
+
+				countDownLatch.await();
+			}
+
 			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
 				(startLevel > 0)) {
 
@@ -750,10 +781,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 					BundleStartLevel.class);
 
 				bundleStartLevel.setStartLevel(startLevel);
-			}
-
-			if (start) {
-				bundle.start();
 			}
 		}
 		catch (Exception e) {

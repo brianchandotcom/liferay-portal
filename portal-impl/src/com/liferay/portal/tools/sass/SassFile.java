@@ -34,7 +34,7 @@ import java.util.concurrent.Callable;
  * @author Minhchau Dang
  * @author Shuyang Zhou
  */
-public class SassFile implements Callable<Void>, SassFragment {
+public class SassFile implements SassFragment {
 
 	public SassFile(String docrootDirName, String fileName) {
 		_docrootDirName = docrootDirName;
@@ -50,14 +50,13 @@ public class SassFile implements Callable<Void>, SassFragment {
 		}
 	}
 
-	@Override
-	public Void call() throws Exception {
+	public void build() throws Exception {
 		long start = System.currentTimeMillis();
 
 		File file = new File(_docrootDirName, _fileName);
 
 		if (!file.exists()) {
-			return null;
+			return;
 		}
 
 		String content = FileUtil.read(file);
@@ -158,7 +157,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 
 		_elapsedTime = System.currentTimeMillis() - start;
 
-		return null;
+		return;
 	}
 
 	@Override

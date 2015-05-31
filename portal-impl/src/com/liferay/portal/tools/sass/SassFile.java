@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
+import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.AggregateUtil;
 import com.liferay.portal.util.CSSBuilderUtil;
 
@@ -120,7 +121,7 @@ public class SassFile implements SassFragment {
 							_baseDir.concat(importFileName));
 					}
 
-					SassFile importSassFile = SassExecutorUtil.execute(
+					SassFile importSassFile = SassToCssBuilder.execute(
 						_docrootDirName, importFileName);
 
 					if (Validator.isNotNull(mediaQuery)) {

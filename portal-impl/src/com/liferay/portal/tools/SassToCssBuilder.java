@@ -81,10 +81,11 @@ public class SassToCssBuilder {
 
 		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String sassCompilerImpl = arguments.get("sass.compiler.impl");
 
 		try {
 			SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
-				docrootDirName, portalCommonDirName);
+				docrootDirName, portalCommonDirName, sassCompilerImpl);
 
 			sassToCssBuilder.execute(dirNames);
 		}
@@ -93,7 +94,8 @@ public class SassToCssBuilder {
 		}
 	}
 
-	public SassToCssBuilder(String docrootDirName, String portalCommonDirName)
+	public SassToCssBuilder(String docrootDirName, String portalCommonDirName,
+			String sassCompilerImpl)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
@@ -101,7 +103,7 @@ public class SassToCssBuilder {
 
 		_initUtil();
 
-		_initCompiler();
+		_initCompiler(sassCompilerImpl);
 	}
 
 	public void execute(List<String> dirNames) throws Exception {
@@ -218,14 +220,32 @@ public class SassToCssBuilder {
 		return sb.toString();
 	}
 
-	private void _initCompiler() throws Exception {
-		try {
-			_sassCompiler = new JniSassCompiler();
+	private void _initCompiler(String sassCompilerImpl) throws Exception {
+		if (sassCompilerImpl == null || sassCompilerImpl.equals("jni")) {
+			try {
+				_sassCompiler = new JniSassCompiler();
+			}
+			catch (Throwable t) {
+				System.out.println(
+					"Unable to load native compiler, falling back to ruby");
+
+				_sassCompiler = new RubySassCompiler(
+					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
+					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+			}
 		}
-		catch (Throwable t) {
-			_sassCompiler = new RubySassCompiler(
-				PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
-				PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+		else {
+			try {
+				_sassCompiler = new RubySassCompiler(
+					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
+					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+			}
+			catch (Exception e) {
+				System.out.println(
+					"Unable to load ruby compiler, falling back to native");
+
+				_sassCompiler = new JniSassCompiler();
+			}
 		}
 	}
 

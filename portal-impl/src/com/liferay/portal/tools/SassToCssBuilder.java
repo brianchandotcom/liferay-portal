@@ -20,8 +20,9 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.sass.SassExecutorUtil;
+import com.liferay.portal.tools.sass.SassFile;
 import com.liferay.portal.util.CSSBuilderUtil;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
@@ -32,7 +33,14 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
+import com.liferay.portal.util.PropsValues;
+import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.SassCompilerException;
+import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
+import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -42,6 +50,48 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Shuyang Zhou
  */
 public class SassToCssBuilder {
+
+	public static SassFile execute(String docrootDirName, String fileName)
+		throws Exception {
+
+		SassFile sassFile = _sassFileCache.get(fileName);
+
+		if (sassFile != null) {
+			return sassFile;
+		}
+
+		sassFile = new SassFile(docrootDirName, fileName);
+
+		SassFile previousSassFile = _sassFileCache.putIfAbsent(
+			fileName, sassFile);
+
+		if (previousSassFile != null) {
+			sassFile = previousSassFile;
+		}
+		else {
+			sassFile.build();
+		}
+
+		return sassFile;
+	}
+
+	public static String parse(String fileName, String content)
+		throws SassCompilerException {
+
+		String filePath = _docrootDirName.concat(fileName);
+
+		String cssThemePath = filePath;
+
+		int pos = filePath.lastIndexOf("/css/");
+
+		if (pos >= 0) {
+			cssThemePath = filePath.substring(0, pos + 4);
+		}
+
+		return _sassCompiler.compileString(
+			content,
+			_portalCommonDirName + File.pathSeparator + cssThemePath, "");
+	}
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -88,19 +138,22 @@ public class SassToCssBuilder {
 
 		_initUtil(classLoader);
 
+		_initCompiler();
+
 		List<String> fileNames = new ArrayList<>();
 
 		for (String dirName : dirNames) {
 			_collectSassFiles(fileNames, dirName, docrootDirName);
 		}
 
-		SassExecutorUtil.init(docrootDirName, portalCommonDirName);
+		_docrootDirName = docrootDirName;
+		_portalCommonDirName = portalCommonDirName;
 
 		for (String fileName : fileNames) {
-			SassExecutorUtil.execute(docrootDirName, fileName);
+			execute(docrootDirName, fileName);
 		}
 
-		SassExecutorUtil.persist();
+		_persist();
 	}
 
 	private void _collectSassFiles(
@@ -114,7 +167,7 @@ public class SassToCssBuilder {
 		directoryScanner.setBasedir(basedir);
 
 		directoryScanner.setExcludes(
-			new String[] {
+			new String[]{
 				"**\\_diffs\\**", "**\\.sass-cache*\\**",
 				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
 				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tmp\\**"
@@ -137,6 +190,19 @@ public class SassToCssBuilder {
 			fileNames.add(_normalizeFileName(dirName, fileName));
 		}
 	}
+
+	private void _initCompiler() throws Exception {
+
+		try {
+			_sassCompiler = new JniSassCompiler();
+		}
+		catch (Throwable t) {
+			_sassCompiler = new RubySassCompiler(
+				PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
+				PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _tmpDir);
+		}
+	}
+
 
 	private void _initUtil(ClassLoader classLoader) {
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
@@ -183,4 +249,20 @@ public class SassToCssBuilder {
 		);
 	}
 
+	private void _persist() throws Exception {
+		for (SassFile sassFile : _sassFileCache.values()) {
+			sassFile.writeCacheFiles();
+
+			System.out.println(sassFile);
+		}
+	}
+
+	private static String _docrootDirName;
+	private static String _portalCommonDirName;
+	private static SassCompiler _sassCompiler;
+	private static final ConcurrentMap<String, SassFile> _sassFileCache =
+		new ConcurrentHashMap<>();
+
+	private final String _tmpDir = SystemProperties.get(
+		SystemProperties.TMP_DIR);
 }

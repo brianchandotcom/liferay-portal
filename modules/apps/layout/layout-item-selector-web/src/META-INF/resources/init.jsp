@@ -33,6 +33,10 @@ page import="com.liferay.portal.model.Group" %><%@
 page import="com.liferay.portal.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portlet.layoutsadmin.context.LayoutsAdminDisplayContext" %>
 
+<%@ page import="java.net.URL" %>
+
+<%@ page import="java.util.UUID" %>
+
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects/>

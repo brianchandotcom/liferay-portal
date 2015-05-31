@@ -187,11 +187,38 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 			button.attr('data-layoutpath', messageText);
 
-			button.attr('data-returnType', <%= StringPool.BLANK %>);
+			<%
+			String returnType = StringPool.BLANK;
 
-			button.attr('data-value', url);
+			for (Class<?> desiredReturnType : layoutItemSelectorCriterion.getDesiredReturnTypes()) {
+				if (desiredReturnType == URL.class) {
+					returnType = URL.class.getName();
+				}
+				else if (desiredReturnType == UUID.class) {
+					returnType = UUID.class.getName();
+				}
+				else {
+					continue;
+				}
 
-			button.attr('data-value', uuid);
+				break;
+			}
+
+			if (Validator.isNull(returnType)) {
+				throw new IllegalArgumentException("Invalid return type " + returnType);
+			}
+			%>
+
+			button.attr('data-returnType', '<%= returnType %>' );
+
+			<c:choose>
+				<c:when test="<%= returnType.equals(URL.class.getName()) %>">
+					button.attr('data-value', url);
+				</c:when>
+				<c:when test="<%= returnType.equals(UUID.class.getName()) %>">
+					button.attr('data-value', uuid);
+				</c:when>
+			</c:choose>
 		}
 
 		Liferay.Util.toggleDisabled(button, disabled);

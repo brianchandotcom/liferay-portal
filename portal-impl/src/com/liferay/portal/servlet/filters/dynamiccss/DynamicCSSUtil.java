@@ -34,7 +34,7 @@ import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.Theme;
 import com.liferay.portal.service.ThemeLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.tools.SassToCssBuilder;
+import com.liferay.portal.util.CSSBuilderUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sass.compiler.SassCompiler;
@@ -164,7 +164,7 @@ public class DynamicCSSUtil {
 			}
 		}
 		else {
-			content = SassToCssBuilder.parseStaticTokens(content);
+			content = CSSBuilderUtil.parseStaticTokens(content);
 
 			String queryString = request.getQueryString();
 
@@ -322,7 +322,7 @@ public class DynamicCSSUtil {
 		}
 
 		return servletContext.getResource(
-			SassToCssBuilder.getCacheFileName(resourcePath, suffix));
+			CSSBuilderUtil.getCacheFileName(resourcePath, suffix));
 	}
 
 	private static String _getCssThemePath(
@@ -351,7 +351,7 @@ public class DynamicCSSUtil {
 		throws Exception {
 
 		return servletContext.getResource(
-			SassToCssBuilder.getRtlCustomFileName(resourcePath));
+			CSSBuilderUtil.getRtlCustomFileName(resourcePath));
 	}
 
 	private static File _getSassTempDir(ServletContext servletContext) {

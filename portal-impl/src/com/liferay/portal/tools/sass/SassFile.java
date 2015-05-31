@@ -21,8 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
-import com.liferay.portal.tools.SassToCssBuilder;
 import com.liferay.portal.util.AggregateUtil;
+import com.liferay.portal.util.CSSBuilderUtil;
 
 import java.io.File;
 
@@ -147,7 +147,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 
 		_addSassString(_fileName, sb.toString());
 
-		String rtlCustomFileName = SassToCssBuilder.getRtlCustomFileName(
+		String rtlCustomFileName = CSSBuilderUtil.getRtlCustomFileName(
 			_fileName);
 
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
@@ -233,7 +233,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 	public void writeCacheFiles() throws Exception {
 		File ltrCacheFile = new File(
 			_docrootDirName,
-			SassToCssBuilder.getCacheFileName(_fileName, StringPool.BLANK));
+			CSSBuilderUtil.getCacheFileName(_fileName, StringPool.BLANK));
 
 		FileUtil.write(ltrCacheFile, getLtrContent());
 
@@ -241,7 +241,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 
 		ltrCacheFile.setLastModified(ltrFile.lastModified());
 
-		String rtlFileName = SassToCssBuilder.getRtlCustomFileName(_fileName);
+		String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(_fileName);
 
 		if (RTLCSSUtil.isExcludedPath(_fileName)) {
 			return;
@@ -249,7 +249,7 @@ public class SassFile implements Callable<Void>, SassFragment {
 
 		File rtlCacheFile = new File(
 			_docrootDirName,
-			SassToCssBuilder.getCacheFileName(rtlFileName, StringPool.BLANK));
+			CSSBuilderUtil.getCacheFileName(rtlFileName, StringPool.BLANK));
 
 		FileUtil.write(rtlCacheFile, getRtlContent());
 

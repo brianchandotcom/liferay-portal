@@ -33,9 +33,10 @@ public class SassToCssBuilderTest {
 
 	@Test
 	public void testSassToCssBuilder() throws Exception {
-		new SassToCssBuilder(
-			ListUtil.fromArray(new String[] { _DIR_NAME}), _DOCROOT_DIR_NAME,
-			"portal-web/docroot/html/css/common");
+		SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
+			_DOCROOT_DIR_NAME, "portal-web/docroot/html/css/common");
+
+		sassToCssBuilder.execute(ListUtil.fromArray(new String[] { _DIR_NAME}));
 
 		String expectedCacheContent = FileUtil.read(
 			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _FILE_NAME);

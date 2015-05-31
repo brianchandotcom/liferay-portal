@@ -83,82 +83,43 @@ public class SassToCssBuilder {
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 
 		try {
-			new SassToCssBuilder(dirNames, docrootDirName, portalCommonDirName);
+			SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
+				docrootDirName, portalCommonDirName);
+
+			sassToCssBuilder.execute(dirNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
-	public SassToCssBuilder(
-			List<String> dirNames, String docrootDirName,
-			String portalCommonDirName)
+	public SassToCssBuilder(String docrootDirName, String portalCommonDirName)
 		throws Exception {
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		_initUtil(classLoader);
-
-		_initCompiler();
-
-		List<String> fileNames = new ArrayList<>();
-
-		for (String dirName : dirNames) {
-			_collectSassFiles(fileNames, dirName, docrootDirName);
-		}
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
 
+		_initUtil();
+
+		_initCompiler();
+	}
+
+	public void execute(List<String> dirNames) throws Exception {
+		List<String> fileNames = new ArrayList<>();
+
+		for (String dirName : dirNames) {
+			_collectSassFiles(fileNames, dirName, _docrootDirName);
+		}
+
 		for (String fileName : fileNames) {
-			_build(docrootDirName, fileName);
+			_build(fileName);
 		}
 
-		_persist();
-	}
+		for (SassFile sassFile : _sassFileCache.values()) {
+			sassFile.writeCacheFiles();
 
-	public SassFile _build(String docrootDirName, String fileName)
-		throws Exception {
-
-		SassFile sassFile = _sassFileCache.get(fileName);
-
-		if (sassFile != null) {
-			return sassFile;
+			System.out.println(sassFile);
 		}
-
-		sassFile = new SassFile(docrootDirName, fileName);
-
-		SassFile previousSassFile = _sassFileCache.putIfAbsent(
-			fileName, sassFile);
-
-		if (previousSassFile != null) {
-			sassFile = previousSassFile;
-		}
-		else {
-			_parseSassFile(sassFile);
-		}
-
-		return sassFile;
-	}
-
-	public String _parseSass(String fileName, String content)
-		throws SassCompilerException {
-
-		String filePath = _docrootDirName.concat(fileName);
-
-		String cssThemePath = filePath;
-
-		int pos = filePath.lastIndexOf("/css/");
-
-		if (pos >= 0) {
-			cssThemePath = filePath.substring(0, pos + 4);
-		}
-
-		return _sassCompiler.compileString(
-			content, _portalCommonDirName + File.pathSeparator + cssThemePath,
-			"");
 	}
 
 	private void _addSassString(
@@ -175,6 +136,28 @@ public class SassToCssBuilder {
 			fileName, CSSBuilderUtil.parseStaticTokens(sassContent));
 
 		sassFile.addSassFragment(new SassString(fileName, cssContent));
+	}
+
+	private SassFile _build(String fileName) throws Exception {
+		SassFile sassFile = _sassFileCache.get(fileName);
+
+		if (sassFile != null) {
+			return sassFile;
+		}
+
+		sassFile = new SassFile(_docrootDirName, fileName);
+
+		SassFile previousSassFile = _sassFileCache.putIfAbsent(
+			fileName, sassFile);
+
+		if (previousSassFile != null) {
+			sassFile = previousSassFile;
+		}
+		else {
+			_parseSassFile(sassFile);
+		}
+
+		return sassFile;
 	}
 
 	private void _collectSassFiles(
@@ -246,7 +229,11 @@ public class SassToCssBuilder {
 		}
 	}
 
-	private void _initUtil(ClassLoader classLoader) {
+	private void _initUtil() {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
 		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
 			new FastDateFormatFactoryUtil();
 
@@ -289,6 +276,24 @@ public class SassToCssBuilder {
 			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
 			new String[] {StringPool.SLASH, StringPool.SLASH}
 		);
+	}
+
+	private String _parseSass(String fileName, String content)
+		throws SassCompilerException {
+
+		String filePath = _docrootDirName.concat(fileName);
+
+		String cssThemePath = filePath;
+
+		int pos = filePath.lastIndexOf("/css/");
+
+		if (pos >= 0) {
+			cssThemePath = filePath.substring(0, pos + 4);
+		}
+
+		return _sassCompiler.compileString(
+			content, _portalCommonDirName + File.pathSeparator + cssThemePath,
+			"");
 	}
 
 	private void _parseSassFile(SassFile sassFile) throws Exception {
@@ -363,8 +368,7 @@ public class SassToCssBuilder {
 							sassFile.getBaseDir().concat(importFileName));
 					}
 
-					SassFile importSassFile = _build(
-						_docrootDirName, importFileName);
+					SassFile importSassFile = _build(importFileName);
 
 					if (Validator.isNotNull(mediaQuery)) {
 						sassFile.addSassFragment(
@@ -400,14 +404,6 @@ public class SassToCssBuilder {
 		}
 
 		sassFile.setElapsedTime(System.currentTimeMillis() - start);
-	}
-
-	private void _persist() throws Exception {
-		for (SassFile sassFile : _sassFileCache.values()) {
-			sassFile.writeCacheFiles();
-
-			System.out.println(sassFile);
-		}
 	}
 
 	private static final String _CSS_COMMENT_BEGIN = "/*";

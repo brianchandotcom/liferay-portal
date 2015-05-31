@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.util.NamedThreadFactory;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.SassCompilerException;
 import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
 import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
@@ -36,7 +37,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class SassExecutorUtil {
 
-	public static SassFile execute(String docrootDirName, String fileName) {
+	public static SassFile execute(String docrootDirName, String fileName)
+		throws Exception {
+
 		SassFile sassFile = _sassFileCache.get(fileName);
 
 		if (sassFile != null) {
@@ -52,7 +55,7 @@ public class SassExecutorUtil {
 			sassFile = previousSassFile;
 		}
 		else {
-			_executorService.submit(sassFile);
+			sassFile.build();
 		}
 
 		return sassFile;
@@ -64,29 +67,19 @@ public class SassExecutorUtil {
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
 
-		int threads = 1;
-
 		try {
 			_sassCompiler = new JniSassCompiler();
 		}
 		catch (Throwable t) {
-			threads = 2;
-
 			_sassCompiler = new RubySassCompiler(
 				PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
 				PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
 		}
-
-		_executorService = Executors.newFixedThreadPool(
-			threads,
-			new NamedThreadFactory(
-				"SassExecutor", Thread.NORM_PRIORITY,
-				SassExecutorUtil.class.getClassLoader()));
-
-		_mainThread = Thread.currentThread();
 	}
 
-	public static String parse(String fileName, String content) {
+	public static String parse(String fileName, String content)
+		throws SassCompilerException {
+
 		String filePath = _docrootDirName.concat(fileName);
 
 		String cssThemePath = filePath;
@@ -97,42 +90,12 @@ public class SassExecutorUtil {
 			cssThemePath = filePath.substring(0, pos + 4);
 		}
 
-		try {
-			return _sassCompiler.compileString(
-				content,
-				_portalCommonDirName + File.pathSeparator + cssThemePath, "");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-
-			_exception = new Exception("Unable to parse " + fileName, e);
-
-			_mainThread.interrupt();
-		}
-
-		return content;
+		return _sassCompiler.compileString(
+			content,
+			_portalCommonDirName + File.pathSeparator + cssThemePath, "");
 	}
 
 	public static void persist() throws Exception {
-		_executorService.shutdown();
-
-		try {
-			if (!_executorService.awaitTermination(
-					_WAIT_MINTUES, TimeUnit.MINUTES)) {
-
-				System.err.println(
-					"Abort processing Sass files after waiting " +
-						_WAIT_MINTUES + " minutes");
-			}
-		}
-		catch (InterruptedException ie) {
-			if (_exception == null) {
-				throw ie;
-			}
-
-			throw _exception;
-		}
-
 		for (SassFile sassFile : _sassFileCache.values()) {
 			sassFile.writeCacheFiles();
 
@@ -143,12 +106,7 @@ public class SassExecutorUtil {
 	private static final String _TMP_DIR = SystemProperties.get(
 		SystemProperties.TMP_DIR);
 
-	private static final int _WAIT_MINTUES = 30;
-
 	private static String _docrootDirName;
-	private static Exception _exception;
-	private static ExecutorService _executorService;
-	private static Thread _mainThread;
 	private static String _portalCommonDirName;
 	private static SassCompiler _sassCompiler;
 	private static final ConcurrentMap<String, SassFile> _sassFileCache =

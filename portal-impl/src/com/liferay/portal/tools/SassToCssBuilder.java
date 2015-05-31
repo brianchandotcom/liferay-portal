@@ -400,8 +400,6 @@ public class SassToCssBuilder {
 		}
 
 		sassFile.setElapsedTime(System.currentTimeMillis() - start);
-
-		return;
 	}
 
 	private void _persist() throws Exception {

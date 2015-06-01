@@ -329,7 +329,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
-	protected String compressImports(
+	protected String compressImportsOrTaglibs(
 		String fileName, String content, String attributePrefix) {
 
 		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
@@ -346,13 +346,14 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		String imports = content.substring(x, y);
+		String importsOrTaglibs = content.substring(x, y);
 
-		imports = StringUtil.replace(
-			imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+		importsOrTaglibs = StringUtil.replace(
+			importsOrTaglibs, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
 			new String[] {"%><%@\r\n", "%><%@\n"});
 
-		return content.substring(0, x) + imports + content.substring(y);
+		return content.substring(0, x) + importsOrTaglibs + 
+			content.substring(y);
 	}
 
 	@Override
@@ -423,8 +424,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		newContent = compressImports(fileName, newContent, "<%@ page import=");
-		newContent = compressImports(fileName, newContent, "<%@ taglib uri=");
+		newContent = compressImportsOrTaglibs(
+			fileName, newContent, "<%@ page import=");
+		newContent = compressImportsOrTaglibs(
+			fileName, newContent, "<%@ taglib uri=");
 
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 		newContent = fixSessionKey(

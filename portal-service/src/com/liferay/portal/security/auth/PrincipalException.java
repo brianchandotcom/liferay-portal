@@ -23,6 +23,10 @@ import com.liferay.portal.kernel.util.Validator;
  */
 public class PrincipalException extends PortalException {
 
+	public static Class[] getNestedClasses() {
+		return _NESTED_CLASSES;
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by the inner classes
 	 */
@@ -92,5 +96,9 @@ public class PrincipalException extends PortalException {
 		public final long userId;
 
 	}
+
+	private static final Class[] _NESTED_CLASSES = {
+		PrincipalException.MustHavePermission.class
+	};
 
 }

@@ -1943,16 +1943,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		originalStatuses.add(workflowedModel.getStatus());
 
-		Assert.assertEquals(
-			initialBaseModelsCount + 1,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
-		if (isAssetableModel()) {
-			Assert.assertTrue(isAssetEntryVisible(baseModel));
-		}
-
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		if (isBaseModelMoveableFromTrash()) {

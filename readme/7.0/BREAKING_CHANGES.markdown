@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `59f8239`.*
+*This document has been reviewed through commit `1e1103f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1648,76 +1648,157 @@ core repository implementations from additional (optional) functionality.
 
 ---------------------------------------
 
-### Indexers called from Document Library no longer receive a DLFileEntry, but a FileEntry 
+### Indexers Called from Document Library Now Receive FileEntry Instead of DLFileEntry
 - **Date:** 2015-May-20
 - **JIRA Ticket:** LPS-55613
 
 #### What changed?
 
-Indexers that previously received a DLFileEntry object (for example in the addRelatedEntryFields() method) will no longer receive a DLFileEntry but a FileEntry.
+Indexers that previously received a `DLFileEntry` object (e.g., in the
+`addRelatedEntryFields` method) no longer receive a `DLFileEntry`, but a
+`FileEntry`.
 
 #### Who is affected?
 
-This affects anyone who implements an Indexer handling DLFileEntry objects.
+This affects anyone who implements an Indexer handling `DLFileEntry` objects.
 
 #### How should I update my code?
 
-You should try to use methods in FileEntry or exported repository capabilities to obtain the value you were using. If no capability exist for your use case you can resort to fileEntry.getModel() and cast the result to a DLFileEntry, but this breaks all encapsulation and may result in future failures or compatibility problems.
+You should try to use methods in `FileEntry` or exported repository capabilities
+to obtain the value you were using. If no capability exists for your use case,
+you can resort to calling `fileEntry.getModel()` and casting the result to a
+`DLFileEntry`. However, this breaks all encapsulation and may result in future
+failures or compatibility problems.
 
-Example of old code:
+Old code:
 
-```
-	@Override
-	public void addRelatedEntryFields(Document document, Object obj)
-		throws Exception {
-		
+    @Override
+    public void addRelatedEntryFields(Document document, Object obj)
+        throws Exception {
+
         DLFileEntry dlFileEntry = (DLFileEntry)obj;
-        
+
         long fileEntryId = dlFileEntry.getFileEntryId();
-```
 
-should be replaced by:
+New Code:
 
-```
-	@Override
-	public void addRelatedEntryFields(Document document, Object obj)
-		throws Exception {
-		
+    @Override
+    public void addRelatedEntryFields(Document document, Object obj)
+        throws Exception {
+
         FileEntry fileEntry = (FileEntry)obj;
-        
+
         long fileEntryId = fileEntry.getFileEntryId();
-```
 
 #### Why was this change made?
 
-This change was made to enhance the Repository API and make decoupling from Document Library easier when modularizing the portal.
+This change was made to enhance the Repository API and make decoupling from
+Document Library easier when modularizing the portal.
 
 ---------------------------------------
 
-### Removed permissionClassName, permissionClassPK and permissionOwner parameters from MBMessage API
+### Removed permissionClassName, permissionClassPK, and permissionOwner Parameters from MBMessage API
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55877
 
 #### What changed?
 
-The parameters `permissionClassName`, `permissionClassPK` and
-`permissionOwner` have been removed from Message Boards API and
-Discussion taglib.
+The parameters `permissionClassName`, `permissionClassPK`, and `permissionOwner`
+have been removed from the Message Boards API and Discussion tag.
 
 #### Who is affected?
 
-Any code that invokes the affected methods (locally or remotely) as
-well as any view that uses the Discusion taglib.
+This affects anyone who invokes the affected methods (locally or remotely) and
+any view that uses the Discussion tag.
 
 #### How should I update my code?
 
-It suffices to remove the parameters from the method calls (for
-consumers of the API) or the attributes in taglib invocations.
+It suffices to remove the parameters from the method calls (for consumers of the
+API) or the attributes in tag invocations.
 
 #### Why was this change made?
 
-Those API methods were exposed in the remote services, allowing any
-cosumer to bypass the permission system by providing customized
-className, classPK or ownerId.
+Those API methods were exposed in the remote services, allowing any consumer to
+bypass the permission system by providing customized `className`, `classPK`, or
+`ownerId` parameters.
 
 ---------------------------------------
+
+### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures, and Removed Indexer.getQueryString 
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55928
+
+#### What changed?
+
+Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into 
+`RelatedEntryIndexer`.
+
+`Indexer.reindexDDMStructures(List<Long>)` has been moved into
+`DDMStructureIndexer`.
+
+`Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of 
+calling `SearchEngineUtil.getQueryString(SearchContext, Query)`
+
+#### Who is affected?
+
+This affects any code that invokes the affected methods, as well as any code
+that implements the interface methods.
+
+#### How should I update my code?
+
+Any code implementing `Indexer.addRelatedEntryFields(...)` should implement the 
+`RelatedEntryIndexer` interface.
+
+Any code calling `Indexer.addRelatedEntryFields(...)` should determine first if
+the `Indexer` is an instance of `RelatedEntryIndexer`.
+
+Old code:
+
+    mbMessageIndexer.addRelatedEntryFields(...);
+
+New code:
+
+    if (mbMessageIndexer instanceof RelatedEntryIndexer) {
+        RelatedEntryIndexer relatedEntryIndexer = 
+            (RelatedEntryIndexer)mbMessageIndexer;
+
+        relatedEntryIndexer.addRelatedEntryFields(...);
+    }
+
+Any code implementing `Indexer.reindexDDMStructures(...)` should implement the 
+`DDMStructureIndexer` interface.
+
+Any code calling `Indexer.reindexDDMStructures(...)` should determine first if
+the `Indexer` is an instance of `DDMStructureIndexer`. 
+
+Old code:
+
+    mbMessageIndexer.reindexDDMStructures(...);
+
+New code:
+
+    if (journalIndexer instanceof DDMStructureIndexer) {
+        DDMStructureIndexer ddmStructureIndexer = 
+            (DDMStructureIndexer)journalIndexer;
+
+        ddmStructureIndexer.reindexDDMStructures(...);
+    }
+
+Any code calling Indexer.getQueryString(...) should call 
+SearchEngineUtil.getQueryString(...)
+
+Old code:
+
+    mbMessageIndexer.getQueryString(...);
+
+
+New code:
+
+    SearchEngineUtil.getQueryString(...);
+
+#### Why was this change made?
+
+The `addRelatedEntryFields` and `reindexDDMStructures` methods were not related
+to core indexing functions. They were functions of specialized indexers.
+
+The `getQueryString` method was an unnecessary convenience method.

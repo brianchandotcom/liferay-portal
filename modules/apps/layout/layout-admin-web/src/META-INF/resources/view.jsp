@@ -180,10 +180,10 @@ boolean showHeader = ParamUtil.getBoolean(request, "showHeader");
 		<div class='<%= !group.isLayoutPrototype() ? "col-md-9" : "col-md-12" %>'>
 			<c:choose>
 				<c:when test="<%= layoutsAdminDisplayContext.getSelPlid() > 0 %>">
-					<liferay-util:include page="/edit_layout.jsp" />
+					<liferay-util:include page="/edit_layout.jsp" servletContext="<%= application %>" />
 				</c:when>
 				<c:otherwise>
-					<liferay-util:include page="/edit_layout_set.jsp" />
+					<liferay-util:include page="/edit_layout_set.jsp" servletContext="<%= application %>" />
 				</c:otherwise>
 			</c:choose>
 		</div>

@@ -32,7 +32,7 @@ request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 
 <div id="<portlet:namespace />inheritWapThemeOptions">
 	<c:if test="<%= !group.isLayoutPrototype() %>">
-		<liferay-util:include page="/look_and_feel_themes.jsp" />
+		<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 	</c:if>
 </div>
 
@@ -42,5 +42,5 @@ request.setAttribute("edit_pages.jsp-editable", Boolean.FALSE);
 	request.setAttribute("edit_pages.jsp-editable", Boolean.TRUE);
 	%>
 
-	<liferay-util:include page="/look_and_feel_themes.jsp" />
+	<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />
 </div>

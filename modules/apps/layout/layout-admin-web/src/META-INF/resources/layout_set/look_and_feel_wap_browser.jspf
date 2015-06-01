@@ -26,4 +26,4 @@ request.setAttribute("edit_pages.jsp-device", "wap");
 request.setAttribute("edit_pages.jsp-editable", true);
 %>
 
-<liferay-util:include page="/look_and_feel_themes.jsp" />
+<liferay-util:include page="/look_and_feel_themes.jsp" servletContext="<%= application %>" />

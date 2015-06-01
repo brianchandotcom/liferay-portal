@@ -54,7 +54,7 @@ int mdrRuleGroupInstancesCount = MDRRuleGroupInstanceServiceUtil.getRuleGroupIns
 </div>
 
 <div class="<%= (mdrRuleGroupInstancesCount > 0) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />uniqueRuleGroupInstancesContainer">
-	<liferay-util:include page="/layout/mobile_device_rules_rule_group_instances.jsp">
+	<liferay-util:include page="/layout/mobile_device_rules_rule_group_instances.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 		<liferay-util:param name="className" value="<%= className %>" />
 		<liferay-util:param name="classPK" value="<%= String.valueOf(classPK) %>" />

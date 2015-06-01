@@ -186,7 +186,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	protected K getKey(Element element) {
 		if (_requireSerialization) {
-			return (K)SerializableObjectWrapper.unwrap(element.getObjectKey());
+			return SerializableObjectWrapper.unwrap(element.getObjectKey());
 		}
 
 		return (K)element.getObjectKey();
@@ -194,8 +194,7 @@ public class PortalCacheCacheEventListener<K extends Serializable, V>
 
 	protected V getValue(Element element) {
 		if (_requireSerialization) {
-			return (V)SerializableObjectWrapper.unwrap(
-				element.getObjectValue());
+			return SerializableObjectWrapper.unwrap(element.getObjectValue());
 		}
 
 		return (V)element.getObjectValue();

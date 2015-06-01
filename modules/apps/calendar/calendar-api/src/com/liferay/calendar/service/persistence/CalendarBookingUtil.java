@@ -170,7 +170,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByResourceBlockId_First(
 		long resourceBlockId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByResourceBlockId_First(resourceBlockId,
 			orderByComparator);
@@ -202,7 +202,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByResourceBlockId_Last(
 		long resourceBlockId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByResourceBlockId_Last(resourceBlockId,
 			orderByComparator);
@@ -235,7 +235,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByResourceBlockId_PrevAndNext(
 		long calendarBookingId, long resourceBlockId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByResourceBlockId_PrevAndNext(calendarBookingId,
 			resourceBlockId, orderByComparator);
@@ -315,7 +315,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByUuid_First(java.lang.String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -341,7 +341,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -369,7 +369,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByUuid_PrevAndNext(
 		long calendarBookingId, java.lang.String uuid,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(calendarBookingId, uuid,
 			orderByComparator);
@@ -403,7 +403,7 @@ public class CalendarBookingUtil {
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
 	public static CalendarBooking findByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.calendar.NoSuchBookingException {
+		long groupId) throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -440,7 +440,7 @@ public class CalendarBookingUtil {
 	* @return the calendar booking that was removed
 	*/
 	public static CalendarBooking removeByUUID_G(java.lang.String uuid,
-		long groupId) throws com.liferay.calendar.NoSuchBookingException {
+		long groupId) throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -517,7 +517,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -547,7 +547,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -579,7 +579,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByUuid_C_PrevAndNext(
 		long calendarBookingId, java.lang.String uuid, long companyId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(calendarBookingId, uuid,
 			companyId, orderByComparator);
@@ -662,7 +662,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByCalendarId_First(long calendarId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByCalendarId_First(calendarId, orderByComparator);
 	}
@@ -690,7 +690,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByCalendarId_Last(long calendarId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByCalendarId_Last(calendarId, orderByComparator);
 	}
@@ -720,7 +720,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByCalendarId_PrevAndNext(
 		long calendarBookingId, long calendarId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByCalendarId_PrevAndNext(calendarBookingId, calendarId,
 			orderByComparator);
@@ -806,7 +806,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByCalendarResourceId_First(
 		long calendarResourceId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByCalendarResourceId_First(calendarResourceId,
 			orderByComparator);
@@ -838,7 +838,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByCalendarResourceId_Last(
 		long calendarResourceId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByCalendarResourceId_Last(calendarResourceId,
 			orderByComparator);
@@ -871,7 +871,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByCalendarResourceId_PrevAndNext(
 		long calendarBookingId, long calendarResourceId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByCalendarResourceId_PrevAndNext(calendarBookingId,
 			calendarResourceId, orderByComparator);
@@ -959,7 +959,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByParentCalendarBookingId_First(
 		long parentCalendarBookingId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByParentCalendarBookingId_First(parentCalendarBookingId,
 			orderByComparator);
@@ -991,7 +991,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByParentCalendarBookingId_Last(
 		long parentCalendarBookingId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByParentCalendarBookingId_Last(parentCalendarBookingId,
 			orderByComparator);
@@ -1024,7 +1024,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByParentCalendarBookingId_PrevAndNext(
 		long calendarBookingId, long parentCalendarBookingId,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByParentCalendarBookingId_PrevAndNext(calendarBookingId,
 			parentCalendarBookingId, orderByComparator);
@@ -1062,7 +1062,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByC_P(long calendarId,
 		long parentCalendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByC_P(calendarId, parentCalendarBookingId);
 	}
 
@@ -1102,7 +1102,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking removeByC_P(long calendarId,
 		long parentCalendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().removeByC_P(calendarId, parentCalendarBookingId);
 	}
 
@@ -1127,7 +1127,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByC_V(long calendarId,
 		java.lang.String vEventUid)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByC_V(calendarId, vEventUid);
 	}
 
@@ -1166,7 +1166,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking removeByC_V(long calendarId,
 		java.lang.String vEventUid)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().removeByC_V(calendarId, vEventUid);
 	}
 
@@ -1241,7 +1241,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByC_S_First(long calendarId, int status,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByC_S_First(calendarId, status, orderByComparator);
 	}
@@ -1271,7 +1271,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByC_S_Last(long calendarId, int status,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByC_S_Last(calendarId, status, orderByComparator);
 	}
@@ -1303,7 +1303,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByC_S_PrevAndNext(
 		long calendarBookingId, long calendarId, int status,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByC_S_PrevAndNext(calendarBookingId, calendarId,
 			status, orderByComparator);
@@ -1462,7 +1462,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking findByP_S_First(
 		long parentCalendarBookingId, int status,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByP_S_First(parentCalendarBookingId, status,
 			orderByComparator);
@@ -1495,7 +1495,7 @@ public class CalendarBookingUtil {
 	*/
 	public static CalendarBooking findByP_S_Last(long parentCalendarBookingId,
 		int status, OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByP_S_Last(parentCalendarBookingId, status,
 			orderByComparator);
@@ -1530,7 +1530,7 @@ public class CalendarBookingUtil {
 	public static CalendarBooking[] findByP_S_PrevAndNext(
 		long calendarBookingId, long parentCalendarBookingId, int status,
 		OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence()
 				   .findByP_S_PrevAndNext(calendarBookingId,
 			parentCalendarBookingId, status, orderByComparator);
@@ -1593,7 +1593,7 @@ public class CalendarBookingUtil {
 	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
 	*/
 	public static CalendarBooking remove(long calendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().remove(calendarBookingId);
 	}
 
@@ -1609,7 +1609,7 @@ public class CalendarBookingUtil {
 	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
 	*/
 	public static CalendarBooking findByPrimaryKey(long calendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException {
+		throws com.liferay.calendar.exception.NoSuchBookingException {
 		return getPersistence().findByPrimaryKey(calendarBookingId);
 	}
 

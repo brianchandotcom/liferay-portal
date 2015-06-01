@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.calendar;
+package com.liferay.calendar.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class DuplicateCalendarResourceException extends PortalException {
+public class CalendarNameException extends PortalException {
 
-	public DuplicateCalendarResourceException() {
+	public CalendarNameException() {
 	}
 
-	public DuplicateCalendarResourceException(String msg) {
+	public CalendarNameException(String msg) {
 		super(msg);
 	}
 
-	public DuplicateCalendarResourceException(String msg, Throwable cause) {
+	public CalendarNameException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public DuplicateCalendarResourceException(Throwable cause) {
+	public CalendarNameException(Throwable cause) {
 		super(cause);
 	}
 

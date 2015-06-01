@@ -17,17 +17,29 @@ package com.liferay.journal.events;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.security.auth.CompanyThreadLocal;
+import com.liferay.portal.service.CompanyLocalService;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DefaultDDMStructureUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
+import java.util.List;
+
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true)
 public class AddDefaultJournalStructuresAction extends SimpleAction {
 
 	@Override
@@ -40,17 +52,32 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 		}
 	}
 
+	@Activate
+	protected void activate() throws ActionException {
+		Long companyId = CompanyThreadLocal.getCompanyId();
+
+		try {
+			List<Company> companies = _companyLocalService.getCompanies();
+
+			for (Company company : companies) {
+				CompanyThreadLocal.setCompanyId(company.getCompanyId());
+
+				run(new String[] {String.valueOf(company.getCompanyId())});
+			}
+		}
+		finally {
+			CompanyThreadLocal.setCompanyId(companyId);
+		}
+	}
+
 	protected void doRun(long companyId) throws Exception {
 		ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAddGroupPermissions(true);
-
-		Group group = GroupLocalServiceUtil.getCompanyGroup(companyId);
+		Group group = _groupLocalService.getCompanyGroup(companyId);
 
 		serviceContext.setScopeGroupId(group.getGroupId());
 
-		long defaultUserId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long defaultUserId = _userLocalService.getDefaultUserId(companyId);
 
 		serviceContext.setUserId(defaultUserId);
 
@@ -58,9 +85,34 @@ public class AddDefaultJournalStructuresAction extends SimpleAction {
 			defaultUserId, group.getGroupId(),
 			PortalUtil.getClassNameId(JournalArticle.class),
 			AddDefaultJournalStructuresAction.class.getClassLoader(),
-			"com/liferay/portal/events/dependencies" +
+			"com/liferay/journal/events/dependencies" +
 				"/basic-web-content-structure.xml",
 			serviceContext);
 	}
+
+	@Reference
+	protected void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
+	@Reference
+	protected void setGroupLocalService(GroupLocalService groupLocalService) {
+		_groupLocalService = groupLocalService;
+	}
+
+	@Reference(target = "(original.bean=true)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
+	}
+
+	@Reference
+	protected void setUserLocalService(UserLocalService userLocalService) {
+		_userLocalService = userLocalService;
+	}
+
+	private CompanyLocalService _companyLocalService;
+	private GroupLocalService _groupLocalService;
+	private UserLocalService _userLocalService;
 
 }

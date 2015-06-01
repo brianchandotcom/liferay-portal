@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for CalendarNotificationTemplate. This utility wraps
@@ -337,12 +338,6 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -375,27 +370,8 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 			notificationTypeSettings, subject, body, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarNotificationTemplateLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarNotificationTemplateLocalService.class.getName());
-
-			if (invokableLocalService instanceof CalendarNotificationTemplateLocalService) {
-				_service = (CalendarNotificationTemplateLocalService)invokableLocalService;
-			}
-			else {
-				_service = new CalendarNotificationTemplateLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarNotificationTemplateLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -405,5 +381,14 @@ public class CalendarNotificationTemplateLocalServiceUtil {
 	public void setService(CalendarNotificationTemplateLocalService service) {
 	}
 
-	private static CalendarNotificationTemplateLocalService _service;
+	private static ServiceTracker<CalendarNotificationTemplateLocalService, CalendarNotificationTemplateLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarNotificationTemplateLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarNotificationTemplateLocalService, CalendarNotificationTemplateLocalService>(bundle.getBundleContext(),
+				CalendarNotificationTemplateLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

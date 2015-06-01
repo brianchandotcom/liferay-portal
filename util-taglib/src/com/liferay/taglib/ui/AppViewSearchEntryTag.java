@@ -49,10 +49,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
-	public void setCommentTuples(
-		List<RelatedSearchResult<Comment>> commentTuples) {
+	public void setRelatedComments(
+		List<RelatedSearchResult<Comment>> relatedComments) {
 
-		_commentTuples = commentTuples;
+		_relatedComments = relatedComments;
 	}
 
 	public void setContainerName(String containerName) {
@@ -71,10 +71,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
-	public void setFileEntryTuples(
-		List<RelatedSearchResult<FileEntry>> fileEntryTuples) {
+	public void setRelatedFileEntries(
+		List<RelatedSearchResult<FileEntry>> relatedFileEntries) {
 
-		_fileEntryTuples = fileEntryTuples;
+		_relatedFileEntries = relatedFileEntries;
 	}
 
 	public void setHighlightEnabled(boolean highlightEnabled) {
@@ -128,10 +128,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_containerType = null;
 		_cssClass = null;
 		_description = null;
-		_fileEntryTuples = null;
+		_relatedFileEntries = null;
 		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;
-		_commentTuples = null;
+		_relatedComments = null;
 		_queryTerms = null;
 		_rowCheckerId = null;
 		_rowCheckerName = null;
@@ -178,14 +178,14 @@ public class AppViewSearchEntryTag extends IncludeTag {
 			"liferay-ui:app-view-search-entry:description", _description);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:fileEntryTuples",
-			_fileEntryTuples);
+			_relatedFileEntries);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:highlightEnabled",
 			_highlightEnabled);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:commentTuples", _commentTuples);
+			"liferay-ui:app-view-search-entry:commentTuples", _relatedComments);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(
@@ -214,12 +214,12 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
-	private List<RelatedSearchResult<Comment>> _commentTuples;
+	private List<RelatedSearchResult<Comment>> _relatedComments;
 	private String _containerName;
 	private String _containerType;
 	private String _cssClass;
 	private String _description;
-	private List<RelatedSearchResult<FileEntry>> _fileEntryTuples;
+	private List<RelatedSearchResult<FileEntry>> _relatedFileEntries;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
 	private String[] _queryTerms;

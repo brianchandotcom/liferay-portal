@@ -52,11 +52,11 @@ public class ${servicePropsUtilClassName} {
 		_instance._configuration.set(key, value);
 	}
 
-	private ServiceProps() {
+	private ${servicePropsUtilClassName}() {
 		_configuration = ConfigurationFactoryUtil.getConfiguration(getClass().getClassLoader(), "service");
 	}
 
-	private static ServiceProps _instance = new ${servicePropsUtilClassName}();
+	private static ${servicePropsUtilClassName} _instance = new ${servicePropsUtilClassName}();
 
 	private Configuration _configuration;
 

@@ -17,7 +17,23 @@ package com.liferay.gradle.plugins.maven.plugin.builder;
 import com.liferay.gradle.plugins.maven.plugin.builder.util.OSDetector;
 import com.liferay.gradle.plugins.maven.plugin.builder.util.XMLUtil;
 
+import com.thoughtworks.qdox.JavaDocBuilder;
+import com.thoughtworks.qdox.model.BeanProperty;
+import com.thoughtworks.qdox.model.DocletTag;
+import com.thoughtworks.qdox.model.JavaClass;
+import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaSource;
+import com.thoughtworks.qdox.model.Type;
+
+import groovy.lang.Closure;
+
 import java.io.File;
+
+import java.net.URL;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,8 +46,8 @@ import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecSpec;
 
@@ -57,9 +73,17 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	@TaskAction
 	public void buildPluginDescriptor() {
 		File pomFile = _project.file(System.currentTimeMillis() + ".xml");
+		File preparedSourceDir = null;
 
 		try {
-			buildPomFile(pomFile);
+			if (isUseSetterComments()) {
+				preparedSourceDir = new File(
+					getTemporaryDir(), "prepared-source");
+
+				prepareSources(preparedSourceDir);
+			}
+
+			buildPomFile(pomFile, preparedSourceDir);
 
 			buildPluginDescriptor(pomFile);
 		}
@@ -67,6 +91,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			throw new GradleException(e.getMessage(), e);
 		}
 		finally {
+			if (preparedSourceDir != null) {
+				_project.delete(preparedSourceDir);
+			}
+
 			_project.delete(pomFile);
 		}
 	}
@@ -94,7 +122,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _mavenVersion;
 	}
 
-	@OutputDirectory
 	public File getOutputDir() {
 		return _outputDir;
 	}
@@ -114,6 +141,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	@InputDirectory
 	public File getSourceDir() {
 		return _sourceDir;
+	}
+
+	public boolean isUseSetterComments() {
+		return _useSetterComments;
 	}
 
 	public void setClassesDir(File classesDir) {
@@ -146,6 +177,10 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 
 	public void setSourceDir(File sourceDir) {
 		_sourceDir = sourceDir;
+	}
+
+	public void setUseSetterComments(boolean useSetterComments) {
+		_useSetterComments = useSetterComments;
 	}
 
 	protected void appendDependencyElements(
@@ -209,7 +244,11 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			});
 	}
 
-	protected void buildPomFile(File pomFile) throws Exception {
+	protected void buildPomFile(File pomFile, File sourceDir) throws Exception {
+		if (sourceDir == null) {
+			sourceDir = getSourceDir();
+		}
+
 		Document document = XMLUtil.createDocument();
 
 		Element projectElement = document.createElementNS(
@@ -237,7 +276,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			_project.relativePath(getClassesDir()));
 		XMLUtil.appendElement(
 			document, buildElement, "sourceDirectory",
-			_project.relativePath(getSourceDir()));
+			_project.relativePath(sourceDir));
 
 		Element dependenciesElement = document.createElement("dependencies");
 
@@ -259,6 +298,93 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		XMLUtil.write(document, pomFile);
 	}
 
+	protected String getComments(JavaMethod javaMethod) {
+		String code = javaMethod.getCodeBlock();
+
+		int start = code.indexOf("/**");
+
+		if (start < 0) {
+			throw new GradleException("Unable to find comments start " + code);
+		}
+
+		int end = code.indexOf("*/", start);
+
+		if (end < 0) {
+			throw new GradleException("Unable to find comments end " + code);
+		}
+
+		return code.substring(start, end + 2);
+	}
+
+	protected void prepareSource(JavaClass javaClass) throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		for (BeanProperty beanProperty : javaClass.getBeanProperties()) {
+			JavaMethod javaMethod = beanProperty.getMutator();
+
+			DocletTag parameterDocletTag = javaMethod.getTagByName("parameter");
+
+			if (parameterDocletTag == null) {
+				continue;
+			}
+
+			sb.append(getComments(javaMethod));
+			sb.append('\n');
+			sb.append("private ");
+
+			Type type = beanProperty.getType();
+
+			sb.append(type.getFullyQualifiedName());
+
+			sb.append(' ');
+			sb.append(beanProperty.getName());
+			sb.append(';');
+			sb.append('\n');
+		}
+
+		if (sb.length() == 0) {
+			return;
+		}
+
+		JavaSource javaSource = javaClass.getSource();
+
+		String code = javaSource.getCodeBlock();
+
+		int pos = code.lastIndexOf('}');
+
+		code = code.substring(0, pos) + sb.toString() + code.substring(pos);
+
+		URL url = javaSource.getURL();
+
+		Files.write(
+			Paths.get(url.toURI()), code.getBytes(StandardCharsets.UTF_8));
+	}
+
+	protected void prepareSources(final File preparedSourceDir)
+		throws Exception {
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall(CopySpec copySpec) {
+				copySpec.from(getSourceDir());
+				copySpec.include("**/*Mojo.java");
+				copySpec.into(preparedSourceDir);
+			}
+
+		};
+
+		_project.copy(closure);
+
+		JavaDocBuilder javaDocBuilder = new JavaDocBuilder();
+
+		javaDocBuilder.addSourceTree(preparedSourceDir);
+
+		for (JavaClass javaClass : javaDocBuilder.getClasses()) {
+			prepareSource(javaClass);
+		}
+	}
+
 	private File _classesDir;
 	private final Map<String, String> _configurationScopeMappings =
 		new HashMap<>();
@@ -270,5 +396,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 	private String _pomVersion;
 	private final Project _project;
 	private File _sourceDir;
+	private boolean _useSetterComments = true;
 
 }

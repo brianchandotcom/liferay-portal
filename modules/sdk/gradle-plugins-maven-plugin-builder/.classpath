@@ -24,5 +24,6 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-core.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-language-java.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
+	<classpathentry kind="lib" path="lib/qdox.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

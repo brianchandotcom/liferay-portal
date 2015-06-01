@@ -1469,9 +1469,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 	protected String stripJSPImports(String fileName, String content)
 		throws IOException {
 
-		fileName = fileName.replace(
-			CharPool.BACK_SLASH, CharPool.FORWARD_SLASH);
-
 		if (fileName.endsWith("init-ext.jsp")) {
 			return content;
 		}

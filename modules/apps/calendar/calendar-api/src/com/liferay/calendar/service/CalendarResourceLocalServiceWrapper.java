@@ -352,14 +352,6 @@ public class CalendarResourceLocalServiceWrapper
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _calendarResourceLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
 	public java.util.List<com.liferay.calendar.model.CalendarResource> search(
 		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String code, java.lang.String name,

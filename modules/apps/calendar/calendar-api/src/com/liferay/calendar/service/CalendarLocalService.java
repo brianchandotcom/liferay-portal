@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
 import com.liferay.portal.service.PermissionedModelLocalService;
 
 /**
@@ -43,7 +42,7 @@ import com.liferay.portal.service.PermissionedModelLocalService;
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface CalendarLocalService extends BaseLocalService,
-	InvokableLocalService, PermissionedModelLocalService {
+	PermissionedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -292,11 +291,6 @@ public interface CalendarLocalService extends BaseLocalService,
 
 	public void importCalendar(long calendarId, java.lang.String data,
 		java.lang.String type) throws java.lang.Exception;
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.Calendar> search(

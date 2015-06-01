@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service interface for CalendarNotificationTemplate. Methods of this
@@ -41,8 +40,7 @@ import com.liferay.portal.service.InvokableService;
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CalendarNotificationTemplateService extends BaseService,
-	InvokableService {
+public interface CalendarNotificationTemplateService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -63,11 +61,6 @@ public interface CalendarNotificationTemplateService extends BaseService,
 	* @return the Spring bean ID for this bean
 	*/
 	public java.lang.String getBeanIdentifier();
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	/**
 	* Sets the Spring bean ID for this bean.

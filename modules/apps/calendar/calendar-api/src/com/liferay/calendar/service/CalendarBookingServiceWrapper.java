@@ -191,14 +191,6 @@ public class CalendarBookingServiceWrapper implements CalendarBookingService,
 	}
 
 	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _calendarBookingService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
-	@Override
 	public void invokeTransition(long calendarBookingId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

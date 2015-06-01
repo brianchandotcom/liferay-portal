@@ -98,7 +98,7 @@ AUI.add(
 					var portlet = _portlets[portletId];
 
 					if (portlet) {
-						if (chunkData) {
+						if (chunkData && _portletIdsMap[portletId]) {
 							chunkData.initialRequest = portlet.initialRequest;
 						}
 

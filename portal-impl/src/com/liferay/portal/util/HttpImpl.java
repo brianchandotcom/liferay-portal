@@ -788,6 +788,10 @@ public class HttpImpl implements Http {
 			sb.append(queryString);
 		}
 
+		if (sb.length() == 0) {
+			return StringPool.SLASH;
+		}
+
 		return sb.toString();
 	}
 

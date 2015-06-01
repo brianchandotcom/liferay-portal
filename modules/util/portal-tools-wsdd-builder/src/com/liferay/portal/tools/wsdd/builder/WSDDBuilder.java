@@ -118,6 +118,10 @@ public class WSDDBuilder {
 		}
 	}
 
+	public void setClassPath(String classPath) {
+		_classPath = classPath;
+	}
+
 	public void setFileName(String fileName) {
 		_fileName = fileName;
 	}

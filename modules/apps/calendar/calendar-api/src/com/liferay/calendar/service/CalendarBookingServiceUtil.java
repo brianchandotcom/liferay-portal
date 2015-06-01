@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for CalendarBooking. This utility wraps
@@ -183,12 +184,6 @@ public class CalendarBookingServiceUtil {
 
 	public static boolean hasChildCalendarBookings(long parentCalendarBookingId) {
 		return getService().hasChildCalendarBookings(parentCalendarBookingId);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	public static void invokeTransition(long calendarBookingId, int status,
@@ -399,27 +394,8 @@ public class CalendarBookingServiceUtil {
 			secondReminderType, status, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarBookingService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarBookingService.class.getName());
-
-			if (invokableService instanceof CalendarBookingService) {
-				_service = (CalendarBookingService)invokableService;
-			}
-			else {
-				_service = new CalendarBookingServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarBookingServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -429,5 +405,14 @@ public class CalendarBookingServiceUtil {
 	public void setService(CalendarBookingService service) {
 	}
 
-	private static CalendarBookingService _service;
+	private static ServiceTracker<CalendarBookingService, CalendarBookingService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarBookingServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarBookingService, CalendarBookingService>(bundle.getBundleContext(),
+				CalendarBookingService.class, null);
+
+		_serviceTracker.open();
+	}
 }

@@ -114,16 +114,15 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			}
 
 			portletPreferences.setValues(
-					"classNameIds",
-					classNameIdsList.toArray(
-						new String[classNameIdsList.size()]));
+				"classNameIds",
+				classNameIdsList.toArray(new String[classNameIdsList.size()]));
 
 			if (classNameIdsList.size() == 1) {
 				long fileEntryTypeId = getIGImageFileEntryType(companyId);
 
 				portletPreferences.setValue(
-						"anyClassTypeDLFileEntryAssetRendererFactory",
-						String.valueOf(fileEntryTypeId));
+					"anyClassTypeDLFileEntryAssetRendererFactory",
+					String.valueOf(fileEntryTypeId));
 				portletPreferences.setValue(
 					"classTypeIds", String.valueOf(fileEntryTypeId));
 			}

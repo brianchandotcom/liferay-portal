@@ -17,7 +17,9 @@ package com.liferay.portlet.configuration.icon.configuration;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.util.PropsValues;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,6 +69,10 @@ public class ConfigurationPortletConfigurationIcon
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "configuration"));
+		sb.append("', '");
+		sb.append(
+			PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ?
+				portletDisplay.getId() : StringPool.BLANK);
 		sb.append("'); return false;");
 
 		return sb.toString();

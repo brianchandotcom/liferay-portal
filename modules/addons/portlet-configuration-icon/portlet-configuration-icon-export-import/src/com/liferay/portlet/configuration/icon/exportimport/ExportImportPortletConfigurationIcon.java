@@ -68,7 +68,7 @@ public class ExportImportPortletConfigurationIcon
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "export-import"));
-		sb.append("'); return false;");
+		sb.append("', ''); return false;");
 
 		return sb.toString();
 	}

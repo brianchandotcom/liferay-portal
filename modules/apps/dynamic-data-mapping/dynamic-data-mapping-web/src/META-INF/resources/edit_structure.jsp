@@ -25,6 +25,12 @@ String portletResourceNamespace = ParamUtil.getString(request, "portletResourceN
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
 
+DDMStructureVersion structureVersion = null;
+
+if(Validator.isNotNull(structure)) {
+	structureVersion = structure.getStructureVersion();
+}
+
 long groupId = BeanParamUtil.getLong(structure, request, "groupId", scopeGroupId);
 
 long parentStructureId = BeanParamUtil.getLong(structure, request, "parentStructureId", DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
@@ -112,6 +118,10 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	/>
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
+	
+	<c:if test="<%= structureVersion != null %>">
+		<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
+	</c:if>
 
 	<aui:fieldset>
 		<aui:field-wrapper>

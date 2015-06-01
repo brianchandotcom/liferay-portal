@@ -87,6 +87,7 @@ page import="com.liferay.portlet.dynamicdatamapping.TemplateSmallImageSizeExcept
 page import="com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMForm" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructure" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
@@ -113,7 +114,8 @@ page import="com.liferay.portlet.dynamicdatamapping.util.DDMUtil" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplate" %><%@
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
-page import="com.liferay.util.ContentUtil" %>
+page import="com.liferay.util.ContentUtil" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

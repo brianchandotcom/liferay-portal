@@ -14,16 +14,60 @@
  */
 --%>
 
-<%@ include file="/html/portlet/init.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
+
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.LayoutBranchNameException" %><%@
 page import="com.liferay.portal.LayoutSetBranchNameException" %><%@
+page import="com.liferay.portal.kernel.dao.orm.QueryUtil" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.staging.LayoutStagingUtil" %><%@
+page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
+page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
+page import="com.liferay.portal.kernel.util.ListUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
+page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
+page import="com.liferay.portal.kernel.util.Validator" %><%@
+page import="com.liferay.portal.kernel.util.WebKeys" %><%@
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowTask" %><%@
+page import="com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor" %><%@
+page import="com.liferay.portal.model.Layout" %><%@
+page import="com.liferay.portal.model.LayoutBranch" %><%@
+page import="com.liferay.portal.model.LayoutRevision" %><%@
+page import="com.liferay.portal.model.LayoutRevisionConstants" %><%@
+page import="com.liferay.portal.model.LayoutSetBranch" %><%@
+page import="com.liferay.portal.model.LayoutSetBranchConstants" %><%@
+page import="com.liferay.portal.model.User" %><%@
+page import="com.liferay.portal.security.auth.PrincipalException" %><%@
+page import="com.liferay.portal.security.permission.ActionKeys" %><%@
+page import="com.liferay.portal.service.LayoutBranchLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.LayoutLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.LayoutRevisionLocalServiceUtil" %><%@
 page import="com.liferay.portal.service.LayoutSetBranchLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.WorkflowDefinitionLinkLocalServiceUtil" %><%@
+page import="com.liferay.portal.service.permission.GroupPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" %><%@
+page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator" %><%@
 page import="com.liferay.portal.util.comparator.LayoutRevisionIdComparator" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
 
 <liferay-staging:defineObjects />
 

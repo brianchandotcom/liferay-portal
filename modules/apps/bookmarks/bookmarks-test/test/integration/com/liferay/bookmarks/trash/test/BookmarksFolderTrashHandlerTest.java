@@ -198,6 +198,12 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	public void testTrashVersionParentBaseModelIndexable() throws Exception {
 	}
 
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIsNotVisible() throws Exception {
+	}
+
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,

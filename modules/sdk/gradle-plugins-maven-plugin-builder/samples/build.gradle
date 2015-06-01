@@ -1,0 +1,29 @@
+buildscript {
+	repositories {
+		mavenLocal()
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "latest.release"
+	}
+}
+
+apply plugin: "com.liferay.maven.plugin.builder"
+apply plugin: "eclipse"
+apply plugin: "java"
+
+dependencies {
+	compile group: "org.apache.maven", name: "maven-plugin-api", version: "2.0"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+group = "com.example"
+version = "1.0.0"

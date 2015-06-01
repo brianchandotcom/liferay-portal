@@ -424,6 +424,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 
 		newContent = compressImports(fileName, newContent, "<%@ page import=");
+		newContent = compressImports(fileName, newContent, "<%@ taglib uri=");
 
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 		newContent = fixSessionKey(

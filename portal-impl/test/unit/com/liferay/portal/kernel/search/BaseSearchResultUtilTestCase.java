@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -66,13 +68,13 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected void assertEmptyFileEntryTuples(SearchResult searchResult) {
-		List<Tuple> fileEntryTuples = searchResult.getRelatedFileEntries();
+		List<RelatedSearchResult<FileEntry>> fileEntryTuples = searchResult.getRelatedFileEntries();
 
 		Assert.assertTrue(fileEntryTuples.isEmpty());
 	}
 
 	protected void assertEmptyMBMessages(SearchResult searchResult) {
-		List<Tuple> commentTuples = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> commentTuples = searchResult.getRelatedComments();
 
 		Assert.assertTrue(commentTuples.isEmpty());
 	}

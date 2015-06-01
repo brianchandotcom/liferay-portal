@@ -219,7 +219,7 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 							<liferay-ui:app-view-search-entry
 								actionJsp="/article_action.jsp"
 								actionJspServletContext="<%= application %>"
-								commentTuples="<%= searchResult.getCommentTuples() %>"
+								commentTuples="<%= searchResult.getRelatedComments() %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : article.getDescription(locale) %>"

@@ -33,11 +33,11 @@ public class SearchResult {
 	}
 
 	public void addComment(Comment comment, Summary summary) {
-		_commentTuples.add(new RelatedSearchResult<>(comment, summary));
+		_relatedComments.add(new RelatedSearchResult<>(comment, summary));
 	}
 
 	public void addFileEntry(FileEntry fileEntry, Summary summary) {
-		_fileEntryTuples.add(new RelatedSearchResult<>(fileEntry, summary));
+		_relatedFileEntries.add(new RelatedSearchResult<>(fileEntry, summary));
 	}
 
 	public void addVersion(String version) {
@@ -73,12 +73,12 @@ public class SearchResult {
 		return _classPK;
 	}
 
-	public List<RelatedSearchResult<Comment>> getCommentTuples() {
-		return _commentTuples;
+	public List<RelatedSearchResult<Comment>> getRelatedComments() {
+		return _relatedComments;
 	}
 
-	public List<RelatedSearchResult<FileEntry>> getFileEntryTuples() {
-		return _fileEntryTuples;
+	public List<RelatedSearchResult<FileEntry>> getRelatedFileEntries() {
+		return _relatedFileEntries;
 	}
 
 	public Summary getSummary() {
@@ -118,9 +118,9 @@ public class SearchResult {
 
 	private String _className;
 	private long _classPK;
-	private final List<RelatedSearchResult<Comment>> _commentTuples =
+	private final List<RelatedSearchResult<Comment>> _relatedComments =
 		new ArrayList<>();
-	private final List<RelatedSearchResult<FileEntry>> _fileEntryTuples =
+	private final List<RelatedSearchResult<FileEntry>> _relatedFileEntries =
 		new ArrayList<>();
 	private Summary _summary;
 	private final List<String> _versions = new ArrayList<>();

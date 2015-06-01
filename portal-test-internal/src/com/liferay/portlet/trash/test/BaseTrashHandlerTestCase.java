@@ -1913,16 +1913,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
-		int initialBaseModelsSearchCount = 0;
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
 
 		List<Integer> originalStatuses = new ArrayList<>();
 
@@ -1957,15 +1948,6 @@ public abstract class BaseTrashHandlerTestCase {
 			getNotInTrashBaseModelsCount(parentBaseModel));
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));

@@ -168,6 +168,13 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndRestoreIsVisible()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashVersionParentBaseModel() throws Exception {
 	}
 

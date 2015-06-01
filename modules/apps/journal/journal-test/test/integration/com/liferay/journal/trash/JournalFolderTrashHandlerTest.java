@@ -171,7 +171,7 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashVersionBaseModelAndRestoreIndexable()
+	public void testTrashVersionBaseModelAndRestoreIsVisible()
 		throws Exception {
 	}
 

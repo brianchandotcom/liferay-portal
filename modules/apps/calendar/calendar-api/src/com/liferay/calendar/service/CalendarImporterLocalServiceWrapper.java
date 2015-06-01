@@ -62,14 +62,6 @@ public class CalendarImporterLocalServiceWrapper
 		_calendarImporterLocalService.importRolePermissions();
 	}
 
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _calendarImporterLocalService.invokeMethod(name, parameterTypes,
-			arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

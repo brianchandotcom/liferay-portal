@@ -94,15 +94,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 	</c:if>
 </liferay-ui:error>
 
-<liferay-ui:error exception="<%= RecordSetDuplicateRecordSetKeyException.class %>">
-
-	<%
-	RecordSetDuplicateRecordSetKeyException rsdrske = (RecordSetDuplicateRecordSetKeyException)errorException;
-	%>
-
-	<liferay-ui:message arguments="<%= rsdrske.getRecordSetKey() %>" key="dynamic-data-list-record-set-with-record-set-key-x-already-exists" translateArguments="<%= false %>" />
-</liferay-ui:error>
-
 <liferay-ui:error exception="<%= StructureDuplicateStructureKeyException.class %>">
 
 	<%

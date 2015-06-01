@@ -126,7 +126,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				containerName="<%= MBUtil.getAbsolutePath(renderRequest, message.getCategoryId()) %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : StringPool.BLANK %>"
-				fileEntryTuples="<%= searchResult.getFileEntryTuples() %>"
+				fileEntryTuples="<%= searchResult.getRelatedFileEntries() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				title="<%= (summary != null) ? summary.getTitle() : message.getSubject() %>"
 				url="<%= rowURL %>"

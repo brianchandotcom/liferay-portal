@@ -194,7 +194,7 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_TITLE, searchResultSummary.getTitle());
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+		List<Tuple> fileEntryTuples = searchResult.getRelatedFileEntries();
 
 		Assert.assertEquals(1, fileEntryTuples.size());
 

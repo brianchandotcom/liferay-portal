@@ -34,8 +34,7 @@ public class SassToCssBuilderTest {
 	@Test
 	public void testSassToCssBuilder() throws Exception {
 		SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
-			_DOCROOT_DIR_NAME, "portal-web/docroot/html/css/common",
-			"jni");
+			_DOCROOT_DIR_NAME, "portal-web/docroot/html/css/common", "jni");
 
 		sassToCssBuilder.execute(ListUtil.fromArray(new String[] { _DIR_NAME}));
 

@@ -94,7 +94,8 @@ public class SassToCssBuilder {
 		}
 	}
 
-	public SassToCssBuilder(String docrootDirName, String portalCommonDirName,
+	public SassToCssBuilder(
+			String docrootDirName, String portalCommonDirName,
 			String sassCompilerImpl)
 		throws Exception {
 
@@ -221,7 +222,7 @@ public class SassToCssBuilder {
 	}
 
 	private void _initCompiler(String sassCompilerImpl) throws Exception {
-		if (sassCompilerImpl == null || sassCompilerImpl.equals("jni")) {
+		if ((sassCompilerImpl == null) || sassCompilerImpl.equals("jni")) {
 			try {
 				_sassCompiler = new JniSassCompiler();
 			}

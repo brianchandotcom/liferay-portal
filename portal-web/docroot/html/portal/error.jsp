@@ -52,7 +52,7 @@ else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 	</div>
 </c:if>
 
-<c:if test="<%= SessionErrors.contains(request, PrincipalException.class.getName()) %>">
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.getNestedClasses()) %>">
 	<div class="alert alert-danger">
 		<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-page" />
 	</div>

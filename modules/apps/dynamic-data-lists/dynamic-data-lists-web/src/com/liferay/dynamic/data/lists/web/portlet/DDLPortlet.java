@@ -126,7 +126,7 @@ public class DDLPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, NoSuchRecordSetException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
 		}

@@ -131,7 +131,7 @@ public class UserGroupsAdminPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchUserGroupException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(
 				"/html/portlet/user_groups_admin/error.jsp", renderRequest,

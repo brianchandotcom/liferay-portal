@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>MyAccountMyWorkflowInstances</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MyAccountMyWorkflowInstances</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>VIEW_LINK</td>
+	<td>//div[@class='task-content-actions']/ul/li/a/span[contains(.,'View')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_LINK</td>
+	<td>//div[@class='task-content-actions']/ul/li/a[contains(.,'Edit')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

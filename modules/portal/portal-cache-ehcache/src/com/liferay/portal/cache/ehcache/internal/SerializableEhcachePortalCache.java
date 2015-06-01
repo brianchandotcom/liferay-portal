@@ -110,9 +110,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected boolean doRemove(K key, V value) {
-		Element element = createElement(key, value);
-
-		return ehcache.removeElement(element);
+		return ehcache.removeElement(createElement(key, value));
 	}
 
 	@Override
@@ -134,15 +132,13 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	protected boolean doReplace(K key, V oldValue, V newValue, int timeToLive) {
-		Element oldElement = createElement(key, oldValue);
-
 		Element newElement = createElement(key, newValue);
 
 		if (timeToLive != DEFAULT_TIME_TO_LIVE) {
 			newElement.setTimeToLive(timeToLive);
 		}
 
-		return ehcache.replace(oldElement, newElement);
+		return ehcache.replace(createElement(key, oldValue), newElement);
 	}
 
 }

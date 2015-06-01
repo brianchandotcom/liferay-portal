@@ -105,7 +105,7 @@ public class CalendarNotificationTemplateStagedModelDataHandler
 			portletDataContext, calendarNotificationTemplate,
 			calendarNotificationTemplate.getBody(),
 			portletDataContext.getBooleanParameter(
-				CalendarPortletDataHandler.NAMESPACE, "referenced-content"));
+				"calendar", "referenced-content"));
 
 		calendarNotificationTemplate.setBody(body);
 

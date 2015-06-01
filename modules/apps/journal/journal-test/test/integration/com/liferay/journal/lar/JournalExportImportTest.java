@@ -15,6 +15,7 @@
 package com.liferay.journal.lar;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.journal.web.lar.JournalPortletDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -50,7 +51,6 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.Date;
 import java.util.HashMap;

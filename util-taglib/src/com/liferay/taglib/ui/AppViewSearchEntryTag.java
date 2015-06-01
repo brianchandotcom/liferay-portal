@@ -14,12 +14,13 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Tuple;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -64,10 +65,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
-	public void setFileEntryTuples(List<Tuple> fileEntryTuples) {
-		_fileEntryTuples = fileEntryTuples;
-	}
-
 	public void setHighlightEnabled(boolean highlightEnabled) {
 		_highlightEnabled = highlightEnabled;
 	}
@@ -76,12 +73,20 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_locked = locked;
 	}
 
-	public void setMbMessages(List<MBMessage> mbMessages) {
-		_mbMessages = mbMessages;
-	}
-
 	public void setQueryTerms(String[] queryTerms) {
 		_queryTerms = queryTerms;
+	}
+
+	public void setRelatedComments(
+		List<RelatedSearchResult<Comment>> relatedComments) {
+
+		_relatedComments = relatedComments;
+	}
+
+	public void setRelatedFileEntries(
+		List<RelatedSearchResult<FileEntry>> relatedFileEntries) {
+
+		_relatedFileEntries = relatedFileEntries;
 	}
 
 	public void setRowCheckerId(String rowCheckerId) {
@@ -123,10 +128,10 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_containerType = null;
 		_cssClass = null;
 		_description = null;
-		_fileEntryTuples = null;
+		_relatedFileEntries = null;
 		_highlightEnabled = _HIGHLIGHT_ENABLED;
 		_locked = false;
-		_mbMessages = null;
+		_relatedComments = null;
 		_queryTerms = null;
 		_rowCheckerId = null;
 		_rowCheckerName = null;
@@ -172,15 +177,16 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:description", _description);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:fileEntryTuples",
-			_fileEntryTuples);
+			"liferay-ui:app-view-search-entry:relatedFileEntries",
+			_relatedFileEntries);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:highlightEnabled",
 			_highlightEnabled);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:mbMessages", _mbMessages);
+			"liferay-ui:app-view-search-entry:relatedComments",
+			_relatedComments);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(
@@ -213,11 +219,11 @@ public class AppViewSearchEntryTag extends IncludeTag {
 	private String _containerType;
 	private String _cssClass;
 	private String _description;
-	private List<Tuple> _fileEntryTuples;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
-	private List<MBMessage> _mbMessages;
 	private String[] _queryTerms;
+	private List<RelatedSearchResult<Comment>> _relatedComments;
+	private List<RelatedSearchResult<FileEntry>> _relatedFileEntries;
 	private String _rowCheckerId;
 	private String _rowCheckerName;
 	private boolean _showCheckbox = false;

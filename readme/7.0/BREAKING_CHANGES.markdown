@@ -1648,6 +1648,41 @@ core repository implementations from additional (optional) functionality.
 
 ---------------------------------------
 
+### Removed mbMessages and fileEntryTuples attributes from app-view-search-entry tag
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55886
+
+#### What changed?
+
+The `mbMessages` and `fileEntryTuples` attributes from the
+`app-view-search-entry` tag have been removed. Related methods
+`getMbMessages`, `getFileEntryTuples`, and `addMbMessage` have been
+removed as well from `SearchResult`.
+
+#### Who is affected?
+
+Any developers that use the `app-view-search-entry` tag in their
+views, or that have developed hooks to customize the taglib JSP or any
+portlet that uses that taglib. Also, any custom code that uses the
+`SearchResult` class may be affected as well.
+
+#### How should I update my code?
+
+The new attributes `relatedComments` and `relatedFileEntries` should
+be used instead. The expected value is the one returned by the
+`getRelatedComments` and `getRelatedFileEntries` methods in
+`SearchResult`.
+
+When adding comments to the `SearchResult` the new `addComment` method
+should be used instead of `addMbMessage`.
+
+#### Why was this change made?
+
+As part of the modularization efforts, references to `MBMessage`
+needed to be removed for the Message Boards portlet to be placed into
+its own OSGi bundle.
+
+---------------------------------------
 ### Indexers called from Document Library no longer receive a DLFileEntry, but a FileEntry 
 - **Date:** 2015-May-20
 - **JIRA Ticket:** LPS-55613

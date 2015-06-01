@@ -57,7 +57,7 @@ public class ConfigurationPortletConfigurationIcon
 	public String getOnClick() {
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		StringBuilder sb = new StringBuilder(11);
+		StringBuilder sb = new StringBuilder(13);
 
 		sb.append("Liferay.Portlet.openWindow('#p_p_id_");
 		sb.append(portletDisplay.getId());

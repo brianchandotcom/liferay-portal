@@ -1843,8 +1843,6 @@ public abstract class BaseTrashHandlerTestCase {
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
-			parentBaseModel);
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
 
 		List<Integer> originalStatuses = new ArrayList<>();
@@ -1874,16 +1872,6 @@ public abstract class BaseTrashHandlerTestCase {
 		workflowedModel = getWorkflowedModel(baseModel);
 
 		originalStatuses.add(workflowedModel.getStatus());
-
-		Assert.assertEquals(
-			initialBaseModelsCount + 1,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
-		if (isAssetableModel()) {
-			Assert.assertTrue(isAssetEntryVisible(baseModel));
-		}
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 

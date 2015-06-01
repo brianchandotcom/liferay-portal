@@ -34,6 +34,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ERROR_ENTER_VALID_CONTENT</td>
+	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter valid content')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ERROR_ENTER_A_VALID_TITLE</td>
 	<td>//div[contains(@class,'alert-danger') and contains(.,'Please enter a valid title')]</td>
 	<td></td>

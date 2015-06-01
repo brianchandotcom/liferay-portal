@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -20,7 +20,7 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_C_S">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByG_C_S">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -39,7 +39,7 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByG_U_F_C">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByG_U_F_C">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -59,7 +59,7 @@
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_S_T_D_R">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.countByC_G_F_C_A_V_T_D_C_S_T_D_R">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -90,7 +90,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByExpirationDate">
 		<![CDATA[
 			SELECT
 				{JournalArticle.*}
@@ -108,7 +108,7 @@
 				(tempJournalArticle.version is NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByNoAssets">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByNoAssets">
 		<![CDATA[
 			SELECT
 				{JournalArticle.*}
@@ -121,7 +121,7 @@
 				AssetEntry.classPK IS NULL
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByNoPermissions">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByNoPermissions">
 		<![CDATA[
 			SELECT
 				{JournalArticle.*}
@@ -130,14 +130,14 @@
 			LEFT JOIN
 				ResourcePermission ON
 					(ResourcePermission.companyId = JournalArticle.companyId) AND
-					(ResourcePermission.name = 'com.liferay.portlet.journal.model.JournalArticle') AND
+					(ResourcePermission.name = 'com.liferay.journal.model.JournalArticle') AND
 					(ResourcePermission.primKey = CAST_TEXT(JournalArticle.resourcePrimKey)) AND
 					(ResourcePermission.scope = ?)
 			WHERE
 				ResourcePermission.primKey IS NULL
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByReviewDate">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByReviewDate">
 		<![CDATA[
 			SELECT
 				{JournalArticle.*}
@@ -149,7 +149,7 @@
 				(reviewDate <= ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByR_D">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByR_D">
 		<![CDATA[
 			SELECT
 				{JournalArticle.*}
@@ -164,7 +164,7 @@
 				version DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_F">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -185,7 +185,7 @@
 				JournalArticle.id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_C_S">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_C_S">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -206,7 +206,7 @@
 				JournalArticle.id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByG_U_F_C">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByG_U_F_C">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -228,7 +228,7 @@
 				JournalArticle.id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_S_T_D_R">
+	<sql id="com.liferay.journal.service.persistence.JournalArticleFinder.findByC_G_F_C_A_V_T_D_C_S_T_D_R">
 		<![CDATA[
 			SELECT
 				JournalArticle.*
@@ -261,7 +261,7 @@
 				JournalArticle.id_ ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFeedFinder.countByC_G_F_N_D">
+	<sql id="com.liferay.journal.service.persistence.JournalFeedFinder.countByC_G_F_N_D">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -277,7 +277,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFeedFinder.findByC_G_F_N_D">
+	<sql id="com.liferay.journal.service.persistence.JournalFeedFinder.findByC_G_F_N_D">
 		<![CDATA[
 			SELECT
 				{JournalFeed.*}
@@ -295,7 +295,7 @@
 				feedId ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countA_ByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countA_ByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT JournalArticle.articleId) AS COUNT_VALUE
@@ -308,7 +308,7 @@
 				[$ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.countF_ByG_F">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -320,7 +320,7 @@
 				[$FOLDER_PARENT_FOLDER_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findA_ByG_F">
 		<![CDATA[
 			SELECT
 				DISTINCT JournalArticle.folderId AS modelFolderId, JournalArticle.articleId as articleId, JournalArticle.version AS version, 0 AS modelFolder, JournalArticle.displayDate as displayDate, JournalArticle.modifiedDate as modifiedDate
@@ -344,7 +344,7 @@
 						(TEMP_TABLE.version = JournalArticle.version)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findByF_ByNoAssets">
 		<![CDATA[
 			SELECT
 				{JournalFolder.*}
@@ -357,7 +357,7 @@
 				(AssetEntry.classPK IS NULL)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
+	<sql id="com.liferay.journal.service.persistence.JournalFolderFinder.findF_ByG_F">
 		<![CDATA[
 			SELECT
 				DISTINCT folderId AS modelFolderId, '' AS articleId, 0 AS version, 1 AS modelFolder, JournalFolder.createDate as displayDate, JournalFolder.modifiedDate as modifiedDate

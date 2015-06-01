@@ -1883,23 +1883,6 @@ public abstract class BaseTrashHandlerTestCase {
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
-
-		restoreParentBaseModelFromTrash(
-			(Long)parentBaseModel.getPrimaryKeyObj());
-
-		List<? extends WorkflowedModel> childrenWorkflowedModels =
-			getChildrenWorkflowedModels(parentBaseModel);
-
-		for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
-			WorkflowedModel childrenWorkflowedModel =
-				childrenWorkflowedModels.get(i - 1);
-
-			int originalStatus = originalStatuses.get(
-				childrenWorkflowedModels.size() - i);
-
-			Assert.assertEquals(
-				originalStatus, childrenWorkflowedModel.getStatus());
-		}
 	}
 
 	@Test

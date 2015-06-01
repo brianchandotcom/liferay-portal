@@ -81,63 +81,64 @@ public class BookmarksEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testAddBaseModelTrashInitialConditionsDraft() throws Exception {
+	public void testAddBaseModelWithDraftStatus() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testAddBaseModelTrashInitialConditionsDraftIndexable()
+	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatus() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatus() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusIsNotVisible()
 		throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testAddBaseModelTrashInitialConditionsDraftIsNotVisible()
+	public void testTrashAndRestoreWithDraftStatusRestoreStatus()
 		throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndDeleteDraft() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndDeleteDraftIndexable() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndRestoreDraft() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndRestoreDraftIndexable() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndRestoreDraftIsNotVisible() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndRestoreDraftRestoreStatus() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashAndRestoreDraftRestoreUniqueTitle() throws Exception {
+	public void testTrashAndRestoreWithDraftStatusRestoreUniqueTitle()
+		throws Exception {
 	}
 
 	@Ignore()

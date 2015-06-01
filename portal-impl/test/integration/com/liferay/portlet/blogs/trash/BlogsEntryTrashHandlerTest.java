@@ -57,6 +57,13 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashBaseModelAndDeleteWithParentIsNotRestorable()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashBaseModelAndParent() throws Exception {
 	}
 
@@ -95,6 +102,26 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashBaseModelAndTrashParentAndDeleteParentIsNotRestorable()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashBaseModelAndTrashParentIsNotRestorable()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashBaseModelWithParentIsRestorable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashDuplicate() throws Exception {
 	}
 
@@ -115,30 +142,6 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent1() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent2() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent3() throws Exception {
-	}
-
-	@Ignore()
-	@Override
-	@Test
-	public void testTrashIsRestorableBaseModelWithParent4() throws Exception {
 	}
 
 	@Ignore()

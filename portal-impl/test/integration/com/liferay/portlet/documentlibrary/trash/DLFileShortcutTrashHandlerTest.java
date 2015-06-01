@@ -65,43 +65,46 @@ public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndDeleteDraft() throws Exception {
+	public void testTrashAndDeleteWithDraftStatus() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndDeleteDraftIndexable() throws Exception {
+	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraft() throws Exception {
+	public void testTrashAndRestoreWithDraftStatus() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraftIndexable() throws Exception {
+	public void testTrashAndRestoreWithDraftStatusIndexable() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraftIsNotVisible() throws Exception {
+	public void testTrashAndRestoreWithDraftStatusIsNotVisible()
+		throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraftRestoreStatus() throws Exception {
+	public void testTrashAndRestoreWithDraftStatusRestoreStatus()
+		throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraftRestoreUniqueTitle() throws Exception {
+	public void testTrashAndRestoreWithDraftStatusRestoreUniqueTitle()
+		throws Exception {
 	}
 
 	@Ignore()

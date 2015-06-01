@@ -1654,7 +1654,7 @@ core repository implementations from additional (optional) functionality.
 
 #### What changed?
 
-Indexers that previously received a `DLFileEntry` object (e.g., the
+Indexers that previously received a `DLFileEntry` object (e.g., in the
 `addRelatedEntryFields` method) no longer receive a `DLFileEntry`, but a
 `FileEntry`.
 
@@ -1666,9 +1666,9 @@ This affects anyone who implements an Indexer handling `DLFileEntry` objects.
 
 You should try to use methods in `FileEntry` or exported repository capabilities
 to obtain the value you were using. If no capability exists for your use case,
-you can resort to `fileEntry.getModel()` and cast the result to a `DLFileEntry`.
-However, this breaks all encapsulation and may result in future failures or
-compatibility problems.
+you can resort to calling `fileEntry.getModel()` and casting the result to a
+`DLFileEntry`. However, this breaks all encapsulation and may result in future
+failures or compatibility problems.
 
 Old code:
 
@@ -1708,7 +1708,7 @@ have been removed from the Message Boards API and Discussion tag.
 
 #### Who is affected?
 
-This affects anyone that invokes the affected methods (locally or remotely) and
+This affects anyone who invokes the affected methods (locally or remotely) and
 any view that uses the Discussion tag.
 
 #### How should I update my code?
@@ -1720,7 +1720,7 @@ API) or the attributes in tag invocations.
 
 Those API methods were exposed in the remote services, allowing any consumer to
 bypass the permission system by providing customized `className`, `classPK`, or
-`ownerId`.
+`ownerId` parameters.
 
 ---------------------------------------
 

@@ -270,17 +270,6 @@
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLFolderFinder" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLFolderFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.documentlibrary.service.DLSyncEventLocalService" class="com.liferay.portlet.documentlibrary.service.impl.DLSyncEventLocalServiceImpl" />
 	<bean id="com.liferay.portlet.documentlibrary.service.persistence.DLSyncEventPersistence" class="com.liferay.portlet.documentlibrary.service.persistence.impl.DLSyncEventPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordLocalService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordLocalServiceImpl" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordServiceImpl" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordPersistence" class="com.liferay.portlet.dynamicdatalists.service.persistence.impl.DDLRecordPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordFinder" class="com.liferay.portlet.dynamicdatalists.service.persistence.impl.DDLRecordFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetLocalServiceImpl" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordSetServiceImpl" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetPersistence" class="com.liferay.portlet.dynamicdatalists.service.persistence.impl.DDLRecordSetPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordSetFinder" class="com.liferay.portlet.dynamicdatalists.service.persistence.impl.DDLRecordSetFinderImpl" parent="basePersistence" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionLocalService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionLocalServiceImpl" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.DDLRecordVersionService" class="com.liferay.portlet.dynamicdatalists.service.impl.DDLRecordVersionServiceImpl" />
-	<bean id="com.liferay.portlet.dynamicdatalists.service.persistence.DDLRecordVersionPersistence" class="com.liferay.portlet.dynamicdatalists.service.persistence.impl.DDLRecordVersionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMContentLocalService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMContentLocalServiceImpl" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.persistence.DDMContentPersistence" class="com.liferay.portlet.dynamicdatamapping.service.persistence.impl.DDMContentPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.dynamicdatamapping.service.DDMStorageLinkLocalService" class="com.liferay.portlet.dynamicdatamapping.service.impl.DDMStorageLinkLocalServiceImpl" />

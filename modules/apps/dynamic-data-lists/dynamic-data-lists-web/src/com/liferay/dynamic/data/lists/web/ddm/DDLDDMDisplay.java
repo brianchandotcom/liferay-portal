@@ -14,12 +14,12 @@
 
 package com.liferay.dynamic.data.lists.web.ddm;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;

@@ -14,11 +14,11 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.action;
 
+import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordService;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;

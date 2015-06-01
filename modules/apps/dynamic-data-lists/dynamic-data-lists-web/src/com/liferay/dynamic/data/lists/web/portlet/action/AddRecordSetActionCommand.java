@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.lists.web.portlet.action;
 
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
+import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
@@ -30,9 +33,6 @@ import com.liferay.portal.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.StrictPortletPreferencesImpl;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
-import com.liferay.portlet.dynamicdatalists.model.DDLRecordSetConstants;
-import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetService;
 
 import java.util.Locale;
 import java.util.Map;

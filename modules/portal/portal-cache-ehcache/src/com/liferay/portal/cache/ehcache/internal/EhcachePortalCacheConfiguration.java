@@ -43,6 +43,13 @@ public class EhcachePortalCacheConfiguration extends PortalCacheConfiguration {
 		return _requireSerialization;
 	}
 
+	@Override
+	public PortalCacheConfiguration newPortalCacheConfiguration(String name) {
+		return new EhcachePortalCacheConfiguration(
+			name, getCacheListenerConfigurations(),
+			getBootstrapLoaderConfiguration(), _requireSerialization);
+	}
+
 	private final boolean _requireSerialization;
 
 }

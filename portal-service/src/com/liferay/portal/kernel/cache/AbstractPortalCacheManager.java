@@ -68,8 +68,9 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			_portalCacheManagerConfiguration.getPortalCacheConfiguration(name);
 
 		if (portalCacheConfiguration == null) {
-			portalCacheConfiguration = createPortalCacheConfiguration(
-				name, _defaultPortalCacheConfiguration);
+			portalCacheConfiguration =
+				_defaultPortalCacheConfiguration.newPortalCacheConfiguration(
+					name);
 
 			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
 				name, portalCacheConfiguration);
@@ -209,11 +210,6 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	protected abstract PortalCache<K, V> createPortalCache(
 		PortalCacheConfiguration portalCacheConfiguration);
-
-	protected abstract PortalCacheConfiguration
-		createPortalCacheConfiguration(
-			String name,
-			PortalCacheConfiguration defaultPortalCacheConfiguration);
 
 	protected abstract void doClearAll();
 

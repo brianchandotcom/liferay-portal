@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/staging_bar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 boolean branchingEnabled = false;

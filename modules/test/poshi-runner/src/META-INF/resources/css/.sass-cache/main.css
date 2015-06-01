@@ -195,7 +195,7 @@ li {
 
 /* ---------- Scope selection ---------- */
 .current-scope {
-  background-color: rgba(232, 255, 118, 0.4);
+  background-color: rgba(255, 250, 97, 0.4);
   border: 1px solid #DEE;
   margin: -1px;
   padding: 0; }
@@ -215,7 +215,7 @@ li {
     opacity: 0.2; }
 
 .hover.current-scope {
-  background-color: rgba(232, 255, 118, 0.4); }
+  background-color: rgba(255, 250, 97, 0.4); }
 
 .current-scope:after, .fail:after {
   content: ' ';
@@ -296,7 +296,8 @@ li {
     padding: 10px; }
   .command-log .line-group {
     padding-bottom: 1px;
-    position: relative; }
+    position: relative;
+    width: 100%; }
   .command-log .child-container {
     border: 1px dashed #EEE;
     border-right-width: 0;
@@ -483,8 +484,9 @@ li {
   border-left: 1px solid #DDD;
   height: 0;
   list-style-type: none;
+  margin-left: 20px;
   overflow: visible;
-  padding: 1px 0 1px 20px; }
+  padding: 1px 0; }
   .child-container.root-container {
     border-width: 0;
     overflow: visible; }

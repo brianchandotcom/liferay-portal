@@ -206,6 +206,8 @@
 				web.xml.timeout
 
 			test.name=${test.name}
+
+			test.run.locally=true
 		</echo>
 
 		<if>

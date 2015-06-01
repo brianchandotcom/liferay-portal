@@ -16,6 +16,7 @@ package com.liferay.asset.publisher.portlet;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -36,7 +37,6 @@ import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.journal.model.JournalArticleConstants;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.util.test.JournalTestUtil;
 
 import java.util.HashMap;
 import java.util.Locale;

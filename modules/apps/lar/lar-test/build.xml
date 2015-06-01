@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<property name="import.shared" value="../journal/journal-content-web,../journal/journal-test" />
+
+	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
+</project>

@@ -1380,7 +1380,7 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashParentAndDeleteGroupTrashEntries() throws Exception {
+	public void testTrashParent() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1432,6 +1432,19 @@ public abstract class BaseTrashHandlerTestCase {
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
+	}
+
+	@Test
+	public void testTrashParentAndDeleteGroupTrashEntries() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		TrashEntryServiceUtil.deleteEntries(group.getGroupId());
 
@@ -1462,43 +1475,9 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		Assert.assertTrue(isInTrashContainer(baseModel));
-
-		Assert.assertEquals(
-			initialBaseModelsCount,
-			getNotInTrashBaseModelsCount(parentBaseModel));
-		Assert.assertEquals(
-			initialTrashEntriesCount + 1,
-			getTrashEntriesCount(group.getGroupId()));
-
 		TrashHandler parentTrashHandler =
 			TrashHandlerRegistryUtil.getTrashHandler(
 				getParentBaseModelClassName());
-
-		if (getBaseModelClassName().equals(getParentBaseModelClassName())) {
-			Assert.assertEquals(
-				0,
-				parentTrashHandler.getTrashContainedModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-			Assert.assertEquals(
-				1,
-				parentTrashHandler.getTrashContainerModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-		}
-		else {
-			Assert.assertEquals(
-				1,
-				parentTrashHandler.getTrashContainedModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-			Assert.assertEquals(
-				0,
-				parentTrashHandler.getTrashContainerModelsCount(
-					(Long)parentBaseModel.getPrimaryKeyObj()));
-		}
-
-		if (isAssetableModel()) {
-			Assert.assertFalse(isAssetEntryVisible(baseModel));
-		}
 
 		parentTrashHandler.deleteTrashEntry(
 			(Long)parentBaseModel.getPrimaryKeyObj());

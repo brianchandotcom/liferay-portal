@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `f7b331c`.*
+*This document has been reviewed through commit `1e1103f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1724,91 +1724,81 @@ bypass the permission system by providing customized `className`, `classPK`, or
 
 ---------------------------------------
 
-### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures.  Removed Indexer.getQueryString 
+### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures, and Removed Indexer.getQueryString 
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55928
 
 #### What changed?
 
-Indexer.addRelatedEntryFields(Document, Object) has been moved into 
-RelatedEntryIndexer.
+Method `Indexer.addRelatedEntryFields(Document, Object)` has been moved into 
+`RelatedEntryIndexer`.
 
-Indexer.reindexDDMStructures(List<Long>) has been moved into DDMStructureIndexer.
+`Indexer.reindexDDMStructures(List<Long>)` has been moved into
+`DDMStructureIndexer`.
 
-Indexer.getQueryString(SearchContext, Query) has been removed in favor of 
-calling SearchEngineUtil.getQueryString(SearchContext, Query)
+`Indexer.getQueryString(SearchContext, Query)` has been removed, in favor of 
+calling `SearchEngineUtil.getQueryString(SearchContext, Query)`
 
 #### Who is affected?
 
-Any code that invokes the affected methods as well as any code that implements 
-the interface methods.
+This affects any code that invokes the affected methods, as well as any code
+that implements the interface methods.
 
 #### How should I update my code?
 
-Any code implementing Indexer.addRelatedEntryFields(...) should implement the 
-RelatedEntryIndexer interface.
+Any code implementing `Indexer.addRelatedEntryFields(...)` should implement the 
+`RelatedEntryIndexer` interface.
 
-Any code calling Indexer.addRelatedEntryFields(...) should determine first if
-the Indexer is an instance of RelatedEntryIndexer.
+Any code calling `Indexer.addRelatedEntryFields(...)` should determine first if
+the `Indexer` is an instance of `RelatedEntryIndexer`.
 
-Example of old code:
+Old code:
 
-```
-        mbMessageIndexer.addRelatedEntryFields(...);
-```
+    mbMessageIndexer.addRelatedEntryFields(...);
 
-should be replaced by:
+New code:
 
-```
-        if (mbMessageIndexer instanceof RelatedEntryIndexer) {
-            RelatedEntryIndexer relatedEntryIndexer = 
-                (RelatedEntryIndexer)mbMessageIndexer;
+    if (mbMessageIndexer instanceof RelatedEntryIndexer) {
+        RelatedEntryIndexer relatedEntryIndexer = 
+            (RelatedEntryIndexer)mbMessageIndexer;
 
-            relatedEntryIndexer.addRelatedEntryFields(...);
-        }
-```
+        relatedEntryIndexer.addRelatedEntryFields(...);
+    }
 
-Any code implementing Indexer.reindexDDMStructures(...) should implement the 
-DDMStructureIndexer interface.
+Any code implementing `Indexer.reindexDDMStructures(...)` should implement the 
+`DDMStructureIndexer` interface.
 
-Any code calling Indexer.reindexDDMStructures(...) should determine first if the 
-Indexer is an instance of DDMStructureIndexer. 
+Any code calling `Indexer.reindexDDMStructures(...)` should determine first if
+the `Indexer` is an instance of `DDMStructureIndexer`. 
 
-Example of old code:
+Old code:
 
-```
-        mbMessageIndexer.reindexDDMStructures(...);
-```
+    mbMessageIndexer.reindexDDMStructures(...);
 
-should be replaced by:
+New code:
 
-```
-        if (journalIndexer instanceof DDMStructureIndexer) {
-            DDMStructureIndexer ddmStructureIndexer = 
-                (DDMStructureIndexer)journalIndexer;
+    if (journalIndexer instanceof DDMStructureIndexer) {
+        DDMStructureIndexer ddmStructureIndexer = 
+            (DDMStructureIndexer)journalIndexer;
 
-            ddmStructureIndexer.reindexDDMStructures(...);
-        }
+        ddmStructureIndexer.reindexDDMStructures(...);
+    }
 
 Any code calling Indexer.getQueryString(...) should call 
 SearchEngineUtil.getQueryString(...)
 
-Example of old code:
+Old code:
 
-```
-        mbMessageIndexer.getQueryString(...);
-```
+    mbMessageIndexer.getQueryString(...);
 
-should be replaced by:
 
-```
-        SearchEngineUtil.getQueryString(...);
-```
+New code:
 
+    SearchEngineUtil.getQueryString(...);
 
 #### Why was this change made?
 
-The addRelatedEntryFields and reindexDDMStructures methods are not related to
-core indexing functions.  They are functions of specialized indexers.
+The `addRelatedEntryFields` and `reindexDDMStructures` methods were not related
+to core indexing functions. They were functions of specialized indexers.
 
-The getQueryString method was an unnecessary convenience method.
+The `getQueryString` method was an unnecessary convenience method.

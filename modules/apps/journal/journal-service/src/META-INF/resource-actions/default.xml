@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portlet.journal</model-name>
+		<model-name>com.liferay.journal</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
@@ -38,7 +38,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.journal.model.JournalArticle</model-name>
+		<model-name>com.liferay.journal.model.JournalArticle</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
@@ -71,7 +71,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.journal.model.JournalFeed</model-name>
+		<model-name>com.liferay.journal.model.JournalFeed</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>
@@ -95,7 +95,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portlet.journal.model.JournalFolder</model-name>
+		<model-name>com.liferay.journal.model.JournalFolder</model-name>
 		<portlet-ref>
 			<portlet-name>com_liferay_journal_web_portlet_JournalPortlet</portlet-name>
 		</portlet-ref>

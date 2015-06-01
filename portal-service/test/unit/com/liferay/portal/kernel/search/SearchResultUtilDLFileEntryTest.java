@@ -194,17 +194,17 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_TITLE, searchResultSummary.getTitle());
 
-		List<Tuple> fileEntryTuples = searchResult.getRelatedFileEntries();
+		List<RelatedSearchResult<FileEntry>> fileEntryTuples = searchResult.getRelatedFileEntries();
 
 		Assert.assertEquals(1, fileEntryTuples.size());
 
-		Tuple tuple = fileEntryTuples.get(0);
+		RelatedSearchResult<FileEntry> relatedSearchResult = fileEntryTuples.get(0);
 
-		FileEntry tupleFileEntry = (FileEntry)tuple.getObject(0);
+		FileEntry tupleFileEntry = relatedSearchResult.getModel();
 
 		Assert.assertSame(_fileEntry, tupleFileEntry);
 
-		Summary tupleSummary = (Summary)tuple.getObject(1);
+		Summary tupleSummary = relatedSearchResult.getSummary();
 
 		Assert.assertSame(summary, tupleSummary);
 		Assert.assertEquals(content, tupleSummary.getContent());

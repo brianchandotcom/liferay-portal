@@ -16,13 +16,16 @@ package com.liferay.portal.kernel.search.test;
 
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.search.SearchResult;
 import com.liferay.portal.kernel.search.SearchResultManager;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.SearchResultManagerUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.search.SearchResultManagerImpl;
 import com.liferay.portal.service.ClassNameLocalService;
@@ -69,13 +72,13 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 	}
 
 	protected void assertEmptyFileEntryTuples(SearchResult searchResult) {
-		List<Tuple> fileEntryTuples = searchResult.getRelatedFileEntries();
+		List<RelatedSearchResult<FileEntry>> fileEntryTuples = searchResult.getRelatedFileEntries();
 
 		Assert.assertTrue(fileEntryTuples.isEmpty());
 	}
 
 	protected void assertEmptyMBMessages(SearchResult searchResult) {
-		List<Tuple> commentTuples = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> commentTuples = searchResult.getRelatedComments();
 
 		Assert.assertTrue(commentTuples.isEmpty());
 	}

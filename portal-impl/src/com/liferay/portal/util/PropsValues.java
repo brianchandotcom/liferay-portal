@@ -1330,6 +1330,8 @@ public class PropsValues {
 
 	public static final String[] PORTLET_CONFIGS = PropsUtil.getArray(PropsKeys.PORTLET_CONFIGS);
 
+	public static final boolean PORTLET_CONFIG_SHOW_PORTLET_ID = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTLET_CONFIG_SHOW_PORTLET_ID));
+
 	public static final boolean PORTLET_CONTAINER_RESTRICT = GetterUtil.getBoolean(PropsUtil.get(PropsKeys.PORTLET_CONTAINER_RESTRICT));
 
 	public static final String PORTLET_CROSS_LAYOUT_INVOCATION_MODE = PropsUtil.get(PropsKeys.PORTLET_CROSS_LAYOUT_INVOCATION_MODE);

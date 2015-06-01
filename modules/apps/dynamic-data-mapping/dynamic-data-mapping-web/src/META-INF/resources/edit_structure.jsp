@@ -81,6 +81,7 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
 	<aui:input name="definition" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
+	<aui:input name="status" type="hidden" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
 
 	<liferay-ui:error exception="<%= LocaleException.class %>">
 
@@ -205,6 +206,8 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 <aui:button-row>
 	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructureAsDraft();" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>
 
@@ -250,5 +253,13 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		form.fm('definition').val(<portlet:namespace />formBuilder.getContentValue());
 
 		submitForm(form);
+	}
+	
+	function <portlet:namespace />saveStructureAsDraft() {
+		var form = AUI.$('#<portlet:namespace />fm');
+
+		form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>);
+
+		<portlet:namespace />saveStructure();
 	}
 </aui:script>

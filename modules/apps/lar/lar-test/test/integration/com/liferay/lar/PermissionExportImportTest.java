@@ -16,6 +16,7 @@ package com.liferay.lar;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -162,7 +163,12 @@ public class PermissionExportImportTest extends PowerMockito {
 		PermissionExporter permissionExporter =
 			PermissionExporter.getInstance();
 
-		permissionExporter.exportPortletPermissions(
+		ReflectionTestUtil.invoke(
+			permissionExporter, "exportPortletPermissions",
+			new Class<?>[] {
+				PortletDataContext.class, String.class, Layout.class,
+				Element.class
+			},
 			portletDataContext, _PORTLET_ID, exportLayout, portletElement);
 
 		return portletElement;
@@ -175,7 +181,12 @@ public class PermissionExportImportTest extends PowerMockito {
 		PermissionImporter permissionImporter =
 			PermissionImporter.getInstance();
 
-		permissionImporter.importPortletPermissions(
+		ReflectionTestUtil.invoke(
+			permissionImporter, "importPortletPermissions",
+			new Class<?>[] {
+				LayoutCache.class, long.class, long.class, long.class,
+				Layout.class, Element.class, String.class
+			},
 			new LayoutCache(), TestPropsValues.getCompanyId(),
 			importGroup.getGroupId(), TestPropsValues.getUserId(), importLayout,
 			portletElement, _PORTLET_ID);

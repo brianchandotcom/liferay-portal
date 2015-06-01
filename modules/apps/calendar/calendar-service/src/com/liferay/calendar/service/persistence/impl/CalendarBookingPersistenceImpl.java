@@ -16,7 +16,7 @@ package com.liferay.calendar.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.calendar.NoSuchBookingException;
+import com.liferay.calendar.exception.NoSuchBookingException;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.impl.CalendarBookingImpl;
 import com.liferay.calendar.model.impl.CalendarBookingModelImpl;

@@ -1054,9 +1054,31 @@
 					Util._submitLocked = true;
 				}
 
-				if (action !== null) {
-					form.attr('action', action);
+				if (action == null) {
+					action = form.attr('action');
 				}
+
+				var x = action.indexOf('?p_auth=');
+
+				if (x < 0) {
+					x = action.indexOf('&p_auth=');
+				}
+
+				if (x >= 0) {
+					var y = action.indexOf('&', x);
+
+					if (y < 0) {
+						y = action.length();
+					}
+
+					var authToken = action.substring(x + 8, y);
+
+					form.append('<input name="p_auth" type="hidden" value="' + authToken + '" />');
+
+					action = action.substring(0, x + 1) + action.substring(y + 1);
+				}
+
+				form.attr('action', action);
 
 				form.submit();
 

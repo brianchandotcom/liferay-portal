@@ -63,7 +63,7 @@ public interface RSSPortletInstanceConfiguration {
 	public String[] titles();
 
 	@Meta.AD(
-		deflt = "http://www.liferay.com/community/blogs/-/blogs_stream/community/rss|http://partners.userland.com/nytRss/technology.xml",
+		deflt = "http://partners.userland.com/nytRss/technology.xml",
 		required = false
 	)
 	public String[] urls();

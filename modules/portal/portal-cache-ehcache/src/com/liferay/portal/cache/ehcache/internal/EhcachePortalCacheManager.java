@@ -150,20 +150,6 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected PortalCacheConfiguration createPortalCacheConfiguration(
-		String name, PortalCacheConfiguration defaultPortalCacheConfiguration) {
-
-		EhcachePortalCacheConfiguration ehcachePortalCacheConfiguration =
-			(EhcachePortalCacheConfiguration)defaultPortalCacheConfiguration;
-
-		return new EhcachePortalCacheConfiguration(
-			name,
-			ehcachePortalCacheConfiguration.getCacheListenerConfigurations(),
-			ehcachePortalCacheConfiguration.getBootstrapLoaderConfiguration(),
-			ehcachePortalCacheConfiguration.isRequireSerialization());
-	}
-
-	@Override
 	protected void doClearAll() {
 		_cacheManager.clearAll();
 	}
@@ -373,9 +359,9 @@ public class EhcachePortalCacheManager<K extends Serializable, V>
 
 	private CacheManager _cacheManager;
 	private String _configFile;
-	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private String _defaultConfigFile;
 	private ManagementService _managementService;
+	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
 	private boolean _registerCacheConfigurations = true;
 	private boolean _registerCacheManager = true;
 	private boolean _registerCaches = true;

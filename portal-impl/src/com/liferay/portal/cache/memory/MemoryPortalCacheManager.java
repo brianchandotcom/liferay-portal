@@ -112,16 +112,6 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected PortalCacheConfiguration createPortalCacheConfiguration(
-		String name, PortalCacheConfiguration defaultPortalCacheConfiguration) {
-
-		return new PortalCacheConfiguration(
-			name,
-			defaultPortalCacheConfiguration.getCacheListenerConfigurations(),
-			defaultPortalCacheConfiguration.getBootstrapLoaderConfiguration());
-	}
-
-	@Override
 	protected void doClearAll() {
 		for (MemoryPortalCache<K, V> memoryPortalCache :
 				_memoryPortalCaches.values()) {

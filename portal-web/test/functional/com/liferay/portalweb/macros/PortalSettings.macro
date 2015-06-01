@@ -1,4 +1,10 @@
 <definition>
+	<command name="_saveDisplaySettings">
+		<execute function="AssertClick" locator1="CPPortalsettingsDisplaysettings#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="CPPortalsettingsDisplaysettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="configureContentSharingAcrossSitesCP">
 		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_CONTENT_SHARING" value1="Content Sharing" />
 
@@ -89,6 +95,14 @@
 
 		<execute function="AssertClick" locator1="CPPortalsettingsDisplaysettings#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPPortalsettingsDisplaysettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
+	<command name="configureTimeZone">
+		<execute function="AssertClick" locator1="CPPortalsettings#MENU_MISCELLANEOUS_DISPLAY_SETTINGS" value1="Display Settings" />
+
+		<execute function="Select" locator1="CPSitesettingsDisplaysettings#TIME_ZONE_SELECT" value1="${timeZone}" />
+
+		<execute macro="PortalSettings#_saveDisplaySettings" />
 	</command>
 
 	<command name="disableLDAPCP">

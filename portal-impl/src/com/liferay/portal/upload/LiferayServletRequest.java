@@ -32,6 +32,12 @@ public class LiferayServletRequest extends HttpServletRequestWrapper {
 		_request = request;
 	}
 
+	public void cleanUp() {
+		if (_lis != null) {
+			_lis.cleanUp();
+		}
+	}
+
 	@Override
 	public ServletInputStream getInputStream() throws IOException {
 		if (_lis == null) {

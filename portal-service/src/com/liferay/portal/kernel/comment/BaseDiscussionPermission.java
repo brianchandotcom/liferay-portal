@@ -58,7 +58,7 @@ public abstract class BaseDiscussionPermission implements DiscussionPermission {
 
 		if (!hasViewPermission(companyId, groupId, className, classPK)) {
 			throw new PrincipalException.MustHavePermission(
-				0, className, classPK, ActionKeys.VIEW_DISCUSSION);
+				0, className, classPK, ActionKeys.VIEW);
 		}
 	}
 

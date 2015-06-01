@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PRIMARY</td>
+	<td>//label[contains(.,'Primary')]/input[@type='radio']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>REMOTE_LIVE</td>
 	<td>//label[contains(.,'Remote Live')]/input[@type='radio']</td>
 	<td></td>

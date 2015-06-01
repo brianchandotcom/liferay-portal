@@ -164,6 +164,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MAILING</td>
+	<td>//label[contains(.,'Mailing')]/input[@type='checkbox']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MERGE_WITH_PARENT_FOLDER</td>
 	<td>//input[contains(@id,'mergeWithParentFolder')]</td>
 	<td></td>

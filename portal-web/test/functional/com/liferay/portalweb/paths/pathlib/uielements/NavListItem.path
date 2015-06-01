@@ -24,6 +24,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADDRESSES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Addresses')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADDITIONAL_EMAIL_ADDRESSES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Additional Email Addresses')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADVANCED</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Advanced')]</td>
 	<td></td>
@@ -89,6 +99,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>INSTANT_MESSENGER</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Instant Messenger')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Javascript')]</td>
 	<td></td>
@@ -114,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPENID</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'OpenID')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ORGANIZATIONS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Organizations')]</td>
 	<td></td>
@@ -131,6 +151,11 @@
 <tr>
 	<td>PERMISSIONS</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PHONE_NUMBERS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Phone Numbers')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -154,6 +179,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SMS</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'SMS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SOCIAL_NETWORK</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Social Network')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBSCRIBE</td>
 	<td>//ul[contains(@class,'list-group') and contains(@class,'nav')]/li/a[contains(.,'Subscribe')]</td>
 	<td></td>
@@ -166,6 +201,11 @@
 <tr>
 	<td>USERS</td>
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WEBSITES</td>
+	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Websites')]</td>
 	<td></td>
 </tr>
 </tbody>

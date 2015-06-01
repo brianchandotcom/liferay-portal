@@ -14,6 +14,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>COUNTRY</td>
+	<td>//div[label[contains(.,'Country')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>DISPLAY_STYLE</td>
 	<td>//div[label[contains(.,'Display Style')]]/select</td>
 	<td></td>
@@ -59,6 +64,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>REGION</td>
+	<td>//div[label[contains(.,'Region')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESET_FAILURE_COUNT</td>
 	<td>//div[label[contains(.,'Reset Failure Count')]]/select</td>
 	<td></td>
@@ -81,6 +91,11 @@
 <tr>
 	<td>SITES</td>
 	<td>//div[label[contains(.,'Sites')]]/select</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TYPE</td>
+	<td>//div[label[contains(.,'Type')]]/select</td>
 	<td></td>
 </tr>
 <tr>

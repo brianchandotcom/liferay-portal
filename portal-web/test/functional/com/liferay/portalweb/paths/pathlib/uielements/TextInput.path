@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>AIM</td>
+	<td>//div[label[contains(.,'AIM')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ANSWER</td>
 	<td>//div[label[contains(.,'Answer')]]/input[@type='text']</td>
 	<td></td>
@@ -19,8 +24,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CITY</td>
+	<td>//div[label[contains(.,'City')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CURRENT_PARENT</td>
 	<td>//input[contains(@id,'currentParent')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT_PASSWORD</td>
+	<td>//div[label[contains(.,'Current Password')]]/input</td>
 	<td></td>
 </tr>
 <tr>
@@ -79,8 +94,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FACEBOOK</td>
+	<td>//div[label[contains(.,'Facebook')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELD_FILTER_INPUT</td>
 	<td>//div[@data-fieldname='${key_fieldName}']/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIRST_NAME</td>
+	<td>//div[label[contains(.,'First Name')]]/input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,6 +124,21 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ICQ</td>
+	<td>//div[label[contains(.,'ICQ')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>JABBER</td>
+	<td>//div[label[contains(.,'Jabber')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LAST_NAME</td>
+	<td>//div[label[contains(.,'Last Name')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MAIL_DOMAIN_FIELD</td>
 	<td>//input[contains(@id,'mx') and contains(@class,'input-text')]</td>
 	<td></td>
@@ -109,8 +149,13 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MIDDLE_NAME</td>
+	<td>//div[label[contains(.,'Middle Name')]]/input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINIMUM_ALPHA_NUMERIC</td>
-	<td>//div[label[contains(.,' Minimum Alpha Numeric')]]//input[@type='text']</td>
+	<td>//div[label[contains(.,'Minimum Alpha Numeric')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -139,6 +184,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MYSPACE</td>
+	<td>//div[label[contains(.,'MySpace')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>NAME</td>
 	<td>//div[label[contains(.,'Name')]]//input[@type='text']</td>
 	<td></td>
@@ -159,6 +209,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NUMBER</td>
+	<td>//div[label[contains(.,'Number')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PAGE_NAME_FIELD</td>
 	<td>//span[contains(@class,'input-localized-input')]/input[contains(@id,'addLayoutName')]</td>
 	<td>New Page Name Field</td>
@@ -166,6 +221,11 @@
 <tr>
 	<td>PASSWORD</td>
 	<td>//div[label[contains(.,'Password')]]/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>POSTAL_CODE</td>
+	<td>//div[label[contains(.,'Postal Code')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -209,6 +269,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKYPE</td>
+	<td>//div[label[contains(.,'Skype')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>STREET_1</td>
+	<td>//div[label[contains(.,'Street 1')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUBJECT</td>
 	<td>//input[contains(@id,'subject')]</td>
 	<td></td>
@@ -221,6 +291,11 @@
 <tr>
 	<td>TITLE_LOCALIZED</td>
 	<td>//input[contains(@id,'title')]/../div[contains(.,'${key_languageName} Translation')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TWITTER</td>
+	<td>//div[label[contains(.,'Twitter')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 <tr>
@@ -246,6 +321,16 @@
 <tr>
 	<td>WEB_ID</td>
 	<td>//input[contains(@id,'webId') and contains(@class,'input-text')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WINDOWS_LIVE_MESSENGER</td>
+	<td>//div[label[contains(.,'Windows Live Messenger')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>YIM</td>
+	<td>//div[label[contains(.,'YIM')]]//input[@type='text']</td>
 	<td></td>
 </tr>
 </tbody>

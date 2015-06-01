@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;
@@ -34,13 +33,11 @@ public class SearchResult {
 	}
 
 	public void addComment(Comment comment, Summary summary) {
-		_commentTuples.add(new Tuple(comment, summary));
+		_commentTuples.add(new RelatedSearchResult<>(comment, summary));
 	}
 
 	public void addFileEntry(FileEntry fileEntry, Summary summary) {
-		Tuple tuple = new Tuple(fileEntry, summary);
-
-		_fileEntryTuples.add(tuple);
+		_fileEntryTuples.add(new RelatedSearchResult<>(fileEntry, summary));
 	}
 
 	public void addVersion(String version) {
@@ -76,11 +73,11 @@ public class SearchResult {
 		return _classPK;
 	}
 
-	public List<Tuple> getCommentTuples() {
+	public List<RelatedSearchResult<Comment>> getCommentTuples() {
 		return _commentTuples;
 	}
 
-	public List<Tuple> getFileEntryTuples() {
+	public List<RelatedSearchResult<FileEntry>> getFileEntryTuples() {
 		return _fileEntryTuples;
 	}
 
@@ -121,8 +118,10 @@ public class SearchResult {
 
 	private String _className;
 	private long _classPK;
-	private final List<Tuple> _commentTuples = new ArrayList<>();
-	private final List<Tuple> _fileEntryTuples = new ArrayList<>();
+	private final List<RelatedSearchResult<Comment>> _commentTuples =
+		new ArrayList<>();
+	private final List<RelatedSearchResult<FileEntry>> _fileEntryTuples =
+		new ArrayList<>();
 	private Summary _summary;
 	private final List<String> _versions = new ArrayList<>();
 

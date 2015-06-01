@@ -14,11 +14,13 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.search.RelatedSearchResult;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
@@ -47,7 +49,9 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
-	public void setCommentTuples(List<Tuple> commentTuples) {
+	public void setCommentTuples(
+		List<RelatedSearchResult<Comment>> commentTuples) {
+
 		_commentTuples = commentTuples;
 	}
 
@@ -67,7 +71,9 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
-	public void setFileEntryTuples(List<Tuple> fileEntryTuples) {
+	public void setFileEntryTuples(
+		List<RelatedSearchResult<FileEntry>> fileEntryTuples) {
+
 		_fileEntryTuples = fileEntryTuples;
 	}
 
@@ -208,12 +214,12 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
-	private List<Tuple> _commentTuples;
+	private List<RelatedSearchResult<Comment>> _commentTuples;
 	private String _containerName;
 	private String _containerType;
 	private String _cssClass;
 	private String _description;
-	private List<Tuple> _fileEntryTuples;
+	private List<RelatedSearchResult<FileEntry>> _fileEntryTuples;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
 	private String[] _queryTerms;

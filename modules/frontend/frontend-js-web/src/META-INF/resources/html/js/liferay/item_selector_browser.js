@@ -42,9 +42,6 @@ AUI.add(
 							}
 						);
 
-						instance._itemViewer.set('itemSelectorBrowser', instance);
-						instance._uploadItemViewer.set('itemSelectorBrowser', instance);
-
 						instance._bindUI();
 						instance._renderUI();
 					},
@@ -61,8 +58,8 @@ AUI.add(
 					_afterVisibleChange: function(event) {
 						var instance = this;
 
-						if (!instance.get('visible')) {
-							instance.get('itemSelectorBrowser').fire('selectedItem', {});
+						if (!event.newVal) {
+							instance.fire('selectedItem', {});
 						}
 					},
 
@@ -76,11 +73,11 @@ AUI.add(
 						var rootNode = instance.rootNode;
 
 						instance._eventHandles = [
-							itemViewer.get('links').on('click', instance._itemPicked, itemViewer),
-							itemViewer.after('currentIndexChange', instance._itemPicked, itemViewer),
-							itemViewer.after('visibleChange', instance._afterVisibleChange, itemViewer),
-							uploadItemViewer.after('linksChange', instance._itemPicked, uploadItemViewer),
-							uploadItemViewer.after('visibleChange', instance._afterVisibleChange, uploadItemViewer),
+							itemViewer.get('links').on('click', A.bind('_itemPicked', instance, itemViewer)),
+							itemViewer.after('currentIndexChange', A.bind('_itemPicked', instance, itemViewer)),
+							itemViewer.after('visibleChange', instance._afterVisibleChange, instance),
+							uploadItemViewer.after('linksChange', A.bind('_itemPicked', instance, uploadItemViewer)),
+							uploadItemViewer.after('visibleChange', instance._afterVisibleChange, instance),
 							rootNode.on('dragover', instance._ddEventHandler, instance),
 							rootNode.on('dragleave', instance._ddEventHandler, instance),
 							rootNode.on('drop', instance._ddEventHandler, instance)
@@ -126,12 +123,12 @@ AUI.add(
 						}
 					},
 
-					_itemPicked: function(event) {
+					_itemPicked: function(itemViewer) {
 						var instance = this;
 
-						var link = instance.get('links').item(instance.get('currentIndex'));
+						var link = itemViewer.get('links').item(itemViewer.get('currentIndex'));
 
-						instance.get('itemSelectorBrowser').fire(
+						instance.fire(
 							'selectedItem',
 							{
 								returnType: link.getData('returnType'),

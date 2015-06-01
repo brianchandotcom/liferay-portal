@@ -9,6 +9,10 @@
 		<execute function="AssertTextEquals" locator1="PGCalendar#DELETED_CALENDAR_SUCCESS_MESSAGE" value1="The calendar was deleted successfully." />
 	</command>
 
+	<command name="_editName">
+		<execute function="Type#mouseOverFocusType" locator1="PGCalendarAddcalendar#NAME_FIELD" value1="${calendarName}" />
+	</command>
+
 	<command name="_gotoMenulistOption">
 		<var name="key_menuListOption" value="${menuListOption}" />
 
@@ -59,33 +63,27 @@
 	</command>
 
 	<command name="add">
-		<execute macro="CalendarNavigator#gotoView">
-			<var name="viewType" value="Week" />
-		</execute>
-
 		<if>
 			<equals arg1="${calendarType}" arg2="My Calendars" />
 			<then>
-				<execute function="Click" locator1="PGCalendar#MY_CALENDARS_MENULIST_ARROW" />
-				<execute function="AssertClick" locator1="PGCalendar#MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+				<execute macro="CalendarNavigator#gotoAddMyCalendars" />
 
-				<execute function="SelectFrame" locator1="PGCalendarAddcalendar#ADD_CALENDAR_IFRAME" />
-				<execute function="Type#mouseOverFocusType" locator1="PGCalendarAddcalendar#NAME_FIELD" value1="${calendarName}" />
-				<execute function="AssertClick" locator1="PGCalendarAddcalendar#SAVE_BUTTON" value1="Save" />
-				<execute function="Click" locator1="PGCalendarAddcalendar#SAVE_BUTTON" />
-				<execute function="AssertTextEquals" locator1="PGCalendarAddcalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+				<execute macro="Calendar#_editName">
+					<var name="calendarName" value="${calendarName}" />
+				</execute>
+
+				<execute macro="Calendar#save" />
 			</then>
 			<elseif>
 				<equals arg1="${calendarType}" arg2="Current Site Calendars" />
 				<then>
-					<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
-					<execute function="AssertClick" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+					<execute macro="CalendarNavigator#gotoAddCurrentSiteCalendars" />
 
-					<execute function="SelectFrame" locator1="PGCalendarAddcalendar#ADD_CALENDAR_IFRAME" />
-					<execute function="Type#mouseOverFocusType" locator1="PGCalendarAddcalendar#NAME_FIELD" value1="${calendarName}" />
-					<execute function="AssertClick" locator1="PGCalendarAddcalendar#SAVE_BUTTON" value1="Save" />
-					<execute function="Click" locator1="PGCalendarAddcalendar#SAVE_BUTTON" />
-					<execute function="AssertTextEquals" locator1="PGCalendarAddcalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+					<execute macro="Calendar#_editName">
+						<var name="calendarName" value="${calendarName}" />
+					</execute>
+
+					<execute macro="Calendar#save" />
 				</then>
 			</elseif>
 			<elseif>
@@ -625,6 +623,12 @@
 		<execute function="Uncheck" locator1="Permissions#EVENT_PERMISSIONS_VIEW_CHECKBOX" value1="${roleName}" />
 		<execute function="AssertClick" locator1="Permissions#SAVE_BUTTON" value1="Save" />
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="save">
+		<execute function="AssertClick" locator1="PGCalendarAddcalendar#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddcalendar#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
 	<command name="searchOtherCalendars">

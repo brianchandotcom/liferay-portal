@@ -21,6 +21,22 @@
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 	</command>
 
+	<command name="gotoAddCurrentSiteCalendars">
+		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+
+		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
+	</command>
+
+	<command name="gotoAddMyCalendars">
+		<execute function="Click" locator1="PGCalendar#MY_CALENDARS_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="PGCalendar#MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+
+		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
+	</command>
+
 	<command name="gotoAddOnSpecifcDayOfWeekViaWeekView">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />

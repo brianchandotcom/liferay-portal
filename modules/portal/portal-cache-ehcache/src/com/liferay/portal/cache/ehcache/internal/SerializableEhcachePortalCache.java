@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.cache.PortalCacheManager;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.ehcache.Ehcache;
@@ -38,9 +39,15 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 
 	@Override
 	public List<K> getKeys() {
-		List<K> keys = new ArrayList<>();
+		List<?> rawKeys = ehcache.getKeys();
 
-		for (Object object : ehcache.getKeys()) {
+		if (rawKeys.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		List<K> keys = new ArrayList<>(rawKeys.size());
+
+		for (Object object : rawKeys) {
 			keys.add(SerializableObjectWrapper.<K>unwrap(object));
 		}
 

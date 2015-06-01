@@ -1723,3 +1723,92 @@ bypass the permission system by providing customized `className`, `classPK`, or
 `ownerId`.
 
 ---------------------------------------
+
+### Moved Indexer.addRelatedEntryFields and Indexer.reindexDDMStructures.  Removed Indexer.getQueryString 
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55928
+
+#### What changed?
+
+Indexer.addRelatedEntryFields(Document, Object) has been moved into 
+RelatedEntryIndexer.
+
+Indexer.reindexDDMStructures(List<Long>) has been moved into DDMStructureIndexer.
+
+Indexer.getQueryString(SearchContext, Query) has been removed in favor of 
+calling SearchEngineUtil.getQueryString(SearchContext, Query)
+
+#### Who is affected?
+
+Any code that invokes the affected methods as well as any code that implements 
+the interface methods.
+
+#### How should I update my code?
+
+Any code implementing Indexer.addRelatedEntryFields(...) should implement the 
+RelatedEntryIndexer interface.
+
+Any code calling Indexer.addRelatedEntryFields(...) should determine first if
+the Indexer is an instance of RelatedEntryIndexer.
+
+Example of old code:
+
+```
+        mbMessageIndexer.addRelatedEntryFields(...);
+```
+
+should be replaced by:
+
+```
+        if (mbMessageIndexer instanceof RelatedEntryIndexer) {
+            RelatedEntryIndexer relatedEntryIndexer = 
+                (RelatedEntryIndexer)mbMessageIndexer;
+
+            relatedEntryIndexer.addRelatedEntryFields(...);
+        }
+```
+
+Any code implementing Indexer.reindexDDMStructures(...) should implement the 
+DDMStructureIndexer interface.
+
+Any code calling Indexer.reindexDDMStructures(...) should determine first if the 
+Indexer is an instance of DDMStructureIndexer. 
+
+Example of old code:
+
+```
+        mbMessageIndexer.reindexDDMStructures(...);
+```
+
+should be replaced by:
+
+```
+        if (journalIndexer instanceof DDMStructureIndexer) {
+            DDMStructureIndexer ddmStructureIndexer = 
+                (DDMStructureIndexer)journalIndexer;
+
+            ddmStructureIndexer.reindexDDMStructures(...);
+        }
+
+Any code calling Indexer.getQueryString(...) should call 
+SearchEngineUtil.getQueryString(...)
+
+Example of old code:
+
+```
+        mbMessageIndexer.getQueryString(...);
+```
+
+should be replaced by:
+
+```
+        SearchEngineUtil.getQueryString(...);
+```
+
+
+#### Why was this change made?
+
+The addRelatedEntryFields and reindexDDMStructures methods are not related to
+core indexing functions.  They are functions of specialized indexers.
+
+The getQueryString method was an unnecessary convenience method.

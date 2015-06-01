@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.wsdd.builder</groupId>
+	<artifactId>sample.wsdd.builder</artifactId>
+	<name>Sample WSDD Builder Project</name>
+	<version>1.0.0</version>
+	<description>Sample WSDD Builder Project</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.portal.tools.wsdd.builder</artifactId>
+				<version>1.0.1</version>
+				<configuration>
+					<inputFileName>docroot/WEB-INF/service.xml</inputFileName>
+					<outputDirName>docroot/WEB-INF/src</outputDirName>
+					<serverConfigFileName>docroot/WEB-INF/server-config.wsdd</serverConfigFileName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

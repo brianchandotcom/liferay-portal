@@ -1,8 +1,12 @@
 Bundle-Name: Liferay Portal Tools WSDD Builder
 Bundle-SymbolicName: com.liferay.portal.tools.wsdd.builder
 Bundle-Version: 1.0.1
+Import-Package:\
+	!org.apache.maven.plugin.*,\
+	*
 Include-Resource:\
 	classes,\
+	{META-INF/maven/plugin.xml=src/META-INF/maven/plugin.xml},\
 	@../../../lib/portal/xercesImpl.jar!/org/apache/xerces/xni/XNIException.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\

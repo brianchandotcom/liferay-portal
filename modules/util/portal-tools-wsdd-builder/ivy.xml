@@ -29,5 +29,6 @@
 		<dependency name="log4j" org="log4j" rev="1.2.17" />
 		<dependency name="mail" org="javax.mail" rev="1.4" />
 		<dependency name="org.apache.axis" org="com.liferay" rev="1.4.LIFERAY-PATCHED-1" />
+		<dependency conf="provided->master" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
 	</dependencies>
 </ivy-module>

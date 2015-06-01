@@ -48,6 +48,7 @@ import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.tasks.InputDirectory;
+import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.TaskAction;
 import org.gradle.process.ExecSpec;
 
@@ -122,6 +123,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		return _mavenVersion;
 	}
 
+	@OutputDirectory
 	public File getOutputDir() {
 		return _outputDir;
 	}
@@ -214,7 +216,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 		}
 	}
 
-	protected void buildPluginDescriptor(final File pomFile) {
+	protected void buildPluginDescriptor(final File pomFile) throws Exception {
 		_project.exec(
 			new Action<ExecSpec>() {
 
@@ -230,10 +232,6 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 					execSpec.args("-Dencoding=UTF-8");
 
 					execSpec.args(
-						"-DoutputDirectory=" +
-							_project.relativePath(getOutputDir()));
-
-					execSpec.args(
 						"org.apache.maven.plugins:maven-plugin-plugin:" +
 							getMavenVersion() + ":descriptor");
 
@@ -242,6 +240,13 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 				}
 
 			});
+
+		File dir = new File(getClassesDir(), "META-INF/maven");
+		File outputDir = getOutputDir();
+
+		_project.delete(outputDir);
+
+		Files.move(dir.toPath(), outputDir.toPath());
 	}
 
 	protected void buildPomFile(File pomFile, File sourceDir) throws Exception {

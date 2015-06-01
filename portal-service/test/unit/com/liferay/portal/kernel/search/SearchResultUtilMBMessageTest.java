@@ -54,7 +54,8 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<RelatedSearchResult<Comment>> relatedComments = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> relatedComments =
+			searchResult.getRelatedComments();
 
 		Assert.assertTrue(relatedComments.isEmpty());
 
@@ -88,9 +89,11 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		List<RelatedSearchResult<Comment>> relatedComments = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> relatedComments =
+			searchResult.getRelatedComments();
 
-		RelatedSearchResult<Comment> relatedSearchResult = relatedComments.get(0);
+		RelatedSearchResult<Comment> relatedSearchResult = relatedComments.get(
+			0);
 		Comment comment = relatedSearchResult.getModel();
 
 		Assert.assertSame(_mbMessage.getMessageId(), comment.getCommentId());

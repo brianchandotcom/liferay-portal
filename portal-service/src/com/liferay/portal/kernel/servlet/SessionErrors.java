@@ -186,6 +186,20 @@ public class SessionErrors {
 			portletRequest.getPortletSession(false), clazz.getName());
 	}
 
+	public static boolean contains(
+		PortletRequest portletRequest, Class<?>[] classes) {
+
+		for (Class clazz : classes) {
+			if (contains(
+					portletRequest.getPortletSession(false), clazz.getName())) {
+
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	public static boolean contains(PortletRequest portletRequest, String key) {
 		return contains(portletRequest.getPortletSession(false), key);
 	}

@@ -14,7 +14,6 @@
 
 package com.liferay.portal.theme;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.toolbar.PortletToolbar;

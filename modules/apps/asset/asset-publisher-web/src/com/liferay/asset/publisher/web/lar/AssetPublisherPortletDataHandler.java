@@ -522,13 +522,13 @@ public class AssetPublisherPortletDataHandler
 						nsle);
 				}
 			}
-			catch (ConfigurationException pe) {
+			catch (ConfigurationException ce) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Ignoring scope " + newValue + " because the " +
 							"referenced parent group no longer allows " +
 								"sharing content with child sites",
-						pe);
+						ce);
 				}
 			}
 		}

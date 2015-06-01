@@ -211,6 +211,10 @@ public class PortletURLImpl
 		Portlet portlet = getPortlet();
 
 		if (portlet != null) {
+			if (portlet.isUndeployedPortlet()) {
+				return portletFriendlyURLPath;
+			}
+
 			FriendlyURLMapper friendlyURLMapper =
 				portlet.getFriendlyURLMapperInstance();
 

@@ -329,6 +329,32 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		}
 	}
 
+	protected String compressImports(
+		String fileName, String content, String attributePrefix) {
+
+		if (!fileName.endsWith("init.jsp") && !fileName.endsWith("init.jspf")) {
+			return content;
+		}
+
+		int x = content.indexOf(attributePrefix);
+
+		int y = content.lastIndexOf(attributePrefix);
+
+		y = content.indexOf("%>", y);
+
+		if ((x == -1) || (y == -1) || (x > y)) {
+			return content;
+		}
+
+		String imports = content.substring(x, y);
+
+		imports = StringUtil.replace(
+			imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
+			new String[] {"%><%@\r\n", "%><%@\n"});
+
+		return content.substring(0, x) + imports + content.substring(y);
+	}
+
 	@Override
 	protected String doFormat(
 			File file, String fileName, String absolutePath, String content)
@@ -397,32 +423,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		if (fileName.endsWith("init.jsp") || fileName.endsWith("init.jspf")) {
-			int x = newContent.indexOf("<%@ page import=");
-
-			int y = newContent.lastIndexOf("<%@ page import=");
-
-			y = newContent.indexOf("%>", y);
-
-			if ((x != -1) && (y != -1) && (y > x)) {
-
-				// Set compressImports to false to decompress imports
-
-				boolean compressImports = true;
-
-				if (compressImports) {
-					String imports = newContent.substring(x, y);
-
-					imports = StringUtil.replace(
-						imports, new String[] {"%>\r\n<%@ ", "%>\n<%@ "},
-						new String[] {"%><%@\r\n", "%><%@\n"});
-
-					newContent =
-						newContent.substring(0, x) + imports +
-							newContent.substring(y);
-				}
-			}
-		}
+		newContent = compressImports(fileName, newContent, "<%@ page import=");
 
 		newContent = fixSessionKey(fileName, newContent, sessionKeyPattern);
 		newContent = fixSessionKey(

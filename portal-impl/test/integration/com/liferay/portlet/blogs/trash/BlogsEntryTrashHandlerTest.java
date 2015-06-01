@@ -101,6 +101,12 @@ public class BlogsEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashGrandparentBaseModel() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashGrandparentBaseModelAndRestoreParentModel()
 		throws Exception {
 	}

@@ -74,12 +74,13 @@ public class UploadServletRequestFilter extends BasePortalFilter {
 						liferayPortletConfig.isCopyRequestParameters() ||
 						!liferayPortletConfig.isWARFile()) {
 
-						uploadServletRequest =
-							PortalUtil.getUploadServletRequest(request);
+						request.setAttribute(
+							WebKeys.COPY_MULTIPART_STREAM_TO_FILE, false);
 					}
 				}
 			}
 
+			uploadServletRequest = PortalUtil.getUploadServletRequest(request);
 		}
 
 		if (uploadServletRequest == null) {

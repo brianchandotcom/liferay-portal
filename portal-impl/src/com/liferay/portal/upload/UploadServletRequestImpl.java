@@ -209,6 +209,8 @@ public class UploadServletRequestImpl
 				}
 			}
 		}
+
+		_liferayServletRequest.cleanUp();
 	}
 
 	@Override

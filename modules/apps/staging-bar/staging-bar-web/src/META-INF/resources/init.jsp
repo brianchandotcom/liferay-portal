@@ -43,4 +43,4 @@ if (selLayout != null) {
 }
 %>
 
-<%@ include file="/html/portlet/staging_bar/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

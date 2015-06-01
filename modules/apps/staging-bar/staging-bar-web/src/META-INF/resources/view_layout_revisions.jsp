@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/staging_bar/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long layoutSetBranchId = ParamUtil.getLong(request, "layoutSetBranchId");

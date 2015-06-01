@@ -105,11 +105,9 @@ public class ItemSelectorImplTest extends PowerMockito {
 			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
 		Assert.assertNull(parameters.get("0_desiredReturnTypes"));
 		Assert.assertNotNull(parameters.get("0_json")[0]);
-		Assert.assertEquals(
-			URL.class.getName(), parameters.get("1_desiredReturnTypes")[0]);
 		Assert.assertNotNull(parameters.get("1_json")[0]);
 
-		Assert.assertEquals(5, parameters.size());
+		Assert.assertEquals(4, parameters.size());
 	}
 
 	@Test
@@ -197,7 +195,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 		LiferayPortletURL liferayPortletURL = mock(LiferayPortletURL.class);
 
 		when(
-			liferayPortletResponse.createActionURL(Mockito.anyString())
+			liferayPortletResponse.createRenderURL(Mockito.anyString())
 		).thenReturn(
 			liferayPortletURL
 		);

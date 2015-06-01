@@ -18,7 +18,7 @@
 
 <%
 DLItemSelectorCriterion dlItemSelectorCriterion = (DLItemSelectorCriterion)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_CRITERION);
-String itemSelectedEventName = HtmlUtil.escape(ParamUtil.getString(request, DLItemSelectorView.ITEM_SELECTED_EVENT_NAME));
+String itemSelectedEventName = GetterUtil.getString(request.getAttribute(DLItemSelectorView.ITEM_SELECTED_EVENT_NAME));
 PortletURL portletURL = (PortletURL)request.getAttribute(DLItemSelectorView.PORTLET_URL);
 
 long groupId = ParamUtil.getLong(request, "groupId", scopeGroupId);
@@ -55,12 +55,6 @@ if (folderId > 0) {
 	DLUtil.addPortletBreadcrumbEntries(folder, request, breadcrumbURL);
 }
 %>
-
-<c:if test="<%= dlItemSelectorCriterion.isShowGroupsSelector() %>">
-	<liferay-util:include page="/group_selector.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="tabs1" value="documents" />
-	</liferay-util:include>
-</c:if>
 
 <aui:form method="post" name="selectDocumentFm">
 
@@ -115,7 +109,6 @@ if (folderId > 0) {
 							<portlet:param name="redirect" value="<%= portletURL.toString() %>" />
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
-							<portlet:param name="type" value="<%= dlItemSelectorCriterion.getType() %>" />
 						</liferay-portlet:renderURL>
 
 						<%
@@ -140,7 +133,6 @@ if (folderId > 0) {
 							<portlet:param name="repositoryId" value="<%= String.valueOf(repositoryId) %>" />
 							<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
 							<portlet:param name="fileEntryTypeId" value="<%= String.valueOf(fileEntryType.getFileEntryTypeId()) %>" />
-							<portlet:param name="type" value="<%= dlItemSelectorCriterion.getType() %>" />
 						</liferay-portlet:renderURL>
 
 						<%
@@ -384,7 +376,7 @@ if (folderId > 0) {
 					</c:if>
 
 					returnType : '<%= FileEntry.class.getName() %>',
-					url : event.target.getAttribute('data-url')
+					value : event.target.getAttribute('data-url')
 				}
 			);
 

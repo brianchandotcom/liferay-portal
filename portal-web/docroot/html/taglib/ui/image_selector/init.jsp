@@ -16,6 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="javax.portlet.ActionRequest" %>
-
 <portlet:defineObjects />

@@ -218,8 +218,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		ItemSelectorCriterion dlItemSelectorCriterion =
 			new DLItemSelectorCriterion(
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, scopeGroupId,
-				"images", PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES,
-				false);
+				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
 
 		dlItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
 

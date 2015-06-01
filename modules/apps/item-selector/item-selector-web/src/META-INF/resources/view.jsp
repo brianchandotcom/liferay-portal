@@ -17,30 +17,28 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String[] tabs1Names = ItemSelectorUtil.getTabs1Names(request);
+LocalizedItemSelectorRendering localizedItemSelectorRendering = LocalizedItemSelectorRendering.get(liferayPortletRequest);
 %>
 
-<c:choose>
-	<c:when test="<%= !ArrayUtil.isEmpty(tabs1Names) && (tabs1Names.length > 1) %>">
-		<liferay-ui:tabs names="<%= StringUtil.merge(tabs1Names) %>" param="tabs1" refresh="<%= false %>" type="pills">
+<liferay-ui:tabs names="<%= StringUtil.merge(localizedItemSelectorRendering.getTitles()) %>" refresh="<%= false %>" type="pills" value="<%= localizedItemSelectorRendering.getSelectedTab() %>">
 
-			<%
-			for (String tabs1Name : tabs1Names) {
-			%>
+	<%
+	for (String title : localizedItemSelectorRendering.getTitles()) {
+		ItemSelectorViewRenderer itemSelectorViewRenderer = localizedItemSelectorRendering.getItemSelectorViewRenderer(title);
+	%>
 
-				<liferay-ui:section>
-					<div>
-						<liferay-util:include page='<%= "/" + tabs1Name + ".jsp" %>' servletContext="<%= application %>" />
-					</div>
-				</liferay-ui:section>
+		<liferay-ui:section>
+			<div>
 
-			<%
-			}
-			%>
+				<%
+				itemSelectorViewRenderer.renderHTML(pageContext);
+				%>
 
-		</liferay-ui:tabs>
-	</c:when>
-	<c:otherwise>
-		<liferay-util:include page='<%= "/" + tabs1Names[0] + ".jsp" %>' servletContext="<%= application %>" />
-	</c:otherwise>
-</c:choose>
+			</div>
+		</liferay-ui:section>
+
+	<%
+	}
+	%>
+
+</liferay-ui:tabs>

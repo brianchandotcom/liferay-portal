@@ -1951,15 +1951,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		Assert.assertEquals(
-			initialTrashEntriesCount + 1,
-			getTrashEntriesCount(group.getGroupId()));
-		Assert.assertTrue(isInTrashContainer(baseModel));
-
-		if (isAssetableModel()) {
-			Assert.assertFalse(isAssetEntryVisible(baseModel));
-		}
-
 		if (isBaseModelMoveableFromTrash()) {
 			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
 				baseModel, group, serviceContext);

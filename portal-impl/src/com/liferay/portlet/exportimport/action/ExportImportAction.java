@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.portletconfiguration.action;
+package com.liferay.portlet.exportimport.action;
 
 import com.liferay.portal.LARFileException;
+import com.liferay.portal.LARFileNameException;
 import com.liferay.portal.LARFileSizeException;
 import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
@@ -44,7 +45,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
-import com.liferay.portlet.exportimport.action.ImportLayoutsAction;
+import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 
 import java.io.InputStream;
 import java.io.Serializable;
@@ -86,7 +87,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 		catch (PrincipalException pe) {
 			SessionErrors.add(actionRequest, pe.getClass());
 
-			setForward(actionRequest, "portlet.portlet_configuration.error");
+			setForward(actionRequest, "portlet.export_import.error");
 
 			return;
 		}
@@ -166,6 +167,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 			}
 			else {
 				if ((e instanceof LARFileException) ||
+					(e instanceof LARFileNameException) ||
 					(e instanceof LARFileSizeException) ||
 					(e instanceof LARTypeException) ||
 					(e instanceof LocaleException) ||
@@ -201,8 +203,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 		catch (PrincipalException pe) {
 			SessionErrors.add(renderRequest, pe.getClass());
 
-			return actionMapping.findForward(
-				"portlet.portlet_configuration.error");
+			return actionMapping.findForward("portlet.export_import.error");
 		}
 
 		renderResponse.setTitle(ActionUtil.getTitle(portlet, renderRequest));
@@ -211,10 +212,10 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		String cmd = ParamUtil.getString(renderRequest, Constants.CMD);
 
-		String forward = "portlet.portlet_configuration.export_import";
+		String forward = "portlet.export_import.export_import";
 
 		if (cmd.equals(Constants.PUBLISH_TO_LIVE)) {
-			forward = "portlet.portlet_configuration.staging";
+			forward = "portlet.export_import.staging";
 		}
 
 		return actionMapping.findForward(getForward(renderRequest, forward));
@@ -235,23 +236,19 @@ public class ExportImportAction extends ImportLayoutsAction {
 
 		if (cmd.equals(Constants.EXPORT)) {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/portlet_configuration/" +
-					"export_portlet_processes.jsp");
+				"/html/portlet/export_import/export_portlet_processes.jsp");
 		}
 		else if (cmd.equals(Constants.IMPORT)) {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/portlet_configuration/" +
-					"import_portlet_processes.jsp");
+				"/html/portlet/export_import/import_portlet_processes.jsp");
 		}
 		else if (cmd.equals(Constants.PUBLISH)) {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/portlet_configuration/" +
-					"publish_portlet_processes.jsp");
+				"/html/portlet/export_import/publish_portlet_processes.jsp");
 		}
 		else {
 			portletRequestDispatcher = portletContext.getRequestDispatcher(
-				"/html/portlet/portlet_configuration/" +
-					"import_portlet_resources.jsp");
+				"/html/portlet/export_import/import_portlet_resources.jsp");
 		}
 
 		resourceRequest = ActionUtil.getWrappedResourceRequest(
@@ -285,8 +282,8 @@ public class ExportImportAction extends ImportLayoutsAction {
 			ExportImportConfiguration exportImportConfiguration =
 				ExportImportConfigurationLocalServiceUtil.
 					addExportImportConfiguration(
-						themeDisplay.getUserId(), groupId, StringPool.BLANK,
-						StringPool.BLANK,
+						themeDisplay.getUserId(), groupId,
+						portlet.getPortletId(), StringPool.BLANK,
 						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
 						settingsMap, WorkflowConstants.STATUS_DRAFT,
 						new ServiceContext());
@@ -295,6 +292,10 @@ public class ExportImportAction extends ImportLayoutsAction {
 				exportImportConfiguration);
 		}
 		catch (Exception e) {
+			if (e instanceof LARFileNameException) {
+				throw e;
+			}
+
 			if (_log.isDebugEnabled()) {
 				_log.debug(e, e);
 			}
@@ -327,7 +328,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					themeDisplay.getUserId(), groupId, portlet.getPortletId(),
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,
@@ -360,7 +361,7 @@ public class ExportImportAction extends ImportLayoutsAction {
 		ExportImportConfiguration exportImportConfiguration =
 			ExportImportConfigurationLocalServiceUtil.
 				addExportImportConfiguration(
-					themeDisplay.getUserId(), groupId, StringPool.BLANK,
+					themeDisplay.getUserId(), groupId, portlet.getPortletId(),
 					StringPool.BLANK,
 					ExportImportConfigurationConstants.TYPE_IMPORT_PORTLET,
 					settingsMap, WorkflowConstants.STATUS_DRAFT,

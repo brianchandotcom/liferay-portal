@@ -24,12 +24,14 @@ page import="com.liferay.portal.LARTypeException" %><%@
 page import="com.liferay.portal.LayoutImportException" %><%@
 page import="com.liferay.portal.LayoutPrototypeException" %><%@
 page import="com.liferay.portal.NoSuchGroupException" %><%@
+page import="com.liferay.portal.PortletIdException" %><%@
 page import="com.liferay.portal.RemoteOptionsException" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatus" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil" %><%@
 page import="com.liferay.portal.kernel.lar.ExportImportHelper" %><%@
 page import="com.liferay.portal.kernel.lar.ExportImportHelperUtil" %><%@
+page import="com.liferay.portal.kernel.lar.PortletDataException" %><%@
 page import="com.liferay.portal.kernel.lar.PortletDataHandlerChoice" %><%@
 page import="com.liferay.portal.kernel.lar.UserIdStrategy" %><%@
 page import="com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants" %><%@
@@ -40,15 +42,23 @@ page import="com.liferay.portal.lar.LayoutExporter" %><%@
 page import="com.liferay.portal.lar.backgroundtask.LayoutExportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.LayoutImportBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.lar.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor" %><%@
+page import="com.liferay.portal.lar.backgroundtask.PortletExportBackgroundTaskExecutor" %><%@
+page import="com.liferay.portal.lar.backgroundtask.PortletImportBackgroundTaskExecutor" %><%@
+page import="com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor" %><%@
 page import="com.liferay.portal.security.auth.RemoteAuthException" %><%@
 page import="com.liferay.portlet.backgroundtask.util.comparator.BackgroundTaskComparatorFactoryUtil" %><%@
 page import="com.liferay.portlet.dynamicdatalists.RecordSetDuplicateRecordSetKeyException" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException" %><%@
+page import="com.liferay.portlet.exportimport.action.ExportImportAction" %><%@
 page import="com.liferay.portlet.exportimport.search.ExportImportConfigurationDisplayTerms" %><%@
 page import="com.liferay.portlet.exportimport.search.ExportImportConfigurationSearchTerms" %><%@
 page import="com.liferay.portlet.layoutsadmin.context.GroupDisplayContextHelper" %>
 
 <%
+String portletResource = ParamUtil.getString(request, "portletResource");
+
+Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
+
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(request);
 
 Format dateFormatDateTime = FastDateFormatFactoryUtil.getDateTime(locale, timeZone);

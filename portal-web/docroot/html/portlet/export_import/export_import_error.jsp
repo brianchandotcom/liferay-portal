@@ -14,9 +14,11 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
+
+<liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 
 <liferay-ui:error exception="<%= LARTypeException.class %>">
 

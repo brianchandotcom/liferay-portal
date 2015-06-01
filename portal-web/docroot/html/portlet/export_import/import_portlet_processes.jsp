@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());
@@ -39,15 +39,15 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 %>
 
 <liferay-ui:search-container
-	emptyResultsMessage="no-publication-processes-were-found"
+	emptyResultsMessage="no-import-processes-were-found"
 	iteratorURL="<%= portletURL %>"
 	orderByCol="<%= orderByCol %>"
 	orderByComparator="<%= orderByComparator %>"
 	orderByType="<%= orderByType %>"
-	total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletStagingBackgroundTaskExecutor.class.getName()) %>"
+	total="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletImportBackgroundTaskExecutor.class.getName()) %>"
 >
 	<liferay-ui:search-container-results
-		results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, selPortlet.getPortletId(), PortletStagingBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+		results="<%= BackgroundTaskLocalServiceUtil.getBackgroundTasks(groupId, selPortlet.getPortletId(), PortletImportBackgroundTaskExecutor.class.getName(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
 	/>
 
 	<liferay-ui:search-container-row
@@ -111,7 +111,7 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 </liferay-ui:search-container>
 
 <%
-int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletStagingBackgroundTaskExecutor.class.getName(), false);
+int incompleteBackgroundTaskCount = BackgroundTaskLocalServiceUtil.getBackgroundTasksCount(groupId, selPortlet.getPortletId(), PortletImportBackgroundTaskExecutor.class.getName(), false);
 %>
 
 <div class="hide incomplete-process-message">

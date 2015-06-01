@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -29,11 +29,11 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 %>
 
 <portlet:actionURL var="importPortletActionURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+	<portlet:param name="struts_action" value="/export_import/export_import" />
 </portlet:actionURL>
 
 <portlet:renderURL var="importPortletRenderURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+	<portlet:param name="struts_action" value="/export_import/export_import" />
 	<portlet:param name="tabs2" value="import" />
 	<portlet:param name="tabs3" value="current-and-previous" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
@@ -289,7 +289,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(them
 			</c:if>
 
 			<portlet:renderURL var="importPortletURL">
-				<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+				<portlet:param name="struts_action" value="/export_import/export_import" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VALIDATE %>" />
 				<portlet:param name="tabs2" value="import" />
 				<portlet:param name="portletResource" value="<%= String.valueOf(portletResource) %>" />

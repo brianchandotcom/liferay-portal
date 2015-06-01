@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <%
 Layout exportableLayout = ExportImportHelperUtil.getExportableLayout(themeDisplay);
@@ -42,7 +42,7 @@ portletURL.setParameter("tabs3", "current-and-previous");
 		</div>
 
 		<portlet:actionURL var="exportPortletURL">
-			<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+			<portlet:param name="struts_action" value="/export_import/export_import" />
 		</portlet:actionURL>
 
 		<aui:form action='<%= exportPortletURL + "&etag=0&strip=0" %>' cssClass="lfr-export-dialog" method="post" name="fm1">
@@ -407,14 +407,14 @@ portletURL.setParameter("tabs3", "current-and-previous");
 
 	<liferay-ui:section>
 		<div class="process-list" id="<portlet:namespace />exportProcesses">
-			<liferay-util:include page="/html/portlet/portlet_configuration/export_portlet_processes.jsp" />
+			<liferay-util:include page="/html/portlet/export_import/export_portlet_processes.jsp" />
 		</div>
 	</liferay-ui:section>
 </liferay-ui:tabs>
 
 <aui:script use="liferay-export-import">
 	<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportProcessesURL">
-		<portlet:param name="struts_action" value="/portlet_configuration/export_import" />
+		<portlet:param name="struts_action" value="/export_import/export_import" />
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EXPORT %>" />
 		<portlet:param name="tabs2" value="export" />
 		<portlet:param name="<%= SearchContainer.DEFAULT_CUR_PARAM %>" value="<%= ParamUtil.getString(request, SearchContainer.DEFAULT_CUR_PARAM) %>" />

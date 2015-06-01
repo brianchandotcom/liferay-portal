@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <%
 String tabs2 = ParamUtil.getString(request, "tabs2", "export");
@@ -24,7 +24,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/portlet_configuration/export_import");
+portletURL.setParameter("struts_action", "/export_import/export_import");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
@@ -36,13 +36,13 @@ portletURL.setParameter("portletResource", portletResource);
 	portletURL="<%= portletURL %>"
 />
 
-<liferay-util:include page="/html/portlet/portlet_configuration/export_import_error.jsp" />
+<liferay-util:include page="/html/portlet/export_import/export_import_error.jsp" />
 
 <c:choose>
 	<c:when test='<%= tabs2.equals("export") %>'>
-		<liferay-util:include page="/html/portlet/portlet_configuration/export_portlet.jsp" />
+		<liferay-util:include page="/html/portlet/export_import/export_portlet.jsp" />
 	</c:when>
 	<c:when test='<%= tabs2.equals("import") %>'>
-		<liferay-util:include page="/html/portlet/portlet_configuration/import_portlet.jsp" />
+		<liferay-util:include page="/html/portlet/export_import/import_portlet.jsp" />
 	</c:when>
 </c:choose>

@@ -194,14 +194,15 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public List<AssetEntry> getEntries(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
-		String title, String description, boolean advancedSearch,
-		boolean andOperator, int start, int end, String orderByCol1,
-		String orderByCol2, String orderByType1, String orderByType2) {
+		String title, String description, boolean includeNoListable,
+		boolean advancedSearch, boolean andOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			groupIds, classNameIds, keywords, userName, title, description,
-			advancedSearch, andOperator, start, end, orderByCol1, orderByCol2,
-			orderByType1, orderByType2);
+			includeNoListable, advancedSearch, andOperator, start, end,
+			orderByCol1, orderByCol2, orderByType1, orderByType2);
 
 		return getEntries(assetEntryQuery);
 	}
@@ -214,13 +215,13 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 	@Override
 	public int getEntriesCount(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
-		String title, String description, boolean advancedSearch,
-		boolean andOperator) {
+		String title, String description, boolean includeNoListable,
+		boolean advancedSearch, boolean andOperator) {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			groupIds, classNameIds, keywords, userName, title, description,
-			advancedSearch, andOperator, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
-			null, null, null, null);
+			includeNoListable, advancedSearch, andOperator, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null, null, null, null);
 
 		return getEntriesCount(assetEntryQuery);
 	}
@@ -903,11 +904,16 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 	protected AssetEntryQuery getAssetEntryQuery(
 		long[] groupIds, long[] classNameIds, String keywords, String userName,
-		String title, String description, boolean advancedSearch,
-		boolean andOperator, int start, int end, String orderByCol1,
-		String orderByCol2, String orderByType1, String orderByType2) {
+		String title, String description, boolean includeNoListable,
+		boolean advancedSearch, boolean andOperator, int start, int end,
+		String orderByCol1, String orderByCol2, String orderByType1,
+		String orderByType2) {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+		if (includeNoListable) {
+			assetEntryQuery.setListable(null);
+		}
 
 		if (advancedSearch) {
 			assetEntryQuery.setAndOperator(andOperator);

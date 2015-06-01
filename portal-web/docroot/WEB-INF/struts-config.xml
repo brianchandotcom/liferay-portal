@@ -461,6 +461,11 @@
 			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
+		<action path="/export_import/export_import" type="com.liferay.portlet.exportimport.action.ExportImportAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.export_import" path="portlet.export_import.export_import" />
+		</action>
+
 		<action path="/export_import/export_layouts" type="com.liferay.portlet.exportimport.action.ExportLayoutsAction">
 			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
 			<forward name="portlet.export_import.export_layouts" path="portlet.export_import.export_layouts" />
@@ -474,6 +479,11 @@
 		<action path="/export_import/publish_layouts" type="com.liferay.portlet.exportimport.action.PublishLayoutsAction">
 			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
 			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
+		</action>
+
+		<action path="/export_import/staging" type="com.liferay.portlet.exportimport.action.ExportImportAction">
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+			<forward name="portlet.export_import.staging" path="portlet.export_import.staging" />
 		</action>
 
 		<action path="/export_import/view" forward="portlet.export_import.view" />
@@ -966,17 +976,7 @@
 			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
 		</action>
 
-		<action path="/portlet_configuration/export_import" type="com.liferay.portlet.portletconfiguration.action.ExportImportAction">
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-			<forward name="portlet.portlet_configuration.export_import" path="portlet.portlet_configuration.export_import" />
-		</action>
-
 		<action path="/portlet_configuration/select_organization" forward="portlet.users_admin.select_organization" />
-
-		<action path="/portlet_configuration/staging" type="com.liferay.portlet.portletconfiguration.action.ExportImportAction">
-			<forward name="portlet.portlet_configuration.error" path="portlet.portlet_configuration.error" />
-			<forward name="portlet.portlet_configuration.staging" path="portlet.portlet_configuration.staging" />
-		</action>
 
 		<action path="/portlet_configuration/update_title" type="com.liferay.portlet.portletconfiguration.action.UpdateTitleAction" />
 

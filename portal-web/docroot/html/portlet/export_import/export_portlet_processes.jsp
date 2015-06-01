@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/html/portlet/export_import/init.jsp" %>
 
 <%
 long groupId = ParamUtil.getLong(request, "groupId", themeDisplay.getScopeGroupId());

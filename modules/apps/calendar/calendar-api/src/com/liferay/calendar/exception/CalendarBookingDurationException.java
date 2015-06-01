@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.calendar;
+package com.liferay.calendar.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class CalendarResourceNameException extends PortalException {
+public class CalendarBookingDurationException extends PortalException {
 
-	public CalendarResourceNameException() {
+	public CalendarBookingDurationException() {
 	}
 
-	public CalendarResourceNameException(String msg) {
+	public CalendarBookingDurationException(String msg) {
 		super(msg);
 	}
 
-	public CalendarResourceNameException(String msg, Throwable cause) {
+	public CalendarBookingDurationException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CalendarResourceNameException(Throwable cause) {
+	public CalendarBookingDurationException(Throwable cause) {
 		super(cause);
 	}
 

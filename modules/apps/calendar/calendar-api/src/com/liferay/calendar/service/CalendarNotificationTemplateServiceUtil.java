@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for CalendarNotificationTemplate. This utility wraps
@@ -64,12 +65,6 @@ public class CalendarNotificationTemplateServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -90,27 +85,8 @@ public class CalendarNotificationTemplateServiceUtil {
 			notificationTypeSettings, subject, body, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarNotificationTemplateService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarNotificationTemplateService.class.getName());
-
-			if (invokableService instanceof CalendarNotificationTemplateService) {
-				_service = (CalendarNotificationTemplateService)invokableService;
-			}
-			else {
-				_service = new CalendarNotificationTemplateServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarNotificationTemplateServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -120,5 +96,14 @@ public class CalendarNotificationTemplateServiceUtil {
 	public void setService(CalendarNotificationTemplateService service) {
 	}
 
-	private static CalendarNotificationTemplateService _service;
+	private static ServiceTracker<CalendarNotificationTemplateService, CalendarNotificationTemplateService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarNotificationTemplateServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarNotificationTemplateService, CalendarNotificationTemplateService>(bundle.getBundleContext(),
+				CalendarNotificationTemplateService.class, null);
+
+		_serviceTracker.open();
+	}
 }

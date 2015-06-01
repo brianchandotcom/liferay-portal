@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service interface for CalendarResource. Methods of this
@@ -42,7 +41,7 @@ import com.liferay.portal.service.InvokableService;
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CalendarResourceService extends BaseService, InvokableService {
+public interface CalendarResourceService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -73,11 +72,6 @@ public interface CalendarResourceService extends BaseService, InvokableService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.calendar.model.CalendarResource getCalendarResource(
 		long calendarResourceId) throws PortalException;
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.calendar.model.CalendarResource> search(

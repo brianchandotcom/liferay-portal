@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service interface for CalendarBooking. Methods of this
@@ -42,7 +41,7 @@ import com.liferay.portal.service.InvokableService;
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CalendarBookingService extends BaseService, InvokableService {
+public interface CalendarBookingService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -138,11 +137,6 @@ public interface CalendarBookingService extends BaseService, InvokableService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasChildCalendarBookings(long parentCalendarBookingId);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	public void invokeTransition(long calendarBookingId, int status,
 		com.liferay.portal.service.ServiceContext serviceContext)

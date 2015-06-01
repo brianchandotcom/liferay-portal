@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
 
 /**
  * Provides the local service interface for CalendarImporter. Methods of this
@@ -38,8 +37,7 @@ import com.liferay.portal.service.InvokableLocalService;
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CalendarImporterLocalService extends BaseLocalService,
-	InvokableLocalService {
+public interface CalendarImporterLocalService extends BaseLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -60,11 +58,6 @@ public interface CalendarImporterLocalService extends BaseLocalService,
 	public void importCalEvents() throws PortalException;
 
 	public void importRolePermissions();
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
 
 	/**
 	* Sets the Spring bean ID for this bean.

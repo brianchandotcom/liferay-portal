@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for CalendarImporter. This utility wraps
@@ -66,12 +67,6 @@ public class CalendarImporterLocalServiceUtil {
 		getService().importRolePermissions();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	/**
 	* Sets the Spring bean ID for this bean.
 	*
@@ -81,27 +76,8 @@ public class CalendarImporterLocalServiceUtil {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarImporterLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarImporterLocalService.class.getName());
-
-			if (invokableLocalService instanceof CalendarImporterLocalService) {
-				_service = (CalendarImporterLocalService)invokableLocalService;
-			}
-			else {
-				_service = new CalendarImporterLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarImporterLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -111,5 +87,14 @@ public class CalendarImporterLocalServiceUtil {
 	public void setService(CalendarImporterLocalService service) {
 	}
 
-	private static CalendarImporterLocalService _service;
+	private static ServiceTracker<CalendarImporterLocalService, CalendarImporterLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarImporterLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarImporterLocalService, CalendarImporterLocalService>(bundle.getBundleContext(),
+				CalendarImporterLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for CalendarResource. This utility wraps
@@ -328,12 +329,6 @@ public class CalendarResourceLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static java.util.List<com.liferay.calendar.model.CalendarResource> search(
 		long companyId, long[] groupIds, long[] classNameIds,
 		java.lang.String code, java.lang.String name,
@@ -410,27 +405,8 @@ public class CalendarResourceLocalServiceUtil {
 			descriptionMap, active, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarResourceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarResourceLocalService.class.getName());
-
-			if (invokableLocalService instanceof CalendarResourceLocalService) {
-				_service = (CalendarResourceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new CalendarResourceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarResourceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -440,5 +416,14 @@ public class CalendarResourceLocalServiceUtil {
 	public void setService(CalendarResourceLocalService service) {
 	}
 
-	private static CalendarResourceLocalService _service;
+	private static ServiceTracker<CalendarResourceLocalService, CalendarResourceLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarResourceLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarResourceLocalService, CalendarResourceLocalService>(bundle.getBundleContext(),
+				CalendarResourceLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

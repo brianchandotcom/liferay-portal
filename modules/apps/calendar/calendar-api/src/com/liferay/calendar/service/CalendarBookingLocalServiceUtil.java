@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for CalendarBooking. This utility wraps
@@ -430,12 +431,6 @@ public class CalendarBookingLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static com.liferay.calendar.model.CalendarBooking moveCalendarBookingToTrash(
 		long userId, com.liferay.calendar.model.CalendarBooking calendarBooking)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -625,27 +620,8 @@ public class CalendarBookingLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarBookingLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarBookingLocalService.class.getName());
-
-			if (invokableLocalService instanceof CalendarBookingLocalService) {
-				_service = (CalendarBookingLocalService)invokableLocalService;
-			}
-			else {
-				_service = new CalendarBookingLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarBookingLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -655,5 +631,14 @@ public class CalendarBookingLocalServiceUtil {
 	public void setService(CalendarBookingLocalService service) {
 	}
 
-	private static CalendarBookingLocalService _service;
+	private static ServiceTracker<CalendarBookingLocalService, CalendarBookingLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarBookingLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarBookingLocalService, CalendarBookingLocalService>(bundle.getBundleContext(),
+				CalendarBookingLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

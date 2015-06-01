@@ -194,7 +194,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 							<liferay-ui:app-view-search-entry
 								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
-								commentTuples="<%= searchResult.getCommentTuples() %>"
+								commentTuples="<%= searchResult.getRelatedComments() %>"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getDescription() %>"

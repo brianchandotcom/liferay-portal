@@ -355,9 +355,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		if (_stripJSPImports && !_jspContents.isEmpty()) {
 			try {
-				newContent = stripJSPImports(
+				newContent = formatJSPImportsOrTaglibs(
 					fileName, newContent, _jspImportPattern, true);
-				newContent = stripJSPImports(
+				newContent = formatJSPImportsOrTaglibs(
 					fileName, newContent, _jspTaglibPattern, false);
 			}
 			catch (RuntimeException re) {
@@ -1469,7 +1469,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			line, attributeAndValue, newAttributeAndValue);
 	}
 
-	protected String stripJSPImports(
+	protected String formatJSPImportsOrTaglibs(
 			String fileName, String content, Pattern pattern,
 			boolean checkUnusedImports)
 		throws IOException {

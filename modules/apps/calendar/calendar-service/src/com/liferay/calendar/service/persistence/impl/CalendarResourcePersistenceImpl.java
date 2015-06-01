@@ -16,7 +16,7 @@ package com.liferay.calendar.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.calendar.NoSuchResourceException;
+import com.liferay.calendar.exception.NoSuchResourceException;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.model.impl.CalendarResourceImpl;
 import com.liferay.calendar.model.impl.CalendarResourceModelImpl;

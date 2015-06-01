@@ -14,8 +14,8 @@
 
 package com.liferay.calendar.service.impl;
 
-import com.liferay.calendar.CalendarNameException;
-import com.liferay.calendar.RequiredCalendarException;
+import com.liferay.calendar.exception.CalendarNameException;
+import com.liferay.calendar.exception.RequiredCalendarException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
 import com.liferay.calendar.util.CalendarDataFormat;

@@ -14,8 +14,8 @@
 
 package com.liferay.calendar.service.impl;
 
-import com.liferay.calendar.CalendarBookingDurationException;
-import com.liferay.calendar.CalendarBookingTitleException;
+import com.liferay.calendar.exception.CalendarBookingDurationException;
+import com.liferay.calendar.exception.CalendarBookingTitleException;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;

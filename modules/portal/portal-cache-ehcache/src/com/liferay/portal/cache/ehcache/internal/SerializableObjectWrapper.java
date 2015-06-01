@@ -29,15 +29,15 @@ import java.nio.ByteBuffer;
  */
 public class SerializableObjectWrapper implements Serializable {
 
-	public static Object unwrap(Object object) {
+	public static <T> T unwrap(Object object) {
 		if (!(object instanceof SerializableObjectWrapper)) {
-			return object;
+			return (T)object;
 		}
 
 		SerializableObjectWrapper serializableWrapper =
 			(SerializableObjectWrapper)object;
 
-		return serializableWrapper._serializable;
+		return (T)serializableWrapper._serializable;
 	}
 
 	public SerializableObjectWrapper(Serializable serializable) {

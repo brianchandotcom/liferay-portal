@@ -41,7 +41,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 		List<K> keys = new ArrayList<>();
 
 		for (Object object : ehcache.getKeys()) {
-			keys.add((K)SerializableObjectWrapper.unwrap(object));
+			keys.add(SerializableObjectWrapper.<K>unwrap(object));
 		}
 
 		return keys;
@@ -65,7 +65,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 			return null;
 		}
 
-		return (V)SerializableObjectWrapper.unwrap(element.getObjectValue());
+		return SerializableObjectWrapper.unwrap(element.getObjectValue());
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 			return null;
 		}
 
-		return (V)SerializableObjectWrapper.unwrap(oldElement.getObjectValue());
+		return SerializableObjectWrapper.unwrap(oldElement.getObjectValue());
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class SerializableEhcachePortalCache<K extends Serializable, V>
 			return null;
 		}
 
-		return (V)SerializableObjectWrapper.unwrap(oldElement.getObjectValue());
+		return SerializableObjectWrapper.unwrap(oldElement.getObjectValue());
 	}
 
 	@Override

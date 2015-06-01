@@ -930,6 +930,26 @@
 		<execute function="AssertElementPresent" locator1="CalendarRSS#FEED_EVENT_DATES" />
 	</command>
 
+	<command name="viewSelectedTimeZone">
+		<if>
+			<equals arg1="${timeZone}" arg2="(UTC -08:00) Pacific Standard Time" />
+			<then>
+				<if>
+					<condition function="IsTextNotEqual" locator1="PGCalendarAddcalendar#TIME_ZONE_LOS_ANGELES_SELECT_OPTION" value1="(UTC -07:00) Pacific Daylight Time" />
+					<then>
+						<execute function="AssertSelectedLabel" locator1="PGCalendarAddcalendar#TIME_ZONE_SELECT" value1="${timeZone}" />
+					</then>
+					<else>
+						<execute function="AssertSelectedLabel" locator1="PGCalendarAddcalendar#TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time" />
+					</else>
+				</if>
+			</then>
+			<else>
+				<execute function="AssertSelectedLabel" locator1="PGCalendarAddcalendar#TIME_ZONE_SELECT" value1="${timeZone}" />
+			</else>
+		</if>
+	</command>
+
 	<command name="viewSiteCalendarNoMenulistOption">
 		<execute macro="Calendar#_gotoSiteCalendarMenulist">
 			<var name="calendarName" value="${calendarName}" />

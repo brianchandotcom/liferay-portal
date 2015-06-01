@@ -29,6 +29,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TIME_ZONE_SELECT</td>
+	<td>//select[contains(@id,'timeZoneId')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TIME_ZONE_LOS_ANGELES_SELECT_OPTION</td>
+	<td>//select[contains(@id,'timeZoneId')]/option[@value='America/Los_Angeles']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[@type='submit']</td>
 	<td></td>

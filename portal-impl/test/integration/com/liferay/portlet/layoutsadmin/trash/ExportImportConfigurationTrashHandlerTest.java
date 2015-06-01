@@ -192,6 +192,13 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndRestoreIndexable()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestoreIsVisible()
 		throws Exception {
 	}
@@ -206,6 +213,12 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIndexable() throws Exception {
 	}
 
 	@Override

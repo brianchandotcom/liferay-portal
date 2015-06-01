@@ -253,6 +253,12 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 	}
 
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIndexable() throws Exception {
+	}
+
 	@Override
 	protected BaseModel<?> addBaseModelWithWorkflow(
 			BaseModel<?> parentBaseModel, boolean approved,

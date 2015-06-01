@@ -914,6 +914,78 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		return content;
 	}
 
+	protected String formatJSPImportsOrTaglibs(
+			String fileName, String content, Pattern pattern,
+			boolean checkUnusedImports)
+		throws IOException {
+
+		if (fileName.endsWith("init-ext.jsp")) {
+			return content;
+		}
+
+		Matcher matcher = pattern.matcher(content);
+
+		if (!matcher.find()) {
+			return content;
+		}
+
+		String imports = matcher.group();
+
+		imports = StringUtil.replace(
+			imports, new String[] {"%><%@\r\n", "%><%@\n"},
+			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
+
+		if (checkUnusedImports) {
+			List<String> importLines = new ArrayList<>();
+
+			UnsyncBufferedReader unsyncBufferedReader =
+				new UnsyncBufferedReader(new UnsyncStringReader(imports));
+
+			String line = null;
+
+			while ((line = unsyncBufferedReader.readLine()) != null) {
+				if (line.contains("import=")) {
+					importLines.add(line);
+				}
+			}
+
+			List<String> unneededImports = getJSPDuplicateImports(
+				fileName, content, importLines);
+
+			addJSPUnusedImports(fileName, importLines, unneededImports);
+
+			for (String unneededImport : unneededImports) {
+				imports = StringUtil.replace(
+					imports, unneededImport, StringPool.BLANK);
+			}
+		}
+
+		ImportsFormatter importsFormatter = new JSPImportsFormatter();
+
+		imports = importsFormatter.format(imports);
+
+		String beforeImports = content.substring(0, matcher.start());
+
+		if (Validator.isNull(imports)) {
+			beforeImports = StringUtil.replaceLast(
+				beforeImports, "\n", StringPool.BLANK);
+		}
+
+		String afterImports = content.substring(matcher.end());
+
+		if (Validator.isNull(afterImports)) {
+			imports = StringUtil.replaceLast(imports, "\n", StringPool.BLANK);
+
+			content = beforeImports + imports;
+
+			return content;
+		}
+
+		content = beforeImports + imports + "\n" + afterImports;
+
+		return content;
+	}
+
 	@Override
 	protected String formatTagAttributeType(
 			String line, String tag, String attributeAndValue)
@@ -1472,78 +1544,6 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 		return StringUtil.replace(
 			line, attributeAndValue, newAttributeAndValue);
-	}
-
-	protected String formatJSPImportsOrTaglibs(
-			String fileName, String content, Pattern pattern,
-			boolean checkUnusedImports)
-		throws IOException {
-
-		if (fileName.endsWith("init-ext.jsp")) {
-			return content;
-		}
-
-		Matcher matcher = pattern.matcher(content);
-
-		if (!matcher.find()) {
-			return content;
-		}
-
-		String imports = matcher.group();
-
-		imports = StringUtil.replace(
-			imports, new String[] {"%><%@\r\n", "%><%@\n"},
-			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
-
-		if (checkUnusedImports) {
-			List<String> importLines = new ArrayList<>();
-
-			UnsyncBufferedReader unsyncBufferedReader =
-				new UnsyncBufferedReader(new UnsyncStringReader(imports));
-
-			String line = null;
-
-			while ((line = unsyncBufferedReader.readLine()) != null) {
-				if (line.contains("import=")) {
-					importLines.add(line);
-				}
-			}
-
-			List<String> unneededImports = getJSPDuplicateImports(
-				fileName, content, importLines);
-
-			addJSPUnusedImports(fileName, importLines, unneededImports);
-
-			for (String unneededImport : unneededImports) {
-				imports = StringUtil.replace(
-					imports, unneededImport, StringPool.BLANK);
-			}
-		}
-
-		ImportsFormatter importsFormatter = new JSPImportsFormatter();
-
-		imports = importsFormatter.format(imports);
-
-		String beforeImports = content.substring(0, matcher.start());
-
-		if (Validator.isNull(imports)) {
-			beforeImports = StringUtil.replaceLast(
-				beforeImports, "\n", StringPool.BLANK);
-		}
-
-		String afterImports = content.substring(matcher.end());
-
-		if (Validator.isNull(afterImports)) {
-			imports = StringUtil.replaceLast(imports, "\n", StringPool.BLANK);
-
-			content = beforeImports + imports;
-
-			return content;
-		}
-
-		content = beforeImports + imports + "\n" + afterImports;
-
-		return content;
 	}
 
 	private static final String[] _INCLUDES = new String[] {

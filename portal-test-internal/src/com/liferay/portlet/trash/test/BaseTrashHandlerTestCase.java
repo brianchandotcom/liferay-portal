@@ -1845,16 +1845,7 @@ public abstract class BaseTrashHandlerTestCase {
 
 		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
 			parentBaseModel);
-		int initialBaseModelsSearchCount = 0;
 		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
 
 		List<Integer> originalStatuses = new ArrayList<>();
 
@@ -1889,15 +1880,6 @@ public abstract class BaseTrashHandlerTestCase {
 			getNotInTrashBaseModelsCount(parentBaseModel));
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
-
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
@@ -2046,6 +2028,62 @@ public abstract class BaseTrashHandlerTestCase {
 				Assert.assertEquals(
 					originalStatus, childrenWorkflowedModel.getStatus());
 			}
+		}
+	}
+
+	@Test
+	public void testTrashVersionParentBaseModelIndexable() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsSearchCount = 0;
+		int initialTrashEntriesSearchCount = 0;
+
+		if (isIndexableBaseModel()) {
+			initialBaseModelsSearchCount = searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId());
+			initialTrashEntriesSearchCount = searchTrashEntriesCount(
+				getSearchKeywords(), serviceContext);
+		}
+
+		List<Integer> originalStatuses = new ArrayList<>();
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = expireBaseModel(baseModel, serviceContext);
+
+		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		if (isIndexableBaseModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount + 1,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount,
+				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 		}
 	}
 

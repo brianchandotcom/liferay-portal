@@ -163,6 +163,12 @@ public class BookmarksFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
 	}
 

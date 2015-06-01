@@ -186,6 +186,12 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
 	}
 

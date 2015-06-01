@@ -58,12 +58,12 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 
 	public ServletInputStream getCachedInputStream() {
 		if (_totalSize < THRESHOLD_SIZE) {
-			return this;
-		}
-		else {
 			return new ServletInputStreamAdapter(
 				new UnsyncByteArrayInputStream(
 					_cachedBytes.unsafeGetByteArray(), 0, _cachedBytes.size()));
+		}
+		else {
+			return this;
 		}
 	}
 

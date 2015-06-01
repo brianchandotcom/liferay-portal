@@ -17,7 +17,6 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -55,15 +54,15 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<RelatedSearchResult<Comment>> commentTuples = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> relatedComments = searchResult.getRelatedComments();
 
-		Assert.assertTrue(commentTuples.isEmpty());
+		Assert.assertTrue(relatedComments.isEmpty());
 
 		verifyZeroInteractions(mbMessageLocalService);
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyRelatedFileEntries(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -89,17 +88,17 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		List<RelatedSearchResult<Comment>> commentTuples = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> relatedComments = searchResult.getRelatedComments();
 
-		RelatedSearchResult<Comment> relatedSearchResult = commentTuples.get(0);
+		RelatedSearchResult<Comment> relatedSearchResult = relatedComments.get(0);
 		Comment comment = relatedSearchResult.getModel();
 
 		Assert.assertSame(_mbMessage.getMessageId(), comment.getCommentId());
-		Assert.assertEquals(1, commentTuples.size());
+		Assert.assertEquals(1, relatedComments.size());
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyRelatedFileEntries(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 

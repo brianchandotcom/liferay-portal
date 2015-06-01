@@ -449,23 +449,23 @@ urlConfiguration.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimar
 
 portletDisplay.setURLConfiguration(urlConfiguration.toString() + "&" + PortalUtil.getPortletNamespace(PortletKeys.PORTLET_CONFIGURATION));
 
-StringBuilder sb = new StringBuilder(13);
+StringBuilder urlConfigurationJSSB = new StringBuilder(13);
 
-sb.append("Liferay.Portlet.openWindow('#p_p_id_");
-sb.append(portletDisplay.getId());
-sb.append("_', '");
-sb.append(portletDisplay.getId());
-sb.append("', '");
-sb.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
-sb.append("', '");
-sb.append(portletDisplay.getNamespace());
-sb.append("', '");
-sb.append(LanguageUtil.get(request, "configuration"));
-sb.append("', '");
-sb.append(PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? portletDisplay.getId() : StringPool.BLANK);
-sb.append("'); return false;");
+urlConfigurationJSSB.append("Liferay.Portlet.openWindow('#p_p_id_");
+urlConfigurationJSSB.append(portletDisplay.getId());
+urlConfigurationJSSB.append("_', '");
+urlConfigurationJSSB.append(portletDisplay.getId());
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(HtmlUtil.escapeJS(portletDisplay.getURLConfiguration()));
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(portletDisplay.getNamespace());
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(LanguageUtil.get(request, "configuration"));
+urlConfigurationJSSB.append("', '");
+urlConfigurationJSSB.append(PropsValues.PORTLET_CONFIG_SHOW_PORTLET_ID ? portletDisplay.getId() : StringPool.BLANK);
+urlConfigurationJSSB.append("'); return false;");
 
-portletDisplay.setURLConfigurationJS(sb.toString());
+portletDisplay.setURLConfigurationJS(urlConfigurationJSSB.toString());
 // URL edit
 
 PortletURLImpl urlEdit = new PortletURLImpl(request, portletDisplay.getId(), plid, PortletRequest.RENDER_PHASE);

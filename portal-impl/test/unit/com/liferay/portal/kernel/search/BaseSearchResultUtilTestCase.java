@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.FastDateFormatFactory;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.Tuple;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.search.SearchResultManagerImpl;
 import com.liferay.portal.service.ClassNameLocalService;
@@ -67,16 +66,18 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpClassNameLocalService();
 	}
 
-	protected void assertEmptyRelatedFileEntries(SearchResult searchResult) {
-		List<RelatedSearchResult<FileEntry>> relatedFileEntries = searchResult.getRelatedFileEntries();
-
-		Assert.assertTrue(relatedFileEntries.isEmpty());
-	}
-
 	protected void assertEmptyRelatedComments(SearchResult searchResult) {
-		List<RelatedSearchResult<Comment>> relatedComments = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> relatedComments =
+			searchResult.getRelatedComments();
 
 		Assert.assertTrue(relatedComments.isEmpty());
+	}
+
+	protected void assertEmptyRelatedFileEntries(SearchResult searchResult) {
+		List<RelatedSearchResult<FileEntry>> relatedFileEntries =
+			searchResult.getRelatedFileEntries();
+
+		Assert.assertTrue(relatedFileEntries.isEmpty());
 	}
 
 	protected void assertEmptyVersions(SearchResult searchResult) {

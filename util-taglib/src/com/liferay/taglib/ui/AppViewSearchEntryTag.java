@@ -49,12 +49,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_actionJspServletContext = actionJspServletContext;
 	}
 
-	public void setRelatedComments(
-		List<RelatedSearchResult<Comment>> relatedComments) {
-
-		_relatedComments = relatedComments;
-	}
-
 	public void setContainerName(String containerName) {
 		_containerName = containerName;
 	}
@@ -71,12 +65,6 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		_description = HtmlUtil.unescape(description);
 	}
 
-	public void setRelatedFileEntries(
-		List<RelatedSearchResult<FileEntry>> relatedFileEntries) {
-
-		_relatedFileEntries = relatedFileEntries;
-	}
-
 	public void setHighlightEnabled(boolean highlightEnabled) {
 		_highlightEnabled = highlightEnabled;
 	}
@@ -87,6 +75,18 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	public void setQueryTerms(String[] queryTerms) {
 		_queryTerms = queryTerms;
+	}
+
+	public void setRelatedComments(
+		List<RelatedSearchResult<Comment>> relatedComments) {
+
+		_relatedComments = relatedComments;
+	}
+
+	public void setRelatedFileEntries(
+		List<RelatedSearchResult<FileEntry>> relatedFileEntries) {
+
+		_relatedFileEntries = relatedFileEntries;
 	}
 
 	public void setRowCheckerId(String rowCheckerId) {
@@ -185,7 +185,8 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:relatedComments", _relatedComments);
+			"liferay-ui:app-view-search-entry:relatedComments",
+			_relatedComments);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(
@@ -214,15 +215,15 @@ public class AppViewSearchEntryTag extends IncludeTag {
 
 	private String _actionJsp;
 	private ServletContext _actionJspServletContext;
-	private List<RelatedSearchResult<Comment>> _relatedComments;
 	private String _containerName;
 	private String _containerType;
 	private String _cssClass;
 	private String _description;
-	private List<RelatedSearchResult<FileEntry>> _relatedFileEntries;
 	private boolean _highlightEnabled = _HIGHLIGHT_ENABLED;
 	private boolean _locked;
 	private String[] _queryTerms;
+	private List<RelatedSearchResult<Comment>> _relatedComments;
+	private List<RelatedSearchResult<FileEntry>> _relatedFileEntries;
 	private String _rowCheckerId;
 	private String _rowCheckerName;
 	private boolean _showCheckbox = false;

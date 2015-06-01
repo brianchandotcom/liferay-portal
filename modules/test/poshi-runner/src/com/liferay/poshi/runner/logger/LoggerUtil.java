@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

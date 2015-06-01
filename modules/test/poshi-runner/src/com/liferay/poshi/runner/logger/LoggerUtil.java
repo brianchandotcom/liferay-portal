@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.PoshiRunnerGetterUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringUtil;
+import com.liferay.poshi.runner.util.Validator;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -312,8 +313,16 @@ public final class LoggerUtil {
 		if (!PropsValues.TEST_RUN_LOCALLY) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append("http://rawgit.com/liferay/liferay-portal/master/");
-			sb.append("modules/test/poshi-runner/src/META-INF/resources");
+			sb.append("http://rawgit.com/liferay/liferay-portal/");
+
+			if (Validator.isNull(PropsValues.LIFERAY_PORTAL_GIT_ID)) {
+				sb.append("master");
+			}
+			else {
+				sb.append(PropsValues.LIFERAY_PORTAL_GIT_ID);
+			}
+
+			sb.append("/modules/test/poshi-runner/src/META-INF/resources");
 
 			indexHTMLContent = StringUtil.replace(
 				indexHTMLContent, "<link href=\"../css/main.css\"",

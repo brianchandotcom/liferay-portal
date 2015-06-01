@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.calendar;
+package com.liferay.calendar.exception;
 
 import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class NoSuchResourceException extends NoSuchModelException {
+public class NoSuchNotificationTemplateException extends NoSuchModelException {
 
-	public NoSuchResourceException() {
+	public NoSuchNotificationTemplateException() {
 	}
 
-	public NoSuchResourceException(String msg) {
+	public NoSuchNotificationTemplateException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchResourceException(String msg, Throwable cause) {
+	public NoSuchNotificationTemplateException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchResourceException(Throwable cause) {
+	public NoSuchNotificationTemplateException(Throwable cause) {
 		super(cause);
 	}
 

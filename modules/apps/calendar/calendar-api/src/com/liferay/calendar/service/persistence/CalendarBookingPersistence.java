@@ -91,7 +91,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByResourceBlockId_First(long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where resourceBlockId = &#63;.
@@ -113,7 +113,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByResourceBlockId_Last(long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where resourceBlockId = &#63;.
@@ -137,7 +137,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByResourceBlockId_PrevAndNext(
 		long calendarBookingId, long resourceBlockId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where resourceBlockId = &#63; from the database.
@@ -204,7 +204,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where uuid = &#63;.
@@ -226,7 +226,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where uuid = &#63;.
@@ -250,7 +250,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByUuid_PrevAndNext(long calendarBookingId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where uuid = &#63; from the database.
@@ -276,7 +276,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
 	public CalendarBooking findByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the calendar booking where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -306,7 +306,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @return the calendar booking that was removed
 	*/
 	public CalendarBooking removeByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the number of calendar bookings where uuid = &#63; and groupId = &#63;.
@@ -373,7 +373,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByUuid_C_First(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -399,7 +399,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -426,7 +426,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByUuid_C_PrevAndNext(long calendarBookingId,
 		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where uuid = &#63; and companyId = &#63; from the database.
@@ -495,7 +495,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByCalendarId_First(long calendarId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where calendarId = &#63;.
@@ -517,7 +517,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByCalendarId_Last(long calendarId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where calendarId = &#63;.
@@ -541,7 +541,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByCalendarId_PrevAndNext(
 		long calendarBookingId, long calendarId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where calendarId = &#63; from the database.
@@ -610,7 +610,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByCalendarResourceId_First(
 		long calendarResourceId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where calendarResourceId = &#63;.
@@ -634,7 +634,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByCalendarResourceId_Last(
 		long calendarResourceId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where calendarResourceId = &#63;.
@@ -659,7 +659,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByCalendarResourceId_PrevAndNext(
 		long calendarBookingId, long calendarResourceId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where calendarResourceId = &#63; from the database.
@@ -728,7 +728,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByParentCalendarBookingId_First(
 		long parentCalendarBookingId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where parentCalendarBookingId = &#63;.
@@ -752,7 +752,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByParentCalendarBookingId_Last(
 		long parentCalendarBookingId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63;.
@@ -777,7 +777,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByParentCalendarBookingId_PrevAndNext(
 		long calendarBookingId, long parentCalendarBookingId,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where parentCalendarBookingId = &#63; from the database.
@@ -804,7 +804,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByC_P(long calendarId,
 		long parentCalendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the calendar booking where calendarId = &#63; and parentCalendarBookingId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -836,7 +836,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking removeByC_P(long calendarId,
 		long parentCalendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the number of calendar bookings where calendarId = &#63; and parentCalendarBookingId = &#63;.
@@ -856,7 +856,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @throws NoSuchBookingException if a matching calendar booking could not be found
 	*/
 	public CalendarBooking findByC_V(long calendarId, java.lang.String vEventUid)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the calendar booking where calendarId = &#63; and vEventUid = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -888,7 +888,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking removeByC_V(long calendarId,
 		java.lang.String vEventUid)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the number of calendar bookings where calendarId = &#63; and vEventUid = &#63;.
@@ -953,7 +953,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByC_S_First(long calendarId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
@@ -977,7 +977,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	*/
 	public CalendarBooking findByC_S_Last(long calendarId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where calendarId = &#63; and status = &#63;.
@@ -1003,7 +1003,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByC_S_PrevAndNext(long calendarBookingId,
 		long calendarId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns all the calendar bookings where calendarId = &#63; and status = any &#63;.
@@ -1135,7 +1135,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByP_S_First(long parentCalendarBookingId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the first calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
@@ -1161,7 +1161,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking findByP_S_Last(long parentCalendarBookingId,
 		int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the last calendar booking in the ordered set where parentCalendarBookingId = &#63; and status = &#63;.
@@ -1188,7 +1188,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	public CalendarBooking[] findByP_S_PrevAndNext(long calendarBookingId,
 		long parentCalendarBookingId, int status,
 		com.liferay.portal.kernel.util.OrderByComparator<CalendarBooking> orderByComparator)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Removes all the calendar bookings where parentCalendarBookingId = &#63; and status = &#63; from the database.
@@ -1237,7 +1237,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
 	*/
 	public CalendarBooking remove(long calendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	public CalendarBooking updateImpl(CalendarBooking calendarBooking);
 
@@ -1249,7 +1249,7 @@ public interface CalendarBookingPersistence extends BasePersistence<CalendarBook
 	* @throws NoSuchBookingException if a calendar booking with the primary key could not be found
 	*/
 	public CalendarBooking findByPrimaryKey(long calendarBookingId)
-		throws com.liferay.calendar.NoSuchBookingException;
+		throws com.liferay.calendar.exception.NoSuchBookingException;
 
 	/**
 	* Returns the calendar booking with the primary key or returns <code>null</code> if it could not be found.

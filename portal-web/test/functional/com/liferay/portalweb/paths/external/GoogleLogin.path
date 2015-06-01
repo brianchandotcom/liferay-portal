@@ -8,6 +8,16 @@
 <tr><td rowspan="1" colspan="3">GoogleLogin</td></tr>
 </thead>
 <tbody>
+<tr>
+	<td>ACCEPT</td>
+	<td>//button[contains(.,'Accept')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--ACCOUNT_MENULIST-->
 <tr>
 	<td>ACCOUNT_MENULIST</td>

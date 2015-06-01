@@ -115,7 +115,8 @@ page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTempl
 page import="com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.ContentUtil" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %>
+page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionServiceUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.HashMap" %><%@

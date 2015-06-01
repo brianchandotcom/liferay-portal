@@ -122,6 +122,37 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	
 	<c:if test="<%= structureVersion != null %>">
 		<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
+		
+		<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>
+		
+		<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
+			var toolbarChildren = [
+				<portlet:renderURL var="viewHistoryURL">
+					<portlet:param name="mvcPath" value="/view_structure_history.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
+				</portlet:renderURL>
+	
+				{
+					icon: 'icon-time',
+					label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
+					on: {
+						click: function(event) {
+							event.domEvent.preventDefault();
+	
+							window.location.href = '<%= viewHistoryURL %>';
+						}
+					}
+				}
+			];
+		
+			new A.Toolbar(
+				{
+					boundingBox: '#<portlet:namespace />structureHistoryToolbar',
+					children: toolbarChildren
+				}
+			).render();
+		</aui:script>
 	</c:if>
 
 	<aui:fieldset>

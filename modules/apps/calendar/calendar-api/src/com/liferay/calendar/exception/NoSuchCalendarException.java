@@ -12,27 +12,27 @@
  * details.
  */
 
-package com.liferay.calendar;
+package com.liferay.calendar.exception;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Eduardo Lundgren
  */
-public class CalendarBookingStartTimeException extends PortalException {
+public class NoSuchCalendarException extends NoSuchModelException {
 
-	public CalendarBookingStartTimeException() {
+	public NoSuchCalendarException() {
 	}
 
-	public CalendarBookingStartTimeException(String msg) {
+	public NoSuchCalendarException(String msg) {
 		super(msg);
 	}
 
-	public CalendarBookingStartTimeException(String msg, Throwable cause) {
+	public NoSuchCalendarException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public CalendarBookingStartTimeException(Throwable cause) {
+	public NoSuchCalendarException(Throwable cause) {
 		super(cause);
 	}
 

@@ -47,12 +47,16 @@ public class WSDDBuilder {
 			WSDDBuilder wsddBuilder = new WSDDBuilder();
 
 			wsddBuilder._classPath = arguments.get("wsdd.class.path");
-			wsddBuilder._fileName = arguments.get("wsdd.input.file");
-			wsddBuilder._outputPath = arguments.get("wsdd.output.path");
-			wsddBuilder._serverConfigFileName = arguments.get(
-				"wsdd.server.config.file");
-			wsddBuilder._serviceNamespace = arguments.get(
-				"wsdd.service.namespace");
+			wsddBuilder._fileName = GetterUtil.getString(
+				arguments.get("wsdd.input.file"), WSDDBuilderArgs.FILE_NAME);
+			wsddBuilder._outputPath = GetterUtil.getString(
+				arguments.get("wsdd.output.path"), WSDDBuilderArgs.OUTPUT_PATH);
+			wsddBuilder._serverConfigFileName = GetterUtil.getString(
+				arguments.get("wsdd.server.config.file"),
+				WSDDBuilderArgs.SERVER_CONFIG_FILE_NAME);
+			wsddBuilder._serviceNamespace = GetterUtil.getString(
+				arguments.get("wsdd.service.namespace"),
+				WSDDBuilderArgs.SERVICE_NAMESPACE);
 
 			wsddBuilder.build();
 		}

@@ -19,6 +19,14 @@ package com.liferay.portal.tools.wsdd.builder;
  */
 public class WSDDBuilderArgs {
 
+	public static final String FILE_NAME = "service.xml";
+
+	public static final String OUTPUT_PATH = "src";
+
+	public static final String SERVER_CONFIG_FILE_NAME = "server-config.wsdd";
+
+	public static final String SERVICE_NAMESPACE = "Plugin";
+
 	public String getClassPath() {
 		return _classPath;
 	}
@@ -60,9 +68,9 @@ public class WSDDBuilderArgs {
 	}
 
 	private String _classPath;
-	private String _fileName = "service.xml";
-	private String _outputPath = "src";
-	private String _serverConfigFileName = "server-config.wsdd";
-	private String _serviceNamespace = "Plugin";
+	private String _fileName = FILE_NAME;
+	private String _outputPath = OUTPUT_PATH;
+	private String _serverConfigFileName = SERVER_CONFIG_FILE_NAME;
+	private String _serviceNamespace = SERVICE_NAMESPACE;
 
 }

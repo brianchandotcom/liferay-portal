@@ -1716,12 +1716,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionParentBaseModel() throws Exception {
-		trashVersionParentBaseModel(false);
+		trashVersionParentBaseModelNoMoveBaseModel();
 	}
 
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
-		trashVersionParentBaseModel(true);
+		trashVersionParentBaseModelMoveBaseModel();
 	}
 
 	protected BaseModel<?> addBaseModel(
@@ -2009,7 +2009,123 @@ public abstract class BaseTrashHandlerTestCase {
 		return results.getLength();
 	}
 
-	protected void trashVersionParentBaseModel(boolean moveBaseModel)
+	protected void trashVersionParentBaseModelMoveBaseModel() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		int initialBaseModelsCount = getNotInTrashBaseModelsCount(
+			parentBaseModel);
+		int initialBaseModelsSearchCount = 0;
+		int initialTrashEntriesCount = getTrashEntriesCount(group.getGroupId());
+		int initialTrashEntriesSearchCount = 0;
+
+		if (isIndexableBaseModel()) {
+			initialBaseModelsSearchCount = searchBaseModelsCount(
+				getBaseModelClass(), group.getGroupId());
+			initialTrashEntriesSearchCount = searchTrashEntriesCount(
+				getSearchKeywords(), serviceContext);
+		}
+
+		List<Integer> originalStatuses = new ArrayList<>();
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = expireBaseModel(baseModel, serviceContext);
+
+		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		Assert.assertEquals(
+			initialBaseModelsCount + 1,
+			getNotInTrashBaseModelsCount(parentBaseModel));
+		Assert.assertEquals(
+			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+
+		if (isIndexableBaseModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount + 1,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			Assert.assertEquals(
+				initialTrashEntriesSearchCount,
+				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
+		}
+
+		if (isAssetableModel()) {
+			Assert.assertTrue(isAssetEntryVisible(baseModel));
+		}
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		Assert.assertEquals(
+			initialTrashEntriesCount + 1,
+			getTrashEntriesCount(group.getGroupId()));
+		Assert.assertTrue(isInTrashContainer(baseModel));
+
+		if (isAssetableModel()) {
+			Assert.assertFalse(isAssetEntryVisible(baseModel));
+		}
+
+		if (isBaseModelMoveableFromTrash()) {
+			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
+				baseModel, group, serviceContext);
+
+			baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+			Assert.assertEquals(
+				initialBaseModelsCount + 1,
+				getNotInTrashBaseModelsCount(newParentBaseModel));
+			Assert.assertEquals(
+				initialTrashEntriesCount + 1,
+				getTrashEntriesCount(group.getGroupId()));
+			Assert.assertFalse(isInTrashContainer(baseModel));
+
+			if (isAssetableModel()) {
+				Assert.assertTrue(isAssetEntryVisible(baseModel));
+			}
+		}
+		else {
+			restoreParentBaseModelFromTrash(
+				(Long)parentBaseModel.getPrimaryKeyObj());
+
+			List<? extends WorkflowedModel> childrenWorkflowedModels =
+				getChildrenWorkflowedModels(parentBaseModel);
+
+			for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
+				WorkflowedModel childrenWorkflowedModel =
+					childrenWorkflowedModels.get(i - 1);
+
+				int originalStatus = originalStatuses.get(
+					childrenWorkflowedModels.size() - i);
+
+				Assert.assertEquals(
+					originalStatus, childrenWorkflowedModel.getStatus());
+			}
+		}
+	}
+
+	protected void trashVersionParentBaseModelNoMoveBaseModel()
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -2089,41 +2205,21 @@ public abstract class BaseTrashHandlerTestCase {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
 
-		if (moveBaseModel && isBaseModelMoveableFromTrash()) {
-			BaseModel<?> newParentBaseModel = moveBaseModelFromTrash(
-				baseModel, group, serviceContext);
+		restoreParentBaseModelFromTrash(
+			(Long)parentBaseModel.getPrimaryKeyObj());
 
-			baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+		List<? extends WorkflowedModel> childrenWorkflowedModels =
+			getChildrenWorkflowedModels(parentBaseModel);
+
+		for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
+			WorkflowedModel childrenWorkflowedModel =
+				childrenWorkflowedModels.get(i - 1);
+
+			int originalStatus = originalStatuses.get(
+				childrenWorkflowedModels.size() - i);
 
 			Assert.assertEquals(
-				initialBaseModelsCount + 1,
-				getNotInTrashBaseModelsCount(newParentBaseModel));
-			Assert.assertEquals(
-				initialTrashEntriesCount + 1,
-				getTrashEntriesCount(group.getGroupId()));
-			Assert.assertFalse(isInTrashContainer(baseModel));
-
-			if (isAssetableModel()) {
-				Assert.assertTrue(isAssetEntryVisible(baseModel));
-			}
-		}
-		else {
-			restoreParentBaseModelFromTrash(
-				(Long)parentBaseModel.getPrimaryKeyObj());
-
-			List<? extends WorkflowedModel> childrenWorkflowedModels =
-				getChildrenWorkflowedModels(parentBaseModel);
-
-			for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
-				WorkflowedModel childrenWorkflowedModel =
-					childrenWorkflowedModels.get(i - 1);
-
-				int originalStatus = originalStatuses.get(
-					childrenWorkflowedModels.size() - i);
-
-				Assert.assertEquals(
-					originalStatus, childrenWorkflowedModel.getStatus());
-			}
+				originalStatus, childrenWorkflowedModel.getStatus());
 		}
 	}
 

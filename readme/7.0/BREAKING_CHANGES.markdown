@@ -1879,15 +1879,16 @@ modifying the structure or template, the `userId` parameter is required.
 
 ---------------------------------------
 
-### Removed mbMessages attribute from app-view-search-entry tag
+### Removed mbMessages and fileEntryTuples attributes from app-view-search-entry tag
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55886
 
 #### What changed?
 
-The `mbMessages` attribute from the `app-view-search-entry` tag has
-been removed, as well as the `getMbMessages` and `addMbMessage`
-methods from `SearchResult`.
+The `mbMessages` and `fileEntryTuples` attributes from the
+`app-view-search-entry` tag have been removed. Related methods
+`getMbMessages`, `getFileEntryTuples`, and `addMbMessage` have been
+removed as well from `SearchResult`.
 
 #### Who is affected?
 
@@ -1898,11 +1899,12 @@ portlet that uses that taglib. Also, any custom code that uses the
 
 #### How should I update my code?
 
-The new attribute `commentTuples` should be used instead. The expected
-value is the one returned by the `getCommentTuples` method in
-`SearchResult` (which itself replaces the `getMbMessages` method).
+The new attributes `relatedComments` and `relatedFileEntries` should
+be used instead. The expected value is the one returned by the
+`getRelatedComments` and `getRelatedFileEntries` methods in
+`SearchResult`.
 
-When adding messages to the `SearchResult` the new `addComment` method
+When adding comments to the `SearchResult` the new `addComment` method
 should be used instead of `addMbMessage`.
 
 #### Why was this change made?

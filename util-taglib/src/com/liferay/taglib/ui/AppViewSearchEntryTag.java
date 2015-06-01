@@ -177,7 +177,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:description", _description);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:fileEntryTuples",
+			"liferay-ui:app-view-search-entry:relatedFileEntries",
 			_relatedFileEntries);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:highlightEnabled",
@@ -185,7 +185,7 @@ public class AppViewSearchEntryTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:locked", _locked);
 		request.setAttribute(
-			"liferay-ui:app-view-search-entry:commentTuples", _relatedComments);
+			"liferay-ui:app-view-search-entry:relatedComments", _relatedComments);
 		request.setAttribute(
 			"liferay-ui:app-view-search-entry:queryTerms", _queryTerms);
 		request.setAttribute(

@@ -16,9 +16,10 @@ package com.liferay.calendar.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for Calendar. This utility wraps
@@ -105,12 +106,6 @@ public class CalendarServiceUtil {
 	public static void importCalendar(long calendarId, java.lang.String data,
 		java.lang.String type) throws java.lang.Exception {
 		getService().importCalendar(calendarId, data, type);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	public static java.util.List<com.liferay.calendar.model.Calendar> search(
@@ -235,27 +230,8 @@ public class CalendarServiceUtil {
 		return getService().updateColor(calendarId, color, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static CalendarService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					CalendarService.class.getName());
-
-			if (invokableService instanceof CalendarService) {
-				_service = (CalendarService)invokableService;
-			}
-			else {
-				_service = new CalendarServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(CalendarServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -265,5 +241,14 @@ public class CalendarServiceUtil {
 	public void setService(CalendarService service) {
 	}
 
-	private static CalendarService _service;
+	private static ServiceTracker<CalendarService, CalendarService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CalendarServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<CalendarService, CalendarService>(bundle.getBundleContext(),
+				CalendarService.class, null);
+
+		_serviceTracker.open();
+	}
 }

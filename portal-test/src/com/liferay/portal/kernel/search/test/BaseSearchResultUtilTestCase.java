@@ -71,16 +71,18 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpClassNameLocalService();
 	}
 
-	protected void assertEmptyRelatedFileEntries(SearchResult searchResult) {
-		List<RelatedSearchResult<FileEntry>> relatedFileEntries = searchResult.getRelatedFileEntries();
-
-		Assert.assertTrue(relatedFileEntries.isEmpty());
-	}
-
 	protected void assertEmptyRelatedComments(SearchResult searchResult) {
-		List<RelatedSearchResult<Comment>> relatedComments = searchResult.getRelatedComments();
+		List<RelatedSearchResult<Comment>> relatedComments =
+			searchResult.getRelatedComments();
 
 		Assert.assertTrue(relatedComments.isEmpty());
+	}
+
+	protected void assertEmptyRelatedFileEntries(SearchResult searchResult) {
+		List<RelatedSearchResult<FileEntry>> relatedFileEntries =
+			searchResult.getRelatedFileEntries();
+
+		Assert.assertTrue(relatedFileEntries.isEmpty());
 	}
 
 	protected void assertEmptyVersions(SearchResult searchResult) {

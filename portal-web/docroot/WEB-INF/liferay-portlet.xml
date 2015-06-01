@@ -1052,6 +1052,13 @@
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
 	</portlet>
+	<portlet>
+		<portlet-name>201</portlet-name>
+		<icon>/html/icons/default.png</icon>
+		<struts-path>undeployed</struts-path>
+		<add-default-resource>true</add-default-resource>
+		<system>true</system>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

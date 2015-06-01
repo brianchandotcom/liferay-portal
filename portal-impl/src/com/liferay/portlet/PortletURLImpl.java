@@ -54,6 +54,7 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.admin.util.PortalAdministrationApplicationType;
@@ -196,6 +197,13 @@ public class PortletURLImpl
 			try {
 				_portlet = PortletLocalServiceUtil.getPortletById(
 					PortalUtil.getCompanyId(_request), _portletId);
+
+				if (_portlet.isUndeployedPortlet()) {
+					_portletId = PortletKeys.UNDEPLOYED;
+
+					_portlet = PortletLocalServiceUtil.getPortletById(
+						PortalUtil.getCompanyId(_request), _portletId);
+				}
 			}
 			catch (SystemException se) {
 				_log.error(se.getMessage());

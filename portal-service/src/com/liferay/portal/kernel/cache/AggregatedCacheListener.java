@@ -65,6 +65,10 @@ public class AggregatedCacheListener<K extends Serializable, V>
 		return Collections.unmodifiableMap(_cacheListeners);
 	}
 
+	public boolean isEmpty() {
+		return _cacheListeners.isEmpty();
+	}
+
 	@Override
 	public void notifyEntryEvicted(
 			PortalCache<K, V> portalCache, K key, V value, int timeToLive)

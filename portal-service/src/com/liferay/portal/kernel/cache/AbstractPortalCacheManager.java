@@ -64,17 +64,19 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return portalCache;
 		}
 
-		portalCache = createPortalCache(name);
-
 		PortalCacheConfiguration portalCacheConfiguration =
-			_portalCacheManagerConfiguration.getPortalCacheConfiguration(
-				portalCache.getName());
+			_portalCacheManagerConfiguration.getPortalCacheConfiguration(name);
 
 		if (portalCacheConfiguration == null) {
 			portalCacheConfiguration =
-				_portalCacheManagerConfiguration.
-					getDefaultPortalCacheConfiguration();
+				_defaultPortalCacheConfiguration.newPortalCacheConfiguration(
+					name);
+
+			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
+				name, portalCacheConfiguration);
 		}
+
+		portalCache = createPortalCache(portalCacheConfiguration);
 
 		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 
@@ -206,7 +208,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		aggregatedCacheManagerListener.clearAll();
 	}
 
-	protected abstract PortalCache<K, V> createPortalCache(String cacheName);
+	protected abstract PortalCache<K, V> createPortalCache(
+		PortalCacheConfiguration portalCacheConfiguration);
 
 	protected abstract void doClearAll();
 
@@ -234,6 +237,10 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		initPortalCacheManager();
 
 		_portalCacheManagerConfiguration = getPortalCacheManagerConfiguration();
+
+		_defaultPortalCacheConfiguration =
+			_portalCacheManagerConfiguration.
+				getDefaultPortalCacheConfiguration();
 
 		for (CallbackConfiguration callbackConfiguration :
 				_portalCacheManagerConfiguration.
@@ -328,6 +335,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private boolean _blockingCacheAllowed;
 	private boolean _bootstrapCacheLoaderEnabled;
 	private boolean _clusterAware;
+	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private boolean _mpiOnly;
 	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;

@@ -3357,10 +3357,6 @@ public class ServiceBuilder {
 			_implDirName + "/" + StringUtil.replace(_propsUtil, ".", "/") +
 				".java");
 
-		if (file.exists()) {
-			return;
-		}
-
 		Map<String, Object> context = _getContext();
 
 		int index = _propsUtil.lastIndexOf(".");

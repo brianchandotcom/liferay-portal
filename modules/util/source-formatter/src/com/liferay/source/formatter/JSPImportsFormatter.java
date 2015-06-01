@@ -31,10 +31,18 @@ public class JSPImportsFormatter extends ImportsFormatter {
 			return new ImportPackage(matcher.group(1), false, line);
 		}
 
+		matcher = _jspTaglibPattern.matcher(line);
+
+		if (matcher.find()) {
+			return new ImportPackage(matcher.group(1), false, line);
+		}
+
 		return null;
 	}
 
 	private static final Pattern _jspImportPattern = Pattern.compile(
 		"import=\"([^\\s\"]+)\"");
+	private static final Pattern _jspTaglibPattern = Pattern.compile(
+		"uri=\"http://([^\\s\"]+)\"");
 
 }

@@ -65,7 +65,19 @@ public class ImportPackage implements Comparable<ImportPackage> {
 	}
 
 	public String getPackageLevel() {
-		int pos = _importString.indexOf(StringPool.PERIOD);
+		int pos = _importString.indexOf(StringPool.SLASH);
+
+		if (pos != -1) {
+			pos = _importString.indexOf(StringPool.SLASH, pos + 1);
+
+			if (pos == -1) {
+				return _importString;
+			}
+
+			return _importString.substring(0, pos);
+		}
+
+		pos = _importString.indexOf(StringPool.PERIOD);
 
 		pos = _importString.indexOf(StringPool.PERIOD, pos + 1);
 

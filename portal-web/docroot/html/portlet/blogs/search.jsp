@@ -96,7 +96,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 			</portlet:renderURL>
 
 			<liferay-ui:app-view-search-entry
-				commentTuples="<%= searchResult.getRelatedComments() %>"
+				relatedComments="<%= searchResult.getRelatedComments() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : entry.getDescription() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"

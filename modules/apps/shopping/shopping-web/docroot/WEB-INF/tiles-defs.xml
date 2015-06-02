@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+<tiles-definitions>
+	<!-- Shopping -->
+	<definition name="portlet.shopping" extends="portlet" />
+
+	<definition name="portlet.shopping.cart" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/cart.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.checkout_first" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/checkout_first.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.checkout_second" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/checkout_second.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.checkout_third" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/checkout_third.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.edit_category" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/edit_category.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.edit_coupon" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/edit_coupon.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.edit_item" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/edit_item.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.edit_item_quantities" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/edit_item_quantities.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.edit_order" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/edit_order.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.error" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/error.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.search" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/search.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.select_category" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/select_category.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.view" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/view.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.view_coupon" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/view_coupon.jsp" />
+	</definition>
+
+	<definition name="portlet.shopping.view_item" extends="portlet.shopping">
+		<put name="portlet_content" value="/portlet/shopping/view_item.jsp" />
+	</definition>
+</tiles-definitions>

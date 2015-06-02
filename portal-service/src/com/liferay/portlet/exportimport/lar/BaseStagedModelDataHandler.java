@@ -14,17 +14,15 @@
 
 package com.liferay.portlet.exportimport.lar;
 
-import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_FAILED;
-import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_STARTED;
-import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_SUCCEEDED;
-import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_FAILED;
-import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_STARTED;
-import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_SUCCEEDED;
+import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_FAILED;
+import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_STARTED;
+import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_EXPORT_SUCCEEDED;
+import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_FAILED;
+import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_STARTED;
+import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_SUCCEEDED;
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -47,6 +45,8 @@ import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.adapter.StagedAssetTag;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
@@ -68,7 +68,7 @@ import java.util.Set;
  * @author Zsolt Berentey
  */
 public abstract class BaseStagedModelDataHandler<T extends StagedModel>
-	implements com.liferay.portal.kernel.lar.StagedModelDataHandler<T> {
+	implements StagedModelDataHandler<T> {
 
 	@Override
 	public abstract void deleteStagedModel(

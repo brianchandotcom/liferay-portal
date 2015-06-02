@@ -14,7 +14,6 @@
 
 package com.liferay.portal.search;
 
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexable;
@@ -25,6 +24,7 @@ import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.spring.aop.AnnotationChainableMethodAdvice;
+import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

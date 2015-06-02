@@ -17,9 +17,9 @@ package com.liferay.portal.model;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.staging.LayoutStagingUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portlet.exportimport.staging.LayoutStagingUtil;
 
 /**
  * @author Alexander Chow

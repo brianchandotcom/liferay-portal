@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.exportimport.lifecycle;
 
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 /**
  * @author Mate Thurzo

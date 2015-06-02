@@ -22,19 +22,19 @@
 	<bean id="messageListener.document_library_pdf_processor" class="com.liferay.portlet.documentlibrary.messaging.PDFProcessorMessageListener" />
 	<bean id="messageListener.document_library_raw_metadata_processor" class="com.liferay.portlet.documentlibrary.messaging.RawMetadataProcessorMessageListener" />
 	<bean id="messageListener.document_library_video_processor" class="com.liferay.portlet.documentlibrary.messaging.VideoProcessorMessageListener" />
-	<bean id="messageListener.export_import_lifecycle_event" class="com.liferay.portal.lar.lifecycle.ExportImportLifecycleMessageListener" />
+	<bean id="messageListener.export_import_lifecycle_event" class="com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleMessageListener" />
 	<bean id="messageListener.flags" class="com.liferay.portlet.flags.messaging.FlagsRequestMessageListener" />
 	<bean id="messageListener.hot_deploy" class="com.liferay.portal.deploy.hot.messaging.HotDeployMessageListener" />
 	<bean id="messageListener.layouts_local_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
-			<bean class="com.liferay.portal.lar.messaging.LayoutsLocalPublisherMessageListener">
+			<bean class="com.liferay.portlet.exportimport.messaging.LayoutsLocalPublisherMessageListener">
 				<property name="destinationName" value="liferay/message_bus/message_status" />
 			</bean>
 		</property>
 	</bean>
 	<bean id="messageListener.layouts_remote_publisher" class="com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListenerWrapper">
 		<property name="messageListener">
-			<bean class="com.liferay.portal.lar.messaging.LayoutsRemotePublisherMessageListener">
+			<bean class="com.liferay.portlet.exportimport.messaging.LayoutsRemotePublisherMessageListener">
 				<property name="destinationName" value="liferay/message_bus/message_status" />
 			</bean>
 		</property>

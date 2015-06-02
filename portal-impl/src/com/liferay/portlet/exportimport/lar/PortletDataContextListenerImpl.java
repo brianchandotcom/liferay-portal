@@ -14,15 +14,13 @@
 
 package com.liferay.portlet.exportimport.lar;
 
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataContextListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 /**
  * @author     Raymond Augé
  * @deprecated As of 7.0.0, see {@link
- *             com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent}
+ *             com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent}
  */
 @Deprecated
 public class PortletDataContextListenerImpl

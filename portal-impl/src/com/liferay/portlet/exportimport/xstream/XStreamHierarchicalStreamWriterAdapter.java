@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.exportimport.xstream;
 
-import com.liferay.portal.kernel.lar.xstream.XStreamHierarchicalStreamWriter;
-
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 
 /**

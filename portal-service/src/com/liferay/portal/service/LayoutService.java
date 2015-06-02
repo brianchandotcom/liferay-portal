@@ -1249,7 +1249,7 @@ public interface LayoutService extends BaseService {
 	ExportImportConfiguration, File)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
 
@@ -1259,7 +1259,7 @@ public interface LayoutService extends BaseService {
 	ExportImportConfiguration, InputStream)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream) throws PortalException;
 
@@ -1268,7 +1268,7 @@ public interface LayoutService extends BaseService {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file) throws PortalException;
@@ -1278,7 +1278,7 @@ public interface LayoutService extends BaseService {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream) throws PortalException;
@@ -1289,7 +1289,7 @@ public interface LayoutService extends BaseService {
 	ExportImportConfiguration, File)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
 
@@ -1299,7 +1299,7 @@ public interface LayoutService extends BaseService {
 	ExportImportConfiguration, InputStream)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream) throws PortalException;
 
@@ -1307,7 +1307,7 @@ public interface LayoutService extends BaseService {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file) throws PortalException;
@@ -1316,7 +1316,7 @@ public interface LayoutService extends BaseService {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream) throws PortalException;

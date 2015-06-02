@@ -14,7 +14,7 @@
 
 package com.liferay.portal.model;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.Date;
 

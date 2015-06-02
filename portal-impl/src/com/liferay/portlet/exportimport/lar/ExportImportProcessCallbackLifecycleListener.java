@@ -16,7 +16,7 @@ package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.lar.lifecycle.BaseProcessExportImportLifecycleListener;
+import com.liferay.portlet.exportimport.lifecycle.BaseProcessExportImportLifecycleListener;
 
 import java.io.Serializable;
 

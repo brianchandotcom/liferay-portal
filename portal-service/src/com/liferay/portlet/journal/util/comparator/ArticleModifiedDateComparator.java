@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.journal.util.comparator;
 
-import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**

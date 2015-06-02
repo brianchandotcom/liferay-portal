@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.dao.orm;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 /**
  * @author Brian Wing Shun Chan

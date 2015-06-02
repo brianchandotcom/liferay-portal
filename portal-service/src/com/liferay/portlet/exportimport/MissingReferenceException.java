@@ -15,7 +15,7 @@
 package com.liferay.portlet.exportimport;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.MissingReferences;
+import com.liferay.portlet.exportimport.lar.MissingReferences;
 
 /**
  * @author Julio Camarero

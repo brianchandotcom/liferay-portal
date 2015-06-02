@@ -17,9 +17,9 @@ package com.liferay.portal.lar;
 /**
  * @author     Brian Wing Shun Chan
  * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.lar.BasePortletDataHandler}
+ *             com.liferay.portlet.exportimport.lar.BasePortletDataHandler}
  */
 @Deprecated
 public abstract class BasePortletDataHandler
-	extends com.liferay.portal.kernel.lar.BasePortletDataHandler {
+	extends com.liferay.portlet.exportimport.lar.BasePortletDataHandler {
 }

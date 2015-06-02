@@ -14,9 +14,9 @@
 
 package com.liferay.portlet.exportimport.exportimportconfiguration;
 
-import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
-import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
+import com.liferay.portlet.exportimport.lar.UserIdStrategy;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

@@ -17,7 +17,6 @@ package com.liferay.exportimport;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -34,6 +33,7 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.Date;

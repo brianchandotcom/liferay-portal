@@ -19,6 +19,7 @@ import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
@@ -39,8 +40,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PortletKeys;
 
 import java.io.IOException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
@@ -104,6 +109,8 @@ public class StagingBarPortlet extends MVCPortlet {
 				PortalUtil.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE);
 		}
+
+		addLayoutBranchSessionMessages(actionRequest);
 	}
 
 	public void deleteLayoutRevision(ActionRequest actionRequest)
@@ -129,6 +136,8 @@ public class StagingBarPortlet extends MVCPortlet {
 				layoutRevision.getPlid(),
 				layoutRevision.getParentLayoutRevisionId());
 		}
+
+		addLayoutRevisionSessionMessages(actionRequest);
 	}
 
 	public void deleteLayoutSetBranch(ActionRequest actionRequest)
@@ -150,6 +159,8 @@ public class StagingBarPortlet extends MVCPortlet {
 		_layoutSetBranchService.deleteLayoutSetBranch(layoutSetBranchId);
 
 		SessionMessages.add(actionRequest, "sitePageVariationDeleted");
+
+		addLayoutBranchSessionMessages(actionRequest);
 	}
 
 	public void mergeLayoutSetBranch(ActionRequest actionRequest)
@@ -168,6 +179,8 @@ public class StagingBarPortlet extends MVCPortlet {
 			layoutSetBranchId, mergeLayoutSetBranchId, serviceContext);
 
 		SessionMessages.add(actionRequest, "sitePageVariationMerged");
+
+		addLayoutBranchSessionMessages(actionRequest);
 	}
 
 	public void selectLayoutBranch(ActionRequest actionRequest) {
@@ -185,6 +198,8 @@ public class StagingBarPortlet extends MVCPortlet {
 
 		StagingUtil.setRecentLayoutBranchId(
 			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
+
+		addLayoutBranchSessionMessages(actionRequest);
 	}
 
 	public void selectLayoutSetBranch(ActionRequest actionRequest)
@@ -211,6 +226,8 @@ public class StagingBarPortlet extends MVCPortlet {
 		StagingUtil.setRecentLayoutSetBranchId(
 			request, layoutSet.getLayoutSetId(),
 			layoutSetBranch.getLayoutSetBranchId());
+
+		addLayoutBranchSessionMessages(actionRequest);
 	}
 
 	public void updateLayoutBranch(ActionRequest actionRequest)
@@ -239,6 +256,8 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			SessionMessages.add(actionRequest, "pageVariationUpdated");
 		}
+
+		addLayoutBranchSessionMessages(actionRequest);
 	}
 
 	public void updateLayoutRevision(ActionRequest actionRequest)
@@ -310,6 +329,8 @@ public class StagingBarPortlet extends MVCPortlet {
 				newLayoutRevision.getPlid(),
 				newLayoutRevision.getLayoutRevisionId());
 		}
+
+		addLayoutRevisionSessionMessages(actionRequest);
 	}
 
 	public void updateLayoutSetBranch(ActionRequest actionRequest)
@@ -343,6 +364,38 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			SessionMessages.add(actionRequest, "sitePageVariationUpdated");
 		}
+
+		addLayoutBranchSessionMessages(actionRequest);
+	}
+
+	protected void addLayoutBranchSessionMessages(ActionRequest actionRequest) {
+		if (SessionErrors.isEmpty(actionRequest)) {
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+				PortletKeys.STAGING_BAR);
+
+			Map<String, String> data = new HashMap<>();
+
+			data.put("preventNotification", Boolean.TRUE.toString());
+
+			SessionMessages.add(
+				actionRequest,
+				PortalUtil.getPortletId(actionRequest) +
+					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
+				data);
+		}
+	}
+
+	protected void addLayoutRevisionSessionMessages(
+		ActionRequest actionRequest) {
+
+		MultiSessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)

@@ -1795,7 +1795,13 @@
 		<var name="roleName2" value="Owner" />
 		<var name="roleName3" value="Site Member" />
 
-		<execute macro="PermissionsInline#gotoBlogsConfiguration" />
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG" />
+
+		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG" />
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
@@ -1818,7 +1824,9 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="PermissionsInline#gotoBlogsConfiguration" />
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG" />
+
+		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG" />
 
 		<execute macro="PermissionsInline#viewPermissionsRemoved">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />

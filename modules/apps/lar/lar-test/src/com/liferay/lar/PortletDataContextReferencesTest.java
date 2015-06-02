@@ -15,7 +15,6 @@
 package com.liferay.lar;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
@@ -39,6 +38,7 @@ import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.util.test.AssetTestUtil;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.HashMap;
 import java.util.List;
@@ -98,7 +98,7 @@ public class PortletDataContextReferencesTest {
 	@Test
 	public void testCleanUpMissingReferences() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			JournalContentPortletKeys.JOURNAL_CONTENT);
+			PortletKeys.TEST);
 
 		AssetVocabulary assetVocabulary = AssetTestUtil.addVocabulary(
 			_group.getGroupId());
@@ -214,7 +214,7 @@ public class PortletDataContextReferencesTest {
 	@Test
 	public void testMultipleMissingReferences() throws Exception {
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			JournalContentPortletKeys.JOURNAL_CONTENT);
+			PortletKeys.TEST);
 
 		_portletDataContext.addReferenceElement(
 			portlet, _portletDataContext.getExportDataRootElement(),

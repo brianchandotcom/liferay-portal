@@ -15,7 +15,6 @@
 package com.liferay.lar;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.journal.content.web.constants.JournalContentPortletKeys;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.LayoutParentLayoutIdException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -58,6 +57,7 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -259,8 +259,7 @@ public class LayoutSetPrototypePropagationTest
 		throws Exception {
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
-			TestPropsValues.getCompanyId(),
-			JournalContentPortletKeys.JOURNAL_CONTENT);
+			TestPropsValues.getCompanyId(), PortletKeys.TEST);
 
 		boolean preferencesUniquePerLayout =
 			portlet.getPreferencesUniquePerLayout();
@@ -277,15 +276,13 @@ public class LayoutSetPrototypePropagationTest
 
 			String testPortletId1 = LayoutTestUtil.addPortletToLayout(
 				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-				JournalContentPortletKeys.JOURNAL_CONTENT, "column-1",
-				preferenceMap);
+				PortletKeys.TEST, "column-1", preferenceMap);
 
 			preferenceMap.put("bulletStyle", new String[] {"Arrows"});
 
 			String testPortletId2 = LayoutTestUtil.addPortletToLayout(
 				TestPropsValues.getUserId(), _layoutSetPrototypeLayout,
-				JournalContentPortletKeys.JOURNAL_CONTENT, "column-2",
-				preferenceMap);
+				PortletKeys.TEST, "column-2", preferenceMap);
 
 			propagateChanges(group);
 
@@ -295,8 +292,7 @@ public class LayoutSetPrototypePropagationTest
 
 			PortletPreferences testPortletIdPortletPreferences =
 				PortletPreferencesFactoryUtil.getPortletSetup(
-					group.getGroupId(), layout,
-					JournalContentPortletKeys.JOURNAL_CONTENT, null);
+					group.getGroupId(), layout, PortletKeys.TEST, null);
 
 			Assert.assertEquals(
 				"Arrows",

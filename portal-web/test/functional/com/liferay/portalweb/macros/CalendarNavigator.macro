@@ -9,7 +9,7 @@
 		<execute function="SelectFrame" locator1="CalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
 	</command>
 
-	<command name="gotoAdd">
+	<command name="gotoAddEvent">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -37,7 +37,7 @@
 		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
 	</command>
 
-	<command name="gotoAddOnSpecifcDayOfWeekViaWeekView">
+	<command name="gotoAddEventOnSpecifcDayOfWeekViaWeekView">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -60,7 +60,7 @@
 		<execute macro="CalendarEvent#_selectEventIframe" />
 	</command>
 
-	<command name="gotoAddToday">
+	<command name="gotoAddEventToday">
 		<var method="StringUtil#upperCase('${viewType}')" name="viewTypeUppercase" />
 
 		<execute function="Click" locator1="PGCalendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />

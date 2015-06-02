@@ -73,7 +73,7 @@
 	</command>
 
 	<command name="addEventToday">
-		<execute macro="CalendarNavigator#gotoAddToday">
+		<execute macro="CalendarNavigator#gotoAddEventToday">
 			<var name="viewType" value="${viewType}" />
 		</execute>
 

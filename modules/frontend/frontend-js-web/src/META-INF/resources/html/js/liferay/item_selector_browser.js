@@ -6,6 +6,20 @@ AUI.add(
 
 		var CSS_DROP_ACTIVE = 'drop-active';
 
+		var STR_DRAG_LEAVE = 'dragleave';
+
+		var STR_DRAG_OVER = 'dragover';
+
+		var STR_DROP = 'drop';
+
+		var STR_ITEM_SELECTED = '_onItemSelected';
+
+		var STR_LINKS = 'links';
+
+		var STR_SELECTED_ITEM = 'selectedItem';
+
+		var STR_VISIBLE_CHANGE = 'visibleChange';
+
 		var UPLOAD_ITEM_LINK_TPL = '<a data-value="{value}" data-returnType="Base64" href="{preview}" title="{title}"></a>';
 
 		var ItemSelectorBrowser = A.Component.create(
@@ -59,7 +73,7 @@ AUI.add(
 						var instance = this;
 
 						if (!event.newVal) {
-							instance.fire('selectedItem', {});
+							instance.fire(STR_SELECTED_ITEM);
 						}
 					},
 
@@ -73,14 +87,14 @@ AUI.add(
 						var rootNode = instance.rootNode;
 
 						instance._eventHandles = [
-							itemViewer.get('links').on('click', A.bind('_itemPicked', instance, itemViewer)),
-							itemViewer.after('currentIndexChange', A.bind('_itemPicked', instance, itemViewer)),
-							itemViewer.after('visibleChange', instance._afterVisibleChange, instance),
-							uploadItemViewer.after('linksChange', A.bind('_itemPicked', instance, uploadItemViewer)),
-							uploadItemViewer.after('visibleChange', instance._afterVisibleChange, instance),
-							rootNode.on('dragover', instance._ddEventHandler, instance),
-							rootNode.on('dragleave', instance._ddEventHandler, instance),
-							rootNode.on('drop', instance._ddEventHandler, instance)
+							itemViewer.get(STR_LINKS).on('click', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
+							itemViewer.after('currentIndexChange', A.bind(STR_ITEM_SELECTED, instance, itemViewer)),
+							itemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
+							uploadItemViewer.after('linksChange', A.bind(STR_ITEM_SELECTED, instance, uploadItemViewer)),
+							uploadItemViewer.after(STR_VISIBLE_CHANGE, instance._afterVisibleChange, instance),
+							rootNode.on(STR_DRAG_OVER, instance._ddEventHandler, instance),
+							rootNode.on(STR_DRAG_LEAVE, instance._ddEventHandler, instance),
+							rootNode.on(STR_DROP, instance._ddEventHandler, instance)
 						];
 
 						var inputFileNode = instance.one('input[type="file"]');
@@ -88,7 +102,7 @@ AUI.add(
 						if (inputFileNode) {
 							instance._eventHandles.push(
 								inputFileNode.on('change', A.bind(instance._onInputFileChanged, instance))
-							)
+							);
 						}
 					},
 
@@ -105,14 +119,14 @@ AUI.add(
 
 								var type = event.type;
 
-								var eventDrop = type === 'drop';
+								var eventDrop = type === STR_DROP;
 
 								var rootNode = instance.rootNode;
 
-								if (type === 'dragover') {
+								if (type === STR_DRAG_OVER) {
 									rootNode.addClass(CSS_DROP_ACTIVE);
 								}
-								else if (type === 'dragleave' || eventDrop) {
+								else if (type === STR_DRAG_LEAVE || eventDrop) {
 									rootNode.removeClass(CSS_DROP_ACTIVE);
 
 									if (eventDrop) {
@@ -123,24 +137,26 @@ AUI.add(
 						}
 					},
 
-					_itemPicked: function(itemViewer) {
-						var instance = this;
-
-						var link = itemViewer.get('links').item(itemViewer.get('currentIndex'));
-
-						instance.fire(
-							'selectedItem',
-							{
-								returnType: link.getData('returnType'),
-								value: link.getData('value')
-							}
-						);
-					},
-
 					_onInputFileChanged: function(event) {
 						var instance = this;
 
 						instance._previewFile(event.currentTarget.getDOMNode().files[0]);
+					},
+
+					_onItemSelected: function(itemViewer) {
+						var instance = this;
+
+						var link = itemViewer.get(STR_LINKS).item(itemViewer.get('currentIndex'));
+
+						instance.fire(
+							STR_SELECTED_ITEM,
+							{
+								data: {
+									returnType: link.getData('returnType'),
+									value: link.getData('value')
+								}
+							}
+						);
 					},
 
 					_previewFile: function(file) {
@@ -183,7 +199,7 @@ AUI.add(
 							)
 						);
 
-						instance._uploadItemViewer.set('links', new A.NodeList(linkNode));
+						instance._uploadItemViewer.set(STR_LINKS, new A.NodeList(linkNode));
 						instance._uploadItemViewer.show();
 					}
 				}

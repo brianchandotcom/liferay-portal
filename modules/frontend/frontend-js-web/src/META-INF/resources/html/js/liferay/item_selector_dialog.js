@@ -5,11 +5,18 @@ AUI.add(
 
 		var Util = Liferay.Util;
 
+		var STR_EVENT_NAME = 'eventName';
+
+		var STR_SELECTED_ITEM = 'selectedItem';
+
 		var LiferayItemSelectorDialog = A.Component.create(
 			{
 				ATTRS: {
 					eventName: {
 						validator: Lang.isString
+					},
+
+					selectedItem: {
 					},
 
 					strings: {
@@ -34,12 +41,18 @@ AUI.add(
 				NS: 'item-selector-dialog',
 
 				prototype: {
-					initializer: function() {
+					close: function() {
+						var instance = this;
+
+						Util.getWindow(instance.get(STR_EVENT_NAME)).hide();
+					},
+
+					open: function() {
 						var instance = this;
 
 						var strings = instance.get('strings');
 
-						var eventName = instance.get('eventName');
+						var eventName = instance.get(STR_EVENT_NAME);
 
 						Util.selectEntity(
 							{
@@ -55,12 +68,8 @@ AUI.add(
 											label: strings.add,
 											on: {
 												click: function() {
-													instance.fire(
-														'itemSelected',
-														instance._selectedItem
-													);
-
-													instance._closeDialog(eventName);
+													instance.set(STR_SELECTED_ITEM, instance._selectedItem);
+													instance.close();
 												}
 											}
 										},
@@ -69,7 +78,8 @@ AUI.add(
 											label: strings.cancel,
 											on: {
 												click: function() {
-													instance._closeDialog(eventName);
+													instance.set(STR_SELECTED_ITEM, null);
+													instance.close();
 												}
 											}
 										}
@@ -80,32 +90,22 @@ AUI.add(
 								title: Liferay.Language.get('select-image'),
 								uri: instance.get('url')
 							},
-							A.bind(instance._onDocumentPicked, instance)
+							A.bind(instance._onItemSelected, instance)
 						);
 					},
 
-					_closeDialog: function(dialogId) {
+					_onItemSelected: function(event) {
 						var instance = this;
 
-						var dialog = Util.getWindow(dialogId);
+						var selectedItem = event.data;
 
-						dialog.hide();
-
-						instance._selectedItem = null;
-					},
-
-					_onDocumentPicked: function(event) {
-						var instance = this;
-
-						instance._selectedItem = event;
-
-						var eventName = instance.get('eventName');
-
-						var dialog = Util.getWindow(eventName);
+						var dialog = Util.getWindow(instance.get(STR_EVENT_NAME));
 
 						var addButton = dialog.getToolbar('footer').get('boundingBox').one('#addButton');
 
-						Util.toggleDisabled(addButton, !event.value);
+						Util.toggleDisabled(addButton, !selectedItem);
+
+						instance._selectedItem = selectedItem;
 					}
 				}
 			}
@@ -114,5 +114,7 @@ AUI.add(
 		A.LiferayItemSelectorDialog = LiferayItemSelectorDialog;
 	},
 	'',
-	{}
+	{
+		requires: ['aui-component']
+	}
 );

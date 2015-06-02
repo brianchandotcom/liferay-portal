@@ -1,3 +1,4 @@
+<%@ page import="java.net.URL" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -100,18 +101,35 @@ PortletURL itemSelectorURL = liferayPortletResponse.createRenderURL(PortletKeys.
 itemSelectorURL.setParameter("criteria", "com.liferay.document.library.item.selector.web.DLItemSelectorCriterion");
 itemSelectorURL.setParameter("itemSelectedEventName", liferayPortletResponse.getNamespace() + "selectImage");
 
-StringBundler sb = new StringBundler(8);
+JSONObject itemSelectorJSONParamJSONObject = JSONFactoryUtil.createJSONObject();
 
-sb.append("{");
-sb.append("\"desiredReturnTypes\":[\"java.net.URL\",\"com.liferay.portal.kernel.repository.model.FileEntry\"],");
-sb.append("\"folderId\":");
-sb.append(DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-sb.append(",\"mimeTypes\":[\"image\\/bmp\",\"image\\/gif\",\"image\\/jpeg\",\"image\\/pjpeg\",\"image\\/png\",\"image\\/tiff\",\"image\\/x-citrix-jpeg\",\"image\\/x-citrix-png\",\"image\\/x-ms-bmp\",\"image\\/x-png\",\"image\\/x-tiff\"],");
-sb.append("\"repositoryId\":");
-sb.append(scopeGroupId);
-sb.append("}");
+JSONArray desiredReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-itemSelectorURL.setParameter("0_json", sb.toString());
+desiredReturnTypesJSONArray.put(URL.class.getName());
+desiredReturnTypesJSONArray.put(FileEntry.class.getName());
+
+itemSelectorJSONParamJSONObject.put("desiredReturnTypes", desiredReturnTypesJSONArray);
+
+itemSelectorJSONParamJSONObject.put("folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+
+JSONArray mimeTypesJSONArray = JSONFactoryUtil.createJSONArray();
+
+mimeTypesJSONArray.put("image/bmp");
+mimeTypesJSONArray.put("image/gif");
+mimeTypesJSONArray.put("image/jpeg");
+mimeTypesJSONArray.put("image/pjpeg");
+mimeTypesJSONArray.put("image/tiff");
+mimeTypesJSONArray.put("image/x-citrix-jpeg");
+mimeTypesJSONArray.put("image/x-citrix-png");
+mimeTypesJSONArray.put("image/x-ms-bmp");
+mimeTypesJSONArray.put("image/x-png");
+mimeTypesJSONArray.put("image/x-tiff");
+
+itemSelectorJSONParamJSONObject.put("mimeTypes", mimeTypesJSONArray);
+
+itemSelectorJSONParamJSONObject.put("repositoryId", scopeGroupId);
+
+itemSelectorURL.setParameter("0_json", itemSelectorJSONParamJSONObject.toString());
 
 itemSelectorURL.setPortletMode(PortletMode.VIEW);
 itemSelectorURL.setWindowState(LiferayWindowState.POP_UP);

@@ -16,7 +16,6 @@ package com.liferay.portlet.messageboards.asset;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
@@ -55,8 +54,8 @@ public class MBDiscussionAssetRenderer extends MBMessageAssetRenderer {
 	}
 
 	@Override
-	public String getStatusLabel() {
-		return WorkflowConstants.getStatusLabel(_message.getStatus());
+	public int getStatus() {
+		return _message.getStatus();
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -138,8 +137,8 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
-	public String getStatusLabel() {
-		return WorkflowConstants.getStatusLabel(_page.getStatus());
+	public int getStatus() {
+		return _page.getStatus();
 	}
 
 	@Override

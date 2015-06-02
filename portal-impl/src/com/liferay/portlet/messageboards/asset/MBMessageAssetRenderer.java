@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -105,8 +104,8 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
-	public String getStatusLabel() {
-		return WorkflowConstants.getStatusLabel(_message.getStatus());
+	public int getStatus() {
+		return _message.getStatus();
 	}
 
 	@Override

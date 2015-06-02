@@ -89,7 +89,9 @@
 				if (hash) {
 					var src = '';
 
-					if (!(/^https?\:\/\//.test(hash))) {
+					var baseSrc = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
+
+					if (!(/^https?\:\/\//.test(hash)) || !A.Lang.String.contains(hash, baseSrc)) {
 						src = '<%= HtmlUtil.escapeJS(iFrameDisplayContext.getIframeBaseSrc()) %>';
 					}
 

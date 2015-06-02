@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.workflow.WorkflowInstanceManagerUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.workflow.instance.web.constants.WorkflowInstancePortletKeys;
 
@@ -84,9 +85,14 @@ public class DeleteWorkflowInstanceActionCommand extends BaseActionCommand {
 			WorkflowInstance workflowInstance = getWorkflowInstance(
 				portletRequest);
 
-			updateEntryStatus(workflowInstance.getWorkflowContext());
+			Map<String, Serializable> workflowContext =
+				workflowInstance.getWorkflowContext();
 
-			deleteWorkflowInstance(workflowInstance.getWorkflowContext());
+			validateUser(workflowContext);
+
+			updateEntryStatus(workflowContext);
+
+			deleteWorkflowInstance(workflowContext);
 		}
 		catch (Exception e) {
 			if (e instanceof PrincipalException ||
@@ -137,6 +143,20 @@ public class DeleteWorkflowInstanceActionCommand extends BaseActionCommand {
 
 		workflowHandler.updateStatus(
 			WorkflowConstants.STATUS_DRAFT, workflowContext);
+	}
+
+	protected void validateUser(Map<String, Serializable> workflowContext)
+		throws Exception {
+
+		long companyId = GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_COMPANY_ID));
+		long userId = GetterUtil.getLong(
+			workflowContext.get(WorkflowConstants.CONTEXT_USER_ID));
+
+		long validUserId = PortalUtil.getValidUserId(companyId, userId);
+
+		workflowContext.put(
+			WorkflowConstants.CONTEXT_USER_ID, String.valueOf(validUserId));
 	}
 
 }

@@ -47,6 +47,116 @@ import java.util.Map;
 
 public class RolesAdminPortlet extends MVCPortlet {
 
+	@Override
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals("role_groups")) {
+				updateRoleGroups(actionRequest);
+			}
+			else if (cmd.equals("role_users")) {
+				updateRoleUsers(actionRequest);
+			}
+
+			if (Validator.isNotNull(cmd)) {
+				String redirect = ParamUtil.getString(
+					actionRequest, "assignmentsRedirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof MembershipPolicyException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof NoSuchRoleException ||
+					 e instanceof PrincipalException ||
+					 e instanceof RoleAssignmentException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.roles_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		try {
+			ActionUtil.getRole(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchRoleException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return actionMapping.findForward("portlet.roles_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		return actionMapping.findForward(
+			getForward(
+				renderRequest, "portlet.roles_admin.edit_role_assignments"));
+	}
+
+	protected void updateRoleGroups(ActionRequest actionRequest)
+		throws Exception {
+
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		long[] addGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addGroupIds"), 0L);
+		long[] removeGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeGroupIds"), 0L);
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		if (role.getName().equals(RoleConstants.OWNER)) {
+			throw new RoleAssignmentException(role.getName());
+		}
+
+		GroupServiceUtil.addRoleGroups(roleId, addGroupIds);
+		GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
+	}
+
+	protected void updateRoleUsers(ActionRequest actionRequest)
+		throws Exception {
+
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		if (role.getName().equals(RoleConstants.OWNER)) {
+			throw new RoleAssignmentException(role.getName());
+		}
+
+		UserServiceUtil.addRoleUsers(roleId, addUserIds);
+		UserServiceUtil.unsetRoleUsers(roleId, removeUserIds);
+	}
+
 	public void deleteRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {

@@ -12,16 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.search;
-
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portlet.shopping.model.ShoppingOrder;
+package com.liferay.shopping.web.search;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
+
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.shopping.model.ShoppingOrder;
 
 /**
  * @author Brian Wing Shun Chan

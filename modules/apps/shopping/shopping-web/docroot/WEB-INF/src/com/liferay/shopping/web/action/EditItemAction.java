@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
+package com.liferay.shopping.web.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
@@ -26,26 +26,26 @@ import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.DuplicateItemFieldNameException;
-import com.liferay.portlet.shopping.DuplicateItemSKUException;
-import com.liferay.portlet.shopping.ItemLargeImageNameException;
-import com.liferay.portlet.shopping.ItemLargeImageSizeException;
-import com.liferay.portlet.shopping.ItemMediumImageNameException;
-import com.liferay.portlet.shopping.ItemMediumImageSizeException;
-import com.liferay.portlet.shopping.ItemNameException;
-import com.liferay.portlet.shopping.ItemSKUException;
-import com.liferay.portlet.shopping.ItemSmallImageNameException;
-import com.liferay.portlet.shopping.ItemSmallImageSizeException;
-import com.liferay.portlet.shopping.NoSuchCategoryException;
-import com.liferay.portlet.shopping.NoSuchItemException;
-import com.liferay.portlet.shopping.model.ShoppingItem;
-import com.liferay.portlet.shopping.model.ShoppingItemField;
-import com.liferay.portlet.shopping.model.ShoppingItemPrice;
-import com.liferay.portlet.shopping.model.ShoppingItemPriceConstants;
-import com.liferay.portlet.shopping.model.impl.ShoppingItemImpl;
-import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
-import com.liferay.portlet.shopping.service.persistence.ShoppingItemFieldUtil;
-import com.liferay.portlet.shopping.service.persistence.ShoppingItemPriceUtil;
+import com.liferay.shopping.exception.DuplicateItemFieldNameException;
+import com.liferay.shopping.exception.DuplicateItemSKUException;
+import com.liferay.shopping.exception.ItemLargeImageNameException;
+import com.liferay.shopping.exception.ItemLargeImageSizeException;
+import com.liferay.shopping.exception.ItemMediumImageNameException;
+import com.liferay.shopping.exception.ItemMediumImageSizeException;
+import com.liferay.shopping.exception.ItemNameException;
+import com.liferay.shopping.exception.ItemSKUException;
+import com.liferay.shopping.exception.ItemSmallImageNameException;
+import com.liferay.shopping.exception.ItemSmallImageSizeException;
+import com.liferay.shopping.exception.NoSuchCategoryException;
+import com.liferay.shopping.exception.NoSuchItemException;
+import com.liferay.shopping.model.ShoppingItem;
+import com.liferay.shopping.model.ShoppingItemField;
+import com.liferay.shopping.model.ShoppingItemPrice;
+import com.liferay.shopping.model.ShoppingItemPriceConstants;
+import com.liferay.shopping.model.impl.ShoppingItemImpl;
+import com.liferay.shopping.service.ShoppingItemServiceUtil;
+import com.liferay.shopping.service.persistence.ShoppingItemFieldUtil;
+import com.liferay.shopping.service.persistence.ShoppingItemPriceUtil;
 
 import java.io.File;
 

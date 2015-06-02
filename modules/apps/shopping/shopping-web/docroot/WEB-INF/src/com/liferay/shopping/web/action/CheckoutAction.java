@@ -12,7 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
+package com.liferay.shopping.web.action;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -24,41 +31,34 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.ActionResponseImpl;
-import com.liferay.portlet.shopping.BillingCityException;
-import com.liferay.portlet.shopping.BillingCountryException;
-import com.liferay.portlet.shopping.BillingEmailAddressException;
-import com.liferay.portlet.shopping.BillingFirstNameException;
-import com.liferay.portlet.shopping.BillingLastNameException;
-import com.liferay.portlet.shopping.BillingPhoneException;
-import com.liferay.portlet.shopping.BillingStateException;
-import com.liferay.portlet.shopping.BillingStreetException;
-import com.liferay.portlet.shopping.BillingZipException;
-import com.liferay.portlet.shopping.CCExpirationException;
-import com.liferay.portlet.shopping.CCNameException;
-import com.liferay.portlet.shopping.CCNumberException;
-import com.liferay.portlet.shopping.CCTypeException;
-import com.liferay.portlet.shopping.NoSuchOrderException;
-import com.liferay.portlet.shopping.ShippingCityException;
-import com.liferay.portlet.shopping.ShippingCountryException;
-import com.liferay.portlet.shopping.ShippingEmailAddressException;
-import com.liferay.portlet.shopping.ShippingFirstNameException;
-import com.liferay.portlet.shopping.ShippingLastNameException;
-import com.liferay.portlet.shopping.ShippingPhoneException;
-import com.liferay.portlet.shopping.ShippingStateException;
-import com.liferay.portlet.shopping.ShippingStreetException;
-import com.liferay.portlet.shopping.ShippingZipException;
-import com.liferay.portlet.shopping.ShoppingGroupServiceSettings;
-import com.liferay.portlet.shopping.model.ShoppingCart;
-import com.liferay.portlet.shopping.model.ShoppingOrder;
-import com.liferay.portlet.shopping.service.ShoppingOrderLocalServiceUtil;
-import com.liferay.portlet.shopping.util.ShoppingUtil;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import com.liferay.shopping.exception.BillingCityException;
+import com.liferay.shopping.exception.BillingCountryException;
+import com.liferay.shopping.exception.BillingEmailAddressException;
+import com.liferay.shopping.exception.BillingFirstNameException;
+import com.liferay.shopping.exception.BillingLastNameException;
+import com.liferay.shopping.exception.BillingPhoneException;
+import com.liferay.shopping.exception.BillingStateException;
+import com.liferay.shopping.exception.BillingStreetException;
+import com.liferay.shopping.exception.BillingZipException;
+import com.liferay.shopping.exception.CCExpirationException;
+import com.liferay.shopping.exception.CCNameException;
+import com.liferay.shopping.exception.CCNumberException;
+import com.liferay.shopping.exception.CCTypeException;
+import com.liferay.shopping.exception.NoSuchOrderException;
+import com.liferay.shopping.exception.ShippingCityException;
+import com.liferay.shopping.exception.ShippingCountryException;
+import com.liferay.shopping.exception.ShippingEmailAddressException;
+import com.liferay.shopping.exception.ShippingFirstNameException;
+import com.liferay.shopping.exception.ShippingLastNameException;
+import com.liferay.shopping.exception.ShippingPhoneException;
+import com.liferay.shopping.exception.ShippingStateException;
+import com.liferay.shopping.exception.ShippingStreetException;
+import com.liferay.shopping.exception.ShippingZipException;
+import com.liferay.shopping.model.ShoppingCart;
+import com.liferay.shopping.model.ShoppingOrder;
+import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
+import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
+import com.liferay.shopping.util.ShoppingUtil;
 
 /**
  * @author Brian Wing Shun Chan

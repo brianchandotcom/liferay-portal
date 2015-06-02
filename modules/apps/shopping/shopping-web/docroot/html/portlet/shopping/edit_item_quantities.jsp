@@ -79,7 +79,7 @@ for (int i = values.size() - 1; i >= 0; i--) {
 
 				<liferay-ui:search-container-column-jsp
 					name="quantity"
-					path="/html/portlet/shopping/edit_item_quantities_column.jsp"
+					path="edit_item_quantities_column.jsp"
 				/>
 
 			</liferay-ui:search-container-row>

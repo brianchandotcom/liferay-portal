@@ -46,17 +46,19 @@ PortletURL portletURL = (PortletURL)request.getAttribute("view.jsp-portletURL");
 	else if (portletName.equals(PortletKeys.SITE_MEMBERS_DIRECTORY)) {
 		userGroupParams.put("userGroupsGroups", Long.valueOf(themeDisplay.getScopeGroupId()));
 	}
+
+	boolean searchWithIndex = portletName.equals(PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX;
 	%>
 
 	<liferay-ui:search-container-results>
-		<c:choose>
-			<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
-				<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_index.jspf" %>
-			</c:when>
-			<c:otherwise>
-				<%@ include file="/html/portlet/user_groups_admin/user_group_search_results_database.jspf" %>
-			</c:otherwise>
-		</c:choose>
+		<liferay-ui:user-group-search-results
+			results="<%= results %>"
+			searchContainer="<%= searchContainer %>"
+			searchTerms="<%= searchTerms %>"
+			searchWithIndex="<%= searchWithIndex %>"
+			total="<%= total %>"
+			userGroupParams="<%= userGroupParams %>"
+		/>
 	</liferay-ui:search-container-results>
 
 	<liferay-ui:search-container-row

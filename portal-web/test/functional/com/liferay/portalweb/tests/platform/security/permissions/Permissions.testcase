@@ -24,9 +24,11 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewPG">
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
+
+		<execute macro="Blogs#viewControlsPG" />
 
 		<execute macro="User#logoutPG" />
 

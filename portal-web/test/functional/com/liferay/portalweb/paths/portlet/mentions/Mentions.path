@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Mentions</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Mentions</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>MENTIONS_CHECKBOX</td>
+	<td>//input[contains(@id,'mentionsEnabledCheckbox')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_HEADER</td>
+	<td>//h3[contains(.,'Mentions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_LABEL</td>
+	<td>//label[contains(.,'Enable Mentions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_USER_DISPLAY_OPTION</td>
+	<td>//li[@data-text='${key_mentionsUserScreenName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_USER_PROFILE_IMAGE</td>
+	<td>//li[@data-text='${key_mentionsUserScreenName}']//span[@class='user-profile-image']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_USER_FULL_NAME</td>
+	<td>//li[@data-text='${key_mentionsUserScreenName}']//span[@class='user-name' and contains (.,'${key_userFullName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_USER_SCREEN_NAME</td>
+	<td>//li[@data-text='${key_mentionsUserScreenName}']//span[@class='user-details' and contains(.,'${key_mentionsUserScreenName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MENTIONS_TAG_LINK</td>
+	<td>//span[@class='lfr-ac-content']/a[contains(.,'${key_mentionsUserScreenName}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

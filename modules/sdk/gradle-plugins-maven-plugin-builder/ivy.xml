@@ -20,10 +20,10 @@
 		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.4" />
 		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
 		<dependency conf="provided->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.9" />
-		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.3" />
-		<dependency conf="provided->default" name="org.gradle.gradle-base-services-groovy" org="com.liferay" rev="2.3" />
-		<dependency conf="provided->default" name="org.gradle.gradle-core" org="com.liferay" rev="2.3" />
-		<dependency conf="provided->default" name="org.gradle.gradle-language-java" org="com.liferay" rev="2.3" />
-		<dependency conf="provided->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.3" />
+		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-base-services-groovy" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-core" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-language-java" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.4" />
 	</dependencies>
 </ivy-module>

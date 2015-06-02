@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordLocalService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordLocalServiceImpl" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.DDLRecordLocalService" ref="com.liferay.dynamic.data.lists.service.DDLRecordLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="ddl" />
+			<entry key="json.web.service.context.path" value="DDLRecord" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordServiceImpl" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.DDLRecordService" ref="com.liferay.dynamic.data.lists.service.DDLRecordService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="ddl" />
+			<entry key="json.web.service.context.path" value="DDLRecord" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence" ref="com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence" />
+	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder" ref="com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder" />
+	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetLocalServiceImpl" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService" ref="com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="ddl" />
+			<entry key="json.web.service.context.path" value="DDLRecordSet" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordSetService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordSetServiceImpl" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.DDLRecordSetService" ref="com.liferay.dynamic.data.lists.service.DDLRecordSetService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="ddl" />
+			<entry key="json.web.service.context.path" value="DDLRecordSet" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence" ref="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetPersistence" />
+	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordSetFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder" ref="com.liferay.dynamic.data.lists.service.persistence.DDLRecordSetFinder" />
+	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionLocalServiceImpl" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService" ref="com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="ddl" />
+			<entry key="json.web.service.context.path" value="DDLRecordVersion" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.dynamic.data.lists.service.DDLRecordVersionService" class="com.liferay.dynamic.data.lists.service.impl.DDLRecordVersionServiceImpl" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.DDLRecordVersionService" ref="com.liferay.dynamic.data.lists.service.DDLRecordVersionService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="ddl" />
+			<entry key="json.web.service.context.path" value="DDLRecordVersion" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" class="com.liferay.dynamic.data.lists.service.persistence.impl.DDLRecordVersionPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" ref="com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence" />
+</beans>

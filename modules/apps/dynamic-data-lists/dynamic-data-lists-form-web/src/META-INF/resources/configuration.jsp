@@ -56,7 +56,7 @@ DDLRecordSet selRecordSet = ddlFormDisplayContext.getRecordSet();
 			/>
 
 			<liferay-ui:search-container-row
-				className="com.liferay.portlet.dynamicdatalists.model.DDLRecordSet"
+				className="com.liferay.dynamic.data.lists.model.DDLRecordSet"
 				escapedModel="<%= true %>"
 				keyProperty="recordSetId"
 				modelVar="recordSet"

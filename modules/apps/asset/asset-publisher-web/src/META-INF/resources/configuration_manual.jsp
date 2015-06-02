@@ -69,14 +69,15 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 					<liferay-ui:search-container-column-text name="title">
 						<i class="<%= assetRenderer.getIconCssClass() %>"></i>
 
-						<c:choose>
-							<c:when test="<%= assetEntry.isVisible() %>">
-								<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
-							</c:when>
-							<c:otherwise>
-								<%= HtmlUtil.escape(assetRenderer.getTitle(locale) + StringPool.SPACE + StringPool.OPEN_PARENTHESIS + LanguageUtil.get(request, assetRenderer.getStatusLabel() == null ? "not-visible" : assetRenderer.getStatusLabel()) + StringPool.CLOSE_PARENTHESIS) %>
-							</c:otherwise>
-						</c:choose>
+						<%= HtmlUtil.escape(assetRenderer.getTitle(locale)) %>
+
+						<c:if test="<%= !assetEntry.isVisible() %>">
+							(<aui:workflow-status
+								showLabel="<%= false %>"
+								status="<%= assetRenderer.getStatus() %>"
+								statusMessage='<%= assetRenderer.getStatus() == 0 ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'
+							/>)
+						</c:if>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

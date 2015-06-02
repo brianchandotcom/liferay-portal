@@ -496,9 +496,7 @@ public class AssetPublisherUtil {
 						assetEntry.getClassName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-				assetEntry.getClassPK(),
-				AssetRendererFactory.TYPE_LATEST_APPROVED,
-				includeNonVisibleAssets);
+				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 
 			if (!assetRendererFactory.isActive(
 					permissionChecker.getCompanyId())) {

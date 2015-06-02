@@ -50,10 +50,6 @@ public interface AssetRendererFactory {
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException;
 
-	public AssetRenderer getAssetRenderer(
-			long classPK, int type, boolean includeNonVisibleAssets)
-		throws PortalException;
-
 	public AssetRenderer getAssetRenderer(long groupId, String urlTitle)
 		throws PortalException;
 

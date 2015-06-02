@@ -78,25 +78,8 @@ public class JournalArticleAssetRendererFactory
 	public AssetRenderer getAssetRenderer(long classPK, int type)
 		throws PortalException {
 
-		return getAssetRenderer(classPK, type, false);
-	}
-
-	@Override
-	public AssetRenderer getAssetRenderer(
-			long classPK, int type, boolean includeNonVisibleAssets)
-		throws PortalException {
-
-		JournalArticle article = null;
-
-		if (includeNonVisibleAssets) {
-			article = JournalArticleLocalServiceUtil.fetchLatestArticle(
-				classPK, WorkflowConstants.STATUS_ANY, true);
-		}
-
-		else {
-			article = JournalArticleLocalServiceUtil.fetchJournalArticle(
-				classPK);
-		}
+		JournalArticle article =
+			JournalArticleLocalServiceUtil.fetchJournalArticle(classPK);
 
 		if (article == null) {
 			JournalArticleResource articleResource =

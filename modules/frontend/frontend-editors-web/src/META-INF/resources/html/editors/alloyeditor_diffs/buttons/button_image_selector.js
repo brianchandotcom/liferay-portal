@@ -14,6 +14,14 @@
 				imageTPL: React.PropTypes.string
 			},
 
+			componentWillUnmount: function() {
+				var instance = this;
+
+				if (instance._itemSelectorDialog) {
+					instance._itemSelectorDialog.destroy();
+				}
+			},
+
 			getDefaultProps: function() {
 				return {
 					imageTPL: new CKEDITOR.template('<img src="{src}" />')

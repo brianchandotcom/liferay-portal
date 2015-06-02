@@ -62,6 +62,12 @@
 						}
 					}
 				);
+
+				editor.once('destroy', function() {
+					if (instance._itemSelectorDialog) {
+						instance._itemSelectorDialog.destroy();
+					}
+				});
 			},
 
 			_bindBrowseButton: function(editor, dialogDefinition, tabName) {

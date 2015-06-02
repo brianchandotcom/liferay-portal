@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.search;
-
-import com.liferay.portlet.shopping.model.ShoppingOrderConstants;
+package com.liferay.shopping.web.search;
 
 import javax.portlet.PortletRequest;
+
+import com.liferay.shopping.model.ShoppingOrderConstants;
 
 /**
  * @author Brian Wing Shun Chan

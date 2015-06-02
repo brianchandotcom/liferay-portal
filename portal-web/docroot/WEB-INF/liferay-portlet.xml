@@ -199,20 +199,6 @@
 		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
-		<portlet-name>34</portlet-name>
-		<icon>/html/icons/shopping.png</icon>
-		<struts-path>shopping</struts-path>
-		<portlet-data-handler-class>com.liferay.portlet.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-shopping</css-class-wrapper>
-	</portlet>
-	<portlet>
 		<portlet-name>47</portlet-name>
 		<icon>/html/icons/default.png</icon>
 		<struts-path>hello_world</struts-path>
@@ -661,25 +647,6 @@
 		<css-class-wrapper>portlet-image-uploader</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 		<system>true</system>
-	</portlet>
-	<portlet>
-		<portlet-name>197</portlet-name>
-		<icon>/html/icons/shopping.png</icon>
-		<struts-path>shopping_admin</struts-path>
-		<parent-struts-path>shopping</parent-struts-path>
-		<configuration-action-class>com.liferay.portlet.shopping.action.ConfigurationActionImpl</configuration-action-class>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
-		<portlet-data-handler-class>com.liferay.portlet.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
-		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
-		<control-panel-entry-weight>6.0</control-panel-entry-weight>
-		<preferences-unique-per-layout>false</preferences-unique-per-layout>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
-		<scopeable>true</scopeable>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<css-class-wrapper>portlet-shopping</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>199</portlet-name>

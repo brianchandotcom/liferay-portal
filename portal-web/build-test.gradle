@@ -1,0 +1,30 @@
+buildscript {
+	repositories {
+		mavenLocal()
+
+		maven {
+			url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+		}
+	}
+
+	dependencies {
+		classpath group: "com.liferay", name: "com.liferay.gradle.plugins.poshi.runner", version: "1.0.3"
+	}
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+apply plugin: "com.liferay.poshi.runner"
+
+poshiRunner {
+	baseDir = file("test/functional")
+	version = "1.0.3"
+	poshiProperty "test.case.available.property.names", testCaseAvailablePropertyNames
+	poshiProperty "selenium.logger.enabled", seleniumLoggerEnabled
+}

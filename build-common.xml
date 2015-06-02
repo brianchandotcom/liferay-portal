@@ -906,14 +906,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<then>
 					<property name="gradlew.suffix" value="" />
 
-					<chmod file="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
+					<chmod file="${project.dir}/tools/sdk/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
 				</then>
 				<else>
 					<property name="gradlew.suffix" value=".bat" />
 				</else>
 			</if>
 
-			<exec executable="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+			<exec executable="${project.dir}/tools/sdk/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
 				<args />
 				<arg value="@{task}" />
 			</exec>

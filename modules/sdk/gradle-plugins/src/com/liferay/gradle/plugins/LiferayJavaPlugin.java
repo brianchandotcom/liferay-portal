@@ -68,6 +68,7 @@ import org.gradle.api.artifacts.ResolvedConfiguration;
 import org.gradle.api.artifacts.ResolvedModuleVersion;
 import org.gradle.api.artifacts.dsl.RepositoryHandler;
 import org.gradle.api.artifacts.repositories.MavenArtifactRepository;
+import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
@@ -917,6 +918,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
 
 		configureTaskJarDependsOn(jar);
+		configureTaskJarDuplicatesStrategy(jar);
 	}
 
 	protected void configureTaskJarDependsOn(Jar jar) {
@@ -930,6 +932,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 			jar.dependsOn(sourceSet.getClassesTaskName());
 		}
+	}
+
+	protected void configureTaskJarDuplicatesStrategy(Jar jar) {
+		jar.setDuplicatesStrategy(DuplicatesStrategy.EXCLUDE);
 	}
 
 	protected void configureTasks(

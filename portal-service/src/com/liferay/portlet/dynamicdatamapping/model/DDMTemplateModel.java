@@ -182,6 +182,49 @@ public interface DDMTemplateModel extends AttachedModel, BaseModel<DDMTemplate>,
 	public void setUserName(String userName);
 
 	/**
+	 * Returns the version user ID of this d d m template.
+	 *
+	 * @return the version user ID of this d d m template
+	 */
+	public long getVersionUserId();
+
+	/**
+	 * Sets the version user ID of this d d m template.
+	 *
+	 * @param versionUserId the version user ID of this d d m template
+	 */
+	public void setVersionUserId(long versionUserId);
+
+	/**
+	 * Returns the version user uuid of this d d m template.
+	 *
+	 * @return the version user uuid of this d d m template
+	 */
+	public String getVersionUserUuid();
+
+	/**
+	 * Sets the version user uuid of this d d m template.
+	 *
+	 * @param versionUserUuid the version user uuid of this d d m template
+	 */
+	public void setVersionUserUuid(String versionUserUuid);
+
+	/**
+	 * Returns the version user name of this d d m template.
+	 *
+	 * @return the version user name of this d d m template
+	 */
+	@AutoEscape
+	public String getVersionUserName();
+
+	/**
+	 * Sets the version user name of this d d m template.
+	 *
+	 * @param versionUserName the version user name of this d d m template
+	 */
+	public void setVersionUserName(String versionUserName);
+
+	/**
 	 * Returns the create date of this d d m template.
 	 *
 	 * @return the create date of this d d m template

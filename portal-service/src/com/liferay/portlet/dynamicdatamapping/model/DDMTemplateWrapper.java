@@ -60,6 +60,8 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
+		attributes.put("versionUserId", getVersionUserId());
+		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
@@ -117,6 +119,18 @@ public class DDMTemplateWrapper implements DDMTemplate,
 
 		if (userName != null) {
 			setUserName(userName);
+		}
+
+		Long versionUserId = (Long)attributes.get("versionUserId");
+
+		if (versionUserId != null) {
+			setVersionUserId(versionUserId);
+		}
+
+		String versionUserName = (String)attributes.get("versionUserName");
+
+		if (versionUserName != null) {
+			setVersionUserName(versionUserName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -600,6 +614,12 @@ public class DDMTemplateWrapper implements DDMTemplate,
 		return _ddmTemplate.getTemplateKey();
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion getTemplateVersion()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmTemplate.getTemplateVersion();
+	}
+
 	/**
 	* Returns the type of this d d m template.
 	*
@@ -658,6 +678,36 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public java.lang.String getVersion() {
 		return _ddmTemplate.getVersion();
+	}
+
+	/**
+	* Returns the version user ID of this d d m template.
+	*
+	* @return the version user ID of this d d m template
+	*/
+	@Override
+	public long getVersionUserId() {
+		return _ddmTemplate.getVersionUserId();
+	}
+
+	/**
+	* Returns the version user name of this d d m template.
+	*
+	* @return the version user name of this d d m template
+	*/
+	@Override
+	public java.lang.String getVersionUserName() {
+		return _ddmTemplate.getVersionUserName();
+	}
+
+	/**
+	* Returns the version user uuid of this d d m template.
+	*
+	* @return the version user uuid of this d d m template
+	*/
+	@Override
+	public java.lang.String getVersionUserUuid() {
+		return _ddmTemplate.getVersionUserUuid();
 	}
 
 	/**
@@ -1130,6 +1180,36 @@ public class DDMTemplateWrapper implements DDMTemplate,
 	@Override
 	public void setVersion(java.lang.String version) {
 		_ddmTemplate.setVersion(version);
+	}
+
+	/**
+	* Sets the version user ID of this d d m template.
+	*
+	* @param versionUserId the version user ID of this d d m template
+	*/
+	@Override
+	public void setVersionUserId(long versionUserId) {
+		_ddmTemplate.setVersionUserId(versionUserId);
+	}
+
+	/**
+	* Sets the version user name of this d d m template.
+	*
+	* @param versionUserName the version user name of this d d m template
+	*/
+	@Override
+	public void setVersionUserName(java.lang.String versionUserName) {
+		_ddmTemplate.setVersionUserName(versionUserName);
+	}
+
+	/**
+	* Sets the version user uuid of this d d m template.
+	*
+	* @param versionUserUuid the version user uuid of this d d m template
+	*/
+	@Override
+	public void setVersionUserUuid(java.lang.String versionUserUuid) {
+		_ddmTemplate.setVersionUserUuid(versionUserUuid);
 	}
 
 	@Override

@@ -84,6 +84,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
+			{ "versionUserId", Types.BIGINT },
+			{ "versionUserName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "parentStructureId", Types.BIGINT },
@@ -96,7 +98,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			{ "storageType", Types.VARCHAR },
 			{ "type_", Types.INTEGER }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructure (uuid_ VARCHAR(75) null,structureId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,parentStructureId LONG,classNameId LONG,structureKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructure";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructure.structureId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructure.structureId ASC";
@@ -141,6 +143,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
+		model.setVersionUserId(soapModel.getVersionUserId());
+		model.setVersionUserName(soapModel.getVersionUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setParentStructureId(soapModel.getParentStructureId());
@@ -235,6 +239,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
+		attributes.put("versionUserId", getVersionUserId());
+		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentStructureId", getParentStructureId());
@@ -289,6 +295,18 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 		if (userName != null) {
 			setUserName(userName);
+		}
+
+		Long versionUserId = (Long)attributes.get("versionUserId");
+
+		if (versionUserId != null) {
+			setVersionUserId(versionUserId);
+		}
+
+		String versionUserName = (String)attributes.get("versionUserName");
+
+		if (versionUserName != null) {
+			setVersionUserName(versionUserName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -480,6 +498,49 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
+	}
+
+	@JSON
+	@Override
+	public long getVersionUserId() {
+		return _versionUserId;
+	}
+
+	@Override
+	public void setVersionUserId(long versionUserId) {
+		_versionUserId = versionUserId;
+	}
+
+	@Override
+	public String getVersionUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getVersionUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
+	}
+
+	@Override
+	public void setVersionUserUuid(String versionUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getVersionUserName() {
+		if (_versionUserName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _versionUserName;
+		}
+	}
+
+	@Override
+	public void setVersionUserName(String versionUserName) {
+		_versionUserName = versionUserName;
 	}
 
 	@JSON
@@ -1024,6 +1085,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		ddmStructureImpl.setCompanyId(getCompanyId());
 		ddmStructureImpl.setUserId(getUserId());
 		ddmStructureImpl.setUserName(getUserName());
+		ddmStructureImpl.setVersionUserId(getVersionUserId());
+		ddmStructureImpl.setVersionUserName(getVersionUserName());
 		ddmStructureImpl.setCreateDate(getCreateDate());
 		ddmStructureImpl.setModifiedDate(getModifiedDate());
 		ddmStructureImpl.setParentStructureId(getParentStructureId());
@@ -1158,6 +1221,16 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 			ddmStructureCacheModel.userName = null;
 		}
 
+		ddmStructureCacheModel.versionUserId = getVersionUserId();
+
+		ddmStructureCacheModel.versionUserName = getVersionUserName();
+
+		String versionUserName = ddmStructureCacheModel.versionUserName;
+
+		if ((versionUserName != null) && (versionUserName.length() == 0)) {
+			ddmStructureCacheModel.versionUserName = null;
+		}
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -1239,7 +1312,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1253,6 +1326,10 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(getUserId());
 		sb.append(", userName=");
 		sb.append(getUserName());
+		sb.append(", versionUserId=");
+		sb.append(getVersionUserId());
+		sb.append(", versionUserName=");
+		sb.append(getVersionUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -1282,7 +1359,7 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
@@ -1311,6 +1388,14 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserId</column-name><column-value><![CDATA[");
+		sb.append(getVersionUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
+		sb.append(getVersionUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -1377,6 +1462,8 @@ public class DDMStructureModelImpl extends BaseModelImpl<DDMStructure>
 	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
+	private long _versionUserId;
+	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

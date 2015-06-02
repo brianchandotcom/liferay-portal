@@ -66,7 +66,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -80,6 +80,10 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		sb.append(userId);
 		sb.append(", userName=");
 		sb.append(userName);
+		sb.append(", versionUserId=");
+		sb.append(versionUserId);
+		sb.append(", versionUserName=");
+		sb.append(versionUserName);
 		sb.append(", createDate=");
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
@@ -128,6 +132,15 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		}
 		else {
 			ddmStructureImpl.setUserName(userName);
+		}
+
+		ddmStructureImpl.setVersionUserId(versionUserId);
+
+		if (versionUserName == null) {
+			ddmStructureImpl.setVersionUserName(StringPool.BLANK);
+		}
+		else {
+			ddmStructureImpl.setVersionUserName(versionUserName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
@@ -209,6 +222,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
+		versionUserId = objectInput.readLong();
+		versionUserName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 		parentStructureId = objectInput.readLong();
@@ -245,6 +260,15 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		}
 		else {
 			objectOutput.writeUTF(userName);
+		}
+
+		objectOutput.writeLong(versionUserId);
+
+		if (versionUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(versionUserName);
 		}
 
 		objectOutput.writeLong(createDate);
@@ -306,6 +330,8 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public long companyId;
 	public long userId;
 	public String userName;
+	public long versionUserId;
+	public String versionUserName;
 	public long createDate;
 	public long modifiedDate;
 	public long parentStructureId;

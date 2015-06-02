@@ -483,6 +483,11 @@
 			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
 		</action>
 
+		<action path="/export_import/publish_layouts_simple" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
+			<forward name="portlet.export_import.confirmation" path="portlet.export_import.publish_layouts_simple" />
+			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
+		</action>
+
 		<action path="/export_import/staging" type="com.liferay.portlet.exportimport.action.ExportImportAction">
 			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
 			<forward name="portlet.export_import.staging" path="portlet.export_import.staging" />
@@ -1142,13 +1147,6 @@
 
 		<!-- Staging Bar -->
 
-		<action path="/staging_bar/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.export_import.confirmation" path="portlet.export_import.confirmation" />
-			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
-		</action>
-
-		<action path="/staging_bar/delete_background_task" type="com.liferay.portlet.backgroundtask.action.DeleteBackgroundTaskAction" />
-
 		<action path="/staging_bar/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
 			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
@@ -1163,22 +1161,7 @@
 			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
 		</action>
 
-		<action path="/staging_bar/edit_publish_configuration" type="com.liferay.portlet.exportimport.action.EditPublishConfigurationAction">
-			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
-			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
-		</action>
-
 		<action path="/staging_bar/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
-
-		<action path="/staging_bar/publish_layouts" type="com.liferay.portlet.exportimport.action.PublishLayoutsAction">
-			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
-			<forward name="portlet.export_import.publish_layouts" path="portlet.export_import.publish_layouts" />
-		</action>
-
-		<action path="/staging_bar/publish_layouts_simple" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">
-			<forward name="portlet.export_import.confirmation" path="portlet.export_import.publish_layouts_simple" />
-			<forward name="portlet.export_import.error" path="portlet.export_import.error" />
-		</action>
 
 		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
 

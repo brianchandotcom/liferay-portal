@@ -440,7 +440,9 @@ public class MicroblogsUtil {
 		return content;
 	}
 
-	private static Pattern _hashtagPattern = Pattern.compile("\\#[a-zA-Z]\\w*");
-	private static Pattern _userTagPattern = Pattern.compile("\\[\\@\\S*\\]");
+	private static final Pattern _hashtagPattern = Pattern.compile(
+		"\\#[a-zA-Z]\\w*");
+	private static final Pattern _userTagPattern = Pattern.compile(
+		"\\[\\@\\S*\\]");
 
 }

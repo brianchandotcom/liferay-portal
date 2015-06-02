@@ -26,9 +26,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public class MicroblogsEntryImpl extends MicroblogsEntryBaseImpl {
 
-	public MicroblogsEntryImpl() {
-	}
-
 	public long fetchParentMicroblogsEntryUserId() {
 		if (getMicroblogsEntryId() == getParentMicroblogsEntryId()) {
 			return getUserId();

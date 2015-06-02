@@ -63,13 +63,6 @@ public class TestAssetRendererFactory implements AssetRendererFactory {
 	}
 
 	@Override
-	public AssetRenderer getAssetRenderer(
-		long classPK, int type, boolean includeNonVisibleAssets) {
-
-		return null;
-	}
-
-	@Override
 	public AssetRenderer getAssetRenderer(long groupId, String urlTitle) {
 		return null;
 	}

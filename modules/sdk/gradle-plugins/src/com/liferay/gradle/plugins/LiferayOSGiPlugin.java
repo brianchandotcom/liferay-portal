@@ -430,9 +430,8 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 						libDirName = libDirName.replace('\\', '/') + "/";
 
 						for (String resource : resources) {
-							if (resource.startsWith(libDirName) ||
-								resource.startsWith("@" + libDirName) ||
-								resource.contains("=@" + libDirName)) {
+							if (resource.contains("@" + libDirName) ||
+								resource.startsWith(libDirName)) {
 
 								return true;
 							}

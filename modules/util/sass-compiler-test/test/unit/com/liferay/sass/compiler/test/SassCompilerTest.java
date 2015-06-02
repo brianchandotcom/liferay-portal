@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.sass.compiler.ruby.internal;
+package com.liferay.sass.compiler.test;
 
 import java.net.URL;
 
+import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -23,7 +25,7 @@ import org.junit.Test;
 /**
  * @author David Truong
  */
-public class RubySassCompilerTest {
+public class SassCompilerTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
@@ -57,6 +59,6 @@ public class RubySassCompilerTest {
 		Assert.assertEquals(expectedOutput, actualOutput);
 	}
 
-	private static RubySassCompiler _rubySassCompiler;
+	private static SassCompiler _rubySassCompiler;
 
 }

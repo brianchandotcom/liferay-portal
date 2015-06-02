@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
-<service-builder package-path="com.liferay.portlet.shopping" auto-import-default-references="false">
+<service-builder package-path="com.liferay.shopping" auto-import-default-references="false">
 	<namespace>Shopping</namespace>
 	<entity name="ShoppingCart" local-service="true" remote-service="false">
 
@@ -44,8 +44,8 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCoupon" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItem" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingCoupon" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
 	</entity>
 	<entity name="ShoppingCategory" local-service="true" remote-service="true">
 
@@ -96,7 +96,7 @@
 
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItem" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
 	</entity>
 	<entity name="ShoppingCoupon" local-service="true" remote-service="true">
 
@@ -148,8 +148,8 @@
 		<!-- References -->
 
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItem" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingCategory" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
 	</entity>
 	<entity name="ShoppingItem" local-service="true" remote-service="true">
 
@@ -230,9 +230,9 @@
 		<reference package-path="com.liferay.portal" entity="Image" />
 		<reference package-path="com.liferay.portal" entity="Resource" />
 		<reference package-path="com.liferay.portal" entity="User" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingCategory" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItemField" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItemPrice" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingCategory" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItemField" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItemPrice" />
 	</entity>
 	<entity name="ShoppingItemField" local-service="true" remote-service="false">
 
@@ -293,7 +293,7 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItem" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
 	</entity>
 	<entity name="ShoppingOrder" local-service="true" remote-service="true">
 
@@ -390,9 +390,9 @@
 		<reference package-path="com.liferay.portal" entity="Subscription" />
 		<reference package-path="com.liferay.portal" entity="User" />
 		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItem" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingItemField" />
-		<reference package-path="com.liferay.portlet.shopping" entity="ShoppingOrderItem" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItem" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingItemField" />
+		<reference package-path="com.liferay.shopping" entity="ShoppingOrderItem" />
 	</entity>
 	<entity name="ShoppingOrderItem" local-service="true" remote-service="false">
 

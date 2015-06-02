@@ -45,12 +45,14 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name) {
+	public PortalCache<K, V> getCache(String portalCacheName) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name, boolean blocking) {
+	public PortalCache<K, V> getCache(
+		String portalCacheName, boolean blocking) {
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -82,7 +84,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void removeCache(String name) {
+	public void removeCache(String portalCacheName) {
 		throw new UnsupportedOperationException();
 	}
 

@@ -42,28 +42,30 @@ public abstract class BaseIntrabandPortalCacheManager
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name) {
-		return getCache(name, false);
+	public PortalCache<K, V> getCache(String portalCacheName) {
+		return getCache(portalCacheName, false);
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name, boolean blocking) {
-		PortalCache<K, V> portalCache = _portalCaches.get(name);
+	public PortalCache<K, V> getCache(
+		String portalCacheName, boolean blocking) {
+
+		PortalCache<K, V> portalCache = _portalCaches.get(portalCacheName);
 
 		if (portalCache == null) {
 			portalCache = (PortalCache<K, V>)IntrabandProxyUtil.newStubInstance(
-				_STUB_CLASS, name, _registrationReference,
+				_STUB_CLASS, portalCacheName, _registrationReference,
 				WarnLogExceptionHandler.INSTANCE);
 
-			_portalCaches.put(name, portalCache);
+			_portalCaches.put(portalCacheName, portalCache);
 		}
 
 		return portalCache;
 	}
 
 	@Override
-	public void removeCache(String name) {
-		_portalCaches.remove(name);
+	public void removeCache(String portalCacheName) {
+		_portalCaches.remove(portalCacheName);
 	}
 
 	private static final Class<? extends PortalCache<?, ?>> _STUB_CLASS =

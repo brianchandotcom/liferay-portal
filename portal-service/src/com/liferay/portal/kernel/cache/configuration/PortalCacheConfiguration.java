@@ -65,9 +65,12 @@ public class PortalCacheConfiguration {
 		return _portalCacheName;
 	}
 
-	public PortalCacheConfiguration newPortalCacheConfiguration(String name) {
+	public PortalCacheConfiguration newPortalCacheConfiguration(
+		String portalCacheName) {
+
 		return new PortalCacheConfiguration(
-			name, _cacheListenerConfigurations, _bootstrapLoaderConfiguration);
+			portalCacheName, _cacheListenerConfigurations,
+			_bootstrapLoaderConfiguration);
 	}
 
 	private final CallbackConfiguration _bootstrapLoaderConfiguration;

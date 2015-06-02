@@ -50,12 +50,12 @@ public class LiferayTemplateCache extends TemplateCache {
 		_freemarkerEngineConfiguration = freemarkerEngineConfiguration;
 		_templateResourceLoader = templateResourceLoader;
 
-		String cacheName = TemplateResource.class.getName();
+		String porttalCacheName = TemplateResource.class.getName();
 
-		cacheName = cacheName.concat(StringPool.POUND).concat(
+		porttalCacheName = porttalCacheName.concat(StringPool.POUND).concat(
 			TemplateConstants.LANG_TYPE_FTL);
 
-		_portalCache = SingleVMPoolUtil.getCache(cacheName);
+		_portalCache = SingleVMPoolUtil.getCache(porttalCacheName);
 	}
 
 	@Override

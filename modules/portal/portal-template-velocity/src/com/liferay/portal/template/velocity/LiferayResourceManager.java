@@ -54,12 +54,12 @@ import org.apache.velocity.runtime.resource.ResourceManagerImpl;
 public class LiferayResourceManager extends ResourceManagerImpl {
 
 	public LiferayResourceManager() {
-		String cacheName = TemplateResource.class.getName();
+		String portalCacheName = TemplateResource.class.getName();
 
-		cacheName = cacheName.concat(StringPool.POUND).concat(
+		portalCacheName = portalCacheName.concat(StringPool.POUND).concat(
 			TemplateConstants.LANG_TYPE_VM);
 
-		_portalCache = SingleVMPoolUtil.getCache(cacheName);
+		_portalCache = SingleVMPoolUtil.getCache(portalCacheName);
 	}
 
 	@Override

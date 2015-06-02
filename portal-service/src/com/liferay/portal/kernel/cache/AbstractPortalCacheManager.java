@@ -50,37 +50,42 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name) throws PortalCacheException {
-		return getCache(name, false);
+	public PortalCache<K, V> getCache(String portalCacheName)
+		throws PortalCacheException {
+
+		return getCache(portalCacheName, false);
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name, boolean blocking)
+	public PortalCache<K, V> getCache(String portalCacheName, boolean blocking)
 		throws PortalCacheException {
 
-		PortalCache<K, V> portalCache = portalCaches.get(name);
+		PortalCache<K, V> portalCache = portalCaches.get(portalCacheName);
 
 		if (portalCache != null) {
 			return portalCache;
 		}
 
 		PortalCacheConfiguration portalCacheConfiguration =
-			_portalCacheManagerConfiguration.getPortalCacheConfiguration(name);
+			_portalCacheManagerConfiguration.getPortalCacheConfiguration(
+				portalCacheName);
 
 		if (portalCacheConfiguration == null) {
 			portalCacheConfiguration =
 				_defaultPortalCacheConfiguration.newPortalCacheConfiguration(
-					name);
+					portalCacheName);
 
 			_portalCacheManagerConfiguration.putPortalCacheConfiguration(
-				name, portalCacheConfiguration);
+				portalCacheName, portalCacheConfiguration);
 		}
 
 		portalCache = createPortalCache(portalCacheConfiguration);
 
 		_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 
-		if (isTransactionalCacheEnabled() && isTransactionalPortalCache(name)) {
+		if (isTransactionalCacheEnabled() &&
+			isTransactionalPortalCache(portalCacheName)) {
+
 			portalCache = new TransactionalPortalCache<>(portalCache);
 		}
 
@@ -89,7 +94,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		}
 
 		PortalCache<K, V> previousPortalCache = portalCaches.putIfAbsent(
-			name, portalCache);
+			portalCacheName, portalCache);
 
 		if (previousPortalCache != null) {
 			portalCache = previousPortalCache;
@@ -109,7 +114,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 						bootstrapLoaderConfiguration.getProperties());
 
 				if (bootstrapLoader != null) {
-					bootstrapLoader.load(getName(), name);
+					bootstrapLoader.load(getName(), portalCacheName);
 				}
 			}
 		}
@@ -157,10 +162,10 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void removeCache(String name) {
-		portalCaches.remove(name);
+	public void removeCache(String portalCacheName) {
+		portalCaches.remove(portalCacheName);
 
-		doRemoveCache(name);
+		doRemoveCache(portalCacheName);
 	}
 
 	public void setBlockingCacheAllowed(boolean blockingCacheAllowed) {
@@ -215,7 +220,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	protected abstract void doDestroy();
 
-	protected abstract void doRemoveCache(String cacheName);
+	protected abstract void doRemoveCache(String portalCacheName);
 
 	protected abstract PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration();
@@ -261,11 +266,11 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	protected abstract void initPortalCacheManager();
 
-	protected boolean isTransactionalPortalCache(String name) {
+	protected boolean isTransactionalPortalCache(String portalCacheName) {
 		for (String namePattern : getTransactionalCacheNames()) {
 			if (StringUtil.wildcardMatches(
-					name, namePattern, CharPool.QUESTION, CharPool.STAR,
-					CharPool.PERCENT, true)) {
+					portalCacheName, namePattern, CharPool.QUESTION,
+					CharPool.STAR, CharPool.PERCENT, true)) {
 
 				return true;
 			}

@@ -8,9 +8,9 @@
 
 	var INPUT_EL = document.createElement('input');
 
-	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
-
 	var PATH_EDITORS = LiferayAUI.getEditorsPath();
+
+	var PATH_JAVASCRIPT = LiferayAUI.getJavaScriptRootPath();
 
 	var SUPPORTS_INPUT_SELECTION = typeof INPUT_EL.selectionStart === 'number' && typeof INPUT_EL.selectionEnd === 'number';
 

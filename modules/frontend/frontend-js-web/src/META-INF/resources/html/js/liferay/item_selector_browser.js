@@ -20,7 +20,7 @@ AUI.add(
 
 		var STR_VISIBLE_CHANGE = 'visibleChange';
 
-		var UPLOAD_ITEM_LINK_TPL = '<a data-value="{value}" data-returnType="Base64" href="{preview}" title="{title}"></a>';
+		var UPLOAD_ITEM_LINK_TPL = '<a data-returnType="Base64" data-value="{value}" href="{preview}" title="{title}"></a>';
 
 		var ItemSelectorBrowser = A.Component.create(
 			{

@@ -152,8 +152,8 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 					</c:if>
 
 					layoutpath: event.target.getAttribute('data-layoutpath'),
-					returnType : event.target.getAttribute('data-returnType'),
-					value : event.target.getAttribute('data-value')
+					returnType: event.target.getAttribute('data-returnType'),
+					value: event.target.getAttribute('data-value')
 				}
 			);
 
@@ -209,7 +209,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			}
 			%>
 
-			button.attr('data-returnType', '<%= returnType %>' );
+			button.attr('data-returnType', '<%= returnType %>');
 
 			<c:choose>
 				<c:when test="<%= returnType.equals(URL.class.getName()) %>">

@@ -25,21 +25,19 @@
 			},
 
 			render: function() {
-				return (
+				return React.createElement(
+					'button',
+					{
+						className: 'alloy-editor-button',
+						'data-type': 'button-image',
+						onClick: this._handleClick,
+						tabIndex: this.props.tabIndex
+					},
 					React.createElement(
-						'button',
+						'span',
 						{
-							className: 'alloy-editor-button',
-							'data-type': 'button-image',
-							onClick: this._handleClick,
-							tabIndex: this.props.tabIndex
-						},
-						React.createElement(
-							'span',
-							{
-								className: 'alloy-editor-icon-image'
-							}
-						)
+							className: 'alloy-editor-icon-image'
+						}
 					)
 				);
 			},

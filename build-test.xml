@@ -379,6 +379,26 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-poshi-method-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="poshi.method.name" unset="true" />
+
+			<get-test-method-name />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testMethodName = project.getProperty("test.method.name");
+
+					String poshiClassName = testMethodName.substring(4);
+
+					project.setProperty("poshi.method.name", poshiClassName);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />

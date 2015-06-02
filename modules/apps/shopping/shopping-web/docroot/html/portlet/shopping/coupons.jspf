@@ -36,7 +36,7 @@ portletURL.setParameter("tabs1", tabs1);
 	%>
 
 	<liferay-ui:search-form
-		page="/html/portlet/shopping/coupon_search.jsp"
+		page="coupon_search.jsp"
 		searchContainer="<%= searchContainer %>"
 	/>
 
@@ -108,7 +108,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		// Action
 
-		row.addJSP("/html/portlet/shopping/coupon_action.jsp", "entry-action");
+		row.addJSP("coupon_action.jsp", "entry-action");
 
 		// Add result row
 

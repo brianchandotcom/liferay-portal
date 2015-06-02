@@ -20,7 +20,7 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 %>
 
-<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" />
+<liferay-util:include page="tabs1.jsp" />
 
 <c:choose>
 	<c:when test='<%= tabs1.equals("categories") %>'>

@@ -31,9 +31,10 @@ import com.liferay.portal.service.LayoutSetBranchServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.layoutsadmin.action.EditLayoutsAction;
+import com.liferay.portlet.sites.action.ActionUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,7 +55,7 @@ import org.apache.struts.action.ActionMapping;
  * @author Brian Wing Shun Chan
  * @author Julio Camarero
  */
-public class EditLayoutSetBranchAction extends EditLayoutsAction {
+public class EditLayoutSetBranchAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -62,13 +63,6 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
 		throws Exception {
-
-		try {
-			checkPermissions(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			return;
-		}
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
@@ -133,17 +127,7 @@ public class EditLayoutSetBranchAction extends EditLayoutsAction {
 		throws Exception {
 
 		try {
-			checkPermissions(renderRequest);
-		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(
-				renderRequest, PrincipalException.class.getName());
-
-			return actionMapping.findForward("portlet.staging_bar.error");
-		}
-
-		try {
-			getGroup(renderRequest);
+			ActionUtil.getGroup(renderRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchGroupException ||

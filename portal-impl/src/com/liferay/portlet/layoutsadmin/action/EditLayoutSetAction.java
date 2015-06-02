@@ -67,13 +67,6 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 			ActionResponse actionResponse)
 		throws Exception {
 
-		try {
-			checkPermissions(actionRequest);
-		}
-		catch (PrincipalException pe) {
-			return;
-		}
-
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
@@ -112,16 +105,6 @@ public class EditLayoutSetAction extends EditLayoutsAction {
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
-
-		try {
-			checkPermissions(renderRequest);
-		}
-		catch (PrincipalException pe) {
-			SessionErrors.add(
-				renderRequest, PrincipalException.class.getName());
-
-			return actionMapping.findForward("portlet.layouts_admin.error");
-		}
 
 		try {
 			getGroup(renderRequest);

@@ -70,7 +70,7 @@ AUI.add(
 				var triggers = instance._getTriggers();
 
 				for (var i = position; i >= 0; --i) {
-					var triggerIndex = AArray.indexOf(triggers, content[i]);
+					var triggerIndex = triggers.indexOf(content[i]);
 
 					if (triggerIndex >= 0) {
 						result = i;

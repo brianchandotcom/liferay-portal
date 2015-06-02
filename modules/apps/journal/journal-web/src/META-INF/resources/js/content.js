@@ -108,7 +108,7 @@ AUI.add(
 
 						var editingLocale = event.newVal;
 
-						var selectedIndex = AArray.indexOf(items, editingLocale);
+						var selectedIndex = items.indexOf(editingLocale);
 
 						descriptionInputLocalized.set('selected', selectedIndex);
 						descriptionInputLocalized.selectFlag(editingLocale);
@@ -235,7 +235,7 @@ AUI.add(
 
 								var ddmStructureId = instance.one('#ddmStructureId');
 
-								if (confirm(strings.selectStructure) && (ddmStructureId.val() != event.ddmstructureid)) {
+								if (confirm(strings.selectStructure) && ddmStructureId.val() != event.ddmstructureid) {
 									ddmStructureId.val(event.ddmstructureid);
 
 									instance.one('#changeStructure').val(true);
@@ -269,8 +269,8 @@ AUI.add(
 								groupId: ddm.groupId,
 								mvcPath: '/select_template.jsp',
 								refererPortletName: ddm.refererPortletName,
-								showAncestorScopes: true,
 								resourceClassNameId: ddm.resourceClassNameId,
+								showAncestorScopes: true,
 								templateId: ddm.templateId,
 								title: strings.templates
 							},

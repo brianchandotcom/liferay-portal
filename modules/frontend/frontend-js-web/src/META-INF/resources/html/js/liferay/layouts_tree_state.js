@@ -234,7 +234,7 @@ AUI.add(
 
 						var treeNodeTaskSuperClass = A.TreeNodeTask.superclass;
 
-						if (AArray.indexOf(instance.get(STR_CHECKED_NODES), plid) > -1) {
+						if (instance.get(STR_CHECKED_NODES).indexOf(plid) > -1) {
 							treeNodeTaskSuperClass.check.call(node, tree);
 						}
 						else {
@@ -251,7 +251,7 @@ AUI.add(
 
 						var checkedNodes = instance.get(STR_CHECKED_NODES);
 
-						var index = AArray.indexOf(checkedNodes, plid);
+						var index = checkedNodes.indexOf(plid);
 
 						if (state) {
 							if (index === -1) {

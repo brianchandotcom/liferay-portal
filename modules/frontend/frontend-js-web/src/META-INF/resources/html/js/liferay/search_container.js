@@ -134,7 +134,7 @@ AUI.add(
 							instance._hoverHandle = instance.get('contentBox').delegate(
 								['mouseenter', 'mouseleave'],
 								function(event) {
-									var mouseenter = (event.type == 'mouseenter');
+									var mouseenter = event.type == 'mouseenter';
 									var row = event.currentTarget;
 
 									var endAlternate = rowClassNameAlternateHover;
@@ -248,7 +248,7 @@ AUI.add(
 						}
 
 						if (id) {
-							var index = A.Array.indexOf(instance._ids, id.toString());
+							var index = instance._ids.indexOf(id.toString());
 
 							if (index > -1) {
 								instance._ids.splice(index, 1);

@@ -2,8 +2,6 @@
 	var Tabs = Liferay.namespace('Portal.Tabs');
 	var ToolTip = Liferay.namespace('Portal.ToolTip');
 
-	var arrayIndexOf = A.Array.indexOf;
-
 	var toCharCode = Liferay.Util.toCharCode;
 
 	var BODY_CONTENT = 'bodyContent';
@@ -56,7 +54,7 @@
 				id: id,
 				names: names,
 				namespace: namespace,
-				selectedIndex: arrayIndexOf(names, id),
+				selectedIndex: names.indexOf(id),
 				tabItem: tab,
 				tabSection: tabSection
 			};

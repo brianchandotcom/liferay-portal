@@ -13,12 +13,12 @@
 	var htmlUnescapedValues = [];
 
 	var MAP_HTML_CHARS_ESCAPED = {
-		'&': '&amp;',
-		'<': '&lt;',
-		'>': '&gt;',
 		'"': '&#034;',
+		'&': '&amp;',
 		'\'': '&#039;',
 		'/': '&#047;',
+		'<': '&lt;',
+		'>': '&gt;',
 		'`': '&#096;'
 	};
 
@@ -34,11 +34,11 @@
 		}
 	);
 
+	var REGEX_DASH = /-([a-z])/gi;
+
 	var STR_LEFT_SQUARE_BRACKET = '[';
 
 	var STR_RIGHT_SQUARE_BRACKET = ']';
-
-	var REGEX_DASH = /-([a-z])/gi;
 
 	var REGEX_HTML_ESCAPE = new RegExp(STR_LEFT_SQUARE_BRACKET + htmlUnescapedValues.join('') + STR_RIGHT_SQUARE_BRACKET, 'g');
 
@@ -96,9 +96,7 @@
 
 					var nodeType = target.get('type');
 
-					if (((tagName == 'input') && (/text|password/).test(nodeType)) ||
-						(tagName == 'textarea')) {
-
+					if (tagName == 'input' && (/text|password/).test(nodeType) || tagName == 'textarea') {
 						var action = 'addClass';
 
 						if (/blur|focusout/.test(event.type)) {
@@ -114,7 +112,7 @@
 			}
 		);
 
-		Util.addInputFocus = function(){};
+		Util.addInputFocus = function() {};
 	};
 
 	Util.addInputType = function(el) {
@@ -204,7 +202,7 @@
 	};
 
 	Util.randomMinMax = function(min, max) {
-		return (Math.round(Math.random() * (max - min))) + min;
+		return Math.round(Math.random() * (max - min)) + min;
 	};
 
 	Util.selectAndCopy = function(el) {
@@ -231,7 +229,7 @@
 	};
 
 	Util.startsWith = function(str, x) {
-		return (str.indexOf(x) === 0);
+		return str.indexOf(x) === 0;
 	};
 
 	Util.textareaTabs = function(event) {
@@ -310,15 +308,15 @@
 
 			var length = arrayArgs.length;
 
-			var string = arrayArgs[length - 1];
 			var offset = arrayArgs[length - 2];
+			var string = arrayArgs[length - 1];
 
 			var nextSemicolonIndex = string.indexOf(';', offset);
 
 			if (nextSemicolonIndex >= 0) {
 				var entity = string.substring(offset, nextSemicolonIndex + 1);
 
-				if (AArray.indexOf(entitiesValues, entity) >= 0) {
+				if (entitiesValues.indexOf(entity) >= 0) {
 					result = match;
 				}
 			}
@@ -361,7 +359,7 @@
 				var disabled = function() {
 					var currentValue = selectBox.val();
 
-					var visible = (value == currentValue);
+					var visible = value == currentValue;
 
 					if (dynamicValue) {
 						visible = value(currentValue, value);
@@ -461,7 +459,7 @@
 						if (buttonRow && templateEditor) {
 							var region = templateEditor.getXY();
 
-							diff = (buttonRow.outerHeight(true) + region[1]) + 25;
+							diff = buttonRow.outerHeight(true) + region[1] + 25;
 						}
 						else {
 							diff = 170;
@@ -475,7 +473,7 @@
 					};
 
 					if (event) {
-						styles.height = (pageBodyHeight - diff);
+						styles.height = pageBodyHeight - diff;
 					}
 
 					if (usingRichEditor) {

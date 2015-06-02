@@ -58,7 +58,7 @@ AUI.add(
 				var queue = new A.Queue(parent);
 
 				var addToQueue = function(item) {
-					if (AArray.indexOf(queue._q, item) === -1) {
+					if (queue._q.indexOf(item) === -1) {
 						queue.add(item);
 					}
 				};

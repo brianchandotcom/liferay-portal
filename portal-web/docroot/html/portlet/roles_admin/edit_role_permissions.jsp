@@ -368,7 +368,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 				selectedGroupNames = selectedGroupNamesField.split('@@');
 			}
 
-			if (AUI().Array.indexOf(selectedGroupIds, event.groupid) == -1) {
+			if (selectedGroupIds.indexOf(event.groupid) == -1) {
 				selectedGroupIds.push(event.groupid);
 				selectedGroupNames.push(event.groupdescriptivename);
 			}

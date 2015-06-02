@@ -379,7 +379,7 @@
 			portlet = A.one(portlet);
 
 			if (portlet && (skipConfirm || confirm(Liferay.Language.get('are-you-sure-you-want-to-remove-this-component')))) {
-				var portletIndex = AArray.indexOf(instance.list, portlet.portletId);
+				var portletIndex = instance.list.indexOf(portlet.portletId);
 
 				if (portletIndex >= 0) {
 					instance.list.splice(portletIndex, 1);

@@ -194,7 +194,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 					function(item, index, collection) {
 						var groupId = item.attr('data-groupid');
 
-						if (AArray.indexOf(deleteGroupIds, groupId) != -1) {
+						if (deleteGroupIds.indexOf(groupId) != -1) {
 							Util.toggleDisabled(item, false);
 						}
 					}

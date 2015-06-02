@@ -330,7 +330,7 @@ AUI.add(
 
 								var dataTransfer = originalEvent.dataTransfer;
 
-								if (dataTransfer && dataTransfer.types.indexOf('Files') > -1) {
+								if (dataTransfer && AArray.indexOf(dataTransfer.types, 'Files') > -1) {
 									event.halt();
 
 									docElement.addClass('upload-drop-intent');

@@ -369,7 +369,7 @@ AUI.add(
 								if (dataTransfer && dataTransfer.types) {
 									var dataTransferTypes = dataTransfer.types || [];
 
-									if (dataTransferTypes.indexOf('Files') > -1 && dataTransferTypes.indexOf('text/html') === -1) {
+									if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
 										event.halt();
 
 										dataTransfer.dropEffect = 'copy';
@@ -394,7 +394,7 @@ AUI.add(
 								if (dataTransfer) {
 									var dataTransferTypes = dataTransfer.types || [];
 
-									if (dataTransferTypes.indexOf('Files') > -1 && dataTransferTypes.indexOf('text/html') === -1) {
+									if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
 										event.halt();
 
 										var dragDropFiles = AArray(dataTransfer.files);
@@ -421,7 +421,7 @@ AUI.add(
 
 								var dataTransferTypes = dataTransfer.types;
 
-								if (dataTransferTypes.indexOf('Files') > -1 && dataTransferTypes.indexOf('text/html') === -1) {
+								if (AArray.indexOf(dataTransferTypes, 'Files') > -1 && AArray.indexOf(dataTransferTypes, 'text/html') === -1) {
 									var parentElement = event.target.ancestor(SELECTOR_ENTRY_DISPLAY_STYLE);
 
 									parentElement.toggleClass(CSS_ACTIVE_AREA, event.type == 'dragover');

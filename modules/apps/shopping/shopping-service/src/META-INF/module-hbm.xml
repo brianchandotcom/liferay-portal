@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.shopping.model.ShoppingCart" />
+	<import class="com.liferay.shopping.model.ShoppingCategory" />
+	<import class="com.liferay.shopping.model.ShoppingCoupon" />
+	<import class="com.liferay.shopping.model.ShoppingItem" />
+	<import class="com.liferay.shopping.model.ShoppingItemField" />
+	<import class="com.liferay.shopping.model.ShoppingItemPrice" />
+	<import class="com.liferay.shopping.model.ShoppingOrder" />
+	<import class="com.liferay.shopping.model.ShoppingOrderItem" />
+	<class name="com.liferay.shopping.model.impl.ShoppingCartImpl" table="ShoppingCart">
+		<id name="cartId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="itemIds" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="couponCodes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="altShipping" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="insure" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingCategoryImpl" table="ShoppingCategory">
+		<id name="categoryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="parentCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingCouponImpl" table="ShoppingCoupon">
+		<id name="couponId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="code" type="com.liferay.portal.dao.orm.hibernate.StringType" column="code_" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="startDate" type="org.hibernate.type.TimestampType" />
+		<property name="endDate" type="org.hibernate.type.TimestampType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+		<property name="limitCategories" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="limitSkus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="minOrder" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="discount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="discountType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingItemImpl" table="ShoppingItem">
+		<id name="itemId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="properties" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fields" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="fields_" />
+		<property name="fieldsQuantities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="maxQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="discount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="taxable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="shipping" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="useShippingFormula" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="requiresShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="stockQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="featured" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="featured_" />
+		<property name="sale" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="sale_" />
+		<property name="smallImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="smallImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="smallImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="mediumImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="mediumImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="mediumImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="largeImage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="largeImageId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="largeImageURL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingItemFieldImpl" table="ShoppingItemField">
+		<id name="itemFieldId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="values" type="com.liferay.portal.dao.orm.hibernate.StringType" column="values_" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingItemPriceImpl" table="ShoppingItemPrice">
+		<id name="itemPriceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="minQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="maxQuantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="discount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="taxable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="shipping" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="useShippingFormula" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingOrderImpl" table="ShoppingOrder">
+		<id name="orderId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" column="number_" />
+		<property name="tax" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="shipping" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="altShipping" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="requiresShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="insure" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="insurance" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="couponCodes" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="couponDiscount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="billingFirstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingLastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingCompany" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingStreet" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingCountry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="billingPhone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shipToBilling" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="shippingFirstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingLastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingCompany" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingStreet" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingCountry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="shippingPhone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ccName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ccType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ccNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ccExpMonth" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccExpYear" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccVerNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="comments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppTxnId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppPaymentStatus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppPaymentGross" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="ppReceiverEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppPayerEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sendOrderEmail" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="sendShippingEmail" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.shopping.model.impl.ShoppingOrderItemImpl" table="ShoppingOrderItem">
+		<id name="orderItemId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="orderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="itemId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="properties" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="quantity" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="shippedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>

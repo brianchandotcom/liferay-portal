@@ -76,6 +76,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MENU_MISCELLANEOUS_MENTIONS</td>
+	<td>//a[@id='_130_mentionsLink']</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

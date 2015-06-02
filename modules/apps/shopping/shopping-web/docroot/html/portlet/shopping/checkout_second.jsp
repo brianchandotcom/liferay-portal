@@ -64,7 +64,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	<aui:input name="ccVerNumber" type="hidden" value="<%= order.getCcVerNumber() %>" />
 	<aui:input name="comments" type="hidden" value="<%= order.getComments() %>" />
 
-	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp">
+	<liferay-util:include page="tabs1.jsp">
 		<liferay-util:param name="tabs1" value="cart" />
 	</liferay-util:include>
 

@@ -28,12 +28,12 @@ public class TemplateResourceCacheListener
 	implements CacheListener<String, TemplateResource> {
 
 	public TemplateResourceCacheListener(String templateResourceLoaderName) {
-		String cacheName = TemplateResource.class.getName();
+		String portalCacheName = TemplateResource.class.getName();
 
-		cacheName = cacheName.concat(StringPool.POUND).concat(
+		portalCacheName = portalCacheName.concat(StringPool.POUND).concat(
 			templateResourceLoaderName);
 
-		_portalCache = SingleVMPoolUtil.getCache(cacheName);
+		_portalCache = SingleVMPoolUtil.getCache(portalCacheName);
 	}
 
 	@Override

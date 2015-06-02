@@ -154,12 +154,12 @@ public class FinderCacheImpl
 	}
 
 	@Override
-	public void notifyCacheAdded(String name) {
+	public void notifyCacheAdded(String portalCacheName) {
 	}
 
 	@Override
-	public void notifyCacheRemoved(String name) {
-		_portalCaches.remove(name);
+	public void notifyCacheRemoved(String portalCacheName) {
+		_portalCaches.remove(portalCacheName);
 	}
 
 	@Override
@@ -242,7 +242,7 @@ public class FinderCacheImpl
 		PortalCacheManager<? extends Serializable, ? extends Serializable>
 			portalCacheManager = _multiVMPool.getCacheManager();
 
-		portalCacheManager.registerCacheManagerListener(this);
+		portalCacheManager.registerListener(this);
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(

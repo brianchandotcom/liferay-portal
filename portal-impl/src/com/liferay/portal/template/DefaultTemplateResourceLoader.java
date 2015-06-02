@@ -80,21 +80,22 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 
 		_modificationCheckInterval = modificationCheckInterval;
 
-		String cacheName = TemplateResourceLoader.class.getName();
+		String portalCacheName = TemplateResourceLoader.class.getName();
 
-		cacheName = cacheName.concat(StringPool.PERIOD).concat(name);
+		portalCacheName = portalCacheName.concat(
+			StringPool.PERIOD).concat(name);
 
-		_multiVMPortalCache = MultiVMPoolUtil.getCache(cacheName);
+		_multiVMPortalCache = MultiVMPoolUtil.getCache(portalCacheName);
 
 		CacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourceCacheListener(name);
 
-		_multiVMPortalCache.registerCacheListener(
+		_multiVMPortalCache.registerListener(
 			cacheListener, CacheListenerScope.ALL);
 
-		_singleVMPortalCache = SingleVMPoolUtil.getCache(cacheName);
+		_singleVMPortalCache = SingleVMPoolUtil.getCache(portalCacheName);
 
-		_singleVMPortalCache.registerCacheListener(
+		_singleVMPortalCache.registerListener(
 			cacheListener, CacheListenerScope.ALL);
 	}
 

@@ -36,7 +36,7 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCacheManager<K, V> getPortalCacheManager() {
+	public PortalCacheManager<K, V> getManager() {
 		return _portalCacheManager;
 	}
 
@@ -85,17 +85,16 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void registerCacheListener(CacheListener<K, V> cacheListener) {
-		aggregatedCacheListener.addCacheListener(cacheListener);
+	public void registerListener(CacheListener<K, V> cacheListener) {
+		aggregatedCacheListener.addListener(cacheListener);
 	}
 
 	@Override
-	public void registerCacheListener(
+	public void registerListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
 
-		aggregatedCacheListener.addCacheListener(
-			cacheListener, cacheListenerScope);
+		aggregatedCacheListener.addListener(cacheListener, cacheListenerScope);
 	}
 
 	@Override
@@ -169,13 +168,13 @@ public abstract class AbstractPortalCache<K extends Serializable, V>
 	}
 
 	@Override
-	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
-		aggregatedCacheListener.removeCacheListener(cacheListener);
+	public void unregisterListener(CacheListener<K, V> cacheListener) {
+		aggregatedCacheListener.removeListener(cacheListener);
 	}
 
 	@Override
-	public void unregisterCacheListeners() {
-		aggregatedCacheListener.clearAll();
+	public void unregisterListeners() {
+		aggregatedCacheListener.clearListeners();
 	}
 
 	protected abstract V doGet(K key);

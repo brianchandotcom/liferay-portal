@@ -39,13 +39,13 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
-	public String getName() {
-		return portalCache.getName();
+	public PortalCacheManager<K, V> getManager() {
+		return portalCache.getManager();
 	}
 
 	@Override
-	public PortalCacheManager<K, V> getPortalCacheManager() {
-		return portalCache.getPortalCacheManager();
+	public String getName() {
+		return portalCache.getName();
 	}
 
 	public PortalCache<K, V> getWrappedPortalCache() {
@@ -63,16 +63,16 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
-	public void registerCacheListener(CacheListener<K, V> cacheListener) {
-		portalCache.registerCacheListener(cacheListener);
+	public void registerListener(CacheListener<K, V> cacheListener) {
+		portalCache.registerListener(cacheListener);
 	}
 
 	@Override
-	public void registerCacheListener(
+	public void registerListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
 
-		portalCache.registerCacheListener(cacheListener, cacheListenerScope);
+		portalCache.registerListener(cacheListener, cacheListenerScope);
 	}
 
 	@Override
@@ -90,13 +90,13 @@ public class PortalCacheWrapper<K extends Serializable, V>
 	}
 
 	@Override
-	public void unregisterCacheListener(CacheListener<K, V> cacheListener) {
-		portalCache.unregisterCacheListener(cacheListener);
+	public void unregisterListener(CacheListener<K, V> cacheListener) {
+		portalCache.unregisterListener(cacheListener);
 	}
 
 	@Override
-	public void unregisterCacheListeners() {
-		portalCache.unregisterCacheListeners();
+	public void unregisterListeners() {
+		portalCache.unregisterListeners();
 	}
 
 	protected PortalCache<K, V> portalCache;

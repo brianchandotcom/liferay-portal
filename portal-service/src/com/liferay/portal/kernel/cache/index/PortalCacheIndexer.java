@@ -32,7 +32,7 @@ public class PortalCacheIndexer<I, K extends IndexedCacheKey<I>, V> {
 	public PortalCacheIndexer(PortalCache<K, V> portalCache) {
 		_portalCache = portalCache;
 
-		_portalCache.registerCacheListener(new IndexerCacheListener());
+		_portalCache.registerListener(new IndexerCacheListener());
 
 		for (K indexedCacheKey : _portalCache.getKeys()) {
 			_addIndexedCacheKey(indexedCacheKey);

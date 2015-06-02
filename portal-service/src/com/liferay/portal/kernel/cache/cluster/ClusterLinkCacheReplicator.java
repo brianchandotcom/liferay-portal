@@ -73,8 +73,7 @@ public class ClusterLinkCacheReplicator
 			return;
 		}
 
-		PortalCacheManager<K, V> portalCacheManager =
-			portalCache.getPortalCacheManager();
+		PortalCacheManager<K, V> portalCacheManager = portalCache.getManager();
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
@@ -98,8 +97,7 @@ public class ClusterLinkCacheReplicator
 			return;
 		}
 
-		PortalCacheManager<K, V> portalCacheManager =
-			portalCache.getPortalCacheManager();
+		PortalCacheManager<K, V> portalCacheManager = portalCache.getManager();
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
@@ -118,8 +116,7 @@ public class ClusterLinkCacheReplicator
 			return;
 		}
 
-		PortalCacheManager<K, V> portalCacheManager =
-			portalCache.getPortalCacheManager();
+		PortalCacheManager<K, V> portalCacheManager = portalCache.getManager();
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(
@@ -142,8 +139,7 @@ public class ClusterLinkCacheReplicator
 			return;
 		}
 
-		PortalCacheManager<K, V> portalCacheManager =
-			portalCache.getPortalCacheManager();
+		PortalCacheManager<K, V> portalCacheManager = portalCache.getManager();
 
 		PortalCacheClusterEvent portalCacheClusterEvent =
 			new PortalCacheClusterEvent(

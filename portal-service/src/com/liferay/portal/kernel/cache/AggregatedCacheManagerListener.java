@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class AggregatedCacheManagerListener implements CacheManagerListener {
 
-	public boolean addCacheListener(CacheManagerListener cacheManagerListener) {
+	public boolean addListener(CacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {
 			return false;
 		}
@@ -31,7 +31,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 		return _cacheManagerListeners.add(cacheManagerListener);
 	}
 
-	public void clearAll() {
+	public void clearListeners() {
 		_cacheManagerListeners.clear();
 	}
 
@@ -44,7 +44,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 		}
 	}
 
-	public Set<CacheManagerListener> getCacheManagerListeners() {
+	public Set<CacheManagerListener> getListeners() {
 		return Collections.unmodifiableSet(_cacheManagerListeners);
 	}
 
@@ -58,26 +58,24 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 	}
 
 	@Override
-	public void notifyCacheAdded(String name) {
+	public void notifyCacheAdded(String portalCacheName) {
 		for (CacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
-			cacheManagerListener.notifyCacheAdded(name);
+			cacheManagerListener.notifyCacheAdded(portalCacheName);
 		}
 	}
 
 	@Override
-	public void notifyCacheRemoved(String name) {
+	public void notifyCacheRemoved(String portalCacheName) {
 		for (CacheManagerListener cacheManagerListener :
 				_cacheManagerListeners) {
 
-			cacheManagerListener.notifyCacheRemoved(name);
+			cacheManagerListener.notifyCacheRemoved(portalCacheName);
 		}
 	}
 
-	public boolean removeCacheListener(
-		CacheManagerListener cacheManagerListener) {
-
+	public boolean removeListener(CacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {
 			return false;
 		}

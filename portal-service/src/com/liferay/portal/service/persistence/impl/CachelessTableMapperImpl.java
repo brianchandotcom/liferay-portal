@@ -54,10 +54,10 @@ public class CachelessTableMapperImpl
 
 		leftToRightPortalCache = new DummyPortalCache(
 			leftToRightPortalCache.getName(),
-			leftToRightPortalCache.getPortalCacheManager());
+			leftToRightPortalCache.getManager());
 		rightToLeftPortalCache = new DummyPortalCache(
 			rightToLeftPortalCache.getName(),
-			rightToLeftPortalCache.getPortalCacheManager());
+			rightToLeftPortalCache.getManager());
 
 		destroy();
 	}
@@ -105,13 +105,13 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public String getName() {
-			return name;
+		public PortalCacheManager<Long, long[]> getManager() {
+			return portalCacheManager;
 		}
 
 		@Override
-		public PortalCacheManager<Long, long[]> getPortalCacheManager() {
-			return portalCacheManager;
+		public String getName() {
+			return portalCacheName;
 		}
 
 		@Override
@@ -123,12 +123,12 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public void registerCacheListener(
+		public void registerListener(
 			CacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override
-		public void registerCacheListener(
+		public void registerListener(
 			CacheListener<Long, long[]> cacheListener,
 			CacheListenerScope cacheListenerScope) {
 		}
@@ -142,23 +142,24 @@ public class CachelessTableMapperImpl
 		}
 
 		@Override
-		public void unregisterCacheListener(
+		public void unregisterListener(
 			CacheListener<Long, long[]> cacheListener) {
 		}
 
 		@Override
-		public void unregisterCacheListeners() {
+		public void unregisterListeners() {
 		}
 
 		protected DummyPortalCache(
-			String name, PortalCacheManager<Long, long[]> portalCacheManager) {
+			String portalCacheName,
+			PortalCacheManager<Long, long[]> portalCacheManager) {
 
-			this.name = name;
+			this.portalCacheName = portalCacheName;
 			this.portalCacheManager = portalCacheManager;
 		}
 
-		protected final String name;
 		protected final PortalCacheManager<Long, long[]> portalCacheManager;
+		protected final String portalCacheName;
 
 	}
 

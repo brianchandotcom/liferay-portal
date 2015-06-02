@@ -37,18 +37,18 @@ public class AggregatedCacheListener<K extends Serializable, V>
 		_remoteInvokeThreadLocal.set(remoteInvoke);
 	}
 
-	public void addCacheListener(CacheListener<K, V> cacheListener) {
-		addCacheListener(cacheListener, CacheListenerScope.ALL);
+	public void addListener(CacheListener<K, V> cacheListener) {
+		addListener(cacheListener, CacheListenerScope.ALL);
 	}
 
-	public void addCacheListener(
+	public void addListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope) {
 
 		_cacheListeners.putIfAbsent(cacheListener, cacheListenerScope);
 	}
 
-	public void clearAll() {
+	public void clearListeners() {
 		dispose();
 
 		_cacheListeners.clear();
@@ -61,7 +61,7 @@ public class AggregatedCacheListener<K extends Serializable, V>
 		}
 	}
 
-	public Map<CacheListener<K, V>, CacheListenerScope> getCacheListeners() {
+	public Map<CacheListener<K, V>, CacheListenerScope> getListeners() {
 		return Collections.unmodifiableMap(_cacheListeners);
 	}
 
@@ -169,7 +169,7 @@ public class AggregatedCacheListener<K extends Serializable, V>
 		}
 	}
 
-	public void removeCacheListener(CacheListener<K, V> cacheListener) {
+	public void removeListener(CacheListener<K, V> cacheListener) {
 		cacheListener.dispose();
 
 		_cacheListeners.remove(cacheListener);

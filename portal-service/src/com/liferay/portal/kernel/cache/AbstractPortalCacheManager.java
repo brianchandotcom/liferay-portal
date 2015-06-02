@@ -124,7 +124,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public Set<CacheManagerListener> getListeners() {
-		return aggregatedCacheManagerListener.getCacheManagerListeners();
+		return aggregatedCacheManagerListener.getListeners();
 	}
 
 	@Override
@@ -155,8 +155,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public boolean registerListener(CacheManagerListener cacheManagerListener) {
-		return aggregatedCacheManagerListener.addCacheListener(
-			cacheManagerListener);
+		return aggregatedCacheManagerListener.addListener(cacheManagerListener);
 	}
 
 	@Override
@@ -202,13 +201,13 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	public boolean unregisterListener(
 		CacheManagerListener cacheManagerListener) {
 
-		return aggregatedCacheManagerListener.removeCacheListener(
+		return aggregatedCacheManagerListener.removeListener(
 			cacheManagerListener);
 	}
 
 	@Override
 	public void unregisterListeners() {
-		aggregatedCacheManagerListener.clearAll();
+		aggregatedCacheManagerListener.clearListeners();
 	}
 
 	protected abstract PortalCache<K, V> createPortalCache(

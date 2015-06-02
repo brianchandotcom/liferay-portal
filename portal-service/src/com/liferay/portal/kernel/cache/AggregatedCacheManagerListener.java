@@ -23,7 +23,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
  */
 public class AggregatedCacheManagerListener implements CacheManagerListener {
 
-	public boolean addCacheListener(CacheManagerListener cacheManagerListener) {
+	public boolean addListener(CacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {
 			return false;
 		}
@@ -31,7 +31,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 		return _cacheManagerListeners.add(cacheManagerListener);
 	}
 
-	public void clearAll() {
+	public void clearListeners() {
 		_cacheManagerListeners.clear();
 	}
 
@@ -44,7 +44,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 		}
 	}
 
-	public Set<CacheManagerListener> getCacheManagerListeners() {
+	public Set<CacheManagerListener> getListeners() {
 		return Collections.unmodifiableSet(_cacheManagerListeners);
 	}
 
@@ -75,9 +75,7 @@ public class AggregatedCacheManagerListener implements CacheManagerListener {
 		}
 	}
 
-	public boolean removeCacheListener(
-		CacheManagerListener cacheManagerListener) {
-
+	public boolean removeListener(CacheManagerListener cacheManagerListener) {
 		if (cacheManagerListener == null) {
 			return false;
 		}

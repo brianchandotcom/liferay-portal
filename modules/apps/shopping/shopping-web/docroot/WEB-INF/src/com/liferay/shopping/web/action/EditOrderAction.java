@@ -12,7 +12,17 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
+package com.liferay.shopping.web.action;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -24,19 +34,9 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.NoSuchOrderException;
-import com.liferay.portlet.shopping.service.ShoppingOrderServiceUtil;
-import com.liferay.portlet.shopping.util.ShoppingUtil;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
+import com.liferay.shopping.exception.NoSuchOrderException;
+import com.liferay.shopping.service.ShoppingOrderServiceUtil;
+import com.liferay.shopping.util.ShoppingUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -113,9 +113,9 @@ public class EditOrderAction extends PortletAction {
 		long[] deleteOrderIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteOrderIds"), 0L);
 
-		for (int i = 0; i < deleteOrderIds.length; i++) {
+		for (long deleteOrderId : deleteOrderIds) {
 			ShoppingOrderServiceUtil.deleteOrder(
-				themeDisplay.getScopeGroupId(), deleteOrderIds[i]);
+				themeDisplay.getScopeGroupId(), deleteOrderId);
 		}
 	}
 

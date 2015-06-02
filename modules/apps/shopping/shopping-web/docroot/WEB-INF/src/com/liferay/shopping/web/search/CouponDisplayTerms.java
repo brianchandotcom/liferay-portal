@@ -12,12 +12,13 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.search;
+package com.liferay.shopping.web.search;
+
+
+import javax.portlet.PortletRequest;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;
-
-import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan

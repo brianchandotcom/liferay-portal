@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
+package com.liferay.shopping.web.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.shopping.NoSuchCategoryException;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.shopping.exception.NoSuchCouponException;
+import com.liferay.shopping.model.ShoppingCoupon;
+import com.liferay.shopping.service.ShoppingCouponLocalServiceUtil;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
@@ -30,7 +34,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ViewAction extends PortletAction {
+public class ViewCouponAction extends PortletAction {
 
 	@Override
 	public ActionForward render(
@@ -40,10 +44,23 @@ public class ViewAction extends PortletAction {
 		throws Exception {
 
 		try {
-			ActionUtil.getCategory(renderRequest);
+			long couponId = ParamUtil.getLong(renderRequest, "couponId");
+
+			String code = ParamUtil.getString(renderRequest, "code");
+
+			ShoppingCoupon coupon = null;
+
+			if (couponId > 0) {
+				coupon = ShoppingCouponLocalServiceUtil.getCoupon(couponId);
+			}
+			else {
+				coupon = ShoppingCouponLocalServiceUtil.getCoupon(code);
+			}
+
+			renderRequest.setAttribute(WebKeys.SHOPPING_COUPON, coupon);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCategoryException ||
+			if (e instanceof NoSuchCouponException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(renderRequest, e.getClass());
@@ -55,7 +72,7 @@ public class ViewAction extends PortletAction {
 			}
 		}
 
-		return actionMapping.findForward("portlet.shopping.view");
+		return actionMapping.findForward("portlet.shopping.view_coupon");
 	}
 
 }

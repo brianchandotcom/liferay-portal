@@ -1,4 +1,3 @@
-<%@ taglib prefix="portlet-url" uri="http://java.sun.com/portlet" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
@@ -32,12 +31,12 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
 	%>
 
-	<portlet-url:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
-		<portlet-url:param name="redirect" value="<%= redirect %>" />
-		<portlet-url:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
-		<portlet-url:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<portlet-url:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
-	</portlet-url:actionURL>
+	<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
+	</portlet:actionURL>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
@@ -72,7 +71,6 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 			<%
 			PortletURL editLayoutsURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
 
-			editLayoutsURL.setParameter("struts_action", "/group_pages/edit_layouts");
 			editLayoutsURL.setParameter("tabs1", layoutSet.isPrivateLayout() ? "private-pages" : "public-pages");
 			editLayoutsURL.setParameter("redirect", redirect);
 			editLayoutsURL.setParameter("groupId", String.valueOf(groupId));

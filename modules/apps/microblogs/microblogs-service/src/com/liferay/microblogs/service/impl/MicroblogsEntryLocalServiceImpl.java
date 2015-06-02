@@ -628,9 +628,9 @@ public class MicroblogsEntryLocalServiceImpl
 
 		private static final long serialVersionUID = 1L;
 
-		private MicroblogsEntry _microblogsEntry;
-		private JSONObject _notificationEventJSONObject;
-		private List<Long> _receiverUserIds;
+		private final MicroblogsEntry _microblogsEntry;
+		private final JSONObject _notificationEventJSONObject;
+		private final List<Long> _receiverUserIds;
 
 	}
 

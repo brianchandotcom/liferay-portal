@@ -934,7 +934,7 @@ public class ThemeDisplay
 			if (_urlPageSettings == null) {
 				_urlPageSettings = PortletProviderUtil.getPortletURL(
 					getRequest(), Layout.class.getName(),
-					PortletProvider.Action.VIEW);
+					PortletProvider.Action.EDIT);
 			}
 
 			return _urlPageSettings;

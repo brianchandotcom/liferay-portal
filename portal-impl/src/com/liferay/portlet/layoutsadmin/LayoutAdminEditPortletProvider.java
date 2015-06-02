@@ -14,10 +14,15 @@
 
 package com.liferay.portlet.layoutsadmin;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
-import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.util.PortletKeys;
+
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -25,12 +30,23 @@ import com.liferay.portal.util.PortletKeys;
 @OSGiBeanProperties(
 	property = {"model.class.name=com.liferay.portal.model.Layout"}
 )
-public class LayoutAdminViewPortletProvider
-	extends BasePortletProvider implements ViewPortletProvider {
+public class LayoutAdminEditPortletProvider
+	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {
 		return PortletKeys.GROUP_PAGES;
+	}
+
+	@Override
+	public PortletURL getPortletURL(HttpServletRequest request)
+		throws PortalException {
+
+		PortletURL portletURL = super.getPortletURL(request);
+
+		portletURL.setParameter("struts_action", "/group_pages/edit_layouts");
+
+		return portletURL;
 	}
 
 }

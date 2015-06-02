@@ -91,7 +91,6 @@
 								<%
 								PortletURL newPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
 
-								newPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
 								newPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
 								newPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
 								newPageURL.setParameter("selPlid", String.valueOf(selPlid));

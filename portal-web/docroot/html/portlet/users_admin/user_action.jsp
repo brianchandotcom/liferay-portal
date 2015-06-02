@@ -73,7 +73,6 @@ long userId = user2.getUserId();
 		<%
 		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
 
-		managePagesURL.setParameter("struts_action", "/group_pages/edit_layouts");
 		managePagesURL.setParameter("redirect", redirect);
 		managePagesURL.setParameter("groupId", String.valueOf(user2.getGroup().getGroupId()));
 		%>

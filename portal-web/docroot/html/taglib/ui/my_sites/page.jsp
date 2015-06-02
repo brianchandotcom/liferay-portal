@@ -228,7 +228,6 @@ List<Group> mySiteGroups = user.getMySiteGroups(classNames, includeControlPanel,
 
 							PortletURL publicAddPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
 
-							publicAddPageURL.setParameter("struts_action", "/group_pages/edit_layouts");
 							publicAddPageURL.setParameter("tabs1", "public-pages");
 							publicAddPageURL.setParameter("redirect", currentURL);
 							publicAddPageURL.setParameter("groupId", String.valueOf(mySiteGroup.getGroupId()));

@@ -86,23 +86,23 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	protected PortalCache<K, V> createPortalCache(
 		PortalCacheConfiguration portalCacheConfiguration) {
 
-		String cacheName = portalCacheConfiguration.getPortalCacheName();
+		String portalCacheName = portalCacheConfiguration.getPortalCacheName();
 
 		MemoryPortalCache<K, V> portalCache = _memoryPortalCaches.get(
-			cacheName);
+			portalCacheName);
 
 		if (portalCache != null) {
 			return portalCache;
 		}
 
 		portalCache = new MemoryPortalCache<>(
-			this, cacheName, _cacheInitialCapacity);
+			this, portalCacheName, _cacheInitialCapacity);
 
 		MemoryPortalCache<K, V> previousPortalCache =
-			_memoryPortalCaches.putIfAbsent(cacheName, portalCache);
+			_memoryPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyCacheAdded(cacheName);
+			aggregatedCacheManagerListener.notifyCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -132,13 +132,13 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String cacheName) {
+	protected void doRemoveCache(String portalCacheName) {
 		MemoryPortalCache<K, V> memoryPortalCache = _memoryPortalCaches.remove(
-			cacheName);
+			portalCacheName);
 
 		memoryPortalCache.destroy();
 
-		aggregatedCacheManagerListener.notifyCacheRemoved(cacheName);
+		aggregatedCacheManagerListener.notifyCacheRemoved(portalCacheName);
 	}
 
 	@Override

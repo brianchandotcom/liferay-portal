@@ -31,15 +31,16 @@ public class SingleVMPoolUtil {
 	}
 
 	public static <K extends Serializable, V> PortalCache<K, V> getCache(
-		String name) {
+		String portalCacheName) {
 
-		return (PortalCache<K, V>)getSingleVMPool().getCache(name);
+		return (PortalCache<K, V>)getSingleVMPool().getCache(portalCacheName);
 	}
 
 	public static <K extends Serializable, V> PortalCache<K, V> getCache(
-		String name, boolean blocking) {
+		String portalCacheName, boolean blocking) {
 
-		return (PortalCache<K, V>)getSingleVMPool().getCache(name, blocking);
+		return (PortalCache<K, V>)getSingleVMPool().getCache(
+			portalCacheName, blocking);
 	}
 
 	public static <K extends Serializable, V> PortalCacheManager<K, V>
@@ -54,8 +55,8 @@ public class SingleVMPoolUtil {
 		return _singleVMPool;
 	}
 
-	public static void removeCache(String name) {
-		getSingleVMPool().removeCache(name);
+	public static void removeCache(String portalCacheName) {
+		getSingleVMPool().removeCache(portalCacheName);
 	}
 
 	public void setSingleVMPool(SingleVMPool singleVMPool) {

@@ -76,15 +76,17 @@ public class SingleVMPoolImpl implements SingleVMPool {
 	}
 
 	@Override
-	public PortalCache<? extends Serializable, ?> getCache(String name) {
-		return _portalCacheManager.getCache(name);
+	public PortalCache<? extends Serializable, ?> getCache(
+		String portalCacheName) {
+
+		return _portalCacheManager.getCache(portalCacheName);
 	}
 
 	@Override
 	public PortalCache<? extends Serializable, ?> getCache(
-		String name, boolean blocking) {
+		String portalCacheName, boolean blocking) {
 
-		return _portalCacheManager.getCache(name, blocking);
+		return _portalCacheManager.getCache(portalCacheName, blocking);
 	}
 
 	@Override
@@ -93,8 +95,8 @@ public class SingleVMPoolImpl implements SingleVMPool {
 	}
 
 	@Override
-	public void removeCache(String name) {
-		_portalCacheManager.removeCache(name);
+	public void removeCache(String portalCacheName) {
+		_portalCacheManager.removeCache(portalCacheName);
 	}
 
 	private final PortalCacheManager<? extends Serializable, ?>

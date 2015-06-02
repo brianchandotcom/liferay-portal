@@ -31,15 +31,16 @@ public class MultiVMPoolUtil {
 	}
 
 	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getCache(String name) {
+		PortalCache<K, V> getCache(String portalCacheName) {
 
-		return (PortalCache<K, V>)getMultiVMPool().getCache(name);
+		return (PortalCache<K, V>)getMultiVMPool().getCache(portalCacheName);
 	}
 
 	public static <K extends Serializable, V extends Serializable>
-		PortalCache<K, V> getCache(String name, boolean blocking) {
+		PortalCache<K, V> getCache(String portalCacheName, boolean blocking) {
 
-		return (PortalCache<K, V>)getMultiVMPool().getCache(name, blocking);
+		return (PortalCache<K, V>)getMultiVMPool().getCache(
+			portalCacheName, blocking);
 	}
 
 	public static <K extends Serializable, V extends Serializable>
@@ -54,8 +55,8 @@ public class MultiVMPoolUtil {
 		return _multiVMPool;
 	}
 
-	public static void removeCache(String name) {
-		getMultiVMPool().removeCache(name);
+	public static void removeCache(String portalCacheName) {
+		getMultiVMPool().removeCache(portalCacheName);
 	}
 
 	public void setMultiVMPool(MultiVMPool multiVMPool) {

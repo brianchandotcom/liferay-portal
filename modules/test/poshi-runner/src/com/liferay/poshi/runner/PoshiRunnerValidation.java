@@ -597,7 +597,7 @@ public class PoshiRunnerValidation {
 		Element element, List<String> attributeNames,
 		List<String> multiplePrimaryAttributeNames, String filePath) {
 
-		if (!multiplePrimaryAttributeNames.equals((attributeNames))) {
+		if (!multiplePrimaryAttributeNames.equals(attributeNames)) {
 			_exceptions.add(
 				new Exception(
 					"Too many attributes: " + "\n" + filePath + ":" +
@@ -640,30 +640,24 @@ public class PoshiRunnerValidation {
 
 		List<String> attributeNames = new ArrayList<>();
 
-		boolean found = false;
-
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
 					element.attributeValue(primaryAttributeName))) {
 
 				attributeNames.add(primaryAttributeName);
-
-				if (!found) {
-					found = true;
-				}
-				else {
-					_validateHasMultiplePrimaryAttributeNames(
-						element, attributeNames, multiplePrimaryAttributeNames,
-						filePath);
-				}
 			}
 		}
 
-		if (!found) {
+		if (attributeNames.size() < 1) {
 			_exceptions.add(
 				new Exception(
 					"Invalid or missing attribute\n" + filePath + ":" +
 						element.attributeValue("line-number")));
+		}
+		else if (attributeNames.size() > 1) {
+			_validateHasMultiplePrimaryAttributeNames(
+				element, attributeNames, multiplePrimaryAttributeNames,
+				filePath);
 		}
 	}
 

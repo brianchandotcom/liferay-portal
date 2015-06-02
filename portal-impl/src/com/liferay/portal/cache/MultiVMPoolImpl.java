@@ -75,7 +75,7 @@ public class MultiVMPoolImpl implements MultiVMPool {
 
 	@Override
 	public void clear() {
-		_portalCacheManager.clearAll();
+		_portalCacheManager.clearCaches();
 	}
 
 	@Override

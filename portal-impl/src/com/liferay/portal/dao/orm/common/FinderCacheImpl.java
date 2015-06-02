@@ -242,7 +242,7 @@ public class FinderCacheImpl
 		PortalCacheManager<? extends Serializable, ? extends Serializable>
 			portalCacheManager = _multiVMPool.getCacheManager();
 
-		portalCacheManager.registerCacheManagerListener(this);
+		portalCacheManager.registerListener(this);
 	}
 
 	private PortalCache<Serializable, Serializable> _getPortalCache(

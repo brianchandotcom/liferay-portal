@@ -34,7 +34,7 @@ public interface PortalCacheManager<K extends Serializable, V> {
 		"portal.cache.manager.type";
 
 	@Proxy
-	public void clearAll() throws PortalCacheException;
+	public void clearCaches() throws PortalCacheException;
 
 	public void destroy();
 
@@ -44,7 +44,7 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	public PortalCache<K, V> getCache(String portalCacheName, boolean blocking)
 		throws PortalCacheException;
 
-	public Set<CacheManagerListener> getCacheManagerListeners();
+	public Set<CacheManagerListener> getListeners();
 
 	public String getName();
 
@@ -53,14 +53,13 @@ public interface PortalCacheManager<K extends Serializable, V> {
 	@Proxy
 	public void reconfigureCaches(URL configurationURL);
 
-	public boolean registerCacheManagerListener(
-		CacheManagerListener cacheManagerListener);
+	public boolean registerListener(CacheManagerListener cacheManagerListener);
 
 	public void removeCache(String portalCacheName);
 
-	public boolean unregisterCacheManagerListener(
+	public boolean unregisterListener(
 		CacheManagerListener cacheManagerListener);
 
-	public void unregisterCacheManagerListeners();
+	public void unregisterListeners();
 
 }

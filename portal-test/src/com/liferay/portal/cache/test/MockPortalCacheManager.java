@@ -35,7 +35,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void clearAll() {
+	public void clearCaches() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -57,7 +57,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public Set<CacheManagerListener> getCacheManagerListeners() {
+	public Set<CacheManagerListener> getListeners() {
 		throw new UnsupportedOperationException();
 	}
 
@@ -77,9 +77,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public boolean registerCacheManagerListener(
-		CacheManagerListener cacheManagerListener) {
-
+	public boolean registerListener(CacheManagerListener cacheManagerListener) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -89,14 +87,14 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public boolean unregisterCacheManagerListener(
+	public boolean unregisterListener(
 		CacheManagerListener cacheManagerListener) {
 
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void unregisterCacheManagerListeners() {
+	public void unregisterListeners() {
 		throw new UnsupportedOperationException();
 	}
 

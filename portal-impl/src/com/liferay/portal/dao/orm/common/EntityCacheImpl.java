@@ -340,7 +340,7 @@ public class EntityCacheImpl
 		PortalCacheManager<? extends Serializable, ? extends Serializable>
 			portalCacheManager = _multiVMPool.getCacheManager();
 
-		portalCacheManager.registerCacheManagerListener(this);
+		portalCacheManager.registerListener(this);
 	}
 
 	private Serializable _encodeCacheKey(Serializable primaryKey) {

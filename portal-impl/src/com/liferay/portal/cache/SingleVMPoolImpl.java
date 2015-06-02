@@ -72,7 +72,7 @@ public class SingleVMPoolImpl implements SingleVMPool {
 
 	@Override
 	public void clear() {
-		_portalCacheManager.clearAll();
+		_portalCacheManager.clearCaches();
 	}
 
 	@Override

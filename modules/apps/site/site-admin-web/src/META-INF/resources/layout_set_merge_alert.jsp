@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/layouts_admin/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 long groupId = GetterUtil.getLong((String)request.getAttribute("edit_layout_set_prototype.jsp-groupId"));
@@ -29,16 +29,14 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutSetPrototype);
 
 	<%
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_set_prototypes_merge_alert") + StringPool.UNDERLINE;
-
-	PortletURL portletURL = liferayPortletResponse.createActionURL();
-
-	portletURL.setParameter("redirect", redirect);
-	portletURL.setParameter("layoutSetPrototypeId",String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()));
-	portletURL.setParameter("struts_action", "/layouts_admin/edit_layout_set");
-	portletURL.setParameter(Constants.CMD, "reset_merge_fail_count_and_merge");
-	portletURL.setParameter("groupId", String.valueOf(groupId));
-	portletURL.setParameter("privateLayoutSet", String.valueOf(layoutSet.isPrivateLayout()));
 	%>
+
+	<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
+		<portlet:param name="redirect" value="<%= redirect %>" />
+		<portlet:param name="layoutSetPrototypeId" value="<%= String.valueOf(layoutSetPrototype.getLayoutSetPrototypeId()) %>" />
+		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+		<portlet:param name="privateLayoutSet" value="<%= String.valueOf(layoutSet.isPrivateLayout()) %>" />
+	</portlet:actionURL>
 
 	<div class="alert alert-warning">
 		<liferay-ui:message arguments='<%= new Object[] {mergeFailCount, LanguageUtil.get(request, "site-template")} %>' key="the-propagation-of-changes-from-the-x-has-been-disabled-temporarily-after-x-errors" translateArguments="<%= false %>" />
@@ -69,15 +67,14 @@ List<Layout> mergeFailFriendlyURLLayouts = SitesUtil.getMergeFailFriendlyURLLayo
 		<liferay-ui:message key="modify-the-friendly-url-of-the-pages-to-allow-their-propagation-from-the-site-template" />
 
 		<ul>
-			<liferay-portlet:renderURL portletName="<%= PortletKeys.GROUP_PAGES %>" varImpl="editLayoutsURL">
-				<portlet:param name="struts_action" value="/group_pages/edit_layouts" />
-				<portlet:param name="tabs1" value='<%= layoutSet.isPrivateLayout() ? "private-pages" : "public-pages" %>' />
-				<portlet:param name="redirect" value="<%= redirect %>" />
-				<portlet:param name="backURL" value="<%= redirect %>" />
-				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-			</liferay-portlet:renderURL>
 
 			<%
+			PortletURL editLayoutsURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
+
+			editLayoutsURL.setParameter("tabs1", layoutSet.isPrivateLayout() ? "private-pages" : "public-pages");
+			editLayoutsURL.setParameter("redirect", redirect);
+			editLayoutsURL.setParameter("groupId", String.valueOf(groupId));
+
 			for (Layout mergeFailFriendlyURLLayout : mergeFailFriendlyURLLayouts) {
 				editLayoutsURL.setParameter("selPlid", String.valueOf(mergeFailFriendlyURLLayout.getPlid()));
 			%>

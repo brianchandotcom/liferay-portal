@@ -187,9 +187,7 @@ else {
 			}
 			%>
 
-			<portlet:actionURL var="publishURL">
-				<portlet:param name="struts_action" value="/staging_bar/edit_layout_revision" />
-				<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
 				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 				<portlet:param name="major" value="true" />
@@ -240,13 +238,25 @@ else {
 	</c:if>
 </div>
 
+<portlet:renderURL var="markAsReadyForPublicationURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+	<portlet:param name="mvcPath" value="/view_layout_revision_details.jsp" />
+</portlet:renderURL>
+
+<portlet:renderURL var="viewHistoryURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+	<portlet:param name="mvcPath" value="/view_layout_revisions.jsp" />
+	<portlet:param name="layoutSetBranchId" value="<%= String.valueOf(layoutSetBranch.getLayoutSetBranchId()) %>" />
+</portlet:renderURL>
+
 <aui:script position="inline" use="liferay-staging-version">
 	var stagingBar = Liferay.StagingBar;
 
 	stagingBar.init(
 		{
+			markAsReadyForPublicationURL: '<%= markAsReadyForPublicationURL %>',
 			namespace: '<portlet:namespace />',
-			portletId: '<%= portletDisplay.getId() %>'
+			portletId: '<%= portletDisplay.getId() %>',
+			viewHistoryURL: '<%= viewHistoryURL %>'
 		}
 	);
 </aui:script>

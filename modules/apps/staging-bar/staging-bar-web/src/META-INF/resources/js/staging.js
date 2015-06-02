@@ -9,9 +9,13 @@ AUI.add(
 
 				var namespace = config.namespace;
 
+				instance.markAsReadyForPublicationURL = config.markAsReadyForPublicationURL;
+
 				instance._namespace = namespace;
 
 				instance._stagingBar = A.oneNS(namespace, '#stagingBar');
+
+				instance.viewHistoryURL = config.viewHistoryURL;
 
 				Liferay.publish(
 					{

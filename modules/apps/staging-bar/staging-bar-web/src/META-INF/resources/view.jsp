@@ -96,15 +96,15 @@ if (layout != null) {
 										%>
 
 										<c:if test="<%= !layoutRevision.isIncomplete() %>">
-											<liferay-util:include page="/html/portlet/staging_bar/view_layout_set_branch_details.jsp" />
+											<liferay-util:include page="/view_layout_set_branch_details.jsp" servletContext="<%= application %>" />
 
-											<liferay-util:include page="/html/portlet/staging_bar/view_layout_branch_details.jsp" />
+											<liferay-util:include page="/view_layout_branch_details.jsp" servletContext="<%= application %>" />
 										</c:if>
 
 										<div class="layout-revision-details" id="<portlet:namespace />layoutRevisionDetails">
 											<aui:model-context bean="<%= layoutRevision %>" model="<%= LayoutRevision.class %>" />
 
-											<liferay-util:include page="/html/portlet/staging_bar/view_layout_revision_details.jsp" />
+											<liferay-util:include page="/view_layout_revision_details.jsp" servletContext="<%= application %>" />
 										</div>
 
 										<liferay-staging:menu cssClass="branching-enabled col-md-4" extended="<%= false %>" layoutSetBranchId="<%= layoutRevision.getLayoutSetBranchId() %>" onlyActions="<%= true %>" />
@@ -125,7 +125,7 @@ if (layout != null) {
 													request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
 													%>
 
-													<liferay-util:include page="/html/portlet/staging_bar/last_publication_date_message.jsp" />
+													<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
 												</c:otherwise>
 											</c:choose>
 										</div>
@@ -178,7 +178,7 @@ if (layout != null) {
 								request.setAttribute("view.jsp-typeSettingsProperties", liveLayout.getTypeSettingsProperties());
 								%>
 
-								<liferay-util:include page="/html/portlet/staging_bar/last_publication_date_message.jsp" />
+								<liferay-util:include page="/last_publication_date_message.jsp" servletContext="<%= application %>" />
 							</div>
 						</aui:nav-item>
 					</aui:nav-item>

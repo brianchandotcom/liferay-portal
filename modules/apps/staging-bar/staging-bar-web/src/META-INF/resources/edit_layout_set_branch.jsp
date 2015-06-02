@@ -31,12 +31,11 @@ if (layoutSetBranchId > 0) {
 <div class='<%= (layoutSetBranch != null) ? StringPool.BLANK : "hide" %>' data-namespace="<portlet:namespace />" id="<portlet:namespace /><%= layoutSetBranch != null ? "updateBranch" : "addBranch" %>">
 	<aui:model-context bean="<%= layoutSetBranch %>" model="<%= LayoutSetBranch.class %>" />
 
-	<portlet:actionURL var="editLayoutSetBranchURL">
-		<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
+	<portlet:actionURL name="updateLayoutSetBranch" var="editLayoutSetBranchURL">
+		<portlet:param name="mvcPath" value="/view_layout_set_branches.jsp" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= editLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm3">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= layoutSetBranch != null ? Constants.UPDATE : Constants.ADD %>" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="groupId" type="hidden" value="<%= stagingGroup.getGroupId() %>" />
 		<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />

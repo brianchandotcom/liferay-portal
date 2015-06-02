@@ -44,9 +44,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 							boolean selected = (group.isStagingGroup() || group.isStagedRemotely()) && (curLayoutSetBranch.getLayoutSetBranchId() == layoutRevision.getLayoutSetBranchId());
 						%>
 
-							<portlet:actionURL var="layoutSetBranchURL">
-								<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
-								<portlet:param name="<%= Constants.CMD %>" value="select_layout_set_branch" />
+							<portlet:actionURL name="selectLayoutSetBranch" var="layoutSetBranchURL">
 								<portlet:param name="redirect" value="<%= stagingFriendlyURL %>" />
 								<portlet:param name="groupId" value="<%= String.valueOf(curLayoutSetBranch.getGroupId()) %>" />
 								<portlet:param name="privateLayout" value="<%= String.valueOf(layout.isPrivateLayout()) %>" />
@@ -68,7 +66,7 @@ String stagingFriendlyURL = (String)request.getAttribute("view.jsp-stagingFriend
 			</c:choose>
 
 			<portlet:renderURL var="layoutSetBranchesURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
-				<portlet:param name="struts_action" value="/staging_bar/view_layout_set_branches" />
+				<portlet:param name="mvcPath" value="/view_layout_set_branches.jsp" />
 			</portlet:renderURL>
 
 			<div class="manage-layout-set-branches page-variations">

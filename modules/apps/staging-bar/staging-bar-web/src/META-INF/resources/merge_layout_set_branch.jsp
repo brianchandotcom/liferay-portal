@@ -33,12 +33,11 @@ if (layoutSetBranches.contains(layoutSetBranch)) {
 %>
 
 <div id="<portlet:namespace />mergeLayoutSetBranch">
-	<portlet:actionURL var="mergeLayoutSetBranchURL">
-		<portlet:param name="struts_action" value="/staging_bar/edit_layout_set_branch" />
+	<portlet:actionURL name="mergeLayoutSetBranch" var="mergeLayoutSetBranchURL">
+		<portlet:param name="mvcPath" value="/view_layout_set_branches.jsp" />
 	</portlet:actionURL>
 
 	<aui:form action="<%= mergeLayoutSetBranchURL %>" enctype="multipart/form-data" method="post" name="fm4">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="merge_layout_set_branch" />
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 		<aui:input name="layoutSetBranchId" type="hidden" value="<%= layoutSetBranchId %>" />

@@ -28,9 +28,8 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= LayoutBranchPermissionUtil.contains(permissionChecker, layoutBranch, ActionKeys.UPDATE) %>">
-		<portlet:renderURL var="editURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-			<portlet:param name="struts_action" value="/staging_bar/edit_layout_branch" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.UPDATE %>" />
+		<portlet:renderURL var="editURL">
+			<portlet:param name="mvcPath" value="/edit_layout_branch.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="groupId" value="<%= String.valueOf(layoutBranch.getGroupId()) %>" />
 			<portlet:param name="layoutBranchId" value="<%= String.valueOf(layoutBranch.getLayoutBranchId()) %>" />
@@ -47,9 +46,7 @@ long currentLayoutBranchId = GetterUtil.getLong((String)request.getAttribute("vi
 		/>
 
 		<c:if test="<%= !rootLayoutRevision.isPending() && !layoutBranch.isMaster() && !rootLayoutRevision.isHead() && LayoutBranchPermissionUtil.contains(permissionChecker, layoutBranch, ActionKeys.DELETE) %>">
-			<portlet:actionURL var="deleteURL">
-				<portlet:param name="struts_action" value="/staging_bar/edit_layout_branch" />
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+			<portlet:actionURL name="deleteLayoutBranch" var="deleteURL">
 				<portlet:param name="redirect" value="<%= currentURL %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutBranch.getGroupId()) %>" />
 				<portlet:param name="layoutBranchId" value="<%= String.valueOf(layoutBranch.getLayoutBranchId()) %>" />

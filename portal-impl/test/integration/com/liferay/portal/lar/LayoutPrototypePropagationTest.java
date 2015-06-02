@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.lar;
+package com.liferay.portal.lar;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -32,12 +31,10 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Eduardo Garcia
  */
-@RunWith(Arquillian.class)
 public class LayoutPrototypePropagationTest
 	extends BasePrototypePropagationTestCase {
 

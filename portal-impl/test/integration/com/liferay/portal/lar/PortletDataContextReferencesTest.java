@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.lar;
+package com.liferay.portal.lar;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataContextFactoryUtil;
@@ -48,12 +47,10 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Mate Thurzo
  */
-@RunWith(Arquillian.class)
 public class PortletDataContextReferencesTest {
 
 	@ClassRule

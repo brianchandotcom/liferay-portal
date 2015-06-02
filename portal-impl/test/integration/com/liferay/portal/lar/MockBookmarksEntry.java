@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lar;
+package com.liferay.portal.lar;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.StagedModelType;

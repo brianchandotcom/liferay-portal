@@ -420,7 +420,7 @@
 		<property name="methodFactoryRegistry">
 			<bean class="com.liferay.portal.webdav.methods.MethodFactoryRegistryImpl">
 				<property name="defaultMethodFactory">
-					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil" />
+					<bean class="com.liferay.portal.webdav.methods.MethodFactoryImpl" depends-on="com.liferay.portal.kernel.xml.SAXReaderUtil, com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil" />
 				</property>
 			</bean>
 		</property>

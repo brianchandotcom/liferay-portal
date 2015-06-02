@@ -513,7 +513,7 @@ AUI.add(
 				var instance = this;
 
 				A.io.request(
-					themeDisplay.getPathMain() + '/layouts_admin/update_page',
+					themeDisplay.getPathMain() + '/portal/edit_layout',
 					{
 						data: A.mix(
 							data,

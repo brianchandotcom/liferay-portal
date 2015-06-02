@@ -153,6 +153,12 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashMoveBaseModelIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashMyBaseModel() throws Exception {
 	}
 

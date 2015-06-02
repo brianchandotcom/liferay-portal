@@ -90,12 +90,12 @@ public class DefaultTemplateResourceLoader implements TemplateResourceLoader {
 		CacheListener<String, TemplateResource> cacheListener =
 			new TemplateResourceCacheListener(name);
 
-		_multiVMPortalCache.registerCacheListener(
+		_multiVMPortalCache.registerListener(
 			cacheListener, CacheListenerScope.ALL);
 
 		_singleVMPortalCache = SingleVMPoolUtil.getCache(portalCacheName);
 
-		_singleVMPortalCache.registerCacheListener(
+		_singleVMPortalCache.registerListener(
 			cacheListener, CacheListenerScope.ALL);
 	}
 

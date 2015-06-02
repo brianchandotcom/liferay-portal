@@ -36,10 +36,10 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public List<K> getKeys();
 
+	public PortalCacheManager<K, V> getManager();
+
 	@Id
 	public String getName();
-
-	public PortalCacheManager<K, V> getPortalCacheManager();
 
 	@Proxy
 	public void put(K key, V value);
@@ -47,9 +47,9 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public void put(K key, V value, int timeToLive);
 
-	public void registerCacheListener(CacheListener<K, V> cacheListener);
+	public void registerListener(CacheListener<K, V> cacheListener);
 
-	public void registerCacheListener(
+	public void registerListener(
 		CacheListener<K, V> cacheListener,
 		CacheListenerScope cacheListenerScope);
 
@@ -59,8 +59,8 @@ public interface PortalCache<K extends Serializable, V> {
 	@Proxy
 	public void removeAll();
 
-	public void unregisterCacheListener(CacheListener<K, V> cacheListener);
+	public void unregisterListener(CacheListener<K, V> cacheListener);
 
-	public void unregisterCacheListeners();
+	public void unregisterListeners();
 
 }

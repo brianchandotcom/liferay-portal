@@ -127,7 +127,7 @@ public class PortalCacheIndexerTest {
 	public void testDispose() {
 		_portalCache.put(_INDEX_1_KEY_1, _VALUE);
 
-		_portalCache.unregisterCacheListeners();
+		_portalCache.unregisterListeners();
 
 		Set<TestIndexedCacheKey> testIndexedCacheKeys =
 			_portalCacheIndexer.getIndexedCacheKeys(_INDEX_1_KEY_1.getIndex());

@@ -296,7 +296,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				continue;
 			}
 
-			portalCache.unregisterCacheListeners();
+			portalCache.unregisterListeners();
 
 			_initPortalCacheListeners(portalCache, portalCacheConfiguration);
 		}
@@ -331,7 +331,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 				callbackFactory.createCacheListener(
 					callbackConfiguration.getProperties());
 
-			portalCache.registerCacheListener(cacheListener, entry.getValue());
+			portalCache.registerListener(cacheListener, entry.getValue());
 		}
 	}
 

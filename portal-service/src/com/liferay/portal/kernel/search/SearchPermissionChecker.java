@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.filter.Filter;
+
 /**
  * @author Allen Chiang
  * @author Bruno Farache
@@ -23,9 +25,9 @@ public interface SearchPermissionChecker {
 
 	public void addPermissionFields(long companyId, Document doc);
 
-	public Query getPermissionQuery(
+	public Filter getPermissionFilter(
 		long companyId, long[] groupIds, long userId, String className,
-		Query query, SearchContext searchContext);
+		Filter filter, SearchContext searchContext);
 
 	public void updatePermissionFields(String name, String primKey);
 

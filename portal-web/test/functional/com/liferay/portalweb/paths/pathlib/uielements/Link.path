@@ -9,6 +9,16 @@
 </thead>
 <tbody>
 <tr>
+	<td>CHANGE_EMAIL_ADDRESS</td>
+	<td>//div/a[contains(.,'Change Email Address')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CREATE_ACCOUNT</td>
+	<td>//a[contains(.,'Create Account')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EDIT</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Edit')]</td>
 	<td></td>
@@ -16,6 +26,11 @@
 <tr>
 	<td>GOOGLE_LOGIN</td>
 	<td>//span[contains(.,'Google')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GUEST</td>
+	<td>//div[@class='navigation']/ul/li/a/span[contains(.,'Guest')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -41,6 +56,11 @@
 <tr>
 	<td>PERMISSIONS</td>
 	<td>//a/span[contains(@class,'taglib-text') and contains(.,'Permissions')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEND_NEW_VERIFICATION_CODE</td>
+	<td>//div/a[contains(.,'Send New Verification Code')]</td>
 	<td></td>
 </tr>
 <tr>

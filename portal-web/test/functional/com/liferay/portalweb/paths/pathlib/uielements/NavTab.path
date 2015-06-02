@@ -29,6 +29,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DNS_LOOKUP</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'DNS Lookup')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>EMAIL_VERIFICATiON_NOTIFICATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Email Verification Notification')]</td>
 	<td></td>
@@ -106,6 +111,11 @@
 <tr>
 	<td>SUPPORTED_CLIENTS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Supported Clients')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WHOIS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Whois')]</td>
 	<td></td>
 </tr>
 </tbody>

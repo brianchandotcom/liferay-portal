@@ -9,6 +9,11 @@
 </thead>
 <tbody>
 <tr>
+	<td>ACTIVATE_ACCOUNT</td>
+	<td>//button[contains(.,'Activate Account')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD</td>
 	<td>//a[contains(.,'Add')]|//button[contains(.,'Add')]</td>
 	<td></td>
@@ -69,6 +74,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CALCULATE</td>
+	<td>//button[contains(.,'Calculate')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CANCEL</td>
 	<td>//a[contains(@id,'cancel') and contains(@class,'btn')]|//button[contains(.,'Cancel')]</td>
 	<td></td>
@@ -119,6 +129,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CONVERT</td>
+	<td>//button[contains(.,'Convert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COPY</td>
 	<td>//button[contains(.,'Copy')]</td>
 	<td></td>
@@ -149,9 +164,19 @@
 	<td></td>
 </tr>
 <tr>
+	<td>FIND</td>
+	<td>//button[contains(.,'Find')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>I_AGREE</td>
 	<td>//button[contains(.,'I Agree')]</td>
 	<td></td>
+</tr>
+<tr>
+	<td>I_DISAGREE_BUTTON</td>
+	<td>//button[contains(.,'I Disagree')]</td>
+	<td>I Disagree Button</td>
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE</td>
@@ -341,6 +366,11 @@
 <tr>
 	<td>SIGN_IN</td>
 	<td>//button[contains(.,'Sign In')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIGN_IN_PNG</td>
+	<td>portal/buttons/sign_in_button.png</td>
 	<td></td>
 </tr>
 <tr>

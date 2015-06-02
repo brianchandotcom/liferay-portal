@@ -100,12 +100,12 @@ public class SecureXMLFactoryProviderImpl implements SecureXMLFactoryProvider {
 
 	@Override
 	public XMLReader newXMLReader() {
-		XMLReader xmlReader = null;
-
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		ClassLoader contextClassLoader =
 			ClassLoaderUtil.getContextClassLoader();
+
+		XMLReader xmlReader = null;
 
 		try {
 			if (contextClassLoader != classLoader) {

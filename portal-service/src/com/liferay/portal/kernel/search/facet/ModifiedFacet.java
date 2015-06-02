@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -40,19 +40,15 @@ public class ModifiedFacet extends RangeFacet {
 	}
 
 	@Override
-	protected BooleanClause<Query> doGetFacetClause() {
-		SearchContext searchContext = getSearchContext();
-
+	protected BooleanClause<Filter> doGetFacetFilterClause() {
 		FacetConfiguration facetConfiguration = getFacetConfiguration();
 
-		normalizeDates(searchContext, facetConfiguration);
+		normalizeDates(facetConfiguration);
 
-		return super.doGetFacetClause();
+		return super.doGetFacetFilterClause();
 	}
 
-	protected void normalizeDates(
-		SearchContext searchContext, FacetConfiguration facetConfiguration) {
-
+	protected void normalizeDates(FacetConfiguration facetConfiguration) {
 		Calendar now = Calendar.getInstance();
 
 		now.set(Calendar.SECOND, 0);

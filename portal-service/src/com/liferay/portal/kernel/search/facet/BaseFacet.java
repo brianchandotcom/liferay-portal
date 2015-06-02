@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.BaseFacetValueValidator;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -33,6 +34,10 @@ public abstract class BaseFacet implements Facet {
 		_searchContext = searchContext;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFacetFilterClause}
+	 */
+	@Deprecated
 	@Override
 	public BooleanClause<Query> getFacetClause() {
 		return doGetFacetClause();
@@ -46,6 +51,11 @@ public abstract class BaseFacet implements Facet {
 	@Override
 	public FacetConfiguration getFacetConfiguration() {
 		return _facetConfiguration;
+	}
+
+	@Override
+	public BooleanClause<Filter> getFacetFilterClause() {
+		return doGetFacetFilterClause();
 	}
 
 	@Override
@@ -105,7 +115,15 @@ public abstract class BaseFacet implements Facet {
 		_facetConfiguration.setStatic(isStatic);
 	}
 
-	protected abstract BooleanClause<Query> doGetFacetClause();
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #doGetFacetFilterClause}
+	 */
+	@Deprecated
+	protected BooleanClause<Query> doGetFacetClause() {
+		return null;
+	}
+
+	protected abstract BooleanClause<Filter> doGetFacetFilterClause();
 
 	private FacetCollector _facetCollector;
 	private FacetConfiguration _facetConfiguration = new FacetConfiguration();

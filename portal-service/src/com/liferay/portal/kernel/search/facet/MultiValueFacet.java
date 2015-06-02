@@ -17,20 +17,15 @@ package com.liferay.portal.kernel.search.facet;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.TermQuery;
-import com.liferay.portal.kernel.search.TermQueryFactoryUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -133,7 +128,7 @@ public class MultiValueFacet extends BaseFacet {
 	}
 
 	@Override
-	protected BooleanClause<Query> doGetFacetClause() {
+	protected BooleanClause<Filter> doGetFacetFilterClause() {
 		SearchContext searchContext = getSearchContext();
 
 		FacetConfiguration facetConfiguration = getFacetConfiguration();
@@ -163,7 +158,7 @@ public class MultiValueFacet extends BaseFacet {
 			return null;
 		}
 
-		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanFilter facetFilter = new BooleanFilter();
 
 		for (String value : values) {
 			FacetValueValidator facetValueValidator = getFacetValueValidator();
@@ -174,23 +169,17 @@ public class MultiValueFacet extends BaseFacet {
 				continue;
 			}
 
-			TermQuery termQuery = TermQueryFactoryUtil.create(
-				searchContext, getFieldName(), value);
+			TermFilter termFilter = new TermFilter(getFieldName(), value);
 
-			try {
-				facetQuery.add(termQuery, BooleanClauseOccur.SHOULD);
-			}
-			catch (ParseException pe) {
-				_log.error(pe, pe);
-			}
+			facetFilter.add(termFilter, BooleanClauseOccur.SHOULD);
 		}
 
-		if (!facetQuery.hasClauses()) {
+		if (!facetFilter.hasClauses()) {
 			return null;
 		}
 
-		return BooleanClauseFactoryUtil.create(
-			searchContext, facetQuery, BooleanClauseOccur.MUST.getName());
+		return BooleanClauseFactoryUtil.createFilter(
+			searchContext, facetFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void doSetValues(JSONArray valuesJSONArray) {
@@ -200,8 +189,5 @@ public class MultiValueFacet extends BaseFacet {
 
 		dataJSONObject.put("values", valuesJSONArray);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		MultiValueFacet.class);
 
 }

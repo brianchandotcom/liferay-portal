@@ -15,6 +15,9 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.facet.Facet;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -126,19 +129,33 @@ public class FacetedSearcher extends BaseSearcher {
 
 		Map<String, Facet> facets = searchContext.getFacets();
 
+		BooleanFilter facetFilter = new BooleanFilter();
+
 		for (Facet facet : facets.values()) {
-			BooleanClause<Query> facetClause = facet.getFacetClause();
+			BooleanClause<Filter> facetClause = facet.getFacetFilterClause();
 
 			if (facetClause != null) {
-				contextQuery.add(
+				facetFilter.add(
 					facetClause.getClause(),
 					facetClause.getBooleanClauseOccur());
 			}
 		}
 
+		doAddFacetClause(searchContext, facetFilter, facets.values());
+
+		BooleanFilter fullQueryFilter = new BooleanFilter();
+
+		fullQueryFilter.add(facetFilter, BooleanClauseOccur.MUST);
+
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 
-		fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
+		if (contextQuery.hasClauses()) {
+			QueryFilter queryFilter = new QueryFilter(contextQuery);
+
+			fullQueryFilter.add(queryFilter, BooleanClauseOccur.MUST);
+		}
+
+		fullQuery.setPreBooleanFilter(fullQueryFilter);
 
 		if (searchQuery.hasClauses()) {
 			fullQuery.add(searchQuery, BooleanClauseOccur.MUST);

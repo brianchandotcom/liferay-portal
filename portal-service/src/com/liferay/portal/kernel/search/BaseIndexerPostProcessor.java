@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+
 import java.util.Locale;
 
 /**
@@ -22,6 +24,17 @@ import java.util.Locale;
  */
 public class BaseIndexerPostProcessor implements IndexerPostProcessor {
 
+	@Override
+	public void postProcessContextFilter(
+			BooleanFilter booleanFilter, SearchContext searchContext)
+		throws Exception {
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #postProcessContextFilter(
+	 *             BooleanFilter, SearchContext)}
+	 */
+	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)

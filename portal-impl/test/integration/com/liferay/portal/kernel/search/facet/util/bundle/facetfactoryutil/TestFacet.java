@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
+import com.liferay.portal.kernel.search.filter.Filter;
 
 /**
  * @author Peter Fellwock
@@ -29,6 +30,7 @@ public class TestFacet implements Facet {
 
 	public static final String FIELD_NAME = "FIELD_NAME";
 
+	@Deprecated
 	@Override
 	public BooleanClause<Query> getFacetClause() {
 		return null;
@@ -41,6 +43,11 @@ public class TestFacet implements Facet {
 
 	@Override
 	public FacetConfiguration getFacetConfiguration() {
+		return null;
+	}
+
+	@Override
+	public BooleanClause<Filter> getFacetFilterClause() {
 		return null;
 	}
 

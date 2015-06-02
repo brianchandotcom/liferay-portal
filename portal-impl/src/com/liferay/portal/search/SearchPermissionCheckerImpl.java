@@ -469,7 +469,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 		BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(searchContext);
 
-		fullQuery.add(query, BooleanClauseOccur.MUST);
+		if (query != null) {
+			fullQuery.add(query, BooleanClauseOccur.MUST);
+		}
+
 		fullQuery.add(permissionQuery, BooleanClauseOccur.MUST);
 
 		return fullQuery;

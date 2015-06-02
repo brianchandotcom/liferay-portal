@@ -21,13 +21,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.ParseException;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -84,7 +82,7 @@ public class ScopeFacet extends MultiValueFacet {
 	}
 
 	@Override
-	protected BooleanClause<Query> doGetFacetClause() {
+	protected BooleanClause<Filter> doGetFacetFilterClause() {
 		SearchContext searchContext = getSearchContext();
 
 		FacetConfiguration facetConfiguration = getFacetConfiguration();
@@ -122,18 +120,16 @@ public class ScopeFacet extends MultiValueFacet {
 			return null;
 		}
 
-		BooleanQuery facetQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanFilter facetFilter = new BooleanFilter();
 
 		long ownerUserId = searchContext.getOwnerUserId();
 
 		if (ownerUserId > 0) {
-			facetQuery.addRequiredTerm(Field.USER_ID, ownerUserId);
+			facetFilter.addRequiredTerm(Field.USER_ID, ownerUserId);
 		}
 
-		BooleanQuery groupIdsQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
-		BooleanQuery scopeGroupIdsQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanFilter groupIdsFilter = new BooleanFilter();
+		BooleanFilter scopeGroupIdsFilter = new BooleanFilter();
 
 		for (int i = 0; i < groupIds.length; i ++) {
 			long groupId = groupIds[i];
@@ -155,12 +151,12 @@ public class ScopeFacet extends MultiValueFacet {
 					parentGroupId = group.getParentGroupId();
 				}
 
-				groupIdsQuery.addTerm(Field.GROUP_ID, parentGroupId);
+				groupIdsFilter.addTerm(Field.GROUP_ID, parentGroupId);
 
 				groupIds[i] = parentGroupId;
 
 				if (group.isLayout() || searchContext.isScopeStrict()) {
-					scopeGroupIdsQuery.addTerm(Field.SCOPE_GROUP_ID, groupId);
+					scopeGroupIdsFilter.addTerm(Field.SCOPE_GROUP_ID, groupId);
 				}
 			}
 			catch (Exception e) {
@@ -172,26 +168,16 @@ public class ScopeFacet extends MultiValueFacet {
 
 		searchContext.setGroupIds(groupIds);
 
-		if (groupIdsQuery.hasClauses()) {
-			try {
-				facetQuery.add(groupIdsQuery, BooleanClauseOccur.MUST);
-			}
-			catch (ParseException pe) {
-				_log.error(pe, pe);
-			}
+		if (groupIdsFilter.hasClauses()) {
+			facetFilter.add(groupIdsFilter, BooleanClauseOccur.MUST);
 		}
 
-		if (scopeGroupIdsQuery.hasClauses()) {
-			try {
-				facetQuery.add(scopeGroupIdsQuery, BooleanClauseOccur.MUST);
-			}
-			catch (ParseException pe) {
-				_log.error(pe, pe);
-			}
+		if (scopeGroupIdsFilter.hasClauses()) {
+			facetFilter.add(scopeGroupIdsFilter, BooleanClauseOccur.MUST);
 		}
 
-		return BooleanClauseFactoryUtil.create(
-			searchContext, facetQuery, BooleanClauseOccur.MUST.getName());
+		return BooleanClauseFactoryUtil.createFilter(
+			searchContext, facetFilter, BooleanClauseOccur.MUST);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(ScopeFacet.class);

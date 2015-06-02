@@ -20,17 +20,24 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.collector.FacetCollector;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
+import com.liferay.portal.kernel.search.filter.Filter;
 
 /**
  * @author Raymond Augé
  */
 public interface Facet {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFacetFilterClause}
+	 */
+	@Deprecated
 	public BooleanClause<Query> getFacetClause();
 
 	public FacetCollector getFacetCollector();
 
 	public FacetConfiguration getFacetConfiguration();
+
+	public BooleanClause<Filter> getFacetFilterClause();
 
 	public FacetValueValidator getFacetValueValidator();
 

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.PermissionChecker;
 
@@ -62,8 +63,20 @@ public class DummyIndexer implements Indexer {
 	}
 
 	@Override
-	public BooleanQuery getFacetQuery(
+	public BooleanFilter getFacetFilter(
 		String className, SearchContext searchContext) {
+
+		return null;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFacetFilter}
+	 */
+	@Deprecated
+	@Override
+	public BooleanQuery getFacetQuery(
+			String className, SearchContext searchContext)
+		throws Exception {
 
 		return null;
 	}
@@ -167,6 +180,17 @@ public class DummyIndexer implements Indexer {
 		return true;
 	}
 
+	@Override
+	public void postProcessContextFilter(
+			BooleanFilter booleanFilter, SearchContext searchContext)
+		throws Exception {
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #postProcessContextFilter(
+	 *             BooleanFilter, SearchContext)}
+	 */
+	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 		BooleanQuery contextQuery, SearchContext searchContext) {

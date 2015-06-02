@@ -189,6 +189,14 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		).toReturn(
 			new String[0]
 		);
+
+		stub(
+			method(
+				SearchEngineUtil.class, "getSearchEngine", String.class
+			)
+		).toReturn(
+			new BaseSearchEngine()
+		);
 	}
 
 	private static final String _CLASS_NAME = RandomTestUtil.randomString();

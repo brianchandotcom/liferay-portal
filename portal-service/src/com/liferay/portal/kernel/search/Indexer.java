@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.util.Locale;
@@ -44,6 +45,14 @@ public interface Indexer {
 
 	public Document getDocument(Object obj) throws SearchException;
 
+	public BooleanFilter getFacetFilter(
+			String className, SearchContext searchContext)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getFacetFilter}
+	 */
+	@Deprecated
 	public BooleanQuery getFacetQuery(
 			String className, SearchContext searchContext)
 		throws Exception;
@@ -98,6 +107,15 @@ public interface Indexer {
 	public boolean isVisibleRelatedEntry(long classPK, int status)
 		throws Exception;
 
+	public void postProcessContextFilter(
+			BooleanFilter booleanFilter, SearchContext searchContext)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #postProcessContextFilter(
+	 *             BooleanFilter, SearchContext)}
+	 */
+	@Deprecated
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
 		throws Exception;

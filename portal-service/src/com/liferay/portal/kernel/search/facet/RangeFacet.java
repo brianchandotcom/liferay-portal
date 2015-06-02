@@ -19,12 +19,11 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
-import com.liferay.portal.kernel.search.TermRangeQuery;
-import com.liferay.portal.kernel.search.TermRangeQueryFactoryUtil;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.RangeParserUtil;
+import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -39,7 +38,7 @@ public class RangeFacet extends BaseFacet {
 	}
 
 	@Override
-	protected BooleanClause<Query> doGetFacetClause() {
+	protected BooleanClause<Filter> doGetFacetFilterClause() {
 		SearchContext searchContext = getSearchContext();
 
 		FacetConfiguration facetConfiguration = getFacetConfiguration();
@@ -95,12 +94,11 @@ public class RangeFacet extends BaseFacet {
 			endString = end;
 		}
 
-		TermRangeQuery facetTermRangeQuery = TermRangeQueryFactoryUtil.create(
-			searchContext, getFieldName(), startString, endString, true, true);
+		RangeTermFilter rangeTermFilter = new RangeTermFilter(
+			getFieldName(), true, true, startString, endString);
 
-		return BooleanClauseFactoryUtil.create(
-			searchContext, facetTermRangeQuery,
-			BooleanClauseOccur.MUST.getName());
+		return BooleanClauseFactoryUtil.createFilter(
+			searchContext, rangeTermFilter, BooleanClauseOccur.MUST);
 	}
 
 }

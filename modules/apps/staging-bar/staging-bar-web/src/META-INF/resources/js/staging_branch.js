@@ -131,22 +131,31 @@ AUI.add(
 				_getUpdateBranchDialog: function() {
 					var instance = this;
 
-					var	updateBranchDialog = Liferay.Util.Window.getWindow(
-						{
-							title: Liferay.Language.get('branch')
-						}
-					);
+					var updateBranchDialog = instance._updateBranchDialog;
 
-					updateBranchDialog.plug(
-						A.Plugin.IO,
-						{
-							autoLoad: false,
-							data: {
-								doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-								p_l_id: themeDisplay.getPlid()
+					if (!updateBranchDialog) {
+						updateBranchDialog = Liferay.Util.Window.getWindow(
+							{
+								dialog: {
+									destroyOnHide: true
+								},
+								title: Liferay.Language.get('branch')
 							}
-						}
-					);
+						);
+
+						updateBranchDialog.plug(
+								A.Plugin.IO,
+								{
+									autoLoad: false,
+									data: {
+										doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
+										p_l_id: themeDisplay.getPlid()
+									}
+								}
+						);
+
+						instance._updateBranchDialog = updateBranchDialog;
+					}
 
 					return updateBranchDialog;
 				},

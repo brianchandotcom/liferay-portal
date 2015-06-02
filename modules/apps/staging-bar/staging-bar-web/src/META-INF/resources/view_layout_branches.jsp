@@ -68,7 +68,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_BRANCH) %>">
 	<liferay-util:html-top>
-		<liferay-util:include page="/html/portlet/staging_bar/edit_layout_branch.jsp">
+		<liferay-util:include page="/edit_layout_branch.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevisionId) %>" />
 			<liferay-util:param name="redirect" value="<%= currentURL %>" />
 		</liferay-util:include>
@@ -126,7 +126,7 @@ request.setAttribute("view_layout_branches.jsp-currenttLayoutBranchId", String.v
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/staging_bar/layout_branch_action.jsp"
+				path="/layout_branch_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 

@@ -146,7 +146,7 @@ List<LayoutRevision> rootLayoutRevisions = LayoutRevisionLocalServiceUtil.getChi
 
 						<liferay-ui:search-container-column-jsp
 							cssClass="entry-action"
-							path="/html/portlet/staging_bar/layout_revision_action.jsp"
+							path="/layout_revision_action.jsp"
 						/>
 					</liferay-ui:search-container-row>
 

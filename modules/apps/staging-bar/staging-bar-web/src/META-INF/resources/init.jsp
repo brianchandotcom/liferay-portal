@@ -18,8 +18,12 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/staging" prefix="liferay-staging" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.portal.LayoutBranchNameException" %><%@
 page import="com.liferay.portal.LayoutSetBranchNameException" %><%@
@@ -30,7 +34,6 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.staging.LayoutStagingUtil" %><%@
 page import="com.liferay.portal.kernel.staging.StagingUtil" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
@@ -63,15 +66,28 @@ page import="com.liferay.portal.service.permission.LayoutBranchPermissionUtil" %
 page import="com.liferay.portal.service.permission.LayoutPermissionUtil" %><%@
 page import="com.liferay.portal.service.permission.LayoutSetBranchPermissionUtil" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
+page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator" %><%@
-page import="com.liferay.portal.util.comparator.LayoutRevisionIdComparator" %>
+page import="com.liferay.portal.util.comparator.LayoutRevisionIdComparator" %><%@
+page import="com.liferay.portlet.PortletURLUtil" %>
 
 <%@ page import="java.util.ArrayList" %><%@
 page import="java.util.List" %>
 
+<%@ page import="javax.portlet.PortletMode" %><%@
+page import="javax.portlet.PortletRequest" %><%@
+page import="javax.portlet.PortletURL" %>
+
+<portlet:defineObjects />
+
+<liferay-theme:defineObjects />
+
 <liferay-staging:defineObjects />
 
 <%
+PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
+
+String currentURL = currentURLObj.toString();
 Layout selLayout = layout;
 
 long selPlid = ParamUtil.getLong(request, "selPlid");

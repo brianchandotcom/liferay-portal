@@ -35,9 +35,8 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 <liferay-ui:icon-menu showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= !layoutRevision.isPending() && LayoutPermissionUtil.contains(permissionChecker, layoutRevision.getPlid(), ActionKeys.UPDATE) %>">
 		<c:if test="<%= pendingLayoutRevisions.isEmpty() && !layoutRevision.isHead() %>">
-			<portlet:actionURL var="publishURL">
-				<portlet:param name="struts_action" value="/staging_bar/edit_layout_revision" />
-				<portlet:param name="<%= Constants.CMD %>" value="update_layout_revision" />
+			<portlet:actionURL name="updateLayoutRevision" var="publishURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutRevision.getGroupId()) %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
@@ -57,9 +56,8 @@ if (layoutRevision.getLayoutRevisionId() == layoutRevisionId) {
 		</c:if>
 
 		<c:if test="<%= !layoutRevision.isHead() && !layoutRevision.isPending() %>">
-			<portlet:actionURL var="deleteURL">
-				<portlet:param name="struts_action" value="/staging_bar/edit_layout_revision" />
-				<portlet:param name="<%= Constants.CMD %>" value="delete_layout_revision" />
+			<portlet:actionURL name="deleteLayoutRevision" var="deleteURL">
+				<portlet:param name="mvcPath" value="/view.jsp" />
 				<portlet:param name="redirect" value="<%= PortalUtil.getLayoutFullURL(themeDisplay) %>" />
 				<portlet:param name="layoutRevisionId" value="<%= String.valueOf(layoutRevision.getLayoutRevisionId()) %>" />
 				<portlet:param name="updateRecentLayoutRevisionId" value="<%= String.valueOf(updateRecentLayoutRevisionId) %>" />

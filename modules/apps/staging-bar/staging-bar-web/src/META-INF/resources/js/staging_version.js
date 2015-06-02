@@ -48,13 +48,8 @@ AUI.add(
 							A.Plugin.IO,
 							{
 								autoLoad: false,
-								data: {
-									doAsUserId: themeDisplay.getDoAsUserIdEncoded(),
-									p_l_id: themeDisplay.getPlid(),
-									p_p_isolated: true,
-									redirect: Liferay.currentURL
-								},
-								uri: themeDisplay.getPathMain() + '/staging_bar/view_layout_revisions'
+								data: {},
+								uri: StagingBar.viewHistoryURL
 							}
 						);
 
@@ -118,11 +113,8 @@ AUI.add(
 								'updatedLayout',
 								function(event) {
 									A.io.request(
-										themeDisplay.getPathMain() + '/staging_bar/view_layout_revision_details',
+										instance.markAsReadyForPublicationURL,
 										{
-											data: {
-												p_l_id: themeDisplay.getPlid()
-											},
 											on: {
 												failure: function(event, id, obj) {
 													layoutRevisionDetails.setContent(Liferay.Language.get('there-was-an-unexpected-error.-please-refresh-the-current-page'));

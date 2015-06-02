@@ -58,7 +58,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, stagingGroup, ActionKeys.ADD_LAYOUT_SET_BRANCH) %>">
 	<liferay-util:html-top>
-		<liferay-util:include page="/html/portlet/staging_bar/edit_layout_set_branch.jsp">
+		<liferay-util:include page="/edit_layout_set_branch.jsp" servletContext="<%= application %>">
 			<liferay-util:param name="redirect" value="<%= currentURL %>" />
 		</liferay-util:include>
 	</liferay-util:html-top>
@@ -110,7 +110,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action"
-				path="/html/portlet/staging_bar/layout_set_branch_action.jsp"
+				path="/layout_set_branch_action.jsp"
 			/>
 		</liferay-ui:search-container-row>
 
@@ -118,7 +118,7 @@ request.setAttribute("view_layout_set_branches.jsp-currentLayoutSetBranchId", St
 	</liferay-ui:search-container>
 </div>
 
-<aui:script position="inline" use="liferay-staging-branch">
+<aui:script use="liferay-staging-branch">
 	Liferay.StagingBar.init(
 		{
 			namespace: '<portlet:namespace />',

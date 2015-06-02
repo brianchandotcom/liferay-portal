@@ -47,6 +47,7 @@ public class DDMFormField implements Serializable {
 		_style = new LocalizedValue(ddmFormField._style);
 		_tip = new LocalizedValue(ddmFormField._tip);
 		_type = ddmFormField._type;
+		_visibilityExpression = ddmFormField._visibilityExpression;
 
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField._nestedDDMFormFields) {
@@ -127,6 +128,10 @@ public class DDMFormField implements Serializable {
 
 	public String getType() {
 		return _type;
+	}
+
+	public String getVisibilityExpression() {
+		return _visibilityExpression;
 	}
 
 	public boolean isLocalizable() {
@@ -239,6 +244,10 @@ public class DDMFormField implements Serializable {
 		_type = type;
 	}
 
+	public void setVisibilityExpression(String visibilityExpression) {
+		_visibilityExpression = visibilityExpression;
+	}
+
 	private String _dataType;
 	private DDMForm _ddmForm;
 	private DDMFormFieldOptions _ddmFormFieldOptions =
@@ -258,5 +267,6 @@ public class DDMFormField implements Serializable {
 	private LocalizedValue _style = new LocalizedValue();
 	private LocalizedValue _tip = new LocalizedValue();
 	private String _type;
+	private String _visibilityExpression;
 
 }

@@ -129,7 +129,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public String getName() {
-		return _name;
+		return _portalCacheManagerName;
 	}
 
 	public String[] getTransactionalCacheNames() {
@@ -186,8 +186,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 		_mpiOnly = mpiOnly;
 	}
 
-	public void setName(String name) {
-		_name = name;
+	public void setName(String portalCacheManagerName) {
+		_portalCacheManagerName = portalCacheManagerName;
 	}
 
 	public void setTransactionalCacheEnabled(
@@ -234,7 +234,7 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 			return;
 		}
 
-		if (Validator.isNull(_name)) {
+		if (Validator.isNull(_portalCacheManagerName)) {
 			throw new IllegalArgumentException(
 				"Portal cache manager name is not specified");
 		}
@@ -342,8 +342,8 @@ public abstract class AbstractPortalCacheManager<K extends Serializable, V>
 	private boolean _clusterAware;
 	private PortalCacheConfiguration _defaultPortalCacheConfiguration;
 	private boolean _mpiOnly;
-	private String _name;
 	private PortalCacheManagerConfiguration _portalCacheManagerConfiguration;
+	private String _portalCacheManagerName;
 	private boolean _transactionalCacheEnabled;
 	private String[] _transactionalCacheNames = StringPool.EMPTY_ARRAY;
 

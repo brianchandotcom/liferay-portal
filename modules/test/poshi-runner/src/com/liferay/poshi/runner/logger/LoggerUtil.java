@@ -310,21 +310,18 @@ public final class LoggerUtil {
 			XMLLoggerHandler.getXMLLogText());
 
 		if (!PropsValues.TEST_RUN_LOCALLY) {
-			StringBuilder sb = new StringBuilder();
-
-			sb.append("http://rawgit.com/liferay/liferay-portal/master/");
-			sb.append("modules/test/poshi-runner/src/META-INF/resources");
-
 			indexHTMLContent = StringUtil.replace(
 				indexHTMLContent, "<link href=\"../css/main.css\"",
-				"<link href=\"" + sb.toString() + "/css/.sass-cache/" +
-					"main.css\"");
+				"<link href=\"" + PropsValues.LOGGER_RESOURCES_URL +
+					"/css/.sass-cache/main.css\"");
 			indexHTMLContent = StringUtil.replace(
 				indexHTMLContent, "<script src=\"../js/component.js\"",
-				"<script src=\"" + sb.toString() + "/js/component.js\"");
+				"<script src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+					"/js/component.js\"");
 			indexHTMLContent = StringUtil.replace(
 				indexHTMLContent, "<script src=\"../js/main.js\"",
-				"<script src=\"" + sb.toString() + "/js/main.js\"");
+				"<script src=\"" + PropsValues.LOGGER_RESOURCES_URL +
+					"/js/main.js\"");
 		}
 
 		FileUtil.write(_getHtmlFilePath(), indexHTMLContent);

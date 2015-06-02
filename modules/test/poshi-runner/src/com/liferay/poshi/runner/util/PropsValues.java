@@ -81,6 +81,9 @@ public class PropsValues {
 	public static final String LIFERAY_PORTAL_BUNDLE = PropsUtil.get(
 		"liferay.portal.bundle");
 
+	public static final String LOGGER_RESOURCES_URL = PropsUtil.get(
+		"logger.resources.url");
+
 	public static final String MOBILE_ANDROID_HOME = PropsUtil.get(
 		"mobile.android.home");
 

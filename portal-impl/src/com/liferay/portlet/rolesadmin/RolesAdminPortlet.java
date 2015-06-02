@@ -17,17 +17,22 @@ package com.liferay.portlet.rolesadmin;
 import com.liferay.portal.DuplicateRoleException;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.RequiredRoleException;
+import com.liferay.portal.RoleAssignmentException;
 import com.liferay.portal.RoleNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.GroupServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.RoleServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.UserServiceUtil;
 
 import java.io.IOException;
 
@@ -47,77 +52,8 @@ import java.util.Map;
 
 public class RolesAdminPortlet extends MVCPortlet {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals("role_groups")) {
-				updateRoleGroups(actionRequest);
-			}
-			else if (cmd.equals("role_users")) {
-				updateRoleUsers(actionRequest);
-			}
-
-			if (Validator.isNotNull(cmd)) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "assignmentsRedirect");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof MembershipPolicyException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else if (e instanceof NoSuchRoleException ||
-					 e instanceof PrincipalException ||
-					 e instanceof RoleAssignmentException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.roles_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getRole(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRoleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.roles_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.roles_admin.edit_role_assignments"));
-	}
-
-	public void updateRoleGroups(ActionRequest actionRequest)
+	public void updateRoleGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
@@ -137,7 +73,8 @@ public class RolesAdminPortlet extends MVCPortlet {
 		GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
 	}
 
-	public void updateRoleUsers(ActionRequest actionRequest)
+	public void updateRoleUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
@@ -209,7 +146,9 @@ public class RolesAdminPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 			renderRequest, PrincipalException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, NoSuchRoleException.class.getName())) {
+				renderRequest, NoSuchRoleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RoleAssignmentException.class.getName())) {
 
 			include(
 				"/html/portlet/roles_admin/error.jsp", renderRequest,
@@ -234,6 +173,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 			cause instanceof NoSuchRoleException ||
 			cause instanceof PrincipalException ||
 			cause instanceof RequiredRoleException ||
+			cause instanceof RoleAssignmentException ||
 			cause instanceof RoleNameException) {
 
 			return true;

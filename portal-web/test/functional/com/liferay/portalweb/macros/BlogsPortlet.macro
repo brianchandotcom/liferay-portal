@@ -260,14 +260,6 @@
 		<execute function="AssertTextEquals" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
 	</command>
 
-	<command name="viewPG">
-		<execute function="AssertTextEquals" locator1="PGBlogs#PORTLET_TITLE" value1="Blogs" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#PERMISSIONS_BUTTON" value1="Permissions" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#SUBSCRIBE_LINK" value1="Subscribe" />
-		<execute function="AssertTextEquals" locator1="PGBlogs#RSS_LINK" value1="RSS" />
-	</command>
-
 	<command name="viewScopeCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />

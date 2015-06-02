@@ -62,7 +62,7 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 <aui:form action="<%= checkoutURL %>" method="post" name="fm">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.UPDATE %>" />
 
-	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp">
+	<liferay-util:include page="tabs1.jsp">
 		<liferay-util:param name="tabs1" value="cart" />
 	</liferay-util:include>
 

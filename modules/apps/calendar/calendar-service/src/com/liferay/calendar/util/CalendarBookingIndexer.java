@@ -16,7 +16,6 @@ package com.liferay.calendar.util;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.calendar.service.persistence.CalendarBookingActionableDynamicQuery;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -208,30 +207,37 @@ public class CalendarBookingIndexer extends BaseIndexer {
 		final Collection<Document> documents = new ArrayList<>();
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new CalendarBookingActionableDynamicQuery() {
+			CalendarBookingLocalServiceUtil.getActionableDynamicQuery();
 
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property statusProperty = PropertyFactoryUtil.forName("status");
+		actionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					Property statusProperty = PropertyFactoryUtil.forName(
+						"status");
 
-				int[] statuses = {
-					CalendarBookingWorkflowConstants.STATUS_APPROVED,
-					CalendarBookingWorkflowConstants.STATUS_MAYBE
-				};
+					int[] statuses = {
+						CalendarBookingWorkflowConstants.STATUS_APPROVED,
+						CalendarBookingWorkflowConstants.STATUS_MAYBE
+					};
 
-				dynamicQuery.add(statusProperty.in(statuses));
-			}
+					dynamicQuery.add(statusProperty.in(statuses));
+				}
+			});
 
-			@Override
-			protected void performAction(Object object) throws PortalException {
-				CalendarBooking calendarBooking = (CalendarBooking)object;
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod() {
+				@Override
+				public void performAction(Object object)
+					throws PortalException {
 
-				Document document = getDocument(calendarBooking);
+					CalendarBooking calendarBooking = (CalendarBooking)object;
 
-				documents.add(document);
-			}
+					Document document = getDocument(calendarBooking);
 
-		};
+					documents.add(document);
+				}
+			});
 
 		actionableDynamicQuery.setCompanyId(companyId);
 

@@ -31,6 +31,8 @@ import javax.portlet.PortletResponse;
  */
 public abstract class BaseSearchResultManager implements SearchResultManager {
 
+	public static final int SUMMARY_MAX_CONTENT_LENGTH = 200;
+
 	@Override
 	public SearchResult createSearchResult(Document document) {
 		long classNameId = GetterUtil.getLong(
@@ -140,7 +142,5 @@ public abstract class BaseSearchResultManager implements SearchResultManager {
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortalException {
 	}
-
-	protected static final int SUMMARY_MAX_CONTENT_LENGTH = 200;
 
 }

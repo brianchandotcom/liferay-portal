@@ -484,7 +484,7 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 	protected void configureTaskWarRenameDependencies(War war) {
 		Closure<String> closure = new RenameDependencyClosure(
-			war.getProject(), JavaPlugin.COMPILE_CONFIGURATION_NAME);
+			war.getProject(), JavaPlugin.RUNTIME_CONFIGURATION_NAME);
 
 		CopySpecInternal copySpecInternal = war.getRootSpec();
 

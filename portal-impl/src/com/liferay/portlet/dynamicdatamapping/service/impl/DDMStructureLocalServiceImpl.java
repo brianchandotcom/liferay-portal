@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
@@ -127,6 +128,8 @@ public class DDMStructureLocalServiceImpl
 		structure.setCompanyId(user.getCompanyId());
 		structure.setUserId(user.getUserId());
 		structure.setUserName(user.getFullName());
+		structure.setVersionUserId(user.getUserId());
+		structure.setVersionUserName(user.getFullName());
 		structure.setParentStructureId(parentStructureId);
 		structure.setClassNameId(classNameId);
 		structure.setStructureKey(structureKey);
@@ -154,10 +157,19 @@ public class DDMStructureLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
+		int status = WorkflowConstants.STATUS_DRAFT;
+
+		if (serviceContext.getAttributes().containsKey(
+				DDMStructureConstants.STATUS)) {
+
+			status = (int)serviceContext.getAttribute(
+				DDMStructureConstants.STATUS);
+		}
+
 		// Structure version
 
 		DDMStructureVersion structureVersion = addStructureVersion(
-			structure, DDMStructureConstants.VERSION_DEFAULT);
+			structure, DDMStructureConstants.VERSION_DEFAULT, status, user);
 
 		// Structure Layout
 
@@ -1386,7 +1398,7 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected DDMStructureVersion addStructureVersion(
-		DDMStructure structure, String version) {
+		DDMStructure structure, String version, int status, User user) {
 
 		long structureVersionId = counterLocalService.increment();
 
@@ -1405,6 +1417,10 @@ public class DDMStructureLocalServiceImpl
 		structureVersion.setDefinition(structure.getDefinition());
 		structureVersion.setStorageType(structure.getStorageType());
 		structureVersion.setType(structure.getType());
+		structureVersion.setStatus(status);
+		structureVersion.setStatusByUserId(user.getUserId());
+		structureVersion.setStatusByUserName(user.getFullName());
+		structureVersion.setStatusDate(structure.getModifiedDate());
 
 		ddmStructureVersionPersistence.update(structureVersion);
 
@@ -1459,9 +1475,13 @@ public class DDMStructureLocalServiceImpl
 
 		String version = getNextVersion(
 			latestStructureVersion.getVersion(), false);
+		
+		User user = userLocalService.fetchUser(serviceContext.getUserId());
 
 		structure.setVersion(version);
 		structure.setNameMap(nameMap);
+		structure.setVersionUserId(user.getUserId());
+		structure.setVersionUserName(user.getFullName());
 		structure.setDescriptionMap(descriptionMap);
 		structure.setDefinition(DDMFormJSONSerializerUtil.serialize(ddmForm));
 
@@ -1473,8 +1493,19 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure version
 
+		int status = WorkflowConstants.STATUS_DRAFT;
+
+		if (serviceContext.getAttributes().containsKey(
+				DDMStructureConstants.STATUS)) {
+
+			status = (int)serviceContext.getAttribute(
+				DDMStructureConstants.STATUS);
+		}
+
+		User user = userLocalService.fetchUser(serviceContext.getUserId());
+
 		DDMStructureVersion structureVersion = addStructureVersion(
-			structure, version);
+			structure, version, status, user);
 
 		// Structure Layout
 

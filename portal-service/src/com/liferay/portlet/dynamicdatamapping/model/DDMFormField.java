@@ -267,10 +267,6 @@ public class DDMFormField implements Serializable {
 	private LocalizedValue _style = new LocalizedValue();
 	private LocalizedValue _tip = new LocalizedValue();
 	private String _type;
-
-	// TODO(pablo.carvalho): when DDM is exported to a module, should this be
-	// changed to be an Expression?
-
 	private String _visibilityExpression;
 
 }

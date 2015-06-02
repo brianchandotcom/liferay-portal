@@ -399,6 +399,27 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-poshi-test-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<if>
+				<contains string="${test.class}" substring="#" />
+				<then>
+					<get-poshi-class-name />
+					<get-poshi-method-name />
+
+					<var name="poshi.test.name" value="${poshi.class.name}#${poshi.method.name}" />
+				</then>
+				<else>
+					<get-poshi-class-name />
+
+					<var name="poshi.test.name" value="${poshi.class.name}" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />

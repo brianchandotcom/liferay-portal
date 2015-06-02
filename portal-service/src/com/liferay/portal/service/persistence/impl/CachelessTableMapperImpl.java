@@ -106,7 +106,7 @@ public class CachelessTableMapperImpl
 
 		@Override
 		public String getName() {
-			return name;
+			return portalCacheName;
 		}
 
 		@Override
@@ -151,14 +151,15 @@ public class CachelessTableMapperImpl
 		}
 
 		protected DummyPortalCache(
-			String name, PortalCacheManager<Long, long[]> portalCacheManager) {
+			String portalCacheName,
+			PortalCacheManager<Long, long[]> portalCacheManager) {
 
-			this.name = name;
+			this.portalCacheName = portalCacheName;
 			this.portalCacheManager = portalCacheManager;
 		}
 
-		protected final String name;
 		protected final PortalCacheManager<Long, long[]> portalCacheManager;
+		protected final String portalCacheName;
 
 	}
 

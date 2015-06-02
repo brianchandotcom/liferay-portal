@@ -46,12 +46,12 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
 
 	public static <K extends Serializable, V> MemoryPortalCacheManager<K, V>
-		createMemoryPortalCacheManager(String name) {
+		createMemoryPortalCacheManager(String portalCacheManagerName) {
 
 		MemoryPortalCacheManager<K, V> memoryPortalCacheManager =
 			new MemoryPortalCacheManager<>();
 
-		memoryPortalCacheManager.setName(name);
+		memoryPortalCacheManager.setName(portalCacheManagerName);
 
 		memoryPortalCacheManager.initialize();
 

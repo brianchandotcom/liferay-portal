@@ -170,8 +170,12 @@ public class GradleUtil {
 
 					Set<Dependency> dependencies =
 						configuration.getDependencies();
+					Set<Configuration> parentConfigurations =
+						configuration.getExtendsFrom();
 
-					if (dependencies.isEmpty()) {
+					if (dependencies.isEmpty() &&
+						parentConfigurations.isEmpty()) {
+
 						action.execute(configuration);
 					}
 				}

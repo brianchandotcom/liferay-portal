@@ -7,33 +7,31 @@
 			init: function(editor) {
 				var instance = this;
 
-				var imageSelectorUrl = editor.config.filebrowserImageBrowseUrl;
-
 				editor.addCommand(
 					pluginName,
 					{
 						canUndo: false,
-						exec: function(editor) {
-							AUI().use(
-								'liferay-item-selector-dialog',
-								function(A) {
-									var eventName = editor.name + 'selectItem';
+						exec: function(editor, callback) {
+							var _onSelectedItemChange = function(event) {
+								var selectedItem = event.newVal;
 
-									var dialog = new A.LiferayItemSelectorDialog(
-										{
-											eventName: eventName,
-											url: imageSelectorUrl
-										}
-									);
+								if (selectedItem) {
+									if (callback) {
+										callback(selectedItem.value);
+									}
+									else {
+										var el = CKEDITOR.dom.element.createFromHtml('<img src="' + selectedItem.value + '">');
 
-									dialog.on(
-										'itemSelected',
-										function(event) {
-											var el = CKEDITOR.dom.element.createFromHtml('<img src="' + event.value + '">');
+										editor.insertElement(el);
+									}
+								}
+							};
 
-											editor.insertElement(el);
-										}
-									);
+							instance._getItemSelectorDialog(
+								editor,
+								function(itemSelectorDialog) {
+									itemSelectorDialog.once('selectedItemChange', _onSelectedItemChange);
+									itemSelectorDialog.open();
 								}
 							);
 						}
@@ -49,10 +47,68 @@
 							label: editor.lang.common.image
 						}
 					);
+				}
 
-					editor.config.filebrowserImageBrowseUrl = '';
+				CKEDITOR.on(
+					'dialogDefinition',
+					function(event) {
+						var dialogName = event.data.name;
 
-					editor.config.filebrowserImageBrowseLinkUrl = '';
+						if (dialogName === 'image') {
+							var dialogDefinition = event.data.definition;
+
+							instance._bindBrowseButton(editor, dialogDefinition, 'info');
+							instance._bindBrowseButton(editor, dialogDefinition, 'Link');
+						}
+					}
+				);
+			},
+
+			_bindBrowseButton: function(editor, dialogDefinition, tabName) {
+				var tab = dialogDefinition.getContents(tabName);
+
+				if (tab) {
+					var browseButton = tab.get('browse');
+
+					if (browseButton) {
+						browseButton.onClick = function() {
+							editor.execCommand(
+								pluginName,
+								function(newVal) {
+									dialogDefinition.dialog.setValueOf(tabName, 'txtUrl', newVal);
+								}
+							);
+						};
+					}
+				}
+			},
+
+			_getItemSelectorDialog: function(editor, callback) {
+				var instance = this;
+
+				var itemSelectorDialog = instance._itemSelectorDialog;
+
+				if (itemSelectorDialog) {
+					callback(itemSelectorDialog);
+				}
+				else {
+					AUI().use(
+						'liferay-item-selector-dialog',
+						function(A) {
+							var eventName = editor.name + 'selectItem';
+
+							itemSelectorDialog = new A.LiferayItemSelectorDialog(
+								{
+									eventName: eventName,
+									url: editor.config.filebrowserImageBrowseUrl
+								}
+							);
+
+							instance._itemSelectorDialog = itemSelectorDialog;
+
+							callback(itemSelectorDialog);
+						}
+					);
 				}
 			}
 		}

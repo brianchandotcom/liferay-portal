@@ -51,42 +51,56 @@
 
 				var eventName = editor.name + 'selectDocument';
 
-				AUI().use(
-					'liferay-item-selector-dialog',
-					function(A) {
-						var dialog = new A.LiferayItemSelectorDialog(
-							{
-								url: editor.config.filebrowserImageBrowseUrl,
-								eventName: eventName
-							}
-						);
+				if (instance._itemSelectorDialog) {
+					instance._itemSelectorDialog.open();
+				}
+				else {
+					AUI().use(
+						'liferay-item-selector-dialog',
+						function(A) {
+							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+								{
+									eventName: eventName,
+									on: {
+										selectedItemChange: A.bind('_onSelectedItemChange', instance)
+									},
+									url: editor.config.filebrowserImageBrowseUrl
+								}
+							);
 
-						dialog.on('itemSelected', instance._onDocumentSelected);
-					}
-				);
+							itemSelectorDialog.open();
+
+							instance._itemSelectorDialog = itemSelectorDialog;
+						}
+					);
+				}
 			},
 
-			_onDocumentSelected: function(item) {
+			_onSelectedItemChange: function(event) {
 				var instance = this;
 
 				var editor = instance.props.editor.get('nativeEditor');
 
 				var eventName = editor.name + 'selectDocument';
 
-				Util.getWindow(eventName).onceAfter(
-					'visibleChange',
-					function() {
-						var image = CKEDITOR.dom.element.createFromHtml(
-							instance.props.imageTPL.output(
-								{
-									src: item.value
-								}
-							)
-						);
+				var selectedItem = event.newVal;
 
-						editor.insertElement(image);
-					}
-				);
+				if (selectedItem) {
+					Util.getWindow(eventName).onceAfter(
+						'visibleChange',
+						function() {
+							var image = CKEDITOR.dom.element.createFromHtml(
+								instance.props.imageTPL.output(
+									{
+										src: selectedItem.value
+									}
+								)
+							);
+
+							editor.insertElement(image);
+						}
+					);
+				}
 			}
 		}
 	);

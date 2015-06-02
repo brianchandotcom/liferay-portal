@@ -83,7 +83,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("language", languageId.replace("iw_", "he_"));
 		jsonObject.put(
-			"removePlugins", "elementspath,image,link,liststyle,resize,toolbar");
+			"removePlugins",
+			"elementspath,image,link,liststyle,resize,toolbar");
 
 		if (liferayPortletResponse != null) {
 			String name =

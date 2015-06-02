@@ -16,8 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/item-selector/ui" prefix="item-selector-ui" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/item-selector/ui" prefix="item-selector-ui" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.document.library.item.selector.web.DLItemSelectorCriterion" %><%@
 page import="com.liferay.document.library.item.selector.web.DLItemSelectorView" %><%@

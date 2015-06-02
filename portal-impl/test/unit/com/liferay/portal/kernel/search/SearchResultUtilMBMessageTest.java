@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
@@ -115,7 +115,7 @@ public class SearchResultUtilMBMessageTest
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			document1, document2);
 
-		Assert.assertEquals( 1, searchResults.size());
+		Assert.assertEquals(1, searchResults.size());
 
 		SearchResult searchResult = searchResults.get(0);
 

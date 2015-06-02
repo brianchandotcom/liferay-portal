@@ -227,6 +227,13 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	}
 
 	protected void configureDependenciesProvidedCompile(Project project) {
+		boolean addDefaultDependencies = getProperty(
+			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+
+		if (!addDefaultDependencies) {
+			return;
+		}
+
 		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
 				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,

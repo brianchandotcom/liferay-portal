@@ -138,7 +138,9 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 	button.on(
 		'click',
-		function() {
+		function(event) {
+			var currentTarget = event.currentTarget;
+
 			Util.getOpener().Liferay.fire(
 				'<%= itemSelectedEventName %>',
 				{
@@ -151,9 +153,9 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 						ckeditorfuncnum: <%= ckEditorFuncNum %>,
 					</c:if>
 
-					layoutpath: event.target.getAttribute('data-layoutpath'),
-					returnType: event.target.getAttribute('data-returnType'),
-					value: event.target.getAttribute('data-value')
+					layoutpath: currentTarget.attr('data-layoutpath'),
+					returnType: currentTarget.attr('data-returnType'),
+					value: currentTarget.attr('data-value')
 				}
 			);
 
@@ -175,7 +177,6 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		var link = labelEl.one('a');
 
 		var url = link.attr('data-url');
-
 		var uuid = link.attr('data-uuid');
 
 		if (link && url) {

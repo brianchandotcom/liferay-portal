@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.search;
+package com.liferay.shopping.web.search;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.util.ParamUtil;

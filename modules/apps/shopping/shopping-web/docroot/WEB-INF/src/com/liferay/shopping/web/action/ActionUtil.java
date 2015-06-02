@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
+package com.liferay.shopping.web.action;
 
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.model.ShoppingCategory;
-import com.liferay.portlet.shopping.model.ShoppingCategoryConstants;
-import com.liferay.portlet.shopping.model.ShoppingCoupon;
-import com.liferay.portlet.shopping.model.ShoppingItem;
-import com.liferay.portlet.shopping.model.ShoppingOrder;
-import com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil;
-import com.liferay.portlet.shopping.service.ShoppingCouponServiceUtil;
-import com.liferay.portlet.shopping.service.ShoppingItemServiceUtil;
-import com.liferay.portlet.shopping.service.ShoppingOrderServiceUtil;
-import com.liferay.portlet.shopping.service.permission.ShoppingPermission;
+import com.liferay.shopping.model.ShoppingCategory;
+import com.liferay.shopping.model.ShoppingCategoryConstants;
+import com.liferay.shopping.model.ShoppingCoupon;
+import com.liferay.shopping.model.ShoppingItem;
+import com.liferay.shopping.model.ShoppingOrder;
+import com.liferay.shopping.service.ShoppingCategoryServiceUtil;
+import com.liferay.shopping.service.ShoppingCouponServiceUtil;
+import com.liferay.shopping.service.ShoppingItemServiceUtil;
+import com.liferay.shopping.service.ShoppingOrderServiceUtil;
+import com.liferay.shopping.service.permission.ShoppingPermission;
 
 import javax.portlet.PortletRequest;
 

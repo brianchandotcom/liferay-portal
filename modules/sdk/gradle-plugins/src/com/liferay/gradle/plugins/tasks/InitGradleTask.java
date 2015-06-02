@@ -56,7 +56,9 @@ public class InitGradleTask extends DefaultTask {
 
 	public InitGradleTask() {
 		portalDependencyNotation("antlr2.jar", "antlr", "antlr", "2.7.7");
-		portalDependencyNotation("axis.jar", "axis", "axis", "1.4");
+		portalDependencyNotation(
+			"axis.jar", "com.liferay", "org.apache.axis",
+			"1.4.LIFERAY-PATCHED-1");
 		portalDependencyNotation(
 			"backport-concurrent.jar", "backport-util-concurrent",
 			"backport-util-concurrent", "3.1");
@@ -111,8 +113,7 @@ public class InitGradleTask extends DefaultTask {
 		portalDependencyNotation(
 			"jfreechart.jar", "jfree", "jfreechart", "1.0.13");
 		portalDependencyNotation("jruby.jar", "org.jruby", "jruby", "1.6.5");
-		portalDependencyNotation(
-			"json-java.jar", "com.liferay", "com.liferay.org.json", "1.0.0");
+		portalDependencyNotation("json-java.jar", "org.json", "json", "+");
 		portalDependencyNotation(
 			"jstl-api.jar", "javax.servlet.jsp.jstl", "jstl-api", "1.2");
 		portalDependencyNotation(

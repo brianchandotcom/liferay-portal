@@ -105,13 +105,13 @@ public class RolesAdminPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.roles_admin.edit_role"));
 	}
 
-	protected void deleteRole(ActionRequest actionRequest) throws Exception {
+	public void deleteRole(ActionRequest actionRequest) throws Exception {
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
 		RoleServiceUtil.deleteRole(roleId);
 	}
 
-	protected Role updateRole(ActionRequest actionRequest) throws Exception {
+	public Role updateRole(ActionRequest actionRequest) throws Exception {
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
 		String name = ParamUtil.getString(actionRequest, "name");

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 7.0.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_7_0_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>34</portlet-name>
+		<icon>/html/icons/shopping.png</icon>
+		<struts-path>shopping</struts-path>
+		<portlet-data-handler-class>com.liferay.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
+		<preferences-unique-per-layout>false</preferences-unique-per-layout>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+		<scopeable>true</scopeable>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<css-class-wrapper>portlet-shopping</css-class-wrapper>
+	</portlet>
+	<portlet>
+		<portlet-name>197</portlet-name>
+		<icon>/html/icons/shopping.png</icon>
+		<struts-path>shopping_admin</struts-path>
+		<parent-struts-path>shopping</parent-struts-path>
+		<configuration-action-class>com.liferay.shopping.web.action.ConfigurationActionImpl</configuration-action-class>
+		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
+		<portlet-data-handler-class>com.liferay.shopping.lar.ShoppingPortletDataHandler</portlet-data-handler-class>
+		<control-panel-entry-category>site_administration.content</control-panel-entry-category>
+		<control-panel-entry-weight>6.0</control-panel-entry-weight>
+		<preferences-unique-per-layout>false</preferences-unique-per-layout>
+		<preferences-owned-by-group>true</preferences-owned-by-group>
+		<use-default-template>false</use-default-template>
+		<scopeable>true</scopeable>
+		<private-request-attributes>false</private-request-attributes>
+		<private-session-attributes>false</private-session-attributes>
+		<render-weight>50</render-weight>
+		<css-class-wrapper>portlet-shopping</css-class-wrapper>
+	</portlet>
+	<role-mapper>
+		<role-name>administrator</role-name>
+		<role-link>Administrator</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>guest</role-name>
+		<role-link>Guest</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>power-user</role-name>
+		<role-link>Power User</role-link>
+	</role-mapper>
+	<role-mapper>
+		<role-name>user</role-name>
+		<role-link>User</role-link>
+	</role-mapper>
+</liferay-portlet-app>

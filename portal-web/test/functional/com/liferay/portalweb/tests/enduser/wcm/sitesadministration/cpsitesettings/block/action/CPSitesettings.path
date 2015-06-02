@@ -123,7 +123,6 @@
 	<td>//ul[contains(@class,'nav-list')]/li/a[contains(.,'Robots')]</td>
 	<td></td>
 </tr>
-<!---->
 <!--MENU_ADVANCED-->
 <tr>
 	<td>MENU_ADVANCED_DEFAULT_USER_ASSOCIATIONS</td>

@@ -117,7 +117,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 				renderRequest, "portlet.roles_admin.edit_role_assignments"));
 	}
 
-	protected void updateRoleGroups(ActionRequest actionRequest)
+	public void updateRoleGroups(ActionRequest actionRequest)
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
@@ -137,7 +137,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
 	}
 
-	protected void updateRoleUsers(ActionRequest actionRequest)
+	public void updateRoleUsers(ActionRequest actionRequest)
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");

@@ -313,7 +313,7 @@
 			<var name="viewType" value="Week" />
 		</execute>
 
-		<execute macro="CalendarScheduler#selectEvent">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />
 		</execute>
 
@@ -333,7 +333,7 @@
 				</execute>
 			</then>
 			<else>
-				<execute macro="CalendarScheduler#selectEvent">
+				<execute macro="CalendarScheduler#selectSpecificEvent">
 					<var name="eventTitle" value="${eventTitle}" />
 				</execute>
 

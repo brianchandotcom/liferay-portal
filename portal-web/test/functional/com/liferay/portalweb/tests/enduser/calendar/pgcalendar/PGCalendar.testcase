@@ -1593,113 +1593,6 @@
 		</execute>
 	</command>
 
-	<command name="ConfigureCalendarTimeZone" priority="5">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoAdd" />
-
-		<execute macro="CalendarEvent#editTitle">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#setDatesToday" />
-
-		<execute macro="CalendarEvent#setTimes">
-			<var name="endDateTime" value="01:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
-		</execute>
-
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoConfiguration" />
-
-		<execute macro="CalendarConfiguration#editTimeZonePacific" />
-
-		<execute macro="CalendarConfiguration#save" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="6:00am" />
-			<var name="startDateTime" value="5:00am" />
-		</execute>
-
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
-
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="06:00 AM" />
-			<var name="startDateTime" value="05:00 AM" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoEdit">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="06:00 AM" />
-			<var name="startDateTime" value="05:00 AM" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarNavigator#gotoConfiguration" />
-
-		<execute macro="CalendarConfiguration#enableGlobalTimeZone" />
-
-		<execute macro="CalendarConfiguration#save" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#selectEvent">
-			<var name="eventTitle" value="Calendar Event Title" />
-			<var name="eventType" value="Regular" />
-		</execute>
-
-		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
-			<var name="endDateTime" value="1:00pm" />
-			<var name="startDateTime" value="12:00pm" />
-		</execute>
-
-		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
-
-		<execute macro="CalendarEvent#viewTimesViaDetails">
-			<var name="endDateTime" value="01:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
-		</execute>
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute macro="CalendarScheduler#gotoEdit">
-			<var name="eventTitle" value="Calendar Event Title" />
-		</execute>
-
-		<execute macro="CalendarEvent#viewTimes">
-			<var name="endDateTime" value="01:00 PM" />
-			<var name="startDateTime" value="12:00 PM" />
-		</execute>
-	</command>
-
 	<command name="ConfigureDefaultView" priority="4">
 		<for list="Day,Week,Month" param="defaultView">
 			<execute macro="Page#gotoPG">
@@ -1722,6 +1615,117 @@
 				<var name="view" value="${defaultView}" />
 			</execute>
 		</for>
+	</command>
+
+	<command name="ConfigureDisplayTimeZone" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#editTimeZonePacific" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="02:00 PM" />
+			<var name="startDateTime" value="01:00 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
+			<var name="endDateTime" value="2:00pm" />
+			<var name="startDateTime" value="1:00pm" />
+		</execute>
+
+		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewTimesViaDetails">
+			<var name="endDateTime" value="02:00 PM" />
+			<var name="startDateTime" value="01:00 PM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoEdit">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimes">
+			<var name="endDateTime" value="02:00 PM" />
+			<var name="startDateTime" value="01:00 PM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoConfiguration" />
+
+		<execute macro="CalendarConfiguration#enableGlobalTimeZone" />
+
+		<execute macro="CalendarConfiguration#save" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#selectEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+			<var name="eventType" value="Regular" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewEventTimesViaDialogBox">
+			<var name="endDateTime" value="9:00pm" />
+			<var name="startDateTime" value="8:00pm" />
+		</execute>
+
+		<execute macro="CalendarScheduler#_gotoDetailsViaDialogBox" />
+
+		<execute macro="CalendarEvent#viewTimesViaDetails">
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="startDateTime" value="08:00 PM" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#gotoEdit">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
+		<execute macro="CalendarEvent#viewTimes">
+			<var name="endDateTime" value="09:00 PM" />
+			<var name="startDateTime" value="08:00 PM" />
+		</execute>
 	</command>
 
 	<command name="DeactivateAndDeleteSiteCalendarAndViewSiteCalendarEvent" priority="5">
@@ -2034,6 +2038,63 @@
 		</execute>
 	</command>
 
+	<command name="DeleteEventAndViewRSSFeed" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAdd" />
+
+		<execute macro="CalendarEvent#editTitle">
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="CalendarEvent#setDatesToday" />
+
+		<execute macro="CalendarEvent#setTimes">
+			<var name="endDateTime" value="11:59 PM" />
+			<var name="startDateTime" value="11:58 PM" />
+		</execute>
+
+		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventPresent">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+
+		<execute macro="CalendarEvent#tearDown" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#chooseSiteCalendarMenulistOption">
+			<var name="calendarName" value="Liferay" />
+			<var name="menuListOption" value="RSS" />
+		</execute>
+
+		<execute macro="Calendar#viewRSSFeedEventNotPresent">
+			<var name="calendarName" value="Liferay" />
+			<var name="eventTitle" value="Current Day Event" />
+		</execute>
+
+		<execute macro="Navigator#closeWindow" />
+	</command>
+
 	<command name="DisableRSSFeedForSiteCalendar" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2072,9 +2133,7 @@
 
 		<var method="selenium#getLocation()" name="rssURL" />
 
-		<execute macro="CalendarNavigator#gotoPageWindow">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="Navigator#closeWindow" />
 
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
@@ -3251,6 +3310,107 @@
 		</execute>
 	</command>
 
+	<command name="SearchForOtherCalendarsAsNonPowerUser" priority="5">
+		<description message="This is a use case for LPS-51572." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#unassignRegularRoleCP">
+			<var name="roleName" value="Power User" />
+			<var name="userScreenName" value="usersn1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userFirstName" value="userfn2" />
+			<var name="userLastName" value="userln2" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="userea2@liferay.com" />
+			<var name="userScreenName" value="usersn2" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#searchOtherCalendars">
+			<var name="searchValue" value="u" />
+		</execute>
+
+		<execute macro="Calendar#viewOtherCalendarsSearchResults">
+			<var name="calendarName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea2@liferay.com" />
+			<var name="userLoginFullName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="userea1@liferay.com" />
+			<var name="userLoginFullName" value="userfn1 userln1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Calendar#searchOtherCalendars">
+			<var name="searchValue" value="u" />
+		</execute>
+
+		<execute macro="Calendar#viewOtherCalendarsSearchResults">
+			<var name="calendarName" value="userfn2 userln2" />
+		</execute>
+
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+	</command>
+
 	<command known-issues="LPS-55278" name="View24hourTimeFormat" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3976,9 +4136,7 @@
 			<var name="eventTitle" value="Future Day Event" />
 		</execute>
 
-		<execute macro="CalendarNavigator#gotoPageWindow">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="Navigator#closeWindow" />
 	</command>
 
 	<command name="ViewSiteNameUpdate" priority="5">

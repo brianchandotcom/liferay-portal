@@ -67,12 +67,12 @@
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_TWO_RECORD_1_WORKFLOW_STATUS</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[2]/span)</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[2]/span)</td>
 	<td></td>
 </tr>
 <tr>
 	<td>RECORD_TABLE_COLUMN_ONE_PREVIEW_1</td>
-	<td>xpath=(//div[@id='_167_ocerSearchContainer']//tr/td[1]/a[contains(.,'Preview')])</td>
+	<td>xpath=(//div[contains(@id,'ocerSearchContainer')]//tr/td[1]/a[contains(.,'Preview')])</td>
 	<td></td>
 </tr>
 <tr>

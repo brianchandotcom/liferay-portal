@@ -20,17 +20,17 @@
 </tr>
 <tr>
 	<td>NAME_FIELD</td>
-	<td>//input[@id='_167_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_167_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_DEFINITION_NAME</td>
-	<td>//input[@id='_167_ddmStructureNameDisplay']</td>
+	<td>//input[contains(@id,'ddmStructureNameDisplay')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>WORKFLOW_SELECT</td>
-	<td>//div/select[@id='_167_workflowDefinition']</td>
+	<td>//div/select[contains(@id,'workflowDefinition')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON</td>
-	<td>//button[@id='_167_saveButton']</td>
+	<td>//button[contains(@id,'saveButton')]</td>
 	<td></td>
 </tr>
 <tr>

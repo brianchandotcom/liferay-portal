@@ -84,7 +84,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsDatadefinitions#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
@@ -267,7 +267,7 @@
 
 	<command name="tearDownCP">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Dynamic Data Lists" />
+			<var name="portletName" value="Forms" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />

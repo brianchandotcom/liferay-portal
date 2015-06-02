@@ -52,27 +52,27 @@
 <!--LIST_TABLE-->
 <tr>
 	<td>LIST_TABLE_NAME</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr[contains(.,'${key_ddlListName}')]/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_ACTIONS</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr[contains(.,'${key_ddlListName}')]/td[5]/div/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr[contains(.,'${key_ddlListName}')]/td[5]/div/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_ID_1</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr/td[1]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[1]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_NAME_1</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr/td[2]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[2]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LIST_TABLE_DESCRIPTION_1</td>
-	<td>xpath=(//div[@id='_167_ddlRecordSetsSearchContainer']//tr/td[3]/a)[1]</td>
+	<td>xpath=(//div[contains(@id,'ddlRecordSetsSearchContainer')]//tr/td[3]/a)[1]</td>
 	<td></td>
 </tr>
 <tr>

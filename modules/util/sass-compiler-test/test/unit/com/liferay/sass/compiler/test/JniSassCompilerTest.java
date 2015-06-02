@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni.internal;
+package com.liferay.sass.compiler.test;
 
 import com.liferay.sass.compiler.SassCompiler;
-import com.liferay.sass.compiler.jni.internal.util.test.JniSassCompilerTestUtil;
+import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
+import com.liferay.sass.compiler.test.util.JniSassCompilerTestUtil;
 
 import java.io.File;
 

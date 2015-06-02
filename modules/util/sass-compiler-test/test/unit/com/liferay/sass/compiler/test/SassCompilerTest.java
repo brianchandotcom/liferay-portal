@@ -24,6 +24,7 @@ import org.junit.Test;
 
 /**
  * @author David Truong
+ * @author Greg Amerson
  */
 public class SassCompilerTest {
 
@@ -60,5 +61,6 @@ public class SassCompilerTest {
 	}
 
 	private static SassCompiler _rubySassCompiler;
+	private static SassCompiler _jniSassCompiler;
 
 }

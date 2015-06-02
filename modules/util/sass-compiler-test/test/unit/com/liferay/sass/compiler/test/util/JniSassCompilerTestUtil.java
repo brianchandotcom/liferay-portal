@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sass.compiler.jni.internal.util.test;
+package com.liferay.sass.compiler.test.util;
 
 import com.sun.jna.NativeLibrary;
 import com.sun.jna.Platform;

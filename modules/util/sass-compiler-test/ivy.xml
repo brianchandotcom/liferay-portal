@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="jna" org="net.java.dev.jna" rev="4.1.0" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

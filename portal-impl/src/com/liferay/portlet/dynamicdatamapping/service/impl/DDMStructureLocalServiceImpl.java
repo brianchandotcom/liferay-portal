@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -157,19 +158,10 @@ public class DDMStructureLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
-		int status = WorkflowConstants.STATUS_DRAFT;
-
-		if (serviceContext.getAttributes().containsKey(
-				DDMStructureConstants.STATUS)) {
-
-			status = (int)serviceContext.getAttribute(
-				DDMStructureConstants.STATUS);
-		}
-
 		// Structure version
 
 		DDMStructureVersion structureVersion = addStructureVersion(
-			structure, DDMStructureConstants.VERSION_DEFAULT, status, user);
+			structure, DDMStructureConstants.VERSION_DEFAULT, serviceContext);
 
 		// Structure Layout
 
@@ -1398,7 +1390,12 @@ public class DDMStructureLocalServiceImpl
 	}
 
 	protected DDMStructureVersion addStructureVersion(
-		DDMStructure structure, String version, int status, User user) {
+			DDMStructure structure, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(
+			serviceContext.getUserId());
 
 		long structureVersionId = counterLocalService.increment();
 
@@ -1417,6 +1414,11 @@ public class DDMStructureLocalServiceImpl
 		structureVersion.setDefinition(structure.getDefinition());
 		structureVersion.setStorageType(structure.getStorageType());
 		structureVersion.setType(structure.getType());
+
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_DRAFT);
+
 		structureVersion.setStatus(status);
 		structureVersion.setStatusByUserId(user.getUserId());
 		structureVersion.setStatusByUserName(user.getFullName());
@@ -1475,7 +1477,7 @@ public class DDMStructureLocalServiceImpl
 
 		String version = getNextVersion(
 			latestStructureVersion.getVersion(), false);
-		
+
 		User user = userLocalService.fetchUser(serviceContext.getUserId());
 
 		structure.setVersion(version);
@@ -1493,19 +1495,8 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure version
 
-		int status = WorkflowConstants.STATUS_DRAFT;
-
-		if (serviceContext.getAttributes().containsKey(
-				DDMStructureConstants.STATUS)) {
-
-			status = (int)serviceContext.getAttribute(
-				DDMStructureConstants.STATUS);
-		}
-
-		User user = userLocalService.fetchUser(serviceContext.getUserId());
-
 		DDMStructureVersion structureVersion = addStructureVersion(
-			structure, version, status, user);
+			structure, version, serviceContext);
 
 		// Structure Layout
 

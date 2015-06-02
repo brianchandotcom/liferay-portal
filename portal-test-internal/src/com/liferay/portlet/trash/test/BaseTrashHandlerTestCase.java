@@ -56,6 +56,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -97,33 +98,28 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testAddBaseModelWithApprovedStatusAndIndexable()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
 
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -167,33 +163,28 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
 
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -239,35 +230,30 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testAddVersionBaseModelIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
 		baseModel = updateBaseModel(
 			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 
 		if (isAssetableModel()) {
 			Assert.assertTrue(isAssetEntryVisible(baseModel));
@@ -359,34 +345,29 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testMoveBaseModelToTrashIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount + 1,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount + 1,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -487,21 +468,18 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashAndDeleteWithApprovedStatusIndexable()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
@@ -514,14 +492,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -559,21 +535,18 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
 
@@ -586,14 +559,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -632,21 +603,18 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashAndRestoreWithApprovedStatusIndexable()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
@@ -660,15 +628,13 @@ public abstract class BaseTrashHandlerTestCase {
 		trashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
 
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -794,21 +760,18 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashAndRestoreWithDraftStatusIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, false, serviceContext);
 
@@ -820,15 +783,13 @@ public abstract class BaseTrashHandlerTestCase {
 		trashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
 
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -1414,15 +1375,13 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashMoveBaseModelIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
-		int initialBaseModelsSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
@@ -1431,11 +1390,9 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
 
 		if (!isBaseModelMoveableFromTrash()) {
 			return;
@@ -1443,19 +1400,15 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveBaseModelFromTrash(baseModel, group, serviceContext);
 
-		if (isIndexableBaseModel()) {
-			if (isBaseModelContainerModel()) {
-				Assert.assertEquals(
-					initialBaseModelsSearchCount + 2,
-					searchBaseModelsCount(
-						getBaseModelClass(), group.getGroupId()));
-			}
-			else {
-				Assert.assertEquals(
-					initialBaseModelsSearchCount + 1,
-					searchBaseModelsCount(
-						getBaseModelClass(), group.getGroupId()));
-			}
+		if (isBaseModelContainerModel()) {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount + 2,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		}
+		else {
+			Assert.assertEquals(
+				initialBaseModelsSearchCount + 1,
+				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
 		}
 	}
 
@@ -1692,21 +1645,18 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
@@ -1720,14 +1670,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -1766,21 +1714,18 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashVersionBaseModelAndRestoreIndexable()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
@@ -1795,14 +1740,12 @@ public abstract class BaseTrashHandlerTestCase {
 		trashHandler.restoreTrashEntry(
 			TestPropsValues.getUserId(), getTrashEntryClassPK(baseModel));
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -1835,21 +1778,18 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionBaseModelIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
 
@@ -1858,14 +1798,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount + 1,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount + 1,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -2016,21 +1954,18 @@ public abstract class BaseTrashHandlerTestCase {
 
 	@Test
 	public void testTrashVersionParentBaseModelIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
 		BaseModel<?> parentBaseModel = getParentBaseModel(
 			group, serviceContext);
 
-		int initialBaseModelsSearchCount = 0;
-		int initialTrashEntriesSearchCount = 0;
-
-		if (isIndexableBaseModel()) {
-			initialBaseModelsSearchCount = searchBaseModelsCount(
-				getBaseModelClass(), group.getGroupId());
-			initialTrashEntriesSearchCount = searchTrashEntriesCount(
-				getSearchKeywords(), serviceContext);
-		}
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+		int initialTrashEntriesSearchCount = searchTrashEntriesCount(
+			getSearchKeywords(), serviceContext);
 
 		List<Integer> originalStatuses = new ArrayList<>();
 
@@ -2060,14 +1995,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		originalStatuses.add(workflowedModel.getStatus());
 
-		if (isIndexableBaseModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			Assert.assertEquals(
-				initialTrashEntriesSearchCount,
-				searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-		}
+		Assert.assertEquals(
+			initialBaseModelsSearchCount + 1,
+			searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+		Assert.assertEquals(
+			initialTrashEntriesSearchCount,
+			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
 	}
 
 	@Test
@@ -2335,10 +2268,6 @@ public abstract class BaseTrashHandlerTestCase {
 		}
 
 		return false;
-	}
-
-	protected boolean isIndexableBaseModel() {
-		return true;
 	}
 
 	protected boolean isInTrashContainer(ClassedModel classedModel)

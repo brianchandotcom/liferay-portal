@@ -79,8 +79,23 @@ public class ElasticsearchConnectionManager {
 		return _elasticsearchConnections.get(_operationMode);
 	}
 
-	@Reference(cardinality = ReferenceCardinality.AT_LEAST_ONE)
-	public void setElasticsearchConnection(
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		target = "(operation.mode=EMBEDDED)"
+	)
+	public void setEmbeddedElasticsearchConnection(
+		ElasticsearchConnection elasticsearchConnection) {
+
+		_elasticsearchConnections.put(
+			elasticsearchConnection.getOperationMode(),
+			elasticsearchConnection);
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MANDATORY,
+		target = "(operation.mode=REMOTE)"
+	)
+	public void setRemoteElasticsearchConnection(
 		ElasticsearchConnection elasticsearchConnection) {
 
 		_elasticsearchConnections.put(

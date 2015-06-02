@@ -14,7 +14,12 @@
 
 package com.liferay.staging.bar.web.portlet;
 
+import com.liferay.portal.LayoutBranchNameException;
+import com.liferay.portal.LayoutSetBranchNameException;
+import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -24,6 +29,7 @@ import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.LayoutSetBranchConstants;
+import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.LayoutBranchService;
 import com.liferay.portal.service.LayoutRevisionLocalService;
 import com.liferay.portal.service.LayoutSetBranchLocalService;
@@ -34,8 +40,13 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
+import java.io.IOException;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -332,6 +343,35 @@ public class StagingBarPortlet extends MVCPortlet {
 
 			SessionMessages.add(actionRequest, "sitePageVariationUpdated");
 		}
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchGroupException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, SystemException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof LayoutBranchNameException ||
+			cause instanceof LayoutSetBranchNameException ||
+			super.isSessionErrorException(cause)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Reference

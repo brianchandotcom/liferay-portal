@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.exportimport.lifecycle;
 
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEventFactory;
-
 import java.io.Serializable;
 
 /**

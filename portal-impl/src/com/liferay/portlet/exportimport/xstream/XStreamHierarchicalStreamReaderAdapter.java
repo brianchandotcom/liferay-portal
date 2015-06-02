@@ -14,8 +14,6 @@
 
 package com.liferay.portlet.exportimport.xstream;
 
-import com.liferay.portal.kernel.lar.xstream.XStreamHierarchicalStreamReader;
-
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 
 import java.util.Iterator;

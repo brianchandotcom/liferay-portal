@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.exportimport.xstream;
 
-import com.liferay.portal.kernel.lar.xstream.XStreamConverter;
-import com.liferay.portal.kernel.lar.xstream.XStreamMarshallingContext;
-
 import com.thoughtworks.xstream.converters.MarshallingContext;
 
 import java.util.Iterator;

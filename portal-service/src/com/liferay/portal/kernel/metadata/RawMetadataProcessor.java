@@ -17,10 +17,10 @@ package com.liferay.portal.kernel.metadata;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.io.File;
 import java.io.InputStream;

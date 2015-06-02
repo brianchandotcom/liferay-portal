@@ -18,13 +18,13 @@ import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.index.IndexedCacheKey;
 import com.liferay.portal.kernel.cache.index.PortalCacheIndexer;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 
 /**
  * @author Charles May

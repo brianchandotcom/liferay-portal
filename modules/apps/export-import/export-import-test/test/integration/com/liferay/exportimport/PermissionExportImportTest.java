@@ -15,7 +15,6 @@
 package com.liferay.exportimport;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -23,9 +22,6 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.lar.LayoutCache;
-import com.liferay.portal.lar.PermissionExporter;
-import com.liferay.portal.lar.PermissionImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutSetPrototype;
@@ -47,6 +43,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.ResourcePermissionUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.exportimport.lar.LayoutCache;
+import com.liferay.portlet.exportimport.lar.PermissionExporter;
+import com.liferay.portlet.exportimport.lar.PermissionImporter;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -15,7 +15,7 @@
 package com.liferay.asset.publisher.web.lar;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
-import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.osgi.service.component.annotations.Component;
 

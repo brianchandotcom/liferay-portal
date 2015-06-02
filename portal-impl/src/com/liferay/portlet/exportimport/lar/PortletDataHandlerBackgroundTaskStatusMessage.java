@@ -15,10 +15,6 @@
 package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
-import com.liferay.portal.kernel.lar.ManifestSummary;
-import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.portal.kernel.util.LongWrapper;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;

@@ -17,9 +17,9 @@ package com.liferay.portal.lar;
 /**
  * @author     Raymond Augé
  * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.lar.PortletDataHandler}
+ *             com.liferay.portlet.exportimport.lar.PortletDataHandler}
  */
 @Deprecated
 public interface PortletDataHandler
-	extends com.liferay.portal.kernel.lar.PortletDataHandler {
+	extendscom.liferay.portlet.exportimport.lar.PortletDataHandler {
 }

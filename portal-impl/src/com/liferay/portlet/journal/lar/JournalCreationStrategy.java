@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.journal.lar;
 
-import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.journal.model.JournalArticle;
 
 /**

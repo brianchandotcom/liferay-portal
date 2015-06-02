@@ -20,7 +20,6 @@ import com.liferay.portal.RequiredLayoutSetBranchException;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,6 +40,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutSetBranchLocalServiceBaseImpl;
 import com.liferay.portal.util.comparator.LayoutSetBranchCreateDateComparator;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.text.Format;
 

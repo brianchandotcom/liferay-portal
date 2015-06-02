@@ -15,8 +15,6 @@
 package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessageSender;
-import com.liferay.portal.kernel.lar.ManifestSummary;
-import com.liferay.portal.kernel.lar.PortletDataHandlerStatusMessageSender;
 import com.liferay.portal.model.StagedModel;
 
 /**

@@ -783,8 +783,6 @@
 	<bean class="com.liferay.portal.verify.model.RoleVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.SCFrameworkVersionVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.SCProductEntryVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.ShoppingCategoryVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.ShoppingItemVerifiableResourcedModel" />
 	<bean class="com.liferay.portal.verify.model.TeamVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserGroupVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.UserVerifiableModel" />
@@ -1071,8 +1069,6 @@
 	<bean id="com.liferay.portlet.rolesadmin.util.RolesAdminUtil" class="com.liferay.portlet.rolesadmin.util.RolesAdminUtil">
 		<property name="rolesAdmin" ref="com.liferay.portlet.rolesadmin.util.RolesAdmin" />
 	</bean>
-	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingCategoryPermission" />
-	<bean id="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" class="com.liferay.portlet.shopping.service.permission.ShoppingItemPermission" />
 	<bean id="com.liferay.portlet.sites.util.Sites" class="com.liferay.portlet.sites.util.SitesImpl" />
 	<bean id="com.liferay.portlet.sites.util.SitesUtil" class="com.liferay.portlet.sites.util.SitesUtil">
 		<property name="sites" ref="com.liferay.portlet.sites.util.Sites" />

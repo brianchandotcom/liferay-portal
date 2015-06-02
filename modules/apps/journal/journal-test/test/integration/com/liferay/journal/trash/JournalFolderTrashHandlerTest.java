@@ -34,6 +34,7 @@ import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.After;
@@ -49,7 +50,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule

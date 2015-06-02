@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
@@ -46,7 +47,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class WikiPageTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule

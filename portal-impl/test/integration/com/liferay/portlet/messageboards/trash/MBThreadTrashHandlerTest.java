@@ -41,6 +41,7 @@ import com.liferay.portlet.messageboards.service.MBThreadLocalServiceUtil;
 import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
 import java.io.InputStream;
 
@@ -58,7 +59,8 @@ import org.junit.Test;
  * @author Eduardo Garcia
  */
 @Sync
-public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class MBThreadTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule

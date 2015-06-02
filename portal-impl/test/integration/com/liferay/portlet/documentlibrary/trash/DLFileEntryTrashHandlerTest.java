@@ -50,6 +50,7 @@ import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.List;
@@ -66,7 +67,8 @@ import org.junit.Test;
  * @author Eudaldo Alonso
  */
 @Sync
-public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class DLFileEntryTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule

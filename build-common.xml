@@ -895,6 +895,31 @@ Please set the environment variable ANT_OPTS to the recommended value of
 		</sequential>
 	</macrodef>
 
+	<macrodef name="gradle-execute">
+		<attribute default="true" name="failonerror" />
+		<attribute name="task" />
+		<element implicit="true" name="args" optional="true" />
+
+		<sequential>
+			<if>
+				<os family="unix" />
+				<then>
+					<property name="gradlew.suffix" value="" />
+
+					<chmod file="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" perm="a+x" />
+				</then>
+				<else>
+					<property name="gradlew.suffix" value=".bat" />
+				</else>
+			</if>
+
+			<exec executable="${sdk.dir}/tools/gradle/gradlew${gradlew.suffix}" failonerror="@{failonerror}">
+				<args />
+				<arg value="@{task}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="junit-cmd">
 		<attribute name="forkmode" />
 		<attribute name="test.type" />

@@ -138,7 +138,7 @@ public class DDLUtil {
 			recordId, recordSetId, mergeFields, serviceContext);
 	}
 
-	private static ServiceTracker<DDL, DDL> _serviceTracker;
+	private static final ServiceTracker<DDL, DDL> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(DDLUtil.class);

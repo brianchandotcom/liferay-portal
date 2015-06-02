@@ -37,7 +37,7 @@ public class DDLExporterFactoryUtil {
 		return getDDLExporterFactory().getAvailableFormats();
 	}
 
-	private static ServiceTracker<DDLExporterFactory, DDLExporterFactory>
+	private static final ServiceTracker<DDLExporterFactory, DDLExporterFactory>
 		_serviceTracker;
 
 	static {

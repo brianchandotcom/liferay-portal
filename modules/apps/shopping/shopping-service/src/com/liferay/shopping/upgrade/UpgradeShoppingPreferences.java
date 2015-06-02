@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.shopping.upgrade;
 
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.util.PortletKeys;

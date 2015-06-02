@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.shopping.upgrade;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_0.util.ShoppingCartTable;
-import com.liferay.portal.upgrade.v7_0_0.util.ShoppingOrderItemTable;
-import com.liferay.portal.upgrade.v7_0_0.util.ShoppingOrderTable;
+import com.liferay.shopping.upgrade.v1_0_0.ShoppingCartTable;
+import com.liferay.shopping.upgrade.v1_0_0.ShoppingOrderItemTable;
+import com.liferay.shopping.upgrade.v1_0_0.ShoppingOrderTable;
 
 import java.sql.SQLException;
 

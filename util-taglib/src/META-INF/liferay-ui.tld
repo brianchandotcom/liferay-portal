@@ -2676,6 +2676,11 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<name>editorName</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
 			<name>fieldPrefix</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -26,6 +26,7 @@ String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:
 String defaultLanguageId = (String)request.getAttribute("liferay-ui:input-localized:defaultLanguageId");
 boolean disabled = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-localized:disabled"));
 Map<String, Object> dynamicAttributes = (Map<String, Object>)request.getAttribute("liferay-ui:input-localized:dynamicAttributes");
+String editorName = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:editorName"));
 String fieldPrefix = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:fieldPrefix"));
 String fieldPrefixSeparator = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-localized:fieldPrefixSeparator"));
 String id = HtmlUtil.getAUICompatibleId((String)request.getAttribute("liferay-ui:input-localized:id"));
@@ -108,7 +109,7 @@ if ((exception != null) && fieldName.equals(focusField)) {
 				contents="<%= mainLanguageValue %>"
 				contentsLanguageId="<%= languageId %>"
 				cssClass='<%= \"language-value \" + cssClass %>'
-				editorName="ckeditor"
+				editorName="<%= editorName %>"
 				name="<%= fieldName %>"
 				onBlurMethod='<%= randomNamespace + \"OnBlurEditor\" %>'
 				onChangeMethod='<%= randomNamespace + \"OnChangeEditor\" %>'

@@ -15,6 +15,8 @@
 package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.ModelHintsConstants;
@@ -61,6 +63,10 @@ public class InputLocalizedTag extends IncludeTag {
 
 	public void setDisplayWidth(String displayWidth) {
 		_displayWidth = displayWidth;
+	}
+
+	public void setEditorName(String editorName) {
+		_editorName = editorName;
 	}
 
 	public void setFieldPrefix(String fieldPrefix) {
@@ -114,6 +120,7 @@ public class InputLocalizedTag extends IncludeTag {
 		_cssClass = null;
 		_disabled = false;
 		_displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
+		_editorName = _EDITOR_WYSIWYG_DEFAULT;
 		_fieldPrefix = null;
 		_fieldPrefixSeparator = null;
 		_formName = null;
@@ -173,6 +180,8 @@ public class InputLocalizedTag extends IncludeTag {
 			"liferay-ui:input-localized:dynamicAttributes",
 			getDynamicAttributes());
 		request.setAttribute(
+			"liferay-ui:input-localized:editorName", _editorName);
+		request.setAttribute(
 			"liferay-ui:input-localized:fieldPrefix", _fieldPrefix);
 		request.setAttribute(
 			"liferay-ui:input-localized:fieldPrefixSeparator",
@@ -193,6 +202,9 @@ public class InputLocalizedTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-localized:xml", _xml);
 	}
 
+	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(
+		PropsKeys.EDITOR_WYSIWYG_DEFAULT);
+
 	private static final String _PAGE =
 		"/html/taglib/ui/input_localized/page.jsp";
 
@@ -203,6 +215,7 @@ public class InputLocalizedTag extends IncludeTag {
 	private String _defaultLanguageId;
 	private boolean _disabled;
 	private String _displayWidth = ModelHintsConstants.TEXT_DISPLAY_WIDTH;
+	private String _editorName = _EDITOR_WYSIWYG_DEFAULT;
 	private String _fieldPrefix;
 	private String _fieldPrefixSeparator;
 	private String _formName;

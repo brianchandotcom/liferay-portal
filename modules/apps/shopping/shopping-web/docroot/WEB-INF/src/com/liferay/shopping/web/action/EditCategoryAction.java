@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
+package com.liferay.shopping.web.action;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
@@ -21,10 +21,10 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.struts.PortletAction;
-import com.liferay.portlet.shopping.CategoryNameException;
-import com.liferay.portlet.shopping.NoSuchCategoryException;
-import com.liferay.portlet.shopping.model.ShoppingCategory;
-import com.liferay.portlet.shopping.service.ShoppingCategoryServiceUtil;
+import com.liferay.shopping.exception.CategoryNameException;
+import com.liferay.shopping.exception.NoSuchCategoryException;
+import com.liferay.shopping.model.ShoppingCategory;
+import com.liferay.shopping.service.ShoppingCategoryServiceUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

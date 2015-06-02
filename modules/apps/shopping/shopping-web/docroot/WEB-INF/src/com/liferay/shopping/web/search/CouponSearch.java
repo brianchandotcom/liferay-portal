@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.search;
+package com.liferay.shopping.web.search;
 
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portlet.shopping.model.ShoppingCoupon;
+import com.liferay.shopping.model.ShoppingCoupon;
 
 import java.util.ArrayList;
 import java.util.List;

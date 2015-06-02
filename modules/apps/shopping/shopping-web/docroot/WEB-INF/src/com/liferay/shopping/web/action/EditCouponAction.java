@@ -12,32 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.action;
-
-import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceContextFactory;
-import com.liferay.portal.struts.PortletAction;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.shopping.CouponCodeException;
-import com.liferay.portlet.shopping.CouponDateException;
-import com.liferay.portlet.shopping.CouponDescriptionException;
-import com.liferay.portlet.shopping.CouponDiscountException;
-import com.liferay.portlet.shopping.CouponEndDateException;
-import com.liferay.portlet.shopping.CouponLimitCategoriesException;
-import com.liferay.portlet.shopping.CouponLimitSKUsException;
-import com.liferay.portlet.shopping.CouponMinimumOrderException;
-import com.liferay.portlet.shopping.CouponNameException;
-import com.liferay.portlet.shopping.CouponStartDateException;
-import com.liferay.portlet.shopping.DuplicateCouponCodeException;
-import com.liferay.portlet.shopping.NoSuchCouponException;
-import com.liferay.portlet.shopping.model.ShoppingCoupon;
-import com.liferay.portlet.shopping.service.ShoppingCouponServiceUtil;
+package com.liferay.shopping.web.action;
 
 import java.util.Calendar;
 
@@ -50,6 +25,31 @@ import javax.portlet.RenderResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.shopping.exception.CouponCodeException;
+import com.liferay.shopping.exception.CouponDateException;
+import com.liferay.shopping.exception.CouponDescriptionException;
+import com.liferay.shopping.exception.CouponDiscountException;
+import com.liferay.shopping.exception.CouponEndDateException;
+import com.liferay.shopping.exception.CouponLimitCategoriesException;
+import com.liferay.shopping.exception.CouponLimitSKUsException;
+import com.liferay.shopping.exception.CouponMinimumOrderException;
+import com.liferay.shopping.exception.CouponNameException;
+import com.liferay.shopping.exception.CouponStartDateException;
+import com.liferay.shopping.exception.DuplicateCouponCodeException;
+import com.liferay.shopping.exception.NoSuchCouponException;
+import com.liferay.shopping.model.ShoppingCoupon;
+import com.liferay.shopping.service.ShoppingCouponServiceUtil;
 
 /**
  * @author Brian Wing Shun Chan
@@ -154,9 +154,9 @@ public class EditCouponAction extends PortletAction {
 		long[] deleteCouponIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "deleteCouponIds"), 0L);
 
-		for (int i = 0; i < deleteCouponIds.length; i++) {
+		for (long deleteCouponId : deleteCouponIds) {
 			ShoppingCouponServiceUtil.deleteCoupon(
-				themeDisplay.getScopeGroupId(), deleteCouponIds[i]);
+				themeDisplay.getScopeGroupId(), deleteCouponId);
 		}
 	}
 

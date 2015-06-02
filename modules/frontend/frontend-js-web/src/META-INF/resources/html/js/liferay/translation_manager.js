@@ -81,8 +81,8 @@ AUI.add(
 			'</ul>';
 
 		var TPL_ICON_NODE = '<li class="' + CSS_TRANSLATION_ITEM + '">' +
-				'<a href="javascript:;" class="taglib-icon" lang="{0}">' +
-					'<img src="' + themeDisplay.getPathThemeImages() + '/language/{0}.png" class="icon">{1}' +
+				'<a class="taglib-icon" href="javascript:;" lang="{0}">' +
+					'<img class="icon" src="' + themeDisplay.getPathThemeImages() + '/language/{0}.png">{1}' +
 				'</a>' +
 			'</li>';
 

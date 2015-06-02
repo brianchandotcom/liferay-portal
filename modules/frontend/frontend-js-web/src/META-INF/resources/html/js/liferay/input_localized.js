@@ -122,7 +122,7 @@ AUI.add(
 					INPUT_HIDDEN_TEMPLATE: '<input id="{namespace}{id}_{value}" name="{namespace}{fieldNamePrefix}{name}_{value}{fieldNameSuffix}" type="hidden" value="" />',
 
 					ITEM_TEMPLATE: '<li class="palette-item {selectedClassName}" data-column={column} data-index={index} data-row={row} data-value="{value}">' +
-						'<a href="" class="palette-item-inner" onclick="return false;">' +
+						'<a class="palette-item-inner" href="" onclick="return false;">' +
 							'<img class="lfr-input-localized-flag" data-languageId="{value}" src="' + themeDisplay.getPathThemeImages() + '/language/{value}.png" />' +
 							'<div class="lfr-input-localized-state {stateClass}"></div>' +
 						'</a>' +

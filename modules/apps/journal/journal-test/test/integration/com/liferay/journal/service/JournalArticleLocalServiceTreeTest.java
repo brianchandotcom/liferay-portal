@@ -50,7 +50,7 @@ public class JournalArticleLocalServiceTreeTest {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(new LiferayIntegrationTestRule());
 
 	@Before
 	public void setUp() throws Exception {

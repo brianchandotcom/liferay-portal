@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.test.util.SearchContextTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.ClassedModel;
@@ -39,7 +38,6 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.search.test.BaseSearchTestCase;
 import com.liferay.portal.search.test.TestOrderHelper;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
@@ -66,9 +64,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -89,23 +85,6 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
-
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		_testMode = PortalRunMode.isTestMode();
-
-		PortalRunMode.setTestMode(true);
-
-		ServiceTestUtil.setUser(TestPropsValues.getUser());
-
-		super.setUp();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		PortalRunMode.setTestMode(_testMode);
-	}
 
 	@Test
 	public void testArticleIdCaseInsensitive() throws Exception {
@@ -555,6 +534,5 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 	}
 
 	private DDMStructure _ddmStructure;
-	private boolean _testMode;
 
 }

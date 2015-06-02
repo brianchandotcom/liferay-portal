@@ -46,7 +46,7 @@ public class VerifyJournalTest extends BaseVerifyProcessTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(new LiferayIntegrationTestRule());
 
 	@Before
 	public void setUp() throws Exception {

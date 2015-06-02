@@ -41,7 +41,7 @@ public class JournalFolderPermissionTest extends BasePermissionTestCase {
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(new LiferayIntegrationTestRule());
 
 	@Test
 	public void testContains() throws Exception {

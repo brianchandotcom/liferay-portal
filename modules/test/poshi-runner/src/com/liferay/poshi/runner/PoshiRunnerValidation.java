@@ -18,6 +18,7 @@ import com.liferay.poshi.runner.util.OSDetector;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -93,10 +94,12 @@ public class PoshiRunnerValidation {
 	}
 
 	private static String _getPrimaryAttributeName(
-		Element element, List<String> primaryAttributeNames, String filePath) {
+		Element element, List<String> multiplePrimaryAttributeNames,
+		List<String> primaryAttributeNames, String filePath) {
 
 		_validateHasPrimaryAttributeName(
-			element, primaryAttributeNames, filePath);
+			element, multiplePrimaryAttributeNames, primaryAttributeNames,
+			filePath);
 
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
@@ -107,6 +110,13 @@ public class PoshiRunnerValidation {
 		}
 
 		return null;
+	}
+
+	private static String _getPrimaryAttributeName(
+		Element element, List<String> primaryAttributeNames, String filePath) {
+
+		return _getPrimaryAttributeName(
+			element, null, primaryAttributeNames, filePath);
 	}
 
 	private static void _parseElements(Element element, String filePath) {
@@ -407,12 +417,16 @@ public class PoshiRunnerValidation {
 	private static void _validateExecuteElement(
 		Element element, String filePath) {
 
+		List<String> multiplePrimaryAttributeNames = Arrays.asList(
+			"macro-desktop", "macro-mobile");
+
 		List<String> primaryAttributeNames = Arrays.asList(
 			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
 			"test-case");
 
 		String primaryAttributeName = _getPrimaryAttributeName(
-			element, primaryAttributeNames, filePath);
+			element, multiplePrimaryAttributeNames, primaryAttributeNames,
+			filePath);
 
 		if (primaryAttributeName.equals("function")) {
 			List<String> possibleAttributeNames = Arrays.asList(
@@ -473,7 +487,8 @@ public class PoshiRunnerValidation {
 				"function", "macro", "macro-desktop", "macro-mobile");
 
 			_validateHasPrimaryAttributeName(
-				element, primaryAttributeNames, filePath);
+				element, multiplePrimaryAttributeNames, primaryAttributeNames,
+				filePath);
 
 			for (Element childElement : childElements) {
 				if (Validator.equals(childElement.getName(), "var")) {
@@ -578,6 +593,18 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateHasMultiplePrimaryAttributeNames(
+		Element element, List<String> attributeNames,
+		List<String> multiplePrimaryAttributeNames, String filePath) {
+
+		if (!multiplePrimaryAttributeNames.equals(attributeNames)) {
+			_exceptions.add(
+				new Exception(
+					"Too many attributes: " + "\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+		}
+	}
+
 	private static void _validateHasNoAttributes(
 		Element element, String filePath) {
 
@@ -608,32 +635,37 @@ public class PoshiRunnerValidation {
 	}
 
 	private static void _validateHasPrimaryAttributeName(
-		Element element, List<String> primaryAttributeNames, String filePath) {
+		Element element, List<String> multiplePrimaryAttributeNames,
+		List<String> primaryAttributeNames, String filePath) {
 
-		boolean found = false;
+		List<String> attributeNames = new ArrayList<>();
 
 		for (String primaryAttributeName : primaryAttributeNames) {
 			if (Validator.isNotNull(
 					element.attributeValue(primaryAttributeName))) {
 
-				if (!found) {
-					found = true;
-				}
-				else {
-					_exceptions.add(
-						new Exception(
-							"Too many attributes: " + "\n" + filePath + ":" +
-								element.attributeValue("line-number")));
-				}
+				attributeNames.add(primaryAttributeName);
 			}
 		}
 
-		if (!found) {
+		if (attributeNames.size() < 1) {
 			_exceptions.add(
 				new Exception(
 					"Invalid or missing attribute\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
+		else if (attributeNames.size() > 1) {
+			_validateHasMultiplePrimaryAttributeNames(
+				element, attributeNames, multiplePrimaryAttributeNames,
+				filePath);
+		}
+	}
+
+	private static void _validateHasPrimaryAttributeName(
+		Element element, List<String> primaryAttributeNames, String filePath) {
+
+		_validateHasPrimaryAttributeName(
+			element, null, primaryAttributeNames, filePath);
 	}
 
 	private static void _validateIfElement(Element element, String filePath) {

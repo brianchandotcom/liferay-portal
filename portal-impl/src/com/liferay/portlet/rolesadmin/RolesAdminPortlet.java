@@ -21,6 +21,7 @@ import com.liferay.portal.RoleAssignmentException;
 import com.liferay.portal.RoleNameException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -52,46 +53,41 @@ import java.util.Map;
 
 public class RolesAdminPortlet extends MVCPortlet {
 
-	public void updateRoleGroups(
+	public void editRoleAssignments(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long roleId = ParamUtil.getLong(actionRequest, "roleId");
-
-		long[] addGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "addGroupIds"), 0L);
-		long[] removeGroupIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "removeGroupIds"), 0L);
-
 		Role role = RoleLocalServiceUtil.getRole(roleId);
 
 		if (role.getName().equals(RoleConstants.OWNER)) {
 			throw new RoleAssignmentException(role.getName());
 		}
-
-		GroupServiceUtil.addRoleGroups(roleId, addGroupIds);
-		GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
-	}
-
-	public void updateRoleUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
 		long[] addUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
 		long[] removeUserIds = StringUtil.split(
 			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
 
-		Role role = RoleLocalServiceUtil.getRole(roleId);
+		if (!ArrayUtil.isEmpty(addUserIds) ||
+			!ArrayUtil.isEmpty(removeUserIds)) {
 
-		if (role.getName().equals(RoleConstants.OWNER)) {
-			throw new RoleAssignmentException(role.getName());
+			UserServiceUtil.addRoleUsers(roleId, addUserIds);
+			UserServiceUtil.unsetRoleUsers(roleId, removeUserIds);
 		}
 
-		UserServiceUtil.addRoleUsers(roleId, addUserIds);
-		UserServiceUtil.unsetRoleUsers(roleId, removeUserIds);
+		long[] addGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addGroupIds"), 0L);
+		long[] removeGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeGroupIds"), 0L);
+
+		if (!ArrayUtil.isEmpty(addGroupIds) ||
+			!ArrayUtil.isEmpty(removeGroupIds)) {
+
+			GroupServiceUtil.addRoleGroups(roleId, addGroupIds);
+			GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
+		}
+
 	}
 
 	public void deleteRole(
@@ -103,7 +99,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 		RoleServiceUtil.deleteRole(roleId);
 	}
 
-	public Role updateRole(
+	public Role editRole(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 

@@ -90,7 +90,7 @@ UserGroup userGroup = (UserGroup)row.getObject();
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, userGroupGroup, ActionKeys.MANAGE_LAYOUTS) %>">
 
 		<%
-		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.VIEW);
+		PortletURL managePagesURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
 
 		managePagesURL.setParameter("redirect", redirect);
 		managePagesURL.setParameter("groupId", String.valueOf(userGroupGroup.getGroupId()));

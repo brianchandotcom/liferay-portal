@@ -59,7 +59,7 @@ public class UpgradePortletPreferences extends UpgradeProcess {
 			sb.append("from PortletPreferences inner join Layout on ");
 			sb.append("PortletPreferences.plid = Layout.plid where ");
 			sb.append("preferences like '%<portlet-preferences />%' or ");
-			sb.append("preferences = ''");
+			sb.append("preferences like '' or preferences is null");
 
 			String sql = sb.toString();
 

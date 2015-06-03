@@ -1116,19 +1116,7 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		boolean stagingGroup = false;
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
-
-		if (group.isLayout()) {
-			group = GroupLocalServiceUtil.getGroup(group.getParentGroupId());
-		}
-
-		if (group.isStagingGroup()) {
-			stagingGroup = true;
-		}
-
-		document.addKeyword(Field.STAGING_GROUP, stagingGroup);
+		document.addKeyword(Field.STAGING_GROUP, isStagingGroup(groupId));
 	}
 
 	protected void addStatus(
@@ -1609,6 +1597,20 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		return null;
+	}
+
+	protected boolean isStagingGroup(long groupId) throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		if (group.isLayout()) {
+			group = GroupLocalServiceUtil.getGroup(group.getParentGroupId());
+		}
+
+		if (group.isStagingGroup()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean isUseSearchResultPermissionFilter(

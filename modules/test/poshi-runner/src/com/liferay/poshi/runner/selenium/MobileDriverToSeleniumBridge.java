@@ -162,7 +162,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void close() {
-		throw new UnsupportedOperationException();
+		super.close();
 	}
 
 	@Override
@@ -470,7 +470,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getTitle() {
-		throw new UnsupportedOperationException();
+		return super.getTitle();
 	}
 
 	@Override
@@ -711,7 +711,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void openWindow(String url, String windowID) {
-		throw new UnsupportedOperationException();
+		open(url);
 	}
 
 	@Override
@@ -854,7 +854,7 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void stop() {
-		throw new UnsupportedOperationException();
+		quit();
 	}
 
 	@Override

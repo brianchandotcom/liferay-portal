@@ -68,7 +68,7 @@ public class StagingPortletConfigurationIcon
 		sb.append(portletDisplay.getNamespace());
 		sb.append("', '");
 		sb.append(LanguageUtil.get(themeDisplay.getLocale(), "staging"));
-		sb.append("', ''); return false;");
+		sb.append("'); return false;");
 
 		return sb.toString();
 	}

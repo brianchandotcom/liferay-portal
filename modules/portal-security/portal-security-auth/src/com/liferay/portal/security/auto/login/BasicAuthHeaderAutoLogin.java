@@ -16,23 +16,14 @@ package com.liferay.portal.security.auto.login;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
-import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
-import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.security.auth.AccessControlContext;
-import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.util.Portal;
 import com.liferay.portlet.login.util.LoginUtil;
 
-import java.util.Properties;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -73,67 +64,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth=false",
-		"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed=",
-		"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes=/api/liferay/*",
-		"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes=/api/*,/xmlrpc/*"
-	},
-	service = {AuthVerifier.class, AutoLogin.class}
-)
+@Component(immediate = true, service = AutoLogin.class)
 public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
-
-	@Override
-	public String getAuthType() {
-		return HttpServletRequest.BASIC_AUTH;
-	}
-
-	@Override
-	public AuthVerifierResult verify(
-			AccessControlContext accessControlContext, Properties properties)
-		throws AuthException {
-
-		try {
-			AuthVerifierResult authVerifierResult = new AuthVerifierResult();
-
-			String[] credentials = login(
-				accessControlContext.getRequest(),
-				accessControlContext.getResponse());
-
-			if (credentials != null) {
-				authVerifierResult.setPassword(credentials[1]);
-				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
-				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
-			}
-			else {
-
-				// Deprecated
-
-				boolean forcedBasicAuth = MapUtil.getBoolean(
-					accessControlContext.getSettings(), "basic_auth");
-
-				if (forcedBasicAuth) {
-					HttpServletResponse response =
-						accessControlContext.getResponse();
-
-					response.setHeader(
-						HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
-
-					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-					authVerifierResult.setState(
-						AuthVerifierResult.State.INVALID_CREDENTIALS);
-				}
-			}
-
-			return authVerifierResult;
-		}
-		catch (AutoLoginException ale) {
-			throw new AuthException(ale);
-		}
-	}
 
 	@Override
 	protected String[] doLogin(
@@ -198,9 +130,6 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 		return credentials;
 	}
-
-	private static final String _BASIC_REALM =
-		"Basic realm=\"" + Portal.PORTAL_REALM + "\"";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);

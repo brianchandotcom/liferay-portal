@@ -407,22 +407,22 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
-			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
+			"auth.verifier.BasicAuthHeaderAuthVerifier.basic_auth",
 			"com.liferay.portal.security.auth"
 		},
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
-			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
+			"auth.verifier.BasicAuthHeaderAuthVerifier.hosts.allowed",
 			"com.liferay.portal.security.auth"
 		},
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
-			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
+			"auth.verifier.BasicAuthHeaderAuthVerifier.urls.excludes",
 			"com.liferay.portal.security.auth"
 		},
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
-			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
+			"auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes",
 			"com.liferay.portal.security.auth"
 		},
 
@@ -449,17 +449,17 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.hosts.allowed",
-			"auth.verifier.ParameterAutoLogin.hosts.allowed",
+			"auth.verifier.ParameterAuthVerifier.hosts.allowed",
 			"com.liferay.portal.security.auth"
 		},
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.urls.excludes",
-			"auth.verifier.ParameterAutoLogin.urls.excludes",
+			"auth.verifier.ParameterAuthVerifier.urls.excludes",
 			"com.liferay.portal.security.auth"
 		},
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.urls.includes",
-			"auth.verifier.ParameterAutoLogin.urls.includes",
+			"auth.verifier.ParameterAuthVerifier.urls.includes",
 			"com.liferay.portal.security.auth"
 		},
 

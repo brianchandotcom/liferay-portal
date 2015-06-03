@@ -14,7 +14,6 @@
 
 package com.liferay.portal.security.auto.login;
 
-import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -36,15 +35,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Minhchau Dang
  * @author Tomas Polesovsky
  */
-@Component(
-	immediate = true,
-	property = {
-		"auth.verifier.ParameterAutoLogin.hosts.allowed=255.255.255.255",
-		"auth.verifier.ParameterAutoLogin.urls.excludes=*",
-		"auth.verifier.ParameterAutoLogin.urls.includes="
-	},
-	service = {AutoLogin.class, AuthVerifier.class}
-)
+@Component(immediate = true, service = AutoLogin.class)
 public class ParameterAutoLogin extends BaseAutoLogin {
 
 	@Override

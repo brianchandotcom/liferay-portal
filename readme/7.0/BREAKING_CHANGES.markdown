@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1e1103f`.*
+*This document has been reviewed through commit `991422f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1805,14 +1805,14 @@ The `getQueryString` method was an unnecessary convenience method.
 
 ---------------------------------------
 
-### Replaced SearchPermissionChecker.getPermissionQuery with SearchPermissionChecker.getPermissionFilter
+### Replaced Method getPermissionQuery with getPermissionFilter in SearchPermissionChecker, and getFacetQuery with getFacetBooleanFilter in Indexer
 - **Date:** 2015-Jun-2
 - **JIRA Ticket:** LPS-56064
 
 #### What changed?
 
 Method `SearchPermissionChecker.getPermissionQuery(
-long, long[], long, String, Query, SearchContext)` 
+long, long[], long, String, Query, SearchContext)`
 has been replaced by `SearchPermissionChecker.getPermissionBooleanFilter(
 long, long[], long, String, BooleanFilter, SearchContext)`.
 
@@ -1826,29 +1826,24 @@ that implements the interface methods.
 
 #### How should I update my code?
 
-Any code implementing `SearchPermissionChecker.getPermissionQuery(...)` should 
-instead implement `SearchPermissionChecker.getPermissionBooleanFilter(...)`.
+Any code calling/implementing `SearchPermissionChecker.getPermissionQuery(...)`
+should instead call/implement
+`SearchPermissionChecker.getPermissionBooleanFilter(...)`.
 
-Any code calling `SearchPermissionChecker.getPermissionQuery(...)` should 
-instead call `SearchPermissionChecker.getPermissionBooleanFilter(...)`.
-
-Any code implementing `Indexer.getFacetQuery(...)` should instead implement 
-`Indexer.getFacetBooleanFilter(...)`.
-
-Any code calling `Indexer.getFacetQuery(...)` should instead call 
-`Indexer.getFacetBooleanFilter(...)`.
+Any code calling/implementing `Indexer.getFacetQuery(...)` should instead
+call/implement `Indexer.getFacetBooleanFilter(...)`.
 
 #### Why was this change made?
 
 Permission constraints placed on search should not affect the score for returned
-search results.  Thus, these constraints should be applied as search filters. 
+search results.  Thus, these constraints should be applied as search filters.
 `SearchPermissionChecker` is also a very deep internal interface within the
-permission system.  Thus, to limit confusion in the logic for maintainability, 
-the `SearchPermissionChecker.getPermissionQuery(...)` method was removed as 
+permission system.  Thus, to limit confusion in the logic for maintainability,
+the `SearchPermissionChecker.getPermissionQuery(...)` method was removed as
 opposed to deprecated.
 
-Similarly, constraints applied to facets should not affect the scoring or the
-facet counts. Since `Indexer.getFacetQuery(...)` was only utilized by the
-`AssetEntriesFacet` and reduce the impact of changes for 
-`SearchPermissionChecker.getPermissionBooleanFilter(...)`, the method was 
+Similarly, constraints applied to facets should not affect the scoring or facet
+counts. Since `Indexer.getFacetQuery(...)` was only utilized by the
+`AssetEntriesFacet`, and used to reduce the impact of changes for
+`SearchPermissionChecker.getPermissionBooleanFilter(...)`, the method was
 removed as opposed to deprecated.

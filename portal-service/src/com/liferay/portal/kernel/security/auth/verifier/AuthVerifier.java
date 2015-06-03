@@ -12,7 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.kernel.security.auth.verifier;
+
+import com.liferay.portal.security.auth.AccessControlContext;
+import com.liferay.portal.security.auth.AuthException;
 
 import java.util.Properties;
 

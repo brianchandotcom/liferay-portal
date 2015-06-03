@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.kernel.security.auth.verifier;
 
 import com.liferay.portal.kernel.util.StringBundler;
 

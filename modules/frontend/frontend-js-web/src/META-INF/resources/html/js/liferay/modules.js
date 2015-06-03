@@ -327,27 +327,6 @@
 							'liferay-search-filter'
 						]
 					},
-					'liferay-dockbar-add-page': {
-						path: 'dockbar_add_page.js',
-						requires: [
-							'aui-loading-mask-deprecated',
-							'aui-parse-content',
-							'aui-toggler-delegate',
-							'liferay-dockbar',
-							'liferay-dockbar-add-base',
-							'liferay-dockbar-add-page-search',
-							'liferay-portlet-base',
-							'liferay-toggler-key-filter'
-						]
-					},
-					'liferay-dockbar-add-page-search': {
-						path: 'dockbar_add_page_search.js',
-						requires: [
-							'aui-base',
-							'liferay-dockbar',
-							'liferay-search-filter'
-						]
-					},
 					'liferay-dockbar-device-preview': {
 						path: 'dockbar_device_preview.js',
 						requires: [

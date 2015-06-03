@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.test;
+package com.liferay.portal.search.test;
 
 import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -69,6 +69,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 		setUpServiceTrackerMap();
 		setUpSearchResultManagerUtil();
 		setUpClassNameLocalService();
+		setUpSearchResultManagerUtil();
 	}
 
 	protected void assertEmptyRelatedComments(SearchResult searchResult) {

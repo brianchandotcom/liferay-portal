@@ -47,6 +47,10 @@ public class DDMStructureVersionSoap implements Serializable {
 		soapModel.setDefinition(model.getDefinition());
 		soapModel.setStorageType(model.getStorageType());
 		soapModel.setType(model.getType());
+		soapModel.setStatus(model.getStatus());
+		soapModel.setStatusByUserId(model.getStatusByUserId());
+		soapModel.setStatusByUserName(model.getStatusByUserName());
+		soapModel.setStatusDate(model.getStatusDate());
 
 		return soapModel;
 	}
@@ -206,6 +210,38 @@ public class DDMStructureVersionSoap implements Serializable {
 		_type = type;
 	}
 
+	public int getStatus() {
+		return _status;
+	}
+
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	public String getStatusByUserName() {
+		return _statusByUserName;
+	}
+
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	private long _structureVersionId;
 	private long _groupId;
 	private long _companyId;
@@ -219,4 +255,8 @@ public class DDMStructureVersionSoap implements Serializable {
 	private String _definition;
 	private String _storageType;
 	private int _type;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 }

@@ -42,7 +42,11 @@ create table DDMStructureVersion (
 	description STRING null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 alter table DDMTemplate add resourceClassNameId LONG;

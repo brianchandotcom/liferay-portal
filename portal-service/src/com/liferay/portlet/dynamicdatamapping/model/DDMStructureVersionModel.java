@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -46,7 +47,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>,
-	LocalizedModel {
+	LocalizedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -438,6 +439,158 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 * @param type the type of this d d m structure version
 	 */
 	public void setType(int type);
+
+	/**
+	 * Returns the status of this d d m structure version.
+	 *
+	 * @return the status of this d d m structure version
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this d d m structure version.
+	 *
+	 * @param status the status of this d d m structure version
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this d d m structure version.
+	 *
+	 * @return the status by user ID of this d d m structure version
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this d d m structure version.
+	 *
+	 * @param statusByUserId the status by user ID of this d d m structure version
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this d d m structure version.
+	 *
+	 * @return the status by user uuid of this d d m structure version
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this d d m structure version.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this d d m structure version
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this d d m structure version.
+	 *
+	 * @return the status by user name of this d d m structure version
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this d d m structure version.
+	 *
+	 * @param statusByUserName the status by user name of this d d m structure version
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this d d m structure version.
+	 *
+	 * @return the status date of this d d m structure version
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this d d m structure version.
+	 *
+	 * @param statusDate the status date of this d d m structure version
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * @deprecated As of 6.1.0, replaced by {@link #isApproved()}
+	 */
+	@Deprecated
+	@Override
+	public boolean getApproved();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is approved.
+	 *
+	 * @return <code>true</code> if this d d m structure version is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is denied.
+	 *
+	 * @return <code>true</code> if this d d m structure version is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is a draft.
+	 *
+	 * @return <code>true</code> if this d d m structure version is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is expired.
+	 *
+	 * @return <code>true</code> if this d d m structure version is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is inactive.
+	 *
+	 * @return <code>true</code> if this d d m structure version is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is incomplete.
+	 *
+	 * @return <code>true</code> if this d d m structure version is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is pending.
+	 *
+	 * @return <code>true</code> if this d d m structure version is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this d d m structure version is scheduled.
+	 *
+	 * @return <code>true</code> if this d d m structure version is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public boolean isNew();

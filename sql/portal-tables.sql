@@ -465,6 +465,8 @@ create table DDMStructure (
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
+	versionUserId LONG,
+	versionUserName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
 	parentStructureId LONG,
@@ -511,7 +513,11 @@ create table DDMStructureVersion (
 	description STRING null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table DDMTemplate (

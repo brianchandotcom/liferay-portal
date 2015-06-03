@@ -1396,8 +1396,9 @@ AUI.add(
 					if (portletTitle != null) {
 						retVal = portletTitle;
 					}
-
-					retVal = instance._objData.defaultPortletTitles[key];
+					else {
+						retVal = instance._objData.defaultPortletTitles[key];
+					}
 				}
 				else {
 					portletTitles[key] = value;

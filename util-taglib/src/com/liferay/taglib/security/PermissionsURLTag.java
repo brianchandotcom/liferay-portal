@@ -122,7 +122,8 @@ public class PermissionsURLTag extends TagSupport {
 		}
 
 		portletURL.setParameter(
-			"struts_action", "/portlet_configuration/edit_permissions");
+			"mvcPath",
+			"/html/portlet/portlet_configuration/edit_permissions.jsp");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);

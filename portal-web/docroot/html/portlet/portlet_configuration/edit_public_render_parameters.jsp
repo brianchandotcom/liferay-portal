@@ -25,7 +25,7 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 
 PortletURL editPublicRenderParameterURL = renderResponse.createRenderURL();
 
-editPublicRenderParameterURL.setParameter("struts_action", "/portlet_configuration/edit_public_render_parameters");
+editPublicRenderParameterURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_public_render_parameters.jsp");
 editPublicRenderParameterURL.setParameter("redirect", redirect);
 editPublicRenderParameterURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 editPublicRenderParameterURL.setParameter("portletResource", portletResource);
@@ -41,12 +41,11 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 	<liferay-ui:message arguments='<%= "http://www.liferay.com/community/wiki/-/wiki/Main/Portlet+Communication+Configuration" %>' key="set-up-the-communication-among-the-portlets-that-use-public-render-parameters" translateArguments="<%= false %>" />
 </div>
 
-<portlet:actionURL var="editPRPURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/edit_public_render_parameters" />
+<portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
+	<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_public_render_parameters.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editPRPURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
+<aui:form action="<%= editPublicRenderParametersURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= editPublicRenderParameterURL.toString() %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

@@ -744,42 +744,6 @@
 		<put name="portlet_content" value="/portlet/portal_settings/test_opensso_configuration.jsp" />
 	</definition>
 
-	<!-- Portlet Configuration -->
-
-	<definition name="portlet.portlet_configuration" extends="portlet" />
-
-	<definition name="portlet.portlet_configuration.edit_archived_setups" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_archived_setups.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.edit_configuration" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_configuration.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.edit_permissions" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_permissions.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.edit_public_render_parameters" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_public_render_parameters.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.edit_scope" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_scope.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.edit_sharing" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_sharing.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.edit_supported_clients" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/edit_supported_clients.jsp" />
-	</definition>
-
-	<definition name="portlet.portlet_configuration.error" extends="portlet.portlet_configuration">
-		<put name="portlet_content" value="/portlet/portlet_configuration/error.jsp" />
-	</definition>
-
 	<!-- Portlet Sharing -->
 
 	<definition name="portlet.portlet_sharing" extends="portlet">

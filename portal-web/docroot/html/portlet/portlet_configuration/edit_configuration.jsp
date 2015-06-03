@@ -31,7 +31,7 @@ String path = (String)request.getAttribute(WebKeys.CONFIGURATION_ACTION_PATH);
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layout.getGroupId(), ActionKeys.MANAGE_ARCHIVED_SETUPS) && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
 	<portlet:renderURL var="archivedSetupsURL">
-		<portlet:param name="struts_action" value="/portlet_configuration/edit_archived_setups" />
+		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />

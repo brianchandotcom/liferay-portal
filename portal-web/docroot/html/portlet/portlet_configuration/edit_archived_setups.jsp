@@ -22,7 +22,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/portlet_configuration/edit_archived_setups");
+portletURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_archived_setups.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
@@ -33,7 +33,7 @@ portletURL.setParameter("portletResource", portletResource);
 </liferay-util:include>
 
 <portlet:renderURL var="backURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/edit_configuration" />
+	<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_configuration.jsp" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
 	<portlet:param name="portletResource" value="<%= portletResource %>" />
@@ -47,12 +47,11 @@ portletURL.setParameter("portletResource", portletResource);
 <liferay-ui:error exception="<%= NoSuchPortletItemException.class %>" message="the-setup-could-not-be-found" />
 <liferay-ui:error exception="<%= PortletItemNameException.class %>" message="please-enter-a-valid-setup-name" />
 
-<portlet:actionURL var="editArchivedSetupsURL">
-	<portlet:param name="struts_action" value="/portlet_configuration/edit_archived_setups" />
+<portlet:actionURL name="updateArchivedSetup" var="updateArchivedSetupURL">
+	<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_archived_setups.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editArchivedSetupsURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.SAVE %>" />
+<aui:form action="<%= updateArchivedSetupURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="returnToFullPageURL" type="hidden" value="<%= returnToFullPageURL %>" />
 	<aui:input name="portletResource" type="hidden" value="<%= portletResource %>" />

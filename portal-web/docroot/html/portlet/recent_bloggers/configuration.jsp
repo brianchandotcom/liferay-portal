@@ -98,7 +98,7 @@ if (organizationId > 0) {
 					},
 					id: '<portlet:namespace />selectOrganization',
 					title: '<liferay-ui:message arguments="organization" key="select-x" />',
-					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/portlet_configuration/select_organization" /><portlet:param name="tabs1" value="organizations" /></portlet:renderURL>'
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization" /><portlet:param name="tabs1" value="organizations" /></portlet:renderURL>'
 				},
 				function(event) {
 					var form = AUI.$(document.<portlet:namespace />fm);

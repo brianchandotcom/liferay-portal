@@ -427,7 +427,7 @@ urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 urlConfiguration.setEscapeXml(false);
 
 if (portlet.getConfigurationActionInstance() != null) {
-	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_configuration");
+	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_configuration.jsp");
 
 	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
 
@@ -436,10 +436,10 @@ if (portlet.getConfigurationActionInstance() != null) {
 	}
 }
 else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
-	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_permissions");
+	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_permissions.jsp");
 }
 else {
-	urlConfiguration.setParameter("struts_action", "/portlet_configuration/edit_sharing");
+	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_sharing.jsp");
 }
 
 urlConfiguration.setParameter("redirect", currentURL);
@@ -1003,11 +1003,14 @@ else {
 %>
 
 <c:if test="<%= renderPortletBoundary %>">
+		<liferay-portlet:actionURL name="editTitle" portletName="<%= PortletKeys.PORTLET_CONFIGURATION %>" var="editTitleURL" />
+
 		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>
 			Liferay.Portlet.onLoad(
 				{
 					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
 					columnPos: <%= columnPos %>,
+					editTitleURL: '<%= HtmlUtil.escapeJS(editTitleURL.toString()) %>',
 					isStatic: '<%= staticVar %>',
 					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
 					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',

@@ -312,7 +312,7 @@ AUI.add(
 					var portletURL = PortletURL.createRenderURL();
 
 					portletURL.setDoAsGroupId(themeDisplay.getScopeGroupId());
-					portletURL.setParameter('struts_action', '/portlet_configuration/edit_permissions');
+					portletURL.setParameter('mvcPath', '/html/portlet/portlet_configuration/edit_permissions.jsp');
 					portletURL.setParameter('redirect', redirect);
 
 					if (!themeDisplay.isStateMaximized()) {

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.SystemEvent;
@@ -178,6 +179,16 @@ public abstract class BaseTrashHandler implements TrashHandler {
 		return destinationContainerModelId;
 	}
 
+	@Override
+	public Filter getExcludeFilter(SearchContext searchContext) {
+		return null;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getExcludeFilter(
+	 *             SearchContext)}
+	 */
+	@Deprecated
 	@Override
 	public Query getExcludeQuery(SearchContext searchContext) {
 		return null;

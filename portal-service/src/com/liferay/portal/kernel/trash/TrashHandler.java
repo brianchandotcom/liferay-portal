@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.model.ContainerModel;
 import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.TrashedModel;
@@ -280,6 +281,13 @@ public interface TrashHandler {
 	public long getDestinationContainerModelId(
 		long classPK, long destinationContainerModelId);
 
+	public Filter getExcludeFilter(SearchContext searchContext);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getExcludeFilter(
+	 *             SearchContext)}
+	 */
+	@Deprecated
 	public Query getExcludeQuery(SearchContext searchContext);
 
 	/**

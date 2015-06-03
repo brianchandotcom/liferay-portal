@@ -21,11 +21,10 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.capabilities.TrashCapability;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.util.RepositoryTrashUtil;
-import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
@@ -101,15 +100,14 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 	}
 
 	@Override
-	public Query getExcludeQuery(SearchContext searchContext) {
-		BooleanQuery excludeQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+	public Filter getExcludeFilter(SearchContext searchContext) {
+		BooleanFilter excludeFilter = new BooleanFilter();
 
-		excludeQuery.addRequiredTerm(
+		excludeFilter.addRequiredTerm(
 			Field.ENTRY_CLASS_NAME, DLFileEntryConstants.getClassName());
-		excludeQuery.addRequiredTerm(Field.HIDDEN, true);
+		excludeFilter.addRequiredTerm(Field.HIDDEN, true);
 
-		return excludeQuery;
+		return excludeFilter;
 	}
 
 	@Override

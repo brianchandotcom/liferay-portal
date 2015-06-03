@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.security.auth;
+package com.liferay.portal.kernel.security.auto.login;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
+import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.AccessControlContext;
+import com.liferay.portal.security.auth.AuthException;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.Properties;
@@ -87,7 +91,7 @@ public abstract class BaseAutoLogin implements AuthVerifier, AutoLogin {
 
 		if (Validator.isNotNull(redirect)) {
 			request.setAttribute(
-				AutoLogin.AUTO_LOGIN_REDIRECT_AND_CONTINUE,
+				AUTO_LOGIN_REDIRECT_AND_CONTINUE,
 				PortalUtil.escapeRedirect(redirect));
 		}
 	}
@@ -97,7 +101,7 @@ public abstract class BaseAutoLogin implements AuthVerifier, AutoLogin {
 			Exception e)
 		throws AutoLoginException {
 
-		if (request.getAttribute(AutoLogin.AUTO_LOGIN_REDIRECT) == null) {
+		if (request.getAttribute(AUTO_LOGIN_REDIRECT) == null) {
 			throw new AutoLoginException(e);
 		}
 

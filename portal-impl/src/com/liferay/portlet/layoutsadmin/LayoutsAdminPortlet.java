@@ -434,6 +434,37 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 			layoutTypeSettingsProperties);
 	}
 
+	public void editLayoutSet(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long layoutSetId = ParamUtil.getLong(actionRequest, "layoutSetId");
+
+		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
+		long stagingGroupId = ParamUtil.getLong(
+			actionRequest, "stagingGroupId");
+		boolean privateLayout = ParamUtil.getBoolean(
+			actionRequest, "privateLayout");
+
+		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
+			layoutSetId);
+
+		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
+
+		updateLookAndFeel(
+			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
+			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
+
+		updateMergePages(actionRequest, liveGroupId);
+
+		updateSettings(
+			actionRequest, liveGroupId, stagingGroupId, privateLayout,
+			layoutSet.getSettingsProperties());
+	}
+
 	public void enableLayout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -554,37 +585,6 @@ public class LayoutsAdminPortlet extends MVCPortlet {
 		else {
 			super.serveResource(resourceRequest, resourceResponse);
 		}
-	}
-
-	public void updateLayoutSet(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		long layoutSetId = ParamUtil.getLong(actionRequest, "layoutSetId");
-
-		long liveGroupId = ParamUtil.getLong(actionRequest, "liveGroupId");
-		long stagingGroupId = ParamUtil.getLong(
-			actionRequest, "stagingGroupId");
-		boolean privateLayout = ParamUtil.getBoolean(
-			actionRequest, "privateLayout");
-
-		LayoutSet layoutSet = LayoutSetLocalServiceUtil.getLayoutSet(
-			layoutSetId);
-
-		updateLogo(actionRequest, liveGroupId, stagingGroupId, privateLayout);
-
-		updateLookAndFeel(
-			actionRequest, themeDisplay.getCompanyId(), liveGroupId,
-			stagingGroupId, privateLayout, layoutSet.getSettingsProperties());
-
-		updateMergePages(actionRequest, liveGroupId);
-
-		updateSettings(
-			actionRequest, liveGroupId, stagingGroupId, privateLayout,
-			layoutSet.getSettingsProperties());
 	}
 
 	protected void deleteThemeSettingsProperties(

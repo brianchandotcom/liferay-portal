@@ -170,8 +170,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						containerName="<%= DLUtil.getAbsolutePath(renderRequest, fileEntry.getFolderId()) %>"
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
-						mbMessages="<%= searchResult.getMBMessages() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
+						relatedComments="<%= searchResult.getRelatedComments() %>"
 						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 						title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
 						url="<%= rowURL %>"

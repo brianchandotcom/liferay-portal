@@ -1518,7 +1518,7 @@ change is used for the blog abstract field.
 
 ---------------------------------------
 
-### Moved the Contact Name Exception Classes to Inner classes of ContactNameException
+### Moved the Contact Name Exception Classes to Inner Classes of ContactNameException
 - **Date:** 2015-May-05
 - **JIRA Ticket:** LPS-55364
 
@@ -1619,7 +1619,7 @@ API from the Document Library, as a part of the portal modularization effort.
 
 ---------------------------------------
 
-### Removed addFileEntry method from DLAppHelperLocalService
+### Removed addFileEntry Method from DLAppHelperLocalService
 - **Date:** 2015-May-20
 - **JIRA Ticket:** LPS-47645
 
@@ -1759,7 +1759,7 @@ Old code:
 New code:
 
     if (mbMessageIndexer instanceof RelatedEntryIndexer) {
-        RelatedEntryIndexer relatedEntryIndexer = 
+        RelatedEntryIndexer relatedEntryIndexer =
             (RelatedEntryIndexer)mbMessageIndexer;
 
         relatedEntryIndexer.addRelatedEntryFields(...);
@@ -1778,7 +1778,7 @@ Old code:
 New code:
 
     if (journalIndexer instanceof DDMStructureIndexer) {
-        DDMStructureIndexer ddmStructureIndexer = 
+        DDMStructureIndexer ddmStructureIndexer =
             (DDMStructureIndexer)journalIndexer;
 
         ddmStructureIndexer.reindexDDMStructures(...);
@@ -1790,7 +1790,6 @@ SearchEngineUtil.getQueryString(...)
 Old code:
 
     mbMessageIndexer.getQueryString(...);
-
 
 New code:
 

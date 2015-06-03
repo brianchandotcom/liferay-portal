@@ -17,6 +17,7 @@ package com.liferay.sass.compiler.ruby.internal;
 import java.net.URL;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -24,35 +25,38 @@ import org.junit.Test;
  */
 public class RubySassCompilerTest {
 
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_rubySassCompiler = new RubySassCompiler();
+	}
+
 	@Test
 	public void testCompileFile() throws Exception {
-		try (RubySassCompiler rubySassCompiler = new RubySassCompiler()) {
-			Assert.assertNotNull(rubySassCompiler);
+		Assert.assertNotNull(_rubySassCompiler);
 
-			String expectedOutput = "foo {\n  margin: 42px; }\n";
+		String expectedOutput = "foo {\n  margin: 42px; }\n";
 
-			Class<?> clazz = getClass();
+		Class<?> clazz = getClass();
 
-			URL url = clazz.getResource("dependencies/input.scss");
+		URL url = clazz.getResource("dependencies/input.scss");
 
-			String actualOutput = rubySassCompiler.compileFile(
-				url.getFile(), "", "");
+		String actualOutput = _rubySassCompiler.compileFile(
+			url.getFile(), "", "");
 
-			Assert.assertEquals(expectedOutput, actualOutput);
-		}
+		Assert.assertEquals(expectedOutput, actualOutput);
 	}
 
 	@Test
 	public void testCompileString() throws Exception {
-		try (RubySassCompiler rubySassCompiler = new RubySassCompiler()) {
-			Assert.assertNotNull(rubySassCompiler);
+		Assert.assertNotNull(_rubySassCompiler);
 
-			String expectedOutput = "foo {\n  margin: 42px; }\n";
-			String actualOutput = rubySassCompiler.compileString(
-				"foo { margin: 21px * 2; }", "", "");
+		String expectedOutput = "foo {\n  margin: 42px; }\n";
+		String actualOutput = _rubySassCompiler.compileString(
+			"foo { margin: 21px * 2; }", "", "");
 
-			Assert.assertEquals(expectedOutput, actualOutput);
-		}
+		Assert.assertEquals(expectedOutput, actualOutput);
 	}
+
+	private static RubySassCompiler _rubySassCompiler;
 
 }

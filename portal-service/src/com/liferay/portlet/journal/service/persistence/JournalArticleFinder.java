@@ -37,7 +37,7 @@ public interface JournalArticleFinder {
 		java.lang.String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
-	public int countByG_U_F_C(long groupId, long userId,
+	public int countByG_U_F_C(long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
@@ -86,7 +86,7 @@ public interface JournalArticleFinder {
 		java.lang.String ddmStructureKey,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
-	public int filterCountByG_U_F_C(long groupId, long userId,
+	public int filterCountByG_U_F_C(long groupId,
 		java.util.List<java.lang.Long> folderIds, long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
@@ -142,7 +142,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> filterFindByG_U_F_C(
-		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
+		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
@@ -214,7 +214,7 @@ public interface JournalArticleFinder {
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 
 	public java.util.List<com.liferay.portlet.journal.model.JournalArticle> findByG_U_F_C(
-		long groupId, long userId, java.util.List<java.lang.Long> folderIds,
+		long groupId, java.util.List<java.lang.Long> folderIds,
 		long classNameId,
 		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.portlet.journal.model.JournalArticle> queryDefinition);
 

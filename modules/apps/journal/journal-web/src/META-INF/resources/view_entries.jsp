@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String referringPortletResource = ParamUtil.getString(request, "referringPortletResource");
+
 String currentFolder = ParamUtil.getString(request, "curFolder");
 String deltaFolder = ParamUtil.getString(request, "deltaFolder");
 
@@ -127,19 +129,19 @@ int total = 0;
 	<c:when test='<%= displayTerms.getNavigation().equals("mine") || displayTerms.isNavigationRecent() %>'>
 
 		<%
-		long userId = 0;
+		boolean includeOwner = true;
 
 		if (displayTerms.getNavigation().equals("mine")) {
-			userId = themeDisplay.getUserId();
+			includeOwner = false;
 
 			status = WorkflowConstants.STATUS_ANY;
 		}
 
-		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, userId, folderId, status);
+		total = JournalArticleServiceUtil.getGroupArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner);
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, userId, folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalArticleServiceUtil.getGroupArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, includeOwner, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:when>
@@ -168,11 +170,11 @@ int total = 0;
 	<c:otherwise>
 
 		<%
-		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, folderId, status);
+		total = JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, themeDisplay.getUserId(), folderId, status);
 
 		articleSearchContainer.setTotal(total);
 
-		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
+		results = JournalFolderServiceUtil.getFoldersAndArticles(scopeGroupId, themeDisplay.getUserId(), folderId, status, articleSearchContainer.getStart(), articleSearchContainer.getEnd(), articleSearchContainer.getOrderByComparator());
 		%>
 
 	</c:otherwise>
@@ -299,18 +301,18 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 
 			<c:choose>
 				<c:when test="<%= curArticle != null %>">
+					<liferay-portlet:renderURL varImpl="tempRowURL">
+						<portlet:param name="mvcPath" value="/edit_article.jsp" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="backURL" value="<%= currentURL %>" />
+						<portlet:param name="referringPortletResource" value="<%= referringPortletResource %>" />
+						<portlet:param name="groupId" value="<%= String.valueOf(curArticle.getGroupId()) %>" />
+						<portlet:param name="folderId" value="<%= String.valueOf(curArticle.getFolderId()) %>" />
+						<portlet:param name="articleId" value="<%= curArticle.getArticleId() %>" />
+						<portlet:param name="version" value="<%= String.valueOf(curArticle.getVersion()) %>" />
+					</liferay-portlet:renderURL>
 
 					<%
-					PortletURL tempRowURL = liferayPortletResponse.createRenderURL();
-
-					tempRowURL.setParameter("mvcPath", "/edit_article.jsp");
-					tempRowURL.setParameter("redirect", currentURL);
-					tempRowURL.setParameter("groupId", String.valueOf(curArticle.getGroupId()));
-					tempRowURL.setParameter("folderId", String.valueOf(curArticle.getFolderId()));
-					tempRowURL.setParameter("articleId", curArticle.getArticleId());
-
-					tempRowURL.setParameter("status", String.valueOf(status));
-
 					request.setAttribute("view_entries.jsp-article", curArticle);
 
 					request.setAttribute("view_entries.jsp-tempRowURL", tempRowURL);

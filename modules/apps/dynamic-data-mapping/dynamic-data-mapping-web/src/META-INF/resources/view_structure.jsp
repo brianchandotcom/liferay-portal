@@ -54,6 +54,9 @@ backURL.setParameter("structureId", String.valueOf(structureVersion.getStructure
 
 <aui:input disabled="<%= true %>" name="description" />
 
+<%
+readOnlyForm = true;
+%>
 <%@ include file="/form_builder.jspf" %>
 
 <aui:button-row>

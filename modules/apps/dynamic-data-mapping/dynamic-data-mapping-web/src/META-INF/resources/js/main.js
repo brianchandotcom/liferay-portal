@@ -48,6 +48,67 @@ AUI.add(
 				NAME: 'availableField'
 			}
 		);
+		
+		var ReadOnlyFormBuilderSupport = function() {};
+
+		ReadOnlyFormBuilderSupport.ATTRS = {
+			readOnly: {
+				value: false
+			}
+		};
+
+		A.mix(
+			ReadOnlyFormBuilderSupport.prototype,
+			{
+				initializer: function() {
+					var instance = this;
+
+					if (instance.get('readOnly')) {
+						instance.set('allowRemoveRequiredFields',false);
+						instance.set('enableEditing',false);
+						instance.translationManager.hide();
+						
+						instance.after('render', instance._afterRenderReadOnlyFormBuilder);
+
+						instance.after('*:render', instance._afterFieldRender);
+
+						instance.dropContainer.delegate('mouseover', instance._onMouseOverFieldReadOnlyFormBuilder, '.form-builder-field');
+					}	
+				},
+
+				_afterRenderReadOnlyFormBuilder: function() {
+					var instance = this;
+
+					instance.tabView.enableTab(1);
+					instance.openEditProperties(instance.get('fields').item(0));
+					instance.tabView.getTabs().item(0).hide();
+				},
+
+				_afterFieldRender: function(event) {
+					var field = event.target;
+
+					if (A.instanceOf(field, A.FormBuilderField)) {
+						var readOnlyAttributes = AArray.map(
+							field.getPropertyModel(),
+							function(item) {
+								return item.attributeName;
+							}
+						);
+
+						field.set('readOnlyAttributes', readOnlyAttributes);
+					}
+				},
+
+				_onMouseOverFieldReadOnlyFormBuilder: function(event) {
+					var field = A.Widget.getByNode(event.currentTarget);
+
+					field.controlsToolbar.hide();
+
+					field.get('boundingBox').removeClass('form-builder-field-hover');
+				}
+				
+			}
+		);
 
 		A.LiferayAvailableField = LiferayAvailableField;
 
@@ -146,6 +207,8 @@ AUI.add(
 				},
 
 				EXTENDS: A.FormBuilder,
+				
+				AUGMENTS: [ReadOnlyFormBuilderSupport],
 
 				LOCALIZABLE_FIELD_ATTRS: ['label', 'options', 'predefinedValue', 'style', 'tip'],
 
@@ -757,7 +820,7 @@ AUI.add(
 				}
 			]
 		};
-
+		
 		AVAILABLE_FIELDS.WCM_STRUCTURE = AVAILABLE_FIELDS.WCM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE);
 
 		LiferayFormBuilder.AVAILABLE_FIELDS = AVAILABLE_FIELDS;

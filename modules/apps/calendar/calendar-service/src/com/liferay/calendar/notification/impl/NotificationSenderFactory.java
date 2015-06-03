@@ -12,28 +12,38 @@
  * details.
  */
 
-package com.liferay.calendar.notification;
+package com.liferay.calendar.notification.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Map;
 
 /**
  * @author Eduardo Lundgren
  */
-public class NotificationSenderException extends PortalException {
+public class NotificationSenderFactory {
 
-	public NotificationSenderException() {
+	public static NotificationSender getNotificationSender(
+			String notificationType)
+		throws PortalException {
+
+		NotificationSender notificationSender = _notificationSenders.get(
+			notificationType);
+
+		if (notificationSender == null) {
+			throw new PortalException(
+				"Invalid notification type " + notificationType);
+		}
+
+		return notificationSender;
 	}
 
-	public NotificationSenderException(String msg) {
-		super(msg);
+	public void setNotificationSenders(
+		Map<String, NotificationSender> notificationSenders) {
+
+		_notificationSenders = notificationSenders;
 	}
 
-	public NotificationSenderException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public NotificationSenderException(Throwable cause) {
-		super(cause);
-	}
+	private static Map<String, NotificationSender> _notificationSenders;
 
 }

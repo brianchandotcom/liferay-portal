@@ -1802,3 +1802,53 @@ The `addRelatedEntryFields` and `reindexDDMStructures` methods were not related
 to core indexing functions. They were functions of specialized indexers.
 
 The `getQueryString` method was an unnecessary convenience method.
+
+---------------------------------------
+
+### Replaced SearchPermissionChecker.getPermissionQuery with SearchPermissionChecker.getPermissionFilter
+- **Date:** 2015-Jun-2
+- **JIRA Ticket:** LPS-56064
+
+#### What changed?
+
+Method `SearchPermissionChecker.getPermissionQuery(
+long, long[], long, String, Query, SearchContext)` 
+has been replaced by `SearchPermissionChecker.getPermissionBooleanFilter(
+long, long[], long, String, BooleanFilter, SearchContext)`.
+
+Method `Indexer.getFacetQuery(String, SearchContext)` has been replaced by
+`Indexer.getFacetBooleanFilter(String, SearchContext)`.
+
+#### Who is affected?
+
+This affects any code that invokes the affected methods, as well as any code
+that implements the interface methods.
+
+#### How should I update my code?
+
+Any code implementing `SearchPermissionChecker.getPermissionQuery(...)` should 
+instead implement `SearchPermissionChecker.getPermissionBooleanFilter(...)`.
+
+Any code calling `SearchPermissionChecker.getPermissionQuery(...)` should 
+instead call `SearchPermissionChecker.getPermissionBooleanFilter(...)`.
+
+Any code implementing `Indexer.getFacetQuery(...)` should instead implement 
+`Indexer.getFacetBooleanFilter(...)`.
+
+Any code calling `Indexer.getFacetQuery(...)` should instead call 
+`Indexer.getFacetBooleanFilter(...)`.
+
+#### Why was this change made?
+
+Permission constraints placed on search should not affect the score for returned
+search results.  Thus, these constraints should be applied as search filters. 
+`SearchPermissionChecker` is also a very deep internal interface within the
+permission system.  Thus, to limit confusion in the logic for maintainability, 
+the `SearchPermissionChecker.getPermissionQuery(...)` method was removed as 
+opposed to deprecated.
+
+Similarly, constraints applied to facets should not affect the scoring or the
+facet counts. Since `Indexer.getFacetQuery(...)` was only utilized by the
+`AssetEntriesFacet` and reduce the impact of changes for 
+`SearchPermissionChecker.getPermissionBooleanFilter(...)`, the method was 
+removed as opposed to deprecated.

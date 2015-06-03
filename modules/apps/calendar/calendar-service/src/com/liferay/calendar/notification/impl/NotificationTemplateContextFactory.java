@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.calendar.notification;
+package com.liferay.calendar.notification.impl;
 
 import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.calendar.notification.NotificationTemplateType;
+import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil;
 import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -36,9 +38,7 @@ import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
-
 import java.text.Format;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;

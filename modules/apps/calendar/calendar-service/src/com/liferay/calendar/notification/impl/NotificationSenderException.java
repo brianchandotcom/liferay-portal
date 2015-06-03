@@ -12,22 +12,28 @@
  * details.
  */
 
-package com.liferay.calendar.notification;
+package com.liferay.calendar.notification.impl;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Eduardo Lundgren
  */
-public interface NotificationSender {
+public class NotificationSenderException extends PortalException {
 
-	public void sendNotification(
-			NotificationRecipient notificationRecipient,
-			NotificationTemplateContext notificationTemplateContext)
-		throws NotificationSenderException;
+	public NotificationSenderException() {
+	}
 
-	public void sendNotification(
-			String fromAddress, String fromName,
-			NotificationRecipient notificationRecipient, String subject,
-			String notificationMessage)
-		throws NotificationSenderException;
+	public NotificationSenderException(String msg) {
+		super(msg);
+	}
+
+	public NotificationSenderException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NotificationSenderException(Throwable cause) {
+		super(cause);
+	}
 
 }

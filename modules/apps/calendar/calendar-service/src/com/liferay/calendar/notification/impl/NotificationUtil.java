@@ -12,20 +12,17 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.notification.impl;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationField;
-import com.liferay.calendar.notification.NotificationRecipient;
-import com.liferay.calendar.notification.NotificationSender;
-import com.liferay.calendar.notification.NotificationSenderFactory;
-import com.liferay.calendar.notification.NotificationTemplateContext;
-import com.liferay.calendar.notification.NotificationTemplateContextFactory;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.util.PortletPropsKeys;
+import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.StringPool;

@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.calendar.notification;
+package com.liferay.calendar.notification.impl;
 
 import com.liferay.calendar.model.CalendarNotificationTemplate;
+import com.liferay.calendar.notification.NotificationTemplateType;
+import com.liferay.calendar.notification.NotificationType;
 import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
-
 import java.util.LinkedHashMap;
 import java.util.Map;
 

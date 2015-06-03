@@ -11,6 +11,7 @@ File sdkDir = rootProject.file("../tools/sdk")
 
 afterEvaluate {
 	project.ext.set("app.server.lib.portal.dir", project.relativePath(appServerLibPortalDir))
+	project.ext.set("app.server.portal.dir", project.relativePath(liferay.appServerPortalDir))
 	project.ext.set("plugin.full.version", project.version.toString())
 }
 

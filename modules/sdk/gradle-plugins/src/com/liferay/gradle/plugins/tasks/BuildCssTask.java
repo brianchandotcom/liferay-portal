@@ -29,13 +29,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.gradle.api.GradleException;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
+import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
+import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
 import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.SkipWhenEmpty;
@@ -48,7 +51,9 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	@Override
 	public void exec() {
-		copyPortalCommon();
+		if (getPortalWebDir() == null) {
+			copyPortalCommon();
+		}
 
 		FileCollection rootDirs = getRootDirs();
 
@@ -70,7 +75,19 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 		args.add("sass.dir=/");
 
-		File cssPortalCommonDir = new File(getTmpDir(), "html/css/common");
+		File dir = getPortalWebDir();
+
+		if (dir == null) {
+			if (getPortalWebFile() != null) {
+				dir = getTmpDir();
+			}
+			else {
+				throw new GradleException(
+					"Unable to find the portal web files");
+			}
+		}
+
+		File cssPortalCommonDir = new File(dir, "html/css/common");
 
 		args.add(
 			"sass.portal.common.dir=" +
@@ -120,7 +137,14 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return "com.liferay.portal.tools.SassToCssBuilder";
 	}
 
+	@InputDirectory
+	@Optional
+	public File getPortalWebDir() {
+		return _portalWebDir;
+	}
+
 	@InputFile
+	@Optional
 	public File getPortalWebFile() {
 		return _portalWebFile;
 	}
@@ -151,6 +175,10 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	public void setLegacy(boolean legacy) {
 		_legacy = legacy;
+	}
+
+	public void setPortalWebDir(File portalWebDir) {
+		_portalWebDir = portalWebDir;
 	}
 
 	public void setPortalWebFile(File portalWebFile) {
@@ -233,6 +261,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	private boolean _legacy;
+	private File _portalWebDir;
 	private File _portalWebFile;
 	private Object _rootDirs;
 	private File _tmpDir;

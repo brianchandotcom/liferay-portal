@@ -1,7 +1,12 @@
 Bundle-Name: Liferay Calendar Web
 Bundle-SymbolicName: com.liferay.calendar.web
 Bundle-Version: 1.0.0
+Import-Package:\
+	*
 Include-Resource:\
-	WEB-INF/classes/META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
-	WEB-INF/classes/portlet.properties=docroot/WEB-INF/src/portlet.properties,\
-	WEB-INF/classes/resource-actions=docroot/WEB-INF/src/resource-actions
+	classes,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/RSSUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/portlet/PortletProps.class

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.constants;
 
 /**
  * @author Eduardo Lundgren
@@ -20,6 +20,7 @@ package com.liferay.calendar.util;
  */
 public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
-	public static final String CALENDAR = "1_WAR_calendarportlet";
+	public static final String CALENDAR =
+		"com_liferay_calendar_web_portlet_CalendarPortlet";
 
 }

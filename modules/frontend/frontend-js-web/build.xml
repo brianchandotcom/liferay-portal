@@ -4,7 +4,7 @@
 <project>
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<property name="auto.deploy.dir" value="${liferay.home}/osgi/modules" />
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
 
 	<property name="alloy.bootstrap.version" value="3.2.0-2" />
 	<property name="alloy.version" value="3.0.1" />

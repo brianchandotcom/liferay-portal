@@ -47,167 +47,16 @@
 		<pathelement location="${project.dir}/lib/portal/struts.jar" />
 	</path>
 
-	<extension-point name="build-portal-web-dependencies" depends="build-bourbon,build-css,build-dtd,build-vaadin" />
+	<extension-point name="build-portal-web-dependencies" depends="build-css,build-dtd,build-vaadin" />
 
-	<target name="build-alloy-bootstrap-theme">
-		<path id="alloy.bootstrap.zip.path">
-			<fileset dir="third-party">
-				<include name="bootstrap-sass-${alloy.bootstrap.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy.bootstrap.zip.path" refid="alloy.bootstrap.zip.path" />
-
-		<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
-
-		<property name="alloy.bootstrap.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/bootstrap-assets" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${alloy.bootstrap.file}"
-					targetfile="${alloy.bootstrap.assets.dir}"
-				/>
-			</not>
-			<then>
-				<ant-execute
-					ant.build.file="build.xml"
-					ant.dir="${frontend.js.web.dir}"
-					ant.target="build-alloy-bootstrap"
-				/>
-			</then>
-		</if>
-
-		<property name="alloy.bootstrap.deploy.theme.dir" value="docroot/html/themes/_unstyled/css/aui" />
-
-		<delete dir="${alloy.bootstrap.deploy.theme.dir}" />
-
-		<!-- CSS -->
-
-		<property name="alloy.bootstrap.css.lib.dir" value="${alloy.bootstrap.assets.dir}/stylesheets" />
-
-		<delete failonerror="false" includeemptydirs="true" quiet="true">
-			<fileset
-				dir="${alloy.bootstrap.css.lib.dir}"
-				includes="_bootstrap-*.scss"
-			/>
-		</delete>
-
-		<copy todir="${alloy.bootstrap.deploy.theme.dir}" overwrite="true" preservelastmodified="true">
-			<fileset dir="${alloy.bootstrap.css.lib.dir}/" />
-		</copy>
-
-		<!-- Glyphicons font -->
-
-		<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.assets.dir}/fonts/bootstrap" />
-
-		<copy todir="${alloy.bootstrap.deploy.theme.dir}/glyphicons/font" overwrite="true" preservelastmodified="true">
-			<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />
-		</copy>
-	</target>
-
-	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap-theme">
-		<path id="alloy-font-awesome.zip.path">
-			<fileset dir="third-party">
-				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy-font-awesome.zip.path" refid="alloy-font-awesome.zip.path" />
-
-		<basename file="${alloy-font-awesome.zip.path}" property="alloy-font-awesome.file" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${alloy-font-awesome.file}"
-					targetfile="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome"
-				/>
-			</not>
-			<then>
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome" />
-
-				<unzip src="third-party/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy.theme.dir}" />
-
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome/css" />
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome/less" />
-			</then>
-		</if>
-	</target>
-
-	<target name="build-alloy-theme">
-		<path id="alloy.zip.path">
-			<fileset dir="third-party">
-				<include name="alloy-${alloy.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy.zip.path" refid="alloy.zip.path" />
-
-		<basename file="${alloy.zip.path}" property="alloy.file" />
-
-		<property name="alloy.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/js/aui" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="third-party/${alloy.file}"
-					targetfile="${alloy.dir}"
-				/>
-			</not>
-			<then>
-				<ant-execute
-					ant.build.file="build.xml"
-					ant.dir="${frontend.js.web.dir}"
-					ant.target="build-alloy"
-				/>
-			</then>
-		</if>
-
-		<delete dir="docroot/html/themes/_unstyled/images/aui" />
-
-		<for param="dir">
-			<path>
-				<dirset
-					dir="${alloy.dir}"
-					includes="aui-*"
-				/>
-			</path>
-			<sequential>
-				<basename property="dir.name" file="@{dir}" />
-				<if>
-					<available file="${alloy.dir}/${dir.name}/assets/skins/sam" />
-					<then>
-						<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
-							<fileset dir="{alloy.dir}/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
-						</copy>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<copy todir="docroot/html/themes/_unstyled/images/aui" preservelastmodified="true">
-			<fileset dir="${alloy.dir}/aui-skin-deprecated/images" />
-		</copy>
-
-		<copy
-			file="${alloy.dir}/aui_deprecated.css"
-			tofile="docroot/html/css/portal/aui_deprecated.css"
-			overwrite="true"
-			preservelastmodified="true"
-		/>
-	</target>
-
-	<target name="build-bourbon">
-		<property name="portal.common.dir" value="docroot/html/css/common" />
+	<target name="build-common-css">
+		<property name="portal.common.dir" value="${basedir}/docroot/html/css/common" />
 
 		<property name="bourbon.version" value="3.2.3" />
 
 		<property name="bourbon.deploy" value="${portal.common.dir}/bourbon" />
 
 		<property name="bourbon.file" value="bourbon-${bourbon.version}.zip" />
-
-		<property name="bourbon.tmp.dir" value="docroot/html/BOURBON_ZIP" />
 
 		<if>
 			<not>
@@ -217,23 +66,16 @@
 				/>
 			</not>
 			<then>
-				<delete dir="${bourbon.tmp.dir}" />
-				<delete dir="${bourbon.deploy}" />
-
-				<unzip src="third-party/${bourbon.file}" dest="${bourbon.tmp.dir}" />
-
-				<property name="bourbon.lib.dir" value="${bourbon.tmp.dir}/bourbon-${bourbon.version}/app/assets/stylesheets" />
-
-				<copy todir="${bourbon.deploy}" overwrite="true" preservelastmodified="true">
-					<fileset dir="${bourbon.lib.dir}/" />
-				</copy>
-
-				<delete dir="${bourbon.tmp.dir}" />
+				<ant-execute
+					ant.build.file="build.xml"
+					ant.dir="../modules/frontend/frontend-css-web"
+					ant.target="build-bourbon"
+				/>
 			</then>
 		</if>
 	</target>
 
-	<target name="build-css" depends="build-themes">
+	<target name="build-css" depends="build-common-css">
 		<property name="sass.tmp.dir" value="${basedir}/sass_tmp_dir" />
 
 		<mkdir dir="${sass.tmp.dir}" />
@@ -253,9 +95,7 @@
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
 			<jvmarg value="-Djava.util.logging.config.file=${project.dir}/portal-impl/src/com/liferay/portal/tools/dependencies/portal-tools-logging.properties" />
 			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
-			<arg value="sass.dir.0=/html/css" />
-			<arg value="sass.dir.1=/html/portlet" />
-			<arg value="sass.dir.2=/html/themes" />
+			<arg value="sass.dir=/html/portlet" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />
 		</java>
@@ -386,80 +226,6 @@
 		<echo file="${project.dir}/tools/selenium/extensions/ide.${user.name}.js">${ide.js.content}</echo>
 	</target>
 
-	<target name="build-themes" depends="build-alloy-bootstrap-theme,build-alloy-theme,build-alloy-font-awesome,build-bourbon">
-		<for param="module.name">
-			<path>
-				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
-			</path>
-			<sequential>
-				<if>
-					<available file="@{module.name}/_diffs/images" />
-					<then>
-						<for param="file">
-							<path>
-								<fileset
-									dir="@{module.name}/_diffs/images"
-									includes="**/screenshot.png"
-								/>
-							</path>
-							<sequential>
-								<propertyregex input="@{file}" override="yes" property="thumbnail.file" regexp="screenshot\.png" replace="thumbnail\.png" />
-
-								<if>
-									<not>
-										<uptodate targetfile="${thumbnail.file}" srcfile="@{file}" />
-									</not>
-									<then>
-										<java
-											classname="com.liferay.portal.tools.ThumbnailBuilder"
-											classpathref="project.classpath"
-										>
-											<arg value="thumbnail.original.file=@{file}" />
-											<arg value="thumbnail.thumbnail.file=${thumbnail.file}" />
-											<arg value="thumbnail.height=120" />
-											<arg value="thumbnail.width=160" />
-											<arg value="thumbnail.overwrite=false" />
-										</java>
-									</then>
-								</if>
-							</sequential>
-						</for>
-					</then>
-				</if>
-
-				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
-					<fileset
-						dir="docroot/html/themes/_unstyled"
-						excludes="templates/init.ftl,templates/init.vm"
-					/>
-				</copy>
-
-				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
-					<fileset
-						dir="docroot/html/themes/_styled"
-					/>
-				</copy>
-
-				<if>
-					<available file="@{module.name}/_diffs" />
-					<then>
-						<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
-							<fileset
-								dir="@{module.name}/_diffs"
-							/>
-						</copy>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<copy
-			file="docroot/html/themes/_unstyled/images/favicon.ico"
-			preservelastmodified="true"
-			todir="docroot"
-		/>
-	</target>
-
 	<target name="build-vaadin">
 		<if>
 			<not>
@@ -496,12 +262,10 @@
 		</if>
 	</target>
 
-	<target name="clean" depends="build-common-web.clean,clean-css,clean-themes,clean-tlds">
+	<target name="clean" depends="build-common-web.clean,clean-css,clean-tlds">
 		<delete dir="classes" />
 		<delete dir="docroot/dtd" />
 		<delete dir="docroot/html/portal/aui" />
-		<delete dir="docroot/html/themes/_unstyled/images/aui/" />
-		<delete dir="docroot/html/themes/classic/color_schemes" />
 		<delete dir="docroot/html/VAADIN" />
 		<delete dir="docroot/WEB-INF/classes" />
 		<delete dir="docroot/WEB-INF/lib" />
@@ -511,26 +275,8 @@
 
 	<target name="clean-css">
 		<delete includeemptydirs="true">
-			<fileset dir="docroot/html/css" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 			<fileset dir="docroot/html/portlet" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			<fileset dir="docroot/html/themes" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 		</delete>
-	</target>
-
-	<target name="clean-themes">
-		<for param="module.name">
-			<path>
-				<dirset dir="docroot/html/themes" excludes="_styled,_unstyled" includes="*" />
-			</path>
-			<sequential>
-				<delete includeemptydirs="true" quiet="true" failonerror="false">
-					<fileset
-						dir="@{module.name}"
-						excludes="**/_diffs/**"
-					/>
-				</delete>
-			</sequential>
-		</for>
 	</target>
 
 	<target name="clean-tlds">

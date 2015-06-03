@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.servlet.DirectRequestDispatcherFactory;
 import com.liferay.portal.kernel.servlet.DirectServletRegistryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
 
@@ -85,7 +84,7 @@ public class DirectRequestDispatcherFactoryImpl
 				"Path " + path + " is not relative to context root");
 		}
 
-		String contextPath = ContextPathUtil.getContextPath(servletContext);
+		String contextPath = servletContext.getContextPath();
 
 		String fullPath = contextPath.concat(path);
 		String queryString = null;

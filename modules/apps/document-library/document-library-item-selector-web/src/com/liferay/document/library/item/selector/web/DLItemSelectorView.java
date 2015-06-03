@@ -29,9 +29,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(service = ItemSelectorView.class)
 public class DLItemSelectorView
 	implements ItemSelectorView<DLItemSelectorCriterion> {
 

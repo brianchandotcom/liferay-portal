@@ -222,3 +222,58 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 		<aui:button href="<%= editLayoutRenderURL %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-toggler">
+
+	A.on(
+		'domready',
+		function(event) {
+			togglerDelegate = new A.TogglerDelegate(
+				{
+					animated: true,
+					closeAllOnExpand: true,
+					container: A.one('#<portlet:namespace />templateList'),
+					content: '.lfr-page-template-options',
+					expanded: false,
+					header: '.lfr-page-template-title',
+					on: {
+						'toggler:expandedChange': function(event) {
+
+							var nodeList = A.one('#<portlet:namespace />templateList');
+
+							if (event.newVal) {
+
+								if (nodeList) {
+									nodeList.all('.active').removeClass('active');
+								}
+
+								var header = event.target.get('header');
+
+								if (header) {
+									var selectedType = header.attr('data-type');
+
+									var selectedPrototypeId = header.attr('data-prototype-id');
+
+									var selectedPageTemplate = header.one('input');
+
+									var addLayoutType = A.one('#<portlet:namespace />addLayoutType');
+
+									var addLayoutPrototypeId = A.one('#<portlet:namespace />addLayoutPrototypeId');
+
+									selectedPageTemplate.attr('checked', true);
+
+									header.addClass('active');
+
+									addLayoutType.attr('value', selectedType);
+
+									addLayoutPrototypeId.attr('value', selectedPrototypeId);
+								}
+							}
+						}
+					}
+				}
+			);
+		}
+	);
+
+</aui:script>

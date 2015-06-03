@@ -76,7 +76,6 @@ backURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 
 		rowURL.setParameter("mvcPath", "/view_structure.jsp");
 		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("structureId", String.valueOf(structureId));
 		rowURL.setParameter("structureVersionId", String.valueOf(structureVersion.getStructureVersionId()));
 
 		// Structure version id

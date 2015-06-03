@@ -26,7 +26,6 @@ DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
 	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="viewStructureVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/view_structure.jsp" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="structureId" value="<%= String.valueOf(structureVersion.getStructureId()) %>" />
 		<portlet:param name="structureVersionId" value="<%= String.valueOf(structureVersion.getStructureVersionId()) %>" />
 	</liferay-portlet:renderURL>
 

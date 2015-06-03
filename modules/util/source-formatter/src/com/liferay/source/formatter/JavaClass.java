@@ -1212,6 +1212,10 @@ public class JavaClass {
 		JavaTerm javaTerm, String javaTermClassName, Pattern pattern,
 		boolean checkOuterClass) {
 
+		if (_javaTerms == null) {
+			return false;
+		}
+
 		if (checkOuterClass && (_outerClass != null)) {
 			return _outerClass.isFinalableField(
 				javaTerm, javaTermClassName, pattern, true);

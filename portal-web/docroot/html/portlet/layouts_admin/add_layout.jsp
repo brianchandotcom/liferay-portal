@@ -224,7 +224,6 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 </aui:form>
 
 <aui:script use="aui-toggler">
-
 	A.on(
 		'domready',
 		function(event) {
@@ -238,11 +237,9 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 					header: '.lfr-page-template-title',
 					on: {
 						'toggler:expandedChange': function(event) {
-
 							var nodeList = A.one('#<portlet:namespace />templateList');
 
 							if (event.newVal) {
-
 								if (nodeList) {
 									nodeList.all('.active').removeClass('active');
 								}
@@ -275,5 +272,4 @@ String[] types = LayoutTypeControllerTracker.getTypes();
 			);
 		}
 	);
-
 </aui:script>

@@ -164,11 +164,6 @@
 			<forward name="portlet.admin.error" path="portlet.admin.error" />
 		</action>
 
-		<action path="/admin_server/edit_role_permissions" type="com.liferay.portlet.rolesadmin.action.EditRolePermissionsAction">
-			<forward name="portlet.roles_admin.edit_role_permissions" path="portlet.roles_admin.edit_role_permissions" />
-			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />
-		</action>
-
 		<action path="/admin_server/edit_server" type="com.liferay.portlet.admin.action.EditServerAction">
 			<forward name="portlet.admin.edit_permissions" path="portlet.admin.edit_permissions" />
 			<forward name="portlet.admin.error" path="portlet.admin.error" />

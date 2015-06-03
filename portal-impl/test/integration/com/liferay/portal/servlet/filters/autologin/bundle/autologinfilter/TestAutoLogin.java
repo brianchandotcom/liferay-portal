@@ -14,8 +14,8 @@
 
 package com.liferay.portal.servlet.filters.autologin.bundle.autologinfilter;
 
+import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.util.StackTraceUtil;
-import com.liferay.portal.security.auth.AutoLogin;
 
 import java.util.concurrent.atomic.AtomicReference;
 

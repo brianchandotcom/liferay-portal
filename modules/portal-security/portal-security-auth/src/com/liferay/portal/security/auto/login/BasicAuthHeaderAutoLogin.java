@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.internal;
+package com.liferay.portal.security.auto.login;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

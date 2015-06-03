@@ -12,13 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.internal.auth;
+package com.liferay.portal.security.sso.facebook.connect.auto.login;
 
-import com.liferay.portal.kernel.openid.OpenId;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.facebook.FacebookConnect;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectWebKeys;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -30,10 +34,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
+ * @author Wilson Man
  */
 @Component(immediate = true, service = AutoLogin.class)
-public class OpenIdAutoLogin extends BaseAutoLogin {
+public class FacebookConnectAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
@@ -42,36 +46,58 @@ public class OpenIdAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
-		if (!_openId.isEnabled(companyId)) {
+		if (!_facebookConnect.isEnabled(companyId)) {
 			return null;
 		}
 
-		HttpSession session = request.getSession();
+		User user = getUser(request, companyId);
 
-		Long userId = (Long)session.getAttribute(WebKeys.OPEN_ID_LOGIN);
-
-		if (userId == null) {
+		if (user == null) {
 			return null;
 		}
-
-		session.removeAttribute(WebKeys.OPEN_ID_LOGIN);
-
-		User user = UserLocalServiceUtil.getUserById(userId);
 
 		String[] credentials = new String[3];
 
 		credentials[0] = String.valueOf(user.getUserId());
 		credentials[1] = user.getPassword();
-		credentials[2] = Boolean.TRUE.toString();
+		credentials[2] = Boolean.FALSE.toString();
 
 		return credentials;
 	}
 
-	@Reference
-	protected void setOpenId(OpenId openId) {
-		_openId = openId;
+	protected User getUser(HttpServletRequest request, long companyId)
+		throws PortalException {
+
+		HttpSession session = request.getSession();
+
+		String emailAddress = (String)session.getAttribute(
+			WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);
+
+		if (Validator.isNotNull(emailAddress)) {
+			session.removeAttribute(WebKeys.FACEBOOK_USER_EMAIL_ADDRESS);
+
+			return UserLocalServiceUtil.getUserByEmailAddress(
+				companyId, emailAddress);
+		}
+		else {
+			long facebookId = GetterUtil.getLong(
+				(String)session.getAttribute(
+					FacebookConnectWebKeys.FACEBOOK_USER_ID));
+
+			if (facebookId > 0) {
+				return UserLocalServiceUtil.getUserByFacebookId(
+					companyId, facebookId);
+			}
+		}
+
+		return null;
 	}
 
-	private OpenId _openId;
+	@Reference
+	protected void setFacebookConnect(FacebookConnect facebookConnect) {
+		_facebookConnect = facebookConnect;
+	}
+
+	private FacebookConnect _facebookConnect;
 
 }

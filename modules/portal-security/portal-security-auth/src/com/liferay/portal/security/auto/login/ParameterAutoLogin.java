@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.internal;
+package com.liferay.portal.security.auto.login;
 
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;

@@ -266,6 +266,7 @@
 				<classpath mode="compile">lib/development/cobertura.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.bnd.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.build.logger.jar</classpath>
+				<classpath mode="compile">lib/development/com.liferay.ant.heap.dump.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.ant.jgit.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.tld.formatter.jar</classpath>
 				<classpath mode="compile">lib/development/com.liferay.whip.jar</classpath>

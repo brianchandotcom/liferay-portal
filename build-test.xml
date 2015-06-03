@@ -5948,6 +5948,9 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-class-group">
+		<echo>
+ANT_OPTS=${env.ANT_OPTS}</echo>
+
 		<antcall target="clean-up-java-processes" inheritAll="false" />
 
 		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
@@ -5971,6 +5974,21 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 
 				<delete file=".testable.portal.started" failonerror="false" />
 			</then>
+		</if>
+
+		<if>
+			<available file="/tmp/ant-gc.log" />
+			<then>
+				<loadfile property="ant-gc-log" srcFile="/tmp/ant-gc.log" />
+
+				<echo>
+Ant GC log:
+
+${ant-gc-log}</echo>
+			</then>
+			<else>
+				<echo>Can not find file /tmp/ant-gc.log</echo>
+			</else>
 		</if>
 	</target>
 

@@ -95,7 +95,10 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected void configureDependenciesCompile(Project project) {
 		super.configureDependenciesCompile(project);
 
-		if (hasJavaSources(project)) {
+		boolean addDefaultDependencies = getProperty(
+			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+
+		if (addDefaultDependencies && hasJavaSources(project)) {
 			for (String dependencyNotation :
 					_THEME_COMPILE_DEPENDENCY_NOTATIONS) {
 

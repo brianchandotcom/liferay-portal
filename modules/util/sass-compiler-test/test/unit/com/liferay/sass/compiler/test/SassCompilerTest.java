@@ -14,10 +14,17 @@
 
 package com.liferay.sass.compiler.test;
 
+import com.liferay.sass.compiler.SassCompiler;
+import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
+import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
+
+import java.io.File;
+
 import java.net.URL;
 
-import com.liferay.sass.compiler.SassCompiler;
-import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -31,36 +38,83 @@ public class SassCompilerTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_rubySassCompiler = new RubySassCompiler();
+		_jniSassCompiler = new JniSassCompiler();
+	}
+
+	@Test
+	public void testBoxShadowTransparent() throws Exception {
+		String input = "foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }";
+		String expectedOutput = stripNewLines(
+			"foo { box-shadow: 2px 4px 7px rgba(0, 0, 0, 0.5); }");
+
+		String jniOutput = _jniSassCompiler.compileString(input, "", "");
+		Assert.assertEquals(expectedOutput, stripNewLines(jniOutput));
+
+		String rubyOutput = _jniSassCompiler.compileString(input, "", "");
+		Assert.assertEquals(expectedOutput, stripNewLines(rubyOutput));
 	}
 
 	@Test
 	public void testCompileFile() throws Exception {
-		Assert.assertNotNull(_rubySassCompiler);
-
-		String expectedOutput = "foo {\n  margin: 42px; }\n";
-
 		Class<?> clazz = getClass();
 
-		URL url = clazz.getResource("dependencies/input.scss");
+		URL url = clazz.getResource("dependencies/sass-spec");
 
-		String actualOutput = _rubySassCompiler.compileFile(
-			url.getFile(), "", "");
+		File sassSpecDir = new File(url.toURI());
 
-		Assert.assertEquals(expectedOutput, actualOutput);
+		for (File testDir : sassSpecDir.listFiles()) {
+			File inputFile = new File(testDir, "input.scss");
+
+			if (!inputFile.exists()) {
+				continue;
+			}
+
+			String inputPath = inputFile.getCanonicalPath();
+
+			File expectedOutputFile = new File(testDir, "expected_output.css");
+			String expectedOutput = stripNewLines(
+				read(expectedOutputFile.toPath()));
+
+			String jniOutput = _jniSassCompiler.compileFile(inputPath, "", "");
+			Assert.assertEquals(expectedOutput, stripNewLines(jniOutput));
+
+			String rubyOutput = _rubySassCompiler.compileFile(
+				inputPath, "", "");
+			Assert.assertEquals(expectedOutput, stripNewLines(rubyOutput));
+		}
+	}
+
+	@Test
+	public void testCompiler() {
+		Assert.assertNotNull(_rubySassCompiler);
+		Assert.assertNotNull(_jniSassCompiler);
 	}
 
 	@Test
 	public void testCompileString() throws Exception {
-		Assert.assertNotNull(_rubySassCompiler);
+		String input = "foo { margin: 21px * 2; }";
+		String expectedOutput = stripNewLines("foo { margin: 42px; }");
 
-		String expectedOutput = "foo {\n  margin: 42px; }\n";
-		String actualOutput = _rubySassCompiler.compileString(
-			"foo { margin: 21px * 2; }", "", "");
+		String jniOutput = _jniSassCompiler.compileString(input, "", "");
+		Assert.assertEquals(expectedOutput, stripNewLines(jniOutput));
 
-		Assert.assertEquals(expectedOutput, actualOutput);
+		String rubyOutput = _rubySassCompiler.compileString(input, "", "");
+		Assert.assertEquals(expectedOutput, stripNewLines(rubyOutput));
 	}
 
-	private static SassCompiler _rubySassCompiler;
+	protected String read(Path filePath) throws Exception {
+		String content = new String(Files.readAllBytes(filePath));
+
+		return stripNewLines(content);
+	}
+
+	protected String stripNewLines(String string) {
+		string = string.replaceAll("\\n|\\r", "");
+
+		return string.replaceAll("\\s+", " ");
+	}
+
 	private static SassCompiler _jniSassCompiler;
+	private static SassCompiler _rubySassCompiler;
 
 }

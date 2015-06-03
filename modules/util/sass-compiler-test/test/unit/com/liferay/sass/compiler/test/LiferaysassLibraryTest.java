@@ -17,20 +17,13 @@ package com.liferay.sass.compiler.test;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary;
 import com.liferay.sass.compiler.jni.internal.libsass.LiferaysassLibrary.Sass_File_Context;
 
-import com.liferay.sass.compiler.test.util.JniSassCompilerTestUtil;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Gregory Amerson
  */
 public class LiferaysassLibraryTest {
-
-	@Before
-	public void setUp() throws Exception {
-		JniSassCompilerTestUtil.addSearchPath();
-	}
 
 	@Test
 	public void testInstance() throws Exception {

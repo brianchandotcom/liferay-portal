@@ -12,18 +12,36 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.exporter;
 
 /**
  * @author Marcellus Tavares
  */
-public interface CalendarDataHandler {
+public enum CalendarDataFormat {
 
-	public String exportCalendar(long calendarId) throws Exception;
+	ICAL("ics");
 
-	public String exportCalendarBooking(long calendarBookingId)
-		throws Exception;
+	public static CalendarDataFormat parse(String value) {
+		if (ICAL.getValue().equals(value)) {
+			return ICAL;
+		}
 
-	public void importCalendar(long calendarId, String data) throws Exception;
+		throw new IllegalArgumentException("Invalid value " + value);
+	}
+
+	public String getValue() {
+		return _value;
+	}
+
+	@Override
+	public String toString() {
+		return _value;
+	}
+
+	private CalendarDataFormat(String value) {
+		_value = value;
+	}
+
+	private String _value;
 
 }

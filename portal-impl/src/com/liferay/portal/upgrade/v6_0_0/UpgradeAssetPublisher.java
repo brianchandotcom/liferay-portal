@@ -14,6 +14,7 @@
 
 package com.liferay.portal.upgrade.v6_0_0;
 
+import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -24,12 +25,10 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleResource;
-import com.liferay.portlet.journal.service.persistence.JournalArticleResourceUtil;
-import com.liferay.portlet.journal.service.persistence.JournalArticleUtil;
 
-import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 import javax.portlet.PortletPreferences;
 
@@ -59,6 +58,41 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 		}
 
 		return assetEntryXmls;
+	}
+
+	protected String getJournalArticleResourceUuid(String journalArticleUuid)
+		throws Exception {
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			StringBundler sb = new StringBundler();
+
+			sb.append("select JournalArticleResource.uuid_ from ");
+			sb.append("JournalArticleResource inner join JournalArticle ");
+			sb.append("on JournalArticle.resourcePrimKey = ");
+			sb.append("JournalArticleResource.resourcePrimKey ");
+			sb.append("where JournalArticle.uuid_ = ?");
+
+			ps = con.prepareStatement(sb.toString());
+
+			ps.setString(1, journalArticleUuid);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getString("uuid_");
+			}
+
+			return null;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
 	}
 
 	@Override
@@ -240,24 +274,16 @@ public class UpgradeAssetPublisher extends BaseUpgradePortletPreferences {
 			Element assetTypeElementUuid = rootElement.element(
 				"asset-entry-uuid");
 
-			String assetUuid = assetTypeElementUuid.getStringValue();
+			String journalArticleResourceUuid = getJournalArticleResourceUuid(
+				assetTypeElementUuid.getStringValue());
 
-			List<JournalArticle> journalArticles =
-				JournalArticleUtil.findByUuid(assetUuid);
-
-			if (journalArticles.isEmpty()) {
+			if (journalArticleResourceUuid == null) {
 				continue;
 			}
 
-			JournalArticle journalArticle = journalArticles.get(0);
-
-			JournalArticleResource journalArticleResource =
-				JournalArticleResourceUtil.findByPrimaryKey(
-					journalArticle.getResourcePrimKey());
-
 			rootElement.remove(assetTypeElementUuid);
 
-			assetTypeElementUuid.setText(journalArticleResource.getUuid());
+			assetTypeElementUuid.setText(journalArticleResourceUuid);
 
 			rootElement.add(assetTypeElementUuid);
 

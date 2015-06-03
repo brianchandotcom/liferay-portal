@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfi
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -125,7 +124,6 @@ import java.util.TimeZone;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -1028,40 +1026,6 @@ public class ServicePreAction extends Action {
 
 			if (hasUpdateLayoutPermission) {
 				themeDisplay.setShowPageSettingsIcon(true);
-
-				LiferayPortletURL pageSettingsURL = new PortletURLImpl(
-					request, PortletKeys.GROUP_PAGES, controlPanelPlid,
-					PortletRequest.RENDER_PHASE);
-
-				pageSettingsURL.setDoAsGroupId(scopeGroupId);
-				pageSettingsURL.setParameter(
-					"struts_action", "/group_pages/edit_layouts");
-
-				if (layout.isPrivateLayout()) {
-					pageSettingsURL.setParameter("tabs1", "private-pages");
-				}
-				else {
-					pageSettingsURL.setParameter("tabs1", "public-pages");
-				}
-
-				pageSettingsURL.setParameter(
-					"groupId", String.valueOf(scopeGroupId));
-				pageSettingsURL.setParameter("selPlid", String.valueOf(plid));
-				pageSettingsURL.setPortletMode(PortletMode.VIEW);
-
-				if (PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) {
-					pageSettingsURL.setControlPanelCategory(
-						PortletCategoryKeys.PORTLET);
-					pageSettingsURL.setWindowState(LiferayWindowState.POP_UP);
-				}
-				else {
-					pageSettingsURL.setParameter(
-						"redirect", themeDisplay.getURLHome());
-					pageSettingsURL.setPlid(plid);
-					pageSettingsURL.setWindowState(WindowState.MAXIMIZED);
-				}
-
-				themeDisplay.setURLPageSettings(pageSettingsURL);
 
 				boolean site = group.isSite();
 

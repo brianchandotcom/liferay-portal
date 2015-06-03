@@ -114,7 +114,6 @@ definePermissionsURL.setRefererPlid(plid);
 %>
 
 <div class="edit-permissions">
-
 	<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
 		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_permissions.jsp" />
 		<portlet:param name="tabs2" value="<%= tabs2 %>" />

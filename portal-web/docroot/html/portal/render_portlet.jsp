@@ -1003,7 +1003,6 @@ else {
 %>
 
 <c:if test="<%= renderPortletBoundary %>">
-
 		<liferay-portlet:actionURL name="editTitle" portletName="<%= PortletKeys.PORTLET_CONFIGURATION %>" var="editTitleURL" />
 
 		<aui:script position='<%= themeDisplay.isIsolated() ? "inline" : "auto" %>'>

@@ -185,28 +185,23 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 
 		updateScope(actionRequest, portlet);
 
-		if (SessionErrors.isEmpty(actionRequest)) {
-			String portletResource = ParamUtil.getString(
-				actionRequest, "portletResource");
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				portletResource);
-
-			SessionMessages.add(
-				actionRequest,
-				PortalUtil.getPortletId(actionRequest) +
-					SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
-
-			String redirect = PortalUtil.escapeRedirect(
-				ParamUtil.getString(actionRequest, "redirect"));
-
-			if (Validator.isNotNull(redirect)) {
-				actionResponse.sendRedirect(redirect);
-			}
+		if (!SessionErrors.isEmpty(actionRequest)) {
+			return;
 		}
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+			portletResource);
+
+		SessionMessages.add(
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
+				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
 	}
 
 	public void editSharing(
@@ -248,13 +243,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) +
 				SessionMessages.KEY_SUFFIX_UPDATED_CONFIGURATION);
-
-		String redirect = PortalUtil.escapeRedirect(
-			ParamUtil.getString(actionRequest, "redirect"));
-
-		if (Validator.isNotNull(redirect)) {
-			actionResponse.sendRedirect(redirect);
-		}
 	}
 
 	public void editSupportedClients(
@@ -544,6 +532,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 		catch (Exception ex) {
 			_log.error(ex.getMessage());
+
 			include("/error.jsp", renderRequest, renderResponse);
 		}
 
@@ -743,21 +732,22 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
 
-		if (configurationAction != null) {
-			String path = configurationAction.render(
-				portletConfig, renderRequest, renderResponse);
+		if (configurationAction == null) {
+			return;
+		}
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Configuration action returned render path " + path);
-			}
+		String path = configurationAction.render(
+			portletConfig, renderRequest, renderResponse);
 
-			if (Validator.isNotNull(path)) {
-				renderRequest.setAttribute(
-					WebKeys.CONFIGURATION_ACTION_PATH, path);
-			}
-			else {
-				_log.error("Configuration action returned a null path");
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug("Configuration action returned render path " + path);
+		}
+
+		if (Validator.isNotNull(path)) {
+			renderRequest.setAttribute(WebKeys.CONFIGURATION_ACTION_PATH, path);
+		}
+		else {
+			_log.error("Configuration action returned a null path");
 		}
 	}
 

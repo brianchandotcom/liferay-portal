@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -103,7 +102,7 @@ public class LayoutTemplateImpl
 			ServletContext servletContext = ServletContextPool.get(
 				servletContextName);
 
-			return ContextPathUtil.getContextPath(servletContext);
+			return servletContext.getContextPath();
 		}
 
 		return StringPool.SLASH.concat(servletContextName);

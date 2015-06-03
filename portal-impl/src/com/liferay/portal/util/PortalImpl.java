@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.DeterminateKeyGenerator;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -357,7 +356,7 @@ public class PortalImpl implements Portal {
 		_pathProxy = PropsValues.PORTAL_PROXY_PATH;
 
 		_pathContext = _pathProxy.concat(
-			ContextPathUtil.getContextPath(
+			getContextPath(
 				PortalContextLoaderListener.getPortalServletContextPath()));
 
 		_pathFriendlyURLPrivateGroup =
@@ -3728,7 +3727,7 @@ public class PortalImpl implements Portal {
 
 	@Override
 	public String getPathContext(String contextPath) {
-		return _pathProxy.concat(ContextPathUtil.getContextPath(contextPath));
+		return _pathProxy.concat(getContextPath(contextPath));
 	}
 
 	@Override
@@ -7709,6 +7708,21 @@ public class PortalImpl implements Portal {
 		request.setAttribute(attributeName, categoriesMap);
 
 		return categoriesMap;
+	}
+
+	protected String getContextPath(String contextPath) {
+		contextPath = GetterUtil.getString(contextPath);
+
+		if ((contextPath.length() == 0) ||
+			contextPath.equals(StringPool.SLASH)) {
+
+			contextPath = StringPool.BLANK;
+		}
+		else if (!contextPath.startsWith(StringPool.SLASH)) {
+			contextPath = StringPool.SLASH.concat(contextPath);
+		}
+
+		return contextPath;
 	}
 
 	protected long getDefaultScopeGroupId(long companyId)

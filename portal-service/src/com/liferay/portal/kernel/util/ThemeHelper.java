@@ -48,7 +48,7 @@ public class ThemeHelper {
 
 		String servletContextName = StringPool.BLANK;
 
-		String contextPath = ContextPathUtil.getContextPath(servletContext);
+		String contextPath = servletContext.getContextPath();
 
 		if (!Validator.equals(
 				PortalUtil.getPathContext(contextPath),

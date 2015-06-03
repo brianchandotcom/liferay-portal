@@ -16,6 +16,8 @@ package com.liferay.portal.template.freemarker;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.ServletContextPool;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.template.URLResourceParser;
@@ -68,13 +70,18 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 
 		URL url = servletContext.getResource(templateName);
 
+		if (url == null) {
+			url = PortalWebResourcesUtil.getServletContextResource(name);
+		}
+
 		if ((url == null) && templateName.endsWith("/init_custom.ftl")) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("The template " + name + " should be created");
 			}
 
-			ServletContext portalServletContext = ServletContextPool.get(
-				PortalUtil.getServletContextName());
+			ServletContext portalServletContext =
+				PortalWebResourcesUtil.getServletContext(
+					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
 
 			url = portalServletContext.getResource(
 				"/html/themes/_unstyled/templates/init_custom.ftl");

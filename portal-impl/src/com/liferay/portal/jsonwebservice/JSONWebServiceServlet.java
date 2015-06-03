@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.access.control.AccessControlThreadLocal;
 import com.liferay.portal.kernel.upload.UploadServletRequest;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
@@ -118,8 +117,7 @@ public class JSONWebServiceServlet extends JSONServlet {
 				requestDispatcher.forward(request, response);
 			}
 			else {
-				String servletContextPath = ContextPathUtil.getContextPath(
-					servletContext);
+				String servletContextPath = servletContext.getContextPath();
 
 				String redirectPath =
 					PortalUtil.getPathContext() + "/api/jsonws?contextPath=" +

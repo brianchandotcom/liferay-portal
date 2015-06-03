@@ -17,9 +17,7 @@ package com.liferay.portal.servlet.filters.dynamiccss;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.ContextPathUtil;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
@@ -217,16 +215,38 @@ public class DynamicCSSUtil {
 			return content;
 		}
 
+		parsedContent = replaceToken(
+			servletContext, request, themeDisplay, theme, parsedContent);
+
+		return parsedContent;
+	}
+
+	public static String replaceToken(
+			ServletContext servletContext, HttpServletRequest request,
+			String content)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Theme theme = _getTheme(request);
+
+		if (theme == null) {
+			return content;
+		}
+
+		return replaceToken(
+			servletContext, request, themeDisplay, theme, content);
+	}
+
+	public static String replaceToken(
+			ServletContext servletContext, HttpServletRequest request,
+			ThemeDisplay themeDisplay, Theme theme, String parsedContent)
+		throws Exception {
+
 		String portalContextPath = PortalUtil.getPathContext();
 
-		String baseURL = portalContextPath;
-
-		String contextPath = ContextPathUtil.getContextPath(servletContext);
-
-		if (!contextPath.equals(portalContextPath)) {
-			baseURL = StringPool.SLASH.concat(
-				GetterUtil.getString(servletContext.getServletContextName()));
-		}
+		String baseURL = servletContext.getContextPath();
 
 		if (baseURL.endsWith(StringPool.SLASH)) {
 			baseURL = baseURL.substring(0, baseURL.length() - 1);

@@ -66,7 +66,7 @@ public class TestAuthenticator implements Authenticator {
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void getAtomicReference(AtomicReference<String> atomicReference) {
+	protected void setAtomicReference(AtomicReference<String> atomicReference) {
 		_atomicReference = atomicReference;
 	}
 

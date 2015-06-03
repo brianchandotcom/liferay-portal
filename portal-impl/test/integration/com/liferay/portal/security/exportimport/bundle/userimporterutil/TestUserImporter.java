@@ -73,11 +73,6 @@ public class TestUserImporter implements UserImporter {
 		_atomicReference.set(StackTraceUtil.getCallerKey());
 	}
 
-	@Reference(target = "(test=AtomicState)")
-	protected void getAtomicReference(AtomicReference<String> atomicReference) {
-		_atomicReference = atomicReference;
-	}
-
 	protected User getUser(long companyId, String screenName) {
 		User user = new UserImpl();
 
@@ -85,6 +80,11 @@ public class TestUserImporter implements UserImporter {
 		user.setScreenName(screenName);
 
 		return user;
+	}
+
+	@Reference(target = "(test=AtomicState)")
+	protected void setAtomicReference(AtomicReference<String> atomicReference) {
+		_atomicReference = atomicReference;
 	}
 
 	private AtomicReference<String> _atomicReference;

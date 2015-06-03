@@ -61,7 +61,7 @@ public class TestAuthFailure implements AuthFailure {
 	}
 
 	@Reference(target = "(test=AtomicState)")
-	protected void getAtomicReference(AtomicReference<String> atomicReference) {
+	protected void setAtomicReference(AtomicReference<String> atomicReference) {
 		_atomicReference = atomicReference;
 	}
 

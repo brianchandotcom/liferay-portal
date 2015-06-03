@@ -18,9 +18,9 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
 import com.liferay.portal.kernel.util.Accessor;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.PermissionChecker;
 
 import java.io.InputStream;

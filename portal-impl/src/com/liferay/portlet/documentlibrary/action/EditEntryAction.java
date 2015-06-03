@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.documentlibrary.action;
 
-import com.liferay.portal.DuplicateLockException;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;

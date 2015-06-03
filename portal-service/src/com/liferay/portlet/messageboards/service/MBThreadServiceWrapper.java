@@ -121,7 +121,7 @@ public class MBThreadServiceWrapper implements MBThreadService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock lockThread(long threadId)
+	public com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbThreadService.lockThread(threadId);
 	}

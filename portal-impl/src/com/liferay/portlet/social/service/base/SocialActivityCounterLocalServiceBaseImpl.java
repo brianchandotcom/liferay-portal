@@ -38,8 +38,6 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.LockFinder;
-import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
@@ -522,61 +520,6 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the lock local service.
-	 *
-	 * @return the lock local service
-	 */
-	public com.liferay.portal.service.LockLocalService getLockLocalService() {
-		return lockLocalService;
-	}
-
-	/**
-	 * Sets the lock local service.
-	 *
-	 * @param lockLocalService the lock local service
-	 */
-	public void setLockLocalService(
-		com.liferay.portal.service.LockLocalService lockLocalService) {
-		this.lockLocalService = lockLocalService;
-	}
-
-	/**
-	 * Returns the lock persistence.
-	 *
-	 * @return the lock persistence
-	 */
-	public LockPersistence getLockPersistence() {
-		return lockPersistence;
-	}
-
-	/**
-	 * Sets the lock persistence.
-	 *
-	 * @param lockPersistence the lock persistence
-	 */
-	public void setLockPersistence(LockPersistence lockPersistence) {
-		this.lockPersistence = lockPersistence;
-	}
-
-	/**
-	 * Returns the lock finder.
-	 *
-	 * @return the lock finder
-	 */
-	public LockFinder getLockFinder() {
-		return lockFinder;
-	}
-
-	/**
-	 * Sets the lock finder.
-	 *
-	 * @param lockFinder the lock finder
-	 */
-	public void setLockFinder(LockFinder lockFinder) {
-		this.lockFinder = lockFinder;
-	}
-
-	/**
 	 * Returns the user local service.
 	 *
 	 * @return the user local service
@@ -904,12 +847,6 @@ public abstract class SocialActivityCounterLocalServiceBaseImpl
 	protected GroupPersistence groupPersistence;
 	@BeanReference(type = GroupFinder.class)
 	protected GroupFinder groupFinder;
-	@BeanReference(type = com.liferay.portal.service.LockLocalService.class)
-	protected com.liferay.portal.service.LockLocalService lockLocalService;
-	@BeanReference(type = LockPersistence.class)
-	protected LockPersistence lockPersistence;
-	@BeanReference(type = LockFinder.class)
-	protected LockFinder lockFinder;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserService.class)

@@ -16,6 +16,7 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
@@ -214,7 +215,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), parentMessageId, ActionKeys.UPDATE);
 		}
 
-		if (lockLocalService.isLocked(
+		if (LockHelperUtil.isLocked(
 				MBThread.class.getName(), parentMessage.getThreadId())) {
 
 			throw new LockedThreadException();
@@ -249,7 +250,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 		MBMessage message = mbMessageLocalService.getMBMessage(messageId);
 
-		if (lockLocalService.isLocked(
+		if (LockHelperUtil.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			throw new LockedThreadException();
@@ -757,7 +758,7 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 				getPermissionChecker(), messageId, ActionKeys.UPDATE);
 		}
 
-		if (lockLocalService.isLocked(
+		if (LockHelperUtil.isLocked(
 				MBThread.class.getName(), message.getThreadId())) {
 
 			throw new LockedThreadException();

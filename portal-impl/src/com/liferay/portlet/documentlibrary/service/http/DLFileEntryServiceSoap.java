@@ -446,6 +446,20 @@ public class DLFileEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock getFileEntryLock(
+		long fileEntryId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLFileEntryServiceUtil.getFileEntryLock(fileEntryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getFoldersFileEntriesCount(long groupId,
 		Long[] folderIds, int status) throws RemoteException {
 		try {
@@ -602,6 +616,22 @@ public class DLFileEntryServiceSoap {
 					newFolderId, serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFileEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
+		java.lang.String lockUuid, long companyId, long expirationTime)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLFileEntryServiceUtil.refreshFileEntryLock(lockUuid,
+					companyId, expirationTime);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

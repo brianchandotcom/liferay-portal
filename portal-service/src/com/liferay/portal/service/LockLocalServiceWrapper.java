@@ -314,34 +314,10 @@ public class LockLocalServiceWrapper implements LockLocalService,
 			updatedOwner);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
-	String)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String expectedOwner,
-		java.lang.String updatedOwner, boolean retrieveFromCache) {
-		return _lockLocalService.lock(className, key, expectedOwner,
-			updatedOwner, retrieveFromCache);
-	}
-
 	@Override
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner) {
 		return _lockLocalService.lock(className, key, owner);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
-	String)}
-	*/
-	@Deprecated
-	@Override
-	public com.liferay.portal.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String owner, boolean retrieveFromCache) {
-		return _lockLocalService.lock(className, key, owner, retrieveFromCache);
 	}
 
 	@Override
@@ -393,17 +369,6 @@ public class LockLocalServiceWrapper implements LockLocalService,
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner) {
 		_lockLocalService.unlock(className, key, owner);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
-	String)}
-	*/
-	@Deprecated
-	@Override
-	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache) {
-		_lockLocalService.unlock(className, key, owner, retrieveFromCache);
 	}
 
 	/**

@@ -188,7 +188,8 @@ public interface DLFileEntryService extends BaseService {
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock getFileEntryLock(long fileEntryId);
+	public com.liferay.portal.kernel.lock.Lock getFileEntryLock(
+		long fileEntryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersFileEntriesCount(long groupId,
@@ -240,7 +241,7 @@ public interface DLFileEntryService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.Lock refreshFileEntryLock(
+	public com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws PortalException;
 

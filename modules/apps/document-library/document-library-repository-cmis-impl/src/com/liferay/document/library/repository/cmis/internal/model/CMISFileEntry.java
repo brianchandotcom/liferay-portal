@@ -18,6 +18,8 @@ import com.liferay.document.library.repository.cmis.internal.CMISRepository;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.Repository;
@@ -35,12 +37,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.RepositoryEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
 import com.liferay.portlet.documentlibrary.NoSuchFileVersionException;
@@ -73,18 +73,19 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	public CMISFileEntry(
 		CMISRepository cmisRepository, String uuid, long fileEntryId,
-		Document document) {
+		Document document, LockHelper lockHelper) {
 
 		_cmisRepository = cmisRepository;
 		_uuid = uuid;
 		_fileEntryId = fileEntryId;
 		_document = document;
+		_lockHelper = lockHelper;
 	}
 
 	@Override
 	public Object clone() {
 		CMISFileEntry cmisFileEntry = new CMISFileEntry(
-			_cmisRepository, _uuid, _fileEntryId, _document);
+			_cmisRepository, _uuid, _fileEntryId, _document, _lockHelper);
 
 		cmisFileEntry.setCompanyId(getCompanyId());
 		cmisFileEntry.setFileEntryId(getFileEntryId());
@@ -330,18 +331,15 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 		User user = getUser(checkedOutBy);
 
-		Lock lock = LockLocalServiceUtil.createLock(0);
-
-		lock.setCompanyId(getCompanyId());
+		long userId = 0;
+		String userName = null;
 
 		if (user != null) {
-			lock.setUserId(user.getUserId());
-			lock.setUserName(user.getFullName());
+			userId = user.getUserId();
+			userName = user.getFullName();
 		}
 
-		lock.setCreateDate(new Date());
-
-		return lock;
+		return _lockHelper.createLock(0, getCompanyId(), userId, userName);
 	}
 
 	@Override
@@ -743,6 +741,7 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	private Document _document;
 	private long _fileEntryId;
 	private FileVersion _latestFileVersion;
+	private final LockHelper _lockHelper;
 	private final String _uuid;
 
 }

@@ -14,12 +14,12 @@
 
 package com.liferay.portal.workflow;
 
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
-import com.liferay.portal.service.LockLocalServiceUtil;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
@@ -47,7 +47,7 @@ public class WorkflowLockingAdvice {
 			String key = _encodeKey(
 				workflowDefinitionName, workflowDefinitionVersion);
 
-			if (LockLocalServiceUtil.isLocked(className, key)) {
+			if (LockHelperUtil.isLocked(className, key)) {
 				throw new WorkflowException(
 					"Workflow definition name " + workflowDefinitionName +
 						" and version " + workflowDefinitionVersion +
@@ -69,21 +69,21 @@ public class WorkflowLockingAdvice {
 		String className = WorkflowDefinition.class.getName();
 		String key = _encodeKey(name, version);
 
-		if (LockLocalServiceUtil.isLocked(className, key)) {
+		if (LockHelperUtil.isLocked(className, key)) {
 			throw new WorkflowException(
 				"Workflow definition name " + name + " and version " + version +
 					" is being undeployed");
 		}
 
 		try {
-			LockLocalServiceUtil.lock(
+			LockHelperUtil.lock(
 				userId, className, key, String.valueOf(userId), false,
 				Time.HOUR);
 
 			return proceedingJoinPoint.proceed();
 		}
 		finally {
-			LockLocalServiceUtil.unlock(className, key);
+			LockHelperUtil.unlock(className, key);
 		}
 	}
 

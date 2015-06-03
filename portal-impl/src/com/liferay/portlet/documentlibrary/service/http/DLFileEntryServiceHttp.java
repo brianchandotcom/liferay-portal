@@ -903,7 +903,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Lock getFileEntryLock(
+	public static com.liferay.portal.kernel.lock.Lock getFileEntryLock(
 		HttpPrincipal httpPrincipal, long fileEntryId) {
 		try {
 			MethodKey methodKey = new MethodKey(DLFileEntryServiceUtil.class,
@@ -921,7 +921,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Lock)returnObj;
+			return (com.liferay.portal.kernel.lock.Lock)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -1262,7 +1262,7 @@ public class DLFileEntryServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Lock refreshFileEntryLock(
+	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
 		HttpPrincipal httpPrincipal, java.lang.String lockUuid, long companyId,
 		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -1287,7 +1287,7 @@ public class DLFileEntryServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Lock)returnObj;
+			return (com.liferay.portal.kernel.lock.Lock)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

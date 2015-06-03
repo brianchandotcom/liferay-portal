@@ -15,6 +15,7 @@
 package com.liferay.portal.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -434,26 +434,6 @@ public class InitializedRepository
 		checkDocumentRepository();
 
 		return documentRepository.getSubfolderIds(folderId, recurse);
-	}
-
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(long fileEntryId) throws PortalException {
-		checkDocumentRepository();
-
-		return documentRepository.lockFileEntry(fileEntryId);
-	}
-
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(
-			long fileEntryId, String owner, long expirationTime)
-		throws PortalException {
-
-		checkDocumentRepository();
-
-		return documentRepository.lockFileEntry(
-			fileEntryId, owner, expirationTime);
 	}
 
 	@Override

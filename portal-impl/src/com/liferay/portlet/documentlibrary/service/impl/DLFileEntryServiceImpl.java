@@ -16,11 +16,12 @@ package com.liferay.portlet.documentlibrary.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -76,7 +77,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	public DLFileVersion cancelCheckOut(long fileEntryId)
 		throws PortalException {
 
-		boolean locked = lockLocalService.isLocked(
+		boolean locked = LockHelperUtil.isLocked(
 			DLFileEntry.class.getName(), fileEntryId);
 
 		try {
@@ -98,7 +99,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		boolean isLocked = lockLocalService.isLocked(
+		boolean isLocked = LockHelperUtil.isLocked(
 			DLFileEntry.class.getName(), fileEntryId);
 
 		try {
@@ -415,7 +416,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 	@Override
 	public Lock getFileEntryLock(long fileEntryId) {
 		try {
-			return lockLocalService.getLock(
+			return LockHelperUtil.getLock(
 				DLFileEntry.class.getName(), fileEntryId);
 		}
 		catch (Exception e) {
@@ -586,7 +587,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 
 		long folderId = dlFileEntry.getFolderId();
 
-		boolean hasLock = lockLocalService.hasLock(
+		boolean hasLock = LockHelperUtil.hasLock(
 			getUserId(), DLFileEntry.class.getName(), fileEntryId);
 
 		if (!hasLock &&
@@ -628,7 +629,7 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException {
 
-		return lockLocalService.refresh(lockUuid, companyId, expirationTime);
+		return LockHelperUtil.refresh(lockUuid, companyId, expirationTime);
 	}
 
 	@Override

@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.InvalidRepositoryIdException;
@@ -48,7 +50,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileEntryException;
@@ -2111,36 +2112,6 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(long fileEntryId) throws PortalException {
-		checkOutFileEntry(fileEntryId, new ServiceContext());
-
-		FileEntry fileEntry = getFileEntry(fileEntryId);
-
-		return fileEntry.getLock();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             String, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(
-			long fileEntryId, String owner, long expirationTime)
-		throws PortalException {
-
-		FileEntry fileEntry = checkOutFileEntry(
-			fileEntryId, owner, expirationTime, new ServiceContext());
-
-		return fileEntry.getLock();
-	}
-
-	/**
 	 * Locks the folder. This method is primarily used by WebDAV.
 	 *
 	 * @param  repositoryId the primary key of the repository
@@ -2477,7 +2448,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException {
 
-		Lock lock = lockLocalService.getLockByUuidAndCompanyId(
+		Lock lock = LockHelperUtil.getLockByUuidAndCompanyId(
 			lockUuid, companyId);
 
 		long fileEntryId = GetterUtil.getLong(lock.getKey());
@@ -2505,7 +2476,7 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			String lockUuid, long companyId, long expirationTime)
 		throws PortalException {
 
-		Lock lock = lockLocalService.getLockByUuidAndCompanyId(
+		Lock lock = LockHelperUtil.getLockByUuidAndCompanyId(
 			lockUuid, companyId);
 
 		long folderId = GetterUtil.getLong(lock.getKey());

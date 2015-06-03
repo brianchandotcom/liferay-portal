@@ -236,13 +236,14 @@ public class DLFolderServiceUtil {
 		return getService().isFolderLocked(folderId);
 	}
 
-	public static com.liferay.portal.model.Lock lockFolder(long folderId)
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().lockFolder(folderId);
 	}
 
-	public static com.liferay.portal.model.Lock lockFolder(long folderId,
-		java.lang.String owner, boolean inheritable, long expirationTime)
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(
+		long folderId, java.lang.String owner, boolean inheritable,
+		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .lockFolder(folderId, owner, inheritable, expirationTime);
@@ -255,7 +256,7 @@ public class DLFolderServiceUtil {
 		return getService().moveFolder(folderId, parentFolderId, serviceContext);
 	}
 
-	public static com.liferay.portal.model.Lock refreshFolderLock(
+	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

@@ -15,6 +15,7 @@
 package com.liferay.document.library.repository.cmis;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.BaseRepositoryImpl;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;

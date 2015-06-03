@@ -14,12 +14,12 @@
 
 package com.liferay.portal.kernel.webdav.bundle.webdavutil;
 
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.webdav.Resource;
 import com.liferay.portal.kernel.webdav.Status;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVStorage;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
-import com.liferay.portal.model.Lock;
 
 import java.util.List;
 

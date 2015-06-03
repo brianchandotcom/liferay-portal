@@ -377,7 +377,7 @@ public class MBThreadServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.model.Lock lockThread(
+	public static com.liferay.portal.kernel.lock.Lock lockThread(
 		HttpPrincipal httpPrincipal, long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -399,7 +399,7 @@ public class MBThreadServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.model.Lock)returnObj;
+			return (com.liferay.portal.kernel.lock.Lock)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

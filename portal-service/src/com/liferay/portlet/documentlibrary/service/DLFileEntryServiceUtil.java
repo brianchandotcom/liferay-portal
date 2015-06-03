@@ -250,7 +250,7 @@ public class DLFileEntryServiceUtil {
 		return getService().getFileEntryByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static com.liferay.portal.model.Lock getFileEntryLock(
+	public static com.liferay.portal.kernel.lock.Lock getFileEntryLock(
 		long fileEntryId) {
 		return getService().getFileEntryLock(fileEntryId);
 	}
@@ -331,7 +331,7 @@ public class DLFileEntryServiceUtil {
 				   .moveFileEntry(fileEntryId, newFolderId, serviceContext);
 	}
 
-	public static com.liferay.portal.model.Lock refreshFileEntryLock(
+	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

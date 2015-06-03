@@ -16,9 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.DuplicateLockException" %><%@
-page import="com.liferay.portal.InvalidRepositoryException" %><%@
+<%@ page import="com.liferay.portal.InvalidRepositoryException" %><%@
 page import="com.liferay.portal.NoSuchRepositoryException" %><%@
+page import="com.liferay.portal.kernel.lock.DuplicateLockException" %><%@
 page import="com.liferay.portal.kernel.repository.LocalRepository" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryException" %><%@
 page import="com.liferay.portal.kernel.repository.RepositoryProviderUtil" %><%@

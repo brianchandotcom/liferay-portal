@@ -94,7 +94,7 @@ boolean checkedOut = false;
 boolean hasLock = false;
 boolean pending = false;
 
-Lock lock = null;
+com.liferay.portal.kernel.lock.Lock lock = null;
 
 if (fileEntry != null) {
 	approved = fileVersion.isApproved();

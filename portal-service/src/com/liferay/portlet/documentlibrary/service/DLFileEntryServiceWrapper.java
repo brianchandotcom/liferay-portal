@@ -267,7 +267,8 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock getFileEntryLock(long fileEntryId) {
+	public com.liferay.portal.kernel.lock.Lock getFileEntryLock(
+		long fileEntryId) {
 		return _dlFileEntryService.getFileEntryLock(fileEntryId);
 	}
 
@@ -353,7 +354,7 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock refreshFileEntryLock(
+	public com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryService.refreshFileEntryLock(lockUuid, companyId,

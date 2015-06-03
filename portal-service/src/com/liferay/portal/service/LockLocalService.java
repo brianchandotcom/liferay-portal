@@ -262,31 +262,10 @@ public interface LockLocalService extends BaseLocalService,
 		java.lang.String key, java.lang.String expectedOwner,
 		java.lang.String updatedOwner);
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
-	String)}
-	*/
-	@java.lang.Deprecated
-	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public com.liferay.portal.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String expectedOwner,
-		java.lang.String updatedOwner, boolean retrieveFromCache);
-
 	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public com.liferay.portal.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
-	String)}
-	*/
-	@java.lang.Deprecated
-	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public com.liferay.portal.model.Lock lock(java.lang.String className,
-		java.lang.String key, java.lang.String owner, boolean retrieveFromCache);
 
 	public com.liferay.portal.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
@@ -315,16 +294,6 @@ public interface LockLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner);
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
-	String)}
-	*/
-	@java.lang.Deprecated
-	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache);
 
 	/**
 	* Updates the lock in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

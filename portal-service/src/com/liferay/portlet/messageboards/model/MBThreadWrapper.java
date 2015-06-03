@@ -340,7 +340,7 @@ public class MBThreadWrapper implements MBThread, ModelWrapper<MBThread> {
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock getLock() {
+	public com.liferay.portal.kernel.lock.Lock getLock() {
 		return _mbThread.getLock();
 	}
 

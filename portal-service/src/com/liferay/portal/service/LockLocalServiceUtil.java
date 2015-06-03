@@ -299,34 +299,9 @@ public class LockLocalServiceUtil {
 		return getService().lock(className, key, expectedOwner, updatedOwner);
 	}
 
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
-	String)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Lock lock(
-		java.lang.String className, java.lang.String key,
-		java.lang.String expectedOwner, java.lang.String updatedOwner,
-		boolean retrieveFromCache) {
-		return getService()
-				   .lock(className, key, expectedOwner, updatedOwner,
-			retrieveFromCache);
-	}
-
 	public static com.liferay.portal.model.Lock lock(
 		java.lang.String className, java.lang.String key, java.lang.String owner) {
 		return getService().lock(className, key, owner);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
-	String)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Lock lock(
-		java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache) {
-		return getService().lock(className, key, owner, retrieveFromCache);
 	}
 
 	public static com.liferay.portal.model.Lock lock(long userId,
@@ -373,16 +348,6 @@ public class LockLocalServiceUtil {
 	public static void unlock(java.lang.String className, java.lang.String key,
 		java.lang.String owner) {
 		getService().unlock(className, key, owner);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
-	String)}
-	*/
-	@Deprecated
-	public static void unlock(java.lang.String className, java.lang.String key,
-		java.lang.String owner, boolean retrieveFromCache) {
-		getService().unlock(className, key, owner, retrieveFromCache);
 	}
 
 	/**

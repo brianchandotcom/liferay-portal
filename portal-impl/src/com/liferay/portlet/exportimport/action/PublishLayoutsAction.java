@@ -14,12 +14,12 @@
 
 package com.liferay.portlet.exportimport.action;
 
-import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.Constants;

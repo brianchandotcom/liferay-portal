@@ -14,9 +14,6 @@
 
 package com.liferay.portlet.documentlibrary.service.impl;
 
-import com.liferay.portal.ExpiredLockException;
-import com.liferay.portal.InvalidLockException;
-import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -33,6 +30,11 @@ import com.liferay.portal.kernel.increment.NumberIncrement;
 import com.liferay.portal.kernel.interval.IntervalActionProcessor;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lock.ExpiredLockException;
+import com.liferay.portal.kernel.lock.InvalidLockException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
+import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
@@ -62,7 +64,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Image;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.ModelHintsUtil;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.model.ResourceConstants;
@@ -417,7 +418,7 @@ public class DLFileEntryLocalServiceImpl
 
 		if (Validator.isNotNull(lockUuid)) {
 			try {
-				Lock lock = lockLocalService.getLock(
+				Lock lock = LockHelperUtil.getLock(
 					DLFileEntry.class.getName(), fileEntryId);
 
 				if (!Validator.equals(lock.getUuid(), lockUuid)) {
@@ -492,7 +493,7 @@ public class DLFileEntryLocalServiceImpl
 				expirationTime = DLFileEntryImpl.LOCK_EXPIRATION_TIME;
 			}
 
-			lockLocalService.lock(
+			LockHelperUtil.lock(
 				userId, DLFileEntry.class.getName(), fileEntryId, owner, false,
 				expirationTime);
 		}
@@ -1519,7 +1520,7 @@ public class DLFileEntryLocalServiceImpl
 
 		long folderId = dlFileEntry.getFolderId();
 
-		boolean hasLock = lockLocalService.hasLock(
+		boolean hasLock = LockHelperUtil.hasLock(
 			userId, DLFileEntry.class.getName(), fileEntryId);
 
 		if (!hasLock &&
@@ -1587,11 +1588,11 @@ public class DLFileEntryLocalServiceImpl
 		throws PortalException {
 
 		if (hasFileEntryLock(userId, fileEntryId)) {
-			return lockLocalService.getLock(
+			return LockHelperUtil.getLock(
 				DLFileEntry.class.getName(), fileEntryId);
 		}
 
-		return lockLocalService.lock(
+		return LockHelperUtil.lock(
 			userId, DLFileEntry.class.getName(), fileEntryId, null, false,
 			DLFileEntryImpl.LOCK_EXPIRATION_TIME);
 	}
@@ -1791,7 +1792,7 @@ public class DLFileEntryLocalServiceImpl
 
 	@Override
 	public void unlockFileEntry(long fileEntryId) {
-		lockLocalService.unlock(DLFileEntry.class.getName(), fileEntryId);
+		LockHelperUtil.unlock(DLFileEntry.class.getName(), fileEntryId);
 	}
 
 	@Override
@@ -2051,7 +2052,7 @@ public class DLFileEntryLocalServiceImpl
 		boolean lockVerified = false;
 
 		try {
-			Lock lock = lockLocalService.getLock(
+			Lock lock = LockHelperUtil.getLock(
 				DLFileEntry.class.getName(), fileEntryId);
 
 			if (Validator.equals(lock.getUuid(), lockUuid)) {

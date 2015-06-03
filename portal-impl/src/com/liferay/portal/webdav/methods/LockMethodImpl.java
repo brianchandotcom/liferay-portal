@@ -14,7 +14,8 @@
 
 package com.liferay.portal.webdav.methods;
 
-import com.liferay.portal.NoSuchLockException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.webdav.methods.Method;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portal.model.Lock;
 import com.liferay.util.xml.XMLFormatter;
 
 import java.util.List;

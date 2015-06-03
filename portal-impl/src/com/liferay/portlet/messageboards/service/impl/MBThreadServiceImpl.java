@@ -16,9 +16,10 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -46,7 +47,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public void deleteThread(long threadId) throws PortalException {
-		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
+		if (LockHelperUtil.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
 		}
 
@@ -282,7 +283,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
-		return lockLocalService.lock(
+		return LockHelperUtil.lock(
 			getUserId(), MBThread.class.getName(), threadId,
 			String.valueOf(threadId), false,
 			MBThreadModelImpl.LOCK_EXPIRATION_TIME);
@@ -292,7 +293,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 	public MBThread moveThread(long categoryId, long threadId)
 		throws PortalException {
 
-		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
+		if (LockHelperUtil.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
 		}
 
@@ -326,7 +327,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 
 	@Override
 	public MBThread moveThreadToTrash(long threadId) throws PortalException {
-		if (lockLocalService.isLocked(MBThread.class.getName(), threadId)) {
+		if (LockHelperUtil.isLocked(MBThread.class.getName(), threadId)) {
 			throw new LockedThreadException();
 		}
 
@@ -399,7 +400,7 @@ public class MBThreadServiceImpl extends MBThreadServiceBaseImpl {
 			getPermissionChecker(), thread.getGroupId(), thread.getCategoryId(),
 			ActionKeys.LOCK_THREAD);
 
-		lockLocalService.unlock(MBThread.class.getName(), threadId);
+		LockHelperUtil.unlock(MBThread.class.getName(), threadId);
 	}
 
 	protected List<MBThread> doGetGroupThreads(

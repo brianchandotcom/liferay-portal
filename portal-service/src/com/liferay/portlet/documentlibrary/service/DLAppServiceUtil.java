@@ -1651,27 +1651,6 @@ public class DLAppServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Lock lockFileEntry(long fileEntryId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().lockFileEntry(fileEntryId);
-	}
-
-	/**
-	* @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	String, long, ServiceContext)}
-	*/
-	@Deprecated
-	public static com.liferay.portal.model.Lock lockFileEntry(
-		long fileEntryId, java.lang.String owner, long expirationTime)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().lockFileEntry(fileEntryId, owner, expirationTime);
-	}
-
-	/**
 	* Locks the folder. This method is primarily used by WebDAV.
 	*
 	* @param repositoryId the primary key of the repository
@@ -1679,8 +1658,8 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	* @throws PortalException if the repository or folder could not be found
 	*/
-	public static com.liferay.portal.model.Lock lockFolder(long repositoryId,
-		long folderId)
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(
+		long repositoryId, long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().lockFolder(repositoryId, folderId);
 	}
@@ -1699,9 +1678,9 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	* @throws PortalException if the repository or folder could not be found
 	*/
-	public static com.liferay.portal.model.Lock lockFolder(long repositoryId,
-		long folderId, java.lang.String owner, boolean inheritable,
-		long expirationTime)
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(
+		long repositoryId, long folderId, java.lang.String owner,
+		boolean inheritable, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .lockFolder(repositoryId, folderId, owner, inheritable,
@@ -1849,7 +1828,7 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	* @throws PortalException if the file entry or lock could not be found
 	*/
-	public static com.liferay.portal.model.Lock refreshFileEntryLock(
+	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -1868,7 +1847,7 @@ public class DLAppServiceUtil {
 	* @return the lock object
 	* @throws PortalException if the folder or lock could not be found
 	*/
-	public static com.liferay.portal.model.Lock refreshFolderLock(
+	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()

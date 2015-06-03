@@ -899,7 +899,7 @@ public class DLFileEntryLocalServiceWrapper implements DLFileEntryLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock lockFileEntry(long userId,
+	public com.liferay.portal.kernel.lock.Lock lockFileEntry(long userId,
 		long fileEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFileEntryLocalService.lockFileEntry(userId, fileEntryId);

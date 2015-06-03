@@ -20,6 +20,7 @@ import com.liferay.document.library.repository.cmis.search.BaseCmisSearchQueryBu
 import com.liferay.document.library.repository.cmis.search.CMISSearchQueryBuilder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
+import com.liferay.portal.kernel.lock.LockHelper;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.Repository;
@@ -66,7 +67,7 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 
 		CMISRepository cmisRepository = new CMISRepository(
 			_cmisRepositoryConfiguration, baseRepository,
-			_cmisSearchQueryBuilder);
+			_cmisSearchQueryBuilder, _lockHelper);
 
 		baseRepository.setCmisRepository(cmisRepository);
 
@@ -110,6 +111,10 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 		_dlFolderLocalService = dlFolderLocalService;
 	}
 
+	protected void setLockHelper(LockHelper lockHelper) {
+		_lockHelper = lockHelper;
+	}
+
 	protected void setRepositoryEntryLocalService(
 		RepositoryEntryLocalService repositoryEntryLocalService) {
 
@@ -151,6 +156,7 @@ public abstract class BaseCMISRepositoryFactory<T extends CMISRepositoryHandler>
 	private CompanyLocalService _companyLocalService;
 	private DLAppHelperLocalService _dlAppHelperLocalService;
 	private DLFolderLocalService _dlFolderLocalService;
+	private LockHelper _lockHelper;
 	private RepositoryEntryLocalService _repositoryEntryLocalService;
 	private RepositoryLocalService _repositoryLocalService;
 	private UserLocalService _userLocalService;

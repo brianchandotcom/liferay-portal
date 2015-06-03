@@ -14,10 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.webdav;
 
-import com.liferay.portal.DuplicateLockException;
-import com.liferay.portal.InvalidLockException;
-import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.lock.InvalidLockException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.NoSuchLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -40,7 +41,6 @@ import com.liferay.portal.kernel.webdav.Status;
 import com.liferay.portal.kernel.webdav.WebDAVException;
 import com.liferay.portal.kernel.webdav.WebDAVRequest;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;

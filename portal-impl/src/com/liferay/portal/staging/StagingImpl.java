@@ -14,7 +14,6 @@
 
 package com.liferay.portal.staging;
 
-import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARFileSizeException;
 import com.liferay.portal.LARTypeException;
@@ -46,6 +45,9 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
@@ -83,7 +85,6 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutRevision;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.User;
@@ -103,7 +104,6 @@ import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.StagingLocalServiceUtil;
@@ -1200,14 +1200,14 @@ public class StagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void lockGroup(long userId, long groupId) throws PortalException {
-		if (LockLocalServiceUtil.isLocked(Staging.class.getName(), groupId)) {
-			Lock lock = LockLocalServiceUtil.getLock(
+		if (LockHelperUtil.isLocked(Staging.class.getName(), groupId)) {
+			Lock lock = LockHelperUtil.getLock(
 				Staging.class.getName(), groupId);
 
 			throw new DuplicateLockException(lock);
 		}
 
-		LockLocalServiceUtil.lock(
+		LockHelperUtil.lock(
 			userId, Staging.class.getName(), String.valueOf(groupId),
 			StagingImpl.class.getName(), false,
 			StagingConstants.LOCK_EXPIRATION_TIME);
@@ -1651,7 +1651,7 @@ public class StagingImpl implements Staging {
 	@Deprecated
 	@Override
 	public void unlockGroup(long groupId) {
-		LockLocalServiceUtil.unlock(Staging.class.getName(), groupId);
+		LockHelperUtil.unlock(Staging.class.getName(), groupId);
 	}
 
 	@Override

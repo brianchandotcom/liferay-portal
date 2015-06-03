@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.webdav;
 
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Lock;
 
 import java.io.InputStream;
 

@@ -17,6 +17,7 @@ package com.liferay.portal.repository.proxy;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.BaseRepository;
 import com.liferay.portal.kernel.repository.LocalRepository;
 import com.liferay.portal.kernel.repository.capabilities.Capability;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.UnicodeProperties;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -701,34 +701,6 @@ public class BaseRepositoryProxyBean
 		Class<T> capabilityClass) {
 
 		return _baseRepository.isCapabilityProvided(capabilityClass);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(long fileEntryId) throws PortalException {
-		Lock lock = _baseRepository.lockFileEntry(fileEntryId);
-
-		return (Lock)newProxyInstance(lock, Lock.class);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             String, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(
-			long fileEntryId, String owner, long expirationTime)
-		throws PortalException {
-
-		Lock lock = _baseRepository.lockFileEntry(
-			fileEntryId, owner, expirationTime);
-
-		return (Lock)newProxyInstance(lock, Lock.class);
 	}
 
 	@Override

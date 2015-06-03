@@ -245,13 +245,13 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock lockFolder(long folderId)
+	public com.liferay.portal.kernel.lock.Lock lockFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.lockFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock lockFolder(long folderId,
+	public com.liferay.portal.kernel.lock.Lock lockFolder(long folderId,
 		java.lang.String owner, boolean inheritable, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.lockFolder(folderId, owner, inheritable,
@@ -268,7 +268,7 @@ public class DLFolderServiceWrapper implements DLFolderService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock refreshFolderLock(
+	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderService.refreshFolderLock(lockUuid, companyId,

@@ -626,7 +626,7 @@ public interface DLFileEntryLocalService extends BaseLocalService,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.Lock lockFileEntry(long userId,
+	public com.liferay.portal.kernel.lock.Lock lockFileEntry(long userId,
 		long fileEntryId) throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)

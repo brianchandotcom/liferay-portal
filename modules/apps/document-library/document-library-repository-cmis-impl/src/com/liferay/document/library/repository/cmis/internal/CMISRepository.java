@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelper;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.RepositoryException;
@@ -53,7 +55,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.TransientValue;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.RepositoryEntry;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
@@ -129,11 +130,12 @@ public class CMISRepository extends BaseCmisRepository {
 	public CMISRepository(
 		CMISRepositoryConfiguration cmisRepositoryConfiguration,
 		CMISRepositoryHandler cmisRepositoryHandler,
-		CMISSearchQueryBuilder cmisSearchQueryBuilder) {
+		CMISSearchQueryBuilder cmisSearchQueryBuilder, LockHelper lockHelper) {
 
 		_cmisRepositoryConfiguration = cmisRepositoryConfiguration;
 		_cmisRepositoryHandler = cmisRepositoryHandler;
 		_cmisSearchQueryBuilder = cmisSearchQueryBuilder;
+		_lockHelper = lockHelper;
 	}
 
 	@Override
@@ -2174,7 +2176,7 @@ public class CMISRepository extends BaseCmisRepository {
 
 		FileEntry fileEntry = new CMISFileEntry(
 			this, repositoryEntry.getUuid(),
-			repositoryEntry.getRepositoryEntryId(), document);
+			repositoryEntry.getRepositoryEntryId(), document, _lockHelper);
 
 		FileVersion fileVersion = null;
 
@@ -2365,6 +2367,7 @@ public class CMISRepository extends BaseCmisRepository {
 	private CMISRepositoryDetector _cmisRepositoryDetector;
 	private final CMISRepositoryHandler _cmisRepositoryHandler;
 	private final CMISSearchQueryBuilder _cmisSearchQueryBuilder;
+	private final LockHelper _lockHelper;
 	private String _sessionKey;
 
 }

@@ -237,6 +237,20 @@ public class MBThreadServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = MBThreadServiceUtil.lockThread(threadId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.messageboards.model.MBThreadSoap moveThread(
 		long categoryId, long threadId) throws RemoteException {
 		try {

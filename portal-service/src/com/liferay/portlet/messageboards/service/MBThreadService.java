@@ -98,7 +98,7 @@ public interface MBThreadService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getThreadsCount(long groupId, long categoryId, int status);
 
-	public com.liferay.portal.model.Lock lockThread(long threadId)
+	public com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
 		throws PortalException;
 
 	public com.liferay.portlet.messageboards.model.MBThread moveThread(

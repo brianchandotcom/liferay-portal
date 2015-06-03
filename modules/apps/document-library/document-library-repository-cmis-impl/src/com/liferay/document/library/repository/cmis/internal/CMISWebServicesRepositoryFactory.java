@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.document.library.repository.cmis.configuration.CMISRepositoryConfiguration;
 import com.liferay.document.library.repository.cmis.internal.constants.CMISRepositoryConstants;
+import com.liferay.portal.kernel.lock.LockHelper;
 import com.liferay.portal.kernel.repository.RepositoryFactory;
 import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.service.RepositoryEntryLocalService;
@@ -90,6 +91,11 @@ public class CMISWebServicesRepositoryFactory
 		DLFolderLocalService dlFolderLocalService) {
 
 		super.setDLFolderLocalService(dlFolderLocalService);
+	}
+
+	@Reference(unbind = "-")
+	protected void setLockHelper(LockHelper lockHelper) {
+		super.setLockHelper(lockHelper);
 	}
 
 	@Override

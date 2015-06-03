@@ -15,13 +15,13 @@
 package com.liferay.portlet.messageboards.model.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Repository;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
@@ -124,7 +124,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	@Override
 	public Lock getLock() {
 		try {
-			return LockLocalServiceUtil.getLock(
+			return LockHelperUtil.getLock(
 				MBThread.class.getName(), getThreadId());
 		}
 		catch (Exception e) {
@@ -150,7 +150,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 	@Override
 	public boolean hasLock(long userId) {
 		try {
-			return LockLocalServiceUtil.hasLock(
+			return LockHelperUtil.hasLock(
 				userId, MBThread.class.getName(), getThreadId());
 		}
 		catch (Exception e) {
@@ -166,7 +166,7 @@ public class MBThreadImpl extends MBThreadBaseImpl {
 				return true;
 			}
 
-			return LockLocalServiceUtil.isLocked(
+			return LockHelperUtil.isLocked(
 				MBThread.class.getName(), getThreadId());
 		}
 		catch (Exception e) {

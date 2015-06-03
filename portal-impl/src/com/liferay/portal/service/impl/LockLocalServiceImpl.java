@@ -186,20 +186,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		return lock(className, key, null, owner);
 	}
 
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@MasterDataSource
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public Lock lock(
-		String className, String key, String owner, boolean retrieveFromCache) {
-
-		return lock(className, key, null, owner);
-	}
-
 	@MasterDataSource
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -239,21 +225,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 		}
 
 		return lock;
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #lock(String, String, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@MasterDataSource
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public Lock lock(
-		String className, String key, String expectedOwner, String updatedOwner,
-		boolean retrieveFromCache) {
-
-		return lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	@Override
@@ -337,20 +308,6 @@ public class LockLocalServiceImpl extends LockLocalServiceBaseImpl {
 			lockPersistence.remove(lock);
 			lockPersistence.flush();
 		}
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #unlock(String, String,
-	 *             String)}
-	 */
-	@Deprecated
-	@MasterDataSource
-	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public void unlock(
-		String className, String key, String owner, boolean retrieveFromCache) {
-
-		unlock(className, key, owner);
 	}
 
 	protected void expireLock(Lock lock) {

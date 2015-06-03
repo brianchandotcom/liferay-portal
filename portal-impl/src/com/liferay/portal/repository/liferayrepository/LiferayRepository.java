@@ -15,6 +15,7 @@
 package com.liferay.portal.repository.liferayrepository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.Repository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut;
 import com.liferay.portal.repository.liferayrepository.model.LiferayFileVersion;
@@ -768,35 +768,6 @@ public class LiferayRepository
 
 		return dlFolderService.getSubfolderIds(
 			getGroupId(), toFolderId(folderId), recurse);
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(long fileEntryId) throws PortalException {
-		FileEntry fileEntry = checkOutFileEntry(
-			fileEntryId, new ServiceContext());
-
-		return fileEntry.getLock();
-	}
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             String, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public Lock lockFileEntry(
-			long fileEntryId, String owner, long expirationTime)
-		throws PortalException {
-
-		FileEntry fileEntry = checkOutFileEntry(
-			fileEntryId, owner, expirationTime, new ServiceContext());
-
-		return fileEntry.getLock();
 	}
 
 	@Override

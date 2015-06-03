@@ -535,7 +535,7 @@ public class DLFileEntryWrapper implements DLFileEntry,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock getLock() {
+	public com.liferay.portal.kernel.lock.Lock getLock() {
 		return _dlFileEntry.getLock();
 	}
 

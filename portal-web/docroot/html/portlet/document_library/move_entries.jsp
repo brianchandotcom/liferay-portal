@@ -237,7 +237,7 @@ for (FileShortcut curFileShortcut : fileShortcuts) {
 
 					AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(invalidMoveFileEntry.getFileEntryId());
 
-					Lock lock = invalidMoveFileEntry.getLock();
+					com.liferay.portal.kernel.lock.Lock lock = invalidMoveFileEntry.getLock();
 				%>
 
 					<li class="icon-warning-sign move-error move-file">

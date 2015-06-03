@@ -81,7 +81,7 @@ public interface DLFileEntry extends DLFileEntryModel, PersistedModel, TreeModel
 		boolean trusted)
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public com.liferay.portal.model.Lock getLock();
+	public com.liferay.portal.kernel.lock.Lock getLock();
 
 	public java.lang.String getLuceneProperties();
 

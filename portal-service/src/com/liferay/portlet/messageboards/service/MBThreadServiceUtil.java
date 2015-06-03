@@ -118,7 +118,7 @@ public class MBThreadServiceUtil {
 		return getService().getThreadsCount(groupId, categoryId, status);
 	}
 
-	public static com.liferay.portal.model.Lock lockThread(long threadId)
+	public static com.liferay.portal.kernel.lock.Lock lockThread(long threadId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().lockThread(threadId);
 	}

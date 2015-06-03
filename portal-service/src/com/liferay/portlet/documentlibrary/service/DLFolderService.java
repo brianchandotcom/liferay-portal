@@ -176,10 +176,10 @@ public interface DLFolderService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isFolderLocked(long folderId);
 
-	public com.liferay.portal.model.Lock lockFolder(long folderId)
+	public com.liferay.portal.kernel.lock.Lock lockFolder(long folderId)
 		throws PortalException;
 
-	public com.liferay.portal.model.Lock lockFolder(long folderId,
+	public com.liferay.portal.kernel.lock.Lock lockFolder(long folderId,
 		java.lang.String owner, boolean inheritable, long expirationTime)
 		throws PortalException;
 
@@ -188,7 +188,7 @@ public interface DLFolderService extends BaseService {
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.portal.model.Lock refreshFolderLock(
+	public com.liferay.portal.kernel.lock.Lock refreshFolderLock(
 		java.lang.String lockUuid, long companyId, long expirationTime)
 		throws PortalException;
 

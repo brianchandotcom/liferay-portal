@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileVersion;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.service.ServiceContext;
 
 import java.io.File;
@@ -217,22 +217,6 @@ public interface Repository extends DocumentRepository {
 		throws PortalException;
 
 	public List<Long> getSubfolderIds(long folderId, boolean recurse)
-		throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             ServiceContext)}
-	 */
-	@Deprecated
-	public Lock lockFileEntry(long fileEntryId) throws PortalException;
-
-	/**
-	 * @deprecated As of 6.2.0, replaced by {@link #checkOutFileEntry(long,
-	 *             String, long, ServiceContext)}
-	 */
-	@Deprecated
-	public Lock lockFileEntry(
-			long fileEntryId, String owner, long expirationTime)
 		throws PortalException;
 
 	public Lock lockFolder(long folderId) throws PortalException;

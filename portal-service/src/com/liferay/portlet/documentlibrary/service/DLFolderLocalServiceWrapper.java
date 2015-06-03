@@ -810,14 +810,16 @@ public class DLFolderLocalServiceWrapper implements DLFolderLocalService,
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock lockFolder(long userId, long folderId)
+	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
+		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.lockFolder(userId, folderId);
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock lockFolder(long userId, long folderId,
-		java.lang.String owner, boolean inheritable, long expirationTime)
+	public com.liferay.portal.kernel.lock.Lock lockFolder(long userId,
+		long folderId, java.lang.String owner, boolean inheritable,
+		long expirationTime)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _dlFolderLocalService.lockFolder(userId, folderId, owner,
 			inheritable, expirationTime);

@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -42,7 +43,6 @@ import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
@@ -126,7 +126,7 @@ public class StartupAction extends SimpleAction {
 		}
 
 		try {
-			LockLocalServiceUtil.clear();
+			LockHelperUtil.clear();
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

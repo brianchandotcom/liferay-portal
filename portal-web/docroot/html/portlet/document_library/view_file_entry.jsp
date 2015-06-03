@@ -57,7 +57,7 @@ else {
 
 long fileVersionId = fileVersion.getFileVersionId();
 
-Lock lock = fileEntry.getLock();
+com.liferay.portal.kernel.lock.Lock lock = fileEntry.getLock();
 
 String[] conversions = new String[0];
 

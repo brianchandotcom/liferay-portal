@@ -30,8 +30,6 @@ import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.ImagePersistence;
 import com.liferay.portal.service.persistence.LayoutFinder;
 import com.liferay.portal.service.persistence.LayoutPersistence;
-import com.liferay.portal.service.persistence.LockFinder;
-import com.liferay.portal.service.persistence.LockPersistence;
 import com.liferay.portal.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.service.persistence.RepositoryPersistence;
@@ -336,61 +334,6 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	 */
 	public void setLayoutFinder(LayoutFinder layoutFinder) {
 		this.layoutFinder = layoutFinder;
-	}
-
-	/**
-	 * Returns the lock local service.
-	 *
-	 * @return the lock local service
-	 */
-	public com.liferay.portal.service.LockLocalService getLockLocalService() {
-		return lockLocalService;
-	}
-
-	/**
-	 * Sets the lock local service.
-	 *
-	 * @param lockLocalService the lock local service
-	 */
-	public void setLockLocalService(
-		com.liferay.portal.service.LockLocalService lockLocalService) {
-		this.lockLocalService = lockLocalService;
-	}
-
-	/**
-	 * Returns the lock persistence.
-	 *
-	 * @return the lock persistence
-	 */
-	public LockPersistence getLockPersistence() {
-		return lockPersistence;
-	}
-
-	/**
-	 * Sets the lock persistence.
-	 *
-	 * @param lockPersistence the lock persistence
-	 */
-	public void setLockPersistence(LockPersistence lockPersistence) {
-		this.lockPersistence = lockPersistence;
-	}
-
-	/**
-	 * Returns the lock finder.
-	 *
-	 * @return the lock finder
-	 */
-	public LockFinder getLockFinder() {
-		return lockFinder;
-	}
-
-	/**
-	 * Sets the lock finder.
-	 *
-	 * @param lockFinder the lock finder
-	 */
-	public void setLockFinder(LockFinder lockFinder) {
-		this.lockFinder = lockFinder;
 	}
 
 	/**
@@ -1921,12 +1864,6 @@ public abstract class DLAppHelperLocalServiceBaseImpl
 	protected LayoutPersistence layoutPersistence;
 	@BeanReference(type = LayoutFinder.class)
 	protected LayoutFinder layoutFinder;
-	@BeanReference(type = com.liferay.portal.service.LockLocalService.class)
-	protected com.liferay.portal.service.LockLocalService lockLocalService;
-	@BeanReference(type = LockPersistence.class)
-	protected LockPersistence lockPersistence;
-	@BeanReference(type = LockFinder.class)
-	protected LockFinder lockFinder;
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesLocalService.class)
 	protected com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService;
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesService.class)

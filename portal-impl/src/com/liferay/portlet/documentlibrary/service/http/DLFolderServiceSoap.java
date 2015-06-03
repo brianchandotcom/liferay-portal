@@ -417,6 +417,36 @@ public class DLFolderServiceSoap {
 		}
 	}
 
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(long folderId)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLFolderServiceUtil.lockFolder(folderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(
+		long folderId, java.lang.String owner, boolean inheritable,
+		long expirationTime) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLFolderServiceUtil.lockFolder(folderId,
+					owner, inheritable, expirationTime);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.documentlibrary.model.DLFolderSoap moveFolder(
 		long folderId, long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -426,6 +456,22 @@ public class DLFolderServiceSoap {
 					parentFolderId, serviceContext);
 
 			return com.liferay.portlet.documentlibrary.model.DLFolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
+		java.lang.String lockUuid, long companyId, long expirationTime)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLFolderServiceUtil.refreshFolderLock(lockUuid,
+					companyId, expirationTime);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

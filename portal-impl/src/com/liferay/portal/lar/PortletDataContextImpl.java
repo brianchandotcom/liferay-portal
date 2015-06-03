@@ -38,6 +38,8 @@ import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.lar.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portal.kernel.lar.xstream.XStreamConverter;
 import com.liferay.portal.kernel.lar.xstream.XStreamConverterRegistryUtil;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -64,7 +66,6 @@ import com.liferay.portal.model.ClassedModel;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletModel;
@@ -76,7 +77,6 @@ import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.model.Team;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -343,9 +343,9 @@ public class PortletDataContextImpl implements PortletDataContext {
 	@Override
 	public void addLocks(Class<?> clazz, String key) throws PortalException {
 		if (!_locksMap.containsKey(getPrimaryKeyString(clazz, key)) &&
-			LockLocalServiceUtil.isLocked(clazz.getName(), key)) {
+			LockHelperUtil.isLocked(clazz.getName(), key)) {
 
-			Lock lock = LockLocalServiceUtil.getLock(clazz.getName(), key);
+			Lock lock = LockHelperUtil.getLock(clazz.getName(), key);
 
 			addLocks(clazz.getName(), key, lock);
 		}
@@ -1553,7 +1553,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			expirationTime = expirationDate.getTime();
 		}
 
-		LockLocalServiceUtil.lock(
+		LockHelperUtil.lock(
 			userId, clazz.getName(), newKey, lock.getOwner(),
 			lock.isInheritable(), expirationTime);
 	}

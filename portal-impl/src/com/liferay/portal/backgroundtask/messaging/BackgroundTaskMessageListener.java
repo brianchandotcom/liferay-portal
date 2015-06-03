@@ -14,7 +14,6 @@
 
 package com.liferay.portal.backgroundtask.messaging;
 
-import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskResult;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.backgroundtask.BackgroundTaskThreadLocalManager
 import com.liferay.portal.kernel.backgroundtask.ClassLoaderAwareBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.SerialBackgroundTaskExecutor;
 import com.liferay.portal.kernel.backgroundtask.ThreadLocalAwareBackgroundTaskExecutor;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;

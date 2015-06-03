@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.webdav;
 
+import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.webdav.methods.MethodFactory;
-import com.liferay.portal.model.Lock;
 
 import java.util.List;
 

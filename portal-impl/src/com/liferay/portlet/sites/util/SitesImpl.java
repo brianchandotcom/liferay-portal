@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.portal.kernel.lar.UserIdStrategy;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockHelperUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
@@ -54,7 +56,6 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutType;
 import com.liferay.portal.model.LayoutTypePortlet;
-import com.liferay.portal.model.Lock;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.ResourceConstants;
@@ -81,7 +82,6 @@ import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetServiceUtil;
-import com.liferay.portal.service.LockLocalServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
@@ -1280,7 +1280,7 @@ public class SitesImpl implements Sites {
 		String owner = PortalUUIDUtil.generate();
 
 		try {
-			Lock lock = LockLocalServiceUtil.lock(
+			Lock lock = LockHelperUtil.lock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layoutSet.getLayoutSetId()), owner);
 
@@ -1294,7 +1294,7 @@ public class SitesImpl implements Sites {
 
 					// Acquire lock if the lock is older than the lock max time
 
-					lock = LockLocalServiceUtil.lock(
+					lock = LockHelperUtil.lock(
 						LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 						String.valueOf(layoutSet.getLayoutSetId()),
 						lock.getOwner(), owner);
@@ -1352,7 +1352,7 @@ public class SitesImpl implements Sites {
 		finally {
 			MergeLayoutPrototypesThreadLocal.setInProgress(false);
 
-			LockLocalServiceUtil.unlock(
+			LockHelperUtil.unlock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layoutSet.getLayoutSetId()), owner);
 		}
@@ -1636,7 +1636,7 @@ public class SitesImpl implements Sites {
 		String owner = PortalUUIDUtil.generate();
 
 		try {
-			Lock lock = LockLocalServiceUtil.lock(
+			Lock lock = LockHelperUtil.lock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layout.getPlid()), owner);
 
@@ -1648,7 +1648,7 @@ public class SitesImpl implements Sites {
 
 					// Acquire lock if the lock is older than the lock max time
 
-					lock = LockLocalServiceUtil.lock(
+					lock = LockHelperUtil.lock(
 						LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 						String.valueOf(layout.getPlid()), lock.getOwner(),
 						owner);
@@ -1687,7 +1687,7 @@ public class SitesImpl implements Sites {
 		finally {
 			MergeLayoutPrototypesThreadLocal.setInProgress(false);
 
-			LockLocalServiceUtil.unlock(
+			LockHelperUtil.unlock(
 				LayoutLocalServiceVirtualLayoutsAdvice.class.getName(),
 				String.valueOf(layout.getPlid()), owner);
 		}

@@ -103,7 +103,9 @@ public class BaseJSONHandler extends BaseHandler {
 			_logger.debug("Handling exception {}", exception);
 		}
 
-		if (exception.equals("com.liferay.portal.DuplicateLockException")) {
+		if (exception.equals(
+				"com.liferay.portal.kernel.lock.DuplicateLockException")) {
+
 			SyncFile syncFile = getLocalSyncFile();
 
 			syncFile.setState(SyncFile.STATE_ERROR);

@@ -184,7 +184,6 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portal" entity="Lock" />
 		<reference package-path="com.liferay.portal" entity="User" />
 	</entity>
 	<entity name="BrowserTracker" local-service="true" remote-service="false">

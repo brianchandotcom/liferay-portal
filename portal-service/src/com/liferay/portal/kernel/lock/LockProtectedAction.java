@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.lock;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.LockLocalServiceUtil;
 
 import java.util.Date;
 
@@ -45,8 +43,7 @@ public class LockProtectedAction<T> {
 
 		while (true) {
 			try {
-				lock = LockLocalServiceUtil.lock(
-					_className, _lockKey, _lockKey);
+				lock = LockHelperUtil.lock(_className, _lockKey, _lockKey);
 			}
 			catch (Exception e) {
 				if (_log.isWarnEnabled()) {
@@ -61,7 +58,7 @@ public class LockProtectedAction<T> {
 					_returnValue = performProtectedAction();
 				}
 				finally {
-					LockLocalServiceUtil.unlock(_className, _lockKey, _lockKey);
+					LockHelperUtil.unlock(_className, _lockKey, _lockKey);
 				}
 
 				break;
@@ -72,8 +69,7 @@ public class LockProtectedAction<T> {
 			if ((System.currentTimeMillis() - createDate.getTime()) >=
 					_timeout) {
 
-				LockLocalServiceUtil.unlock(
-					_className, _lockKey, lock.getOwner());
+				LockHelperUtil.unlock(_className, _lockKey, lock.getOwner());
 
 				if (_log.isWarnEnabled()) {
 					_log.warn("Removed lock " + lock + " due to timeout");

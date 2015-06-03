@@ -1882,6 +1882,59 @@ public class DLAppServiceSoap {
 	}
 
 	/**
+	* Locks the folder. This method is primarily used by WebDAV.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the folder
+	* @return the lock object
+	* @throws PortalException if the repository or folder could not be found
+	*/
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(
+		long repositoryId, long folderId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.lockFolder(repositoryId,
+					folderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Locks the folder. This method is primarily used by WebDAV.
+	*
+	* @param repositoryId the primary key of the repository
+	* @param folderId the primary key of the folder
+	* @param owner the owner string for the checkout (optionally
+	<code>null</code>)
+	* @param inheritable whether the lock must propagate to descendants
+	* @param expirationTime the time in milliseconds before the lock expires.
+	If the value is <code>0</code>, the default expiration time will
+	be used from <code>portal.properties>.
+	* @return the lock object
+	* @throws PortalException if the repository or folder could not be found
+	*/
+	public static com.liferay.portal.kernel.lock.Lock lockFolder(
+		long repositoryId, long folderId, java.lang.String owner,
+		boolean inheritable, long expirationTime) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.lockFolder(repositoryId,
+					folderId, owner, inheritable, expirationTime);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Moves the file entry to the new folder.
 	*
 	* @param fileEntryId the primary key of the file entry
@@ -2022,6 +2075,62 @@ public class DLAppServiceSoap {
 			com.liferay.portal.kernel.repository.model.Folder returnValue = DLAppServiceUtil.moveFolderToTrash(folderId);
 
 			return com.liferay.portal.kernel.repository.model.FolderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Refreshes the lock for the file entry. This method is primarily used by
+	* WebDAV.
+	*
+	* @param lockUuid the lock's UUID
+	* @param companyId the primary key of the file entry's company
+	* @param expirationTime the time in milliseconds before the lock expires.
+	If the value is <code>0</code>, the default expiration time will
+	be used from <code>portal.properties>.
+	* @return the lock object
+	* @throws PortalException if the file entry or lock could not be found
+	*/
+	public static com.liferay.portal.kernel.lock.Lock refreshFileEntryLock(
+		java.lang.String lockUuid, long companyId, long expirationTime)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.refreshFileEntryLock(lockUuid,
+					companyId, expirationTime);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* Refreshes the lock for the folder. This method is primarily used by
+	* WebDAV.
+	*
+	* @param lockUuid the lock's UUID
+	* @param companyId the primary key of the file entry's company
+	* @param expirationTime the time in milliseconds before the lock expires.
+	If the value is <code>0</code>, the default expiration time will
+	be used from <code>portal.properties>.
+	* @return the lock object
+	* @throws PortalException if the folder or lock could not be found
+	*/
+	public static com.liferay.portal.kernel.lock.Lock refreshFolderLock(
+		java.lang.String lockUuid, long companyId, long expirationTime)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.lock.Lock returnValue = DLAppServiceUtil.refreshFolderLock(lockUuid,
+					companyId, expirationTime);
+
+			return returnValue;
 		}
 		catch (Exception e) {
 			_log.error(e, e);

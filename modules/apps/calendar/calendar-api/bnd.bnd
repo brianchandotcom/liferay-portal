@@ -13,7 +13,6 @@ Export-Package:\
        com.liferay.calendar.recurrence,\
        com.liferay.calendar.service,\
        com.liferay.calendar.service.persistence,\
-       com.liferay.calendar.util,\
        com.liferay.calendar.util.comparator
 Import-Package:\
        !org.joda.*,\

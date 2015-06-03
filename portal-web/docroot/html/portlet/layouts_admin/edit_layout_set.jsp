@@ -48,7 +48,7 @@ else {
 
 <aui:nav-bar>
 	<aui:nav cssClass="navbar-nav">
-		<c:if test="<%= (pagesCount > 0) && (liveGroup.isStaged() || selGroup.isLayoutSetPrototype() || selGroup.isStagingGroup() || portletName.equals(PortletKeys.GROUP_PAGES) || portletName.equals(PortletKeys.USERS_ADMIN)) %>">
+		<c:if test="<%= pagesCount > 0 %>">
 			<aui:nav-item href="<%= group.getDisplayURL(themeDisplay, privateLayout) %>" iconCssClass="icon-file" label="view-pages" target="_blank" />
 		</c:if>
 		<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.ADD_LAYOUT) %>">

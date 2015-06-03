@@ -186,7 +186,11 @@ public class CompileThemeTask extends DefaultTask {
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
 					copySpec.from(new File(portalWebDir, prefix));
-					copySpec.exclude(excludes);
+
+					if (ArrayUtil.isNotEmpty(excludes)) {
+						copySpec.exclude(excludes);
+					}
+
 					copySpec.include(include);
 					copySpec.into(getThemeRootDir());
 				}

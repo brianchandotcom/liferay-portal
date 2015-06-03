@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
-import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -122,19 +121,20 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	@Override
-	public Filter getPermissionFilter(
+	public BooleanFilter getPermissionFilter(
 		long companyId, long[] groupIds, long userId, String className,
-		Filter filter, SearchContext searchContext) {
+		BooleanFilter booleanFilter, SearchContext searchContext) {
 
 		try {
-			filter = doGetPermissionFilter(
-				companyId, groupIds, userId, className, filter, searchContext);
+			booleanFilter = doGetPermissionFilter(
+				companyId, groupIds, userId, className, booleanFilter,
+				searchContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
 		}
 
-		return filter;
+		return booleanFilter;
 	}
 
 	@Override
@@ -262,15 +262,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			groupRoleIds.toArray(new String[groupRoleIds.size()]));
 	}
 
-	protected Filter doGetPermissionFilter(
+	protected BooleanFilter doGetPermissionFilter(
 			long companyId, long[] groupIds, long userId, String className,
-			Filter filter, SearchContext searchContext)
+			BooleanFilter booleanFilter, SearchContext searchContext)
 		throws Exception {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(className);
 
 		if (!indexer.isPermissionAware()) {
-			return filter;
+			return booleanFilter;
 		}
 
 		PermissionChecker permissionChecker =
@@ -286,14 +286,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 
 		if (advancedPermissionChecker == null) {
-			return filter;
+			return booleanFilter;
 		}
 
 		PermissionCheckerBag permissionCheckerBag = getPermissionCheckerBag(
 			advancedPermissionChecker, userId);
 
 		if (permissionCheckerBag == null) {
-			return filter;
+			return booleanFilter;
 		}
 
 		Set<Group> groups = new LinkedHashSet<>();
@@ -307,21 +307,21 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			groupIdsToRoles);
 
 		return doGetPermissionFilter_6(
-			companyId, groupIds, userId, className, filter, groups, roles,
-			userGroupRoles, groupIdsToRoles);
+			companyId, groupIds, userId, className, booleanFilter, groups,
+			roles, userGroupRoles, groupIdsToRoles);
 	}
 
-	protected Filter doGetPermissionFilter_6(
+	protected BooleanFilter doGetPermissionFilter_6(
 			long companyId, long[] groupIds, long userId, String className,
-			Filter filter, Set<Group> groups, Set<Role> roles,
+			BooleanFilter booleanFilter, Set<Group> groups, Set<Role> roles,
 			Set<UserGroupRole> userGroupRoles,
 			Map<Long, List<Role>> groupIdsToRoles)
 		throws Exception {
 
-		BooleanFilter permissionFilter = new BooleanFilter();
+		BooleanFilter permissionBooleanFilter = new BooleanFilter();
 
 		if (userId > 0) {
-			permissionFilter.addTerm(Field.USER_ID, userId);
+			permissionBooleanFilter.addTerm(Field.USER_ID, userId);
 		}
 
 		BooleanFilter groupsFilter = new BooleanFilter();
@@ -331,7 +331,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			String roleName = role.getName();
 
 			if (roleName.equals(RoleConstants.ADMINISTRATOR)) {
-				return filter;
+				return booleanFilter;
 			}
 
 			if (ResourcePermissionLocalServiceUtil.hasResourcePermission(
@@ -339,7 +339,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					String.valueOf(companyId), role.getRoleId(),
 					ActionKeys.VIEW)) {
 
-				return filter;
+				return booleanFilter;
 			}
 
 			if ((role.getType() == RoleConstants.TYPE_REGULAR) &&
@@ -349,7 +349,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
 					role.getRoleId(), ActionKeys.VIEW)) {
 
-				return filter;
+				return booleanFilter;
 			}
 
 			for (Group group : groups) {
@@ -417,22 +417,26 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 		}
 
 		if (groupsFilter.hasClauses()) {
-			permissionFilter.add(groupsFilter);
+			permissionBooleanFilter.add(groupsFilter);
 		}
 
 		if (rolesFilter.hasClauses()) {
-			permissionFilter.add(rolesFilter);
+			permissionBooleanFilter.add(rolesFilter);
 		}
 
-		BooleanFilter fullFilter = new BooleanFilter();
-
-		if (filter != null) {
-			fullFilter.add(filter, BooleanClauseOccur.MUST);
+		if (!permissionBooleanFilter.hasClauses()) {
+			return booleanFilter;
 		}
 
-		fullFilter.add(permissionFilter, BooleanClauseOccur.MUST);
+		BooleanFilter fullBooleanFilter = new BooleanFilter();
 
-		return fullFilter;
+		if ((booleanFilter != null) && booleanFilter.hasClauses()) {
+			fullBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
+		}
+
+		fullBooleanFilter.add(permissionBooleanFilter, BooleanClauseOccur.MUST);
+
+		return fullBooleanFilter;
 	}
 
 	protected void doUpdatePermissionFields(

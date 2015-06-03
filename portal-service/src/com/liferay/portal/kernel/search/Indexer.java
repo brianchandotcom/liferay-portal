@@ -49,14 +49,6 @@ public interface Indexer {
 			String className, SearchContext searchContext)
 		throws Exception;
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getFacetBooleanFilter}
-	 */
-	@Deprecated
-	public BooleanQuery getFacetQuery(
-			String className, SearchContext searchContext)
-		throws Exception;
-
 	public BooleanQuery getFullQuery(SearchContext searchContext)
 		throws SearchException;
 

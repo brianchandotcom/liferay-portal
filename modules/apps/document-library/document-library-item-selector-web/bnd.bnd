@@ -2,5 +2,13 @@ Bundle-Name: Liferay Document Library Item Selector Web
 Bundle-SymbolicName: com.document.library.item.selector.web
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.document.library.item.selector.web
-Include-Resource: classes
+Import-Package:\
+	com.liferay.item.selector.taglib,\
+	com.liferay.item.selector.taglib.servlet.taglib.ui,\
+	*
+Include-Resource:\
+	classes,\
+	META-INF/resources=src/META-INF/resources
+Require-Capability:\
+	osgi.extender;osgi.extender="jsp.taglib";uri="http://liferay.com/tld/item-selector/ui";version:Version="1.0.0"
 Web-ContextPath: /document-library-item-selector-web

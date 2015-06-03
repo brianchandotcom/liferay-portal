@@ -16,6 +16,10 @@ package com.liferay.item.selector.taglib;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.Base64;
+import com.liferay.portal.kernel.util.ObjectValuePair;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.documentlibrary.util.DLUtil;
 
 import java.util.Set;
 
@@ -52,6 +56,26 @@ public enum ReturnType {
 		}
 
 		throw new IllegalArgumentException("Invalid values " + values);
+	}
+
+	public ObjectValuePair<String, String> getReturnTypeAndValue(
+			FileEntry fileEntry, ThemeDisplay themeDisplay)
+		throws Exception {
+
+		Class<?> clazz = this.getValue();
+
+		if (this == FILE_ENTRY) {
+			return new ObjectValuePair<>(
+				clazz.getName(), String.valueOf(fileEntry.getFileEntryId()));
+		}
+		else if (this == URL) {
+			return new ObjectValuePair<>(
+				clazz.getName(),
+				DLUtil.getImagePreviewURL(fileEntry, themeDisplay));
+		}
+		else {
+			return new ObjectValuePair<>(clazz.getName(), StringPool.BLANK);
+		}
 	}
 
 	public Class<?> getValue() {

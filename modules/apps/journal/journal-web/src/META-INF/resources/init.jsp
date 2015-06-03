@@ -189,11 +189,13 @@ page import="com.liferay.util.RSSUtil" %>
 page import="java.util.Collections" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.HashMap" %><%@
+page import="java.util.HashSet" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Set" %>
+page import="java.util.Set" %><%@
+page import="java.util.UUID" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletRequest" %><%@

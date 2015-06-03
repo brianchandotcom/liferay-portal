@@ -113,6 +113,12 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(scopeGroupId);
 
+		Set<Class<?>> desiredReturnTypes = new HashSet<Class<?>>();
+
+		desiredReturnTypes.add(UUID.class);
+
+		layoutItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, layoutItemSelectorCriterion);
 		%>
 
@@ -137,7 +143,7 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 							uri: '<%= itemSelectorURL.toString() %>'
 						},
 						function(event) {
-							pagesContainerInput.val(event.uuid);
+							pagesContainerInput.val(event.value);
 
 							displayPageNameInput.html(event.layoutpath);
 

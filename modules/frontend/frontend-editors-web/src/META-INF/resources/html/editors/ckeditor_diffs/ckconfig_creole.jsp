@@ -67,7 +67,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 	config.disableObjectResizing = true;
 
-	config.extraPlugins = 'a11yhelpbtn,creole,lfrpopup,wikilink';
+	config.extraPlugins = 'a11yhelpbtn,creole,imageselector,lfrpopup,wikilink';
 
 	config.filebrowserWindowFeatures = 'title=<%= LanguageUtil.get(request, "browse") %>';
 
@@ -114,7 +114,7 @@ response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
 		['Format'],
 		['Link', 'Unlink'],
-		['Table', '-', <c:if test="<%= (wikiPageResourcePrimKey > 0) %>">'Image', '-', </c:if> 'HorizontalRule', '-', 'SpecialChar' ],
+		['Table', '-', <c:if test="<%= (wikiPageResourcePrimKey > 0) %>">'ImageSelector', '-', </c:if> 'HorizontalRule', '-', 'SpecialChar' ],
 		'/',
 		['Cut', 'Copy', 'Paste', '-', 'PasteText', 'PasteFromWord', '-', 'SelectAll', '-', 'Undo', 'Redo'],
 		['Find','Replace'],

@@ -138,7 +138,9 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 	button.on(
 		'click',
-		function() {
+		function(event) {
+			var currentTarget = event.currentTarget;
+
 			Util.getOpener().Liferay.fire(
 				'<%= itemSelectedEventName %>',
 				{
@@ -151,9 +153,9 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 						ckeditorfuncnum: <%= ckEditorFuncNum %>,
 					</c:if>
 
-					layoutpath: event.target.getAttribute('data-layoutpath'),
-					returnType : event.target.getAttribute('data-returnType'),
-					value : event.target.getAttribute('data-url')
+					layoutpath: currentTarget.attr('data-layoutpath'),
+					returnType: currentTarget.attr('data-returnType'),
+					value: currentTarget.attr('data-value')
 				}
 			);
 
@@ -175,7 +177,6 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 		var link = labelEl.one('a');
 
 		var url = link.attr('data-url');
-
 		var uuid = link.attr('data-uuid');
 
 		if (link && url) {
@@ -185,11 +186,40 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 			messageType = 'info';
 
-			button.attr('data-url', url);
-
-			button.attr('data-uuid', uuid);
-
 			button.attr('data-layoutpath', messageText);
+
+			<%
+			String returnType = StringPool.BLANK;
+
+			for (Class<?> desiredReturnType : layoutItemSelectorCriterion.getDesiredReturnTypes()) {
+				if (desiredReturnType == URL.class) {
+					returnType = URL.class.getName();
+				}
+				else if (desiredReturnType == UUID.class) {
+					returnType = UUID.class.getName();
+				}
+				else {
+					continue;
+				}
+
+				break;
+			}
+
+			if (Validator.isNull(returnType)) {
+				throw new IllegalArgumentException("Invalid return type " + returnType);
+			}
+			%>
+
+			button.attr('data-returnType', '<%= returnType %>');
+
+			<c:choose>
+				<c:when test="<%= returnType.equals(URL.class.getName()) %>">
+					button.attr('data-value', url);
+				</c:when>
+				<c:when test="<%= returnType.equals(UUID.class.getName()) %>">
+					button.attr('data-value', uuid);
+				</c:when>
+			</c:choose>
 		}
 
 		Liferay.Util.toggleDisabled(button, disabled);

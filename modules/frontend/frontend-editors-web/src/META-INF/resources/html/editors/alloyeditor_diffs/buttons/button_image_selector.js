@@ -3,6 +3,8 @@
 (function() {
 	'use strict';
 
+	var Util = Liferay.Util;
+
 	var ButtonImage = React.createClass(
 		{
 			displayName: 'ButtonImage',
@@ -10,6 +12,14 @@
 			propTypes: {
 				editor: React.PropTypes.object.isRequired,
 				imageTPL: React.PropTypes.string
+			},
+
+			componentWillUnmount: function() {
+				var instance = this;
+
+				if (instance._itemSelectorDialog) {
+					instance._itemSelectorDialog.destroy();
+				}
 			},
 
 			getDefaultProps: function() {
@@ -23,67 +33,80 @@
 			},
 
 			render: function() {
-				return (
+				return React.createElement(
+					'button',
+					{
+						className: 'alloy-editor-button',
+						'data-type': 'button-image',
+						onClick: this._handleClick,
+						tabIndex: this.props.tabIndex
+					},
 					React.createElement(
-						'button',
+						'span',
 						{
-							className: 'alloy-editor-button',
-							'data-type': 'button-image',
-							onClick: this._handleClick,
-							tabIndex: this.props.tabIndex
-						},
-						React.createElement(
-							'span',
-							{
-								className: 'alloy-editor-icon-image'
-							}
-						)
+							className: 'alloy-editor-icon-image'
+						}
 					)
 				);
 			},
 
 			_handleClick: function() {
+				var instance = this;
+
 				var editor = this.props.editor.get('nativeEditor');
 
 				var eventName = editor.name + 'selectDocument';
 
-				Liferay.Util.selectEntity(
-					{
-						dialog: {
-							constrain: true,
-							destroyOnHide: true,
-							modal: true
-						},
-						eventName: eventName,
-						id: eventName,
-						title: Liferay.Language.get('select-image'),
-						uri: editor.config.filebrowserImageBrowseUrl
-					},
-					this._onDocumentSelected
-				);
+				if (instance._itemSelectorDialog) {
+					instance._itemSelectorDialog.open();
+				}
+				else {
+					AUI().use(
+						'liferay-item-selector-dialog',
+						function(A) {
+							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
+								{
+									eventName: eventName,
+									on: {
+										selectedItemChange: A.bind('_onSelectedItemChange', instance)
+									},
+									url: editor.config.filebrowserImageBrowseUrl
+								}
+							);
+
+							itemSelectorDialog.open();
+
+							instance._itemSelectorDialog = itemSelectorDialog;
+						}
+					);
+				}
 			},
 
-			_onDocumentSelected: function(event) {
+			_onSelectedItemChange: function(event) {
 				var instance = this;
 
 				var editor = instance.props.editor.get('nativeEditor');
 
 				var eventName = editor.name + 'selectDocument';
 
-				Liferay.Util.getWindow(eventName).onceAfter(
-					'visibleChange',
-					function() {
-						var image = CKEDITOR.dom.element.createFromHtml(
-							instance.props.imageTPL.output(
-								{
-									src: event.url
-								}
-							)
-						);
+				var selectedItem = event.newVal;
 
-						editor.insertElement(image);
-					}
-				);
+				if (selectedItem) {
+					Util.getWindow(eventName).onceAfter(
+						'visibleChange',
+						function() {
+							var image = CKEDITOR.dom.element.createFromHtml(
+								instance.props.imageTPL.output(
+									{
+										src: selectedItem.value
+									}
+								)
+							);
+
+							editor.insertElement(image);
+						}
+					);
+				}
 			}
 		}
 	);

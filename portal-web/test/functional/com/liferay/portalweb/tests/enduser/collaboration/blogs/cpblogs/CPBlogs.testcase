@@ -153,7 +153,7 @@
 
 	<command name="AddBlogsEntryTitleEscapeCharacters" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="&lt;!--Html Escape Character Test--&gt;" />
+		<var name="entryTitle" value="&amp; &lt; &gt; &quot; Escape Characters Entry" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -193,7 +193,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewDefaultCP">
-			<var name="entryTitle" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 
@@ -356,8 +356,8 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#editTitleCP">
-			<var name="entryContent" value="${entryContent}" />
+		<execute macro="BlogsEntry#editTitle">
+			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
 

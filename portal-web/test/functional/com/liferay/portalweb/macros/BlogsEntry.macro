@@ -721,7 +721,7 @@
 	<command name="editContent">
 		<execute function="AssertTextEquals" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContent}" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryEditContent}" />
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#CONTENT_FIELD" value1="${entryContentEdit}" />
 	</command>
 
 	<command name="editContentCP">
@@ -848,7 +848,7 @@
 	<command name="editTitle">
 		<execute function="AssertTextEquals" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitle}" />
 
-		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryEditTitle}" />
+		<execute function="Type#typeCKEditor" locator1="AlloyEditor#TITLE_FIELD" value1="${entryTitleEdit}" />
 	</command>
 
 	<command name="editTitleCP">
@@ -1437,7 +1437,7 @@
 
 	<command name="viewDefaultCP">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
-		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewDetailsPG">
@@ -1539,6 +1539,10 @@
 	</command>
 
 	<command name="viewEntry">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entrySubtitle" value="${entrySubtitle}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
 		<if>
@@ -1666,7 +1670,7 @@
 	</command>
 
 	<command name="viewNoPG">
-		<execute function="AssertTextNotPresent" value1="${entryTitle}" />
+		<execute function="AssertElementNotPresent" locator1="Blogs#ENTRY_TABLE_TITLE" value1="${entryTitle}" />
 	</command>
 
 	<command name="viewPermissionsNoPermission">

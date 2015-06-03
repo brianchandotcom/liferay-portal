@@ -201,7 +201,7 @@
 
 	<command name="AddBlogsEntryTitleEscapeCharacters" priority="5">
 		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="&lt;!--Html Escape Character Test--&gt;" />
+		<var name="entryTitle" value="&amp; &lt; &gt; &quot; Escape Characters Entry" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -242,7 +242,7 @@
 		</execute>
 
 		<execute macro="BlogsEntry#viewNoPG">
-			<var name="entryTitle" value="${entryContent}" />
+			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
 

@@ -39,29 +39,9 @@
 	</command>
 
 	<command name="addPG" summary="Add a page named '${pageName}'">
-		<if>
-			<isset var="nodePort" />
-			<then>
-				<execute function="Open" locator1="http://localhost:${nodePort}" />
-			</then>
-			<elseif>
-				<not>
-					<and>
-						<isset var="defaultURL" />
-						<equals arg1="${defaultURL}" arg2="false" />
-					</and>
-				</not>
-				<then>
-					<execute macro="Page#openURL" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="Click#clickAtSidebarClickAtWaitForScript" locator1="Dockbar#ADD_ICON" value1="Add" />
-
-		<execute function="AssertClick" locator1="DockbarAddpanelpage#PAGE_TAB" value1="Page" />
-
-		<execute function="AssertClick" locator1="Link#NEW_PAGE" value1="New Page" />
+		<execute macro="Page#gotoPagesCP">
+			<var name="portletName" value="Site Pages" />
+		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_ADD_PAGE" value1="Add Page" />
 

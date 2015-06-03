@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.item.selector.web;
+package com.liferay.document.library.item.selector;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;

@@ -1,3 +1,5 @@
+<%@ page
+		import="com.liferay.document.library.item.selector.DLItemSelectorCriterion" %>
 <%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.

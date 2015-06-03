@@ -385,19 +385,18 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	 * 		   have permission to view the organization
 	 */
 	@Override
-	public Organization fetchOrganization(long organizationId) {
+	public Organization fetchOrganization(long organizationId)
+		throws PortalException {
+
 		Organization organization = organizationLocalService.fetchOrganization(
 			organizationId);
 
-		try {
+		if (organization != null) {
 			OrganizationPermissionUtil.check(
 				getPermissionChecker(), organizationId, ActionKeys.VIEW);
+		}
 
-			return organization;
-		}
-		catch (PortalException pe) {
-			return null;
-		}
+		return organization;
 	}
 
 	/**

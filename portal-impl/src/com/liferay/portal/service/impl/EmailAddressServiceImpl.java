@@ -83,20 +83,19 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	 * 		   did not have permission to view the email address
 	 */
 	@Override
-	public EmailAddress fetchEmailAddress(long emailAddressId) {
+	public EmailAddress fetchEmailAddress(long emailAddressId)
+		throws PortalException {
+
 		EmailAddress emailAddress = emailAddressPersistence.fetchByPrimaryKey(
 			emailAddressId);
 
-		try {
+		if (emailAddress != null) {
 			CommonPermissionUtil.check(
 				getPermissionChecker(), emailAddress.getClassNameId(),
 				emailAddress.getClassPK(), ActionKeys.VIEW);
+		}
 
-			return emailAddress;
-		}
-		catch (Exception e) {
-			return null;
-		}
+		return emailAddress;
 	}
 
 	@Override

@@ -689,12 +689,12 @@
 						titleHtml = title.one('.portlet-title-text').outerHTML() + ' - ' + titleHtml;
 					}
 					else {
-						titleHtml = title.html() + ' - ' + titleHtml;
+						titleHtml = title.text() + ' - ' + titleHtml;
 					}
 				}
 
-				if (windowSubtitle && windowSubtitle !== '') {
-					titleHtml += '<span class="portlet-subtitle-text">' + windowSubtitle + '</id>';
+				if (windowSubtitle) {
+					titleHtml += '<div class="portlet-subtitle"><span class="portlet-subtitle-text">' + windowSubtitle + '</span></div>';
 				}
 
 				Liferay.Util.openWindow(
@@ -707,6 +707,14 @@
 						id: namespacedId + 'configurationIframeDialog',
 						title: titleHtml,
 						uri: url
+					},
+					function(dialog) {
+						dialog.once(
+							'drag:init',
+							function() {
+								dialog.dd.addInvalid('.portlet-subtitle-text');
+							}
+						);
 					}
 				);
 			}

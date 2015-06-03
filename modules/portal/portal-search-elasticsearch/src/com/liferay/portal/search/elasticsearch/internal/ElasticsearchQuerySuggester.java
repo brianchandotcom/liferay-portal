@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.suggest.BaseQuerySuggester;
+import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.internal.util.DocumentTypes;
 
@@ -49,15 +50,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = ElasticsearchQuerySuggester.class)
+@Component(
+	immediate = true, property = {"search.engine.impl=Elasticsearch"},
+	service = QuerySuggester.class
+)
 public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
-
-	@Reference
-	public void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
 
 	@Override
 	public Map<String, List<String>> spellCheckKeywords(
@@ -190,6 +187,13 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 		Suggest suggest = searchResponse.getSuggest();
 
 		return suggest.getSuggestion(requestType);
+	}
+
+	@Reference(unbind = "-")
+	protected void setElasticsearchConnectionManager(
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
 	}
 
 	private static final String _REQUEST_TYPE_KEYWORD_QUERY =

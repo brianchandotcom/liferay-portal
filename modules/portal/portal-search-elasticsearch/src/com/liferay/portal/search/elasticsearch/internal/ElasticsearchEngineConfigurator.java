@@ -35,7 +35,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Michael C. Han
  */
-@Component(immediate = true, service = SearchEngineConfigurator.class)
+@Component(
+	immediate = true, property = {"search.engine.impl=Elasticsearch"},
+	service = SearchEngineConfigurator.class
+)
 public class ElasticsearchEngineConfigurator
 	extends AbstractSearchEngineConfigurator {
 
@@ -47,23 +50,6 @@ public class ElasticsearchEngineConfigurator
 		elasticsearchConnection.close();
 
 		super.destroy();
-	}
-
-	@Reference
-	public void setElasticsearchConnectionManager(
-		ElasticsearchConnectionManager elasticsearchConnectionManager) {
-
-		_elasticsearchConnectionManager = elasticsearchConnectionManager;
-	}
-
-	@Reference
-	public void setIndexSearcher(IndexSearcher indexSearcher) {
-		_indexSearcher = indexSearcher;
-	}
-
-	@Reference
-	public void setIndexWriter(IndexWriter indexWriter) {
-		_indexWriter = indexWriter;
 	}
 
 	@Activate
@@ -93,7 +79,26 @@ public class ElasticsearchEngineConfigurator
 		return clazz.getClassLoader();
 	}
 
-	@Reference(target = "(search.engine.id=SYSTEM_ENGINE)")
+	@Reference(unbind = "-")
+	protected void setElasticsearchConnectionManager(
+		ElasticsearchConnectionManager elasticsearchConnectionManager) {
+
+		_elasticsearchConnectionManager = elasticsearchConnectionManager;
+	}
+
+	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
+	protected void setIndexSearcher(IndexSearcher indexSearcher) {
+		_indexSearcher = indexSearcher;
+	}
+
+	@Reference(target = "(!(search.engine.impl=*))", unbind = "-")
+	protected void setIndexWriter(IndexWriter indexWriter) {
+		_indexWriter = indexWriter;
+	}
+
+	@Reference(
+		target = "(&(search.engine.id=SYSTEM_ENGINE)(search.engine.impl=Elasticsearch))"
+	)
 	protected void setSearchEngine(
 		SearchEngine searchEngine, Map<String, Object> properties) {
 

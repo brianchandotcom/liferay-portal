@@ -59,7 +59,7 @@ public class CompositeFacetProcessor
 		cardinality = ReferenceCardinality.MANDATORY,
 		target = "(class.name=DEFAULT)"
 	)
-	public void setDefaultFacetProcessor(
+	protected void setDefaultFacetProcessor(
 		FacetProcessor<SearchRequestBuilder> defaultFacetProcessor) {
 
 		_defaultFacetProcessor = defaultFacetProcessor;
@@ -71,7 +71,7 @@ public class CompositeFacetProcessor
 		policyOption = ReferencePolicyOption.GREEDY,
 		target = "(&(class.name=*)(!(class.name=DEFAULT)))"
 	)
-	public void setFacetProcessor(
+	protected void setFacetProcessor(
 		FacetProcessor<SearchRequestBuilder> facetProcessor,
 		Map<String, Object> properties) {
 
@@ -80,13 +80,7 @@ public class CompositeFacetProcessor
 		_facetProcessors.put(className, facetProcessor);
 	}
 
-	public void unsetDefaultFacetProcessor(
-		FacetProcessor<SearchRequestBuilder> defaultFacetProcessor) {
-
-		_defaultFacetProcessor = null;
-	}
-
-	public void unsetFacetProcessor(
+	protected void unsetFacetProcessor(
 		FacetProcessor<SearchRequestBuilder> facetProcessor,
 		Map<String, Object> properties) {
 

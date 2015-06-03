@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.HitsImpl;
+import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -83,7 +84,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  * @author Milen Dyankov
  */
-@Component(immediate = true, service = ElasticsearchIndexSearcher.class)
+@Component(
+	immediate = true, property = {"search.engine.impl=Elasticsearch"},
+	service = IndexSearcher.class
+)
 public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 
 	@Override
@@ -180,7 +184,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	}
 
 	@Override
-	@Reference(service = ElasticsearchQuerySuggester.class, unbind = "-")
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	public void setQuerySuggester(QuerySuggester querySuggester) {
 		super.setQuerySuggester(querySuggester);
 	}
@@ -552,14 +556,14 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		_facetProcessor = facetProcessor;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setFilterTranslator(
 		FilterTranslator<FilterBuilder> filterTranslator) {
 
 		_filterTranslator = filterTranslator;
 	}
 
-	@Reference(unbind = "-")
+	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	protected void setQueryTranslator(
 		QueryTranslator<QueryBuilder> queryTranslator) {
 

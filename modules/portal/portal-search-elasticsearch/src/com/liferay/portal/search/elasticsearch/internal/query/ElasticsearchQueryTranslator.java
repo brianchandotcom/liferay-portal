@@ -37,37 +37,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
-@Component(immediate = true, service = QueryTranslator.class)
+@Component(
+	immediate = true, property = {"search.engine.impl=Elasticsearch"},
+	service = QueryTranslator.class
+)
 public class ElasticsearchQueryTranslator
 	implements QueryTranslator<QueryBuilder>, QueryVisitor<QueryBuilder> {
-
-	@Reference
-	public void setBooleanQueryTranslator(
-		BooleanQueryTranslator booleanQueryTranslator) {
-
-		_booleanQueryTranslator = booleanQueryTranslator;
-	}
-
-	@Reference
-	public void setTermQueryTranslator(
-		TermQueryTranslator termQueryTranslator) {
-
-		_termQueryTranslator = termQueryTranslator;
-	}
-
-	@Reference
-	public void setTermRangeQueryTranslator(
-		TermRangeQueryTranslator termRangeQueryTranslator) {
-
-		_termRangeQueryTranslator = termRangeQueryTranslator;
-	}
-
-	@Reference
-	public void setWildcardQueryTranslator(
-		WildcardQueryTranslator wildcardQueryTranslator) {
-
-		_wildcardQueryTranslator = wildcardQueryTranslator;
-	}
 
 	@Override
 	public QueryBuilder translate(Query query, SearchContext searchContext) {
@@ -98,6 +73,34 @@ public class ElasticsearchQueryTranslator
 	@Override
 	public QueryBuilder visitQuery(WildcardQuery wildcardQuery) {
 		return _wildcardQueryTranslator.translate(wildcardQuery);
+	}
+
+	@Reference(unbind = "-")
+	protected void setBooleanQueryTranslator(
+		BooleanQueryTranslator booleanQueryTranslator) {
+
+		_booleanQueryTranslator = booleanQueryTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTermQueryTranslator(
+		TermQueryTranslator termQueryTranslator) {
+
+		_termQueryTranslator = termQueryTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setTermRangeQueryTranslator(
+		TermRangeQueryTranslator termRangeQueryTranslator) {
+
+		_termRangeQueryTranslator = termRangeQueryTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setWildcardQueryTranslator(
+		WildcardQueryTranslator wildcardQueryTranslator) {
+
+		_wildcardQueryTranslator = wildcardQueryTranslator;
 	}
 
 	private BooleanQueryTranslator _booleanQueryTranslator;

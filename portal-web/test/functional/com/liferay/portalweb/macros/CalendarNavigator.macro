@@ -9,7 +9,15 @@
 		<execute function="SelectFrame" locator1="CalendarPermissions#CALENDAR_PERMISSIONS_IFRAME" />
 	</command>
 
-	<command name="gotoAdd">
+	<command name="gotoAddCurrentSiteCalendars">
+		<execute function="Click" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="PGCalendar#CURRENT_SITE_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+
+		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
+	</command>
+
+	<command name="gotoAddEvent">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -21,7 +29,7 @@
 		<execute macro="CalendarEvent#_viewNewEventIframe" />
 	</command>
 
-	<command name="gotoAddOnSpecifcDayOfWeekViaWeekView">
+	<command name="gotoAddEventOnSpecifcDayOfWeekViaWeekView">
 		<execute macro="CalendarNavigator#gotoView">
 			<var name="viewType" value="Week" />
 		</execute>
@@ -44,10 +52,18 @@
 		<execute macro="CalendarEvent#_selectEventIframe" />
 	</command>
 
-	<command name="gotoAddToday">
+	<command name="gotoAddEventToday">
 		<var method="StringUtil#upperCase('${viewType}')" name="viewTypeUppercase" />
 
 		<execute function="Click" locator1="PGCalendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
+	</command>
+
+	<command name="gotoAddMyCalendars">
+		<execute function="Click" locator1="PGCalendar#MY_CALENDARS_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="PGCalendar#MY_CALENDARS_MENULIST_ADD_CALENDAR" value1="Add Calendar" />
+
+		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
 	</command>
 
 	<command name="gotoBusyDayViaSmallCalendar">

@@ -49,6 +49,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>TIME_ZONE_SELECT</td>
+	<td>//select[contains(@id,'timeZoneId')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SAVE_BUTTON</td>
 	<td>//button[@type='submit']</td>
 	<td></td>

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.auth.bundle.authverifierpipeline;
 
+import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
+import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.security.auth.AccessControlContext;
-import com.liferay.portal.security.auth.AuthVerifier;
-import com.liferay.portal.security.auth.AuthVerifierResult;
 
 import java.util.HashMap;
 import java.util.Map;

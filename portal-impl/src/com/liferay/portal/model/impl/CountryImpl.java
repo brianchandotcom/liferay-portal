@@ -24,6 +24,7 @@ import java.util.Locale;
  * @author Brian Wing Shun Chan
  * @author Hugo Huijser
  */
+@JSON(strict = true)
 public class CountryImpl extends CountryBaseImpl {
 
 	@Override

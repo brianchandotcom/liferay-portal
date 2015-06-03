@@ -33,12 +33,12 @@ public class MemoryPortalCache<K extends Serializable, V>
 	extends AbstractPortalCache<K, V> {
 
 	public MemoryPortalCache(
-		PortalCacheManager<K, V> portalCacheManager, String name,
+		PortalCacheManager<K, V> portalCacheManager, String portalCacheName,
 		int initialCapacity) {
 
 		super(portalCacheManager);
 
-		_name = name;
+		_portalCacheName = portalCacheName;
 
 		_concurrentMap = new ConcurrentHashMap<>(initialCapacity);
 	}
@@ -47,7 +47,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 		removeAll();
 
 		_concurrentMap = null;
-		_name = null;
+		_portalCacheName = null;
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class MemoryPortalCache<K extends Serializable, V>
 
 	@Override
 	public String getName() {
-		return _name;
+		return _portalCacheName;
 	}
 
 	@Override
@@ -151,6 +151,6 @@ public class MemoryPortalCache<K extends Serializable, V>
 	}
 
 	private ConcurrentMap<K, V> _concurrentMap;
-	private String _name;
+	private String _portalCacheName;
 
 }

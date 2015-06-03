@@ -247,13 +247,13 @@ public abstract class AbstractTemplate implements Template {
 			templateResource = new CacheTemplateResource(templateResource);
 		}
 
-		String cacheName = TemplateResourceLoader.class.getName();
+		String portalCacheName = TemplateResourceLoader.class.getName();
 
-		cacheName = cacheName.concat(StringPool.PERIOD).concat(
+		portalCacheName = portalCacheName.concat(StringPool.PERIOD).concat(
 			templateManagerName);
 
 		PortalCache<String, Serializable> portalCache = _getPortalCache(
-			templateResource, cacheName);
+			templateResource, portalCacheName);
 
 		Object object = portalCache.get(templateResource.getTemplateId());
 
@@ -280,7 +280,7 @@ public abstract class AbstractTemplate implements Template {
 				errorTemplateResource);
 		}
 
-		portalCache = _getPortalCache(errorTemplateResource, cacheName);
+		portalCache = _getPortalCache(errorTemplateResource, portalCacheName);
 
 		object = portalCache.get(errorTemplateResource.getTemplateId());
 
@@ -291,10 +291,10 @@ public abstract class AbstractTemplate implements Template {
 	}
 
 	private PortalCache<String, Serializable> _getPortalCache(
-		TemplateResource templateResource, String cacheName) {
+		TemplateResource templateResource, String portalCacheName) {
 
 		if (!(templateResource instanceof CacheTemplateResource)) {
-			return MultiVMPoolUtil.getCache(cacheName);
+			return MultiVMPoolUtil.getCache(portalCacheName);
 		}
 
 		CacheTemplateResource cacheTemplateResource =
@@ -304,10 +304,10 @@ public abstract class AbstractTemplate implements Template {
 			cacheTemplateResource.getInnerTemplateResource();
 
 		if (innerTemplateResource instanceof URLTemplateResource) {
-			return SingleVMPoolUtil.getCache(cacheName);
+			return SingleVMPoolUtil.getCache(portalCacheName);
 		}
 
-		return MultiVMPoolUtil.getCache(cacheName);
+		return MultiVMPoolUtil.getCache(portalCacheName);
 	}
 
 	private final TemplateContextHelper _templateContextHelper;

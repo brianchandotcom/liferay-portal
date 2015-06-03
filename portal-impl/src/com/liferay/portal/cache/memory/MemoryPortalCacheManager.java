@@ -46,12 +46,12 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	extends AbstractPortalCacheManager<K, V> {
 
 	public static <K extends Serializable, V> MemoryPortalCacheManager<K, V>
-		createMemoryPortalCacheManager(String name) {
+		createMemoryPortalCacheManager(String portalCacheManagerName) {
 
 		MemoryPortalCacheManager<K, V> memoryPortalCacheManager =
 			new MemoryPortalCacheManager<>();
 
-		memoryPortalCacheManager.setName(name);
+		memoryPortalCacheManager.setName(portalCacheManagerName);
 
 		memoryPortalCacheManager.initialize();
 
@@ -83,22 +83,26 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected PortalCache<K, V> createPortalCache(String cacheName) {
+	protected PortalCache<K, V> createPortalCache(
+		PortalCacheConfiguration portalCacheConfiguration) {
+
+		String portalCacheName = portalCacheConfiguration.getPortalCacheName();
+
 		MemoryPortalCache<K, V> portalCache = _memoryPortalCaches.get(
-			cacheName);
+			portalCacheName);
 
 		if (portalCache != null) {
 			return portalCache;
 		}
 
 		portalCache = new MemoryPortalCache<>(
-			this, cacheName, _cacheInitialCapacity);
+			this, portalCacheName, _cacheInitialCapacity);
 
 		MemoryPortalCache<K, V> previousPortalCache =
-			_memoryPortalCaches.putIfAbsent(cacheName, portalCache);
+			_memoryPortalCaches.putIfAbsent(portalCacheName, portalCache);
 
 		if (previousPortalCache == null) {
-			aggregatedCacheManagerListener.notifyCacheAdded(cacheName);
+			aggregatedCacheManagerListener.notifyCacheAdded(portalCacheName);
 		}
 		else {
 			portalCache = previousPortalCache;
@@ -128,43 +132,43 @@ public class MemoryPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	protected void doRemoveCache(String cacheName) {
+	protected void doRemoveCache(String portalCacheName) {
 		MemoryPortalCache<K, V> memoryPortalCache = _memoryPortalCaches.remove(
-			cacheName);
+			portalCacheName);
 
 		memoryPortalCache.destroy();
 
-		aggregatedCacheManagerListener.notifyCacheRemoved(cacheName);
+		aggregatedCacheManagerListener.notifyCacheRemoved(portalCacheName);
 	}
 
 	@Override
 	protected PortalCacheManagerConfiguration
 		getPortalCacheManagerConfiguration() {
 
-		PortalCacheConfiguration defaultPortalCacheConfiguration = null;
+		Map<CallbackConfiguration, CacheListenerScope>
+			cacheListenerConfigurations = null;
+		CallbackConfiguration bootstrapLoaderConfiguration = null;
 
 		if (isClusterAware() && PropsValues.CLUSTER_LINK_ENABLED) {
 			CallbackConfiguration cacheListenerConfiguration =
 				new CallbackConfiguration(
 					ClusterLinkCallbackFactory.INSTANCE, new Properties());
 
-			Map<CallbackConfiguration, CacheListenerScope>
-				cacheListenerConfigurations = new HashMap<>();
+			cacheListenerConfigurations = new HashMap<>();
 
 			cacheListenerConfigurations.put(
 				cacheListenerConfiguration, CacheListenerScope.ALL);
 
-			CallbackConfiguration bootstrapLoaderConfiguration =
-				new CallbackConfiguration(
-					ClusterLinkCallbackFactory.INSTANCE, new Properties());
-
-			defaultPortalCacheConfiguration = new PortalCacheConfiguration(
-				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
-				cacheListenerConfigurations, bootstrapLoaderConfiguration);
+			bootstrapLoaderConfiguration = new CallbackConfiguration(
+				ClusterLinkCallbackFactory.INSTANCE, new Properties());
 		}
 
 		return new PortalCacheManagerConfiguration(
-			null, defaultPortalCacheConfiguration, null);
+			null,
+			new PortalCacheConfiguration(
+				PortalCacheConfiguration.DEFAULT_PORTAL_CACHE_NAME,
+				cacheListenerConfigurations, bootstrapLoaderConfiguration),
+			null);
 	}
 
 	@Override

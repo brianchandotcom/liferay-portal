@@ -24,13 +24,14 @@ public interface SingleVMPool {
 
 	public void clear();
 
-	public PortalCache<? extends Serializable, ?> getCache(String name);
+	public PortalCache<? extends Serializable, ?> getCache(
+		String portalCacheName);
 
 	public PortalCache<? extends Serializable, ?> getCache(
-		String name, boolean blocking);
+		String portalCacheName, boolean blocking);
 
 	public PortalCacheManager<? extends Serializable, ?> getCacheManager();
 
-	public void removeCache(String name);
+	public void removeCache(String portalCacheName);
 
 }

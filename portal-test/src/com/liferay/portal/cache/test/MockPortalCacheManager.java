@@ -30,8 +30,8 @@ import java.util.Set;
 public class MockPortalCacheManager<K extends Serializable, V>
 	implements PortalCacheManager<K, V> {
 
-	public MockPortalCacheManager(String name) {
-		_name = name;
+	public MockPortalCacheManager(String portalCacheManagerName) {
+		_portalCacheManagerName = portalCacheManagerName;
 	}
 
 	@Override
@@ -45,12 +45,14 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name) {
+	public PortalCache<K, V> getCache(String portalCacheName) {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public PortalCache<K, V> getCache(String name, boolean blocking) {
+	public PortalCache<K, V> getCache(
+		String portalCacheName, boolean blocking) {
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -61,7 +63,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 
 	@Override
 	public String getName() {
-		return _name;
+		return _portalCacheManagerName;
 	}
 
 	@Override
@@ -82,7 +84,7 @@ public class MockPortalCacheManager<K extends Serializable, V>
 	}
 
 	@Override
-	public void removeCache(String name) {
+	public void removeCache(String portalCacheName) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -98,6 +100,6 @@ public class MockPortalCacheManager<K extends Serializable, V>
 		throw new UnsupportedOperationException();
 	}
 
-	private final String _name;
+	private final String _portalCacheManagerName;
 
 }

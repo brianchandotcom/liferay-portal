@@ -2,159 +2,13 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="alloy.bootstrap.version" value="3.2.0-2" />
-	<property name="alloy.version" value="3.0.1" />
-	<property name="alloy-font-awesome.version" value="2.0" />
 	<property name="common.css.dir" value="../../../portal-web/docroot/html/css/common" />
 	<property name="css.dir" value="src/META-INF/resources/html/css" />
-	<property name="frontend.js.web.dir" value="../frontend-js-web" />
-	<property name="themes.dir" value="src/META-INF/resources/html/themes" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
-
-	<target name="build-alloy-bootstrap-theme">
-		<path id="alloy.bootstrap.zip.path">
-			<fileset dir="${third.party.dir}">
-				<include name="bootstrap-sass-${alloy.bootstrap.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy.bootstrap.zip.path" refid="alloy.bootstrap.zip.path" />
-
-		<basename file="${alloy.bootstrap.zip.path}" property="alloy.bootstrap.file" />
-
-		<property name="alloy.bootstrap.assets.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/bootstrap-assets" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${alloy.bootstrap.file}"
-					targetfile="${alloy.bootstrap.assets.dir}"
-				/>
-			</not>
-			<then>
-				<ant antfile="${frontend.js.web.dir}/build.xml" dir="${frontend.js.web.dir}" target="build-alloy-bootstrap" inheritAll="false" />
-			</then>
-		</if>
-
-		<property name="alloy.bootstrap.deploy.theme.dir" value="${themes.dir}/_unstyled/css/aui" />
-
-		<delete dir="${alloy.bootstrap.deploy.theme.dir}" />
-
-		<!-- CSS -->
-
-		<property name="alloy.bootstrap.css.lib.dir" value="${alloy.bootstrap.assets.dir}/stylesheets" />
-
-		<delete failonerror="false" includeemptydirs="true" quiet="true">
-			<fileset
-				dir="${alloy.bootstrap.css.lib.dir}"
-				includes="_bootstrap-*.scss"
-			/>
-		</delete>
-
-		<copy todir="${alloy.bootstrap.deploy.theme.dir}" overwrite="true" preservelastmodified="true">
-			<fileset dir="${alloy.bootstrap.css.lib.dir}/" />
-		</copy>
-
-		<!-- Glyphicons font -->
-
-		<property name="alloy.bootstrap.fonts.lib.dir" value="${alloy.bootstrap.assets.dir}/fonts/bootstrap" />
-
-		<copy todir="${alloy.bootstrap.deploy.theme.dir}/glyphicons/font" overwrite="true" preservelastmodified="true">
-			<fileset dir="${alloy.bootstrap.fonts.lib.dir}/" />
-		</copy>
-	</target>
-
-	<target name="build-alloy-font-awesome" depends="build-alloy-bootstrap-theme">
-		<path id="alloy-font-awesome.zip.path">
-			<fileset dir="${third.party.dir}">
-				<include name="alloy-font-awesome-${alloy-font-awesome.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy-font-awesome.zip.path" refid="alloy-font-awesome.zip.path" />
-
-		<basename file="${alloy-font-awesome.zip.path}" property="alloy-font-awesome.file" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${alloy-font-awesome.file}"
-					targetfile="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome"
-				/>
-			</not>
-			<then>
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome" />
-
-				<unzip src="${third.party.dir}/${alloy-font-awesome.file}" dest="${alloy.bootstrap.deploy.theme.dir}" />
-
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome/css" />
-				<delete dir="${alloy.bootstrap.deploy.theme.dir}/alloy-font-awesome/less" />
-			</then>
-		</if>
-	</target>
-
-	<target name="build-alloy-theme">
-		<path id="alloy.zip.path">
-			<fileset dir="${third.party.dir}">
-				<include name="alloy-${alloy.version}*.zip" />
-			</fileset>
-		</path>
-
-		<property name="alloy.zip.path" refid="alloy.zip.path" />
-
-		<basename file="${alloy.zip.path}" property="alloy.file" />
-
-		<property name="alloy.dir" value="${frontend.js.web.dir}/tmp/META-INF/resources/html/js/aui" />
-
-		<if>
-			<not>
-				<uptodate
-					srcfile="${third.party.dir}/${alloy.file}"
-					targetfile="${alloy.dir}"
-				/>
-			</not>
-			<then>
-				<ant antfile="${frontend.js.web.dir}/build.xml" dir="${frontend.js.web.dir}" target="build-alloy" inheritAll="false" />
-			</then>
-		</if>
-
-		<delete dir="${themes.dir}/_unstyled/images/aui" />
-
-		<for param="dir">
-			<path>
-				<dirset
-					dir="${alloy.dir}"
-					includes="aui-*"
-				/>
-			</path>
-			<sequential>
-				<basename property="dir.name" file="@{dir}" />
-				<if>
-					<available file="${alloy.dir}/${dir.name}/assets/skins/sam" />
-					<then>
-						<copy todir="${themes.dir}/_unstyled/images/aui" preservelastmodified="true">
-							<fileset dir="{alloy.dir}/${dir.name}/assets/skins/sam" includes="**/*.png,**/*.jpg,**/*.gif" />
-						</copy>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<copy todir="${themes.dir}/_unstyled/images/aui" preservelastmodified="true">
-			<fileset dir="${alloy.dir}/aui-skin-deprecated/images" />
-		</copy>
-
-		<copy
-			file="${alloy.dir}/aui_deprecated.css"
-			tofile="${css.dir}/portal/aui_deprecated.css"
-			overwrite="true"
-			preservelastmodified="true"
-		/>
-	</target>
 
 	<target name="build-bourbon">
 		<property name="portal.common.dir" value="${common.css.dir}" />
@@ -191,84 +45,7 @@
 		</if>
 	</target>
 
-	<target name="build-themes" depends="build-alloy-bootstrap-theme,build-alloy-theme,build-alloy-font-awesome,build-bourbon">
-		<for param="module.name">
-			<path>
-				<dirset dir="${themes.dir}" excludes="_styled,_unstyled" includes="*" />
-			</path>
-			<sequential>
-				<if>
-					<available file="@{module.name}/_diffs/images" />
-					<then>
-						<for param="file">
-							<path>
-								<fileset
-									dir="@{module.name}/_diffs/images"
-									includes="**/screenshot.png"
-								/>
-							</path>
-							<sequential>
-								<propertyregex input="@{file}" override="yes" property="thumbnail.file" regexp="screenshot\.png" replace="thumbnail\.png" />
-
-								<if>
-									<not>
-										<uptodate targetfile="${thumbnail.file}" srcfile="@{file}" />
-									</not>
-									<then>
-										<java
-											classname="com.liferay.portal.tools.ThumbnailBuilder"
-											classpathref="portal.classpath"
-										>
-											<arg value="thumbnail.original.file=@{file}" />
-											<arg value="thumbnail.thumbnail.file=${thumbnail.file}" />
-											<arg value="thumbnail.height=120" />
-											<arg value="thumbnail.width=160" />
-											<arg value="thumbnail.overwrite=false" />
-										</java>
-									</then>
-								</if>
-							</sequential>
-						</for>
-					</then>
-				</if>
-
-				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
-					<fileset
-						dir="${themes.dir}/_unstyled"
-						excludes="templates/init.ftl,templates/init.vm"
-					/>
-				</copy>
-
-				<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
-					<fileset
-						dir="${themes.dir}/_styled"
-					/>
-				</copy>
-
-				<if>
-					<available file="@{module.name}/_diffs" />
-					<then>
-						<copy todir="@{module.name}" overwrite="true" preservelastmodified="true">
-							<fileset
-								dir="@{module.name}/_diffs"
-							/>
-						</copy>
-					</then>
-				</if>
-			</sequential>
-		</for>
-
-		<copy
-			file="${themes.dir}/_unstyled/images/favicon.ico"
-			preservelastmodified="true"
-			todir="src/META-INF/resources"
-		/>
-	</target>
-
-	<target name="clean" depends="clean-css,clean-themes">
-		<delete dir="${themes.dir}/_unstyled/images/aui/" />
-		<delete dir="${themes.dir}/classic/color_schemes" />
-
+	<target name="clean" depends="clean-css">
 		<clean
 			module.dir="${basedir}"
 		/>
@@ -277,27 +54,10 @@
 	<target name="clean-css">
 		<delete includeemptydirs="true">
 			<fileset dir="${css.dir}" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
-			<fileset dir="${themes.dir}" includes="**/.sass-cache/**,**/.sass_cache_*.css,**/_sass_cache_*.css" />
 		</delete>
 	</target>
 
-	<target name="clean-themes">
-		<for param="module.name">
-			<path>
-				<dirset dir="${themes.dir}" excludes="_styled,_unstyled" includes="*" />
-			</path>
-			<sequential>
-				<delete includeemptydirs="true" quiet="true" failonerror="false">
-					<fileset
-						dir="@{module.name}"
-						excludes="**/_diffs/**"
-					/>
-				</delete>
-			</sequential>
-		</for>
-	</target>
-
-	<target name="jar" depends="build-themes,build-common.compile">
+	<target name="jar" depends="build-bourbon,build-common.compile">
 		<jar-macro
 			module.dir="${basedir}"
 		/>

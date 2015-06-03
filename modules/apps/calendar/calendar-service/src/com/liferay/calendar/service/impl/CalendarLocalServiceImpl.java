@@ -16,11 +16,11 @@ package com.liferay.calendar.service.impl;
 
 import com.liferay.calendar.exception.CalendarNameException;
 import com.liferay.calendar.exception.RequiredCalendarException;
+import com.liferay.calendar.exporter.CalendarDataFormat;
+import com.liferay.calendar.exporter.CalendarDataHandler;
+import com.liferay.calendar.exporter.CalendarDataHandlerFactory;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.service.base.CalendarLocalServiceBaseImpl;
-import com.liferay.calendar.util.CalendarDataFormat;
-import com.liferay.calendar.util.CalendarDataHandler;
-import com.liferay.calendar.util.CalendarDataHandlerFactory;
 import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.Indexable;

@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.util;
 
+import com.liferay.calendar.exporter.CalendarDataHandler;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;

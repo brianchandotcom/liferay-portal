@@ -14,14 +14,24 @@
 
 package com.liferay.portal.search.elasticsearch.internal.filter;
 
+import com.liferay.portal.kernel.search.QueryPreProcessConfiguration;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.filter.TermFilterTranslator;
 
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.QueryFilterBuilder;
 import org.elasticsearch.index.query.TermFilterBuilder;
+import org.elasticsearch.index.query.WildcardQueryBuilder;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -31,12 +41,63 @@ public class TermFilterTranslatorImpl implements TermFilterTranslator {
 
 	@Override
 	public FilterBuilder translate(TermFilter termFilter) {
-		TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
-			termFilter.getField(), termFilter.getValue());
+		String field = termFilter.getField();
+		String value = termFilter.getValue();
 
-		termFilterBuilder.cache(termFilter.isCached());
+		FilterBuilder filterBuilder = null;
 
-		return termFilterBuilder;
+		if ((_queryPreProcessConfiguration != null) &&
+			_queryPreProcessConfiguration.isSubstringSearchAlways(field)) {
+
+			WildcardQueryBuilder wildcardQueryBuilder =
+				toCaseInsensitiveSubstringQuery(field, value);
+
+			QueryFilterBuilder queryFilterBuilder = FilterBuilders.queryFilter(
+				wildcardQueryBuilder);
+
+			queryFilterBuilder.cache(termFilter.isCached());
+
+			filterBuilder = queryFilterBuilder;
+		}
+		else {
+			TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
+				field, value);
+
+			termFilterBuilder.cache(termFilter.isCached());
+
+			filterBuilder = termFilterBuilder;
+		}
+
+		return filterBuilder;
 	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void setQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = queryPreProcessConfiguration;
+	}
+
+	protected WildcardQueryBuilder toCaseInsensitiveSubstringQuery(
+		String field, String value) {
+
+		value = StringUtil.replace(value, StringPool.PERCENT, StringPool.BLANK);
+		value = StringUtil.toLowerCase(value);
+		value = StringPool.STAR + value + StringPool.STAR;
+
+		return QueryBuilders.wildcardQuery(field, value);
+	}
+
+	protected void unsetQueryPreProcessConfiguration(
+		QueryPreProcessConfiguration queryPreProcessConfiguration) {
+
+		_queryPreProcessConfiguration = null;
+	}
+
+	private QueryPreProcessConfiguration _queryPreProcessConfiguration;
 
 }

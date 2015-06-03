@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,21 +58,20 @@ public class FolderSearcher extends BaseSearcher {
 
 	@Override
 	protected BooleanQuery createFullQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+			BooleanFilter fullQueryBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
 		long[] folderIds = searchContext.getFolderIds();
 
-		BooleanQuery entryClassPKQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanFilter entryClassPKFilter = new BooleanFilter();
 
 		for (long folderId : folderIds) {
-			entryClassPKQuery.addTerm(Field.ENTRY_CLASS_PK, folderId);
+			entryClassPKFilter.addTerm(Field.ENTRY_CLASS_PK, folderId);
 		}
 
-		contextQuery.add(entryClassPKQuery, BooleanClauseOccur.MUST);
+		fullQueryBooleanFilter.add(entryClassPKFilter, BooleanClauseOccur.MUST);
 
-		return super.createFullQuery(contextQuery, searchContext);
+		return super.createFullQuery(fullQueryBooleanFilter, searchContext);
 	}
 
 	private final String[] _classNames;

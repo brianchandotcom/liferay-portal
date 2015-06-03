@@ -14,13 +14,15 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+
 /**
  * @author Michael C. Han
  */
 public interface RelatedEntryIndexer {
 
 	public void addRelatedClassNames(
-			BooleanQuery contextQuery, SearchContext searchContext)
+			BooleanFilter contextFilter, SearchContext searchContext)
 		throws Exception;
 
 	public void addRelatedEntryFields(Document document, Object obj)

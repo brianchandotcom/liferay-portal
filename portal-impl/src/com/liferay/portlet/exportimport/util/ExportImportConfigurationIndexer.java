@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,34 +62,31 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 		return CLASS_NAME;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
-		addStatus(contextQuery, searchContext);
+		addStatus(contextBooleanFilter, searchContext);
 
-		contextQuery.addRequiredTerm(
+		contextBooleanFilter.addRequiredTerm(
 			Field.COMPANY_ID, searchContext.getCompanyId());
-		contextQuery.addRequiredTerm(
+		contextBooleanFilter.addRequiredTerm(
 			Field.GROUP_ID,
 			GetterUtil.getLong(searchContext.getAttribute(Field.GROUP_ID)));
 
 		Serializable type = searchContext.getAttribute(Field.TYPE);
 
 		if (type != null) {
-			contextQuery.addRequiredTerm(
+			contextBooleanFilter.addRequiredTerm(
 				Field.TYPE, GetterUtil.getInteger(type));
 		}
 	}
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.DESCRIPTION, true);

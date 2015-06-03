@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -80,50 +81,46 @@ public class AssetCategoryIndexer extends BaseIndexer {
 			permissionChecker, category, ActionKeys.VIEW);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
 		long[] parentCategoryIds = (long[])searchContext.getAttribute(
 			Field.ASSET_PARENT_CATEGORY_IDS);
 
 		if (!ArrayUtil.isEmpty(parentCategoryIds)) {
-			BooleanQuery parentCategoryQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanFilter parentCategoryFilter = new BooleanFilter();
 
 			for (long parentCategoryId : parentCategoryIds) {
-				parentCategoryQuery.addTerm(
+				parentCategoryFilter.addTerm(
 					Field.ASSET_PARENT_CATEGORY_ID,
 					String.valueOf(parentCategoryId));
 			}
 
-			contextQuery.add(parentCategoryQuery, BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(
+				parentCategoryFilter, BooleanClauseOccur.MUST);
 		}
 
 		long[] vocabularyIds = (long[])searchContext.getAttribute(
 			Field.ASSET_VOCABULARY_IDS);
 
 		if (!ArrayUtil.isEmpty(vocabularyIds)) {
-			BooleanQuery vocabularyQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanFilter vocabularyFilter = new BooleanFilter();
 
 			for (long vocabularyId : vocabularyIds) {
-				vocabularyQuery.addTerm(
+				vocabularyFilter.addTerm(
 					Field.ASSET_VOCABULARY_ID, String.valueOf(vocabularyId));
 			}
 
-			contextQuery.add(vocabularyQuery, BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(vocabularyFilter, BooleanClauseOccur.MUST);
 		}
 	}
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		String title = (String)searchContext.getAttribute(Field.TITLE);

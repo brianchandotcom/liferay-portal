@@ -44,6 +44,16 @@ public interface IndexerPostProcessor {
 		throws Exception;
 
 	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter booleanFilter,
+			SearchContext searchContext)
+		throws Exception;
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #postProcessSearchQuery(
+	 *             BooleanQuery, BooleanFilter, SearchContext)}
+	 */
+	@Deprecated
+	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception;
 

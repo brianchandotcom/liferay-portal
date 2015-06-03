@@ -19,14 +19,18 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.WildcardQueryFactoryUtil;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
@@ -68,13 +72,9 @@ public class OrganizationIndexer extends BaseIndexer {
 		return CLASS_NAME;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
 		LinkedHashMap<String, Object> params =
@@ -87,34 +87,34 @@ public class OrganizationIndexer extends BaseIndexer {
 		List<Long> excludedOrganizationIds = (List<Long>)params.get(
 			"excludedOrganizationIds");
 
-		if ((excludedOrganizationIds != null) &&
-			!excludedOrganizationIds.isEmpty()) {
-
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+		if (ListUtil.isNotEmpty(excludedOrganizationIds)) {
+			BooleanFilter booleanFilter = new BooleanFilter();
 
 			for (long excludedOrganizationId : excludedOrganizationIds) {
-				booleanQuery.addTerm(
+				booleanFilter.addTerm(
 					"organizationId", String.valueOf(excludedOrganizationId));
 			}
 
-			contextQuery.add(booleanQuery, BooleanClauseOccur.MUST_NOT);
+			contextBooleanFilter.add(
+				booleanFilter, BooleanClauseOccur.MUST_NOT);
 		}
 
 		List<Organization> organizationsTree = (List<Organization>)params.get(
 			"organizationsTree");
 
-		if ((organizationsTree != null) && !organizationsTree.isEmpty()) {
-			BooleanQuery booleanQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+		if (ListUtil.isNotEmpty(organizationsTree)) {
+			BooleanFilter booleanFilter = new BooleanFilter();
 
 			for (Organization organization : organizationsTree) {
 				String treePath = organization.buildTreePath();
 
-				booleanQuery.addTerm(Field.TREE_PATH, treePath, true);
+				WildcardQuery wildcardQuery = WildcardQueryFactoryUtil.create(
+					searchContext, Field.TREE_PATH, treePath);
+
+				booleanFilter.add(new QueryFilter(wildcardQuery));
 			}
 
-			contextQuery.add(booleanQuery, BooleanClauseOccur.MUST);
+			contextBooleanFilter.add(booleanFilter, BooleanClauseOccur.MUST);
 		}
 		else {
 			long parentOrganizationId = GetterUtil.getLong(
@@ -123,7 +123,7 @@ public class OrganizationIndexer extends BaseIndexer {
 			if (parentOrganizationId !=
 					OrganizationConstants.ANY_PARENT_ORGANIZATION_ID) {
 
-				contextQuery.addRequiredTerm(
+				contextBooleanFilter.addRequiredTerm(
 					"parentOrganizationId", parentOrganizationId);
 			}
 		}
@@ -131,7 +131,8 @@ public class OrganizationIndexer extends BaseIndexer {
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, "city", false);

@@ -182,7 +182,7 @@ public class DummyIndexer implements Indexer {
 
 	@Override
 	public void postProcessContextBooleanFilter(
-			BooleanFilter booleanFilter, SearchContext searchContext)
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 	}
 
@@ -198,7 +198,16 @@ public class DummyIndexer implements Indexer {
 
 	@Override
 	public void postProcessSearchQuery(
-		BooleanQuery searchQuery, SearchContext searchContext) {
+		BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+		SearchContext searchContext) {
+	}
+
+	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, SearchContext searchContext)
+		throws Exception {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

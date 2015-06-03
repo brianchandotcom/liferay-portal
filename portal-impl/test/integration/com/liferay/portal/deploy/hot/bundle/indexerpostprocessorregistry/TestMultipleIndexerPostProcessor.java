@@ -44,10 +44,6 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
 	@Override
 	public void postProcessContextQuery(
 			BooleanQuery contextQuery, SearchContext searchContext)
@@ -65,6 +61,14 @@ public class TestMultipleIndexerPostProcessor implements IndexerPostProcessor {
 		throws Exception {
 	}
 
+	@Override
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, BooleanFilter booleanFilter,
+			SearchContext searchContext)
+		throws Exception {
+	}
+
+	@Deprecated
 	@Override
 	public void postProcessSearchQuery(
 			BooleanQuery searchQuery, SearchContext searchContext)

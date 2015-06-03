@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
+import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -71,13 +72,9 @@ public class DDLIndexer extends BaseIndexer {
 		return CLASS_NAME;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0
-	 */
-	@Deprecated
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+	public void postProcessContextBooleanFilter(
+			BooleanFilter contextBooleanFilter, SearchContext searchContext)
 		throws Exception {
 
 		int status = GetterUtil.getInteger(
@@ -85,22 +82,23 @@ public class DDLIndexer extends BaseIndexer {
 			WorkflowConstants.STATUS_APPROVED);
 
 		if (status != WorkflowConstants.STATUS_ANY) {
-			contextQuery.addRequiredTerm(Field.STATUS, status);
+			contextBooleanFilter.addRequiredTerm(Field.STATUS, status);
 		}
 
 		long recordSetId = GetterUtil.getLong(
 			searchContext.getAttribute("recordSetId"));
 
 		if (recordSetId > 0) {
-			contextQuery.addRequiredTerm("recordSetId", recordSetId);
+			contextBooleanFilter.addRequiredTerm("recordSetId", recordSetId);
 		}
 
-		addSearchClassTypeIds(contextQuery, searchContext);
+		addSearchClassTypeIds(contextBooleanFilter, searchContext);
 	}
 
 	@Override
 	public void postProcessSearchQuery(
-			BooleanQuery searchQuery, SearchContext searchContext)
+			BooleanQuery searchQuery, BooleanFilter fullQueryBooleanFilter,
+			SearchContext searchContext)
 		throws Exception {
 
 		addSearchTerm(searchQuery, searchContext, Field.USER_NAME, false);

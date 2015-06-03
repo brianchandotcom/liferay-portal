@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.editors.web.editor.configuration;
 
-import com.liferay.document.library.item.selector.web.DLItemSelectorCriterion;
+import com.liferay.document.library.item.selector.DLItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.layout.item.selector.web.LayoutItemSelectorCriterion;

@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.item.selector.web;
 
+import com.liferay.document.library.item.selector.DLItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 
 import java.io.IOException;

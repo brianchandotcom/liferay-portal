@@ -918,7 +918,7 @@ AUI.add(
 						var portletURL = Liferay.PortletURL.createRenderURL();
 
 						portletURL.setParameter('javax.portlet.action', 'showItemSelector');
-						portletURL.setParameter('criteria', 'com.liferay.document.library.item.selector.web.DLItemSelectorCriterion');
+						portletURL.setParameter('criteria', 'com.liferay.document.library.item.selector.DLItemSelectorCriterion');
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
 
 						var criterionJSON = {

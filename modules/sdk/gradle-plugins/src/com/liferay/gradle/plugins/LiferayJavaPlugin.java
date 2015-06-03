@@ -490,7 +490,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTaskBuildCssPortalWebFile(
 		BuildCssTask buildCssTask) {
 
-		if (buildCssTask.getPortalWebFile() != null) {
+		if ((buildCssTask.getPortalWebDir() != null) ||
+			(buildCssTask.getPortalWebFile() != null)) {
+
 			return;
 		}
 

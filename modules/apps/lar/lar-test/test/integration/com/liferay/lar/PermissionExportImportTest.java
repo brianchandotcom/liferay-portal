@@ -42,6 +42,7 @@ import com.liferay.portal.service.ResourceLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.ResourcePermissionUtil;
@@ -53,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,6 +72,11 @@ public class PermissionExportImportTest extends PowerMockito {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	}
 
 	@Test
 	public void testPortletGuestPermissionsExportImport() throws Exception {

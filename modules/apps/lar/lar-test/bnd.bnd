@@ -1,8 +1,16 @@
 Bundle-Name: LAR Test
 Bundle-SymbolicName: com.liferay.lar.test
 Bundle-Version: 1.0.0
+Import-Package: *;resolution:=optional
 Include-Resource:\
 	classes,\
 	test-classes/integration,\
+	@lib/com.liferay.bookmarks.test.jar!/com/liferay/bookmarks/util/test/BookmarksTestUtil.class,\
 	@lib/com.liferay.journal.test.jar!/com/liferay/journal/test/util/JournalTestUtil.class,\
+	@lib/javassist.jar,\
+	@lib/mockito-all.jar,\
+	@lib/powermock-api-mockito.jar,\
+	@lib/powermock-api-support.jar,\
+	@lib/powermock-core.jar,\
+	@lib/powermock-reflect.jar,\
 	../../../../portal-impl/test/test-portal-impl.properties

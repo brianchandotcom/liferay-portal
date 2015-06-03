@@ -32,6 +32,7 @@ import com.liferay.portal.model.LayoutPrototype;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyUtil;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 
@@ -56,6 +57,8 @@ public abstract class BasePrototypePropagationTestCase {
 	public void setUp() throws Exception {
 		ServiceContextThreadLocal.pushServiceContext(
 			ServiceContextTestUtil.getServiceContext());
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		// Group
 

@@ -5001,7 +5001,6 @@ if (ppstate.equals("normal")) {
 					directoryScanner.setBasedir(project.getBaseDir());
 					directoryScanner.setExcludes(
 						new String[] {
-							"modules/apps/lar/lar-test/test/integration/**/*Test.java",
 							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
 							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
 							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",

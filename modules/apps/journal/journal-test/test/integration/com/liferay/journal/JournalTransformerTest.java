@@ -16,15 +16,19 @@ package com.liferay.journal;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
@@ -38,14 +42,17 @@ import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalUtil;
+import com.liferay.portlet.journal.util.RegexTransformerUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -166,9 +173,10 @@ public class JournalTransformerTest {
 		Assert.assertEquals("Joe Bloggs", content);
 	}
 
-	@Ignore
 	@Test
 	public void testRegexTransformerListener() throws Exception {
+		loadRegexTransformerListenerTestProperties();
+
 		Map<String, String> tokens = getTokens();
 
 		String xml = DDMStructureTestUtil.getSampleStructuredContent(
@@ -287,6 +295,34 @@ public class JournalTransformerTest {
 			"company_id", String.valueOf(TestPropsValues.getCompanyId()));
 
 		return tokens;
+	}
+
+	protected void loadRegexTransformerListenerTestProperties() {
+		List<Pattern> patterns = new ArrayList<>();
+		List<String> replacements = new ArrayList<>();
+
+		for (int i = 0; i < 100; i++) {
+			String regex = TestPropsUtil.get(
+				"journal.transformer.regex.pattern." + i);
+			String replacement = TestPropsUtil.get(
+				"journal.transformer.regex.replacement." + i);
+
+			if (Validator.isNull(regex) || Validator.isNull(replacement)) {
+				break;
+			}
+
+			patterns.add(Pattern.compile(regex));
+			replacements.add(replacement);
+		}
+
+		Object instance = ReflectionTestUtil.getFieldValue(
+			RegexTransformerUtil.class, "_instance");
+
+		CacheRegistryUtil.setActive(true);
+
+		ReflectionTestUtil.setFieldValue(instance, "_patterns", patterns);
+		ReflectionTestUtil.setFieldValue(
+			instance, "_replacements", replacements);
 	}
 
 	@DeleteAfterTestRun

@@ -45,6 +45,7 @@ import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetPrototypeLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 
@@ -57,6 +58,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -75,6 +77,13 @@ public class LayoutExportImportTest extends BaseExportImportTestCase {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@Before
+	public void setUp() throws Exception {
+		super.setUp();
+
+		ServiceTestUtil.setUser(TestPropsValues.getUser());
+	}
 
 	@Test
 	public void testDeleteMissingLayouts() throws Exception {

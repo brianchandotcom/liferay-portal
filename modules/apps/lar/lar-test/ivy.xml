@@ -18,5 +18,10 @@
 
 	<dependencies defaultconf="default">
 		<dependency conf="test->default" name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency conf="default" name="mockito-all" org="org.mockito" rev="1.9.5" />
+		<dependency conf="default" name="powermock-api-mockito" org="org.powermock" rev="1.6.1" />
+		<dependency conf="default" name="powermock-api-support" org="org.powermock" rev="1.6.1" />
+		<dependency conf="default" name="powermock-core" org="org.powermock" rev="1.6.1" />
+		<dependency conf="default" name="powermock-reflect" org="org.powermock" rev="1.6.1" />
 	</dependencies>
 </ivy-module>

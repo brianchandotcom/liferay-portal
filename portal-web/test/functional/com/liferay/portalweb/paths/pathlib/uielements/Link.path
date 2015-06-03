@@ -19,6 +19,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NEW_PAGE</td>
+	<td>//a[contains(.,'New Page')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>READ_MORE</td>
 	<td>//a[contains(.,'Read More')]</td>
 	<td></td>

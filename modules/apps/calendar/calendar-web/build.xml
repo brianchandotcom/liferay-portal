@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="calendar-service" />
+	<property name="import.shared" value="calendar-api,calendar-service" />
 	<property name="osgi.auto.update.xml" value="true" />
 	<property name="osgi.ide.dependencies" value="struts.jar" />
 

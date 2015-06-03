@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="commons-lang" org="commons-lang" rev="2.6" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>

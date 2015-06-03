@@ -1,7 +1,6 @@
 lib/development/com.liferay.ant.bnd.jar
 lib/development/com.liferay.ant.build.logger.jar
 lib/development/com.liferay.ant.heap.dump.jar
-lib/development/com.liferay.tld.formatter.jar
 lib/development/liferay-doclet.jar
 lib/portal/com.liferay.rtl.css.jar
 lib/portal/com.liferay.ruby.gems.jar

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.gradle.api.DefaultTask;
+import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
@@ -62,7 +63,14 @@ public class CompileThemeTask extends DefaultTask {
 		return _diffsDir;
 	}
 
+	@InputDirectory
+	@Optional
+	public File getPortalWebDir() {
+		return _portalWebDir;
+	}
+
 	@InputFile
+	@Optional
 	public File getPortalWebFile() {
 		return _portalWebFile;
 	}
@@ -127,6 +135,10 @@ public class CompileThemeTask extends DefaultTask {
 		_diffsDir = diffsDir;
 	}
 
+	public void setPortalWebDir(File portalWebDir) {
+		_portalWebDir = portalWebDir;
+	}
+
 	public void setPortalWebFile(File portalWebFile) {
 		_portalWebFile = portalWebFile;
 	}
@@ -161,16 +173,39 @@ public class CompileThemeTask extends DefaultTask {
 	}
 
 	protected void copyPortalThemeDir(
-		String theme, String[] excludes, String include) {
+		String theme, final String[] excludes, final String include) {
 
-		String prefix = "html/themes/" + theme + "/";
+		final String prefix = "html/themes/" + theme + "/";
 
-		excludes = StringUtil.prepend(excludes, prefix);
-		include = prefix + include;
+		final File portalWebDir = getPortalWebDir();
+		File portalWebFile = getPortalWebFile();
 
-		FileUtil.unzip(
-			_project, getPortalWebFile(), getThemeRootDir(), 3, excludes,
-			new String[] {include});
+		if (portalWebDir != null) {
+			Closure<Void> closure = new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					copySpec.from(new File(portalWebDir, prefix));
+					copySpec.exclude(excludes);
+					copySpec.include(include);
+					copySpec.into(getThemeRootDir());
+				}
+
+			};
+
+			_project.copy(closure);
+		}
+		else if (portalWebFile != null) {
+			String[] prefixedExcludes = StringUtil.prepend(excludes, prefix);
+			String prefixedInclude = prefix + include;
+
+			FileUtil.unzip(
+				_project, portalWebFile, getThemeRootDir(), 3, prefixedExcludes,
+				new String[] {prefixedInclude});
+		}
+		else {
+			throw new GradleException("Unable to find the portal web files");
+		}
 	}
 
 	protected void copyThemeParent() {
@@ -261,6 +296,7 @@ public class CompileThemeTask extends DefaultTask {
 	};
 
 	private File _diffsDir;
+	private File _portalWebDir;
 	private File _portalWebFile;
 	private final Project _project;
 	private String _themeParent;

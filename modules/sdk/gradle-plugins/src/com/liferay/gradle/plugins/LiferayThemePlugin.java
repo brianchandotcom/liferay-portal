@@ -209,7 +209,9 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected void configureTaskCompileThemePortalWebFile(
 		CompileThemeTask compileThemeTask) {
 
-		if (compileThemeTask.getPortalWebFile() != null) {
+		if ((compileThemeTask.getPortalWebDir() != null) ||
+			(compileThemeTask.getPortalWebFile() != null)) {
+
 			return;
 		}
 

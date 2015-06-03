@@ -321,10 +321,16 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsEntry#editContentCP">
+		<execute macro="BlogsNavigator#gotoEditCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#editContent">
 			<var name="entryContentEdit" value="${entryContentEdit}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
@@ -354,10 +360,16 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
+		<execute macro="BlogsEntry#gotoEditCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
 		<execute macro="BlogsEntry#editTitle">
 			<var name="entryTitle" value="${entryTitle}" />
 			<var name="entryTitleEdit" value="${entryTitleEdit}" />
 		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />

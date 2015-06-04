@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>ServerAdministrationFileUploads</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ServerAdministrationFileUploads</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>GENERAL_OVERALL_MAX_FILE_SIZE_FIELD</td>
+	<td>//input[contains(@id,'uploadServletRequestImplMaxSize')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>GENERAL_TEMP_STORAGE_DIRECTORY_FIELD</td>
+	<td>//input[contains(@id,'uploadServletRequestImplTempDir')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD</td>
+	<td>//input[contains(@id,'dlFileMaxSize')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCS_AND_MEDIA_MAX_PREVIEWABLE_FILE_SIZE_FIELD</td>
+	<td>//input[contains(@id,'dlFileEntryPreviewableProcessorMaxSize')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCS_AND_MEDIA_MAX_THUMBNAIL_HEIGHT_FIELD</td>
+	<td>//input[contains(@id,'dlFileEntryThumbnailMaxHeight')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCS_AND_MEDIA_MAX_THUMBNAIL_WIDTH_FIELD</td>
+	<td>//input[contains(@id,'dlFileEntryThumbnailMaxWidth')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DOCS_AND_MEDIA_ALLOWED_FILE_EXTENSIONS_FIELD</td>
+	<td>//input[contains(@id,'dlFileExtensions')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>ServerAdministrationResources</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ServerAdministrationResources</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SOURCE</td>
+	<td>//span[contains(@onmouseover,'ToolTip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ACTIONS_TABLE-->
+<tr>
+	<td>ACTIONS_TABLE_DESCRIPTION</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ACTIONS_TABLE_EXECUTE</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td/button[contains(.,'Execute')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

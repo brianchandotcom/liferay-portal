@@ -475,11 +475,17 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public String getValue(String locator) {
-		throw new UnsupportedOperationException();
+		return getValue(locator, null);
 	}
 
 	public String getValue(String locator, String timeout) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator, timeout);
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		return webElement.getAttribute("value");
 	}
 
 	@Override

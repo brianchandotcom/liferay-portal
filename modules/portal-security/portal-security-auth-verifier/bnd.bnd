@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Portal Security Auth Verifier
+Bundle-SymbolicName: com.liferay.portal.security.auth.verifier
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.security.auth.verifier
+Import-Package: \
+	com.liferay.portal.security.auto.login,\
+	*
+Include-Resource: \
+	classes,\
+	@../../../util-java/util-java.jar!/com/liferay/util/Encryptor.class,\
+	@../../../util-java/util-java.jar!/com/liferay/util/EncryptorException.class

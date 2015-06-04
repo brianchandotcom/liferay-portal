@@ -408,91 +408,91 @@ public class VerifyProperties extends VerifyProcess {
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.basic_auth",
 			"auth.verifier.BasicAuthHeaderAuthVerifier.basic_auth",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.hosts.allowed",
 			"auth.verifier.BasicAuthHeaderAuthVerifier.hosts.allowed",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.urls.excludes",
 			"auth.verifier.BasicAuthHeaderAuthVerifier.urls.excludes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.BasicAuthHeaderAutoLogin.urls.includes",
 			"auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 
 		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth",
 			"auth.verifier.DigestAuthenticationAuthVerifier.digest_auth",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed",
 			"auth.verifier.DigestAuthenticationAuthVerifier.hosts.allowed",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes",
 			"auth.verifier.DigestAuthenticationAuthVerifier.urls.excludes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes",
 			"auth.verifier.DigestAuthenticationAuthVerifier.urls.includes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.hosts.allowed",
 			"auth.verifier.ParameterAuthVerifier.hosts.allowed",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.urls.excludes",
 			"auth.verifier.ParameterAuthVerifier.urls.excludes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.urls.includes",
 			"auth.verifier.ParameterAuthVerifier.urls.includes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 
 		new String[] {
 			"auth.verifier.PortalSessionAuthVerifier.hosts.allowed",
 			"auth.verifier.PortalSessionAuthVerifier.hosts.allowed",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.PortalSessionAuthVerifier.urls.excludes",
 			"auth.verifier.PortalSessionAuthVerifier.urls.excludes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.PortalSessionAuthVerifier.urls.includes",
 			"auth.verifier.PortalSessionAuthVerifier.urls.includes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 
 		new String[] {
 			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
 			"auth.verifier.TunnelingServletAuthVerifier.hosts.allowed",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
 			"auth.verifier.TunnelingServletAuthVerifier.urls.excludes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
 			"auth.verifier.TunnelingServletAuthVerifier.urls.includes",
-			"com.liferay.portal.security.auth"
+			"com.liferay.portal.security.auth.verifier"
 		},
 
 		// Bookmarks

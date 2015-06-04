@@ -43,7 +43,7 @@ public abstract class BaseBackgroundTaskDisplay
 
 	@Override
 	public JSONObject getDetails(Locale locale) {
-		JSONObject detailsJSON = createDetails(_backgroundTask);
+		JSONObject detailsJSON = createMessageDetails(_backgroundTask);
 
 		return BackgroundTaskDisplayJSONTransformer.translateDetailsJSON(
 			locale, detailsJSON);
@@ -73,7 +73,7 @@ public abstract class BaseBackgroundTaskDisplay
 
 	@Override
 	public boolean hasDetails() {
-		if (createDetails(_backgroundTask) != null) {
+		if (createMessageDetails(_backgroundTask) != null) {
 			return true;
 		}
 
@@ -98,7 +98,8 @@ public abstract class BaseBackgroundTaskDisplay
 		return false;
 	}
 
-	protected abstract JSONObject createDetails(BackgroundTask backgroundTask);
+	protected abstract JSONObject createMessageDetails(
+		BackgroundTask backgroundTask);
 
 	protected abstract String createMessageKey();
 

@@ -79,6 +79,7 @@ public class BackgroundTaskDisplayJSONTransformer {
 			JSONObject detailItem = detailItems.getJSONObject(i);
 
 			String message = detailItem.getString("message");
+
 			detailItem.put("message", LanguageUtil.get(locale, message));
 
 			JSONArray itemsList = detailItem.getJSONArray("itemsList");
@@ -90,18 +91,18 @@ public class BackgroundTaskDisplayJSONTransformer {
 			for (int j = 0; j < itemsList.length(); j++) {
 				JSONObject listItem = itemsList.getJSONObject(j);
 
-				String info = listItem.getString("info");
 				String errorMessage = listItem.getString("errorMessage");
 				String errorStrongMessage = listItem.getString(
 					"errorStrongMessage");
+				String info = listItem.getString("info");
 
-				listItem.put("info", LanguageUtil.get(locale, info));
 				listItem.put(
 					"errorMessage",
 					LanguageUtil.get(locale, errorMessage));
 				listItem.put(
 					"errorStrongMessage",
 					LanguageUtil.get(locale, errorStrongMessage));
+				listItem.put("info", LanguageUtil.get(locale, info));
 			}
 
 			detailItem.put("itemsList", itemsList);

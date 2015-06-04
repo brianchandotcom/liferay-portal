@@ -932,8 +932,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		String imports = matcher.group();
 
 		imports = StringUtil.replace(
-			imports, new String[] {"%><%@\r\n", "%><%@\n"},
-			new String[] {"%>\r\n<%@ ", "%>\n<%@ "});
+			imports, new String[] {"<%@\r\n", "<%@\n"},
+			new String[] {"\r\n<%@ ", "\n<%@ "});
 
 		if (checkUnusedImports) {
 			List<String> importLines = new ArrayList<>();

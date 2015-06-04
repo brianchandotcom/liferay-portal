@@ -36,28 +36,6 @@
 				}
 			},
 			{
-				"template_ddm": {
-					"mapping": {
-						"index": "analyzed",
-						"store": "true",
-						"type": "string"
-					},
-					"match": "ddm__*",
-					"match_mapping_type": "string"
-				}
-			},
-			{
-				"template_expando": {
-					"mapping": {
-						"index": "not_analyzed",
-						"store": "true",
-						"type": "string"
-					},
-					"match": "expando__*",
-					"match_mapping_type": "string"
-				}
-			},
-			{
 				"template_ar": {
 					"mapping": {
 						"analyzer": "arabic",
@@ -460,6 +438,28 @@
 					"match": "\\w+_zh\\b|\\w+_zh_[A-Z]{2}\\b",
 					"match_mapping_type": "string",
 					"match_pattern": "regex"
+				}
+			},
+			{
+				"template_ddm": {
+					"mapping": {
+						"index": "analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "ddm__*",
+					"match_mapping_type": "string"
+				}
+			},
+			{
+				"template_expando": {
+					"mapping": {
+						"index": "not_analyzed",
+						"store": "true",
+						"type": "string"
+					},
+					"match": "expando__*",
+					"match_mapping_type": "string"
 				}
 			},
 			{

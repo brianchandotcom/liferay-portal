@@ -75,7 +75,9 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.model.ExpandoColumn;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeIndexerUtil;
 import com.liferay.portlet.ratings.model.RatingsStats;
@@ -913,8 +915,8 @@ public abstract class BaseIndexer implements Indexer {
 				properties.getProperty(ExpandoColumnConstants.INDEX_TYPE));
 
 			if (indexType != ExpandoColumnConstants.INDEX_TYPE_NONE) {
-				String fieldName = ExpandoBridgeIndexerUtil.encodeFieldName(
-					attributeName);
+				String fieldName = getExpandoFieldName(
+					searchContext, expandoBridge, attributeName);
 
 				if (Validator.isNotNull(keywords)) {
 					if (searchContext.isAndSearch()) {
@@ -1522,6 +1524,28 @@ public abstract class BaseIndexer implements Indexer {
 
 	protected String[] getDefaultSelectedLocalizedFieldNames() {
 		return _defaultSelectedLocalizedFieldNames;
+	}
+
+	protected String getExpandoFieldName(
+		SearchContext searchContext, ExpandoBridge expandoBridge,
+		String attributeName) {
+
+		ExpandoColumn expandoColumn =
+			ExpandoColumnLocalServiceUtil.getDefaultTableColumn(
+				expandoBridge.getCompanyId(), expandoBridge.getClassName(),
+				attributeName);
+
+		String fieldName = ExpandoBridgeIndexerUtil.encodeFieldName(
+			attributeName);
+
+		if (expandoColumn.getType() ==
+				ExpandoColumnConstants.STRING_LOCALIZED) {
+
+			fieldName = DocumentImpl.getLocalizedName(
+				searchContext.getLocale(), fieldName);
+		}
+
+		return fieldName;
 	}
 
 	protected Locale getLocale(PortletRequest portletRequest) {

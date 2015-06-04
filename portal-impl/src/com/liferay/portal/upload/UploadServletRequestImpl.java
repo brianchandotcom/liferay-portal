@@ -95,6 +95,8 @@ public class UploadServletRequestImpl
 			List<org.apache.commons.fileupload.FileItem> fileItems =
 				servletFileUpload.parseRequest(liferayServletRequest);
 
+			liferayServletRequest.setFinishedReadingOriginalStream(true);
+
 			for (org.apache.commons.fileupload.FileItem fileItem : fileItems) {
 				LiferayFileItem liferayFileItem = (LiferayFileItem)fileItem;
 

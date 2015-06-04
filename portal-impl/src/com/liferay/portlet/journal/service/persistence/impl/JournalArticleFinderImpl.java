@@ -155,11 +155,11 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public int countByG_U_F_C(
+	public int countByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		return doCountByG_U_F_C(
+		return doCountByG_F_C(
 			groupId, folderIds, classNameId, queryDefinition, false);
 	}
 
@@ -278,11 +278,11 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public int filterCountByG_U_F_C(
+	public int filterCountByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		return doCountByG_U_F_C(
+		return doCountByG_F_C(
 			groupId, folderIds, classNameId, queryDefinition, true);
 	}
 
@@ -411,11 +411,11 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public List<JournalArticle> filterFindByG_U_F_C(
+	public List<JournalArticle> filterFindByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		return doFindByG_U_F_C(
+		return doFindByG_F_C(
 			groupId, folderIds, classNameId, queryDefinition, true);
 	}
 
@@ -716,11 +716,11 @@ public class JournalArticleFinderImpl
 	}
 
 	@Override
-	public List<JournalArticle> findByG_U_F_C(
+	public List<JournalArticle> findByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition) {
 
-		return doFindByG_U_F_C(
+		return doFindByG_F_C(
 			groupId, folderIds, classNameId, queryDefinition, false);
 	}
 
@@ -909,7 +909,7 @@ public class JournalArticleFinderImpl
 		}
 	}
 
-	protected int doCountByG_U_F_C(
+	protected int doCountByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {
@@ -1254,7 +1254,7 @@ public class JournalArticleFinderImpl
 		}
 	}
 
-	protected List<JournalArticle> doFindByG_U_F_C(
+	protected List<JournalArticle> doFindByG_F_C(
 		long groupId, List<Long> folderIds, long classNameId,
 		QueryDefinition<JournalArticle> queryDefinition,
 		boolean inlineSQLHelper) {

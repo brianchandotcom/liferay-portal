@@ -184,7 +184,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			status, userId, true, start, end, (OrderByComparator<Object>)obc);
 
-		return journalFolderFinder.filterFindF_A_ByG_U_F(
+		return journalFolderFinder.filterFindF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 
@@ -235,7 +235,7 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 		QueryDefinition<Object> queryDefinition = new QueryDefinition<>(
 			status, userId, true);
 
-		return journalFolderFinder.filterCountF_A_ByG_U_F(
+		return journalFolderFinder.filterCountF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 

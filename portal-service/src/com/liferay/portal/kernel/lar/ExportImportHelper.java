@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
@@ -187,6 +188,8 @@ public interface ExportImportHelper {
 			PortletRequest portletRequest, long targetGroupId)
 		throws PortalException;
 
+	public ZipWriter getLayoutSetZipWriter(long groupId);
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
 	 *             #getManifestSummary(PortletDataContext)}
@@ -213,6 +216,8 @@ public interface ExportImportHelper {
 			final PortletDataContext portletDataContext,
 			final StagedModelType stagedModelType)
 		throws PortalException;
+
+	public ZipWriter getPortletZipWriter(String portletId);
 
 	public String getSelectedLayoutsJSON(
 		long groupId, boolean privateLayout, String selectedNodes);

@@ -4,15 +4,6 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>1</portlet-name>
-		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.calendar.messaging.CheckBookingsMessageListener</scheduler-event-listener-class>
-			<trigger>
-				<simple>
-					<property-key>calendar.notification.check.interval</property-key>
-					<time-unit>minute</time-unit>
-				</simple>
-			</trigger>
-		</scheduler-entry>
 		<friendly-url-mapper-class>com.liferay.portal.kernel.portlet.DefaultFriendlyURLMapper</friendly-url-mapper-class>
 		<friendly-url-mapping>calendar</friendly-url-mapping>
 		<friendly-url-routes>com/liferay/calendar/calendar-friendly-url-routes.xml</friendly-url-routes>

@@ -14,15 +14,36 @@
 
 package com.liferay.calendar.web.messaging;
 
+import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.calendar.util.PortletPropsValues;
+import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.scheduler.SchedulerEntry;
+import com.liferay.portal.kernel.scheduler.TimeUnit;
+import com.liferay.portal.kernel.scheduler.TriggerType;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  */
-public class CheckBookingsMessageListener extends BaseMessageListener {
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	service = SchedulerEntry.class
+)
+public class CheckBookingsMessageListener
+	extends BaseSchedulerEntryMessageListener {
+
+	@Activate
+	protected void activate() {
+		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
+		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
+		schedulerEntry.setTriggerValue(
+			PortletPropsValues.CALENDAR_NOTIFICATION_CHECK_INTERVAL);
+	}
 
 	@Override
 	protected void doReceive(Message message) throws Exception {

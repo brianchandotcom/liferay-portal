@@ -359,19 +359,80 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-poshi-class-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="poshi.class.name" unset="true" />
+
+			<get-test-simple-class-name />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testSimpleClassName = project.getProperty("test.simple.class.name");
+
+					String poshiClassName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
+
+					project.setProperty("poshi.class.name", poshiClassName);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-poshi-method-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<var name="poshi.method.name" unset="true" />
+
+			<get-test-method-name />
+
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					String testMethodName = project.getProperty("test.method.name");
+
+					String poshiClassName = testMethodName.substring(4);
+
+					project.setProperty("poshi.method.name", poshiClassName);
+				]]>
+			</script>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-poshi-test-name">
+		<sequential>
+			<fail message="Please set the property ${test.class}." unless="test.class" />
+
+			<if>
+				<contains string="${test.class}" substring="#" />
+				<then>
+					<get-poshi-class-name />
+					<get-poshi-method-name />
+
+					<var name="poshi.test.name" value="${poshi.class.name}#${poshi.method.name}" />
+				</then>
+				<else>
+					<get-poshi-class-name />
+
+					<var name="poshi.test.name" value="${poshi.class.name}" />
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-test-class-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
 
 			<var name="test.class.name" unset="true" />
 
-			<get-test-name />
+			<get-poshi-class-name />
 
 			<script classpathref="project.classpath" language="beanshell">
 				<![CDATA[
 					import org.apache.tools.ant.DirectoryScanner;
 
-					String testName = project.getProperty("test.name");
+					String poshiClassName = project.getProperty("poshi.class.name");
 
 					try {
 						DirectoryScanner directoryScanner = new DirectoryScanner();
@@ -383,7 +444,7 @@
 							directoryScanner.setBasedir(project.getBaseDir());
 						}
 
-						directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + testName + ".testcase"});
+						directoryScanner.setIncludes(new String[] {"**/test/functional/**/" + poshiClassName + ".testcase"});
 
 						directoryScanner.scan();
 
@@ -430,26 +491,6 @@
 
 						project.setProperty("test.method.name", testMethodName);
 					}
-				]]>
-			</script>
-		</sequential>
-	</macrodef>
-
-	<macrodef name="get-test-name">
-		<sequential>
-			<fail message="Please set the property ${test.class}." unless="test.class" />
-
-			<var name="test.name" unset="true" />
-
-			<get-test-simple-class-name />
-
-			<script classpathref="project.classpath" language="beanshell">
-				<![CDATA[
-					String testSimpleClassName = project.getProperty("test.simple.class.name");
-
-					String testName = testSimpleClassName.substring(0, testSimpleClassName.length() - 8);
-
-					project.setProperty("test.name", testName);
 				]]>
 			</script>
 		</sequential>
@@ -5344,30 +5385,45 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 
 		<if>
-			<contains string="${test.class}" substring="#" />
+			<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
 			<then>
-				<get-test-method-name />
+				<get-poshi-test-name />
 
-				<get-test-simple-class-name />
-
-				<var name="test.class" unset="true" />
-				<var name="test.methods" unset="true" />
-
-				<ant dir="portal-web" target="test-method">
-					<property name="test.class" value="${test.simple.class.name}" />
-					<property name="test.dir" value="functional-generated" />
-					<property name="test.methods" value="${test.method.name}" />
-				</ant>
+				<gradle-execute failonerror="false" task="runPoshi">
+					<arg value="--build-file=portal-web/build-test.gradle" />
+					<arg value="-PposhiTestName=${poshi.test.name}" />
+					<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
+					<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+				</gradle-execute>
 			</then>
 			<else>
-				<get-test-simple-class-name />
+				<if>
+					<contains string="${test.class}" substring="#" />
+					<then>
+						<get-test-method-name />
 
-				<var name="test.class" unset="true" />
+						<get-test-simple-class-name />
 
-				<ant dir="portal-web" target="test-class" inheritAll="false">
-					<property name="test.class" value="${test.simple.class.name}" />
-					<property name="test.dir" value="functional-generated" />
-				</ant>
+						<var name="test.class" unset="true" />
+						<var name="test.methods" unset="true" />
+
+						<ant dir="portal-web" target="test-method">
+							<property name="test.class" value="${test.simple.class.name}" />
+							<property name="test.dir" value="functional-generated" />
+							<property name="test.methods" value="${test.method.name}" />
+						</ant>
+					</then>
+					<else>
+						<get-test-simple-class-name />
+
+						<var name="test.class" unset="true" />
+
+						<ant dir="portal-web" target="test-class" inheritAll="false">
+							<property name="test.class" value="${test.simple.class.name}" />
+							<property name="test.dir" value="functional-generated" />
+						</ant>
+					</else>
+				</if>
 			</else>
 		</if>
 
@@ -5390,14 +5446,32 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<antelope:replace regex="," replacement="_" />
 				</antelope:stringutil>
 
+				<get-poshi-class-name />
+				<get-poshi-method-name />
+
+				<property name="poshi.runner.results.dir" value="${poshi.class.name}_${poshi.method.name}" />
+
 				<if>
 					<and>
-						<available file="portal-web/test-results/functional/report.html" />
+						<or>
+							<available file="portal-web/test-results/functional/report.html" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+						</or>
 						<equals arg1="${test.selenium.logger.enabled}" arg2="true" />
 					</and>
 					<then>
+						<if>
+							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+							<then>
+								<property name="result.file" value="portal-web/test-results/${poshi.runner.results.dir}/index.html" />
+							</then>
+							<else>
+								<property name="result.file" value="portal-web/test-results/functional/report.html" />
+							</else>
+						</if>
+
 						<copy
-							file="portal-web/test-results/functional/report.html"
+							file="${result.file}"
 							tofile="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/report.html"
 						/>
 					</then>
@@ -5405,14 +5479,29 @@ jdbc.default.password=${database.mysql.password}</echo>
 
 				<if>
 					<and>
-						<available file="portal-web/test-results/functional/screenshots" />
+						<or>
+							<available file="portal-web/test-results/functional/screenshots" />
+							<available file="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+						</or>
 						<equals arg1="${test.save.screenshot}" arg2="true" />
 					</and>
 					<then>
-						<copy todir="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots">
-							<fileset
-								dir="portal-web/test-results/functional/screenshots"
-							/>
+						<if>
+							<equals arg1="${test.poshi.runner.enabled}" arg2="true" />
+							<then>
+								<property name="screenshot.dir" value="portal-web/test-results/${poshi.runner.results.dir}/screenshot" />
+
+								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshot" />
+							</then>
+							<else>
+								<property name="screenshot.dir" value="portal-web/test-results/functional/screenshots" />
+
+								<property name="screenshot.dest.dir"  value="${jenkins.shared.results.dir}/${job.name}/builds/${env.BUILD_NUMBER}/screenshots" />
+							</else>
+						</if>
+
+						<copy todir="${screenshot.dest.dir}">
+							<fileset dir="${screenshot.dir}" erroronmissingdir="false" />
 						</copy>
 					</then>
 				</if>
@@ -5420,7 +5509,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 				<antcall target="build-test-results-xml" />
 
 				<first id="first">
-					<fileset dir="portal-web/test-results/functional/" includes="TEST-com.liferay.portalweb.*.xml,TEST-com.liferay.portalweb2.*.xml" />
+					<fileset dir="portal-web/test-results/" includes="**/TEST-com.liferay.portalweb.*.xml,**/TEST-com.liferay.portalweb2.*.xml,**/TEST-com.liferay.poshi.runner.*.xml" />
 				</first>
 
 				<property name="jenkins.results.xml.file" value="${toString:first}" />

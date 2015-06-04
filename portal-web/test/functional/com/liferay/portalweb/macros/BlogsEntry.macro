@@ -1489,6 +1489,10 @@
 	</command>
 
 	<command name="viewDraft">
+		<var name="key_entryContent" value="${entryContent}" />
+		<var name="key_entrySubtitle" value="${entrySubtitle}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
 		<execute function="AssertTextEquals" locator1="BlogsEntry#DRAFT_ENTRY_STATUS" value1="Draft" />
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
@@ -1499,7 +1503,7 @@
 			</then>
 		</if>
 
-		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryTitle}" />
+		<execute function="AssertTextEquals" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 	</command>
 
 	<command name="viewDraftCP">
@@ -1564,7 +1568,10 @@
 	</command>
 
 	<command name="viewEntryAuthorCP">
-		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_AUTHOR" value1="${entryAuthor}" />
+		<var name="entryAuthorFullName" value="${entryAuthorFullName}" />
+		<var name="key_entryTitle" value="${entryTitle}" />
+
+		<execute function="AssertTextEquals" locator1="Blogs#ENTRY_TABLE_AUTHOR" value1="${entryAuthorFullName}" />
 	</command>
 
 	<command name="viewEntryAuthorPG">

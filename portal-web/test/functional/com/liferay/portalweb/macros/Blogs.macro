@@ -1,6 +1,6 @@
 <definition>
 	<command name="addDraft">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -12,7 +12,7 @@
 	</command>
 
 	<command name="addDraftViaAutoSave">
-		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
 		<execute macro="BlogsEntry#addEntryContent">
 			<var name="entryContent" value="${entryContent}" />
@@ -283,11 +283,7 @@
 	</command>
 
 	<command name="publishDraftCP">
-		<execute macro="BlogsNavigator#gotoDraftCP">
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#gotoEditPG">
+		<execute macro="BlogsNavigator#gotoEditCP">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 

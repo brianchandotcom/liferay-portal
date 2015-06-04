@@ -103,6 +103,14 @@ public class PortletDisplayTemplateUtil {
 					groupId, classNameId);
 	}
 
+	/**
+	 * Returns the display style that's associated with the template key of the
+	 * portlet display template's DDM template.
+	 *
+	 * @param  ddmTemplateKey the template key of the portlet display template's
+	 *         DDM template
+	 * @return the display style stored in the portlet configuration
+	 */
 	public static String getDisplayStyle(String ddmTemplateKey) {
 		return getPortletDisplayTemplate().getDisplayStyle(ddmTemplateKey);
 	}

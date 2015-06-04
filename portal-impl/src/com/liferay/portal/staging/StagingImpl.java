@@ -14,7 +14,6 @@
 
 package com.liferay.portal.staging;
 
-import com.liferay.portal.DuplicateLockException;
 import com.liferay.portal.LARFileException;
 import com.liferay.portal.LARFileSizeException;
 import com.liferay.portal.LARTypeException;
@@ -46,6 +45,7 @@ import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationConstants;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
 import com.liferay.portal.kernel.lock.Lock;
 import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;

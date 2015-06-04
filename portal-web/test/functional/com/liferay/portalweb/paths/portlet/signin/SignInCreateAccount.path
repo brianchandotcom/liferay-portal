@@ -9,12 +9,7 @@
 </thead>
 <tbody>
 <tr>
-	<td>CREATE_ACCOUNT_LINK</td>
-	<td>//div[@class='navigation']//span[contains(.,'Create Account')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>EMAIL_VERIFICATION_CODE</td>
+	<td>EMAIL_VERIFICATION_CODE_FIELD</td>
 	<td>//input[@id='ticketKey']</td>
 	<td></td>
 </tr>
@@ -29,29 +24,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CREATE ACCOUNT-->
-<tr>
-	<td>CREATE_ACCOUNT_FIRST_NAME</td>
-	<td>//input[@id='_58_firstName']</td>
+	<td>CAPTCHA_IMAGE</td>
+	<td>//img[@id='_58_captcha']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CREATE_ACCOUNT_LAST_NAME</td>
-	<td>//input[@id='_58_lastName']</td>
+	<td>CAPTCHA_REFRESH</td>
+	<td>//img[@id='refreshCaptcha']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>CREATE_ACCOUNT_SCREEN_NAME</td>
-	<td>//input[@id='_58_screenName']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>CREATE_ACCOUNT_EMAIL_ADDRESS</td>
-	<td>//input[@id='_58_emailAddress']</td>
+	<td>CREATE_ACCOUNT_POP_UP_WINDOW</td>
+	<td>title=Welcome - Liferay</td>
 	<td></td>
 </tr>
 </tbody>

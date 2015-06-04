@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -153,7 +154,7 @@ public class WikiPageIndexer
 		long[] nodeIds = searchContext.getNodeIds();
 
 		if (ArrayUtil.isNotEmpty(nodeIds)) {
-			BooleanFilter nodesIdBooleanFilter = new BooleanFilter();
+			TermsFilter nodesIdTermsFilter = new TermsFilter(Field.NODE_ID);
 
 			for (long nodeId : nodeIds) {
 				try {
@@ -167,12 +168,12 @@ public class WikiPageIndexer
 					continue;
 				}
 
-				nodesIdBooleanFilter.addTerm(Field.NODE_ID, nodeId);
+				nodesIdTermsFilter.addValue(String.valueOf(nodeId));
 			}
 
-			if (nodesIdBooleanFilter.hasClauses()) {
+			if (!nodesIdTermsFilter.isEmpty()) {
 				contextBooleanFilter.add(
-					nodesIdBooleanFilter, BooleanClauseOccur.MUST);
+					nodesIdTermsFilter, BooleanClauseOccur.MUST);
 			}
 		}
 	}

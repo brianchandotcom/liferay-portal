@@ -28,13 +28,20 @@ import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.social.model.BaseSocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
+import com.liferay.portlet.social.model.SocialActivityInterpreter;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	service = SocialActivityInterpreter.class
+)
 public class CalendarActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	@Override

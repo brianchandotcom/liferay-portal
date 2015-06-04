@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
@@ -37,9 +38,12 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Adam Brandizzi
  */
+@Component(immediate = true, service = Indexer.class)
 public class CalendarIndexer extends BaseIndexer {
 
 	public static final String CLASS_NAME = Calendar.class.getName();

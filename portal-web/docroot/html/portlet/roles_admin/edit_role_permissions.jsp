@@ -43,7 +43,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 %>
 
 <liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsResourceURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/view_resources.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 	<portlet:param name="tabs1" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />
@@ -51,7 +51,7 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 </liferay-portlet:resourceURL>
 
 <liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="editPermissionsURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/view_resources.jsp" />
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 	<portlet:param name="tabs1" value="roles" />
 	<portlet:param name="redirect" value="<%= backURL %>" />

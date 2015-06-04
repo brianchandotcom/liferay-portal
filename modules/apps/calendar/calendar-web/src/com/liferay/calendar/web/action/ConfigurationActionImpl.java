@@ -14,6 +14,8 @@
 
 package com.liferay.calendar.web.action;
 
+import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -26,10 +28,16 @@ import javax.portlet.PortletPreferences;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Lundgren
  * @author Fabio Pezzutto
  */
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	service = ConfigurationAction.class
+)
 public class ConfigurationActionImpl extends DefaultConfigurationAction {
 
 	@Override

@@ -641,7 +641,7 @@ public class DLFileEntryTypeLocalServiceImpl
 			}
 			else {
 				ddmStructure = ddmStructureLocalService.updateStructure(
-					ddmStructure.getStructureId(),
+					userId, ddmStructure.getStructureId(),
 					ddmStructure.getParentStructureId(), nameMap,
 					descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 			}

@@ -403,6 +403,30 @@
 		</execute>
 	</command>
 
+	<command name="viewEntryCP">
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
+	<command name="viewEntryDraftCP">
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDraft">
+			<var name="entryContent" value="${entryContent}" />
+			<var name="entrySubtitle" value="${entrySubtitle}" />
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+	</command>
+
 	<command name="viewNoEntryCP">
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found." />
 	</command>

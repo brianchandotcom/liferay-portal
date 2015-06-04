@@ -792,6 +792,7 @@ public class PoshiRunnerValidation {
 		List<String> possibleAttributeNames = Arrays.asList(
 			"line-number", "message");
 
+		validateHasNoChildElements(element, filePath);
 		validatePossibleAttributeNames(
 			element, possibleAttributeNames, filePath);
 
@@ -998,6 +999,7 @@ public class PoshiRunnerValidation {
 		List<String> attributeNames = Arrays.asList(
 			"line-number", "name", "value");
 
+		validateHasNoChildElements(element, filePath);
 		validatePossibleAttributeNames(element, attributeNames, filePath);
 		validateRequiredAttributeNames(element, attributeNames, filePath);
 

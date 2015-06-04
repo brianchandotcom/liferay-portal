@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `1e1103f`.*
+*This document has been reviewed through commit `991422f`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1518,7 +1518,7 @@ change is used for the blog abstract field.
 
 ---------------------------------------
 
-### Moved the Contact Name Exception Classes to Inner classes of ContactNameException
+### Moved the Contact Name Exception Classes to Inner Classes of ContactNameException
 - **Date:** 2015-May-05
 - **JIRA Ticket:** LPS-55364
 
@@ -1619,7 +1619,7 @@ API from the Document Library, as a part of the portal modularization effort.
 
 ---------------------------------------
 
-### Removed addFileEntry method from DLAppHelperLocalService
+### Removed addFileEntry Method from DLAppHelperLocalService
 - **Date:** 2015-May-20
 - **JIRA Ticket:** LPS-47645
 
@@ -1759,7 +1759,7 @@ Old code:
 New code:
 
     if (mbMessageIndexer instanceof RelatedEntryIndexer) {
-        RelatedEntryIndexer relatedEntryIndexer = 
+        RelatedEntryIndexer relatedEntryIndexer =
             (RelatedEntryIndexer)mbMessageIndexer;
 
         relatedEntryIndexer.addRelatedEntryFields(...);
@@ -1778,7 +1778,7 @@ Old code:
 New code:
 
     if (journalIndexer instanceof DDMStructureIndexer) {
-        DDMStructureIndexer ddmStructureIndexer = 
+        DDMStructureIndexer ddmStructureIndexer =
             (DDMStructureIndexer)journalIndexer;
 
         ddmStructureIndexer.reindexDDMStructures(...);
@@ -1791,7 +1791,6 @@ Old code:
 
     mbMessageIndexer.getQueryString(...);
 
-
 New code:
 
     SearchEngineUtil.getQueryString(...);
@@ -1802,3 +1801,48 @@ The `addRelatedEntryFields` and `reindexDDMStructures` methods were not related
 to core indexing functions. They were functions of specialized indexers.
 
 The `getQueryString` method was an unnecessary convenience method.
+
+---------------------------------------
+
+### Replaced Method getPermissionQuery with getPermissionFilter in SearchPermissionChecker, and getFacetQuery with getFacetBooleanFilter in Indexer
+- **Date:** 2015-Jun-2
+- **JIRA Ticket:** LPS-56064
+
+#### What changed?
+
+Method `SearchPermissionChecker.getPermissionQuery(
+long, long[], long, String, Query, SearchContext)`
+has been replaced by `SearchPermissionChecker.getPermissionBooleanFilter(
+long, long[], long, String, BooleanFilter, SearchContext)`.
+
+Method `Indexer.getFacetQuery(String, SearchContext)` has been replaced by
+`Indexer.getFacetBooleanFilter(String, SearchContext)`.
+
+#### Who is affected?
+
+This affects any code that invokes the affected methods, as well as any code
+that implements the interface methods.
+
+#### How should I update my code?
+
+Any code calling/implementing `SearchPermissionChecker.getPermissionQuery(...)`
+should instead call/implement
+`SearchPermissionChecker.getPermissionBooleanFilter(...)`.
+
+Any code calling/implementing `Indexer.getFacetQuery(...)` should instead
+call/implement `Indexer.getFacetBooleanFilter(...)`.
+
+#### Why was this change made?
+
+Permission constraints placed on search should not affect the score for returned
+search results.  Thus, these constraints should be applied as search filters.
+`SearchPermissionChecker` is also a very deep internal interface within the
+permission system.  Thus, to limit confusion in the logic for maintainability,
+the `SearchPermissionChecker.getPermissionQuery(...)` method was removed as
+opposed to deprecated.
+
+Similarly, constraints applied to facets should not affect the scoring or facet
+counts. Since `Indexer.getFacetQuery(...)` was only utilized by the
+`AssetEntriesFacet`, and used to reduce the impact of changes for
+`SearchPermissionChecker.getPermissionBooleanFilter(...)`, the method was
+removed as opposed to deprecated.

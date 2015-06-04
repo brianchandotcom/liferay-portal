@@ -37,7 +37,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/roles_admin/edit_role" />
+			<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:renderURL>
@@ -79,7 +79,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 
 	<c:if test="<%= !name.equals(RoleConstants.ADMINISTRATOR) && !name.equals(RoleConstants.SITE_OWNER) && !name.equals(RoleConstants.ORGANIZATION_ADMINISTRATOR) && !name.equals(RoleConstants.ORGANIZATION_OWNER) && !name.equals(RoleConstants.OWNER) && !name.equals(RoleConstants.SITE_ADMINISTRATOR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DEFINE_PERMISSIONS) %>">
 		<portlet:renderURL var="editRolePermissionsURL">
-			<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+			<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
@@ -90,7 +90,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 
 	<c:if test="<%= !unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.ASSIGN_MEMBERS) %>">
 		<portlet:renderURL var="assignMembersURL">
-			<portlet:param name="struts_action" value="/roles_admin/edit_role_assignments" />
+			<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_assignments.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:renderURL>
@@ -100,7 +100,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 
 	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/roles_admin/edit_role" />
+			<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role.jsp" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />

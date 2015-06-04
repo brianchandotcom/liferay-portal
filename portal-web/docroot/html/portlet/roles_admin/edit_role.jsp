@@ -43,7 +43,7 @@ String subtype = BeanParamUtil.getString(role, request, "subtype");
 </c:if>
 
 <portlet:actionURL var="editRoleActionURL">
-	<portlet:param name="struts_action" value="/roles_admin/edit_role" />
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role.jsp" />
 	<portlet:param name="backURL" value="<%= backURL %>" />
 </portlet:actionURL>
 

@@ -22,7 +22,7 @@
 	<div class="lfr-permission-navigation" id="<portlet:namespace />permissionNavigationDataContainer">
 		<div id="<portlet:namespace />permissionNavigationData">
 			<liferay-portlet:resourceURL varImpl="viewPermissionsResourceURL">
-				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+				<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
 				<portlet:param name="tabs1" value="roles" />
 				<portlet:param name="backURL" value="<%= backURL %>" />
@@ -36,7 +36,7 @@
 			%>
 
 			<liferay-portlet:renderURL varImpl="viewPermissionsURL">
-				<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+				<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
 				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.VIEW %>" />
 				<portlet:param name="tabs1" value="roles" />
 				<portlet:param name="backURL" value="<%= backURL %>" />

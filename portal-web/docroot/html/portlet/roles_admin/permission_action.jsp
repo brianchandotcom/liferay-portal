@@ -27,7 +27,7 @@ Role role = (Role)objArray[1];
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<portlet:actionURL var="deletePermissionURL">
-		<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+		<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
 		<portlet:param name="<%= Constants.CMD %>" value="delete_permission" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />

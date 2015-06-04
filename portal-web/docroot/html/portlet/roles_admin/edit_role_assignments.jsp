@@ -31,7 +31,7 @@ Role role = RoleServiceUtil.fetchRole(roleId);
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/roles_admin/edit_role_assignments");
+portletURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("tabs3", tabs3);
@@ -59,7 +59,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 </liferay-util:include>
 
 <portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/roles_admin/edit_role_assignments" />
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_assignments.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
@@ -124,7 +124,7 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 <%
 PortletURL assignMembersURL = renderResponse.createRenderURL();
 
-assignMembersURL.setParameter("struts_action", "/roles_admin/edit_role_assignments");
+assignMembersURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", redirect);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 

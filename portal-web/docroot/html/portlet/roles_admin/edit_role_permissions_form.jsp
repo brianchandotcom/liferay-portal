@@ -54,7 +54,7 @@ if (Validator.isNotNull(portletResource)) {
 %>
 
 <portlet:actionURL var="editRolePermissionsURL">
-	<portlet:param name="struts_action" value="/roles_admin/edit_role_permissions" />
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
@@ -186,7 +186,7 @@ if (Validator.isNotNull(portletResource)) {
 <%
 PortletURL definePermissionsURL = liferayPortletResponse.createRenderURL();
 
-definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+definePermissionsURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -196,7 +196,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "define-
 if (Validator.isNotNull(portletResource)) {
 	PortletURL resourceURL = liferayPortletResponse.createRenderURL();
 
-	resourceURL.setParameter("struts_action", "/roles_admin/edit_role");
+	resourceURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
 	resourceURL.setParameter(Constants.CMD, Constants.EDIT);
 	resourceURL.setParameter("tabs1", tabs1);
 	resourceURL.setParameter("portletResource", portletResource);

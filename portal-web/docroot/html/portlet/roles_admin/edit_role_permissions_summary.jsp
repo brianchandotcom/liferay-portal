@@ -27,7 +27,7 @@ Role role = (Role)request.getAttribute("edit_role_permissions.jsp-role");
 
 PortletURL permissionsAllURL = liferayPortletResponse.createRenderURL();
 
-permissionsAllURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+permissionsAllURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
 permissionsAllURL.setParameter(Constants.CMD, Constants.VIEW);
 permissionsAllURL.setParameter("tabs1", "roles");
 permissionsAllURL.setParameter("backURL", backURL);
@@ -167,7 +167,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	ResourceURL editPermissionsResourceURL = liferayPortletResponse.createResourceURL();
 
-	editPermissionsResourceURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+	editPermissionsResourceURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
 	editPermissionsResourceURL.setParameter(Constants.CMD, Constants.EDIT);
 	editPermissionsResourceURL.setParameter("tabs1", "roles");
 	editPermissionsResourceURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -176,7 +176,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	PortletURL editPermissionsURL = liferayPortletResponse.createRenderURL();
 
-	editPermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+	editPermissionsURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
 	editPermissionsURL.setParameter(Constants.CMD, Constants.EDIT);
 	editPermissionsURL.setParameter("tabs1", "roles");
 	editPermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));

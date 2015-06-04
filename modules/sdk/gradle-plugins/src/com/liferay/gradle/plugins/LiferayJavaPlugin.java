@@ -155,7 +155,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, PORTAL_WEB_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures portal-web for compiling themes and CSS files.");
+			"Configures portal-web for compiling CSS files.");
 		configuration.setVisible(false);
 
 		GradleUtil.executeIfEmpty(
@@ -179,7 +179,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void addDependenciesPortalWeb(Project project) {
 		GradleUtil.addDependency(
 			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
-			"portal-web", "default");
+			"portal-web", "default", false);
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {
@@ -484,7 +484,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTaskBuildCssPortalWebFile(buildCssTask);
 		configureTaskBuildCssRootDirs(buildCssTask);
-		configureTaskBuildCssTmpDir(buildCssTask, liferayExtension);
 	}
 
 	protected void configureTaskBuildCssPortalWebFile(
@@ -517,16 +516,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
 
 		buildCssTask.setRootDirs(sourceDirectorySet.getSrcDirs());
-	}
-
-	protected void configureTaskBuildCssTmpDir(
-		BuildCssTask buildCssTask, LiferayExtension liferayExtension) {
-
-		if (buildCssTask.getTmpDir() == null) {
-			File tmpDir = new File(liferayExtension.getTmpDir(), "portal-web");
-
-			buildCssTask.setTmpDir(tmpDir);
-		}
 	}
 
 	protected void configureTaskBuildLang(Project project) {

@@ -40,7 +40,6 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
-import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.internal.streams.SafeStreams;
 
@@ -48,6 +47,10 @@ import org.gradle.process.internal.streams.SafeStreams;
  * @author Andrea Di Giorgi
  */
 public class BuildCssTask extends BasePortalToolsTask {
+
+	public BuildCssTask() {
+		_tmpDir = new File(getTemporaryDir(), "portal-web");
+	}
 
 	@Override
 	public void exec() {
@@ -79,7 +82,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 		if (dir == null) {
 			if (getPortalWebFile() != null) {
-				dir = getTmpDir();
+				dir = _tmpDir;
 			}
 			else {
 				throw new GradleException(
@@ -157,11 +160,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return project.files(_rootDirs);
 	}
 
-	@OutputDirectory
-	public File getTmpDir() {
-		return _tmpDir;
-	}
-
 	@Input
 	public boolean isLegacy() {
 		return _legacy;
@@ -193,10 +191,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 		throw new UnsupportedOperationException();
 	}
 
-	public void setTmpDir(File tmpDir) {
-		_tmpDir = tmpDir;
-	}
-
 	@Override
 	protected void addDependencies() {
 		super.addDependencies();
@@ -220,13 +214,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	protected void copyPortalCommon() {
-		final File tmpDir = getTmpDir();
-
-		File htmlDir = new File(tmpDir, "html");
-
-		if (htmlDir.exists()) {
-			return;
-		}
+		project.delete(_tmpDir);
 
 		Closure<Void> closure = new Closure<Void>(null) {
 
@@ -236,9 +224,9 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 				CopySpec fileTreeCopySpec = copySpec.from(fileTree);
 
-				fileTreeCopySpec.include("html/css/**/*", "html/themes/**/*");
+				fileTreeCopySpec.include("html/css/common/**/*");
 
-				copySpec.into(tmpDir);
+				copySpec.into(_tmpDir);
 			}
 
 		};
@@ -263,6 +251,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 	private File _portalWebDir;
 	private File _portalWebFile;
 	private Object _rootDirs;
-	private File _tmpDir;
+	private final File _tmpDir;
 
 }

@@ -134,10 +134,6 @@ public class LiferayExtension {
 		return _portalVersion;
 	}
 
-	public File getTmpDir() {
-		return _tmpDir;
-	}
-
 	public String getVersionPrefix() {
 		String version = getPortalVersion();
 
@@ -186,10 +182,6 @@ public class LiferayExtension {
 		_portalVersion = portalVersion;
 	}
 
-	public void setTmpDir(File tmpDir) {
-		_tmpDir = tmpDir;
-	}
-
 	protected File getAppServerDir(String dirNameKey) {
 		File appServerDir = getAppServerDir();
 
@@ -234,6 +226,5 @@ public class LiferayExtension {
 	private File _deployDir;
 	private File _liferayHome;
 	private String _portalVersion;
-	private File _tmpDir;
 
 }

@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchPermissionChecker;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -150,15 +151,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 	}
 
 	protected void addRequiredMemberRole(
-			Group group, BooleanFilter permissionBooleanFilter)
+			Group group, TermsFilter groupRolesTermsFilter)
 		throws Exception {
 
 		if (group.isOrganization()) {
 			Role organizationUserRole = RoleLocalServiceUtil.getRole(
 				group.getCompanyId(), RoleConstants.ORGANIZATION_USER);
 
-			permissionBooleanFilter.addTerm(
-				Field.GROUP_ROLE_ID,
+			groupRolesTermsFilter.addValue(
 				group.getGroupId() + StringPool.DASH +
 					organizationUserRole.getRoleId());
 		}
@@ -167,8 +167,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			Role siteMemberRole = RoleLocalServiceUtil.getRole(
 				group.getCompanyId(), RoleConstants.SITE_MEMBER);
 
-			permissionBooleanFilter.addTerm(
-				Field.GROUP_ROLE_ID,
+			groupRolesTermsFilter.addValue(
 				group.getGroupId() + StringPool.DASH +
 					siteMemberRole.getRoleId());
 		}
@@ -324,8 +323,10 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			permissionBooleanFilter.addTerm(Field.USER_ID, userId);
 		}
 
-		BooleanFilter groupsBooleanFilter = new BooleanFilter();
-		BooleanFilter rolesBooleanFilter = new BooleanFilter();
+		TermsFilter groupsTermsFilter = new TermsFilter(Field.GROUP_ID);
+		TermsFilter groupRolesTermsFilter = new TermsFilter(
+			Field.GROUP_ROLE_ID);
+		TermsFilter rolesTermsFilter = new TermsFilter(Field.ROLE_ID);
 
 		for (Role role : roles) {
 			String roleName = role.getName();
@@ -358,8 +359,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 						String.valueOf(group.getGroupId()), role.getRoleId(),
 						ActionKeys.VIEW)) {
 
-					groupsBooleanFilter.addTerm(
-						Field.GROUP_ID, group.getGroupId());
+					groupsTermsFilter.addValue(
+						String.valueOf(group.getGroupId()));
 				}
 
 				if ((role.getType() != RoleConstants.TYPE_REGULAR) &&
@@ -373,8 +374,8 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 						group.getGroupId());
 
 					if (groupRoles.contains(role)) {
-						groupsBooleanFilter.addTerm(
-							Field.GROUP_ID, group.getGroupId());
+						groupsTermsFilter.addValue(
+							String.valueOf(group.getGroupId()));
 					}
 				}
 
@@ -382,8 +383,7 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					!roleName.equals(RoleConstants.SITE_MEMBER) &&
 					(role.getType() == RoleConstants.TYPE_SITE)) {
 
-					rolesBooleanFilter.addTerm(
-						Field.GROUP_ROLE_ID,
+					groupRolesTermsFilter.addValue(
 						group.getGroupId() + StringPool.DASH +
 							role.getRoleId());
 				}
@@ -398,31 +398,34 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 								String.valueOf(groupId), role.getRoleId(),
 								ActionKeys.VIEW)) {
 
-						groupsBooleanFilter.addTerm(Field.GROUP_ID, groupId);
+						groupsTermsFilter.addValue(String.valueOf(groupId));
 					}
 				}
 			}
 
-			rolesBooleanFilter.addTerm(Field.ROLE_ID, role.getRoleId());
+			rolesTermsFilter.addValue(String.valueOf(role.getRoleId()));
 		}
 
 		for (Group group : groups) {
-			addRequiredMemberRole(group, rolesBooleanFilter);
+			addRequiredMemberRole(group, groupRolesTermsFilter);
 		}
 
 		for (UserGroupRole userGroupRole : userGroupRoles) {
-			rolesBooleanFilter.addTerm(
-				Field.GROUP_ROLE_ID,
+			groupRolesTermsFilter.addValue(
 				userGroupRole.getGroupId() + StringPool.DASH +
 					userGroupRole.getRoleId());
 		}
 
-		if (groupsBooleanFilter.hasClauses()) {
-			permissionBooleanFilter.add(groupsBooleanFilter);
+		if (!groupsTermsFilter.isEmpty()) {
+			permissionBooleanFilter.add(groupsTermsFilter);
 		}
 
-		if (rolesBooleanFilter.hasClauses()) {
-			permissionBooleanFilter.add(rolesBooleanFilter);
+		if (!groupRolesTermsFilter.isEmpty()) {
+			permissionBooleanFilter.add(groupRolesTermsFilter);
+		}
+
+		if (!rolesTermsFilter.isEmpty()) {
+			permissionBooleanFilter.add(rolesTermsFilter);
 		}
 
 		if (!permissionBooleanFilter.hasClauses()) {

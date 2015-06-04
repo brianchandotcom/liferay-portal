@@ -306,7 +306,7 @@ public class PoshiRunnerValidation {
 		if (!Validator.equals(elementName, "definition")) {
 			_exceptions.add(
 				new Exception(
-					"Invalid " + elementName + " element\n" + filePath + ":" +
+					"Root element name must be definition\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
 
@@ -486,7 +486,7 @@ public class PoshiRunnerValidation {
 		if (!childElements.isEmpty()) {
 			primaryAttributeNames = Arrays.asList(
 				"function", "macro", "macro-desktop", "macro-mobile",
-				"test-case");
+				"selenium", "test-case");
 
 			validateHasPrimaryAttributeName(
 				element, multiplePrimaryAttributeNames, primaryAttributeNames,
@@ -502,7 +502,7 @@ public class PoshiRunnerValidation {
 					_exceptions.add(
 						new Exception(
 							"Invalid child element\n" + filePath + ":" +
-								element.attributeValue("line-number")));
+								childElement.attributeValue("line-number")));
 				}
 			}
 		}
@@ -552,8 +552,7 @@ public class PoshiRunnerValidation {
 							"Invalid path name " + pathName + "\n" + filePath +
 								":" + element.attributeValue("line-number")));
 				}
-
-				if (!PoshiRunnerContext.isPathLocator(locator)) {
+				else if (!PoshiRunnerContext.isPathLocator(locator)) {
 					_exceptions.add(
 						new Exception(
 							"Invalid path locator " + locator + "\n" +
@@ -602,7 +601,7 @@ public class PoshiRunnerValidation {
 		if (!multiplePrimaryAttributeNames.equals(attributeNames)) {
 			_exceptions.add(
 				new Exception(
-					"Too many attributes: " + "\n" + filePath + ":" +
+					"Too many attributes\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
 	}
@@ -756,8 +755,7 @@ public class PoshiRunnerValidation {
 	protected static void validateMacroFile(Element element, String filePath) {
 		validateDefinitionElement(element, filePath);
 		validateHasChildElements(element, filePath);
-		validateRequiredChildElementNames(
-			element, Arrays.asList("command"), filePath);
+		validateRequiredChildElementName(element, "command", filePath);
 
 		List<Element> childElements = element.elements();
 
@@ -1118,8 +1116,7 @@ public class PoshiRunnerValidation {
 
 		if (Validator.isNull(element.attributeValue("extends"))) {
 			validateHasChildElements(element, filePath);
-			validateRequiredChildElementNames(
-				element, Arrays.asList("command"), filePath);
+			validateRequiredChildElementName(element, "command", filePath);
 		}
 
 		List<String> possibleTagElementNames = Arrays.asList(
@@ -1139,13 +1136,6 @@ public class PoshiRunnerValidation {
 			}
 
 			if (childElementName.equals("command")) {
-				if (Validator.isNull(childElement.attributeValue("name"))) {
-					_exceptions.add(
-						new Exception(
-							"Missing name attribute\n" + filePath + ":" +
-								childElement.attributeValue("line-number")));
-				}
-
 				List<String> possibleAttributeNames = Arrays.asList(
 					"description", "known-issues", "line-number", "name",
 					"priority");
@@ -1228,7 +1218,7 @@ public class PoshiRunnerValidation {
 		if (thenElements.isEmpty()) {
 			_exceptions.add(
 				new Exception(
-					"Missing then elements\n" + filePath + ":" +
+					"Missing then element\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
 		else if (thenElements.size() > 1) {

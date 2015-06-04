@@ -59,6 +59,10 @@ public class TermsFilter extends BaseFilter {
 		return _values.toArray(new String[_values.size()]);
 	}
 
+	public boolean isEmpty() {
+		return _values.isEmpty();
+	}
+
 	public void setExecution(Execution execution) {
 		_execution = execution;
 	}

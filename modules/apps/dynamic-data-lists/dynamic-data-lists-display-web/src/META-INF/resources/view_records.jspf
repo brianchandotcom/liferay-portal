@@ -41,7 +41,7 @@
 		%>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portlet.dynamicdatalists.model.DDLRecord"
+			className="com.liferay.dynamic.data.lists.model.DDLRecord"
 			modelVar="record"
 		>
 

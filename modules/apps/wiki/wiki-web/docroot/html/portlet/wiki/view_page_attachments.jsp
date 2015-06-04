@@ -140,6 +140,8 @@ PortletURL iteratorURL = renderResponse.createRenderURL();
 iteratorURL.setParameter("struts_action", "/wiki/view_page_attachments");
 iteratorURL.setParameter("redirect", currentURL);
 iteratorURL.setParameter("nodeId", String.valueOf(node.getNodeId()));
+iteratorURL.setParameter("nodeName", node.getName());
+iteratorURL.setParameter("title", wikiPage.getTitle());
 iteratorURL.setParameter("viewTrashAttachments", String.valueOf(viewTrashAttachments));
 %>
 

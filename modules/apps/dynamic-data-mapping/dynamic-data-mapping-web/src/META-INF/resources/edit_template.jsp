@@ -28,6 +28,12 @@ String portletResourceNamespace = ParamUtil.getString(request, "portletResourceN
 
 DDMTemplate template = (DDMTemplate)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
+DDMTemplateVersion templateVersion = null;
+
+if (Validator.isNotNull(template)) {
+	templateVersion = template.getTemplateVersion();
+}
+
 long templateId = BeanParamUtil.getLong(template, request, "templateId");
 
 long groupId = BeanParamUtil.getLong(template, request, "groupId", scopeGroupId);
@@ -133,6 +139,10 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 	</c:if>
 
 	<aui:model-context bean="<%= template %>" model="<%= DDMTemplate.class %>" />
+
+	<c:if test="<%= templateVersion != null %>">
+		<aui:workflow-status model="<%= DDMTemplate.class %>" status="<%= templateVersion.getStatus() %>" version="<%= templateVersion.getVersion() %>" />
+	</c:if>
 
 	<aui:fieldset>
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) || windowState.equals(LiferayWindowState.POP_UP) %>" name="name" />

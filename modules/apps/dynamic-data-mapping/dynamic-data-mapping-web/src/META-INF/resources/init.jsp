@@ -92,6 +92,7 @@ page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants"
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.model.DDMTemplateVersion" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureDisplayTerms" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearch" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.search.StructureSearchTerms" %><%@

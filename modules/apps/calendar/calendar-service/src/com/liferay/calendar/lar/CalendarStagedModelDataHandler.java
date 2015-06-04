@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.lar;
 
+import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarLocalServiceUtil;
@@ -22,6 +23,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,10 +38,17 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Andrea Di Giorgi
  * @author Daniel Kocsis
  */
+@Component(
+	immediate = true,
+	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	service = StagedModelDataHandler.class
+)
 public class CalendarStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Calendar> {
 

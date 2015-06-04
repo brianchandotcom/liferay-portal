@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.service;
+package com.liferay.portal.lock.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+import com.liferay.portal.service.BaseLocalService;
+import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
  * Provides the local service interface for Lock. Methods of this
@@ -31,8 +33,8 @@ import com.liferay.portal.kernel.transaction.Transactional;
  *
  * @author Brian Wing Shun Chan
  * @see LockLocalServiceUtil
- * @see com.liferay.portal.service.base.LockLocalServiceBaseImpl
- * @see com.liferay.portal.service.impl.LockLocalServiceImpl
+ * @see com.liferay.portal.lock.service.base.LockLocalServiceBaseImpl
+ * @see com.liferay.portal.lock.service.impl.LockLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -43,7 +45,7 @@ public interface LockLocalService extends BaseLocalService,
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link LockLocalServiceUtil} to access the lock local service. Add custom service methods to {@link com.liferay.portal.service.impl.LockLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link LockLocalServiceUtil} to access the lock local service. Add custom service methods to {@link com.liferay.portal.lock.service.impl.LockLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
@@ -53,8 +55,8 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the lock that was added
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Lock addLock(
-		com.liferay.portal.model.Lock lock);
+	public com.liferay.portal.lock.model.Lock addLock(
+		com.liferay.portal.lock.model.Lock lock);
 
 	public void clear();
 
@@ -64,7 +66,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @param lockId the primary key for the new lock
 	* @return the new lock
 	*/
-	public com.liferay.portal.model.Lock createLock(long lockId);
+	public com.liferay.portal.lock.model.Lock createLock(long lockId);
 
 	/**
 	* Deletes the lock from the database. Also notifies the appropriate model listeners.
@@ -73,8 +75,8 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the lock that was removed
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Lock deleteLock(
-		com.liferay.portal.model.Lock lock);
+	public com.liferay.portal.lock.model.Lock deleteLock(
+		com.liferay.portal.lock.model.Lock lock);
 
 	/**
 	* Deletes the lock with the primary key from the database. Also notifies the appropriate model listeners.
@@ -84,7 +86,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @throws PortalException if a lock with the primary key could not be found
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.portal.model.Lock deleteLock(long lockId)
+	public com.liferay.portal.lock.model.Lock deleteLock(long lockId)
 		throws PortalException;
 
 	/**
@@ -110,7 +112,7 @@ public interface LockLocalService extends BaseLocalService,
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.lock.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -126,7 +128,7 @@ public interface LockLocalService extends BaseLocalService,
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.lock.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -161,7 +163,7 @@ public interface LockLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock fetchLock(long lockId);
+	public com.liferay.portal.lock.model.Lock fetchLock(long lockId);
 
 	/**
 	* Returns the lock with the matching UUID and company.
@@ -171,7 +173,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the matching lock, or <code>null</code> if a matching lock could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock fetchLockByUuidAndCompanyId(
+	public com.liferay.portal.lock.model.Lock fetchLockByUuidAndCompanyId(
 		java.lang.String uuid, long companyId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -185,12 +187,13 @@ public interface LockLocalService extends BaseLocalService,
 	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock getLock(java.lang.String className,
-		long key) throws PortalException;
+	public com.liferay.portal.lock.model.Lock getLock(
+		java.lang.String className, java.lang.String key)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock getLock(java.lang.String className,
-		java.lang.String key) throws PortalException;
+	public com.liferay.portal.lock.model.Lock getLock(
+		java.lang.String className, long key) throws PortalException;
 
 	/**
 	* Returns the lock with the primary key.
@@ -200,7 +203,7 @@ public interface LockLocalService extends BaseLocalService,
 	* @throws PortalException if a lock with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock getLock(long lockId)
+	public com.liferay.portal.lock.model.Lock getLock(long lockId)
 		throws PortalException;
 
 	/**
@@ -212,14 +215,14 @@ public interface LockLocalService extends BaseLocalService,
 	* @throws PortalException if a matching lock could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.Lock getLockByUuidAndCompanyId(
+	public com.liferay.portal.lock.model.Lock getLockByUuidAndCompanyId(
 		java.lang.String uuid, long companyId) throws PortalException;
 
 	/**
 	* Returns a range of all the locks.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.portal.lock.model.impl.LockModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of locks
@@ -227,8 +230,8 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the range of locks
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.portal.model.Lock> getLocks(int start,
-		int end);
+	public java.util.List<com.liferay.portal.lock.model.Lock> getLocks(
+		int start, int end);
 
 	/**
 	* Returns the number of locks.
@@ -258,25 +261,25 @@ public interface LockLocalService extends BaseLocalService,
 
 	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public com.liferay.portal.model.Lock lock(java.lang.String className,
+	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String expectedOwner,
 		java.lang.String updatedOwner);
 
 	@com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
-	public com.liferay.portal.model.Lock lock(java.lang.String className,
+	public com.liferay.portal.lock.model.Lock lock(java.lang.String className,
 		java.lang.String key, java.lang.String owner);
 
-	public com.liferay.portal.model.Lock lock(long userId,
+	public com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, java.lang.String key,
 		java.lang.String owner, boolean inheritable, long expirationTime)
 		throws PortalException;
 
-	public com.liferay.portal.model.Lock lock(long userId,
+	public com.liferay.portal.lock.model.Lock lock(long userId,
 		java.lang.String className, long key, java.lang.String owner,
 		boolean inheritable, long expirationTime) throws PortalException;
 
-	public com.liferay.portal.model.Lock refresh(java.lang.String uuid,
+	public com.liferay.portal.lock.model.Lock refresh(java.lang.String uuid,
 		long companyId, long expirationTime) throws PortalException;
 
 	/**
@@ -302,6 +305,6 @@ public interface LockLocalService extends BaseLocalService,
 	* @return the lock that was updated
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.portal.model.Lock updateLock(
-		com.liferay.portal.model.Lock lock);
+	public com.liferay.portal.lock.model.Lock updateLock(
+		com.liferay.portal.lock.model.Lock lock);
 }

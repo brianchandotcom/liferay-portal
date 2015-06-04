@@ -12,21 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence;
+package com.liferay.portal.lock.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.model.Lock;
+import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.service.ServiceContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the lock service. This utility wraps {@link com.liferay.portal.service.persistence.impl.LockPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the lock service. This utility wraps {@link com.liferay.portal.lock.service.persistence.impl.LockPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,7 +37,7 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see LockPersistence
- * @see com.liferay.portal.service.persistence.impl.LockPersistenceImpl
+ * @see com.liferay.portal.lock.service.persistence.impl.LockPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -156,11 +159,11 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -182,11 +185,11 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -209,11 +212,11 @@ public class LockUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
-	* @throws NoSuchLockException if a lock with the primary key could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByUuid_PrevAndNext(long lockId,
 		java.lang.String uuid, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(lockId, uuid, orderByComparator);
 	}
@@ -294,11 +297,11 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -324,11 +327,11 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByUuid_C_Last(java.lang.String uuid, long companyId,
 		OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -355,12 +358,12 @@ public class LockUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
-	* @throws NoSuchLockException if a lock with the primary key could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByUuid_C_PrevAndNext(long lockId,
 		java.lang.String uuid, long companyId,
 		OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(lockId, uuid, companyId,
 			orderByComparator);
@@ -443,11 +446,11 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByLtExpirationDate_First(
 		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_First(expirationDate,
 			orderByComparator);
@@ -473,11 +476,11 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByLtExpirationDate_Last(
 		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_Last(expirationDate,
 			orderByComparator);
@@ -504,11 +507,11 @@ public class LockUtil {
 	* @param expirationDate the expiration date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next lock
-	* @throws NoSuchLockException if a lock with the primary key could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock[] findByLtExpirationDate_PrevAndNext(long lockId,
 		java.util.Date expirationDate, OrderByComparator<Lock> orderByComparator)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence()
 				   .findByLtExpirationDate_PrevAndNext(lockId, expirationDate,
 			orderByComparator);
@@ -534,15 +537,16 @@ public class LockUtil {
 	}
 
 	/**
-	* Returns the lock where className = &#63; and key = &#63; or throws a {@link NoSuchLockException} if it could not be found.
+	* Returns the lock where className = &#63; and key = &#63; or throws a {@link com.liferay.portal.lock.NoSuchLockException} if it could not be found.
 	*
 	* @param className the class name
 	* @param key the key
 	* @return the matching lock
-	* @throws NoSuchLockException if a matching lock could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a matching lock could not be found
 	*/
 	public static Lock findByC_K(java.lang.String className,
-		java.lang.String key) throws com.liferay.portal.NoSuchLockException {
+		java.lang.String key)
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence().findByC_K(className, key);
 	}
 
@@ -579,7 +583,8 @@ public class LockUtil {
 	* @return the lock that was removed
 	*/
 	public static Lock removeByC_K(java.lang.String className,
-		java.lang.String key) throws com.liferay.portal.NoSuchLockException {
+		java.lang.String key)
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence().removeByC_K(className, key);
 	}
 
@@ -628,10 +633,10 @@ public class LockUtil {
 	*
 	* @param lockId the primary key of the lock
 	* @return the lock that was removed
-	* @throws NoSuchLockException if a lock with the primary key could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock remove(long lockId)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence().remove(lockId);
 	}
 
@@ -640,14 +645,14 @@ public class LockUtil {
 	}
 
 	/**
-	* Returns the lock with the primary key or throws a {@link NoSuchLockException} if it could not be found.
+	* Returns the lock with the primary key or throws a {@link com.liferay.portal.lock.NoSuchLockException} if it could not be found.
 	*
 	* @param lockId the primary key of the lock
 	* @return the lock
-	* @throws NoSuchLockException if a lock with the primary key could not be found
+	* @throws com.liferay.portal.lock.NoSuchLockException if a lock with the primary key could not be found
 	*/
 	public static Lock findByPrimaryKey(long lockId)
-		throws com.liferay.portal.NoSuchLockException {
+		throws com.liferay.portal.lock.exception.NoSuchLockException {
 		return getPersistence().findByPrimaryKey(lockId);
 	}
 
@@ -724,13 +729,7 @@ public class LockUtil {
 	}
 
 	public static LockPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (LockPersistence)PortalBeanLocatorUtil.locate(LockPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(LockUtil.class, "_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -740,5 +739,14 @@ public class LockUtil {
 	public void setPersistence(LockPersistence persistence) {
 	}
 
-	private static LockPersistence _persistence;
+	private static ServiceTracker<LockPersistence, LockPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(LockUtil.class);
+
+		_serviceTracker = new ServiceTracker<LockPersistence, LockPersistence>(bundle.getBundleContext(),
+				LockPersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

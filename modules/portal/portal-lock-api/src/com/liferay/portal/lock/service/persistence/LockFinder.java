@@ -12,24 +12,17 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.lock.service.persistence;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.model.Lock;
+import aQute.bnd.annotation.ProviderType;
 
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
-public class DuplicateLockException extends PortalException {
-
-	public DuplicateLockException(Lock lock) {
-		_lock = lock;
-	}
-
-	public Lock getLock() {
-		return _lock;
-	}
-
-	private final Lock _lock;
-
+@ProviderType
+public interface LockFinder {
+	public com.liferay.portal.lock.model.Lock fetchByC_K(
+		java.lang.String className, java.lang.String key,
+		com.liferay.portal.kernel.dao.orm.LockMode lockMode);
 }

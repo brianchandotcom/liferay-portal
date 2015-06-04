@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence.test;
+package com.liferay.portal.lock.service.persistence.test;
 
-import com.liferay.portal.NoSuchLockException;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -32,10 +33,11 @@ import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.LockLocalServiceUtil;
-import com.liferay.portal.service.persistence.LockPersistence;
-import com.liferay.portal.service.persistence.LockUtil;
+import com.liferay.portal.lock.exception.NoSuchLockException;
+import com.liferay.portal.lock.model.Lock;
+import com.liferay.portal.lock.service.LockLocalServiceUtil;
+import com.liferay.portal.lock.service.persistence.LockPersistence;
+import com.liferay.portal.lock.service.persistence.LockUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
@@ -44,6 +46,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -57,6 +61,7 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class LockPersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),

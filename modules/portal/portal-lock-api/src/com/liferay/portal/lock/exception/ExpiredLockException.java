@@ -12,17 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence;
+package com.liferay.portal.lock.exception;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
- * @generated
  */
-@ProviderType
-public interface LockFinder {
-	public com.liferay.portal.model.Lock fetchByC_K(
-		java.lang.String className, java.lang.String key,
-		com.liferay.portal.kernel.dao.orm.LockMode lockMode);
+public class ExpiredLockException extends PortalException {
+
+	public ExpiredLockException() {
+	}
+
+	public ExpiredLockException(String msg) {
+		super(msg);
+	}
+
+	public ExpiredLockException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public ExpiredLockException(Throwable cause) {
+		super(cause);
+	}
+
 }

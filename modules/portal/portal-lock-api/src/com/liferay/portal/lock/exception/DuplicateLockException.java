@@ -12,28 +12,24 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.lock.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.lock.model.Lock;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class InvalidLockException extends PortalException {
+public class DuplicateLockException extends PortalException {
 
-	public InvalidLockException() {
+	public DuplicateLockException(Lock lock) {
+		_lock = lock;
 	}
 
-	public InvalidLockException(String msg) {
-		super(msg);
+	public Lock getLock() {
+		return _lock;
 	}
 
-	public InvalidLockException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public InvalidLockException(Throwable cause) {
-		super(cause);
-	}
+	private final Lock _lock;
 
 }

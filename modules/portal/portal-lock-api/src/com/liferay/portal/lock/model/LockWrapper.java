@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.lock.model;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelWrapper;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -148,7 +149,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.portal.model.Lock lock) {
+	public int compareTo(com.liferay.portal.lock.model.Lock lock) {
 		return _lock.compareTo(lock);
 	}
 
@@ -388,7 +389,8 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
 		_lock.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -525,12 +527,12 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.model.Lock> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.lock.model.Lock> toCacheModel() {
 		return _lock.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock toEscapedModel() {
+	public com.liferay.portal.lock.model.Lock toEscapedModel() {
 		return new LockWrapper(_lock.toEscapedModel());
 	}
 
@@ -540,7 +542,7 @@ public class LockWrapper implements Lock, ModelWrapper<Lock> {
 	}
 
 	@Override
-	public com.liferay.portal.model.Lock toUnescapedModel() {
+	public com.liferay.portal.lock.model.Lock toUnescapedModel() {
 		return new LockWrapper(_lock.toUnescapedModel());
 	}
 

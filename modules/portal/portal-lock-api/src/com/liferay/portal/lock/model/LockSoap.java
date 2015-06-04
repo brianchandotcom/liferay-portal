@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model;
+package com.liferay.portal.lock.model;
 
 import aQute.bnd.annotation.ProviderType;
 

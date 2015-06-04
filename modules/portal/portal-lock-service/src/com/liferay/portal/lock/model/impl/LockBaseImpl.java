@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.portal.lock.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.lock.model.Lock;
+import com.liferay.portal.lock.service.LockLocalServiceUtil;
 
 /**
  * The extended model base implementation for the Lock service. Represents a row in the &quot;Lock_&quot; database table, with each column mapped to a property of this class.

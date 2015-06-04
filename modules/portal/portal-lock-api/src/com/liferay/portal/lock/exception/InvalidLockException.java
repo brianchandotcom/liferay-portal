@@ -12,25 +12,27 @@
  * details.
  */
 
-package com.liferay.portal;
+package com.liferay.portal.lock.exception;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchLockException extends NoSuchModelException {
+public class InvalidLockException extends PortalException {
 
-	public NoSuchLockException() {
+	public InvalidLockException() {
 	}
 
-	public NoSuchLockException(String msg) {
+	public InvalidLockException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchLockException(String msg, Throwable cause) {
+	public InvalidLockException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchLockException(Throwable cause) {
+	public InvalidLockException(Throwable cause) {
 		super(cause);
 	}
 

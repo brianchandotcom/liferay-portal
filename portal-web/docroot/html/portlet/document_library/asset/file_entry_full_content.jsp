@@ -18,6 +18,7 @@
 
 <%
 boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo");
+request.setAttribute("includeBreadcrumb", Boolean.FALSE);		 
 %>
 
 <c:choose>

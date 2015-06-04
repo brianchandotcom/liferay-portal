@@ -672,5 +672,9 @@ DLViewFileVersionDisplayContext dlViewFileVersionDisplayContext = DLDisplayConte
 </aui:script>
 
 <%
-DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
+boolean includeBreadcrumb = GetterUtil.getBoolean(request.getAttribute("includeBreadcrumb"), Boolean.TRUE);
+
+if(includeBreadcrumb){
+	DLUtil.addPortletBreadcrumbEntries(fileEntry, request, renderResponse);
+}
 %>

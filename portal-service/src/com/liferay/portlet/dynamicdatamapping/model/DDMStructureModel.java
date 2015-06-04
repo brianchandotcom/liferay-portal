@@ -182,6 +182,49 @@ public interface DDMStructureModel extends BaseModel<DDMStructure>,
 	public void setUserName(String userName);
 
 	/**
+	 * Returns the version user ID of this d d m structure.
+	 *
+	 * @return the version user ID of this d d m structure
+	 */
+	public long getVersionUserId();
+
+	/**
+	 * Sets the version user ID of this d d m structure.
+	 *
+	 * @param versionUserId the version user ID of this d d m structure
+	 */
+	public void setVersionUserId(long versionUserId);
+
+	/**
+	 * Returns the version user uuid of this d d m structure.
+	 *
+	 * @return the version user uuid of this d d m structure
+	 */
+	public String getVersionUserUuid();
+
+	/**
+	 * Sets the version user uuid of this d d m structure.
+	 *
+	 * @param versionUserUuid the version user uuid of this d d m structure
+	 */
+	public void setVersionUserUuid(String versionUserUuid);
+
+	/**
+	 * Returns the version user name of this d d m structure.
+	 *
+	 * @return the version user name of this d d m structure
+	 */
+	@AutoEscape
+	public String getVersionUserName();
+
+	/**
+	 * Sets the version user name of this d d m structure.
+	 *
+	 * @param versionUserName the version user name of this d d m structure
+	 */
+	public void setVersionUserName(String versionUserName);
+
+	/**
 	 * Returns the create date of this d d m structure.
 	 *
 	 * @return the create date of this d d m structure

@@ -125,6 +125,7 @@ public class DLFileEntryTypeServiceTest {
 
 		User user = TestPropsValues.getUser();
 
+		serviceContext.setUserId(user.getUserId());
 		serviceContext.setLanguageId(LocaleUtil.toLanguageId(user.getLocale()));
 
 		DLFileEntryType dlFileEntryType =

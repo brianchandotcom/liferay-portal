@@ -20,12 +20,14 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Image;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
@@ -206,6 +208,8 @@ public class DDMTemplateLocalServiceImpl
 		template.setCompanyId(user.getCompanyId());
 		template.setUserId(user.getUserId());
 		template.setUserName(user.getFullName());
+		template.setVersionUserId(user.getUserId());
+		template.setVersionUserName(user.getFullName());
 		template.setClassNameId(classNameId);
 		template.setClassPK(classPK);
 		template.setResourceClassNameId(resourceClassNameId);
@@ -247,7 +251,8 @@ public class DDMTemplateLocalServiceImpl
 
 		// Template version
 
-		addTemplateVersion(template, DDMTemplateConstants.VERSION_DEFAULT);
+		addTemplateVersion(
+			template, DDMTemplateConstants.VERSION_DEFAULT, serviceContext);
 
 		return template;
 	}
@@ -1274,7 +1279,12 @@ public class DDMTemplateLocalServiceImpl
 		String version = getNextVersion(
 			latestTemplateVersion.getVersion(), false);
 
+		User user = userPersistence.findByPrimaryKey(
+			serviceContext.getUserId());
+
 		template.setVersion(version);
+		template.setVersionUserId(user.getUserId());
+		template.setVersionUserName(user.getFullName());
 		template.setNameMap(nameMap);
 		template.setDescriptionMap(descriptionMap);
 		template.setType(type);
@@ -1295,7 +1305,7 @@ public class DDMTemplateLocalServiceImpl
 
 		// Template version
 
-		addTemplateVersion(template, version);
+		addTemplateVersion(template, version, serviceContext);
 
 		return template;
 	}
@@ -1342,7 +1352,11 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected DDMTemplateVersion addTemplateVersion(
-		DDMTemplate template, String version) {
+			DDMTemplate template, String version, ServiceContext serviceContext)
+		throws PortalException {
+
+		User user = userPersistence.findByPrimaryKey(
+			serviceContext.getUserId());
 
 		long templateVersionId = counterLocalService.increment();
 
@@ -1362,6 +1376,15 @@ public class DDMTemplateLocalServiceImpl
 		templateVersion.setDescription(template.getDescription());
 		templateVersion.setLanguage(template.getLanguage());
 		templateVersion.setScript(template.getScript());
+
+		int status = GetterUtil.getInteger(
+			serviceContext.getAttribute("status"),
+			WorkflowConstants.STATUS_DRAFT);
+
+		templateVersion.setStatus(status);
+		templateVersion.setStatusByUserId(user.getUserId());
+		templateVersion.setStatusByUserName(user.getFullName());
+		templateVersion.setStatusDate(template.getModifiedDate());
 
 		ddmTemplateVersionPersistence.update(templateVersion);
 

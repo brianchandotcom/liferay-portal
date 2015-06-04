@@ -66,7 +66,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{structureVersionId=");
 		sb.append(structureVersionId);
@@ -94,6 +94,14 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		sb.append(storageType);
 		sb.append(", type=");
 		sb.append(type);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -160,6 +168,22 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		}
 
 		ddmStructureVersionImpl.setType(type);
+		ddmStructureVersionImpl.setStatus(status);
+		ddmStructureVersionImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			ddmStructureVersionImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			ddmStructureVersionImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			ddmStructureVersionImpl.setStatusDate(null);
+		}
+		else {
+			ddmStructureVersionImpl.setStatusDate(new Date(statusDate));
+		}
 
 		ddmStructureVersionImpl.resetOriginalValues();
 
@@ -181,6 +205,10 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		definition = objectInput.readUTF();
 		storageType = objectInput.readUTF();
 		type = objectInput.readInt();
+		status = objectInput.readInt();
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -237,6 +265,17 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		}
 
 		objectOutput.writeInt(type);
+		objectOutput.writeInt(status);
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long structureVersionId;
@@ -252,4 +291,8 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 	public String definition;
 	public String storageType;
 	public int type;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

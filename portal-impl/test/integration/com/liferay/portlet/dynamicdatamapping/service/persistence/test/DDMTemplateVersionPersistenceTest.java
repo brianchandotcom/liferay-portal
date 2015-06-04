@@ -143,6 +143,14 @@ public class DDMTemplateVersionPersistenceTest {
 
 		newDDMTemplateVersion.setScript(RandomTestUtil.randomString());
 
+		newDDMTemplateVersion.setStatus(RandomTestUtil.nextInt());
+
+		newDDMTemplateVersion.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newDDMTemplateVersion.setStatusByUserName(RandomTestUtil.randomString());
+
+		newDDMTemplateVersion.setStatusDate(RandomTestUtil.nextDate());
+
 		_ddmTemplateVersions.add(_persistence.update(newDDMTemplateVersion));
 
 		DDMTemplateVersion existingDDMTemplateVersion = _persistence.findByPrimaryKey(newDDMTemplateVersion.getPrimaryKey());
@@ -176,6 +184,15 @@ public class DDMTemplateVersionPersistenceTest {
 			newDDMTemplateVersion.getLanguage());
 		Assert.assertEquals(existingDDMTemplateVersion.getScript(),
 			newDDMTemplateVersion.getScript());
+		Assert.assertEquals(existingDDMTemplateVersion.getStatus(),
+			newDDMTemplateVersion.getStatus());
+		Assert.assertEquals(existingDDMTemplateVersion.getStatusByUserId(),
+			newDDMTemplateVersion.getStatusByUserId());
+		Assert.assertEquals(existingDDMTemplateVersion.getStatusByUserName(),
+			newDDMTemplateVersion.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDMTemplateVersion.getStatusDate()),
+			Time.getShortTimestamp(newDDMTemplateVersion.getStatusDate()));
 	}
 
 	@Test
@@ -192,6 +209,14 @@ public class DDMTemplateVersionPersistenceTest {
 		_persistence.countByT_V(0L, StringPool.NULL);
 
 		_persistence.countByT_V(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByT_S() throws Exception {
+		_persistence.countByT_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByT_S(0L, 0);
 	}
 
 	@Test
@@ -222,7 +247,8 @@ public class DDMTemplateVersionPersistenceTest {
 			"userId", true, "userName", true, "createDate", true,
 			"classNameId", true, "classPK", true, "templateId", true,
 			"version", true, "name", true, "description", true, "language",
-			true, "script", true);
+			true, "script", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -469,6 +495,14 @@ public class DDMTemplateVersionPersistenceTest {
 		ddmTemplateVersion.setLanguage(RandomTestUtil.randomString());
 
 		ddmTemplateVersion.setScript(RandomTestUtil.randomString());
+
+		ddmTemplateVersion.setStatus(RandomTestUtil.nextInt());
+
+		ddmTemplateVersion.setStatusByUserId(RandomTestUtil.nextLong());
+
+		ddmTemplateVersion.setStatusByUserName(RandomTestUtil.randomString());
+
+		ddmTemplateVersion.setStatusDate(RandomTestUtil.nextDate());
 
 		_ddmTemplateVersions.add(_persistence.update(ddmTemplateVersion));
 

@@ -65,14 +65,14 @@ public class CompileThemeTask extends DefaultTask {
 
 	@InputDirectory
 	@Optional
-	public File getPortalWebDir() {
-		return _portalWebDir;
+	public File getFrontendCssWebDir() {
+		return _frontendCssWebDir;
 	}
 
 	@InputFile
 	@Optional
-	public File getPortalWebFile() {
-		return _portalWebFile;
+	public File getFrontendCssWebFile() {
+		return _frontendCssWebFile;
 	}
 
 	@OutputDirectories
@@ -135,12 +135,12 @@ public class CompileThemeTask extends DefaultTask {
 		_diffsDir = diffsDir;
 	}
 
-	public void setPortalWebDir(File portalWebDir) {
-		_portalWebDir = portalWebDir;
+	public void setFrontendCssWebDir(File frontendCssWebDir) {
+		_frontendCssWebDir = frontendCssWebDir;
 	}
 
-	public void setPortalWebFile(File portalWebFile) {
-		_portalWebFile = portalWebFile;
+	public void setFrontendCssWebFile(File frontendCssWebFile) {
+		_frontendCssWebFile = frontendCssWebFile;
 	}
 
 	public void setThemeParent(String themeParent) {
@@ -177,15 +177,15 @@ public class CompileThemeTask extends DefaultTask {
 
 		final String prefix = "html/themes/" + theme + "/";
 
-		final File portalWebDir = getPortalWebDir();
-		File portalWebFile = getPortalWebFile();
+		final File frontendCssWebDir = getFrontendCssWebDir();
+		File frontendCssWebFile = getFrontendCssWebFile();
 
-		if (portalWebDir != null) {
+		if (frontendCssWebDir != null) {
 			Closure<Void> closure = new Closure<Void>(null) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
-					copySpec.from(new File(portalWebDir, prefix));
+					copySpec.from(new File(frontendCssWebDir, prefix));
 
 					if (ArrayUtil.isNotEmpty(excludes)) {
 						copySpec.exclude(excludes);
@@ -199,16 +199,18 @@ public class CompileThemeTask extends DefaultTask {
 
 			_project.copy(closure);
 		}
-		else if (portalWebFile != null) {
-			String[] prefixedExcludes = StringUtil.prepend(excludes, prefix);
-			String prefixedInclude = prefix + include;
+		else if (frontendCssWebFile != null) {
+			String jarPrefix = "META-INF/resources/" + prefix;
+
+			String[] prefixedExcludes = StringUtil.prepend(excludes, jarPrefix);
+			String prefixedInclude = jarPrefix + include;
 
 			FileUtil.unzip(
-				_project, portalWebFile, getThemeRootDir(), 3, prefixedExcludes,
-				new String[] {prefixedInclude});
+				_project, frontendCssWebFile, getThemeRootDir(), 5,
+				prefixedExcludes, new String[] {prefixedInclude});
 		}
 		else {
-			throw new GradleException("Unable to find the portal web files");
+			throw new GradleException("Unable to find frontend css web");
 		}
 	}
 
@@ -300,8 +302,8 @@ public class CompileThemeTask extends DefaultTask {
 	};
 
 	private File _diffsDir;
-	private File _portalWebDir;
-	private File _portalWebFile;
+	private File _frontendCssWebDir;
+	private File _frontendCssWebFile;
 	private final Project _project;
 	private String _themeParent;
 	private Project _themeParentProject;

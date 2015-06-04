@@ -22,6 +22,8 @@ String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 DDMTemplate template = (DDMTemplate)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_TEMPLATE);
 
 long templateId = BeanParamUtil.getLong(template, request, "templateId");
+
+DDMTemplateVersion templateVersion = template.getTemplateVersion();
 %>
 
 <portlet:actionURL name="copyTemplate" var="copyTemplateURL">
@@ -33,6 +35,7 @@ long templateId = BeanParamUtil.getLong(template, request, "templateId");
 	<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 	<aui:input name="templateId" type="hidden" value="<%= String.valueOf(templateId) %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
+	<aui:input name="status" type="hidden" value="<%= templateVersion.getStatus() %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 

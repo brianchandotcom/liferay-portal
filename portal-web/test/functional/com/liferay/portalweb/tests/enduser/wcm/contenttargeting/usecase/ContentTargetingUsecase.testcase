@@ -1811,6 +1811,8 @@
 	</command>
 
 	<command name="StagingContentTargeting" priority="5">
+		<property name="ignore.errors" value="IX_DC6100CC" />
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

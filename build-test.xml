@@ -2268,51 +2268,6 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="deploy-required-plugins">
-		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins">
-			<property name="plugin.types" value="portlets" />
-			<property name="plugins.includes" value="marketplace-portlet" />
-		</ant>
-
-		<get-testcase-property property.name="marketplace.staging.enabled" />
-
-		<if>
-			<equals arg1="${marketplace.staging.enabled}" arg2="true" />
-			<then>
-				<path id="marketplace.portlet.war.path">
-					<fileset dir="${app.server.parent.dir}/deploy" erroronmissingdir="false">
-						<include name="marketplace-portlet-*.war" />
-					</fileset>
-				</path>
-
-				<tstamp>
-					<format property="tstamp.value" pattern="yyyyMMddkkmmssSSS" />
-				</tstamp>
-
-				<mkdir dir="${tstamp.value}" />
-
-				<property name="marketplace.portlet.war.path" value="${toString:marketplace.portlet.war.path}" />
-
-				<unzip
-					dest="${tstamp.value}"
-					src="${marketplace.portlet.war.path}"
-				/>
-
-				<echo append="true" file="${tstamp.value}/WEB-INF/classes/portlet.properties">
-
-${marketplace.portlet.properties}</echo>
-
-				<zip
-					basedir="${tstamp.value}"
-					destfile="${marketplace.portlet.war.path}"
-					update="yes"
-				/>
-
-				<delete dir="${tstamp.value}" />
-			</then>
-		</if>
-	</target>
-
 	<target name="deploy-specified-plugins">
 
 		<!--
@@ -5617,8 +5572,6 @@ jdbc.default.password=${database.mysql.password}</echo>
 			</then>
 		</if>
 
-		<antcall target="deploy-required-plugins" />
-
 		<antcall target="deploy-specified-plugins" />
 
 		<antcall target="deploy-extra-apps" />
@@ -5742,9 +5695,7 @@ jdbc.default.password=${database.mysql.password}</echo>
 					<available file="${liferay.home}/logs" type="dir" />
 				</waitfor>
 
-				<antcall target="wait-for-plugins-deployment">
-					<param name="required.plugins.includes" value="marketplace-portlet" />
-				</antcall>
+				<antcall target="wait-for-plugins-deployment" />
 			</then>
 		</if>
 

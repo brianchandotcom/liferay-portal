@@ -69,6 +69,13 @@ public class LayoutsAdminDisplayContext {
 		if (Validator.isNull(tabs1)) {
 			LayoutSet layoutSet = _themeDisplay.getLayoutSet();
 
+			Layout refererLayout = LayoutLocalServiceUtil.getLayout(
+				_themeDisplay.getRefererPlid());
+
+			if (refererLayout != null) {
+				layoutSet = refererLayout.getLayoutSet();
+			}
+
 			Group group = layoutSet.getGroup();
 
 			if (group.isUser()) {
@@ -78,7 +85,9 @@ public class LayoutsAdminDisplayContext {
 				tabs1 = "public-pages";
 			}
 
-			if (!group.isControlPanel() && layoutSet.isPrivateLayout()) {
+			if ((!group.isControlPanel()|| refererLayout!= null) &&
+				layoutSet.isPrivateLayout()) {
+
 				if (group.isUser()) {
 					tabs1 = "my-dashboard";
 				}

@@ -830,7 +830,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portlet-blogs" />
 		<antcall target="build-service-portlet-calendar" />
 		<antcall target="build-service-portlet-documentlibrary" />
-		<antcall target="build-service-portlet-dynamicdatalists" />
 		<antcall target="build-service-portlet-dynamicdatamapping" />
 		<antcall target="build-service-portlet-expando" />
 		<antcall target="build-service-portlet-flags" />
@@ -1020,7 +1019,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-wsdd-portlet-asset" />
 		<antcall target="build-wsdd-portlet-blogs" />
 		<antcall target="build-wsdd-portlet-documentlibrary" />
-		<antcall target="build-wsdd-portlet-dynamicdatalists" />
 		<antcall target="build-wsdd-portlet-dynamicdatamapping" />
 		<antcall target="build-wsdd-portlet-expando" />
 		<antcall target="build-wsdd-portlet-flags" />

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE project>
+
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<property name="import.shared" value="portal-lock-api" />
+	<property name="osgi.ide.dependencies" value="spring-context.jar" />
+	<property name="service.input.file" value="service.xml" />
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/portal" />
+
+	<target name="build-service">
+		<build-service
+			service.api.dir="../portal-lock-api/src"
+			service.auto.namespace.tables="false"
+			service.hbm.file.name="module-hbm.xml"
+			service.spring.file.name="module-spring.xml"
+			service.sql.dir="src/META-INF/sql"
+			service.test.dir="../portal-lock-test/test/integration"
+		/>
+	</target>
+</project>

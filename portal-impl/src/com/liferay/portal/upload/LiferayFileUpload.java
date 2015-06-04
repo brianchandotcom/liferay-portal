@@ -51,7 +51,6 @@ public class LiferayFileUpload extends ServletFileUpload {
 	public List<FileItem> parseRequest(HttpServletRequest request)
 		throws FileUploadException {
 
-		_session.removeAttribute(LiferayFileUpload.FILE_NAME);
 		_session.removeAttribute(LiferayFileUpload.PERCENT);
 
 		return super.parseRequest(request);

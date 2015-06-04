@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.backgroundtask;
 
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.BackgroundTask;
@@ -107,6 +108,18 @@ public abstract class BaseBackgroundTaskDisplay
 
 	protected BackgroundTaskStatus getBackgroundTaskStatus() {
 		return _backgroundTaskStatus;
+	}
+
+	protected long getBackgroundTaskStatusAttributeLong(String attributeKey) {
+		return GetterUtil.getLong(
+			_backgroundTaskStatus.getAttribute(attributeKey));
+	}
+
+	protected String getBackgroundTaskStatusAttributeString(
+		String attributeKey) {
+
+		return GetterUtil.getString(
+			_backgroundTaskStatus.getAttribute(attributeKey));
 	}
 
 	protected static final int _MAX_PERCENTAGE = 100;

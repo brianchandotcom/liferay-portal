@@ -90,6 +90,9 @@ boolean hasDistributionScope = false;
 						continue;
 					}
 				}
+				else if (!RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+					continue;
+				}
 
 				if (RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;

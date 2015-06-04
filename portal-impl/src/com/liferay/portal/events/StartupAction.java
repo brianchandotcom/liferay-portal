@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.cluster.ClusterMasterExecutor;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.executor.PortalExecutorManager;
-import com.liferay.portal.kernel.lock.LockManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBus;
@@ -118,22 +117,6 @@ public class StartupAction extends SimpleAction {
 		}
 
 		DBUpgrader.upgrade();
-
-		// Clear locks
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Clear locks");
-		}
-
-		try {
-			LockManagerUtil.clear();
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Unable to clear locks because Lock table does not exist");
-			}
-		}
 
 		// Ehache bootstrap
 

@@ -12,10 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lock;
+package com.liferay.portal.lock.internal;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.service.LockLocalServiceUtil;
+import com.liferay.portal.kernel.lock.DuplicateLockException;
+import com.liferay.portal.kernel.lock.ExpiredLockException;
+import com.liferay.portal.kernel.lock.InvalidLockException;
+import com.liferay.portal.kernel.lock.Lock;
+import com.liferay.portal.kernel.lock.LockManager;
+import com.liferay.portal.kernel.lock.NoSuchLockException;
+import com.liferay.portal.lock.service.LockLocalService;
+import com.liferay.portal.lock.service.configuration.configurator.LockServiceConfigurator;
 
 import java.util.Date;
 import java.util.Map;
@@ -23,6 +30,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tina Tian
@@ -32,14 +40,14 @@ public class LockManagerImpl implements LockManager {
 
 	@Override
 	public void clear() {
-		LockLocalServiceUtil.clear();
+		_lockLocalService.clear();
 	}
 
 	@Override
 	public Lock createLock(
 		long lockId, long companyId, long userId, String userName) {
 
-		com.liferay.portal.model.Lock lock = LockLocalServiceUtil.createLock(
+		com.liferay.portal.lock.model.Lock lock = _lockLocalService.createLock(
 			lockId);
 
 		lock.setCompanyId(companyId);
@@ -53,7 +61,7 @@ public class LockManagerImpl implements LockManager {
 	@Override
 	public Lock getLock(String className, long key) throws PortalException {
 		try {
-			return new LockImpl(LockLocalServiceUtil.getLock(className, key));
+			return new LockImpl(_lockLocalService.getLock(className, key));
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -63,7 +71,7 @@ public class LockManagerImpl implements LockManager {
 	@Override
 	public Lock getLock(String className, String key) throws PortalException {
 		try {
-			return new LockImpl(LockLocalServiceUtil.getLock(className, key));
+			return new LockImpl(_lockLocalService.getLock(className, key));
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -76,8 +84,7 @@ public class LockManagerImpl implements LockManager {
 
 		try {
 			return new LockImpl(
-				LockLocalServiceUtil.getLockByUuidAndCompanyId(
-					uuid, companyId));
+				_lockLocalService.getLockByUuidAndCompanyId(uuid, companyId));
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -86,22 +93,22 @@ public class LockManagerImpl implements LockManager {
 
 	@Override
 	public boolean hasLock(long userId, String className, long key) {
-		return LockLocalServiceUtil.hasLock(userId, className, key);
+		return _lockLocalService.hasLock(userId, className, key);
 	}
 
 	@Override
 	public boolean hasLock(long userId, String className, String key) {
-		return LockLocalServiceUtil.hasLock(userId, className, key);
+		return _lockLocalService.hasLock(userId, className, key);
 	}
 
 	@Override
 	public boolean isLocked(String className, long key) {
-		return LockLocalServiceUtil.isLocked(className, key);
+		return _lockLocalService.isLocked(className, key);
 	}
 
 	@Override
 	public boolean isLocked(String className, String key) {
-		return LockLocalServiceUtil.isLocked(className, key);
+		return _lockLocalService.isLocked(className, key);
 	}
 
 	@Override
@@ -112,7 +119,7 @@ public class LockManagerImpl implements LockManager {
 
 		try {
 			return new LockImpl(
-				LockLocalServiceUtil.lock(
+				_lockLocalService.lock(
 					userId, className, key, owner, inheritable,
 					expirationTime));
 		}
@@ -129,7 +136,7 @@ public class LockManagerImpl implements LockManager {
 
 		try {
 			return new LockImpl(
-				LockLocalServiceUtil.lock(
+				_lockLocalService.lock(
 					userId, className, key, owner, inheritable,
 					expirationTime));
 		}
@@ -140,7 +147,7 @@ public class LockManagerImpl implements LockManager {
 
 	@Override
 	public Lock lock(String className, String key, String owner) {
-		return new LockImpl(LockLocalServiceUtil.lock(className, key, owner));
+		return new LockImpl(_lockLocalService.lock(className, key, owner));
 	}
 
 	@Override
@@ -149,7 +156,7 @@ public class LockManagerImpl implements LockManager {
 		String updatedOwner) {
 
 		return new LockImpl(
-			LockLocalServiceUtil.lock(
+			_lockLocalService.lock(
 				className, key, expectedOwner, updatedOwner));
 	}
 
@@ -159,7 +166,7 @@ public class LockManagerImpl implements LockManager {
 
 		try {
 			return new LockImpl(
-				LockLocalServiceUtil.refresh(uuid, companyId, expirationTime));
+				_lockLocalService.refresh(uuid, companyId, expirationTime));
 		}
 		catch (PortalException pe) {
 			throw translate(pe);
@@ -168,31 +175,43 @@ public class LockManagerImpl implements LockManager {
 
 	@Override
 	public void unlock(String className, long key) {
-		LockLocalServiceUtil.unlock(className, key);
+		_lockLocalService.unlock(className, key);
 	}
 
 	@Override
 	public void unlock(String className, String key) {
-		LockLocalServiceUtil.unlock(className, key);
+		_lockLocalService.unlock(className, key);
 	}
 
 	@Override
 	public void unlock(String className, String key, String owner) {
-		LockLocalServiceUtil.unlock(className, key, owner);
+		_lockLocalService.unlock(className, key, owner);
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		LockLocalServiceUtil.clear();
+		clear();
+	}
+
+	@Reference(unbind = "-")
+	protected void setLockLocalService(LockLocalService lockLocalService) {
+		_lockLocalService = lockLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setLockServiceConfigurator(
+		LockServiceConfigurator lockServiceConfigurator) {
 	}
 
 	protected PortalException translate(PortalException portalException) {
 		if (portalException instanceof
-				com.liferay.portal.DuplicateLockException) {
+				com.liferay.portal.lock.exception.DuplicateLockException) {
 
-			com.liferay.portal.DuplicateLockException duplicateLockException =
-				(com.liferay.portal.DuplicateLockException)portalException;
+			com.liferay.portal.lock.exception.DuplicateLockException
+				duplicateLockException =
+					(com.liferay.portal.lock.exception.DuplicateLockException)
+						portalException;
 
 			return new DuplicateLockException(
 				new LockImpl(duplicateLockException.getLock()));
@@ -202,7 +221,7 @@ public class LockManagerImpl implements LockManager {
 		String message = portalException.getMessage();
 
 		if (portalException instanceof
-				com.liferay.portal.ExpiredLockException) {
+				com.liferay.portal.lock.exception.ExpiredLockException) {
 
 			if (cause == null) {
 				return new ExpiredLockException(message);
@@ -211,7 +230,7 @@ public class LockManagerImpl implements LockManager {
 			return new ExpiredLockException(message, cause);
 		}
 		else if (portalException instanceof
-					com.liferay.portal.InvalidLockException) {
+					com.liferay.portal.lock.exception.InvalidLockException) {
 
 			if (cause == null) {
 				return new InvalidLockException(message);
@@ -220,7 +239,7 @@ public class LockManagerImpl implements LockManager {
 			return new InvalidLockException(message, cause);
 		}
 		else if (portalException instanceof
-					com.liferay.portal.NoSuchLockException) {
+					com.liferay.portal.lock.exception.NoSuchLockException) {
 
 			if (cause == null) {
 				return new NoSuchLockException(message);
@@ -231,5 +250,7 @@ public class LockManagerImpl implements LockManager {
 
 		return portalException;
 	}
+
+	private volatile LockLocalService _lockLocalService;
 
 }

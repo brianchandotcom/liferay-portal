@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lock;
+package com.liferay.portal.lock.internal;
+
+import com.liferay.portal.kernel.lock.Lock;
 
 import java.util.Date;
 
@@ -21,7 +23,7 @@ import java.util.Date;
  */
 public class LockImpl implements Lock {
 
-	public LockImpl(com.liferay.portal.model.Lock lock) {
+	public LockImpl(com.liferay.portal.lock.model.Lock lock) {
 		_lock = lock;
 	}
 
@@ -140,6 +142,6 @@ public class LockImpl implements Lock {
 		return _lock.isNew();
 	}
 
-	private final com.liferay.portal.model.Lock _lock;
+	private final com.liferay.portal.lock.model.Lock _lock;
 
 }

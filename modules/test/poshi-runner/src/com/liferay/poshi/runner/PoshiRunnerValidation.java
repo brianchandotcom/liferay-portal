@@ -252,6 +252,10 @@ public class PoshiRunnerValidation {
 			String primaryAttributeName = _getPrimaryAttributeName(
 				element, primaryAttributeNames, filePath);
 
+			if (Validator.isNull(primaryAttributeName)) {
+				return;
+			}
+
 			if (primaryAttributeName.equals("function")) {
 				_validateRequiredAttributeNames(
 					element, Arrays.asList("locator1"), filePath);
@@ -424,6 +428,10 @@ public class PoshiRunnerValidation {
 			element, multiplePrimaryAttributeNames, primaryAttributeNames,
 			filePath);
 
+		if (primaryAttributeName == null) {
+			return;
+		}
+
 		if (primaryAttributeName.equals("function")) {
 			List<String> possibleAttributeNames = Arrays.asList(
 				"function", "line-number", "locator1", "locator2", "value1",
@@ -474,6 +482,8 @@ public class PoshiRunnerValidation {
 
 			_validatePossibleAttributeNames(
 				element, possibleAttributeNames, filePath);
+
+			_validateTestCaseContext(element, filePath);
 		}
 
 		List<Element> childElements = element.elements();
@@ -1082,6 +1092,26 @@ public class PoshiRunnerValidation {
 		_parseElements(element, filePath);
 	}
 
+	private static void _validateTestCaseContext(
+		Element element, String filePath) {
+
+		String testName = element.attributeValue("test-case");
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
+
+		String commandName =
+			PoshiRunnerGetterUtil.getCommandNameFromClassCommandName(testName);
+
+		if (className.equals("super")) {
+			className = PoshiRunnerGetterUtil.getExtendedTestCaseName(filePath);
+		}
+
+		_validateTestName(
+			className + "#" + commandName,
+			filePath + ":" + element.attributeValue("line-number"));
+	}
+
 	private static void _validateTestCaseFile(
 		Element element, String filePath) {
 
@@ -1147,15 +1177,22 @@ public class PoshiRunnerValidation {
 	}
 
 	private static void _validateTestName(String testName) {
+		_validateTestName(testName, "");
+	}
+
+	private static void _validateTestName(
+		String testName, String errorLocation) {
+
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
 
 		if (!PoshiRunnerContext.isRootElement("test-case#" + className)) {
 			_exceptions.add(
-				new Exception("Invalid test case class " + className));
+				new Exception(
+					"Invalid test case class " + className + "\n" +
+						errorLocation));
 		}
-
-		if (testName.contains("#")) {
+		else if (testName.contains("#")) {
 			String commandElementKey = "test-case#" + testName;
 
 			if (!PoshiRunnerContext.isCommandElement(commandElementKey)) {
@@ -1164,7 +1201,9 @@ public class PoshiRunnerValidation {
 						testName);
 
 				_exceptions.add(
-					new Exception("Invalid test case command " + commandName));
+					new Exception(
+						"Invalid test case command " + commandName +
+							errorLocation));
 			}
 		}
 	}

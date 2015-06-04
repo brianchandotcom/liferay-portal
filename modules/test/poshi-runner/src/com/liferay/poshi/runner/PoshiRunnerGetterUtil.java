@@ -112,6 +112,17 @@ public class PoshiRunnerGetterUtil {
 		return classCommandName.substring(x + 1);
 	}
 
+	public static String getExtendedTestCaseName(Element rootElement) {
+		return rootElement.attributeValue("extends");
+	}
+
+	public static String getExtendedTestCaseName(String filePath) {
+		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+			getClassNameFromFilePath(filePath));
+
+		return getExtendedTestCaseName(rootElement);
+	}
+
 	public static String getFileExtensionFromClassType(String classType) {
 		String fileExtension = classType;
 

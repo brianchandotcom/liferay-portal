@@ -456,7 +456,6 @@ public class UploadServletRequestImpl
 		}
 
 		parameterNames.addAll(_regularParameters.keySet());
-		parameterNames.addAll(_fileParameters.keySet());
 
 		return Collections.enumeration(parameterNames);
 	}

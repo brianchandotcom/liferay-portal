@@ -105,7 +105,8 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 		excludeBooleanFilter.addRequiredTerm(
 			Field.ENTRY_CLASS_NAME, JournalArticle.class.getName());
-		excludeBooleanFilter.addRequiredTerm("head", false);
+
+		excludeBooleanFilter.addMissing("head");
 
 		return excludeBooleanFilter;
 	}

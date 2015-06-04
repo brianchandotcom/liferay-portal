@@ -216,7 +216,7 @@ public class JournalArticleIndexer
 			searchContext.getAttribute("relatedClassName"));
 
 		if (head && !relatedClassName) {
-			contextBooleanFilter.addRequiredTerm("head", Boolean.TRUE);
+			contextBooleanFilter.addExists("head");
 		}
 	}
 
@@ -476,7 +476,10 @@ public class JournalArticleIndexer
 		document.addKeyword("ddmStructureKey", article.getDDMStructureKey());
 		document.addKeyword("ddmTemplateKey", article.getDDMTemplateKey());
 		document.addDate("displayDate", article.getDisplayDate());
-		document.addKeyword("head", isHead(article));
+
+		if (isHead(article)) {
+			document.addKeyword("head", true);
+		}
 
 		addDDMStructureAttributes(document, article);
 

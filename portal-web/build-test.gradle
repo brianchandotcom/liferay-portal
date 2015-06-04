@@ -24,7 +24,7 @@ apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
 	baseDir = file("test/functional")
-	version = "1.0.3"
-	poshiProperty "test.case.available.property.names", testCaseAvailablePropertyNames
 	poshiProperty "selenium.logger.enabled", seleniumLoggerEnabled
+	poshiProperty "test.case.available.property.names", testCaseAvailablePropertyNames
+	version = "1.0.3"
 }

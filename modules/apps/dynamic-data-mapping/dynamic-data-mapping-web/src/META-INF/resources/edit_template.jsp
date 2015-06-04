@@ -143,6 +143,38 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 	<c:if test="<%= templateVersion != null %>">
 		<aui:workflow-status model="<%= DDMTemplate.class %>" status="<%= templateVersion.getStatus() %>" version="<%= templateVersion.getVersion() %>" />
+
+		<div class="template-history-toolbar" id="<portlet:namespace />templateHistoryToolbar"></div>
+
+		<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
+			var toolbarChildren = [
+				<portlet:renderURL var="viewHistoryURL">
+					<portlet:param name="mvcPath" value="/view_template_history.jsp" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
+					<portlet:param name="templateId" value="<%= String.valueOf(template.getTemplateId()) %>" />
+				</portlet:renderURL>
+
+				{
+					icon: 'icon-time',
+					label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
+					on: {
+						click: function(event) {
+							event.domEvent.preventDefault();
+
+							window.location.href = '<%= viewHistoryURL %>';
+						}
+					}
+				}
+			];
+
+			new A.Toolbar(
+				{
+					boundingBox: '#<portlet:namespace />templateHistoryToolbar',
+					children: toolbarChildren
+				}
+			).render();
+		</aui:script>
+
 	</c:if>
 
 	<aui:fieldset>

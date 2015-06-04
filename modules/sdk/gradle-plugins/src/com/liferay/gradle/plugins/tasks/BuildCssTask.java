@@ -149,7 +149,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 		return _portalWebFile;
 	}
 
-	@InputFiles
 	public FileCollection getRootDirs() {
 		if (_rootDirs == null) {
 			return project.files();

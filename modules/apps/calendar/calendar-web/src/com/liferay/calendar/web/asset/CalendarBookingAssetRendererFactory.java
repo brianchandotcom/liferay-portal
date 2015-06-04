@@ -30,14 +30,22 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.model.BaseAssetRendererFactory;
 
 import javax.portlet.PortletURL;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Fabio Pezzutto
  * @author Eduardo Lundgren
  */
+@Component(
+	immediate = true,
+	property = {"search.asset.type=com.liferay.calendar.model.CalendarBooking"},
+	service = AssetRendererFactory.class
+)
 public class CalendarBookingAssetRendererFactory
 	extends BaseAssetRendererFactory {
 

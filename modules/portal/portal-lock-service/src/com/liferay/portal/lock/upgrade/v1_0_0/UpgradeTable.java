@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.portal.lock.upgrade.v1_0_0;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.upgrade.v7_0_0.util.LockTable;
+import com.liferay.portal.lock.upgrade.v1_0_0.util.LockTable;
 
 import java.sql.SQLException;
 
 /**
- * @author Dustin Ryerson
+ * @author Miguel Pastor
  */
-public class UpgradeLock extends UpgradeProcess {
+public class UpgradeTable extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {

@@ -699,7 +699,7 @@ public class PoshiRunnerValidation {
 				else {
 					_exceptions.add(
 						new Exception(
-							"Missing if condition element\n" +
+							"Missing or invalid if condition element\n" +
 								filePath + ":" +
 								element.attributeValue("line-number")));
 				}
@@ -1231,6 +1231,7 @@ public class PoshiRunnerValidation {
 	private static void _validateWhileElement(
 		Element element, String filePath) {
 
+		_validateHasChildElements(element, filePath);
 		_validatePossibleAttributeNames(
 			element, Arrays.asList("line-number", "max-iterations"), filePath);
 		_validateThenElement(element, filePath);
@@ -1245,8 +1246,17 @@ public class PoshiRunnerValidation {
 
 			String childElementName = childElement.getName();
 
-			if (conditionTags.contains(childElementName) && (i == 0)) {
-				_validateConditionElement(childElement, filePath);
+			if (i == 0) {
+				if (conditionTags.contains(childElementName)) {
+					_validateConditionElement(childElement, filePath);
+				}
+				else {
+					_exceptions.add(
+						new Exception(
+							"Missing while condition element\n" +
+								filePath + ":" +
+								element.attributeValue("line-number")));
+				}
 			}
 			else if (childElementName.equals("then")) {
 				_validateHasChildElements(childElement, filePath);

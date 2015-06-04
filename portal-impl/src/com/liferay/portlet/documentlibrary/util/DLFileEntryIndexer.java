@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
@@ -144,7 +145,11 @@ public class DLFileEntryIndexer
 			DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
-			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
+
+			if (dlFileEntry.isInHiddenFolder()) {
+				document.addKeyword(Field.HIDDEN, true);
+			}
+
 			document.addKeyword(
 				Field.TREE_PATH,
 				StringUtil.split(dlFileEntry.getTreePath(), CharPool.SLASH));
@@ -206,8 +211,12 @@ public class DLFileEntryIndexer
 			addRelatedClassNames(contextBooleanFilter, searchContext);
 		}
 
-		contextBooleanFilter.addRequiredTerm(
-			Field.HIDDEN, searchContext.isIncludeAttachments());
+		if (searchContext.isIncludeAttachments()) {
+			contextBooleanFilter.addExists(Field.HIDDEN);
+		}
+		else {
+			contextBooleanFilter.addMissing(Field.HIDDEN);
+		}
 
 		addSearchClassTypeIds(contextBooleanFilter, searchContext);
 
@@ -254,17 +263,16 @@ public class DLFileEntryIndexer
 		String[] mimeTypes = (String[])searchContext.getAttribute("mimeTypes");
 
 		if (ArrayUtil.isNotEmpty(mimeTypes)) {
-			BooleanFilter mimeTypesBooleanFilter = new BooleanFilter();
+			TermsFilter mimeTypesTermsFilter = new TermsFilter("mimeType");
 
 			for (String mimeType : mimeTypes) {
-				mimeTypesBooleanFilter.addTerm(
-					"mimeType",
+				mimeTypesTermsFilter.addValues(
 					StringUtil.replace(
 						mimeType, CharPool.FORWARD_SLASH, CharPool.UNDERLINE));
 			}
 
 			contextBooleanFilter.add(
-				mimeTypesBooleanFilter, BooleanClauseOccur.MUST);
+				mimeTypesTermsFilter, BooleanClauseOccur.MUST);
 		}
 	}
 
@@ -431,7 +439,11 @@ public class DLFileEntryIndexer
 				Field.CLASS_TYPE_ID, dlFileEntry.getFileEntryTypeId());
 			document.addText(Field.DESCRIPTION, dlFileEntry.getDescription());
 			document.addKeyword(Field.FOLDER_ID, dlFileEntry.getFolderId());
-			document.addKeyword(Field.HIDDEN, dlFileEntry.isInHiddenFolder());
+
+			if (dlFileEntry.isInHiddenFolder()) {
+				document.addKeyword(Field.HIDDEN, true);
+			}
+
 			document.addText(
 				Field.PROPERTIES, dlFileEntry.getLuceneProperties());
 			document.addText(Field.TITLE, dlFileEntry.getTitle());

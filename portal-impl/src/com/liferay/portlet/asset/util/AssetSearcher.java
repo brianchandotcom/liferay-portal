@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -100,8 +102,6 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
-
 		for (long allCategoryId : filteredAllCategoryIds) {
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.fetchAssetCategory(allCategoryId);
@@ -122,19 +122,16 @@ public class AssetSearcher extends BaseSearcher {
 				categoryIds.add(allCategoryId);
 			}
 
-			BooleanFilter categoryIdBooleanFilter = new BooleanFilter();
+			TermsFilter categoryIdTermsFilter = new TermsFilter(
+				Field.ASSET_CATEGORY_IDS);
 
-			for (long categoryId : categoryIds) {
-				categoryIdBooleanFilter.addTerm(
-					Field.ASSET_CATEGORY_IDS, categoryId);
-			}
+			categoryIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(
+					categoryIds.toArray(new Long[categoryIds.size()])));
 
-			categoryIdsBooleanFilter.add(
-				categoryIdBooleanFilter, BooleanClauseOccur.MUST);
+			queryBooleanFilter.add(
+				categoryIdTermsFilter, BooleanClauseOccur.MUST);
 		}
-
-		queryBooleanFilter.add(
-			categoryIdsBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void addSearchAllTags(BooleanFilter queryBooleanFilter)
@@ -148,8 +145,6 @@ public class AssetSearcher extends BaseSearcher {
 		if (allTagIdsArray.length == 0) {
 			return;
 		}
-
-		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
 
 		for (long[] allTagIds : allTagIdsArray) {
 			if (allTagIds.length == 0) {
@@ -165,18 +160,13 @@ public class AssetSearcher extends BaseSearcher {
 				return;
 			}
 
-			BooleanFilter tagIdsBooleanFilter = new BooleanFilter();
+			TermsFilter tagIdsTermsFilter = new TermsFilter(
+				Field.ASSET_TAG_IDS);
 
-			for (long tagId : allTagIds) {
-				tagIdsBooleanFilter.addTerm(Field.ASSET_TAG_IDS, tagId);
-			}
+			tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(allTagIds));
 
-			tagIdsArrayBooleanFilter.add(
-				tagIdsBooleanFilter, BooleanClauseOccur.MUST);
+			queryBooleanFilter.add(tagIdsTermsFilter, BooleanClauseOccur.MUST);
 		}
-
-		queryBooleanFilter.add(
-			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void addSearchAnyCategories(BooleanFilter queryBooleanFilter)
@@ -200,7 +190,8 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
+		TermsFilter categoryIdsTermsFilter = new TermsFilter(
+			Field.ASSET_CATEGORY_IDS);
 
 		for (long anyCategoryId : filteredAnyCategoryIds) {
 			AssetCategory assetCategory =
@@ -222,14 +213,12 @@ public class AssetSearcher extends BaseSearcher {
 				categoryIds.add(anyCategoryId);
 			}
 
-			for (long categoryId : categoryIds) {
-				categoryIdsBooleanFilter.addTerm(
-					Field.ASSET_CATEGORY_IDS, categoryId);
-			}
+			categoryIdsTermsFilter.addValues(
+				ArrayUtil.toStringArray(
+					categoryIds.toArray(new Long[categoryIds.size()])));
 		}
 
-		queryBooleanFilter.add(
-			categoryIdsBooleanFilter, BooleanClauseOccur.MUST);
+		queryBooleanFilter.add(categoryIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void addSearchAnyTags(BooleanFilter queryBooleanFilter)
@@ -253,13 +242,11 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter tagIdsBooleanFilter = new BooleanFilter();
+		TermsFilter tagIdsTermsFilter = new TermsFilter(Field.ASSET_TAG_IDS);
 
-		for (long tagId : anyTagIds) {
-			tagIdsBooleanFilter.addTerm(Field.ASSET_TAG_IDS, tagId);
-		}
+		tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(anyTagIds));
 
-		queryBooleanFilter.add(tagIdsBooleanFilter, BooleanClauseOccur.MUST);
+		queryBooleanFilter.add(tagIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	@Override
@@ -330,8 +317,6 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
-
 		for (long notAllCategoryId : notAllCategoryIds) {
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.fetchAssetCategory(
@@ -353,19 +338,16 @@ public class AssetSearcher extends BaseSearcher {
 				categoryIds.add(notAllCategoryId);
 			}
 
-			BooleanFilter categoryIdBooleanFilter = new BooleanFilter();
+			TermsFilter categoryIdTermsFilter = new TermsFilter(
+				Field.ASSET_CATEGORY_IDS);
 
-			for (long categoryId : categoryIds) {
-				categoryIdBooleanFilter.addTerm(
-					Field.ASSET_CATEGORY_IDS, categoryId);
-			}
+			categoryIdTermsFilter.addValues(
+				ArrayUtil.toStringArray(
+					categoryIds.toArray(new Long[categoryIds.size()])));
 
-			categoryIdsBooleanFilter.add(
-				categoryIdBooleanFilter, BooleanClauseOccur.MUST);
+			queryBooleanFilter.add(
+				categoryIdTermsFilter, BooleanClauseOccur.MUST_NOT);
 		}
-
-		queryBooleanFilter.add(
-			categoryIdsBooleanFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
 	protected void addSearchNotAllTags(BooleanFilter queryBooleanFilter)
@@ -377,25 +359,19 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter tagIdsArrayBooleanFilter = new BooleanFilter();
-
 		for (long[] notAllTagIds : notAllTagIdsArray) {
 			if (notAllTagIds.length == 0) {
 				continue;
 			}
 
-			BooleanFilter tagIdsBooleanFilter = new BooleanFilter();
+			TermsFilter tagIdsTermsFilter = new TermsFilter(
+				Field.ASSET_TAG_IDS);
 
-			for (long tagId : notAllTagIds) {
-				tagIdsBooleanFilter.addTerm(Field.ASSET_TAG_IDS, tagId);
-			}
+			tagIdsTermsFilter.addValues(ArrayUtil.toStringArray(notAllTagIds));
 
-			tagIdsArrayBooleanFilter.add(
-				tagIdsBooleanFilter, BooleanClauseOccur.MUST);
+			queryBooleanFilter.add(
+				tagIdsTermsFilter, BooleanClauseOccur.MUST_NOT);
 		}
-
-		queryBooleanFilter.add(
-			tagIdsArrayBooleanFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
 	protected void addSearchNotAnyCategories(BooleanFilter queryBooleanFilter)
@@ -407,7 +383,8 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter categoryIdsBooleanFilter = new BooleanFilter();
+		TermsFilter categoryIdsTermsFilter = new TermsFilter(
+			Field.ASSET_CATEGORY_IDS);
 
 		for (long notAnyCategoryId : notAnyCategoryIds) {
 			AssetCategory assetCategory =
@@ -430,14 +407,13 @@ public class AssetSearcher extends BaseSearcher {
 				categoryIds.add(notAnyCategoryId);
 			}
 
-			for (long categoryId : categoryIds) {
-				categoryIdsBooleanFilter.addTerm(
-					Field.ASSET_CATEGORY_IDS, categoryId);
-			}
+			categoryIdsTermsFilter.addValues(
+				ArrayUtil.toStringArray(
+					categoryIds.toArray(new Long[categoryIds.size()])));
 		}
 
 		queryBooleanFilter.add(
-			categoryIdsBooleanFilter, BooleanClauseOccur.MUST_NOT);
+			categoryIdsTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
 	protected void addSearchNotAnyTags(BooleanFilter queryBooleanFilter)
@@ -449,14 +425,11 @@ public class AssetSearcher extends BaseSearcher {
 			return;
 		}
 
-		BooleanFilter tagIgsBooleanFilter = new BooleanFilter();
+		TermsFilter tagIgsTermsFilter = new TermsFilter(Field.ASSET_TAG_IDS);
 
-		for (long tagId : _assetEntryQuery.getNotAnyTagIds()) {
-			tagIgsBooleanFilter.addTerm(Field.ASSET_TAG_IDS, tagId);
-		}
+		tagIgsTermsFilter.addValues(ArrayUtil.toStringArray(notAnyTagIds));
 
-		queryBooleanFilter.add(
-			tagIgsBooleanFilter, BooleanClauseOccur.MUST_NOT);
+		queryBooleanFilter.add(tagIgsTermsFilter, BooleanClauseOccur.MUST_NOT);
 	}
 
 	@Override

@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -66,38 +65,34 @@ public class ExportImportBackgroundTaskDisplay
 			return;
 		}
 
-		long allModelAdditionCountersTotal = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute(
+		long allModelAdditionCountersTotal =
+			getBackgroundTaskStatusAttributeLong(
 				StagingBackgroundTaskConstants.
-					ALL_MODEL_ADDITION_COUNTERS_TOTAL));
-		long allPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute(
-				StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER));
+					ALL_MODEL_ADDITION_COUNTERS_TOTAL);
+		long allPortletAdditionCounter = getBackgroundTaskStatusAttributeLong(
+			StagingBackgroundTaskConstants.ALL_PORTLET_ADDITION_COUNTER);
 
 		_allProgressBarCountersTotal =
 			allModelAdditionCountersTotal + allPortletAdditionCounter;
 
-		long currentModelAdditionCountersTotal = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute(
+		long currentModelAdditionCountersTotal =
+			getBackgroundTaskStatusAttributeLong(
 				StagingBackgroundTaskConstants.
-					CURRENT_MODEL_ADDITION_COUNTERS_TOTAL));
-		long currentPortletAdditionCounter = GetterUtil.getLong(
-			backgroundTaskStatus.getAttribute(
+					CURRENT_MODEL_ADDITION_COUNTERS_TOTAL);
+		long currentPortletAdditionCounter =
+			getBackgroundTaskStatusAttributeLong(
 				StagingBackgroundTaskConstants.
-					CURRENT_PORTLET_ADDITION_COUNTER));
+					CURRENT_PORTLET_ADDITION_COUNTER);
 
 		_currentProgressBarCountersTotal =
 			currentModelAdditionCountersTotal + currentPortletAdditionCounter;
 
-		_phase = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute(
-				StagingBackgroundTaskConstants.PHASE));
-		_stagedModelName = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute(
-				StagingBackgroundTaskConstants.STAGED_MODEL_NAME));
-		_stagedModelType = GetterUtil.getString(
-			backgroundTaskStatus.getAttribute(
-				StagingBackgroundTaskConstants.STAGED_MODEL_TYPE));
+		_phase = getBackgroundTaskStatusAttributeString(
+			StagingBackgroundTaskConstants.PHASE);
+		_stagedModelName = getBackgroundTaskStatusAttributeString(
+			StagingBackgroundTaskConstants.STAGED_MODEL_NAME);
+		_stagedModelType = getBackgroundTaskStatusAttributeString(
+			StagingBackgroundTaskConstants.STAGED_MODEL_TYPE);
 	}
 
 	@Override

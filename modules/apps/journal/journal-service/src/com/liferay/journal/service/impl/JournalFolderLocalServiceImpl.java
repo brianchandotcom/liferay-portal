@@ -363,7 +363,7 @@ public class JournalFolderLocalServiceImpl
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
-		return journalFolderFinder.findF_A_ByG_U_F(
+		return journalFolderFinder.findF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 
@@ -373,7 +373,7 @@ public class JournalFolderLocalServiceImpl
 
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(status);
 
-		return journalFolderFinder.findF_A_ByG_U_F(
+		return journalFolderFinder.findF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 
@@ -386,7 +386,7 @@ public class JournalFolderLocalServiceImpl
 			WorkflowConstants.STATUS_ANY, start, end,
 			(OrderByComparator<Object>)obc);
 
-		return journalFolderFinder.findF_A_ByG_U_F(
+		return journalFolderFinder.findF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 
@@ -422,7 +422,7 @@ public class JournalFolderLocalServiceImpl
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
 
-		return journalFolderFinder.countF_A_ByG_U_F(
+		return journalFolderFinder.countF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 
@@ -433,7 +433,7 @@ public class JournalFolderLocalServiceImpl
 		QueryDefinition<?> queryDefinition = new QueryDefinition<>(
 			status, 0, false);
 
-		return journalFolderFinder.countF_A_ByG_U_F(
+		return journalFolderFinder.countF_A_ByG_F(
 			groupId, folderId, queryDefinition);
 	}
 

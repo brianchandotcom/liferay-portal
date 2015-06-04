@@ -1049,7 +1049,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, userId, includeOwner, start, end, orderByComparator);
 
-		return journalArticleFinder.filterFindByG_U_F_C(
+		return journalArticleFinder.filterFindByG_F_C(
 			groupId, folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			queryDefinition);
 	}
@@ -1216,7 +1216,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			status, userId, includeOwner);
 
-		return journalArticleFinder.filterCountByG_U_F_C(
+		return journalArticleFinder.filterCountByG_F_C(
 			groupId, folderIds, JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			queryDefinition);
 	}

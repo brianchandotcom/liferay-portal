@@ -136,7 +136,7 @@ public class PoshiRunnerValidation {
 			"description", "echo", "execute", "fail", "for", "if", "property",
 			"take-screenshot", "task", "var", "while");
 
-		if (filePath.endsWith(".function")) {
+		if (Validator.isNotNull(filePath) && filePath.endsWith(".function")) {
 			possibleElementNames = Arrays.asList("execute", "if");
 		}
 

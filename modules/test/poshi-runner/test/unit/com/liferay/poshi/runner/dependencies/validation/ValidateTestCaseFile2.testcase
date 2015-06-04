@@ -1,0 +1,16 @@
+<definition component-name="test">
+	<property name="testray.main.component.name" value="Tools" />
+	<execute function="Open" locator1="//here" />
+
+	<set-up>
+		<execute macro="ValidateTestCaseFile#validateTestCaseFile" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="ValidateTestCaseFile#validateTestCaseFile" />
+	</tear-down>
+
+	<command name="testCaseFile">
+		<execute macro="ValidateTestCaseFile#validateTestCaseFile" />
+	</command>
+</definition>

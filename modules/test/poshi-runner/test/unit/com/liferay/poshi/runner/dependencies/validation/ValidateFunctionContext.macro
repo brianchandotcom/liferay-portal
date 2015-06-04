@@ -1,0 +1,15 @@
+<definition>
+	<command name="validateFunctionContextFail1">
+		<execute function="Click" locator1="ClickAt#HERE" value1="test" />
+	</command>
+
+	<command name="validateFunctionContextFail2">
+		<execute function="Click" locator1="Click#CLICK_THERE" value1="test" />
+	</command>
+
+	<command name="validateFunctionContextPass">
+		<execute function="Click" locator1="//pass here" value1="test" />
+
+		<execute function="Click" locator1="Click#CLICK_HERE" value1="test" />
+	</command>
+</definition>

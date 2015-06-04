@@ -112,6 +112,10 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String includeFileName = content.substring(x + 1, y);
 
+			if (!includeFileName.startsWith(StringPool.SLASH)) {
+				includeFileName = StringPool.SLASH + includeFileName;
+			}
+
 			Matcher matcher = _jspIncludeFilePattern.matcher(includeFileName);
 
 			if (!matcher.find()) {
@@ -172,7 +176,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				}
 
 				if (content.contains(
-						"<%@ include file=\"" + fileName.substring(x))) {
+						"<%@ include file=\"" + fileName.substring(x)) ||
+					content.contains(
+						"<%@ include file=\"" + fileName.substring(x + 1))) {
 
 					_includeFileNames.add(referenceFileName);
 

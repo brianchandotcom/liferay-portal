@@ -4,11 +4,6 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>1</portlet-name>
-		<portlet-data-handler-class>com.liferay.calendar.lar.CalendarPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.calendar.lar.CalendarBookingStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.calendar.lar.CalendarNotificationTemplateStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.calendar.lar.CalendarResourceStagedModelDataHandler</staged-model-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.calendar.lar.CalendarStagedModelDataHandler</staged-model-data-handler-class>
 		<social-activity-interpreter-class>com.liferay.calendar.social.CalendarActivityInterpreter</social-activity-interpreter-class>
 		<asset-renderer-factory>com.liferay.calendar.asset.CalendarBookingAssetRendererFactory</asset-renderer-factory>
 		<custom-attributes-display>com.liferay.calendar.CalendarCustomAttributesDisplay</custom-attributes-display>

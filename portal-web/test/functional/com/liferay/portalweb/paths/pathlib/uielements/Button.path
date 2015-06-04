@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CUSTOM_FIELD</td>
+	<td>//button[contains(.,'Add Custom Field')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ADD_ENTRY</td>
 	<td>//button[contains(.,'Add Entry')]</td>
 	<td></td>

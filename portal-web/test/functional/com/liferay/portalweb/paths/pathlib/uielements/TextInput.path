@@ -149,6 +149,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>KEY</td>
+	<td>//div[label[contains(.,'Key')]]//input[@type='text']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>LAST_NAME</td>
 	<td>//div[label[contains(.,'Last Name')]]/input[@type='text']</td>
 	<td></td>

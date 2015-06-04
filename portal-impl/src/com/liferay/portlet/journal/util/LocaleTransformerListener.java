@@ -152,7 +152,7 @@ public class LocaleTransformerListener extends BaseTransformerListener {
 			if (ddmStructure == null) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Not checking localization because ynamic data " +
+						"Not checking localization because dynamic data " +
 							"mapping structure is not available");
 				}
 

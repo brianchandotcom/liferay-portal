@@ -105,6 +105,7 @@ page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureServiceU
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMStructureVersionServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.service.DDMTemplateVersionServiceUtil" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMStructurePermission" %><%@
 page import="com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission" %><%@
@@ -185,3 +186,45 @@ else if (scopeTemplateType.equals(DDMTemplateConstants.TEMPLATE_TYPE_FORM)) {
 %>
 
 <%@ include file="/init-ext.jsp" %>
+
+<%!
+public void _addFormTemplateFieldAttributes(DDMStructure structure, JSONArray jsonArray) throws Exception {
+	for (int i = 0; i < jsonArray.length(); i++) {
+		JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+		String fieldName = jsonObject.getString("name");
+
+		try {
+			jsonObject.put("readOnlyAttributes", _getFieldReadOnlyAttributes(structure, fieldName));
+			jsonObject.put("unique", true);
+		}
+		catch (StructureFieldException sfe) {
+		}
+	}
+}
+
+public JSONArray _getFieldReadOnlyAttributes(DDMStructure structure, String fieldName) throws Exception {
+	JSONArray readOnlyAttributesJSONArray = JSONFactoryUtil.createJSONArray();
+
+	readOnlyAttributesJSONArray.put("indexType");
+	readOnlyAttributesJSONArray.put("name");
+	readOnlyAttributesJSONArray.put("options");
+	readOnlyAttributesJSONArray.put("repeatable");
+
+	boolean required = structure.getFieldRequired(fieldName);
+
+	if (required) {
+		readOnlyAttributesJSONArray.put("required");
+	}
+
+	return readOnlyAttributesJSONArray;
+}
+
+public JSONArray _getFormTemplateFieldsJSONArray(DDMStructure structure, String script) throws Exception {
+	JSONArray jsonArray = DDMUtil.getDDMFormFieldsJSONArray(structure, script);
+
+	_addFormTemplateFieldAttributes(structure, jsonArray);
+
+	return jsonArray;
+}
+%>

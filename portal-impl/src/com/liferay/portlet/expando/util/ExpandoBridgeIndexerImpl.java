@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -163,6 +164,19 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 				document.addKeyword(fieldName, new long[0]);
 			}
 		}
+		else if (type == ExpandoColumnConstants.NUMBER) {
+			document.addKeyword(fieldName, expandoValue.getNumber().toString());
+		}
+		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
+			if (!defaultValue) {
+				document.addKeyword(
+					fieldName,
+					ArrayUtil.toStringArray(expandoValue.getNumberArray()));
+			}
+			else {
+				document.addKeyword(fieldName, new long[0]);
+			}
+		}
 		else if (type == ExpandoColumnConstants.SHORT) {
 			document.addKeyword(fieldName, expandoValue.getShort());
 		}
@@ -201,6 +215,18 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 				}
 				else {
 					document.addText(fieldName, StringPool.BLANK);
+				}
+			}
+		}
+		else if (type == ExpandoColumnConstants.STRING_LOCALIZED) {
+			if (!defaultValue) {
+				if (indexType == ExpandoColumnConstants.INDEX_TYPE_KEYWORD) {
+					document.addLocalizedKeyword(
+						fieldName, expandoValue.getStringMap());
+				}
+				else {
+					document.addLocalizedText(
+						fieldName, expandoValue.getStringMap());
 				}
 			}
 		}

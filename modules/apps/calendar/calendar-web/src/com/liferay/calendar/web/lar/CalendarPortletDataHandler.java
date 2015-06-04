@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.web.lar;
 
+import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarNotificationTemplate;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
@@ -46,10 +48,16 @@ import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Marcellus Tavares
  * @author Andrea Di Giorgi
  */
+@Component(
+	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	service = PortletDataHandler.class
+)
 public class CalendarPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "calendar";

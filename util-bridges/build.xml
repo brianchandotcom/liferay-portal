@@ -23,14 +23,14 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jar-marco">
+	<macrodef name="jar-macro">
 		<sequential>
-			<jar-marco-cmd>
+			<jar-macro-cmd>
 				<jar-post>
 					<copy file="${jar.file}.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 					<copy file="${project.dir}/lib/portal/portals-bridges.jar" todir="${portal-impl.classes.dir}/com/liferay/portal/deploy/dependencies" preservelastmodified="true" />
 				</jar-post>
-			</jar-marco-cmd>
+			</jar-macro-cmd>
 		</sequential>
 	</macrodef>
 </project>

@@ -130,7 +130,7 @@
 					</uptodate>
 				</not>
 				<then>
-					<jar-marco />
+					<jar-macro />
 
 					<copy if:true="@{copy.jar}" file="@{jar.file}.jar" todir="@{deploy.dir}" preservelastmodified="true" />
 
@@ -140,13 +140,13 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jar-marco">
+	<macrodef name="jar-macro">
 		<sequential>
-			<jar-marco-cmd />
+			<jar-macro-cmd />
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jar-marco-cmd">
+	<macrodef name="jar-macro-cmd">
 		<element name="jar-post" optional="true" />
 		<element name="jar-pre" optional="true" />
 
@@ -234,7 +234,7 @@
 	</target>
 
 	<target name="jar">
-		<jar-marco />
+		<jar-macro />
 	</target>
 
 	<target name="jar-javadoc" depends="javadoc">

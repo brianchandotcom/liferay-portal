@@ -114,9 +114,9 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="jar-marco">
+	<macrodef name="jar-macro">
 		<sequential>
-			<jar-marco-cmd>
+			<jar-macro-cmd>
 				<jar-pre>
 					<ant dir="../util-bridges" target="jar" inheritAll="false" />
 					<ant dir="../util-java" target="jar" inheritAll="false" />
@@ -152,7 +152,7 @@
 						</sequential>
 					</for>
 				</jar-pre>
-			</jar-marco-cmd>
+			</jar-macro-cmd>
 		</sequential>
 	</macrodef>
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.indexer;
 
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarResource;

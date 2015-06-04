@@ -31,7 +31,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 /**
  * @author Brian Myunghun Kim
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class LiferayFileUpload extends ServletFileUpload {
 
 	public static final String FILE_NAME =

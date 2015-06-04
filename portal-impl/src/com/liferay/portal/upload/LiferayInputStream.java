@@ -142,7 +142,7 @@ public class LiferayInputStream extends ServletInputStreamAdapter {
 		}
 
 		ProgressTracker progressTracker =
-			(ProgressTracker)_session.getAttribute(LiferayFileUpload.PERCENT);
+			(ProgressTracker)_session.getAttribute(ProgressTracker.PERCENT);
 
 		Integer curPercent = null;
 

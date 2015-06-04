@@ -36,6 +36,13 @@ public class DelegatingBackgroundTaskExecutor
 	}
 
 	@Override
+	public BackgroundTaskDisplay getBackgroundTaskDisplay(
+		BackgroundTask backgroundTask) {
+
+		return _backgroundTaskExecutor.getBackgroundTaskDisplay(backgroundTask);
+	}
+
+	@Override
 	public BackgroundTaskStatusMessageTranslator
 		getBackgroundTaskStatusMessageTranslator() {
 

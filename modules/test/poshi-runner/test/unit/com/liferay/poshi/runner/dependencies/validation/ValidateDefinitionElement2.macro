@@ -1,0 +1,5 @@
+<html>
+	<command name="validateDefinitionElementFail">
+		<execute function="Click" locator1="//right here" value1="value" />
+	</command>
+</html>

@@ -1,3 +1,23 @@
 <definition>
-	<command name="test" />
+	<command name="test">
+		<if>
+			<and>
+				<isset var="year" />
+				<isset var="month" />
+			</and>
+			<then>
+				<execute function="Click" locator1="//right here" value1="value" />
+			</then>
+		</if>
+	</command>
+
+	<command name="test2">
+		<execute macro="Macro2#test" />
+
+		<execute function="Click" locator1="//right here" value1="value" />
+	</command>
+
+	<command name="test3" summ="summary is spelled incorrectly">
+		<command name="test" />
+	</command>
 </definition>

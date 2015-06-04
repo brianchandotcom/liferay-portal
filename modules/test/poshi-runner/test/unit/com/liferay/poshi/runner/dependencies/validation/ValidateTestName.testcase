@@ -1,0 +1,5 @@
+<definition component-name="test">
+	<command name="testName">
+		<execute macro="Validation#validateTestNamePass" />
+	</command>
+</definition>

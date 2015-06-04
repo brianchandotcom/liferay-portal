@@ -6109,6 +6109,13 @@ ${ant-gc-log}</echo>
 		<ant dir="modules" target="test-unit" inheritAll="false" />
 	</target>
 
+	<target name="validate-poshi">
+		<gradle-execute failonerror="false" task="validatePoshi">
+			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+		</gradle-execute>
+	</target>
+
 	<target name="wait-for-plugins-deployment">
 		<fail message="Please set the property ${test.class}." unless="test.class" />
 

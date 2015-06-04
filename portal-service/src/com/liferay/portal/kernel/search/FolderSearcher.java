@@ -15,6 +15,8 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,14 +65,13 @@ public class FolderSearcher extends BaseSearcher {
 
 		long[] folderIds = searchContext.getFolderIds();
 
-		BooleanFilter entryClassPKBooleanFilter = new BooleanFilter();
+		TermsFilter entryClassPKTermsFilter = new TermsFilter(
+			Field.ENTRY_CLASS_PK);
 
-		for (long folderId : folderIds) {
-			entryClassPKBooleanFilter.addTerm(Field.ENTRY_CLASS_PK, folderId);
-		}
+		entryClassPKTermsFilter.addValues(ArrayUtil.toStringArray(folderIds));
 
 		fullQueryBooleanFilter.add(
-			entryClassPKBooleanFilter, BooleanClauseOccur.MUST);
+			entryClassPKTermsFilter, BooleanClauseOccur.MUST);
 
 		return super.createFullQuery(fullQueryBooleanFilter, searchContext);
 	}

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -128,8 +129,9 @@ public class ScopeFacet extends MultiValueFacet {
 			facetBooleanFilter.addRequiredTerm(Field.USER_ID, ownerUserId);
 		}
 
-		BooleanFilter groupIdsBooleanFilter = new BooleanFilter();
-		BooleanFilter scopeGroupIdsBooleanFilter = new BooleanFilter();
+		TermsFilter groupIdsTermsFilter = new TermsFilter(Field.GROUP_ID);
+		TermsFilter scopeGroupIdsTermsFilter = new TermsFilter(
+			Field.SCOPE_GROUP_ID);
 
 		for (int i = 0; i < groupIds.length; i ++) {
 			long groupId = groupIds[i];
@@ -151,13 +153,12 @@ public class ScopeFacet extends MultiValueFacet {
 					parentGroupId = group.getParentGroupId();
 				}
 
-				groupIdsBooleanFilter.addTerm(Field.GROUP_ID, parentGroupId);
+				groupIdsTermsFilter.addValue(String.valueOf(parentGroupId));
 
 				groupIds[i] = parentGroupId;
 
 				if (group.isLayout() || searchContext.isScopeStrict()) {
-					scopeGroupIdsBooleanFilter.addTerm(
-						Field.SCOPE_GROUP_ID, groupId);
+					scopeGroupIdsTermsFilter.addValue(String.valueOf(groupId));
 				}
 			}
 			catch (Exception e) {
@@ -169,14 +170,14 @@ public class ScopeFacet extends MultiValueFacet {
 
 		searchContext.setGroupIds(groupIds);
 
-		if (groupIdsBooleanFilter.hasClauses()) {
+		if (!groupIdsTermsFilter.isEmpty()) {
 			facetBooleanFilter.add(
-				groupIdsBooleanFilter, BooleanClauseOccur.MUST);
+				groupIdsTermsFilter, BooleanClauseOccur.MUST);
 		}
 
-		if (scopeGroupIdsBooleanFilter.hasClauses()) {
+		if (!scopeGroupIdsTermsFilter.isEmpty()) {
 			facetBooleanFilter.add(
-				scopeGroupIdsBooleanFilter, BooleanClauseOccur.MUST);
+				scopeGroupIdsTermsFilter, BooleanClauseOccur.MUST);
 		}
 
 		return BooleanClauseFactoryUtil.createFilter(

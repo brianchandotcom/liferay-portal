@@ -167,6 +167,6 @@ public class MicroblogsEntryAssetRenderer extends BaseAssetRenderer {
 		}
 	}
 
-	private MicroblogsEntry _entry;
+	private final MicroblogsEntry _entry;
 
 }

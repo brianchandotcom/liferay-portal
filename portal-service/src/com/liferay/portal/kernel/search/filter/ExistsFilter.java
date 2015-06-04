@@ -14,21 +14,44 @@
 
 package com.liferay.portal.kernel.search.filter;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Michael C. Han
  */
-public interface Filter {
+public class ExistsFilter extends BaseFilter {
 
-	public <T> T accept(FilterVisitor<T> filterVisitor);
+	public ExistsFilter(String field) {
+		_field = field;
+	}
 
-	public String getExecutionOption();
+	@Override
+	public <T> T accept(FilterVisitor<T> filterVisitor) {
+		return filterVisitor.visit(this);
+	}
 
-	public int getSortOrder();
+	public String getField() {
+		return _field;
+	}
 
-	public Boolean isCached();
+	@Override
+	public int getSortOrder() {
+		return 1;
+	}
 
-	public void setCached(Boolean cached);
+	@Override
+	public String toString() {
+		StringBundler sb = new StringBundler(5);
 
-	public void setExecutionOption(String executionOption);
+		sb.append("{(");
+		sb.append(_field);
+		sb.append("), ");
+		sb.append(super.toString());
+		sb.append("}");
+
+		return sb.toString();
+	}
+
+	private final String _field;
 
 }

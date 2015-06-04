@@ -55,7 +55,9 @@ public class TermFilterTranslatorImpl implements TermFilterTranslator {
 			QueryFilterBuilder queryFilterBuilder = FilterBuilders.queryFilter(
 				wildcardQueryBuilder);
 
-			queryFilterBuilder.cache(termFilter.isCached());
+			if (termFilter.isCached() != null) {
+				queryFilterBuilder.cache(termFilter.isCached());
+			}
 
 			filterBuilder = queryFilterBuilder;
 		}
@@ -63,7 +65,9 @@ public class TermFilterTranslatorImpl implements TermFilterTranslator {
 			TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
 				field, value);
 
-			termFilterBuilder.cache(termFilter.isCached());
+			if (termFilter.isCached() != null) {
+				termFilterBuilder.cache(termFilter.isCached());
+			}
 
 			filterBuilder = termFilterBuilder;
 		}

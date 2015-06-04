@@ -16,19 +16,30 @@ package com.liferay.portal.kernel.search.filter;
 
 import com.liferay.portal.kernel.util.StringBundler;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author Michael C. Han
  */
-public class TermFilter extends BaseFilter {
+public class TermsFilter extends BaseFilter {
 
-	public TermFilter(String field, String value) {
+	public TermsFilter(String field) {
 		_field = field;
-		_value = value;
 	}
 
 	@Override
 	public <T> T accept(FilterVisitor<T> filterVisitor) {
 		return filterVisitor.visit(this);
+	}
+
+	public void addValues(String... values) {
+		_values.addAll(Arrays.asList(values));
+	}
+
+	public Execution getExecution() {
+		return _execution;
 	}
 
 	public String getField() {
@@ -37,11 +48,15 @@ public class TermFilter extends BaseFilter {
 
 	@Override
 	public int getSortOrder() {
-		return 3;
+		return 4;
 	}
 
-	public String getValue() {
-		return _value;
+	public String[] getValues() {
+		return _values.toArray(new String[_values.size()]);
+	}
+
+	public void setExecution(Execution execution) {
+		_execution = execution;
 	}
 
 	@Override
@@ -51,7 +66,7 @@ public class TermFilter extends BaseFilter {
 		sb.append("{(");
 		sb.append(_field);
 		sb.append("=");
-		sb.append(_value);
+		sb.append(_values);
 		sb.append("), ");
 		sb.append(super.toString());
 		sb.append("}");
@@ -59,7 +74,14 @@ public class TermFilter extends BaseFilter {
 		return sb.toString();
 	}
 
+	public enum Execution {
+
+		AND, BOOL, FIELD_DATA, OR, PLAIN;
+
+	}
+
+	private Execution _execution = Execution.PLAIN;
 	private final String _field;
-	private final String _value;
+	private final Set<String> _values = new HashSet<>();
 
 }

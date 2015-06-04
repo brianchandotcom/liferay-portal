@@ -47,7 +47,9 @@ public class GeoBoundingBoxFilterTranslatorImpl
 
 		geoBoundingBoxFilterBuilder.bottomRight(bottomRightGeoPoint);
 
-		geoBoundingBoxFilterBuilder.cache(geoBoundingBoxFilter.isCached());
+		if (geoBoundingBoxFilter.isCached() != null) {
+			geoBoundingBoxFilterBuilder.cache(geoBoundingBoxFilter.isCached());
+		}
 
 		GeoLocationPoint topLeftGeoLocationPoint =
 			geoBoundingBoxFilter.getTopLeftGeoLocationPoint();

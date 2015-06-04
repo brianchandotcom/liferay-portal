@@ -36,7 +36,10 @@ public class GeoDistanceFilterTranslatorImpl
 		GeoDistanceFilterBuilder geoDistanceFilterBuilder =
 			FilterBuilders.geoDistanceFilter(geoDistanceFilter.getField());
 
-		geoDistanceFilterBuilder.cache(geoDistanceFilter.isCached());
+		if (geoDistanceFilter.isCached() != null) {
+			geoDistanceFilterBuilder.cache(geoDistanceFilter.isCached());
+		}
+
 		geoDistanceFilterBuilder.distance(
 			String.valueOf(geoDistanceFilter.getGeoDistance()));
 

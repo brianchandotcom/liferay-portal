@@ -39,7 +39,11 @@ public class GeoDistanceRangeFilterTranslatorImpl
 			FilterBuilders.geoDistanceRangeFilter(
 				geoDistanceRangeFilter.getField());
 
-		geoDistanceRangeFilterBuilder.cache(geoDistanceRangeFilter.isCached());
+		if (geoDistanceRangeFilter.isCached() != null) {
+			geoDistanceRangeFilterBuilder.cache(
+				geoDistanceRangeFilter.isCached());
+		}
+
 		geoDistanceRangeFilterBuilder.from(
 			String.valueOf(geoDistanceRangeFilter.getLowerBoundGeoDistance()));
 		geoDistanceRangeFilterBuilder.includeLower(

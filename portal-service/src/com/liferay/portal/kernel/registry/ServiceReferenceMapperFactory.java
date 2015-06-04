@@ -12,8 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.kernel.util;
+package com.liferay.portal.kernel.registry;
 
+import com.liferay.portal.kernel.util.Accessor;
+import com.liferay.portal.kernel.util.Function;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceMapper;
 import com.liferay.registry.collections.ServiceReferenceMapper;

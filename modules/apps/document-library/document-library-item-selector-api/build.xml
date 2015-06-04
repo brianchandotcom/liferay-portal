@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-    <property name="import.shared" value="../item-selector/item-selector-web,document-library-item-selector-api" />
+    <property name="import.shared" value="../item-selector/item-selector-web" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

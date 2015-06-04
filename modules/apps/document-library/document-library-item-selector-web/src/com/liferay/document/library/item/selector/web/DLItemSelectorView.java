@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.item.selector.web;
 
+import com.liferay.document.library.item.selector.DLItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
 
 import java.io.IOException;
@@ -28,9 +29,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Roberto Díaz
  */
+@Component(service = ItemSelectorView.class)
 public class DLItemSelectorView
 	implements ItemSelectorView<DLItemSelectorCriterion> {
 

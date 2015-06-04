@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -169,16 +170,17 @@ public class UserIndexer extends BaseIndexer {
 			if (value instanceof Long[]) {
 				Long[] values = (Long[])value;
 
-				BooleanFilter userGroupsBooleanFilter = new BooleanFilter();
-
-				for (long groupId : values) {
-					userGroupsBooleanFilter.addTerm("groupIds", groupId);
+				if (ArrayUtil.isEmpty(values)) {
+					return;
 				}
 
-				if (userGroupsBooleanFilter.hasClauses()) {
-					contextFilter.add(
-						userGroupsBooleanFilter, BooleanClauseOccur.MUST);
-				}
+				TermsFilter userGroupsTermsFilter = new TermsFilter("groupIds");
+
+				userGroupsTermsFilter.addValues(
+					ArrayUtil.toStringArray(values));
+
+				contextFilter.add(
+					userGroupsTermsFilter, BooleanClauseOccur.MUST);
 			}
 			else {
 				contextFilter.addRequiredTerm(
@@ -189,17 +191,28 @@ public class UserIndexer extends BaseIndexer {
 			if (value instanceof Long[]) {
 				Long[] values = (Long[])value;
 
-				BooleanFilter userOrgsFilter = new BooleanFilter();
-
-				for (long organizationId : values) {
-					userOrgsFilter.addTerm("organizationIds", organizationId);
-					userOrgsFilter.addTerm(
-						"ancestorOrganizationIds", organizationId);
+				if (ArrayUtil.isEmpty(values)) {
+					return;
 				}
 
-				if (userOrgsFilter.hasClauses()) {
-					contextFilter.add(userOrgsFilter, BooleanClauseOccur.MUST);
-				}
+				TermsFilter organizationsTermsFilter = new TermsFilter(
+					"organizationIds");
+				TermsFilter ancestorOrgsTermsFilter = new TermsFilter(
+					"ancestorOrganizationIds");
+
+				String[] organizationIdsStrings = ArrayUtil.toStringArray(
+					values);
+
+				organizationsTermsFilter.addValues(organizationIdsStrings);
+				ancestorOrgsTermsFilter.addValues(organizationIdsStrings);
+
+				BooleanFilter userOrgsBooleanFilter = new BooleanFilter();
+
+				userOrgsBooleanFilter.add(organizationsTermsFilter);
+				userOrgsBooleanFilter.add(ancestorOrgsTermsFilter);
+
+				contextFilter.add(
+					userOrgsBooleanFilter, BooleanClauseOccur.MUST);
 			}
 			else {
 				contextFilter.addRequiredTerm(

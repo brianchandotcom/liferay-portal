@@ -112,14 +112,12 @@ public class AssetEntriesFacet extends MultiValueFacet {
 					if (!searchContext.isIncludeLiveGroups() &&
 						searchContext.isIncludeStagingGroups()) {
 
-						entityBooleanFilter.addRequiredTerm(
-							Field.STAGING_GROUP, true);
+						entityBooleanFilter.addExists(Field.STAGING_GROUP);
 					}
 					else if (searchContext.isIncludeLiveGroups() &&
 							 !searchContext.isIncludeStagingGroups()) {
 
-						entityBooleanFilter.addRequiredTerm(
-							Field.STAGING_GROUP, false);
+						entityBooleanFilter.addMissing(Field.STAGING_GROUP);
 					}
 				}
 

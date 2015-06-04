@@ -679,7 +679,10 @@ public abstract class BaseIndexer implements Indexer {
 		document.addLocalizedKeyword(
 			"localized_title",
 			populateMap(assetEntry, assetEntry.getTitleMap()), true, true);
-		document.addKeyword("visible", assetEntry.isVisible());
+
+		if (assetEntry.isVisible()) {
+			document.addKeyword("visible", assetEntry.isVisible());
+		}
 	}
 
 	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
@@ -1116,7 +1119,9 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		document.addKeyword(Field.STAGING_GROUP, isStagingGroup(groupId));
+		if (isStagingGroup(groupId)) {
+			document.addKeyword(Field.STAGING_GROUP, true);
+		}
 	}
 
 	protected void addStatus(

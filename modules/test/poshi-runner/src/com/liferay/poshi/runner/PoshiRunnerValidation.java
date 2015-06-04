@@ -789,6 +789,31 @@ public class PoshiRunnerValidation {
 		}
 	}
 
+	private static void _validateNumberofAttributes(
+		Element element, int number, String filePath) {
+
+		List<Attribute> attributes = element.attributes();
+
+		if (attributes.isEmpty()) {
+			_exceptions.add(
+				new Exception(
+					"Missing attributes\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+		}
+		else if (attributes.size() > number) {
+			_exceptions.add(
+				new Exception(
+					"Too many attributes\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+		}
+		else if (attributes.size() < number) {
+			_exceptions.add(
+				new Exception(
+					"Too few attributes\n" + filePath + ":" +
+						element.attributeValue("line-number")));
+		}
+	}
+
 	private static void _validateNumberofChildElements(
 		Element element, int number, String filePath) {
 

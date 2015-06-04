@@ -14,8 +14,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_CATEGORY</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Add Category')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ASSET_SELECTION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Asset Selection')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CAPTCHA</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'CAPTCHA')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DATA_MIGRATION</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Data Migration')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -39,8 +54,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>EXTERNAL_SERVICES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'External Services')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>FIELDS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Fields')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'File Uploads')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,6 +79,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>LOG_LEVELS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Log Levels')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CAS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'CAS')]</td>
 	<td></td>
@@ -61,6 +91,11 @@
 <tr>
 	<td>FACEBOOK</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Facebook')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MAIL</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Mail')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -89,8 +124,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PORTAL_PROPERTIES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Portal Properties')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Properties')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>RESERVED_CREDENTIALS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Reserved Credentials')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Resources')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,8 +149,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCRIPT</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Script')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SENDER</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Sender')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SHUTDOWN</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Shutdown')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -109,8 +169,18 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SYSTEM_PROPERTIES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'System Properties')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SUPPORTED_CLIENTS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li[contains(.,'Supported Clients')]/a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>UPDATE_CATEGORIES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Update Categories')]</td>
 	<td></td>
 </tr>
 <tr>

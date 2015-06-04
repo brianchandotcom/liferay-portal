@@ -22,9 +22,13 @@
 	<tear-down>
 		<execute macro="BlogsEntry#tearDownCP" />
 
-		<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG" />
+		<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
 
-		<execute macro="Blogs#tearDownConfigurationScopePG" />
+		<execute macro="Blogs#tearDownConfigurationScopePG">
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
 
 		<execute macro="Page#tearDownPG" />
 
@@ -1592,6 +1596,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Blogs" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -1676,6 +1681,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Blogs" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -1770,6 +1776,7 @@
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Blogs" />
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
@@ -1798,9 +1805,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG" />
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG" />
+		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
 
 		<execute macro="Role#removePermissionPG">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />
@@ -1823,9 +1834,13 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationSetupPG" />
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
 
-		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG" />
+		<execute macro="BlogsNavigator#gotoConfigurationPermissionsPG">
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
 
 		<execute macro="PermissionsInline#viewPermissionsRemoved">
 			<var name="permissionDefinitionKey" value="${permissionDefinitionKeyView}" />

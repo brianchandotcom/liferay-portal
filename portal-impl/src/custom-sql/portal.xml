@@ -557,17 +557,6 @@
 				(PortletPreferences.preferences LIKE ?)
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.service.persistence.LockFinder.findByC_K">
-		<![CDATA[
-			SELECT
-				lock
-			FROM
-				Lock lock
-			WHERE
-				(lock.className = ?) AND
-				(lock.key = ?)
-		]]>
-	</sql>
 	<sql id="com.liferay.portal.service.persistence.OrganizationFinder.countByGroupId">
 		<![CDATA[
 			SELECT

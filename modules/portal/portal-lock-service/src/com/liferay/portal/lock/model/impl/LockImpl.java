@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.model.impl;
+package com.liferay.portal.lock.model.impl;
 
 /**
  * @author Brian Wing Shun Chan

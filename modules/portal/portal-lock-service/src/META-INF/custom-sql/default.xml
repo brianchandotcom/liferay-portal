@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.portal.lock.service.persistence.LockFinder.findByC_K">
+		<![CDATA[
+			SELECT
+				lock
+			FROM
+				Lock lock
+			WHERE
+				(lock.className = ?) AND
+				(lock.key = ?)
+		]]>
+	</sql>
+</custom-sql>

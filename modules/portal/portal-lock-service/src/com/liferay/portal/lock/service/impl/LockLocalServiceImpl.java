@@ -12,11 +12,8 @@
  * details.
  */
 
-package com.liferay.portal.service.impl;
+package com.liferay.portal.lock.service.impl;
 
-import com.liferay.portal.DuplicateLockException;
-import com.liferay.portal.ExpiredLockException;
-import com.liferay.portal.NoSuchLockException;
 import com.liferay.portal.kernel.dao.jdbc.aop.MasterDataSource;
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,9 +23,12 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Lock;
+import com.liferay.portal.lock.exception.DuplicateLockException;
+import com.liferay.portal.lock.exception.ExpiredLockException;
+import com.liferay.portal.lock.exception.NoSuchLockException;
+import com.liferay.portal.lock.model.Lock;
+import com.liferay.portal.lock.service.base.LockLocalServiceBaseImpl;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.base.LockLocalServiceBaseImpl;
 
 import java.util.Date;
 import java.util.List;

@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.service.persistence.impl;
+package com.liferay.portal.lock.service.persistence.impl;
 
 import com.liferay.portal.kernel.dao.orm.LockMode;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.model.Lock;
-import com.liferay.portal.service.persistence.LockFinder;
-import com.liferay.portal.service.persistence.LockUtil;
+import com.liferay.portal.lock.model.Lock;
+import com.liferay.portal.lock.service.persistence.LockFinder;
+import com.liferay.portal.lock.service.persistence.LockUtil;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.List;

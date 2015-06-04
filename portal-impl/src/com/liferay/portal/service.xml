@@ -1291,41 +1291,6 @@
 
 		<reference package-path="com.liferay.portal" entity="ClassName" />
 	</entity>
-	<entity name="Lock" uuid="true" local-service="true" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="lockId" type="long" primary="true" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="className" type="String" />
-		<column name="key" type="String" />
-		<column name="owner" type="String" />
-		<column name="inheritable" type="boolean" />
-		<column name="expirationDate" type="Date" />
-
-		<!-- Finder methods -->
-
-		<finder name="LtExpirationDate" return-type="Collection">
-			<finder-column name="expirationDate" comparator="&lt;" />
-		</finder>
-		<finder name="C_K" return-type="Lock" unique="true">
-			<finder-column name="className" />
-			<finder-column name="key" />
-		</finder>
-
-		<!-- References -->
-
-		<reference package-path="com.liferay.portal" entity="User" />
-	</entity>
 	<entity name="MembershipRequest" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -3379,7 +3344,6 @@
 		<exception>CountryName</exception>
 		<exception>CountryNumber</exception>
 		<exception>DuplicateGroup</exception>
-		<exception>DuplicateLock</exception>
 		<exception>DuplicateOpenId</exception>
 		<exception>DuplicateOrganization</exception>
 		<exception>DuplicatePasswordPolicy</exception>
@@ -3387,13 +3351,11 @@
 		<exception>DuplicateTeam</exception>
 		<exception>DuplicateUserGroup</exception>
 		<exception>EmailAddress</exception>
-		<exception>ExpiredLock</exception>
 		<exception>GroupFriendlyURL</exception>
 		<exception>GroupInheritContent</exception>
 		<exception>GroupKey</exception>
 		<exception>GroupParent</exception>
 		<exception>ImageType</exception>
-		<exception>InvalidLock</exception>
 		<exception>InvalidRepository</exception>
 		<exception>LARFile</exception>
 		<exception>LARFileName</exception>

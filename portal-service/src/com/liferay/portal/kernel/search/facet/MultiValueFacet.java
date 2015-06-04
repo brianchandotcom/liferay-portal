@@ -23,9 +23,8 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.facet.config.FacetConfiguration;
 import com.liferay.portal.kernel.search.facet.util.FacetValueValidator;
-import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -158,7 +157,7 @@ public class MultiValueFacet extends BaseFacet {
 			return null;
 		}
 
-		BooleanFilter facetBooleanFilter = new BooleanFilter();
+		TermsFilter facetTermsFilter = new TermsFilter(getFieldName());
 
 		for (String value : values) {
 			FacetValueValidator facetValueValidator = getFacetValueValidator();
@@ -169,17 +168,15 @@ public class MultiValueFacet extends BaseFacet {
 				continue;
 			}
 
-			TermFilter termFilter = new TermFilter(getFieldName(), value);
-
-			facetBooleanFilter.add(termFilter, BooleanClauseOccur.SHOULD);
+			facetTermsFilter.addValue(value);
 		}
 
-		if (!facetBooleanFilter.hasClauses()) {
+		if (facetTermsFilter.isEmpty()) {
 			return null;
 		}
 
 		return BooleanClauseFactoryUtil.createFilter(
-			searchContext, facetBooleanFilter, BooleanClauseOccur.MUST);
+			searchContext, facetTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void doSetValues(JSONArray valuesJSONArray) {

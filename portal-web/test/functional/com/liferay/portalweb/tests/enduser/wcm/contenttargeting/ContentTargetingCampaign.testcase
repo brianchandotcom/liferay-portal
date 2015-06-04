@@ -1,4 +1,5 @@
 <definition component-name="extra-apps-content-targeting">
+	<property name="custom.properties" value="layout.parallel.render.enable=false" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<set-up>

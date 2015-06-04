@@ -1,5 +1,5 @@
 <definition component-name="extra-apps-content-targeting">
-	<property name="custom.properties" value="javascript.fast.load=false" />
+	<property name="custom.properties" value="layout.parallel.render.enable=false" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<tear-down>
@@ -947,13 +947,26 @@
 		<property name="app.server.bundles.size" value="1" />
 		<property name="cluster.enabled" value="true" />
 
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="8080" />
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="nodePort" value="8080" />
+			<var name="pageName" value="Test Page Name" />
+		</execute>
+
 		<execute macro="Page#assertnodePortPG">
 			<var name="nodePort" value="8080" />
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="ContentTargetingUserSegment#addCP">
@@ -981,7 +994,6 @@
 		<execute macro="Page#gotoContentCP">
 			<var name="nodePort" value="9080" />
 			<var name="portletName" value="Web Content" />
-			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -996,8 +1008,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
@@ -1024,8 +1034,6 @@
 		<execute macro="Page#gotoPG">
 			<var name="nodePort" value="9080" />
 			<var name="pageName" value="Test Page Name" />
-			<var name="siteName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">

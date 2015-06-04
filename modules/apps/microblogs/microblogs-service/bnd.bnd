@@ -1,8 +1,14 @@
 Bundle-Name: Liferay Microblogs Service
 Bundle-SymbolicName: com.liferay.microblogs.service
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.microblogs.util.*
-Include-Resource: classes
+Export-Package:\
+	com.liferay.microblogs.service.permission,\
+	com.liferay.microblogs.util,\
+	com.liferay.microblogs.util.comparator
+Include-Resource:\
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/default.xml,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\

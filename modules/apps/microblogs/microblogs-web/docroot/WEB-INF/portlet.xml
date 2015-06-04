@@ -4,7 +4,7 @@
 	<portlet>
 		<portlet-name>1</portlet-name>
 		<display-name>Microblogs</display-name>
-		<portlet-class>com.liferay.microblogs.microblogs.portlet.MicroblogsPortlet</portlet-class>
+		<portlet-class>com.liferay.microblogs.web.microblogs.portlet.MicroblogsPortlet</portlet-class>
 		<init-param>
 			<name>view-template</name>
 			<value>/microblogs/view.jsp</value>
@@ -35,7 +35,7 @@
 	<portlet>
 		<portlet-name>2</portlet-name>
 		<display-name>Microblogs Status Update</display-name>
-		<portlet-class>com.liferay.microblogs.microblogs.portlet.MicroblogsPortlet</portlet-class>
+		<portlet-class>com.liferay.microblogs.web.microblogs.portlet.MicroblogsPortlet</portlet-class>
 		<init-param>
 			<name>config-jsp</name>
 			<value>/status_update/configuration.jsp</value>

@@ -2,7 +2,6 @@
 	<property name="testray.main.component.name" value="Blogs" />
 
 	<var name="pageName" value="Blogs Page" />
-	<var name="portletName" value="Blogs" />
 
 	<set-up>
 		<execute macro="User#firstLoginPG" />
@@ -16,7 +15,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 	</set-up>
 
@@ -232,7 +231,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -575,7 +574,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#addPG">
@@ -609,7 +608,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsEntry#gotoPG">
@@ -769,7 +768,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="${portletName}" />
+			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsPortlet#configureScopePG">

@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.documentlibrary.NoSuchFileException;
@@ -63,11 +64,19 @@ public class WikiPageStagedModelDataHandler
 			String uuid, long groupId, String className, String extraData)
 		throws PortalException {
 
-		WikiPage wikiPage = fetchStagedModelByUuidAndGroupId(uuid, groupId);
+		WikiPageResource pageResource =
+			WikiPageResourceLocalServiceUtil.
+				fetchWikiPageResourceByUuidAndGroupId(uuid, groupId);
 
-		if (wikiPage != null) {
-			deleteStagedModel(wikiPage);
+		if (pageResource == null) {
+			return;
 		}
+
+		WikiPage latestPage = WikiPageLocalServiceUtil.getLatestPage(
+			pageResource.getResourcePrimKey(), WorkflowConstants.STATUS_ANY,
+			true);
+
+		deleteStagedModel(latestPage);
 	}
 
 	@Override

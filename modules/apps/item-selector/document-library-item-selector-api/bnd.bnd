@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Document Library Item Selector API
+Bundle-SymbolicName: com.document.library.item.selector.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.document.library.item.selector
+Include-Resource: classes

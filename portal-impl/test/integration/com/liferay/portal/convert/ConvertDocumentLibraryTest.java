@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.InstancePool;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -46,7 +44,6 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLContentLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.store.FileSystemStore;
 import com.liferay.portlet.documentlibrary.store.Store;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.DLPreviewableProcessor;
@@ -84,11 +81,11 @@ public class ConvertDocumentLibraryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		PropsValues.DL_STORE_IMPL = FileSystemStore.class.getName();
+		PropsValues.DL_STORE_IMPL =
+			"com.liferay.portal.store.filesystem.FileSystemStore";
 
-		_sourceStore = (Store)InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(),
-			FileSystemStore.class.getName());
+		_sourceStore = _storeFactory.getStoreInstance(
+			PropsValues.DL_STORE_IMPL);
 
 		_storeFactory.setStoreInstance(_sourceStore);
 
@@ -97,7 +94,8 @@ public class ConvertDocumentLibraryTest {
 		_convertProcess = (ConvertProcess)InstancePool.get(
 			ConvertDocumentLibrary.class.getName());
 
-		Store dbStore = _storeFactory.getStoreInstance("db");
+		Store dbStore = _storeFactory.getStoreInstance(
+			"com.liferay.portal.store.db.DBStore");
 
 		_dbStoreClassName = dbStore.getClass().getName();
 
@@ -109,8 +107,7 @@ public class ConvertDocumentLibraryTest {
 	public void tearDown() throws Exception {
 		PropsValues.DL_STORE_IMPL = PropsUtil.get(PropsKeys.DL_STORE_IMPL);
 
-		Store store = (Store)InstanceFactory.newInstance(
-			ClassLoaderUtil.getPortalClassLoader(), PropsValues.DL_STORE_IMPL);
+		Store store = _storeFactory.getStoreInstance(PropsValues.DL_STORE_IMPL);
 
 		_storeFactory.setStoreInstance(store);
 	}

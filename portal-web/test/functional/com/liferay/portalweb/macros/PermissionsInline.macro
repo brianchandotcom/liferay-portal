@@ -78,18 +78,6 @@
 		</for>
 	</command>
 
-	<command name="gotoBlogsConfiguration">
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
-
-		<execute function="Click" locator1="PGBlogs#OPTIONS" />
-		<execute function="AssertClick" locator1="PGBlogs#OPTIONS_MENULIST_CONFIGURATION" value1="Configuration" />
-
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-		<execute function="AssertClick" locator1="PGBlogsConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
-	</command>
-
 	<command name="gotoBlogsEntryCP">
 		<execute macro="Page#gotoContentCP">
 			<var name="pageName" value="${pageName}" />

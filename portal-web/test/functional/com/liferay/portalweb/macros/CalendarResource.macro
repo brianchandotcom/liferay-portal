@@ -5,7 +5,7 @@
 		<execute function="AssertClick" locator1="PGCalendarResource#ADD_RESOURCE_BUTTON" value1="Add Resource" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendarAddresource#HEADER_TITLE" value1="New Resource" />
-		<execute function="Type#mouseOverFocusType" locator1="PGCalendarAddresource#NAME_FIELD" value1="${calendarResourceName}" />
+		<execute function="Type" locator1="PGCalendarAddresource#NAME_FIELD" value1="${calendarResourceName}" />
 		<execute function="Click" locator1="PGCalendarAddresource#SAVE_BUTTON" />
 
 		<var name="key_calendarResourceName" value="${calendarResourceName}" />
@@ -38,7 +38,7 @@
 		<execute function="AssertClick" locator1="PGCalendarResource#RESOURCE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendarEditresource#HEADER_TITLE" value1="${calendarResourceName}" />
-		<execute function="Type#mouseOverFocusType" locator1="PGCalendarEditresource#NAME_FIELD" value1="${calendarResourceNameEdit}" />
+		<execute function="Type" locator1="PGCalendarEditresource#NAME_FIELD" value1="${calendarResourceNameEdit}" />
 		<execute function="Click" locator1="PGCalendarEditresource#SAVE_BUTTON" />
 
 		<var name="key_calendarResourceName" value="${calendarResourceNameEdit}" />

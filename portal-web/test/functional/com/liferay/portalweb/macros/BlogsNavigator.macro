@@ -10,6 +10,10 @@
 		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
 	</command>
 
+	<command name="gotoConfigurationPermissionsPG">
+		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_PERMISSIONS" value1="Permissions" />
+	</command>
+
 	<command name="gotoConfigurationScopePG">
 		<execute function="AssertClick" locator1="BasePortletConfiguration#NAVIGATION_SCOPE" value1="Scope" />
 	</command>

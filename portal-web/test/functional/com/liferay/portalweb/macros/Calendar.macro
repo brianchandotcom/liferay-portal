@@ -10,7 +10,7 @@
 	</command>
 
 	<command name="_editName">
-		<execute function="Type#mouseOverFocusType" locator1="PGCalendarAddcalendar#NAME_FIELD" value1="${calendarName}" />
+		<execute function="Type" locator1="PGCalendarAddcalendar#NAME_FIELD" value1="${calendarName}" />
 	</command>
 
 	<command name="_gotoMenulistOption">
@@ -209,7 +209,7 @@
 				</execute>
 
 				<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
-				<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
+				<execute function="Type" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
 				<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
 				<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -228,7 +228,7 @@
 					</execute>
 
 					<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
-					<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
+					<execute function="Type" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
 					<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
 					<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -244,7 +244,7 @@
 					</execute>
 
 					<execute function="SelectFrame" locator1="PGCalendarCalendarSettings#CALENDAR_SETTING_IFRAME" />
-					<execute function="Type#mouseOverFocusType" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
+					<execute function="Type" locator1="PGCalendarCalendarSettings#NAME_FIELD" value1="${calendarNameEdit}" />
 					<execute function="AssertClick" locator1="PGCalendarCalendarSettings#SAVE_BUTTON" value1="Save" />
 					<execute function="AssertTextEquals" locator1="PGCalendarCalendarSettings#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 

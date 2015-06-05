@@ -464,7 +464,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewPG" />
+		<execute macro="Blogs#viewControlsPG" />
 	</command>
 
 	<command known-issues="LPS-51696" name="ViewNoInfoMessageWhenChangingSiteTemplateAsUser" priority="4">

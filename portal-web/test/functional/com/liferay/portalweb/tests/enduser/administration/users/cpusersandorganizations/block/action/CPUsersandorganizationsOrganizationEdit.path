@@ -171,7 +171,7 @@
 <!--ORGANIZATION_SITE-->
 <tr>
 	<td>ORGANIZATION_SITE_CREATE_SITE_CHECKBOX</td>
-	<td>//input[contains(@id,'site')]</td>
+	<td>//input[@id='_125_site']</td>
 	<td></td>
 </tr>
 <tr>

@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
@@ -93,6 +94,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
+
+	public static final String EXPAND_PORTAL_WEB_TASK_NAME = "expandPortalWeb";
 
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
@@ -245,6 +248,41 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	protected Copy addTaskExpandPortalWeb(final Project project) {
+		Copy copy = GradleUtil.addTask(
+			project, EXPAND_PORTAL_WEB_TASK_NAME, Copy.class);
+
+		copy.from(
+			new Callable<FileTree>() {
+
+				@Override
+				public FileTree call() throws Exception {
+					Configuration configuration = GradleUtil.getConfiguration(
+						project, PORTAL_WEB_CONFIGURATION_NAME);
+
+					return project.zipTree(configuration.getSingleFile());
+				}
+
+			});
+
+		copy.include("html/css/common/**/*");
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
+					return new File(liferayExtension.getTmpDir(), "portal-web");
+				}
+
+			});
+
+		return copy;
+	}
+
 	protected FormatXMLTask addTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = GradleUtil.addTask(
 			project, FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
@@ -279,6 +317,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void addTasks(Project project) {
 		addTaskBuildCss(project);
 		addTaskDeploy(project);
+		addTaskExpandPortalWeb(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
@@ -476,23 +515,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
 			project, BUILD_CSS_TASK_NAME);
 
-		configureTaskBuildCssPortalWebFile(buildCssTask);
+		configureTaskBuildCssPortalCommonDir(buildCssTask);
 		configureTaskBuildCssRootDirs(buildCssTask);
 	}
 
-	protected void configureTaskBuildCssPortalWebFile(
+	protected void configureTaskBuildCssPortalCommonDir(
 		BuildCssTask buildCssTask) {
 
-		if ((buildCssTask.getPortalWebDir() != null) ||
-			(buildCssTask.getPortalWebFile() != null)) {
-
+		if (buildCssTask.getPortalCommonDir() != null) {
 			return;
 		}
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			buildCssTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
+		Task expandPortalWebTask = GradleUtil.getTask(
+			buildCssTask.getProject(), EXPAND_PORTAL_WEB_TASK_NAME);
 
-		buildCssTask.setPortalWebFile(configuration.getSingleFile());
+		buildCssTask.dependsOn(expandPortalWebTask);
+
+		TaskOutputs taskOutputs = expandPortalWebTask.getOutputs();
+
+		FileCollection fileCollection = taskOutputs.getFiles();
+
+		File portalCommonDir = new File(
+			fileCollection.getSingleFile(), "html/css/common");
+
+		buildCssTask.setPortalCommonDir(portalCommonDir);
 	}
 
 	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {

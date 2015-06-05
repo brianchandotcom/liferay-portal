@@ -115,4 +115,6 @@ liferay {
 	appServerType = "tomcat"
 
 	portalVersion = "7.0.0-SNAPSHOT"
+
+	tmpDir = rootProject.file("tmp")
 }

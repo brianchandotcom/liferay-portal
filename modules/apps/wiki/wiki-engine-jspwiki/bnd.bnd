@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Wiki Engine JSPWiki
 Bundle-SymbolicName: com.liferay.wiki.engine.jspwiki
 Bundle-Version: 1.0.0
-Export-Package:
 Import-Package:\
 	!junit.framework.*,\
 	!net.sf.akismet.*,\

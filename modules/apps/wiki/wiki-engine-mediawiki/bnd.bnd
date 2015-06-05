@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Wiki Engine MediaWiki
 Bundle-SymbolicName: com.liferay.wiki.engine.mediawiki
 Bundle-Version: 1.0.0
-Export-Package:
 Import-Package:\
 	!net.sf.ehcache.*,\
 	!org.apache.commons.dbcp.*,\

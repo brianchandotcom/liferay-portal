@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -209,6 +211,16 @@ public class InitGradleTask extends DefaultTask {
 			"${app.server.parent.dir}", "${appServerParentDir}");
 		value = value.replace("${auto.deploy.dir}", "${deployDir}");
 		value = value.replace("${liferay.home}", "${liferayHome}");
+
+		if (_liferayExtension instanceof LiferayOSGiExtension) {
+			value = value.replace(
+				"${plugin.name}",
+				"${bundle.instructions['" + Constants.BUNDLE_SYMBOLICNAME +
+					"']}");
+		}
+		else {
+			value = value.replace("${plugin.name}", "${project.name}");
+		}
 
 		return value;
 	}

@@ -66,7 +66,7 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					dayOfWeek += byDay[i].getDayOfWeek();
+					dayOfWeek += toDayOfWeekWord(byDay[i].getDayOfWeek());
 				}
 			}
 		}
@@ -83,36 +83,7 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					switch (byDay[i].getDayOfWeek()) {
-
-						case Calendar.SUNDAY :
-							dayOfWeek += "SUN";
-							break;
-
-						case Calendar.MONDAY :
-							dayOfWeek += "MON";
-							break;
-
-						case Calendar.TUESDAY :
-							dayOfWeek += "TUE";
-							break;
-
-						case Calendar.WEDNESDAY :
-							dayOfWeek += "WED";
-							break;
-
-						case Calendar.THURSDAY :
-							dayOfWeek += "THU";
-							break;
-
-						case Calendar.FRIDAY :
-							dayOfWeek += "FRI";
-							break;
-
-						case Calendar.SATURDAY :
-							dayOfWeek += "SAT";
-							break;
-					}
+					dayOfWeek += toDayOfWeekWord(byDay[i].getDayOfWeek());
 				}
 			}
 
@@ -131,11 +102,12 @@ public class RecurrenceSerializer {
 				String pos = String.valueOf(byDay[0].getDayPosition());
 
 				if (pos.equals("-1")) {
-					dayOfWeek = byDay[0].getDayOfWeek() + "L";
+					dayOfWeek = toDayOfWeekWord(byDay[0].getDayOfWeek()) + "L";
 				}
 				else {
 					dayOfWeek =
-						byDay[0].getDayOfWeek() + StringPool.POUND + pos;
+						toDayOfWeekWord(byDay[0].getDayOfWeek()) +
+							StringPool.POUND + pos;
 				}
 			}
 		}
@@ -154,11 +126,13 @@ public class RecurrenceSerializer {
 					String pos = String.valueOf(byDay[0].getDayPosition());
 
 					if (pos.equals("-1")) {
-						dayOfWeek = byDay[0].getDayOfWeek() + "L";
+						dayOfWeek =
+							toDayOfWeekWord(byDay[0].getDayOfWeek()) + "L";
 					}
 					else {
 						dayOfWeek =
-							byDay[0].getDayOfWeek() + StringPool.POUND + pos;
+							toDayOfWeekWord(byDay[0].getDayOfWeek()) +
+								StringPool.POUND + pos;
 					}
 				}
 			}
@@ -181,6 +155,35 @@ public class RecurrenceSerializer {
 		sb.append(year);
 
 		return sb.toString();
+	}
+
+	protected static String toDayOfWeekWord(int dayOfWeekNum) {
+		switch (dayOfWeekNum) {
+
+			case Calendar.SUNDAY :
+				return "SUN";
+
+			case Calendar.MONDAY :
+				return "MON";
+
+			case Calendar.TUESDAY :
+				return "TUE";
+
+			case Calendar.WEDNESDAY :
+				return "WED";
+
+			case Calendar.THURSDAY :
+				return "THU";
+
+			case Calendar.FRIDAY :
+				return "FRI";
+
+			case Calendar.SATURDAY :
+				return "SAT";
+
+			default:
+				return "MON";
+		}
 	}
 
 }

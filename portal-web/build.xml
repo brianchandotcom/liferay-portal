@@ -66,11 +66,7 @@
 				/>
 			</not>
 			<then>
-				<ant-execute
-					ant.build.file="build.xml"
-					ant.dir="../modules/frontend/frontend-css-web"
-					ant.target="build-bourbon"
-				/>
+				<ant antfile="build.xml" dir="../modules/frontend/frontend-css-web" target="build-bourbon" inheritAll="false" />
 			</then>
 		</if>
 	</target>
@@ -634,19 +630,11 @@ Please set the property "jdk.7.home" in build.properties.
 	</target>
 
 	<target name="node-execute">
-		<ant-execute
-			ant.build.file="build-node.xml"
-			ant.dir="${sdk.dir}"
-			ant.target="node-execute"
-		/>
+		<ant antfile="build-node.xml" dir="${sdk.dir}" target="node-execute" inheritAll="false" />
 	</target>
 
 	<target name="npm-execute">
-		<ant-execute
-			ant.build.file="build-node.xml"
-			ant.dir="${sdk.dir}"
-			ant.target="npm-execute"
-		/>
+		<ant antfile="build-node.xml" dir="${sdk.dir}" target="npm-execute" inheritAll="false" />
 	</target>
 
 	<target name="war" depends="build-portal-web-dependencies">

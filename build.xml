@@ -262,10 +262,7 @@
 
 				<setup-sdk />
 
-				<ant-execute
-					ant.dir="${project.dir}/modules"
-					ant.target="clean"
-				/>
+				<ant antfile="build.xml" dir="${project.dir}/modules" target="clean" inheritAll="false" />
 			</sequential>
 
 			<delete dir="${doc.dir}" />
@@ -500,15 +497,9 @@
 
 		<stopwatch name="modules.stopwatch" />
 
-		<ant-execute
-			ant.dir="${project.dir}/modules/core/registry-api"
-			ant.target="deploy"
-		/>
+		<ant antfile="build.xml" dir="${project.dir}/modules/core/registry-api" target="deploy" inheritAll="false" />
 
-		<ant-execute
-			ant.dir="${project.dir}/modules"
-			ant.target="deploy"
-		/>
+		<ant antfile="build.xml" dir="${project.dir}/modules" target="deploy" inheritAll="false" />
 
 		<stopwatch action="elapsed" name="modules.stopwatch" />
 

@@ -216,8 +216,8 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			return methodInvocation.proceed();
 		}
 
-		long userId = PrincipalThreadLocal.getUserId();
-		User user = UserLocalServiceUtil.fetchUser(userId);
+		User user = UserLocalServiceUtil.fetchUser(
+			PrincipalThreadLocal.getUserId());
 
 		if ((user == null) || user.isDefaultUser()) {
 			plid = layoutRevision.getLayoutRevisionId();

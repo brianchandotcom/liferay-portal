@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.model.LayoutTypePortlet;
@@ -34,15 +33,10 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.service.permission.GroupPermissionUtil;
 import com.liferay.portal.service.permission.LayoutPermissionUtil;
-import com.liferay.portal.service.permission.LayoutPrototypePermissionUtil;
-import com.liferay.portal.service.permission.LayoutSetPrototypePermissionUtil;
-import com.liferay.portal.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.PortletMode;
 
@@ -215,10 +209,6 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			return true;
 		}
 
-		if (isLayoutConfigurationAllowed(request, layout, portlet)) {
-			return true;
-		}
-
 		if (isAccessGrantedByPortletAuthenticationToken(
 				request, layout, portlet)) {
 
@@ -301,87 +291,6 @@ public class DefaultLayoutTypeAccessPolicyImpl
 
 		if (renderPortletResource != null) {
 			return renderPortletResource;
-		}
-
-		return false;
-	}
-
-	protected boolean isLayoutConfigurationAllowed(
-			HttpServletRequest request, Layout layout, Portlet portlet)
-		throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		if (!themeDisplay.isSignedIn()) {
-			return false;
-		}
-
-		String portletId = portlet.getPortletId();
-
-		if (!portletId.equals(PortletKeys.LAYOUTS_ADMIN)) {
-			return false;
-		}
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		Group group = layout.getGroup();
-
-		if (group.isSite()) {
-			if (LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.CUSTOMIZE) ||
-				LayoutPermissionUtil.contains(
-					permissionChecker, layout, ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-
-		if (group.isCompany()) {
-			if (permissionChecker.isCompanyAdmin()) {
-				return true;
-			}
-		}
-		else if (group.isLayoutPrototype()) {
-			long layoutPrototypeId = group.getClassPK();
-
-			if (LayoutPrototypePermissionUtil.contains(
-					permissionChecker, layoutPrototypeId, ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-		else if (group.isLayoutSetPrototype()) {
-			long layoutSetPrototypeId = group.getClassPK();
-
-			if (LayoutSetPrototypePermissionUtil.contains(
-					permissionChecker, layoutSetPrototypeId,
-					ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-		else if (group.isOrganization()) {
-			long organizationId = group.getOrganizationId();
-
-			if (OrganizationPermissionUtil.contains(
-					permissionChecker, organizationId, ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-		else if (group.isUserGroup()) {
-			long scopeGroupId = themeDisplay.getScopeGroupId();
-
-			if (GroupPermissionUtil.contains(
-					permissionChecker, scopeGroupId, ActionKeys.UPDATE)) {
-
-				return true;
-			}
-		}
-		else if (group.isUser()) {
-			return true;
 		}
 
 		return false;

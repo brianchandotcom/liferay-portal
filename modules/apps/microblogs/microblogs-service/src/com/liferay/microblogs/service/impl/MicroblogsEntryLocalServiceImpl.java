@@ -38,16 +38,10 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.UserNotificationEventLocalServiceUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.social.service.SocialActivityLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -175,7 +169,7 @@ public class MicroblogsEntryLocalServiceImpl
 		extraDataJSONObject.put(
 			"parentMicroblogsEntryId", parentMicroblogsEntryId);
 
-		SocialActivityLocalServiceUtil.addActivity(
+		socialActivityLocalService.addActivity(
 			userId, 0, MicroblogsEntry.class.getName(), microblogsEntryId,
 			activityKey, extraDataJSONObject.toString(),
 			microblogsEntry.getParentMicroblogsEntryUserId());
@@ -218,13 +212,13 @@ public class MicroblogsEntryLocalServiceImpl
 
 		// Asset
 
-		AssetEntryLocalServiceUtil.deleteEntry(
+		assetEntryLocalService.deleteEntry(
 			MicroblogsEntry.class.getName(),
 			microblogsEntry.getMicroblogsEntryId());
 
 		// Social
 
-		SocialActivityLocalServiceUtil.deleteActivities(
+		socialActivityLocalService.deleteActivities(
 			MicroblogsEntry.class.getName(),
 			microblogsEntry.getMicroblogsEntryId());
 
@@ -376,10 +370,10 @@ public class MicroblogsEntryLocalServiceImpl
 			String[] assetTagNames)
 		throws PortalException {
 
-		Group group = GroupLocalServiceUtil.getCompanyGroup(
+		Group group = groupLocalService.getCompanyGroup(
 			microblogsEntry.getCompanyId());
 
-		AssetEntryLocalServiceUtil.updateEntry(
+		assetEntryLocalService.updateEntry(
 			microblogsEntry.getUserId(), group.getGroupId(),
 			MicroblogsEntry.class.getName(),
 			microblogsEntry.getMicroblogsEntryId(), assetCategoryIds,
@@ -416,7 +410,7 @@ public class MicroblogsEntryLocalServiceImpl
 
 		try {
 			Subscription subscription =
-				SubscriptionLocalServiceUtil.getSubscription(
+				subscriptionLocalService.getSubscription(
 					microblogsEntry.getCompanyId(), userId,
 					MicroblogsEntry.class.getName(),
 					microblogsEntry.getParentMicroblogsEntryId());
@@ -495,7 +489,7 @@ public class MicroblogsEntryLocalServiceImpl
 		long rootMicroblogsEntryId = MicroblogsUtil.getRootMicroblogsEntryId(
 			microblogsEntry);
 
-		SubscriptionLocalServiceUtil.addSubscription(
+		subscriptionLocalService.addSubscription(
 			microblogsEntry.getUserId(), serviceContext.getScopeGroupId(),
 			MicroblogsEntry.class.getName(), rootMicroblogsEntryId);
 
@@ -503,10 +497,10 @@ public class MicroblogsEntryLocalServiceImpl
 			microblogsEntry.getContent());
 
 		for (String screenName : screenNames) {
-			long userId = UserLocalServiceUtil.getUserIdByScreenName(
+			long userId = userLocalService.getUserIdByScreenName(
 				serviceContext.getCompanyId(), screenName);
 
-			SubscriptionLocalServiceUtil.addSubscription(
+			subscriptionLocalService.addSubscription(
 				userId, serviceContext.getScopeGroupId(),
 				MicroblogsEntry.class.getName(), rootMicroblogsEntryId);
 		}
@@ -595,7 +589,7 @@ public class MicroblogsEntryLocalServiceImpl
 						notificationEventJSONObject.put(
 							"notificationType", notificationType);
 
-						UserNotificationEventLocalServiceUtil.
+						userNotificationEventLocalService.
 							sendUserNotificationEvents(
 								receiverUserIds.get(j), PortletKeys.MICROBLOGS,
 								UserNotificationDeliveryConstants.TYPE_PUSH,
@@ -613,7 +607,7 @@ public class MicroblogsEntryLocalServiceImpl
 						notificationEventJSONObject.put(
 							"notificationType", notificationType);
 
-						UserNotificationEventLocalServiceUtil.
+						userNotificationEventLocalService.
 							sendUserNotificationEvents(
 								receiverUserIds.get(j), PortletKeys.MICROBLOGS,
 								UserNotificationDeliveryConstants.TYPE_WEBSITE,

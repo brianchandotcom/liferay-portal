@@ -595,15 +595,20 @@ public class MobileDriverToSeleniumBridge
 	public boolean isVisible(String locator) {
 		WebElement webElement = getWebElement(locator, "1");
 
-		if (!webElement.isDisplayed()) {
+		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
+			if (!isInViewport(locator)) {
+				swipeWebElementIntoView(locator);
+			}
+
+			return isInViewport(locator);
+		}
+		else {
+			if (!webElement.isDisplayed()) {
+				WebDriverHelper.scrollWebElementIntoView(this, webElement);
+			}
+
 			return webElement.isDisplayed();
 		}
-
-		if (!isInViewport(locator)) {
-			swipeWebElementIntoView(locator);
-		}
-
-		return isInViewport(locator);
 	}
 
 	@Override

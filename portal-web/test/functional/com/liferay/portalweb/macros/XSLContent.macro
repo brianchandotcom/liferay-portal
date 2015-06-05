@@ -1,4 +1,14 @@
 <definition>
+	<command name="configureConfigurationAdminXSL">
+		<var name="key_configurationAdminName" value="XSLContent" />
+
+		<execute function="Click" locator1="ConfigurationAdmin#CONFIGURATION_ADMIN_NAME_LINK" />
+
+		<execute function="Type" locator1="ConfigurationAdmin#XSL_CONTENT_CONFIGURATION_VALID_URL_PREFIXES_FIELD" value1="@portlet_context_url@,@portal_url@" />
+
+		<execute function="Click" locator1="Button#SAVE" />
+	</command>
+
 	<command name="configureXSLContentPortlet">
 		<execute function="SelectFrame" locator1="XSLContentConfiguration#CONFIGURATION_IFRAME" />
 

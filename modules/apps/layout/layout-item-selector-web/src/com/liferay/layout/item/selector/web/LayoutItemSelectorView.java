@@ -16,7 +16,6 @@ package com.liferay.layout.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.layout.item.selector.LayoutItemSelectorCriterion;
-import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 
@@ -29,6 +28,8 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz

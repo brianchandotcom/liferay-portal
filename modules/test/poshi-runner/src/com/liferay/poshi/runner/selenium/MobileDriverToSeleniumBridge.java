@@ -964,55 +964,63 @@ public class MobileDriverToSeleniumBridge
 	}
 
 	protected void swipeWebElementIntoView(String locator) {
-		int elementPositionCenterY = WebDriverHelper.getElementPositionCenterY(
-			this, locator);
+		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
+			int elementPositionCenterY =
+				WebDriverHelper.getElementPositionCenterY(this, locator);
 
-		for (int i = 0; i < 25; i++) {
-			int viewportPositionBottom =
-				WebDriverHelper.getViewportPositionBottom(this);
+			for (int i = 0; i < 25; i++) {
+				int viewportPositionBottom =
+					WebDriverHelper.getViewportPositionBottom(this);
 
-			int viewportPositionTop = WebDriverHelper.getScrollOffsetY(this);
+				int viewportPositionTop = WebDriverHelper.getScrollOffsetY(
+					this);
 
-			StringBuilder sb = new StringBuilder(3);
+				StringBuilder sb = new StringBuilder(4);
 
-			sb.append(PropsValues.MOBILE_ANDROID_HOME);
-			sb.append("/platform-tools/");
+				sb.append(PropsValues.MOBILE_ANDROID_HOME);
+				sb.append("/platform-tools/");
 
-			if (elementPositionCenterY >= viewportPositionBottom) {
+				if (elementPositionCenterY >= viewportPositionBottom) {
+					try {
+						sb.append("adb -s emulator-5554 shell ");
+						sb.append("/data/local/swipe_up.sh");
+
+						Runtime runtime = Runtime.getRuntime();
+
+						runtime.exec(sb.toString());
+					}
+					catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+				}
+				else if (elementPositionCenterY <= viewportPositionTop ) {
+					try {
+						sb.append("adb -s emulator-5554 shell ");
+						sb.append("/data/local/swipe_down.sh");
+
+						Runtime runtime = Runtime.getRuntime();
+
+						runtime.exec(sb.toString());
+					}
+					catch (IOException ioe) {
+						ioe.printStackTrace();
+					}
+				}
+				else {
+					break;
+				}
+
 				try {
-					sb.append(
-						"adb -s emulator-5554 shell /data/local/swipe_up.sh");
-
-					Runtime runtime = Runtime.getRuntime();
-
-					runtime.exec(sb.toString());
+					LiferaySeleniumHelper.pause("1000");
 				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
+				catch (Exception e) {
 				}
 			}
-			else if (elementPositionCenterY <= viewportPositionTop ) {
-				try {
-					sb.append(
-						"adb -s emulator-5554 shell /data/local/swipe_down.sh");
+		}
+		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
+			WebElement webElement = getWebElement(locator, "1");
 
-					Runtime runtime = Runtime.getRuntime();
-
-					runtime.exec(sb.toString());
-				}
-				catch (IOException ioe) {
-					ioe.printStackTrace();
-				}
-			}
-			else {
-				break;
-			}
-
-			try {
-				LiferaySeleniumHelper.pause("1000");
-			}
-			catch (Exception e) {
-			}
+			WebDriverHelper.scrollWebElementIntoView(this, webElement);
 		}
 	}
 

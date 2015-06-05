@@ -248,6 +248,69 @@ public class WikiPageResourceUtil {
 	}
 
 	/**
+	* Returns the wiki page resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching wiki page resource
+	* @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	*/
+	public static WikiPageResource findByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.wiki.exception.NoSuchPageResourceException {
+		return getPersistence().findByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	*/
+	public static WikiPageResource fetchByUUID_G(java.lang.String uuid,
+		long groupId) {
+		return getPersistence().fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	*/
+	public static WikiPageResource fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
+		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the wiki page resource where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the wiki page resource that was removed
+	*/
+	public static WikiPageResource removeByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.wiki.exception.NoSuchPageResourceException {
+		return getPersistence().removeByUUID_G(uuid, groupId);
+	}
+
+	/**
+	* Returns the number of wiki page resources where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching wiki page resources
+	*/
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+		return getPersistence().countByUUID_G(uuid, groupId);
+	}
+
+	/**
 	* Returns the wiki page resource where nodeId = &#63; and title = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
 	*
 	* @param nodeId the node ID

@@ -90,6 +90,20 @@ public interface WikiPageResourceModel extends BaseModel<WikiPageResource> {
 	public void setResourcePrimKey(long resourcePrimKey);
 
 	/**
+	 * Returns the group ID of this wiki page resource.
+	 *
+	 * @return the group ID of this wiki page resource
+	 */
+	public long getGroupId();
+
+	/**
+	 * Sets the group ID of this wiki page resource.
+	 *
+	 * @param groupId the group ID of this wiki page resource
+	 */
+	public void setGroupId(long groupId);
+
+	/**
 	 * Returns the node ID of this wiki page resource.
 	 *
 	 * @return the node ID of this wiki page resource

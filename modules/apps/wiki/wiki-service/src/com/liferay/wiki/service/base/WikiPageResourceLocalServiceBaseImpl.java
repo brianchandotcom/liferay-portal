@@ -211,6 +211,19 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the wiki page resource matching the UUID and group.
+	 *
+	 * @param uuid the wiki page resource's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	 */
+	@Override
+	public WikiPageResource fetchWikiPageResourceByUuidAndGroupId(String uuid,
+		long groupId) {
+		return wikiPageResourcePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the wiki page resource with the primary key.
 	 *
 	 * @param resourcePrimKey the primary key of the wiki page resource
@@ -258,6 +271,20 @@ public abstract class WikiPageResourceLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return wikiPageResourcePersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the wiki page resource matching the UUID and group.
+	 *
+	 * @param uuid the wiki page resource's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching wiki page resource
+	 * @throws PortalException if a matching wiki page resource could not be found
+	 */
+	@Override
+	public WikiPageResource getWikiPageResourceByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException {
+		return wikiPageResourcePersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

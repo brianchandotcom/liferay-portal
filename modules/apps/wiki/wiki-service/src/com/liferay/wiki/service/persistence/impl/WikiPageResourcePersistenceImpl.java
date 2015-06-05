@@ -608,6 +608,263 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "wikiPageResource.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "wikiPageResource.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageResourceModelImpl.FINDER_CACHE_ENABLED,
+			WikiPageResourceImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() },
+			WikiPageResourceModelImpl.UUID_COLUMN_BITMASK |
+			WikiPageResourceModelImpl.GROUPID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
+			WikiPageResourceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns the wiki page resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.wiki.NoSuchPageResourceException} if it could not be found.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching wiki page resource
+	 * @throws com.liferay.wiki.NoSuchPageResourceException if a matching wiki page resource could not be found
+	 */
+	@Override
+	public WikiPageResource findByUUID_G(String uuid, long groupId)
+		throws NoSuchPageResourceException {
+		WikiPageResource wikiPageResource = fetchByUUID_G(uuid, groupId);
+
+		if (wikiPageResource == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("uuid=");
+			msg.append(uuid);
+
+			msg.append(", groupId=");
+			msg.append(groupId);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchPageResourceException(msg.toString());
+		}
+
+		return wikiPageResource;
+	}
+
+	/**
+	 * Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	 */
+	@Override
+	public WikiPageResource fetchByUUID_G(String uuid, long groupId) {
+		return fetchByUUID_G(uuid, groupId, true);
+	}
+
+	/**
+	 * Returns the wiki page resource where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching wiki page resource, or <code>null</code> if a matching wiki page resource could not be found
+	 */
+	@Override
+	public WikiPageResource fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderArgs, this);
+		}
+
+		if (result instanceof WikiPageResource) {
+			WikiPageResource wikiPageResource = (WikiPageResource)result;
+
+			if (!Validator.equals(uuid, wikiPageResource.getUuid()) ||
+					(groupId != wikiPageResource.getGroupId())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_WIKIPAGERESOURCE_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				List<WikiPageResource> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+						finderArgs, list);
+				}
+				else {
+					WikiPageResource wikiPageResource = list.get(0);
+
+					result = wikiPageResource;
+
+					cacheResult(wikiPageResource);
+
+					if ((wikiPageResource.getUuid() == null) ||
+							!wikiPageResource.getUuid().equals(uuid) ||
+							(wikiPageResource.getGroupId() != groupId)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+							finderArgs, wikiPageResource);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (WikiPageResource)result;
+		}
+	}
+
+	/**
+	 * Removes the wiki page resource where uuid = &#63; and groupId = &#63; from the database.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the wiki page resource that was removed
+	 */
+	@Override
+	public WikiPageResource removeByUUID_G(String uuid, long groupId)
+		throws NoSuchPageResourceException {
+		WikiPageResource wikiPageResource = findByUUID_G(uuid, groupId);
+
+		return remove(wikiPageResource);
+	}
+
+	/**
+	 * Returns the number of wiki page resources where uuid = &#63; and groupId = &#63;.
+	 *
+	 * @param uuid the uuid
+	 * @param groupId the group ID
+	 * @return the number of matching wiki page resources
+	 */
+	@Override
+	public int countByUUID_G(String uuid, long groupId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+
+		Object[] finderArgs = new Object[] { uuid, groupId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_WIKIPAGERESOURCE_WHERE);
+
+			boolean bindUuid = false;
+
+			if (uuid == null) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
+			}
+			else if (uuid.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
+			}
+			else {
+				bindUuid = true;
+
+				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
+			}
+
+			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindUuid) {
+					qPos.add(uuid);
+				}
+
+				qPos.add(groupId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "wikiPageResource.uuid IS NULL AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "wikiPageResource.uuid = ? AND ";
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(wikiPageResource.uuid IS NULL OR wikiPageResource.uuid = '') AND ";
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "wikiPageResource.groupId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_N_T = new FinderPath(WikiPageResourceModelImpl.ENTITY_CACHE_ENABLED,
 			WikiPageResourceModelImpl.FINDER_CACHE_ENABLED,
 			WikiPageResourceImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByN_T",
@@ -880,6 +1137,11 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 			WikiPageResourceImpl.class, wikiPageResource.getPrimaryKey(),
 			wikiPageResource);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+			new Object[] {
+				wikiPageResource.getUuid(), wikiPageResource.getGroupId()
+			}, wikiPageResource);
+
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_N_T,
 			new Object[] {
 				wikiPageResource.getNodeId(), wikiPageResource.getTitle()
@@ -958,6 +1220,15 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 	protected void cacheUniqueFindersCache(WikiPageResource wikiPageResource) {
 		if (wikiPageResource.isNew()) {
 			Object[] args = new Object[] {
+					wikiPageResource.getUuid(), wikiPageResource.getGroupId()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+				wikiPageResource);
+
+			args = new Object[] {
 					wikiPageResource.getNodeId(), wikiPageResource.getTitle()
 				};
 
@@ -968,6 +1239,19 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		}
 		else {
 			WikiPageResourceModelImpl wikiPageResourceModelImpl = (WikiPageResourceModelImpl)wikiPageResource;
+
+			if ((wikiPageResourceModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						wikiPageResource.getUuid(),
+						wikiPageResource.getGroupId()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					wikiPageResource);
+			}
 
 			if ((wikiPageResourceModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_N_T.getColumnBitmask()) != 0) {
@@ -988,6 +1272,24 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 		WikiPageResourceModelImpl wikiPageResourceModelImpl = (WikiPageResourceModelImpl)wikiPageResource;
 
 		Object[] args = new Object[] {
+				wikiPageResource.getUuid(), wikiPageResource.getGroupId()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+
+		if ((wikiPageResourceModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					wikiPageResourceModelImpl.getOriginalUuid(),
+					wikiPageResourceModelImpl.getOriginalGroupId()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
 				wikiPageResource.getNodeId(), wikiPageResource.getTitle()
 			};
 
@@ -1196,6 +1498,7 @@ public class WikiPageResourcePersistenceImpl extends BasePersistenceImpl<WikiPag
 
 		wikiPageResourceImpl.setUuid(wikiPageResource.getUuid());
 		wikiPageResourceImpl.setResourcePrimKey(wikiPageResource.getResourcePrimKey());
+		wikiPageResourceImpl.setGroupId(wikiPageResource.getGroupId());
 		wikiPageResourceImpl.setNodeId(wikiPageResource.getNodeId());
 		wikiPageResourceImpl.setTitle(wikiPageResource.getTitle());
 

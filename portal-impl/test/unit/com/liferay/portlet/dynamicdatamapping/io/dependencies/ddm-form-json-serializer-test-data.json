@@ -10,7 +10,6 @@
 				"pt_BR": "Texto"
 			},
 			"localizable": false,
-			"multiple": false,
 			"name": "ParentField",
 			"nestedFields": [
 				{
@@ -51,11 +50,10 @@
 			"required": false,
 			"showLabel": true,
 			"type": "text"
-		}, 
+		},
 		{
 			"dataType": "string",
 			"localizable": false,
-			"multiple": false,
 			"name": "BooleanField",
 			"options": [
 				{
@@ -115,7 +113,6 @@
 				"en_US": "Text"
 			},
 			"localizable": false,
-			"multiple": false,
 			"name": "TextField",
 			"predefinedValue": {
 				"en_US": "Example",

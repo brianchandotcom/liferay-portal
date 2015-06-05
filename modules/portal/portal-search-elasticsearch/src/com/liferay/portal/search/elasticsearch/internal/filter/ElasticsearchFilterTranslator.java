@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.filter;
 
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
@@ -60,7 +61,7 @@ public class ElasticsearchFilterTranslator
 	implements FilterTranslator<FilterBuilder>, FilterVisitor<FilterBuilder> {
 
 	@Override
-	public FilterBuilder translate(Filter filter) {
+	public FilterBuilder translate(Filter filter, SearchContext searchContext) {
 		return filter.accept(this);
 	}
 

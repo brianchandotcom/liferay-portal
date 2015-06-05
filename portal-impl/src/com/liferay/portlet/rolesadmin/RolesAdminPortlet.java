@@ -139,7 +139,28 @@ public class RolesAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
+		long roleId = ParamUtil.getLong(renderRequest, "roleId");
+
 		if (SessionErrors.contains(
+					renderRequest,
+					RequiredRoleException.class.getName()) && roleId < 1) {
+
+			include(
+				"/html/portlet/roles_admin/view.jsp", renderRequest,
+				renderResponse);
+		}
+		else if (SessionErrors.contains(
+				renderRequest, DuplicateRoleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RequiredRoleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RoleNameException.class.getName())) {
+
+			include(
+				"/html/portlet/roles_admin/edit_role.jsp", renderRequest,
+				renderResponse);
+		}
+		else if (SessionErrors.contains(
 			renderRequest, PrincipalException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, NoSuchRoleException.class.getName()) ||
@@ -148,14 +169,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 			include(
 				"/html/portlet/roles_admin/error.jsp", renderRequest,
-				renderResponse);
-		}
-		else if (SessionErrors.contains(
-					renderRequest,
-					RequiredRoleException.class.getName())) {
-
-			include(
-				"/html/portlet/roles_admin/view.jsp", renderRequest,
 				renderResponse);
 		}
 		else {

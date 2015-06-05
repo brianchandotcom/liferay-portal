@@ -37,7 +37,9 @@ import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageResourceLocalServiceUtil;
 
 import java.io.InputStream;
 
@@ -48,6 +50,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Zsolt Berentey
+ * @author Akos Thurzo
  */
 @Component(immediate = true, service = StagedModelDataHandler.class)
 public class WikiPageStagedModelDataHandler
@@ -120,6 +123,12 @@ public class WikiPageStagedModelDataHandler
 
 		Element pageElement = portletDataContext.getExportDataElement(page);
 
+		WikiPageResource pageResource =
+			WikiPageResourceLocalServiceUtil.getPageResource(
+				page.getResourcePrimKey());
+
+		pageElement.addAttribute("page-resource-uuid", pageResource.getUuid());
+
 		portletDataContext.addClassedModel(
 			pageElement, ExportImportPathUtil.getModelPath(page), page);
 	}
@@ -177,6 +186,16 @@ public class WikiPageStagedModelDataHandler
 				page.getContent(), page.getSummary(), page.isMinorEdit(),
 				page.getFormat(), page.getHead(), page.getParentTitle(),
 				page.getRedirectTitle(), serviceContext);
+
+			WikiPageResource pageResource =
+				WikiPageResourceLocalServiceUtil.getPageResource(
+					importedPage.getResourcePrimKey());
+
+			pageResource.setUuid(
+				pageElement.attributeValue("page-resource-uuid"));
+
+			WikiPageResourceLocalServiceUtil.updateWikiPageResource(
+				pageResource);
 		}
 		else {
 			existingPage = fetchStagedModelByUuidAndGroupId(

@@ -117,12 +117,12 @@ public class JCRFactoryWrapper {
 		jcrFactory.shutdown();
 	}
 
-	private JCRStoreConfiguration _configuration;
-	private JCRFactory _jcrFactory;
-
 	private static final ThreadLocal<Map<String, Session>> _sessions =
 		new AutoResetThreadLocal<Map<String, Session>>(
 			JCRFactoryWrapper.class + "._sessions",
 			new HashMap<String, Session>());
+
+	private final JCRStoreConfiguration _configuration;
+	private final JCRFactory _jcrFactory;
 
 }

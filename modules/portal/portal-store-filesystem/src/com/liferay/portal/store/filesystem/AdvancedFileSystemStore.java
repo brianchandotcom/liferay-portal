@@ -375,9 +375,9 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 		return path;
 	}
 
+	private static final String _HOOK_EXTENSION = "afsh";
+
 	private static volatile AdvancedFileSystemConfiguration
 		_advancedFileSystemConfiguration;
-
-	private static final String _HOOK_EXTENSION = "afsh";
 
 }

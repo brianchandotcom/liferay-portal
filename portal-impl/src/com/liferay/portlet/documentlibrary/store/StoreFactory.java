@@ -220,8 +220,8 @@ public class StoreFactory {
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
 	private static final Store _NULL_STORE = null;
-	private static Store _store;
 	private static StoreFactory _instance;
+	private static Store _store;
 	private static boolean _warned;
 
 	private final ServiceTrackerMap<String, Store> _serviceTrackerMap =
@@ -287,6 +287,7 @@ public class StoreFactory {
 
 			registry.ungetService(serviceReference);
 		}
+
 	}
 
 }

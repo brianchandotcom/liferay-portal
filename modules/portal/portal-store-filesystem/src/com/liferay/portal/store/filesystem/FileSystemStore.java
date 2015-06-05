@@ -639,12 +639,6 @@ public class FileSystemStore extends BaseStore {
 
 	protected ConfigurationAdmin configurationAdmin;
 
-	private final Map<RepositoryDirKey, File> _repositoryDirs =
-		new ConcurrentHashMap<>();
-	private File _rootDir;
-
-	private static volatile FileSystemConfiguration _fileSystemConfiguration;
-
 	protected class FileSystemConfigurationValidator {
 
 		public void validate(
@@ -663,14 +657,14 @@ public class FileSystemStore extends BaseStore {
 				Dictionary<String, Object> fileSystemDictionary =
 					fileSystemConfiguration.getProperties();
 
-				if (advancedFileSystemDictionary != null &&
-					fileSystemDictionary != null) {
+				if ((advancedFileSystemDictionary != null) &&
+					(fileSystemDictionary != null)) {
 
 					String advancedFileSystemRootDir =
-						(String) advancedFileSystemDictionary.get("rootdir");
+						(String)advancedFileSystemDictionary.get("rootdir");
 
-					String fileSystemRootDir =
-						(String) fileSystemDictionary.get("rootdir");
+					String fileSystemRootDir = (String)fileSystemDictionary.get(
+						"rootdir");
 
 					if (Validator.equals(
 							advancedFileSystemRootDir, fileSystemRootDir)) {
@@ -688,6 +682,12 @@ public class FileSystemStore extends BaseStore {
 		}
 
 	}
+
+	private static volatile FileSystemConfiguration _fileSystemConfiguration;
+
+	private final Map<RepositoryDirKey, File> _repositoryDirs =
+		new ConcurrentHashMap<>();
+	private File _rootDir;
 
 	private class RepositoryDirKey {
 

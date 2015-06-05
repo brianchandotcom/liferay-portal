@@ -69,8 +69,7 @@ import org.osgi.service.component.annotations.Modified;
  */
 @Component(
 	configurationPid = "com.liferay.portal.store.jcr.configuration.JCRStoreConfiguration",
-	configurationPolicy = ConfigurationPolicy.REQUIRE,
-	immediate = true,
+	configurationPolicy = ConfigurationPolicy.REQUIRE, immediate = true,
 	property = "store.type=com.liferay.portal.store.jcr.JCRStore",
 	service = Store.class
 )
@@ -840,6 +839,34 @@ public class JCRStore extends BaseStore {
 		}
 	}
 
+	@Activate
+	protected void activate(Map<String, Object> properties)
+		throws RepositoryException {
+
+		_jcrStoreConfiguration = Configurable.createConfigurable(
+			JCRStoreConfiguration.class, properties);
+
+		try {
+			_jcrFactoryWrapper = new JCRFactoryWrapper(_jcrStoreConfiguration);
+
+			_jcrFactoryWrapper.prepare();
+
+			if (_jcrStoreConfiguration.initializeOnStartup()) {
+				_jcrFactoryWrapper.initialize();
+			}
+		}
+		catch (Exception e) {
+			throw new RepositoryException(e);
+		}
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_jcrFactoryWrapper.shutdown();
+
+		_jcrFactoryWrapper = null;
+	}
+
 	protected void doGetFileNames(
 			List<String> fileNames, String dirName, Node node)
 		throws RepositoryException {
@@ -869,34 +896,6 @@ public class JCRStore extends BaseStore {
 		else if (primaryNodeTypeName.equals(JCRConstants.NT_FILE)) {
 			fileNames.add(dirName);
 		}
-	}
-
-	@Activate
-	protected void activate(Map<String, Object> properties)
-		throws RepositoryException {
-
-		_jcrStoreConfiguration = Configurable.createConfigurable(
-			JCRStoreConfiguration.class, properties);
-
-		try {
-			_jcrFactoryWrapper = new JCRFactoryWrapper(_jcrStoreConfiguration);
-
-			_jcrFactoryWrapper.prepare();
-
-			if (_jcrStoreConfiguration.initializeOnStartup()) {
-				_jcrFactoryWrapper.initialize();
-			}
-		}
-		catch (Exception e) {
-			throw new RepositoryException(e);
-		}
-	}
-
-	@Deactivate
-	protected void deactivate() {
-		_jcrFactoryWrapper.shutdown();
-
-		_jcrFactoryWrapper = null;
 	}
 
 	protected Node getFileContentNode(
@@ -1016,8 +1015,8 @@ public class JCRStore extends BaseStore {
 		activate(properties);
 	}
 
-	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 	private JCRFactoryWrapper _jcrFactoryWrapper;
+	private volatile JCRStoreConfiguration _jcrStoreConfiguration;
 
 	private static final Log _log = LogFactoryUtil.getLog(JCRStore.class);
 

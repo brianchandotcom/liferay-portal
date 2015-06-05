@@ -26,14 +26,15 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface CMISConfiguration {
 
 	@Meta.AD(deflt = "none", required = true)
-	public String credentialsUsername();
+	public String credentialsPassword();
 
 	@Meta.AD(deflt = "none", required = true)
-	public String credentialsPassword();
+	public String credentialsUsername();
 
 	@Meta.AD(
 		deflt = "http://localhost:8080/alfresco/service/api/cmis",
-		required = true)
+		required = true
+	)
 	public String repositoryUrl();
 
 	@Meta.AD(deflt = "Liferay Home", required = true)

@@ -1,7 +1,5 @@
 Bundle-Name: Liferay Portal Store DB
 Bundle-SymbolicName: com.liferay.portal.store.db
 Bundle-Version: 1.0.0
-Import-Package:\
-	*
 Include-Resource:\
 	classes

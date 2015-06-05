@@ -610,11 +610,6 @@ public class CMISStore extends BaseStore {
 		}
 	}
 
-	@Deactivate
-	protected void deactivate() {
-		_systemRootDir = null;
-	}
-
 	protected Folder getCompanyFolder(long companyId) {
 		String name = String.valueOf(companyId);
 

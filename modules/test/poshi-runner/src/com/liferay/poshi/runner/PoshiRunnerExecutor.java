@@ -268,6 +268,8 @@ public class PoshiRunnerExecutor {
 			runVarElement(executeVarElement, false, false);
 		}
 
+		PoshiRunnerStackTraceUtil.setCurrentElement(executeElement);
+
 		String classCommandName = executeElement.attributeValue("function");
 
 		String className = classCommandName;

@@ -39,7 +39,9 @@ public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 
 		BoolFilterBuilder boolFilterBuilder = FilterBuilders.boolFilter();
 
-		boolFilterBuilder.cache(booleanFilter.isCached());
+		if (booleanFilter.isCached() != null) {
+			boolFilterBuilder.cache(booleanFilter.isCached());
+		}
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustBooleanClauses()) {

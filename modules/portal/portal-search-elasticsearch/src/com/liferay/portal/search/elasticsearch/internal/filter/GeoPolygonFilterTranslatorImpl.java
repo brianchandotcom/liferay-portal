@@ -44,7 +44,9 @@ public class GeoPolygonFilterTranslatorImpl
 				geoLocationPoint.getLongitude());
 		}
 
-		geoPolygonFilterBuilder.cache(geoPolygonFilter.isCached());
+		if (geoPolygonFilter.isCached() != null) {
+			geoPolygonFilterBuilder.cache(geoPolygonFilter.isCached());
+		}
 
 		return geoPolygonFilterBuilder;
 	}

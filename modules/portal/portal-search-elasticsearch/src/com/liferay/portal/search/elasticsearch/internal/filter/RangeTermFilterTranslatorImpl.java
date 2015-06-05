@@ -35,7 +35,10 @@ public class RangeTermFilterTranslatorImpl
 		RangeFilterBuilder rangeFilterBuilder = FilterBuilders.rangeFilter(
 			rangeTermFilter.getField());
 
-		rangeFilterBuilder.cache(rangeTermFilter.isCached());
+		if (rangeTermFilter.isCached() != null) {
+			rangeFilterBuilder.cache(rangeTermFilter.isCached());
+		}
+
 		rangeFilterBuilder.from(rangeTermFilter.getLowerBound());
 		rangeFilterBuilder.includeLower(rangeTermFilter.isIncludesLower());
 		rangeFilterBuilder.includeUpper(rangeTermFilter.isIncludesUpper());

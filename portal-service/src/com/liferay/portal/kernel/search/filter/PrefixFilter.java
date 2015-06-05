@@ -19,42 +19,47 @@ import com.liferay.portal.kernel.util.StringBundler;
 /**
  * @author Michael C. Han
  */
-public abstract class BaseFilter implements Filter {
+public class PrefixFilter extends BaseFilter {
 
-	@Override
-	public String getExecutionOption() {
-		return _executionOption;
+	public PrefixFilter(String field, String prefix) {
+		_field = field;
+		_prefix = prefix;
 	}
 
 	@Override
-	public Boolean isCached() {
-		return true;
+	public <T> T accept(FilterVisitor<T> filterVisitor) {
+		return filterVisitor.visit(this);
+	}
+
+	public String getField() {
+		return _field;
+	}
+
+	public String getPrefix() {
+		return _prefix;
 	}
 
 	@Override
-	public void setCached(Boolean cached) {
-		_cached = cached;
-	}
-
-	@Override
-	public void setExecutionOption(String executionOption) {
-		_executionOption = executionOption;
+	public int getSortOrder() {
+		return 5;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(7);
 
-		sb.append("(cached=");
-		sb.append(_cached);
-		sb.append(", executionOption=");
-		sb.append(_executionOption);
-		sb.append(")");
+		sb.append("{(");
+		sb.append(_field);
+		sb.append("=");
+		sb.append(_prefix);
+		sb.append("), ");
+		sb.append(super.toString());
+		sb.append("}");
 
 		return sb.toString();
 	}
 
-	private Boolean _cached;
-	private String _executionOption;
+	private final String _field;
+	private final String _prefix;
 
 }

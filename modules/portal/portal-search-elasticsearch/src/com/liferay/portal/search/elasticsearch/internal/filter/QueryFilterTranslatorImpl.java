@@ -32,13 +32,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true, service = QueryFilterTranslator.class)
 public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 
-	@Reference(unbind = "-")
-	public void setQueryTranslator(
-		QueryTranslator<QueryBuilder> queryTranslator) {
-
-		_queryTranslator = queryTranslator;
-	}
-
 	@Override
 	public FilterBuilder translate(QueryFilter queryFilter) {
 		QueryBuilder queryBuilder = _queryTranslator.translate(
@@ -47,9 +40,18 @@ public class QueryFilterTranslatorImpl implements QueryFilterTranslator {
 		QueryFilterBuilder queryFilterBuilder = FilterBuilders.queryFilter(
 			queryBuilder);
 
-		queryFilterBuilder.cache(queryFilter.isCached());
+		if (queryFilter.isCached() != null) {
+			queryFilterBuilder.cache(queryFilter.isCached());
+		}
 
 		return queryFilterBuilder;
+	}
+
+	@Reference(unbind = "-")
+	protected void setQueryTranslator(
+		QueryTranslator<QueryBuilder> queryTranslator) {
+
+		_queryTranslator = queryTranslator;
 	}
 
 	private QueryTranslator<QueryBuilder> _queryTranslator;

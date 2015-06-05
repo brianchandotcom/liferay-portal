@@ -19,11 +19,10 @@ import com.liferay.portal.kernel.util.StringBundler;
 /**
  * @author Michael C. Han
  */
-public class TermFilter extends BaseFilter {
+public class MissingFilter extends BaseFilter {
 
-	public TermFilter(String field, String value) {
+	public MissingFilter(String field) {
 		_field = field;
-		_value = value;
 	}
 
 	@Override
@@ -37,21 +36,35 @@ public class TermFilter extends BaseFilter {
 
 	@Override
 	public int getSortOrder() {
-		return 3;
+		return 2;
 	}
 
-	public String getValue() {
-		return _value;
+	public Boolean isExists() {
+		return _exists;
+	}
+
+	public Boolean isNullValue() {
+		return _nullValue;
+	}
+
+	public void setExists(boolean exists) {
+		_exists = exists;
+	}
+
+	public void setNullValue(boolean nullValue) {
+		_nullValue = nullValue;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{(");
 		sb.append(_field);
-		sb.append("=");
-		sb.append(_value);
+		sb.append(", _exists=");
+		sb.append(_exists);
+		sb.append(", _nullValue=");
+		sb.append(_nullValue);
 		sb.append("), ");
 		sb.append(super.toString());
 		sb.append("}");
@@ -59,7 +72,8 @@ public class TermFilter extends BaseFilter {
 		return sb.toString();
 	}
 
+	private Boolean _exists;
 	private final String _field;
-	private final String _value;
+	private Boolean _nullValue;
 
 }

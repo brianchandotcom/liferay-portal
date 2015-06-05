@@ -23,6 +23,8 @@ public interface FilterVisitor<T> {
 
 	public T visit(DateRangeTermFilter dateRangeTermFilter);
 
+	public T visit(ExistsFilter existsFilter);
+
 	public T visit(GeoBoundingBoxFilter geoBoundingBoxFilter);
 
 	public T visit(GeoDistanceFilter geoDistanceFilter);
@@ -31,10 +33,16 @@ public interface FilterVisitor<T> {
 
 	public T visit(GeoPolygonFilter geoPolygonFilter);
 
+	public T visit(MissingFilter missingFilter);
+
+	public T visit(PrefixFilter prefixFilter);
+
 	public T visit(QueryFilter queryFilter);
 
 	public T visit(RangeTermFilter rangeTermFilter);
 
 	public T visit(TermFilter termFilter);
+
+	public T visit(TermsFilter termsFilter);
 
 }

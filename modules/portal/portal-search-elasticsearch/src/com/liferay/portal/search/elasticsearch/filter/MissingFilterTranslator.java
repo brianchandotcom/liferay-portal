@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.filter;
+package com.liferay.portal.search.elasticsearch.filter;
+
+import com.liferay.portal.kernel.search.filter.MissingFilter;
+
+import org.elasticsearch.index.query.FilterBuilder;
 
 /**
  * @author Michael C. Han
  */
-public interface Filter {
+public interface MissingFilterTranslator {
 
-	public <T> T accept(FilterVisitor<T> filterVisitor);
-
-	public String getExecutionOption();
-
-	public int getSortOrder();
-
-	public Boolean isCached();
-
-	public void setCached(Boolean cached);
-
-	public void setExecutionOption(String executionOption);
+	public FilterBuilder translate(MissingFilter missingFilter);
 
 }

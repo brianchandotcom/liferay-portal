@@ -39,7 +39,9 @@ public class DateRangeTermFilterTranslatorImpl
 		RangeFilterBuilder rangeFilterBuilder = FilterBuilders.rangeFilter(
 			dateRangeTermFilter.getField());
 
-		rangeFilterBuilder.cache(dateRangeTermFilter.isCached());
+		if (dateRangeTermFilter.isCached() != null) {
+			rangeFilterBuilder.cache(dateRangeTermFilter.isCached());
+		}
 
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			dateRangeTermFilter.getDateFormat(),

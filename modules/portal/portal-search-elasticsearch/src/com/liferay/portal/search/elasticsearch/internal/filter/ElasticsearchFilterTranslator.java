@@ -16,6 +16,7 @@ package com.liferay.portal.search.elasticsearch.internal.filter;
 
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
+import com.liferay.portal.kernel.search.filter.ExistsFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.FilterTranslator;
 import com.liferay.portal.kernel.search.filter.FilterVisitor;
@@ -23,18 +24,25 @@ import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceFilter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
 import com.liferay.portal.kernel.search.filter.GeoPolygonFilter;
+import com.liferay.portal.kernel.search.filter.MissingFilter;
+import com.liferay.portal.kernel.search.filter.PrefixFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.kernel.search.filter.TermFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.search.elasticsearch.filter.BooleanFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.DateRangeTermFilterTranslator;
+import com.liferay.portal.search.elasticsearch.filter.ExistsFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.GeoBoundingBoxFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.GeoDistanceFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.GeoDistanceRangeFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.GeoPolygonFilterTranslator;
+import com.liferay.portal.search.elasticsearch.filter.MissingFilterTranslator;
+import com.liferay.portal.search.elasticsearch.filter.PrefixFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.QueryFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.RangeTermFilterTranslator;
 import com.liferay.portal.search.elasticsearch.filter.TermFilterTranslator;
+import com.liferay.portal.search.elasticsearch.filter.TermsFilterTranslator;
 
 import org.elasticsearch.index.query.FilterBuilder;
 
@@ -67,6 +75,11 @@ public class ElasticsearchFilterTranslator
 	}
 
 	@Override
+	public FilterBuilder visit(ExistsFilter existsFilter) {
+		return _existsFilterTranslator.translate(existsFilter);
+	}
+
+	@Override
 	public FilterBuilder visit(GeoBoundingBoxFilter geoBoundingBoxFilter) {
 		return _geoBoundingBoxFilterTranslator.translate(geoBoundingBoxFilter);
 	}
@@ -88,6 +101,16 @@ public class ElasticsearchFilterTranslator
 	}
 
 	@Override
+	public FilterBuilder visit(MissingFilter missingFilter) {
+		return _missingFilterTranslator.translate(missingFilter);
+	}
+
+	@Override
+	public FilterBuilder visit(PrefixFilter prefixFilter) {
+		return _prefixFilterTranslator.translate(prefixFilter);
+	}
+
+	@Override
 	public FilterBuilder visit(QueryFilter queryFilter) {
 		return _queryFilterTranslator.translate(queryFilter);
 	}
@@ -102,6 +125,11 @@ public class ElasticsearchFilterTranslator
 		return _termFilterTranslator.translate(termFilter);
 	}
 
+	@Override
+	public FilterBuilder visit(TermsFilter termsFilter) {
+		return _termsFilterTranslator.translate(termsFilter);
+	}
+
 	@Reference(unbind = "-")
 	protected void setBooleanQueryTranslator(
 		BooleanFilterTranslator booleanQueryTranslator) {
@@ -114,6 +142,13 @@ public class ElasticsearchFilterTranslator
 		DateRangeTermFilterTranslator dateRangeTermFilterTranslator) {
 
 		_dateRangeTermFilterTranslator = dateRangeTermFilterTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setExistsFilterTranslator(
+		ExistsFilterTranslator existsFilterTranslator) {
+
+		_existsFilterTranslator = existsFilterTranslator;
 	}
 
 	@Reference(unbind = "-")
@@ -145,6 +180,20 @@ public class ElasticsearchFilterTranslator
 	}
 
 	@Reference(unbind = "-")
+	protected void setMissingFilterTranslator(
+		MissingFilterTranslator missingFilterTranslator) {
+
+		_missingFilterTranslator = missingFilterTranslator;
+	}
+
+	@Reference(unbind = "-")
+	protected void setPrefixFilterTranslator(
+		PrefixFilterTranslator prefixFilterTranslator) {
+
+		_prefixFilterTranslator = prefixFilterTranslator;
+	}
+
+	@Reference(unbind = "-")
 	protected void setQueryFilterTranslator(
 		QueryFilterTranslator queryFilterTranslator) {
 
@@ -165,14 +214,25 @@ public class ElasticsearchFilterTranslator
 		_termFilterTranslator = termFilterTranslator;
 	}
 
+	@Reference(unbind = "-")
+	protected void setTermsFilterTranslator(
+		TermsFilterTranslator termsFilterTranslator) {
+
+		_termsFilterTranslator = termsFilterTranslator;
+	}
+
 	private BooleanFilterTranslator _booleanQueryTranslator;
 	private DateRangeTermFilterTranslator _dateRangeTermFilterTranslator;
+	private ExistsFilterTranslator _existsFilterTranslator;
 	private GeoBoundingBoxFilterTranslator _geoBoundingBoxFilterTranslator;
 	private GeoDistanceFilterTranslator _geoDistanceFilterTranslator;
 	private GeoDistanceRangeFilterTranslator _geoDistanceRangeFilterTranslator;
 	private GeoPolygonFilterTranslator _geoPolygonFilterTranslator;
+	private MissingFilterTranslator _missingFilterTranslator;
+	private PrefixFilterTranslator _prefixFilterTranslator;
 	private QueryFilterTranslator _queryFilterTranslator;
 	private RangeTermFilterTranslator _rangeTermFilterTranslator;
 	private TermFilterTranslator _termFilterTranslator;
+	private TermsFilterTranslator _termsFilterTranslator;
 
 }

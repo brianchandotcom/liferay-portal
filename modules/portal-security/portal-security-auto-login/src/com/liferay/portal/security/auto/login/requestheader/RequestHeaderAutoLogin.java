@@ -12,64 +12,56 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login;
+package com.liferay.portal.security.auto.login.requestheader;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auto.login.requestheader.configuration.RequestHeaderAutoLoginConfiguration;
+import com.liferay.portal.security.auto.login.requestheader.constants.RequestHeaderAutoLoginConstants;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
 import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
 @Component(
-	immediate = true,
-	property = {"request.header.auth.hosts.allowed=255.255.255.255"},
-	service = AutoLogin.class
+	configurationPid = "com.liferay.portal.security.auto.login.requestheader.configuration.RequestHeaderAutoLoginConfiguration",
+	immediate = true, service = AutoLogin.class
 )
 public class RequestHeaderAutoLogin extends BaseAutoLogin {
-
-	@Activate
-	public void activate(Map<String, String> properties) {
-		String[] hostsAllowedArray = StringUtil.split(
-			properties.get("request.header.auth.hosts.allowed"));
-
-		for (int i = 0; i < hostsAllowedArray.length; i++) {
-			_hostsAllowed.add(hostsAllowedArray[i]);
-		}
-	}
 
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		long companyId = PortalUtil.getCompanyId(request);
+
 		String remoteAddr = request.getRemoteAddr();
 
-		if (SSOUtil.isAccessAllowed(request, _hostsAllowed)) {
+		if (isAccessAllowed(companyId, request)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Access allowed for " + remoteAddr);
 			}
@@ -82,8 +74,6 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 			return null;
 		}
 
-		long companyId = PortalUtil.getCompanyId(request);
-
 		String screenName = request.getHeader(HttpHeaders.LIFERAY_SCREEN_NAME);
 
 		if (Validator.isNull(screenName)) {
@@ -92,10 +82,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 		User user = null;
 
-		if (PrefsPropsUtil.getBoolean(
-				companyId, PropsKeys.REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP,
-				PropsValues.REQUEST_HEADER_AUTH_IMPORT_FROM_LDAP)) {
-
+		if (isLDAPImportEnabled(companyId)) {
 			try {
 				user = UserImporterUtil.importUser(
 					companyId, StringPool.BLANK, screenName);
@@ -118,9 +105,68 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
+	protected boolean isAccessAllowed(
+		long companyId, HttpServletRequest request) {
+
+		RequestHeaderAutoLoginConfiguration configuration = _getConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		String[] hostsAllowedArray = StringUtil.split(
+			configuration.authHostsAllowed());
+
+		Set<String> hostsAllowed = new HashSet<>();
+
+		for (int i = 0; i < hostsAllowedArray.length; i++) {
+			hostsAllowed.add(hostsAllowedArray[i]);
+		}
+
+		return SSOUtil.isAccessAllowed(request, hostsAllowed);
+	}
+
+	protected boolean isLDAPImportEnabled(long companyId) {
+		RequestHeaderAutoLoginConfiguration configuration = _getConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		return configuration.importFromLDAP();
+	}
+
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	private RequestHeaderAutoLoginConfiguration _getConfiguration(
+		long companyId) {
+
+		try {
+			RequestHeaderAutoLoginConfiguration configuration =
+				_settingsFactory.getSettings(
+					RequestHeaderAutoLoginConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId,
+						RequestHeaderAutoLoginConstants.SERVICE_NAME));
+
+			return configuration;
+		}
+		catch (SettingsException se) {
+			_log.error(
+				"Unable to get RequestHeaderAutoLogin configuration", se);
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		RequestHeaderAutoLogin.class);
 
-	private final Set<String> _hostsAllowed = new HashSet<>();
+	private volatile SettingsFactory _settingsFactory;
 
 }

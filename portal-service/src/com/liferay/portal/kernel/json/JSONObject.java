@@ -73,6 +73,8 @@ public interface JSONObject extends Externalizable {
 
 	public JSONObject put(String key, long value);
 
+	public JSONObject put(String key, Object value);
+
 	public JSONObject put(String key, String value);
 
 	public JSONObject putException(Exception exception);

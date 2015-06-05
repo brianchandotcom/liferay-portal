@@ -283,6 +283,28 @@ public class JSONObjectImpl implements JSONObject {
 	}
 
 	@Override
+	public JSONObject put(String key, Object value) {
+		try {
+			if (value instanceof JSONArray) {
+				put(key, (JSONArray)value);
+			}
+			else if (value instanceof JSONObject) {
+				put(key, (JSONObject)value);
+			}
+			else {
+				_jsonObject.put(key, value);
+			}
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(e, e);
+			}
+		}
+
+		return this;
+	}
+
+	@Override
 	public JSONObject put(String key, String value) {
 		try {
 			_jsonObject.put(key, value);

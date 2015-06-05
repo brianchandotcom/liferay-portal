@@ -144,7 +144,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			long structureVersionId, long groupId, long companyId, long userId,
 			String userName, Timestamp createDate, long structureId,
 			String name, String description, String definition,
-			String storageType, int type)
+			String storageType, int type, int status, long statusByUserId,
+			String statusByUserName, Timestamp statusDate)
 		throws Exception {
 
 		Connection con = null;
@@ -158,8 +159,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			sb.append("insert into DDMStructureVersion (structureVersionId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("structureId, version, name, description, definition, ");
-			sb.append("storageType, type_) values (?, ?, ?, ?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?)");
+			sb.append("storageType, type_, status, statusByUserId, ");
+			sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -178,6 +180,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.setString(11, definition);
 			ps.setString(12, storageType);
 			ps.setInt(13, type);
+			ps.setInt(14, status);
+			ps.setLong(15, statusByUserId);
+			ps.setString(16, statusByUserName);
+			ps.setTimestamp(17, statusDate);
 
 			ps.executeUpdate();
 		}
@@ -197,7 +203,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			long templateVersionId, long groupId, long companyId, long userId,
 			String userName, Timestamp createDate, long classNameId,
 			long classPK, long templateId, String name, String description,
-			String language, String script)
+			String language, String script, int status, long statusByUserId,
+			String statusByUserName, Timestamp statusDate)
 		throws Exception {
 
 		Connection con = null;
@@ -211,8 +218,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			sb.append("insert into DDMTemplateVersion (templateVersionId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
 			sb.append("classNameId, classPK, templateId, version, name, ");
-			sb.append("description, language, script) values (?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("description, language, script, status, ");
+			sb.append("statusByUserId, statusByUserName, statusDate) values (");
+			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -232,6 +240,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.setString(12, description);
 			ps.setString(13, language);
 			ps.setString(14, script);
+			ps.setInt(15, status);
+			ps.setLong(16, statusByUserId);
+			ps.setString(17, statusByUserName);
+			ps.setTimestamp(18, statusDate);
 
 			ps.executeUpdate();
 		}
@@ -639,7 +651,8 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				addStructureVersion(
 					structureVersionId, groupId, companyId, userId, userName,
 					modifiedDate, structureId, name, description, definition,
-					storageType, type);
+					storageType, type, WorkflowConstants.STATUS_APPROVED,
+					userId, userName, modifiedDate);
 
 				String ddmFormLayoutDefinition =
 					getDefaultDDMFormLayoutDefinition(ddmForm);
@@ -695,7 +708,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				addTemplateVersion(
 					increment(), groupId, companyId, userId, userName,
 					modifiedDate, classNameId, classPK, templateId, name,
-					description, language, script);
+					description, language, script,
+					WorkflowConstants.STATUS_APPROVED, userId, userName,
+					modifiedDate);
 			}
 		}
 		finally {

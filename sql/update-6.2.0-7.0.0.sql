@@ -12,8 +12,12 @@ alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
+alter table DDMStructure add versionUserId LONG;
+alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
 
+update DDMStrucrure set versionUserId = userId;
+update DDMStrucrure set versionUserName = userName;
 update DDMStructure set version = '1.0';
 
 create table DDMStructureLayout (
@@ -49,9 +53,13 @@ create table DDMStructureVersion (
 	statusDate DATE null
 );
 
+alter table DDMTemplate add versionUserId LONG;
+alter table DDMTemplate add versionUserName VARCHAR(75) null;
 alter table DDMTemplate add resourceClassNameId LONG;
 alter table DDMTemplate add version VARCHAR(75) null;
 
+update DDMTemplate set versionUserId = userId;
+update DDMTemplate set versionUserName = userName;
 update DDMTemplate set version = '1.0';
 
 create table DDMTemplateVersion (

@@ -1846,3 +1846,33 @@ counts. Since `Indexer.getFacetQuery(...)` was only utilized by the
 `AssetEntriesFacet`, and used to reduce the impact of changes for
 `SearchPermissionChecker.getPermissionBooleanFilter(...)`, the method was
 removed as opposed to deprecated.
+
+---------------------------------------
+
+### Added userId parameter to `update` operations of DDMStructureLocalService DDMTemplateLocalService services
+- **Date:** 2015-Jun-5
+- **JIRA Ticket:** LPS-50939
+
+#### What changed?
+
+A new parameter `long userId` was added in some of the methods starting with  
+`updateStructure` and `updateTemplate` of DDMStructure and DDMTemplate 
+Local services respectively.
+
+#### Who is affected?
+
+This affects any code that invokes the affected methods, as well as any code
+that implements the interface methods.
+
+#### How should I update my code?
+
+Any code calling/implementing 
+`DDMStructureLocalServiceUtil.updateStructure(...)` or 
+`DDMTemplateLocalServiceUtil.updateTemplate(...)` 
+should pass the new userId parameter.
+
+#### Why was this change made?
+
+In order to add support to structure and template versions, audit columns were
+also added to such models. For the service to keep track which the user is
+modifying the structure or template, the `userId` parameter is required.

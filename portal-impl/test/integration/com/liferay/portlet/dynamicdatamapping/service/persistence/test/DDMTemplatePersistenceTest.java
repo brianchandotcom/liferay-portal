@@ -127,6 +127,10 @@ public class DDMTemplatePersistenceTest {
 
 		newDDMTemplate.setUserName(RandomTestUtil.randomString());
 
+		newDDMTemplate.setVersionUserId(RandomTestUtil.nextLong());
+
+		newDDMTemplate.setVersionUserName(RandomTestUtil.randomString());
+
 		newDDMTemplate.setCreateDate(RandomTestUtil.nextDate());
 
 		newDDMTemplate.setModifiedDate(RandomTestUtil.nextDate());
@@ -177,6 +181,10 @@ public class DDMTemplatePersistenceTest {
 			newDDMTemplate.getUserId());
 		Assert.assertEquals(existingDDMTemplate.getUserName(),
 			newDDMTemplate.getUserName());
+		Assert.assertEquals(existingDDMTemplate.getVersionUserId(),
+			newDDMTemplate.getVersionUserId());
+		Assert.assertEquals(existingDDMTemplate.getVersionUserName(),
+			newDDMTemplate.getVersionUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMTemplate.getCreateDate()),
 			Time.getShortTimestamp(newDDMTemplate.getCreateDate()));
@@ -400,12 +408,13 @@ public class DDMTemplatePersistenceTest {
 	protected OrderByComparator<DDMTemplate> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMTemplate", "uuid", true,
 			"templateId", true, "groupId", true, "companyId", true, "userId",
-			true, "userName", true, "createDate", true, "modifiedDate", true,
-			"classNameId", true, "classPK", true, "resourceClassNameId", true,
-			"templateKey", true, "version", true, "name", true, "description",
-			true, "type", true, "mode", true, "language", true, "script", true,
-			"cacheable", true, "smallImage", true, "smallImageId", true,
-			"smallImageURL", true);
+			true, "userName", true, "versionUserId", true, "versionUserName",
+			true, "createDate", true, "modifiedDate", true, "classNameId",
+			true, "classPK", true, "resourceClassNameId", true, "templateKey",
+			true, "version", true, "name", true, "description", true, "type",
+			true, "mode", true, "language", true, "script", true, "cacheable",
+			true, "smallImage", true, "smallImageId", true, "smallImageURL",
+			true);
 	}
 
 	@Test
@@ -647,6 +656,10 @@ public class DDMTemplatePersistenceTest {
 		ddmTemplate.setUserId(RandomTestUtil.nextLong());
 
 		ddmTemplate.setUserName(RandomTestUtil.randomString());
+
+		ddmTemplate.setVersionUserId(RandomTestUtil.nextLong());
+
+		ddmTemplate.setVersionUserName(RandomTestUtil.randomString());
 
 		ddmTemplate.setCreateDate(RandomTestUtil.nextDate());
 

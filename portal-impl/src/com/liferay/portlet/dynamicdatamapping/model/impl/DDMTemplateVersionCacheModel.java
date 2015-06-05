@@ -66,7 +66,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{templateVersionId=");
 		sb.append(templateVersionId);
@@ -96,6 +96,14 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		sb.append(language);
 		sb.append(", script=");
 		sb.append(script);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -163,6 +171,23 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 			ddmTemplateVersionImpl.setScript(script);
 		}
 
+		ddmTemplateVersionImpl.setStatus(status);
+		ddmTemplateVersionImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			ddmTemplateVersionImpl.setStatusByUserName(StringPool.BLANK);
+		}
+		else {
+			ddmTemplateVersionImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			ddmTemplateVersionImpl.setStatusDate(null);
+		}
+		else {
+			ddmTemplateVersionImpl.setStatusDate(new Date(statusDate));
+		}
+
 		ddmTemplateVersionImpl.resetOriginalValues();
 
 		return ddmTemplateVersionImpl;
@@ -184,6 +209,10 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		description = objectInput.readUTF();
 		language = objectInput.readUTF();
 		script = objectInput.readUTF();
+		status = objectInput.readInt();
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -240,6 +269,18 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		else {
 			objectOutput.writeUTF(script);
 		}
+
+		objectOutput.writeInt(status);
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long templateVersionId;
@@ -256,4 +297,8 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 	public String description;
 	public String language;
 	public String script;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

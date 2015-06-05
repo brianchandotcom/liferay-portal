@@ -827,6 +827,525 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 	private static final String _FINDER_COLUMN_T_V_VERSION_1 = "ddmTemplateVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_T_V_VERSION_2 = "ddmTemplateVersion.version = ?";
 	private static final String _FINDER_COLUMN_T_V_VERSION_3 = "(ddmTemplateVersion.version IS NULL OR ddmTemplateVersion.version = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S = new FinderPath(DDMTemplateVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateVersionModelImpl.FINDER_CACHE_ENABLED,
+			DDMTemplateVersionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByT_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S = new FinderPath(DDMTemplateVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateVersionModelImpl.FINDER_CACHE_ENABLED,
+			DDMTemplateVersionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_S",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			DDMTemplateVersionModelImpl.TEMPLATEID_COLUMN_BITMASK |
+			DDMTemplateVersionModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_T_S = new FinderPath(DDMTemplateVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMTemplateVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_S",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the d d m template versions where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @return the matching d d m template versions
+	 */
+	@Override
+	public List<DDMTemplateVersion> findByT_S(long templateId, int status) {
+		return findByT_S(templateId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param start the lower bound of the range of d d m template versions
+	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @return the range of matching d d m template versions
+	 */
+	@Override
+	public List<DDMTemplateVersion> findByT_S(long templateId, int status,
+		int start, int end) {
+		return findByT_S(templateId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m template versions where templateId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMTemplateVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param start the lower bound of the range of d d m template versions
+	 * @param end the upper bound of the range of d d m template versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m template versions
+	 */
+	@Override
+	public List<DDMTemplateVersion> findByT_S(long templateId, int status,
+		int start, int end,
+		OrderByComparator<DDMTemplateVersion> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S;
+			finderArgs = new Object[] { templateId, status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_T_S;
+			finderArgs = new Object[] {
+					templateId, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DDMTemplateVersion> list = (List<DDMTemplateVersion>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DDMTemplateVersion ddmTemplateVersion : list) {
+				if ((templateId != ddmTemplateVersion.getTemplateId()) ||
+						(status != ddmTemplateVersion.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_DDMTEMPLATEVERSION_WHERE);
+
+			query.append(_FINDER_COLUMN_T_S_TEMPLATEID_2);
+
+			query.append(_FINDER_COLUMN_T_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDMTemplateVersionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(templateId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<DDMTemplateVersion>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMTemplateVersion>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m template version
+	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 */
+	@Override
+	public DDMTemplateVersion findByT_S_First(long templateId, int status,
+		OrderByComparator<DDMTemplateVersion> orderByComparator)
+		throws NoSuchTemplateVersionException {
+		DDMTemplateVersion ddmTemplateVersion = fetchByT_S_First(templateId,
+				status, orderByComparator);
+
+		if (ddmTemplateVersion != null) {
+			return ddmTemplateVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("templateId=");
+		msg.append(templateId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 */
+	@Override
+	public DDMTemplateVersion fetchByT_S_First(long templateId, int status,
+		OrderByComparator<DDMTemplateVersion> orderByComparator) {
+		List<DDMTemplateVersion> list = findByT_S(templateId, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m template version
+	 * @throws NoSuchTemplateVersionException if a matching d d m template version could not be found
+	 */
+	@Override
+	public DDMTemplateVersion findByT_S_Last(long templateId, int status,
+		OrderByComparator<DDMTemplateVersion> orderByComparator)
+		throws NoSuchTemplateVersionException {
+		DDMTemplateVersion ddmTemplateVersion = fetchByT_S_Last(templateId,
+				status, orderByComparator);
+
+		if (ddmTemplateVersion != null) {
+			return ddmTemplateVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("templateId=");
+		msg.append(templateId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTemplateVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m template version, or <code>null</code> if a matching d d m template version could not be found
+	 */
+	@Override
+	public DDMTemplateVersion fetchByT_S_Last(long templateId, int status,
+		OrderByComparator<DDMTemplateVersion> orderByComparator) {
+		int count = countByT_S(templateId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDMTemplateVersion> list = findByT_S(templateId, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the d d m template versions before and after the current d d m template version in the ordered set where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateVersionId the primary key of the current d d m template version
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next d d m template version
+	 * @throws NoSuchTemplateVersionException if a d d m template version with the primary key could not be found
+	 */
+	@Override
+	public DDMTemplateVersion[] findByT_S_PrevAndNext(long templateVersionId,
+		long templateId, int status,
+		OrderByComparator<DDMTemplateVersion> orderByComparator)
+		throws NoSuchTemplateVersionException {
+		DDMTemplateVersion ddmTemplateVersion = findByPrimaryKey(templateVersionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMTemplateVersion[] array = new DDMTemplateVersionImpl[3];
+
+			array[0] = getByT_S_PrevAndNext(session, ddmTemplateVersion,
+					templateId, status, orderByComparator, true);
+
+			array[1] = ddmTemplateVersion;
+
+			array[2] = getByT_S_PrevAndNext(session, ddmTemplateVersion,
+					templateId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMTemplateVersion getByT_S_PrevAndNext(Session session,
+		DDMTemplateVersion ddmTemplateVersion, long templateId, int status,
+		OrderByComparator<DDMTemplateVersion> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DDMTEMPLATEVERSION_WHERE);
+
+		query.append(_FINDER_COLUMN_T_S_TEMPLATEID_2);
+
+		query.append(_FINDER_COLUMN_T_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDMTemplateVersionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(templateId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ddmTemplateVersion);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DDMTemplateVersion> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the d d m template versions where templateId = &#63; and status = &#63; from the database.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByT_S(long templateId, int status) {
+		for (DDMTemplateVersion ddmTemplateVersion : findByT_S(templateId,
+				status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ddmTemplateVersion);
+		}
+	}
+
+	/**
+	 * Returns the number of d d m template versions where templateId = &#63; and status = &#63;.
+	 *
+	 * @param templateId the template ID
+	 * @param status the status
+	 * @return the number of matching d d m template versions
+	 */
+	@Override
+	public int countByT_S(long templateId, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_S;
+
+		Object[] finderArgs = new Object[] { templateId, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DDMTEMPLATEVERSION_WHERE);
+
+			query.append(_FINDER_COLUMN_T_S_TEMPLATEID_2);
+
+			query.append(_FINDER_COLUMN_T_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(templateId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_T_S_TEMPLATEID_2 = "ddmTemplateVersion.templateId = ? AND ";
+	private static final String _FINDER_COLUMN_T_S_STATUS_2 = "ddmTemplateVersion.status = ?";
 
 	public DDMTemplateVersionPersistenceImpl() {
 		setModelClass(DDMTemplateVersion.class);
@@ -1130,6 +1649,27 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TEMPLATEID,
 					args);
 			}
+
+			if ((ddmTemplateVersionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ddmTemplateVersionModelImpl.getOriginalTemplateId(),
+						ddmTemplateVersionModelImpl.getOriginalStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+					args);
+
+				args = new Object[] {
+						ddmTemplateVersionModelImpl.getTemplateId(),
+						ddmTemplateVersionModelImpl.getStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_S,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(DDMTemplateVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -1169,6 +1709,10 @@ public class DDMTemplateVersionPersistenceImpl extends BasePersistenceImpl<DDMTe
 		ddmTemplateVersionImpl.setDescription(ddmTemplateVersion.getDescription());
 		ddmTemplateVersionImpl.setLanguage(ddmTemplateVersion.getLanguage());
 		ddmTemplateVersionImpl.setScript(ddmTemplateVersion.getScript());
+		ddmTemplateVersionImpl.setStatus(ddmTemplateVersion.getStatus());
+		ddmTemplateVersionImpl.setStatusByUserId(ddmTemplateVersion.getStatusByUserId());
+		ddmTemplateVersionImpl.setStatusByUserName(ddmTemplateVersion.getStatusByUserName());
+		ddmTemplateVersionImpl.setStatusDate(ddmTemplateVersion.getStatusDate());
 
 		return ddmTemplateVersionImpl;
 	}

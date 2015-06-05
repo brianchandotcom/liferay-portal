@@ -127,6 +127,10 @@ public class DDMStructurePersistenceTest {
 
 		newDDMStructure.setUserName(RandomTestUtil.randomString());
 
+		newDDMStructure.setVersionUserId(RandomTestUtil.nextLong());
+
+		newDDMStructure.setVersionUserName(RandomTestUtil.randomString());
+
 		newDDMStructure.setCreateDate(RandomTestUtil.nextDate());
 
 		newDDMStructure.setModifiedDate(RandomTestUtil.nextDate());
@@ -165,6 +169,10 @@ public class DDMStructurePersistenceTest {
 			newDDMStructure.getUserId());
 		Assert.assertEquals(existingDDMStructure.getUserName(),
 			newDDMStructure.getUserName());
+		Assert.assertEquals(existingDDMStructure.getVersionUserId(),
+			newDDMStructure.getVersionUserId());
+		Assert.assertEquals(existingDDMStructure.getVersionUserName(),
+			newDDMStructure.getVersionUserName());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingDDMStructure.getCreateDate()),
 			Time.getShortTimestamp(newDDMStructure.getCreateDate()));
@@ -334,11 +342,11 @@ public class DDMStructurePersistenceTest {
 	protected OrderByComparator<DDMStructure> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("DDMStructure", "uuid",
 			true, "structureId", true, "groupId", true, "companyId", true,
-			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "parentStructureId", true, "classNameId",
-			true, "structureKey", true, "version", true, "name", true,
-			"description", true, "definition", true, "storageType", true,
-			"type", true);
+			"userId", true, "userName", true, "versionUserId", true,
+			"versionUserName", true, "createDate", true, "modifiedDate", true,
+			"parentStructureId", true, "classNameId", true, "structureKey",
+			true, "version", true, "name", true, "description", true,
+			"definition", true, "storageType", true, "type", true);
 	}
 
 	@Test
@@ -576,6 +584,10 @@ public class DDMStructurePersistenceTest {
 		ddmStructure.setUserId(RandomTestUtil.nextLong());
 
 		ddmStructure.setUserName(RandomTestUtil.randomString());
+
+		ddmStructure.setVersionUserId(RandomTestUtil.nextLong());
+
+		ddmStructure.setVersionUserName(RandomTestUtil.randomString());
 
 		ddmStructure.setCreateDate(RandomTestUtil.nextDate());
 

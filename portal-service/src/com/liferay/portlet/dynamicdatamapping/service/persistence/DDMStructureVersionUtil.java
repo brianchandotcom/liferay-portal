@@ -318,6 +318,157 @@ public class DDMStructureVersionUtil {
 	}
 
 	/**
+	* Returns all the d d m structure versions where structureId = &#63; and status = &#63;.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @return the matching d d m structure versions
+	*/
+	public static List<DDMStructureVersion> findByS_S(long structureId,
+		int status) {
+		return getPersistence().findByS_S(structureId, status);
+	}
+
+	/**
+	* Returns a range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @param start the lower bound of the range of d d m structure versions
+	* @param end the upper bound of the range of d d m structure versions (not inclusive)
+	* @return the range of matching d d m structure versions
+	*/
+	public static List<DDMStructureVersion> findByS_S(long structureId,
+		int status, int start, int end) {
+		return getPersistence().findByS_S(structureId, status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @param start the lower bound of the range of d d m structure versions
+	* @param end the upper bound of the range of d d m structure versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching d d m structure versions
+	*/
+	public static List<DDMStructureVersion> findByS_S(long structureId,
+		int status, int start, int end,
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
+		return getPersistence()
+				   .findByS_S(structureId, status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure version
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	*/
+	public static DDMStructureVersion findByS_S_First(long structureId,
+		int status, OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		return getPersistence()
+				   .findByS_S_First(structureId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the first d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	*/
+	public static DDMStructureVersion fetchByS_S_First(long structureId,
+		int status, OrderByComparator<DDMStructureVersion> orderByComparator) {
+		return getPersistence()
+				   .fetchByS_S_First(structureId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure version
+	* @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	*/
+	public static DDMStructureVersion findByS_S_Last(long structureId,
+		int status, OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		return getPersistence()
+				   .findByS_S_Last(structureId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the last d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	*/
+	public static DDMStructureVersion fetchByS_S_Last(long structureId,
+		int status, OrderByComparator<DDMStructureVersion> orderByComparator) {
+		return getPersistence()
+				   .fetchByS_S_Last(structureId, status, orderByComparator);
+	}
+
+	/**
+	* Returns the d d m structure versions before and after the current d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	*
+	* @param structureVersionId the primary key of the current d d m structure version
+	* @param structureId the structure ID
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next d d m structure version
+	* @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	*/
+	public static DDMStructureVersion[] findByS_S_PrevAndNext(
+		long structureVersionId, long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws com.liferay.portlet.dynamicdatamapping.NoSuchStructureVersionException {
+		return getPersistence()
+				   .findByS_S_PrevAndNext(structureVersionId, structureId,
+			status, orderByComparator);
+	}
+
+	/**
+	* Removes all the d d m structure versions where structureId = &#63; and status = &#63; from the database.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	*/
+	public static void removeByS_S(long structureId, int status) {
+		getPersistence().removeByS_S(structureId, status);
+	}
+
+	/**
+	* Returns the number of d d m structure versions where structureId = &#63; and status = &#63;.
+	*
+	* @param structureId the structure ID
+	* @param status the status
+	* @return the number of matching d d m structure versions
+	*/
+	public static int countByS_S(long structureId, int status) {
+		return getPersistence().countByS_S(structureId, status);
+	}
+
+	/**
 	* Caches the d d m structure version in the entity cache if it is enabled.
 	*
 	* @param ddmStructureVersion the d d m structure version

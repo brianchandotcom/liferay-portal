@@ -830,6 +830,525 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 	private static final String _FINDER_COLUMN_S_V_VERSION_1 = "ddmStructureVersion.version IS NULL";
 	private static final String _FINDER_COLUMN_S_V_VERSION_2 = "ddmStructureVersion.version = ?";
 	private static final String _FINDER_COLUMN_S_V_VERSION_3 = "(ddmStructureVersion.version IS NULL OR ddmStructureVersion.version = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_S_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureVersionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByS_S",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED,
+			DDMStructureVersionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByS_S",
+			new String[] { Long.class.getName(), Integer.class.getName() },
+			DDMStructureVersionModelImpl.STRUCTUREID_COLUMN_BITMASK |
+			DDMStructureVersionModelImpl.STATUS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_S_S = new FinderPath(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
+			DDMStructureVersionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByS_S",
+			new String[] { Long.class.getName(), Integer.class.getName() });
+
+	/**
+	 * Returns all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @return the matching d d m structure versions
+	 */
+	@Override
+	public List<DDMStructureVersion> findByS_S(long structureId, int status) {
+		return findByS_S(structureId, status, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param start the lower bound of the range of d d m structure versions
+	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @return the range of matching d d m structure versions
+	 */
+	@Override
+	public List<DDMStructureVersion> findByS_S(long structureId, int status,
+		int start, int end) {
+		return findByS_S(structureId, status, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the d d m structure versions where structureId = &#63; and status = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param start the lower bound of the range of d d m structure versions
+	 * @param end the upper bound of the range of d d m structure versions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching d d m structure versions
+	 */
+	@Override
+	public List<DDMStructureVersion> findByS_S(long structureId, int status,
+		int start, int end,
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S;
+			finderArgs = new Object[] { structureId, status };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_S_S;
+			finderArgs = new Object[] {
+					structureId, status,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<DDMStructureVersion> list = (List<DDMStructureVersion>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (DDMStructureVersion ddmStructureVersion : list) {
+				if ((structureId != ddmStructureVersion.getStructureId()) ||
+						(status != ddmStructureVersion.getStatus())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE);
+
+			query.append(_FINDER_COLUMN_S_S_STRUCTUREID_2);
+
+			query.append(_FINDER_COLUMN_S_S_STATUS_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(DDMStructureVersionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(structureId);
+
+				qPos.add(status);
+
+				if (!pagination) {
+					list = (List<DDMStructureVersion>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<DDMStructureVersion>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m structure version
+	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 */
+	@Override
+	public DDMStructureVersion findByS_S_First(long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException {
+		DDMStructureVersion ddmStructureVersion = fetchByS_S_First(structureId,
+				status, orderByComparator);
+
+		if (ddmStructureVersion != null) {
+			return ddmStructureVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("structureId=");
+		msg.append(structureId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStructureVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 */
+	@Override
+	public DDMStructureVersion fetchByS_S_First(long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
+		List<DDMStructureVersion> list = findByS_S(structureId, status, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m structure version
+	 * @throws NoSuchStructureVersionException if a matching d d m structure version could not be found
+	 */
+	@Override
+	public DDMStructureVersion findByS_S_Last(long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException {
+		DDMStructureVersion ddmStructureVersion = fetchByS_S_Last(structureId,
+				status, orderByComparator);
+
+		if (ddmStructureVersion != null) {
+			return ddmStructureVersion;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("structureId=");
+		msg.append(structureId);
+
+		msg.append(", status=");
+		msg.append(status);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchStructureVersionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching d d m structure version, or <code>null</code> if a matching d d m structure version could not be found
+	 */
+	@Override
+	public DDMStructureVersion fetchByS_S_Last(long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator) {
+		int count = countByS_S(structureId, status);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<DDMStructureVersion> list = findByS_S(structureId, status,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the d d m structure versions before and after the current d d m structure version in the ordered set where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureVersionId the primary key of the current d d m structure version
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next d d m structure version
+	 * @throws NoSuchStructureVersionException if a d d m structure version with the primary key could not be found
+	 */
+	@Override
+	public DDMStructureVersion[] findByS_S_PrevAndNext(
+		long structureVersionId, long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException {
+		DDMStructureVersion ddmStructureVersion = findByPrimaryKey(structureVersionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			DDMStructureVersion[] array = new DDMStructureVersionImpl[3];
+
+			array[0] = getByS_S_PrevAndNext(session, ddmStructureVersion,
+					structureId, status, orderByComparator, true);
+
+			array[1] = ddmStructureVersion;
+
+			array[2] = getByS_S_PrevAndNext(session, ddmStructureVersion,
+					structureId, status, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected DDMStructureVersion getByS_S_PrevAndNext(Session session,
+		DDMStructureVersion ddmStructureVersion, long structureId, int status,
+		OrderByComparator<DDMStructureVersion> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_DDMSTRUCTUREVERSION_WHERE);
+
+		query.append(_FINDER_COLUMN_S_S_STRUCTUREID_2);
+
+		query.append(_FINDER_COLUMN_S_S_STATUS_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(DDMStructureVersionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(structureId);
+
+		qPos.add(status);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ddmStructureVersion);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<DDMStructureVersion> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the d d m structure versions where structureId = &#63; and status = &#63; from the database.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 */
+	@Override
+	public void removeByS_S(long structureId, int status) {
+		for (DDMStructureVersion ddmStructureVersion : findByS_S(structureId,
+				status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ddmStructureVersion);
+		}
+	}
+
+	/**
+	 * Returns the number of d d m structure versions where structureId = &#63; and status = &#63;.
+	 *
+	 * @param structureId the structure ID
+	 * @param status the status
+	 * @return the number of matching d d m structure versions
+	 */
+	@Override
+	public int countByS_S(long structureId, int status) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_S_S;
+
+		Object[] finderArgs = new Object[] { structureId, status };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_DDMSTRUCTUREVERSION_WHERE);
+
+			query.append(_FINDER_COLUMN_S_S_STRUCTUREID_2);
+
+			query.append(_FINDER_COLUMN_S_S_STATUS_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(structureId);
+
+				qPos.add(status);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_S_S_STRUCTUREID_2 = "ddmStructureVersion.structureId = ? AND ";
+	private static final String _FINDER_COLUMN_S_S_STATUS_2 = "ddmStructureVersion.status = ?";
 
 	public DDMStructureVersionPersistenceImpl() {
 		setModelClass(DDMStructureVersion.class);
@@ -1137,6 +1656,27 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STRUCTUREID,
 					args);
 			}
+
+			if ((ddmStructureVersionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ddmStructureVersionModelImpl.getOriginalStructureId(),
+						ddmStructureVersionModelImpl.getOriginalStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S,
+					args);
+
+				args = new Object[] {
+						ddmStructureVersionModelImpl.getStructureId(),
+						ddmStructureVersionModelImpl.getStatus()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_S_S, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_S_S,
+					args);
+			}
 		}
 
 		EntityCacheUtil.putResult(DDMStructureVersionModelImpl.ENTITY_CACHE_ENABLED,
@@ -1175,6 +1715,10 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersionImpl.setDefinition(ddmStructureVersion.getDefinition());
 		ddmStructureVersionImpl.setStorageType(ddmStructureVersion.getStorageType());
 		ddmStructureVersionImpl.setType(ddmStructureVersion.getType());
+		ddmStructureVersionImpl.setStatus(ddmStructureVersion.getStatus());
+		ddmStructureVersionImpl.setStatusByUserId(ddmStructureVersion.getStatusByUserId());
+		ddmStructureVersionImpl.setStatusByUserName(ddmStructureVersion.getStatusByUserName());
+		ddmStructureVersionImpl.setStatusDate(ddmStructureVersion.getStatusDate());
 
 		return ddmStructureVersionImpl;
 	}

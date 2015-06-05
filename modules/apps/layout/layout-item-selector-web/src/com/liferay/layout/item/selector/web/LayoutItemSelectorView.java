@@ -15,6 +15,8 @@
 package com.liferay.layout.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.layout.item.selector.LayoutItemSelectorCriterion;
+import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
 
@@ -31,6 +33,7 @@ import javax.servlet.ServletResponse;
 /**
  * @author Roberto Díaz
  */
+@Component(service = ItemSelectorView.class)
 public class LayoutItemSelectorView
 	implements ItemSelectorView<LayoutItemSelectorCriterion> {
 

@@ -78,15 +78,10 @@ public class WikiPageResourceLocalServiceImpl
 			nodeId, title);
 
 		if (pageResource == null) {
-			long pageResourcePrimKey = counterLocalService.increment();
 
-			pageResource = wikiPageResourcePersistence.create(
-				pageResourcePrimKey);
 
-			pageResource.setNodeId(nodeId);
-			pageResource.setTitle(title);
 
-			wikiPageResourcePersistence.update(pageResource);
+			pageResource = addPageResource(nodeId, title);
 		}
 
 		return pageResource.getResourcePrimKey();

@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -26,27 +26,20 @@ import java.util.Map;
 
 /**
  * @author Pablo Carvalho
+ * @author Marcellus Tavares
  */
 public class DDMFormField implements Serializable {
 
 	public DDMFormField(DDMFormField ddmFormField) {
-		_dataType = ddmFormField._dataType;
-		_ddmFormFieldOptions = new DDMFormFieldOptions(
-			ddmFormField._ddmFormFieldOptions);
-		_indexType = ddmFormField._indexType;
-		_label = new LocalizedValue(ddmFormField._label);
-		_localizable = ddmFormField._localizable;
-		_multiple = ddmFormField._multiple;
-		_name = ddmFormField._name;
-		_namespace = ddmFormField._namespace;
-		_predefinedValue = new LocalizedValue(ddmFormField._predefinedValue);
-		_readOnly = ddmFormField._readOnly;
-		_repeatable = ddmFormField._repeatable;
-		_required = ddmFormField._required;
-		_showLabel = ddmFormField._showLabel;
-		_style = new LocalizedValue(ddmFormField._style);
-		_tip = new LocalizedValue(ddmFormField._tip);
-		_type = ddmFormField._type;
+		_properties = new LinkedHashMap<>(ddmFormField._properties);
+
+		setDDMFormFieldOptions(
+			new DDMFormFieldOptions(ddmFormField.getDDMFormFieldOptions()));
+		setLabel(new LocalizedValue(ddmFormField.getLabel()));
+		setPredefinedValue(
+			new LocalizedValue(ddmFormField.getPredefinedValue()));
+		setStyle(new LocalizedValue(ddmFormField.getStyle()));
+		setTip(new LocalizedValue(ddmFormField.getTip()));
 
 		for (DDMFormField nestedDDMFormField :
 				ddmFormField._nestedDDMFormFields) {
@@ -56,8 +49,16 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormField(String name, String type) {
-		_name = name;
-		_type = type;
+		_properties = new LinkedHashMap<>();
+
+		setName(name);
+		setType(type);
+
+		setDDMFormFieldOptions(new DDMFormFieldOptions());
+		setLabel(new LocalizedValue());
+		setPredefinedValue(new LocalizedValue());
+		setStyle(new LocalizedValue());
+		setTip(new LocalizedValue());
 	}
 
 	public void addNestedDDMFormField(DDMFormField nestedDDMFormField) {
@@ -67,7 +68,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	public String getDataType() {
-		return _dataType;
+		return MapUtil.getString(_properties, "dataType");
 	}
 
 	public DDMForm getDDMForm() {
@@ -75,23 +76,23 @@ public class DDMFormField implements Serializable {
 	}
 
 	public DDMFormFieldOptions getDDMFormFieldOptions() {
-		return _ddmFormFieldOptions;
+		return (DDMFormFieldOptions)_properties.get("options");
 	}
 
 	public String getIndexType() {
-		return _indexType;
+		return MapUtil.getString(_properties, "indexType");
 	}
 
 	public LocalizedValue getLabel() {
-		return _label;
+		return (LocalizedValue)_properties.get("label");
 	}
 
 	public String getName() {
-		return _name;
+		return MapUtil.getString(_properties, "name");
 	}
 
 	public String getNamespace() {
-		return _namespace;
+		return MapUtil.getString(_properties, "namespace");
 	}
 
 	public List<DDMFormField> getNestedDDMFormFields() {
@@ -114,47 +115,51 @@ public class DDMFormField implements Serializable {
 	}
 
 	public LocalizedValue getPredefinedValue() {
-		return _predefinedValue;
+		return (LocalizedValue)_properties.get("predefinedValue");
+	}
+
+	public Object getProperty(String name) {
+		return _properties.get(name);
 	}
 
 	public LocalizedValue getStyle() {
-		return _style;
+		return (LocalizedValue)_properties.get("style");
 	}
 
 	public LocalizedValue getTip() {
-		return _tip;
+		return (LocalizedValue)_properties.get("tip");
 	}
 
 	public String getType() {
-		return _type;
+		return MapUtil.getString(_properties, "type");
 	}
 
 	public boolean isLocalizable() {
-		return _localizable;
+		return MapUtil.getBoolean(_properties, "localizable");
 	}
 
 	public boolean isMultiple() {
-		return _multiple;
+		return MapUtil.getBoolean(_properties, "localizable");
 	}
 
 	public boolean isReadOnly() {
-		return _readOnly;
+		return MapUtil.getBoolean(_properties, "readOnly");
 	}
 
 	public boolean isRepeatable() {
-		return _repeatable;
+		return MapUtil.getBoolean(_properties, "repeatable");
 	}
 
 	public boolean isRequired() {
-		return _required;
+		return MapUtil.getBoolean(_properties, "required");
 	}
 
 	public boolean isShowLabel() {
-		return _showLabel;
+		return MapUtil.getBoolean(_properties, "showLabel");
 	}
 
 	public boolean isTransient() {
-		if (Validator.isNull(_dataType)) {
+		if (Validator.isNull(getDataType())) {
 			return true;
 		}
 
@@ -162,7 +167,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	public void setDataType(String dataType) {
-		_dataType = dataType;
+		_properties.put("dataType", dataType);
 	}
 
 	public void setDDMForm(DDMForm ddmForm) {
@@ -176,31 +181,31 @@ public class DDMFormField implements Serializable {
 	public void setDDMFormFieldOptions(
 		DDMFormFieldOptions ddmFormFieldOptions) {
 
-		_ddmFormFieldOptions = ddmFormFieldOptions;
+		_properties.put("options", ddmFormFieldOptions);
 	}
 
 	public void setIndexType(String indexType) {
-		_indexType = indexType;
+		_properties.put("indexType", indexType);
 	}
 
 	public void setLabel(LocalizedValue label) {
-		_label = label;
+		_properties.put("label", label);
 	}
 
 	public void setLocalizable(boolean localizable) {
-		_localizable = localizable;
+		_properties.put("localizable", localizable);
 	}
 
 	public void setMultiple(boolean multiple) {
-		_multiple = multiple;
+		_properties.put("multiple", multiple);
 	}
 
 	public void setName(String name) {
-		_name = name;
+		_properties.put("name", name);
 	}
 
 	public void setNamespace(String namespace) {
-		_namespace = namespace;
+		_properties.put("namespace", namespace);
 	}
 
 	public void setNestedDDMFormFields(List<DDMFormField> nestedDDMFormFields) {
@@ -208,55 +213,43 @@ public class DDMFormField implements Serializable {
 	}
 
 	public void setPredefinedValue(LocalizedValue predefinedValue) {
-		_predefinedValue = predefinedValue;
+		_properties.put("predefinedValue", predefinedValue);
+	}
+
+	public void setProperty(String name, Object value) {
+		_properties.put(name, value);
 	}
 
 	public void setReadOnly(boolean readOnly) {
-		_readOnly = readOnly;
+		_properties.put("readOnly", readOnly);
 	}
 
 	public void setRepeatable(boolean repeatable) {
-		_repeatable = repeatable;
+		_properties.put("repeatable", repeatable);
 	}
 
 	public void setRequired(boolean required) {
-		_required = required;
+		_properties.put("required", required);
 	}
 
 	public void setShowLabel(boolean showLabel) {
-		_showLabel = showLabel;
+		_properties.put("showLabel", showLabel);
 	}
 
 	public void setStyle(LocalizedValue style) {
-		_style = style;
+		_properties.put("style", style);
 	}
 
 	public void setTip(LocalizedValue tip) {
-		_tip = tip;
+		_properties.put("tip", tip);
 	}
 
 	public void setType(String type) {
-		_type = type;
+		_properties.put("type", type);
 	}
 
-	private String _dataType;
 	private DDMForm _ddmForm;
-	private DDMFormFieldOptions _ddmFormFieldOptions =
-		new DDMFormFieldOptions();
-	private String _indexType = StringPool.BLANK;
-	private LocalizedValue _label = new LocalizedValue();
-	private boolean _localizable;
-	private boolean _multiple;
-	private String _name;
-	private String _namespace;
 	private List<DDMFormField> _nestedDDMFormFields = new ArrayList<>();
-	private LocalizedValue _predefinedValue = new LocalizedValue();
-	private boolean _readOnly;
-	private boolean _repeatable;
-	private boolean _required;
-	private boolean _showLabel;
-	private LocalizedValue _style = new LocalizedValue();
-	private LocalizedValue _tip = new LocalizedValue();
-	private String _type;
+	private final Map<String, Object> _properties;
 
 }

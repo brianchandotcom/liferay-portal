@@ -53,12 +53,10 @@ if (Validator.isNotNull(portletResource)) {
 }
 %>
 
-<portlet:actionURL var="editRolePermissionsURL">
-	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_permissions.jsp" />
-</portlet:actionURL>
+<portlet:actionURL var="editRolePermissionsURL" />
 
 <aui:form action="<%= editRolePermissionsURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" />
 	<aui:input name="roleId" type="hidden" value="<%= role.getRoleId() %>" />

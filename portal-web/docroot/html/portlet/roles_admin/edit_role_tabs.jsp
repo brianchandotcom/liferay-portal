@@ -45,7 +45,6 @@ PortletURL editRoleURL = renderResponse.createRenderURL();
 
 editRoleURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
 editRoleURL.setParameter("redirect", backURL);
-editRoleURL.setParameter(Constants.CMD, Constants.VIEW);
 editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 // Define permissions

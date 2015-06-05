@@ -21,5 +21,5 @@ package com.liferay.portal.lar;
  */
 @Deprecated
 public interface PortletDataHandler
-	extendscom.liferay.portlet.exportimport.lar.PortletDataHandler {
+	extends com.liferay.portlet.exportimport.lar.PortletDataHandler {
 }

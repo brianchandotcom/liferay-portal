@@ -256,7 +256,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a byte array
@@ -281,7 +281,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layout as a byte array
@@ -316,7 +316,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a File
@@ -391,7 +391,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
@@ -428,7 +428,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a file
@@ -611,12 +611,12 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param bytes the byte array with the data
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the
 	layouts, or if some other portal exception occurred
-	* @see com.liferay.portal.lar.LayoutImporter
+	* @see com.liferay.portlet.exportimport.lar.LayoutImporter
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
@@ -632,13 +632,13 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the
 	layouts and publish, or if some other portal exception
 	occurred
-	* @see com.liferay.portal.lar.LayoutImporter
+	* @see com.liferay.portlet.exportimport.lar.LayoutImporter
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
@@ -654,12 +654,12 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @throws PortalException if a group with the primary key could not be
 	found, if the group did not have permission to manage the
 	layouts, or if some other portal exception occurred
-	* @see com.liferay.portal.lar.LayoutImporter
+	* @see com.liferay.portlet.exportimport.lar.LayoutImporter
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
@@ -715,7 +715,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @throws PortalException if a group, layout, or portlet with the
 	primary key could not be found, or if the group did not have
@@ -738,7 +738,7 @@ public interface LayoutService extends BaseService {
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @throws PortalException if a group, portlet, or layout with the
 	primary key could not be found or if the group did not have
@@ -814,7 +814,7 @@ public interface LayoutService extends BaseService {
 	children
 	* @param parameterMap the mapping of parameters indicating which
 	information will be used. See {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param scope the scope of the pages. It can be
 	<code>all-pages</code> or <code>selected-pages</code>.
 	* @param startDate the start date
@@ -856,7 +856,7 @@ public interface LayoutService extends BaseService {
 	layout IDs
 	* @param parameterMap the mapping of parameters indicating which
 	information will be used. See {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param scope the scope of the pages. It can be <code>all-pages</code> or
 	<code>selected-pages</code>.
 	* @param startDate the start date
@@ -890,7 +890,7 @@ public interface LayoutService extends BaseService {
 	the layout IDs and booleans indicating whether they have children
 	* @param parameterMap the mapping of parameters indicating which
 	information will be used. See {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param remoteAddress the remote address
 	* @param remotePort the remote port
 	* @param remotePathContext the remote path context

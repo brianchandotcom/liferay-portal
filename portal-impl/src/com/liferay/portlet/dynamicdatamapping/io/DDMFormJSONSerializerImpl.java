@@ -17,11 +17,16 @@ package com.liferay.portlet.dynamicdatamapping.io;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFactory;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -69,19 +74,6 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		jsonObject.put("fields", toJSONArray(ddmFormFields));
 	}
 
-	protected void addLocalizedProperty(
-		JSONObject jsonObject, String propertyName,
-		LocalizedValue localizedValue) {
-
-		Map<Locale, String> values = localizedValue.getValues();
-
-		if (values.isEmpty()) {
-			return;
-		}
-
-		jsonObject.put(propertyName, toJSONObject(localizedValue));
-	}
-
 	protected void addNestedFields(
 		JSONObject jsonObject, List<DDMFormField> nestedDDMFormFields) {
 
@@ -92,38 +84,87 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 		jsonObject.put("nestedFields", toJSONArray(nestedDDMFormFields));
 	}
 
-	protected void addOptions(
-		JSONObject jsonObject, DDMFormFieldOptions ddmFormFieldOptions) {
+	protected void addProperties(
+		JSONObject jsonObject, DDMFormField ddmFormField) {
 
-		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
+		DDMForm ddmFormFieldTypeSettingsDDMForm =
+			getDDMFormFieldTypeSettingsDDMForm(ddmFormField.getType());
 
-		if (optionValues.isEmpty()) {
+		for (DDMFormField ddmFormFieldTypeSetting :
+				ddmFormFieldTypeSettingsDDMForm.getDDMFormFields()) {
+
+			addProperty(jsonObject, ddmFormField, ddmFormFieldTypeSetting);
+		}
+	}
+
+	protected void addProperty(
+		JSONObject jsonObject, DDMFormField ddmFormField,
+		DDMFormField ddmFormFieldTypeSetting) {
+
+		Object property = ddmFormField.getProperty(
+			ddmFormFieldTypeSetting.getName());
+
+		if (property == null) {
 			return;
 		}
 
-		jsonObject.put("options", toJSONArray(ddmFormFieldOptions));
+		addProperty(
+			jsonObject, ddmFormFieldTypeSetting.getName(),
+			serializeDDMFormFieldProperty(property, ddmFormFieldTypeSetting));
 	}
 
-	protected void addSimpleProperties(
-		JSONObject jsonObject, DDMFormField ddmFormField) {
+	protected void addProperty(
+		JSONObject jsonObject, String propertyName, Object propertyValue) {
 
-		jsonObject.put("dataType", ddmFormField.getDataType());
-		jsonObject.put("fieldNamespace", ddmFormField.getNamespace());
-		jsonObject.put("indexType", ddmFormField.getIndexType());
-		jsonObject.put("localizable", ddmFormField.isLocalizable());
-		jsonObject.put("multiple", ddmFormField.isMultiple());
-		jsonObject.put("name", ddmFormField.getName());
-		jsonObject.put("readOnly", ddmFormField.isReadOnly());
-		jsonObject.put("repeatable", ddmFormField.isRepeatable());
-		jsonObject.put("required", ddmFormField.isRequired());
-		jsonObject.put("showLabel", ddmFormField.isShowLabel());
-		jsonObject.put("type", ddmFormField.getType());
+		if (propertyValue == null) {
+			return;
+		}
+
+		jsonObject.put(propertyName, propertyValue);
+	}
+
+	protected DDMForm getDDMFormFieldTypeSettingsDDMForm(String type) {
+		DDMFormFieldType ddmFormFieldType =
+			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(type);
+
+		if (ddmFormFieldType == null) {
+			ddmFormFieldType = DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
+				"text");
+		}
+
+		return DDMFormFactory.create(ddmFormFieldType.getSettings());
+	}
+
+	protected Object serializeDDMFormFieldProperty(
+		Object property, DDMFormField ddmFormFieldTypeSetting) {
+
+		if (ddmFormFieldTypeSetting.isLocalizable()) {
+			return toJSONObject((LocalizedValue)property);
+		}
+
+		String dataType = ddmFormFieldTypeSetting.getDataType();
+
+		if (Validator.equals(dataType, "boolean")) {
+			return GetterUtil.getBoolean(property);
+		}
+		else if (Validator.equals(dataType, "ddm-options")) {
+			return toJSONArray((DDMFormFieldOptions)property);
+		}
+		else {
+			return String.valueOf(property);
+		}
 	}
 
 	protected JSONArray toJSONArray(DDMFormFieldOptions ddmFormFieldOptions) {
+		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
+
+		if (optionValues.isEmpty()) {
+			return null;
+		}
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		for (String optionValue : ddmFormFieldOptions.getOptionsValues()) {
+		for (String optionValue : optionValues) {
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 			jsonObject.put("value", optionValue);
@@ -150,19 +191,20 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 	protected JSONObject toJSONObject(DDMFormField ddmFormField) {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		addLocalizedProperty(jsonObject, "label", ddmFormField.getLabel());
-		addLocalizedProperty(
-			jsonObject, "predefinedValue", ddmFormField.getPredefinedValue());
-		addLocalizedProperty(jsonObject, "style", ddmFormField.getStyle());
-		addLocalizedProperty(jsonObject, "tip", ddmFormField.getTip());
+		addProperties(jsonObject, ddmFormField);
+
 		addNestedFields(jsonObject, ddmFormField.getNestedDDMFormFields());
-		addOptions(jsonObject, ddmFormField.getDDMFormFieldOptions());
-		addSimpleProperties(jsonObject, ddmFormField);
 
 		return jsonObject;
 	}
 
 	protected JSONObject toJSONObject(LocalizedValue localizedValue) {
+		Map<Locale, String> values = localizedValue.getValues();
+
+		if (values.isEmpty()) {
+			return null;
+		}
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		for (Locale availableLocale : localizedValue.getAvailableLocales()) {

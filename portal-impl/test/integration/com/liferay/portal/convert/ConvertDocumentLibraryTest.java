@@ -62,6 +62,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -78,6 +79,11 @@ public class ConvertDocumentLibraryTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		_storeFactory = StoreFactory.getInstance();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -306,6 +312,8 @@ public class ConvertDocumentLibraryTest {
 			dlFileEntry.getName());
 	}
 
+	private static StoreFactory _storeFactory;
+
 	private ConvertProcess _convertProcess;
 
 	private String _dbStoreClassName;
@@ -314,8 +322,5 @@ public class ConvertDocumentLibraryTest {
 	private Group _group;
 
 	private Store _sourceStore;
-
-	private static final StoreFactory _storeFactory =
-		StoreFactory.getInstance();
 
 }

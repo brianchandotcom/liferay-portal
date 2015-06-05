@@ -67,7 +67,7 @@
 		<xs:complexContent>
 			<xs:extension base="abstract-notification-complex-type">
 				<xs:sequence>
-					<xs:element name="recipients" type="recipients-complex-type" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="recipients" type="recipients-complex-type" minOccurs="0" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -82,10 +82,8 @@
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="scripted-recipient" type="script-complex-type" minOccurs="0" maxOccurs="unbounded" />
 			<xs:element name="user" type="user-complex-type" minOccurs="0" maxOccurs="unbounded" />
 		</xs:sequence>
-		<xs:attribute name="receptionType" type="notification-reception-type" default="to"/>
 	</xs:complexType>
 	<xs:complexType name="role-complex-type">
 		<xs:sequence>
@@ -99,18 +97,11 @@
 			</xs:choice>
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="script-complex-type">
-		<xs:sequence>
-			<xs:element name="script" type="xs:string" />
-			<xs:element name="script-language" type="script-language-type" />
-			<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
-		</xs:sequence>
-	</xs:complexType>
 	<xs:complexType name="task-notification-complex-type">
 		<xs:complexContent>
 			<xs:extension base="abstract-notification-complex-type">
 				<xs:sequence>
-					<xs:element name="recipients" type="task-recipients-complex-type" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element name="recipients" type="task-recipients-complex-type" minOccurs="0" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -123,7 +114,6 @@
 						<xs:complexType />
 					</xs:element>
 				</xs:sequence>
-				<xs:attribute name="receptionType" type="notification-reception-type" default="to"/>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
@@ -329,7 +319,15 @@
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="scripted-assignment" type="script-complex-type" />
+			<xs:element name="scripted-assignment">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="script" type="xs:string" />
+						<xs:element name="script-language" type="script-language-type" />
+						<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="user" type="user-complex-type" />
 		</xs:choice>
 	</xs:group>
@@ -405,13 +403,6 @@
 			<xs:enumeration value="im" />
 			<xs:enumeration value="private-message" />
 			<xs:enumeration value="user-notification" />
-		</xs:restriction>
-	</xs:simpleType>
-	<xs:simpleType name="notification-reception-type">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="bcc" />
-			<xs:enumeration value="cc" />
-			<xs:enumeration value="to" />
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="role-type">

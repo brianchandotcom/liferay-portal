@@ -17,12 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="test->default" name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-		<dependency name="chemistry-opencmis-client-api" org="org.apache.chemistry.opencmis" rev="0.13.0"/>
-		<dependency name="chemistry-opencmis-client-bindings" org="org.apache.chemistry.opencmis" rev="0.13.0"/>
-		<dependency name="chemistry-opencmis-client-impl" org="org.apache.chemistry.opencmis" rev="0.13.0"/>
-		<dependency name="chemistry-opencmis-commons-api" org="org.apache.chemistry.opencmis" rev="0.13.0"/>
-		<dependency name="chemistry-opencmis-commons-impl" org="org.apache.chemistry.opencmis" rev="0.13.0"/>
+		<dependency name="chemistry-opencmis-client-api" org="org.apache.chemistry.opencmis" rev="0.13.0" />
+		<dependency name="chemistry-opencmis-client-bindings" org="org.apache.chemistry.opencmis" rev="0.13.0" />
+		<dependency name="chemistry-opencmis-client-impl" org="org.apache.chemistry.opencmis" rev="0.13.0" />
+		<dependency name="chemistry-opencmis-commons-api" org="org.apache.chemistry.opencmis" rev="0.13.0" />
+		<dependency name="chemistry-opencmis-commons-impl" org="org.apache.chemistry.opencmis" rev="0.13.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

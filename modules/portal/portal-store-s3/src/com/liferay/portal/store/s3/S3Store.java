@@ -63,8 +63,8 @@ import org.jets3t.service.security.AWSCredentials;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 
 /**
@@ -798,14 +798,6 @@ public class S3Store extends BaseStore {
 		return tempFile;
 	}
 
-	@Modified
-	protected void modified(Map<String, Object> properties)
-		throws ServiceException {
-
-		deactivate();
-		activate(properties);
-	}
-
 	protected boolean isS3NoSuchKeyException(Exception e) {
 		if (e instanceof S3ServiceException) {
 			S3ServiceException s3se = (S3ServiceException)e;
@@ -816,6 +808,14 @@ public class S3Store extends BaseStore {
 		}
 
 		return false;
+	}
+
+	@Modified
+	protected void modified(Map<String, Object> properties)
+		throws ServiceException {
+
+		deactivate();
+		activate(properties);
 	}
 
 	private static final String _S3_NO_SUCH_KEY_ERROR_CODE = "NoSuchKey";

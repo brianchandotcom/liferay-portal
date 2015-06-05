@@ -21,13 +21,16 @@ import aQute.bnd.annotation.metatype.Meta;
  */
 @Meta.OCD(
 	id = "com.liferay.portal.store.filesystem.configuration.AdvancedFileSystemConfiguration",
-	localization = "content/Language", name = "%advanced.filesystem.store.configuration.name"
+	localization = "content/Language",
+	name = "%advanced.filesystem.store.configuration.name"
 )
 public interface AdvancedFileSystemConfiguration {
 
-	@Meta.AD(deflt = "data/document_library",
+	@Meta.AD(
+		deflt = "data/document_library",
 		description = "%filesystem.store.configuration.root.dir.description",
-		required = false)
+		required = false
+	)
 	public String rootDir();
 
 }

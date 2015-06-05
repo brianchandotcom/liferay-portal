@@ -154,6 +154,13 @@ public class GitHeadHashTask extends Task {
 
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
 			treeWalk.addTree(revCommit.getTree());
+
+			if (revCommit.getParentCount() > 0) {
+				RevCommit parentRevCommit = revCommit.getParent(0);
+
+				treeWalk.addTree(parentRevCommit.getTree());
+			}
+
 			treeWalk.setRecursive(true);
 
 			treeWalk.setFilter(

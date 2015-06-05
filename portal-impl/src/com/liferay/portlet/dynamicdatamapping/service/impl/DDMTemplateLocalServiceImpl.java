@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.template.TemplateConstants;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -36,6 +37,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
+import com.liferay.portlet.dynamicdatamapping.InvalidStructureVersionException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
@@ -863,6 +865,36 @@ public class DDMTemplateLocalServiceImpl
 			groupId, classNameId, classPK);
 	}
 
+	@Override
+	public void revertTemplate(
+			long userId, long templateId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMTemplateVersion templateVersion =
+			ddmTemplateVersionLocalService.getTemplateVersion(
+				templateId, version);
+
+		if (!templateVersion.isApproved()) {
+			throw new InvalidStructureVersionException(
+				"Unable to revert from an unapproved file version");
+		}
+
+		DDMTemplate template = templateVersion.getTemplate();
+
+		serviceContext.setAttribute("majorVersion", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"status", WorkflowConstants.STATUS_APPROVED);
+		serviceContext.setCommand(Constants.REVERT);
+
+		ddmTemplateLocalService.updateTemplate(
+			userId, templateId, templateVersion.getClassPK(),
+			templateVersion.getNameMap(), templateVersion.getDescriptionMap(),
+			template.getType(), template.getMode(),
+			templateVersion.getLanguage(), templateVersion.getScript(),
+			template.getCacheable(), serviceContext);
+	}
+
 	/**
 	 * Returns an ordered range of all the templates matching the group, class
 	 * name ID, class PK, type, and mode, and matching the keywords in the
@@ -1280,8 +1312,11 @@ public class DDMTemplateLocalServiceImpl
 		DDMTemplateVersion latestTemplateVersion =
 			ddmTemplateVersionLocalService.getLatestTemplateVersion(templateId);
 
+		boolean majorVersion = GetterUtil.getBoolean(
+			serviceContext.getAttribute("majorVersion"));
+
 		String version = getNextVersion(
-			latestTemplateVersion.getVersion(), false);
+			latestTemplateVersion.getVersion(), majorVersion);
 
 		template.setVersion(version);
 		template.setVersionUserId(user.getUserId());

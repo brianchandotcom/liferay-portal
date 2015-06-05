@@ -16,9 +16,19 @@ package com.liferay.portlet.dynamicdatamapping.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
+
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
 public class DDMTemplateVersionImpl extends DDMTemplateVersionBaseImpl {
+
+	@Override
+	public DDMTemplate getTemplate() throws PortalException {
+		return DDMTemplateLocalServiceUtil.getTemplate(getTemplateId());
+	}
+
 }

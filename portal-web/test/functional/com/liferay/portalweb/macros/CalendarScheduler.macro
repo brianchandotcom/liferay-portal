@@ -496,10 +496,10 @@
 		<var name="key_eventTitle" value="${eventTitle}" />
 
 		<while>
-			<condition function="IsElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
+			<condition function="IsElementPresent" locator1="//div[contains(@class,'calendar-portlet-event')]/div[${i}][contains(.,'${key_eventTitle}')]" />
 			<then>
-				<execute function="AssertElementPresent" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" />
-				<execute function="AssertTextEquals" locator1="xpath=(//div[contains(@class,'calendar-portlet-event')]/div[contains(.,'${key_eventTitle}')])[${i}]" value1="${eventTitle}" />
+				<execute function="AssertElementPresent" locator1="//div[contains(@class,'calendar-portlet-event')]/div[${i}][contains(.,'${key_eventTitle}')]" />
+				<execute function="AssertTextEquals" locator1="//div[contains(@class,'calendar-portlet-event')]/div[${i}][contains(.,'${key_eventTitle}')]" value1="${eventTitle}" />
 				<var method="MathUtil#sum('${i}', '1')" name="i" />
 			</then>
 		</while>

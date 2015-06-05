@@ -23,6 +23,7 @@ import java.util.List;
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.tasks.JavaExec;
 import org.gradle.process.JavaExecSpec;
@@ -35,23 +36,7 @@ public abstract class BasePortalToolsTask extends JavaExec {
 	public BasePortalToolsTask() {
 		project = getProject();
 
-		Configuration configuration = GradleUtil.addConfiguration(
-			project, getConfigurationName());
-
-		configuration.setDescription(
-			"Configures the " + getToolName() + " tool for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
-
-				@Override
-				public void execute(Configuration configuration) {
-					addDependencies();
-				}
-
-			});
+		addConfiguration();
 	}
 
 	@Override
@@ -98,6 +83,38 @@ public abstract class BasePortalToolsTask extends JavaExec {
 	@Override
 	public JavaExec setStandardInput(InputStream inputStream) {
 		throw new UnsupportedOperationException();
+	}
+
+	protected Configuration addConfiguration() {
+		ConfigurationContainer configurationContainer =
+			project.getConfigurations();
+
+		Configuration configuration = configurationContainer.findByName(
+			getConfigurationName());
+
+		if (configuration != null) {
+			return configuration;
+		}
+
+		configuration = GradleUtil.addConfiguration(
+			project, getConfigurationName());
+
+		configuration.setDescription(
+			"Configures the " + getToolName() + " tool for this project.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependencies();
+				}
+
+			});
+
+		return configuration;
 	}
 
 	protected void addDependencies() {

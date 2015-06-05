@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria;
+package com.liferay.item.selector.criteria.image.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -24,13 +24,13 @@ import java.util.Set;
 /**
  * @author Roberto Díaz
  */
-public class DLItemSelectorCriterion extends BaseItemSelectorCriterion {
+public class ImageItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	public DLItemSelectorCriterion() {
+	public ImageItemSelectorCriterion() {
 		super(_AVAILABLE_RETURN_TYPES);
 	}
 
-	public DLItemSelectorCriterion(
+	public ImageItemSelectorCriterion(
 		long folderId, long repositoryId, String[] mimeTypes) {
 
 		super(_AVAILABLE_RETURN_TYPES);

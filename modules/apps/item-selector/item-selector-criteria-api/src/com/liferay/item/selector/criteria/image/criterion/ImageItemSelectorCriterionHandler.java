@@ -12,35 +12,36 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.file.criterion;
+package com.liferay.item.selector.criteria.image.criterion;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
-import com.liferay.item.selector.criteria.DLItemSelectorCriterion;
 import com.liferay.portal.kernel.registry.ServiceTrackerCustomizerFactory;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class DLItemSelectorCriterionHandler
-	implements ItemSelectorCriterionHandler<com.liferay.item.selector.criteria.DLItemSelectorCriterion> {
+public class ImageItemSelectorCriterionHandler
+	implements ItemSelectorCriterionHandler<ImageItemSelectorCriterion> {
 
 	@Override
-	public Class<com.liferay.item.selector.criteria.DLItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return com.liferay.item.selector.criteria.DLItemSelectorCriterion.class;
+	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return ImageItemSelectorCriterion.class;
 	}
 
 	@Override
-	public List<ItemSelectorView<com.liferay.item.selector.criteria.DLItemSelectorCriterion>>
-		getItemSelectorViews(com.liferay.item.selector.criteria.DLItemSelectorCriterion dlItemSelectorCriterion) {
+	public List<ItemSelectorView<ImageItemSelectorCriterion>>
+		getItemSelectorViews(
+			ImageItemSelectorCriterion imageItemSelectorCriterion) {
 
 		return (List)Collections.unmodifiableList(_itemSelectorViews);
 	}
@@ -57,7 +58,7 @@ public class DLItemSelectorCriterionHandler
 							itemSelectorView.getItemSelectorCriterionClass();
 
 						return itemSelectorCriterionClass.isAssignableFrom(
-							DLItemSelectorCriterion.class);
+							ImageItemSelectorCriterion.class);
 					}
 
 				}));

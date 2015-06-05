@@ -27,7 +27,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-55648" name="AddWCWithMultipleTranslations" priority="5">
+	<command name="AddWCWithMultipleTranslations" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -35,7 +35,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addBasic">
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC Content" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>
@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55648" name="AddWCWithTranslation" priority="5">
+	<command name="AddWCWithTranslation" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -162,7 +162,7 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute macro="WebContent#addBasic">
+		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC Content" />
 			<var name="webContentTitle" value="WC Title" />
 		</execute>

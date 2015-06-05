@@ -56,12 +56,12 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PUBLIC_PAGES</td>
-	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'Public Pages')]</td>
+	<td>//li[contains(@id,'_200_tabs')]/a[contains(.,'Public Pages')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_PRIVATE_PAGES</td>
-	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'Private Pages')]</td>
+	<td>//li[contains(@id,'_200_tabs')]/a[contains(.,'Private Pages')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -92,12 +92,12 @@
 </tr>
 <tr>
 	<td>TOOLBAR_EXPORT</td>
-	<td>//ul[contains(@id,'_156_navTag')]/li/a[contains(.,'Export')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_IMPORT</td>
-	<td>//ul[contains(@id,'_156_navTag')]/li/a[contains(.,'Import')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'Import')]</td>
 	<td></td>
 </tr>
 <tr>

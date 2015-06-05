@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>EXPORT_IMPORT_IFRAME</td>
-	<td>//iframe[contains(@id,'configurationIframeDialog')]</td>
+	<td>//iframe[contains(@id,'iframe')]</td>
 	<td></td>
 </tr>
 <tr>

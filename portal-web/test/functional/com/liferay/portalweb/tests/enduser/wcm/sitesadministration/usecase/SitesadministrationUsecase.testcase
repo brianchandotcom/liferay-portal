@@ -1120,9 +1120,8 @@
 			<var name="pageNameList" value="Accomodations,Maps" />
 		</execute>
 
-		<execute macro="LAR#configureExportSiteCP" >
-			<var name="portletName" value="Site Pages" />
-			<var name="siteName" value="World Cup - Russia 2018" />
+		<execute macro="LAR#gotoExportSite">
+			<var name="siteScopeName" value="World Cup - Russia 2018" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
@@ -1296,7 +1295,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54029" name="SiteTeamsPermissions" priority="4">
+	<command name="SiteTeamsPermissions" priority="4">
 		<var name="pageName" value="Blog Page Template" />
 		<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_VIEW_CHECKBOX" />
 		<var name="permissionInLineCheckLists" value="ACTION_ADD_DISCUSSION,ACTION_ADD_LAYOUT,ACTION_CONFIGURE_PORTLETS,ACTION_CUSTOMIZE,ACTION_DELETE,ACTION_DELETE_DISCUSSION,ACTION_PERMISSIONS,ACTION_UPDATE,ACTION_UPDATE_DISCUSSION,ACTION_VIEW" />

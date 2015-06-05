@@ -58,8 +58,14 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPDraft">
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="WC Webcontent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
 			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="WC Webcontent Title" />
 		</execute>
 	</command>

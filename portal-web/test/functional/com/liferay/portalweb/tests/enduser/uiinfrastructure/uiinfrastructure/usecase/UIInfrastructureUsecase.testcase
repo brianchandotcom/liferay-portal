@@ -55,7 +55,7 @@
 		<take-screenshot />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute function="AssertTextNotPresent" value1="View All" />

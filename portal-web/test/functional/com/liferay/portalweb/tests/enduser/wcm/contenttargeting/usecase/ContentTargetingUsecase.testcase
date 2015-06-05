@@ -80,6 +80,12 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -89,6 +95,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Higher Priority" />
+			<var name="webContentTitle" value="Web Content Title Higher Priority" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title Higher Priority" />
 		</execute>
 
@@ -211,6 +223,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -576,6 +594,12 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -585,6 +609,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Otherwise" />
+			<var name="webContentTitle" value="Web Content Title Otherwise" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title Otherwise" />
 		</execute>
 
@@ -681,6 +711,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -1072,12 +1108,9 @@
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="LAR#gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
-
-		<execute macro="LAR#gotoExportSite" />
 
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
@@ -1089,7 +1122,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1124,13 +1157,8 @@
 
 		<execute macro="ContentTargetingCampaign#deleteAllCP" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1148,7 +1176,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1190,12 +1218,9 @@
 	<command name="ExportImportSmoke" priority="5">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="LAR#gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
 		</execute>
-
-		<execute macro="LAR#gotoExportSite" />
 
 		<execute function="AssertClick" locator1="CPSitepagesExport#EXPORT_BUTTON" value1="Export" />
 
@@ -1207,7 +1232,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1271,6 +1296,12 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1311,13 +1342,8 @@
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1346,7 +1372,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1400,13 +1426,8 @@
 	<command name="ExportImportUncheckAppCTRefAllAndContentAll" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1437,7 +1458,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1463,13 +1484,8 @@
 	<command name="ExportImportUncheckAppCTRefAllAndContentAT" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1496,7 +1512,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1522,13 +1538,8 @@
 	<command name="ExportImportUncheckAppCTRefAllAndContentWC" priority="4">
 		<execute macro="LAR#setupContentTargeting" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1555,7 +1566,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1591,6 +1602,12 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -1600,6 +1617,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC Content Unreferenced" />
+			<var name="webContentTitle" value="WC Title Unreferenced" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC Title Unreferenced" />
 		</execute>
 
@@ -1643,13 +1666,8 @@
 
 		<execute macro="ContentTargetingCampaign#saveCP" />
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
-		</execute>
-
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1670,7 +1688,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -1759,13 +1777,14 @@
 			<var name="webContentTitle" value="WC Title Unreferenced" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="Site Name" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC Title Unreferenced" />
 		</execute>
 
 		<execute macro="LAR#gotoExportSite">
-			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteOptions">
@@ -1782,7 +1801,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="lar file name ${larFileName}" />
 
@@ -2361,6 +2380,12 @@
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />
 			<var name="siteScopeName" value="Site Name" />
@@ -2768,6 +2793,12 @@
 				<var name="webContentContent" value="WC Content ${ruleName}" />
 				<var name="webContentTitle" value="WC Title ${ruleName}" />
 			</execute>
+
+			<execute macro="WebContent#publish" />
+
+			<execute macro="WebContent#viewTitle">
+				<var name="webContentTitle" value="WC Title ${ruleName}" />
+			</execute>
 		</for>
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -3003,6 +3034,12 @@
 			<var name="webContentTitle" value="Web Content Title All" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title All" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3012,6 +3049,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Otherwise" />
+			<var name="webContentTitle" value="Web Content Title Otherwise" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title Otherwise" />
 		</execute>
 
@@ -3107,6 +3150,12 @@
 			<var name="webContentTitle" value="Web Content Title Any" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title Any" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3116,6 +3165,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Otherwise" />
+			<var name="webContentTitle" value="Web Content Title Otherwise" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title Otherwise" />
 		</execute>
 
@@ -3356,6 +3411,12 @@
 			<var name="webContentTitle" value="Web Content Title Female" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title Female" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3365,6 +3426,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Male" />
+			<var name="webContentTitle" value="Web Content Title Male" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title Male" />
 		</execute>
 
@@ -3472,6 +3539,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -3590,6 +3663,12 @@
 			<var name="webContentTitle" value="Web Content Title Male" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content Title Male" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />
@@ -3599,6 +3678,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content Female" />
+			<var name="webContentTitle" value="Web Content Title Female" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title Female" />
 		</execute>
 

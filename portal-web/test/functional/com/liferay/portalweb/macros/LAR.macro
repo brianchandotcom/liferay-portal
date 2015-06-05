@@ -8,6 +8,9 @@
 	<command name="configureExportSiteCP">
 		<execute macro="LAR#gotoExportSiteCmd" />
 
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
+
 		<execute macro="LAR#configureExportSiteOptionsCmd" />
 	</command>
 
@@ -296,7 +299,7 @@
 
 		<echo message="value name ${valueName}" />
 
-		<var group="1" input="${valueName}"  name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
+		<var group="1" input="${valueName}" name="larFileName" pattern="([a-zA-z0-9_.-]*)[(0-9k)]*" />
 
 		<echo message="import file name ${larFileName}" />
 
@@ -305,7 +308,9 @@
 	</command>
 
 	<command name="exportSiteCP">
-		<execute macro="LAR#gotoExportSiteCmd" />
+		<execute macro="LAR#gotoExportSiteCmd">
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
 
 		<execute macro="LAR#exportSiteCmd">
 			<var name="larFileName" value="${larFileName}" />
@@ -327,25 +332,37 @@
 	</command>
 
 	<command name="gotoExportSite">
-		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
+		<execute macro="LAR#gotoExportSiteCmd" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 
 		<execute function="Pause" locator1="5000" />
 	</command>
 
 	<command name="gotoExportSiteCmd">
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletCategoryName" value="Configuration" />
+			<var name="portletName" value="Export/Import" />
+			<var name="siteScopeName" value="${siteScopeName}" />
+		</execute>
+
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />
 	</command>
 
 	<command name="gotoExportTemplateCP">
 		<execute macro="LAR#gotoExportSiteCmd" />
 
+		<execute function="SelectFrameTop" value1="relative=top" />
+		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
+
 		<execute function="Click" locator1="CPSitepagesExport#EXPORT_TEMPLATE_BUTTON" />
 	</command>
 
 	<command name="gotoImportSiteCmd">
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
-			<var name="siteScopeName" value="${siteName}" />
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletCategoryName" value="Configuration" />
+			<var name="portletName" value="Export/Import" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_IMPORT" value1="Import" />

@@ -88,8 +88,14 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewDraftCP">
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -124,6 +130,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="${webContentContent}" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
@@ -168,8 +180,13 @@
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC Folder WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
@@ -222,8 +239,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -298,6 +314,10 @@
 			<var name="webContentTitle" value="WC Folder WCWithStructure Title" />
 		</execute>
 
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC Folder WCWithStructure Title" />
+		</execute>
+
 		<execute macro="WebContent#viewStructureWithWorkflowCP">
 			<var name="webContentTitle" value="WC Folder WCWithStructure Title" />
 			<var name="workflowTask" value="Review" />
@@ -319,8 +339,13 @@
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC Folder WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
@@ -337,8 +362,13 @@
 			<var name="webContentTitle" value="WC WebContent Structure Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Structure Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC WebContent Structure Title" />
 		</execute>
 
@@ -385,8 +415,7 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WCWithStructure Title" />
 		</execute>
 	</command>
@@ -414,8 +443,13 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -483,8 +517,7 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 	</command>
@@ -609,8 +642,7 @@
 			<var name="webContentTitle" value="WC Folder Name" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
@@ -618,8 +650,7 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 	</command>
@@ -713,8 +744,13 @@
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC Folder WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
@@ -851,8 +887,13 @@
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC Folder WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC Folder WebContent Title" />
 		</execute>
 
@@ -862,6 +903,10 @@
 			<var name="structureName" value="WC Structure Name" />
 			<var name="templateName" value="WC Template Name" />
 			<var name="webContentText" value="WC Folder WebContent Structure Text" />
+			<var name="webContentTitle" value="WC Folder WebContent Structure Title" />
+		</execute>
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC Folder WebContent Structure Title" />
 		</execute>
 
@@ -883,8 +928,13 @@
 			<var name="webContentTitle" value="WC WebContent Structure Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Structure Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC WebContent Structure Title" />
 		</execute>
 
@@ -969,8 +1019,13 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
-			<var name="webContentStatus" value="Approved" />
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewApprovedStatus">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

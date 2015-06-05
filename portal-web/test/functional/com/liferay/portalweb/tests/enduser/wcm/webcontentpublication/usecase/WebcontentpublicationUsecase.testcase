@@ -669,6 +669,12 @@
 			<var name="webContentTitle" value="Web Content1 Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content1 Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -696,6 +702,12 @@
 			<var name="templateName" value="WC Template Name" />
 			<var name="webContentInteger" value="5" />
 			<var name="webContentNumber" value="345" />
+			<var name="webContentTitle" value="Web Content2 Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content2 Title" />
 		</execute>
 
@@ -729,6 +741,12 @@
 			<var name="webContentTitle" value="Web Content3 Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="Web Content3 Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -753,6 +771,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content4 Content" />
+			<var name="webContentTitle" value="Web Content4 Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content4 Title" />
 		</execute>
 
@@ -974,6 +998,12 @@
 			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent1 Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -983,6 +1013,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Global Content" />
+			<var name="webContentTitle" value="WC WebContent Global Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Global Title" />
 		</execute>
 
@@ -1003,6 +1039,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Site Content" />
+			<var name="webContentTitle" value="WC WebContent Site Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Site Title" />
 		</execute>
 
@@ -1070,6 +1112,12 @@
 			<var name="webContentTitle" value="WC WebContent1 Title" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent1 Title" />
+		</execute>
+
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -1079,6 +1127,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Global Content" />
+			<var name="webContentTitle" value="WC WebContent Global Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Global Title" />
 		</execute>
 
@@ -1099,6 +1153,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Site Content" />
+			<var name="webContentTitle" value="WC WebContent Site Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Site Title" />
 		</execute>
 
@@ -1520,7 +1580,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54712" name="ViewAuthorChangeViaAP" priority="3">
+	<command name="ViewAuthorChangeViaAP" priority="3">
 		<execute macro="AssetPublisherPortlet#configureShowMetadataFieldsPG">
 			<var name="addMetadata" value="true" />
 			<var name="metadataField" value="Author" />
@@ -1596,6 +1656,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
@@ -1734,6 +1800,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 

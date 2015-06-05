@@ -163,7 +163,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54712" name="AddCategorywithSiteRole" priority="4">
+	<command name="AddCategorywithSiteRole" priority="4">
 		<var name="pageName" value="Test Page Name" />
 		<var name="siteName" value="Test Site Name" />
 
@@ -457,7 +457,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54712" name="DeletePartialCategory" priority="5">
+	<command name="DeletePartialCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -782,10 +782,8 @@
 			<var name="categoryName" value="Category Name" />
 		</execute>
 
-		<execute macro="Page#gotoPagesCP">
-			<var name="portletName" value="Site Pages" />
+		<execute macro="LAR#gotoExportSite">
 			<var name="siteScopeName" value="Site Name" />
-			<var name="siteURL" value="true" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_EXPORT" value1="Export" />

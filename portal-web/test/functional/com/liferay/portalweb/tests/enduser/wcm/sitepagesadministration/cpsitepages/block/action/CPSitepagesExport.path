@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>EXPORT_FILE_NAME</td>
-	<td>//input[@id='_156_exportFileName']</td>
+	<td>//input[contains(@id,'exportFileName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,12 +40,12 @@
 </tr>
 <tr>
 	<td>CUSTOM_EXPORT_BUTTON</td>
-	<td>//ul[@id='_156_exportConfigurationButtons']//li/a[@title='Custom']</td>
+	<td>//ul[contains(@id,'exportConfigurationButtons')]//li/a[@title='Custom']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATE_BUTTON</td>
-	<td>//ul[@id='_156_exportConfigurationButtons']//li/a[@title='Export Templates']</td>
+	<td>//ul[contains(@id,'exportConfigurationButtons')]//li/a[@title='Export Templates']</td>
 	<td></td>
 </tr>
 <tr>
@@ -76,17 +76,17 @@
 </tr>
 <tr>
 	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_LAYOUT_SET_SETTINGS']</td>
+	<td>//input[contains(@id,'LAYOUT_SET_SETTINGS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_THEME_REFERENCE']</td>
+	<td>//input[contains(@id,'THEME_REFERENCE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_156_LOGO']</td>
+	<td>//input[contains(@id,'LOGO')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -107,27 +107,27 @@
 <!--APPLICATION-->
 <tr>
 	<td>APPLICATION_ALL_APPLICATIONS_RADIO</td>
-	<td>//input[@id='_156_allApplications']</td>
+	<td>//input[contains(@id,'allApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CHOOSE_APPLICATIONS_RADIO</td>
-	<td>//input[@id='_156_chooseApplications']</td>
+	<td>//input[contains(@id,'chooseApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CHANGE_LINK</td>
-	<td>//a[@id='_156_globalConfigurationLink']</td>
+	<td>//a[contains(@id,'globalConfigurationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_NAME_CHECKBOX</td>
-	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_NAME</td>
-	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]</td>
+	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -138,12 +138,12 @@
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_ALL_CONTENT_RADIO</td>
-	<td>//input[@id='_156_allContent']</td>
+	<td>//input[contains(@id,'allContent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
-	<td>//input[@id='_156_chooseContent']</td>
+	<td>//input[contains(@id,'chooseContent')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -164,27 +164,27 @@
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_STATUS</td>
-	<td>//div[@id='_156_exportProcesses']//table//tr/td[2]</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_CREATE_DATE</td>
-	<td>//div[@id='_156_exportProcesses']//table//tr/td[3]</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_COMPLETION_DATE</td>
-	<td>//div[@id='_156_exportProcesses']//table//tr/td[4]</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_DOWNLOAD</td>
-	<td>//div[@id='_156_exportProcesses']//table//tr/td[5]/span/a</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[5]/span/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CURRENT_AND_PREVIOUS_ACTIONS</td>
-	<td>//div[@id='_156_exportProcesses']//table//tr/td[6]/div/a</td>
+	<td>//div[contains(@id,'exportProcesses')]//table//tr/td[6]/div/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -216,12 +216,12 @@
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_NAME_FIELD</td>
-	<td>//input[@id='_156_name']</td>
+	<td>//input[contains(@id,'name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_156_description']</td>
+	<td>//textarea[contains(@id,'description')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -242,22 +242,22 @@
 <!--EXPORT_TEMPLATES_TABLE-->
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_NAME</td>
-	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'savedConfigurations')]//tr[contains(.,'${key_exportTemplateName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_DESCRIPTION</td>
-	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td[3]</td>
+	<td>//div[contains(@id,'savedConfigurations')]//tr[contains(.,'${key_exportTemplateName}')]/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_EXPORT_ARROW_BUTTON</td>
-	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]/td/span/a[contains(.,'Export')]</td>
+	<td>//div[contains(@id,'savedConfigurations')]//tr[contains(.,'${key_exportTemplateName}')]/td/span/a[contains(.,'Export')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_TEMPLATES_TABLE_MOVE_TO_THE_RECYCLE_BIN_BUTTON</td>
-	<td>//div[@id='_156_savedConfigurations']//tr[contains(.,'${key_exportTemplateName}')]//a[contains(.,'Recycle Bin')]</td>
+	<td>//div[contains(@id,'savedConfigurations')]//tr[contains(.,'${key_exportTemplateName}')]//a[contains(.,'Recycle Bin')]</td>
 	<td></td>
 </tr>
 <tr>

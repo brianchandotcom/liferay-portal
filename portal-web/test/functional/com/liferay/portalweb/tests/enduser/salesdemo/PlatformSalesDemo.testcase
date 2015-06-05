@@ -93,6 +93,12 @@
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
 
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
 		<execute macro="Page#addPG">
 			<var name="pageName" value="WC Page" />
 		</execute>

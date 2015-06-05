@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54712" name="BlogsOrganizationWorkflowStaging" priority="4">
+	<command name="BlogsOrganizationWorkflowStaging" priority="4">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoCP">
@@ -1078,6 +1078,12 @@
 
 		<execute macro="WebContent#addCP">
 			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 

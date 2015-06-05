@@ -62,7 +62,12 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -108,7 +113,12 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -142,7 +152,12 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>
@@ -177,7 +192,12 @@
 			<var name="portletName" value="Web Content" />
 		</execute>
 
-		<execute macro="WebContent#viewCPStatus">
+		<execute macro="WebContentNavigator#gotoViewStatus">
+			<var name="webContentStatus" value="Draft" />
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<execute macro="WebContent#viewStatus">
 			<var name="webContentStatus" value="Draft" />
 			<var name="webContentTitle" value="${webContentTitle}" />
 		</execute>

@@ -32,7 +32,7 @@
 		<var name="fieldName" value="Text" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_MANAGE_DATA_DEFINITIONS" value1="Manage Data Definitions" />
@@ -58,7 +58,7 @@
 		<var name="ddlListName" value="List Name" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute function="AssertClick" locator1="CPDynamicdatalists#TOOLBAR_ADD" value1="Add" />
@@ -79,7 +79,7 @@
 		<var name="pageName" value="Dynamic Data List Display Page" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -96,7 +96,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -111,7 +111,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -164,7 +164,7 @@
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#viewCP">
@@ -183,7 +183,7 @@
 		<description message="This is a use case for LPS-51513." />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -199,7 +199,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#viewCP">
@@ -212,7 +212,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -226,7 +226,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -247,7 +247,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -268,7 +268,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#viewCP">
@@ -284,7 +284,7 @@
 
 	<command known-issues="LPS-51620" name="AddRepeatableFieldAndAssertOrderInTranslation" priority="4">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -304,7 +304,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -318,7 +318,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -338,7 +338,7 @@
 		<execute macro="DDLRecord#saveAsDraftCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#editCP">
@@ -356,7 +356,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#editCP">
@@ -375,7 +375,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#editCP">
@@ -474,7 +474,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -526,7 +526,7 @@
 		<var name="ddlDataDefinitionName" value="Data Definition Title" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -584,7 +584,7 @@
 		<var name="portletName" value="Dynamic Data List Display" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -607,7 +607,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#editPermissionsCP">
@@ -773,7 +773,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -842,7 +842,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -909,7 +909,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -962,7 +962,7 @@
 		<execute macro="DDLRecord#publishViaDDLDisplayPG" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute function="Click" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
@@ -995,7 +995,7 @@
 		<execute function="SelectWindow" locator1="title=Users and Organizations - Control Panel - Liferay" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute function="Click" locator1="CPDynamicdatalists#LIST_TABLE_ACTIONS_1" />
@@ -1198,7 +1198,7 @@
 		<var name="pageName" value="Dynamic Data List Display Page" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -1215,7 +1215,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -1230,7 +1230,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -1247,7 +1247,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#deleteNoCP">
@@ -1255,7 +1255,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#deleteCP">
@@ -1263,7 +1263,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#deleteCP">
@@ -1579,7 +1579,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#copyCP">
@@ -1588,7 +1588,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#viewDefaultNoTemplatesCP">
@@ -1596,7 +1596,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#copyCP">
@@ -1606,7 +1606,7 @@
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#viewFormTemplateCP">
@@ -1617,7 +1617,7 @@
 
 	<command name="FormTemplateUniqueField" priority="5">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -1634,7 +1634,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#addFormTemplateCP">
@@ -1695,7 +1695,7 @@
 
 	<command known-issues="LPS-51620" name="RemoveRepeatableFieldAndAssertOrderInTranslation" priority="4">
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -1715,7 +1715,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -1729,7 +1729,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -1753,7 +1753,7 @@
 		<execute macro="DDLRecord#saveAsDraftCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#editCP">
@@ -1771,7 +1771,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#editCP">
@@ -1786,7 +1786,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#editCP">
@@ -1808,7 +1808,7 @@
 		<description message="This is a use case for LPS-48743." />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -1830,7 +1830,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#addFormTemplateCP">
@@ -1874,7 +1874,7 @@
 		<description message="This is a use case for LPS-48591." />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -1896,7 +1896,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLTemplate#addFormTemplateCP">
@@ -1963,7 +1963,7 @@
 		<description message="This is a use case for LPS-51538." />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -1987,7 +1987,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -2001,7 +2001,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -2022,7 +2022,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#viewCP">
@@ -2041,7 +2041,7 @@
 		<description message="This is a use case for LPS-48969." />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#addCP">
@@ -2065,7 +2065,7 @@
 		<execute macro="DDLDataDefinition#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLList#addCP">
@@ -2079,7 +2079,7 @@
 		<execute macro="DDLList#saveCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#addCP">
@@ -2095,7 +2095,7 @@
 		<execute macro="DDLRecord#publishCP" />
 
 		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Forms" />
+			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>
 
 		<execute macro="DDLRecord#viewCP">

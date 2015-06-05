@@ -96,7 +96,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoWebsiteNotificationForUpdatedBlogsEntry" priority="5">
+	<command known-issues="LPS-55992" name="ViewNoWebsiteNotificationForUpdatedBlogsEntry" priority="5">
 		<execute macro="NotificationsPortlet#gotoNotificationDelivery" />
 
 		<execute macro="NotificationsPortlet#setUserDeliveries">
@@ -252,7 +252,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewWebsiteNotificationForUpdatedBlogsEntry" priority="5">
+	<command known-issues="LPS-55992" name="ViewWebsiteNotificationForUpdatedBlogsEntry" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

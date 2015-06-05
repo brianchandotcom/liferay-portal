@@ -107,7 +107,8 @@ boolean hasDistributionScope = false;
 				if (role.isTeam()) {
 					Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
 
-					if (!GroupPermissionUtil.contains(permissionChecker, team.getGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+					if (!GroupPermissionUtil.contains(permissionChecker, team.getGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS) || !RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
+
 						continue;
 					}
 				}
@@ -115,23 +116,21 @@ boolean hasDistributionScope = false;
 					continue;
 				}
 
-				if (RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
+				hasDistributionScope = true;
 
-					if (!hasRoleScope) {
-						hasRoleScope = true;
+				if (!hasRoleScope) {
+					hasRoleScope = true;
 			%>
 
-						<optgroup label="<liferay-ui:message key="roles" />">
-
-			<%
-					}
-			%>
-
-					<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" selected="<%= classPK == role.getRoleId() %>" value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>" />
+					<optgroup label="<liferay-ui:message key="roles" />">
 
 			<%
 				}
+			%>
+
+				<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" selected="<%= classPK == role.getRoleId() %>" value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>" />
+
+			<%
 			}
 			%>
 

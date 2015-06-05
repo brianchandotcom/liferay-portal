@@ -34,4 +34,6 @@ public interface DDMFormFieldType {
 
 	public String getName();
 
+	public Class<? extends DDMFormFieldTypeSettings> getSettings();
+
 }

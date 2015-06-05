@@ -90,7 +90,7 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 		addStatus(contextBooleanFilter, searchContext);
 
-		contextBooleanFilter.addRequiredTerm(Field.HIDDEN, false);
+		contextBooleanFilter.addMissing(Field.HIDDEN);
 	}
 
 	@Override
@@ -118,8 +118,11 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
 		document.addKeyword(Field.FOLDER_ID, dlFolder.getParentFolderId());
-		document.addKeyword(
-			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
+
+		if (dlFolder.isHidden() || dlFolder.isInHiddenFolder()) {
+			document.addKeyword(Field.HIDDEN, true);
+		}
+
 		document.addText(Field.TITLE, dlFolder.getName());
 		document.addKeyword(Field.TREE_PATH, dlFolder.getTreePath());
 		document.addKeyword(

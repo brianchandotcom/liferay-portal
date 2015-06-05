@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.facet.ScopeFacet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -679,7 +680,10 @@ public abstract class BaseIndexer implements Indexer {
 		document.addLocalizedKeyword(
 			"localized_title",
 			populateMap(assetEntry, assetEntry.getTitleMap()), true, true);
-		document.addKeyword("visible", assetEntry.isVisible());
+
+		if (assetEntry.isVisible()) {
+			document.addKeyword("visible", assetEntry.isVisible());
+		}
 	}
 
 	protected void addDefaultHighlightFieldNames(QueryConfig queryConfig) {
@@ -869,18 +873,18 @@ public abstract class BaseIndexer implements Indexer {
 
 		long[] classTypeIds = searchContext.getClassTypeIds();
 
-		if ((classTypeIds == null) || (classTypeIds.length <= 0)) {
+		if (ArrayUtil.isEmpty(classTypeIds)) {
 			return null;
 		}
 
-		BooleanFilter classTypeIdsBooleanFilter = new BooleanFilter();
+		TermsFilter classTypeIdsTermsFilter = new TermsFilter(
+			Field.CLASS_TYPE_ID);
 
-		for (long classTypeId : classTypeIds) {
-			classTypeIdsBooleanFilter.addTerm(Field.CLASS_TYPE_ID, classTypeId);
-		}
+		classTypeIdsTermsFilter.addValues(
+			ArrayUtil.toStringArray(classTypeIds));
 
 		return contextBooleanFilter.add(
-			classTypeIdsBooleanFilter, BooleanClauseOccur.MUST);
+			classTypeIdsTermsFilter, BooleanClauseOccur.MUST);
 	}
 
 	protected void addSearchEntryClassNames(
@@ -1116,7 +1120,9 @@ public abstract class BaseIndexer implements Indexer {
 			return;
 		}
 
-		document.addKeyword(Field.STAGING_GROUP, isStagingGroup(groupId));
+		if (isStagingGroup(groupId)) {
+			document.addKeyword(Field.STAGING_GROUP, true);
+		}
 	}
 
 	protected void addStatus(

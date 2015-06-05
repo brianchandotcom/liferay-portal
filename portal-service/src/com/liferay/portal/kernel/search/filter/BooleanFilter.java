@@ -55,6 +55,22 @@ public class BooleanFilter extends BaseFilter {
 		return filter;
 	}
 
+	public Filter addExists(String field) {
+		ExistsFilter existsFilter = new ExistsFilter(field);
+
+		add(existsFilter, BooleanClauseOccur.MUST);
+
+		return existsFilter;
+	}
+
+	public Filter addMissing(String field) {
+		MissingFilter missingFilter = new MissingFilter(field);
+
+		add(missingFilter, BooleanClauseOccur.MUST);
+
+		return missingFilter;
+	}
+
 	public Filter addRangeTerm(String field, int startValue, int endValue) {
 		RangeTermFilter rangeTermFilter = new RangeTermFilter(
 			field, true, true, String.valueOf(startValue),

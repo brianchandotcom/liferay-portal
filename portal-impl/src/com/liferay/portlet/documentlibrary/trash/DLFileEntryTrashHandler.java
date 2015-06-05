@@ -105,7 +105,8 @@ public class DLFileEntryTrashHandler extends DLBaseTrashHandler {
 
 		excludeBooleanFilter.addRequiredTerm(
 			Field.ENTRY_CLASS_NAME, DLFileEntryConstants.getClassName());
-		excludeBooleanFilter.addRequiredTerm(Field.HIDDEN, true);
+
+		excludeBooleanFilter.addExists(Field.HIDDEN);
 
 		return excludeBooleanFilter;
 	}

@@ -26,9 +26,11 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -87,17 +89,15 @@ public class TrashIndexer extends BaseIndexer {
 					searchContext, fullQueryBooleanFilter, trashHandler);
 			}
 
-			BooleanFilter groupBooleanFilter = new BooleanFilter();
+			long[] groupIds = searchContext.getGroupIds();
 
-			for (long groupId : searchContext.getGroupIds()) {
-				groupBooleanFilter.addTerm(
-					Field.GROUP_ID, String.valueOf(groupId),
-					BooleanClauseOccur.SHOULD);
-			}
+			if (ArrayUtil.isNotEmpty(groupIds)) {
+				TermsFilter groupTermsFilter = new TermsFilter(Field.GROUP_ID);
 
-			if (groupBooleanFilter.hasClauses()) {
+				groupTermsFilter.addValues(ArrayUtil.toStringArray(groupIds));
+
 				fullQueryBooleanFilter.add(
-					groupBooleanFilter, BooleanClauseOccur.MUST);
+					groupTermsFilter, BooleanClauseOccur.MUST);
 			}
 
 			fullQueryBooleanFilter.addRequiredTerm(

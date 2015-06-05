@@ -509,7 +509,7 @@ public class CMISStore extends BaseStore {
 				doGetFileNames(fileNames, subDirName, curFolder);
 			}
 		}
-		else {
+		else if (!Validator.isNull(dirName)) {
 			fileNames.add(dirName);
 		}
 	}

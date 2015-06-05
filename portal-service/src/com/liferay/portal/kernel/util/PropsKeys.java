@@ -937,8 +937,6 @@ public interface PropsKeys {
 
 	public static final String ICQ_PASSWORD = "icq.password";
 
-	public static final String IFRAME_DYNAMIC_URL_ENABLED = "iframe.dynamic.url.enabled";
-
 	public static final String IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE = "iframe.password.token.role";
 
 	public static final String IMAGE_AUTO_SCALE = "image.auto.scale";

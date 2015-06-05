@@ -35,7 +35,7 @@
 	</c:otherwise>
 </c:choose>
 
-<c:if test="<%= PropsValues.IFRAME_DYNAMIC_URL_ENABLED %>">
+<c:if test="<%= iFrameConfiguration.dynamicUrlEnabled() %>">
 	<aui:script>
 		function <portlet:namespace />monitorIframe() {
 			var A = AUI();

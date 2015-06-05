@@ -456,12 +456,12 @@ public class DDMTemplateServiceTest extends BaseDDMServiceTestCase {
 		throws Exception {
 
 		return DDMTemplateLocalServiceUtil.updateTemplate(
-			template.getUserId(), template.getTemplateId(), 
-			template.getClassPK(), template.getNameMap(), 
-			template.getDescriptionMap(), template.getType(), 
-			template.getMode(), template.getLanguage(), template.getScript(), 
-			template.isCacheable(), template.isSmallImage(), 
-			template.getSmallImageURL(), null, 
+			template.getUserId(), template.getTemplateId(),
+			template.getClassPK(), template.getNameMap(),
+			template.getDescriptionMap(), template.getType(),
+			template.getMode(), template.getLanguage(), template.getScript(),
+			template.isCacheable(), template.isSmallImage(),
+			template.getSmallImageURL(), null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 

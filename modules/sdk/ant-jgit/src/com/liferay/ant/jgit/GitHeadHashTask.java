@@ -74,10 +74,10 @@ public class GitHeadHashTask extends Task {
 
 			RevWalk revWalk = new RevWalk(repository);
 
-			RevCommit headRevCommit = revWalk.lookupCommit(
-				repository.resolve(Constants.HEAD));
+			revWalk.setRetainBody(false);
 
-			revWalk.markStart(headRevCommit);
+			revWalk.markStart(
+				revWalk.parseCommit(repository.resolve(Constants.HEAD)));
 
 			if (_ignoreFileName == null) {
 				revWalk.setRevFilter(MaxCountRevFilter.create(1));
@@ -98,9 +98,7 @@ public class GitHeadHashTask extends Task {
 					"Unable to find any commit under " + _path);
 			}
 
-			if ((_ignoreFileName != null) &&
-				hasIgnoreFile(repository, revCommit, relativePath)) {
-
+			if (hasIgnoreFile(repository, revCommit, relativePath)) {
 				RevCommit secondRevCommit = revWalk.next();
 
 				if (secondRevCommit != null) {
@@ -150,8 +148,19 @@ public class GitHeadHashTask extends Task {
 			Repository repository, RevCommit revCommit, String relativePath)
 		throws Exception {
 
+		if (_ignoreFileName == null) {
+			return false;
+		}
+
 		try (TreeWalk treeWalk = new TreeWalk(repository)) {
 			treeWalk.addTree(revCommit.getTree());
+
+			if (revCommit.getParentCount() > 0) {
+				RevCommit parentRevCommit = revCommit.getParent(0);
+
+				treeWalk.addTree(parentRevCommit.getTree());
+			}
+
 			treeWalk.setRecursive(true);
 
 			treeWalk.setFilter(

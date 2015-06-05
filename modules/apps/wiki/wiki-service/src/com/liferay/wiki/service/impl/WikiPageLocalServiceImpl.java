@@ -167,7 +167,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		validate(title, nodeId, content, format);
 
 		long resourcePrimKey =
-			wikiPageResourceLocalService.getPageResourcePrimKey(nodeId, title);
+			wikiPageResourceLocalService.getPageResourcePrimKey(
+				node.getGroupId(), nodeId, title);
 
 		WikiPage page = wikiPagePersistence.create(pageId);
 
@@ -3262,7 +3263,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		long resourcePrimKey =
 			wikiPageResourceLocalService.getPageResourcePrimKey(
-				oldPage.getNodeId(), oldPage.getTitle());
+				oldPage.getGroupId(), oldPage.getNodeId(), oldPage.getTitle());
 
 		Date now = new Date();
 

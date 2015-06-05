@@ -304,6 +304,10 @@
 
 		<column name="resourcePrimKey" type="long" primary="true" />
 
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="nodeId" type="long" />

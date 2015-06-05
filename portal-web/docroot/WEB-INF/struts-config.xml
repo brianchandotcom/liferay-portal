@@ -964,8 +964,6 @@
 
 		<action path="/roles_admin/view" forward="portlet.roles_admin.view" />
 
-		<action path="/roles_admin/view_users" forward="portlet.users_admin.view" />
-
 		<!-- Shopping -->
 
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">

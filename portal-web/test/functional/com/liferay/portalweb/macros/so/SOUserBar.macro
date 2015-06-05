@@ -60,9 +60,7 @@
 				<execute function="Pause" locator1="1000" />
 
 				<if>
-					<and>
-						<condition function="IsElementNotPresent" locator1="Home#${portletTypeKey}" />
-					</and>
+					<condition function="IsElementNotPresent" locator1="Home#${portletTypeKey}" />
 					<then>
 						<if>
 							<condition function="IsElementNotPresent" locator1="SOUserBar#VISIBLE_PAGE_CONTROLS" />
@@ -93,8 +91,10 @@
 
 				<while>
 					<not>
-						<condition function="IsVisible" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
-						<equals arg1="${gotoMenuClickAttemptNumber}" arg2="5" />
+						<and>
+							<condition function="IsVisible" locator1="SOUserBar#GO_TO_ADD_SITE_BUTTON" />
+							<equals arg1="${gotoMenuClickAttemptNumber}" arg2="5" />
+						</and>
 					</not>
 					<then>
 						<var method="MathUtil#sum('${gotoMenuClickAttemptNumber}', '1')" name="gotoMenuClickAttemptNumber" />
@@ -175,8 +175,10 @@
 
 		<if>
 			<not>
-				<contains string="${numberOfNotifications}" substring="{numberOfNotifications}" />
-				<equals arg1="${numberOfNotifications}" arg2="1" />
+				<and>
+					<contains string="${numberOfNotifications}" substring="{numberOfNotifications}" />
+					<equals arg1="${numberOfNotifications}" arg2="1" />
+				</and>
 			</not>
 			<then>
 				<execute function="AssertClick" locator1="SOUserBar#NOTIFICATION_MENU_COUNT" value1="${numberOfNotifications}" />

@@ -38,15 +38,17 @@
 							<equals arg1="true" arg2="true" />
 						</or>
 						<not>
-							<equals arg1="true" arg2="false" />
 							<and>
-								<equals arg1="true" arg2="true" />
-								<equals arg1="true" arg2="true" />
-								<or>
+								<equals arg1="true" arg2="false" />
+								<and>
 									<equals arg1="true" arg2="true" />
-									<equals arg1="true" arg2="false" />
-									<equals arg1="true" arg2="false" />
-								</or>
+									<equals arg1="true" arg2="true" />
+									<or>
+										<equals arg1="true" arg2="true" />
+										<equals arg1="true" arg2="false" />
+										<equals arg1="true" arg2="false" />
+									</or>
+								</and>
 							</and>
 						</not>
 					</and>

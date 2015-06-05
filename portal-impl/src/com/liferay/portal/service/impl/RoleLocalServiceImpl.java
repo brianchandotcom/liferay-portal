@@ -1446,20 +1446,9 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 			role = roleLocalService.addRole(
 				user.getUserId(), null, 0, name, null, descriptionMap, type,
 				null, null);
-
-			if (name.equals(RoleConstants.USER)) {
-				initPersonalControlPanelPortletsPermissions(role);
-			}
 		}
 
 		_systemRolesMap.put(key, role);
-	}
-
-	protected String[] getDefaultControlPanelPortlets() {
-		return new String[] {
-			PortletKeys.MY_ACCOUNT, PortletKeys.MY_PAGES,
-			PortletKeys.MY_WORKFLOW_INSTANCE, PortletKeys.MY_WORKFLOW_TASK
-		};
 	}
 
 	protected Map<Team, Role> getTeamRoleMap(
@@ -1493,32 +1482,6 @@ public class RoleLocalServiceImpl extends RoleLocalServiceBaseImpl {
 		}
 
 		return teamRoleMap;
-	}
-
-	protected void initPersonalControlPanelPortletsPermissions(Role role)
-		throws PortalException {
-
-		for (String portletId : getDefaultControlPanelPortlets()) {
-			int count = resourcePermissionPersistence.countByC_N_S_P_R(
-				role.getCompanyId(), portletId, ResourceConstants.SCOPE_COMPANY,
-				String.valueOf(role.getCompanyId()), role.getRoleId());
-
-			if (count > 0) {
-				continue;
-			}
-
-			ResourceAction resourceAction =
-				resourceActionLocalService.fetchResourceAction(
-					portletId, ActionKeys.ACCESS_IN_CONTROL_PANEL);
-
-			if (resourceAction == null) {
-				continue;
-			}
-
-			setRolePermissions(
-				role, portletId,
-				new String[] {ActionKeys.ACCESS_IN_CONTROL_PANEL});
-		}
 	}
 
 	protected void setRolePermissions(

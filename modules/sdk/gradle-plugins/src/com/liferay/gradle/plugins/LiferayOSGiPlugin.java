@@ -610,6 +610,17 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected void configureTaskDeploy(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.configureTaskDeploy(project, liferayExtension);
+
+		Copy deployTask = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		configureTaskDeployRename(deployTask);
+	}
+
+	@Override
 	protected void configureTaskDeployFrom(Copy deployTask) {
 		super.configureTaskDeployFrom(deployTask);
 
@@ -617,6 +628,23 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 			deployTask.getProject(), BUILD_WSDD_JAR_TASK_NAME);
 
 		deployTask.from(task.getOutputs());
+	}
+
+	protected void configureTaskDeployRename(Copy deployTask) {
+		final Project project = deployTask.getProject();
+
+		Closure<String> closure = new Closure<String>(null) {
+
+			@SuppressWarnings("unused")
+			public String doCall(String fileName) {
+				return fileName.replace(
+					"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
+					"." + Jar.DEFAULT_EXTENSION);
+			}
+
+		};
+
+		deployTask.rename(closure);
 	}
 
 	@Override

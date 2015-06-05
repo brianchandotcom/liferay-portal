@@ -702,15 +702,10 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		}
 
 		if (pageResource != null) {
-			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-			extraDataJSONObject.put("version", page.getVersion());
-
 			systemEventLocalService.addSystemEvent(
 				0, page.getGroupId(), page.getModelClassName(),
 				page.getPrimaryKey(), pageResource.getUuid(), null,
-				SystemEventConstants.TYPE_DELETE,
-				extraDataJSONObject.toString());
+				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 		}
 	}
 

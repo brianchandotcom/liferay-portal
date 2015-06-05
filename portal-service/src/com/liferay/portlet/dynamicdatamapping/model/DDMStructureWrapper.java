@@ -60,6 +60,8 @@ public class DDMStructureWrapper implements DDMStructure,
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
+		attributes.put("versionUserId", getVersionUserId());
+		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("parentStructureId", getParentStructureId());
@@ -111,6 +113,18 @@ public class DDMStructureWrapper implements DDMStructure,
 
 		if (userName != null) {
 			setUserName(userName);
+		}
+
+		Long versionUserId = (Long)attributes.get("versionUserId");
+
+		if (versionUserId != null) {
+			setVersionUserId(versionUserId);
+		}
+
+		String versionUserName = (String)attributes.get("versionUserName");
+
+		if (versionUserName != null) {
+			setVersionUserName(versionUserName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -683,6 +697,36 @@ public class DDMStructureWrapper implements DDMStructure,
 	}
 
 	/**
+	* Returns the version user ID of this d d m structure.
+	*
+	* @return the version user ID of this d d m structure
+	*/
+	@Override
+	public long getVersionUserId() {
+		return _ddmStructure.getVersionUserId();
+	}
+
+	/**
+	* Returns the version user name of this d d m structure.
+	*
+	* @return the version user name of this d d m structure
+	*/
+	@Override
+	public java.lang.String getVersionUserName() {
+		return _ddmStructure.getVersionUserName();
+	}
+
+	/**
+	* Returns the version user uuid of this d d m structure.
+	*
+	* @return the version user uuid of this d d m structure
+	*/
+	@Override
+	public java.lang.String getVersionUserUuid() {
+		return _ddmStructure.getVersionUserUuid();
+	}
+
+	/**
 	* Returns the WebDAV URL to access the structure.
 	*
 	* @param themeDisplay the theme display needed to build the URL. It can
@@ -1096,6 +1140,36 @@ public class DDMStructureWrapper implements DDMStructure,
 	@Override
 	public void setVersion(java.lang.String version) {
 		_ddmStructure.setVersion(version);
+	}
+
+	/**
+	* Sets the version user ID of this d d m structure.
+	*
+	* @param versionUserId the version user ID of this d d m structure
+	*/
+	@Override
+	public void setVersionUserId(long versionUserId) {
+		_ddmStructure.setVersionUserId(versionUserId);
+	}
+
+	/**
+	* Sets the version user name of this d d m structure.
+	*
+	* @param versionUserName the version user name of this d d m structure
+	*/
+	@Override
+	public void setVersionUserName(java.lang.String versionUserName) {
+		_ddmStructure.setVersionUserName(versionUserName);
+	}
+
+	/**
+	* Sets the version user uuid of this d d m structure.
+	*
+	* @param versionUserUuid the version user uuid of this d d m structure
+	*/
+	@Override
+	public void setVersionUserUuid(java.lang.String versionUserUuid) {
+		_ddmStructure.setVersionUserUuid(versionUserUuid);
 	}
 
 	@Override

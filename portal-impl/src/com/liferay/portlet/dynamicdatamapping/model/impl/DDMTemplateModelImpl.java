@@ -84,6 +84,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
+			{ "versionUserId", Types.BIGINT },
+			{ "versionUserName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
@@ -102,7 +104,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			{ "smallImageId", Types.BIGINT },
 			{ "smallImageURL", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMTemplate (uuid_ VARCHAR(75) null,templateId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,resourceClassNameId LONG,templateKey VARCHAR(75) null,version VARCHAR(75) null,name STRING null,description STRING null,type_ VARCHAR(75) null,mode_ VARCHAR(75) null,language VARCHAR(75) null,script TEXT null,cacheable BOOLEAN,smallImage BOOLEAN,smallImageId LONG,smallImageURL VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMTemplate";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmTemplate.templateId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMTemplate.templateId ASC";
@@ -149,6 +151,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
+		model.setVersionUserId(soapModel.getVersionUserId());
+		model.setVersionUserName(soapModel.getVersionUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setClassNameId(soapModel.getClassNameId());
@@ -236,6 +240,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
+		attributes.put("versionUserId", getVersionUserId());
+		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
@@ -296,6 +302,18 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 		if (userName != null) {
 			setUserName(userName);
+		}
+
+		Long versionUserId = (Long)attributes.get("versionUserId");
+
+		if (versionUserId != null) {
+			setVersionUserId(versionUserId);
+		}
+
+		String versionUserName = (String)attributes.get("versionUserName");
+
+		if (versionUserName != null) {
+			setVersionUserName(versionUserName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -523,6 +541,49 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public void setUserName(String userName) {
 		_userName = userName;
+	}
+
+	@JSON
+	@Override
+	public long getVersionUserId() {
+		return _versionUserId;
+	}
+
+	@Override
+	public void setVersionUserId(long versionUserId) {
+		_versionUserId = versionUserId;
+	}
+
+	@Override
+	public String getVersionUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getVersionUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return StringPool.BLANK;
+		}
+	}
+
+	@Override
+	public void setVersionUserUuid(String versionUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getVersionUserName() {
+		if (_versionUserName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _versionUserName;
+		}
+	}
+
+	@Override
+	public void setVersionUserName(String versionUserName) {
+		_versionUserName = versionUserName;
 	}
 
 	@JSON
@@ -1164,6 +1225,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		ddmTemplateImpl.setCompanyId(getCompanyId());
 		ddmTemplateImpl.setUserId(getUserId());
 		ddmTemplateImpl.setUserName(getUserName());
+		ddmTemplateImpl.setVersionUserId(getVersionUserId());
+		ddmTemplateImpl.setVersionUserName(getVersionUserName());
 		ddmTemplateImpl.setCreateDate(getCreateDate());
 		ddmTemplateImpl.setModifiedDate(getModifiedDate());
 		ddmTemplateImpl.setClassNameId(getClassNameId());
@@ -1306,6 +1369,16 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			ddmTemplateCacheModel.userName = null;
 		}
 
+		ddmTemplateCacheModel.versionUserId = getVersionUserId();
+
+		ddmTemplateCacheModel.versionUserName = getVersionUserName();
+
+		String versionUserName = ddmTemplateCacheModel.versionUserName;
+
+		if ((versionUserName != null) && (versionUserName.length() == 0)) {
+			ddmTemplateCacheModel.versionUserName = null;
+		}
+
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -1413,7 +1486,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(47);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1427,6 +1500,10 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(getUserId());
 		sb.append(", userName=");
 		sb.append(getUserName());
+		sb.append(", versionUserId=");
+		sb.append(getVersionUserId());
+		sb.append(", versionUserName=");
+		sb.append(getVersionUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -1468,7 +1545,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(73);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.dynamicdatamapping.model.DDMTemplate");
@@ -1497,6 +1574,14 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(getUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserId</column-name><column-value><![CDATA[");
+		sb.append(getVersionUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
+		sb.append(getVersionUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -1587,6 +1672,8 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
+	private long _versionUserId;
+	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;

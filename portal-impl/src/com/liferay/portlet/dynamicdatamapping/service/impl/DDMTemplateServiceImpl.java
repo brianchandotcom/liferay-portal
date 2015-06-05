@@ -910,9 +910,9 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		return ddmTemplateLocalService.updateTemplate(
-			templateId, classPK, nameMap, descriptionMap, type, mode, language,
-			script, cacheable, smallImage, smallImageURL, smallImageFile,
-			serviceContext);
+			getUserId(), templateId, classPK, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, smallImage, smallImageURL,
+			smallImageFile, serviceContext);
 	}
 
 	/**
@@ -950,8 +950,8 @@ public class DDMTemplateServiceImpl extends DDMTemplateServiceBaseImpl {
 			getPermissionChecker(), templateId, ActionKeys.UPDATE);
 
 		return ddmTemplateLocalService.updateTemplate(
-			templateId, classPK, nameMap, descriptionMap, type, mode, language,
-			script, cacheable, serviceContext);
+			getUserId(), templateId, classPK, nameMap, descriptionMap, type,
+			mode, language, script, cacheable, serviceContext);
 	}
 
 }

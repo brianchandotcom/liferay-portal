@@ -2556,6 +2556,8 @@ public class DataFactory {
 		dDMStructureModel.setCompanyId(_companyId);
 		dDMStructureModel.setUserId(userId);
 		dDMStructureModel.setUserName(_SAMPLE_USER_NAME);
+		dDMStructureModel.setVersionUserId(userId);
+		dDMStructureModel.setVersionUserName(_SAMPLE_USER_NAME);
 		dDMStructureModel.setCreateDate(nextFutureDate());
 		dDMStructureModel.setModifiedDate(nextFutureDate());
 		dDMStructureModel.setClassNameId(classNameId);
@@ -2596,6 +2598,8 @@ public class DataFactory {
 		ddmTemplateModel.setResourceClassNameId(structureId);
 		ddmTemplateModel.setTemplateKey(String.valueOf(_counter.get()));
 		ddmTemplateModel.setVersion(DDMTemplateConstants.VERSION_DEFAULT);
+		ddmTemplateModel.setVersionUserId(userId);
+		ddmTemplateModel.setVersionUserName(_SAMPLE_USER_NAME);
 
 		StringBundler sb = new StringBundler(3);
 

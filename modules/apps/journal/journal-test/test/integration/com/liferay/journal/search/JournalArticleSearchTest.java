@@ -478,7 +478,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 		DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(ddmForm);
 
 		DDMStructureLocalServiceUtil.updateStructure(
-			_ddmStructure.getStructureId(),
+			_ddmStructure.getUserId(), _ddmStructure.getStructureId(),
 			_ddmStructure.getParentStructureId(), _ddmStructure.getNameMap(),
 			_ddmStructure.getDescriptionMap(), ddmForm, ddmFormLayout,
 			serviceContext);

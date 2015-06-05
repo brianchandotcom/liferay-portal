@@ -372,7 +372,7 @@ public class DDMTemplateStagedModelDataHandler
 				else {
 					importedTemplate =
 						DDMTemplateLocalServiceUtil.updateTemplate(
-							existingTemplate.getTemplateId(),
+							userId, existingTemplate.getTemplateId(),
 							template.getClassPK(), template.getNameMap(),
 							template.getDescriptionMap(), template.getType(),
 							template.getMode(), template.getLanguage(),

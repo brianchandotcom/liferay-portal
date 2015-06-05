@@ -130,6 +130,7 @@ create unique index IX_E43143A3 on DDMStructureLink (classNameId, classPK, struc
 create unique index IX_C803899D on DDMStructureLink (classPK);
 create index IX_17692B58 on DDMStructureLink (structureId);
 
+create index IX_17B3C96C on DDMStructureVersion (structureId, status);
 create unique index IX_64C3C42 on DDMStructureVersion (structureId, version);
 
 create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_);
@@ -147,6 +148,7 @@ create unique index IX_1AA75CE3 on DDMTemplate (uuid_, groupId);
 create unique index IX_6F3B3E9C on DDMTemplateLink (classNameId, classPK);
 create index IX_85278170 on DDMTemplateLink (templateId);
 
+create index IX_66382FC6 on DDMTemplateVersion (templateId, status);
 create unique index IX_8854A128 on DDMTemplateVersion (templateId, version);
 
 create unique index IX_FDD1AAA8 on DLContent (companyId, repositoryId, path_, version);

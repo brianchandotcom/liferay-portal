@@ -141,6 +141,14 @@ public class DDMStructureVersionPersistenceTest {
 
 		newDDMStructureVersion.setType(RandomTestUtil.nextInt());
 
+		newDDMStructureVersion.setStatus(RandomTestUtil.nextInt());
+
+		newDDMStructureVersion.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newDDMStructureVersion.setStatusByUserName(RandomTestUtil.randomString());
+
+		newDDMStructureVersion.setStatusDate(RandomTestUtil.nextDate());
+
 		_ddmStructureVersions.add(_persistence.update(newDDMStructureVersion));
 
 		DDMStructureVersion existingDDMStructureVersion = _persistence.findByPrimaryKey(newDDMStructureVersion.getPrimaryKey());
@@ -172,6 +180,15 @@ public class DDMStructureVersionPersistenceTest {
 			newDDMStructureVersion.getStorageType());
 		Assert.assertEquals(existingDDMStructureVersion.getType(),
 			newDDMStructureVersion.getType());
+		Assert.assertEquals(existingDDMStructureVersion.getStatus(),
+			newDDMStructureVersion.getStatus());
+		Assert.assertEquals(existingDDMStructureVersion.getStatusByUserId(),
+			newDDMStructureVersion.getStatusByUserId());
+		Assert.assertEquals(existingDDMStructureVersion.getStatusByUserName(),
+			newDDMStructureVersion.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingDDMStructureVersion.getStatusDate()),
+			Time.getShortTimestamp(newDDMStructureVersion.getStatusDate()));
 	}
 
 	@Test
@@ -188,6 +205,14 @@ public class DDMStructureVersionPersistenceTest {
 		_persistence.countByS_V(0L, StringPool.NULL);
 
 		_persistence.countByS_V(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByS_S() throws Exception {
+		_persistence.countByS_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByS_S(0L, 0);
 	}
 
 	@Test
@@ -217,7 +242,9 @@ public class DDMStructureVersionPersistenceTest {
 			"structureVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"structureId", true, "version", true, "name", true, "description",
-			true, "definition", true, "storageType", true, "type", true);
+			true, "definition", true, "storageType", true, "type", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -462,6 +489,14 @@ public class DDMStructureVersionPersistenceTest {
 		ddmStructureVersion.setStorageType(RandomTestUtil.randomString());
 
 		ddmStructureVersion.setType(RandomTestUtil.nextInt());
+
+		ddmStructureVersion.setStatus(RandomTestUtil.nextInt());
+
+		ddmStructureVersion.setStatusByUserId(RandomTestUtil.nextLong());
+
+		ddmStructureVersion.setStatusByUserName(RandomTestUtil.randomString());
+
+		ddmStructureVersion.setStatusDate(RandomTestUtil.nextDate());
 
 		_ddmStructureVersions.add(_persistence.update(ddmStructureVersion));
 

@@ -86,6 +86,11 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 		return "select";
 	}
 
+	@Override
+	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
+		return SelectDDMFormFieldTypeSettings.class;
+	}
+
 	@Reference(service = SelectDDMFormFieldRenderer.class, unbind = "-")
 	protected void setDDMFormFieldRenderer(
 		DDMFormFieldRenderer ddmFormFieldRenderer) {

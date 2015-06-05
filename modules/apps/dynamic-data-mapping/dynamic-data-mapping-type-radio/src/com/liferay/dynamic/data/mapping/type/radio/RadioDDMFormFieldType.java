@@ -85,6 +85,11 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 		return "radio";
 	}
 
+	@Override
+	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
+		return RadioDDMFormFieldTypeSettings.class;
+	}
+
 	@Reference(service = RadioDDMFormFieldRenderer.class, unbind = "-")
 	protected void setDDMFormFieldRenderer(
 		DDMFormFieldRenderer ddmFormFieldRenderer) {

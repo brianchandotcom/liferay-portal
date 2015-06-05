@@ -1089,9 +1089,13 @@ public class VerifyProperties extends VerifyProcess {
 		// Request Header
 
 		new String[] {
-			"request.header.auth.hosts.allowed",
-			"request.header.auth.hosts.allowed",
-			"com.liferay.portal.security.auth"
+			"request.header.auth.hosts.allowed", "authHostsAllowed",
+			"com.liferay.portal.security.auto.login.requestheader"
+		},
+
+		new String[] {
+			"request.header.auth.import.from.ldap", "importFromLDAP",
+			"com.liferay.portal.security.auto.login.requestheader"
 		},
 
 		// RSS

@@ -1,6 +1,8 @@
 Bundle-Name: Liferay Portal Security Auto Login
 Bundle-SymbolicName: com.liferay.portal.security.auto.login
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.security.auto.login
+Export-Package: \
+	com.liferay.portal.security.auto.login,\
+	com.liferay.portal.security.auto.login.requestheader
 Import-Package: *
 Include-Resource: classes

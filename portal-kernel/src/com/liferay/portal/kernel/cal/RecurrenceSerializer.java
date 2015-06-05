@@ -14,8 +14,14 @@
 
 package com.liferay.portal.kernel.cal;
 
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
+import java.text.Format;
 
 import java.util.Calendar;
 
@@ -66,7 +72,7 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					dayOfWeek += toDayOfWeekWord(byDay[i].getDayOfWeek());
+					dayOfWeek += getDayOfWeek(byDay[i]);
 				}
 			}
 		}
@@ -83,7 +89,7 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					dayOfWeek += toDayOfWeekWord(byDay[i].getDayOfWeek());
+					dayOfWeek += getDayOfWeek(byDay[i]);
 				}
 			}
 
@@ -102,12 +108,10 @@ public class RecurrenceSerializer {
 				String pos = String.valueOf(byDay[0].getDayPosition());
 
 				if (pos.equals("-1")) {
-					dayOfWeek = toDayOfWeekWord(byDay[0].getDayOfWeek()) + "L";
+					dayOfWeek = getDayOfWeek(byDay[0]) + "L";
 				}
 				else {
-					dayOfWeek =
-						toDayOfWeekWord(byDay[0].getDayOfWeek()) +
-							StringPool.POUND + pos;
+					dayOfWeek = getDayOfWeek(byDay[0]) + StringPool.POUND + pos;
 				}
 			}
 		}
@@ -126,13 +130,11 @@ public class RecurrenceSerializer {
 					String pos = String.valueOf(byDay[0].getDayPosition());
 
 					if (pos.equals("-1")) {
-						dayOfWeek =
-							toDayOfWeekWord(byDay[0].getDayOfWeek()) + "L";
+						dayOfWeek = getDayOfWeek(byDay[0]) + "L";
 					}
 					else {
 						dayOfWeek =
-							toDayOfWeekWord(byDay[0].getDayOfWeek()) +
-								StringPool.POUND + pos;
+							getDayOfWeek(byDay[0]) + StringPool.POUND + pos;
 					}
 				}
 			}
@@ -157,33 +159,15 @@ public class RecurrenceSerializer {
 		return sb.toString();
 	}
 
-	protected static String toDayOfWeekWord(int dayOfWeekNum) {
-		switch (dayOfWeekNum) {
+	protected static String getDayOfWeek(DayAndPosition dayPos) {
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
-			case Calendar.SUNDAY :
-				return "SUN";
+		calendar.set(Calendar.DAY_OF_WEEK, dayPos.getDayOfWeek());
 
-			case Calendar.MONDAY :
-				return "MON";
+		Format dateFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			"EEE", LocaleUtil.US);
 
-			case Calendar.TUESDAY :
-				return "TUE";
-
-			case Calendar.WEDNESDAY :
-				return "WED";
-
-			case Calendar.THURSDAY :
-				return "THU";
-
-			case Calendar.FRIDAY :
-				return "FRI";
-
-			case Calendar.SATURDAY :
-				return "SAT";
-
-			default:
-				return "MON";
-		}
+		return StringUtil.toUpperCase(dateFormat.format(calendar));
 	}
 
 }

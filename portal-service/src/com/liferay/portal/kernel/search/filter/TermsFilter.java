@@ -34,6 +34,10 @@ public class TermsFilter extends BaseFilter {
 		return filterVisitor.visit(this);
 	}
 
+	public void addValue(String value) {
+		_values.add(value);
+	}
+
 	public void addValues(String... values) {
 		_values.addAll(Arrays.asList(values));
 	}
@@ -53,6 +57,10 @@ public class TermsFilter extends BaseFilter {
 
 	public String[] getValues() {
 		return _values.toArray(new String[_values.size()]);
+	}
+
+	public boolean isEmpty() {
+		return _values.isEmpty();
 	}
 
 	public void setExecution(Execution execution) {

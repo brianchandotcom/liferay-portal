@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.item.selector.criteria.image.criterion;
+package com.liferay.item.selector.criteria.image.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 
 import org.osgi.service.component.annotations.Component;
 

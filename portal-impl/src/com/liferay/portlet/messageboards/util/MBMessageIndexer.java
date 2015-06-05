@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -188,7 +189,8 @@ public class MBMessageIndexer
 			(categoryIds[0] !=
 				MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID)) {
 
-			BooleanFilter categoriesFilter = new BooleanFilter();
+			TermsFilter categoriesTermsFilter = new TermsFilter(
+				Field.CATEGORY_ID);
 
 			for (long categoryId : categoryIds) {
 				try {
@@ -202,12 +204,12 @@ public class MBMessageIndexer
 					continue;
 				}
 
-				categoriesFilter.addTerm(Field.CATEGORY_ID, categoryId);
+				categoriesTermsFilter.addValue(String.valueOf(categoryId));
 			}
 
-			if (categoriesFilter.hasClauses()) {
+			if (!categoriesTermsFilter.isEmpty()) {
 				contextBooleanFilter.add(
-					categoriesFilter, BooleanClauseOccur.MUST);
+					categoriesTermsFilter, BooleanClauseOccur.MUST);
 			}
 		}
 	}

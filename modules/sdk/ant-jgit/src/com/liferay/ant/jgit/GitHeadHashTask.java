@@ -74,6 +74,8 @@ public class GitHeadHashTask extends Task {
 
 			RevWalk revWalk = new RevWalk(repository);
 
+			revWalk.setRetainBody(false);
+
 			RevCommit headRevCommit = revWalk.parseCommit(
 				repository.resolve(Constants.HEAD));
 

@@ -45,7 +45,6 @@ page import="com.liferay.portal.service.UserLocalServiceUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
-page import="com.liferay.portlet.sites.action.ActionUtil" %><%@
 page import="com.liferay.portlet.sites.search.OrganizationRoleUserChecker" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupGroupRoleUserGroupChecker" %><%@
 page import="com.liferay.portlet.sites.search.UserGroupRoleUserChecker" %><%@

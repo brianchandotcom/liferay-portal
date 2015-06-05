@@ -1098,13 +1098,9 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 	</target>
 
 	<target name="format-tld">
-		<path id="tld.formatter.classpath">
-			<fileset dir="${sdk.dir}/dependencies/com.liferay.tld.formatter/lib" includes="*.jar" />
-		</path>
-
 		<java
 			classname="com.liferay.tld.formatter.TLDFormatter"
-			classpathref="tld.formatter.classpath"
+			classpathref="project.classpath"
 			dir="${project.dir}"
 			fork="true"
 			newenvironment="true"

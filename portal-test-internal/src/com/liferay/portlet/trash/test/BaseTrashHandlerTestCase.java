@@ -64,6 +64,7 @@ import org.junit.Test;
  * @author Brian Wing Shun Chan
  * @author Eudaldo Alonso
  * @author Manuel de la Peña
+ * @author Cristina González
  */
 public abstract class BaseTrashHandlerTestCase {
 

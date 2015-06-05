@@ -29,8 +29,7 @@ page import="com.liferay.portal.security.permission.comparator.ActionComparator"
 page import="com.liferay.portal.security.permission.comparator.ModelResourceWeightComparator" %><%@
 page import="com.liferay.portlet.rolesadmin.search.ResourceActionRowChecker" %><%@
 page import="com.liferay.portlet.rolesadmin.search.RoleSearch" %><%@
-page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %><%@
-page import="com.liferay.portlet.sites.action.ActionUtil" %>
+page import="com.liferay.portlet.rolesadmin.search.RoleSearchTerms" %>
 
 <%
 boolean filterManageableGroups = true;

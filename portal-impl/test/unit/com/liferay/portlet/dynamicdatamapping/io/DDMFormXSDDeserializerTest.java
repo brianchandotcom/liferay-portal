@@ -31,6 +31,7 @@ public class DDMFormXSDDeserializerTest
 
 	@Before
 	public void setUp() throws Exception {
+		setUpDDMFormFieldTypeRegistryUtil();
 		setUpDDMFormXSDDeserializerUtil();
 		setUpHtmlUtil();
 		setUpLocaleUtil();

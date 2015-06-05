@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.type.text;
 
+import com.liferay.portlet.dynamicdatamapping.registry.BaseDDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueAccessor;
@@ -30,7 +31,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marcellus Tavares
  */
 @Component(immediate = true, service = DDMFormFieldType.class)
-public class TextDDMFormFieldType implements DDMFormFieldType {
+public class TextDDMFormFieldType extends BaseDDMFormFieldType {
 
 	@Override
 	public DDMFormFieldRenderer getDDMFormFieldRenderer() {

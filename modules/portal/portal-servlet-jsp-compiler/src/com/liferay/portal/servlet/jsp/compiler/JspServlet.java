@@ -311,29 +311,6 @@ public class JspServlet extends HttpServlet {
 			return method.invoke(_servletContext, args);
 		}
 
-		private String getOriginalResourcePath(String path){
-
-			if(path.endsWith(".portal.jsp")){
-
-				int endIndex = path.indexOf(".portal.jsp");
-
-				path = path.substring(0, endIndex);
-
-				path = path +".jsp";
-
-			}
-			else if(path.endsWith(".portal.jspf")){
-
-				int endIndex = path.indexOf(".portal.jspf");
-
-				path = path.substring(0, endIndex);
-
-				path = path +".jspf";
-			}
-
-			return path;
-		}
-
 		private URL getExtension(String path, boolean isFiFo) {
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				"META-INF/resources", path.substring(1), false);
@@ -344,11 +321,21 @@ public class JspServlet extends HttpServlet {
 
 			List<URL> urls = Collections.list(enumeration);
 
-			if(isFiFo){
+			if (isFiFo) {
 				return urls.get(0);
 			}
 
 			return urls.get(urls.size() - 1);
+		}
+
+		private String getOriginalResourcePath(String path) {
+			String resourceExtensionPattern = "(\\.portal\\.)(jsp|jspf)";
+
+			if (isOriginalJsporJspfPath(path)) {
+				path = path.replaceAll(resourceExtensionPattern, ".$2");
+			}
+
+			return path;
 		}
 
 		private URL getResource(String path) {
@@ -357,21 +344,14 @@ public class JspServlet extends HttpServlet {
 					path = '/' + path;
 				}
 
-				URL url = getExtension(path,false);
+				URL url = getExtension(path, false);
 
 				if (url != null) {
 					return url;
 				}
 
-				if(url == null && path.endsWith(".portal.jsp")){
-
+				if ((url == null) && isOriginalJsporJspfPath(path)) {
 					path = getOriginalResourcePath(path);
-
-				}
-				else if(url == null && path.endsWith(".portal.jspf")){
-
-					path = getOriginalResourcePath(path);
-
 				}
 
 				url = _servletContext.getResource(path);
@@ -414,20 +394,12 @@ public class JspServlet extends HttpServlet {
 		private InputStream getResourceAsStream(String path) {
 			URL url = null;
 
-			if(url == null && path.endsWith(".portal.jsp")){
-
+			if ((url == null) && isOriginalJsporJspfPath(path)) {
 				path = getOriginalResourcePath(path);
 
-				url =  getExtension(path,true);
-
+				url = getExtension(path, true);
 			}
-			else if(url == null && path.endsWith(".portal.jspf")){
-
-				path = getOriginalResourcePath(path);
-
-				url =  getExtension(path,true);
-			}
-			else{
+			else {
 				url = getResource(path);
 			}
 
@@ -462,6 +434,12 @@ public class JspServlet extends HttpServlet {
 			}
 
 			return paths;
+		}
+
+		private boolean isOriginalJsporJspfPath(String path) {
+			String resourcePathPattern = "^.*(\\.portal\\.)(jsp|jspf)$";
+
+			return path.matches(resourcePathPattern);
 		}
 
 		private final ServletContext _servletContext;

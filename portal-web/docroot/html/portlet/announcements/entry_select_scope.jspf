@@ -30,15 +30,17 @@ boolean hasDistributionScope = false;
 
 	<%
 	List<Group> groups = GroupLocalServiceUtil.getUserGroups(user.getUserId(), true);
-	Boolean hasGroupScope = false;
 	%>
 
 	<c:if test="<%= !groups.isEmpty() %>">
 
 			<%
+			Boolean hasGroupScope = false;
+
 			for (Group group : groups) {
 				if (((group.isOrganization() && group.isSite()) || group.isRegularSite()) && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;
+
 					if (!hasGroupScope) {
 						hasGroupScope = true;
 			%>
@@ -61,16 +63,18 @@ boolean hasDistributionScope = false;
 
 	<%
 	List<Organization> organizations = OrganizationLocalServiceUtil.getUserOrganizations(user.getUserId());
-	Boolean hasOrganizationScope = false;
 	%>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
 
 			<%
+			Boolean hasOrganizationScope = false;
+
 			for (Organization organization : organizations) {
 				if (OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;
-					if (!hasOrganizationScope){
+
+					if (!hasOrganizationScope) {
 						hasOrganizationScope = true;
 			%>
 
@@ -92,12 +96,13 @@ boolean hasDistributionScope = false;
 
 	<%
 	List<Role> roles = RoleLocalServiceUtil.getRoles(themeDisplay.getCompanyId());
-	Boolean hasRoleScope = false;
 	%>
 
 	<c:if test="<%= !roles.isEmpty() %>">
 
 			<%
+			Boolean hasRoleScope = false;
+
 			for (Role role : roles) {
 				if (role.isTeam()) {
 					Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
@@ -112,6 +117,7 @@ boolean hasDistributionScope = false;
 
 				if (RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;
+
 					if (!hasRoleScope) {
 						hasRoleScope = true;
 			%>
@@ -134,15 +140,17 @@ boolean hasDistributionScope = false;
 
 	<%
 	List<UserGroup> userGroups = UserGroupLocalServiceUtil.getUserGroups(themeDisplay.getCompanyId());
-	Boolean hasUserGroupScope = false;
 	%>
 
 	<c:if test="<%= !userGroups.isEmpty() %>">
 
 			<%
+			Boolean hasUserGroupScope = false;
+
 			for (UserGroup userGroup : userGroups) {
 				if (UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 					hasDistributionScope = true;
+
 					if (!hasUserGroupScope) {
 						hasUserGroupScope = true;
 			%>

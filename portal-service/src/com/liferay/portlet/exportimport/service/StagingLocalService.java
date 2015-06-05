@@ -85,7 +85,7 @@ public interface StagingLocalService extends BaseLocalService {
 	*/
 	public java.lang.String getBeanIdentifier();
 
-	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long userId, long stagingRequestId,
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
@@ -95,7 +95,7 @@ public interface StagingLocalService extends BaseLocalService {
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws PortalException;
@@ -115,7 +115,7 @@ public interface StagingLocalService extends BaseLocalService {
 	long, boolean, java.util.Map)}
 	*/
 	@java.lang.Deprecated
-	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(
 		long userId, long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap);
 }

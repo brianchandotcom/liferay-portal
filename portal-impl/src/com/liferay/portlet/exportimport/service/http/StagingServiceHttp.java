@@ -116,7 +116,7 @@ public class StagingServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+	public static com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		HttpPrincipal httpPrincipal, long stagingRequestId,
 		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
@@ -142,7 +142,7 @@ public class StagingServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
+			return (com.liferay.portlet.exportimport.lar.MissingReferences)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -151,7 +151,7 @@ public class StagingServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+	public static com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		HttpPrincipal httpPrincipal, long stagingRequestId,
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -176,7 +176,7 @@ public class StagingServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
+			return (com.liferay.portlet.exportimport.lar.MissingReferences)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -213,7 +213,7 @@ public class StagingServiceHttp {
 		}
 	}
 
-	public static com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+	public static com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(
 		HttpPrincipal httpPrincipal, long stagingRequestId,
 		boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
@@ -239,7 +239,7 @@ public class StagingServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (com.liferay.portal.kernel.lar.MissingReferences)returnObj;
+			return (com.liferay.portlet.exportimport.lar.MissingReferences)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

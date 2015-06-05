@@ -10,52 +10,52 @@
 	<xs:complexType name="abstract-notification-complex-type" abstract="true">
 		<xs:sequence>
 			<xs:element name="name" type="xs:string" />
-			<xs:element name="description" type="xs:string" minOccurs="0" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
 			<xs:element name="template" type="xs:string" />
 			<xs:element name="template-language" type="template-language-type" />
-			<xs:element name="notification-type" type="notification-transport-type" maxOccurs="unbounded" />
+			<xs:element maxOccurs="unbounded" name="notification-type" type="notification-transport-type" />
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="abstract-timer-complex-type" abstract="true">
+	<xs:complexType abstract="true" name="abstract-timer-complex-type">
 		<xs:sequence>
 			<xs:element name="name" type="xs:string" />
-			<xs:element name="description" type="xs:string" minOccurs="0" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
 			<xs:element name="delay" type="time-delay-complex-type" />
-			<xs:element name="recurrence" type="time-delay-complex-type" minOccurs="0" />
+			<xs:element minOccurs="0" name="recurrence" type="time-delay-complex-type" />
 		</xs:sequence>
 	</xs:complexType>
-	<xs:complexType name="abstract-workflow-node-complex-type" abstract="true">
+	<xs:complexType abstract="true" name="abstract-workflow-node-complex-type">
 		<xs:sequence>
 			<xs:element name="name" type="xs:string" />
-			<xs:element name="description" type="xs:string" minOccurs="0" />
-			<xs:element name="metadata" type="xs:string" minOccurs="0" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
+			<xs:element minOccurs="0" name="metadata" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="action-complex-type">
 		<xs:sequence>
 			<xs:element name="name" type="xs:string" />
-			<xs:element name="description" type="xs:string" minOccurs="0" />
+			<xs:element minOccurs="0" name="description" type="xs:string" />
 			<xs:element name="script" type="xs:string" />
 			<xs:element name="script-language" type="script-language-type" />
-			<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
-			<xs:element name="priority" type="xs:int" minOccurs="0" />
+			<xs:element minOccurs="0" name="script-required-contexts" type="xs:string" />
+			<xs:element minOccurs="0" name="priority" type="xs:int" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="action-timer-workflow-node-complex-type">
 		<xs:complexContent>
 			<xs:extension base="abstract-workflow-node-complex-type">
 				<xs:sequence>
-					<xs:element name="actions" minOccurs="0">
+					<xs:element minOccurs="0" name="actions">
 						<xs:complexType>
-							<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:choice maxOccurs="unbounded" minOccurs="0">
 								<xs:group ref="actions-group" />
 							</xs:choice>
 						</xs:complexType>
 					</xs:element>
-					<xs:element name="timers" minOccurs="0">
+					<xs:element minOccurs="0" name="timers">
 						<xs:complexType>
 							<xs:sequence>
-								<xs:element name="timer" type="timer-complex-type" maxOccurs="unbounded" />
+								<xs:element maxOccurs="unbounded" name="timer" type="timer-complex-type" />
 							</xs:sequence>
 						</xs:complexType>
 					</xs:element>
@@ -67,34 +67,34 @@
 		<xs:complexContent>
 			<xs:extension base="abstract-notification-complex-type">
 				<xs:sequence>
-					<xs:element name="recipients" type="recipients-complex-type" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="recipients" type="recipients-complex-type" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	<xs:complexType name="recipients-complex-type">
 		<xs:sequence>
-			<xs:element name="address" type="email-address-type" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="roles" minOccurs="0">
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="address" type="email-address-type" />
+			<xs:element minOccurs="0" name="roles">
 				<xs:complexType>
 					<xs:choice minOccurs="0">
-						<xs:element name="role" type="role-complex-type" maxOccurs="unbounded" />
+						<xs:element maxOccurs="unbounded" name="role" type="role-complex-type" />
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="scripted-recipient" type="script-complex-type" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element name="user" type="user-complex-type" minOccurs="0" maxOccurs="unbounded" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="scripted-recipient" type="script-complex-type" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" name="user" type="user-complex-type" />
 		</xs:sequence>
-		<xs:attribute name="receptionType" type="notification-reception-type" default="to"/>
+		<xs:attribute default="to" name="receptionType" type="notification-reception-type" />
 	</xs:complexType>
 	<xs:complexType name="role-complex-type">
 		<xs:sequence>
 			<xs:choice>
-				<xs:element name="role-id" type="xs:long" minOccurs="0" />
+				<xs:element minOccurs="0" name="role-id" type="xs:long" />
 				<xs:sequence>
-					<xs:element name="role-type" type="role-type" minOccurs="0" default="regular" />
-					<xs:element name="name" type="xs:string" minOccurs="0" />
-					<xs:element name="auto-create" type="xs:boolean" minOccurs="0" default="true" />
+					<xs:element default="regular" minOccurs="0" name="role-type" type="role-type" />
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element default="true" minOccurs="0" name="auto-create" type="xs:boolean" />
 				</xs:sequence>
 			</xs:choice>
 		</xs:sequence>
@@ -103,14 +103,14 @@
 		<xs:sequence>
 			<xs:element name="script" type="xs:string" />
 			<xs:element name="script-language" type="script-language-type" />
-			<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
+			<xs:element minOccurs="0" name="script-required-contexts" type="xs:string" />
 		</xs:sequence>
 	</xs:complexType>
 	<xs:complexType name="task-notification-complex-type">
 		<xs:complexContent>
 			<xs:extension base="abstract-notification-complex-type">
 				<xs:sequence>
-					<xs:element name="recipients" type="task-recipients-complex-type" minOccurs="0" maxOccurs="unbounded" />
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="recipients" type="task-recipients-complex-type" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -119,7 +119,7 @@
 		<xs:complexContent>
 			<xs:extension base="recipients-complex-type">
 				<xs:sequence>
-					<xs:element name="assignees" minOccurs="0" maxOccurs="1">
+					<xs:element maxOccurs="1" minOccurs="0" name="assignees">
 						<xs:complexType />
 					</xs:element>
 				</xs:sequence>
@@ -130,7 +130,7 @@
 		<xs:complexContent>
 			<xs:extension base="abstract-timer-complex-type">
 				<xs:sequence>
-					<xs:element name="blocking" type="xs:boolean" minOccurs="0" default="false" />
+					<xs:element default="false" minOccurs="0" name="blocking" type="xs:boolean" />
 					<xs:element name="timer-actions">
 						<xs:complexType>
 							<xs:choice maxOccurs="unbounded">
@@ -152,7 +152,7 @@
 		<xs:complexContent>
 			<xs:extension base="abstract-timer-complex-type">
 				<xs:sequence>
-					<xs:element name="timer-actions" minOccurs="0">
+					<xs:element minOccurs="0" name="timer-actions">
 						<xs:complexType>
 							<xs:choice maxOccurs="unbounded">
 								<xs:group ref="timer-actions-group" />
@@ -165,9 +165,9 @@
 	</xs:complexType>
 	<xs:complexType name="user-complex-type">
 		<xs:choice>
-			<xs:element name="user-id" type="xs:long" minOccurs="0" />
-			<xs:element name="screen-name" type="xs:string" minOccurs="0" />
-			<xs:element name="email-address" type="email-address-type" minOccurs="0" />
+			<xs:element minOccurs="0" name="user-id" type="xs:long" />
+			<xs:element minOccurs="0" name="screen-name" type="xs:string" />
+			<xs:element minOccurs="0" name="email-address" type="email-address-type" />
 		</xs:choice>
 	</xs:complexType>
 	<xs:element name="condition">
@@ -177,7 +177,7 @@
 					<xs:sequence>
 						<xs:element name="script" type="xs:string" />
 						<xs:element name="script-language" type="script-language-type" />
-						<xs:element name="script-required-contexts" type="xs:string" minOccurs="0" />
+						<xs:element minOccurs="0" name="script-required-contexts" type="xs:string" />
 						<xs:element ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
@@ -222,8 +222,8 @@
 			<xs:complexContent>
 				<xs:extension base="action-timer-workflow-node-complex-type">
 					<xs:sequence>
-						<xs:element name="initial" type="xs:boolean" minOccurs="0" default="false" />
-						<xs:element ref="transitions" minOccurs="0" />
+						<xs:element default="false" minOccurs="0" name="initial" type="xs:boolean" />
+						<xs:element minOccurs="0" ref="transitions" />
 					</xs:sequence>
 				</xs:extension>
 			</xs:complexContent>
@@ -234,10 +234,10 @@
 			<xs:complexContent>
 				<xs:extension base="abstract-workflow-node-complex-type">
 					<xs:sequence>
-						<xs:element name="actions" minOccurs="0">
+						<xs:element minOccurs="0" name="actions">
 							<xs:complexType>
 								<xs:choice>
-									<xs:group ref="task-actions-group" maxOccurs="unbounded" />
+									<xs:group maxOccurs="unbounded" ref="task-actions-group" />
 								</xs:choice>
 							</xs:complexType>
 						</xs:element>
@@ -248,10 +248,10 @@
 								</xs:choice>
 							</xs:complexType>
 						</xs:element>
-						<xs:element name="task-timers" minOccurs="0">
+						<xs:element minOccurs="0" name="task-timers">
 							<xs:complexType>
 								<xs:sequence>
-									<xs:element name="task-timer" type="task-timer-complex-type" maxOccurs="unbounded" />
+									<xs:element maxOccurs="unbounded" name="task-timer" type="task-timer-complex-type" />
 								</xs:sequence>
 							</xs:complexType>
 						</xs:element>
@@ -264,12 +264,12 @@
 	<xs:element name="transitions">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="transition" maxOccurs="unbounded">
+				<xs:element maxOccurs="unbounded" name="transition">
 					<xs:complexType>
 						<xs:sequence>
 							<xs:element name="name" type="xs:string" />
 							<xs:element name="target" type="xs:string" />
-							<xs:element name="default" type="xs:boolean" minOccurs="0" default="true" />
+							<xs:element default="true" minOccurs="0" name="default" type="xs:boolean" />
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -278,9 +278,9 @@
 	</xs:element>
 	<xs:element name="workflow-definition">
 		<xs:complexType>
-			<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:choice maxOccurs="unbounded" minOccurs="0">
 				<xs:element name="name" type="xs:string" />
-				<xs:element name="description" type="xs:string" minOccurs="0" />
+				<xs:element minOccurs="0" name="description" type="xs:string" />
 				<xs:element name="version" type="xs:int" />
 				<xs:group ref="nodes-group" />
 			</xs:choice>
@@ -317,14 +317,14 @@
 			<xs:element name="resource-actions">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="resource-action" type="xs:string" maxOccurs="unbounded" />
+						<xs:element maxOccurs="unbounded" name="resource-action" type="xs:string" />
 					</xs:sequence>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="roles">
 				<xs:complexType>
 					<xs:choice minOccurs="0">
-						<xs:element name="role" type="role-complex-type" maxOccurs="unbounded" />
+						<xs:element maxOccurs="unbounded" name="role" type="role-complex-type" />
 					</xs:choice>
 				</xs:complexType>
 			</xs:element>
@@ -372,7 +372,7 @@
 		<xs:choice>
 			<xs:element name="timer-action" type="action-complex-type" />
 			<xs:element name="timer-notification" type="task-notification-complex-type" />
-			<xs:element name="reassignments" minOccurs="0">
+			<xs:element minOccurs="0" name="reassignments">
 				<xs:complexType>
 					<xs:choice>
 						<xs:group ref="assignments-group" />

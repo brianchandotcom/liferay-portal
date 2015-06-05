@@ -12,8 +12,12 @@ alter table BlogsEntry add coverImageFileEntryId LONG;
 alter table BlogsEntry add coverImageURL STRING null;
 alter table BlogsEntry add smallImageFileEntryId LONG;
 
+alter table DDMStructure add versionUserId LONG;
+alter table DDMStructure add versionUserName VARCHAR(75) null;
 alter table DDMStructure add version VARCHAR(75) null;
 
+update DDMStrucrure set versionUserId = userId;
+update DDMStrucrure set versionUserName = userName;
 update DDMStructure set version = '1.0';
 
 create table DDMStructureLayout (
@@ -42,12 +46,20 @@ create table DDMStructureVersion (
 	description STRING null,
 	definition TEXT null,
 	storageType VARCHAR(75) null,
-	type_ INTEGER
+	type_ INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
+alter table DDMTemplate add versionUserId LONG;
+alter table DDMTemplate add versionUserName VARCHAR(75) null;
 alter table DDMTemplate add resourceClassNameId LONG;
 alter table DDMTemplate add version VARCHAR(75) null;
 
+update DDMTemplate set versionUserId = userId;
+update DDMTemplate set versionUserName = userName;
 update DDMTemplate set version = '1.0';
 
 create table DDMTemplateVersion (
@@ -64,7 +76,11 @@ create table DDMTemplateVersion (
 	name STRING null,
 	description STRING null,
 	language VARCHAR(75) null,
-	script TEXT null
+	script TEXT null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 alter table DLFileEntryMetadata drop column fileEntryTypeId;

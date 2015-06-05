@@ -1695,6 +1695,8 @@
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
+		<field name="versionUserId" type="long" />
+		<field name="versionUserName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="parentStructureId" type="long" />
@@ -1756,6 +1758,10 @@
 		</field>
 		<field name="storageType" type="String" />
 		<field name="type" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.dynamicdatamapping.model.DDMTemplate">
 		<field name="uuid" type="String" />
@@ -1764,6 +1770,8 @@
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
+		<field name="versionUserId" type="long" />
+		<field name="versionUserName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="classNameId" type="long" />
@@ -1820,6 +1828,10 @@
 		<field name="script" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.portlet.expando.model.ExpandoColumn">
 		<field name="columnId" type="long" />

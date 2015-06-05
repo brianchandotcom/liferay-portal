@@ -657,8 +657,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
-			groupId, parentStructureId, classNameId, structureKey, nameMap,
-			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
+			getUserId(), groupId, parentStructureId, classNameId, structureKey,
+			nameMap, descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	/**
@@ -714,8 +714,8 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			getPermissionChecker(), structureId, ActionKeys.UPDATE);
 
 		return ddmStructureLocalService.updateStructure(
-			structureId, parentStructureId, nameMap, descriptionMap, ddmForm,
-			ddmFormLayout, serviceContext);
+			getUserId(), structureId, parentStructureId, nameMap,
+			descriptionMap, ddmForm, ddmFormLayout, serviceContext);
 	}
 
 	/**

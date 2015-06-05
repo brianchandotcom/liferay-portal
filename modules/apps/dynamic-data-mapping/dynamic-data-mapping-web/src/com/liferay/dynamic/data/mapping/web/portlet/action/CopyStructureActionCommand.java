@@ -28,7 +28,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import java.util.Locale;
 import java.util.Map;
@@ -88,7 +88,7 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 			portletRequest, "copyDisplayTemplates");
 
 		if (copyDisplayTemplates) {
-			DDMTemplateServiceUtil.copyTemplates(
+			_ddmTemplateService.copyTemplates(
 				classNameId, oldClassPK, resourceClassNameId, newClassPK,
 				DDMTemplateConstants.TEMPLATE_TYPE_DISPLAY, serviceContext);
 		}
@@ -97,7 +97,7 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 			portletRequest, "copyFormTemplates");
 
 		if (copyFormTemplates) {
-			DDMTemplateServiceUtil.copyTemplates(
+			_ddmTemplateService.copyTemplates(
 				classNameId, oldClassPK, resourceClassNameId, newClassPK,
 				DDMTemplateConstants.TEMPLATE_TYPE_FORM, serviceContext);
 		}
@@ -153,6 +153,14 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 		_ddmStructureService = ddmStructureService;
 	}
 
+	@Reference
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		_ddmTemplateService = ddmTemplateService;
+	}
+
 	private DDMStructureService _ddmStructureService;
+	private DDMTemplateService _ddmTemplateService;
 
 }

@@ -24,7 +24,7 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateServiceUtil;
+import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
 import java.io.File;
 
@@ -35,6 +35,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -60,6 +61,13 @@ public class UpdateTemplateActionCommand extends AddTemplateActionCommand {
 		updatePortletPreferences(portletRequest, template);
 
 		setRedirectAttribute(portletRequest, template);
+	}
+
+	@Reference
+	protected void setDDMTemplateService(
+		DDMTemplateService ddmTemplateService) {
+
+		_ddmTemplateService = ddmTemplateService;
 	}
 
 	protected DDMTemplate updateTemplate(PortletRequest portletRequest)
@@ -94,10 +102,12 @@ public class UpdateTemplateActionCommand extends AddTemplateActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMTemplate.class.getName(), uploadPortletRequest);
 
-		return DDMTemplateServiceUtil.updateTemplate(
+		return _ddmTemplateService.updateTemplate(
 			templateId, classPK, nameMap, descriptionMap, type, mode, language,
 			script, cacheable, smallImage, smallImageURL, smallImageFile,
 			serviceContext);
 	}
+
+	private DDMTemplateService _ddmTemplateService;
 
 }

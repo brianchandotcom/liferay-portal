@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>ServerAdministration</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ServerAdministration</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>SOURCE</td>
+	<td>//span[contains(@onmouseover,'ToolTip')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESOURCES_ACTIONS_TABLE-->
+<tr>
+	<td>RESOURCES_ACTIONS_TABLE_DESCRIPTION</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>RESOURCES_ACTIONS_TABLE_EXECUTE</td>
+	<td>//div[@id='adminServerAdministrationActionsPanelContainer']//tr[contains(.,'${key_actionsDescription}')]/td/button[contains(.,'Execute')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--PROPERTIES_PORTAL_PROPERTIES-->
+<tr>
+	<td>PROPERTIES_PORTAL_PROPERTIES_SEARCH_FIELD</td>
+	<td>//input[@id='_137_keywords']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_PORTAL_PROPERTIES_SEARCH_BUTTON</td>
+	<td>//button[contains(.,'Search')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_PORTAL_PROPERTIES_TABLE_PROPERTY</td>
+	<td>//tr[contains(.,'${key_propertyName}')]/td[1]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_PORTAL_PROPERTIES_TABLE_VALUE</td>
+	<td>//tr[contains(.,'${key_propertyName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PROPERTIES_PORTAL_PROPERTIES_TABLE_SOURCE</td>
+	<td>//div[contains(@class,'tooltip-content')]/div</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--FILE_UPLOADS-->
+<tr>
+	<td>FILE_UPLOADS_GENERAL_OVERALL_MAX_FILE_SIZE_FIELD</td>
+	<td>//input[@id='_137_uploadServletRequestImplMaxSize']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS_GENERAL_TEMP_STORAGE_DIRECTORY_FIELD</td>
+	<td>//input[@id='_137_uploadServletRequestImplTempDir']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_FILE_SIZE_FIELD</td>
+	<td>//input[@id='_137_dlFileMaxSize']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_PREVIEWABLE_FILE_SIZE_FIELD</td>
+	<td>//input[@id='_137_dlFileEntryPreviewableProcessorMaxSize']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_THUMBNAIL_HEIGHT_FIELD</td>
+	<td>//input[@id='_137_dlFileEntryThumbnailMaxHeight']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS_DOCS_AND_MEDIA_MAX_THUMBNAIL_WIDTH_FIELD</td>
+	<td>//input[@id='_137_dlFileEntryThumbnailMaxWidth']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FILE_UPLOADS_DOCS_AND_MEDIA_ALLOWED_FILE_EXTENSIONS_FIELD</td>
+	<td>//input[@id='_137_dlFileExtensions']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

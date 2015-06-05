@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>ServerAdministrationExternalServices</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ServerAdministrationExternalServices</td></tr>
+</thead>
+<tbody>
+<!--OPEN_OFFICE_INTEGRATION-->
+<tr>
+	<td>OPEN_OFFICE_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@id,'openOfficeEnabled')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--XUGGLER-->
+<tr>
+	<td>XUGGLER_JAR_FILE_SELECT</td>
+	<td>//select[contains(@id,'jarName')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XUGGLER_INSTALL_BUTTON</td>
+	<td>//button[contains(@id,'installXugglerButton')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>XUGGLER_ENABLED_CHECKBOX</td>
+	<td>//input[contains(@id,'xugglerEnabled')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -311,7 +311,30 @@ public class JspServlet extends HttpServlet {
 			return method.invoke(_servletContext, args);
 		}
 
-		private URL getExtension(String path) {
+		private String getOriginalResourcePath(String path){
+
+			if(path.endsWith(".portal.jsp")){
+
+				int endIndex = path.indexOf(".portal.jsp");
+
+				path = path.substring(0, endIndex);
+
+				path = path +".jsp";
+
+			}
+			else if(path.endsWith(".portal.jspf")){
+
+				int endIndex = path.indexOf(".portal.jspf");
+
+				path = path.substring(0, endIndex);
+
+				path = path +".jspf";
+			}
+
+			return path;
+		}
+
+		private URL getExtension(String path, boolean isFiFo) {
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				"META-INF/resources", path.substring(1), false);
 
@@ -320,6 +343,10 @@ public class JspServlet extends HttpServlet {
 			}
 
 			List<URL> urls = Collections.list(enumeration);
+
+			if(isFiFo){
+				return urls.get(0);
+			}
 
 			return urls.get(urls.size() - 1);
 		}
@@ -330,10 +357,21 @@ public class JspServlet extends HttpServlet {
 					path = '/' + path;
 				}
 
-				URL url = getExtension(path);
+				URL url = getExtension(path,false);
 
 				if (url != null) {
 					return url;
+				}
+
+				if(url == null && path.endsWith(".portal.jsp")){
+
+					path = getOriginalResourcePath(path);
+
+				}
+				else if(url == null && path.endsWith(".portal.jspf")){
+
+					path = getOriginalResourcePath(path);
+
 				}
 
 				url = _servletContext.getResource(path);
@@ -374,7 +412,24 @@ public class JspServlet extends HttpServlet {
 		}
 
 		private InputStream getResourceAsStream(String path) {
-			URL url = getResource(path);
+			URL url = null;
+
+			if(url == null && path.endsWith(".portal.jsp")){
+
+				path = getOriginalResourcePath(path);
+
+				url =  getExtension(path,true);
+
+			}
+			else if(url == null && path.endsWith(".portal.jspf")){
+
+				path = getOriginalResourcePath(path);
+
+				url =  getExtension(path,true);
+			}
+			else{
+				url = getResource(path);
+			}
 
 			if (url == null) {
 				return null;

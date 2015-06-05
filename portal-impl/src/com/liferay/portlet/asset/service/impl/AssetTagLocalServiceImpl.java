@@ -55,7 +55,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 * Adds an asset tag.
 	 *
 	 * @param  userId the primary key of the user adding the asset tag
-	 * @param  groupId the site in which the asset tag is to be added
+	 * @param  groupId the primary key of the group in which the asset tag is to
+	 *         be added
 	 * @param  name the asset tag's name
 	 * @param  serviceContext the service context to be applied
 	 * @return the asset tag that was added
@@ -330,10 +331,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the asset tags in the sites.
+	 * Returns the asset tags in the groups.
 	 *
-	 * @param  groupIds the primary keys of the sites
-	 * @return the asset tags that have been added in the sites
+	 * @param  groupIds the primary keys of the groups
+	 * @return the asset tags that have been added in the groups
 	 */
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
@@ -349,10 +350,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the asset tags in the site.
+	 * Returns the asset tags in the group.
 	 *
-	 * @param  groupId the primary key of the site
-	 * @return the asset tags that have been added in the site
+	 * @param  groupId the primary key of the group
+	 * @return the asset tags that have been added in the group
 	 */
 	@Override
 	public List<AssetTag> getGroupTags(long groupId) {
@@ -360,9 +361,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns a range of all the asset tags in the site.
+	 * Returns a range of all the asset tags in the group.
 	 *
-	 * @param  groupId the primary key of the site
+	 * @param  groupId the primary key of the group
 	 * @param  start the lower bound of the range of asset tags
 	 * @param  end the upper bound of the range of asset tags (not inclusive)
 	 * @return the range of matching asset tags
@@ -373,10 +374,10 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the number of asset tags in the site.
+	 * Returns the number of asset tags in the group.
 	 *
-	 * @param  groupId the primary key of the site
-	 * @return the number of asset tags in the site
+	 * @param  groupId the primary key of the group
+	 * @return the number of asset tags in the group
 	 */
 	@Override
 	public int getGroupTagsCount(long groupId) {
@@ -423,11 +424,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the asset tag with the name in the site.
+	 * Returns the asset tag with the name in the group.
 	 *
-	 * @param  groupId the primary key of the site
+	 * @param  groupId the primary key of the group
 	 * @param  name the name of the asset tag
-	 * @return the asset tag with the name in the site
+	 * @return the asset tag with the name in the group
 	 * @throws PortalException if a matching asset tag could not be found
 	 */
 	@Override
@@ -436,11 +437,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the primary keys of the asset tags with the names in the site.
+	 * Returns the primary keys of the asset tags with the names in the group.
 	 *
-	 * @param  groupId the primary key of the site
+	 * @param  groupId the primary key of the group
 	 * @param  names the names of the asset tags
-	 * @return the primary keys of the asset tags with the names in the site
+	 * @return the primary keys of the asset tags with the names in the group
 	 */
 	@Override
 	public long[] getTagIds(long groupId, String[] names) {
@@ -460,11 +461,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the primary keys of the asset tags with the name in the sites.
+	 * Returns the primary keys of the asset tags with the name in the groups.
 	 *
-	 * @param  groupIds the primary keys of the sites
+	 * @param  groupIds the primary keys of the groups
 	 * @param  name the name of the asset tags
-	 * @return the primary keys of the asset tags with the name in the sites
+	 * @return the primary keys of the asset tags with the name in the groups
 	 */
 	@Override
 	public long[] getTagIds(long[] groupIds, String name) {
@@ -484,11 +485,11 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the primary keys of the asset tags with the names in the sites.
+	 * Returns the primary keys of the asset tags with the names in the groups.
 	 *
-	 * @param  groupIds the primary keys of the sites
+	 * @param  groupIds the primary keys of the groups
 	 * @param  names the names of the asset tags
-	 * @return the primary keys of the asset tags with the names in the sites
+	 * @return the primary keys of the asset tags with the names in the groups
 	 */
 	@Override
 	public long[] getTagIds(long[] groupIds, String[] names) {
@@ -600,12 +601,12 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns <code>true</code> if the site contains an asset tag with the
+	 * Returns <code>true</code> if the group contains an asset tag with the
 	 * name.
 	 *
-	 * @param  groupId the primary key of the site
+	 * @param  groupId the primary key of the group
 	 * @param  name the name of the asset tag
-	 * @return <code>true</code> if the site contains an asset tag with the
+	 * @return <code>true</code> if the group contains an asset tag with the
 	 *         name; <code>false</code> otherwise.
 	 */
 	@Override
@@ -664,13 +665,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the asset tags in the site whose names match the pattern.
+	 * Returns the asset tags in the group whose names match the pattern.
 	 *
-	 * @param  groupId the primary key of the site
+	 * @param  groupId the primary key of the group
 	 * @param  name the pattern to match
 	 * @param  start the lower bound of the range of asset tags
 	 * @param  end the upper bound of the range of asset tags (not inclusive)
-	 * @return the asset tags in the site whose names match the pattern
+	 * @return the asset tags in the group whose names match the pattern
 	 */
 	@Override
 	public List<AssetTag> search(
@@ -680,13 +681,13 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the asset tags in the sites whose names match the pattern.
+	 * Returns the asset tags in the groups whose names match the pattern.
 	 *
-	 * @param  groupIds the primary keys of the sites
+	 * @param  groupIds the primary keys of the groups
 	 * @param  name the pattern to match
 	 * @param  start the lower bound of the range of asset tags
 	 * @param  end the upper bound of the range of asset tags (not inclusive)
-	 * @return the asset tags in the sites whose names match the pattern
+	 * @return the asset tags in the groups whose names match the pattern
 	 */
 	@Override
 	public List<AssetTag> search(

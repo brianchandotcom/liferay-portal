@@ -421,13 +421,13 @@
 		<finder name="TemplateId" return-type="Collection">
 			<finder-column name="templateId" />
 		</finder>
-		<finder name="T_S" return-type="Collection">
-			<finder-column name="templateId" />
-			<finder-column name="status" />
-		</finder>
 		<finder name="T_V" return-type="DDMTemplateVersion" unique="true">
 			<finder-column name="templateId" />
 			<finder-column name="version" />
+		</finder>
+		<finder name="T_S" return-type="Collection">
+			<finder-column name="templateId" />
+			<finder-column name="status" />
 		</finder>
 	</entity>
 	<exceptions>

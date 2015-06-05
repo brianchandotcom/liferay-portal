@@ -14,11 +14,13 @@
 
 package com.liferay.portal.kernel.search.filter;
 
+import com.liferay.portal.kernel.search.SearchContext;
+
 /**
  * @author Michael C. Han
  */
 public interface FilterTranslator<T> {
 
-	public T translate(Filter filter);
+	public T translate(Filter filter, SearchContext searchContext);
 
 }

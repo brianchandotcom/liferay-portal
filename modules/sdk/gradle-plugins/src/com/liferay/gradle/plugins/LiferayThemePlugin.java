@@ -25,6 +25,11 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
+
 import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -132,31 +137,57 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	}
 
 	@Override
-	protected void configureDependenciesCompile(Project project) {
-		super.configureDependenciesCompile(project);
+	protected void configureDependencies(Project project) {
+		super.configureDependencies(project);
 
-		boolean addDefaultDependencies = getProperty(
-			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+		configureDependenciesProvided(project);
+		configureDependenciesRuntime(project);
+	}
 
-		if (addDefaultDependencies && hasSources(project)) {
-			for (String dependencyNotation :
-					_THEME_COMPILE_DEPENDENCY_NOTATIONS) {
+	protected void configureDependenciesProvided(Project project) {
+		super.configureDependenciesProvided(project);
 
-				GradleUtil.addDependency(
-					project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
-					dependencyNotation);
-			}
+		if (!isAddDefaultDependencies(project) || !hasSources(project)) {
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+
+		for (String dependencyNotationPrefix :
+				_THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES) {
+
+			int pos = dependencyNotationPrefix.indexOf(':');
+
+			String group = dependencyNotationPrefix.substring(0, pos);
+			String module = dependencyNotationPrefix.substring(pos + 1);
+
+			Map<String, String> args = new HashMap<>();
+
+			args.put("group", group);
+			args.put("module", module);
+
+			configuration.exclude(args);
 		}
 	}
 
-	@Override
-	protected void configureDependenciesProvidedCompile(Project project) {
-		super.configureDependenciesProvidedCompile(project);
+	protected void configureDependenciesRuntime(Project project) {
+		super.configureDependenciesCompile(project);
 
-		if (hasSources(project)) {
-			GradleUtil.removeDependencies(
-				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-				_THEME_COMPILE_DEPENDENCY_NOTATIONS);
+		if (!isAddDefaultDependencies(project) || !hasSources(project)) {
+			return;
+		}
+
+		for (String dependencyNotationPrefix :
+				_THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES) {
+
+			for (String dependencyNotation : DEFAULT_DEPENDENCY_NOTATIONS) {
+				if (dependencyNotation.startsWith(dependencyNotationPrefix)) {
+					GradleUtil.addDependency(
+						project, JavaPlugin.RUNTIME_CONFIGURATION_NAME,
+						dependencyNotation);
+				}
+			}
 		}
 	}
 
@@ -344,11 +375,11 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		return true;
 	}
 
-	private static final String[] _THEME_COMPILE_DEPENDENCY_NOTATIONS = {
-		"com.liferay.portal:util-bridges:default",
-		"com.liferay.portal:util-java:default",
-		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.1", "log4j:log4j:1.2.16"
-	};
+	private static final String[] _THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES =
+		{
+			"com.liferay.portal:util-bridges", "com.liferay.portal:util-java",
+			"com.liferay.portal:util-taglib", "commons-logging:commons-logging",
+			"log4j:log4j"
+		};
 
 }

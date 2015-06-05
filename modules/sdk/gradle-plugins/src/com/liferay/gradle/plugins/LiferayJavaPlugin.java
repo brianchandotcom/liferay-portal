@@ -90,12 +90,6 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
 
-	public static final String ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.adddefaultdependencies";
-
-	public static final String ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.addtestdefaultdependencies";
-
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
@@ -368,34 +362,34 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureDependencies(Project project) {
-		configureDependenciesCompile(project);
+		configureDependenciesProvided(project);
 		configureDependenciesTestCompile(project);
 	}
 
-	protected void configureDependenciesCompile(Project project) {
-		boolean addDefaultDependencies = getProperty(
-			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-
-		if (!addDefaultDependencies) {
+	protected void configureDependenciesProvided(Project project) {
+		if (!isAddDefaultDependencies(project)) {
 			return;
 		}
 
-		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
+		for (String dependencyNotation : DEFAULT_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
+				dependencyNotation);
+		}
+
+		for (String dependencyNotation : _DEFAULT_EXT_DEPENDENCY_NOTATIONS) {
+			GradleUtil.addDependency(
+				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
 				dependencyNotation);
 		}
 	}
 
 	protected void configureDependenciesTestCompile(Project project) {
-		boolean addTestDefaultDependencies = getProperty(
-			project, ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-
-		if (!addTestDefaultDependencies) {
+		if (!isAddTestDefaultDependencies(project)) {
 			return;
 		}
 
-		for (String dependencyNotation : _TEST_COMPILE_DEPENDENCY_NOTATIONS) {
+		for (String dependencyNotation : _DEFAULT_TEST_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
 				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
@@ -1061,6 +1055,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return project.getProjectDir();
 	}
 
+	protected boolean isAddDefaultDependencies(Project project) {
+		return getProperty(
+			project, _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
+	protected boolean isAddTestDefaultDependencies(Project project) {
+		return getProperty(
+			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
 	protected boolean isTestProject(Project project) {
 		String projectName = project.getName();
 
@@ -1071,21 +1075,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	protected static final String[] COMPILE_DEPENDENCY_NOTATIONS = {
+	protected static final String[] DEFAULT_DEPENDENCY_NOTATIONS = {
 		"biz.aQute.bnd:biz.aQute.bnd:2.4.1",
 		"com.liferay.portal:portal-service:default",
 		"com.liferay.portal:util-bridges:default",
 		"com.liferay.portal:util-java:default",
 		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.1", "hsqldb:hsqldb:1.8.0.7",
-		"javax.activation:activation:1.1", "javax.ccpp:ccpp:1.0",
-		"javax.jms:jms:1.1", "javax.mail:mail:1.4",
-		"javax.portlet:portlet-api:2.0", "javax.servlet.jsp:jsp-api:2.1",
-		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.16",
-		"mysql:mysql-connector-java:5.1.23", "net.sf:jargs:1.0",
-		"net.sourceforge.jtds:jtds:1.2.6",
-		"org.eclipse.persistence:javax.persistence:2.0.0",
-		"postgresql:postgresql:9.2-1002.jdbc4"
+		"commons-logging:commons-logging:1.1.3",
+		"javax.activation:activation:1.1", "javax.annotation:jsr250-api:1.0",
+		"javax.mail:mail:1.4", "javax.servlet.jsp:jsp-api:2.1",
+		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.17"
 	};
 
 	protected static class RenameDependencyClosure extends Closure<String> {
@@ -1168,10 +1167,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	}
 
-	private static final String _REPOSITORY_URL =
-		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+	private static final String _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
+		"com.liferay.adddefaultdependencies";
 
-	private static final String[] _TEST_COMPILE_DEPENDENCY_NOTATIONS = {
+	private static final String _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
+		"com.liferay.addtestdefaultdependencies";
+
+	private static final String[] _DEFAULT_EXT_DEPENDENCY_NOTATIONS = {
+		"hsqldb:hsqldb:1.8.0.7", "javax.ccpp:ccpp:1.0", "javax.jms:jms:1.1",
+		"javax.portlet:portlet-api:2.0", "mysql:mysql-connector-java:5.1.23",
+		"net.sourceforge.jtds:jtds:1.2.6",
+		"org.eclipse.persistence:javax.persistence:2.0.0",
+		"postgresql:postgresql:9.2-1002.jdbc4"
+	};
+
+	private static final String[] _DEFAULT_TEST_DEPENDENCY_NOTATIONS = {
 		"junit:junit:4.12", "org.mockito:mockito-all:1.9.5",
 		"org.powermock:powermock-api-mockito:1.6.1",
 		"org.powermock:powermock-api-support:1.6.1",
@@ -1181,5 +1191,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.powermock:powermock-reflect:1.6.1",
 		"org.springframework:spring-test:3.0.7.RELEASE"
 	};
+
+	private static final String _REPOSITORY_URL =
+		"http://cdn.repository.liferay.com/nexus/content/groups/public";
 
 }

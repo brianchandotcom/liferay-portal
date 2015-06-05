@@ -519,6 +519,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>UNINSTALL</td>
+	<td>//a[@role='menuitem' and contains(.,'Uninstall')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>UNSUBSCRIBE</td>
 	<td>//a[@role='menuitem' and contains(.,'Unsubscribe')]</td>
 	<td></td>

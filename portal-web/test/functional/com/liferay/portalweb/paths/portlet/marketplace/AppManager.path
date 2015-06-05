@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>AppManager</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">AppManager</td></tr>
+</thead>
+<tbody>
+<!--APP-->
+<tr>
+	<td>APP_NAME</td>
+	<td>//div[@class='title' and contains(.,'${key_appName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>APP_ACTIONS</td>
+	<td>//div[@class='title' and contains(.,'${key_appName}')]/../../div[@class='app-actions']/div/a/span</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

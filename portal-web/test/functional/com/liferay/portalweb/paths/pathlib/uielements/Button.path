@@ -181,7 +181,7 @@
 <tr>
 	<td>I_DISAGREE_BUTTON</td>
 	<td>//button[contains(.,'I Disagree')]</td>
-	<td>I Disagree Button</td>
+	<td></td>
 </tr>
 <tr>
 	<td>ITEMS_PER_PAGE</td>

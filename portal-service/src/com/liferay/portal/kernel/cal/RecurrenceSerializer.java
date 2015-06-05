@@ -83,7 +83,36 @@ public class RecurrenceSerializer {
 						dayOfWeek += StringPool.COMMA;
 					}
 
-					dayOfWeek += byDay[i].getDayOfWeek();
+					switch (byDay[i].getDayOfWeek()) {
+
+						case Calendar.SUNDAY :
+							dayOfWeek += "SUN";
+							break;
+
+						case Calendar.MONDAY :
+							dayOfWeek += "MON";
+							break;
+
+						case Calendar.TUESDAY :
+							dayOfWeek += "TUE";
+							break;
+
+						case Calendar.WEDNESDAY :
+							dayOfWeek += "WED";
+							break;
+
+						case Calendar.THURSDAY :
+							dayOfWeek += "THU";
+							break;
+
+						case Calendar.FRIDAY :
+							dayOfWeek += "FRI";
+							break;
+
+						case Calendar.SATURDAY :
+							dayOfWeek += "SAT";
+							break;
+					}
 				}
 			}
 

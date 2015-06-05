@@ -30,6 +30,12 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="XSL Content" />
 		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Configuration Admin" />
+		</execute>
+
+		<execute macro="XSLContent#configureConfigurationAdminXSL" />
 	</set-up>
 
 	<tear-down>

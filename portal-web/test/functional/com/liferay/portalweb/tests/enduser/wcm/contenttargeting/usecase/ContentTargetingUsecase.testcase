@@ -1,5 +1,6 @@
 <definition component-name="extra-apps-content-targeting">
 	<property name="custom.properties" value="layout.parallel.render.enable=false" />
+	<property name="ignore.errors" value="IX_DC6100CC" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
 	<tear-down>
@@ -1830,8 +1831,6 @@
 	</command>
 
 	<command name="StagingContentTargeting" priority="5">
-		<property name="ignore.errors" value="IX_DC6100CC" />
-
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

@@ -1397,7 +1397,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 	private volatile LDAPConfiguration _ldapConfiguration;
 	private LDAPToPortalConverter _ldapToPortalConverter;
 	private Set<String> _ldapUserIgnoreAttributes;
-	private volatile LockManager _lockManager;
+	private LockManager _lockManager;
 	private PortalCache<String, Long> _portalCache;
 
 }

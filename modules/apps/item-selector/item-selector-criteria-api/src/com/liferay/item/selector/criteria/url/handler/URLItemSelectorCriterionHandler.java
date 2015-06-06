@@ -14,16 +14,9 @@
 
 package com.liferay.item.selector.criteria.url.handler;
 
+import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.portal.kernel.registry.ServiceTrackerCustomizerFactory;
-import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.registry.collections.ServiceTrackerCollections;
-import com.liferay.registry.collections.ServiceTrackerList;
-
-import java.util.Collections;
-import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,36 +25,11 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class URLItemSelectorCriterionHandler
-	implements ItemSelectorCriterionHandler<URLItemSelectorCriterion> {
+	extends BaseItemSelectorCriterionHandler<URLItemSelectorCriterion> {
 
 	@Override
 	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return URLItemSelectorCriterion.class;
 	}
-
-	@Override
-	public List<ItemSelectorView<URLItemSelectorCriterion>>
-	getItemSelectorViews(
-		URLItemSelectorCriterion urlItemSelectorCriterion) {
-
-		return (List)Collections.unmodifiableList(_itemSelectorViews);
-	}
-
-	private final ServiceTrackerList<ItemSelectorView> _itemSelectorViews =
-		ServiceTrackerCollections.list(
-			ItemSelectorView.class,
-			ServiceTrackerCustomizerFactory.create(
-				new PredicateFilter<ItemSelectorView>() {
-
-					@Override
-					public boolean filter(ItemSelectorView itemSelectorView) {
-						Class<?> itemSelectorCriterionClass =
-							itemSelectorView.getItemSelectorCriterionClass();
-
-						return itemSelectorCriterionClass.isAssignableFrom(
-							URLItemSelectorCriterion.class);
-					}
-
-				}));
 
 }

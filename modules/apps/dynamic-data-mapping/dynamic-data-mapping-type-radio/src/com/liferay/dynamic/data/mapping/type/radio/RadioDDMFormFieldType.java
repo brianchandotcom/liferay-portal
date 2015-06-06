@@ -44,6 +44,13 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public Class<? extends DDMFormFieldTypeSettings>
+		getDDMFormFieldTypeSettings() {
+
+		return RadioDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
 	public DDMFormFieldValueAccessor<String> getDDMFormFieldValueAccessor(
 		Locale locale) {
 
@@ -83,11 +90,6 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 	@Override
 	public String getName() {
 		return "radio";
-	}
-
-	@Override
-	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
-		return RadioDDMFormFieldTypeSettings.class;
 	}
 
 	@Reference(service = RadioDDMFormFieldRenderer.class, unbind = "-")

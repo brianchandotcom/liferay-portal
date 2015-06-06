@@ -40,6 +40,13 @@ public class TestDDMFormFieldType implements DDMFormFieldType {
 	}
 
 	@Override
+	public Class<? extends DDMFormFieldTypeSettings>
+		getDDMFormFieldTypeSettings() {
+
+		return null;
+	}
+
+	@Override
 	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
 		Locale locale) {
 
@@ -63,11 +70,6 @@ public class TestDDMFormFieldType implements DDMFormFieldType {
 	@Override
 	public String getName() {
 		return TestDDMFormFieldType.class.getName();
-	}
-
-	@Override
-	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
-		return null;
 	}
 
 }

@@ -23,6 +23,9 @@ public interface DDMFormFieldType {
 
 	public DDMFormFieldRenderer getDDMFormFieldRenderer();
 
+	public Class<? extends DDMFormFieldTypeSettings>
+		getDDMFormFieldTypeSettings();
+
 	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
 		Locale locale);
 
@@ -33,7 +36,5 @@ public interface DDMFormFieldType {
 		getDDMFormFieldValueRendererAccessor(Locale locale);
 
 	public String getName();
-
-	public Class<? extends DDMFormFieldTypeSettings> getSettings();
 
 }

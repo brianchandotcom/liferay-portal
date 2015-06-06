@@ -505,7 +505,7 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 
 	protected void setUpDefaultDDMFormFieldType() {
 		when (
-			_defaultDDMFormFieldType.getSettings()
+			_defaultDDMFormFieldType.getDDMFormFieldTypeSettings()
 		).then(
 			new Answer<Class<? extends DDMFormFieldTypeSettings>>() {
 

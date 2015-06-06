@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:osgi="http://www.springframework.org/schema/osgi" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd">
+	<bean id="com.liferay.portal.lock.service.LockLocalService" class="com.liferay.portal.lock.service.impl.LockLocalServiceImpl" />
+	<osgi:service interface="com.liferay.portal.lock.service.LockLocalService" ref="com.liferay.portal.lock.service.LockLocalService">
+		<osgi:service-properties>
+			<entry key="json.web.service.context.name" value="lock" />
+			<entry key="json.web.service.context.path" value="Lock" />
+		</osgi:service-properties>
+	</osgi:service>
+	<bean id="com.liferay.portal.lock.service.persistence.LockPersistence" class="com.liferay.portal.lock.service.persistence.impl.LockPersistenceImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.portal.lock.service.persistence.LockPersistence" ref="com.liferay.portal.lock.service.persistence.LockPersistence" />
+	<bean id="com.liferay.portal.lock.service.persistence.LockFinder" class="com.liferay.portal.lock.service.persistence.impl.LockFinderImpl" parent="basePersistence" />
+	<osgi:service interface="com.liferay.portal.lock.service.persistence.LockFinder" ref="com.liferay.portal.lock.service.persistence.LockFinder" />
+</beans>

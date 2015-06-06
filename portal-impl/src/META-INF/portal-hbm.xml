@@ -27,7 +27,6 @@
 	<import class="com.liferay.portal.model.LayoutSetPrototype" />
 	<import class="com.liferay.portal.model.LayoutTemplate" />
 	<import class="com.liferay.portal.model.ListType" />
-	<import class="com.liferay.portal.model.Lock" />
 	<import class="com.liferay.portal.model.MembershipRequest" />
 	<import class="com.liferay.portal.model.Organization" />
 	<import class="com.liferay.portal.model.OrgGroupRole" />
@@ -581,22 +580,6 @@
 		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
-	</class>
-	<class name="com.liferay.portal.model.impl.LockImpl" table="Lock_" dynamic-update="true">
-		<id name="lockId" type="long">
-			<generator class="assigned" />
-		</id>
-		<version name="mvccVersion" type="long" access="com.liferay.portal.dao.orm.hibernate.PrivatePropertyAccessor" />
-		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
-		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
-		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="key" type="com.liferay.portal.dao.orm.hibernate.StringType" column="key_" />
-		<property name="owner" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="inheritable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
-		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.portal.model.impl.MembershipRequestImpl" table="MembershipRequest" dynamic-update="true">
 		<id name="membershipRequestId" type="long">

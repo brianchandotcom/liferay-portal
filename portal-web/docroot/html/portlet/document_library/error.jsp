@@ -21,7 +21,7 @@
 <liferay-ui:error exception="<%= DuplicateLockException.class %>">
 
 	<%
-	Lock lock = (Lock)errorException;
+	com.liferay.portal.kernel.lock.Lock lock = (com.liferay.portal.kernel.lock.Lock)errorException;
 	%>
 
 	<%= LanguageUtil.format(request, "you-cannot-modify-this-document-because-it-was-locked-by-x-on-x", new Object[] {HtmlUtil.escape(PortalUtil.getUserName(lock.getUserId(), String.valueOf(lock.getUserId()))), dateFormatDateTime.format(lock.getCreateDate())}, false) %>

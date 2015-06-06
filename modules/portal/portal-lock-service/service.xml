@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="com.liferay.portal.lock" auto-import-default-references="false" mvcc-enabled="true">
+	<namespace>Lock</namespace>
+		<entity name="Lock" uuid="true" local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="lockId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="className" type="String" />
+		<column name="key" type="String" />
+		<column name="owner" type="String" />
+		<column name="inheritable" type="boolean" />
+		<column name="expirationDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="LtExpirationDate" return-type="Collection">
+			<finder-column name="expirationDate" comparator="&lt;" />
+		</finder>
+		<finder name="C_K" return-type="Lock" unique="true">
+			<finder-column name="className" />
+			<finder-column name="key" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="User" />
+	</entity>
+	<exceptions>
+		<exception>DuplicateLock</exception>
+		<exception>ExpiredLock</exception>
+		<exception>InvalidLock</exception>
+	</exceptions>
+</service-builder>

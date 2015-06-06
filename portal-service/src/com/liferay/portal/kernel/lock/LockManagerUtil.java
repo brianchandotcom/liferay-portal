@@ -118,8 +118,6 @@ public class LockManagerUtil {
 	private LockManagerUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		registry.registerService(LockManager.class, new LockManagerImpl());
-
 		ServiceTracker<LockManager, LockManager> serviceTracker =
 			registry.trackServices(LockManager.class);
 

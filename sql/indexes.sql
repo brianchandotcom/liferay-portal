@@ -358,10 +358,6 @@ create index IX_D9FFCA84 on LayoutSetPrototype (uuid_, companyId);
 create index IX_77729718 on ListType (name, type_);
 create index IX_2932DD37 on ListType (type_);
 
-create unique index IX_228562AD on Lock_ (className, key_);
-create index IX_E3F1286B on Lock_ (expirationDate);
-create index IX_2C418EAE on Lock_ (uuid_, companyId);
-
 create index IX_69951A25 on MBBan (banUserId);
 create unique index IX_8ABC4E3B on MBBan (groupId, banUserId);
 create index IX_48814BBA on MBBan (userId);

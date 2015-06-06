@@ -30,23 +30,7 @@ public class URLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		super(_AVAILABLE_RETURN_TYPES);
 	}
 
-	public URLItemSelectorCriterion(long groupId) {
-		super(_AVAILABLE_RETURN_TYPES);
-
-		_groupId = groupId;
-	}
-
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-	}
-
 	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
 		getInmutableSet(URL.class, UUID.class);
-
-	private long _groupId;
 
 }

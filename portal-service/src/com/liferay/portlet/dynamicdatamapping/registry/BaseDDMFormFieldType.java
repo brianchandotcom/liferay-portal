@@ -14,26 +14,14 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
-import java.util.Locale;
-
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldType {
+public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
 
-	public DDMFormFieldRenderer getDDMFormFieldRenderer();
-
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale);
-
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer();
-
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale);
-
-	public String getName();
-
-	public Class<? extends DDMFormFieldTypeSettings> getSettings();
+	@Override
+	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
+		return DefaultDDMFormFieldTypeSettings.class;
+	}
 
 }

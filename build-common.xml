@@ -490,26 +490,6 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 	<property name="whip.agent" value="-javaagent:${project.dir}/${junit.whip.jar}=${junit.whip.includes};${junit.whip.excludes}" />
 
-	<macrodef name="ant-execute">
-		<attribute default="build.xml" name="ant.build.file" />
-		<attribute name="ant.dir" />
-		<attribute name="ant.target" />
-
-		<sequential>
-			<if>
-				<os family="unix" />
-				<then>
-					<ant antfile="@{ant.build.file}" dir="@{ant.dir}" target="@{ant.target}" inheritAll="false" />
-				</then>
-				<else>
-					<exec dir="@{ant.dir}" executable="${ant.home}/bin/ant.bat" failonerror="true">
-						<arg line="-f @{ant.build.file} @{ant.target}" />
-					</exec>
-				</else>
-			</if>
-		</sequential>
-	</macrodef>
-
 	<macrodef name="app-server-properties-reset">
 		<sequential>
 			<delete file="app.server.${user.name}.properties" />

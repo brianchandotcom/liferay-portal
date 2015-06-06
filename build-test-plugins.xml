@@ -153,14 +153,14 @@ app.server.tomcat.dir=${app.server.parent.dir}/tomcat-7.0.42</echo>
 				<if>
 					<isset property="plugin.types" />
 					<then>
-						<ant antfile="build.xml" dir="${lp.plugins.dir}/${plugin.types}" target="clean" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}/${plugin.types}" target="clean" inheritAll="false" />
 
-						<ant antfile="build.xml" dir="${lp.plugins.dir}/${plugin.types}" target="deploy" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}/${plugin.types}" target="deploy" inheritAll="false" />
 					</then>
 					<else>
-						<ant antfile="build.xml" dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
 
-						<ant antfile="build.xml" dir="${lp.plugins.dir}" target="deploy" inheritAll="false" />
+						<ant dir="${lp.plugins.dir}" target="deploy" inheritAll="false" />
 					</else>
 				</if>
 			</else>
@@ -209,15 +209,15 @@ auto.deploy.dir=${auto.deploy.dir}
 
 plugins.includes=${test.plugin}</echo>
 
-		<ant antfile="build.xml" dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="clean" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="clean" inheritAll="false" />
 
 		<if>
 			<contains string="${test.plugin}" substring="portlet" />
 			<then>
-				<ant antfile="build.xml" dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="compile-jsp" inheritAll="false" />
+				<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="compile-jsp" inheritAll="false" />
 			</then>
 			<else>
-				<ant antfile="build.xml" dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="compile" inheritAll="false" />
+				<ant dir="${lp.plugins.dir}/${test.plugin.type}/${test.plugin}" target="compile" inheritAll="false" />
 			</else>
 		</if>
 	</target>

@@ -424,7 +424,7 @@
 			plugins.war.excludes=**/WEB-INF/service/**,**/WEB-INF/src/**
 		</echo>
 
-		<ant antfile="build.xml" dir="${lp.plugins.dir}" target="all" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" target="all" inheritAll="false" />
 
 		<copy todir="${app.server.tcat.dir}/admin/tcat_init/webapps/${lp.version.tcat}">
 			<fileset dir="${lp.plugins.dir}/dist" includes="*.war" />

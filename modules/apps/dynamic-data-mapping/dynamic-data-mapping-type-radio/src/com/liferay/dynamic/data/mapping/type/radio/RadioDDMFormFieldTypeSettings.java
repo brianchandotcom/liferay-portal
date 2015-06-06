@@ -12,29 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.dynamic.data.mapping.type.radio;
 
-import java.util.Locale;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
+import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldTypeSettings;
+import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldType {
+@DDMForm
+public interface RadioDDMFormFieldTypeSettings
+	extends DefaultDDMFormFieldTypeSettings {
 
-	public DDMFormFieldRenderer getDDMFormFieldRenderer();
-
-	public Class<? extends DDMFormFieldTypeSettings>
-		getDDMFormFieldTypeSettings();
-
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale);
-
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer();
-
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale);
-
-	public String getName();
+	@DDMFormField(dataType = "ddm-options", type = "select")
+	public DDMFormFieldOptions options();
 
 }

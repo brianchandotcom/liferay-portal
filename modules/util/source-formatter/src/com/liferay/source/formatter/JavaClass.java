@@ -152,6 +152,15 @@ public class JavaClass {
 		return _content;
 	}
 
+	public String getClassName() {
+		if (_outerClass == null) {
+			return _packagePath + StringPool.PERIOD + _name;
+		}
+		else {
+			return _outerClass.getClassName() + StringPool.DOLLAR + _name;
+		}
+	}
+
 	public String getContent() {
 		return _content;
 	}
@@ -287,8 +296,7 @@ public class JavaClass {
 		javaDocBuilder.addSource(_file);
 
 		com.thoughtworks.qdox.model.JavaClass javaClass =
-			javaDocBuilder.getClassByName(
-				_packagePath + StringPool.PERIOD + _name);
+			javaClass = javaDocBuilder.getClassByName(getClassName());
 
 		com.thoughtworks.qdox.model.JavaClass superJavaClass =
 			javaClass.getSuperJavaClass();

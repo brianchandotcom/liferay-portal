@@ -16,31 +16,33 @@ package com.liferay.item.selector.criteria.url.handler;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.registry.ServiceTrackerCustomizerFactory;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Collections;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class LayoutItemSelectorCriterionHandler
-	implements ItemSelectorCriterionHandler<LayoutItemSelectorCriterion> {
+public class URLItemSelectorCriterionHandler
+	implements ItemSelectorCriterionHandler<URLItemSelectorCriterion> {
 
 	@Override
-	public Class<LayoutItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return LayoutItemSelectorCriterion.class;
+	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return URLItemSelectorCriterion.class;
 	}
 
 	@Override
-	public List<ItemSelectorView<LayoutItemSelectorCriterion>>
-		getItemSelectorViews(
-			LayoutItemSelectorCriterion dlItemSelectorCriterion) {
+	public List<ItemSelectorView<URLItemSelectorCriterion>>
+	getItemSelectorViews(
+		URLItemSelectorCriterion urlItemSelectorCriterion) {
 
 		return (List)Collections.unmodifiableList(_itemSelectorViews);
 	}
@@ -57,7 +59,7 @@ public class LayoutItemSelectorCriterionHandler
 							itemSelectorView.getItemSelectorCriterionClass();
 
 						return itemSelectorCriterionClass.isAssignableFrom(
-							LayoutItemSelectorCriterion.class);
+							URLItemSelectorCriterion.class);
 					}
 
 				}));

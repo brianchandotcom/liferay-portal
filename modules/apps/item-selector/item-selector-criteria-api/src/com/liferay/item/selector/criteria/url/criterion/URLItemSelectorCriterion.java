@@ -17,19 +17,20 @@ package com.liferay.item.selector.criteria.url.criterion;
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 import java.net.URL;
+
 import java.util.Set;
 import java.util.UUID;
 
 /**
  * @author Roberto Díaz
  */
-public class LayoutItemSelectorCriterion extends BaseItemSelectorCriterion {
+public class URLItemSelectorCriterion extends BaseItemSelectorCriterion {
 
-	public LayoutItemSelectorCriterion() {
+	public URLItemSelectorCriterion() {
 		super(_AVAILABLE_RETURN_TYPES);
 	}
 
-	public LayoutItemSelectorCriterion(long groupId) {
+	public URLItemSelectorCriterion(long groupId) {
 		super(_AVAILABLE_RETURN_TYPES);
 
 		_groupId = groupId;

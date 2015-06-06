@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.item.selector.web.file;
 
-import com.liferay.document.library.item.selector.DLItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 
 import java.io.IOException;
 
@@ -35,21 +35,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Roberto Díaz
  */
 @Component(service = ItemSelectorView.class)
-public class DLItemSelectorView
-	implements ItemSelectorView<DLItemSelectorCriterion> {
+public class DLFileItemSelectorView
+	implements ItemSelectorView<FileItemSelectorCriterion> {
 
 	public static final String DL_ITEM_SELECTOR_CRITERION =
-		DLItemSelectorView.class.getName() + "#DL_ITEM_SELECTOR_CRITERION";
+		DLFileItemSelectorView.class.getName() +
+			"#DL_FILE_ITEM_SELECTOR_CRITERION";
 
 	public static final String ITEM_SELECTED_EVENT_NAME =
-		DLItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
+		DLFileItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
 
 	public static final String PORTLET_URL =
-		DLItemSelectorView.class.getName() + "#PORTLET_URL";
+		DLFileItemSelectorView.class.getName() + "#PORTLET_URL";
 
 	@Override
-	public Class<DLItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return DLItemSelectorCriterion.class;
+	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return FileItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -63,12 +64,12 @@ public class DLItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			DLItemSelectorCriterion dlItemSelectorCriterion,
+			FileItemSelectorCriterion fileItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
 		request.setAttribute(
-			DL_ITEM_SELECTOR_CRITERION, dlItemSelectorCriterion);
+			DL_ITEM_SELECTOR_CRITERION, fileItemSelectorCriterion);
 		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
 		request.setAttribute(PORTLET_URL, portletURL);
 

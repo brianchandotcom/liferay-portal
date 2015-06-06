@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.item.selector.web;
+package com.liferay.layout.item.selector;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 

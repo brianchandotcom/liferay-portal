@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import aQute.bnd.osgi.Constants;
+
 import com.liferay.gradle.plugins.LiferayPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayOSGiExtension;
@@ -210,6 +212,16 @@ public class InitGradleTask extends DefaultTask {
 		value = value.replace("${auto.deploy.dir}", "${deployDir}");
 		value = value.replace("${liferay.home}", "${liferayHome}");
 
+		if (_liferayExtension instanceof LiferayOSGiExtension) {
+			value = value.replace(
+				"${plugin.name}",
+				"${bundle.instructions['" + Constants.BUNDLE_SYMBOLICNAME +
+					"']}");
+		}
+		else {
+			value = value.replace("${plugin.name}", "${project.name}");
+		}
+
 		return value;
 	}
 
@@ -278,32 +290,32 @@ public class InitGradleTask extends DefaultTask {
 		String importShared = getBuildXmlProperty("import.shared");
 
 		if (Validator.isNotNull(importShared)) {
-			Map<String, String> projectFileNamePathMap = new HashMap<>();
+			Map<String, String> projectNamePathMap = new HashMap<>();
 
 			Project rootProject = _project.getRootProject();
 
-			File projectDir = _project.getProjectDir();
-
-			File parentDir = projectDir.getParentFile();
-
 			for (Project project : rootProject.getSubprojects()) {
+				if (!FileUtil.exists(project, "build.gradle")) {
+					continue;
+				}
+
 				File dir = project.getProjectDir();
 
-				projectFileNamePathMap.put(dir.getName(), project.getPath());
-
-				String projectFileName = FileUtil.relativize(
-					project.getProjectDir(), parentDir);
-
-				projectFileName = projectFileName.replace('\\', '/');
-
-				projectFileNamePathMap.put(projectFileName, project.getPath());
+				projectNamePathMap.put(dir.getName(), project.getPath());
 			}
 
 			String[] importSharedArray = importShared.split(",");
 
 			for (String projectFileName : importSharedArray) {
-				String projectPath = projectFileNamePathMap.get(
-					projectFileName);
+				String projectName = projectFileName;
+
+				int pos = projectName.lastIndexOf('/');
+
+				if (pos != -1) {
+					projectName = projectName.substring(pos + 1);
+				}
+
+				String projectPath = projectNamePathMap.get(projectName);
 
 				if (Validator.isNull(projectPath)) {
 					throw new GradleException(

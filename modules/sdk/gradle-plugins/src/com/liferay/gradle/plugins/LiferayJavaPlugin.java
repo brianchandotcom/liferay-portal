@@ -49,6 +49,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.Callable;
 
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
@@ -90,15 +91,11 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
 
-	public static final String ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.adddefaultdependencies";
-
-	public static final String ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
-		"com.liferay.addtestdefaultdependencies";
-
 	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
+
+	public static final String EXPAND_PORTAL_WEB_TASK_NAME = "expandPortalWeb";
 
 	public static final String FORMAT_WSDL_TASK_NAME = "formatWSDL";
 
@@ -155,7 +152,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, PORTAL_WEB_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures portal-web for compiling themes and CSS files.");
+			"Configures portal-web for compiling CSS files.");
 		configuration.setVisible(false);
 
 		GradleUtil.executeIfEmpty(
@@ -179,7 +176,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void addDependenciesPortalWeb(Project project) {
 		GradleUtil.addDependency(
 			project, PORTAL_WEB_CONFIGURATION_NAME, "com.liferay.portal",
-			"portal-web", "default");
+			"portal-web", "default", false);
 	}
 
 	protected LiferayExtension addLiferayExtension(Project project) {
@@ -251,6 +248,41 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return copy;
 	}
 
+	protected Copy addTaskExpandPortalWeb(final Project project) {
+		Copy copy = GradleUtil.addTask(
+			project, EXPAND_PORTAL_WEB_TASK_NAME, Copy.class);
+
+		copy.from(
+			new Callable<FileTree>() {
+
+				@Override
+				public FileTree call() throws Exception {
+					Configuration configuration = GradleUtil.getConfiguration(
+						project, PORTAL_WEB_CONFIGURATION_NAME);
+
+					return project.zipTree(configuration.getSingleFile());
+				}
+
+			});
+
+		copy.include("html/css/common/**/*");
+
+		copy.into(
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					LiferayExtension liferayExtension = GradleUtil.getExtension(
+						project, LiferayExtension.class);
+
+					return new File(liferayExtension.getTmpDir(), "portal-web");
+				}
+
+			});
+
+		return copy;
+	}
+
 	protected FormatXMLTask addTaskFormatWSDL(Project project) {
 		FormatXMLTask formatXMLTask = GradleUtil.addTask(
 			project, FORMAT_WSDL_TASK_NAME, FormatXMLTask.class);
@@ -285,6 +317,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void addTasks(Project project) {
 		addTaskBuildCss(project);
 		addTaskDeploy(project);
+		addTaskExpandPortalWeb(project);
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
@@ -368,34 +401,34 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureDependencies(Project project) {
-		configureDependenciesCompile(project);
+		configureDependenciesProvided(project);
 		configureDependenciesTestCompile(project);
 	}
 
-	protected void configureDependenciesCompile(Project project) {
-		boolean addDefaultDependencies = getProperty(
-			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-
-		if (!addDefaultDependencies) {
+	protected void configureDependenciesProvided(Project project) {
+		if (!isAddDefaultDependencies(project)) {
 			return;
 		}
 
-		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
+		for (String dependencyNotation : DEFAULT_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
-				project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
+				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
+				dependencyNotation);
+		}
+
+		for (String dependencyNotation : _DEFAULT_EXT_DEPENDENCY_NOTATIONS) {
+			GradleUtil.addDependency(
+				project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME(),
 				dependencyNotation);
 		}
 	}
 
 	protected void configureDependenciesTestCompile(Project project) {
-		boolean addTestDefaultDependencies = getProperty(
-			project, ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-
-		if (!addTestDefaultDependencies) {
+		if (!isAddTestDefaultDependencies(project)) {
 			return;
 		}
 
-		for (String dependencyNotation : _TEST_COMPILE_DEPENDENCY_NOTATIONS) {
+		for (String dependencyNotation : _DEFAULT_TEST_DEPENDENCY_NOTATIONS) {
 			GradleUtil.addDependency(
 				project, JavaPlugin.TEST_COMPILE_CONFIGURATION_NAME,
 				dependencyNotation);
@@ -482,24 +515,30 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
 			project, BUILD_CSS_TASK_NAME);
 
-		configureTaskBuildCssPortalWebFile(buildCssTask);
+		configureTaskBuildCssPortalCommonDir(buildCssTask);
 		configureTaskBuildCssRootDirs(buildCssTask);
-		configureTaskBuildCssTmpDir(buildCssTask, liferayExtension);
 	}
 
-	protected void configureTaskBuildCssPortalWebFile(
+	protected void configureTaskBuildCssPortalCommonDir(
 		BuildCssTask buildCssTask) {
 
-		if ((buildCssTask.getPortalWebDir() != null) ||
-			(buildCssTask.getPortalWebFile() != null)) {
-
+		if (buildCssTask.getPortalCommonDir() != null) {
 			return;
 		}
 
-		Configuration configuration = GradleUtil.getConfiguration(
-			buildCssTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
+		Task expandPortalWebTask = GradleUtil.getTask(
+			buildCssTask.getProject(), EXPAND_PORTAL_WEB_TASK_NAME);
 
-		buildCssTask.setPortalWebFile(configuration.getSingleFile());
+		buildCssTask.dependsOn(expandPortalWebTask);
+
+		TaskOutputs taskOutputs = expandPortalWebTask.getOutputs();
+
+		FileCollection fileCollection = taskOutputs.getFiles();
+
+		File portalCommonDir = new File(
+			fileCollection.getSingleFile(), "html/css/common");
+
+		buildCssTask.setPortalCommonDir(portalCommonDir);
 	}
 
 	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
@@ -517,16 +556,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
 
 		buildCssTask.setRootDirs(sourceDirectorySet.getSrcDirs());
-	}
-
-	protected void configureTaskBuildCssTmpDir(
-		BuildCssTask buildCssTask, LiferayExtension liferayExtension) {
-
-		if (buildCssTask.getTmpDir() == null) {
-			File tmpDir = new File(liferayExtension.getTmpDir(), "portal-web");
-
-			buildCssTask.setTmpDir(tmpDir);
-		}
 	}
 
 	protected void configureTaskBuildLang(Project project) {
@@ -1072,6 +1101,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return project.getProjectDir();
 	}
 
+	protected boolean isAddDefaultDependencies(Project project) {
+		return getProperty(
+			project, _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
+	protected boolean isAddTestDefaultDependencies(Project project) {
+		return getProperty(
+			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
+	}
+
 	protected boolean isTestProject(Project project) {
 		String projectName = project.getName();
 
@@ -1082,21 +1121,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return false;
 	}
 
-	protected static final String[] COMPILE_DEPENDENCY_NOTATIONS = {
+	protected static final String[] DEFAULT_DEPENDENCY_NOTATIONS = {
 		"biz.aQute.bnd:biz.aQute.bnd:2.4.1",
 		"com.liferay.portal:portal-service:default",
 		"com.liferay.portal:util-bridges:default",
 		"com.liferay.portal:util-java:default",
 		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.1", "hsqldb:hsqldb:1.8.0.7",
-		"javax.activation:activation:1.1", "javax.ccpp:ccpp:1.0",
-		"javax.jms:jms:1.1", "javax.mail:mail:1.4",
-		"javax.portlet:portlet-api:2.0", "javax.servlet.jsp:jsp-api:2.1",
-		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.16",
-		"mysql:mysql-connector-java:5.1.23", "net.sf:jargs:1.0",
-		"net.sourceforge.jtds:jtds:1.2.6",
-		"org.eclipse.persistence:javax.persistence:2.0.0",
-		"postgresql:postgresql:9.2-1002.jdbc4"
+		"commons-logging:commons-logging:1.1.3",
+		"javax.activation:activation:1.1", "javax.annotation:jsr250-api:1.0",
+		"javax.mail:mail:1.4", "javax.servlet.jsp:jsp-api:2.1",
+		"javax.servlet:javax.servlet-api:3.0.1", "log4j:log4j:1.2.17"
 	};
 
 	protected static class RenameDependencyClosure extends Closure<String> {
@@ -1179,10 +1213,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	}
 
-	private static final String _REPOSITORY_URL =
-		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+	private static final String _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
+		"com.liferay.adddefaultdependencies";
 
-	private static final String[] _TEST_COMPILE_DEPENDENCY_NOTATIONS = {
+	private static final String _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME =
+		"com.liferay.addtestdefaultdependencies";
+
+	private static final String[] _DEFAULT_EXT_DEPENDENCY_NOTATIONS = {
+		"hsqldb:hsqldb:1.8.0.7", "javax.ccpp:ccpp:1.0", "javax.jms:jms:1.1",
+		"javax.portlet:portlet-api:2.0", "mysql:mysql-connector-java:5.1.23",
+		"net.sourceforge.jtds:jtds:1.2.6",
+		"org.eclipse.persistence:javax.persistence:2.0.0",
+		"postgresql:postgresql:9.2-1002.jdbc4"
+	};
+
+	private static final String[] _DEFAULT_TEST_DEPENDENCY_NOTATIONS = {
 		"junit:junit:4.12", "org.mockito:mockito-all:1.9.5",
 		"org.powermock:powermock-api-mockito:1.6.1",
 		"org.powermock:powermock-api-support:1.6.1",
@@ -1192,5 +1237,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		"org.powermock:powermock-reflect:1.6.1",
 		"org.springframework:spring-test:3.0.7.RELEASE"
 	};
+
+	private static final String _REPOSITORY_URL =
+		"http://cdn.repository.liferay.com/nexus/content/groups/public";
 
 }

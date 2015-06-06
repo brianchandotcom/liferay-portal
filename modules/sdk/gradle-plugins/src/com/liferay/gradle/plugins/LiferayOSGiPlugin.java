@@ -245,17 +245,7 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 
 				@Override
 				public File call() throws Exception {
-					Jar jar = (Jar)GradleUtil.getTask(
-						project, JavaPlugin.JAR_TASK_NAME);
-
-					String bundleSymbolicName = getBundleInstruction(
-						project, Constants.BUNDLE_SYMBOLICNAME);
-
-					String fileName =
-						bundleSymbolicName + "-wsdd-" + project.getVersion() +
-							"." + Jar.DEFAULT_EXTENSION;
-
-					return new File(jar.getDestinationDir(), fileName);
+					return getWSDDJarFile(project);
 				}
 
 			});
@@ -610,13 +600,42 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 	}
 
 	@Override
+	protected void configureTaskDeploy(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.configureTaskDeploy(project, liferayExtension);
+
+		Copy deployTask = (Copy)GradleUtil.getTask(project, DEPLOY_TASK_NAME);
+
+		configureTaskDeployRename(deployTask);
+	}
+
+	@Override
 	protected void configureTaskDeployFrom(Copy deployTask) {
 		super.configureTaskDeployFrom(deployTask);
 
-		Task task = GradleUtil.getTask(
-			deployTask.getProject(), BUILD_WSDD_JAR_TASK_NAME);
+		File wsddJarFile = getWSDDJarFile(deployTask.getProject());
 
-		deployTask.from(task.getOutputs());
+		if (wsddJarFile.exists()) {
+			deployTask.from(wsddJarFile);
+		}
+	}
+
+	protected void configureTaskDeployRename(Copy deployTask) {
+		final Project project = deployTask.getProject();
+
+		Closure<String> closure = new Closure<String>(null) {
+
+			@SuppressWarnings("unused")
+			public String doCall(String fileName) {
+				return fileName.replace(
+					"-" + project.getVersion() + "." + Jar.DEFAULT_EXTENSION,
+					"." + Jar.DEFAULT_EXTENSION);
+			}
+
+		};
+
+		deployTask.rename(closure);
 	}
 
 	@Override
@@ -752,6 +771,19 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 		}
 
 		return new File(docrootDir, "WEB-INF");
+	}
+
+	protected File getWSDDJarFile(Project project) {
+		Jar jar = (Jar)GradleUtil.getTask(project, JavaPlugin.JAR_TASK_NAME);
+
+		String bundleSymbolicName = getBundleInstruction(
+			project, Constants.BUNDLE_SYMBOLICNAME);
+
+		String fileName =
+			bundleSymbolicName + "-wsdd-" + project.getVersion() +
+				"." + Jar.DEFAULT_EXTENSION;
+
+		return new File(jar.getDestinationDir(), fileName);
 	}
 
 	protected void replaceJarBuilderFactory(Project project) {

@@ -26,10 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.gradle.api.tasks.Input;
-import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.internal.streams.SafeStreams;
 
@@ -66,8 +64,6 @@ public class BuildThumbnailsTask extends BasePortalToolsTask {
 		return _height;
 	}
 
-	@InputDirectory
-	@Optional
 	public File getImagesDir() {
 		return _imagesDir;
 	}

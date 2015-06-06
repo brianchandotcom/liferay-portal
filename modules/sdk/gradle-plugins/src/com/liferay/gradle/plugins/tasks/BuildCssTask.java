@@ -16,8 +16,6 @@ package com.liferay.gradle.plugins.tasks;
 
 import com.liferay.gradle.util.FileUtil;
 
-import groovy.lang.Closure;
-
 import java.io.File;
 import java.io.OutputStream;
 
@@ -29,18 +27,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.gradle.api.GradleException;
-import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.FileCollection;
-import org.gradle.api.file.FileTree;
 import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.JavaExec;
-import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.OutputDirectories;
-import org.gradle.api.tasks.OutputDirectory;
 import org.gradle.api.tasks.SkipWhenEmpty;
 import org.gradle.process.internal.streams.SafeStreams;
 
@@ -51,10 +43,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 
 	@Override
 	public void exec() {
-		if (getPortalWebDir() == null) {
-			copyPortalCommon();
-		}
-
 		FileCollection rootDirs = getRootDirs();
 
 		if (rootDirs == null) {
@@ -74,24 +62,9 @@ public class BuildCssTask extends BasePortalToolsTask {
 		List<String> args = new ArrayList<>();
 
 		args.add("sass.dir=/");
-
-		File dir = getPortalWebDir();
-
-		if (dir == null) {
-			if (getPortalWebFile() != null) {
-				dir = getTmpDir();
-			}
-			else {
-				throw new GradleException(
-					"Unable to find the portal web files");
-			}
-		}
-
-		File cssPortalCommonDir = new File(dir, "html/css/common");
-
 		args.add(
 			"sass.portal.common.dir=" +
-				FileUtil.getAbsolutePath(cssPortalCommonDir));
+				FileUtil.getAbsolutePath(getPortalCommonDir()));
 
 		return args;
 	}
@@ -138,29 +111,16 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	@InputDirectory
-	@Optional
-	public File getPortalWebDir() {
-		return _portalWebDir;
+	public File getPortalCommonDir() {
+		return _portalCommonDir;
 	}
 
-	@InputFile
-	@Optional
-	public File getPortalWebFile() {
-		return _portalWebFile;
-	}
-
-	@InputFiles
 	public FileCollection getRootDirs() {
 		if (_rootDirs == null) {
 			return project.files();
 		}
 
 		return project.files(_rootDirs);
-	}
-
-	@OutputDirectory
-	public File getTmpDir() {
-		return _tmpDir;
 	}
 
 	@Input
@@ -177,12 +137,8 @@ public class BuildCssTask extends BasePortalToolsTask {
 		_legacy = legacy;
 	}
 
-	public void setPortalWebDir(File portalWebDir) {
-		_portalWebDir = portalWebDir;
-	}
-
-	public void setPortalWebFile(File portalWebFile) {
-		_portalWebFile = portalWebFile;
+	public void setPortalCommonDir(File cssPortalCommonDir) {
+		_portalCommonDir = cssPortalCommonDir;
 	}
 
 	public void setRootDirs(Object rootDirs) {
@@ -192,10 +148,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 	@Override
 	public JavaExec setStandardOutput(OutputStream outputStream) {
 		throw new UnsupportedOperationException();
-	}
-
-	public void setTmpDir(File tmpDir) {
-		_tmpDir = tmpDir;
 	}
 
 	@Override
@@ -211,6 +163,8 @@ public class BuildCssTask extends BasePortalToolsTask {
 		addDependency("com.liferay", "com.liferay.rtl.css", "1.0.0-SNAPSHOT");
 		addDependency("com.liferay", "com.liferay.ruby.gems", "1.0.0-SNAPSHOT");
 		addDependency(
+			"com.liferay", "com.liferay.sass.compiler.api", "1.0.0-SNAPSHOT");
+		addDependency(
 			"com.liferay", "com.liferay.sass.compiler.ruby", "1.0.0-SNAPSHOT");
 		addDependency("com.liferay.portal", "util-slf4j", "default");
 		addDependency("javax.portlet", "portlet-api", "2.0");
@@ -218,33 +172,6 @@ public class BuildCssTask extends BasePortalToolsTask {
 		addDependency("org.jruby", "jruby-complete", "1.6.5");
 		addDependency("org.springframework", "spring-web", "3.2.10.RELEASE");
 		addDependency("struts", "struts", "1.2.9");
-	}
-
-	protected void copyPortalCommon() {
-		final File tmpDir = getTmpDir();
-
-		File htmlDir = new File(tmpDir, "html");
-
-		if (htmlDir.exists()) {
-			return;
-		}
-
-		Closure<Void> closure = new Closure<Void>(null) {
-
-			@SuppressWarnings("unused")
-			public void doCall(CopySpec copySpec) {
-				FileTree fileTree = project.zipTree(getPortalWebFile());
-
-				CopySpec fileTreeCopySpec = copySpec.from(fileTree);
-
-				fileTreeCopySpec.include("html/css/**/*", "html/themes/**/*");
-
-				copySpec.into(tmpDir);
-			}
-
-		};
-
-		project.copy(closure);
 	}
 
 	protected List<String> getArgs(File rootDir) {
@@ -261,9 +188,7 @@ public class BuildCssTask extends BasePortalToolsTask {
 	}
 
 	private boolean _legacy;
-	private File _portalWebDir;
-	private File _portalWebFile;
+	private File _portalCommonDir;
 	private Object _rootDirs;
-	private File _tmpDir;
 
 }

@@ -25,6 +25,12 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
+
+import org.gradle.api.Action;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
@@ -43,6 +49,45 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	public static final String BUILD_THUMBNAILS_TASK_NAME = "buildThumbnails";
 
 	public static final String COMPILE_THEME_TASK_NAME = "compileTheme";
+
+	public static final String FRONTEND_CSS_WEB_CONFIGURATION_NAME =
+		"frontendCssWeb";
+
+	protected Configuration addConfigurationFrontendCssWeb(
+		final Project project) {
+
+		Configuration configuration = GradleUtil.addConfiguration(
+			project, FRONTEND_CSS_WEB_CONFIGURATION_NAME);
+
+		configuration.setDescription(
+			"Configures com.liferay.frontend.css.web for compiling themes.");
+		configuration.setVisible(false);
+
+		GradleUtil.executeIfEmpty(
+			configuration,
+			new Action<Configuration>() {
+
+				@Override
+				public void execute(Configuration configuration) {
+					addDependenciesFrontendCssWeb(project);
+				}
+
+			});
+
+		return configuration;
+	}
+
+	protected void addConfigurations(Project project) {
+		super.addConfigurations(project);
+
+		addConfigurationFrontendCssWeb(project);
+	}
+
+	protected void addDependenciesFrontendCssWeb(Project project) {
+		GradleUtil.addDependency(
+			project, FRONTEND_CSS_WEB_CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.frontend.css.web", "1.0.0-SNAPSHOT", false);
+	}
 
 	@Override
 	protected LiferayExtension addLiferayExtension(Project project) {
@@ -92,28 +137,57 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	}
 
 	@Override
-	protected void configureDependenciesCompile(Project project) {
-		super.configureDependenciesCompile(project);
+	protected void configureDependencies(Project project) {
+		super.configureDependencies(project);
 
-		if (hasJavaSources(project)) {
-			for (String dependencyNotation :
-					_THEME_COMPILE_DEPENDENCY_NOTATIONS) {
+		configureDependenciesProvided(project);
+		configureDependenciesRuntime(project);
+	}
 
-				GradleUtil.addDependency(
-					project, JavaPlugin.COMPILE_CONFIGURATION_NAME,
-					dependencyNotation);
-			}
+	protected void configureDependenciesProvided(Project project) {
+		super.configureDependenciesProvided(project);
+
+		if (!isAddDefaultDependencies(project) || !hasSources(project)) {
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			project, ProvidedBasePlugin.getPROVIDED_CONFIGURATION_NAME());
+
+		for (String dependencyNotationPrefix :
+				_THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES) {
+
+			int pos = dependencyNotationPrefix.indexOf(':');
+
+			String group = dependencyNotationPrefix.substring(0, pos);
+			String module = dependencyNotationPrefix.substring(pos + 1);
+
+			Map<String, String> args = new HashMap<>();
+
+			args.put("group", group);
+			args.put("module", module);
+
+			configuration.exclude(args);
 		}
 	}
 
-	@Override
-	protected void configureDependenciesProvidedCompile(Project project) {
-		super.configureDependenciesProvidedCompile(project);
+	protected void configureDependenciesRuntime(Project project) {
+		super.configureDependenciesCompile(project);
 
-		if (hasJavaSources(project)) {
-			GradleUtil.removeDependencies(
-				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-				_THEME_COMPILE_DEPENDENCY_NOTATIONS);
+		if (!isAddDefaultDependencies(project) || !hasSources(project)) {
+			return;
+		}
+
+		for (String dependencyNotationPrefix :
+				_THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES) {
+
+			for (String dependencyNotation : DEFAULT_DEPENDENCY_NOTATIONS) {
+				if (dependencyNotation.startsWith(dependencyNotationPrefix)) {
+					GradleUtil.addDependency(
+						project, JavaPlugin.RUNTIME_CONFIGURATION_NAME,
+						dependencyNotation);
+				}
+			}
 		}
 	}
 
@@ -163,9 +237,9 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 
 		configureTaskCompileThemeDiffsDir(
 			compileThemeTask, liferayThemeExtension);
+		configureTaskCompileThemeFrontendCssWebFile(compileThemeTask);
 		configureTaskCompileThemeParent(
 			compileThemeTask, liferayThemeExtension);
-		configureTaskCompileThemePortalWebFile(compileThemeTask);
 		configureTaskCompileThemeType(compileThemeTask, liferayThemeExtension);
 
 		configureTaskCompileThemeDependsOn(compileThemeTask);
@@ -196,6 +270,21 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		}
 	}
 
+	protected void configureTaskCompileThemeFrontendCssWebFile(
+		CompileThemeTask compileThemeTask) {
+
+		if ((compileThemeTask.getFrontendCssWebDir() != null) ||
+			(compileThemeTask.getFrontendCssWebFile() != null)) {
+
+			return;
+		}
+
+		Configuration configuration = GradleUtil.getConfiguration(
+			compileThemeTask.getProject(), FRONTEND_CSS_WEB_CONFIGURATION_NAME);
+
+		compileThemeTask.setFrontendCssWebFile(configuration.getSingleFile());
+	}
+
 	protected void configureTaskCompileThemeParent(
 		CompileThemeTask compileThemeTask,
 		LiferayThemeExtension liferayThemeExtension) {
@@ -204,21 +293,6 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 			compileThemeTask.setThemeParent(
 				liferayThemeExtension.getThemeParent());
 		}
-	}
-
-	protected void configureTaskCompileThemePortalWebFile(
-		CompileThemeTask compileThemeTask) {
-
-		if ((compileThemeTask.getPortalWebDir() != null) ||
-			(compileThemeTask.getPortalWebFile() != null)) {
-
-			return;
-		}
-
-		Configuration configuration = GradleUtil.getConfiguration(
-			compileThemeTask.getProject(), PORTAL_WEB_CONFIGURATION_NAME);
-
-		compileThemeTask.setPortalWebFile(configuration.getSingleFile());
 	}
 
 	protected void configureTaskCompileThemeType(
@@ -288,11 +362,11 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		return diffsDir;
 	}
 
-	protected boolean hasJavaSources(Project project) {
+	protected boolean hasSources(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		SourceDirectorySet sourceDirectorySet = sourceSet.getAllJava();
+		SourceDirectorySet sourceDirectorySet = sourceSet.getAllSource();
 
 		if (sourceDirectorySet.isEmpty()) {
 			return false;
@@ -301,11 +375,11 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		return true;
 	}
 
-	private static final String[] _THEME_COMPILE_DEPENDENCY_NOTATIONS = {
-		"com.liferay.portal:util-bridges:default",
-		"com.liferay.portal:util-java:default",
-		"com.liferay.portal:util-taglib:default",
-		"commons-logging:commons-logging:1.1.1", "log4j:log4j:1.2.16"
-	};
+	private static final String[] _THEME_RUNTIME_DEPENDENCY_NOTATION_PREFIXES =
+		{
+			"com.liferay.portal:util-bridges", "com.liferay.portal:util-java",
+			"com.liferay.portal:util-taglib", "commons-logging:commons-logging",
+			"log4j:log4j"
+		};
 
 }

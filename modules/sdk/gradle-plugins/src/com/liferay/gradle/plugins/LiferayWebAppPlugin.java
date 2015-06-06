@@ -202,13 +202,10 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 	protected void configureDependencies(Project project) {
 		super.configureDependencies(project);
 
-		configureDependenciesProvidedCompile(project);
+		configureDependenciesCompile(project);
 	}
 
-	@Override
 	protected void configureDependenciesCompile(Project project) {
-		super.configureDependenciesCompile(project);
-
 		project.afterEvaluate(
 			new Action<Project>() {
 
@@ -224,21 +221,6 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 				}
 
 			});
-	}
-
-	protected void configureDependenciesProvidedCompile(Project project) {
-		boolean addDefaultDependencies = getProperty(
-			project, ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
-
-		if (!addDefaultDependencies) {
-			return;
-		}
-
-		for (String dependencyNotation : COMPILE_DEPENDENCY_NOTATIONS) {
-			GradleUtil.addDependency(
-				project, WarPlugin.PROVIDED_COMPILE_CONFIGURATION_NAME,
-				dependencyNotation);
-		}
 	}
 
 	@Override

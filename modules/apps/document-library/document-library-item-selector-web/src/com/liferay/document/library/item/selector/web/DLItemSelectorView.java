@@ -14,68 +14,12 @@
 
 package com.liferay.document.library.item.selector.web;
 
-import com.liferay.document.library.item.selector.DLItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorView;
-
-import java.io.IOException;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Roberto Díaz
  */
-@Component(service = ItemSelectorView.class)
-public class DLItemSelectorView
-	implements ItemSelectorView<DLItemSelectorCriterion> {
-
-	public static final String DL_ITEM_SELECTOR_CRITERION =
-		DLItemSelectorView.class.getName() + "#DL_ITEM_SELECTOR_CRITERION";
-
-	public static final String ITEM_SELECTED_EVENT_NAME =
-		DLItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
-
-	public static final String PORTLET_URL =
-		DLItemSelectorView.class.getName() + "#PORTLET_URL";
-
-	@Override
-	public Class<DLItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return DLItemSelectorCriterion.class;
-	}
-
-	@Override
-	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content/Language", locale);
-
-		return resourceBundle.getString("documents");
-	}
-
-	@Override
-	public void renderHTML(
-			ServletRequest request, ServletResponse response,
-			DLItemSelectorCriterion dlItemSelectorCriterion,
-			PortletURL portletURL, String itemSelectedEventName)
-		throws IOException, ServletException {
-
-		request.setAttribute(
-			DL_ITEM_SELECTOR_CRITERION, dlItemSelectorCriterion);
-		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
-		request.setAttribute(PORTLET_URL, portletURL);
-
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/document-library-item-selector-web/documents.jsp");
-
-		requestDispatcher.include(request, response);
-	}
-
+public interface DLItemSelectorView<T extends ItemSelectorCriterion>
+	extends ItemSelectorView<T> {
 }

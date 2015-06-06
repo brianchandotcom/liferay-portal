@@ -14,6 +14,7 @@
 
 package com.liferay.document.library.item.selector.web.image;
 
+import com.liferay.document.library.item.selector.web.DLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 
@@ -36,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorView.class)
 public class DLImageItemSelectorView
-	implements ItemSelectorView<ImageItemSelectorCriterion> {
+	implements DLItemSelectorView<ImageItemSelectorCriterion> {
 
 	public static final String DL_ITEM_SELECTOR_CRITERION =
 		DLImageItemSelectorView.class.getName() +

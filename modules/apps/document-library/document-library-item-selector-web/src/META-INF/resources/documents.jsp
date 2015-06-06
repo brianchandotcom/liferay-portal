@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext = (DLItemSelectorViewDisplayContext)request.getAttribute(DLItemSelectorView.DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+
 String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 PortletURL portletURL = (PortletURL)request.getAttribute(DLItemSelectorView.PORTLET_URL);

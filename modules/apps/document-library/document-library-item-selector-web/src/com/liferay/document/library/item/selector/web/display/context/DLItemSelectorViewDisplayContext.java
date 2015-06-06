@@ -14,8 +14,38 @@
 
 package com.liferay.document.library.item.selector.web.display.context;
 
+import com.liferay.item.selector.ItemSelectorCriterion;
+
+import javax.portlet.PortletURL;
+
 /**
  * @author Roberto Díaz
  */
 public class DLItemSelectorViewDisplayContext {
+
+	public DLItemSelectorViewDisplayContext(
+		ItemSelectorCriterion itemSelectorCriterion,
+		String itemSelectedEventName, PortletURL portletURL) {
+
+		_itemSelectorCriterion = itemSelectorCriterion;
+		_itemSelectedEventName = itemSelectedEventName;
+		_portletURL = portletURL;
+	}
+
+	public ItemSelectorCriterion getDLItemSelectorCriterion() {
+		return _itemSelectorCriterion;
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
+	}
+
+	public PortletURL getPortletURL() {
+		return _portletURL;
+	}
+
+	private final String _itemSelectedEventName;
+	private final ItemSelectorCriterion _itemSelectorCriterion;
+	private final PortletURL _portletURL;
+
 }

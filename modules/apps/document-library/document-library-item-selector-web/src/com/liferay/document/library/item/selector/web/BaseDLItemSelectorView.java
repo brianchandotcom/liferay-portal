@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.item.selector.web;
 
+import com.liferay.document.library.item.selector.web.display.context.DLItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorCriterion;
-import com.liferay.item.selector.ItemSelectorView;
 
 import java.io.IOException;
 
@@ -35,15 +35,6 @@ import javax.servlet.ServletResponse;
 public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	implements DLItemSelectorView<T> {
 
-	public static final String DL_ITEM_SELECTOR_CRITERION =
-		BaseDLItemSelectorView.class.getName() + "#DL_ITEM_SELECTOR_CRITERION";
-
-	public static final String ITEM_SELECTED_EVENT_NAME =
-		BaseDLItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
-
-	public static final String PORTLET_URL =
-		BaseDLItemSelectorView.class.getName() + "#PORTLET_URL";
-
 	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
@@ -58,9 +49,13 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		request.setAttribute(DL_ITEM_SELECTOR_CRITERION, t);
-		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
-		request.setAttribute(PORTLET_URL, portletURL);
+		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
+			new DLItemSelectorViewDisplayContext(
+				t, itemSelectedEventName, portletURL);
+
+		request.setAttribute(
+			DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			dlItemSelectorViewDisplayContext);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			"/o/document-library-item-selector-web/documents.jsp");

@@ -22,4 +22,8 @@ import com.liferay.item.selector.ItemSelectorView;
  */
 public interface DLItemSelectorView<T extends ItemSelectorCriterion>
 	extends ItemSelectorView<T> {
+
+	public static final String DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+
 }

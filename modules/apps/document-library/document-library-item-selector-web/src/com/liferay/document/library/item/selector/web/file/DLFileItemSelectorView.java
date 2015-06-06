@@ -18,6 +18,9 @@ import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -30,6 +33,14 @@ public class DLFileItemSelectorView
 	@Override
 	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return FileItemSelectorCriterion.class;
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content/Language", locale);
+
+		return resourceBundle.getString("images");
 	}
 
 }

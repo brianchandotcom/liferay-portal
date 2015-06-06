@@ -19,9 +19,6 @@ import com.liferay.item.selector.ItemSelectorCriterion;
 
 import java.io.IOException;
 
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
@@ -36,11 +33,8 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 	implements DLItemSelectorView<T> {
 
 	@Override
-	public String getTitle(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundle.getBundle(
-			"content/Language", locale);
-
-		return resourceBundle.getString("documents");
+	public String[] getMimeTypes() {
+		return new String[0];
 	}
 
 	@Override
@@ -51,7 +45,7 @@ public abstract class BaseDLItemSelectorView<T extends ItemSelectorCriterion>
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
-				t, itemSelectedEventName, portletURL);
+				t, this, itemSelectedEventName, portletURL);
 
 		request.setAttribute(
 			DL_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,

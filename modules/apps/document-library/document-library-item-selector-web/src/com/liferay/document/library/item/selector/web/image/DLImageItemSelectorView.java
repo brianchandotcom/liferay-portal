@@ -17,6 +17,10 @@ package com.liferay.document.library.item.selector.web.image;
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.portal.util.PropsValues;
+
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,6 +34,19 @@ public class DLImageItemSelectorView
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return ImageItemSelectorCriterion.class;
+	}
+
+	@Override
+	public String[] getMimeTypes() {
+		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+	}
+
+	@Override
+	public String getTitle(Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(
+			"content/Language", locale);
+
+		return resourceBundle.getString("images");
 	}
 
 }

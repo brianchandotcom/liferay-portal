@@ -20,7 +20,9 @@ package com.liferay.portlet.dynamicdatamapping.registry;
 public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
 
 	@Override
-	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
+	public Class<? extends DDMFormFieldTypeSettings>
+		getDDMFormFieldTypeSettings() {
+
 		return DefaultDDMFormFieldTypeSettings.class;
 	}
 

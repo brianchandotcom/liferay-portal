@@ -213,7 +213,8 @@ public class DDMFormJSONDeserializerImpl implements DDMFormJSONDeserializer {
 				"text");
 		}
 
-		return DDMFormFactory.create(ddmFormFieldType.getSettings());
+		return DDMFormFactory.create(
+			ddmFormFieldType.getDDMFormFieldTypeSettings());
 	}
 
 	protected void setDDMFormAvailableLocales(

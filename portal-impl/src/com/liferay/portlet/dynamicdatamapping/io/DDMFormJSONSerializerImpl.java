@@ -132,7 +132,8 @@ public class DDMFormJSONSerializerImpl implements DDMFormJSONSerializer {
 				"text");
 		}
 
-		return DDMFormFactory.create(ddmFormFieldType.getSettings());
+		return DDMFormFactory.create(
+			ddmFormFieldType.getDDMFormFieldTypeSettings());
 	}
 
 	protected Object serializeDDMFormFieldProperty(

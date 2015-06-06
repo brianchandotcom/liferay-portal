@@ -45,6 +45,13 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public Class<? extends DDMFormFieldTypeSettings>
+		getDDMFormFieldTypeSettings() {
+
+		return SelectDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
 	public DDMFormFieldValueAccessor<JSONArray> getDDMFormFieldValueAccessor(
 		Locale locale) {
 
@@ -84,11 +91,6 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 	@Override
 	public String getName() {
 		return "select";
-	}
-
-	@Override
-	public Class<? extends DDMFormFieldTypeSettings> getSettings() {
-		return SelectDDMFormFieldTypeSettings.class;
 	}
 
 	@Reference(service = SelectDDMFormFieldRenderer.class, unbind = "-")

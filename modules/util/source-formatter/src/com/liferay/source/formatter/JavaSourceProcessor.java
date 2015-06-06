@@ -576,16 +576,25 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int packagePathX = packagePath.indexOf("/src/");
 
 		if (packagePathX == -1) {
-			packagePathX = packagePath.indexOf("/integration/") + 8;
+			packagePathX = packagePath.indexOf("/unit/");
+		}
+
+		if (packagePathX == -1) {
+			packagePathX = packagePath.indexOf("/integration/");
+		}
+
+		if (packagePathX != -1) {
+			packagePathX = packagePath.indexOf(
+				CharPool.SLASH, packagePathX + 1);
 		}
 
 		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
 
-		if ((packagePathX + 5) >= packagePathY) {
+		if (packagePathX >= packagePathY) {
 			packagePath = StringPool.BLANK;
 		}
 		else {
-			packagePath = packagePath.substring(packagePathX + 5, packagePathY);
+			packagePath = packagePath.substring(packagePathX + 1, packagePathY);
 		}
 
 		packagePath = StringUtil.replace(

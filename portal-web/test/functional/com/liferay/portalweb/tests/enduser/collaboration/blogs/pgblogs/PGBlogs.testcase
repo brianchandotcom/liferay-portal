@@ -23,10 +23,12 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 
 		<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
+			<var name="pageName" value="${pageName}" />
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#tearDownConfigurationScopePG">
+			<var name="pageName" value="${pageName}" />
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
@@ -105,6 +107,7 @@
 
 		<execute macro="BlogsEntryComment#addPG">
 			<var name="entryComment" value="Blogs Entry Comment" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
@@ -496,6 +499,7 @@
 
 		<execute macro="BlogsEntryComment#addPG">
 			<var name="entryComment" value="${entryComment}" />
+			<var name="entryContent" value="${entryContent}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 

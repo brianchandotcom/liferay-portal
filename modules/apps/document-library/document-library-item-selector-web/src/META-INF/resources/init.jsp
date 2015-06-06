@@ -26,8 +26,6 @@ page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portlet.documentlibrary.service.DLAppServiceUtil" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects/>

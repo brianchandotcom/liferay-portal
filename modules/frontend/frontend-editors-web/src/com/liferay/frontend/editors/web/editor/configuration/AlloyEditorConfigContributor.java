@@ -14,9 +14,9 @@
 
 package com.liferay.frontend.editors.web.editor.configuration;
 
-import com.liferay.document.library.item.selector.DLItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.layout.item.selector.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -29,8 +29,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 
 import java.net.URL;
 
@@ -216,15 +214,13 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put(
 			"filebrowserBrowseUrl", layoutItemSelectorURL.toString());
 
-		ItemSelectorCriterion dlItemSelectorCriterion =
-			new DLItemSelectorCriterion(
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, scopeGroupId,
-				PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES);
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
 
-		dlItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		imageItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
 
 		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, dlItemSelectorCriterion);
+			liferayPortletResponse, eventName, imageItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());

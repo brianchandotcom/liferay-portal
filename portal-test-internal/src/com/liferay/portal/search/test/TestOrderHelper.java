@@ -312,7 +312,7 @@ public abstract class TestOrderHelper {
 		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
 
 		for (String option : _unsortedValues) {
-			ddmFormFieldOptions.addOption(option);
+			ddmFormFieldOptions.addOptionLabel(option, LocaleUtil.US, option);
 		}
 
 		ddmFormField.setDDMFormFieldOptions(ddmFormFieldOptions);

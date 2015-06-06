@@ -27,6 +27,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldType;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -116,7 +117,11 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormField.getDDMFormFieldOptions();
 
-		Set<String> optionValues = ddmFormFieldOptions.getOptionsValues();
+		Set<String> optionValues = Collections.emptySet();
+
+		if (ddmFormFieldOptions != null) {
+			optionValues = ddmFormFieldOptions.getOptionsValues();
+		}
 
 		if (optionValues.isEmpty()) {
 			throw new DDMFormValidationException(

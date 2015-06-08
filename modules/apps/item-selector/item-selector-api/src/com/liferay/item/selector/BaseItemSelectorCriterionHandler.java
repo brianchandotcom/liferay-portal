@@ -19,8 +19,10 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Roberto Díaz
@@ -32,10 +34,30 @@ public abstract class BaseItemSelectorCriterionHandler
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ItemSelectorView<T, S>>
-		getItemSelectorViews(
-			ItemSelectorCriterion fileItemSelectorCriterion) {
+		getItemSelectorViews(ItemSelectorCriterion itemSelectorCriterion) {
 
-		return (List)Collections.unmodifiableList(_itemSelectorViews);
+		List<ItemSelectorView<T, S>> filteredItemSelectedViews =
+			new ArrayList<>();
+
+		for (ItemSelectorView itemSelectorView : _itemSelectorViews) {
+			Set<S> itemSelectorSupportedReturnTypes =
+				itemSelectorView.getItemSelectorSupportedReturnTypes();
+
+			Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
+				itemSelectorCriterion.getItemSelectorDesiredReturnTypes();
+
+			for (ItemSelectorReturnType itemSelectorDesiredReturnType :
+					itemSelectorDesiredReturnTypes) {
+
+				if (itemSelectorSupportedReturnTypes.contains(
+						itemSelectorDesiredReturnType)) {
+
+					filteredItemSelectedViews.add(itemSelectorView);
+				}
+			}
+		}
+
+		return (List)Collections.unmodifiableList(filteredItemSelectedViews);
 	}
 
 	private final ServiceTrackerList<ItemSelectorView> _itemSelectorViews =

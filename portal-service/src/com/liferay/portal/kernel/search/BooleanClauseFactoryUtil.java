@@ -15,23 +15,50 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.filter.Filter;
+import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
 
 /**
  * @author Bruno Farache
  */
 public class BooleanClauseFactoryUtil {
 
+	public static BooleanClause<Query> create(Query query, String occur) {
+		return getBooleanClauseFactory().create(query, occur);
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link create(Query, String)}
+	 */
+	@Deprecated
 	public static BooleanClause<Query> create(
 		SearchContext searchContext, Query query, String occur) {
 
 		return getBooleanClauseFactory(searchContext).create(query, occur);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link create(
+	 *             String, String, String)}
+	 */
+	@Deprecated
 	public static BooleanClause<Query> create(
 		SearchContext searchContext, String field, String value, String occur) {
 
 		return getBooleanClauseFactory(searchContext).create(
 			field, value, occur);
+	}
+
+	public static BooleanClause<Query> create(
+		String field, String value, String occur) {
+
+		return getBooleanClauseFactory().create(field, value, occur);
+	}
+
+	public static BooleanClause<Filter> createFilter(
+		Filter filter, BooleanClauseOccur booleanClauseOccur) {
+
+		return getBooleanClauseFactory().createFilter(
+			filter, booleanClauseOccur);
 	}
 
 	public static BooleanClause<Filter> createFilter(
@@ -50,15 +77,28 @@ public class BooleanClauseFactoryUtil {
 			field, value, booleanClauseOccur);
 	}
 
+	public static BooleanClause<Filter> createFilter(
+		String field, String value, BooleanClauseOccur booleanClauseOccur) {
+
+		return getBooleanClauseFactory().createFilter(
+			field, value, booleanClauseOccur);
+	}
+
+	public static BooleanClauseFactory getBooleanClauseFactory() {
+		return _booleanClauseFactory;
+	}
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link getBooleanClauseFactory()}
+	 */
+	@Deprecated
 	public static BooleanClauseFactory getBooleanClauseFactory(
 		SearchContext searchContext) {
 
-		String searchEngineId = searchContext.getSearchEngineId();
-
-		SearchEngine searchEngine = SearchEngineUtil.getSearchEngine(
-			searchEngineId);
-
-		return searchEngine.getBooleanClauseFactory();
+		return _booleanClauseFactory;
 	}
+
+	private static final BooleanClauseFactory _booleanClauseFactory =
+		new BooleanClauseFactoryImpl();
 
 }

@@ -40,6 +40,10 @@ public class BaseSearchEngine implements SearchEngine {
 		return null;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		if (_booleanClauseFactory == null) {
@@ -123,6 +127,10 @@ public class BaseSearchEngine implements SearchEngine {
 		throws SearchException {
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setBooleanClauseFactory(
 		BooleanClauseFactory booleanClauseFactory) {
 

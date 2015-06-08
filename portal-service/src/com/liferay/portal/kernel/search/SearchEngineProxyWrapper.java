@@ -35,6 +35,10 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 		return _searchEngine.backup(companyId, backupName);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public BooleanClauseFactory getBooleanClauseFactory() {
 		return _searchEngine.getBooleanClauseFactory();

@@ -6,6 +6,8 @@
 	<command name="gotoHtmlMode">
 		<execute function="Open" locator1="https://mail.google.com/mail/?ui=html&amp;zy=h" />
 
+		<execute function="Click" locator1="Gmail#GMAIL_HTML_MODE_CONFIRMATION" />
+
 		<execute function="Pause" locator1="5000" />
 	</command>
 

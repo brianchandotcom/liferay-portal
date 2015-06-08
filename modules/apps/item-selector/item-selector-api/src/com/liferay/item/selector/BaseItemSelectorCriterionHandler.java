@@ -25,13 +25,13 @@ import java.util.List;
 /**
  * @author Roberto Díaz
  */
-public abstract class
-	BaseItemSelectorCriterionHandler<T extends ItemSelectorCriterion>
+public abstract class BaseItemSelectorCriterionHandler
+	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 		implements ItemSelectorCriterionHandler {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ItemSelectorView<T>>
+	public List<ItemSelectorView<T, S>>
 		getItemSelectorViews(
 			ItemSelectorCriterion fileItemSelectorCriterion) {
 

@@ -15,6 +15,7 @@
 package com.liferay.item.selector.web.util;
 
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONDeserializer;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -144,25 +145,43 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private void _setDesiredReturnTypes(Map<String, ?> map) {
-		Set<Class<?>> desiredReturnTypes = new LinkedHashSet<>();
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new LinkedHashSet<>();
 
-		List<String> desiredReturnTypeNames = (List<String>)map.get(
+		List<String> desiredItemSelectorReturnTypeNames = (List<String>)map.get(
 			"desiredReturnTypes");
 
-		for (String desiredReturnTypeName : desiredReturnTypeNames) {
-			try {
-				Class<?> clazz = Class.forName(desiredReturnTypeName);
+		for (String desiredItemSelectoReturnTypeName :
+				desiredItemSelectorReturnTypeNames) {
 
-				desiredReturnTypes.add(clazz);
-			}
-			catch (ClassNotFoundException cnfe) {
-				if (_log.isWarnEnabled()) {
-					_log.warn("Unable to load class " + desiredReturnTypeName);
+			Set<ItemSelectorReturnType> availableItemSelectorReturnTypes =
+				_itemSelectorCriterion.getItemSelectorAvailableReturnTypes();
+
+			for (ItemSelectorReturnType availableItemSelectorReturnType :
+					availableItemSelectorReturnTypes) {
+
+				String availableItemSelectorReturnTypeName =
+					availableItemSelectorReturnType.getName();
+
+				if (availableItemSelectorReturnTypeName.equals(
+						desiredItemSelectoReturnTypeName)) {
+
+					desiredItemSelectorReturnTypes.add(
+						availableItemSelectorReturnType);
+
+					break;
 				}
 			}
 		}
 
-		_itemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		if (desiredItemSelectorReturnTypes.isEmpty()) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("No valid item selector return types found");
+			}
+		}
+
+		_itemSelectorCriterion.setItemSelectorDesiredReturnTypes(
+			desiredItemSelectorReturnTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

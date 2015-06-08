@@ -194,12 +194,12 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 
 							<liferay-ui:app-view-search-entry
 								actionJsp="/html/portlet/document_library/file_entry_action.jsp"
+								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= DLUtil.getAbsolutePath(liferayPortletRequest, fileEntry.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getDescription() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
-								relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
 								rowCheckerId="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 								rowCheckerName="<%= FileEntry.class.getSimpleName() %>"
 								showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"

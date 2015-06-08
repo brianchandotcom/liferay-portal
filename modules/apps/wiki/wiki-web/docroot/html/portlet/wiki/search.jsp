@@ -110,12 +110,12 @@ portletURL.setParameter("keywords", keywords);
 			</portlet:renderURL>
 
 			<liferay-ui:app-view-search-entry
+				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 				containerName="<%= curNode.getName() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : wikiPage.getSummary() %>"
+				fileEntryRelatedSearchResults="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
-				relatedFileEntries="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
 				url="<%= rowURL %>"
 			/>

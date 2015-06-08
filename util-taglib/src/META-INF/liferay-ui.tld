@@ -401,7 +401,7 @@
 		</attribute>
 		<attribute>
 			<description>A list of objects containing information such as content, user ID, and titles of the entry file attachments.</description>
-			<name>relatedFileEntries</name>
+			<name>fileEntryRelatedSearchResults</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
@@ -421,7 +421,7 @@
 		</attribute>
 		<attribute>
 			<description>A list of objects containing information such as content, author, and status of entry messages. An example would be a comment made by one user on another user's blog post.</description>
-			<name>relatedComments</name>
+			<name>commentRelatedSearchResults</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

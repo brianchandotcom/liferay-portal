@@ -219,11 +219,11 @@ ArticleSearch searchContainer = new ArticleSearch(liferayPortletRequest, portlet
 							<liferay-ui:app-view-search-entry
 								actionJsp="/article_action.jsp"
 								actionJspServletContext="<%= application %>"
+								commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 								containerName="<%= JournalUtil.getAbsolutePath(liferayPortletRequest, article.getFolderId()) %>"
 								cssClass='<%= MathUtil.isEven(i) ? "alt" : StringPool.BLANK %>'
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : article.getDescription(locale) %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
-								relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
 								rowCheckerId="<%= HtmlUtil.escape(article.getArticleId()) %>"
 								rowCheckerName="<%= JournalArticle.class.getSimpleName() %>"
 								showCheckbox="<%= JournalArticlePermission.contains(permissionChecker, article, ActionKeys.DELETE) || JournalArticlePermission.contains(permissionChecker, article, ActionKeys.UPDATE) %>"

@@ -96,10 +96,10 @@ String keywords = ParamUtil.getString(request, "keywords");
 			</portlet:renderURL>
 
 			<liferay-ui:app-view-search-entry
+				commentRelatedSearchResults="<%= searchResult.getCommentRelatedSearchResults() %>"
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : entry.getDescription() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
 				thumbnailSrc="<%= Validator.isNotNull(entry.getSmallImageURL(themeDisplay)) ? entry.getSmallImageURL(themeDisplay) : StringPool.BLANK %>"
 				title="<%= (summary != null) ? summary.getTitle() : entry.getTitle() %>"
 				url="<%= rowURL %>"

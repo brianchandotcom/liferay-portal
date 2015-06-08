@@ -41,6 +41,14 @@ public interface IndexWriter extends SpellCheckIndexWriter {
 			SearchContext searchContext, String className)
 		throws SearchException;
 
+	public void partialUpdateDocument(
+			SearchContext searchContext, Document document)
+		throws SearchException;
+
+	public void partialUpdateDocuments(
+			SearchContext searchContext, Collection<Document> documents)
+		throws SearchException;
+
 	public void updateDocument(SearchContext searchContext, Document document)
 		throws SearchException;
 

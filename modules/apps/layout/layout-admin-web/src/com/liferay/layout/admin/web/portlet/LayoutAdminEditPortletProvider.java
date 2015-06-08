@@ -14,28 +14,31 @@
 
 package com.liferay.layout.admin.web.portlet;
 
+import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.util.PortletKeys;
 
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
-@OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.portal.model.Layout"}
+@Component(
+	immediate = true,
+	property = {"model.class.name=com.liferay.portal.model.Layout"},
+	service = EditPortletProvider.class
 )
 public class LayoutAdminEditPortletProvider
 	extends BasePortletProvider implements EditPortletProvider {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.GROUP_PAGES;
+		return LayoutAdminPortletKeys.GROUP_PAGES;
 	}
 
 	@Override

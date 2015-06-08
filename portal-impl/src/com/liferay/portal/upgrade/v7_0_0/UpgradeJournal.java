@@ -42,7 +42,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.util.ContentUtil;
 import com.liferay.util.xml.XMLUtil;
 
@@ -168,7 +167,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			ps.setTimestamp(7, now);
 			ps.setTimestamp(8, now);
 			ps.setLong(9, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID);
-			ps.setLong(10, PortalUtil.getClassNameId(JournalArticle.class));
+			ps.setLong(
+				10,
+				PortalUtil.getClassNameId(
+					"com.liferay.portlet.journal.model.JournalArticle"));
 			ps.setString(11, ddmStructureKey);
 			ps.setString(12, DDMStructureConstants.VERSION_DEFAULT);
 			ps.setString(13, localizedName);
@@ -542,7 +544,9 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 
 			ps.setLong(1, groupId);
 			ps.setLong(
-				2, PortalUtil.getClassNameId(JournalArticle.class.getName()));
+				2,
+				PortalUtil.getClassNameId(
+					"com.liferay.portlet.journal.model.JournalArticle"));
 			ps.setString(3, ddmStructureKey);
 
 			rs = ps.executeQuery();

@@ -58,6 +58,11 @@ public class DummyIndexSearcher implements IndexSearcher {
 	}
 
 	@Override
+	public long searchCount(SearchContext searchContext, Query query) {
+		return 0;
+	}
+
+	@Override
 	public String spellCheckKeywords(SearchContext searchContext) {
 		return StringPool.BLANK;
 	}

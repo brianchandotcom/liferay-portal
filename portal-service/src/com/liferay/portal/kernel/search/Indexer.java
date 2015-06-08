@@ -141,6 +141,8 @@ public interface Indexer {
 			SearchContext searchContext, String... selectedFieldNames)
 		throws SearchException;
 
+	public long searchCount(SearchContext searchContext) throws SearchException;
+
 	public void unregisterIndexerPostProcessor(
 		IndexerPostProcessor indexerPostProcessor);
 

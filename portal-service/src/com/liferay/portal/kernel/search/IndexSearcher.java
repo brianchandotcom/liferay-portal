@@ -41,4 +41,7 @@ public interface IndexSearcher extends QuerySuggester {
 			int start, int end)
 		throws SearchException;
 
+	public long searchCount(SearchContext searchContext, Query query)
+		throws SearchException;
+
 }

@@ -974,7 +974,7 @@
 
 		<execute macro="ContentTargetingCampaign#viewTrackingReportCP">
 			<var name="trackingAlias" value="Content Alias" />
-			<var name="trackingCount" value="4" />
+			<var name="trackingCount" value="2" />
 			<var name="trackingEvent" value="View" />
 			<var name="userSegmentName" value="User Segment Name" />
 		</execute>
@@ -1390,11 +1390,10 @@
 		</execute>
 
 		<execute macro="LAR#importSiteCP">
+			<var name="importCampaignValidationError" value="true" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="siteName" value="Import Site" />
 		</execute>
-
-		<execute function="AssertConsoleTextPresent" value1="Cannot import rule Content Visited from user segment User Segment Name because it refers to a missing Asset" />
 
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Audience Targeting" />

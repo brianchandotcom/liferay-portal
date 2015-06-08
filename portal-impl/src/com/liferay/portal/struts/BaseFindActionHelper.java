@@ -99,8 +99,7 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 			PortletURL portletURL = PortletURLFactoryUtil.create(
 				request, portletId, plid, PortletRequest.RENDER_PHASE);
 
-			portletURL.setParameter(
-				"struts_action", getStrutsAction(request, portletId));
+			addRequiredParameters(request, portletId, portletURL);
 
 			boolean inheritRedirect = ParamUtil.getBoolean(
 				request, "inheritRedirect");
@@ -157,10 +156,6 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 
 	@Override
 	public abstract String getPrimaryKeyParameterName();
-
-	@Override
-	public abstract String getStrutsAction(
-		HttpServletRequest request, String portletId);
 
 	@Override
 	public abstract String[] initPortletIds();
@@ -323,6 +318,9 @@ public abstract class BaseFindActionHelper implements FindActionHelper {
 			throw new RuntimeException("Portlet IDs cannot be null or empty");
 		}
 	}
+
+	protected abstract void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL);
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseFindActionHelper.class);

@@ -14,9 +14,26 @@
 
 package com.liferay.portal.struts;
 
+import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Adolfo Pérez
  */
 public abstract class BaseStrutsPortletFindActionHelper
-	extends BaseFindActionHelper {
+	extends BaseFindActionHelper implements StrutsPortletFindActionHelper {
+
+	@Override
+	public abstract String getStrutsAction(
+		HttpServletRequest request, String portletId);
+
+	@Override
+	protected void addRequiredParameters(
+		HttpServletRequest request, String portletId, PortletURL portletURL) {
+
+		portletURL.setParameter(
+			"struts_action", getStrutsAction(request, portletId));
+	}
+
 }

@@ -14,31 +14,13 @@
 
 package com.liferay.portal.struts;
 
-import javax.portlet.PortletURL;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Adolfo Pérez
  */
-public interface FindActionHelper {
+public interface StrutsPortletFindActionHelper extends FindActionHelper {
 
-	public void execute(
-			HttpServletRequest request, HttpServletResponse response)
-		throws Exception;
-
-	public long getGroupId(long primaryKey) throws Exception;
-
-	public String getPrimaryKeyParameterName();
-
-	public String[] initPortletIds();
-
-	public PortletURL processPortletURL(
-			HttpServletRequest request, PortletURL portletURL)
-		throws Exception;
-
-	public void setPrimaryKeyParameter(PortletURL portletURL, long primaryKey)
-		throws Exception;
+	public String getStrutsAction(HttpServletRequest request, String portletId);
 
 }

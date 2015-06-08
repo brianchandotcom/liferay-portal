@@ -14,15 +14,17 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
+import static org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus.GREEN;
+import static org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus.YELLOW;
 
-import java.util.Arrays;
+import com.liferay.portal.kernel.test.IdempotentRetryAssert;
+import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 
-import org.apache.commons.lang.ArrayUtils;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 
-import org.elasticsearch.indices.recovery.RecoveryState;
-import org.elasticsearch.indices.recovery.RecoveryState.Type;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthStatus;
 
 import org.junit.Assert;
 
@@ -31,26 +33,157 @@ import org.junit.Assert;
  */
 public class ClusterAssert {
 
-	public static void assertShards(Index index, Type... types)
+	public static void assert1PrimaryAnd1UnassignedShard(
+			ElasticsearchFixture elasticsearchFixture)
 		throws Exception {
 
-		Type[] expectedTypes = ArrayUtil.clone(types);
+		ClusterAssert.assertHealth(
+			elasticsearchFixture,
+			new ClusterAssert.HealthExpectations() { {
+				activePrimaryShards = 1;
+				activeShards = 1;
+				numberOfDataNodes = 1;
+				numberOfNodes = 1;
+				status = YELLOW;
+				unassignedShards = 1;
+			} });
+	}
 
-		Arrays.sort(expectedTypes);
+	public static void assert1PrimaryShardAnd2Nodes(
+			ElasticsearchFixture elasticsearchFixture)
+		throws Exception {
 
-		RecoveryState[] recoveryStates = index.getRecoveryStates(types.length);
+		ClusterAssert.assertHealth(
+			elasticsearchFixture,
+			new ClusterAssert.HealthExpectations() { {
+				activePrimaryShards = 1;
+				activeShards = 1;
+				numberOfDataNodes = 2;
+				numberOfNodes = 2;
+				status = GREEN;
+				unassignedShards = 0;
+			} });
+	}
 
-		Type[] actualTypes = new Type[types.length];
+	public static void assert1PrimaryShardOnly(
+			ElasticsearchFixture elasticsearchFixture)
+		throws Exception {
 
-		for (int i = 0; i < types.length; i++) {
-			actualTypes[i] = recoveryStates[i].getType();
-		}
+		ClusterAssert.assertHealth(
+			elasticsearchFixture,
+			new ClusterAssert.HealthExpectations() { {
+				activePrimaryShards = 1;
+				activeShards = 1;
+				numberOfDataNodes = 1;
+				numberOfNodes = 1;
+				status = GREEN;
+				unassignedShards = 0;
+			} });
+	}
 
-		Arrays.sort(actualTypes);
+	public static void assert1ReplicaAnd1UnassignedShard(
+			ElasticsearchFixture elasticsearchFixture)
+		throws Exception {
+
+		ClusterAssert.assertHealth(
+			elasticsearchFixture,
+			new ClusterAssert.HealthExpectations() { {
+				activePrimaryShards = 1;
+				activeShards = 2;
+				numberOfDataNodes = 2;
+				numberOfNodes = 2;
+				status = YELLOW;
+				unassignedShards = 1;
+			} });
+	}
+
+	public static void assert1ReplicaShard(
+			ElasticsearchFixture elasticsearchFixture)
+		throws Exception {
+
+		ClusterAssert.assertHealth(
+			elasticsearchFixture,
+			new ClusterAssert.HealthExpectations() { {
+				activePrimaryShards = 1;
+				activeShards = 2;
+				numberOfDataNodes = 2;
+				numberOfNodes = 2;
+				status = GREEN;
+				unassignedShards = 0;
+			} });
+	}
+
+	public static void assert2ReplicaShards(
+			ElasticsearchFixture elasticsearchFixture)
+		throws Exception {
+
+		ClusterAssert.assertHealth(
+			elasticsearchFixture,
+			new ClusterAssert.HealthExpectations() { {
+				activePrimaryShards = 1;
+				activeShards = 3;
+				numberOfDataNodes = 3;
+				numberOfNodes = 3;
+				status = GREEN;
+				unassignedShards = 0;
+			} });
+	}
+
+	public static void assertHealth(
+			final ElasticsearchFixture elasticsearchFixture,
+			final HealthExpectations healthExpectations)
+		throws Exception {
+
+		IdempotentRetryAssert.retryAssert(
+			3, TimeUnit.SECONDS,
+			new Callable<Void>() {
+
+				@Override
+				public Void call() throws Exception {
+					ClusterHealthResponse clusterHealthResponse =
+						elasticsearchFixture.getClusterHealthResponse();
+
+					_assertHealth(clusterHealthResponse, healthExpectations);
+
+					return null;
+				}
+
+			});
+	}
+
+	public static class HealthExpectations {
+
+		public int activePrimaryShards;
+		public int activeShards;
+		public int numberOfDataNodes;
+		public int numberOfNodes;
+		public ClusterHealthStatus status;
+		public int unassignedShards;
+
+	}
+
+	private static void _assertHealth(
+		ClusterHealthResponse clusterHealthResponse,
+		HealthExpectations healthExpectations) {
 
 		Assert.assertEquals(
-			ArrayUtils.toString(expectedTypes),
-			ArrayUtils.toString(actualTypes));
+			"activePrimaryShards", healthExpectations.activePrimaryShards,
+			clusterHealthResponse.getActivePrimaryShards());
+		Assert.assertEquals(
+			"activeShards", healthExpectations.activeShards,
+			clusterHealthResponse.getActiveShards());
+		Assert.assertEquals(
+			"numberOfDataNodes", healthExpectations.numberOfDataNodes,
+			clusterHealthResponse.getNumberOfDataNodes());
+		Assert.assertEquals(
+			"numberOfNodes", healthExpectations.numberOfNodes,
+			clusterHealthResponse.getNumberOfNodes());
+		Assert.assertEquals(
+			"status", healthExpectations.status,
+			clusterHealthResponse.getStatus());
+		Assert.assertEquals(
+			"unassignedShards", healthExpectations.unassignedShards,
+			clusterHealthResponse.getUnassignedShards());
 	}
 
 }

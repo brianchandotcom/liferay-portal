@@ -17,10 +17,8 @@ package com.liferay.portal.search.elasticsearch.internal.cluster;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture.Index;
 
-import org.elasticsearch.indices.recovery.RecoveryState.Type;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
@@ -30,35 +28,32 @@ import org.junit.rules.TestName;
  */
 public class Cluster1InstanceTest {
 
-	@BeforeClass
-	public static void setUpClass() throws Exception {
-		_elasticsearchFixture = new ElasticsearchFixture(
-			Cluster1InstanceTest.class.getSimpleName());
-
-		_elasticsearchFixture.setUpClass();
+	@Before
+	public void setUp() throws Exception {
+		_testCluster.setUp();
 	}
 
-	@AfterClass
-	public static void tearDownClass() throws Exception {
-		_elasticsearchFixture.tearDownClass();
-
-		_elasticsearchFixture = null;
+	@After
+	public void tearDown() throws Exception {
+		_testCluster.tearDown();
 	}
 
 	@Test
 	public void test1PrimaryShardByDefault() throws Exception {
-		Index index = createIndex();
+		ElasticsearchFixture elasticsearchFixture = _testCluster.getNode(0);
 
-		ClusterAssert.assertShards(index, Type.GATEWAY);
+		createIndex(elasticsearchFixture);
+
+		ClusterAssert.assert1PrimaryShardOnly(elasticsearchFixture);
 	}
 
 	@Rule
 	public TestName testName = new TestName();
 
-	protected Index createIndex() {
-		return _elasticsearchFixture.createIndex(testName.getMethodName());
+	protected Index createIndex(ElasticsearchFixture elasticsearchFixture) {
+		return elasticsearchFixture.createIndex(testName.getMethodName());
 	}
 
-	private static ElasticsearchFixture _elasticsearchFixture;
+	private final TestCluster _testCluster = new TestCluster(1, this);
 
 }

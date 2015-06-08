@@ -14,35 +14,31 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
-import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
+import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
+import com.liferay.portal.search.elasticsearch.internal.cluster.UnicastSettingsContributor;
 
 import java.io.File;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.io.FileUtils;
 
+import org.elasticsearch.action.ActionFuture;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequestBuilder;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequestBuilder;
-import org.elasticsearch.action.admin.indices.recovery.RecoveryRequestBuilder;
-import org.elasticsearch.action.admin.indices.recovery.RecoveryResponse;
-import org.elasticsearch.action.admin.indices.recovery.ShardRecoveryResponse;
 import org.elasticsearch.client.AdminClient;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.client.ClusterAdminClient;
 import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.indices.IndexMissingException;
-import org.elasticsearch.indices.recovery.RecoveryState;
-
-import org.junit.Assert;
 
 import org.mockito.Mockito;
 
@@ -77,6 +73,37 @@ public class ElasticsearchFixture {
 		return new Index(indexName);
 	}
 
+	public void createNode() throws Exception {
+		deleteTmpDir();
+
+		_elasticsearchConnection = createElasticsearchConnection();
+	}
+
+	public void destroyNode() throws Exception {
+		_elasticsearchConnection.close();
+
+		deleteTmpDir();
+	}
+
+	public ClusterHealthResponse getClusterHealthResponse() {
+		Client client = _elasticsearchConnection.getClient();
+
+		AdminClient adminClient = client.admin();
+
+		ClusterAdminClient clusterAdminClient = adminClient.cluster();
+
+		ClusterHealthRequestBuilder clusterHealthRequestBuilder =
+			clusterAdminClient.prepareHealth();
+
+		ClusterHealthRequest clusterHealthRequest =
+			clusterHealthRequestBuilder.request();
+
+		ActionFuture<ClusterHealthResponse> health = clusterAdminClient.health(
+			clusterHealthRequest);
+
+		return health.actionGet();
+	}
+
 	public IndicesAdminClient getIndicesAdminClient() {
 		Client client = _elasticsearchConnection.getClient();
 
@@ -85,16 +112,18 @@ public class ElasticsearchFixture {
 		return adminClient.indices();
 	}
 
-	public void setUpClass() throws Exception {
-		deleteTmpDir();
+	public void setClusterSettingsContext(
+		ClusterSettingsContext clusterSettingsContext) {
 
-		_elasticsearchConnection = createElasticsearchConnection();
+		_clusterSettingsContext = clusterSettingsContext;
 	}
 
-	public void tearDownClass() throws Exception {
-		_elasticsearchConnection.close();
+	public void setUp() throws Exception {
+		createNode();
+	}
 
-		deleteTmpDir();
+	public void tearDown() throws Exception {
+		destroyNode();
 	}
 
 	public class Index {
@@ -107,62 +136,32 @@ public class ElasticsearchFixture {
 			return _name;
 		}
 
-		public RecoveryState[] getRecoveryStates(final int expectedShards)
-			throws Exception {
-
-			List<ShardRecoveryResponse> shardRecoveryResponses =
-				IdempotentRetryAssert.retryAssert(
-					3, TimeUnit.SECONDS,
-					new Callable<List<ShardRecoveryResponse>>() {
-
-						@Override
-						public List<ShardRecoveryResponse> call()
-							throws Exception {
-
-							List<ShardRecoveryResponse> shardRecoveryResponses =
-								getShardRecoveryResponses();
-
-							Assert.assertEquals(
-								expectedShards, shardRecoveryResponses.size());
-
-							return shardRecoveryResponses;
-						}
-
-					});
-
-			RecoveryState[] recoveryStates = new RecoveryState[expectedShards];
-
-			for (int i = 0; i < expectedShards; i++) {
-				ShardRecoveryResponse shardRecoveryResponse =
-					shardRecoveryResponses.get(i);
-
-				recoveryStates[i] = shardRecoveryResponse.recoveryState();
-			}
-
-			return recoveryStates;
-		}
-
-		protected List<ShardRecoveryResponse> getShardRecoveryResponses() {
-			IndicesAdminClient indicesAdminClient = getIndicesAdminClient();
-
-			RecoveryRequestBuilder recoveryRequestBuilder =
-				indicesAdminClient.prepareRecoveries(_name);
-
-			RecoveryResponse recoveryResponse = recoveryRequestBuilder.get();
-
-			Map<String, List<ShardRecoveryResponse>> shardResponses =
-				recoveryResponse.shardResponses();
-
-			return shardResponses.get(_name);
-		}
-
 		private final String _name;
 
+	}
+
+	protected void addUnicast(
+		EmbeddedElasticsearchConnection embeddedElasticsearchConnection) {
+
+		if (_clusterSettingsContext == null) {
+			return;
+		}
+
+		UnicastSettingsContributor unicastSettingsContributor =
+			new UnicastSettingsContributor();
+
+		unicastSettingsContributor.setClusterSettingsContext(
+			_clusterSettingsContext);
+
+		embeddedElasticsearchConnection.addSettingsContributor(
+			unicastSettingsContributor);
 	}
 
 	protected ElasticsearchConnection createElasticsearchConnection() {
 		EmbeddedElasticsearchConnection embeddedElasticsearchConnection =
 			new EmbeddedElasticsearchConnection();
+
+		addUnicast(embeddedElasticsearchConnection);
 
 		Props props = Mockito.mock(Props.class);
 
@@ -181,8 +180,6 @@ public class ElasticsearchFixture {
 
 		embeddedElasticsearchConnection.activate(properties);
 
-		embeddedElasticsearchConnection.initialize();
-
 		return embeddedElasticsearchConnection;
 	}
 
@@ -190,6 +187,7 @@ public class ElasticsearchFixture {
 		FileUtils.deleteDirectory(new File(_tmpDirName));
 	}
 
+	private ClusterSettingsContext _clusterSettingsContext;
 	private ElasticsearchConnection _elasticsearchConnection;
 	private final String _tmpDirName;
 

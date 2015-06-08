@@ -29,32 +29,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Group> groups = GroupLocalServiceUtil.getUserGroups(user.getUserId(), true);
+	List<Group> groups = AnnouncementsUtil.getGroups(themeDisplay);
 	%>
 
 	<c:if test="<%= !groups.isEmpty() %>">
+		<optgroup label="<liferay-ui:message key="sites" />">
 
 			<%
-			Boolean hasGroupScope = false;
+			hasDistributionScope = true;
 
 			for (Group group : groups) {
-				if (((group.isOrganization() && group.isSite()) || group.isRegularSite()) && GroupPermissionUtil.contains(permissionChecker, group, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
-
-					if (!hasGroupScope) {
-						hasGroupScope = true;
 			%>
 
-						<optgroup label="<liferay-ui:message key="sites" />">
+				<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
 
 			<%
-					}
-			%>
-
-					<aui:option label="<%= HtmlUtil.escape(group.getDescriptiveName(locale)) %>" localizeLabel="<%= false %>" selected="<%= classPK == group.getGroupId() %>" value="<%= PortalUtil.getClassNameId(Group.class) + StringPool.COMMA + group.getGroupId() %>" />
-
-			<%
-				}
 			}
 			%>
 
@@ -62,32 +51,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Organization> organizations = OrganizationLocalServiceUtil.getUserOrganizations(user.getUserId());
+	List<Organization> organizations = AnnouncementsUtil.getOrganizations(themeDisplay);
 	%>
 
 	<c:if test="<%= !organizations.isEmpty() %>">
+		<optgroup label="<liferay-ui:message key="organizations" />">
 
 			<%
-			Boolean hasOrganizationScope = false;
+			hasDistributionScope = true;
 
 			for (Organization organization : organizations) {
-				if (OrganizationPermissionUtil.contains(permissionChecker, organization, ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
-
-					if (!hasOrganizationScope) {
-						hasOrganizationScope = true;
 			%>
 
-						<optgroup label="<liferay-ui:message key="organizations" />">
+				<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" localizeLabel="<%= false %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
 
 			<%
-					}
-			%>
-
-					<aui:option label="<%= HtmlUtil.escape(organization.getName()) %>" localizeLabel="<%= false %>" selected="<%= classPK == organization.getOrganizationId() %>" value="<%= PortalUtil.getClassNameId(Organization.class) + StringPool.COMMA + organization.getOrganizationId() %>" />
-
-			<%
-				}
 			}
 			%>
 
@@ -95,37 +73,16 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<Role> roles = RoleLocalServiceUtil.getRoles(themeDisplay.getCompanyId());
+	List<Role> roles = AnnouncementsUtil.getRoles(themeDisplay);
 	%>
 
 	<c:if test="<%= !roles.isEmpty() %>">
+		<optgroup label="<liferay-ui:message key="roles" />">
 
 			<%
-			Boolean hasRoleScope = false;
+			hasDistributionScope = true;
 
 			for (Role role : roles) {
-				if (role.isTeam()) {
-					Team team = TeamLocalServiceUtil.getTeam(role.getClassPK());
-
-					if (!GroupPermissionUtil.contains(permissionChecker, team.getGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS) || !RolePermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-
-						continue;
-					}
-				}
-				else if (!RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					continue;
-				}
-
-				hasDistributionScope = true;
-
-				if (!hasRoleScope) {
-					hasRoleScope = true;
-			%>
-
-					<optgroup label="<liferay-ui:message key="roles" />">
-
-			<%
-				}
 			%>
 
 				<aui:option label="<%= HtmlUtil.escape(role.getTitle(locale)) %>" selected="<%= classPK == role.getRoleId() %>" value="<%= PortalUtil.getClassNameId(Role.class) + StringPool.COMMA + role.getRoleId() %>" />
@@ -138,32 +95,21 @@ boolean hasDistributionScope = false;
 	</c:if>
 
 	<%
-	List<UserGroup> userGroups = UserGroupLocalServiceUtil.getUserGroups(themeDisplay.getCompanyId());
+	List<UserGroup> userGroups = AnnouncementsUtil.getUserGroups(themeDisplay);
 	%>
 
 	<c:if test="<%= !userGroups.isEmpty() %>">
+		<optgroup label="<liferay-ui:message key="user-groups" />">
 
 			<%
-			Boolean hasUserGroupScope = false;
+			hasDistributionScope = true;
 
 			for (UserGroup userGroup : userGroups) {
-				if (UserGroupPermissionUtil.contains(permissionChecker, userGroup.getUserGroupId(), ActionKeys.MANAGE_ANNOUNCEMENTS)) {
-					hasDistributionScope = true;
-
-					if (!hasUserGroupScope) {
-						hasUserGroupScope = true;
 			%>
 
-						<optgroup label="<liferay-ui:message key="user-groups" />">
+				<aui:option label="<%= HtmlUtil.escape(userGroup.getName()) %>" selected="<%= classPK == userGroup.getUserGroupId() %>" value="<%= PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA + userGroup.getUserGroupId() %>" />
 
 			<%
-					}
-			%>
-
-					<aui:option label="<%= HtmlUtil.escape(userGroup.getName()) %>" selected="<%= classPK == userGroup.getUserGroupId() %>" value="<%= PortalUtil.getClassNameId(UserGroup.class) + StringPool.COMMA + userGroup.getUserGroupId() %>" />
-
-			<%
-				}
 			}
 			%>
 

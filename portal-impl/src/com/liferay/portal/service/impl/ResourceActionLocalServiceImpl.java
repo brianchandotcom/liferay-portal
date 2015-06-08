@@ -197,18 +197,14 @@ public class ResourceActionLocalServiceImpl
 	public ResourceAction deleteResourceAction(long resourceActionId)
 		throws PortalException {
 
-		ResourceAction resourceAction =
-			resourceActionPersistence.findByPrimaryKey(resourceActionId);
-
-		return deleteResourceAction(resourceAction);
+		return deleteResourceAction(
+			resourceActionPersistence.findByPrimaryKey(resourceActionId));
 	}
 
 	@Override
 	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
-		String key = encodeKey(
-			resourceAction.getName(), resourceAction.getActionId());
-
-		_resourceActions.remove(key);
+		_resourceActions.remove(
+			encodeKey(resourceAction.getName(), resourceAction.getActionId()));
 
 		return resourceActionPersistence.remove(resourceAction);
 	}

@@ -278,14 +278,15 @@ public class VerifyPermission extends VerifyProcess {
 	protected boolean isPrivateLayout(String name, String primKey)
 		throws Exception {
 
-		boolean containsUnderline = primKey.contains(StringPool.UNDERLINE);
+		boolean isLayout = primKey.contains(PortletConstants.LAYOUT_SEPARATOR);
 
-		if (!name.equals(Layout.class.getName()) && !containsUnderline) {
+		if (!name.equals(Layout.class.getName()) && !isLayout) {
 			return false;
 		}
 
-		if (containsUnderline) {
-			primKey = StringUtil.extractFirst(primKey, StringPool.UNDERLINE);
+		if (isLayout) {
+			primKey = StringUtil.extractFirst(
+				primKey, PortletConstants.LAYOUT_SEPARATOR);
 		}
 
 		long plid = GetterUtil.getLong(primKey);

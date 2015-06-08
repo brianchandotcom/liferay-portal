@@ -20,6 +20,6 @@ package com.liferay.user.groups.admin.web.constants;
 public class UserGroupsAdminPortletKeys {
 
 	public static final String USER_GROUPS_ADMIN =
-		"com_liferay_user_groups_admin_web_portlet_" + "UserGroupsAdminPortlet";
+		"com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet";
 
 }

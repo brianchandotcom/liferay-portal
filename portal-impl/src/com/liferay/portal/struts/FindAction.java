@@ -30,7 +30,7 @@ import org.apache.struts.action.ActionMapping;
 public abstract class FindAction extends Action {
 
 	public FindAction() {
-		_findActionHelper = new BaseFindActionHelper() {
+		_findActionHelper = new BaseStrutsPortletFindActionHelper() {
 
 			@Override
 			public long getGroupId(long primaryKey) throws Exception {

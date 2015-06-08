@@ -1547,6 +1547,8 @@
 		<var name="key_entrySubtitle" value="${entrySubtitle}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
 
 		<if>

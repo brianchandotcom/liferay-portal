@@ -125,12 +125,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="configureScopeCP">
-		<execute macro="Page#gotoContentCP">
-			<var name="portletName" value="Blogs" />
-		</execute>
-	</command>
-
 	<command name="configureScopePG">
 		<if>
 			<equals arg1="${soPage}" arg2="true" />

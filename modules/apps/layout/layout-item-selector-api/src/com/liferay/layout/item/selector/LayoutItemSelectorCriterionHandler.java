@@ -39,6 +39,7 @@ public class LayoutItemSelectorCriterionHandler
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<ItemSelectorView<LayoutItemSelectorCriterion>>
 		getItemSelectorViews(
 			LayoutItemSelectorCriterion dlItemSelectorCriterion) {

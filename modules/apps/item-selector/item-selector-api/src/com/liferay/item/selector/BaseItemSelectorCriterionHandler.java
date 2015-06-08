@@ -30,6 +30,7 @@ public abstract class
 		implements ItemSelectorCriterionHandler {
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public List<ItemSelectorView<T>>
 		getItemSelectorViews(
 			ItemSelectorCriterion fileItemSelectorCriterion) {

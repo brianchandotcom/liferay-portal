@@ -9,7 +9,7 @@
 	<property name="alloyeditor.version" value="0.2.7" />
 	<property name="ckeditor.file" value="ckeditor_4.4.5_liferay.zip" />
 	<property name="html.editor.dir" value="src/META-INF/resources/html/editors" />
-    <property name="import.shared" value="../apps/document-library/document-library-item-selector-api,../apps/item-selector/item-selector-api,../apps/layout/layout-item-selector-api" />
+	<property name="import.shared" value="../apps/item-selector/item-selector-api,../apps/item-selector/item-selector-criteria-api,../apps/layout/layout-item-selector-api" />
 	<property name="scayt.file" value="scayt_4.4.5.zip" />
 	<property name="third.party.dir" value="../../../portal-web/third-party" />
 	<property name="tinymce.file" value="tinymce_4.1.7.zip" />

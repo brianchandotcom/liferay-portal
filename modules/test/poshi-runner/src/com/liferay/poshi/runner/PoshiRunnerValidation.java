@@ -656,9 +656,17 @@ public class PoshiRunnerValidation {
 						element.attributeValue("line-number")));
 		}
 		else if (attributeNames.size() > 1) {
-			_validateHasMultiplePrimaryAttributeNames(
-				element, attributeNames, multiplePrimaryAttributeNames,
-				filePath);
+			if (Validator.isNull(multiplePrimaryAttributeNames)) {
+				_exceptions.add(
+					new Exception(
+						"Too many attributes\n" + filePath + ":" +
+							element.attributeValue("line-number")));
+			}
+			else {
+				_validateHasMultiplePrimaryAttributeNames(
+					element, attributeNames, multiplePrimaryAttributeNames,
+					filePath);
+			}
 		}
 	}
 

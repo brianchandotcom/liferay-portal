@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 String scopeType = GetterUtil.getString(portletPreferences.getValue("lfrScopeType", null));

@@ -38,4 +38,4 @@ String portletResource = ParamUtil.getString(request, "portletResource");
 Portlet selPortlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
 %>
 
-<%@ include file="/html/portlet/portlet_configuration/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

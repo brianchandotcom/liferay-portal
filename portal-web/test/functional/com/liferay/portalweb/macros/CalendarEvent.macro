@@ -952,18 +952,6 @@
 		</for>
 	</command>
 
-	<command name="viewInvitationResourceNotPresent">
-		<execute macro="CalendarEvent#_expandInvitationsPanel" />
-
-		<for list="${resourceNameList}" param="resourceName" >
-			<execute function="Type" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
-
-			<var name="key_resource" value="${resourceName}" />
-
-			<execute function="AssertElementNotPresent" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST" />
-		</for>
-	</command>
-
 	<command name="rate4Stars">
 		<execute macro="CalendarEvent#viewDetails">
 			<var name="calendarName" value="${calendarName}" />
@@ -1323,6 +1311,18 @@
 		</if>
 
 		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="viewInvitationResourceNotPresent">
+		<execute macro="CalendarEvent#_expandInvitationsPanel" />
+
+		<for list="${resourceNameList}" param="resourceName" >
+			<execute function="Type" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
+
+			<var name="key_resource" value="${resourceName}" />
+
+			<execute function="AssertElementNotPresent" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD_LIST" />
+		</for>
 	</command>
 
 	<command name="viewRepeatWeekStartDay">

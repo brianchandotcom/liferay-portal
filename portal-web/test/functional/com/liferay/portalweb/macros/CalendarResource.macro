@@ -1,8 +1,4 @@
 <definition>
-	<command name="editResourceName">
-		<execute function="Type" locator1="PGCalendarAddresource#NAME_FIELD" value1="${calendarResourceName}" />
-	</command>
-
 	<command name="_expandDetailsPanel">
 		<if>
 			<condition function="IsElementPresent" locator1="CalendarEditResource#DETAILS_PANEL_COLLAPSED" />
@@ -19,12 +15,6 @@
 		<execute function="Check" locator1="CalendarEditResource#DETAILS_PANEL_ACTIVE_CHECKBOX" />
 	</command>
 
-	<command name="deactivate">
-		<execute macro="CalendarResource#_expandDetailsPanel" />
-
-		<execute function="Uncheck" locator1="CalendarEditResource#DETAILS_PANEL_ACTIVE_CHECKBOX" />
-	</command>
-
 	<command name="add">
 		<execute macro="CalendarNavigator#gotoAddResource" />
 
@@ -37,6 +27,12 @@
 		<execute macro="CalendarResource#view">
 			<var name="calendarResourceName" value="${calendarResourceName}" />
 		</execute>
+	</command>
+
+	<command name="deactivate">
+		<execute macro="CalendarResource#_expandDetailsPanel" />
+
+		<execute function="Uncheck" locator1="CalendarEditResource#DETAILS_PANEL_ACTIVE_CHECKBOX" />
 	</command>
 
 	<command name="delete">
@@ -71,6 +67,10 @@
 		<execute macro="CalendarResource#view">
 			<var name="calendarResourceName" value="${calendarResourceNameEdit}" />
 		</execute>
+	</command>
+
+	<command name="editResourceName">
+		<execute function="Type" locator1="PGCalendarAddresource#NAME_FIELD" value1="${calendarResourceName}" />
 	</command>
 
 	<command name="save">

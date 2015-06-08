@@ -17,14 +17,26 @@ package com.liferay.portal.tools.css.builder;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.net.URL;
+
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
  * @author Eduardo Garcia
  */
 public class CSSBuilderTest {
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Class clazz = CSSBuilderTest.class;
+
+		URL url = clazz.getResource("dependencies");
+
+		_DOCROOT_DIR_NAME = url.getFile();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -34,7 +46,8 @@ public class CSSBuilderTest {
 	@Test
 	public void testSassToCssBuilder() throws Exception {
 		CSSBuilder cssBuilder = new CSSBuilder(
-			_DOCROOT_DIR_NAME, "portal-web/docroot/html/css/common", "jni");
+			_DOCROOT_DIR_NAME, "../../../portal-web/docroot/html/css/common",
+			"jni");
 
 		cssBuilder.execute(ListUtil.fromArray(new String[] { _DIR_NAME}));
 
@@ -56,8 +69,7 @@ public class CSSBuilderTest {
 
 	private static final String _DIR_NAME = "/css";
 
-	private static final String _DOCROOT_DIR_NAME =
-		"portal-impl/test/integration/com/liferay/portal/tools/dependencies";
+	private static String _DOCROOT_DIR_NAME;
 
 	private static final String _EXPECTED_DIR_NAME = "/expected";
 

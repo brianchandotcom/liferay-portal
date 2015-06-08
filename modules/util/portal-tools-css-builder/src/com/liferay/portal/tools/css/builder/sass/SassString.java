@@ -14,7 +14,6 @@
 
 package com.liferay.portal.tools.css.builder.sass;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 
 /**
@@ -25,7 +24,7 @@ public class SassString implements SassFragment {
 
 	public SassString(String fileName, String cssContent) throws Exception {
 		if (fileName.contains("_rtl")) {
-			_ltrContent = StringPool.BLANK;
+			_ltrContent = "";
 			_rtlContent = cssContent;
 		}
 		else {

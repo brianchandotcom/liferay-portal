@@ -14,10 +14,17 @@
 
 package com.liferay.portal.tools.css.builder;
 
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.ListUtil;
+import java.io.File;
 
 import java.net.URL;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.util.Arrays;
+
+import org.apache.commons.io.FileUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -26,6 +33,7 @@ import org.junit.Test;
 
 /**
  * @author Eduardo Garcia
+ * @author David Truong
  */
 public class CSSBuilderTest {
 
@@ -40,7 +48,8 @@ public class CSSBuilderTest {
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtil.deltree(_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME);
+		FileUtils.deleteDirectory(
+			new File(_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME));
 	}
 
 	@Test
@@ -49,22 +58,28 @@ public class CSSBuilderTest {
 			_DOCROOT_DIR_NAME, "../../../portal-web/docroot/html/css/common",
 			"jni");
 
-		cssBuilder.execute(ListUtil.fromArray(new String[] { _DIR_NAME}));
+		cssBuilder.execute(Arrays.asList(new String[] {_DIR_NAME}));
 
-		String expectedCacheContent = FileUtil.read(
+		String expectedCacheContent = _read(
 			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _FILE_NAME);
-		String actualCacheContent = FileUtil.read(
+		String actualCacheContent = _read(
 			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME + _FILE_NAME);
 
 		Assert.assertEquals(expectedCacheContent, actualCacheContent);
 
-		String expectedRtlCacheContent = FileUtil.read(
+		String expectedRtlCacheContent = _read(
 			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _RTL_FILE_NAME);
-		String actualRtlCacheContent = FileUtil.read(
+		String actualRtlCacheContent = _read(
 			_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME +
 				_RTL_FILE_NAME);
 
 		Assert.assertEquals(expectedRtlCacheContent, actualRtlCacheContent);
+	}
+
+	private String _read(String fileName) throws Exception {
+		Path path = Paths.get(fileName);
+
+		return new String(Files.readAllBytes(path));
 	}
 
 	private static final String _DIR_NAME = "/css";

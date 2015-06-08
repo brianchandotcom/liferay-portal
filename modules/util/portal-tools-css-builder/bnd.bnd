@@ -3,7 +3,10 @@ Bundle-SymbolicName: com.liferay.portal.tools.css.builder
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.tools.css.builder
 Include-Resource:\
-	classes
+	classes,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
+    @../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
+    @../../../portal-impl/portal-impl.jar!/com/liferay/portal/servlet/filters/dynamiccss/RTLCSSUtil.class
 Main-Class: com.liferay.portal.tools.css.builder.CSSBuilder
 Private-Package:\
 	com.liferay.portal.tools.css.builder.sass

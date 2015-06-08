@@ -14,25 +14,11 @@
 
 package com.liferay.portal.tools.css.builder;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.portal.tools.css.builder.sass.SassFile;
 import com.liferay.portal.tools.css.builder.sass.SassFileWithMediaQuery;
 import com.liferay.portal.tools.css.builder.sass.SassString;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
 import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
@@ -40,12 +26,15 @@ import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
 
+import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -64,14 +53,14 @@ public class CSSBuilder {
 
 		String dirName = arguments.get("sass.dir");
 
-		if (Validator.isNotNull(dirName)) {
+		if ((dirName != null) && !dirName.equals("")) {
 			dirNames.add(dirName);
 		}
 		else {
 			for (int i = 0;; i++ ) {
 				dirName = arguments.get("sass.dir." + i);
 
-				if (Validator.isNotNull(dirName)) {
+				if ((dirName != null) && !dirName.equals("")) {
 					dirNames.add(dirName);
 				}
 				else {
@@ -103,8 +92,6 @@ public class CSSBuilder {
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
-
-		_initUtil();
 
 		_initSassCompiler(sassCompilerClassName);
 	}
@@ -201,22 +188,20 @@ public class CSSBuilder {
 	}
 
 	private String _fixRelativePath(String fileName) {
-		String[] paths = StringUtil.split(fileName, CharPool.SLASH);
+		String[] paths = fileName.split("/");
 
-		StringBundler sb = new StringBundler(paths.length * 2);
+		StringBuilder sb = new StringBuilder(paths.length * 2);
 
 		for (String path : paths) {
-			if (path.isEmpty() || path.equals(StringPool.PERIOD)) {
+			if (path.isEmpty() || path.equals(".")) {
 				continue;
 			}
 
-			if (path.equals(StringPool.DOUBLE_PERIOD) && (sb.length() >= 2)) {
-				sb.setIndex(sb.index() - 2);
-
+			if (path.equals("..") && (sb.length() >= 2)) {
 				continue;
 			}
 
-			sb.append(StringPool.SLASH);
+			sb.append("/");
 			sb.append(path);
 		}
 
@@ -236,16 +221,12 @@ public class CSSBuilder {
 				System.out.println(
 					"Unable to load native compiler, falling back to Ruby");
 
-				_sassCompiler = new RubySassCompiler(
-					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
-					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+				_sassCompiler = new RubySassCompiler("jit", 5, _TMP_DIR);
 			}
 		}
 		else {
 			try {
-				_sassCompiler = new RubySassCompiler(
-					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
-					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+				_sassCompiler = new RubySassCompiler("jit", 5, _TMP_DIR);
 			}
 			catch (Exception e) {
 				System.out.println(
@@ -254,26 +235,6 @@ public class CSSBuilder {
 				_sassCompiler = new JniSassCompiler();
 			}
 		}
-	}
-
-	private void _initUtil() {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		PortalClassLoaderUtil.setClassLoader(classLoader);
-
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 	private boolean _isModified(String dirName, String[] fileNames)
@@ -298,10 +259,9 @@ public class CSSBuilder {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		return StringUtil.replace(
-			dirName + StringPool.SLASH + fileName,
-			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
-			new String[] {StringPool.SLASH, StringPool.SLASH}
+		return StringUtils.replaceEach(
+			dirName + "/" + fileName, new String[] {"\\", "//"},
+			new String[] {"/", "/"}
 		);
 	}
 
@@ -334,11 +294,11 @@ public class CSSBuilder {
 			return;
 		}
 
-		String content = FileUtil.read(file);
+		String content = _read(file);
 
 		int pos = 0;
 
-		StringBundler sb = new StringBundler();
+		StringBuilder sb = new StringBuilder();
 
 		while (true) {
 			int commentX = content.indexOf(_CSS_COMMENT_BEGIN, pos);
@@ -366,13 +326,12 @@ public class CSSBuilder {
 			else {
 				sb.append(content.substring(pos, importX));
 
-				String mediaQuery = StringPool.BLANK;
+				String mediaQuery = "";
 
-				int mediaQueryImportX = content.indexOf(
-					CharPool.CLOSE_PARENTHESIS,
-					importX + _CSS_IMPORT_BEGIN.length());
+				int mediaQueryImportX =
+					content.indexOf(')', importX + _CSS_IMPORT_BEGIN.length());
 				int mediaQueryImportY = content.indexOf(
-					CharPool.SEMICOLON, importX + _CSS_IMPORT_BEGIN.length());
+					';', importX + _CSS_IMPORT_BEGIN.length());
 
 				String importFileName = null;
 
@@ -390,14 +349,14 @@ public class CSSBuilder {
 				}
 
 				if (!importFileName.isEmpty()) {
-					if (importFileName.charAt(0) != CharPool.SLASH) {
+					if (importFileName.charAt(0) != '/') {
 						importFileName = _fixRelativePath(
 							sassFile.getBaseDir().concat(importFileName));
 					}
 
 					SassFile importSassFile = _build(importFileName);
 
-					if (Validator.isNotNull(mediaQuery)) {
+					if ((mediaQuery != null) && !mediaQuery.equals("")) {
 						sassFile.addSassFragment(
 							new SassFileWithMediaQuery(
 								importSassFile, mediaQuery));
@@ -409,7 +368,7 @@ public class CSSBuilder {
 
 				// LEP-7540
 
-				if (Validator.isNotNull(mediaQuery)) {
+				if ((mediaQuery != null) && !mediaQuery.equals("")) {
 					pos = mediaQueryImportY + 1;
 				}
 				else {
@@ -426,11 +385,14 @@ public class CSSBuilder {
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
-			_addSassString(
-				sassFile, rtlCustomFileName, FileUtil.read(rtlCustomFile));
+			_addSassString(sassFile, rtlCustomFileName, _read(rtlCustomFile));
 		}
 
 		sassFile.setElapsedTime(System.currentTimeMillis() - start);
+	}
+
+	private String _read(File file) throws Exception {
+		return new String(Files.readAllBytes(file.toPath()));
 	}
 
 	private static final String _CSS_COMMENT_BEGIN = "/*";
@@ -441,8 +403,7 @@ public class CSSBuilder {
 
 	private static final String _CSS_IMPORT_END = ");";
 
-	private static final String _TMP_DIR = SystemProperties.get(
-		SystemProperties.TMP_DIR);
+	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 	private final String _docrootDirName;
 	private final String _portalCommonDirName;

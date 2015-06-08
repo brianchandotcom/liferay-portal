@@ -14,15 +14,15 @@
 
 package com.liferay.portal.tools.css.builder.sass;
 
-import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.portal.util.AggregateUtil;
 
 import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +37,13 @@ public class SassFile implements SassFragment {
 		_docrootDirName = docrootDirName;
 		_fileName = fileName;
 
-		int pos = fileName.lastIndexOf(CharPool.SLASH);
+		int pos = fileName.lastIndexOf('/');
 
 		if (pos != -1) {
 			_baseDir = fileName.substring(0, pos + 1);
 		}
 		else {
-			_baseDir = StringPool.BLANK;
+			_baseDir = "";
 		}
 	}
 
@@ -65,7 +65,7 @@ public class SassFile implements SassFragment {
 			return _ltrContent;
 		}
 
-		StringBundler sb = new StringBundler(_sassFragments.size());
+		StringBuilder sb = new StringBuilder(_sassFragments.size());
 
 		for (SassFragment sassFragment : _sassFragments) {
 			String ltrContent = sassFragment.getLtrContent();
@@ -93,7 +93,7 @@ public class SassFile implements SassFragment {
 			return _rtlContent;
 		}
 
-		StringBundler sb = new StringBundler(_sassFragments.size());
+		StringBuilder sb = new StringBuilder(_sassFragments.size());
 
 		for (SassFragment sassFragment : _sassFragments) {
 			String rtlContent = sassFragment.getRtlContent();
@@ -121,7 +121,7 @@ public class SassFile implements SassFragment {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(5);
+		StringBuilder sb = new StringBuilder(5);
 
 		sb.append("Parsed ");
 		sb.append(_fileName);
@@ -134,10 +134,9 @@ public class SassFile implements SassFragment {
 
 	public void writeCacheFiles() throws Exception {
 		File ltrCacheFile = new File(
-			_docrootDirName,
-			CSSBuilderUtil.getCacheFileName(_fileName, StringPool.BLANK));
+			_docrootDirName, CSSBuilderUtil.getCacheFileName(_fileName, ""));
 
-		FileUtil.write(ltrCacheFile, getLtrContent());
+		_writeFile(ltrCacheFile, getLtrContent());
 
 		File ltrFile = new File(_docrootDirName, _fileName);
 
@@ -150,12 +149,22 @@ public class SassFile implements SassFragment {
 		}
 
 		File rtlCacheFile = new File(
-			_docrootDirName,
-			CSSBuilderUtil.getCacheFileName(rtlFileName, StringPool.BLANK));
+			_docrootDirName, CSSBuilderUtil.getCacheFileName(rtlFileName, ""));
 
-		FileUtil.write(rtlCacheFile, getRtlContent());
+		_writeFile(rtlCacheFile, getRtlContent());
 
 		rtlCacheFile.setLastModified(ltrFile.lastModified());
+	}
+
+	private void _writeFile(File file, String content) throws Exception {
+		File parentFile = file.getParentFile();
+
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
+
+		Path path = Paths.get(file.toURI());
+		Files.write(path, content.getBytes()); //creates, overwrites
 	}
 
 	private static final String _BASE_URL = "@base_url@";

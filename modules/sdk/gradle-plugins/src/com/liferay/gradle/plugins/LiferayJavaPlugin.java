@@ -336,7 +336,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void applyConfigScripts(Project project) {
-		GradleUtil.applyScript(project, "config-liferay.gradle", project);
+		GradleUtil.applyScript(
+			project,
+			"com/liferay/gradle/plugins/dependencies/config-liferay.gradle",
+			project);
 	}
 
 	protected void applyPlugins(Project project) {

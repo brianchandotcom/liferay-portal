@@ -1181,7 +1181,7 @@ public class PoshiRunnerValidation {
 	}
 
 	private static void _validateTestName(
-		String testName, String errorLocation) {
+		String testName, String filePathLineNumber) {
 
 		String className =
 			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(testName);
@@ -1190,7 +1190,7 @@ public class PoshiRunnerValidation {
 			_exceptions.add(
 				new Exception(
 					"Invalid test case class " + className + "\n" +
-						errorLocation));
+						filePathLineNumber));
 		}
 		else if (testName.contains("#")) {
 			String commandElementKey = "test-case#" + testName;
@@ -1202,8 +1202,8 @@ public class PoshiRunnerValidation {
 
 				_exceptions.add(
 					new Exception(
-						"Invalid test case command " + commandName +
-							errorLocation));
+						"Invalid test case command " + commandName + "\n" +
+							filePathLineNumber));
 			}
 		}
 	}

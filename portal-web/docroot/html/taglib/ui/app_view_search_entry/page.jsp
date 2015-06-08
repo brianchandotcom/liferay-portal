@@ -23,10 +23,10 @@ String containerName = (String)request.getAttribute("liferay-ui:app-view-search-
 String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(request, "folder"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
-List<RelatedSearchResult<FileEntry>> relatedFileEntries = (List<RelatedSearchResult<FileEntry>>)request.getAttribute("liferay-ui:app-view-search-entry:relatedFileEntries");
+List<RelatedSearchResult<FileEntry>> fileEntryRelatedSearchResults = (List<RelatedSearchResult<FileEntry>>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryRelatedSearchResults");
 boolean highlightEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:highlightEnabled"));
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
-List<RelatedSearchResult<Comment>> relatedComments = (List<RelatedSearchResult<Comment>>)request.getAttribute("liferay-ui:app-view-search-entry:relatedComments");
+List<RelatedSearchResult<Comment>> commentRelatedSearchResults = (List<RelatedSearchResult<Comment>>)request.getAttribute("liferay-ui:app-view-search-entry:commentRelatedSearchResults");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
 String rowCheckerId = (String)request.getAttribute("liferay-ui:app-view-search-entry:rowCheckerId");
 String rowCheckerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:rowCheckerName");
@@ -98,17 +98,17 @@ summary.setQueryTerms(queryTerms);
 		</div>
 	</a>
 
-	<c:if test="<%= relatedFileEntries != null %>">
+	<c:if test="<%= fileEntryRelatedSearchResults != null %>">
 
 		<%
-		for (RelatedSearchResult<FileEntry> relatedFileEntry : relatedFileEntries) {
-			FileEntry fileEntry = relatedFileEntry.getModel();
+		for (RelatedSearchResult<FileEntry> fileEntryRelatedSearchResult : fileEntryRelatedSearchResults) {
+			FileEntry fileEntry = fileEntryRelatedSearchResult.getModel();
 
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 
-			summary = relatedFileEntry.getSummary();
+			summary = fileEntryRelatedSearchResult.getSummary();
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);
@@ -140,15 +140,15 @@ summary.setQueryTerms(queryTerms);
 
 	</c:if>
 
-	<c:if test="<%= relatedComments != null %>">
+	<c:if test="<%= commentRelatedSearchResults != null %>">
 
 		<%
-		for (RelatedSearchResult<Comment> relatedComment : relatedComments) {
-			Comment comment = relatedComment.getModel();
+		for (RelatedSearchResult<Comment> commentRelatedSearchResult : commentRelatedSearchResults) {
+			Comment comment = commentRelatedSearchResult.getModel();
 
 			User userDisplay = comment.getUser();
 
-			summary = relatedComment.getSummary();
+			summary = commentRelatedSearchResult.getSummary();
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);

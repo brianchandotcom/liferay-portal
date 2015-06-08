@@ -64,13 +64,13 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		assertEmptyRelatedFileEntries(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Assert.assertNull(searchResult.getSummary());
 
 		verifyZeroInteractions(dlAppLocalService);
 
-		assertEmptyRelatedComments(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -193,25 +193,25 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_TITLE, searchResultSummary.getTitle());
 
-		List<RelatedSearchResult<FileEntry>> relatedFileEntries =
+		List<RelatedSearchResult<FileEntry>> fileEntryRelatedSearchResults =
 			searchResult.getFileEntryRelatedSearchResults();
 
-		Assert.assertEquals(1, relatedFileEntries.size());
+		Assert.assertEquals(1, fileEntryRelatedSearchResults.size());
 
 		RelatedSearchResult<FileEntry> relatedSearchResult =
-			relatedFileEntries.get(0);
+			fileEntryRelatedSearchResults.get(0);
 
-		FileEntry tupleFileEntry = relatedSearchResult.getModel();
+		FileEntry relatedSearchResultFileEntry = relatedSearchResult.getModel();
 
-		Assert.assertSame(_fileEntry, tupleFileEntry);
+		Assert.assertSame(_fileEntry, relatedSearchResultFileEntry);
 
-		Summary tupleSummary = relatedSearchResult.getSummary();
+		Summary relatedSearchResultSummary = relatedSearchResult.getSummary();
 
-		Assert.assertSame(summary, tupleSummary);
-		Assert.assertEquals(content, tupleSummary.getContent());
-		Assert.assertEquals(title, tupleSummary.getTitle());
+		Assert.assertSame(summary, relatedSearchResultSummary);
+		Assert.assertEquals(content, relatedSearchResultSummary.getContent());
+		Assert.assertEquals(title, relatedSearchResultSummary.getTitle());
 
-		assertEmptyRelatedComments(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -233,7 +233,7 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		assertEmptyRelatedFileEntries(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Mockito.verify(
 			dlAppLocalService
@@ -253,7 +253,7 @@ public class SearchResultUtilDLFileEntryTest
 		IndexerRegistryUtil.getIndexer(
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
 
-		assertEmptyRelatedComments(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -308,7 +308,7 @@ public class SearchResultUtilDLFileEntryTest
 			document, snippet, null, null
 		);
 
-		assertEmptyRelatedFileEntries(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Mockito.verify(
 			dlAppLocalService
@@ -316,7 +316,7 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
-		assertEmptyRelatedComments(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 

@@ -54,16 +54,16 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<RelatedSearchResult<Comment>> relatedComments =
+		List<RelatedSearchResult<Comment>> commentRelatedSearchResults =
 			searchResult.getCommentRelatedSearchResults();
 
-		Assert.assertTrue(relatedComments.isEmpty());
+		Assert.assertTrue(commentRelatedSearchResults.isEmpty());
 
 		verifyZeroInteractions(mbMessageLocalService);
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertEmptyRelatedFileEntries(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -89,19 +89,20 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		List<RelatedSearchResult<Comment>> relatedComments =
+		List<RelatedSearchResult<Comment>> commentRelatedSearchResults =
 			searchResult.getCommentRelatedSearchResults();
 
-		RelatedSearchResult<Comment> relatedSearchResult = relatedComments.get(
-			0);
+		RelatedSearchResult<Comment> relatedSearchResult =
+			commentRelatedSearchResults.get(0);
+
 		Comment comment = relatedSearchResult.getModel();
 
 		Assert.assertSame(_mbMessage.getMessageId(), comment.getCommentId());
-		Assert.assertEquals(1, relatedComments.size());
+		Assert.assertEquals(1, commentRelatedSearchResults.size());
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertEmptyRelatedFileEntries(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 

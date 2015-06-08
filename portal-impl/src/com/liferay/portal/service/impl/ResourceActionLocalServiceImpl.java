@@ -198,7 +198,7 @@ public class ResourceActionLocalServiceImpl
 		throws PortalException {
 
 		ResourceAction resourceAction =
-			resourceActionPersistence.fetchByPrimaryKey(resourceActionId);
+			resourceActionPersistence.findByPrimaryKey(resourceActionId);
 
 		return deleteResourceAction(resourceAction);
 	}

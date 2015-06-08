@@ -81,9 +81,9 @@ public class DLItemSelectorViewDisplayContext
 		return _dlItemSelectorView.getTitle(locale);
 	}
 
-	private final T _itemSelectorCriterion;
 	private final DLItemSelectorView<T> _dlItemSelectorView;
 	private final String _itemSelectedEventName;
+	private final T _itemSelectorCriterion;
 	private final PortletURL _portletURL;
 
 }

@@ -1098,6 +1098,8 @@ public class PoshiRunnerValidation {
 		List<String> possibleTagElementNames = Arrays.asList(
 			"command", "property", "set-up", "tear-down", "var");
 
+		List<String> propertyNames = new ArrayList<>();
+
 		for (Element childElement : childElements) {
 			String childElementName = childElement.getName();
 
@@ -1131,6 +1133,19 @@ public class PoshiRunnerValidation {
 			}
 			else if (childElementName.equals("property")) {
 				_validatePropertyElement(childElement, filePath);
+
+				String propertyName = childElement.attributeValue("name");
+
+				if (!propertyNames.contains(propertyName)) {
+					propertyNames.add(propertyName);
+				}
+				else {
+					_exceptions.add(
+						new Exception(
+							"Duplicate property name " + propertyName + "\n" +
+								filePath + ":" +
+								childElement.attributeValue("line-number")));
+				}
 			}
 			else if (childElementName.equals("set-up") ||
 					 childElementName.equals("tear-down")) {

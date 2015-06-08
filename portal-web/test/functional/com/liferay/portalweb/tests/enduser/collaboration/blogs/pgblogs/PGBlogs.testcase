@@ -726,7 +726,11 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#viewEntryDraftCP">
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDraft">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />
@@ -748,7 +752,11 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="Blogs#viewEntryDraftCP">
+		<execute macro="BlogsNavigator#gotoEntryCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDraft">
 			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySubtitle" value="Blogs Entry Subtitle" />
 			<var name="entryTitle" value="Blogs Entry Title" />

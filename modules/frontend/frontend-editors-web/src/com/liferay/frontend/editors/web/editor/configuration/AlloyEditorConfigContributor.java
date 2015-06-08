@@ -17,7 +17,7 @@ package com.liferay.frontend.editors.web.editor.configuration;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.layout.item.selector.LayoutItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -92,8 +92,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 							"liferay-ui:input-editor:name"));
 
 			populateFileBrowserURL(
-				jsonObject, liferayPortletResponse,
-				themeDisplay.getScopeGroupId(), name + "selectDocument");
+				jsonObject, liferayPortletResponse, name + "selectDocument");
 
 			jsonObject.put("srcNode", name);
 		}
@@ -197,19 +196,19 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 
 	protected void populateFileBrowserURL(
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
-		long scopeGroupId, String eventName) {
+		String eventName) {
 
 		Set<Class<?>> desiredReturnTypes = new HashSet<>();
 
 		desiredReturnTypes.add(URL.class);
 
-		ItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion(scopeGroupId);
+		ItemSelectorCriterion urlItemSelectorCriterion =
+			new URLItemSelectorCriterion();
 
-		layoutItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		urlItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
 
 		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
-			liferayPortletResponse, eventName, layoutItemSelectorCriterion);
+			liferayPortletResponse, eventName, urlItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserBrowseUrl", layoutItemSelectorURL.toString());

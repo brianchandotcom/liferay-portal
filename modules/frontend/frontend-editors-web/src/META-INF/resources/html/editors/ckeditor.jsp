@@ -440,15 +440,15 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		<c:if test="<%= allowBrowseDocuments %>">
 
 			<%
-			ItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion(themeDisplay.getScopeGroupId());
+			ItemSelectorCriterion urlItemSelectorCriterion = new URLItemSelectorCriterion();
 
 			Set<Class<?>> desiredReturnTypes = new HashSet<Class<?>>();
 
 			desiredReturnTypes.add(URL.class);
 
-			layoutItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+			urlItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
 
-			PortletURL layoutItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", layoutItemSelectorCriterion);
+			PortletURL layoutItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", urlItemSelectorCriterion);
 			%>
 
 			filebrowserBrowseUrl = '<%= layoutItemSelectorURL %>';

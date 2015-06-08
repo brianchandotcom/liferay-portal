@@ -16,6 +16,7 @@ package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -99,8 +100,7 @@ public class BaseRelatedEntryIndexer implements RelatedEntryIndexer {
 			Indexer indexer)
 		throws Exception {
 
-		BooleanQuery entityQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery entityQuery = new BooleanQueryImpl();
 
 		indexer.postProcessContextQuery(entityQuery, searchContext);
 

@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryTermBuilder;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -145,10 +145,9 @@ public class LuceneRepositorySearchQueryTermBuilder
 			org.apache.lucene.search.BooleanQuery curBooleanQuery =
 				(org.apache.lucene.search.BooleanQuery)query;
 
-			BooleanQuery conjunctionQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
-			BooleanQuery disjunctionQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanQuery conjunctionQuery = new BooleanQueryImpl();
+
+			BooleanQuery disjunctionQuery = new BooleanQueryImpl();
 
 			for (org.apache.lucene.search.BooleanClause booleanClause :
 					curBooleanQuery.getClauses()) {

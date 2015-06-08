@@ -18,8 +18,11 @@ import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.TermRangeQueryFactory;
 
 /**
+ * @deprecated As of 7.0.0
+ *
  * @author Raymond Augé
  */
+@Deprecated
 public class TermRangeQueryFactoryImpl implements TermRangeQueryFactory {
 
 	@Override

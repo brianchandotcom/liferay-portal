@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.repository.search.RepositorySearchQueryTermBuil
 import com.liferay.portal.kernel.search.BooleanClause;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryTerm;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.search.TermRangeQuery;
 import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -58,18 +58,15 @@ public class RepositorySearchQueryBuilderImpl
 		throws SearchException {
 
 		try {
-			BooleanQuery contextQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanQuery contextQuery = new BooleanQueryImpl();
 
 			addContext(contextQuery, searchContext);
 
-			BooleanQuery searchQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanQuery searchQuery = new BooleanQueryImpl();
 
 			addSearchKeywords(searchQuery, searchContext);
 
-			BooleanQuery fullQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanQuery fullQuery = new BooleanQueryImpl();
 
 			if (contextQuery.hasClauses()) {
 				fullQuery.add(contextQuery, BooleanClauseOccur.MUST);
@@ -113,8 +110,7 @@ public class RepositorySearchQueryBuilderImpl
 			return;
 		}
 
-		BooleanQuery folderIdsQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery folderIdsQuery = new BooleanQueryImpl();
 
 		for (long folderId : folderIds) {
 			try {
@@ -143,7 +139,7 @@ public class RepositorySearchQueryBuilderImpl
 		RepositorySearchQueryTermBuilder repositorySearchQueryTermBuilder =
 			_serviceTracker.getService();
 
-		BooleanQuery titleQuery = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery titleQuery = new BooleanQueryImpl();
 
 		repositorySearchQueryTermBuilder.addTerm(
 			titleQuery, searchContext, Field.TITLE, keywords);
@@ -152,8 +148,7 @@ public class RepositorySearchQueryBuilderImpl
 			searchQuery.add(titleQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		BooleanQuery userNameQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery userNameQuery = new BooleanQueryImpl();
 
 		repositorySearchQueryTermBuilder.addTerm(
 			userNameQuery, searchContext, Field.USER_NAME, keywords);
@@ -164,8 +159,7 @@ public class RepositorySearchQueryBuilderImpl
 			searchQuery.add(userNameQuery, BooleanClauseOccur.SHOULD);
 		}
 
-		BooleanQuery contentQuery = BooleanQueryFactoryUtil.create(
-			searchContext);
+		BooleanQuery contentQuery = new BooleanQueryImpl();
 
 		repositorySearchQueryTermBuilder.addTerm(
 			contentQuery, searchContext, Field.CONTENT, keywords);

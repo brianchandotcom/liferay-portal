@@ -28,6 +28,10 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 		_queryTerm = queryTerm;
 	}
 
+	public TermQueryImpl(String field, String value) {
+		this(new QueryTermImpl(field, value));
+	}
+
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {
 		return queryVisitor.visitQuery(this);

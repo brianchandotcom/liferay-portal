@@ -18,10 +18,10 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.test.IdempotentRetryAssert;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -149,7 +149,7 @@ public class JournalArticleSearchTest extends BaseSearchTestCase {
 
 		searchContext.setCompanyId(TestPropsValues.getCompanyId());
 
-		BooleanQuery query = BooleanQueryFactoryUtil.create(searchContext);
+		BooleanQuery query = new BooleanQueryImpl();
 
 		query.addTerm("title", RandomTestUtil.randomString());
 

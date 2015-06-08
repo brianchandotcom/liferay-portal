@@ -15,8 +15,12 @@
 package com.liferay.portal.kernel.search;
 
 /**
+ * @deprecated As of 7.0.0 , replaced by {@link
+ *             com.liferay.portal.kernel.search.generic.TermRangeQueryImpl}
+ *
  * @author Raymond Augé
  */
+@Deprecated
 public interface TermRangeQueryFactory {
 
 	public TermRangeQuery create(

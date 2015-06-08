@@ -28,6 +28,10 @@ public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 		_queryTerm = queryTerm;
 	}
 
+	public WildcardQueryImpl(String field, String value) {
+		this(new QueryTermImpl(field, value));
+	}
+
 	@Override
 	public <T> T accept(QueryVisitor<T> queryVisitor) {
 		return queryVisitor.visitQuery(this);

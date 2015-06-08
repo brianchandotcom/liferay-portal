@@ -23,21 +23,35 @@ public interface SearchEngine {
 	public String backup(long companyId, String backupName)
 		throws SearchException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link BooleanClauseFactoryUtil}
+	 */
+	@Deprecated
 	public BooleanClauseFactory getBooleanClauseFactory();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public BooleanQueryFactory getBooleanQueryFactory();
 
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public TermQueryFactory getTermQueryFactory();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public TermRangeQueryFactory getTermRangeQueryFactory();
 
 	public String getVendor();
-
-	public WildcardQueryFactory getWildcardQueryFactory();
 
 	public void initialize(long companyId);
 

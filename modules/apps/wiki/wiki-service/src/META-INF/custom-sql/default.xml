@@ -15,6 +15,41 @@
 				(status = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.countByG_N_H_S">
+		<![CDATA[
+			SELECT COUNT(DISTINCT WikiPage.pageId) AS COUNT_VALUE
+			FROM
+				WikiPage
+			WHERE
+				WikiPage.groupId = ? AND
+				WikiPage.nodeId = ? AND
+				WikiPage.head = ? AND
+				([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] [$STATUS$])
+		]]>
+	</sql>
+	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByG_N_H_S">
+		<![CDATA[
+			SELECT
+				{WikiPage.*}
+			FROM
+				(
+					SELECT DISTINCT
+						WikiPage.pageId
+					FROM
+						WikiPage
+					WHERE
+						WikiPage.groupId = ? AND
+						WikiPage.nodeId = ? AND
+						WikiPage.head = ? AND
+						([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] [$STATUS$])
+				)
+				TEMP_TABLE
+					INNER JOIN WikiPage ON
+						TEMP_TABLE.pageId = WikiPage.pageId
+			ORDER BY
+				WikiPage.nodeId ASC
+		]]>
+	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByResourcePrimKey">
 		<![CDATA[
 			SELECT

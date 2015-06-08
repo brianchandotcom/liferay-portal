@@ -6029,6 +6029,21 @@ ${ant-gc-log}</echo>
 				<echo>Unable to read /tmp/ant-gc.log</echo>
 			</else>
 		</if>
+
+		<if>
+			<available file="/tmp/tomcat-gc.log" />
+			<then>
+				<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
+
+				<echo>
+Tomcat GC log:
+
+${tomcat-gc-log}</echo>
+			</then>
+			<else>
+				<echo>Unable to read /tmp/tomcat-gc.log</echo>
+			</else>
+		</if>
 	</target>
 
 	<target name="test-integration">

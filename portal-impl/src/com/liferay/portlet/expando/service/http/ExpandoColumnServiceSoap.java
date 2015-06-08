@@ -108,6 +108,20 @@ public class ExpandoColumnServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.expando.model.ExpandoColumnSoap fetchExpandoColumn(
+		long columnId) throws RemoteException {
+		try {
+			com.liferay.portlet.expando.model.ExpandoColumn returnValue = ExpandoColumnServiceUtil.fetchExpandoColumn(columnId);
+
+			return com.liferay.portlet.expando.model.ExpandoColumnSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portlet.expando.model.ExpandoColumnSoap updateColumn(
 		long columnId, java.lang.String name, int type)
 		throws RemoteException {

@@ -54,6 +54,13 @@ public class ExpandoColumnServiceWrapper implements ExpandoColumnService,
 		_expandoColumnService.deleteColumn(columnId);
 	}
 
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoColumn fetchExpandoColumn(
+		long columnId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _expandoColumnService.fetchExpandoColumn(columnId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

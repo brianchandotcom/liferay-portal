@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseService;
 
@@ -55,6 +56,10 @@ public interface ExpandoColumnService extends BaseService {
 		java.lang.Object defaultData) throws PortalException;
 
 	public void deleteColumn(long columnId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.expando.model.ExpandoColumn fetchExpandoColumn(
+		long columnId) throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.

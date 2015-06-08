@@ -58,6 +58,12 @@ public class ExpandoColumnServiceUtil {
 		getService().deleteColumn(columnId);
 	}
 
+	public static com.liferay.portlet.expando.model.ExpandoColumn fetchExpandoColumn(
+		long columnId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchExpandoColumn(columnId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

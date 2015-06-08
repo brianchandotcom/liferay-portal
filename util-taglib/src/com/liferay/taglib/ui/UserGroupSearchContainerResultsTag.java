@@ -16,22 +16,16 @@ package com.liferay.taglib.ui;
 
 import com.liferay.portal.kernel.dao.search.DisplayTerms;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.model.UserGroup;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Drew Brokke
  */
-public class UserGroupSearchResultsTag extends IncludeTag {
-
-	public void setResults(List<UserGroup> results) {
-		_results = results;
-	}
+public class UserGroupSearchContainerResultsTag extends IncludeTag {
 
 	public void setSearchContainer(SearchContainer searchContainer) {
 		_searchContainer = searchContainer;
@@ -39,14 +33,6 @@ public class UserGroupSearchResultsTag extends IncludeTag {
 
 	public void setSearchTerms(DisplayTerms searchTerms) {
 		_searchTerms = searchTerms;
-	}
-
-	public void setSearchWithIndex(boolean searchWithIndex) {
-		_searchWithIndex = searchWithIndex;
-	}
-
-	public void setTotal(int total) {
-		_total = total;
 	}
 
 	public void setUserGroupParams(
@@ -63,30 +49,21 @@ public class UserGroupSearchResultsTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:user-group-search-results:results", _results);
-		request.setAttribute(
-			"liferay-ui:user-group-search-results:searchContainer",
+			"liferay-ui:user-group-search-container-results:searchContainer",
 			_searchContainer);
 		request.setAttribute(
-			"liferay-ui:user-group-search-results:searchTerms", _searchTerms);
+			"liferay-ui:user-group-search-container-results:searchTerms",
+			_searchTerms);
 		request.setAttribute(
-			"liferay-ui:user-group-search-results:searchWithIndex",
-			_searchWithIndex);
-		request.setAttribute(
-			"liferay-ui:user-group-search-results:total", _total);
-		request.setAttribute(
-			"liferay-ui:user-group-search-results:userGroupParams",
+			"liferay-ui:user-group-search-container-results:userGroupParams",
 			_userGroupParams);
 	}
 
 	private static final String _PAGE =
-		"/html/taglib/ui/user_group_search_results/page.jsp";
+		"/html/taglib/ui/user_group_search_container_results/page.jsp";
 
-	private List<UserGroup> _results;
 	private SearchContainer _searchContainer;
 	private DisplayTerms _searchTerms;
-	private boolean _searchWithIndex;
-	private int _total;
 	private LinkedHashMap<String, Object> _userGroupParams;
 
 }

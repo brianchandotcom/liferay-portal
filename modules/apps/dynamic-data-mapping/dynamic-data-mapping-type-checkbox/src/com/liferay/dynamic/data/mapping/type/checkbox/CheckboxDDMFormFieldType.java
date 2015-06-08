@@ -39,6 +39,16 @@ public class CheckboxDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getDDMFormFieldTypeJavaScriptClass() {
+		return "Liferay.DDM.Field.Checkbox";
+	}
+
+	@Override
+	public String getDDMFormFieldTypeJavaScriptModule() {
+		return "liferay-ddm-form-field-checkbox";
+	}
+
+	@Override
 	public DDMFormFieldValueAccessor<Boolean> getDDMFormFieldValueAccessor(
 		Locale locale) {
 

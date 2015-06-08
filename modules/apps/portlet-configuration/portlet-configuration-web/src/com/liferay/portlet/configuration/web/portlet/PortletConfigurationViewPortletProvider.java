@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.portletconfiguration;
+package com.liferay.portlet.configuration.web.portlet;
 
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;

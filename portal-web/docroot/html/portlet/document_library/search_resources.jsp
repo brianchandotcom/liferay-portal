@@ -199,7 +199,7 @@ SearchContainer searchContainer = new SearchContainer(liferayPortletRequest, por
 								description="<%= ((summary != null) && Validator.isNotNull(summary.getContent())) ? summary.getContent() : fileEntry.getDescription() %>"
 								locked="<%= fileEntry.isCheckedOut() %>"
 								queryTerms="<%= hits.getQueryTerms() %>"
-								relatedComments="<%= searchResult.getRelatedComments() %>"
+								relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
 								rowCheckerId="<%= String.valueOf(fileEntry.getFileEntryId()) %>"
 								rowCheckerName="<%= FileEntry.class.getSimpleName() %>"
 								showCheckbox="<%= DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.DELETE) || DLFileEntryPermission.contains(permissionChecker, fileEntry, ActionKeys.UPDATE) %>"

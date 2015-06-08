@@ -55,7 +55,7 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
 		List<RelatedSearchResult<Comment>> relatedComments =
-			searchResult.getRelatedComments();
+			searchResult.getCommentRelatedSearchResults();
 
 		Assert.assertTrue(relatedComments.isEmpty());
 
@@ -90,7 +90,7 @@ public class SearchResultUtilMBMessageTest
 			searchResult.getClassPK());
 
 		List<RelatedSearchResult<Comment>> relatedComments =
-			searchResult.getRelatedComments();
+			searchResult.getCommentRelatedSearchResults();
 
 		RelatedSearchResult<Comment> relatedSearchResult = relatedComments.get(
 			0);

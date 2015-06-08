@@ -74,7 +74,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected void assertEmptyRelatedComments(SearchResult searchResult) {
 		List<RelatedSearchResult<Comment>> relatedComments =
-			searchResult.getRelatedComments();
+			searchResult.getCommentRelatedSearchResults();
 
 		Assert.assertTrue(relatedComments.isEmpty());
 	}

@@ -171,7 +171,7 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 						description="<%= (summary != null) ? summary.getContent() : fileEntry.getDescription() %>"
 						queryTerms="<%= hits.getQueryTerms() %>"
-						relatedComments="<%= searchResult.getRelatedComments() %>"
+						relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
 						thumbnailSrc="<%= DLUtil.getThumbnailSrc(fileEntry, themeDisplay) %>"
 						title="<%= (summary != null) ? summary.getTitle() : fileEntry.getTitle() %>"
 						url="<%= rowURL %>"

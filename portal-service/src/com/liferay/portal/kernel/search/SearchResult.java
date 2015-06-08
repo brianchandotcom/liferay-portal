@@ -73,7 +73,7 @@ public class SearchResult {
 		return _classPK;
 	}
 
-	public List<RelatedSearchResult<Comment>> getRelatedComments() {
+	public List<RelatedSearchResult<Comment>> getCommentRelatedSearchResults() {
 		return _relatedComments;
 	}
 

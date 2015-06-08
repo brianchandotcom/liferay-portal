@@ -24,12 +24,12 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
  */
 public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 
-	public WildcardQueryImpl(String field, String value) {
-		this(new QueryTermImpl(field, value));
-	}
-
 	public WildcardQueryImpl(QueryTerm queryTerm) {
 		_queryTerm = queryTerm;
+	}
+
+	public WildcardQueryImpl(String field, String value) {
+		this(new QueryTermImpl(field, value));
 	}
 
 	@Override

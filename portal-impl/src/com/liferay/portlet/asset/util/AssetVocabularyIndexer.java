@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.BooleanQuery;
-import com.liferay.portal.kernel.search.BooleanQueryFactoryUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,8 +87,7 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 		String title = (String)searchContext.getAttribute(Field.TITLE);
 
 		if (Validator.isNotNull(title)) {
-			BooleanQuery localizedQuery = BooleanQueryFactoryUtil.create(
-				searchContext);
+			BooleanQuery localizedQuery = new BooleanQueryImpl();
 
 			addSearchLocalizedTerm(
 				localizedQuery, searchContext, Field.TITLE, true);

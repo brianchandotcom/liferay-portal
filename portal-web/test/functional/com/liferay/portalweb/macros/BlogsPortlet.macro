@@ -180,6 +180,17 @@
 		<execute function="Select" locator1="Configuration#SETUP_RSS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
 	</command>
 
+	<command name="selectScopeCP">
+		<var name="key_scopeDefault" value="${scopeDefault}" />
+		<var name="key_scopeSelection" value="${scopeSelection}" />
+
+		<execute function="Click#pauseClickAt" locator1="MenuItem#SCOPE_DEFAULT" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="MenuItem#SCOPE_SELECTION" value1="${scopeSelection}" />
+
+		<execute function="AssertTextEquals" locator1="MenuItem#SCOPE" value1="${scopeSelection}" />
+	</command>
+
 	<command name="selectScopePG">
 		<var name="key_scopeSelection" value="${scopeSelection}" />
 

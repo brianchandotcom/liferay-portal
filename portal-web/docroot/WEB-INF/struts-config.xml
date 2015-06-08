@@ -423,17 +423,6 @@
 			<forward name="portlet.document_library.view" path="portlet.document_library_display.view" />
 		</action>
 
-		<!-- Expando -->
-
-		<action path="/expando/edit_expando" type="com.liferay.portlet.expando.action.EditExpandoAction">
-			<forward name="portlet.expando.edit_expando" path="portlet.expando.edit_expando" />
-			<forward name="portlet.expando.error" path="portlet.expando.error" />
-		</action>
-
-		<action path="/expando/view" forward="portlet.expando.view" />
-
-		<action path="/expando/view_attributes" forward="portlet.expando.view_attributes" />
-
 		<!-- Export Import -->
 
 		<action path="/export_import/confirmation" type="com.liferay.portlet.exportimport.action.ConfirmationExportImportConfigurationAction">

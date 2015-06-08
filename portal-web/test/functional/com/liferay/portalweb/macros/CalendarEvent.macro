@@ -937,7 +937,7 @@
 	</command>
 
 	<command name="inviteResource">
-		<execute macro="_expandInvitationsPanel" />
+		<execute macro="CalendarEvent#_expandInvitationsPanel" />
 
 		<for list="${resourceNameList}" param="resourceName" >
 			<execute function="Type" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />
@@ -953,7 +953,7 @@
 	</command>
 
 	<command name="viewInvitationResourceNotPresent">
-		<execute macro="_expandInvitationsPanel" />
+		<execute macro="CalendarEvent#_expandInvitationsPanel" />
 
 		<for list="${resourceNameList}" param="resourceName" >
 			<execute function="Type" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />

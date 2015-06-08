@@ -1899,10 +1899,10 @@ portlet that uses that taglib. Also, any custom code that uses the
 
 #### How should I update my code?
 
-The new attributes `relatedComments` and `relatedFileEntries` should
-be used instead. The expected value is the one returned by the
-`getRelatedComments` and `getRelatedFileEntries` methods in
-`SearchResult`.
+The new attributes `commentRelatedSearchResults` and
+`fileEntryRelatedSearchResults` should be used instead. The expected
+value is the one returned by the `getCommentRelatedSearchResults` and
+`getFileEntryRelatedSearchResults` methods in `SearchResult`.
 
 When adding comments to the `SearchResult` the new `addComment` method
 should be used instead of `addMbMessage`.

@@ -374,6 +374,7 @@ public class PoshiRunnerValidation {
 		_validateHasChildElements(element, filePath);
 		_validateHasNoAttributes(element, filePath);
 		_validateNumberofChildElements(element, 2, filePath);
+		_validateThenElement(element, filePath);
 
 		List<Element> childElements = element.elements();
 
@@ -390,24 +391,17 @@ public class PoshiRunnerValidation {
 		else {
 			_exceptions.add(
 				new Exception(
-					"Invalid " + conditionElementName + " element" + filePath +
-						":" + element.attributeValue("line-number")));
-		}
-
-		Element thenElement = childElements.get(1);
-
-		if (Validator.equals("then", thenElement.getName())) {
-			_validateHasChildElements(thenElement, filePath);
-			_validateHasNoAttributes(thenElement, filePath);
-
-			_parseElements(thenElement, filePath);
-		}
-		else {
-			_exceptions.add(
-				new Exception(
-					"Missing then element" + filePath + ":" +
+					"Invalid " + conditionElementName + " element\n" +
+						filePath + ":" +
 						element.attributeValue("line-number")));
 		}
+
+		Element thenElement = element.element("then");
+
+		_validateHasChildElements(thenElement, filePath);
+		_validateHasNoAttributes(thenElement, filePath);
+
+		_parseElements(thenElement, filePath);
 	}
 
 	private static void _validateExecuteElement(

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.BrowserSniffer;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
-import com.liferay.portal.kernel.servlet.FileTimestampUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
@@ -281,21 +280,10 @@ public class AggregateFilter extends IgnoreModuleRequestFilter {
 		File cacheFile = new File(_tempDir, cacheFileName);
 
 		if (cacheFile.exists()) {
-			boolean staleCache = false;
+			long lastModified = PortalWebResourcesUtil.getLastModified(
+				PortalWebResourceConstants.RESOURCE_TYPE_JS);
 
-			for (String fileName : fileNames) {
-				long lastModified = FileTimestampUtil.getTimestamp(
-					jsServletContext,
-					bundleDirName.concat(StringPool.SLASH).concat(fileName));
-
-				if (lastModified > cacheFile.lastModified()) {
-					staleCache = true;
-
-					break;
-				}
-			}
-
-			if (!staleCache) {
+			if (lastModified <= cacheFile.lastModified()) {
 				response.setContentType(ContentTypes.TEXT_JAVASCRIPT);
 
 				return cacheFile;

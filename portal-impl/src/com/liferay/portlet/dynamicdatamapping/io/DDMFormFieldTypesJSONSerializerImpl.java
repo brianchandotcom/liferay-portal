@@ -14,11 +14,15 @@
 
 package com.liferay.portlet.dynamicdatamapping.io;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFactory;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
+import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeSettings;
 
 import java.util.List;
 
@@ -29,7 +33,9 @@ public class DDMFormFieldTypesJSONSerializerImpl
 	implements DDMFormFieldTypesJSONSerializer {
 
 	@Override
-	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes) {
+	public String serialize(List<DDMFormFieldType> ddmFormFieldTypes)
+		throws PortalException {
+
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (DDMFormFieldType ddmFormFieldType : ddmFormFieldTypes) {
@@ -39,10 +45,37 @@ public class DDMFormFieldTypesJSONSerializerImpl
 		return jsonArray.toString();
 	}
 
-	protected JSONObject toJSONObject(DDMFormFieldType ddmFormFieldType) {
+	protected JSONObject toJSONObject(
+			Class<? extends DDMFormFieldTypeSettings> ddmFormFieldTypeSettings)
+		throws PortalException {
+
+		DDMForm ddmFormFieldTypeSettingsDDMForm = DDMFormFactory.create(
+			ddmFormFieldTypeSettings);
+
+		String serializedDDMFormFieldTypeSettings =
+			DDMFormJSONSerializerUtil.serialize(
+				ddmFormFieldTypeSettingsDDMForm);
+
+		return JSONFactoryUtil.createJSONObject(
+			serializedDDMFormFieldTypeSettings);
+	}
+
+	protected JSONObject toJSONObject(DDMFormFieldType ddmFormFieldType)
+		throws PortalException {
+
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+		jsonObject.put("icon", ddmFormFieldType.getIcon());
+		jsonObject.put(
+			"javaScriptClass",
+			ddmFormFieldType.getDDMFormFieldTypeJavaScriptClass());
+		jsonObject.put(
+			"javaScriptModule",
+			ddmFormFieldType.getDDMFormFieldTypeJavaScriptModule());
 		jsonObject.put("name", ddmFormFieldType.getName());
+		jsonObject.put(
+			"settings",
+			toJSONObject(ddmFormFieldType.getDDMFormFieldTypeSettings()));
 
 		DDMFormFieldRenderer ddmFormFieldRenderer =
 			ddmFormFieldType.getDDMFormFieldRenderer();

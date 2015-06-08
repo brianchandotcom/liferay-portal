@@ -676,6 +676,21 @@ public class SearchEngineUtil {
 		return search(searchContext, query);
 	}
 
+	public static long searchCount(SearchContext searchContext, Query query)
+		throws SearchException {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Search query " + getQueryString(searchContext, query));
+		}
+
+		SearchEngine searchEngine = getSearchEngine(
+			searchContext.getSearchEngineId());
+
+		IndexSearcher indexSearcher = searchEngine.getIndexSearcher();
+
+		return indexSearcher.searchCount(searchContext, query);
+	}
+
 	public static void setDefaultSearchEngineId(String defaultSearchEngineId) {
 		PortalRuntimePermission.checkSetBeanProperty(
 			SearchEngineUtil.class, "defaultSearchEngineId");

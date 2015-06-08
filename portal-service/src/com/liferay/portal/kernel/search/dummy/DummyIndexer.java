@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.StringPool;
@@ -225,6 +226,13 @@ public class DummyIndexer implements Indexer {
 		SearchContext searchContext, String... selectedFieldNames) {
 
 		return null;
+	}
+
+	@Override
+	public long searchCount(SearchContext searchContext)
+		throws SearchException {
+
+		return 0;
 	}
 
 	@Override

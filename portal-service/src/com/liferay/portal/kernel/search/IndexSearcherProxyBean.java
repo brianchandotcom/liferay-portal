@@ -70,6 +70,11 @@ public class IndexSearcherProxyBean
 	}
 
 	@Override
+	public long searchCount(SearchContext searchContext, Query query) {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public String spellCheckKeywords(SearchContext searchContext) {
 		throw new UnsupportedOperationException();
 	}

@@ -22,10 +22,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 String modelResource = ParamUtil.getString(request, "modelResource");
 String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
 
-ExpandoColumn column = (ExpandoColumn)request.getAttribute(WebKeys.EXPANDO_COLUMN);
+ExpandoColumn column = null;
+int type = 0;
 
-long columnId = BeanParamUtil.getLong(column, request, "columnId");
-int type = BeanParamUtil.getInteger(column, request, "type");
+long columnId = ParamUtil.getLong(request, "columnId");
+
+if (columnId > 0) {
+	column = ExpandoColumnServiceUtil.fetchExpandoColumn(columnId);
+	type = column.getType();
+}
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 

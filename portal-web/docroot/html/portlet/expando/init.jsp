@@ -25,6 +25,7 @@ page import="com.liferay.portlet.expando.model.CustomAttributesDisplay" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumn" %><%@
 page import="com.liferay.portlet.expando.model.ExpandoColumnConstants" %><%@
 page import="com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil" %><%@
+page import="com.liferay.portlet.expando.service.ExpandoColumnServiceUtil" %><%@
 page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermissionUtil" %><%@
 page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %>

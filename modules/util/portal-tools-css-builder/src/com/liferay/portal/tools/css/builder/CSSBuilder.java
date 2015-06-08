@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.portal.tools.css.builder;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -24,9 +24,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.sass.SassFile;
-import com.liferay.portal.tools.sass.SassFileWithMediaQuery;
-import com.liferay.portal.tools.sass.SassString;
+import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.CSSBuilderUtil;
+import com.liferay.portal.tools.css.builder.sass.SassFile;
+import com.liferay.portal.tools.css.builder.sass.SassFileWithMediaQuery;
+import com.liferay.portal.tools.css.builder.sass.SassString;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsImpl;
@@ -53,7 +55,7 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Shuyang Zhou
  * @author David Truong
  */
-public class SassToCssBuilder {
+public class CSSBuilder {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -84,19 +86,19 @@ public class SassToCssBuilder {
 			"sass.compiler.class.name");
 
 		try {
-			SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
+			CSSBuilder CSSBuilder = new CSSBuilder(
 				docrootDirName, portalCommonDirName, sassCompilerClassName);
 
-			sassToCssBuilder.execute(dirNames);
+			CSSBuilder.execute(dirNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
-	public SassToCssBuilder(
-			String docrootDirName, String portalCommonDirName,
-			String sassCompilerClassName)
+	public CSSBuilder(
+		String docrootDirName, String portalCommonDirName,
+		String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
@@ -174,12 +176,12 @@ public class SassToCssBuilder {
 		directoryScanner.setBasedir(basedir);
 
 		directoryScanner.setExcludes(
-			new String[] {
+			new String[]{
 				"**\\_diffs\\**", "**\\.sass-cache*\\**",
 				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
 				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tmp\\**"
 			});
-		directoryScanner.setIncludes(new String[] {"**\\*.css"});
+		directoryScanner.setIncludes(new String[]{"**\\*.css"});
 
 		directoryScanner.scan();
 

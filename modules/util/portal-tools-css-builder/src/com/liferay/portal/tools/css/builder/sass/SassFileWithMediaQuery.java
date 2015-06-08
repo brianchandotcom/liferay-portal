@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.sass;
+package com.liferay.portal.tools.css.builder.sass;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;

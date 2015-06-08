@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.portal.tools.css.builder;
 
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Eduardo Garcia
  */
-public class SassToCssBuilderTest {
+public class CSSBuilderTest {
 
 	@After
 	public void tearDown() throws Exception {
@@ -33,10 +33,10 @@ public class SassToCssBuilderTest {
 
 	@Test
 	public void testSassToCssBuilder() throws Exception {
-		SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
+		CSSBuilder cssBuilder = new CSSBuilder(
 			_DOCROOT_DIR_NAME, "portal-web/docroot/html/css/common", "jni");
 
-		sassToCssBuilder.execute(ListUtil.fromArray(new String[] { _DIR_NAME}));
+		cssBuilder.execute(ListUtil.fromArray(new String[] { _DIR_NAME}));
 
 		String expectedCacheContent = FileUtil.read(
 			_DOCROOT_DIR_NAME + _EXPECTED_DIR_NAME + _FILE_NAME);

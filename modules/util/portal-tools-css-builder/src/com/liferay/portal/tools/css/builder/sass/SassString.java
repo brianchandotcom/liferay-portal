@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.sass;
+package com.liferay.portal.tools.css.builder.sass;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;

@@ -14,7 +14,40 @@
 
 package com.liferay.portlet.expando;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.expando.model.ExpandoColumnConstants;
+import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
+import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.expando.util.ExpandoPresetUtil;
+
+import java.io.IOException;
+import java.io.Serializable;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Raymond Augé
@@ -22,7 +55,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  */
 public class ExpandoPortlet extends MVCPortlet {
 
-	public void addExpando(ActionRequest actionRequest) throws Exception {
+	public void addExpando(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -49,83 +85,19 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 	}
 
-	public void deleteExpando(ActionRequest actionRequest) throws Exception {
+	public void deleteExpando(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long columnId = ParamUtil.getLong(actionRequest, "columnId");
 
 		ExpandoColumnServiceUtil.deleteColumn(columnId);
 	}
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void updateExpando(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD)) {
-				addExpando(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteExpando(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateExpando(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchColumnException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.expando.error");
-			}
-			else if (e instanceof ColumnNameException ||
-					 e instanceof ColumnTypeException ||
-					 e instanceof DuplicateColumnNameException ||
-					 e instanceof ValueDataException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getColumn(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchColumnException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.expando.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.expando.edit_expando"));
-	}
-
-	public void updateExpando(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -146,6 +118,39 @@ public class ExpandoPortlet extends MVCPortlet {
 		expandoBridge.setAttributeDefault(name, defaultValue);
 
 		updateProperties(actionRequest, expandoBridge, name);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, ColumnNameException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, ColumnTypeException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, DuplicateColumnNameException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, ValueDataException.class.getName())) {
+
+			include(
+				"/html/portlet/expando/edit_expando.jsp", renderRequest,
+				renderResponse);
+		}
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchColumnException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include(
+				"/html/portlet/expando/error.jsp", renderRequest,
+				renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
 	}
 
 	protected Serializable getValue(
@@ -289,6 +294,21 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 
 		return value;
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof ColumnNameException ||
+			cause instanceof ColumnTypeException ||
+			cause instanceof DuplicateColumnNameException ||
+			cause instanceof NoSuchColumnException ||
+			cause instanceof PrincipalException ||
+			cause instanceof ValueDataException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected void updateProperties(

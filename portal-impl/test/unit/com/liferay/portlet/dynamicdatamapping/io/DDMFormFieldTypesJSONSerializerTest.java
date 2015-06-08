@@ -46,7 +46,7 @@ public class DDMFormFieldTypesJSONSerializerTest extends Mockito {
 	}
 
 	@Test
-	public void testSerializationWithEmptyParameterList() {
+	public void testSerializationWithEmptyParameterList() throws Exception {
 		List<DDMFormFieldType> ddmFormFieldTypes = Collections.emptyList();
 
 		String actualJSON = DDMFormFieldTypesJSONSerializerUtil.serialize(

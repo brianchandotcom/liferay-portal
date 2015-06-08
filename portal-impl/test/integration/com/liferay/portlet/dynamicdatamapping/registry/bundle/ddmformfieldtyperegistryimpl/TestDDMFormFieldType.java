@@ -40,6 +40,16 @@ public class TestDDMFormFieldType implements DDMFormFieldType {
 	}
 
 	@Override
+	public String getDDMFormFieldTypeJavaScriptClass() {
+		return null;
+	}
+
+	@Override
+	public String getDDMFormFieldTypeJavaScriptModule() {
+		return null;
+	}
+
+	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings() {
 
@@ -64,6 +74,11 @@ public class TestDDMFormFieldType implements DDMFormFieldType {
 	public DDMFormFieldValueRendererAccessor
 		getDDMFormFieldValueRendererAccessor(Locale locale) {
 
+		return null;
+	}
+
+	@Override
+	public String getIcon() {
 		return null;
 	}
 

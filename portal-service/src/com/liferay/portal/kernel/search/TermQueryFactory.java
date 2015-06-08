@@ -15,7 +15,8 @@
 package com.liferay.portal.kernel.search;
 
 /**
- * @deprecated As of 7.0.0
+ * @deprecated As of 7.0.0 , replaced by {@link
+ *             com.liferay.portal.kernel.search.generic.TermQueryImpl}
  *
  * @author Brian Wing Shun Chan
  */

@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/background_task/init.jsp" %>
 
 <%
-BackgroundTaskDisplay backgroundTaskDisplay = (BackgroundTaskDisplay)request.getAttribute("backgroundTaskDisplay");
+BackgroundTaskDisplay backgroundTaskDisplay = (BackgroundTaskDisplay)request.getAttribute(WebKeys.BACKGROUND_TASK_DISPLAY);
 
 long backgroundTaskId = ParamUtil.getLong(request, "backgroundTaskId");
 

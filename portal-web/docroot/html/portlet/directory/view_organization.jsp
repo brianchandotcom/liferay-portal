@@ -17,9 +17,9 @@
 <%@ include file="/html/portlet/directory/init.jsp" %>
 
 <%
-Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
+long organizationId = ParamUtil.getLong(request, "organizationId");
 
-long organizationId = BeanParamUtil.getLong(organization, request, "organizationId");
+Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 
 request.setAttribute(WebKeys.ORGANIZATION, organization);
 request.setAttribute("addresses.className", Organization.class.getName());

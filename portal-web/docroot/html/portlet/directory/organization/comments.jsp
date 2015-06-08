@@ -17,7 +17,9 @@
 <%@ include file="/html/portlet/directory/init.jsp" %>
 
 <%
-Organization organization = (Organization)request.getAttribute(WebKeys.ORGANIZATION);
+long organizationId = ParamUtil.getLong(request, "organizationId");
+
+Organization organization = OrganizationServiceUtil.fetchOrganization(organizationId);
 %>
 
 <c:if test="<%= Validator.isNotNull(organization.getComments()) %>">

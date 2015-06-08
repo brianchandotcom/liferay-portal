@@ -390,6 +390,28 @@ public class OrganizationServiceSoap {
 	}
 
 	/**
+	* Returns the organization with the primary key.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the organization with the primary key or null if an organization
+	with the primary key could not be found or if the user did not
+	have permission to view the organization
+	*/
+	public static com.liferay.portal.model.OrganizationSoap fetchOrganization(
+		long organizationId) throws RemoteException {
+		try {
+			com.liferay.portal.model.Organization returnValue = OrganizationServiceUtil.fetchOrganization(organizationId);
+
+			return com.liferay.portal.model.OrganizationSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
 	* Returns all the organizations which the user has permission to manage.
 	*
 	* @param actionId the permitted action

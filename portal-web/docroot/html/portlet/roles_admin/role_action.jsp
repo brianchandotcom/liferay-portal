@@ -98,18 +98,6 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 		<liferay-ui:icon iconCssClass="icon-signin" message="assign-members" url="<%= assignMembersURL %>" />
 	</c:if>
 
-	<c:if test="<%= !unassignableRole && (role.getType() == RoleConstants.TYPE_REGULAR) && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.VIEW) %>">
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="struts_action" value="/roles_admin/view_users" />
-			<portlet:param name="viewUsersRedirect" value="<%= currentURL %>" />
-			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
-			<portlet:param name="usersListView" value="<%= UserConstants.LIST_VIEW_FLAT_USERS %>" />
-			<portlet:param name="saveUsersListView" value="<%= Boolean.FALSE.toString() %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:icon iconCssClass="icon-search" message="view-users" method="get" url="<%= viewUsersURL %>" />
-	</c:if>
-
 	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL var="deleteURL">
 			<portlet:param name="struts_action" value="/roles_admin/edit_role" />

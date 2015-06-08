@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public abstract class FindStrutsAction extends BaseStrutsAction {
 
 	public FindStrutsAction() {
-		_findActionHelper = new BaseFindActionHelper() {
+		_findActionHelper = new BaseStrutsPortletFindActionHelper() {
 
 			@Override
 			public long getGroupId(long primaryKey) throws Exception {

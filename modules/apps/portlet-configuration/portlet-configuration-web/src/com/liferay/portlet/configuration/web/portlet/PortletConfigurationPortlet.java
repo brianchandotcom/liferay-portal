@@ -91,9 +91,31 @@ import javax.portlet.ResourceResponse;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Carlos Sierra Andrés
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.add-default-resource=true",
+		"com.liferay.portlet.css-class-wrapper=portlet-configuration",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.system=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.display-name=Portlet Configuration",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/edit_configuration.jsp",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = Portlet.class
+)
 public class PortletConfigurationPortlet extends MVCPortlet {
 
 	public void deleteArchivedSetup(

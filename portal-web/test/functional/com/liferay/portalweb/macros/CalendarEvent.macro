@@ -21,6 +21,16 @@
 		</if>
 	</command>
 
+	<command name="_expandInvitationsPanel">
+		<if>
+			<condition function="IsElementPresent" locator1="PGCalendarAddevent#INVITATIONS_PANEL_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="PGCalendarAddevent#INVITATIONS_PANEL_COLLAPSED" />
+				<execute function="AssertElementPresent" locator1="PGCalendarAddevent#INVITATIONS_PANEL_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
 	<command name="_options">
 		<if>
 			<equals arg1="${viewPermission}" arg2="true" />
@@ -927,13 +937,7 @@
 	</command>
 
 	<command name="inviteResource">
-		<if>
-			<condition function="IsElementPresent" locator1="PGCalendarAddevent#INVITATIONS_PANEL_COLLAPSED" />
-			<then>
-				<execute function="Click" locator1="PGCalendarAddevent#INVITATIONS_PANEL_COLLAPSED" />
-				<execute function="AssertElementPresent" locator1="PGCalendarAddevent#INVITATIONS_PANEL_EXPANDED" />
-			</then>
-		</if>
+		<execute macro="_expandInvitationsPanel" />
 
 		<for list="${resourceNameList}" param="resourceName" >
 			<execute function="Type" locator1="PGCalendarAddevent#INVITATIONS_INVITE_RESOURCE_FIELD" value1="${resourceName}" />

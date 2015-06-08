@@ -29,7 +29,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
  * @author Drew Brokke
  */
 @Component(immediate = true, service = UserGroupsAdminWebUpgrade.class)

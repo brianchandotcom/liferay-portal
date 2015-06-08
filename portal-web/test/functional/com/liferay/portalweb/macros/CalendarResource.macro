@@ -1,5 +1,5 @@
 <definition>
-	<command name="_editResourceName">
+	<command name="editResourceName">
 		<execute function="Type" locator1="PGCalendarAddresource#NAME_FIELD" value1="${calendarResourceName}" />
 	</command>
 
@@ -28,7 +28,7 @@
 	<command name="add">
 		<execute macro="CalendarNavigator#gotoAddResource" />
 
-		<execute macro="CalendarResource#_editResourceName">
+		<execute macro="CalendarResource#editResourceName">
 			<var name="calendarResourceName" value="${calendarResourceName}" />
 		</execute>
 

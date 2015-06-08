@@ -18,8 +18,10 @@ import com.liferay.item.selector.ItemSelectorView;
 
 import java.io.IOException;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -32,7 +34,9 @@ import javax.servlet.ServletResponse;
  * @author Iván Zaera
  */
 public class WikiAttachmentItemSelectorView
-	implements ItemSelectorView<WikiAttachmentItemSelectorCriterion> {
+	implements ItemSelectorView
+		<WikiAttachmentItemSelectorCriterion,
+		 WikiAttachmentItemSelectorReturnTypes> {
 
 	public static final String ITEM_SELECTED_EVENT_NAME =
 		WikiAttachmentItemSelectorView.class.getName() +
@@ -50,6 +54,13 @@ public class WikiAttachmentItemSelectorView
 		getItemSelectorCriterionClass() {
 
 		return WikiAttachmentItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<WikiAttachmentItemSelectorReturnTypes>
+		getItemSelectorSupportedReturnTypes() {
+
+		return _WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
 	}
 
 	@Override
@@ -78,6 +89,14 @@ public class WikiAttachmentItemSelectorView
 			"/o/wiki-item-selector-web/attachments.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	private static final Set<WikiAttachmentItemSelectorReturnTypes>
+		_WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
+
+	static {
+		_WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+			WikiAttachmentItemSelectorReturnTypes.URL);
 	}
 
 }

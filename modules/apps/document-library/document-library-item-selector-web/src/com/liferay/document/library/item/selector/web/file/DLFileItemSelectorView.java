@@ -17,9 +17,12 @@ package com.liferay.document.library.item.selector.web.file;
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.item.selector.criteria.file.returnTypes.FileItemSelectorReturnTypes;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,11 +31,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorView.class)
 public class DLFileItemSelectorView
-	extends BaseDLItemSelectorView<FileItemSelectorCriterion> {
+	extends BaseDLItemSelectorView
+		<FileItemSelectorCriterion, FileItemSelectorReturnTypes> {
 
 	@Override
 	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return FileItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<FileItemSelectorReturnTypes>
+		getItemSelectorSupportedReturnTypes() {
+
+		return _FILE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
 	}
 
 	@Override
@@ -41,6 +52,14 @@ public class DLFileItemSelectorView
 			"content/Language", locale);
 
 		return resourceBundle.getString("images");
+	}
+
+	private static final Set<FileItemSelectorReturnTypes>
+		_FILE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
+
+	static {
+		_FILE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+			FileItemSelectorReturnTypes.URL);
 	}
 
 }

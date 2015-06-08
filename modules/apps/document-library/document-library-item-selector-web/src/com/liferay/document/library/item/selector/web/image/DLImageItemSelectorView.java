@@ -17,10 +17,13 @@ package com.liferay.document.library.item.selector.web.image;
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.item.selector.criteria.image.returnTypes.ImageItemSelectorReturnTypes;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,11 +32,19 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorView.class)
 public class DLImageItemSelectorView
-	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
+	extends BaseDLItemSelectorView
+		<ImageItemSelectorCriterion, ImageItemSelectorReturnTypes> {
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return ImageItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<ImageItemSelectorReturnTypes>
+		getItemSelectorSupportedReturnTypes() {
+
+		return _IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
 	}
 
 	@Override
@@ -47,6 +58,14 @@ public class DLImageItemSelectorView
 			"content/Language", locale);
 
 		return resourceBundle.getString("images");
+	}
+
+	private static final Set<ImageItemSelectorReturnTypes>
+		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
+
+	static {
+		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+			ImageItemSelectorReturnTypes.URL);
 	}
 
 }

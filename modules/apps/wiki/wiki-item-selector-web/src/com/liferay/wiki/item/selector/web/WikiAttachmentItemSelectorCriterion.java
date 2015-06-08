@@ -15,9 +15,7 @@
 package com.liferay.wiki.item.selector.web;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-
-import java.net.URL;
+import com.liferay.item.selector.ItemSelectorReturnType;
 
 import java.util.Set;
 
@@ -28,11 +26,11 @@ public class WikiAttachmentItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
 	public WikiAttachmentItemSelectorCriterion() {
-		super(_AVAILABLE_RETURN_TYPES);
+		super(_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES);
 	}
 
 	public WikiAttachmentItemSelectorCriterion(long wikiPageResourceId) {
-		super(_AVAILABLE_RETURN_TYPES);
+		super(_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES);
 
 		_wikiPageResourceId = wikiPageResourceId;
 	}
@@ -45,8 +43,9 @@ public class WikiAttachmentItemSelectorCriterion
 		_wikiPageResourceId = wikiPageResourceId;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+	private static final Set<ItemSelectorReturnType>
+		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
+			WikiAttachmentItemSelectorReturnTypes.URL);
 
 	private long _wikiPageResourceId;
 

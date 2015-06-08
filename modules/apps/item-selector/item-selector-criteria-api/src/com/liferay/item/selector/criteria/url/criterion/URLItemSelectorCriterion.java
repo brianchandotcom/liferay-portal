@@ -15,11 +15,10 @@
 package com.liferay.item.selector.criteria.url.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-
-import java.net.URL;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.url.returnTypes.URLItemSelectorReturnTypes;
 
 import java.util.Set;
-import java.util.UUID;
 
 /**
  * @author Roberto Díaz
@@ -30,7 +29,7 @@ public class URLItemSelectorCriterion extends BaseItemSelectorCriterion {
 		super(_AVAILABLE_RETURN_TYPES);
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(URL.class, UUID.class);
+	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
+		getInmutableSet(URLItemSelectorReturnTypes.URL);
 
 }

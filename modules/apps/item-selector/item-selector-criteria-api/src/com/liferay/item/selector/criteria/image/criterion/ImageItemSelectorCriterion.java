@@ -15,9 +15,8 @@
 package com.liferay.item.selector.criteria.image.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-import com.liferay.portal.kernel.repository.model.FileEntry;
-
-import java.net.URL;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.returnTypes.ImageItemSelectorReturnTypes;
 
 import java.util.Set;
 
@@ -27,10 +26,12 @@ import java.util.Set;
 public class ImageItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public ImageItemSelectorCriterion() {
-		super(_AVAILABLE_RETURN_TYPES);
+		super(_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES);
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(FileEntry.class, URL.class);
+	private static final Set<ItemSelectorReturnType>
+		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
+			ImageItemSelectorReturnTypes.BASE_64,
+			ImageItemSelectorReturnTypes.URL);
 
 }

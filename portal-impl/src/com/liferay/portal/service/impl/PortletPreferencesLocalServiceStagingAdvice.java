@@ -23,7 +23,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutRevision;
 import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.User;
-import com.liferay.portal.model.UserConstants;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
@@ -217,14 +216,13 @@ public class PortletPreferencesLocalServiceStagingAdvice
 			return methodInvocation.proceed();
 		}
 
-		long userId = PrincipalThreadLocal.getUserId();
+		User user = UserLocalServiceUtil.fetchUser(
+			PrincipalThreadLocal.getUserId());
 
-		if (userId == UserConstants.USER_ID_DEFAULT) {
+		if ((user == null) || user.isDefaultUser()) {
 			plid = layoutRevision.getLayoutRevisionId();
 		}
 		else {
-			User user = UserLocalServiceUtil.getUserById(userId);
-
 			plid = StagingUtil.getRecentLayoutRevisionId(
 				user, layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid());

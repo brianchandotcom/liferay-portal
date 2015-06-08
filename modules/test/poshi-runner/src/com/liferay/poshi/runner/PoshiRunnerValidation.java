@@ -228,11 +228,18 @@ public class PoshiRunnerValidation {
 
 		String elementName = element.getName();
 
-		if (elementName.equals("and")) {
+		if (elementName.equals("and") || elementName.equals("or")) {
 			_validateHasChildElements(element, filePath);
 			_validateHasNoAttributes(element, filePath);
 
 			List<Element> childElements = element.elements();
+
+			if (childElements.size() < 2) {
+				_exceptions.add(
+					new Exception(
+						"Too few child elements\n" + filePath + ":" +
+							element.attributeValue("line-number")));
+			}
 
 			for (Element childElement : childElements) {
 				_validateConditionElement(childElement, filePath);
@@ -291,22 +298,11 @@ public class PoshiRunnerValidation {
 		else if (elementName.equals("not")) {
 			_validateHasChildElements(element, filePath);
 			_validateHasNoAttributes(element, filePath);
+			_validateNumberofChildElements(element, 1, filePath);
 
 			List<Element> childElements = element.elements();
 
-			for (Element childElement : childElements) {
-				_validateConditionElement(childElement, filePath);
-			}
-		}
-		else if (elementName.equals("or")) {
-			_validateHasChildElements(element, filePath);
-			_validateHasNoAttributes(element, filePath);
-
-			List<Element> childElements = element.elements();
-
-			for (Element childElement : childElements) {
-				_validateConditionElement(childElement, filePath);
-			}
+			_validateConditionElement(childElements.get(0), filePath);
 		}
 	}
 

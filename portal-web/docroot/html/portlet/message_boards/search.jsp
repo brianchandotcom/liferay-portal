@@ -127,7 +127,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 				cssClass='<%= MathUtil.isEven(index) ? "search" : "search alt" %>'
 				description="<%= (summary != null) ? summary.getContent() : StringPool.BLANK %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
-				relatedFileEntries="<%= searchResult.getRelatedFileEntries() %>"
+				relatedFileEntries="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				title="<%= (summary != null) ? summary.getTitle() : message.getSubject() %>"
 				url="<%= rowURL %>"
 			/>

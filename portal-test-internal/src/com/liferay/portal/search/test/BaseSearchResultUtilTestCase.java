@@ -81,7 +81,7 @@ public abstract class BaseSearchResultUtilTestCase extends PowerMockito {
 
 	protected void assertEmptyRelatedFileEntries(SearchResult searchResult) {
 		List<RelatedSearchResult<FileEntry>> relatedFileEntries =
-			searchResult.getRelatedFileEntries();
+			searchResult.getFileEntryRelatedSearchResults();
 
 		Assert.assertTrue(relatedFileEntries.isEmpty());
 	}

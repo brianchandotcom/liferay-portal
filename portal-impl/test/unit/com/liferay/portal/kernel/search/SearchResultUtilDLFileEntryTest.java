@@ -194,7 +194,7 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.SUMMARY_TITLE, searchResultSummary.getTitle());
 
 		List<RelatedSearchResult<FileEntry>> relatedFileEntries =
-			searchResult.getRelatedFileEntries();
+			searchResult.getFileEntryRelatedSearchResults();
 
 		Assert.assertEquals(1, relatedFileEntries.size());
 

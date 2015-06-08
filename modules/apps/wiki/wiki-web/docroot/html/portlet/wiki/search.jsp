@@ -115,7 +115,7 @@ portletURL.setParameter("keywords", keywords);
 				description="<%= (summary != null) ? summary.getContent() : wikiPage.getSummary() %>"
 				queryTerms="<%= hits.getQueryTerms() %>"
 				relatedComments="<%= searchResult.getCommentRelatedSearchResults() %>"
-				relatedFileEntries="<%= searchResult.getRelatedFileEntries() %>"
+				relatedFileEntries="<%= searchResult.getFileEntryRelatedSearchResults() %>"
 				title="<%= (summary != null) ? summary.getTitle() : wikiPage.getTitle() %>"
 				url="<%= rowURL %>"
 			/>

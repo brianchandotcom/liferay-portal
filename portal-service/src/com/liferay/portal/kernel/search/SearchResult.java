@@ -77,7 +77,9 @@ public class SearchResult {
 		return _relatedComments;
 	}
 
-	public List<RelatedSearchResult<FileEntry>> getRelatedFileEntries() {
+	public List<RelatedSearchResult<FileEntry>>
+		getFileEntryRelatedSearchResults() {
+
 		return _relatedFileEntries;
 	}
 

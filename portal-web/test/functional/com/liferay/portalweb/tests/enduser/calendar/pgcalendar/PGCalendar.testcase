@@ -3388,7 +3388,7 @@
 			<var name="searchValue" value="u" />
 		</execute>
 
-		<execute macro="Calendar#viewOtherCalendarsSearchResults">
+		<execute macro="Calendar#viewOtherCalendarsSearchResult">
 			<var name="calendarName" value="${userFirstName} ${userLastName}" />
 		</execute>
 	</command>
@@ -3458,7 +3458,7 @@
 			<var name="searchValue" value="u" />
 		</execute>
 
-		<execute macro="Calendar#viewOtherCalendarsSearchResults">
+		<execute macro="Calendar#viewOtherCalendarsSearchResult">
 			<var name="calendarName" value="userfn2 userln2" />
 		</execute>
 
@@ -3484,7 +3484,7 @@
 			<var name="searchValue" value="u" />
 		</execute>
 
-		<execute macro="Calendar#viewOtherCalendarsSearchResults">
+		<execute macro="Calendar#viewOtherCalendarsSearchResult">
 			<var name="calendarName" value="userfn2 userln2" />
 		</execute>
 

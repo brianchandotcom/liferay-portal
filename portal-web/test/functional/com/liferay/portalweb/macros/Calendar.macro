@@ -93,7 +93,7 @@
 						<var name="searchValue" value="${calendarName}" />
 					</execute>
 
-					<execute macro="Calendar#viewOtherCalendarsSearchResults">
+					<execute macro="Calendar#viewOtherCalendarsSearchResult">
 						<var name="calendarName" value="${calendarName}" />
 					</execute>
 
@@ -905,7 +905,7 @@
 		</execute>
 	</command>
 
-	<command name="viewOtherCalendarsSearchResults">
+	<command name="viewOtherCalendarsSearchResult">
 		<var name="key_calendarName" value="${calendarName}" />
 
 		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />

@@ -880,31 +880,36 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public void type(String locator, String value) {
-		WebElement webElement = getWebElement(locator);
+		if (PropsValues.MOBILE_DEVICE_TYPE.equals("android")) {
+			WebElement webElement = getWebElement(locator);
 
-		if (!webElement.isEnabled()) {
-			return;
+			if (!webElement.isEnabled()) {
+				return;
+			}
+
+			webElement.clear();
+
+			Runtime runtime = Runtime.getRuntime();
+
+			StringBuilder sb = new StringBuilder(6);
+
+			sb.append(PropsValues.MOBILE_ANDROID_HOME);
+			sb.append("/platform-tools/");
+			sb.append("adb -s emulator-5554 shell input text ");
+
+			value = StringUtil.replace(value, " ", "%s");
+
+			sb.append(value);
+
+			try {
+				runtime.exec(sb.toString());
+			}
+			catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
 		}
-
-		webElement.clear();
-
-		Runtime runtime = Runtime.getRuntime();
-
-		StringBuilder sb = new StringBuilder(6);
-
-		sb.append(PropsValues.MOBILE_ANDROID_HOME);
-		sb.append("/platform-tools/");
-		sb.append("adb -s emulator-5554 shell input text ");
-
-		value = StringUtil.replace(value, " ", "%s");
-
-		sb.append(value);
-
-		try {
-			runtime.exec(sb.toString());
-		}
-		catch (IOException ioe) {
-			ioe.printStackTrace();
+		else if (PropsValues.MOBILE_DEVICE_TYPE.equals("ios")) {
+			WebDriverHelper.type(this, locator, value);
 		}
 	}
 

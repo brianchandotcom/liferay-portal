@@ -31,6 +31,14 @@ import com.liferay.gradle.util.Validator;
 import groovy.lang.Closure;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.nio.charset.StandardCharsets;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 import java.util.Iterator;
 import java.util.Properties;
@@ -40,6 +48,7 @@ import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
+import org.gradle.api.file.CopySpec;
 import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileCopyDetails;
@@ -374,11 +383,130 @@ public class LiferayWebAppPlugin extends LiferayJavaPlugin {
 
 		War war = (War)GradleUtil.getTask(project, WarPlugin.WAR_TASK_NAME);
 
+		configureTaskWarAlloyPortlet(war);
 		configureTaskWarDuplicatesStrategy(war);
 		configureTaskWarExcludeManifest(war);
 		configureTaskWarFilesMatching(war);
 		configureTaskWarOutputs(war);
 		configureTaskWarRenameDependencies(war);
+	}
+
+	protected void configureTaskWarAlloyPortlet(final War war) {
+		Project project = war.getProject();
+
+		String projectName = project.getName();
+
+		if (!projectName.endsWith("-portlet")) {
+			return;
+		}
+
+		File webAppDir = getWebAppDir(project);
+
+		String portletXml;
+
+		try {
+			File portletXmlFile = new File(webAppDir, "WEB-INF/portlet.xml");
+
+			portletXml = new String(
+				Files.readAllBytes(portletXmlFile.toPath()),
+				StandardCharsets.UTF_8);
+		}
+		catch (Exception e) {
+			throw new GradleException("Unable to read portlet.xml", e);
+		}
+
+		if (!portletXml.contains("com.liferay.alloy.mvc.AlloyPortlet")) {
+			return;
+		}
+
+		war.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					ClassLoader classLoader =
+						LiferayWebAppPlugin.class.getClassLoader();
+
+					try (InputStream inputStream =
+							classLoader.getResourceAsStream(
+								"com/liferay/gradle/plugins/dependencies/" +
+									"touch.jsp")) {
+
+						File touchJspFile = new File(
+							task.getTemporaryDir(), "touch.jsp");
+
+						Files.copy(
+							inputStream, touchJspFile.toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
+					}
+					catch (Exception e) {
+						throw new GradleException(
+							"Unable to copy touch.jsp", e);
+					}
+				}
+
+			});
+
+		war.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					File touchJspFile = new File(
+						task.getTemporaryDir(), "touch.jsp");
+
+					project.delete(touchJspFile);
+				}
+
+			});
+
+		File jspDir = new File(webAppDir, "WEB-INF/jsp");
+
+		DirectoryStream.Filter<Path> filter =
+			new DirectoryStream.Filter<Path>() {
+
+				@Override
+				public boolean accept(Path path) throws IOException {
+					if (!Files.isDirectory(path)) {
+						return false;
+					}
+
+					Path viewsDirPath = path.resolve("views");
+
+					if (!Files.exists(viewsDirPath)) {
+						return false;
+					}
+
+					return true;
+				}
+
+			};
+
+		try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(
+			jspDir.toPath(), filter)) {
+
+			Closure<Void> closure = new Closure<Void>(null) {
+
+				@SuppressWarnings("unused")
+				public void doCall(CopySpec copySpec) {
+					File touchJspFile = new File(
+						war.getTemporaryDir(), "touch.jsp");
+
+					copySpec.from(touchJspFile);
+				}
+
+			};
+
+			for (Path path : directoryStream) {
+				war.into(
+					FileUtil.relativize(path.toFile(), webAppDir), closure);
+			}
+		}
+		catch (Exception e) {
+			throw new GradleException(e.getMessage(), e);
+		}
 	}
 
 	protected void configureTaskWarDuplicatesStrategy(War war) {

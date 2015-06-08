@@ -1,0 +1,121 @@
+<%--
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+--%>
+
+<%@ include file="/admin/init.jsp" %>
+
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+
+DDLRecordSet recordSet = ddlFormAdminDisplayContext.getRecordSet();
+
+long groupId = BeanParamUtil.getLong(recordSet, request, "groupId", scopeGroupId);
+long recordSetId = BeanParamUtil.getLong(recordSet, request, "recordSetId");
+long ddmStructureId = BeanParamUtil.getLong(recordSet, request, "DDMStructureId");
+String name = BeanParamUtil.getString(recordSet, request, "name");
+String description = BeanParamUtil.getString(recordSet, request, "description");
+%>
+
+<portlet:actionURL name="addRecordSet" var="addRecordSetURL">
+	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
+</portlet:actionURL>
+
+<portlet:actionURL name="updateRecordSet" var="updateRecordSetURL">
+	<portlet:param name="mvcPath" value="/admin/edit_record_set.jsp" />
+</portlet:actionURL>
+
+<aui:form action="<%= (recordSet == null) ? addRecordSetURL : updateRecordSetURL %>" cssClass="ddl-form-builder-form" method="post" name="editForm">
+	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
+	<aui:input name="recordSetId" type="hidden" value="<%= recordSetId %>" />
+	<aui:input name="ddmStructureId" type="hidden" value="<%= ddmStructureId %>" />
+
+	<liferay-ui:error exception="<%= RecordSetNameException.class %>" message="please-enter-a-valid-form-name" />
+	<liferay-ui:error exception="<%= StructureDefinitionException .class %>" message="please-enter-a-valid-form-definition" />
+	<liferay-ui:error exception="<%= StructureLayoutException .class %>" message="please-enter-a-valid-form-layout" />
+
+	<aui:fieldset cssClass="ddl-form-builder-basic-info">
+		<aui:input ignoreRequestValue="<%= true %>" name="name" placeholder="title" required="<%= true %>" value="<%= LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId()) %>"  wrapperCssClass="ddl-form-builder-name field form-control lfr-input-text lfr-input-text-container" />
+
+		<aui:input ignoreRequestValue="<%= true %>" name="description" placeholder="description" value="<%= LocalizationUtil.getLocalization(description, themeDisplay.getLanguageId()) %>" wrapperCssClass="ddl-form-builder-description field form-control lfr-input-text lfr-input-text-container" />
+	</aui:fieldset>
+
+	<aui:fieldset cssClass="ddl-form-builder-app">
+		<aui:input name="definition" type="hidden" />
+		<aui:input name="layout" type="hidden" />
+
+		<div id="<portlet:namespace />formBuilder"></div>
+	</aui:fieldset>
+
+	<aui:button-row cssClass="ddl-form-builder-buttons">
+		<aui:button label="save" primary="<%= true %>" type="submit" />
+
+		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
+	</aui:button-row>
+
+	<aui:script>
+		var initHandler = Liferay.after(
+			'form:registered',
+			function(event) {
+				if (event.formName === '<portlet:namespace />editForm') {
+					var fieldTypes = <%= ddlFormAdminDisplayContext.getDDMFormFieldTypesJSONArray() %>;
+
+					var fieldModules = _.map(
+						fieldTypes,
+						function(item) {
+							return item.javaScriptModule;
+						}
+					);
+
+					Liferay.provide(
+						window,
+						'<portlet:namespace />init',
+						function() {
+							Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
+
+							var formBuilder = new Liferay.DDL.FormBuilder(
+								{
+									definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
+									layouts: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>
+								}
+							).render('#<portlet:namespace />formBuilder');
+
+							new Liferay.DDL.Portlet(
+								{
+									editForm: event.form,
+									formBuilder: formBuilder,
+									namespace: '<portlet:namespace />'
+								}
+							);
+						},
+						['liferay-ddl-form-builder', 'liferay-ddl-portlet'].concat(fieldModules)
+					);
+
+					<portlet:namespace />init();
+				}
+			}
+		);
+
+		var clearPortletHandlers = function(event) {
+			if (event.portletId === '<%= portletDisplay.getRootPortletId() %>') {
+				initHandler.detach();
+
+				Liferay.detach('destroyPortlet', clearPortletHandlers);
+			}
+		};
+
+		Liferay.on('destroyPortlet', clearPortletHandlers);
+	</aui:script>
+</aui:form>

@@ -49,6 +49,10 @@ public class BaseSearchEngine implements SearchEngine {
 		return _booleanClauseFactory;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		if (_booleanQueryFactory == null) {
@@ -77,6 +81,10 @@ public class BaseSearchEngine implements SearchEngine {
 		return _termQueryFactory;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	@Override
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
 		if (_termRangeQueryFactory == null) {
@@ -121,6 +129,10 @@ public class BaseSearchEngine implements SearchEngine {
 		_booleanClauseFactory = booleanClauseFactory;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setBooleanQueryFactory(
 		BooleanQueryFactory booleanQueryFactory) {
 
@@ -135,10 +147,18 @@ public class BaseSearchEngine implements SearchEngine {
 		_indexWriter = indexWriter;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setTermQueryFactory(TermQueryFactory termQueryFactory) {
 		_termQueryFactory = termQueryFactory;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public void setTermRangeQueryFactory(
 		TermRangeQueryFactory termRangeQueryFactory) {
 

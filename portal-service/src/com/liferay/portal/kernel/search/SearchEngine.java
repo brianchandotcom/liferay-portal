@@ -25,14 +25,26 @@ public interface SearchEngine {
 
 	public BooleanClauseFactory getBooleanClauseFactory();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public BooleanQueryFactory getBooleanQueryFactory();
 
 	public IndexSearcher getIndexSearcher();
 
 	public IndexWriter getIndexWriter();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public TermQueryFactory getTermQueryFactory();
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public TermRangeQueryFactory getTermRangeQueryFactory();
 
 	public String getVendor();

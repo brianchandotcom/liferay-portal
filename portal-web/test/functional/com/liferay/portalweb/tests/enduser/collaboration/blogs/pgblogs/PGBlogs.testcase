@@ -246,7 +246,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryWithSamePageScope" priority="4">
+	<command known-issues="LPS-56162" name="AddBlogsEntryWithSamePageScope" priority="4">
 		<var name="entryContent" value="Blogs Entry1 Content" />
 		<var name="entryContent2" value="Blogs Entry2 Content" />
 		<var name="entryTitle" value="Blogs Entry1 Title" />
@@ -1580,7 +1580,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewBlogsEntryWithDefaultScope" priority="4">
+	<command known-issues="LPS-56162" name="ViewBlogsEntryWithDefaultScope" priority="4">
 		<var name="contentScopeName" value="Default" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

@@ -529,7 +529,17 @@ public class MobileDriverToSeleniumBridge
 
 	@Override
 	public boolean isChecked(String locator) {
-		throw new UnsupportedOperationException();
+		WebElement webElement = getWebElement(locator, "1");
+
+		if (!webElement.isDisplayed()) {
+			return webElement.isDisplayed();
+		}
+
+		if (!isInViewport(locator)) {
+			swipeWebElementIntoView(locator);
+		}
+
+		return webElement.isSelected();
 	}
 
 	@Override

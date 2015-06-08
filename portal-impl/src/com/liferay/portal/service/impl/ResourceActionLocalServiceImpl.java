@@ -194,6 +194,22 @@ public class ResourceActionLocalServiceImpl
 	}
 
 	@Override
+	public ResourceAction deleteResourceAction(long resourceActionId)
+		throws PortalException {
+
+		return deleteResourceAction(
+			resourceActionPersistence.findByPrimaryKey(resourceActionId));
+	}
+
+	@Override
+	public ResourceAction deleteResourceAction(ResourceAction resourceAction) {
+		_resourceActions.remove(
+			encodeKey(resourceAction.getName(), resourceAction.getActionId()));
+
+		return resourceActionPersistence.remove(resourceAction);
+	}
+
+	@Override
 	@Skip
 	public ResourceAction fetchResourceAction(String name, String actionId) {
 		String key = encodeKey(name, actionId);

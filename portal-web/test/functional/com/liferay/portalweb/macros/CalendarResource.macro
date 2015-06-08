@@ -3,6 +3,16 @@
 		<execute function="Type" locator1="PGCalendarAddresource#NAME_FIELD" value1="${calendarResourceName}" />
 	</command>
 
+	<command name="_expandDetailsPanel">
+		<if>
+			<condition function="IsElementPresent" locator1="CalendarEditResource#DETAILS_PANEL_COLLAPSED" />
+			<then>
+				<execute function="Click" locator1="CalendarEditResource#DETAILS_PANEL_COLLAPSED" />
+				<execute function="AssertElementPresent" locator1="CalendarEditResource#DETAILS_PANEL_EXPANDED" />
+			</then>
+		</if>
+	</command>
+
 	<command name="add">
 		<execute macro="CalendarNavigator#gotoAddResource" />
 

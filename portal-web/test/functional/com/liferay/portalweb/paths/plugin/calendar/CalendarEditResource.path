@@ -19,13 +19,24 @@
 	<td></td>
 </tr>
 <tr>
-	<td>DESCRIPTION_FIELD</td>
-	<td>//textarea[@id='_1_WAR_calendarportlet_description']</td>
+	<td>SAVE_BUTTON</td>
+	<td>//button[@type='submit']</td>
+	<td></td>
+</tr>
+<!--DETAILS-->
+<tr>
+	<td>DETAILS_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'toggler-header-collapsed') and @data-persist-id='calendarResourceDetailsPanel']</td>
 	<td></td>
 </tr>
 <tr>
-	<td>SAVE_BUTTON</td>
-	<td>//button[@type='submit']</td>
+	<td>DETAILS_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'toggler-header-expanded') and @data-persist-id='calendarResourceDetailsPanel']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DETAILS_PANEL_DESCRIPTION_FIELD</td>
+	<td>//textarea[@id='_1_WAR_calendarportlet_description']</td>
 	<td></td>
 </tr>
 </tbody>

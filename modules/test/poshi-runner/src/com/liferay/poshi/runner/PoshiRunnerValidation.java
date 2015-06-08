@@ -600,14 +600,19 @@ public class PoshiRunnerValidation {
 
 		List<Attribute> attributes = element.attributes();
 
-		if (attributes.size() > 1) {
-			Attribute attribute = attributes.get(1);
+		if (!attributes.isEmpty()) {
+			for (Attribute attribute : attributes) {
+				String attributeName = attribute.getName();
 
-			_exceptions.add(
-				new Exception(
-					"Invalid " + attribute.getName() + " attribute\n" +
-						filePath + ":" +
-						element.attributeValue("line-number")));
+				if (attributeName.equals("line-number")) {
+					continue;
+				}
+
+				_exceptions.add(
+					new Exception(
+						"Invalid " + attributeName + " attribute\n" + filePath +
+							":" + element.attributeValue("line-number")));
+			}
 		}
 	}
 

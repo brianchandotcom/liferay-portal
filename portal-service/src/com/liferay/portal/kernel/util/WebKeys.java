@@ -41,6 +41,8 @@ public interface WebKeys {
 
 	public static final String AUTHENTICATION_TOKEN = "LIFERAY_SHARED_AUTHENTICATION_TOKEN";
 
+	public static final String BACKGROUND_TASK_DISPLAY = "BACKGROUND_TASK_DISPLAY";
+
 	public static final String BROWSER_SNIFFER_REVISION = "BROWSER_SNIFFER_REVISION";
 
 	public static final String BROWSER_SNIFFER_VERSION = "BROWSER_SNIFFER_VERSION";

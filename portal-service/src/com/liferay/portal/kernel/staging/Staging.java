@@ -200,10 +200,18 @@ public interface Staging {
 			ServiceContext serviceContext)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public JSONArray getErrorMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
 		Map<String, Serializable> contextMap);
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public JSONObject getExceptionMessagesJSONObject(
 		Locale locale, Exception e, Map<String, Serializable> contextMap);
 
@@ -256,6 +264,10 @@ public interface Staging {
 	public Map<String, String[]> getStagingParameters(
 		PortletRequest PortletRequest);
 
+	/**
+	 * @deprecated As of 7.0.0
+	 */
+	@Deprecated
 	public JSONArray getWarningMessagesJSONArray(
 		Locale locale, Map<String, MissingReference> missingReferences,
 		Map<String, Serializable> contextMap);

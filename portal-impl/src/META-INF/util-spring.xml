@@ -24,6 +24,10 @@
 			<bean class="com.liferay.portal.audit.AuditMessageFactoryImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactory" class="com.liferay.portal.backgroundtask.BackgroundTaskDisplayFactoryImpl" />
+	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactoryUtil" class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactoryUtil">
+		<property name="backgroundTaskDisplayFactory" ref="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactory" />
+	</bean>
 	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry" class="com.liferay.portal.backgroundtask.BackgroundTaskStatusRegistryImpl" />
 	<bean id="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil" class="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistryUtil">
 		<property name="backgroundTaskStatusRegistry" ref="com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusRegistry" />

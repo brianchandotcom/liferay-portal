@@ -685,31 +685,32 @@ public class PoshiRunnerValidation {
 
 		List<Element> childElements = element.elements();
 
+		List<String> conditionTags = Arrays.asList(
+			"and", "condition", "contains", "equals", "isset", "not", "or");
+
 		if (fileName.equals("function")) {
-			Element firstChildElement = childElements.get(0);
-
-			_validateConditionElement(firstChildElement, filePath);
-
-			List<String> possibleElementNames = Arrays.asList(
-				"condition", "contains");
-
-			_validateElementName(
-				firstChildElement, possibleElementNames, filePath);
+			conditionTags = Arrays.asList("condition", "contains");
 		}
 
 		_validateElseElement(element, filePath);
 		_validateThenElement(element, filePath);
-
-		List<String> conditionTags = Arrays.asList(
-			"and", "condition", "contains", "equals", "isset", "not", "or");
 
 		for (int i = 0; i < childElements.size(); i++) {
 			Element childElement = childElements.get(i);
 
 			String childElementName = childElement.getName();
 
-			if (conditionTags.contains(childElementName) && (i == 0)) {
-				_validateConditionElement(childElement, filePath);
+			if (i == 0) {
+				if (conditionTags.contains(childElementName)) {
+					_validateConditionElement(childElement, filePath);
+				}
+				else {
+					_exceptions.add(
+						new Exception(
+							"Missing or invalid if condition element\n" +
+								filePath + ":" +
+								element.attributeValue("line-number")));
+				}
 			}
 			else if (childElementName.equals("else")) {
 				_validateHasChildElements(childElement, filePath);
@@ -1238,6 +1239,7 @@ public class PoshiRunnerValidation {
 	private static void _validateWhileElement(
 		Element element, String filePath) {
 
+		_validateHasChildElements(element, filePath);
 		_validatePossibleAttributeNames(
 			element, Arrays.asList("line-number", "max-iterations"), filePath);
 		_validateThenElement(element, filePath);
@@ -1252,8 +1254,17 @@ public class PoshiRunnerValidation {
 
 			String childElementName = childElement.getName();
 
-			if (conditionTags.contains(childElementName) && (i == 0)) {
-				_validateConditionElement(childElement, filePath);
+			if (i == 0) {
+				if (conditionTags.contains(childElementName)) {
+					_validateConditionElement(childElement, filePath);
+				}
+				else {
+					_exceptions.add(
+						new Exception(
+							"Missing while condition element\n" +
+								filePath + ":" +
+								element.attributeValue("line-number")));
+				}
 			}
 			else if (childElementName.equals("then")) {
 				_validateHasChildElements(childElement, filePath);

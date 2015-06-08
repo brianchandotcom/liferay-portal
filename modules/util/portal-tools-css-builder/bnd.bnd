@@ -1,0 +1,9 @@
+Bundle-Name: Liferay Portal Tools CSS Builder
+Bundle-SymbolicName: com.liferay.portal.tools.css.builder
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.tools.css.builder
+Include-Resource:\
+	classes
+Main-Class: com.liferay.portal.tools.css.builder.CSSBuilder
+Private-Package:\
+	com.liferay.portal.tools.css.builder.sass

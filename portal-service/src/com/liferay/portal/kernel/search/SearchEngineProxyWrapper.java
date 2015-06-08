@@ -75,11 +75,6 @@ public class SearchEngineProxyWrapper implements SearchEngine {
 	}
 
 	@Override
-	public WildcardQueryFactory getWildcardQueryFactory() {
-		return _searchEngine.getWildcardQueryFactory();
-	}
-
-	@Override
 	public void initialize(long companyId) {
 		_searchEngine.initialize(companyId);
 	}

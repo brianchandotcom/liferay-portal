@@ -37,8 +37,6 @@ public interface SearchEngine {
 
 	public String getVendor();
 
-	public WildcardQueryFactory getWildcardQueryFactory();
-
 	public void initialize(long companyId);
 
 	public void removeBackup(long companyId, String backupName)

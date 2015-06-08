@@ -50,6 +50,70 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
+	<command name="ViewInactiveResourceNotPresent" priority="5">
+		<description message="This is a use case for LPS-55171." />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Calendar Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddResource" />
+
+		<execute macro="CalendarResource#editResourceName">
+			<var name="calendarResourceName" value="Calendar Resource" />
+		</execute>
+
+		<execute macro="CalendarResource#deactivate" />
+
+		<execute macro="CalendarResource#save" />
+
+		<execute macro="CalendarResource#viewDefault" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Calendar Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Calendar#searchOtherCalendars">
+			<var name="searchValue" value="resource" />
+		</execute>
+
+		<execute macro="Calendar#viewOtherCalendarsSearchResultNotPresent">
+			<var name="calendarName" value="Calendar Resource" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoAddEvent" />
+
+		<execute macro="CalendarEvent#viewInvitationResourceNotPresent">
+			<var name="resourceNameList" value="Calendar Resource" />
+		</execute>
+	</command>
+
 	<command name="AddCalendarEventAllDay" priority="5">
 		<var name="eventTitle" value="Calendar Event All Day Title" />
 		<var name="eventType" value="All Day" />

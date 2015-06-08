@@ -911,6 +911,12 @@
 		<execute function="AssertTextEquals" locator1="PGCalendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" value1="${calendarName}" />
 	</command>
 
+	<command name="viewOtherCalendarsSearchResultNotPresent">
+		<var name="key_calendarName" value="${calendarName}" />
+
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#OTHER_CALENDARS_SEARCH_LIST_RESULT" />
+	</command>
+
 	<command name="viewRSSFeedEventNotPresent">
 		<execute function="AssertTextEquals" locator1="CalendarRSS#FEED_TITLE"  value1="${calendarName}" />
 

@@ -61,7 +61,7 @@ BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.g
 	<%
 	long[] expandedBackgroundTaskIds = StringUtil.split(GetterUtil.getString(SessionClicks.get(request, "background-task-ids", null)), 0L);
 
-	request.setAttribute("backgroundTaskDisplay", backgroundTaskDisplay);
+	request.setAttribute(WebKeys.BACKGROUND_TASK_DISPLAY, backgroundTaskDisplay);
 	%>
 
 	<a class="details-link toggler-header-<%= ArrayUtil.contains(expandedBackgroundTaskIds, backgroundTask.getBackgroundTaskId()) ? "expanded" : "collapsed" %>" data-persist-id="<%= backgroundTask.getBackgroundTaskId() %>" href="#"><liferay-ui:message key="details" /></a>

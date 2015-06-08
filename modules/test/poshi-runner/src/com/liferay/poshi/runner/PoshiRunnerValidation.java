@@ -366,6 +366,12 @@ public class PoshiRunnerValidation {
 					"Too many else elements\n" + filePath + ":" +
 						element.attributeValue("line-number")));
 		}
+
+		if (!elseElements.isEmpty()) {
+			Element elseElement = elseElements.get(0);
+
+			_parseElements(elseElement, filePath);
+		}
 	}
 
 	private static void _validateElseIfElement(

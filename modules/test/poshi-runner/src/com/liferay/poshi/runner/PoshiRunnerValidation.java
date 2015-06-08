@@ -1132,16 +1132,18 @@ public class PoshiRunnerValidation {
 				_parseElements(childElement, filePath);
 			}
 			else if (childElementName.equals("property")) {
+				_validatePropertyElement(childElement, filePath);
+
 				String propertyName = childElement.attributeValue("name");
 
 				if (!propertyNames.contains(propertyName)) {
 					propertyNames.add(propertyName);
-					_validatePropertyElement(childElement, filePath);
 				}
 				else {
 					_exceptions.add(
 						new Exception(
-							"Duplicate property name\n" + filePath + ":" +
+							"Duplicate property name " + propertyName + "\n" +
+								filePath + ":" +
 								childElement.attributeValue("line-number")));
 				}
 			}

@@ -146,43 +146,43 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private void _setDesiredReturnTypes(Map<String, ?> map) {
-		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+		Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
 			new LinkedHashSet<>();
 
-		List<String> desiredItemSelectorReturnTypeNames = (List<String>)map.get(
-			"desiredReturnTypes");
+		List<String> itemSelectorDesiredReturnTypeNames = (List<String>)map.get(
+			"itemSelectorDesiredReturnTypes");
 
-		for (String desiredItemSelectoReturnTypeName :
-				desiredItemSelectorReturnTypeNames) {
+		for (String itemSelectorDesiredReturnTypeName :
+				itemSelectorDesiredReturnTypeNames) {
 
-			Set<ItemSelectorReturnType> availableItemSelectorReturnTypes =
+			Set<ItemSelectorReturnType> itemSelectorAvailableReturnTypes =
 				_itemSelectorCriterion.getItemSelectorAvailableReturnTypes();
 
-			for (ItemSelectorReturnType availableItemSelectorReturnType :
-					availableItemSelectorReturnTypes) {
+			for (ItemSelectorReturnType itemSelectorAvailableReturnType :
+					itemSelectorAvailableReturnTypes) {
 
 				String availableItemSelectorReturnTypeName =
-					availableItemSelectorReturnType.getName();
+					itemSelectorAvailableReturnType.getName();
 
 				if (availableItemSelectorReturnTypeName.equals(
-						desiredItemSelectoReturnTypeName)) {
+						itemSelectorDesiredReturnTypeName)) {
 
-					desiredItemSelectorReturnTypes.add(
-						availableItemSelectorReturnType);
+					itemSelectorDesiredReturnTypes.add(
+						itemSelectorAvailableReturnType);
 
 					break;
 				}
 			}
 		}
 
-		if (desiredItemSelectorReturnTypes.isEmpty()) {
+		if (itemSelectorDesiredReturnTypes.isEmpty()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("No valid item selector return types found");
 			}
 		}
 
 		_itemSelectorCriterion.setItemSelectorDesiredReturnTypes(
-			desiredItemSelectorReturnTypes);
+			itemSelectorDesiredReturnTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

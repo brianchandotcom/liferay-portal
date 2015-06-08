@@ -55,7 +55,7 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 
 String currentURL = currentURLObj.toString();
 
-DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(request, portletPreferences);
+DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(renderRequest);
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<%@ include file="/display/init-ext.jsp" %>

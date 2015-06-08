@@ -27,23 +27,19 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
 
-import javax.portlet.PortletPreferences;
-
-import javax.servlet.http.HttpServletRequest;
+import javax.portlet.RenderRequest;
 
 /**
  * @author Marcellus Tavares
  */
 public class DDLFormDisplayContext {
 
-	public DDLFormDisplayContext(
-			HttpServletRequest request, PortletPreferences portletPreferences)
+	public DDLFormDisplayContext(RenderRequest renderRequest)
 		throws PortalException {
 
-		_request = request;
-		_portletPreferences = portletPreferences;
+		_renderRequest = renderRequest;
 
-		String portletId = PortalUtil.getPortletId(request);
+		String portletId = PortalUtil.getPortletId(_renderRequest);
 
 		if (portletId.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 			return;
@@ -52,7 +48,7 @@ public class DDLFormDisplayContext {
 		DDLRecordSet recordSet = getRecordSet();
 
 		if ((recordSet == null) || !hasViewPermission()) {
-			request.setAttribute(
+			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
 	}
@@ -62,7 +58,7 @@ public class DDLFormDisplayContext {
 			return _recordSet;
 		}
 
-		_recordSet = (DDLRecordSet)_request.getAttribute(
+		_recordSet = (DDLRecordSet)_renderRequest.getAttribute(
 			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET);
 
 		if (_recordSet != null) {
@@ -81,7 +77,7 @@ public class DDLFormDisplayContext {
 		}
 
 		_recordSetId = PrefsParamUtil.getLong(
-			_portletPreferences, _request, "recordSetId");
+			_renderRequest.getPreferences(), _renderRequest, "recordSetId");
 
 		return _recordSetId;
 	}
@@ -109,7 +105,7 @@ public class DDLFormDisplayContext {
 	}
 
 	protected ThemeDisplay getThemeDisplay() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		return themeDisplay;
@@ -136,10 +132,9 @@ public class DDLFormDisplayContext {
 	}
 
 	private Boolean _hasViewPermission;
-	private final PortletPreferences _portletPreferences;
 	private DDLRecordSet _recordSet;
 	private long _recordSetId;
-	private final HttpServletRequest _request;
+	private final RenderRequest _renderRequest;
 	private Boolean _showConfigurationIcon;
 
 }

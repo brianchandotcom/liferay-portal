@@ -13,6 +13,18 @@
 		</if>
 	</command>
 
+	<command name="activate">
+		<execute macro="CalendarResource#_expandDetailsPanel" />
+
+		<execute function="Check" locator1="CalendarEditResource#DETAILS_PANEL_ACTIVE_CHECKBOX" />
+	</command>
+
+	<command name="deactivate">
+		<execute macro="CalendarResource#_expandDetailsPanel" />
+
+		<execute function="Uncheck" locator1="CalendarEditResource#DETAILS_PANEL_ACTIVE_CHECKBOX" />
+	</command>
+
 	<command name="add">
 		<execute macro="CalendarNavigator#gotoAddResource" />
 

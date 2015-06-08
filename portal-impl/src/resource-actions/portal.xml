@@ -524,7 +524,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.UserGroup</model-name>
 		<portlet-ref>
-			<portlet-name>127</portlet-name>
+			<portlet-name>com_liferay_user_groups_admin_web_portlet_UserGroupsAdminPortlet</portlet-name>
 		</portlet-ref>
 		<weight>1</weight>
 		<permissions>

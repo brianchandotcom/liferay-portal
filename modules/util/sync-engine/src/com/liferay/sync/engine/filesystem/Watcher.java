@@ -42,8 +42,6 @@ import java.util.concurrent.ConcurrentNavigableMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import org.apache.commons.io.FilenameUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -214,26 +212,6 @@ public abstract class Watcher implements Runnable {
 			}
 
 			return true;
-		}
-
-		if (!OSDetector.isWindows()) {
-			String sanitizedFileName = FileUtil.getSanitizedFileName(
-				fileName, FilenameUtils.getExtension(fileName));
-
-			if (!sanitizedFileName.equals(fileName)) {
-				String sanitizedFilePathName = FileUtil.getFilePathName(
-					String.valueOf(filePath.getParent()), sanitizedFileName);
-
-				sanitizedFilePathName = FileUtil.getNextFilePathName(
-					sanitizedFilePathName);
-
-				FileUtil.checkFilePath(filePath);
-
-				FileUtil.moveFile(
-					filePath, java.nio.file.Paths.get(sanitizedFilePathName));
-
-				return true;
-			}
 		}
 
 		return false;

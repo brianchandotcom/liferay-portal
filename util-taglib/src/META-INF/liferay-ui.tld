@@ -5526,19 +5526,9 @@
 		</attribute>
 	</tag>
 	<tag>
-		<name>user-group-search-form</name>
-		<tag-class>com.liferay.taglib.ui.UserGroupSearchFormTag</tag-class>
+		<name>user-group-search-container-results</name>
+		<tag-class>com.liferay.taglib.ui.UserGroupSearchContainerResultsTag</tag-class>
 		<body-content>JSP</body-content>
-	</tag>
-	<tag>
-		<name>user-group-search-results</name>
-		<tag-class>com.liferay.taglib.ui.UserGroupSearchResultsTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>results</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 		<attribute>
 			<name>searchContainer</name>
 			<required>true</required>
@@ -5550,20 +5540,15 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>searchWithIndex</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>total</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>userGroupParams</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
+	</tag>
+	<tag>
+		<name>user-group-search-form</name>
+		<tag-class>com.liferay.taglib.ui.UserGroupSearchFormTag</tag-class>
+		<body-content>JSP</body-content>
 	</tag>
 	<tag>
 		<name>user-search</name>

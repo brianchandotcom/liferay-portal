@@ -17,6 +17,7 @@ package com.liferay.item.selector.criteria.url.handler;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.item.selector.criteria.url.returnTypes.URLItemSelectorReturnTypes;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -25,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class URLItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<URLItemSelectorCriterion> {
+	extends BaseItemSelectorCriterionHandler
+		<URLItemSelectorCriterion, URLItemSelectorReturnTypes> {
 
 	@Override
 	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {

@@ -97,8 +97,8 @@ public class CSSBuilder {
 	}
 
 	public CSSBuilder(
-		String docrootDirName, String portalCommonDirName,
-		String sassCompilerClassName)
+			String docrootDirName, String portalCommonDirName,
+			String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
@@ -176,12 +176,12 @@ public class CSSBuilder {
 		directoryScanner.setBasedir(basedir);
 
 		directoryScanner.setExcludes(
-			new String[]{
+			new String[] {
 				"**\\_diffs\\**", "**\\.sass-cache*\\**",
 				"**\\.sass_cache_*\\**", "**\\_sass_cache_*\\**",
 				"**\\_styled\\**", "**\\_unstyled\\**", "**\\tmp\\**"
 			});
-		directoryScanner.setIncludes(new String[]{"**\\*.css"});
+		directoryScanner.setIncludes(new String[] {"**\\*.css"});
 
 		directoryScanner.scan();
 

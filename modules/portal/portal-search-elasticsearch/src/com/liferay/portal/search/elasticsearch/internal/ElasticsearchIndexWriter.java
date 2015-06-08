@@ -169,6 +169,24 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	}
 
 	@Override
+	public void partialUpdateDocument(
+			SearchContext searchContext, Document document)
+		throws SearchException {
+
+		_elasticsearchUpdateDocumentCommand.updateDocument(
+			DocumentTypes.LIFERAY, searchContext, document, false);
+	}
+
+	@Override
+	public void partialUpdateDocuments(
+			SearchContext searchContext, Collection<Document> documents)
+		throws SearchException {
+
+		_elasticsearchUpdateDocumentCommand.updateDocuments(
+			DocumentTypes.LIFERAY, searchContext, documents, false);
+	}
+
+	@Override
 	@Reference(target = "(search.engine.impl=Elasticsearch)", unbind = "-")
 	public void setSpellCheckIndexWriter(
 		SpellCheckIndexWriter spellCheckIndexWriter) {

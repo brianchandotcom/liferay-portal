@@ -22,6 +22,39 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  */
 public class ExpandoPortlet extends MVCPortlet {
 
+	public void addExpando(ActionRequest actionRequest) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String modelResource = ParamUtil.getString(
+			actionRequest, "modelResource");
+		long resourcePrimKey = ParamUtil.getLong(
+			actionRequest, "resourcePrimKey");
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		String preset = ParamUtil.getString(actionRequest, "type");
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
+
+		if (preset.startsWith("Preset")) {
+			ExpandoPresetUtil.addPresetExpando(expandoBridge, preset, name);
+		}
+		else {
+			int type = ParamUtil.getInteger(actionRequest, "type");
+
+			expandoBridge.addAttribute(name, type);
+
+			updateProperties(actionRequest, expandoBridge, name);
+		}
+	}
+
+	public void deleteExpando(ActionRequest actionRequest) throws Exception {
+		long columnId = ParamUtil.getLong(actionRequest, "columnId");
+
+		ExpandoColumnServiceUtil.deleteColumn(columnId);
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -92,7 +125,7 @@ public class ExpandoPortlet extends MVCPortlet {
 			getForward(renderRequest, "portlet.expando.edit_expando"));
 	}
 
-	protected void addExpando(ActionRequest actionRequest) throws Exception {
+	public void updateExpando(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -102,27 +135,17 @@ public class ExpandoPortlet extends MVCPortlet {
 			actionRequest, "resourcePrimKey");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String preset = ParamUtil.getString(actionRequest, "type");
+		int type = ParamUtil.getInteger(actionRequest, "type");
+
+		Serializable defaultValue = getValue(
+			actionRequest, "defaultValue", type);
 
 		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
-		if (preset.startsWith("Preset")) {
-			ExpandoPresetUtil.addPresetExpando(expandoBridge, preset, name);
-		}
-		else {
-			int type = ParamUtil.getInteger(actionRequest, "type");
+		expandoBridge.setAttributeDefault(name, defaultValue);
 
-			expandoBridge.addAttribute(name, type);
-
-			updateProperties(actionRequest, expandoBridge, name);
-		}
-	}
-
-	protected void deleteExpando(ActionRequest actionRequest) throws Exception {
-		long columnId = ParamUtil.getLong(actionRequest, "columnId");
-
-		ExpandoColumnServiceUtil.deleteColumn(columnId);
+		updateProperties(actionRequest, expandoBridge, name);
 	}
 
 	protected Serializable getValue(
@@ -266,29 +289,6 @@ public class ExpandoPortlet extends MVCPortlet {
 		}
 
 		return value;
-	}
-
-	protected void updateExpando(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String modelResource = ParamUtil.getString(
-			actionRequest, "modelResource");
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		Serializable defaultValue = getValue(
-			actionRequest, "defaultValue", type);
-
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
-
-		expandoBridge.setAttributeDefault(name, defaultValue);
-
-		updateProperties(actionRequest, expandoBridge, name);
 	}
 
 	protected void updateProperties(

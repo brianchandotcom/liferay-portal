@@ -15,10 +15,13 @@
 package com.liferay.portal.kernel.search;
 
 /**
+ * @deprecated As of 7.0.0
+ *
  * @author Brian Wing Shun Chan
  * @author Michael C. Han
  * @author Raymond Augé
  */
+@Deprecated
 public class TermQueryFactoryUtil {
 
 	public static TermQuery create(

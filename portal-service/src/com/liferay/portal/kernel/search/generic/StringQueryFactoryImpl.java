@@ -18,9 +18,12 @@ import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.StringQueryFactory;
 
 /**
+ * @deprecated As of 7.0.0
+ *
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
  */
+@Deprecated
 public class StringQueryFactoryImpl implements StringQueryFactory {
 
 	@Override

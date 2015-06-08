@@ -25,14 +25,14 @@ public class BooleanClauseFactoryUtil {
 		SearchContext searchContext, Query query, String occur) {
 
 		return getBooleanClauseFactory(searchContext).create(
-			searchContext, query, occur);
+			query, occur);
 	}
 
 	public static BooleanClause<Query> create(
 		SearchContext searchContext, String field, String value, String occur) {
 
 		return getBooleanClauseFactory(searchContext).create(
-			searchContext, field, value, occur);
+			field, value, occur);
 	}
 
 	public static BooleanClause<Filter> createFilter(

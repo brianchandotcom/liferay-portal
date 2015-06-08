@@ -15,9 +15,12 @@
 package com.liferay.portal.kernel.search;
 
 /**
+ * @deprecated As of 7.0.0
+ *
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  */
+@Deprecated
 public class BooleanQueryFactoryUtil {
 
 	public static BooleanQuery create(SearchContext searchContext) {

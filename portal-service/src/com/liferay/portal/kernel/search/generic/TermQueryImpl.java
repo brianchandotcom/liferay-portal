@@ -24,6 +24,10 @@ import com.liferay.portal.kernel.search.query.QueryVisitor;
  */
 public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 
+	public TermQueryImpl(String field, String value) {
+		this(new QueryTermImpl(field, value));
+	}
+
 	public TermQueryImpl(QueryTerm queryTerm) {
 		_queryTerm = queryTerm;
 	}

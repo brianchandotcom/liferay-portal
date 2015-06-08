@@ -22,8 +22,23 @@ import com.liferay.portal.kernel.search.filter.Filter;
 public interface BooleanClauseFactory {
 
 	public BooleanClause<Query> create(
+		Query query, String occur);
+
+	public BooleanClause<Query> create(
+		String field, String value, String occur);
+
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #create(Query, String)}
+	 */
+	@Deprecated
+	public BooleanClause<Query> create(
 		SearchContext searchContext, Query query, String occur);
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #create(
+	 *             String, String, String)}}
+	 */
+	@Deprecated
 	public BooleanClause<Query> create(
 		SearchContext searchContext, String field, String value, String occur);
 

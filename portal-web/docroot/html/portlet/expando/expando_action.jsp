@@ -30,7 +30,7 @@ String modelResource = (String)row.getParameter("modelResource");
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/expando/edit_expando" />
+			<portlet:param name="mvcPath" value="/html/portlet/expando/edit_expando.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="columnId" value="<%= String.valueOf(expandoColumn.getColumnId()) %>" />
 			<portlet:param name="modelResource" value="<%= modelResource %>" />

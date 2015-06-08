@@ -52,7 +52,7 @@ String propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnCo
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/expando/view_attributes");
+portletURL.setParameter("mvcPath", "/html/portlet/expando/view_attributes.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("modelResource", modelResource);
 %>

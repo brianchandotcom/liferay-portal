@@ -91,6 +91,9 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 
 		ddmFormField.setDataType("string");
 		ddmFormField.setDDMFormFieldOptions(createDDMFormFieldOptions());
+		ddmFormField.setLocalizable(false);
+		ddmFormField.setReadOnly(false);
+		ddmFormField.setRepeatable(false);
 		ddmFormField.setRequired(true);
 		ddmFormField.setShowLabel(false);
 
@@ -101,8 +104,12 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		DDMFormField ddmFormField = new DDMFormField(name, "select");
 
 		ddmFormField.setDataType("string");
+		ddmFormField.setLocalizable(false);
 		ddmFormField.setIndexType("");
 		ddmFormField.setMultiple(true);
+		ddmFormField.setReadOnly(false);
+		ddmFormField.setRepeatable(false);
+		ddmFormField.setRequired(false);
 		ddmFormField.setShowLabel(true);
 
 		DDMFormFieldOptions ddmFormFieldOptions = createDDMFormFieldOptions();
@@ -119,9 +126,12 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormField.setDataType("string");
 		ddmFormField.setIndexType("keyword");
 		ddmFormField.setLabel(createTextDDMFormFieldLabel());
+		ddmFormField.setLocalizable(false);
 		ddmFormField.setPredefinedValue(
 			createTextDDMFormFieldPredefinedValue());
+		ddmFormField.setReadOnly(false);
 		ddmFormField.setRepeatable(true);
+		ddmFormField.setRequired(false);
 		ddmFormField.setShowLabel(true);
 
 		return ddmFormField;

@@ -12,29 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.registry;
+package com.liferay.portlet.dynamicdatamapping.registry.annotations;
 
-import java.util.Locale;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author Marcellus Tavares
  */
-public interface DDMFormFieldType {
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface DDMForm {
 
-	public DDMFormFieldRenderer getDDMFormFieldRenderer();
-
-	public Class<? extends DDMFormFieldTypeSettings>
-		getDDMFormFieldTypeSettings();
-
-	public DDMFormFieldValueAccessor<?> getDDMFormFieldValueAccessor(
-		Locale locale);
-
-	public DDMFormFieldValueParameterSerializer
-		getDDMFormFieldValueParameterSerializer();
-
-	public DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(Locale locale);
-
-	public String getName();
+	public String localization() default StringPool.BLANK;
 
 }

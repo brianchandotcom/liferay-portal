@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.WildcardQuery;
-import com.liferay.portal.kernel.search.WildcardQueryFactoryUtil;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
+import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -109,8 +109,8 @@ public class OrganizationIndexer extends BaseIndexer {
 			for (Organization organization : organizationsTree) {
 				String treePath = organization.buildTreePath();
 
-				WildcardQuery wildcardQuery = WildcardQueryFactoryUtil.create(
-					searchContext, Field.TREE_PATH, treePath);
+				WildcardQuery wildcardQuery = new WildcardQueryImpl(
+					Field.TREE_PATH, treePath);
 
 				booleanFilter.add(new QueryFilter(wildcardQuery));
 			}

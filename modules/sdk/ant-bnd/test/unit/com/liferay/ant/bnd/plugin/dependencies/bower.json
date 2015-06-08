@@ -1,0 +1,10 @@
+{
+	"name": "liferay",
+	"version": "1.2.4",
+	"dependencies": {
+		"lodash": "~3.9.3"
+	},
+	"runtime": {
+		"liferay": "~1.0.0"
+	}
+}

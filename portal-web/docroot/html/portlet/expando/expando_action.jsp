@@ -62,15 +62,13 @@ String modelResource = (String)row.getParameter("modelResource");
 	</c:if>
 
 	<c:if test="<%= ExpandoColumnPermissionUtil.contains(permissionChecker, expandoColumn, ActionKeys.DELETE) %>">
-		<portlet:actionURL var="deleteURL">
-			<portlet:param name="struts_action" value="/expando/edit_expando" />
-			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
+		<portlet:actionURL name="deleteExpando" var="deleteExpandoURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="columnId" value="<%= String.valueOf(expandoColumn.getColumnId()) %>" />
 		</portlet:actionURL>
 
 		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
+			url="<%= deleteExpandoURL %>"
 		/>
 	</c:if>
 </liferay-ui:icon-menu>

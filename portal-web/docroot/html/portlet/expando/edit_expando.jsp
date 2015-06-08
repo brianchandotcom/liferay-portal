@@ -63,12 +63,12 @@ portletURL.setParameter("modelResource", modelResource);
 	title='<%= modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()) %>'
 />
 
-<portlet:actionURL var="editExpandoURL">
-	<portlet:param name="struts_action" value="/expando/edit_expando" />
-</portlet:actionURL>
+<portlet:actionURL
+	name='<%= (column == null) ? "addExpando" : "updateExpando" %>'
+	var="editExpandoURL"
+/>
 
-<aui:form action="<%= editExpandoURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveExpando();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editExpandoURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
@@ -283,14 +283,6 @@ portletURL.setParameter("modelResource", modelResource);
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveExpando(options) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (column == null) ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, modelResourceName, portletURL.toString());

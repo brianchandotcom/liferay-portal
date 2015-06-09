@@ -21,7 +21,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  */
 public enum URLItemSelectorReturnTypes implements ItemSelectorReturnType {
 
-	URL;
+	URL, UUID;
 
 	@Override
 	public String getName() {

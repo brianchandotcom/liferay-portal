@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
+import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -40,6 +41,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.model.PortletPreferencesIds;
 import com.liferay.portal.model.PublicRenderParameter;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -47,6 +49,7 @@ import com.liferay.portal.security.permission.PermissionPropagator;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
@@ -59,6 +62,7 @@ import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 import com.liferay.portlet.PortletConfigImpl;
+import com.liferay.portlet.PortletPreferencesFactoryConstants;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 import com.liferay.portlet.portletconfiguration.util.PortletConfigurationUtil;
@@ -115,6 +119,48 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				name);
 
 		archivedSettings.delete();
+	}
+
+	public void editConfiguration(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		Portlet portlet = ActionUtil.getPortlet(actionRequest);
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String settingsScope = ParamUtil.getString(
+			actionRequest, "settingsScope");
+
+		PortletPreferences portletPreferences = getPortletPreferences(
+			themeDisplay, portlet.getPortletId(), settingsScope);
+
+		actionRequest = ActionUtil.getWrappedActionRequest(
+			actionRequest, portletPreferences);
+
+		ConfigurationAction configurationAction = getConfigurationAction(
+			portlet);
+
+		if (configurationAction == null) {
+			return;
+		}
+
+		configurationAction.processAction(
+			portletConfig, actionRequest, actionResponse);
+
+		Layout layout = themeDisplay.getLayout();
+
+		PortletLayoutListener portletLayoutListener =
+			portlet.getPortletLayoutListenerInstance();
+
+		if (portletLayoutListener != null) {
+			portletLayoutListener.onSetup(
+				portlet.getPortletId(), layout.getPlid());
+		}
 	}
 
 	public void editPublicRenderParameters(
@@ -694,6 +740,26 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		}
 
 		return scopeName;
+	}
+
+	protected PortletPreferences getPortletPreferences(
+		ThemeDisplay themeDisplay, String portletId, String settingsScope) {
+
+		if (Validator.isNull(settingsScope) ||
+			settingsScope.equals(
+				PortletPreferencesFactoryConstants.
+					SETTINGS_SCOPE_PORTLET_INSTANCE)) {
+
+			return null;
+		}
+
+		PortletPreferencesIds portletPreferencesIds =
+			PortletPreferencesFactoryUtil.getPortletPreferencesIds(
+				themeDisplay.getCompanyId(), themeDisplay.getSiteGroupId(),
+				themeDisplay.getPlid(), portletId, settingsScope);
+
+		return PortletPreferencesLocalServiceUtil.getPreferences(
+			portletPreferencesIds);
 	}
 
 	protected String getPortletTitle(

@@ -176,6 +176,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 				PortletDataContext portletDataContext, T stagedModel) {
 			}
 
+			@Override
+			public boolean isClassNameSupported(String className) {
+				return false;
+			}
+
 		};
 
 }

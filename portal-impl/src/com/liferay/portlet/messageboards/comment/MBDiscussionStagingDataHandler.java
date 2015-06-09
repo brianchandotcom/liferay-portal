@@ -78,4 +78,13 @@ public class MBDiscussionStagingDataHandler
 			portletDataContext, stagedModel, MBMessage.class);
 	}
 
+	@Override
+	public boolean isClassNameSupported(String className) {
+		if (className.equals(MBMessage.class.getName())) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

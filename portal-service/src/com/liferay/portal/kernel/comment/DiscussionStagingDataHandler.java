@@ -31,4 +31,6 @@ public interface DiscussionStagingDataHandler {
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
+	public boolean isClassNameSupported(String className);
+
 }

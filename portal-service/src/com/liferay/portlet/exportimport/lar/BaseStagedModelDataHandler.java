@@ -49,7 +49,6 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
-import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -737,6 +736,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
+		DiscussionStagingDataHandler discussionStagingDataHandler =
+			CommentManagerUtil.getDiscussionStagingDataHandler();
+
 		List<Element> referenceElements = referencesElement.elements();
 
 		for (Element referenceElement : referenceElements) {
@@ -744,7 +746,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(MBMessage.class.getName())) {
+				discussionStagingDataHandler.isClassNameSupported(className)) {
 
 				continue;
 			}

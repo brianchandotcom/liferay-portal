@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>ConfigurationAdmin</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">ConfigurationAdmin</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>CONFIGURATION_ADMIN_NAME_LINK</td>
+	<td>//tbody [@class='table-data']//tr/td/a[contains(.,'${key_configurationAdminName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--XSL_CONTENT_CONFIGURATION-->
+<tr>
+	<td>XSL_CONTENT_CONFIGURATION_VALID_URL_PREFIXES_FIELD</td>
+	<td>//div[contains(.,'Valid url prefixes')]/input</td>
+	<td></td>
+</tr>
+
+</tbody>
+</table>
+</body>
+</html>

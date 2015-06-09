@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderer;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException;
 import com.liferay.portal.expression.ExpressionFactory;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
@@ -193,9 +194,16 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypes();
 
-		template.put(
-			"fieldTypes",
-			DDMFormFieldTypesJSONSerializerUtil.serialize(ddmFormFieldTypes));
+		try {
+			template.put(
+				"fieldTypes",
+				DDMFormFieldTypesJSONSerializerUtil.serialize(
+					ddmFormFieldTypes));
+		}
+		catch (PortalException pe) {
+			throw new DDMFormRenderingException(pe);
+		}
+
 		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 

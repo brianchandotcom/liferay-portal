@@ -1053,6 +1053,10 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		configureTaskSetupTestableTomcatDir(
 			setupTestableTomcatTask, liferayExtension);
+		configureTaskSetupTestableTomcatJmx(
+			setupTestableTomcatTask, liferayExtension);
+		configureTaskSetupTestableTomcatManagerUser(
+			setupTestableTomcatTask, liferayExtension);
 		configureTaskSetupTestableTomcatModuleFrameworkBaseDir(
 			setupTestableTomcatTask, liferayExtension);
 		configureTaskSetupTestableTomcatZipUrl(
@@ -1069,6 +1073,37 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		setupTestableTomcatTask.setTomcatDir(
 			liferayExtension.getAppServerDir());
+	}
+
+	protected void configureTaskSetupTestableTomcatJmx(
+		SetupTestableTomcatTask setupTestableTomcatTask,
+		LiferayExtension liferayExtension) {
+
+		if (setupTestableTomcatTask.getJmxRemotePort() > 0) {
+			return;
+		}
+
+		setupTestableTomcatTask.setJmxRemotePort(
+			liferayExtension.getJmxRemotePort());
+	}
+
+	protected void configureTaskSetupTestableTomcatManagerUser(
+		SetupTestableTomcatTask setupTestableTomcatTask,
+		LiferayExtension liferayExtension) {
+
+		if (Validator.isNull(
+				setupTestableTomcatTask.getTomcatManagerPassword())) {
+
+			setupTestableTomcatTask.setTomcatManagerPassword(
+				liferayExtension.getAppServerProperty("managerPassword"));
+		}
+
+		if (Validator.isNull(
+				setupTestableTomcatTask.getTomcatManagerUserName())) {
+
+			setupTestableTomcatTask.setTomcatManagerUserName(
+				liferayExtension.getAppServerProperty("managerUserName"));
+		}
 	}
 
 	protected void configureTaskSetupTestableTomcatModuleFrameworkBaseDir(

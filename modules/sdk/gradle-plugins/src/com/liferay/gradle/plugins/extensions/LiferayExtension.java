@@ -136,6 +136,10 @@ public class LiferayExtension {
 		return new File(appServerParentDir, "deploy");
 	}
 
+	public int getJmxRemotePort() {
+		return _jmxRemotePort;
+	}
+
 	public File getLiferayHome() {
 		if (_liferayHome != null) {
 			return _liferayHome;
@@ -198,6 +202,10 @@ public class LiferayExtension {
 		_deployDir = deployDir;
 	}
 
+	public void setJmxRemotePort(int jmxRemotePort) {
+		_jmxRemotePort = jmxRemotePort;
+	}
+
 	public void setLiferayHome(File liferayHome) {
 		_liferayHome = liferayHome;
 	}
@@ -232,6 +240,7 @@ public class LiferayExtension {
 	private final ConfigObject _appServers = new ConfigObject();
 	private String _appServerType;
 	private File _deployDir;
+	private int _jmxRemotePort;
 	private File _liferayHome;
 	private String _portalVersion;
 	private File _tmpDir;

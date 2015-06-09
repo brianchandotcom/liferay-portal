@@ -89,6 +89,8 @@ liferay {
 		tomcat {
 			deployDirName = "webapps"
 			libGlobalDirName = "lib/ext"
+			managerPassword = "tomcat"
+			managerUserName = "tomcat"
 			name = "tomcat"
 			portalDirName = "webapps/ROOT"
 			version = "7.0.62"
@@ -115,6 +117,8 @@ liferay {
 
 	appServerParentDir = rootProject.file("../bundles")
 	appServerType = "tomcat"
+
+	jmxRemotePort = 8099
 
 	portalVersion = "7.0.0-SNAPSHOT"
 

@@ -43,6 +43,12 @@ public class LayoutAssetRendererFactory extends BaseAssetRendererFactory {
 
 	public static final String TYPE = "layout";
 
+	public LayoutAssetRendererFactory() {
+		setClassName(Layout.class.getName());
+		setSelectable(false);
+		setPortletId(LayoutAdminPortletKeys.LAYOUT_ADMIN);
+	}
+
 	@Override
 	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException {
 		return getAssetEntry(getClassName(), assetEntryId);
@@ -97,15 +103,8 @@ public class LayoutAssetRendererFactory extends BaseAssetRendererFactory {
 	}
 
 	@Override
-	public boolean isSelectable() {
-		return _SELECTABLE;
-	}
-
-	@Override
 	protected String getIconPath(ThemeDisplay themeDisplay) {
 		return themeDisplay.getPathThemeImages() + "/common/pages.png";
 	}
-
-	private static final boolean _SELECTABLE = false;
 
 }

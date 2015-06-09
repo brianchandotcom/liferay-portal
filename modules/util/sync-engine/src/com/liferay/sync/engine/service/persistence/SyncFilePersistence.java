@@ -57,6 +57,22 @@ public class SyncFilePersistence extends BasePersistenceImpl<SyncFile, Long> {
 		return where.countOf();
 	}
 
+	public long countByS_T_U(long syncAccountId, String type, int uiEvent)
+		throws SQLException {
+
+		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
+
+		Where<SyncFile, Long> where = queryBuilder.where();
+
+		where.eq("syncAccountId", syncAccountId);
+		where.eq("type", type);
+		where.eq("uiEvent", uiEvent);
+
+		where.and(3);
+
+		return where.countOf();
+	}
+
 	public long countByUIEvent(int uiEvent) throws SQLException {
 		QueryBuilder<SyncFile, Long> queryBuilder = queryBuilder();
 

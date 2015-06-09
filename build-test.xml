@@ -1468,7 +1468,7 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
 								</sequential>
 								<daemons>
-									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />
 									</exec>
 								</daemons>

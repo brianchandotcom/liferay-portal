@@ -16,9 +16,11 @@ package com.liferay.gradle.util;
 
 import groovy.lang.Closure;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 
@@ -143,6 +145,26 @@ public class FileUtil {
 		};
 
 		project.ant(closure);
+	}
+
+	public static String read(String resourceName) throws Exception {
+		StringBuilder sb = new StringBuilder();
+
+		ClassLoader classLoader = FileUtil.class.getClassLoader();
+
+		try (BufferedReader bufferedReader = new BufferedReader(
+				new InputStreamReader(
+					classLoader.getResourceAsStream(resourceName)))) {
+
+			String line = null;
+
+			while ((line = bufferedReader.readLine()) != null) {
+				sb.append(line);
+				sb.append('\n');
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public static Properties readProperties(File file) throws Exception {

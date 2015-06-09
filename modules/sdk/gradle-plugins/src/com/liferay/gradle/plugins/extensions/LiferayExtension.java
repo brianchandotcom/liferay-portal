@@ -95,8 +95,10 @@ public class LiferayExtension {
 	}
 
 	public String getAppServerProperty(String key) {
-		String appServerType = getAppServerType();
+		return getAppServerProperty(getAppServerType(), key);
+	}
 
+	public String getAppServerProperty(String appServerType, String key) {
 		if (Validator.isNull(appServerType)) {
 			return null;
 		}

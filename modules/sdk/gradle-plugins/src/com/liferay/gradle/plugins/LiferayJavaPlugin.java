@@ -45,6 +45,7 @@ import groovy.lang.Closure;
 import java.io.File;
 
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -57,6 +58,7 @@ import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
 import org.gradle.api.Action;
+import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
@@ -105,6 +107,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String INIT_GRADLE_TASK_NAME = "initGradle";
 
 	public static final String PORTAL_WEB_CONFIGURATION_NAME = "portalWeb";
+
+	public static final String SETUP_ARQUILLIAN_TASK_NAME = "setupArquillian";
 
 	public static final String SETUP_TESTABLE_TOMCAT_TASK_NAME =
 		"setupTestableTomcat";
@@ -314,8 +318,94 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskFormatWSDL(project);
 		addTaskFormatXSD(project);
 		addTaskInitGradle(project);
+		addTaskSetupArquillian(project);
 		addTaskSetupTestableTomcat(project);
 		addTaskWar(project);
+	}
+
+	protected Task addTaskSetupArquillian(Project project) {
+		Task task = project.task(SETUP_ARQUILLIAN_TASK_NAME);
+
+		task.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					try {
+						String xml = FileUtil.read(
+							"com/liferay/gradle/plugins/dependencies/" +
+								"arquillian.xml");
+
+						LiferayExtension liferayExtension =
+							GradleUtil.getExtension(
+								project, LiferayExtension.class);
+
+						xml = xml.replace(
+							"${app.server.tomcat.manager.password}",
+							liferayExtension.getAppServerProperty(
+								"tomcat", "managerPassword"));
+						xml = xml.replace(
+							"${app.server.tomcat.manager.user}",
+							liferayExtension.getAppServerProperty(
+								"tomcat", "managerUserName"));
+						xml = xml.replace(
+							"${jmx.remote.port}",
+							String.valueOf(
+								liferayExtension.getJmxRemotePort()));
+
+						SourceSet sourceSet = GradleUtil.getSourceSet(
+							project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+						File testIntegrationDir = getSrcDir(
+							sourceSet.getResources());
+
+						File arquillianXmlFile = new File(
+							testIntegrationDir, "arquillian.xml");
+
+						Files.write(
+							arquillianXmlFile.toPath(),
+							xml.getBytes(StandardCharsets.UTF_8));
+					}
+					catch (Exception e) {
+						throw new GradleException(e.getMessage(), e);
+					}
+				}
+
+			});
+
+		task.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					SourceSet sourceSet = GradleUtil.getSourceSet(
+						task.getProject(), TEST_INTEGRATION_SOURCE_SET_NAME);
+
+					File testIntegrationDir = getSrcDir(
+						sourceSet.getResources());
+
+					File arquillianXmlFile = new File(
+						testIntegrationDir, "arquillian.xml");
+
+					if (arquillianXmlFile.exists()) {
+						return false;
+					}
+
+					SourceDirectorySet sourceDirectorySet =
+						sourceSet.getAllJava();
+
+					if (sourceDirectorySet.isEmpty()) {
+						return false;
+					}
+
+					return true;
+				}
+
+			});
+
+		return task;
 	}
 
 	protected SetupTestableTomcatTask addTaskSetupTestableTomcat(
@@ -1095,14 +1185,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				setupTestableTomcatTask.getTomcatManagerPassword())) {
 
 			setupTestableTomcatTask.setTomcatManagerPassword(
-				liferayExtension.getAppServerProperty("managerPassword"));
+				liferayExtension.getAppServerProperty(
+					"tomcat", "managerPassword"));
 		}
 
 		if (Validator.isNull(
 				setupTestableTomcatTask.getTomcatManagerUserName())) {
 
 			setupTestableTomcatTask.setTomcatManagerUserName(
-				liferayExtension.getAppServerProperty("managerUserName"));
+				liferayExtension.getAppServerProperty(
+					"tomcat", "managerUserName"));
 		}
 	}
 
@@ -1178,13 +1270,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		SourceDirectorySet javaSourceDirectorySet = sourceSet.getJava();
-
-		Set<File> srcDirs = javaSourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
+		return getSrcDir(sourceSet.getJava());
 	}
 
 	protected File getLibDir(Project project) {
@@ -1215,18 +1301,19 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-		SourceDirectorySet resourcesSourceDirectorySet =
-			sourceSet.getResources();
-
-		Set<File> srcDirs = resourcesSourceDirectorySet.getSrcDirs();
-
-		Iterator<File> iterator = srcDirs.iterator();
-
-		return iterator.next();
+		return getSrcDir(sourceSet.getResources());
 	}
 
 	protected File getServiceBaseDir(Project project) {
 		return project.getProjectDir();
+	}
+
+	protected File getSrcDir(SourceDirectorySet sourceDirectorySet) {
+		Set<File> srcDirs = sourceDirectorySet.getSrcDirs();
+
+		Iterator<File> iterator = srcDirs.iterator();
+
+		return iterator.next();
 	}
 
 	protected boolean isAddDefaultDependencies(Project project) {

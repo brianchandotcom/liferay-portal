@@ -236,15 +236,19 @@ AUI.add(
 
 						var fieldType = instance.get('fieldType');
 
-						var FieldClass = Util.getFieldClass(fieldType);
-
 						var siblings = instance.getSiblings();
 
 						var index = siblings.indexOf(instance);
 
 						var form = instance.get('form');
 
-						var field = new FieldClass(
+						var fieldTypeInstance = FieldTypes.get(fieldType);
+
+						var fieldClassName = fieldTypeInstance.get('className');
+
+						var fieldClass = Util.getFieldClass(fieldClassName);
+
+						var field = new fieldClass(
 							{
 								definition: instance.get('definition'),
 								fieldType: fieldType,

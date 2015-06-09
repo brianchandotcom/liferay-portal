@@ -50,6 +50,12 @@ AUI.add(
 						instance.after('liferay-ddm-form-renderer-field:remove', A.bind(instance, instance._afterFieldRemove));
 					},
 
+					destructor: function() {
+						var instance = this;
+
+						AArray.invoke(instance.get('fields'), 'destroy');
+					},
+
 					getFieldNodes: function() {
 						var instance = this;
 
@@ -73,9 +79,13 @@ AUI.add(
 
 						var fieldDefinition = Util.searchFieldData(instance.get('definition'), 'name', name);
 
-						var FieldClass = Util.getFieldClass(fieldDefinition);
+						var fieldType = FieldTypes.get(fieldDefinition.type);
 
-						var field = new FieldClass(
+						var fieldClassName = fieldType.get('className');
+
+						var fieldClass = Util.getFieldClass(fieldClassName);
+
+						var field = new fieldClass(
 							{
 								container: node,
 								definition: fieldDefinition,

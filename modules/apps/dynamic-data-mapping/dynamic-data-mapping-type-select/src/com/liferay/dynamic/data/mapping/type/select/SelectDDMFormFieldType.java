@@ -45,6 +45,16 @@ public class SelectDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getDDMFormFieldTypeJavaScriptClass() {
+		return "Liferay.DDM.Field.Select";
+	}
+
+	@Override
+	public String getDDMFormFieldTypeJavaScriptModule() {
+		return "liferay-ddm-form-field-select";
+	}
+
+	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings() {
 

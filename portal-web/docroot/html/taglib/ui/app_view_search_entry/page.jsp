@@ -23,10 +23,10 @@ String containerName = (String)request.getAttribute("liferay-ui:app-view-search-
 String containerType = GetterUtil.getString(request.getAttribute("liferay-ui:app-view-search-entry:containerType"), LanguageUtil.get(request, "folder"));
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:app-view-search-entry:cssClass"));
 String description = (String)request.getAttribute("liferay-ui:app-view-search-entry:description");
-List<Tuple> fileEntryTuples = (List<Tuple>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryTuples");
+List<RelatedSearchResult<FileEntry>> fileEntryRelatedSearchResults = (List<RelatedSearchResult<FileEntry>>)request.getAttribute("liferay-ui:app-view-search-entry:fileEntryRelatedSearchResults");
 boolean highlightEnabled = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:highlightEnabled"));
 boolean locked = GetterUtil.getBoolean(request.getAttribute("liferay-ui:app-view-search-entry:locked"));
-List<MBMessage> mbMessages = (List<MBMessage>)request.getAttribute("liferay-ui:app-view-search-entry:mbMessages");
+List<RelatedSearchResult<Comment>> commentRelatedSearchResults = (List<RelatedSearchResult<Comment>>)request.getAttribute("liferay-ui:app-view-search-entry:commentRelatedSearchResults");
 String[] queryTerms = (String[])request.getAttribute("liferay-ui:app-view-search-entry:queryTerms");
 String rowCheckerId = (String)request.getAttribute("liferay-ui:app-view-search-entry:rowCheckerId");
 String rowCheckerName = (String)request.getAttribute("liferay-ui:app-view-search-entry:rowCheckerName");
@@ -98,21 +98,17 @@ summary.setQueryTerms(queryTerms);
 		</div>
 	</a>
 
-	<c:if test="<%= fileEntryTuples != null %>">
+	<c:if test="<%= fileEntryRelatedSearchResults != null %>">
 
 		<%
-		for (Tuple fileEntryTuple : fileEntryTuples) {
-			FileEntry fileEntry = (FileEntry)fileEntryTuple.getObject(0);
+		for (RelatedSearchResult<FileEntry> fileEntryRelatedSearchResult : fileEntryRelatedSearchResults) {
+			FileEntry fileEntry = fileEntryRelatedSearchResult.getModel();
 
 			AssetRendererFactory assetRendererFactory = AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(DLFileEntry.class.getName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(fileEntry.getFileEntryId());
 
-			summary = (Summary)fileEntryTuple.getObject(1);
-
-			if (Validator.isNull(summary.getContent())) {
-				summary.setContent(fileEntry.getTitle());
-			}
+			summary = fileEntryRelatedSearchResult.getSummary();
 
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);
@@ -144,15 +140,16 @@ summary.setQueryTerms(queryTerms);
 
 	</c:if>
 
-	<c:if test="<%= mbMessages != null %>">
+	<c:if test="<%= commentRelatedSearchResults != null %>">
 
 		<%
-		for (MBMessage mbMessage : mbMessages) {
-			User userDisplay = UserLocalServiceUtil.getUser(mbMessage.getUserId());
+		for (RelatedSearchResult<Comment> commentRelatedSearchResult : commentRelatedSearchResults) {
+			Comment comment = commentRelatedSearchResult.getModel();
 
-			summary = new Summary(null, mbMessage.getBody());
+			User userDisplay = comment.getUser();
 
-			summary.setEscape(false);
+			summary = commentRelatedSearchResult.getSummary();
+
 			summary.setHighlight(highlightEnabled);
 			summary.setQueryTerms(queryTerms);
 		%>

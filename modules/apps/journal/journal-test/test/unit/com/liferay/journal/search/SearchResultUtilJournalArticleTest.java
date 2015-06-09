@@ -19,10 +19,10 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchResult;
-import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
-import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
+import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
@@ -102,8 +102,8 @@ public class SearchResultUtilJournalArticleTest
 		Assert.assertEquals(_DOCUMENT_VERSION, versions.get(0));
 		Assert.assertEquals(1, versions.size());
 
-		assertEmptyFileEntryTuples(searchResult);
-		assertEmptyMBMessages(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 	}
 
 	protected Document createDocument() {

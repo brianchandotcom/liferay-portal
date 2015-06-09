@@ -15,15 +15,12 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
-import com.liferay.portal.kernel.search.test.SearchTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.Tuple;
+import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
+import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalService;
-import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.lang.reflect.InvocationHandler;
@@ -36,7 +33,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -51,20 +47,12 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author André de Oliveira
  */
 @PrepareForTest( {
-	AssetRendererFactoryRegistryUtil.class, DLAppLocalServiceUtil.class,
-	IndexerRegistryUtil.class, ServiceTrackerCollections.class
+	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
+	ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilDLFileEntryTest
 	extends BaseSearchResultUtilTestCase {
-
-	@Before
-	@Override
-	public void setUp() {
-		super.setUp();
-
-		setUpDLAppLocalServiceUtil();
-	}
 
 	@Test
 	public void testDLFileEntry() throws Exception {
@@ -76,13 +64,13 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Assert.assertNull(searchResult.getSummary());
 
-		verifyZeroInteractions(_dlAppLocalService);
+		verifyZeroInteractions(dlAppLocalService);
 
-		assertEmptyMBMessages(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -138,7 +126,7 @@ public class SearchResultUtilDLFileEntryTest
 		);
 
 		when(
-			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_fileEntry
 		);
@@ -205,30 +193,32 @@ public class SearchResultUtilDLFileEntryTest
 		Assert.assertEquals(
 			SearchTestUtil.SUMMARY_TITLE, searchResultSummary.getTitle());
 
-		List<Tuple> fileEntryTuples = searchResult.getFileEntryTuples();
+		List<RelatedSearchResult<FileEntry>> fileEntryRelatedSearchResults =
+			searchResult.getFileEntryRelatedSearchResults();
 
-		Assert.assertEquals(1, fileEntryTuples.size());
+		Assert.assertEquals(1, fileEntryRelatedSearchResults.size());
 
-		Tuple tuple = fileEntryTuples.get(0);
+		RelatedSearchResult<FileEntry> relatedSearchResult =
+			fileEntryRelatedSearchResults.get(0);
 
-		FileEntry tupleFileEntry = (FileEntry)tuple.getObject(0);
+		FileEntry relatedSearchResultFileEntry = relatedSearchResult.getModel();
 
-		Assert.assertSame(_fileEntry, tupleFileEntry);
+		Assert.assertSame(_fileEntry, relatedSearchResultFileEntry);
 
-		Summary tupleSummary = (Summary)tuple.getObject(1);
+		Summary relatedSearchResultSummary = relatedSearchResult.getSummary();
 
-		Assert.assertSame(summary, tupleSummary);
-		Assert.assertEquals(content, tupleSummary.getContent());
-		Assert.assertEquals(title, tupleSummary.getTitle());
+		Assert.assertSame(summary, relatedSearchResultSummary);
+		Assert.assertEquals(content, relatedSearchResultSummary.getContent());
+		Assert.assertEquals(title, relatedSearchResultSummary.getTitle());
 
-		assertEmptyMBMessages(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
 	@Test
 	public void testDLFileEntryMissing() throws Exception {
 		when(
-			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			null
 		);
@@ -243,10 +233,10 @@ public class SearchResultUtilDLFileEntryTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Mockito.verify(
-			_dlAppLocalService
+			dlAppLocalService
 		).getFileEntry(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
@@ -263,14 +253,14 @@ public class SearchResultUtilDLFileEntryTest
 		IndexerRegistryUtil.getIndexer(
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_NAME);
 
-		assertEmptyMBMessages(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
 	@Test
 	public void testDLFileEntryWithBrokenIndexer() throws Exception {
 		when(
-			_dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
+			dlAppLocalService.getFileEntry(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_fileEntry
 		);
@@ -318,33 +308,20 @@ public class SearchResultUtilDLFileEntryTest
 			document, snippet, null, null
 		);
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 
 		Mockito.verify(
-			_dlAppLocalService
+			dlAppLocalService
 		).getFileEntry(
 			SearchTestUtil.ENTRY_CLASS_PK
 		);
 
-		assertEmptyMBMessages(searchResult);
+		assertEmptyCommentRelatedResults(searchResult);
 		assertEmptyVersions(searchResult);
-	}
-
-	protected void setUpDLAppLocalServiceUtil() {
-		mockStatic(DLAppLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(DLAppLocalServiceUtil.class, "getService")
-		).toReturn(
-			_dlAppLocalService
-		);
 	}
 
 	private static final String _DL_FILE_ENTRY_CLASS_NAME =
 		DLFileEntry.class.getName();
-
-	@Mock
-	private DLAppLocalService _dlAppLocalService;
 
 	@Mock
 	private FileEntry _fileEntry;

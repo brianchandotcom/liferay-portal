@@ -14,23 +14,20 @@
 
 package com.liferay.portal.kernel.search;
 
-import com.liferay.portal.kernel.search.test.BaseSearchResultUtilTestCase;
-import com.liferay.portal.kernel.search.test.SearchTestUtil;
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
+import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalService;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 
 import java.util.List;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.internal.stubbing.answers.ThrowsExceptionClass;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
@@ -41,19 +38,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest( {
 	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	MBMessageLocalServiceUtil.class, ServiceTrackerCollections.class
+	ServiceTrackerCollections.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest
 	extends BaseSearchResultUtilTestCase {
-
-	@Before
-	@Override
-	public void setUp() {
-		super.setUp();
-
-		setUpMBMessageLocalServiceUtil();
-	}
 
 	@Test
 	public void testMBMessage() throws Exception {
@@ -65,22 +54,23 @@ public class SearchResultUtilMBMessageTest
 		Assert.assertEquals(
 			SearchTestUtil.ENTRY_CLASS_PK, searchResult.getClassPK());
 
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
+		List<RelatedSearchResult<Comment>> commentRelatedSearchResults =
+			searchResult.getCommentRelatedSearchResults();
 
-		Assert.assertTrue(mbMessages.isEmpty());
+		Assert.assertTrue(commentRelatedSearchResults.isEmpty());
 
-		verifyZeroInteractions(_mbMessageLocalService);
+		verifyZeroInteractions(mbMessageLocalService);
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
 	@Test
 	public void testMBMessageAttachment() throws Exception {
 		when(
-			_mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
+			mbMessageLocalService.getMessage(SearchTestUtil.ENTRY_CLASS_PK)
 		).thenReturn(
 			_mbMessage
 		);
@@ -99,14 +89,20 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK,
 			searchResult.getClassPK());
 
-		List<MBMessage> mbMessages = searchResult.getMBMessages();
+		List<RelatedSearchResult<Comment>> commentRelatedSearchResults =
+			searchResult.getCommentRelatedSearchResults();
 
-		Assert.assertSame(_mbMessage, mbMessages.get(0));
-		Assert.assertEquals(1, mbMessages.size());
+		RelatedSearchResult<Comment> relatedSearchResult =
+			commentRelatedSearchResults.get(0);
+
+		Comment comment = relatedSearchResult.getModel();
+
+		Assert.assertSame(_mbMessage.getMessageId(), comment.getCommentId());
+		Assert.assertEquals(1, commentRelatedSearchResults.size());
 
 		Assert.assertNull(searchResult.getSummary());
 
-		assertEmptyFileEntryTuples(searchResult);
+		assertEmptyFileEntryRelatedSearchResults(searchResult);
 		assertEmptyVersions(searchResult);
 	}
 
@@ -120,7 +116,7 @@ public class SearchResultUtilMBMessageTest
 		List<SearchResult> searchResults = SearchTestUtil.getSearchResults(
 			document1, document2);
 
-		Assert.assertEquals( 1, searchResults.size());
+		Assert.assertEquals(1, searchResults.size());
 
 		SearchResult searchResult = searchResults.get(0);
 
@@ -132,23 +128,10 @@ public class SearchResultUtilMBMessageTest
 			SearchTestUtil.ATTACHMENT_OWNER_CLASS_PK);
 	}
 
-	protected void setUpMBMessageLocalServiceUtil() {
-		mockStatic(MBMessageLocalServiceUtil.class, Mockito.CALLS_REAL_METHODS);
-
-		stub(
-			method(MBMessageLocalServiceUtil.class, "getService")
-		).toReturn(
-			_mbMessageLocalService
-		);
-	}
-
 	private static final String _MB_MESSAGE_CLASS_NAME =
 		MBMessage.class.getName();
 
 	@Mock
 	private MBMessage _mbMessage;
-
-	@Mock
-	private MBMessageLocalService _mbMessageLocalService;
 
 }

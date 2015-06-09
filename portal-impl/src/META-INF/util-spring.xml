@@ -259,6 +259,11 @@
 			<bean class="com.liferay.portal.sanitizer.SanitizerImpl" />
 		</property>
 	</bean>
+	<bean id="com.liferay.portal.kernel.search.SearchResultManagerUtil" class="com.liferay.portal.kernel.search.SearchResultManagerUtil">
+		<property name="searchResultManager">
+			<bean class="com.liferay.portal.search.SearchResultManagerImpl" />
+		</property>
+	</bean>
 	<bean id="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" class="com.liferay.portal.kernel.servlet.BrowserSnifferUtil">
 		<property name="browserSniffer">
 			<bean class="com.liferay.portal.servlet.BrowserSnifferImpl" />

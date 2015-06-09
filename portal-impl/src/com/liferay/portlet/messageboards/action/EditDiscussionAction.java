@@ -44,13 +44,9 @@ import java.io.IOException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequestDispatcher;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
@@ -124,53 +120,7 @@ public class EditDiscussionAction extends PortletAction {
 			ResourceResponse resourceResponse)
 		throws IOException, PortletException {
 
-		String className = ParamUtil.getString(resourceRequest, "className");
-		long classPK = ParamUtil.getLong(resourceRequest, "classPK");
-		boolean hideControls = ParamUtil.getBoolean(
-			resourceRequest, "hideControls");
-		boolean ratingsEnabled = ParamUtil.getBoolean(
-			resourceRequest, "ratingsEnabled");
-		long userId = ParamUtil.getLong(resourceRequest, "userId");
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			resourceRequest);
-
-		request.setAttribute("liferay-ui:discussion:className", className);
-		request.setAttribute(
-			"liferay-ui:discussion:classPK", String.valueOf(classPK));
-		request.setAttribute(
-			"liferay-ui:discussion:hideControls", String.valueOf(hideControls));
-		request.setAttribute(
-			"liferay-ui:discussion:ratingsEnabled",
-			String.valueOf(ratingsEnabled));
-		request.setAttribute(
-			"liferay-ui:discussion:userId", String.valueOf(userId));
-
-		int index = ParamUtil.getInteger(resourceRequest, "index");
-
-		request.setAttribute(
-			"liferay-ui:discussion:index", String.valueOf(index));
-
-		String randomNamespace = ParamUtil.getString(
-			resourceRequest, "randomNamespace");
-
-		request.setAttribute(
-			"liferay-ui:discussion:randomNamespace", randomNamespace);
-
-		int rootIndexPage = ParamUtil.getInteger(
-			resourceRequest, "rootIndexPage");
-
-		request.setAttribute(
-			"liferay-ui:discussion:rootIndexPage",
-			String.valueOf(rootIndexPage));
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/taglib/ui/discussion/page_resources.jsp");
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
+		throw new UnsupportedOperationException();
 	}
 
 	protected void deleteComment(ActionRequest actionRequest) throws Exception {

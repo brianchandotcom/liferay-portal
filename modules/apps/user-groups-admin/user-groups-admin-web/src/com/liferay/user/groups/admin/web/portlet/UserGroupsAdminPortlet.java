@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usergroupsadmin;
+package com.liferay.user.groups.admin.web;
 
 import com.liferay.portal.DuplicateUserGroupException;
 import com.liferay.portal.NoSuchUserGroupException;

@@ -19,6 +19,7 @@ import com.liferay.poshi.runner.selenium.SeleniumUtil;
 import com.liferay.poshi.runner.util.FileUtil;
 import com.liferay.poshi.runner.util.MathUtil;
 import com.liferay.poshi.runner.util.OSDetector;
+import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.StringPool;
 import com.liferay.poshi.runner.util.StringUtil;
 
@@ -110,6 +111,13 @@ public class PoshiRunnerGetterUtil {
 		}
 
 		return classCommandName.substring(x + 1);
+	}
+
+	public static String getExtendedTestCaseName() {
+		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+			getClassNameFromClassCommandName(PropsValues.TEST_NAME));
+
+		return getExtendedTestCaseName(rootElement);
 	}
 
 	public static String getExtendedTestCaseName(Element rootElement) {

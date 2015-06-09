@@ -96,23 +96,11 @@
 
 		<app-server-properties-reset />
 
-		<if>
-			<equals arg1="${app.server.jboss.major.version}" arg2="5" />
-			<then>
-				<antcall target="deploy-plugins">
-					<param name="deployer.dest.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/default/deploy" />
-					<param name="deployer.app.server.type" value="jboss" />
-					<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/default/deploy/ROOT.war/WEB-INF/lib" />
-				</antcall>
-			</then>
-			<else>
-				<antcall target="deploy-plugins">
-					<param name="deployer.dest.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/standalone/deployments" />
-					<param name="deployer.app.server.type" value="jboss" />
-					<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/standalone/deployments/ROOT.war/WEB-INF/lib" />
-				</antcall>
-			</else>
-		</if>
+		<antcall target="deploy-plugins">
+			<param name="deployer.dest.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/standalone/deployments" />
+			<param name="deployer.app.server.type" value="jboss" />
+			<param name="deployer.app.server.lib.portal.dir" value="${app.server.parent.dir}/jboss-${app.server.jboss.version}/standalone/deployments/ROOT.war/WEB-INF/lib" />
+		</antcall>
 	</target>
 
 	<target name="build-dist-jboss-eap-6.0">
@@ -1160,350 +1148,135 @@ this task.
 			</then>
 		</if>
 
+		<unzip
+			dest="${app.server.parent.dir}"
+			src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
+		>
+			<mapper
+				type="glob"
+				from="wildfly-${app.server.jboss.version}.Final/*"
+				to="jboss-wildfly-${app.server.jboss.version}/*"
+			/>
+		</unzip>
+
+		<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/sun/jdk/main/module.xml" />
+
+		<replace file="${app.server.jboss.module.file}">
+			<replacetoken><![CDATA[<paths>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					<paths>
+						<path name="com/sun/crypto" />
+						<path name="com/sun/crypto/provider" />
+						<path name="com/sun/image/codec/jpeg" />
+						<path name="com/sun/org/apache/xml/internal/resolver" />
+						<path name="com/sun/org/apache/xml/internal/resolver/tools" />
+				]]>
+			</replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
+			<replacevalue></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<extension module="org.jboss.as.weld"/>]]></replacetoken>
+			<replacevalue></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:weld:2.0"/>]]></replacetoken>
+			<replacevalue></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[</extensions>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					</extensions>
+						<system-properties>
+							<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8" />
+							<property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true" />
+						</system-properties>
+				]]>
+			</replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
+			<replacevalue><![CDATA[<deployment-scanner deployment-timeout="120" ]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
+			<replacetoken><![CDATA[<security-domains>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					<security-domains>
+						<security-domain name="PortalRealm">
+							<authentication>
+								<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+							</authentication>
+						</security-domain>
+				]]>
+			</replacevalue>
+		</replace>
+
+		<echo file="${app.server.jboss.bin.dir}/server.policy">
+			grant {
+				permission java.security.AllPermission;
+			};
+		</echo>
+
+		<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+			<replacetoken><![CDATA[JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m ]]></replacetoken>
+			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+		</replace>
+
 		<if>
-			<equals arg1="${app.server.jboss.major.version}" arg2="5" />
+			<equals arg1="${java.security.manager.option}" arg2="" />
 			<then>
-				<unzip
-					dest="${app.server.parent.dir}"
-					src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-				>
-					<patternset
-						excludes="jboss-${app.server.jboss.version}.GA/server/all/**,jboss-${app.server.jboss.version}.GA/server/default/**,jboss-${app.server.jboss.version}.GA/server/minimal/**,jboss-${app.server.jboss.version}.GA/server/standard/**"
-					/>
-					<mapper
-						type="glob"
-						from="jboss-${app.server.jboss.version}.GA/*"
-						to="jboss-${app.server.jboss.version}/*"
-					/>
-				</unzip>
-
-				<replace file="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/web/conf/jboss-service.xml">
-					<replacetoken><![CDATA[<attribute name="Port">-1</attribute>]]></replacetoken>
-					<replacevalue><![CDATA[<attribute name="Port"><value-factory bean="ServiceBindingManager" method="getIntBinding"><parameter>jboss:service=Naming</parameter><parameter>Port</parameter></value-factory></attribute>]]></replacevalue>
-				</replace>
-
-				<replace file="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/web/conf/login-config.xml">
-					<replacetoken><![CDATA[</policy>]]></replacetoken>
-					<replacevalue><![CDATA[
-							<application-policy name="PortalRealm">
-								<authentication>
-									<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-								</authentication>
-							</application-policy>
-						</policy>]]>
-					</replacevalue>
-				</replace>
-
-				<move file="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/web" tofile="${app.server.parent.dir}/jboss-${app.server.jboss.version}/server/default" />
+				<var name="java.security.config" value="" />
 			</then>
-			<elseif>
-				<or>
-					<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-					<equals arg1="${app.server.jboss.major.version}" arg2="7" />
-					<equals arg1="${app.server.jboss.major.version}" arg2="8" />
-				</or>
-				<then>
-					<if>
-						<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-						<then>
-							<unzip
-								dest="${app.server.parent.dir}"
-								src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-							/>
-						</then>
-						<elseif>
-							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
-							<then>
-								<unzip
-									dest="${app.server.parent.dir}"
-									src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-								>
-									<mapper
-										type="glob"
-										from="jboss-as-${app.server.jboss.version}.Final/*"
-										to="jboss-${app.server.jboss.version}/*"
-									/>
-								</unzip>
-							</then>
-						</elseif>
-						<elseif>
-							<equals arg1="${app.server.jboss.major.version}" arg2="8" />
-							<then>
-								<unzip
-									dest="${app.server.parent.dir}"
-									src="${app.server.parent.dir}/${app.server.jboss.zip.name}"
-								>
-									<mapper
-										type="glob"
-										from="wildfly-${app.server.jboss.version}.Final/*"
-										to="jboss-wildfly-${app.server.jboss.version}/*"
-									/>
-								</unzip>
-							</then>
-						</elseif>
-					</if>
-
-					<if>
-						<equals arg1="${app.server.jboss.major.version}" arg2="7" />
-						<then>
-							<zip
-								basedir="tools/servers/jboss/patches/JBPAPP-9353/classes"
-								destfile="${app.server.jboss.dir}/modules/org/jboss/as/server/main/jboss-as-server-${app.server.jboss.version}.Final.jar"
-								update="yes"
-							/>
-						</then>
-					</if>
-
-					<if>
-						<or>
-							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
-							<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
-						</or>
-						<then>
-							<echo file="${app.server.jboss.dir}/modules/ibm/jdk/main/module.xml"><![CDATA[<?xml version="1.0"?>
-
-								<module xmlns="urn:jboss:module:1.1" name="ibm.jdk">
-									<dependencies>
-										<system export="true">
-											<paths>
-												<path name="com/ibm" />
-												<path name="com/ibm/crypto/provider" />
-												<path name="com/ibm/jvm" />
-												<path name="com/ibm/jvm/io" />
-												<path name="com/ibm/jvm/util" />
-												<path name="com/ibm/match" />
-												<path name="com/ibm/misc" />
-												<path name="com/ibm/net" />
-												<path name="com/ibm/nio" />
-												<path name="com/ibm/nio/ch" />
-												<path name="com/ibm/security/auth" />
-												<path name="com/ibm/security/bootstrap" />
-												<path name="com/ibm/security/auth/module" />
-												<path name="com/ibm/security/util" />
-												<path name="META-INF/services" />
-											</paths>
-										</system>
-									</dependencies>
-								</module>]]>
-							</echo>
-						</then>
-					</if>
-
-					<if>
-						<and>
-							<or>
-								<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-								<equals arg1="${app.server.jboss.major.version}" arg2="8" />
-							</or>
-							<not>
-								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6.0" />
-							</not>
-						</and>
-						<then>
-							<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/system/layers/base/sun/jdk/main/module.xml" />
-						</then>
-						<else>
-							<property name="app.server.jboss.module.file" value="${app.server.jboss.dir}/modules/sun/jdk/main/module.xml" />
-						</else>
-					</if>
-
-					<replace file="${app.server.jboss.module.file}">
-						<replacetoken><![CDATA[<paths>]]></replacetoken>
-						<replacevalue>
-							<![CDATA[
-								<paths>
-									<path name="com/sun/crypto" />
-									<path name="com/sun/crypto/provider" />
-									<path name="com/sun/image/codec/jpeg" />
-									<path name="com/sun/org/apache/xml/internal/resolver" />
-									<path name="com/sun/org/apache/xml/internal/resolver/tools" />
-							]]>
-						</replacevalue>
-					</replace>
-
-					<if>
-						<or>
-							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
-						</or>
-						<then>
-							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-								<replacetoken><![CDATA[enable-welcome-root="true"]]></replacetoken>
-								<replacevalue><![CDATA[enable-welcome-root="false"]]></replacevalue>
-							</replace>
-						</then>
-						<else>
-							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-								<replacetoken><![CDATA[<location name="/" handler="welcome-content"/>]]></replacetoken>
-								<replacevalue></replacevalue>
-							</replace>
-
-							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-								<replacetoken><![CDATA[<extension module="org.jboss.as.weld"/>]]></replacetoken>
-								<replacevalue></replacevalue>
-							</replace>
-
-							<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-								<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:weld:2.0"/>]]></replacetoken>
-								<replacevalue></replacevalue>
-							</replace>
-						</else>
-					</if>
-
-					<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-						<replacetoken><![CDATA[</extensions>]]></replacetoken>
-						<replacevalue>
-							<![CDATA[
-								</extensions>
-									<system-properties>
-										<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8" />
-										<property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true" />
-									</system-properties>
-							]]>
-						</replacevalue>
-					</replace>
-
-					<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-						<replacetoken><![CDATA[<deployment-scanner ]]></replacetoken>
-						<replacevalue><![CDATA[<deployment-scanner deployment-timeout="120" ]]></replacevalue>
-					</replace>
-
-					<replace file="${app.server.jboss.dir}/standalone/configuration/standalone.xml">
-						<replacetoken><![CDATA[<security-domains>]]></replacetoken>
-						<replacevalue>
-							<![CDATA[
-								<security-domains>
-									<security-domain name="PortalRealm">
-										<authentication>
-											<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-										</authentication>
-									</security-domain>
-							]]>
-						</replacevalue>
-					</replace>
-
-					<echo file="${app.server.jboss.bin.dir}/server.policy">
-						grant {
-							permission java.security.AllPermission;
-						};
-					</echo>
-
-					<replace file="${app.server.jboss.bin.dir}/standalone.conf">
-						<replacetoken><![CDATA[JAVA_OPTS="-Xms64m -Xmx512m -XX:MaxPermSize=256m ]]></replacetoken>
-						<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-					</replace>
-
-					<if>
-						<equals arg1="${java.security.manager.option}" arg2="" />
-						<then>
-							<var name="java.security.config" value="" />
-						</then>
-						<else>
-							<var name="java.security.config" value="${java.security.manager.option} -Djava.security.policy==${app.server.jboss.dir}/bin/server.policy -Djboss.home.dir=${app.server.jboss.dir}" />
-						</else>
-					</if>
-
-					<if>
-						<and>
-							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-							<not>
-								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
-							</not>
-						</and>
-						<then>
-							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
-								<![CDATA[
-									JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT"
-								]]>
-							</echo>
-						</then>
-						<else>
-							<replace file="${app.server.jboss.bin.dir}/standalone.conf">
-								<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
-								<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
-							</replace>
-
-							<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
-								<![CDATA[
-									JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
-								]]>
-							</echo>
-						</else>
-					</if>
-
-					<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
-						<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
-						<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
-					</replace>
-
-					<if>
-						<and>
-							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-							<not>
-								<contains string="${app.server.jboss.zip.name}" substring="jboss-eap-6" />
-							</not>
-						</and>
-						<then>
-							<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
-								<replacefilter token="@java.security.config@" value="${java.security.config}" />
-								<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-								<replacevalue>
-									<![CDATA[
-										set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT"
-
-										:JAVA_OPTS_SET
-									]]>
-								</replacevalue>
-							</replace>
-						</then>
-						<else>
-							<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
-								<replacefilter token="@java.security.config@" value="${java.security.config}" />
-								<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-								<replacevalue>
-									<![CDATA[
-										set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
-
-										:JAVA_OPTS_SET
-									]]>
-								</replacevalue>
-							</replace>
-						</else>
-					</if>
-
-					<if>
-						<or>
-							<equals arg1="${app.server.jboss.major.version}" arg2="6" />
-							<equals arg1="${app.server.jboss.major.version}" arg2="7" />
-						</or>
-						<then>
-							<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
-								<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">]]></replacetoken>
-								<replacevalue>
-									<![CDATA[
-										<subsystem xmlns="urn:jboss:domain:web:1.1" default-virtual-server="default-host" native="false">
-											<configuration>
-												<jsp-configuration development="true" />
-											</configuration>
-									]]>
-								</replacevalue>
-							</replace>
-						</then>
-						<else>
-							<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
-								<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
-								<replacevalue>
-									<![CDATA[<jsp-config development="true" />]]>
-								</replacevalue>
-							</replace>
-						</else>
-					</if>
-				</then>
-			</elseif>
 			<else>
-				<fail>JBoss ${app.server.jboss.version} is unsupported.</fail>
+				<var name="java.security.config" value="${java.security.manager.option} -Djava.security.policy==${app.server.jboss.dir}/bin/server.policy -Djboss.home.dir=${app.server.jboss.dir}" />
 			</else>
 		</if>
+
+		<replace file="${app.server.jboss.bin.dir}/standalone.conf">
+			<replacetoken><![CDATA[JAVA_OPTS="-Xms1303m -Xmx1303m -XX:MaxPermSize=256m ]]></replacetoken>
+			<replacevalue><![CDATA[JAVA_OPTS="]]></replacevalue>
+		</replace>
+
+		<echo file="${app.server.jboss.bin.dir}/standalone.conf" append="true">
+			<![CDATA[
+				JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true ${java.security.config} -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+			]]>
+		</echo>
+
+		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
+			<replacetoken><![CDATA[set "JAVA_OPTS=-Xms64M ]]></replacetoken>
+			<replacevalue><![CDATA[rem set "JAVA_OPTS=-Xms64M ]]></replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.bin.dir}/standalone.conf.bat">
+			<replacefilter token="@java.security.config@" value="${java.security.config}" />
+			<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
+			<replacevalue>
+				<![CDATA[
+					set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true @java.security.config@ -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=256m"
+
+					:JAVA_OPTS_SET
+				]]>
+			</replacevalue>
+		</replace>
+
+		<replace file="${app.server.jboss.instance.dir}/configuration/standalone.xml">
+			<replacetoken><![CDATA[<jsp-config/>]]></replacetoken>
+			<replacevalue>
+				<![CDATA[<jsp-config development="true" />]]>
+			</replacevalue>
+		</replace>
 
 		<chmod perm="a+x">
 			<fileset dir="${app.server.jboss.bin.dir}">

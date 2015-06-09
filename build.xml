@@ -560,43 +560,6 @@
 		</if>
 
 		<if>
-			<equals arg1="${app.server.type}" arg2="jboss" />
-			<then>
-				<if>
-					<equals arg1="${app.server.jboss.major.version}" arg2="5" />
-					<then>
-						<move
-							failonerror="false"
-							file="${app.server.dir}/common/lib/hibernate-validator.jar"
-							tofile="${app.server.dir}/common/lib/hibernate-validator.jar.bak"
-						/>
-
-						<move
-							failonerror="false"
-							file="${app.server.dir}/common/lib/slf4j-jboss-logging.jar"
-							tofile="${app.server.dir}/common/lib/slf4j-jboss-logging.jar.bak"
-						/>
-
-						<delete>
-							<fileset
-								dir="${app.server.lib.portal.dir}"
-								includes="jaxrpc.jar,log4j.jar,stax.jar,xercesImpl.jar,xml-apis.jar"
-							/>
-						</delete>
-					</then>
-					<else>
-						<delete>
-							<fileset
-								dir="${app.server.lib.portal.dir}"
-								includes="eclipselink.jar"
-							/>
-						</delete>
-					</else>
-				</if>
-			</then>
-		</if>
-
-		<if>
 			<equals arg1="${app.server.type}" arg2="jetty" />
 			<then>
 				<copy todir="${app.server.lib.global.dir}">
@@ -973,58 +936,15 @@
 			<equals arg1="${app.server.type}" arg2="jboss" />
 			<then>
 				<if>
-					<equals arg1="${app.server.jboss.major.version}" arg2="5" />
+					<not>
+						<available file="${app.server.lib.global.dir}/module.xml" />
+					</not>
 					<then>
-						<loadfile property="run.conf.content" srcfile="${app.server.bin.dir}/run.conf" />
-
-						<antelope:stringutil string="${run.conf.content}" property="run.conf.content.index">
-							<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
-						</antelope:stringutil>
-
-						<if>
-							<equals arg1="${run.conf.content.index}" arg2="-1" />
-							<then>
-								<echo file="${app.server.bin.dir}/run.conf" append="true">
-		JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"</echo>
-							</then>
-						</if>
-
-						<loadfile property="run.conf.bat.content" srcfile="${app.server.bin.dir}/run.conf.bat" />
-
-						<antelope:stringutil string="${run.conf.bat.content}" property="run.conf.bat.content.index">
-							<indexof string="-Dfile.encoding=UTF-8" fromindex="0" />
-						</antelope:stringutil>
-
-						<if>
-							<equals arg1="${run.conf.bat.content.index}" arg2="-1" />
-							<then>
-								<replace file="${app.server.bin.dir}/run.conf.bat">
-									<replacetoken><![CDATA[:JAVA_OPTS_SET]]></replacetoken>
-									<replacevalue><![CDATA[set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8 -Djava.net.preferIPv4Stack=true -Djboss.vfs.forceVfsJar=true -Dorg.jboss.logging.Log4jService.catchSystemOut=false -Duser.timezone=GMT -Xmx1024m -XX:MaxPermSize=384m"
-
-		:JAVA_OPTS_SET]]></replacevalue>
-								</replace>
-							</then>
-						</if>
-
-						<replace file="${app.server.deploy.dir}/jbossweb.sar/server.xml">
-							<replacetoken><![CDATA[redirectPort="8443" />]]></replacetoken>
-							<replacevalue><![CDATA[redirectPort="8443" URIEncoding="UTF-8" />]]></replacevalue>
-						</replace>
+						<copy
+							file="tools/servers/jboss/modules/module.xml"
+							tofile="${app.server.lib.global.dir}/module.xml"
+						/>
 					</then>
-					<else>
-						<if>
-							<not>
-								<available file="${app.server.lib.global.dir}/module.xml" />
-							</not>
-							<then>
-								<copy
-									file="tools/servers/jboss/modules/module.xml"
-									tofile="${app.server.lib.global.dir}/module.xml"
-								/>
-							</then>
-						</if>
-					</else>
 				</if>
 			</then>
 		</if>

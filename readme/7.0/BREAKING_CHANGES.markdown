@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `f9fcd68`.*
+*This document has been reviewed through commit `50d72f6`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1804,39 +1804,38 @@ The `getQueryString` method was an unnecessary convenience method.
 
 ---------------------------------------
 
-### Removed mbMessages and fileEntryTuples attributes from app-view-search-entry tag
+### Removed mbMessages and fileEntryTuples Attributes from app-view-search-entry Tag
 - **Date:** 2015-May-27
 - **JIRA Ticket:** LPS-55886
 
 #### What changed?
 
 The `mbMessages` and `fileEntryTuples` attributes from the
-`app-view-search-entry` tag have been removed. Related methods
-`getMbMessages`, `getFileEntryTuples`, and `addMbMessage` have been
-removed as well from `SearchResult`.
+`app-view-search-entry` tag have been removed. Related methods `getMbMessages`,
+`getFileEntryTuples`, and `addMbMessage` have also been removed from the
+`SearchResult` class.
 
 #### Who is affected?
 
-Any developers that use the `app-view-search-entry` tag in their
-views, or that have developed hooks to customize the taglib JSP or any
-portlet that uses that taglib. Also, any custom code that uses the
-`SearchResult` class may be affected as well.
+This affects developers that use the `app-view-search-entry` tag in their views,
+have developed hooks to customize the tag JSP, or have developed a portlet that
+uses that tag. Also, any custom code that uses the `SearchResult` class may be
+affected.
 
 #### How should I update my code?
 
 The new attributes `commentRelatedSearchResults` and
-`fileEntryRelatedSearchResults` should be used instead. The expected
-value is the one returned by the `getCommentRelatedSearchResults` and
+`fileEntryRelatedSearchResults` should be used instead. The expected value is
+the one returned by the `getCommentRelatedSearchResults` and
 `getFileEntryRelatedSearchResults` methods in `SearchResult`.
 
-When adding comments to the `SearchResult` the new `addComment` method
-should be used instead of `addMbMessage`.
+When adding comments to the `SearchResult`, the new `addComment` method should
+be used instead of the `addMbMessage` method.
 
 #### Why was this change made?
 
-As part of the modularization efforts, references to `MBMessage`
-needed to be removed for the Message Boards portlet to be placed into
-its own OSGi bundle.
+As part of the modularization efforts, references to `MBMessage` needed to be
+removed for the Message Boards portlet to be placed into its own OSGi bundle.
 
 ---------------------------------------
 

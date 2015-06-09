@@ -2933,9 +2933,9 @@
 			</library>
 			<library>
 				<file-name>lib/portal/serializer.jar</file-name>
-				<version>2.7.1</version>
+				<version>2.7.2</version>
 				<project-name>Xalan-Java</project-name>
-				<project-url>http://xml.apache.org/xalan-j</project-url>
+				<project-url>http://xalan.apache.org/xalan-j</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>
@@ -3474,9 +3474,9 @@
 			</library>
 			<library>
 				<file-name>lib/portal/xalan.jar</file-name>
-				<version>2.7.1</version>
+				<version>2.7.2</version>
 				<project-name>Xalan</project-name>
-				<project-url>http://xml.apache.org/xalan-j</project-url>
+				<project-url>http://xalan.apache.org/xalan-j</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>

@@ -187,6 +187,11 @@ public interface Localization {
 		PortletPreferences preferences, String preferenceName,
 		String propertyName);
 
+	public Map<Locale, String> getLocalizationMap(
+		PortletPreferences preferences, String preferenceName,
+		String propertyName, String defaultPropertyValue,
+		ClassLoader classLoader);
+
 	/**
 	 * Returns a map of locales and localized strings for the parameter in the
 	 * portlet request.

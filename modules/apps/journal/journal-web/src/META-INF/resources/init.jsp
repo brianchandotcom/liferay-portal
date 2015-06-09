@@ -194,8 +194,7 @@ page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Set" %><%@
-page import="java.util.UUID" %>
+page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@
 page import="javax.portlet.PortletRequest" %><%@

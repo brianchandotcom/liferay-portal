@@ -75,12 +75,13 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the email address with the primary key.
+	 * Returns the email address with the ID.
 	 *
 	 * @param  emailAddressId the primary key of the email address
-	 * @return the email address with the primary key or null if an email
-	 * 		   address with the primary key could not be found or if the user
-	 * 		   did not have permission to view the email address
+	 * @return the email address with the ID, or <code>null</code> if an email
+	 *         address with the ID could not be found or if the user did not
+	 *         have permission to view the email address
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public EmailAddress fetchEmailAddress(long emailAddressId)

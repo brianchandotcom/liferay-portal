@@ -377,12 +377,13 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the organization with the primary key.
+	 * Returns the organization with the ID.
 	 *
 	 * @param  organizationId the primary key of the organization
-	 * @return the organization with the primary key or null if an organization
-	 * 		   with the primary key could not be found or if the user did not
-	 * 		   have permission to view the organization
+	 * @return the organization with the ID, or <code>null</code> if an
+	 *         organization with the ID could not be found or if the user did
+	 *         not have permission to view the organization
+	 * @throws PortalException if a portal exception occurred
 	 */
 	@Override
 	public Organization fetchOrganization(long organizationId)

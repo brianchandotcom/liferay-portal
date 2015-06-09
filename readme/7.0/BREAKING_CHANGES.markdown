@@ -1804,6 +1804,42 @@ The `getQueryString` method was an unnecessary convenience method.
 
 ---------------------------------------
 
+### Removed mbMessages and fileEntryTuples attributes from app-view-search-entry tag
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55886
+
+#### What changed?
+
+The `mbMessages` and `fileEntryTuples` attributes from the
+`app-view-search-entry` tag have been removed. Related methods
+`getMbMessages`, `getFileEntryTuples`, and `addMbMessage` have been
+removed as well from `SearchResult`.
+
+#### Who is affected?
+
+Any developers that use the `app-view-search-entry` tag in their
+views, or that have developed hooks to customize the taglib JSP or any
+portlet that uses that taglib. Also, any custom code that uses the
+`SearchResult` class may be affected as well.
+
+#### How should I update my code?
+
+The new attributes `commentRelatedSearchResults` and
+`fileEntryRelatedSearchResults` should be used instead. The expected
+value is the one returned by the `getCommentRelatedSearchResults` and
+`getFileEntryRelatedSearchResults` methods in `SearchResult`.
+
+When adding comments to the `SearchResult` the new `addComment` method
+should be used instead of `addMbMessage`.
+
+#### Why was this change made?
+
+As part of the modularization efforts, references to `MBMessage`
+needed to be removed for the Message Boards portlet to be placed into
+its own OSGi bundle.
+
+---------------------------------------
+
 ### Replaced Method getPermissionQuery with getPermissionFilter in SearchPermissionChecker, and getFacetQuery with getFacetBooleanFilter in Indexer
 - **Date:** 2015-Jun-2
 - **JIRA Ticket:** LPS-56064
@@ -1876,42 +1912,6 @@ should pass the new userId parameter.
 In order to add support to structure and template versions, audit columns were
 also added to such models. For the service to keep track which the user is
 modifying the structure or template, the `userId` parameter is required.
-
----------------------------------------
-
-### Removed mbMessages and fileEntryTuples attributes from app-view-search-entry tag
-- **Date:** 2015-May-27
-- **JIRA Ticket:** LPS-55886
-
-#### What changed?
-
-The `mbMessages` and `fileEntryTuples` attributes from the
-`app-view-search-entry` tag have been removed. Related methods
-`getMbMessages`, `getFileEntryTuples`, and `addMbMessage` have been
-removed as well from `SearchResult`.
-
-#### Who is affected?
-
-Any developers that use the `app-view-search-entry` tag in their
-views, or that have developed hooks to customize the taglib JSP or any
-portlet that uses that taglib. Also, any custom code that uses the
-`SearchResult` class may be affected as well.
-
-#### How should I update my code?
-
-The new attributes `commentRelatedSearchResults` and
-`fileEntryRelatedSearchResults` should be used instead. The expected
-value is the one returned by the `getCommentRelatedSearchResults` and
-`getFileEntryRelatedSearchResults` methods in `SearchResult`.
-
-When adding comments to the `SearchResult` the new `addComment` method
-should be used instead of `addMbMessage`.
-
-#### Why was this change made?
-
-As part of the modularization efforts, references to `MBMessage`
-needed to be removed for the Message Boards portlet to be placed into
-its own OSGi bundle.
 
 ---------------------------------------
 

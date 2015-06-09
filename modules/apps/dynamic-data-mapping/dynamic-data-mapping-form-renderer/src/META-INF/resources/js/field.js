@@ -355,29 +355,31 @@ AUI.add(
 
 						var repeatedIndex = -1;
 
-						var found = false;
+						if (A.instanceOf(form, Liferay.DDM.Renderer.Form)) {
+							var found = false;
 
-						form.getFieldNodes().each(
-							function(item) {
-								if (!found) {
-									var fieldNode = item.one('.field-wrapper');
+							form.getFieldNodes().each(
+								function(item) {
+									if (!found) {
+										var fieldNode = item.one('.field-wrapper');
 
-									var fieldQualifiedName = fieldNode.getData('fieldname');
+										var fieldQualifiedName = fieldNode.getData('fieldname');
 
-									var fieldInstanceId = Util.getInstanceIdFromQualifiedName(fieldQualifiedName);
+										var fieldInstanceId = Liferay.DDM.Renderer.Util.getInstanceIdFromQualifiedName(fieldQualifiedName);
 
-									if (fieldInstanceId === instance.get('instanceId')) {
-										found = true;
-									}
+										if (fieldInstanceId === instance.get('instanceId')) {
+											found = true;
+										}
 
-									var fieldName = Util.getFieldNameFromQualifiedName(fieldQualifiedName);
+										var fieldName = Liferay.DDM.Renderer.Util.getFieldNameFromQualifiedName(fieldQualifiedName);
 
-									if (fieldName === instance.get('name')) {
-										repeatedIndex++;
+										if (fieldName === instance.get('name')) {
+											repeatedIndex++;
+										}
 									}
 								}
-							}
-						);
+							);
+						}
 
 						return repeatedIndex;
 					}

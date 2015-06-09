@@ -4432,7 +4432,7 @@ module.framework.properties.osgi.console=11312</echo>
 
 		<replace file="${app.server.tomcat.bin.dir}/setenv${file.suffix.bat}">
 			<replacetoken><![CDATA[-Xmx1024m -XX:MaxPermSize=256m]]></replacetoken>
-			<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xmx2048m  -XX:+PrintGCCause -XX:+PrintGCDetails -XX:MaxPermSize=512m]]></replacevalue>
+			<replacevalue><![CDATA[-verbose:gc -Xloggc:/tmp/tomcat-gc.log -Xms512m -Xmx512m -XX:MaxNewSize=32m -XX:MaxPermSize=200m -XX:MaxTenuringThreshold=0 -XX:NewSize=32m -XX:ParallelGCThreads=2 -XX:PermSize=200m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0 -XX:+UseParNewGC]]></replacevalue>
 		</replace>
 
 		<antcall target="prepare-test-build-tomcat-dependents" inheritAll="false" />
@@ -6045,6 +6045,21 @@ ${tomcat-gc-log}</echo>
 			</then>
 			<else>
 				<echo>Unable to read /tmp/tomcat-gc.log</echo>
+			</else>
+		</if>
+
+		<if>
+			<available file="/tmp/tsant-gc.log" />
+			<then>
+				<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
+
+				<echo>
+Tsant GC log:
+
+${tsant-gc-log}</echo>
+			</then>
+			<else>
+				<echo>Unable to read /tmp/tsant-gc.log</echo>
 			</else>
 		</if>
 	</target>

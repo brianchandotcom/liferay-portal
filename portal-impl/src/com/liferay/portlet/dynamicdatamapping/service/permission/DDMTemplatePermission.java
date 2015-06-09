@@ -34,7 +34,9 @@ public class DDMTemplatePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, template, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDMTemplate.class.getName(),
+				template.getTemplateId(), actionId);
 		}
 	}
 
@@ -46,7 +48,9 @@ public class DDMTemplatePermission {
 		if (!contains(
 				permissionChecker, groupId, template, portletId, actionId)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDMTemplate.class.getName(),
+				template.getTemplateId(), actionId);
 		}
 	}
 
@@ -58,7 +62,9 @@ public class DDMTemplatePermission {
 		if (!contains(
 				permissionChecker, groupId, templateId, portletId, actionId)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDMTemplate.class.getName(),
+				templateId, actionId);
 		}
 	}
 
@@ -68,7 +74,9 @@ public class DDMTemplatePermission {
 		throws PortalException {
 
 		if (!contains(permissionChecker, templateId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DDMTemplate.class.getName(),
+				templateId, actionId);
 		}
 	}
 

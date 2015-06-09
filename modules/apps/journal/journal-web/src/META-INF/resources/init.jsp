@@ -94,6 +94,7 @@ page import="com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil" %><
 page import="com.liferay.portal.layoutconfiguration.util.RuntimePageUtil" %><%@
 page import="com.liferay.portal.model.*" %><%@
 page import="com.liferay.portal.model.impl.*" %><%@
+page import="com.liferay.portal.security.auth.ConfigurationException" %><%@
 page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.*" %><%@

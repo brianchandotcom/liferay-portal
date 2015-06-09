@@ -25,4 +25,9 @@
 	title="error"
 />
 
+<liferay-ui:error exception="<%= ConfigurationException.MustBeSelectableScope.class %>" message="the-selected-scope-is-not-available" />
+<liferay-ui:error exception="<%= ConfigurationException.MustBeStrictPortlet.class %>" message="the-portlet-is-not-configured-correctly" />
+<liferay-ui:error exception="<%= ConfigurationException.MustHaveAncestor.class %>" message="no-matching-scope-group-found" />
+<liferay-ui:error exception="<%= ConfigurationException.MustHaveContentSharingWithChildrenEnabled.class %>" message="referenced-group-no-longer-allows-sharing-content-with-child-sites" />
+<liferay-ui:error exception="<%= ConfigurationException.MustHaveValidScopeGroupId.class %>" message="no-matching-scope-group-found" />
 <liferay-ui:error exception="<%= NoSuchModelException.class %>" message="the-asset-could-not-be-found" />

@@ -130,7 +130,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 
 			if (!hasPermission) {
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					getPermissionChecker().getUserId(), Group.class.getName(),
+					groupId, ActionKeys.ASSIGN_MEMBERS);
 			}
 		}
 
@@ -718,7 +720,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 
 		return userPersistence.findByCompanyId(companyId, start, end);
@@ -729,7 +732,8 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if (!permissionChecker.isCompanyAdmin(companyId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeCompanyAdmin(
+				permissionChecker.getUserId());
 		}
 
 		return userPersistence.countByCompanyId(companyId);
@@ -1261,7 +1265,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 
 			if (!hasPermission) {
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					getPermissionChecker().getUserId(), Group.class.getName(),
+					groupId, ActionKeys.ASSIGN_MEMBERS);
 			}
 		}
 
@@ -2326,7 +2332,10 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 					getPermissionChecker(), organizationIds,
 					ActionKeys.ASSIGN_MEMBERS)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					getPermissionChecker().getUserId(),
+					Organization.class.getName(), 0, ActionKeys.ADD_USER,
+					ActionKeys.ASSIGN_MEMBERS);
 			}
 		}
 
@@ -2746,7 +2755,9 @@ public class UserServiceImpl extends UserServiceBaseImpl {
 			}
 
 			if (!allowed) {
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), Organization.class.getName(),
+					0, ActionKeys.MANAGE_USERS);
 			}
 		}
 	}

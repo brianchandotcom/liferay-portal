@@ -113,7 +113,7 @@ public class MyWorkflowTaskPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, WorkflowException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			hideDefaultErrorMessage(renderRequest);
 

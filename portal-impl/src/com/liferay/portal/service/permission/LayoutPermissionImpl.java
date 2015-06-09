@@ -61,7 +61,9 @@ public class LayoutPermissionImpl
 		if (!contains(
 				permissionChecker, layout, checkViewableGroup, actionId)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Layout.class.getName(),
+				layout.getLayoutId(), actionId);
 		}
 	}
 
@@ -71,7 +73,9 @@ public class LayoutPermissionImpl
 		throws PortalException {
 
 		if (!contains(permissionChecker, layout, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Layout.class.getName(),
+				layout.getLayoutId(), actionId);
 		}
 	}
 
@@ -85,7 +89,9 @@ public class LayoutPermissionImpl
 				permissionChecker, groupId, privateLayout, layoutId,
 				actionId)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Layout.class.getName(), layoutId,
+				actionId);
 		}
 	}
 
@@ -94,9 +100,9 @@ public class LayoutPermissionImpl
 			PermissionChecker permissionChecker, long plid, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, plid, actionId)) {
-			throw new PrincipalException();
-		}
+		Layout layout = LayoutLocalServiceUtil.getLayout(plid);
+
+		check(permissionChecker, layout, actionId);
 	}
 
 	@Override

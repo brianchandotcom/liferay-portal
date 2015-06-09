@@ -16,6 +16,7 @@ package com.liferay.portlet.announcements.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portlet.announcements.model.AnnouncementsFlag;
 import com.liferay.portlet.announcements.service.base.AnnouncementsFlagServiceBaseImpl;
 
@@ -37,7 +38,9 @@ public class AnnouncementsFlagServiceImpl
 			flagId);
 
 		if (flag.getUserId() != getUserId()) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeOwnedByCurrentUser(
+				getUserId(), AnnouncementsFlag.class.getName(), flagId,
+				ActionKeys.DELETE);
 		}
 
 		announcementsFlagLocalService.deleteFlag(flagId);

@@ -46,7 +46,9 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, dlFolder, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), DLFolder.class.getName(),
+				dlFolder.getFolderId(), actionId);
 		}
 	}
 
@@ -55,7 +57,9 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!folder.containsPermission(permissionChecker, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Folder.class.getName(),
+				folder.getFolderId(), actionId);
 		}
 	}
 
@@ -65,7 +69,9 @@ public class DLFolderPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, groupId, folderId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), Folder.class.getName(), folderId,
+				actionId);
 		}
 	}
 

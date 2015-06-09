@@ -103,7 +103,7 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchRecordSetException.class.getName()) ||
 			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
+				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(templatePath + "error.jsp", renderRequest, renderResponse);
 		}

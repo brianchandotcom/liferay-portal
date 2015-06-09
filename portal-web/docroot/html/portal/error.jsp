@@ -52,9 +52,53 @@ else if (company.getAuthType().equals(CompanyConstants.AUTH_TYPE_ID)) {
 	</div>
 </c:if>
 
-<c:if test="<%= SessionErrors.contains(request, PrincipalException.class.getName()) %>">
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.MustBeAuthenticated.class.getName()) %>">
 	<div class="alert alert-danger">
-		<liferay-ui:message key="you-do-not-have-the-roles-required-to-access-this-page" />
+		<liferay-ui:message key="please-sign-in-to-access-this-application" />
+	</div>
+</c:if>
+
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.MustBeCompanyAdmin.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustBeMarketplaceAdmin.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustBeOmniadmin.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustBeOwnedByCurrentUser.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustBeSupportedActionForRole.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustBeValidPortlet.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustHavePermission.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustHaveUserGroupRole.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustHaveUserRole.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustNotBeGroupAdmin.class.getName()) %>">
+
+	<div class="alert alert-danger">
+		<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+	</div>
+</c:if>
+
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.MustBeEnabled.class.getName()) %>">
+	<div class="alert alert-danger">
+
+		<%
+		PrincipalException.MustBeEnabled pe = (PrincipalException.MustBeEnabled)SessionErrors.get(request, PrincipalException.MustBeEnabled.class.getName());
+		%>
+
+		<liferay-ui:message arguments="<%= pe.resourceName %>" key="x-is-not-enabled" translateArguments="<%= false %>" />
+	</div>
+</c:if>
+
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.MustBeInvokedByPost.class.getName()) %>">
+	<div class="alert alert-danger">
+		<liferay-ui:message key="an-unexpected-error-occurred-while-connecting-to-the-specified-url" />
+	</div>
+</c:if>
+
+<c:if test="<%= SessionErrors.contains(request, PrincipalException.MustBePortletStrutsPath.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustHaveValidPermissionChecker.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustHaveValidPortletId.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustHaveValidPrincipalName.class.getName()) ||
+	SessionErrors.contains(request, PrincipalException.MustInitializePermissionChecker.class.getName()) %>">
+
+	<div class="alert alert-danger">
+		<liferay-ui:message key="the-portlet-is-not-configured-correctly" />
 	</div>
 </c:if>
 

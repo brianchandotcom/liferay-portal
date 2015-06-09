@@ -793,7 +793,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 		if (!isPublicPath(path)) {
 			if (user == null) {
-				SessionErrors.add(request, PrincipalException.class.getName());
+				SessionErrors.add(
+					request,
+					PrincipalException.MustBeAuthenticated.class.getName());
 
 				return _PATH_PORTAL_LOGIN;
 			}
@@ -938,7 +940,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 				if (portlet != null) {
 					if (!strutsPath.equals(portlet.getStrutsPath())) {
-						throw new PrincipalException();
+						throw new PrincipalException.MustBePortletStrutsPath(
+							strutsPath, portletId);
 					}
 				}
 				else {
@@ -961,7 +964,10 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 							permissionChecker, layout, portlet,
 							ActionKeys.VIEW)) {
 
-						throw new PrincipalException();
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker.getUserId(),
+							Portlet.class.getName(), portlet.getPortletId(),
+							ActionKeys.VIEW);
 					}
 				}
 				else if ((portlet != null) && !portlet.isActive()) {
@@ -972,7 +978,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 				}
 			}
 			catch (Exception e) {
-				SessionErrors.add(request, PrincipalException.class.getName());
+				SessionErrors.add(request, e.getClass().getName());
 
 				authorized = false;
 			}

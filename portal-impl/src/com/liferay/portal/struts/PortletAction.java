@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutTypePortlet;
 import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -265,7 +266,7 @@ public class PortletAction extends Action {
 				layout, portletId);
 
 		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
+			throw new ConfigurationException.MustBeStrictPortlet(portletId);
 		}
 
 		return portletPreferences;
@@ -362,7 +363,9 @@ public class PortletAction extends Action {
 			HttpServletRequest request = PortalUtil.getHttpServletRequest(
 				actionRequest);
 
-			SessionErrors.add(request, PrincipalException.class.getName());
+			SessionErrors.add(
+				request,
+				PrincipalException.MustBeAuthenticated.class.getName());
 
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);

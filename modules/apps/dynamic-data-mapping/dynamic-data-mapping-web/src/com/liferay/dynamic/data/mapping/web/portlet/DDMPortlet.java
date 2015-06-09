@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.security.auth.ConfigurationException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
@@ -99,7 +100,8 @@ public class DDMPortlet extends MVCPortlet {
 			super.processAction(actionRequest, actionResponse);
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchStructureException ||
+			if (e instanceof ConfigurationException ||
+				e instanceof NoSuchStructureException ||
 				e instanceof PrincipalException ||
 				e instanceof NoSuchTemplateException) {
 
@@ -163,7 +165,9 @@ public class DDMPortlet extends MVCPortlet {
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof PrincipalException) {
+			if (e instanceof ConfigurationException ||
+				e instanceof PrincipalException) {
+
 				SessionErrors.add(request, e.getClass());
 
 				include("/error.jsp", request, response);

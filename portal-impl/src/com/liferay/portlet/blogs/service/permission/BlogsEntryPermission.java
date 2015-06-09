@@ -40,7 +40,9 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, entry, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), BlogsEntry.class.getName(),
+				entry.getEntryId(), actionId);
 		}
 	}
 
@@ -49,7 +51,9 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 		throws PortalException {
 
 		if (!contains(permissionChecker, entryId, actionId)) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker.getUserId(), BlogsEntry.class.getName(),
+				entryId, actionId);
 		}
 	}
 

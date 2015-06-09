@@ -54,7 +54,9 @@ public class MBBanServiceImpl extends MBBanServiceBaseImpl {
 		}
 
 		if (groupAdmin) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustNotBeGroupAdmin(
+				permissionChecker.getUserId(), MBBan.class.getName(),
+				serviceContext.getScopeGroupId(), ActionKeys.BAN_USER);
 		}
 
 		return mbBanLocalService.addBan(getUserId(), banUserId, serviceContext);

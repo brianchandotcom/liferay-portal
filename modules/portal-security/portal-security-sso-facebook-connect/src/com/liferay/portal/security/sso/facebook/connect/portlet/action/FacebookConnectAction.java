@@ -83,7 +83,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 			WebKeys.THEME_DISPLAY);
 
 		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeEnabled(
+				themeDisplay.getCompanyId(), FacebookConnect.class.getName());
 		}
 
 		HttpSession session = request.getSession();
@@ -303,7 +304,8 @@ public class FacebookConnectAction extends BaseStrutsAction {
 		throws Exception {
 
 		if (!_facebookConnect.isEnabled(themeDisplay.getCompanyId())) {
-			throw new PrincipalException();
+			throw new PrincipalException.MustBeEnabled(
+				themeDisplay.getCompanyId(), FacebookConnect.class.getName());
 		}
 
 		HttpSession session = request.getSession();

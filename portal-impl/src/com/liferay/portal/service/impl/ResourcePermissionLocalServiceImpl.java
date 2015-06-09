@@ -1216,8 +1216,8 @@ public class ResourcePermissionLocalServiceImpl
 			}
 
 			if (unsupportedActionIds.contains(actionId)) {
-				throw new PrincipalException(
-					actionId + "is not supported by role " + roleId);
+				throw new PrincipalException.MustBeSupportedActionForRole(
+					roleId, actionId);
 			}
 
 			ResourceAction resourceAction =

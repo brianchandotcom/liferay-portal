@@ -53,12 +53,75 @@ if (Validator.isNotNull(exception)) {
 %>
 
 <c:choose>
-	<c:when test="<%= SessionErrors.contains(request, PrincipalException.class.getName()) %>">
+	<c:when test="<%= SessionErrors.contains(request, PrincipalException.MustBeAuthenticated.class.getName()) %>">
+		<h3 class="alert alert-danger">
+			<liferay-ui:message key="forbidden" />
+		</h3>
+
+		<liferay-ui:message key="please-sign-in-to-access-this-application" />
+
+		<br /><br />
+
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+	</c:when>
+	<c:when test="<%= SessionErrors.contains(request, PrincipalException.MustBeCompanyAdmin.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustBeMarketplaceAdmin.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustBeOmniadmin.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustBeOwnedByCurrentUser.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustBeSupportedActionForRole.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustBeValidPortlet.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustHavePermission.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustHaveUserGroupRole.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustHaveUserRole.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustNotBeGroupAdmin.class.getName()) %>">
+
 		<h3 class="alert alert-danger">
 			<liferay-ui:message key="forbidden" />
 		</h3>
 
 		<liferay-ui:message key="you-do-not-have-permission-to-access-the-requested-resource" />
+
+		<br /><br />
+
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+	</c:when>
+	<c:when test="<%= SessionErrors.contains(request, PrincipalException.MustBeEnabled.class.getName()) %>">
+		<h3 class="alert alert-danger">
+			<liferay-ui:message key="forbidden" />
+		</h3>
+
+		<%
+		PrincipalException.MustBeEnabled pe = (PrincipalException.MustBeEnabled)SessionErrors.get(request, PrincipalException.MustBeEnabled.class.getName());
+		%>
+
+		<liferay-ui:message arguments="<%= pe.resourceName %>" key="x-is-not-enabled" translateArguments="<%= false %>" />
+
+		<br /><br />
+
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+	</c:when>
+	<c:when test="<%= SessionErrors.contains(request, PrincipalException.MustBeInvokedByPost.class.getName()) %>">
+		<h3 class="alert alert-danger">
+			<liferay-ui:message key="internal-server-error" />
+		</h3>
+
+		<liferay-ui:message key="an-unexpected-error-occurred-while-connecting-to-the-specified-url" />
+
+		<br /><br />
+
+		<code class="lfr-url-error"><%= HtmlUtil.escape(url) %></code>
+	</c:when>
+	<c:when test="<%= SessionErrors.contains(request, PrincipalException.MustBePortletStrutsPath.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustHaveValidPermissionChecker.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustHaveValidPortletId.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustHaveValidPrincipalName.class.getName()) ||
+		SessionErrors.contains(request, PrincipalException.MustInitializePermissionChecker.class.getName()) %>">
+
+		<h3 class="alert alert-danger">
+			<liferay-ui:message key="internal-server-error" />
+		</h3>
+
+		<liferay-ui:message key="the-portlet-is-not-configured-correctly" />
 
 		<br /><br />
 

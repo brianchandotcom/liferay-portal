@@ -172,8 +172,8 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 				_log.warn("Invalid portlet ID " + portlet.getPortletId());
 			}
 
-			throw new PrincipalException(
-				"Invalid portlet ID " + portlet.getPortletId());
+			throw new PrincipalException.MustHaveValidPortletId(
+				portlet.getPortletId());
 		}
 
 		if (portlet.isUndeployedPortlet()) {

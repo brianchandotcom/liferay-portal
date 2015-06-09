@@ -14,7 +14,9 @@
 
 package com.liferay.portal.comment.action;
 
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.servlet.RequestDispatcher;
@@ -24,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Adolfo Pérez
  */
+@OSGiBeanProperties(
+	property = "path=/portal/more_comments", service = StrutsAction.class
+)
 public class GetCommentsStrutsAction extends BaseStrutsAction {
 
 	@Override

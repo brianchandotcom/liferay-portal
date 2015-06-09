@@ -39,22 +39,11 @@
 			.field {
 				background: transparent;
 				border-width: 0;
-				color: #333;
-				font-family: Helvetica;
-				font-weight: 300;
-				line-height: 28px;
 				margin: 0;
 				padding: 0;
 
 				&:focus {
 					box-shadow: none;
-				}
-
-				@include placeholder {
-					color: #BAC5D2;
-					font-family: Helvetica;
-					font-weight: 300;
-					line-height: 28px;
 				}
 			}
 		}

@@ -1205,11 +1205,9 @@ public class UsersAdminImpl implements UsersAdmin {
 			PropsKeys.FIELD_EDITABLE_DOMAINS, new Filter(field));
 
 		for (String domainName : fieldEditableDomainNames) {
-			if (domainName.equals(StringPool.STAR)) {
-				return true;
-			}
+			if (domainName.equals(StringPool.STAR) ||
+				emailAddress.endsWith(domainName)) {
 
-			if (emailAddress.endsWith(domainName)) {
 				return true;
 			}
 		}

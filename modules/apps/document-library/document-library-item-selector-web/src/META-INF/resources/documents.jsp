@@ -35,7 +35,7 @@ searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderI
 	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
 	idPrefix="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
-	returnType="<%= ReturnType.parseFirst(itemSelectorCriterion.getDesiredReturnTypes()) %>"
+	returnType="<%= ReturnType.parseFirst(itemSelectorCriterion.getItemSelectorDesiredReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"
 	tabName="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

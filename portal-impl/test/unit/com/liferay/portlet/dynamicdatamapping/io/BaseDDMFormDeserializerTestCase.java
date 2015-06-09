@@ -134,7 +134,6 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Assert.assertTrue(ddmFormField.isRepeatable());
 		Assert.assertFalse(ddmFormField.isRequired());
 		Assert.assertFalse(ddmFormField.isShowLabel());
-		Assert.assertEquals("true", ddmFormField.getVisibilityExpression());
 	}
 
 	protected void testDateDDMFormField(DDMFormField ddmFormField) {

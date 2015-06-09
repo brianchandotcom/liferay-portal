@@ -66,6 +66,14 @@ AUI.add(
 						);
 					},
 
+					toJSON: function() {
+						var instance = this;
+
+						return {
+							fields: AArray.invoke(instance.get('fields'), 'toJSON')
+						};
+					},
+
 					_getField: function(node) {
 						var instance = this;
 

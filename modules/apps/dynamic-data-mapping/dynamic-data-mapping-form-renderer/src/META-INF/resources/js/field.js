@@ -20,12 +20,16 @@ AUI.add(
 						valueFn: '_valueContainer'
 					},
 
-					fieldType: {
-						getter: '_getFieldType'
-					},
-
 					definition: {
 						value: {}
+					},
+
+					fields: {
+						value: []
+					},
+
+					fieldType: {
+						value: ''
 					},
 
 					form: {
@@ -41,6 +45,10 @@ AUI.add(
 
 					locale: {
 						value: themeDisplay.getLanguageId()
+					},
+
+					localizable: {
+						getter: '_getLocalizable'
 					},
 
 					name: {
@@ -62,6 +70,10 @@ AUI.add(
 
 					repeatedIndex: {
 						valueFn: '_valueRepeatedIndex'
+					},
+
+					value: {
+						value: ''
 					}
 				},
 
@@ -287,16 +299,43 @@ AUI.add(
 						container.one('.lfr-ddm-form-field-repeatable-delete-button').toggle(instance.get('repeatedIndex') > 0);
 					},
 
-					_getFieldType: function() {
+					toJSON: function() {
 						var instance = this;
 
-						return instance.get('definition').type;
+						var fieldJSON = {
+							instanceId: instance.get('instanceId'),
+							name: instance.get('name')
+						};
+
+						if (instance.get('localizable')) {
+							var valueMap = {};
+
+							valueMap[instance.get('locale')] = instance.getValue();
+
+							fieldJSON.value = valueMap;
+						}
+						else {
+							fieldJSON.value = instance.getValue();
+						}
+
+						var fields = instance.get('fields');
+
+						if (fields.length) {
+							fieldJSON.nestedFieldValues = AArray.invoke(fields, 'toJSON');
+						}
+
+						return fieldJSON;
 					},
 
 					_getLabel: function() {
 						var instance = this;
 
 						return instance.get('definition').label[instance.get('locale')];
+
+					_getLocalizable: function() {
+						var instance = this;
+
+						return !!instance.get('definition').localizable;
 					},
 
 					_getName: function() {

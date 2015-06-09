@@ -35,9 +35,9 @@ if (ppid.equals(PortletKeys.PORTLET_CONFIGURATION)) {
 	}
 
 	if (Validator.isNotNull(portletResource)) {
-		String strutsAction = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "struts_action");
+		String mvcAction = ParamUtil.getString(request, PortalUtil.getPortletNamespace(ppid) + "mvcPath");
 
-		if (!strutsAction.startsWith("/portlet_configuration/")) {
+		if (!mvcAction.contains("/html/portlet/portlet_configuration/edit_configuration.jsp")) {
 			ppid = portletResource;
 		}
 	}

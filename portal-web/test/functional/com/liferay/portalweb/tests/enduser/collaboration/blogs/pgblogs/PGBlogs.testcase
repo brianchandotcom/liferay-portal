@@ -1563,8 +1563,8 @@
 	</command>
 
 	<command name="ViewBlogsEntryWithAbstractDisplayTemplate" priority="5">
-		<var name="displaySelection" value="Abstract" />
-		<var name="entryAbstractDescription" value="Blogs Entry Abstract Description" />
+		<var name="displayTemplate" value="Abstract" />
+		<var name="entryAbstractDescription" value="Blogs Entry Content" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />
 

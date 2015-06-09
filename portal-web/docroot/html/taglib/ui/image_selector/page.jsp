@@ -102,12 +102,11 @@ itemSelectorURL.setParameter("itemSelectedEventName", liferayPortletResponse.get
 
 JSONObject itemSelectorJSONParamJSONObject = JSONFactoryUtil.createJSONObject();
 
-JSONArray desiredReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
+JSONArray itemSelectorDesiredReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-desiredReturnTypesJSONArray.put(URL.class.getName());
-desiredReturnTypesJSONArray.put(FileEntry.class.getName());
+itemSelectorDesiredReturnTypesJSONArray.put("FILE_ENTRY");
 
-itemSelectorJSONParamJSONObject.put("desiredReturnTypes", desiredReturnTypesJSONArray);
+itemSelectorJSONParamJSONObject.put("itemSelectorDesiredReturnTypes", itemSelectorDesiredReturnTypesJSONArray);
 
 itemSelectorURL.setParameter("0_json", itemSelectorJSONParamJSONObject.toString());
 

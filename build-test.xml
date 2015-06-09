@@ -1609,27 +1609,31 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 	<macrodef name="wait-for-app-server">
 		<attribute name="app.server.bin.dir" />
 		<sequential>
+			<local name="app.server.waiting.url" />
+
 			<if>
 				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
 				<then>
-					<waitfor maxwait="5" maxwaitunit="minute">
-						<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
-					</waitfor>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}180/console" />
 				</then>
 				<elseif>
 					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
 					<then>
-						<waitfor maxwait="1" maxwaitunit="minute">
-							<http url="http://localhost:${test.app.server.leading.port.number}080" />
-						</waitfor>
+						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080" />
 					</then>
 				</elseif>
 				<else>
-					<waitfor maxwait="5" maxwaitunit="minute">
-						<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-					</waitfor>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
 				</else>
 			</if>
+
+			<local name="app.server.waiting.timeout" />
+
+			<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
+				<http url="${app.server.waiting.url}" />
+			</waitfor>
+
+			<fail if="app.server.waiting.timeout" message="App server waiting timeout on ${app.server.waiting.url}" />
 		</sequential>
 	</macrodef>
 

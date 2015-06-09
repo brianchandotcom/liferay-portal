@@ -1,0 +1,154 @@
+@import "bourbon";
+
+.portlet-forms {
+	.form-builder-header-title {
+		display: none;
+	}
+
+	.ddl-form-builder-basic-info {
+		margin: 0 auto;
+		position: relative;
+		width: auto;
+
+		.ddl-form-builder-buttons {
+			position: absolute;
+			right: 0;
+			top: 0;
+
+			.btn {
+				padding: 5px 45px;
+			}
+		}
+
+		.ddl-form-builder-description, .ddl-form-builder-name {
+			border-width: 0;
+			box-shadow: none;
+			margin-bottom: 10px;
+			margin-top: 0;
+			padding-left: 0;
+
+			.help-block {
+				position: absolute;
+				top: -15px;
+			}
+
+			.control-label {
+				display: none;
+			}
+
+			.field {
+				background: transparent;
+				border-width: 0;
+				color: #333;
+				font-family: Helvetica;
+				font-weight: 300;
+				line-height: 28px;
+				margin: 0;
+				padding: 0;
+
+				&:focus {
+					box-shadow: none;
+				}
+
+				@include placeholder {
+					color: #BAC5D2;
+					font-family: Helvetica;
+					font-weight: 300;
+					line-height: 28px;
+				}
+			}
+		}
+
+		.ddl-form-builder-description .field {
+			font-size: 16px;
+		}
+
+		.ddl-form-builder-name .field {
+			font-size: 26px;
+			height: 45px;
+			max-width: 780px;
+		}
+	}
+
+	.ddl-form-builder-app {
+		background-color: #F5F5F5;
+		margin-left: -40px;
+		margin-right: -25px;
+		padding-left: 40px;
+		padding-right: 25px;
+
+		.form-builder-header {
+			display: none;
+		}
+
+		.form-builder-layout {
+			margin: 3px auto;
+			width: auto;
+
+			.layout-builder-add-row-area {
+				margin: 0;
+			}
+
+			.layout-row-container-row {
+				margin-bottom: 2px;
+
+				.layout-row {
+					border-width: 0;
+					margin: 0;
+
+					.col {
+						border-radius: 0;
+						border-width: 0;
+						min-height: 100px;
+					}
+				}
+			}
+		}
+
+		.form-builder-content {
+			background: transparent;
+			margin: 0 auto;
+			width: auto;
+
+			.form-builder-pages-header {
+				margin-bottom: 0;
+				width: auto;
+
+				input {
+					border-width: 0;
+
+					&:focus {
+						box-shadow: none;
+					}
+				}
+			}
+
+			.form-builder-pages {
+				width: auto;
+
+				.pagination .pagination-content li.active a {
+					z-index: 0;
+				}
+			}
+		}
+	}
+
+	.lfr-ddm-repeatable-add-button {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}
+
+	.lfr-ddm-repeatable-delete-button {
+		position: absolute;
+		right: 15px;
+		top: 0;
+	}
+}
+
+.form-builder-field {
+	border-radius: 0;
+	border-width: 0;
+	box-shadow: none;
+	margin: 0;
+}

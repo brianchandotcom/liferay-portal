@@ -330,7 +330,19 @@ AUI.add(
 					_getLabel: function() {
 						var instance = this;
 
-						return instance.get('definition').label[instance.get('locale')];
+						var definition = instance.get('definition');
+
+						var label
+
+						if (definition.label && definition[instance.get('locale')]) {
+							label = definition[instance.get('locale')];
+						}
+						else {
+							label = definition.name;
+						}
+
+						return label;
+					},
 
 					_getLocalizable: function() {
 						var instance = this;

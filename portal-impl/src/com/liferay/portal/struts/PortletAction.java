@@ -37,7 +37,6 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.StrictPortletPreferencesImpl;
 
 import java.io.IOException;
 
@@ -256,32 +255,16 @@ public class PortletAction extends Action {
 			Layout layout, String portletId)
 		throws PortalException {
 
-		if (Validator.isNull(portletId)) {
-			return null;
-		}
-
-		PortletPreferences portletPreferences =
-			PortletPreferencesFactoryUtil.getStrictPortletSetup(
-				layout, portletId);
-
-		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
-			throw new PrincipalException();
-		}
-
-		return portletPreferences;
+		return PortletPreferencesFactoryUtil.getExistingPortletSetup(
+			layout, portletId);
 	}
 
 	protected PortletPreferences getStrictPortletSetup(
 			PortletRequest portletRequest)
 		throws PortalException {
 
-		String portletResource = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
+		return PortletPreferencesFactoryUtil.getExistingPortletSetup(
+			portletRequest);
 	}
 
 	protected void hideDefaultErrorMessage(PortletRequest portletRequest) {

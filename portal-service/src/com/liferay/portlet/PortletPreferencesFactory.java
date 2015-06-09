@@ -56,6 +56,14 @@ public interface PortletPreferencesFactory {
 	public PortalPreferences fromXML(
 		long companyId, long ownerId, int ownerType, String xml);
 
+	public PortletPreferences getExistingPortletSetup(
+			Layout layout, String portletId)
+		throws PortalException;
+
+	public PortletPreferences getExistingPortletSetup(
+			PortletRequest portletRequest)
+		throws PortalException;
+
 	public PortletPreferences getLayoutPortletSetup(
 		Layout layout, String portletId);
 

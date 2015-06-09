@@ -25,6 +25,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.Portal;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.PortletPreferencesFactory;
+import com.liferay.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portlet.blogs.NoSuchEntryException;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.trackback.Trackback;
@@ -230,7 +232,7 @@ public class TrackbackActionTest extends PowerMockito {
 		);
 	}
 
-	protected void setUpPortal() {
+	protected void setUpPortal() throws Exception {
 		Portal portal = mock(Portal.class);
 
 		when(
@@ -256,6 +258,22 @@ public class TrackbackActionTest extends PowerMockito {
 		portalUtil.setPortal(portal);
 
 		PropsUtil.setProps(mock(Props.class));
+
+		PortletPreferencesFactory portletPreferencesFactory =
+			mock(PortletPreferencesFactory.class);
+
+		when(
+			portletPreferencesFactory.getExistingPortletSetup(
+				Mockito.any(PortletRequest.class))
+		).thenReturn(
+			_portletPreferences
+		);
+
+		PortletPreferencesFactoryUtil portletPreferencesFactoryUtil =
+			new PortletPreferencesFactoryUtil();
+
+		portletPreferencesFactoryUtil.setPortletPreferencesFactory(
+			portletPreferencesFactory);
 
 		HttpUtil httpUtil = new HttpUtil();
 

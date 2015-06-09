@@ -298,12 +298,12 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#exportLayoutsAsFile(
+	com.liferay.portlet.exportimport.service.ExportImportService#exportLayoutsAsFile(
 	ExportImportConfiguration)}
 	*/
 	@java.lang.Deprecated
 	public java.io.File exportLayoutsAsFile(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
@@ -335,17 +335,17 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#exportLayoutsAsFileInBackground(
+	com.liferay.portlet.exportimport.service.ExportImportService#exportLayoutsAsFileInBackground(
 	ExportImportConfiguration)}
 	*/
 	@java.lang.Deprecated
 	public long exportLayoutsAsFileInBackground(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#exportLayoutsAsFileInBackground(
+	com.liferay.portlet.exportimport.service.ExportImportService#exportLayoutsAsFileInBackground(
 	long)}
 	*/
 	@java.lang.Deprecated
@@ -410,12 +410,12 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#exportPortletInfoAsFile(
+	com.liferay.portlet.exportimport.service.ExportImportService#exportPortletInfoAsFile(
 	ExportImportConfiguration)}
 	*/
 	@java.lang.Deprecated
 	public java.io.File exportPortletInfoAsFile(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration)
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
 		throws PortalException;
 
 	/**
@@ -585,22 +585,22 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#importLayouts(
+	com.liferay.portlet.exportimport.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, File)}
 	*/
 	@java.lang.Deprecated
 	public void importLayouts(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#importLayouts(
+	com.liferay.portlet.exportimport.service.ExportImportService#importLayouts(
 	ExportImportConfiguration, InputStream)}
 	*/
 	@java.lang.Deprecated
 	public void importLayouts(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream is) throws PortalException;
 
 	/**
@@ -687,22 +687,22 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#importPortletInfo(
+	com.liferay.portlet.exportimport.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, File)} (
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfo(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#importPortletInfo(
+	com.liferay.portlet.exportimport.service.ExportImportService#importPortletInfo(
 	ExportImportConfiguration, InputStream)} (
 	*/
 	@java.lang.Deprecated
 	public void importPortletInfo(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream is) throws PortalException;
 
 	/**
@@ -1245,22 +1245,22 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#validateImportLayoutsFile(
+	com.liferay.portlet.exportimport.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, File)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#validateImportLayoutsFile(
+	com.liferay.portlet.exportimport.service.ExportImportService#validateImportLayoutsFile(
 	ExportImportConfiguration, InputStream)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream) throws PortalException;
 
 	/**
@@ -1285,22 +1285,22 @@ public interface LayoutService extends BaseService {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#validateImportPortletInfo(
+	com.liferay.portlet.exportimport.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, File)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file) throws PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	com.liferay.portal.service.ExportImportService#validateImportPortletInfo(
+	com.liferay.portlet.exportimport.service.ExportImportService#validateImportPortletInfo(
 	ExportImportConfiguration, InputStream)}
 	*/
 	@java.lang.Deprecated
 	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
-		com.liferay.portal.model.ExportImportConfiguration exportImportConfiguration,
+		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream) throws PortalException;
 
 	/**

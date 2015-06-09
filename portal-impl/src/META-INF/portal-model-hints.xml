@@ -220,30 +220,6 @@
 		<field name="typeId" type="long" />
 		<field name="primary" type="boolean" />
 	</model>
-	<model name="com.liferay.portal.model.ExportImportConfiguration">
-		<field name="mvccVersion" type="long" />
-		<field name="exportImportConfigurationId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String">
-			<hint name="max-length">200</hint>
-		</field>
-		<field name="description" type="String">
-			<hint-collection name="TEXTAREA" />
-		</field>
-		<field name="type" type="int" />
-		<field name="settings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-		<field name="status" type="int" />
-		<field name="statusByUserId" type="long" />
-		<field name="statusByUserName" type="String" />
-		<field name="statusDate" type="Date" />
-	</model>
 	<model name="com.liferay.portal.model.Group">
 		<field name="mvccVersion" type="long" />
 		<field name="uuid" type="String" />
@@ -2708,5 +2684,29 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="status" type="int" />
+	</model>
+	<model name="com.liferay.portlet.exportimport.model.ExportImportConfiguration">
+		<field name="mvccVersion" type="long" />
+		<field name="exportImportConfigurationId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">200</hint>
+		</field>
+		<field name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="type" type="int" />
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 </model-hints>

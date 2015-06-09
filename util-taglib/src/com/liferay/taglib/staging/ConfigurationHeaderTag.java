@@ -14,7 +14,7 @@
 
 package com.liferay.taglib.staging;
 
-import com.liferay.portal.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;

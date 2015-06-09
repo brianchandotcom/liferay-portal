@@ -19,9 +19,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.struts.PortletAction;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.sites.action.ActionUtil;
 
 import javax.portlet.PortletConfig;

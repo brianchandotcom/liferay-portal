@@ -31,14 +31,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutSetBranchLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 
 import java.io.File;
 import java.io.Serializable;

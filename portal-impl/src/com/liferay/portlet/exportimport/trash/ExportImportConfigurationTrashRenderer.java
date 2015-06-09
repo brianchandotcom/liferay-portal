@@ -15,10 +15,10 @@
 package com.liferay.portlet.exportimport.trash;
 
 import com.liferay.portal.kernel.trash.BaseTrashRenderer;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
 import java.util.Locale;
 

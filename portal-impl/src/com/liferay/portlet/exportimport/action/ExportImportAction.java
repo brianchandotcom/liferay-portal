@@ -14,10 +14,6 @@
 
 package com.liferay.portlet.exportimport.action;
 
-import com.liferay.portal.LARFileException;
-import com.liferay.portal.LARFileNameException;
-import com.liferay.portal.LARFileSizeException;
-import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.PortletIdException;
@@ -35,16 +31,20 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
-import com.liferay.portal.service.ExportImportServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.dynamicdatamapping.StructureDuplicateStructureKeyException;
+import com.liferay.portlet.exportimport.LARFileException;
+import com.liferay.portlet.exportimport.LARFileNameException;
+import com.liferay.portlet.exportimport.LARFileSizeException;
+import com.liferay.portlet.exportimport.LARTypeException;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.ExportImportServiceUtil;
 import com.liferay.portlet.portletconfiguration.action.ActionUtil;
 
 import java.io.InputStream;

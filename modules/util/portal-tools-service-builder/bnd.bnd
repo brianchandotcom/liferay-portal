@@ -32,6 +32,7 @@ Include-Resource:\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/dynamicdatalists/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/dynamicdatamapping/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/expando/service.xml,\
+	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/exportimport/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/flags/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/journal/service.xml,\
 	@../../../portal-impl/portal-impl.jar!/com/liferay/portlet/messageboards/service.xml,\

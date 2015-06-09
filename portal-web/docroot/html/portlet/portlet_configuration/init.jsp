@@ -16,8 +16,7 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.LARFileSizeException" %><%@
-page import="com.liferay.portal.NoSuchPortletItemException" %><%@
+<%@ page import="com.liferay.portal.NoSuchPortletItemException" %><%@
 page import="com.liferay.portal.NoSuchResourceException" %><%@
 page import="com.liferay.portal.PortletItemNameException" %><%@
 page import="com.liferay.portal.ResourcePrimKeyException" %><%@
@@ -27,6 +26,7 @@ page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@
 page import="com.liferay.portal.service.permission.TeamPermissionUtil" %><%@
 page import="com.liferay.portal.util.ResourcePermissionUtil" %><%@
 page import="com.liferay.portlet.PortletQNameUtil" %><%@
+page import="com.liferay.portlet.exportimport.LARFileSizeException" %><%@
 page import="com.liferay.portlet.portletconfiguration.action.ActionUtil" %><%@
 page import="com.liferay.portlet.portletconfiguration.util.PublicRenderParameterConfiguration" %>
 

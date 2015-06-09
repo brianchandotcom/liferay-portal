@@ -14,17 +14,12 @@
 
 package com.liferay.portal.staging;
 
-import com.liferay.portal.LARFileException;
-import com.liferay.portal.LARFileSizeException;
-import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.PortletIdException;
-import com.liferay.portal.RemoteExportException;
 import com.liferay.portal.RemoteOptionsException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -79,7 +74,6 @@ import com.liferay.portal.lar.backgroundtask.LayoutStagingBackgroundTaskExecutor
 import com.liferay.portal.lar.backgroundtask.PortletStagingBackgroundTaskExecutor;
 import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -98,7 +92,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.BackgroundTaskLocalServiceUtil;
-import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutBranchLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
@@ -106,7 +99,6 @@ import com.liferay.portal.service.LayoutRevisionLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
-import com.liferay.portal.service.StagingLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.WorkflowInstanceLinkLocalServiceUtil;
 import com.liferay.portal.service.http.ClassNameServiceHttp;
@@ -124,6 +116,14 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.exportimport.LARFileException;
+import com.liferay.portlet.exportimport.LARFileSizeException;
+import com.liferay.portlet.exportimport.LARTypeException;
+import com.liferay.portlet.exportimport.MissingReferenceException;
+import com.liferay.portlet.exportimport.RemoteExportException;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.StagingLocalServiceUtil;
 
 import java.io.Serializable;
 
@@ -469,7 +469,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -483,7 +483,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -496,7 +496,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             PortletRequest, Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -511,7 +511,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             PortletRequest, Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -527,7 +527,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#enableLocalStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableLocalStaging(
 	 *             long, Group, boolean, boolean, ServiceContext)}
 	 */
 	@Deprecated
@@ -545,7 +545,7 @@ public class StagingImpl implements Staging {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#enableRemoteStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableRemoteStaging(
 	 *             long, Group, boolean, boolean, String, int, String, boolean,
 	 *             long, ServiceContext)}
 	 */

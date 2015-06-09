@@ -50,8 +50,8 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleListener;
 import com.liferay.portal.kernel.util.TransientValue;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
 import java.io.Serializable;
 

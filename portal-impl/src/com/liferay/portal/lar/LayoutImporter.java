@@ -23,12 +23,8 @@ import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConst
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_IMPORT_IN_PROCESS;
 import static com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants.PROCESS_FLAG_LAYOUT_STAGING_IN_PROCESS;
 
-import com.liferay.portal.LARFileException;
-import com.liferay.portal.LARTypeException;
-import com.liferay.portal.LayoutImportException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.NoSuchLayoutPrototypeException;
 import com.liferay.portal.NoSuchLayoutSetPrototypeException;
@@ -84,6 +80,10 @@ import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.LayoutUtil;
+import com.liferay.portlet.exportimport.LARFileException;
+import com.liferay.portlet.exportimport.LARTypeException;
+import com.liferay.portlet.exportimport.LayoutImportException;
+import com.liferay.portlet.exportimport.MissingReferenceException;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 

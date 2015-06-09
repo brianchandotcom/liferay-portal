@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.messaging.MessageStatus;
 import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.service.ExportImportConfigurationLocalServiceUtil;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 
 import java.io.Serializable;
 

@@ -34,14 +34,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.security.auth.HttpPrincipal;
-import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.http.LayoutServiceHttp;
-import com.liferay.portal.service.http.StagingServiceHttp;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
+import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 
 import java.io.File;
 import java.io.FileInputStream;

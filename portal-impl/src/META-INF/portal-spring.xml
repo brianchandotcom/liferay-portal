@@ -28,11 +28,6 @@
 	<bean id="com.liferay.portal.service.EmailAddressLocalService" class="com.liferay.portal.service.impl.EmailAddressLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.EmailAddressService" class="com.liferay.portal.service.impl.EmailAddressServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.EmailAddressPersistence" class="com.liferay.portal.service.persistence.impl.EmailAddressPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.ExportImportLocalService" class="com.liferay.portal.service.impl.ExportImportLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.ExportImportService" class="com.liferay.portal.service.impl.ExportImportServiceImpl" />
-	<bean id="com.liferay.portal.service.ExportImportConfigurationLocalService" class="com.liferay.portal.service.impl.ExportImportConfigurationLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.ExportImportConfigurationService" class="com.liferay.portal.service.impl.ExportImportConfigurationServiceImpl" />
-	<bean id="com.liferay.portal.service.persistence.ExportImportConfigurationPersistence" class="com.liferay.portal.service.persistence.impl.ExportImportConfigurationPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.GroupLocalService" class="com.liferay.portal.service.impl.GroupLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.GroupService" class="com.liferay.portal.service.impl.GroupServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.GroupPersistence" class="com.liferay.portal.service.persistence.impl.GroupPersistenceImpl" parent="basePersistence" />
@@ -141,8 +136,6 @@
 	<bean id="com.liferay.portal.service.persistence.ServiceComponentFinder" class="com.liferay.portal.service.persistence.impl.ServiceComponentFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.ShardLocalService" class="com.liferay.portal.service.impl.ShardLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.ShardPersistence" class="com.liferay.portal.service.persistence.impl.ShardPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.portal.service.StagingLocalService" class="com.liferay.portal.service.impl.StagingLocalServiceImpl" />
-	<bean id="com.liferay.portal.service.StagingService" class="com.liferay.portal.service.impl.StagingServiceImpl" />
 	<bean id="com.liferay.portal.service.SubscriptionLocalService" class="com.liferay.portal.service.impl.SubscriptionLocalServiceImpl" />
 	<bean id="com.liferay.portal.service.persistence.SubscriptionPersistence" class="com.liferay.portal.service.persistence.impl.SubscriptionPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portal.service.SystemEventLocalService" class="com.liferay.portal.service.impl.SystemEventLocalServiceImpl" />
@@ -429,4 +422,11 @@
 	<bean id="com.liferay.portlet.trash.service.persistence.TrashEntryPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashEntryPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.portlet.trash.service.TrashVersionLocalService" class="com.liferay.portlet.trash.service.impl.TrashVersionLocalServiceImpl" />
 	<bean id="com.liferay.portlet.trash.service.persistence.TrashVersionPersistence" class="com.liferay.portlet.trash.service.persistence.impl.TrashVersionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.exportimport.service.ExportImportLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportLocalServiceImpl" />
+	<bean id="com.liferay.portlet.exportimport.service.ExportImportService" class="com.liferay.portlet.exportimport.service.impl.ExportImportServiceImpl" />
+	<bean id="com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationLocalServiceImpl" />
+	<bean id="com.liferay.portlet.exportimport.service.ExportImportConfigurationService" class="com.liferay.portlet.exportimport.service.impl.ExportImportConfigurationServiceImpl" />
+	<bean id="com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationPersistence" class="com.liferay.portlet.exportimport.service.persistence.impl.ExportImportConfigurationPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portlet.exportimport.service.StagingLocalService" class="com.liferay.portlet.exportimport.service.impl.StagingLocalServiceImpl" />
+	<bean id="com.liferay.portlet.exportimport.service.StagingService" class="com.liferay.portlet.exportimport.service.impl.StagingServiceImpl" />
 </beans>

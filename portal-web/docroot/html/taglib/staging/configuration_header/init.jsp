@@ -16,6 +16,8 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
+<%@ page import="com.liferay.portlet.exportimport.model.ExportImportConfiguration" %>
+
 <%
 ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)request.getAttribute("liferay-staging:configuration-header:exportImportConfiguration");
 String label = GetterUtil.getString((String)request.getAttribute("liferay-staging:configuration-header:label"));

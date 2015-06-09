@@ -23,9 +23,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.model.BackgroundTask;
-import com.liferay.portal.model.ExportImportConfiguration;
-import com.liferay.portal.service.ExportImportLocalServiceUtil;
 import com.liferay.portal.spring.transaction.TransactionHandlerUtil;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
+import com.liferay.portlet.exportimport.service.ExportImportLocalServiceUtil;
 
 import java.io.File;
 

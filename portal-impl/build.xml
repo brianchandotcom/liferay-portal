@@ -770,6 +770,12 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
+	<target name="build-service-portlet-exportimport">
+		<antcall target="build-service">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/exportimport/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-service-portlet-flags">
 		<antcall target="build-service">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/flags/service.xml" />
@@ -832,6 +838,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-service-portlet-documentlibrary" />
 		<antcall target="build-service-portlet-dynamicdatamapping" />
 		<antcall target="build-service-portlet-expando" />
+		<antcall target="build-service-portlet-exportimport" />
 		<antcall target="build-service-portlet-flags" />
 		<antcall target="build-service-portlet-journal" />
 		<antcall target="build-service-portlet-messageboards" />
@@ -960,6 +967,12 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		</antcall>
 	</target>
 
+	<target name="build-wsdd-portlet-exportimport">
+		<antcall target="build-wsdd">
+			<param name="service.file" value="${basedir}/src/com/liferay/portlet/exportimport/service.xml" />
+		</antcall>
+	</target>
+
 	<target name="build-wsdd-portlet-flags">
 		<antcall target="build-wsdd">
 			<param name="service.file" value="${basedir}/src/com/liferay/portlet/flags/service.xml" />
@@ -1021,6 +1034,7 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 		<antcall target="build-wsdd-portlet-documentlibrary" />
 		<antcall target="build-wsdd-portlet-dynamicdatamapping" />
 		<antcall target="build-wsdd-portlet-expando" />
+		<antcall target="build-wsdd-portlet-exportimport" />
 		<antcall target="build-wsdd-portlet-flags" />
 		<antcall target="build-wsdd-portlet-journal" />
 		<antcall target="build-wsdd-portlet-messageboards" />

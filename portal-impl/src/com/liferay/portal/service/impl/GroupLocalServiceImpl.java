@@ -72,7 +72,6 @@ import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.model.Account;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Layout;
@@ -111,6 +110,7 @@ import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.comparator.GroupIdComparator;
 import com.liferay.portal.util.comparator.GroupNameComparator;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.io.File;

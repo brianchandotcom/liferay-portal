@@ -65,22 +65,6 @@
 		<property name="service" ref="com.liferay.portal.service.EmailAddressService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.EmailAddressService" />
 	</bean>
-	<bean name="/com_liferay_portal_service_spring_ExportImportService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ExportImportService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ExportImportService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ExportImportService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ExportImportConfigurationService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ExportImportConfigurationService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportConfigurationService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_ExportImportConfigurationService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.ExportImportConfigurationService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.ExportImportConfigurationService" />
-	</bean>
 	<bean name="/com_liferay_portal_service_spring_GroupService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.GroupService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.GroupService" />
@@ -280,14 +264,6 @@
 	<bean name="/com_liferay_portal_service_spring_RoleService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.RoleService" />
 		<property name="serviceInterface" value="com.liferay.portal.service.RoleService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_StagingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.StagingService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
-	</bean>
-	<bean name="/com_liferay_portal_service_spring_StagingService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
-		<property name="service" ref="com.liferay.portal.service.StagingService" />
-		<property name="serviceInterface" value="com.liferay.portal.service.StagingService" />
 	</bean>
 	<bean name="/com_liferay_portal_service_spring_TeamService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portal.service.TeamService" />
@@ -712,5 +688,29 @@
 	<bean name="/com_liferay_portlet_trash_service_spring_TrashEntryService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
 		<property name="service" ref="com.liferay.portlet.trash.service.TrashEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.trash.service.TrashEntryService" />
+	</bean>
+	<bean name="/com_liferay_portlet_exportimport_service_spring_ExportImportService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.exportimport.service.ExportImportService" />
+		<property name="serviceInterface" value="com.liferay.portlet.exportimport.service.ExportImportService" />
+	</bean>
+	<bean name="/com_liferay_portlet_exportimport_service_spring_ExportImportService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.exportimport.service.ExportImportService" />
+		<property name="serviceInterface" value="com.liferay.portlet.exportimport.service.ExportImportService" />
+	</bean>
+	<bean name="/com_liferay_portlet_exportimport_service_spring_ExportImportConfigurationService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.exportimport.service.ExportImportConfigurationService" />
+		<property name="serviceInterface" value="com.liferay.portlet.exportimport.service.ExportImportConfigurationService" />
+	</bean>
+	<bean name="/com_liferay_portlet_exportimport_service_spring_ExportImportConfigurationService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.exportimport.service.ExportImportConfigurationService" />
+		<property name="serviceInterface" value="com.liferay.portlet.exportimport.service.ExportImportConfigurationService" />
+	</bean>
+	<bean name="/com_liferay_portlet_exportimport_service_spring_StagingService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="com.liferay.portlet.exportimport.service.StagingService" />
+		<property name="serviceInterface" value="com.liferay.portlet.exportimport.service.StagingService" />
+	</bean>
+	<bean name="/com_liferay_portlet_exportimport_service_spring_StagingService-http" class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="com.liferay.portlet.exportimport.service.StagingService" />
+		<property name="serviceInterface" value="com.liferay.portlet.exportimport.service.StagingService" />
 	</bean>
 </beans>

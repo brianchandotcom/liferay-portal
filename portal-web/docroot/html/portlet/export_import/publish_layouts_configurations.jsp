@@ -71,7 +71,7 @@ int exportImportConfigurationType = localPublishing ? ExportImportConfigurationC
 		</liferay-ui:search-container-results>
 
 		<liferay-ui:search-container-row
-			className="com.liferay.portal.model.ExportImportConfiguration"
+			className="com.liferay.portlet.exportimport.model.ExportImportConfiguration"
 			keyProperty="exportImportConfigurationId"
 			modelVar="exportImportConfiguration"
 		>

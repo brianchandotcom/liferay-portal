@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.model.ExportImportConfiguration;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
 import java.io.Serializable;
 

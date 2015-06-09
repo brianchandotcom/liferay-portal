@@ -880,28 +880,31 @@ AUI.add(
 
 						instance.setPercentUploaded(0);
 
-						Liferay.Util.selectEntity(
+						var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 							{
-								dialog: {
-									constrain: true,
-									destroyOnHide: true,
-									modal: true
-								},
 								eventName: portletNamespace + 'selectDocumentLibrary',
-								id: portletNamespace + 'selectDocumentLibrary',
-								title: Liferay.Language.get('select-document'),
-								uri: instance.getDocumentLibraryURL()
-							},
-							function(event) {
-								instance.setValue(
-									{
-										groupId: event.groupid,
-										title: event.title,
-										uuid: event.uuid
+								on: {
+									selectedItemChange: function(event) {
+										var selectedItem = event.newVal;
+
+										if (selectedItem) {
+											var itemValue = JSON.parse(selectedItem.value);
+
+											instance.setValue(
+												{
+													groupId: itemValue.groupid,
+													title: itemValue.title,
+													uuid: itemValue.uuid
+												}
+											);
+										}
 									}
-								);
+								},
+								url: instance.getDocumentLibraryURL()
 							}
 						);
+
+						itemSelectorDialog.open();
 					},
 
 					_handleUploadButtonClick: function(event) {
@@ -1684,6 +1687,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager', 'uploader']
+		requires: ['aui-base', 'aui-datatype', 'aui-image-viewer', 'aui-io-request', 'aui-parse-content', 'aui-set', 'aui-sortable-list', 'json', 'liferay-item-selector-dialog', 'liferay-map-base', 'liferay-notice', 'liferay-portlet-url', 'liferay-translation-manager', 'uploader']
 	}
 );

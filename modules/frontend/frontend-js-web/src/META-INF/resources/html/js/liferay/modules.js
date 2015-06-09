@@ -257,6 +257,7 @@
 							'aui-datatype',
 							'aui-io-request',
 							'aui-parse-content',
+							'liferay-item-selector-dialog',
 							'liferay-map-base',
 							'liferay-translation-manager'
 						]

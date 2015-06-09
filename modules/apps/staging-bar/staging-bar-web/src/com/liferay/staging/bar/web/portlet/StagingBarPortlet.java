@@ -18,6 +18,7 @@ import com.liferay.portal.LayoutBranchNameException;
 import com.liferay.portal.LayoutSetBranchNameException;
 import com.liferay.portal.NoSuchGroupException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.MultiSessionMessages;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -48,10 +49,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,7 +70,6 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-staging-bar",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/staging.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/staging_branch.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/staging_version.js",
@@ -90,7 +92,8 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class StagingBarPortlet extends MVCPortlet {
 
-	public void deleteLayoutBranch(ActionRequest actionRequest)
+	public void deleteLayoutBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutBranchId = ParamUtil.getLong(
@@ -110,10 +113,11 @@ public class StagingBarPortlet extends MVCPortlet {
 					SessionMessages.KEY_SUFFIX_PORTLET_NOT_AJAXABLE);
 		}
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void deleteLayoutRevision(ActionRequest actionRequest)
+	public void deleteLayoutRevision(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -137,10 +141,11 @@ public class StagingBarPortlet extends MVCPortlet {
 				layoutRevision.getParentLayoutRevisionId());
 		}
 
-		addLayoutRevisionSessionMessages(actionRequest);
+		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void deleteLayoutSetBranch(ActionRequest actionRequest)
+	public void deleteLayoutSetBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutSetBranchId = ParamUtil.getLong(
@@ -160,10 +165,11 @@ public class StagingBarPortlet extends MVCPortlet {
 
 		SessionMessages.add(actionRequest, "sitePageVariationDeleted");
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void mergeLayoutSetBranch(ActionRequest actionRequest)
+	public void mergeLayoutSetBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutSetBranchId = ParamUtil.getLong(
@@ -180,10 +186,13 @@ public class StagingBarPortlet extends MVCPortlet {
 
 		SessionMessages.add(actionRequest, "sitePageVariationMerged");
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void selectLayoutBranch(ActionRequest actionRequest) {
+	public void selectLayoutBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			actionRequest);
 
@@ -199,10 +208,11 @@ public class StagingBarPortlet extends MVCPortlet {
 		StagingUtil.setRecentLayoutBranchId(
 			request, layoutSetBranchId, themeDisplay.getPlid(), layoutBranchId);
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void selectLayoutSetBranch(ActionRequest actionRequest)
+	public void selectLayoutSetBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
@@ -227,10 +237,11 @@ public class StagingBarPortlet extends MVCPortlet {
 			request, layoutSet.getLayoutSetId(),
 			layoutSetBranch.getLayoutSetBranchId());
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void updateLayoutBranch(ActionRequest actionRequest)
+	public void updateLayoutBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutBranchId = ParamUtil.getLong(
@@ -257,10 +268,11 @@ public class StagingBarPortlet extends MVCPortlet {
 			SessionMessages.add(actionRequest, "pageVariationUpdated");
 		}
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void updateLayoutRevision(ActionRequest actionRequest)
+	public void updateLayoutRevision(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -292,6 +304,8 @@ public class StagingBarPortlet extends MVCPortlet {
 			StagingUtil.setRecentLayoutRevisionId(
 				themeDisplay.getUser(), layoutRevision.getLayoutSetBranchId(),
 				layoutRevision.getPlid(), layoutRevision.getLayoutRevisionId());
+
+			addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 
 			return;
 		}
@@ -330,10 +344,11 @@ public class StagingBarPortlet extends MVCPortlet {
 				newLayoutRevision.getLayoutRevisionId());
 		}
 
-		addLayoutRevisionSessionMessages(actionRequest);
+		addLayoutRevisionSessionMessages(actionRequest, actionResponse);
 	}
 
-	public void updateLayoutSetBranch(ActionRequest actionRequest)
+	public void updateLayoutSetBranch(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long layoutSetBranchId = ParamUtil.getLong(
@@ -365,10 +380,13 @@ public class StagingBarPortlet extends MVCPortlet {
 			SessionMessages.add(actionRequest, "sitePageVariationUpdated");
 		}
 
-		addLayoutBranchSessionMessages(actionRequest);
+		addLayoutBranchSessionMessages(actionRequest, actionResponse);
 	}
 
-	protected void addLayoutBranchSessionMessages(ActionRequest actionRequest) {
+	protected void addLayoutBranchSessionMessages(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
+
 		if (SessionErrors.isEmpty(actionRequest)) {
 			SessionMessages.add(
 				actionRequest,
@@ -386,14 +404,26 @@ public class StagingBarPortlet extends MVCPortlet {
 					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET_DATA,
 				data);
 		}
+
+		String redirect = PortalUtil.escapeRedirect(
+			ParamUtil.getString(actionRequest, "redirect"));
+
+		WindowState windowState = actionRequest.getWindowState();
+
+		if (windowState.equals(LiferayWindowState.POP_UP)) {
+			actionResponse.sendRedirect(redirect);
+		}
 	}
 
 	protected void addLayoutRevisionSessionMessages(
-		ActionRequest actionRequest) {
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws IOException {
 
 		MultiSessionMessages.add(
 			actionRequest,
 			PortalUtil.getPortletId(actionRequest) + "requestProcessed");
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Override

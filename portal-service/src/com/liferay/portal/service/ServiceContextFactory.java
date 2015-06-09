@@ -483,6 +483,40 @@ public class ServiceContextFactory {
 	}
 
 	public static ServiceContext getInstance(
+			String className, HttpServletRequest request)
+		throws PortalException {
+
+		ServiceContext serviceContext = getInstance(request);
+
+		// Permissions
+
+		String[] groupPermissions = PortalUtil.getGroupPermissions(
+			request, className);
+		String[] guestPermissions = PortalUtil.getGuestPermissions(
+			request, className);
+
+		if (groupPermissions != null) {
+			serviceContext.setGroupPermissions(groupPermissions);
+		}
+
+		if (guestPermissions != null) {
+			serviceContext.setGuestPermissions(guestPermissions);
+		}
+
+		// Expando
+
+		Map<String, Serializable> expandoBridgeAttributes =
+			PortalUtil.getExpandoBridgeAttributes(
+				ExpandoBridgeFactoryUtil.getExpandoBridge(
+					serviceContext.getCompanyId(), className),
+				request);
+
+		serviceContext.setExpandoBridgeAttributes(expandoBridgeAttributes);
+
+		return serviceContext;
+	}
+
+	public static ServiceContext getInstance(
 			String className, PortletRequest portletRequest)
 		throws PortalException {
 

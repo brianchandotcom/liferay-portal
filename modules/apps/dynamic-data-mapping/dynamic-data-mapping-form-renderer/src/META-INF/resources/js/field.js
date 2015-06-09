@@ -32,7 +32,7 @@ AUI.add(
 					},
 
 					instanceId: {
-						value: ''
+						valueFn: '_valueInstanceId'
 					},
 
 					label: {
@@ -249,7 +249,6 @@ AUI.add(
 								definition: instance.get('definition'),
 								fieldType: fieldType,
 								form: form,
-								instanceId: Util.generateInstanceId(8),
 								parent: instance.get('parent'),
 								portletNamespace: instance.get('portletNamespace'),
 								repeatedIndex: index + 1
@@ -341,6 +340,12 @@ AUI.add(
 						var instance = this;
 
 						return A.Node.create('<div class="lfr-ddm-form-field-container"></div>');
+					},
+
+					_valueInstanceId: function() {
+						var instance = this;
+
+						return Liferay.DDM.Renderer.Util.generateInstanceId(8);
 					},
 
 					_valueRepeatedIndex: function() {

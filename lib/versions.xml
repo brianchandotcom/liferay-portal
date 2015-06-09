@@ -3552,8 +3552,8 @@
 			<library>
 				<file-name>lib/portal/xml-apis.jar</file-name>
 				<version>1.4.01</version>
-				<project-name>Xalan</project-name>
-				<project-url>http://xml.apache.org/xalan-j</project-url>
+				<project-name>xml-commons</project-name>
+				<project-url>http://xerces.apache.org/xml-commons</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>

@@ -48,7 +48,7 @@ public class FileLockRetryUtil {
 
 		};
 
-		_scheduledExecutorService.scheduleAtFixedRate(
+		_scheduledExecutorService.scheduleWithFixedDelay(
 			runnable, 0, 5, TimeUnit.SECONDS);
 	}
 

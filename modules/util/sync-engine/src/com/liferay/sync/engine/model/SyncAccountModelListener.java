@@ -129,7 +129,7 @@ public class SyncAccountModelListener implements ModelListener<SyncAccount> {
 
 		};
 
-		_scheduledFuture = _scheduledExecutorService.scheduleAtFixedRate(
+		_scheduledFuture = _scheduledExecutorService.scheduleWithFixedDelay(
 			runnable, 0, 5, TimeUnit.SECONDS);
 	}
 

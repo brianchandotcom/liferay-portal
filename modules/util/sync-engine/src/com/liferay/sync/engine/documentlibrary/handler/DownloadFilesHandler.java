@@ -15,12 +15,12 @@
 package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.model.SyncFile;
 import com.liferay.sync.engine.session.Session;
 import com.liferay.sync.engine.session.SessionManager;
+import com.liferay.sync.engine.util.JSONUtil;
 import com.liferay.sync.engine.util.StreamUtil;
 
 import java.io.InputStream;
@@ -89,10 +89,7 @@ public class DownloadFilesHandler extends BaseHandler {
 				String zipEntryName = zipEntry.getName();
 
 				if (zipEntryName.equals("errors.json")) {
-					ObjectMapper objectMapper = new ObjectMapper();
-
-					JsonNode rootJsonNode = objectMapper.readTree(
-						zipInputStream);
+					JsonNode rootJsonNode = JSONUtil.readTree(zipInputStream);
 
 					Iterator<Map.Entry<String, JsonNode>> fields =
 						rootJsonNode.fields();

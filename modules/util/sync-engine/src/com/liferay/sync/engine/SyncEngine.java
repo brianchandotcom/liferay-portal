@@ -207,7 +207,7 @@ public class SyncEngine {
 			new SyncWatchEventProcessor(syncAccountId);
 
 		ScheduledFuture<?> scheduledFuture =
-			_localEventsScheduledExecutorService.scheduleAtFixedRate(
+			_localEventsScheduledExecutorService.scheduleWithFixedDelay(
 				syncWatchEventProcessor, 0, 3, TimeUnit.SECONDS);
 
 		WatchEventListener watchEventListener = new SyncSiteWatchEventListener(
@@ -346,7 +346,7 @@ public class SyncEngine {
 		};
 
 		ScheduledFuture<?> remoteEventsScheduledFuture =
-			_remoteEventsScheduledExecutorService.scheduleAtFixedRate(
+			_remoteEventsScheduledExecutorService.scheduleWithFixedDelay(
 				runnable, 0, syncAccount.getPollInterval(), TimeUnit.SECONDS);
 
 		_syncAccountTasks.put(

@@ -622,9 +622,7 @@ public class SyncWatchEventProcessor implements Runnable {
 
 		if (_logger.isDebugEnabled()) {
 			_logger.debug(
-				"Event type {} file path {} file type {} timestamp {}",
-				eventType, syncWatchEvent.getFilePathName(),
-				syncWatchEvent.getFileType(), syncWatchEvent.getTimestamp());
+				"Processing sync watch event {}", syncWatchEvent.toString());
 		}
 
 		String fileType = syncWatchEvent.getFileType();

@@ -15,7 +15,6 @@
 package com.liferay.sync.engine.documentlibrary.handler;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.model.SyncAccount;
@@ -23,6 +22,7 @@ import com.liferay.sync.engine.model.SyncSite;
 import com.liferay.sync.engine.service.SyncAccountService;
 import com.liferay.sync.engine.service.SyncSiteService;
 import com.liferay.sync.engine.util.FileUtil;
+import com.liferay.sync.engine.util.JSONUtil;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,9 +45,7 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 		Set<Long> remoteSyncSiteIds = new HashSet<>();
 
 		if (_remoteSyncSites == null) {
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			_remoteSyncSites = objectMapper.readValue(
+			_remoteSyncSites = JSONUtil.readValue(
 				response, new TypeReference<List<SyncSite>>() {});
 		}
 
@@ -105,9 +103,7 @@ public class GetUserSitesGroupsHandler extends BaseJSONHandler {
 	@Override
 	protected void logResponse(String response) {
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			_remoteSyncSites = objectMapper.readValue(
+			_remoteSyncSites = JSONUtil.readValue(
 				response, new TypeReference<List<SyncSite>>() {});
 
 			super.logResponse("{\"count\":" + _remoteSyncSites.size() + "}");

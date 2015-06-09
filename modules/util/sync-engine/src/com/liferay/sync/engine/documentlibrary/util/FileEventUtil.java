@@ -323,6 +323,10 @@ public class FileEventUtil {
 			Path filePath = Paths.get(uploadingSyncFile.getFilePathName());
 
 			if (Files.notExists(filePath)) {
+				if (uploadingSyncFile.getTypePK() == 0) {
+					SyncFileService.deleteSyncFile(uploadingSyncFile, false);
+				}
+
 				continue;
 			}
 

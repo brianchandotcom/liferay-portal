@@ -14,12 +14,11 @@
 
 package com.liferay.sync.engine.documentlibrary.util;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.sync.engine.documentlibrary.event.DownloadFileEvent;
 import com.liferay.sync.engine.documentlibrary.event.DownloadFilesEvent;
 import com.liferay.sync.engine.documentlibrary.handler.DownloadFileHandler;
 import com.liferay.sync.engine.model.SyncFile;
+import com.liferay.sync.engine.util.JSONUtil;
 import com.liferay.sync.engine.util.PropsValues;
 
 import java.util.ArrayList;
@@ -104,14 +103,11 @@ public class BatchDownloadEvent {
 				return;
 			}
 
-			ObjectMapper objectMapper = new ObjectMapper();
-
 			Map<String, Object> parameters = new HashMap<>();
 
 			parameters.put("handlers", _handlers);
 			parameters.put(
-				"zipFileIds",
-				objectMapper.writeValueAsString(_batchParameters));
+				"zipFileIds", JSONUtil.writeValueAsString(_batchParameters));
 
 			DownloadFilesEvent downloadFilesEvent = new DownloadFilesEvent(
 				_syncAccountId, parameters);

@@ -357,7 +357,7 @@ public class Session {
 		};
 
 		_trackTransferRateScheduledFuture =
-			_scheduledExecutorService.scheduleAtFixedRate(
+			_scheduledExecutorService.scheduleWithFixedDelay(
 				runnable, 0, 1, TimeUnit.SECONDS);
 	}
 

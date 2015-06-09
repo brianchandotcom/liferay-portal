@@ -14,9 +14,6 @@
 
 package com.liferay.sync.engine.documentlibrary.handler;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.sync.engine.documentlibrary.event.Event;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncContextEvent;
 import com.liferay.sync.engine.documentlibrary.model.SyncDLObjectUpdate;
@@ -34,6 +31,7 @@ import com.liferay.sync.engine.session.SessionManager;
 import com.liferay.sync.engine.util.FileKeyUtil;
 import com.liferay.sync.engine.util.FileUtil;
 import com.liferay.sync.engine.util.IODeltaUtil;
+import com.liferay.sync.engine.util.JSONUtil;
 import com.liferay.sync.engine.util.SyncEngineUtil;
 
 import java.io.IOException;
@@ -160,17 +158,15 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 
 		};
 
-		_scheduledFuture = _scheduledExecutorService.scheduleAtFixedRate(
+		_scheduledFuture = _scheduledExecutorService.scheduleWithFixedDelay(
 			getSyncContextEvent, 10, 5, TimeUnit.SECONDS);
 	}
 
 	@Override
 	public void processResponse(String response) throws Exception {
 		if (_syncDLObjectUpdate == null) {
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			_syncDLObjectUpdate = objectMapper.readValue(
-				response, new TypeReference<SyncDLObjectUpdate>() {});
+			_syncDLObjectUpdate = JSONUtil.readValue(
+				response, SyncDLObjectUpdate.class);
 		}
 
 		for (SyncFile targetSyncFile : _syncDLObjectUpdate.getSyncDLObjects()) {
@@ -381,10 +377,8 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 	@Override
 	protected void logResponse(String response) {
 		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-
-			_syncDLObjectUpdate = objectMapper.readValue(
-				response, new TypeReference<SyncDLObjectUpdate>() {});
+			_syncDLObjectUpdate = JSONUtil.readValue(
+				response, SyncDLObjectUpdate.class);
 
 			List<SyncFile> syncFiles = _syncDLObjectUpdate.getSyncDLObjects();
 

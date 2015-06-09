@@ -22,10 +22,15 @@ String redirect = ParamUtil.getString(request, "redirect");
 String modelResource = ParamUtil.getString(request, "modelResource");
 String modelResourceName = ResourceActionsUtil.getModelResource(request, modelResource);
 
-ExpandoColumn column = (ExpandoColumn)request.getAttribute(WebKeys.EXPANDO_COLUMN);
+ExpandoColumn column = null;
+int type = 0;
 
-long columnId = BeanParamUtil.getLong(column, request, "columnId");
-int type = BeanParamUtil.getInteger(column, request, "type");
+long columnId = ParamUtil.getLong(request, "columnId");
+
+if (columnId > 0) {
+	column = ExpandoColumnServiceUtil.fetchExpandoColumn(columnId);
+	type = column.getType();
+}
 
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 
@@ -47,7 +52,7 @@ String propertyDisplayType = GetterUtil.getString(properties.get(ExpandoColumnCo
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/expando/view_attributes");
+portletURL.setParameter("mvcPath", "/html/portlet/expando/view_attributes.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("modelResource", modelResource);
 %>
@@ -58,12 +63,11 @@ portletURL.setParameter("modelResource", modelResource);
 	title='<%= modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()) %>'
 />
 
-<portlet:actionURL var="editExpandoURL">
-	<portlet:param name="struts_action" value="/expando/edit_expando" />
+<portlet:actionURL name='<%= (column == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
+	<portlet:param name="mvcPath" value="/html/portlet/expando/edit_expando.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= editExpandoURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveExpando();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+<aui:form action="<%= editExpandoURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="columnId" type="hidden" value="<%= columnId %>" />
 	<aui:input name="modelResource" type="hidden" value="<%= modelResource %>" />
@@ -278,14 +282,6 @@ portletURL.setParameter("modelResource", modelResource);
 		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveExpando(options) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = '<%= (column == null) ? Constants.ADD : Constants.UPDATE %>';
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, modelResourceName, portletURL.toString());

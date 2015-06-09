@@ -19,12 +19,13 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.expando.action.EditExpandoAction;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -39,7 +40,7 @@ import org.apache.struts.action.ActionMapping;
 /**
  * @author Alexander Chow
  */
-public class EditDocumentLibraryExtraSettingsAction extends EditExpandoAction {
+public class EditDocumentLibraryExtraSettingsAction extends PortletAction {
 
 	@Override
 	public void processAction(
@@ -77,7 +78,8 @@ public class EditDocumentLibraryExtraSettingsAction extends EditExpandoAction {
 			companyId, DLFileEntryConstants.getClassName(), 0);
 
 		if (preset.startsWith("Preset")) {
-			return addPresetExpando(expandoBridge, preset, name);
+			return ExpandoPresetUtil.addPresetExpando(
+				expandoBridge, preset, name);
 		}
 
 		int type = GetterUtil.getInteger(preset);

@@ -358,22 +358,6 @@
 		<put name="portlet_content" value="/portlet/document_library_display/view.jsp" />
 	</definition>
 
-	<!-- Expando -->
-
-	<definition name="portlet.expando" extends="portlet" />
-
-	<definition name="portlet.expando.edit_expando" extends="portlet.expando">
-		<put name="portlet_content" value="/portlet/expando/edit_expando.jsp" />
-	</definition>
-
-	<definition name="portlet.expando.view" extends="portlet.expando">
-		<put name="portlet_content" value="/portlet/expando/view.jsp" />
-	</definition>
-
-	<definition name="portlet.expando.view_attributes" extends="portlet.expando">
-		<put name="portlet_content" value="/portlet/expando/view_attributes.jsp" />
-	</definition>
-
 	<!-- Export Import -->
 
 	<definition name="portlet.export_import" extends="portlet" />

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.expando.action;
+package com.liferay.portlet.expando;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -26,19 +26,15 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.User;
 import com.liferay.portal.security.auth.PrincipalException;
-import com.liferay.portal.struts.PortletAction;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.expando.ColumnNameException;
-import com.liferay.portlet.expando.ColumnTypeException;
-import com.liferay.portlet.expando.DuplicateColumnNameException;
-import com.liferay.portlet.expando.NoSuchColumnException;
-import com.liferay.portlet.expando.ValueDataException;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.service.ExpandoColumnServiceUtil;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
+import com.liferay.portlet.expando.util.ExpandoPresetUtil;
 
+import java.io.IOException;
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -48,91 +44,21 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
+import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 /**
  * @author Raymond Augé
+ * @author Drew Brokke
  */
-public class EditExpandoAction extends PortletAction {
+public class ExpandoPortlet extends MVCPortlet {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
+	public void addExpando(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD)) {
-				addExpando(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteExpando(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateExpando(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchColumnException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.expando.error");
-			}
-			else if (e instanceof ColumnNameException ||
-					 e instanceof ColumnTypeException ||
-					 e instanceof DuplicateColumnNameException ||
-					 e instanceof ValueDataException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getColumn(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchColumnException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.expando.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.expando.edit_expando"));
-	}
-
-	protected void addExpando(ActionRequest actionRequest) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -148,7 +74,7 @@ public class EditExpandoAction extends PortletAction {
 			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
 
 		if (preset.startsWith("Preset")) {
-			addPresetExpando(expandoBridge, preset, name);
+			ExpandoPresetUtil.addPresetExpando(expandoBridge, preset, name);
 		}
 		else {
 			int type = ParamUtil.getInteger(actionRequest, "type");
@@ -159,87 +85,72 @@ public class EditExpandoAction extends PortletAction {
 		}
 	}
 
-	protected int addPresetExpando(
-			ExpandoBridge expandoBridge, String preset, String name)
+	public void deleteExpando(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		int type = 0;
-
-		UnicodeProperties properties = null;
-
-		try {
-			properties = expandoBridge.getAttributeProperties(name);
-		}
-		catch (Exception e) {
-			properties = new UnicodeProperties();
-		}
-
-		if (preset.equals("PresetSelectionIntegerArray()")) {
-			type = ExpandoColumnConstants.INTEGER_ARRAY;
-
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
-				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST);
-		}
-		else if (preset.equals("PresetSelectionDoubleArray()")) {
-			type = ExpandoColumnConstants.DOUBLE_ARRAY;
-
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
-				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST);
-		}
-		else if (preset.equals("PresetSelectionStringArray()")) {
-			type = ExpandoColumnConstants.STRING_ARRAY;
-
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE,
-				ExpandoColumnConstants.PROPERTY_DISPLAY_TYPE_SELECTION_LIST);
-		}
-		else if (preset.equals("PresetTextBox()")) {
-			type = ExpandoColumnConstants.STRING;
-
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_HEIGHT, "105");
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_WIDTH, "450");
-		}
-		else if (preset.equals("PresetTextBoxIndexed()")) {
-			type = ExpandoColumnConstants.STRING;
-
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_HEIGHT, "105");
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_WIDTH, "450");
-			properties.setProperty(
-				ExpandoColumnConstants.INDEX_TYPE,
-				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_TEXT));
-		}
-		else if (preset.equals("PresetTextFieldSecret()")) {
-			type = ExpandoColumnConstants.STRING;
-
-			properties.setProperty(
-				ExpandoColumnConstants.PROPERTY_SECRET,
-				Boolean.TRUE.toString());
-		}
-		else {
-			type = ExpandoColumnConstants.STRING;
-
-			properties.setProperty(
-				ExpandoColumnConstants.INDEX_TYPE,
-				String.valueOf(ExpandoColumnConstants.INDEX_TYPE_TEXT));
-		}
-
-		expandoBridge.addAttribute(name, type);
-
-		expandoBridge.setAttributeProperties(name, properties);
-
-		return type;
-	}
-
-	protected void deleteExpando(ActionRequest actionRequest) throws Exception {
 		long columnId = ParamUtil.getLong(actionRequest, "columnId");
 
 		ExpandoColumnServiceUtil.deleteColumn(columnId);
+	}
+
+	public void updateExpando(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String modelResource = ParamUtil.getString(
+			actionRequest, "modelResource");
+		long resourcePrimKey = ParamUtil.getLong(
+			actionRequest, "resourcePrimKey");
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		int type = ParamUtil.getInteger(actionRequest, "type");
+
+		Serializable defaultValue = getValue(
+			actionRequest, "defaultValue", type);
+
+		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
+			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
+
+		expandoBridge.setAttributeDefault(name, defaultValue);
+
+		updateProperties(actionRequest, expandoBridge, name);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, ColumnNameException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, ColumnTypeException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, DuplicateColumnNameException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, ValueDataException.class.getName())) {
+
+			include(
+				"/html/portlet/expando/edit_expando.jsp", renderRequest,
+				renderResponse);
+		}
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchColumnException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include(
+				"/html/portlet/expando/error.jsp", renderRequest,
+				renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
 	}
 
 	protected Serializable getValue(
@@ -385,27 +296,19 @@ public class EditExpandoAction extends PortletAction {
 		return value;
 	}
 
-	protected void updateExpando(ActionRequest actionRequest) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof ColumnNameException ||
+			cause instanceof ColumnTypeException ||
+			cause instanceof DuplicateColumnNameException ||
+			cause instanceof NoSuchColumnException ||
+			cause instanceof PrincipalException ||
+			cause instanceof ValueDataException) {
 
-		String modelResource = ParamUtil.getString(
-			actionRequest, "modelResource");
-		long resourcePrimKey = ParamUtil.getLong(
-			actionRequest, "resourcePrimKey");
+			return true;
+		}
 
-		String name = ParamUtil.getString(actionRequest, "name");
-		int type = ParamUtil.getInteger(actionRequest, "type");
-
-		Serializable defaultValue = getValue(
-			actionRequest, "defaultValue", type);
-
-		ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(
-			themeDisplay.getCompanyId(), modelResource, resourcePrimKey);
-
-		expandoBridge.setAttributeDefault(name, defaultValue);
-
-		updateProperties(actionRequest, expandoBridge, name);
+		return false;
 	}
 
 	protected void updateProperties(

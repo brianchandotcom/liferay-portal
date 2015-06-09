@@ -24,7 +24,7 @@ String modelResourceName = ResourceActionsUtil.getModelResource(request, modelRe
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/expando/view_attributes");
+portletURL.setParameter("mvcPath", "/html/portlet/expando/view_attributes.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("modelResource", modelResource);
 %>
@@ -65,7 +65,7 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 		%>
 
 		<portlet:renderURL var="rowURL">
-			<portlet:param name="struts_action" value="/expando/edit_expando" />
+			<portlet:param name="mvcPath" value="/html/portlet/expando/edit_expando.jsp" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="columnId" value="<%= String.valueOf(expandoColumn.getColumnId()) %>" />
 			<portlet:param name="modelResource" value="<%= modelResource %>" />
@@ -97,7 +97,7 @@ List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames()
 
 <aui:script>
 	function <portlet:namespace />addExpando() {
-		submitForm(document.hrefFm, '<portlet:renderURL><portlet:param name="struts_action" value="/expando/edit_expando" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="modelResource" value="<%= modelResource %>" /></portlet:renderURL>');
+		submitForm(document.hrefFm, '<portlet:renderURL><portlet:param name="mvcPath" value="/html/portlet/expando/edit_expando.jsp" /><portlet:param name="redirect" value="<%= currentURL %>" /><portlet:param name="modelResource" value="<%= modelResource %>" /></portlet:renderURL>');
 	}
 </aui:script>
 

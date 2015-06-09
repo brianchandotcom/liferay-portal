@@ -29,7 +29,7 @@ CustomAttributesDisplay customAttributesDisplay = (CustomAttributesDisplay)row.g
 <c:if test="<%= permissionChecker.isCompanyAdmin() %>">
 	<liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 		<portlet:renderURL var="editURL">
-			<portlet:param name="struts_action" value="/expando/view_attributes" />
+			<portlet:param name="mvcPath" value="/html/portlet/expando/view_attributes.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="modelResource" value="<%= customAttributesDisplay.getClassName() %>" />
 		</portlet:renderURL>

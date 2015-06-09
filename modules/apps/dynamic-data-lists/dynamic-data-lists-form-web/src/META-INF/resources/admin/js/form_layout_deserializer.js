@@ -65,7 +65,7 @@ AUI.add(
 					deserializeColumns: function(columns) {
 						var instance = this;
 
-						return AArray.map(columns, A.bind(instance.deserializeColumn, instance));
+						return AArray.map(columns, A.bind('deserializeColumn', instance));
 					},
 
 					deserializeField: function(deserializedColumn, fieldName) {
@@ -131,7 +131,7 @@ AUI.add(
 						var deserializedPages;
 
 						if (pages.length) {
-							deserializedPages = AArray.map(pages, A.bind(instance.deserializePage, instance));
+							deserializedPages = AArray.map(pages, A.bind('deserializePage', instance));
 						}
 						else {
 							deserializedPages = [
@@ -161,7 +161,7 @@ AUI.add(
 					deserializeRows: function(rows) {
 						var instance = this;
 
-						return AArray.map(rows, A.bind(instance.deserializeRow, instance));
+						return AArray.map(rows, A.bind('deserializeRow', instance));
 					}
 				}
 			}

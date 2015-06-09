@@ -41,10 +41,10 @@ AUI.add(
 
 						var editForm = instance.get('editForm');
 
-						editForm.set('onSubmit', A.bind(instance._onSubmitEditForm, instance));
+						editForm.set('onSubmit', A.bind('_onSubmitEditForm', instance));
 
 						instance._eventHandlers = [
-							Liferay.on('destroyPortlet', A.bind(instance._onDestroyPortlet, instance))
+							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
 					},
 

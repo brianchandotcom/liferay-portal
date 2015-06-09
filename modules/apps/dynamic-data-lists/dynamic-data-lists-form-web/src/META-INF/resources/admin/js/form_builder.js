@@ -61,10 +61,12 @@ AUI.add(
 
 						FormBuilder.superclass.renderUI.apply(instance, arguments);
 
-						instance._pages.set('descriptions', deserializer.get('descriptions'));
-						instance._pages.set('titles', deserializer.get('titles'));
+						var pages = instance._pages;
 
-						instance._pages._uiSetActivePageNumber(instance._pages.get('activePageNumber'));
+						pages.set('descriptions', deserializer.get('descriptions'));
+						pages.set('titles', deserializer.get('titles'));
+
+						pages._uiSetActivePageNumber(pages.get('activePageNumber'));
 					},
 
 					destructor: function() {
@@ -72,7 +74,7 @@ AUI.add(
 
 						new Liferay.DDL.LayoutVisitor(
 							{
-								columnHandler: A.bind(instance._columnDestructor, instance),
+								columnHandler: A.bind('_columnDestructor', instance),
 								layouts: instance.get('layouts')
 							}
 						).visit();
@@ -158,7 +160,6 @@ AUI.add(
 						var instance = this;
 
 						field.addTarget(instance);
-
 						field.showSettingsPanel(fieldTypeName);
 					}
 				}

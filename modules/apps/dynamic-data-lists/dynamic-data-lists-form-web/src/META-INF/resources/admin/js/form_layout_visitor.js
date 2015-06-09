@@ -46,7 +46,7 @@ AUI.add(
 					visitColumns: function(columns) {
 						var instance = this;
 
-						return AArray.map(columns, A.bind(instance.visitColumn, instance));
+						return AArray.map(columns, A.bind('visitColumn', instance));
 					},
 
 					visitPage: function(page, index) {
@@ -62,7 +62,7 @@ AUI.add(
 					visitPages: function(pages) {
 						var instance = this;
 
-						return AArray.map(pages, A.bind(instance.visitPage, instance));
+						return AArray.map(pages, A.bind('visitPage', instance));
 					},
 
 					visitRow: function(row) {
@@ -78,7 +78,7 @@ AUI.add(
 					visitRows: function(rows) {
 						var instance = this;
 
-						return AArray.map(rows, A.bind(instance.visitRow, instance));
+						return AArray.map(rows, A.bind('visitRow', instance));
 					}
 				}
 			}

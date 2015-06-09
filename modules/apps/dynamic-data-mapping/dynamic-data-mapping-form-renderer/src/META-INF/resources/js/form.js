@@ -66,7 +66,7 @@ AUI.add(
 						var instance = this;
 
 						instance.after('definitionChange', instance._afterDefinitionChange);
-						instance.after('liferay-ddm-form-renderer-field:remove', A.bind(instance, instance._afterFieldRemove));
+						instance.after('liferay-ddm-form-renderer-field:remove', A.bind('_afterFieldRemove', instance));
 					},
 
 					destructor: function() {
@@ -141,7 +141,6 @@ AUI.add(
 						var qualifiedName = fieldNode.getData('fieldname');
 
 						var instanceId = Util.getInstanceIdFromQualifiedName(qualifiedName);
-
 						var name = Util.getFieldNameFromQualifiedName(qualifiedName);
 
 						var fieldDefinition = Util.searchFieldData(instance.get('definition'), 'name', name);

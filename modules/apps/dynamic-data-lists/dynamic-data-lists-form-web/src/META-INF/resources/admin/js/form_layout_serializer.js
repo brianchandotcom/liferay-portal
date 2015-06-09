@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var Field = Liferay.DDM.Renderer.Field;
+
 		var LayoutSerializer = A.Component.create(
 			{
 				ATTRS: {
@@ -70,9 +72,10 @@ AUI.add(
 
 						var builder = instance.get('builder');
 
-						var descriptions = builder._pages.get('descriptions');
+						var pages = builder._pages;
 
-						var titles = builder._pages.get('titles');
+						var descriptions = pages.get('descriptions');
+						var titles = pages.get('titles');
 
 						return {
 							description: {
@@ -102,10 +105,10 @@ AUI.add(
 								function(item) {
 									var value = item.get('value');
 
-									return A.instanceOf(value, Liferay.DDM.Renderer.Field);
+									return A.instanceOf(value, Field);
 								}
 							),
-							A.bind(instance.visitColumn, instance)
+							A.bind('visitColumn', instance)
 						);
 					}
 				}

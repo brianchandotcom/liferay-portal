@@ -98,7 +98,9 @@ AUI.add(
 			_getSettingsFormValuesFromDefinition: function() {
 				var instance = this;
 
-				var values = { fields: [] };
+				var values = {
+					fields: []
+				};
 
 				A.each(
 					instance.get('definition'),
@@ -139,7 +141,6 @@ AUI.add(
 				settingsFormContainer.show();
 
 				settingsModal.render();
-
 				settingsModal.show();
 
 				settingsModal.fillHeight(settingsModal.bodyNode);
@@ -177,7 +178,7 @@ AUI.add(
 
 				container.append('<button style="display: none;" type="submit" />');
 
-				container.on('submit', A.bind(instance._onSubmitSettings, instance));
+				container.on('submit', A.bind('_onSubmitSettings', instance));
 
 				return new Liferay.DDM.Renderer.Form(
 					{
@@ -214,13 +215,13 @@ AUI.add(
 						{
 							label: Liferay.Language.get('cancel'),
 							on: {
-								click: A.bind(settingsModal.hide, settingsModal)
+								click: A.bind('hide', settingsModal)
 							}
 						},
 						{
 							label: Liferay.Language.get('save'),
 							on: {
-								click: A.bind(instance._onSubmitSettings, instance)
+								click: A.bind('_onSubmitSettings', instance)
 							},
 							primary: true
 						}

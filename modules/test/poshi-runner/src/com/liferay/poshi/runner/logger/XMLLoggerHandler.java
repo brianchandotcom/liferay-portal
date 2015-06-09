@@ -656,6 +656,14 @@ public final class XMLLoggerHandler {
 		return false;
 	}
 
+	private static boolean _isExecutingTestCase(Element element) {
+		if (element.attributeValue("test-case") != null) {
+			return true;
+		}
+
+		return false;
+	}
+
 	private static int _btnLinkCollapseId;
 	private static int _btnLinkVarId;
 	private static final Map<String, LoggerElement> _loggerElements =

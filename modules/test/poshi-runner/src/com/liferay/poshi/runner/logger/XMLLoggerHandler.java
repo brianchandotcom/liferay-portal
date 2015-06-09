@@ -165,13 +165,14 @@ public final class XMLLoggerHandler {
 		List<Element> childElements = element.elements();
 
 		if ((!childElements.isEmpty() && !_isExecutingFunction(element)) ||
-			_isExecutingMacro(element)) {
+			_isExecutingMacro(element) || _isExecutingTestCase(element)) {
 
 			sb.append(_getBtnItemText("btn-collapse"));
 		}
 
 		if (!childElements.isEmpty() &&
-			(_isExecutingFunction(element) || _isExecutingMacro(element))) {
+			(_isExecutingFunction(element) || _isExecutingMacro(element) ||
+			 _isExecutingTestCase(element))) {
 
 			sb.append(_getBtnItemText("btn-var"));
 		}

@@ -72,22 +72,6 @@ public class Log4JUtil {
 				java.util.logging.Level.WARNING,
 				"Unable to load portal-log4j-ext.xml", ioe);
 		}
-
-		if (ServerDetector.isJBoss5()) {
-			Logger rootLogger = LogManager.getRootLogger();
-
-			Enumeration<Appender> enu = rootLogger.getAllAppenders();
-
-			while (enu.hasMoreElements()) {
-				Appender appender = enu.nextElement();
-
-				if (appender instanceof WriterAppender) {
-					WriterAppender writerAppender = (WriterAppender)appender;
-
-					writerAppender.activateOptions();
-				}
-			}
-		}
 	}
 
 	public static void configureLog4J(URL url) {

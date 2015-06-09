@@ -578,13 +578,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 		throws Exception {
 
 		if (appServerType.equals(ServerDetector.JBOSS_ID)) {
-			if (ServerDetector.isJBoss5()) {
-				copyDependencyXml("jboss-web.xml", srcFile + "/WEB-INF");
-			}
-			else {
-				copyDependencyXml(
-					"jboss-deployment-structure.xml", srcFile + "/WEB-INF");
-			}
+			copyDependencyXml(
+				"jboss-deployment-structure.xml", srcFile + "/WEB-INF");
 		}
 		else if (appServerType.equals(ServerDetector.WEBLOGIC_ID)) {
 			copyDependencyXml("weblogic.xml", srcFile + "/WEB-INF");

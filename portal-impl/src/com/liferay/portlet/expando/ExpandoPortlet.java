@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.expando;
 
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+
 /**
  * @author Drew Brokke
  */
-
 public class ExpandoPortlet extends MVCPortlet {
-
 }

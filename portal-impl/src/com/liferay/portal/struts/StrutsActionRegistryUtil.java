@@ -169,9 +169,11 @@ public class StrutsActionRegistryUtil {
 				action = new PortletActionAdapter((StrutsPortletAction)service);
 			}
 
-			String path = (String)serviceReference.getProperty("path");
+			String[] paths = _getPaths(serviceReference);
 
-			_actions.put(path, action);
+			for (String path : paths) {
+				_actions.put(path, action);
+			}
 
 			return action;
 		}
@@ -189,9 +191,22 @@ public class StrutsActionRegistryUtil {
 
 			registry.ungetService(serviceReference);
 
-			String path = (String)serviceReference.getProperty("path");
+			String[] paths = _getPaths(serviceReference);
 
-			_actions.remove(path);
+			for (String path : paths) {
+				_actions.remove(path);
+			}
+		}
+
+		private String[] _getPaths(ServiceReference<Object> serviceReference) {
+			Object object = serviceReference.getProperty("path");
+
+			if (object instanceof String[]) {
+				return (String[])object;
+			}
+			else {
+				return new String[] {(String)object};
+			}
 		}
 
 	}

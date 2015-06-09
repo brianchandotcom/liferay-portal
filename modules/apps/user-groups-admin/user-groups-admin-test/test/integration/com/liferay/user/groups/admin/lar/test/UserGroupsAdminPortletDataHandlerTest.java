@@ -12,21 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.usergroupsadmin.lar;
+package com.liferay.user.groups.admin.web.lar.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
+import com.liferay.user.groups.admin.web.lar.UserGroupsAdminPortletDataHandler;
 
 import org.junit.ClassRule;
 import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Zsolt Berentey
  */
+@RunWith(Arquillian.class)
 public class UserGroupsAdminPortletDataHandlerTest
 	extends BasePortletDataHandlerTestCase {
 
@@ -47,7 +51,7 @@ public class UserGroupsAdminPortletDataHandlerTest
 
 	@Override
 	protected String getPortletId() {
-		return PortletKeys.USER_GROUPS_ADMIN;
+		return UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN;
 	}
 
 }

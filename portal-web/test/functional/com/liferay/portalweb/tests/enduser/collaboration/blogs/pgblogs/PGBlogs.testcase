@@ -1603,9 +1603,11 @@
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+		<execute macro="BlogsPortlet#selectDisplayTemplate">
 			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
+
+		<execute macro="IFrame#saveConfiguration" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1708,9 +1710,11 @@
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+		<execute macro="BlogsPortlet#selectDisplayTemplate">
 			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
+
+		<execute macro="IFrame#saveConfiguration" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1802,9 +1806,11 @@
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+		<execute macro="BlogsPortlet#selectDisplayTemplate">
 			<var name="displayTemplate" value="${displayTemplate}" />
 		</execute>
+
+		<execute macro="IFrame#saveConfiguration" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

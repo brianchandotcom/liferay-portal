@@ -116,7 +116,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
 <div class="edit-permissions">
 	<portlet:actionURL name="updateRolePermissions" var="updateRolePermissionsURL">
-		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_permissions.jsp" />
+		<portlet:param name="mvcPath" value="/edit_permissions.jsp" />
 		<portlet:param name="tabs2" value="<%= tabs2 %>" />
 		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />
@@ -132,7 +132,7 @@ definePermissionsURL.setWindowState(LiferayWindowState.POP_UP);
 
 		<c:choose>
 			<c:when test="<%= Validator.isNull(modelResource) %>">
-				<liferay-util:include page="/html/portlet/portlet_configuration/tabs1.jsp">
+				<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
 					<liferay-util:param name="tabs1" value="permissions" />
 				</liferay-util:include>
 			</c:when>

@@ -53,7 +53,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 }
 %>
 
-<liferay-util:include page="/html/portlet/portlet_configuration/tabs1.jsp">
+<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="scope" />
 </liferay-util:include>
 
@@ -81,7 +81,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				<liferay-portlet:actionURL name="editScope" var="setScopeURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_scope.jsp" />
+					<portlet:param name="mvcPath" value="/edit_scope.jsp" />
 					<portlet:param name="scopeType" value="<%= availableGroupScopeType %>" />
 					<portlet:param name="scopeLayoutUuid" value="<%= availableGroupScopeLayoutUuid %>" />
 				</liferay-portlet:actionURL>
@@ -104,7 +104,7 @@ for (Layout scopeGroupLayout : LayoutLocalServiceUtil.getScopeGroupLayouts(layou
 				<liferay-portlet:actionURL name="editScope" var="createNewScopeURL">
 					<portlet:param name="redirect" value="<%= currentURL %>" />
 					<portlet:param name="portletResource" value="<%= portletResource %>" />
-					<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_scope.jsp" />
+					<portlet:param name="mvcPath" value="/edit_scope.jsp" />
 					<portlet:param name="scopeType" value="layout" />
 					<portlet:param name="scopeLayoutUuid" value="<%= layout.getUuid() %>" />
 				</liferay-portlet:actionURL>

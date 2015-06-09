@@ -24,7 +24,7 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 
 PortletURL configurationURL = renderResponse.createRenderURL();
 
-configurationURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_configuration.jsp");
+configurationURL.setParameter("mvcPath", "/edit_configuration.jsp");
 configurationURL.setParameter("redirect", redirect);
 configurationURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 configurationURL.setParameter("portletResource", portletResource);
@@ -33,7 +33,7 @@ configurationURL.setParameter("portletResource", portletResource);
 
 PortletURL supportedClientsURL = renderResponse.createRenderURL();
 
-supportedClientsURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_supported_clients.jsp");
+supportedClientsURL.setParameter("mvcPath", "/edit_supported_clients.jsp");
 supportedClientsURL.setParameter("redirect", redirect);
 supportedClientsURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 supportedClientsURL.setParameter("portletResource", portletResource);
@@ -42,7 +42,7 @@ supportedClientsURL.setParameter("portletResource", portletResource);
 
 PortletURL permissionsURL = renderResponse.createRenderURL();
 
-permissionsURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_permissions.jsp");
+permissionsURL.setParameter("mvcPath", "/edit_permissions.jsp");
 permissionsURL.setParameter("redirect", redirect);
 permissionsURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 permissionsURL.setParameter("portletResource", portletResource);
@@ -52,7 +52,7 @@ permissionsURL.setParameter("resourcePrimKey", PortletPermissionUtil.getPrimaryK
 
 PortletURL publicRenderParametersURL = renderResponse.createRenderURL();
 
-publicRenderParametersURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_public_render_parameters.jsp");
+publicRenderParametersURL.setParameter("mvcPath", "/edit_public_render_parameters.jsp");
 publicRenderParametersURL.setParameter("redirect", redirect);
 publicRenderParametersURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 publicRenderParametersURL.setParameter("portletResource", portletResource);
@@ -61,7 +61,7 @@ publicRenderParametersURL.setParameter("portletResource", portletResource);
 
 PortletURL sharingURL = renderResponse.createRenderURL();
 
-sharingURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_sharing.jsp");
+sharingURL.setParameter("mvcPath", "/edit_sharing.jsp");
 sharingURL.setParameter("redirect", redirect);
 sharingURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 sharingURL.setParameter("portletResource", portletResource);
@@ -70,7 +70,7 @@ sharingURL.setParameter("portletResource", portletResource);
 
 PortletURL scopeURL = renderResponse.createRenderURL();
 
-scopeURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_scope.jsp");
+scopeURL.setParameter("mvcPath", "/edit_scope.jsp");
 scopeURL.setParameter("redirect", redirect);
 scopeURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 scopeURL.setParameter("portletResource", portletResource);

@@ -22,14 +22,14 @@ String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL")
 %>
 
 <c:if test="<%= !layout.isTypeControlPanel() && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
-	<liferay-util:include page="/html/portlet/portlet_configuration/tabs1.jsp">
+	<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="setup" />
 	</liferay-util:include>
 </c:if>
 
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, layout.getGroupId(), ActionKeys.MANAGE_ARCHIVED_SETUPS) && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
 	<portlet:renderURL var="archivedSetupsURL">
-		<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_archived_setups.jsp" />
+		<portlet:param name="mvcPath" value="/edit_archived_setups.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="returnToFullPageURL" value="<%= returnToFullPageURL %>" />
 		<portlet:param name="portletResource" value="<%= portletResource %>" />

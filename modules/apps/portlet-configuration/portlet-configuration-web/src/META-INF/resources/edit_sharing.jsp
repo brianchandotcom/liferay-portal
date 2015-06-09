@@ -24,7 +24,7 @@ Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(),
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_sharing.jsp");
+portletURL.setParameter("mvcPath", "/edit_sharing.jsp");
 portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 portletURL.setParameter("portletResource", portletResource);
@@ -32,12 +32,12 @@ portletURL.setParameter("portletResource", portletResource);
 String widgetURL = PortalUtil.getWidgetURL(portlet, themeDisplay);
 %>
 
-<liferay-util:include page="/html/portlet/portlet_configuration/tabs1.jsp">
+<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="sharing" />
 </liferay-util:include>
 
 <portlet:actionURL name="editSharing" var="editSharingURL">
-	<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_sharing.jsp" />
+	<portlet:param name="mvcPath" value="/edit_sharing.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editSharingURL %>" method="post" name="fm">

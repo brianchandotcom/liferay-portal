@@ -25,13 +25,13 @@ Set<PublicRenderParameter> publicRenderParameters = (Set<PublicRenderParameter>)
 
 PortletURL editPublicRenderParameterURL = renderResponse.createRenderURL();
 
-editPublicRenderParameterURL.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_public_render_parameters.jsp");
+editPublicRenderParameterURL.setParameter("mvcPath", "/edit_public_render_parameters.jsp");
 editPublicRenderParameterURL.setParameter("redirect", redirect);
 editPublicRenderParameterURL.setParameter("returnToFullPageURL", returnToFullPageURL);
 editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 %>
 
-<liferay-util:include page="/html/portlet/portlet_configuration/tabs1.jsp">
+<liferay-util:include page="/tabs1.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="communication" />
 </liferay-util:include>
 
@@ -42,7 +42,7 @@ editPublicRenderParameterURL.setParameter("portletResource", portletResource);
 </div>
 
 <portlet:actionURL name="editPublicRenderParameters" var="editPublicRenderParametersURL">
-	<portlet:param name="mvcPath" value="/html/portlet/portlet_configuration/edit_public_render_parameters.jsp" />
+	<portlet:param name="mvcPath" value="/edit_public_render_parameters.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editPublicRenderParametersURL %>" method="post" name="fm">

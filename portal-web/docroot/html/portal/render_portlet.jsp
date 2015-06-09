@@ -420,7 +420,7 @@ PortletURL urlConfiguration = PortletProviderUtil.getPortletURL(request, Portlet
 urlConfiguration.setWindowState(LiferayWindowState.POP_UP);
 
 if (portlet.getConfigurationActionInstance() != null) {
-	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_configuration.jsp");
+	urlConfiguration.setParameter("mvcPath", "/edit_configuration.jsp");
 
 	String settingsScope = (String)request.getAttribute(WebKeys.SETTINGS_SCOPE);
 
@@ -429,10 +429,10 @@ if (portlet.getConfigurationActionInstance() != null) {
 	}
 }
 else if (PortletPermissionUtil.contains(permissionChecker, layout, portletDisplay.getId(), ActionKeys.PERMISSIONS)) {
-	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_permissions.jsp");
+	urlConfiguration.setParameter("mvcPath", "/edit_permissions.jsp");
 }
 else {
-	urlConfiguration.setParameter("mvcPath", "/html/portlet/portlet_configuration/edit_sharing.jsp");
+	urlConfiguration.setParameter("mvcPath", "/edit_sharing.jsp");
 }
 
 urlConfiguration.setParameter("redirect", currentURL);

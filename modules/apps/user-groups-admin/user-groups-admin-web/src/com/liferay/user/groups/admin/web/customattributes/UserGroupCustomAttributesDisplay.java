@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.usergroupsadmin;
+package com.liferay.user.groups.admin.web;
 
 import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.theme.ThemeDisplay;

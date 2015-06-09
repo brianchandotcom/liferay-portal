@@ -1585,10 +1585,15 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="BlogsEntry#addAbstractDescriptionPG">
-			<var name="entryAbstractDescription" value="${entryAbstractDescription}" />
+		<execute macro="BlogsNavigator#gotoSettingsTab">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
+
+		<execute macro="BlogsEntry#addDefaultAbstract">
+			<var name="entryContent" value="${entryContent}" />
+		</execute>
+
+		<execute macro="BlogsEntry#publish" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

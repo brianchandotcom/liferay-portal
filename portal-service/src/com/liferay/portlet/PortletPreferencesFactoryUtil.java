@@ -75,6 +75,22 @@ public class PortletPreferencesFactoryUtil {
 			companyId, ownerId, ownerType, xml);
 	}
 
+	public static PortletPreferences getExistingPortletSetup(
+			Layout layout, String portletId)
+		throws PortalException {
+
+		return getPortletPreferencesFactory().getExistingPortletSetup(
+			layout, portletId);
+	}
+
+	public static PortletPreferences getExistingPortletSetup(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		return getPortletPreferencesFactory().getExistingPortletSetup(
+			portletRequest);
+	}
+
 	public static PortletPreferences getLayoutPortletSetup(
 		Layout layout, String portletId) {
 

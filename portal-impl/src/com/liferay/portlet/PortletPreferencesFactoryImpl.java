@@ -171,6 +171,40 @@ public class PortletPreferencesFactoryImpl
 	}
 
 	@Override
+	public PortletPreferences getExistingPortletSetup(
+			Layout layout, String portletId)
+		throws PortalException {
+
+		if (Validator.isNull(portletId)) {
+			return null;
+		}
+
+		PortletPreferences portletPreferences = getStrictPortletSetup(
+			layout, portletId);
+
+		if (portletPreferences instanceof StrictPortletPreferencesImpl) {
+			throw new PrincipalException();
+		}
+
+		return portletPreferences;
+	}
+
+	@Override
+	public PortletPreferences getExistingPortletSetup(
+			PortletRequest portletRequest)
+		throws PortalException {
+
+		String portletResource = ParamUtil.getString(
+			portletRequest, "portletResource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return getExistingPortletSetup(
+			themeDisplay.getLayout(), portletResource);
+	}
+
+	@Override
 	public PortletPreferences getLayoutPortletSetup(
 		Layout layout, String portletId) {
 

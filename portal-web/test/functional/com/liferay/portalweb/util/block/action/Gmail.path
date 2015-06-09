@@ -112,6 +112,11 @@
 </tr>
 <!--GMAIL_HTML_MODE-->
 <tr>
+	<td>GMAIL_HTML_MODE_CONFIRMATION</td>
+	<td>//input[@value="I'd like to use HTML Gmail"]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>GMAIL_HTML_MODE_USER_SCREENNAME</td>
 	<td>//div[@id='guser']/nobr/b</td>
 	<td></td>

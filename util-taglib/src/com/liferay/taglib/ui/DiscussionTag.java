@@ -14,6 +14,8 @@
 
 package com.liferay.taglib.ui;
 
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,9 +86,31 @@ public class DiscussionTag extends IncludeTag {
 		_userId = 0;
 	}
 
+	protected String getFormAction(HttpServletRequest request) {
+		if (_formAction != null) {
+			return _formAction;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getPathMain() + "/portal/edit_discussion";
+	}
+
 	@Override
 	protected String getPage() {
 		return _PAGE;
+	}
+
+	protected String getPaginationURL(HttpServletRequest request) {
+		if (_paginationURL != null) {
+			return _paginationURL;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return themeDisplay.getPathMain() + "/portal/more_comments";
 	}
 
 	@Override
@@ -97,13 +121,14 @@ public class DiscussionTag extends IncludeTag {
 		request.setAttribute("liferay-ui:discussion:className", _className);
 		request.setAttribute(
 			"liferay-ui:discussion:classPK", String.valueOf(_classPK));
-		request.setAttribute("liferay-ui:discussion:formAction", _formAction);
+		request.setAttribute(
+			"liferay-ui:discussion:formAction", getFormAction(request));
 		request.setAttribute("liferay-ui:discussion:formName", _formName);
 		request.setAttribute(
 			"liferay-ui:discussion:hideControls",
 			String.valueOf(_hideControls));
 		request.setAttribute(
-			"liferay-ui:discussion:paginationURL", _paginationURL);
+			"liferay-ui:discussion:paginationURL", getPaginationURL(request));
 		request.setAttribute(
 			"liferay-ui:discussion:ratingsEnabled",
 			String.valueOf(_ratingsEnabled));

@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Function;
@@ -50,6 +52,9 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Adolfo Pérez
  */
+@OSGiBeanProperties(
+	property = "path=/portal/edit_discussion", service = StrutsAction.class
+)
 public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 	@Override

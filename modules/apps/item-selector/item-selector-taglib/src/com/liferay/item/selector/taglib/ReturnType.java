@@ -15,6 +15,8 @@
 package com.liferay.item.selector.taglib;
 
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -33,6 +35,23 @@ public enum ReturnType implements ItemSelectorReturnType {
 			return StringPool.BLANK;
 		}
 	},
+	FILE_ENTRY {
+		@Override
+		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
+			throws Exception {
+
+			JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
+
+			fileEntryJSONObject.put("fileEntry", fileEntry.getFileEntryId());
+			fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
+			fileEntryJSONObject.put("title", fileEntry.getTitle());
+			fileEntryJSONObject.put(
+				"url", DLUtil.getImagePreviewURL(fileEntry, themeDisplay));
+			fileEntryJSONObject.put("uuid", fileEntry.getUuid());
+
+			return fileEntryJSONObject.toString();
+		}
+	},
 	URL {
 		@Override
 		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
@@ -47,6 +66,10 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 		if (BASE_64.name().equals(itemSelectorReturnType.getName())) {
 			return BASE_64;
+		}
+
+		if (FILE_ENTRY.name().equals(itemSelectorReturnType.getName())) {
+			return FILE_ENTRY;
 		}
 
 		if (URL.name().equals(itemSelectorReturnType.getName())) {

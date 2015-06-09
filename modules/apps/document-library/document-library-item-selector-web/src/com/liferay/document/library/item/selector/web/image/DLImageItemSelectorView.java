@@ -65,6 +65,8 @@ public class DLImageItemSelectorView
 
 	static {
 		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+			ImageItemSelectorReturnTypes.FILE_ENTRY);
+		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
 			ImageItemSelectorReturnTypes.URL);
 	}
 

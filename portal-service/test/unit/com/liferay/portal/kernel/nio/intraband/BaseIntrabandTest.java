@@ -194,9 +194,7 @@ public class BaseIntrabandTest {
 			monitorFutureTask.get(10, TimeUnit.MINUTES);
 
 			try {
-				Assert.assertSame(
-					datagramReceiveHandler1,
-					registerFutureTask.get(10, TimeUnit.MINUTES));
+				registerFutureTask.get(10, TimeUnit.MINUTES);
 
 				Assert.fail();
 			}

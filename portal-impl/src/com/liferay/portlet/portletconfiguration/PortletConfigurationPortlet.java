@@ -565,9 +565,18 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 			Portlet portlet = ActionUtil.getPortlet(renderRequest);
 
 			if (mvcPath.endsWith("edit_configuration.jsp")) {
+				renderRequest = ActionUtil.getWrappedRenderRequest(
+					renderRequest, null);
+
 				renderEditConfiguration(renderRequest, renderResponse, portlet);
 			}
 			else if (mvcPath.endsWith("edit_public_render_parameters.jsp")) {
+				PortletPreferences portletPreferences =
+					ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
+
+				renderRequest = ActionUtil.getWrappedRenderRequest(
+					renderRequest, portletPreferences);
+
 				renderEditPublicParameters(renderRequest, portlet);
 			}
 
@@ -791,8 +800,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
 			JavaConstants.JAVAX_PORTLET_CONFIG);
 
-		renderRequest = ActionUtil.getWrappedRenderRequest(renderRequest, null);
-
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
 
@@ -818,12 +825,6 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	protected void renderEditPublicParameters(
 			RenderRequest renderRequest, Portlet portlet)
 		throws Exception {
-
-		PortletPreferences portletPreferences =
-			ActionUtil.getLayoutPortletSetup(renderRequest, portlet);
-
-		renderRequest = ActionUtil.getWrappedRenderRequest(
-			renderRequest, portletPreferences);
 
 		ActionUtil.getLayoutPublicRenderParameters(renderRequest);
 

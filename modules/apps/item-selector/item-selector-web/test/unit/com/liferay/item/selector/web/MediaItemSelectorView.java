@@ -19,7 +19,9 @@ import com.liferay.item.selector.ItemSelectorView;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -30,11 +32,19 @@ import javax.servlet.ServletResponse;
  * @author Iván Zaera
  */
 public class MediaItemSelectorView
-	implements ItemSelectorView<MediaItemSelectorCriterion> {
+	implements ItemSelectorView
+		<MediaItemSelectorCriterion, TestItemSelectorReturnTypes> {
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return MediaItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<TestItemSelectorReturnTypes>
+		getItemSelectorSupportedReturnTypes() {
+
+		return _TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
 	}
 
 	@Override
@@ -53,6 +63,14 @@ public class MediaItemSelectorView
 
 		printWriter.print(
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
+	}
+
+	private static final Set<TestItemSelectorReturnTypes>
+		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
+
+	static {
+		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+			TestItemSelectorReturnTypes.URL);
 	}
 
 }

@@ -15,9 +15,18 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.messageboards.model.MBDiscussion;
+import com.liferay.portlet.messageboards.model.MBMessage;
+import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Adolfo Pérez
@@ -30,7 +39,34 @@ public class MBDiscussionStagingDataHandler
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		throw new UnsupportedOperationException();
+		MBDiscussion mbDiscussion =
+			MBDiscussionLocalServiceUtil.fetchDiscussion(
+				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassPK(stagedModel));
+
+		if (mbDiscussion == null) {
+			return;
+		}
+
+		List<MBMessage> mbMessages =
+			MBMessageLocalServiceUtil.getThreadMessages(
+				mbDiscussion.getThreadId(), WorkflowConstants.STATUS_APPROVED);
+
+		if (mbMessages.isEmpty()) {
+			return;
+		}
+
+		MBMessage firstMBMessage = mbMessages.get(0);
+
+		if ((mbMessages.size() == 1) && firstMBMessage.isRoot()) {
+			return;
+		}
+
+		for (MBMessage mbMessage : mbMessages) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, stagedModel, mbMessage,
+				PortletDataContext.REFERENCE_TYPE_WEAK);
+		}
 	}
 
 	@Override
@@ -38,7 +74,8 @@ public class MBDiscussionStagingDataHandler
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		throw new UnsupportedOperationException();
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, stagedModel, MBMessage.class);
 	}
 
 }

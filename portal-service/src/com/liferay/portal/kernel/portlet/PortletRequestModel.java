@@ -773,7 +773,7 @@ public class PortletRequestModel implements Serializable {
 		if (StringUtil.equalsIgnoreCase(name, "j_password") ||
 			StringUtil.equalsIgnoreCase(name, "LAYOUT_CONTENT") ||
 			StringUtil.equalsIgnoreCase(name, "LAYOUTS") ||
-			StringUtil.equalsIgnoreCase(name, "PORTLET_RENDER_PARAMETERS") ||
+			StringUtil.equalsIgnoreCase(name, "PORTLET_RENDER_PARAMETERS_") ||
 			StringUtil.equalsIgnoreCase(name, "USER_PASSWORD") ||
 			name.startsWith("javax.") || name.startsWith("liferay-ui:")) {
 

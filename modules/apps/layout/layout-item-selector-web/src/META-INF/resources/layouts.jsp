@@ -18,9 +18,9 @@
 
 <%
 String itemSelectedEventName = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_EVENT_NAME);
-LayoutItemSelectorCriterion layoutItemSelectorCriterion = (LayoutItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
+URLItemSelectorCriterion urlItemSelectorCriterion = (URLItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
 
-long groupId = layoutItemSelectorCriterion.getGroupId();
+long groupId = themeDisplay.getScopeGroupId();
 
 Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
@@ -191,7 +191,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			<%
 			String returnType = StringPool.BLANK;
 
-			for (Class<?> desiredReturnType : layoutItemSelectorCriterion.getDesiredReturnTypes()) {
+			for (Class<?> desiredReturnType : urlItemSelectorCriterion.getDesiredReturnTypes()) {
 				if (desiredReturnType == URL.class) {
 					returnType = URL.class.getName();
 				}

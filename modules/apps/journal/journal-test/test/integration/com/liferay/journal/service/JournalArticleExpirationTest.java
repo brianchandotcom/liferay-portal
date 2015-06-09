@@ -15,6 +15,7 @@
 package com.liferay.journal.service;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -28,7 +29,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -149,10 +152,16 @@ public class JournalArticleExpirationTest {
 			true, true, false, null, null, null, null, serviceContext);
 	}
 
-	protected Calendar getExpirationCalendar(long timeUnit, int timeValue) {
+	protected Calendar getExpirationCalendar(long timeUnit, int timeValue)
+		throws PortalException {
+
 		Calendar calendar = new GregorianCalendar();
 
 		calendar.setTime(new Date(new Date().getTime() + timeUnit * timeValue));
+
+		User user = UserLocalServiceUtil.fetchUser(TestPropsValues.getUserId());
+
+		calendar.setTimeZone(user.getTimeZone());
 
 		return calendar;
 	}

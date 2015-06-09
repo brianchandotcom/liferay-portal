@@ -376,6 +376,14 @@ public class OrganizationServiceImpl extends OrganizationServiceBaseImpl {
 		organizationLocalService.deleteOrganization(organizationId);
 	}
 
+	/**
+	 * Returns the organization with the primary key.
+	 *
+	 * @param  organizationId the primary key of the organization
+	 * @return the organization with the primary key or null if an organization
+	 * 		   with the primary key could not be found or if the user did not
+	 * 		   have permission to view the organization
+	 */
 	@Override
 	public Organization fetchOrganization(long organizationId)
 		throws PortalException {

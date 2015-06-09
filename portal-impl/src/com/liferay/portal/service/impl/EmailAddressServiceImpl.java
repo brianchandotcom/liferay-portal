@@ -74,6 +74,14 @@ public class EmailAddressServiceImpl extends EmailAddressServiceBaseImpl {
 		emailAddressLocalService.deleteEmailAddress(emailAddress);
 	}
 
+	/**
+	 * Returns the email address with the primary key.
+	 *
+	 * @param  emailAddressId the primary key of the email address
+	 * @return the email address with the primary key or null if an email
+	 * 		   address with the primary key could not be found or if the user
+	 * 		   did not have permission to view the email address
+	 */
 	@Override
 	public EmailAddress fetchEmailAddress(long emailAddressId)
 		throws PortalException {

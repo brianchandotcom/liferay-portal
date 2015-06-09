@@ -1,5 +1,6 @@
 uptodate.properties
 
+/*/*/.js_cache
 /*/*/bin
 /*/*/build
 /*/*/docroot/WEB-INF/classes
@@ -13,6 +14,7 @@ uptodate.properties
 /*/*/test-coverage
 /*/*/test-results
 /*/*/tmp
+/*/*/*/.js_cache
 /*/*/*/bin
 /*/*/*/build
 /*/*/*/docroot/WEB-INF/classes
@@ -26,6 +28,7 @@ uptodate.properties
 /*/*/*/test-coverage
 /*/*/*/test-results
 /*/*/*/tmp
+/*/*/*/*/.js_cache
 /*/*/*/*/bin
 /*/*/*/*/docroot/WEB-INF/classes
 /*/*/*/*/docroot/WEB-INF/lib

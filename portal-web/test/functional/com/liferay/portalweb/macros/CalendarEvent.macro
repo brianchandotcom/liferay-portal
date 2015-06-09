@@ -16,6 +16,7 @@
 			<condition function="IsElementPresent" locator1="PGCalendarAddevent#DETAILS_PANEL_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="PGCalendarAddevent#DETAILS_PANEL_COLLAPSED" />
+
 				<execute function="AssertElementPresent" locator1="PGCalendarAddevent#DETAILS_PANEL_EXPANDED" />
 			</then>
 		</if>
@@ -26,6 +27,7 @@
 			<condition function="IsElementPresent" locator1="PGCalendarAddevent#INVITATIONS_PANEL_COLLAPSED" />
 			<then>
 				<execute function="Click" locator1="PGCalendarAddevent#INVITATIONS_PANEL_COLLAPSED" />
+
 				<execute function="AssertElementPresent" locator1="PGCalendarAddevent#INVITATIONS_PANEL_EXPANDED" />
 			</then>
 		</if>

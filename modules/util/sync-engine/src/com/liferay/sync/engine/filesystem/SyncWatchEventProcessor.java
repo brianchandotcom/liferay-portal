@@ -42,6 +42,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
+import org.apache.commons.io.FilenameUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -79,6 +81,11 @@ public class SyncWatchEventProcessor implements Runnable {
 
 					for (SyncWatchEvent syncWatchEvent : syncWatchEvents) {
 						try {
+							_logger.debug(
+								"Processing queued event {} {}",
+								syncWatchEvent.getFilePathName(),
+								syncWatchEvent.getEventType());
+
 							processSyncWatchEvent(syncWatchEvent);
 						}
 						catch (Exception e) {
@@ -141,7 +148,10 @@ public class SyncWatchEventProcessor implements Runnable {
 	protected void addFile(SyncWatchEvent syncWatchEvent) throws Exception {
 		final Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
-		if (Files.notExists(targetFilePath) || isInErrorState(targetFilePath)) {
+		if (Files.notExists(targetFilePath) ||
+			sanitizeFileName(targetFilePath) ||
+			isInErrorState(targetFilePath)) {
+
 			return;
 		}
 
@@ -211,9 +221,19 @@ public class SyncWatchEventProcessor implements Runnable {
 		}
 		else if (Files.exists(sourceFilePath)) {
 			try {
-				SyncFileService.addFileSyncFile(
-					targetFilePath, parentSyncFile.getTypePK(),
-					parentSyncFile.getRepositoryId(), _syncAccountId);
+				if ((Files.size(targetFilePath) == 0) ||
+					FileUtil.isModified(syncFile, targetFilePath) ||
+					isInErrorState(targetFilePath)) {
+
+					SyncFileService.addFileSyncFile(
+						targetFilePath, parentSyncFile.getTypePK(),
+						parentSyncFile.getRepositoryId(), _syncAccountId);
+				}
+				else {
+					SyncFileService.copySyncFile(
+						syncFile, targetFilePath, parentSyncFile.getTypePK(),
+						parentSyncFile.getRepositoryId(), _syncAccountId);
+				}
 			}
 			catch (Exception e) {
 				if (_logger.isTraceEnabled()) {
@@ -272,7 +292,9 @@ public class SyncWatchEventProcessor implements Runnable {
 	protected void addFolder(SyncWatchEvent syncWatchEvent) throws Exception {
 		Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
-		if (isInErrorState(targetFilePath)) {
+		if (sanitizeFileName(targetFilePath) ||
+			isInErrorState(targetFilePath)) {
+
 			return;
 		}
 
@@ -509,7 +531,10 @@ public class SyncWatchEventProcessor implements Runnable {
 	protected void moveFile(SyncWatchEvent syncWatchEvent) throws Exception {
 		Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
-		if (Files.notExists(targetFilePath) || isInErrorState(targetFilePath)) {
+		if (Files.notExists(targetFilePath) ||
+			sanitizeFileName(targetFilePath) ||
+			isInErrorState(targetFilePath)) {
+
 			return;
 		}
 
@@ -659,6 +684,10 @@ public class SyncWatchEventProcessor implements Runnable {
 			}
 		}
 
+		_logger.debug(
+			"Queueing event {} {}", syncWatchEvent.getEventType(),
+			syncWatchEvent.getFilePathName());
+
 		syncWatchEvents.add(syncWatchEvent);
 	}
 
@@ -669,9 +698,13 @@ public class SyncWatchEventProcessor implements Runnable {
 		SyncFile syncFile = SyncFileService.fetchSyncFile(
 			sourceFilePath.toString());
 
-		if (syncFile == null) {
-			Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
+		Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
 
+		if (sanitizeFileName(targetFilePath)) {
+			return;
+		}
+
+		if (syncFile == null) {
 			if (Files.isDirectory(targetFilePath)) {
 				addFolder(syncWatchEvent);
 			}
@@ -687,8 +720,6 @@ public class SyncWatchEventProcessor implements Runnable {
 			return;
 		}
 
-		Path targetFilePath = Paths.get(syncWatchEvent.getFilePathName());
-
 		String fileType = syncFile.getType();
 
 		if (fileType.equals(SyncFile.TYPE_FILE)) {
@@ -699,6 +730,34 @@ public class SyncWatchEventProcessor implements Runnable {
 			SyncFileService.renameFolderSyncFile(
 				targetFilePath, _syncAccountId, syncFile);
 		}
+	}
+
+	protected boolean sanitizeFileName(Path filePath) {
+		if (OSDetector.isWindows()) {
+			return false;
+		}
+
+		String fileName = String.valueOf(filePath.getFileName());
+
+		String sanitizedFileName = FileUtil.getSanitizedFileName(
+			fileName, FilenameUtils.getExtension(fileName));
+
+		if (!sanitizedFileName.equals(fileName)) {
+			String sanitizedFilePathName = FileUtil.getFilePathName(
+				String.valueOf(filePath.getParent()), sanitizedFileName);
+
+			sanitizedFilePathName = FileUtil.getNextFilePathName(
+				sanitizedFilePathName);
+
+			FileUtil.checkFilePath(filePath);
+
+			FileUtil.moveFile(
+				filePath, java.nio.file.Paths.get(sanitizedFilePathName));
+
+			return true;
+		}
+
+		return false;
 	}
 
 	protected boolean verifySite(SyncFile syncFile, SyncFile parentSyncFile) {

@@ -19,6 +19,7 @@ import com.liferay.sync.engine.documentlibrary.event.AddFolderEvent;
 import com.liferay.sync.engine.documentlibrary.event.CancelCheckOutEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckInFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.CheckOutFileEntryEvent;
+import com.liferay.sync.engine.documentlibrary.event.CopyFileEntryEvent;
 import com.liferay.sync.engine.documentlibrary.event.DownloadFileEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetAllFolderSyncDLObjectsEvent;
 import com.liferay.sync.engine.documentlibrary.event.GetSyncDLObjectUpdateEvent;
@@ -129,6 +130,25 @@ public class FileEventUtil {
 			new CheckOutFileEntryEvent(syncAccountId, parameters);
 
 		checkOutFileEntryEvent.run();
+	}
+
+	public static void copyFile(
+		long sourceFileEntryId, long folderId, long repositoryId,
+		long syncAccountId, String name, SyncFile syncFile) {
+
+		Map<String, Object> parameters = new HashMap<>();
+
+		parameters.put("sourceFileEntryId", sourceFileEntryId);
+		parameters.put("folderId", folderId);
+		parameters.put("repositoryId", repositoryId);
+		parameters.put("sourceFileName", name);
+		parameters.put("syncFile", syncFile);
+		parameters.put("title", name);
+
+		CopyFileEntryEvent copyFileEntryEvent = new CopyFileEntryEvent(
+			syncAccountId, parameters);
+
+		copyFileEntryEvent.run();
 	}
 
 	public static void deleteFile(long syncAccountId, SyncFile syncFile) {

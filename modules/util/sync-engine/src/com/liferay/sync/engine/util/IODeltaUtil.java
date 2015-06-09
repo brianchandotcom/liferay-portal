@@ -94,6 +94,31 @@ public class IODeltaUtil {
 		}
 	}
 
+	public static Path copyChecksums(
+		SyncFile sourceSyncFile, SyncFile targetSyncFile) {
+
+		try {
+			Path sourceChecksumsFilePath = getChecksumsFilePath(sourceSyncFile);
+
+			if (Files.notExists(sourceChecksumsFilePath)) {
+				checksums(targetSyncFile);
+			}
+
+			Path targetChecksumsFilePath = getChecksumsFilePath(targetSyncFile);
+
+			Files.copy(
+				sourceChecksumsFilePath, targetChecksumsFilePath,
+				StandardCopyOption.REPLACE_EXISTING);
+
+			return targetChecksumsFilePath;
+		}
+		catch (IOException ioe) {
+			_logger.error(ioe.getMessage(), ioe);
+
+			return null;
+		}
+	}
+
 	public static Path delta(
 		Path targetFilePath, Path checksumsFilePath, Path deltaFilePath) {
 

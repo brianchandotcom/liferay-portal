@@ -72,7 +72,7 @@ public class GetSyncDLObjectUpdateEvent extends BaseEvent {
 				SyncFileService.addSyncFile(
 					null, null, null, filePathName, null, syncSite.getName(), 0,
 					syncSite.getGroupId(), SyncFile.STATE_SYNCED,
-					syncSite.getSyncAccountId(), SyncFile.TYPE_SYSTEM);
+					syncSite.getSyncAccountId(), SyncFile.TYPE_SYSTEM, false);
 			}
 		}
 

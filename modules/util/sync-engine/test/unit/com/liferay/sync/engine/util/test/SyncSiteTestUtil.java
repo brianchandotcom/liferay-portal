@@ -56,7 +56,7 @@ public class SyncSiteTestUtil {
 		SyncFileService.addSyncFile(
 			null, null, null, filePathName, null, filePathName, 0, groupId,
 			SyncFile.STATE_SYNCED, syncSite.getSyncAccountId(),
-			SyncFile.TYPE_SYSTEM);
+			SyncFile.TYPE_SYSTEM, false);
 
 		return syncSite;
 	}

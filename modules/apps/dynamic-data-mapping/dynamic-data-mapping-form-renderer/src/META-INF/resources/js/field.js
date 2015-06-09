@@ -3,7 +3,10 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 		var Lang = A.Lang;
-		var Util = Liferay.DDM.Renderer.Util;
+		var Renderer = Liferay.DDM.Renderer;
+
+		var FieldTypes = Renderer.FieldTypes;
+		var Util = Renderer.Util;
 
 		var SELECTOR_REPEAT_BUTTONS = '.lfr-ddm-form-field-repeatable-add-button, .lfr-ddm-form-field-repeatable-delete-button';
 
@@ -173,7 +176,7 @@ AUI.add(
 					getTemplate: function() {
 						var instance = this;
 
-						return Liferay.DDM.Renderer.FieldTypes.getFieldTypeTemplate(
+						return FieldTypes.getFieldTypeTemplate(
 							instance.get('fieldType'),
 							instance.getTemplateContext()
 						);
@@ -349,13 +352,10 @@ AUI.add(
 
 						var definition = instance.get('definition');
 
-						var label
+						var label = definition.name;
 
 						if (definition.label && definition[instance.get('locale')]) {
 							label = definition[instance.get('locale')];
-						}
-						else {
-							label = definition.name;
 						}
 
 						return label;
@@ -417,7 +417,7 @@ AUI.add(
 					_valueInstanceId: function() {
 						var instance = this;
 
-						return Liferay.DDM.Renderer.Util.generateInstanceId(8);
+						return Util.generateInstanceId(8);
 					},
 
 					_valueRepeatedIndex: function() {
@@ -427,7 +427,7 @@ AUI.add(
 
 						var repeatedIndex = -1;
 
-						if (A.instanceOf(form, Liferay.DDM.Renderer.Form)) {
+						if (A.instanceOf(form, Renderer.Form)) {
 							var found = false;
 
 							form.getFieldNodes().each(
@@ -437,13 +437,13 @@ AUI.add(
 
 										var fieldQualifiedName = fieldNode.getData('fieldname');
 
-										var fieldInstanceId = Liferay.DDM.Renderer.Util.getInstanceIdFromQualifiedName(fieldQualifiedName);
+										var fieldInstanceId = Util.getInstanceIdFromQualifiedName(fieldQualifiedName);
 
 										if (fieldInstanceId === instance.get('instanceId')) {
 											found = true;
 										}
 
-										var fieldName = Liferay.DDM.Renderer.Util.getFieldNameFromQualifiedName(fieldQualifiedName);
+										var fieldName = Util.getFieldNameFromQualifiedName(fieldQualifiedName);
 
 										if (fieldName === instance.get('name')) {
 											repeatedIndex++;

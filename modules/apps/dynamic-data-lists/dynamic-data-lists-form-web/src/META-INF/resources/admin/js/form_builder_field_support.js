@@ -175,7 +175,7 @@ AUI.add(
 
 				var fieldType = FieldTypes.get(instance.get('fieldType'));
 
-				container.append('<button type="submit" style="display:none;" />');
+				container.append('<button style="display: none;" type="submit" />');
 
 				container.on('submit', A.bind(instance._onSubmitSettings, instance));
 
@@ -235,6 +235,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-field-checkbox', 'liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template']
+		requires: ['liferay-ddm-form-field-checkbox', 'liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field']
 	}
 );

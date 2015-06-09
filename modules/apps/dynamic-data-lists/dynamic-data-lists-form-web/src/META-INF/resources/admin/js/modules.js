@@ -2,24 +2,6 @@
 	AUI().applyConfig(
 		{
 			groups: {
-				'field-checkbox': {
-					base: '/o/ddm-type-checkbox/',
-					modules: {
-						'liferay-ddm-form-field-checkbox': {
-							path: 'checkbox_field.js',
-							requires: [
-								'liferay-ddm-form-renderer-field'
-							]
-						},
-						'liferay-ddm-form-field-checkbox-template': {
-							path: 'checkbox.soy.js',
-							requires: [
-								'soyutils'
-							]
-						}
-					},
-					root: '/o/ddm-type-checkbox/'
-				},
 				ddl: {
 					base: '/o/ddl-form-web/admin/js/',
 					modules: {
@@ -140,6 +122,24 @@
 						}
 					},
 					root: '/o/ddm-form-renderer/js/'
+				},
+				'field-checkbox': {
+					base: '/o/ddm-type-checkbox/',
+					modules: {
+						'liferay-ddm-form-field-checkbox': {
+							path: 'checkbox_field.js',
+							requires: [
+								'liferay-ddm-form-renderer-field'
+							]
+						},
+						'liferay-ddm-form-field-checkbox-template': {
+							path: 'checkbox.soy.js',
+							requires: [
+								'soyutils'
+							]
+						}
+					},
+					root: '/o/ddm-type-checkbox/'
 				},
 				radio: {
 					base: '/o/ddm-type-radio/',

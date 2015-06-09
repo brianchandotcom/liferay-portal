@@ -54,17 +54,6 @@ AUI.add(
 						boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a');
 					},
 
-					destructor: function() {
-						var instance = this;
-
-						new Liferay.DDL.LayoutVisitor(
-							{
-								columnHandler: A.bind(instance._columnDestructor, instance),
-								layouts: instance.get('layouts')
-							}
-						).visit();
-					},
-
 					renderUI: function() {
 						var instance = this;
 
@@ -76,6 +65,17 @@ AUI.add(
 						instance._pages.set('titles', deserializer.get('titles'));
 
 						instance._pages._uiSetActivePageNumber(instance._pages.get('activePageNumber'));
+					},
+
+					destructor: function() {
+						var instance = this;
+
+						new Liferay.DDL.LayoutVisitor(
+							{
+								columnHandler: A.bind(instance._columnDestructor, instance),
+								layouts: instance.get('layouts')
+							}
+						).visit();
 					},
 
 					_afterFieldSettingsModalSave: function(event) {
@@ -169,6 +169,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-util', 'aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
+		requires: ['aui-form-builder', 'aui-form-builder-pages', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-layout-deserializer', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer']
 	}
 );

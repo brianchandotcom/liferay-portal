@@ -1599,9 +1599,8 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
 			<var name="portletNameBorderless" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
@@ -1705,9 +1704,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
 			<var name="portletNameBorderless" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
@@ -1800,9 +1798,8 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute macro="Portlet#gotoPortletOptions">
+		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
 			<var name="portletNameBorderless" value="Blogs" />
-			<var name="portletOption" value="Configuration" />
 		</execute>
 
 		<execute macro="BlogsPortlet#configureDisplaySettingsPG">

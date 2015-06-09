@@ -59,6 +59,8 @@ public class DLFileItemSelectorView
 
 	static {
 		_FILE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+			FileItemSelectorReturnTypes.FILE_ENTRY);
+		_FILE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
 			FileItemSelectorReturnTypes.URL);
 	}
 

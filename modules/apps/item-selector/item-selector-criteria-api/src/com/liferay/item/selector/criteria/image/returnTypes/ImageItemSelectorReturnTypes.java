@@ -21,7 +21,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
  */
 public enum ImageItemSelectorReturnTypes implements ItemSelectorReturnType {
 
-	BASE_64, URL;
+	BASE_64, FILE_ENTRY, URL;
 
 	@Override
 	public String getName() {

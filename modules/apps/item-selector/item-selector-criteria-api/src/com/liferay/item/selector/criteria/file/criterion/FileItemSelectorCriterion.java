@@ -32,6 +32,7 @@ public class FileItemSelectorCriterion extends BaseItemSelectorCriterion {
 	private static final Set<ItemSelectorReturnType>
 		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
 			FileItemSelectorReturnTypes.BASE_64,
+			FileItemSelectorReturnTypes.FILE_ENTRY,
 			FileItemSelectorReturnTypes.URL);
 
 }

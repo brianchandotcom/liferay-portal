@@ -1581,7 +1581,7 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
-		<execute macro="BlogsEntry#gotoEditPG">
+		<execute macro="BlogsNavigator#gotoEditPG">
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 

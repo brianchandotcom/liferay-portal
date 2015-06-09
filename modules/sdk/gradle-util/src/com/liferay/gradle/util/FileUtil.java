@@ -45,6 +45,21 @@ public class FileUtil {
 		return file.exists();
 	}
 
+	public static void get(
+		Project project, final String url, final File destinationFile) {
+
+		Closure<Void> closure = new Closure<Void>(null) {
+
+			@SuppressWarnings("unused")
+			public void doCall(AntBuilder antBuilder) {
+				_invokeAntMethodGet(antBuilder, url, destinationFile);
+			}
+
+		};
+
+		project.ant(closure);
+	}
+
 	public static String getAbsolutePath(File file) {
 		String absolutePath = file.getAbsolutePath();
 
@@ -194,6 +209,17 @@ public class FileUtil {
 		args.put("includes", fileset[1]);
 
 		antBuilder.invokeMethod("fileset", args);
+	}
+
+	private static void _invokeAntMethodGet(
+		AntBuilder antBuilder, String url, File destinationFile) {
+
+		Map<String, Object> args = new HashMap<>();
+
+		args.put("dest", destinationFile);
+		args.put("src", url);
+
+		antBuilder.invokeMethod("get", args);
 	}
 
 	private static void _invokeAntMethodJar(

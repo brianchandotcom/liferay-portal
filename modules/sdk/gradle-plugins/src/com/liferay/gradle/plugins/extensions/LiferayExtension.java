@@ -94,6 +94,26 @@ public class LiferayExtension {
 		return getAppServerDir("portalDirName");
 	}
 
+	public String getAppServerProperty(String key) {
+		String appServerType = getAppServerType();
+
+		if (Validator.isNull(appServerType)) {
+			return null;
+		}
+
+		Map<String, Object> appServerProperties =
+			(Map<String, Object>)_appServers.getProperty(appServerType);
+
+		String value = String.valueOf(appServerProperties.get(key));
+
+		if (Validator.isNull(value)) {
+			throw new GradleException(
+				"Unable to get property " + key + " for " + appServerType);
+		}
+
+		return value;
+	}
+
 	public ConfigObject getAppServers() {
 		return _appServers;
 	}
@@ -200,26 +220,6 @@ public class LiferayExtension {
 		String dirName = getAppServerProperty(dirNameKey);
 
 		return new File(appServerDir, dirName);
-	}
-
-	protected String getAppServerProperty(String key) {
-		String appServerType = getAppServerType();
-
-		if (Validator.isNull(appServerType)) {
-			return null;
-		}
-
-		Map<String, String> appServerProperties =
-			(Map<String, String>)_appServers.getProperty(appServerType);
-
-		String value = appServerProperties.get(key);
-
-		if (Validator.isNull(value)) {
-			throw new GradleException(
-				"Unable to get property " + key + " for " + appServerType);
-		}
-
-		return value;
 	}
 
 	protected final Project project;

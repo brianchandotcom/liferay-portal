@@ -92,6 +92,8 @@ liferay {
 			name = "tomcat"
 			portalDirName = "webapps/ROOT"
 			version = "7.0.62"
+			zipName = "apache-tomcat-${->tomcat.version}.zip"
+			zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-7/v${->tomcat.version}/bin/${->tomcat.zipName}"
 		}
 
 		weblogic {

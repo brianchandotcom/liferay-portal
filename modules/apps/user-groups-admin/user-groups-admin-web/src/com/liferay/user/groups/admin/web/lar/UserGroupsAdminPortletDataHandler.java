@@ -22,18 +22,29 @@ import com.liferay.portal.service.UserGroupLocalServiceUtil;
 import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
 import com.liferay.portlet.exportimport.lar.DataLevel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
+import com.liferay.user.groups.admin.web.constants.UserGroupsAdminPortletKeys;
 
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Michael C. Han
  * @author David Mendez Gonzalez
  */
+@Component(
+	immediate = true,
+	property = {
+		"javax.portlet.name=" + UserGroupsAdminPortletKeys.USER_GROUPS_ADMIN
+	},
+	service = PortletDataHandler.class
+)
 public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String NAMESPACE = "user_groups_admin";

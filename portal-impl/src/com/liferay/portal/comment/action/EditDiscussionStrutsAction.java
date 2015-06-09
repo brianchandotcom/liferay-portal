@@ -1,0 +1,264 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.portal.comment.action;
+
+import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.struts.BaseStrutsAction;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFunction;
+import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.WebKeys;
+import com.liferay.portlet.messageboards.DiscussionMaxCommentsException;
+import com.liferay.portlet.messageboards.MessageBodyException;
+import com.liferay.portlet.messageboards.NoSuchMessageException;
+import com.liferay.portlet.messageboards.RequiredMessageException;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * @author Adolfo Pérez
+ */
+public class EditDiscussionStrutsAction extends BaseStrutsAction {
+
+	@Override
+	public String execute(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(request, Constants.CMD);
+
+		try {
+			String redirect = PortalUtil.escapeRedirect(
+				ParamUtil.getString(request, "redirect"));
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				long commentId = updateComment(request);
+
+				boolean ajax = ParamUtil.getBoolean(request, "ajax");
+
+				if (ajax) {
+					String randomNamespace = ParamUtil.getString(
+						request, "randomNamespace");
+
+					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+					jsonObject.put("commentId", commentId);
+					jsonObject.put("randomNamespace", randomNamespace);
+
+					writeJSON(request, response, jsonObject);
+
+					return null;
+				}
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteComment(request);
+			}
+			else if (cmd.equals(Constants.SUBSCRIBE_TO_COMMENTS)) {
+				subscribeToComments(request, true);
+			}
+			else if (cmd.equals(Constants.UNSUBSCRIBE_FROM_COMMENTS)) {
+				subscribeToComments(request, false);
+			}
+
+			sendRedirect(request, response, redirect);
+		}
+		catch (DiscussionMaxCommentsException | MessageBodyException |
+			NoSuchMessageException | PrincipalException |
+			RequiredMessageException e) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.putException(e);
+
+			writeJSON(request, response, jsonObject);
+		}
+
+		return null;
+	}
+
+	protected void deleteComment(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long commentId = ParamUtil.getLong(request, "commentId");
+
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(
+				themeDisplay.getPermissionChecker());
+
+		discussionPermission.checkDeletePermission(commentId);
+
+		CommentManagerUtil.deleteComment(commentId);
+	}
+
+	protected void subscribeToComments(
+			HttpServletRequest request, boolean subscribe)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
+
+		if (subscribe) {
+			CommentManagerUtil.subscribeDiscussion(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				className, classPK);
+		}
+		else {
+			CommentManagerUtil.unsubscribeDiscussion(
+				themeDisplay.getUserId(), className, classPK);
+		}
+	}
+
+	protected long updateComment(HttpServletRequest request) throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long commentId = ParamUtil.getLong(request, "commentId");
+
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
+		long parentCommentId = ParamUtil.getLong(request, "parentCommentId");
+		String subject = ParamUtil.getString(request, "subject");
+		String body = ParamUtil.getString(request, "body");
+
+		Function<String, ServiceContext> serviceContextFunction =
+			new ServiceContextFunction(request);
+
+		DiscussionPermission discussionPermission =
+			CommentManagerUtil.getDiscussionPermission(
+				themeDisplay.getPermissionChecker());
+
+		if (commentId <= 0) {
+
+			// Add message
+
+			User user = null;
+
+			if (themeDisplay.isSignedIn()) {
+				user = themeDisplay.getUser();
+			}
+			else {
+				String emailAddress = ParamUtil.getString(
+					request, "emailAddress");
+
+				user = UserLocalServiceUtil.fetchUserByEmailAddress(
+					themeDisplay.getCompanyId(), emailAddress);
+
+				if ((user == null) ||
+					(user.getStatus() != WorkflowConstants.STATUS_INCOMPLETE)) {
+
+					return 0;
+				}
+			}
+
+			String name = PrincipalThreadLocal.getName();
+
+			PrincipalThreadLocal.setName(user.getUserId());
+
+			try {
+				discussionPermission.checkAddPermission(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					className, classPK);
+
+				commentId = CommentManagerUtil.addComment(
+					user.getUserId(), className, classPK, user.getFullName(),
+					parentCommentId, subject, body, serviceContextFunction);
+			}
+			finally {
+				PrincipalThreadLocal.setName(name);
+			}
+		}
+		else {
+
+			// Update message
+
+			if (Validator.isNull(className) || (classPK == 0)) {
+				Comment comment = CommentManagerUtil.fetchComment(commentId);
+
+				if (comment != null) {
+					className = comment.getClassName();
+					classPK = comment.getClassPK();
+				}
+			}
+
+			discussionPermission.checkUpdatePermission(commentId);
+
+			commentId = CommentManagerUtil.updateComment(
+				themeDisplay.getUserId(), className, classPK, commentId,
+				subject, body, serviceContextFunction);
+		}
+
+		// Subscription
+
+		boolean subscribe = ParamUtil.getBoolean(request, "subscribe");
+
+		if (subscribe) {
+			CommentManagerUtil.subscribeDiscussion(
+				themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
+				className, classPK);
+		}
+
+		return commentId;
+	}
+
+	protected void writeJSON(
+			HttpServletRequest request, HttpServletResponse response,
+			Object json)
+		throws IOException {
+
+		String contentType = ContentTypes.APPLICATION_JSON;
+
+		if (BrowserSnifferUtil.isIe(request)) {
+			contentType = ContentTypes.TEXT_HTML;
+		}
+
+		response.setContentType(contentType);
+
+		ServletResponseUtil.write(response, json.toString());
+
+		response.flushBuffer();
+	}
+
+	private void sendRedirect(
+		HttpServletRequest request, HttpServletResponse response,
+		String redirect) {
+
+		throw new UnsupportedOperationException();
+	}
+
+}

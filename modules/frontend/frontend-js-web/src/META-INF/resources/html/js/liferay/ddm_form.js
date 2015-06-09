@@ -917,15 +917,13 @@ AUI.add(
 
 						var portletURL = Liferay.PortletURL.createRenderURL();
 
-						portletURL.setParameter('javax.portlet.action', 'showItemSelector');
 						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
 
 						var criterionJSON = {
-							desiredReturnTypes:
+							itemSelectorDesiredReturnTypes:
 								[
-									'java.net.URL',
-									'com.liferay.portal.kernel.repository.model.FileEntry'
+									'FILE_ENTRY'
 								]
 						};
 

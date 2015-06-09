@@ -16,6 +16,4 @@
 
 <%@ include file="/html/taglib/init.jsp" %>
 
-<%@ page import="java.net.URL" %>
-
 <portlet:defineObjects />

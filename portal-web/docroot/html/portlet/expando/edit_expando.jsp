@@ -63,10 +63,9 @@ portletURL.setParameter("modelResource", modelResource);
 	title='<%= modelResourceName + ": " + ((column == null) ? LanguageUtil.get(request, "new-custom-field") : column.getName()) %>'
 />
 
-<portlet:actionURL
-	name='<%= (column == null) ? "addExpando" : "updateExpando" %>'
-	var="editExpandoURL"
-/>
+<portlet:actionURL name='<%= (column == null) ? "addExpando" : "updateExpando" %>' var="editExpandoURL">
+	<portlet:param name="mvcPath" value="/html/portlet/expando/edit_expando.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= editExpandoURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

@@ -2,7 +2,6 @@ AUI.add(
 	'liferay-ddm-form-renderer-field',
 	function(A) {
 		var AArray = A.Array;
-		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 		var Lang = A.Lang;
 		var Util = Liferay.DDM.Renderer.Util;
 
@@ -77,13 +76,23 @@ AUI.add(
 					}
 				},
 
-				EXTENDS: A.FormField,
+				EXTENDS: A.Base,
 
 				NAME: 'liferay-ddm-form-renderer-field',
 
 				prototype: {
 					renderUI: function() {
 						var instance = this;
+
+						var container = instance.get('container');
+
+						if (!container.inDoc()) {
+							instance.renderTemplate();
+
+							var parent = instance.get('parent');
+
+							container.appendTo(parent.get('container'));
+						}
 
 						if (instance.get('repeatable')) {
 							instance.renderRepeatableUI();
@@ -110,15 +119,9 @@ AUI.add(
 					destructor: function() {
 						var instance = this;
 
+						instance.get('container').remove();
+
 						(new A.EventHandle(instance._eventHandlers)).detach();
-					},
-
-					getIndex: function() {
-						var instance = this;
-
-						var form = instance.get('form');
-
-						return form.getFieldNodes().indexOf(instance.get('container'));
 					},
 
 					getInputNode: function() {
@@ -170,18 +173,30 @@ AUI.add(
 					getTemplate: function() {
 						var instance = this;
 
-						return FieldTypes.getFieldTypeTemplate(
+						return Liferay.DDM.Renderer.FieldTypes.getFieldTypeTemplate(
 							instance.get('fieldType'),
-							A.merge(
-								instance.get('definition'),
-								{
-									childElementsHTML: '',
-									label: instance.get('label'),
-									name: instance.getQualifiedName(),
-									placeholder: '',
-									value: ''
-								}
-							)
+							instance.getTemplateContext()
+						);
+					},
+
+					getTemplateContext: function() {
+						var instance = this;
+
+						var value = instance.get('value');
+
+						if (instance.get('localizable')) {
+							value = value[instance.get('locale')];
+						}
+
+						return A.merge(
+							instance.get('definition'),
+							{
+								childElementsHTML: '',
+								label: instance.get('label'),
+								name: instance.getQualifiedName(),
+								placeholder: '',
+								value: value || ''
+							}
 						);
 					},
 
@@ -202,8 +217,6 @@ AUI.add(
 
 						siblings.splice(index, 1);
 
-						instance.destroy();
-
 						instance.get('container').remove(true);
 
 						instance.fire(
@@ -212,18 +225,18 @@ AUI.add(
 								field: instance
 							}
 						);
+
+						instance.destroy();
 					},
 
 					render: function() {
 						var instance = this;
 
-						if (!instance.get('container').inDoc()) {
-							instance.renderTemplate();
-						}
-
 						instance.renderUI();
 						instance.bindUI();
 						instance.syncUI();
+
+						return instance;
 					},
 
 					renderRepeatableUI: function() {
@@ -238,9 +251,13 @@ AUI.add(
 					renderTemplate: function() {
 						var instance = this;
 
+						var container = instance.get('container');
+
+						var parent = instance.get('parent');
+
 						var template = instance.getTemplate();
 
-						instance.get('container').html(template);
+						container.html(template);
 					},
 
 					repeat: function() {
@@ -446,6 +463,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-field', 'liferay-ddm-form-renderer-field-types']
+		requires: ['aui-form-builder-field-base', 'aui-form-field', 'liferay-ddm-form-renderer-field-types']
 	}
 );

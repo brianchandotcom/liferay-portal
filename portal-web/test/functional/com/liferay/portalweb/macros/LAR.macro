@@ -442,6 +442,7 @@
 			<not>
 				<or>
 					<isset var="importValidationMissingItem" />
+					<isset var="importCampaignValidationError" />
 					<isset var="importFail" />
 				</or>
 			</not>
@@ -547,6 +548,15 @@
 				<execute function="Pause" locator1="5000" />
 				<execute function="AssertTextEquals" locator1="CPSitepagesImport#FILE_NAME" value1="${larFileName}" />
 			</else>
+		</if>
+
+		<if>
+			<equals arg1="importCampaignValidationError" arg2="true" />
+			<then>
+				<execute function="AssertTextEquals" locator1="CPSitepagesImport#VALIDATION_ERROR_MESSAGE" value1="The following data will not be imported:" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="Campaign Tracking Action" />
+				<execute function="AssertTextEquals#assertPartialText" locator1="CPSitepagesImport#VALIDATION_ERROR_LIST_ITEM" value1="The original Referenced Asset does not exist in the current environment." />
+			</then>
 		</if>
 
 		<if>

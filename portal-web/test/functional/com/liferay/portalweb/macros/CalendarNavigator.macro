@@ -66,6 +66,14 @@
 		<execute macro="CalendarNavigator#_selectCalendarSettingsIframe" />
 	</command>
 
+	<command name="gotoAddResource">
+		<execute macro="CalendarNavigator#gotoResources" />
+
+		<execute function="AssertClick" locator1="PGCalendarResource#ADD_RESOURCE_BUTTON" value1="Add Resource" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendarAddresource#HEADER_TITLE" value1="New Resource" />
+	</command>
+
 	<command name="gotoBusyDayViaSmallCalendar">
 		<execute function="AssertElementPresent" locator1="PGCalendar#SMALL_CALENDAR_BUSY_DAY" />
 
@@ -124,6 +132,10 @@
 		</execute>
 
 		<execute function="Click" locator1="PGCalendar#VIEW_PREVIOUS_BUTTON" />
+	</command>
+
+	<command name="gotoResources">
+		<execute function="AssertClick" locator1="PGCalendar#NAVIGATION_RESOURCES" value1="Resources" />
 	</command>
 
 	<command name="gotoSpecificBusyDayViaSmallCalendar">

@@ -17,14 +17,12 @@ package com.liferay.portal.struts;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
-import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.JSONResponseUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -463,23 +461,7 @@ public class PortletAction extends Action {
 			Object json)
 		throws IOException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		String contentType = ContentTypes.APPLICATION_JSON;
-
-		if (BrowserSnifferUtil.isIe(request)) {
-			contentType = ContentTypes.TEXT_HTML;
-		}
-
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		response.setContentType(contentType);
-
-		ServletResponseUtil.write(response, json.toString());
-
-		response.flushBuffer();
+		JSONResponseUtil.writeJSON(portletRequest, actionResponse, json);
 
 		setForward(portletRequest, ActionConstants.COMMON_NULL);
 	}
@@ -489,20 +471,7 @@ public class PortletAction extends Action {
 			Object json)
 		throws IOException {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		String contentType = ContentTypes.APPLICATION_JSON;
-
-		if (BrowserSnifferUtil.isIe(request)) {
-			contentType = ContentTypes.TEXT_HTML;
-		}
-
-		mimeResponse.setContentType(contentType);
-
-		PortletResponseUtil.write(mimeResponse, json.toString());
-
-		mimeResponse.flushBuffer();
+		JSONResponseUtil.writeJSON(portletRequest, mimeResponse, json);
 	}
 
 	private static final boolean _CHECK_METHOD_ON_PROCESS_ACTION = true;

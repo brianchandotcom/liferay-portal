@@ -14,30 +14,33 @@
 
 package com.liferay.portlet.blogs.action;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.blogs.CoverImageSizeException;
+import com.liferay.portal.kernel.imageselector.ImageSelectorUploadHandler;
+import com.liferay.portal.struts.PortletAction;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Sergio González
  */
-public class CoverImageSelectorAction extends BaseImageSelectorAction {
+public class CoverImageSelectorAction extends PortletAction {
 
 	@Override
-	public void validateFile(String fileName, String contentType, long size)
-		throws PortalException {
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
 
-		if (size > getMaxFileSize()) {
-			throw new CoverImageSizeException();
-		}
-
-		super.validateFile(fileName, contentType, size);
+		_imageSelectorUploadHandler.uploadSelectedImage(
+			actionRequest, actionResponse);
 	}
 
-	@Override
-	protected long getMaxFileSize() {
-		return PrefsPropsUtil.getLong(PropsKeys.BLOGS_IMAGE_COVER_MAX_SIZE);
-	}
+	private final ImageSelectorUploadHandler _imageSelectorUploadHandler =
+		new CoverImageSelectorUploadHandler();
 
 }

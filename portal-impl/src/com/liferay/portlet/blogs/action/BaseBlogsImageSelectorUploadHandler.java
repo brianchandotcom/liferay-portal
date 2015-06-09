@@ -15,10 +15,13 @@
 package com.liferay.portlet.blogs.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.imageselector.BaseImageSelectorUploadHandler;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.JSONResponseUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -34,14 +37,17 @@ import com.liferay.portlet.blogs.service.permission.BlogsPermission;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.antivirus.AntivirusScannerException;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import java.io.IOException;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Sergio González
+ * @author Adolfo Pérez
  */
-public abstract class BaseImageSelectorAction
-	extends com.liferay.portal.action.BaseImageSelectorAction {
+public abstract class BaseBlogsImageSelectorUploadHandler
+	extends BaseImageSelectorUploadHandler {
 
 	@Override
 	public void checkPermission(
@@ -83,38 +89,39 @@ public abstract class BaseImageSelectorAction
 
 	@Override
 	protected void handleUploadException(
-			ActionRequest actionRequest, ActionResponse actionResponse,
-			Exception e, JSONObject jsonObject)
-		throws Exception {
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			PortalException pe, JSONObject jsonObject)
+		throws PortalException {
 
 		jsonObject.put("success", Boolean.FALSE);
 
-		if (e instanceof AntivirusScannerException ||
-			e instanceof CoverImageNameException ||
-			e instanceof CoverImageSizeException ||
-			e instanceof FileNameException) {
+		if (pe instanceof AntivirusScannerException ||
+			pe instanceof CoverImageNameException ||
+			pe instanceof CoverImageSizeException ||
+			pe instanceof FileNameException) {
 
 			String errorMessage = StringPool.BLANK;
 			int errorType = 0;
 
 			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
 
-			if (e instanceof AntivirusScannerException) {
+			if (pe instanceof AntivirusScannerException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_ANTIVIRUS_EXCEPTION;
-				AntivirusScannerException ase = (AntivirusScannerException)e;
+				AntivirusScannerException ase = (AntivirusScannerException)pe;
 
 				errorMessage = themeDisplay.translate(ase.getMessageKey());
 			}
-			else if (e instanceof CoverImageNameException) {
+			else if (pe instanceof CoverImageNameException) {
 				errorType =
 					ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
 			}
-			else if (e instanceof CoverImageSizeException) {
+			else if (pe instanceof CoverImageSizeException) {
 				errorType = ServletResponseConstants.SC_FILE_SIZE_EXCEPTION;
 			}
-			else if (e instanceof FileNameException) {
+			else if (pe instanceof FileNameException) {
 				errorType = ServletResponseConstants.SC_FILE_NAME_EXCEPTION;
 			}
 
@@ -125,10 +132,16 @@ public abstract class BaseImageSelectorAction
 
 			jsonObject.put("error", errorJSONObject);
 
-			writeJSON(actionRequest, actionResponse, jsonObject);
+			try {
+				JSONResponseUtil.writeJSON(
+					portletRequest, portletResponse, jsonObject);
+			}
+			catch (IOException ioe) {
+				throw new SystemException(ioe);
+			}
 		}
 		else {
-			throw e;
+			throw pe;
 		}
 	}
 

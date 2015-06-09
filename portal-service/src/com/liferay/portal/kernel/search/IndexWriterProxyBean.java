@@ -110,6 +110,19 @@ public class IndexWriterProxyBean extends BaseMultiDestinationProxyBean
 	}
 
 	@Override
+	public void partialUpdateDocument(
+		SearchContext searchContext, Document document) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public void partialUpdateDocuments(
+			SearchContext searchContext, Collection<Document> documents)
+		throws SearchException {
+	}
+
+	@Override
 	public void updateDocument(SearchContext searchContext, Document document) {
 		throw new UnsupportedOperationException();
 	}

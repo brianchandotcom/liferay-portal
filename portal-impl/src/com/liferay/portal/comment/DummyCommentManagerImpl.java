@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 
@@ -87,6 +90,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public DiscussionStagingDataHandler getDiscussionStagingDataHandler() {
+		return _discussionStagingDataHandler;
+	}
+
+	@Override
 	public boolean hasDiscussion(String className, long classPK) {
 		return false;
 	}
@@ -151,6 +159,21 @@ public class DummyCommentManagerImpl implements CommentManager {
 				long companyId, long groupId, String className, long classPK) {
 
 				return false;
+			}
+
+		};
+
+	private static final DiscussionStagingDataHandler
+		_discussionStagingDataHandler = new DiscussionStagingDataHandler() {
+
+			@Override
+			public <T extends StagedModel> void exportModelDiscussion(
+				PortletDataContext portletDataContext, T stagedModel) {
+			}
+
+			@Override
+			public <T extends StagedModel> void importModelDiscussion(
+				PortletDataContext portletDataContext, T stagedModel) {
 			}
 
 		};

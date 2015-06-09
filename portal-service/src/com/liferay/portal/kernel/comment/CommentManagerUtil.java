@@ -101,6 +101,12 @@ public class CommentManagerUtil {
 		return getCommentManager().getDiscussionPermission(permissionChecker);
 	}
 
+	public static DiscussionStagingDataHandler
+		getDiscussionStagingDataHandler() {
+
+		return getCommentManager().getDiscussionStagingDataHandler();
+	}
+
 	public static boolean hasDiscussion(String className, long classPK)
 		throws PortalException {
 

@@ -62,6 +62,8 @@ public interface CommentManager {
 	public DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker);
 
+	public DiscussionStagingDataHandler getDiscussionStagingDataHandler();
+
 	public boolean hasDiscussion(String className, long classPK)
 		throws PortalException;
 

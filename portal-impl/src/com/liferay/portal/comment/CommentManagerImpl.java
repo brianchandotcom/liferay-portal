@@ -17,6 +17,7 @@ package com.liferay.portal.comment;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Function;
@@ -150,6 +151,13 @@ public class CommentManagerImpl implements CommentManager {
 		CommentManager commentManager = getCommentManager();
 
 		return commentManager.getDiscussionPermission(permissionChecker);
+	}
+
+	@Override
+	public DiscussionStagingDataHandler getDiscussionStagingDataHandler() {
+		CommentManager commentManager = getCommentManager();
+
+		return commentManager.getDiscussionStagingDataHandler();
 	}
 
 	@Override

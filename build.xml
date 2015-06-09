@@ -210,6 +210,9 @@
 						clean.delete.lib=true
 						ivy.home=${ivy.home}
 						ivy.log.level=${ivy.log.level}
+						junit.java.integration.gc=${junit.java.integration.gc}
+						junit.java.unit.gc=${junit.java.unit.gc}
+						junit.java.unit.gc.logging=${junit.java.unit.gc.logging}
 						junit.test.excludes=${junit.test.excludes}
 						liferay.home=${liferay.home}
 						lp.portal.project.dir=${project.dir}

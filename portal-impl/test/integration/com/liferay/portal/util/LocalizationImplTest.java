@@ -339,46 +339,6 @@ public class LocalizationImplTest {
 	}
 
 	@Test
-	public void testLongTranslationText() {
-		StringBundler sb = new StringBundler();
-
-		sb.append("<?xml version='1.0' encoding='UTF-8'?>");
-
-		sb.append("<root available-locales=\"en_US,es_ES\" ");
-		sb.append("default-locale=\"en_US\">");
-		sb.append("<static-content language-id=\"es_ES\">");
-		sb.append("<![CDATA[");
-
-		int loops = 2000000;
-
-		for (int i = 0; i < loops; i++) {
-			sb.append("1234567890");
-		}
-
-		sb.append("]]>");
-		sb.append("</static-content>");
-		sb.append("<static-content language-id=\"en_US\">");
-		sb.append("<![CDATA[Example in English]]>");
-		sb.append("</static-content>");
-		sb.append("</root>");
-
-		int totalSize = loops * 10;
-
-		Assert.assertTrue(sb.length() > totalSize);
-
-		String translation = LocalizationUtil.getLocalization(
-			sb.toString(), "es_ES");
-
-		Assert.assertNotNull(translation);
-		Assert.assertEquals(totalSize, translation.length());
-
-		translation = LocalizationUtil.getLocalization(sb.toString(), "en_US");
-
-		Assert.assertNotNull(translation);
-		Assert.assertEquals(18, translation.length());
-	}
-
-	@Test
 	public void testPreferencesLocalization() throws Exception {
 		PortletPreferences preferences = new PortletPreferencesImpl();
 

@@ -2006,11 +2006,11 @@
 	</command>
 
 	<command name="viewWithAbstractDisplayTemplatePG">
-		<var name="key_entryAbstract" value="${entryAbstract}" />
+		<var name="key_entryAbstractDescription" value="${entryAbstractDescription}" />
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertTextEquals" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
-		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="${entryAbstract}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#CONTENT_ABSTRACT" value1="${entryAbstractDescription}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="BlogsEntry#READ_MORE" value1="Read More" />
 	</command>
 

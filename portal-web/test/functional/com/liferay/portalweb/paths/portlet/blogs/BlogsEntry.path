@@ -60,7 +60,7 @@
 </tr>
 <tr>
 	<td>CONTENT_ABSTRACT</td>
-	<td>//div[contains(@class,'entry-body')]/p[contains(.,'${key_entryAbstract}')]</td>
+	<td>//div[contains(@class,'entry-body')]/p[contains(.,'${key_entryAbstractDescription}')]</td>
 	<td></td>
 </tr>
 <tr>

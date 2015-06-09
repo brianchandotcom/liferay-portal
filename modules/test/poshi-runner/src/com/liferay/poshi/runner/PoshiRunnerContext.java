@@ -317,6 +317,11 @@ public class PoshiRunnerContext {
 					_addTestCaseClassCommandNames(
 						componentName,
 						testCaseClassName + "#" + extendsCommandName);
+
+					_commandElements.put(
+						"test-case#" + testCaseClassName + "#" +
+							extendsCommandName,
+						extendsCommandElement);
 				}
 			}
 

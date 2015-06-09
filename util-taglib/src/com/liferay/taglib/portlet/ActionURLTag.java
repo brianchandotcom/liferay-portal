@@ -156,6 +156,11 @@ public class ActionURLTag extends ParamAndPropertyAncestorTagImpl {
 				"returnToFullPageURL", returnToFullPageURL);
 			liferayPortletURL.setParameter("portletResource", portletResource);
 			liferayPortletURL.setParameter("previewWidth", previewWidth);
+
+			if (Validator.isNull(name)) {
+				liferayPortletURL.setParameter(
+					ActionRequest.ACTION_NAME, "editConfiguration");
+			}
 		}
 
 		if (parameterMap != null) {

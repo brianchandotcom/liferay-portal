@@ -458,6 +458,7 @@
 						path: 'image_selector.js',
 						requires: [
 							'aui-base',
+							'liferay-item-selector-dialog',
 							'liferay-portlet-base',
 							'uploader'
 						]

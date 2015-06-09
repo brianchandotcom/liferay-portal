@@ -1459,37 +1459,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 								<arg line="${app.server.start.executable.arg.line}" />
 							</exec>
+
+							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
 						</then>
 						<else>
 							<parallel>
+								<sequential>
+									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+								</sequential>
 								<daemons>
 									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />
 									</exec>
 								</daemons>
 							</parallel>
-						</else>
-					</if>
-
-					<if>
-						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-						<then>
-							<waitfor maxwait="5" maxwaitunit="minute">
-								<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
-							</waitfor>
-						</then>
-						<elseif>
-							<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-							<then>
-								<waitfor maxwait="1" maxwaitunit="minute">
-									<http url="http://localhost:${test.app.server.leading.port.number}080" />
-								</waitfor>
-							</then>
-						</elseif>
-						<else>
-							<waitfor maxwait="5" maxwaitunit="minute">
-								<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-							</waitfor>
 						</else>
 					</if>
 				</then>
@@ -1619,6 +1602,33 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 				<then>
 					<record action="stop" name="log" />
 				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wait-for-app-server">
+		<attribute name="app.server.bin.dir" />
+		<sequential>
+			<if>
+				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+				<then>
+					<waitfor maxwait="5" maxwaitunit="minute">
+						<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
+					</waitfor>
+				</then>
+				<elseif>
+					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+					<then>
+						<waitfor maxwait="1" maxwaitunit="minute">
+							<http url="http://localhost:${test.app.server.leading.port.number}080" />
+						</waitfor>
+					</then>
+				</elseif>
+				<else>
+					<waitfor maxwait="5" maxwaitunit="minute">
+						<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+					</waitfor>
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

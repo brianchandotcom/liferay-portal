@@ -138,6 +138,11 @@ public class BaseIntrabandTest {
 		final AtomicReference<DatagramReceiveHandler[]> atomicReference =
 			_mockIntraband.datagramReceiveHandlersReference;
 
+		DatagramReceiveHandler[] originalDatagramReceiveHandlers =
+			atomicReference.get();
+
+		atomicReference.set(new DatagramReceiveHandler[1024 * 1024]);
+
 		long valueOffset = ReflectionTestUtil.getFieldValue(
 			AtomicReference.class, "valueOffset");
 
@@ -205,6 +210,8 @@ public class BaseIntrabandTest {
 		finally {
 			ReflectionTestUtil.setFieldValue(
 				AtomicReference.class, "valueOffset", valueOffset);
+
+			atomicReference.set(originalDatagramReceiveHandlers);
 		}
 
 		_mockIntraband.close();

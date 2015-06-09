@@ -42,7 +42,7 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 			JSONObject fileEntryJSONObject = JSONFactoryUtil.createJSONObject();
 
-			fileEntryJSONObject.put("fileEntry", fileEntry.getFileEntryId());
+			fileEntryJSONObject.put("fileEntryId", fileEntry.getFileEntryId());
 			fileEntryJSONObject.put("groupId", fileEntry.getGroupId());
 			fileEntryJSONObject.put("title", fileEntry.getTitle());
 			fileEntryJSONObject.put(

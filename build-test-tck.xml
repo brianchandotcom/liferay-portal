@@ -306,7 +306,7 @@ ${logfile.content}</echo>
 			<sequential>
 				<exec dir="tools/tck/src/@{test.directory}" executable="${basedir}/tools/tck/bin/tsant${tsant.file.suffix.bat}" failonerror="true">
 					<arg line="runclient" />
-					<env key="ANT_OPTS" value="-verbose:gc -Xloggc:/tmp/tsant-gc.log -XX:+PrintGCCause -XX:+PrintGCDetails" />
+					<env key="ANT_OPTS" value="-verbose:gc -Xloggc:/tmp/tsant-gc.log -Xms8m -Xmx8m -XX:MaxNewSize=2m -XX:MaxPermSize=6m -XX:MaxTenuringThreshold=0 -XX:NewSize=2m -XX:PermSize=6m -XX:+PrintGCCause -XX:+PrintGCDetails -XX:SurvivorRatio=65536 -XX:TargetSurvivorRatio=0" />
 					<env key="TS_HOME" value="${basedir}/tools/tck" />
 				</exec>
 

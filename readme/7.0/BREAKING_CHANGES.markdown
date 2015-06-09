@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `991422f`.*
+*This document has been reviewed through commit `f9fcd68`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1841,7 +1841,7 @@ its own OSGi bundle.
 ---------------------------------------
 
 ### Replaced Method getPermissionQuery with getPermissionFilter in SearchPermissionChecker, and getFacetQuery with getFacetBooleanFilter in Indexer
-- **Date:** 2015-Jun-2
+- **Date:** 2015-Jun-02
 - **JIRA Ticket:** LPS-56064
 
 #### What changed?
@@ -1885,15 +1885,15 @@ removed as opposed to deprecated.
 
 ---------------------------------------
 
-### Added userId parameter to `update` operations of DDMStructureLocalService DDMTemplateLocalService services
-- **Date:** 2015-Jun-5
+### Added userId Parameter to Update Operations of DDMStructureLocalService and DDMTemplateLocalService
+- **Date:** 2015-Jun-05
 - **JIRA Ticket:** LPS-50939
 
 #### What changed?
 
-A new parameter `long userId` was added in some of the methods starting with  
-`updateStructure` and `updateTemplate` of DDMStructure and DDMTemplate 
-Local services respectively.
+A new parameter `userId` has been added to the `updateStructure` and
+`updateTemplate` methods of the `DDMStructureLocalService` and
+`DDMTemplateLocalService` classes, respectively.
 
 #### Who is affected?
 
@@ -1902,16 +1902,16 @@ that implements the interface methods.
 
 #### How should I update my code?
 
-Any code calling/implementing 
-`DDMStructureLocalServiceUtil.updateStructure(...)` or 
-`DDMTemplateLocalServiceUtil.updateTemplate(...)` 
-should pass the new userId parameter.
+Any code calling/implementing
+`DDMStructureLocalServiceUtil.updateStructure(...)` or
+`DDMTemplateLocalServiceUtil.updateTemplate(...)` should pass the new `userId`
+parameter.
 
 #### Why was this change made?
 
-In order to add support to structure and template versions, audit columns were
-also added to such models. For the service to keep track which the user is
-modifying the structure or template, the `userId` parameter is required.
+For the service to keep track of which user is modifying the structure or
+template, the `userId` parameter was required. In order to add support to
+structure and template versions, audit columns were also added to such models.
 
 ---------------------------------------
 

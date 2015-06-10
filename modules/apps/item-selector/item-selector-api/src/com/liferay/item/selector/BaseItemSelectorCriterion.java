@@ -61,6 +61,7 @@ public abstract class BaseItemSelectorCriterion
 		Set<ItemSelectorReturnType> availableItemSelectorReturnTypes) {
 
 		_availableItemSelectorReturnTypes = availableItemSelectorReturnTypes;
+
 		_desiredItemSelectorReturnTypes = _availableItemSelectorReturnTypes;
 	}
 

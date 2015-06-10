@@ -25,12 +25,12 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.calendar.CalendarBookingDurationException" %><%@
-page import="com.liferay.calendar.CalendarNameException" %><%@
-page import="com.liferay.calendar.CalendarResourceCodeException" %><%@
-page import="com.liferay.calendar.CalendarResourceNameException" %><%@
-page import="com.liferay.calendar.DuplicateCalendarResourceException" %><%@
-page import="com.liferay.calendar.NoSuchResourceException" %><%@
+<%@ page import="com.liferay.calendar.exception.CalendarBookingDurationException" %><%@
+page import="com.liferay.calendar.exception.CalendarNameException" %><%@
+page import="com.liferay.calendar.exception.CalendarResourceCodeException" %><%@
+page import="com.liferay.calendar.exception.CalendarResourceNameException" %><%@
+page import="com.liferay.calendar.exception.DuplicateCalendarResourceException" %><%@
+page import="com.liferay.calendar.exception.NoSuchResourceException" %><%@
 page import="com.liferay.calendar.model.Calendar" %><%@
 page import="com.liferay.calendar.model.CalendarBooking" %><%@
 page import="com.liferay.calendar.model.CalendarNotificationTemplate" %><%@
@@ -39,12 +39,11 @@ page import="com.liferay.calendar.model.CalendarResource" %><%@
 page import="com.liferay.calendar.notification.NotificationField" %><%@
 page import="com.liferay.calendar.notification.NotificationTemplateType" %><%@
 page import="com.liferay.calendar.notification.NotificationType" %><%@
+page import="com.liferay.calendar.notification.impl.NotificationUtil" %><%@
 page import="com.liferay.calendar.recurrence.Frequency" %><%@
 page import="com.liferay.calendar.recurrence.PositionalWeekday" %><%@
 page import="com.liferay.calendar.recurrence.Recurrence" %><%@
 page import="com.liferay.calendar.recurrence.Weekday" %><%@
-page import="com.liferay.calendar.search.CalendarResourceDisplayTerms" %><%@
-page import="com.liferay.calendar.search.CalendarResourceSearch" %><%@
 page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarBookingServiceUtil" %><%@
 page import="com.liferay.calendar.service.CalendarNotificationTemplateLocalServiceUtil" %><%@
@@ -58,11 +57,12 @@ page import="com.liferay.calendar.util.CalendarResourceUtil" %><%@
 page import="com.liferay.calendar.util.CalendarUtil" %><%@
 page import="com.liferay.calendar.util.ColorUtil" %><%@
 page import="com.liferay.calendar.util.JCalendarUtil" %><%@
-page import="com.liferay.calendar.util.NotificationUtil" %><%@
 page import="com.liferay.calendar.util.PortletPropsValues" %><%@
 page import="com.liferay.calendar.util.RecurrenceUtil" %><%@
 page import="com.liferay.calendar.util.WebKeys" %><%@
 page import="com.liferay.calendar.util.comparator.CalendarNameComparator" %><%@
+page import="com.liferay.calendar.web.search.CalendarResourceDisplayTerms" %><%@
+page import="com.liferay.calendar.web.search.CalendarResourceSearch" %><%@
 page import="com.liferay.calendar.workflow.CalendarBookingWorkflowConstants" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@

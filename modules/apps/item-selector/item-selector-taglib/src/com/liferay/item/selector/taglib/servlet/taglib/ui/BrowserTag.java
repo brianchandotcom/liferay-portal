@@ -74,7 +74,7 @@ public class BrowserTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_displayStyle = "icon";
+		_displayStyle = null;
 		_displayStyleURL = null;
 		_idPrefix = null;
 		_itemSelectedEventName = null;
@@ -82,6 +82,14 @@ public class BrowserTag extends IncludeTag {
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
+	}
+
+	protected String getDisplayStyle() {
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
+
+		return _DEFAULT_DISPLAY_STYLE;
 	}
 
 	@Override
@@ -103,7 +111,7 @@ public class BrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:displayStyle", _displayStyle);
+			"liferay-ui:item-selector-browser:displayStyle", getDisplayStyle());
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:displayStyleURL",
 			_displayStyleURL);
@@ -124,9 +132,11 @@ public class BrowserTag extends IncludeTag {
 			getUploadMessage());
 	}
 
+	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
+
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
-	private String _displayStyle;
+	private String _displayStyle = null;
 	private PortletURL _displayStyleURL;
 	private String _idPrefix;
 	private String _itemSelectedEventName;

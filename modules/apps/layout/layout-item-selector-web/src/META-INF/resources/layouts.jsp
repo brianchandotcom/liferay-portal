@@ -220,10 +220,10 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			button.attr('data-returnType', '<%= returnTypeName %>');
 
 			<c:choose>
-				<c:when test="<%= returnTypeName.equals(DefaultItemSelectorReturnType.URL) %>">
+				<c:when test="<%= returnTypeName.equals(DefaultItemSelectorReturnType.URL.getName()) %>">
 					button.attr('data-value', url);
 				</c:when>
-				<c:when test="<%= returnTypeName.equals(DefaultItemSelectorReturnType.UUID) %>">
+				<c:when test="<%= returnTypeName.equals(DefaultItemSelectorReturnType.UUID.getName()) %>">
 					button.attr('data-value', uuid);
 				</c:when>
 			</c:choose>

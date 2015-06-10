@@ -1121,7 +1121,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49879" name="AdvancedSearchOrganizationAddress" priority="3">
+	<command name="AdvancedSearchOrganizationAddress" priority="3">
 		<var name="orgAddressCity" value="Diamond Bar" />
 		<var name="orgAddressCountry" value="United States" />
 		<var name="orgAddressPostal" value="41111" />

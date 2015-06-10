@@ -26,6 +26,9 @@ public interface DefaultDDMFormFieldTypeSettings
 	extends DDMFormFieldTypeSettings {
 
 	@DDMFormField
+	public String fieldNamespace();
+
+	@DDMFormField
 	public String indexType();
 
 	@DDMFormField(type = "text")

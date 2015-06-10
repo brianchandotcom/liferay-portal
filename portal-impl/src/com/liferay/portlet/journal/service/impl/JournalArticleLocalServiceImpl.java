@@ -15,6 +15,7 @@
 package com.liferay.portlet.journal.service.impl;
 
 import com.liferay.portal.LocaleException;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
@@ -448,10 +449,9 @@ public class JournalArticleLocalServiceImpl
 		// Message boards
 
 		if (PropsValues.JOURNAL_ARTICLE_COMMENTS_ENABLED) {
-			mbMessageLocalService.addDiscussionMessage(
-				userId, article.getUserName(), groupId,
-				JournalArticle.class.getName(), resourcePrimKey,
-				WorkflowConstants.ACTION_PUBLISH);
+			CommentManagerUtil.addDiscussion(
+				userId, groupId, JournalArticle.class.getName(),
+				resourcePrimKey, article.getUserName());
 		}
 
 		// Email
@@ -1013,9 +1013,9 @@ public class JournalArticleLocalServiceImpl
 			ratingsStatsLocalService.deleteStats(
 				JournalArticle.class.getName(), article.getResourcePrimKey());
 
-			// Message boards
+			// Comments
 
-			mbMessageLocalService.deleteDiscussionMessages(
+			CommentManagerUtil.deleteDiscussion(
 				JournalArticle.class.getName(), article.getResourcePrimKey());
 
 			// Asset

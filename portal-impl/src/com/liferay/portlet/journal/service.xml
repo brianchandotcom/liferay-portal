@@ -231,7 +231,6 @@
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticleResource" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalContentSearch" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
-		<reference package-path="com.liferay.portlet.messageboards" entity="MBMessage" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
 		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />

@@ -12,14 +12,6 @@ buildscript {
 	}
 }
 
-repositories {
-	mavenLocal()
-
-	maven {
-		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
-	}
-}
-
 apply plugin: "com.liferay.poshi.runner"
 
 poshiRunner {
@@ -27,4 +19,12 @@ poshiRunner {
 	poshiProperty "selenium.logger.enabled", seleniumLoggerEnabled
 	poshiProperty "test.case.available.property.names", testCaseAvailablePropertyNames
 	version = "1.0.5"
+}
+
+repositories {
+	mavenLocal()
+
+	maven {
+		url "http://cdn.repository.liferay.com/nexus/content/groups/public"
+	}
 }

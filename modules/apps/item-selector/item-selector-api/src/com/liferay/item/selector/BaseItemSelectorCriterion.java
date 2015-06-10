@@ -25,7 +25,7 @@ public abstract class BaseItemSelectorCriterion
 	implements ItemSelectorCriterion {
 
 	@Override
-	public Set<ItemSelectorReturnType> getItemSelectorAvailableReturnTypes() {
+	public Set<ItemSelectorReturnType> getAvailableItemSelectorReturnTypes() {
 		return _availableItemSelectorReturnTypes;
 	}
 
@@ -60,9 +60,9 @@ public abstract class BaseItemSelectorCriterion
 	}
 
 	protected BaseItemSelectorCriterion(
-		Set<ItemSelectorReturnType> itemSelectorAvailableReturnTypes) {
+		Set<ItemSelectorReturnType> availableItemSelectorReturnTypes) {
 
-		_availableItemSelectorReturnTypes = itemSelectorAvailableReturnTypes;
+		_availableItemSelectorReturnTypes = availableItemSelectorReturnTypes;
 		_desiredItemSelectorReturnTypes = _availableItemSelectorReturnTypes;
 	}
 

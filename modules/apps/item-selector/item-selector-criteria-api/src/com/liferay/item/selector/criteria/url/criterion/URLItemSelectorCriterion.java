@@ -30,6 +30,6 @@ public class URLItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(DefaultItemSelectorReturnType.URL);
+		getImmutableSet(DefaultItemSelectorReturnType.URL);
 
 }

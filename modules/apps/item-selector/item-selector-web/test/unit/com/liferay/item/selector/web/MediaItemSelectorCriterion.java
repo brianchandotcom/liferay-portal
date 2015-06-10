@@ -45,7 +45,7 @@ public class MediaItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(
+		getImmutableSet(
 			TestItemSelectorReturnType.FILE_ENTRY,
 			TestItemSelectorReturnType.URL);
 

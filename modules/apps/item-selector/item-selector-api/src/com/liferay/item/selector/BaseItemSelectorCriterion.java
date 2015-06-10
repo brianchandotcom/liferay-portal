@@ -50,7 +50,7 @@ public abstract class BaseItemSelectorCriterion
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
 
-	protected static Set<ItemSelectorReturnType> getInmutableSet(
+	protected static Set<ItemSelectorReturnType> getImmutableSet(
 		ItemSelectorReturnType... itemSelectorReturnTypes) {
 
 		return Collections.unmodifiableSet(

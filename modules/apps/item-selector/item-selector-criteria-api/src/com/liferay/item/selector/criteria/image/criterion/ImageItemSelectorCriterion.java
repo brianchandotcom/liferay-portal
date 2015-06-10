@@ -30,7 +30,7 @@ public class ImageItemSelectorCriterion extends BaseItemSelectorCriterion {
 	}
 
 	private static final Set<ItemSelectorReturnType>
-		_availableItemSelectorReturnTypes = getInmutableSet(
+		_availableItemSelectorReturnTypes = getImmutableSet(
 			DefaultItemSelectorReturnType.BASE_64,
 			DefaultItemSelectorReturnType.FILE_ENTRY,
 			DefaultItemSelectorReturnType.URL);

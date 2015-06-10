@@ -45,7 +45,7 @@ public class WikiAttachmentItemSelectorCriterion
 	}
 
 	private static final Set<ItemSelectorReturnType>
-		_availableItemSelectorReturnTypes = getInmutableSet(
+		_availableItemSelectorReturnTypes = getImmutableSet(
 			DefaultItemSelectorReturnType.URL);
 
 	private long _wikiPageResourceId;

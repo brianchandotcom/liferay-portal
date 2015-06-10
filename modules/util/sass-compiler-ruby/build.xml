@@ -5,4 +5,36 @@
 	<property name="import.shared" value="sass-compiler-api" />
 
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
+
+	<target name="compile">
+		<if>
+			<not>
+				<available file="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec" />
+			</not>
+			<then>
+				<mkdir dir="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec" />
+
+				<mirrors-get
+						dest="sass-spec.zip"
+						src="https://github.com/sass/sass-spec/archive/3818b9d686765461add05e996d990b085e15a348.zip"
+						/>
+
+				<unzip
+						dest="test/unit/com/liferay/sass/compiler/ruby/internal/dependencies/sass-spec"
+						src="sass-spec.zip"
+						>
+					<patternset>
+						<include name="**/spec/basic/**" />
+					</patternset>
+					<cutdirsmapper dirs="3" />
+				</unzip>
+
+				<delete file="sass-spec.zip" />
+			</then>
+		</if>
+
+		<compile
+				module.dir="${basedir}"
+				/>
+	</target>
 </project>

@@ -54,8 +54,7 @@ public interface SchedulerEngine {
 
 	public static final String MESSAGE = "MESSAGE";
 
-	public static final String MESSAGE_LISTENER_CLASS_NAME =
-		"MESSAGE_LISTENER_CLASS_NAME";
+	public static final String MESSAGE_LISTENER = "MESSAGE_LISTENER";
 
 	public static final String MESSAGE_LISTENER_UUID = "MESSAGE_LISTENER_UUID";
 

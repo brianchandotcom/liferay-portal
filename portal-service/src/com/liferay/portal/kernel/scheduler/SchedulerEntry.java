@@ -14,6 +14,8 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.messaging.MessageListener;
+
 import java.io.Serializable;
 
 /**
@@ -25,6 +27,8 @@ public interface SchedulerEntry extends Serializable {
 
 	public String getEventListenerClass();
 
+	public MessageListener getEventMessageListener() throws SchedulerException;
+
 	public TimeUnit getTimeUnit();
 
 	public Trigger getTrigger() throws SchedulerException;
@@ -32,6 +36,8 @@ public interface SchedulerEntry extends Serializable {
 	public TriggerType getTriggerType();
 
 	public String getTriggerValue();
+
+	public void setClassLoader(ClassLoader classLoader);
 
 	public void setDescription(String description);
 

@@ -14,7 +14,10 @@
 
 package com.liferay.portal.kernel.scheduler;
 
+import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
@@ -32,6 +35,33 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	@Override
 	public String getEventListenerClass() {
 		return _eventListenerClass;
+	}
+
+	@Override
+	public MessageListener getEventMessageListener() throws SchedulerException {
+		MessageListener schedulerEventListener = null;
+
+		try {
+			Class<? extends MessageListener> clazz =
+				(Class<? extends MessageListener>)_classLoader.loadClass(
+					_eventListenerClass);
+
+			schedulerEventListener = clazz.newInstance();
+
+			schedulerEventListener =
+				(MessageListener)ProxyUtil.newProxyInstance(
+					_classLoader, new Class<?>[] {MessageListener.class},
+					new ClassLoaderBeanHandler(
+						schedulerEventListener, _classLoader));
+		}
+		catch (Exception e) {
+			throw new SchedulerException(
+				"Unable to register message listener with name " +
+					_eventListenerClass,
+				e);
+		}
+
+		return schedulerEventListener;
 	}
 
 	@Override
@@ -90,6 +120,11 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 	}
 
 	@Override
+	public void setClassLoader(ClassLoader classLoader) {
+		_classLoader = classLoader;
+	}
+
+	@Override
 	public void setDescription(String description) {
 		_description = description;
 	}
@@ -145,6 +180,7 @@ public class SchedulerEntryImpl implements SchedulerEntry {
 		return sb.toString();
 	}
 
+	private ClassLoader _classLoader;
 	private String _description = StringPool.BLANK;
 	private String _eventListenerClass = StringPool.BLANK;
 	private TimeUnit _timeUnit;

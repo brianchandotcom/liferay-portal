@@ -116,6 +116,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	public static final String TEST_INTEGRATION_SOURCE_SET_NAME =
 		"testIntegration";
 
+	public static final String TEST_INTEGRATION_TASK_NAME = "testIntegration";
+
 	@Override
 	public void apply(Project project) {
 		addLiferayExtension(project);
@@ -320,6 +322,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskInitGradle(project);
 		addTaskSetupArquillian(project);
 		addTaskSetupTestableTomcat(project);
+		addTaskTestIntegration(project);
 		addTaskWar(project);
 	}
 
@@ -437,6 +440,25 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 
 		return setupTestableTomcatTask;
+	}
+
+	protected Test addTaskTestIntegration(Project project) {
+		Test test = GradleUtil.addTask(
+			project, TEST_INTEGRATION_TASK_NAME, Test.class);
+
+		test.dependsOn(SETUP_ARQUILLIAN_TASK_NAME);
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+		test.setClasspath(sourceSet.getRuntimeClasspath());
+		test.setDescription("Runs the integration tests.");
+		test.setGroup("verification");
+		test.setTestClassesDir(sourceSetOutput.getClassesDir());
+
+		return test;
 	}
 
 	protected Task addTaskWar(Project project) {

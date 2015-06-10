@@ -15,11 +15,12 @@
 package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
@@ -66,11 +67,10 @@ public class MediaItemSelectorView
 	}
 
 	private static final Set<TestItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = new HashSet<>();
-
-	static {
-		_supportedItemSelectorReturnTypes.add(
-			TestItemSelectorReturnType.URL);
-	}
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new TestItemSelectorReturnType[] {
+					TestItemSelectorReturnType.URL
+				}));
 
 }

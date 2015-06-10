@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelectorView;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -44,7 +43,7 @@ public class FlickrItemSelectorView
 	public Set<TestItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
-		return _TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -66,11 +65,10 @@ public class FlickrItemSelectorView
 	}
 
 	private static final Set<TestItemSelectorReturnType>
-		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
-
-	static {
-		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
-			TestItemSelectorReturnType.URL);
-	}
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new TestItemSelectorReturnType[] {
+					TestItemSelectorReturnType.URL
+				}));
 
 }

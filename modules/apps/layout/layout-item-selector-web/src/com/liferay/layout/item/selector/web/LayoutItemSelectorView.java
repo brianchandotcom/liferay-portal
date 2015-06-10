@@ -17,10 +17,11 @@ package com.liferay.layout.item.selector.web;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -91,11 +92,10 @@ public class LayoutItemSelectorView
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = new HashSet<>();
-
-	static {
-		_supportedItemSelectorReturnTypes.add(
-			DefaultItemSelectorReturnType.URL);
-	}
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new DefaultItemSelectorReturnType[] {
+					DefaultItemSelectorReturnType.URL
+				}));
 
 }

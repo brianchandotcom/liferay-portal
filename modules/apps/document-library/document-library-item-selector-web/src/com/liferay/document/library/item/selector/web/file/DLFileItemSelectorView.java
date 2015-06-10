@@ -18,8 +18,9 @@ import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
+import com.liferay.portal.kernel.util.SetUtil;
 
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -55,13 +56,11 @@ public class DLFileItemSelectorView
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
-		_supportedItemSelectorReturnTypes = new HashSet<>();
-
-	static {
-		_supportedItemSelectorReturnTypes.add(
-			DefaultItemSelectorReturnType.FILE_ENTRY);
-		_supportedItemSelectorReturnTypes.add(
-			DefaultItemSelectorReturnType.URL);
-	}
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new DefaultItemSelectorReturnType[] {
+					DefaultItemSelectorReturnType.FILE_ENTRY,
+					DefaultItemSelectorReturnType.URL
+				}));
 
 }

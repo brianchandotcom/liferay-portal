@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lar;
+package com.liferay.exportimport;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.LocaleException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lar.lifecycle;
+package com.liferay.exportimport.lifecycle;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;

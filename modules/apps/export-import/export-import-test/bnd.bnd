@@ -1,5 +1,5 @@
-Bundle-Name: LAR Test
-Bundle-SymbolicName: com.liferay.lar.test
+Bundle-Name: Liferay Export Import Test
+Bundle-SymbolicName: com.liferay.exportimport.test
 Bundle-Version: 1.0.0
 Import-Package: *;resolution:=optional
 Include-Resource:\

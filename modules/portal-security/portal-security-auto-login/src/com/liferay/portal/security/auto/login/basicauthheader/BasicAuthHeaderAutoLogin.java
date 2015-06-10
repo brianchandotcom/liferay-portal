@@ -12,16 +12,22 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login;
+package com.liferay.portal.security.auto.login.basicauthheader;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.security.auto.login.basicauthheader.configuration.BasicAuthHeaderAutoLoginConfiguration;
+import com.liferay.portal.security.auto.login.basicauthheader.constants.BasicAuthHeaderAutoLoginConstants;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.login.util.LoginUtil;
 
 import java.util.StringTokenizer;
@@ -30,6 +36,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * <p>
@@ -64,13 +71,22 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = AutoLogin.class)
+@Component(
+	configurationPid = "com.liferay.portal.security.auto.login.basicauthheader.configuration.BasicAuthHeaderAutoLoginConfiguration",
+	immediate = true, service = AutoLogin.class
+)
 public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		if (!isEnabled(companyId)) {
+			return null;
+		}
 
 		// Get the Authorization header, if one was supplied
 
@@ -131,7 +147,46 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
+	protected boolean isEnabled(long companyId) {
+		BasicAuthHeaderAutoLoginConfiguration configuration = _getConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		return configuration.enabled();
+	}
+
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	private BasicAuthHeaderAutoLoginConfiguration _getConfiguration(
+		long companyId) {
+
+		try {
+			BasicAuthHeaderAutoLoginConfiguration configuration =
+				_settingsFactory.getSettings(
+					BasicAuthHeaderAutoLoginConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId,
+						BasicAuthHeaderAutoLoginConstants.SERVICE_NAME));
+
+			return configuration;
+		}
+		catch (SettingsException se) {
+			_log.error(
+				"Unable to get BasicAuthHeaderAutoLogin configuration", se);
+		}
+
+		return null;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasicAuthHeaderAutoLogin.class);
+
+	private volatile SettingsFactory _settingsFactory;
 
 }

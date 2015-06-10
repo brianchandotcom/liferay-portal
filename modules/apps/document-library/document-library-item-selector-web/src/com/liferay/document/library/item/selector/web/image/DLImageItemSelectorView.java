@@ -42,9 +42,9 @@ public class DLImageItemSelectorView
 
 	@Override
 	public Set<DefaultItemSelectorReturnType>
-		getItemSelectorSupportedReturnTypes() {
+		getSupportedItemSelectorReturnTypes() {
 
-		return _IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
+		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
 	}
 
 	@Override
@@ -61,12 +61,12 @@ public class DLImageItemSelectorView
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
-		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES = new HashSet<>();
 
 	static {
-		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
 			DefaultItemSelectorReturnType.FILE_ENTRY);
-		_IMAGE_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
 			DefaultItemSelectorReturnType.URL);
 	}
 

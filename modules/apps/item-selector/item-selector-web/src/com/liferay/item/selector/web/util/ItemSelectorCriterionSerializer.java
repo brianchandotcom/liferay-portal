@@ -99,7 +99,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 					_itemSelectorCriterion, externalPropertyKey, value);
 			}
 
-			_setDesiredReturnTypes(map);
+			_setDesiredItemSelectorReturnTypes(map);
 		}
 		catch (IllegalAccessException | InvocationTargetException |
 			NoSuchMethodException e) {
@@ -145,7 +145,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		return false;
 	}
 
-	private void _setDesiredReturnTypes(Map<String, ?> map) {
+	private void _setDesiredItemSelectorReturnTypes(Map<String, ?> map) {
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new LinkedHashSet<>();
 
@@ -181,7 +181,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			}
 		}
 
-		_itemSelectorCriterion.setItemSelectorDesiredReturnTypes(
+		_itemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 	}
 

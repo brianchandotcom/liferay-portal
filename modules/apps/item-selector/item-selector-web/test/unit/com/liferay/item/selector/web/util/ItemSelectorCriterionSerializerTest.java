@@ -55,7 +55,7 @@ public class ItemSelectorCriterionSerializerTest {
 
 		desiredItemSelectorReturnTypes.add(TestItemSelectorReturnType.URL);
 
-		_flickrItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
+		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		Map<String, String[]> properties =
@@ -96,13 +96,13 @@ public class ItemSelectorCriterionSerializerTest {
 			_flickrItemSelectorCriterion.getTags());
 
 		Set<TestItemSelectorReturnType>
-			expectedItemSelectorDesiredReturnTypes = new HashSet<>();
+			expectedDesiredItemSelectorReturnTypes = new HashSet<>();
 
-		expectedItemSelectorDesiredReturnTypes.add(
+		expectedDesiredItemSelectorReturnTypes.add(
 			TestItemSelectorReturnType.URL);
 
 		Assert.assertEquals(
-			expectedItemSelectorDesiredReturnTypes,
+			expectedDesiredItemSelectorReturnTypes,
 			_flickrItemSelectorCriterion.getDesiredItemSelectorReturnTypes());
 	}
 

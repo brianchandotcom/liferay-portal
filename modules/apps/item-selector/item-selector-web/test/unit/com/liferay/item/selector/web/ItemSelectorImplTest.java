@@ -57,7 +57,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 
 		desiredItemSelectorReturnTypes.add(TestItemSelectorReturnType.URL);
 
-		_flickrItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
+		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		_itemSelectorImpl = new ItemSelectorImpl();
@@ -104,7 +104,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			MediaItemSelectorCriterion.class.getName() + "," +
 				FlickrItemSelectorCriterion.class.getName(),
 			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
-		Assert.assertNull(parameters.get("0_desiredReturnTypes"));
+		Assert.assertNull(parameters.get("0_desiredItemSelectorReturnTypes"));
 		Assert.assertNotNull(parameters.get("0_json")[0]);
 		Assert.assertNotNull(parameters.get("1_json")[0]);
 

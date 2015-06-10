@@ -113,9 +113,9 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		URLItemSelectorCriterion urlItemSelectorCriterion = new URLItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> layoutItemSelectorDesiredReturnTypes = new HashSet<ItemSelectorReturnType>();
+		Set<ItemSelectorReturnType> layoutDesiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
 
-		urlItemSelectorCriterion.setItemSelectorDesiredReturnTypes(layoutItemSelectorDesiredReturnTypes);
+		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(layoutDesiredItemSelectorReturnTypes);
 
 		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, urlItemSelectorCriterion);
 		%>

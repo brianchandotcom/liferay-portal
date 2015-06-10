@@ -14,11 +14,11 @@
 
 package com.liferay.calendar.web.asset;
 
+import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.ActionKeys;
-import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

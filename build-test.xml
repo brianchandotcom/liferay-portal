@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="portal-test" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks">
+<project name="portal-test" basedir="." default="test" xmlns:antelope="antlib:ise.antelope.tasks" xmlns:if="ant:if" xmlns:unless="ant:unless">
 	<import file="build.xml" />
 
 	<property file="${project.dir}/test.generated.properties" />
@@ -262,7 +262,7 @@
 					<available file="git-commit-portal" />
 				</not>
 				<then>
-					<antcall target="record-git-commit-portal" inheritAll="false" />
+					<record-git-commit-portal />
 				</then>
 			</if>
 
@@ -1018,6 +1018,126 @@
 					</antelope:repeat>
 
 					<var name="app.server.bundle.index" unset="true" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="print-gc-logs">
+		<sequential>
+			<if>
+				<available file="/tmp/ant-gc.log" />
+				<then>
+					<loadfile property="ant-gc-log" srcFile="/tmp/ant-gc.log" />
+
+					<echo>
+	Ant GC log:
+
+	${ant-gc-log}</echo>
+				</then>
+				<else>
+					<echo>Unable to read /tmp/ant-gc.log</echo>
+				</else>
+			</if>
+
+			<if>
+				<available file="/tmp/tomcat-gc.log" />
+				<then>
+					<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
+
+					<echo>
+	Tomcat GC log:
+
+	${tomcat-gc-log}</echo>
+				</then>
+				<else>
+					<echo>Unable to read /tmp/tomcat-gc.log</echo>
+				</else>
+			</if>
+
+			<if>
+				<available file="/tmp/tsant-gc.log" />
+				<then>
+					<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
+
+					<echo>
+	Tsant GC log:
+
+	${tsant-gc-log}</echo>
+				</then>
+				<else>
+					<echo>Unable to read /tmp/tsant-gc.log</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-git-commit-plugins">
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					File pluginsDir = null;
+
+					String lpPluginsDirName = project.getProperty("lp.plugins.dir");
+
+					if ((lpPluginsDirName == null) || lpPluginsDirName.equals("")) {
+						File projectDir = new File(project.getProperty("project.dir"));
+
+						String projectDirName = projectDir.getName();
+
+						String pluginsDirName = "liferay-plugins" + projectDirName.substring("liferay-portal".length());
+
+						pluginsDir = new File(projectDir.getParent(), pluginsDirName);
+					}
+					else {
+						if (lpPluginsDirName.contains("${basedir.name}")) {
+							lpPluginsDirName = lpPluginsDirName.substring(0, lpPluginsDirName.lastIndexOf("/"));
+						}
+
+						pluginsDir = new File(lpPluginsDirName);
+					}
+
+					project.setProperty("git.plugins.dir", pluginsDir.toString());
+				]]>
+			</script>
+
+			<exec dir="${git.plugins.dir}" executable="git" outputproperty="git.commit.plugins.rev.parse">
+				<arg line="rev-parse HEAD" />
+			</exec>
+
+			<echo>Recording ${git.plugins.dir} with ${git.commit.plugins.rev.parse}.</echo>
+
+			<var name="git.plugins.dir" unset="true" />
+
+			<echo file="git-commit-plugins">${git.commit.plugins.rev.parse}</echo>
+
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<copy
+						file="git-commit-plugins"
+						todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-git-commit-portal">
+		<sequential>
+			<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
+				<arg line="rev-parse HEAD" />
+			</exec>
+
+			<echo file="git-commit-portal">${git.commit.portal.rev.parse}</echo>
+
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<copy
+						file="git-commit-portal"
+						todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+					/>
 				</then>
 			</if>
 		</sequential>
@@ -2529,7 +2649,10 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="generate-changelog" depends="record-git-commit-plugins,record-git-commit-portal">
+	<target name="generate-changelog">
+		<record-git-commit-plugins />
+		<record-git-commit-portal />
+
 		<tstamp>
 			<format property="build.tstamp.value" pattern="EEEE, d MMMM yyyy, hh:mm aa" />
 		</tstamp>
@@ -4272,7 +4395,7 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-test-build">
-		<antcall target="record-git-commit-portal" inheritAll="false" />
+		<record-git-commit-portal />
 
 		<antcall target="compile" inheritAll="false" />
 
@@ -4932,6 +5055,14 @@ if (ppstate.equals("normal")) {
 %>]]></echo>
 
 		<echo>Updated ${app.server.dir}/webapps/ROOT/html/common/themes/bottom-test.jsp.</echo>
+	</target>
+
+	<target name="record-git-commit-plugins">
+		<record-git-commit-plugins />
+	</target>
+
+	<target name="record-git-commit-portal">
+		<record-git-commit-portal />
 	</target>
 
 	<target name="record-test-class-file-names">
@@ -5958,10 +6089,10 @@ Please set "ie.driver.zip" in test.properties to point to "IEDriverServer_x64_2.
 	</target>
 
 	<target name="test-class-group">
-		<echo>
+		<echo if:set="env.JENKINS_HOME">
 ANT_OPTS=${env.ANT_OPTS}</echo>
 
-		<antcall target="clean-up-java-processes" inheritAll="false" />
+		<antcall if:set="env.JENKINS_HOME" target="clean-up-java-processes" inheritAll="false" />
 
 		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
 
@@ -5986,50 +6117,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 		</if>
 
-		<if>
-			<available file="/tmp/ant-gc.log" />
-			<then>
-				<loadfile property="ant-gc-log" srcFile="/tmp/ant-gc.log" />
-
-				<echo>
-Ant GC log:
-
-${ant-gc-log}</echo>
-			</then>
-			<else>
-				<echo>Unable to read /tmp/ant-gc.log</echo>
-			</else>
-		</if>
-
-		<if>
-			<available file="/tmp/tomcat-gc.log" />
-			<then>
-				<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
-
-				<echo>
-Tomcat GC log:
-
-${tomcat-gc-log}</echo>
-			</then>
-			<else>
-				<echo>Unable to read /tmp/tomcat-gc.log</echo>
-			</else>
-		</if>
-
-		<if>
-			<available file="/tmp/tsant-gc.log" />
-			<then>
-				<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
-
-				<echo>
-Tsant GC log:
-
-${tsant-gc-log}</echo>
-			</then>
-			<else>
-				<echo>Unable to read /tmp/tsant-gc.log</echo>
-			</else>
-		</if>
+		<print-gc-logs if:set="env.JENKINS_HOME" />
 	</target>
 
 	<target name="test-integration">

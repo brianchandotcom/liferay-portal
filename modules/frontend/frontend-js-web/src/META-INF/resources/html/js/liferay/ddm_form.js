@@ -892,7 +892,7 @@ AUI.add(
 
 											instance.setValue(
 												{
-													groupId: itemValue.groupid,
+													groupId: itemValue.groupId,
 													title: itemValue.title,
 													uuid: itemValue.uuid
 												}
@@ -922,6 +922,7 @@ AUI.add(
 
 						portletURL.setParameter('criteria', 'com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion');
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
+						portletURL.setParameter('repositoryId', instance.get('doAsGroupId'));
 
 						var criterionJSON = {
 							desiredItemSelectorReturnTypes:

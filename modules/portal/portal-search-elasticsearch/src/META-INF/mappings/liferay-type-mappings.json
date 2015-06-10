@@ -622,6 +622,11 @@
 				"store": "yes",
 				"type": "string"
 			},
+			"geoLocation": {
+				"index": "not_analyzed",
+				"store": "yes",
+				"type": "geo_point"
+		  	},
 			"groupId": {
 				"index": "not_analyzed",
 				"store": "yes",

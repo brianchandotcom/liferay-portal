@@ -54,7 +54,16 @@ public class UpdateFileEntriesHandler extends BaseJSONHandler {
 
 				JsonNode fieldValue = field.getValue();
 
-				String exception = handler.getException(fieldValue.textValue());
+				String exception = null;
+
+				if (fieldValue.isNull()) {
+					exception =
+						"com.liferay.portal.kernel.jsonwebservice." +
+							"NoSuchJSONWebServiceException";
+				}
+				else {
+					exception = handler.getException(fieldValue.textValue());
+				}
 
 				if (handler.handlePortalException(exception)) {
 					continue;

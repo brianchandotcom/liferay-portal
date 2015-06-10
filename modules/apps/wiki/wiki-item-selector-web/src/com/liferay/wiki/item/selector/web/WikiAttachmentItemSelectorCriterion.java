@@ -27,11 +27,11 @@ public class WikiAttachmentItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 
 	public WikiAttachmentItemSelectorCriterion() {
-		super(_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES);
+		super(_availableItemSelectorReturnTypes);
 	}
 
 	public WikiAttachmentItemSelectorCriterion(long wikiPageResourceId) {
-		super(_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES);
+		super(_availableItemSelectorReturnTypes);
 
 		_wikiPageResourceId = wikiPageResourceId;
 	}
@@ -45,7 +45,7 @@ public class WikiAttachmentItemSelectorCriterion
 	}
 
 	private static final Set<ItemSelectorReturnType>
-		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
+		_availableItemSelectorReturnTypes = getInmutableSet(
 			DefaultItemSelectorReturnType.URL);
 
 	private long _wikiPageResourceId;

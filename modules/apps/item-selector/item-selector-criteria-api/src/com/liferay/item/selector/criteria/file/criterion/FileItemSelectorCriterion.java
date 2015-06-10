@@ -26,11 +26,11 @@ import java.util.Set;
 public class FileItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public FileItemSelectorCriterion() {
-		super(_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES);
+		super(_availableItemSelectorReturnTypes);
 	}
 
 	private static final Set<ItemSelectorReturnType>
-		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
+		_availableItemSelectorReturnTypes = getInmutableSet(
 			DefaultItemSelectorReturnType.BASE_64,
 			DefaultItemSelectorReturnType.FILE_ENTRY,
 			DefaultItemSelectorReturnType.URL);

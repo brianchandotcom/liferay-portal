@@ -123,6 +123,30 @@
 			"required": false,
 			"showLabel": true,
 			"type": "text"
+		},
+		{
+			"dataType": "html",
+			"fieldNamespace": "ddm",
+			"indexType": "keyword",
+			"label": {
+				"en_US": "HTML",
+				"pt_BR": "HTML"
+			},
+			"localizable": true,
+			"name": "HTMLField",
+			"predefinedValue": {
+				"en_US": "",
+				"pt_BR": ""
+			},
+			"readOnly": false,
+			"repeatable": false,
+			"required": false,
+			"showLabel": true,
+			"tip": {
+				"en_US": "Tip",
+				"pt_BR": "Dica"
+			},
+			"type": "ddm-text-html"
 		}
 	]
 }

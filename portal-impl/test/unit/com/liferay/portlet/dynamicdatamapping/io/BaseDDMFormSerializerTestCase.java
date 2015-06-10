@@ -68,8 +68,55 @@ public abstract class BaseDDMFormSerializerTestCase extends BaseDDMTestCase {
 		ddmFormFields.add(createRadioDDMFormField("BooleanField"));
 		ddmFormFields.add(createSelectDDMFormField("SelectField"));
 		ddmFormFields.add(createTextDDMFormField("TextField"));
+		ddmFormFields.add(createHTMLDDMFormField("HTMLField"));
 
 		return ddmFormFields;
+	}
+
+	protected DDMFormField createHTMLDDMFormField(String name) {
+		DDMFormField ddmFormField = new DDMFormField(name, "ddm-text-html");
+
+		ddmFormField.setDataType("html");
+		ddmFormField.setFieldNamespace("ddm");
+		ddmFormField.setIndexType("keyword");
+		ddmFormField.setLabel(createHTMLDDMFormFieldLabel());
+		ddmFormField.setLocalizable(true);
+		ddmFormField.setPredefinedValue(
+			createHTMLDDMFormFieldPredefinedValue());
+		ddmFormField.setReadOnly(false);
+		ddmFormField.setRepeatable(false);
+		ddmFormField.setRequired(false);
+		ddmFormField.setShowLabel(true);
+		ddmFormField.setTip(createHTMLDDMFormFieldTip());
+
+		return ddmFormField;
+	}
+
+	protected LocalizedValue createHTMLDDMFormFieldLabel() {
+		LocalizedValue label = new LocalizedValue();
+
+		label.addString(LocaleUtil.BRAZIL, "HTML");
+		label.addString(LocaleUtil.US, "HTML");
+
+		return label;
+	}
+
+	protected LocalizedValue createHTMLDDMFormFieldPredefinedValue() {
+		LocalizedValue predefinedValue = new LocalizedValue();
+
+		predefinedValue.addString(LocaleUtil.BRAZIL, "");
+		predefinedValue.addString(LocaleUtil.US, "");
+
+		return predefinedValue;
+	}
+
+	protected LocalizedValue createHTMLDDMFormFieldTip() {
+		LocalizedValue predefinedValue = new LocalizedValue();
+
+		predefinedValue.addString(LocaleUtil.BRAZIL, "Dica");
+		predefinedValue.addString(LocaleUtil.US, "Tip");
+
+		return predefinedValue;
 	}
 
 	protected DDMFormField createNestedDDMFormFields(

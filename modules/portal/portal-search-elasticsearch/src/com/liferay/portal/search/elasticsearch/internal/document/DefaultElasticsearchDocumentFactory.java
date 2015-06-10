@@ -17,6 +17,7 @@ package com.liferay.portal.search.elasticsearch.internal.document;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.elasticsearch.common.geo.GeoPoint;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 
@@ -140,8 +142,19 @@ public class DefaultElasticsearchDocumentFactory
 			xContentBuilder.startArray();
 		}
 
-		for (String value : values) {
-			xContentBuilder.value(translateValue(field, value));
+		if (fieldName.equals(Field.GEO_LOCATION)) {
+			GeoLocationPoint geoLocationPoint = field.getGeoLocationPoint();
+
+			GeoPoint geoPoint = new GeoPoint(
+				geoLocationPoint.getLatitude(),
+				geoLocationPoint.getLongitude());
+
+			xContentBuilder.value(geoPoint);
+		}
+		else {
+			for (String value : values) {
+				xContentBuilder.value(translateValue(field, value));
+			}
 		}
 
 		if (field.isArray() || (values.length > 1)) {

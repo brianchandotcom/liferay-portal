@@ -262,7 +262,7 @@
 					<available file="git-commit-portal" />
 				</not>
 				<then>
-					<antcall target="record-git-commit-portal" inheritAll="false" />
+					<record-git-commit-portal />
 				</then>
 			</if>
 
@@ -1018,6 +1018,77 @@
 					</antelope:repeat>
 
 					<var name="app.server.bundle.index" unset="true" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-git-commit-plugins">
+		<sequential>
+			<script classpathref="project.classpath" language="beanshell">
+				<![CDATA[
+					File pluginsDir = null;
+
+					String lpPluginsDirName = project.getProperty("lp.plugins.dir");
+
+					if ((lpPluginsDirName == null) || lpPluginsDirName.equals("")) {
+						File projectDir = new File(project.getProperty("project.dir"));
+
+						String projectDirName = projectDir.getName();
+
+						String pluginsDirName = "liferay-plugins" + projectDirName.substring("liferay-portal".length());
+
+						pluginsDir = new File(projectDir.getParent(), pluginsDirName);
+					}
+					else {
+						if (lpPluginsDirName.contains("${basedir.name}")) {
+							lpPluginsDirName = lpPluginsDirName.substring(0, lpPluginsDirName.lastIndexOf("/"));
+						}
+
+						pluginsDir = new File(lpPluginsDirName);
+					}
+
+					project.setProperty("git.plugins.dir", pluginsDir.toString());
+				]]>
+			</script>
+
+			<exec dir="${git.plugins.dir}" executable="git" outputproperty="git.commit.plugins.rev.parse">
+				<arg line="rev-parse HEAD" />
+			</exec>
+
+			<echo>Recording ${git.plugins.dir} with ${git.commit.plugins.rev.parse}.</echo>
+
+			<var name="git.plugins.dir" unset="true" />
+
+			<echo file="git-commit-plugins">${git.commit.plugins.rev.parse}</echo>
+
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<copy
+						file="git-commit-plugins"
+						todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+					/>
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="record-git-commit-portal">
+		<sequential>
+			<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
+				<arg line="rev-parse HEAD" />
+			</exec>
+
+			<echo file="git-commit-portal">${git.commit.portal.rev.parse}</echo>
+
+			<if>
+				<isset property="env.JENKINS_HOME" />
+				<then>
+					<copy
+						file="git-commit-portal"
+						todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
+					/>
 				</then>
 			</if>
 		</sequential>
@@ -2515,7 +2586,10 @@ go]]></replacevalue>
 		</if>
 	</target>
 
-	<target name="generate-changelog" depends="record-git-commit-plugins,record-git-commit-portal">
+	<target name="generate-changelog">
+		<record-git-commit-plugins />
+		<record-git-commit-portal />
+
 		<tstamp>
 			<format property="build.tstamp.value" pattern="EEEE, d MMMM yyyy, hh:mm aa" />
 		</tstamp>
@@ -4258,7 +4332,7 @@ module.framework.properties.osgi.console=11312</echo>
 	</target>
 
 	<target name="prepare-test-build">
-		<antcall target="record-git-commit-portal" inheritAll="false" />
+		<record-git-commit-portal />
 
 		<antcall target="compile" inheritAll="false" />
 
@@ -4921,70 +4995,11 @@ if (ppstate.equals("normal")) {
 	</target>
 
 	<target name="record-git-commit-plugins">
-		<script classpathref="project.classpath" language="beanshell">
-			<![CDATA[
-				File pluginsDir = null;
-
-				String lpPluginsDirName = project.getProperty("lp.plugins.dir");
-
-				if ((lpPluginsDirName == null) || lpPluginsDirName.equals("")) {
-					File projectDir = new File(project.getProperty("project.dir"));
-
-					String projectDirName = projectDir.getName();
-
-					String pluginsDirName = "liferay-plugins" + projectDirName.substring("liferay-portal".length());
-
-					pluginsDir = new File(projectDir.getParent(), pluginsDirName);
-				}
-				else {
-					if (lpPluginsDirName.contains("${basedir.name}")) {
-						lpPluginsDirName = lpPluginsDirName.substring(0, lpPluginsDirName.lastIndexOf("/"));
-					}
-
-					pluginsDir = new File(lpPluginsDirName);
-				}
-
-				project.setProperty("git.plugins.dir", pluginsDir.toString());
-			]]>
-		</script>
-
-		<exec dir="${git.plugins.dir}" executable="git" outputproperty="git.commit.plugins.rev.parse">
-			<arg line="rev-parse HEAD" />
-		</exec>
-
-		<echo>Recording ${git.plugins.dir} with ${git.commit.plugins.rev.parse}.</echo>
-
-		<var name="git.plugins.dir" unset="true" />
-
-		<echo file="git-commit-plugins">${git.commit.plugins.rev.parse}</echo>
-
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<copy
-					file="git-commit-plugins"
-					todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
-				/>
-			</then>
-		</if>
+		<record-git-commit-plugins />
 	</target>
 
 	<target name="record-git-commit-portal">
-		<exec dir="${project.dir}" executable="git" outputproperty="git.commit.portal.rev.parse">
-			<arg line="rev-parse HEAD" />
-		</exec>
-
-		<echo file="git-commit-portal">${git.commit.portal.rev.parse}</echo>
-
-		<if>
-			<isset property="env.JENKINS_HOME" />
-			<then>
-				<copy
-					file="git-commit-portal"
-					todir="${env.JENKINS_HOME}/userContent/jobs/${env.JOB_NAME}/builds/${env.BUILD_NUMBER}"
-				/>
-			</then>
-		</if>
+		<record-git-commit-portal />
 	</target>
 
 	<target name="record-test-class-file-names">

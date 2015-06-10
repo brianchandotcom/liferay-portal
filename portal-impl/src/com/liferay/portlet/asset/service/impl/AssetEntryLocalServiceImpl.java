@@ -201,8 +201,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		AssetEntryQuery assetEntryQuery = getAssetEntryQuery(
 			groupIds, classNameIds, keywords, userName, title, description,
-			listable, advancedSearch, andOperator, start, end,
-			orderByCol1, orderByCol2, orderByType1, orderByType2);
+			listable, advancedSearch, andOperator, start, end, orderByCol1,
+			orderByCol2, orderByType1, orderByType2);
 
 		return getEntries(assetEntryQuery);
 	}

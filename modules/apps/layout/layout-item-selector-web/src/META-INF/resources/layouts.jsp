@@ -42,21 +42,31 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	<%
 	boolean checkContentDisplayPage = ParamUtil.getBoolean(request, "checkContentDisplayPage");
 	String selectedLayoutIds = ParamUtil.getString(request, "selectedLayoutIds");
+	long selPlid = ParamUtil.getLong(request, "selPlid", LayoutConstants.DEFAULT_PLID);
 
-	LayoutsAdminDisplayContext layoutsAdminDisplayContext = new LayoutsAdminDisplayContext(request, liferayPortletResponse);
+	PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+
+	editLayoutURL.setParameter("redirect", currentURL);
+	editLayoutURL.setParameter("groupId", String.valueOf(groupId));
+	editLayoutURL.setParameter("viewLayout", Boolean.TRUE.toString());
 	%>
 
 	<c:if test="<%= group.getPublicLayoutsPageCount() > 0 %>">
+
+		<%
+		editLayoutURL.setParameter("tabs1", "public-pages");
+		%>
+
 		<liferay-ui:section>
 			<div>
 				<liferay-ui:layouts-tree
 					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
-					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
-					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					portletURL="<%= editLayoutURL %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(false, themeDisplay.getLocale()) %>"
 					saveState="<%= false %>"
-					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+					selPlid="<%= selPlid %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
 					treeId="treeContainerPublicPages"
 				/>
@@ -65,17 +75,22 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 	</c:if>
 
 	<c:if test="<%= group.getPrivateLayoutsPageCount() > 0 %>">
+
+		<%
+		editLayoutURL.setParameter("tabs1", "private-pages");
+		%>
+
 		<liferay-ui:section>
 			<div>
 				<liferay-ui:layouts-tree
 					checkContentDisplayPage="<%= checkContentDisplayPage %>"
 					draggableTree="<%= false %>"
 					groupId="<%= groupId %>"
-					portletURL="<%= layoutsAdminDisplayContext.getEditLayoutURL() %>"
+					portletURL="<%= editLayoutURL %>"
 					privateLayout="<%= true %>"
-					rootNodeName="<%= layoutsAdminDisplayContext.getRootNodeName() %>"
+					rootNodeName="<%= group.getLayoutRootNodeName(true, themeDisplay.getLocale()) %>"
 					saveState="<%= false %>"
-					selPlid="<%= layoutsAdminDisplayContext.getSelPlid() %>"
+					selPlid="<%= selPlid %>"
 					selectedLayoutIds="<%= selectedLayoutIds %>"
 					treeId="treeContainerPrivatePages"
 				/>

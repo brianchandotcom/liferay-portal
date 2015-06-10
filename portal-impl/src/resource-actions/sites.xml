@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.portal.model.Layout</model-name>
 		<portlet-ref>
-			<portlet-name>156</portlet-name>
+			<portlet-name>com_liferay_layout_admin_web_portlet_GroupPagesPortlet</portlet-name>
 		</portlet-ref>
 		<weight>2</weight>
 		<permissions>

@@ -31,18 +31,9 @@ searchContainer.setTotal(DLAppServiceUtil.getFileEntriesCount(repositoryId, fold
 searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderId, mimeTypes, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()));
 %>
 
-<aui:nav-bar>
-	<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
-		<liferay-ui:app-view-display-style
-			displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-			displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL() %>"
-			displayStyles='<%= new String[] {"list", "descriptive"} %>'
-		/>
-	</aui:nav>
-</aui:nav-bar>
-
 <item-selector-ui:browser
 	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
+	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL() %>"
 	idPrefix="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	returnType="<%= ReturnType.parseFirst(itemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"

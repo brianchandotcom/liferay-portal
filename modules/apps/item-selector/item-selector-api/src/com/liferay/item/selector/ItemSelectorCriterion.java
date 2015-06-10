@@ -23,7 +23,7 @@ public interface ItemSelectorCriterion {
 
 	public Set<ItemSelectorReturnType> getItemSelectorAvailableReturnTypes();
 
-	public Set<ItemSelectorReturnType> getItemSelectorDesiredReturnTypes();
+	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes();
 
 	public void setItemSelectorDesiredReturnTypes(
 		Set<ItemSelectorReturnType> desiredReturnTypes);

@@ -102,11 +102,11 @@ itemSelectorURL.setParameter("itemSelectedEventName", randomNamespace + "selectI
 
 JSONObject itemSelectorJSONParamJSONObject = JSONFactoryUtil.createJSONObject();
 
-JSONArray itemSelectorDesiredReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
+JSONArray desiredItemSelectorReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-itemSelectorDesiredReturnTypesJSONArray.put("FILE_ENTRY");
+desiredItemSelectorReturnTypesJSONArray.put("FILE_ENTRY");
 
-itemSelectorJSONParamJSONObject.put("itemSelectorDesiredReturnTypes", itemSelectorDesiredReturnTypesJSONArray);
+itemSelectorJSONParamJSONObject.put("desiredItemSelectorReturnTypes", desiredItemSelectorReturnTypesJSONArray);
 
 itemSelectorURL.setParameter("0_json", itemSelectorJSONParamJSONObject.toString());
 

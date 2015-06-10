@@ -206,8 +206,8 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			<%
 			String returnTypeName = StringPool.BLANK;
 
-			for (ItemSelectorReturnType itemSelectorDesiredReturnType : urlItemSelectorCriterion.getItemSelectorDesiredReturnTypes()) {
-				returnTypeName = itemSelectorDesiredReturnType.getName();
+			for (ItemSelectorReturnType desiredItemSelectorReturnType : urlItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
+				returnTypeName = desiredItemSelectorReturnType.getName();
 
 				break;
 			}

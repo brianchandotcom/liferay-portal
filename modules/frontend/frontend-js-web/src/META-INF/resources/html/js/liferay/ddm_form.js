@@ -924,7 +924,7 @@ AUI.add(
 						portletURL.setParameter('itemSelectedEventName', portletNamespace + 'selectDocumentLibrary');
 
 						var criterionJSON = {
-							itemSelectorDesiredReturnTypes:
+							desiredItemSelectorReturnTypes:
 								[
 									'FILE_ENTRY'
 								]

@@ -58,7 +58,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		String[] serializableFields = ArrayUtil.append(
-			_externalPropertyKeys, "desiredItemSelectorReturnTypes");
+			_externalPropertyKeys, "desiredItemSelectorReturnTypesNames");
 
 		jsonSerializer.include(serializableFields);
 
@@ -137,7 +137,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	private boolean _isInternalProperty(String name) {
 		if (name.equals("availableItemSelectorReturnTypes") ||
 			name.equals("class") ||
-			name.equals("desiredItemSelectorReturnTypes")) {
+			name.equals("desiredItemSelectorReturnTypesNames")) {
 
 			return true;
 		}
@@ -150,7 +150,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			new LinkedHashSet<>();
 
 		List<String> desiredItemSelectorReturnTypeNames = (List<String>)map.get(
-			"desiredItemSelectorReturnTypes");
+			"desiredItemSelectorReturnTypesNames");
 
 		for (String desiredItemSelectorReturnTypeName :
 				desiredItemSelectorReturnTypeNames) {

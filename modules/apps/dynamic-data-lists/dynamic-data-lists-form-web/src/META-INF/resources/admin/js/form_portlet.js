@@ -65,6 +65,10 @@ AUI.add(
 					_onSubmitEditForm: function(event) {
 						var instance = this;
 
+						var description = window[instance.ns('descriptionEditor')].getHTML();
+
+						instance.one('#description').val(description);
+
 						var formBuilder = instance.get('formBuilder');
 
 						var layouts = formBuilder.get('layouts');
@@ -80,6 +84,10 @@ AUI.add(
 						instance.layoutSerializer.set('layouts', layouts);
 
 						layoutInput.val(instance.layoutSerializer.serialize());
+
+						var name = window[instance.ns('nameEditor')].getHTML();
+
+						instance.one('#name').val(name);
 					}
 				}
 			}

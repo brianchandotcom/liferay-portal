@@ -47,9 +47,17 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 	<liferay-ui:error exception="<%= StructureLayoutException .class %>" message="please-enter-a-valid-form-layout" />
 
 	<aui:fieldset cssClass="ddl-form-builder-basic-info">
-		<aui:input ignoreRequestValue="<%= true %>" name="name" placeholder="title" required="<%= true %>" value="<%= LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId()) %>"  wrapperCssClass="ddl-form-builder-name field form-control lfr-input-text lfr-input-text-container" />
+		<div class="ddl-form-builder-name">
+			<h2><liferay-ui:input-editor contents="<%= LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId()) %>" editorName="alloyeditor" name="nameEditor" placeholder="name" showSource="<%= false %>" /></h2>
+		</div>
 
-		<aui:input ignoreRequestValue="<%= true %>" name="description" placeholder="description" value="<%= LocalizationUtil.getLocalization(description, themeDisplay.getLanguageId()) %>" wrapperCssClass="ddl-form-builder-description field form-control lfr-input-text lfr-input-text-container" />
+		<aui:input name="name" type="hidden" />
+
+		<div class="ddl-form-builder-description">
+			<h4><liferay-ui:input-editor contents="<%= LocalizationUtil.getLocalization(description, themeDisplay.getLanguageId()) %>" editorName="alloyeditor" name="descriptionEditor" placeholder="description" showSource="<%= false %>" /></h4>
+		</div>
+
+		<aui:input name="description" type="hidden" />
 	</aui:fieldset>
 
 	<aui:fieldset cssClass="ddl-form-builder-app">

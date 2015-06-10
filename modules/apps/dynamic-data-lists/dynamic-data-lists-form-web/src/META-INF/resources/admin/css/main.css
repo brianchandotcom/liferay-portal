@@ -6,56 +6,13 @@
 	}
 
 	.ddl-form-builder-basic-info {
-		margin: 0 auto;
-		position: relative;
-		width: auto;
-
-		.ddl-form-builder-buttons {
-			position: absolute;
-			right: 0;
-			top: 0;
-
-			.btn {
-				padding: 5px 45px;
-			}
-		}
+		margin-top: -25px;
 
 		.ddl-form-builder-description, .ddl-form-builder-name {
-			border-width: 0;
-			box-shadow: none;
-			margin-bottom: 10px;
-			margin-top: 0;
-			padding-left: 0;
-
 			.help-block {
 				position: absolute;
 				top: -15px;
 			}
-
-			.control-label {
-				display: none;
-			}
-
-			.field {
-				background: transparent;
-				border-width: 0;
-				margin: 0;
-				padding: 0;
-
-				&:focus {
-					box-shadow: none;
-				}
-			}
-		}
-
-		.ddl-form-builder-description .field {
-			font-size: 16px;
-		}
-
-		.ddl-form-builder-name .field {
-			font-size: 26px;
-			height: 45px;
-			max-width: 780px;
 		}
 	}
 

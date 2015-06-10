@@ -1103,93 +1103,9 @@ public interface PropsKeys {
 
 	public static final String JNDI_ENVIRONMENT = "jndi.environment.";
 
-	public static final String JOURNAL_ARTICLE_CHECK_INTERVAL = "journal.article.check.interval";
-
-	public static final String JOURNAL_ARTICLE_COMMENTS_ENABLED = "journal.article.comments.enabled";
-
-	public static final String JOURNAL_ARTICLE_CUSTOM_TOKEN_VALUE = "journal.article.custom.token.value";
-
-	public static final String JOURNAL_ARTICLE_CUSTOM_TOKENS = "journal.article.custom.tokens";
-
-	public static final String JOURNAL_ARTICLE_DATABASE_KEYWORD_SEARCH_CONTENT = "journal.article.database.keyword.search.content";
-
-	public static final String JOURNAL_ARTICLE_EXPIRE_ALL_VERSIONS = "journal.article.expire.all.versions";
-
-	public static final String JOURNAL_ARTICLE_INDEX_ALL_VERSIONS = "journal.articles.index.all.versions";
-
-	public static final String JOURNAL_ARTICLE_STORAGE_TYPE = "journal.article.storage.type";
-
-	public static final String JOURNAL_ARTICLE_TOKEN_PAGE_BREAK = "journal.article.token.page.break";
-
-	public static final String JOURNAL_ARTICLE_VIEW_PERMISSION_CHECK_ENABLED = "journal.article.view.permission.check.enabled";
-
-	public static final String JOURNAL_CHAR_BLACKLIST = "journal.char.blacklist";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_ADDED_BODY = "journal.email.article.added.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_ADDED_ENABLED = "journal.email.article.added.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_ADDED_SUBJECT = "journal.email.article.added.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_BODY = "journal.email.article.approval.denied.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_ENABLED = "journal.email.article.approval.denied.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_DENIED_SUBJECT = "journal.email.article.approval.denied.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_BODY = "journal.email.article.approval.granted.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_ENABLED = "journal.email.article.approval.granted.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_GRANTED_SUBJECT = "journal.email.article.approval.granted.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_BODY = "journal.email.article.approval.requested.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_ENABLED = "journal.email.article.approval.requested.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_APPROVAL_REQUESTED_SUBJECT = "journal.email.article.approval.requested.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_BODY = "journal.email.article.moved.from.folder.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_ENABLED = "journal.email.article.moved.from.folder.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_FROM_FOLDER_SUBJECT = "journal.email.article.moved.from.folder.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_BODY = "journal.email.article.moved.to.folder.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_ENABLED = "journal.email.article.moved.to.folder.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_MOVED_TO_FOLDER_SUBJECT = "journal.email.article.moved.to.folder.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_BODY = "journal.email.article.review.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_ENABLED = "journal.email.article.review.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_REVIEW_SUBJECT = "journal.email.article.review.subject";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_UPDATED_BODY = "journal.email.article.updated.body";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_UPDATED_ENABLED = "journal.email.article.updated.enabled";
-
-	public static final String JOURNAL_EMAIL_ARTICLE_UPDATED_SUBJECT = "journal.email.article.updated.subject";
-
-	public static final String JOURNAL_EMAIL_FROM_ADDRESS = "journal.email.from.address";
-
-	public static final String JOURNAL_EMAIL_FROM_NAME = "journal.email.from.name";
-
-	public static final String JOURNAL_ERROR_TEMPLATE = "journal.error.template";
-
-	public static final String JOURNAL_FOLDER_ICON_CHECK_COUNT = "journal.folder.icon.check.count";
-
 	public static final String JOURNAL_IMAGE_EXTENSIONS = "journal.image.extensions";
 
 	public static final String JOURNAL_IMAGE_SMALL_MAX_SIZE = "journal.image.small.max.size";
-
-	public static final String JOURNAL_LAR_CREATION_STRATEGY = "journal.lar.creation.strategy";
-
-	public static final String JOURNAL_SYNC_CONTENT_SEARCH_ON_STARTUP = "journal.sync.content.search.on.startup";
-
-	public static final String JOURNAL_TRANSFORMER_LISTENER = "journal.transformer.listener";
 
 	public static final String JSON_SERVICE_AUTH_TOKEN_ENABLED = "json.service.auth.token.enabled";
 
@@ -2464,10 +2380,6 @@ public interface PropsKeys {
 	public static final String SYSTEM_SITE_ROLES = "system.site.roles";
 
 	public static final String TABLE_MAPPER_CACHE_MAPPING_TABLE_NAMES = "table.mapper.cache.mapping.table.names";
-
-	public static final String TERMS_OF_USE_JOURNAL_ARTICLE_GROUP_ID = "terms.of.use.journal.article.group.id";
-
-	public static final String TERMS_OF_USE_JOURNAL_ARTICLE_ID = "terms.of.use.journal.article.id";
 
 	public static final String TERMS_OF_USE_REQUIRED = "terms.of.use.required";
 

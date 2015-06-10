@@ -63,7 +63,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.documentlibrary.DLPortletInstanceSettings;
 import com.liferay.portlet.documentlibrary.action.EditFileEntryAction;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
@@ -78,8 +77,6 @@ import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelModifi
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelReadCountComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelSizeComparator;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;
@@ -636,46 +633,6 @@ public class DLImpl implements DL {
 				"the-site-name-associated-with-the-document"));
 
 		return definitionTerms;
-	}
-
-	@Override
-	public List<Object> getEntries(Hits hits) {
-		List<Object> entries = new ArrayList<>();
-
-		for (Document document : hits.getDocs()) {
-			String entryClassName = GetterUtil.getString(
-				document.get(Field.ENTRY_CLASS_NAME));
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			try {
-				Object obj = null;
-
-				if (entryClassName.equals(DLFileEntry.class.getName())) {
-					obj = DLAppLocalServiceUtil.getFileEntry(entryClassPK);
-				}
-				else if (entryClassName.equals(MBMessage.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.CLASS_PK));
-
-					DLAppLocalServiceUtil.getFileEntry(classPK);
-
-					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
-				}
-
-				entries.add(obj);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Documents and Media search index is stale and " +
-							"contains entry {className=" + entryClassName +
-								", classPK=" + entryClassPK + "}");
-				}
-			}
-		}
-
-		return entries;
 	}
 
 	@Override

@@ -184,10 +184,6 @@ public class DLUtil {
 			request, emailFromAddress, emailFromName);
 	}
 
-	public static List<Object> getEntries(Hits hits) {
-		return getDL().getEntries(hits);
-	}
-
 	public static List<FileEntry> getFileEntries(Hits hits) {
 		return getDL().getFileEntries(hits);
 	}

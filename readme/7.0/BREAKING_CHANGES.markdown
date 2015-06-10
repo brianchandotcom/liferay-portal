@@ -1914,3 +1914,29 @@ needed to be removed for the Message Boards portlet to be placed into
 its own OSGi bundle.
 
 ---------------------------------------
+
+### Removed method `getEntries` from `DL`, `DLImpl` and `DLUtil`
+- **Date:** 2015-Jun-10
+- **JIRA Ticket:** LPS-56247
+
+#### What changed?
+
+The method `getEntries` was removed from `DL`, `DLImpl` and `DLUtil`.
+
+#### Who is affected?
+
+Any caller of the `getEntries` method will be affected.
+
+#### How should I update my code?
+
+You may use the `SearchResultUtil` class to process the search
+results. Note that this class is not completely equivalent; if you
+need exactly the same behavior as the removed method, you will need to
+add use some custom code.
+
+#### Why was this change made?
+
+That method was no longer used, and contained hardcoded references to
+classes that will be moved into OSGi bundles.
+
+---------------------------------------

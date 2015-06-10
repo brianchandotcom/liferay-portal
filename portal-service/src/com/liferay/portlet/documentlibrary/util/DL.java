@@ -130,8 +130,6 @@ public interface DL {
 		PortletRequest portletRequest, String emailFromAddress,
 		String emailFromName);
 
-	public List<Object> getEntries(Hits hits);
-
 	public List<FileEntry> getFileEntries(Hits hits);
 
 	public String getFileEntryImage(

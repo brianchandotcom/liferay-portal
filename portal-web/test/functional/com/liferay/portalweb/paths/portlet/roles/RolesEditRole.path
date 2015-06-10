@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>RolesEditRole</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RolesEditRole</td></tr>
+</thead>
+<tbody>
+<!--TITLE_FIELD_LOCALIZATION-->
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_ENGLISH</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_CATALAN</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='ca_ES']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_CHINESE</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='zh_CN']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_FINNISH</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='fi_FI']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_FRENCH</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='fr_FR']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_GERMAN</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='de_DE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_HEBREW</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='iw_IL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_HUNGARIAN</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='hu_HU']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_JAPANESE</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='ja_JP']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_PORTUGUESE</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='pt_BR']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>TITLE_FIELD_LOCALIZATION_FLAG_SPANISH</td>
+	<td>//div[@id='_128_titleContentBox']//img[@data-languageid='es_ES']</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--DESCRIPTION_FIELD_LOCALIZATION-->
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_ENGLISH</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='en_US']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_CATALAN</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='ca_ES']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_CHINESE</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='zh_CN']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_FINNISH</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='fi_FI']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_FRENCH</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='fr_FR']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_GERMAN</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='de_DE']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_HEBREW</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='iw_IL']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_HUNGARIAN</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='hu_HU']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_JAPANESE</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='ja_JP']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_PORTUGUESE</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='pt_BR']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>DESCRIPTION_FIELD_LOCALIZATION_FLAG_SPANISH</td>
+	<td>//div[@id='_128_descriptionContentBox']//img[@data-languageid='es_ES']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

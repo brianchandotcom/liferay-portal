@@ -1,0 +1,25 @@
+<html>
+<head>
+<title>RolesPermissionsSummary</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RolesPermissionsSummary</td></tr>
+</thead>
+<tbody>
+<!--PERMISSION_TABLE-->
+<tr>
+	<td>PERMISSION_TABLE_PERMISSIONS</td>
+	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PERMISSION_TABLE_REMOVE</td>
+	<td>//tr[contains(.,'${key_permissionNavigationValue}') and contains(.,'${key_permissionDefinitionValue}')]/td//a[contains(.,'Remove')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

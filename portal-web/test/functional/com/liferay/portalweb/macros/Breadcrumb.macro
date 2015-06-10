@@ -45,6 +45,24 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
+	<command name="displayTemplatePreview">
+		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="Select" locator1="Select#DISPLAY_TEMPLATE" value1="${displayStyle}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
+	<command name="saveDisplayPreview">
+		<execute function="SelectFrame" locator1="BasePortletConfiguration#CONFIGURATION_IFRAME" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="You have successfully updated the setup." />
+
+		<execute function="SelectFrame" value1="relative=top" />
+	</command>
+
 	<command name="viewADTApplied">
 		<var name="key_breadcrumbADTType" value="${breadcrumbADTType}" />
 
@@ -107,30 +125,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="viewCurrentLocationPG">
-		<if>
-			<isset var="breadcrumbListVisible" />
-			<then>
-				<for list="${breadcrumbListVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
-
-					<execute function="AssertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_CURRENT_LOCATION" value1="${breadcrumbName}" />
-				</for>
-			</then>
-		</if>
-
-		<if>
-			<isset var="breadcrumbListNotVisible" />
-			<then>
-				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
-					<var name="key_breadcrumbName" value="${breadcrumbName}" />
-
-					<execute function="AssertElementNotPresent" locator1="PGBreadcrumb#BREADCRUMB_CURRENT_LOCATION" />
-				</for>
-			</then>
-		</if>
-	</command>
-
 	<command name="viewPG">
 		<if>
 			<isset var="breadcrumbListVisible" />
@@ -138,7 +132,7 @@
 				<for list="${breadcrumbListVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<execute function="AssertTextEquals" locator1="PGBreadcrumb#BREADCRUMB_PAGE" value1="${breadcrumbName}" />
+					<execute function="AssertTextEquals" locator1="Breadcrumb#BREADCRUMB_${pathLocator}" value1="${breadcrumbName}" />
 				</for>
 			</then>
 		</if>
@@ -149,7 +143,7 @@
 				<for list="${breadcrumbListNotVisible}" param="breadcrumbName">
 					<var name="key_breadcrumbName" value="${breadcrumbName}" />
 
-					<execute function="AssertElementNotPresent" locator1="PGBreadcrumb#BREADCRUMB_PAGE" />
+					<execute function="AssertElementNotPresent" locator1="Breadcrumb#BREADCRUMB_${pathLocator}" />
 				</for>
 			</then>
 		</if>

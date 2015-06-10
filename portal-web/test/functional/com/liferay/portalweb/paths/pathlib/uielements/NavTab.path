@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>AVAILABLE</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Available')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>CAPTCHA</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'CAPTCHA')]</td>
 	<td></td>
@@ -31,6 +36,11 @@
 <tr>
 	<td>CAS</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'CAS')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>CURRENT</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'AVAILABLE')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -114,6 +124,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ORGANIZATIONS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Organizations')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PASSWORD_CHANGED_NOTIFICATION</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Password Changed Notification')]</td>
 	<td></td>
@@ -159,6 +174,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SITES</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Sites')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SITE_MINDER</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'SiteMinder')]</td>
 	<td></td>
@@ -181,6 +201,16 @@
 <tr>
 	<td>UPDATE_CATEGORIES</td>
 	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Update Categories')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USERS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'Users')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUPS</td>
+	<td>//ul[contains(@class,'nav-tabs')]/li/a[contains(.,'User Groups')]</td>
 	<td></td>
 </tr>
 <tr>

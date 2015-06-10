@@ -24,6 +24,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>DISPLAY_TEMPLATE</td>
+	<td>//div[label[contains(.,'Display Template')]]/select</td>
+	<td></td>
+</tr>
+<tr>
 	<td>HEADER</td>
 	<td>//div[label[contains(.,'Header')]]/select</td>
 	<td></td>

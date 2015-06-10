@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>RolesAssignMembers</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">RolesAssignMembers</td></tr>
+</thead>
+<tbody>
+<!--ORGANIZATION_TABLE-->
+<tr>
+	<td>ORGANIZATION_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_NAME</td>
+	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ORGANIZATION_TABLE_TYPE</td>
+	<td>//div[contains(@id,'organizationsSearchContainer')]//tr[contains(.,'${key_orgName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--SITE_TABLE-->
+<tr>
+	<td>SITE_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_NAME</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SITE_TABLE_TYPE</td>
+	<td>//div[contains(@id,'groupsSearchContainerSearchContainer')]//tr[contains(.,'${key_siteName}')]/td[3]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--USER_GROUP_TABLE-->
+<tr>
+	<td>USER_GROUP_TABLE_CHECKBOX</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[1]/input[@name='_128_rowIds']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_NAME</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[2]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>USER_GROUP_TABLE_DESCRIPTION</td>
+	<td>//div[contains(@id,'userGroupsSearchContainerSearchContainer')]//tr[contains(.,'${key_userGroupName}')]/td[3]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

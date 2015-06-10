@@ -9,23 +9,13 @@
 </thead>
 <tbody>
 <tr>
-	<td>EXTEND_ACTION_PATH</td>
-	<td>BasePortlet</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<tr>
 	<td>BREADCRUMB_ENTRY</td>
 	<td>//div[@class='portlet-content']//ul[@aria-label='Breadcrumb']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>BREADCRUMB_PAGE</td>
-	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'breadcrumb') and contains(@class,'breadcrumb')]/a[contains(.,'${key_breadcrumbName}')]</td>
+	<td>//div[contains(@class,'portlet-content')]//div[contains(@class,'breadcrumb') and contains(@class,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -36,6 +26,11 @@
 <tr>
 	<td>BREADCRUMB_CURRENT_LOCATION</td>
 	<td>//div/ul[contains(@class,'breadcrumb')]/li[contains(.,'${key_breadcrumbName}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>BREADCRUMB_EMBEDDED</td>
+	<td>//div[contains(@id,'breadcrumb')]//a[contains(.,'${key_breadcrumbName}')]</td>
 	<td></td>
 </tr>
 </tbody>

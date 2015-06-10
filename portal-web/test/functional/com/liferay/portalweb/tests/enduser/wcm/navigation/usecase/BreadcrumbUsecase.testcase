@@ -85,6 +85,7 @@
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
 			<var name="breadcrumbListVisible" value="Liferay,Site Name" />
+			<var name="pathLocator" value="PAGE" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -111,6 +112,7 @@
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListNotVisible" value="Site Name,Parent Page Name,Child Page Name" />
 			<var name="breadcrumbListVisible" value="Liferay" />
+			<var name="pathLocator" value="PAGE" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -135,6 +137,7 @@
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListNotVisible" value="Parent Page Name,Child Page Name" />
+			<var name="pathLocator" value="PAGE" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -158,6 +161,7 @@
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+			<var name="pathLocator" value="PAGE" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -181,6 +185,7 @@
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Parent Page Name,Child Page Name" />
+			<var name="pathLocator" value="PAGE" />
 		</execute>
 
 		<execute macro="Portlet#gotoPortletOptions">
@@ -247,6 +252,7 @@
 
 		<execute macro="Breadcrumb#viewPG">
 			<var name="breadcrumbListVisible" value="Liferay,Site Name,Site Page Name" />
+			<var name="pathLocator" value="PAGE" />
 		</execute>
 
 		<var name="key_URL" value="http://localhost:8080" />

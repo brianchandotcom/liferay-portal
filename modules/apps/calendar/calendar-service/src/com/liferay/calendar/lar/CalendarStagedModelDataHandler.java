@@ -45,8 +45,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true,
-	property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
 	service = StagedModelDataHandler.class
 )
 public class CalendarStagedModelDataHandler

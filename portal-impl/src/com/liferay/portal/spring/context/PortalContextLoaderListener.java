@@ -112,6 +112,18 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 		ThreadLocalCacheManager.destroy();
 
+		if (_indexerPostProcessorRegistry != null) {
+			_indexerPostProcessorRegistry.close();
+		}
+
+		if (_schedulerEntryRegistry != null) {
+			_schedulerEntryRegistry.close();
+		}
+
+		if (_serviceWrapperRegistry != null) {
+			_serviceWrapperRegistry.close();
+		}
+
 		try {
 			ClearThreadLocalUtil.clearThreadLocal();
 		}
@@ -263,17 +275,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 
 				@Override
 				public void destroy() {
-					if (_indexerPostProcessorRegistry != null) {
-						_indexerPostProcessorRegistry.close();
-					}
-
-					if (_schedulerEntryRegistry != null) {
-						_schedulerEntryRegistry.close();
-					}
-
-					if (_serviceWrapperRegistry != null) {
-						_serviceWrapperRegistry.close();
-					}
 				}
 
 				@Override
@@ -283,11 +284,6 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 					_schedulerEntryRegistry = new SchedulerEntryRegistry();
 					_serviceWrapperRegistry = new ServiceWrapperRegistry();
 				}
-
-				private IndexerPostProcessorRegistry
-					_indexerPostProcessorRegistry;
-				private SchedulerEntryRegistry _schedulerEntryRegistry;
-				private ServiceWrapperRegistry _serviceWrapperRegistry;
 
 			});
 
@@ -415,5 +411,8 @@ public class PortalContextLoaderListener extends ContextLoaderListener {
 	}
 
 	private ArrayApplicationContext _arrayApplicationContext;
+	private IndexerPostProcessorRegistry _indexerPostProcessorRegistry;
+	private SchedulerEntryRegistry _schedulerEntryRegistry;
+	private ServiceWrapperRegistry _serviceWrapperRegistry;
 
 }

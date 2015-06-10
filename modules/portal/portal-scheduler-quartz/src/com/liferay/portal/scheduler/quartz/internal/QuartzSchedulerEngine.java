@@ -14,7 +14,6 @@
 
 package com.liferay.portal.scheduler.quartz.internal;
 
-import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -37,15 +36,11 @@ import com.liferay.portal.kernel.scheduler.messaging.SchedulerEventMessageListen
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
 import com.liferay.portal.scheduler.JobStateSerializeUtil;
 import com.liferay.portal.scheduler.quartz.internal.job.MessageSenderJob;
 import com.liferay.portal.service.PortletLocalService;
@@ -57,8 +52,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-
-import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -660,35 +653,6 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 		return (Message)_jsonFactory.deserialize(messageJSON);
 	}
 
-	protected MessageListener getMessageListener(
-			String messageListenerClassName, ClassLoader classLoader)
-		throws SchedulerException {
-
-		MessageListener schedulerEventListener = null;
-
-		try {
-			Class<? extends MessageListener> clazz =
-				(Class<? extends MessageListener>)classLoader.loadClass(
-					messageListenerClassName);
-
-			schedulerEventListener = clazz.newInstance();
-
-			schedulerEventListener =
-				(MessageListener)ProxyUtil.newProxyInstance(
-					classLoader, new Class<?>[] {MessageListener.class},
-					new ClassLoaderBeanHandler(
-						schedulerEventListener, classLoader));
-		}
-		catch (Exception e) {
-			throw new SchedulerException(
-				"Unable to register message listener with name " +
-					messageListenerClassName,
-				e);
-		}
-
-		return schedulerEventListener;
-	}
-
 	protected Trigger getQuartzTrigger(
 			com.liferay.portal.kernel.scheduler.Trigger trigger,
 			StorageType storageType)
@@ -1011,37 +975,12 @@ public class QuartzSchedulerEngine implements SchedulerEngine {
 				"Portlet local service not initialized");
 		}
 
-		String messageListenerClassName = message.getString(
-			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME);
+		MessageListener schedulerEventListener = (MessageListener)message.get(
+			SchedulerEngine.MESSAGE_LISTENER);
 
-		if (Validator.isNull(messageListenerClassName)) {
+		if (schedulerEventListener == null) {
 			return;
 		}
-
-		String portletId = message.getString(SchedulerEngine.PORTLET_ID);
-
-		ClassLoader classLoader = null;
-
-		if (Validator.isNull(portletId)) {
-			classLoader = PortalClassLoaderUtil.getClassLoader();
-		}
-		else {
-			Portlet portlet = _portletLocalService.getPortletById(portletId);
-
-			PortletApp portletApp = portlet.getPortletApp();
-
-			ServletContext servletContext = portletApp.getServletContext();
-
-			classLoader = servletContext.getClassLoader();
-		}
-
-		if (classLoader == null) {
-			throw new SchedulerException(
-				"Unable to find class loader for portlet " + portletId);
-		}
-
-		MessageListener schedulerEventListener = getMessageListener(
-			messageListenerClassName, classLoader);
 
 		SchedulerEventMessageListenerWrapper schedulerEventListenerWrapper =
 			new SchedulerEventMessageListenerWrapper();

@@ -12,16 +12,23 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login;
+package com.liferay.portal.security.auto.login.parameter;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
+import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auto.login.parameter.configuration.ParameterAutoLoginConfiguration;
+import com.liferay.portal.security.auto.login.parameter.constants.ParameterAutoLoginConstants;
 import com.liferay.portal.security.pwd.PasswordEncryptorUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
@@ -30,18 +37,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Minhchau Dang
  * @author Tomas Polesovsky
  */
-@Component(immediate = true, service = AutoLogin.class)
+@Component(
+	configurationPid = "com.liferay.portal.security.auto.login.parameter.configuration.ParameterAutoLoginConfiguration",
+	immediate = true, service = AutoLogin.class
+)
 public class ParameterAutoLogin extends BaseAutoLogin {
 
 	@Override
 	protected String[] doLogin(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		if (!isEnabled(companyId)) {
+			return null;
+		}
 
 		String login = ParamUtil.getString(request, getLoginParam());
 
@@ -110,8 +127,46 @@ public class ParameterAutoLogin extends BaseAutoLogin {
 		return _PASSWORD_PARAM;
 	}
 
+	protected boolean isEnabled(long companyId) {
+		ParameterAutoLoginConfiguration configuration = _getConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		return configuration.enabled();
+	}
+
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	private ParameterAutoLoginConfiguration _getConfiguration(long companyId) {
+		try {
+			ParameterAutoLoginConfiguration configuration =
+				_settingsFactory.getSettings(
+					ParameterAutoLoginConfiguration.class,
+					new CompanyServiceSettingsLocator(
+						companyId, ParameterAutoLoginConstants.SERVICE_NAME));
+
+			return configuration;
+		}
+		catch (SettingsException se) {
+			_log.error("Unable to get ParameterAutoLogin configuration", se);
+		}
+
+		return null;
+	}
+
 	private static final String _LOGIN_PARAM = "parameterAutoLoginLogin";
 
 	private static final String _PASSWORD_PARAM = "parameterAutoLoginPassword";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ParameterAutoLogin.class);
+
+	private volatile SettingsFactory _settingsFactory;
 
 }

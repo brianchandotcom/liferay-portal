@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.security.auto.login.BasicAuthHeaderAutoLogin;
+import com.liferay.portal.security.auto.login.basicauthheader.BasicAuthHeaderAutoLogin;
 import com.liferay.portal.util.Portal;
 
 import java.util.Properties;
@@ -97,6 +97,11 @@ public class BasicAuthHeaderAuthVerifier
 		catch (AutoLoginException ale) {
 			throw new AuthException(ale);
 		}
+	}
+
+	@Override
+	protected boolean isEnabled(long companyId) {
+		return true;
 	}
 
 	private static final String _BASIC_REALM =

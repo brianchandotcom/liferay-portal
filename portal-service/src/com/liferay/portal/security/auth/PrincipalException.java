@@ -150,7 +150,7 @@ public class PrincipalException extends PortalException {
 		public MustBeOwnedByCurrentUser(
 			long userId, String resourceName, long resourceId,
 			String actionId) {
-			
+
 			super(
 				String.format(
 					"User %s must be the owner of %s %s to perform action %s",
@@ -162,10 +162,10 @@ public class PrincipalException extends PortalException {
 			this.userId = userId;
 		}
 
-		public final long userId;
-		public final String resourceName;
-		public final long resourceId;
 		public final String actionId;
+		public final long resourceId;
+		public final String resourceName;
+		public final long userId;
 
 	}
 
@@ -207,7 +207,7 @@ public class PrincipalException extends PortalException {
 
 		public MustBeValidPortlet(
 			String currentPortletName, String validPortletName) {
-			
+
 			super(
 				String.format(
 					"Action is only supported in %s and is not allowed in %s",
@@ -368,7 +368,7 @@ public class PrincipalException extends PortalException {
 		public MustNotBeGroupAdmin(
 			long userId, String resourceName, long resourceId,
 			String actionId) {
-			
+
 			super(
 				String.format(
 					"User %s is not allowed to perform action %s on the " +
@@ -385,6 +385,7 @@ public class PrincipalException extends PortalException {
 		public final long resourceId;
 		public final String resourceName;
 		public final long userId;
+
 	}
 
 	private static final Class[] _NESTED_CLASSES = {

@@ -168,6 +168,7 @@ public class DDMPortlet extends MVCPortlet {
 		catch (Exception e) {
 			if (e instanceof ConfigurationException ||
 				e instanceof PrincipalException) {
+
 				SessionErrors.add(request, e.getClass());
 
 				include("/error.jsp", request, response);

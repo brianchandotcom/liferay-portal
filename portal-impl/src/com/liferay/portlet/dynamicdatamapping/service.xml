@@ -228,6 +228,7 @@
 
 		<column name="structureId" type="long" />
 		<column name="version" type="String" />
+		<column name="parentStructureId" type="long" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 		<column name="definition" type="String" />
@@ -434,6 +435,7 @@
 		<exception>Content</exception>
 		<exception>ContentData</exception>
 		<exception>ContentName</exception>
+		<exception>InvalidStructureVersion</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>

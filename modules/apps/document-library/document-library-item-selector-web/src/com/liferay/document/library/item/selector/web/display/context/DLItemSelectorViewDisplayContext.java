@@ -50,8 +50,7 @@ public class DLItemSelectorViewDisplayContext
 
 	public long getFolderId(HttpServletRequest request) {
 		return ParamUtil.getLong(
-			request, "repositoryId",
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+			request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	public String getItemSelectedEventName() {

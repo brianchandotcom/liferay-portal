@@ -58,7 +58,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
 		String[] serializableFields = ArrayUtil.append(
-			_externalPropertyKeys, "itemSelectorDesiredReturnTypes");
+			_externalPropertyKeys, "desiredItemSelectorReturnTypes");
 
 		jsonSerializer.include(serializableFields);
 
@@ -137,7 +137,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	private boolean _isInternalProperty(String name) {
 		if (name.equals("class") ||
 			name.equals("itemSelectorAvailableReturnTypes") ||
-			name.equals("itemSelectorDesiredReturnTypes")) {
+			name.equals("desiredItemSelectorReturnTypes")) {
 
 			return true;
 		}
@@ -146,14 +146,14 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private void _setDesiredReturnTypes(Map<String, ?> map) {
-		Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new LinkedHashSet<>();
 
-		List<String> itemSelectorDesiredReturnTypeNames = (List<String>)map.get(
-			"itemSelectorDesiredReturnTypes");
+		List<String> desiredItemSelectorReturnTypeNames = (List<String>)map.get(
+			"desiredItemSelectorReturnTypes");
 
-		for (String itemSelectorDesiredReturnTypeName :
-				itemSelectorDesiredReturnTypeNames) {
+		for (String desiredItemSelectorReturnTypeName :
+				desiredItemSelectorReturnTypeNames) {
 
 			Set<ItemSelectorReturnType> itemSelectorAvailableReturnTypes =
 				_itemSelectorCriterion.getItemSelectorAvailableReturnTypes();
@@ -165,9 +165,9 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 					itemSelectorAvailableReturnType.getName();
 
 				if (availableItemSelectorReturnTypeName.equals(
-						itemSelectorDesiredReturnTypeName)) {
+						desiredItemSelectorReturnTypeName)) {
 
-					itemSelectorDesiredReturnTypes.add(
+					desiredItemSelectorReturnTypes.add(
 						itemSelectorAvailableReturnType);
 
 					break;
@@ -175,14 +175,14 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 			}
 		}
 
-		if (itemSelectorDesiredReturnTypes.isEmpty()) {
+		if (desiredItemSelectorReturnTypes.isEmpty()) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("No valid item selector return types found");
 			}
 		}
 
 		_itemSelectorCriterion.setItemSelectorDesiredReturnTypes(
-			itemSelectorDesiredReturnTypes);
+			desiredItemSelectorReturnTypes);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

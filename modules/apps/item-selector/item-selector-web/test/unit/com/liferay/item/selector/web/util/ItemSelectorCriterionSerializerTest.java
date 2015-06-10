@@ -50,13 +50,13 @@ public class ItemSelectorCriterionSerializerTest {
 
 	@Test
 	public void testGetProperties() {
-		Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		itemSelectorDesiredReturnTypes.add(TestItemSelectorReturnTypes.URL);
+		desiredItemSelectorReturnTypes.add(TestItemSelectorReturnTypes.URL);
 
 		_flickrItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
-			itemSelectorDesiredReturnTypes);
+			desiredItemSelectorReturnTypes);
 
 		Map<String, String[]> properties =
 			_itemSelectorCriterionSerializer.getProperties();
@@ -65,7 +65,7 @@ public class ItemSelectorCriterionSerializerTest {
 			_PREFIX + ItemSelectorCriterionSerializer.JSON)[0];
 
 		json = _assert(
-			"\"itemSelectorDesiredReturnTypes\":[\"" +
+			"\"desiredItemSelectorReturnTypes\":[\"" +
 				TestItemSelectorReturnTypes.URL.getName() + "\"]",
 			json);
 		json = _assert("\"tags\":[\"me\",\"photo\",\"picture\"]", json);
@@ -81,7 +81,7 @@ public class ItemSelectorCriterionSerializerTest {
 		properties.put(
 			_PREFIX + ItemSelectorCriterionSerializer.JSON,
 			new String[] {
-				"{\"itemSelectorDesiredReturnTypes\":[\"" +
+				"{\"desiredItemSelectorReturnTypes\":[\"" +
 					TestItemSelectorReturnTypes.URL.getName() + "\"],\"tags\"" +
 					":[\"tag1\",\"tag2\",\"tag3\"],\"user\":\"Joe Bloggs\"}"
 			});
@@ -102,7 +102,7 @@ public class ItemSelectorCriterionSerializerTest {
 
 		Assert.assertEquals(
 			expectedItemSelectorDesiredReturnTypes,
-			_flickrItemSelectorCriterion.getItemSelectorDesiredReturnTypes());
+			_flickrItemSelectorCriterion.getDesiredItemSelectorReturnTypes());
 	}
 
 	private String _assert(String expected, String json) {

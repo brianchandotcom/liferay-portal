@@ -52,13 +52,13 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		itemSelectorDesiredReturnTypes.add(TestItemSelectorReturnTypes.URL);
+		desiredItemSelectorReturnTypes.add(TestItemSelectorReturnTypes.URL);
 
 		_flickrItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
-			itemSelectorDesiredReturnTypes);
+			desiredItemSelectorReturnTypes);
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 

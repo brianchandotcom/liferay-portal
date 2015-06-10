@@ -43,14 +43,14 @@ public abstract class BaseItemSelectorCriterionHandler
 			Set<S> itemSelectorSupportedReturnTypes =
 				itemSelectorView.getItemSelectorSupportedReturnTypes();
 
-			Set<ItemSelectorReturnType> itemSelectorDesiredReturnTypes =
-				itemSelectorCriterion.getItemSelectorDesiredReturnTypes();
+			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
 
-			for (ItemSelectorReturnType itemSelectorDesiredReturnType :
-					itemSelectorDesiredReturnTypes) {
+			for (ItemSelectorReturnType desiredItemSelectorReturnType :
+					desiredItemSelectorReturnTypes) {
 
 				if (itemSelectorSupportedReturnTypes.contains(
-						itemSelectorDesiredReturnType)) {
+						desiredItemSelectorReturnType)) {
 
 					filteredItemSelectedViews.add(itemSelectorView);
 				}

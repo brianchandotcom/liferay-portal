@@ -512,6 +512,18 @@ public class DDMStructureServiceImpl extends DDMStructureServiceBaseImpl {
 			groupIds, classNameId, start, end);
 	}
 
+	@Override
+	public void revertStructure(
+			long structureId, String version, ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructurePermission.check(
+			getPermissionChecker(), structureId, ActionKeys.UPDATE);
+
+		ddmStructureLocalService.revertStructure(
+			getUserId(), structureId, version, serviceContext);
+	}
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and

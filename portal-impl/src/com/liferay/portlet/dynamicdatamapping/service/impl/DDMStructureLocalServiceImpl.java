@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackRegistryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -38,6 +39,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.dynamicdatamapping.InvalidStructureVersionException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchStructureException;
 import com.liferay.portlet.dynamicdatamapping.RequiredStructureException;
 import com.liferay.portlet.dynamicdatamapping.StructureDefinitionException;
@@ -1085,6 +1087,36 @@ public class DDMStructureLocalServiceImpl
 		return ddmStructurePersistence.countByG_C(groupIds, classNameId);
 	}
 
+	@Override
+	public void revertStructure(
+			long userId, long structureId, String version,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		DDMStructureVersion structureVersion =
+			ddmStructureVersionLocalService.getStructureVersion(
+				structureId, version);
+
+		if (!structureVersion.isApproved()) {
+			throw new InvalidStructureVersionException(
+				"Cannot revert from an unapproved file version");
+		}
+
+		DDMStructure structure = structureVersion.getStructure();
+
+		serviceContext.setAttribute("majorVersion", Boolean.TRUE);
+		serviceContext.setAttribute(
+			"status", WorkflowConstants.STATUS_APPROVED);
+		serviceContext.setCommand(Constants.REVERT);
+
+		ddmStructureLocalService.updateStructure(
+			userId, structure.getGroupId(),
+			structureVersion.getParentStructureId(), structure.getClassNameId(),
+			structure.getStructureKey(), structureVersion.getNameMap(),
+			structureVersion.getDescriptionMap(), structureVersion.getDDMForm(),
+			structureVersion.getDDMFormLayout(), serviceContext);
+	}
+
 	/**
 	 * Returns an ordered range of all the structures matching the groups and
 	 * class name IDs, and matching the keywords in the structure names and
@@ -1415,6 +1447,7 @@ public class DDMStructureLocalServiceImpl
 		structureVersion.setCreateDate(structure.getModifiedDate());
 		structureVersion.setStructureId(structure.getStructureId());
 		structureVersion.setVersion(version);
+		structureVersion.setParentStructureId(structure.getParentStructureId());
 		structureVersion.setName(structure.getName());
 		structureVersion.setDescription(structure.getDescription());
 		structureVersion.setDefinition(structure.getDefinition());
@@ -1484,8 +1517,11 @@ public class DDMStructureLocalServiceImpl
 			ddmStructureVersionLocalService.getLatestStructureVersion(
 				structure.getStructureId());
 
+		boolean majorVersion = GetterUtil.getBoolean(
+			serviceContext.getAttribute("majorVersion"));
+
 		String version = getNextVersion(
-			latestStructureVersion.getVersion(), false);
+			latestStructureVersion.getVersion(), majorVersion);
 
 		structure.setVersion(version);
 		structure.setNameMap(nameMap);

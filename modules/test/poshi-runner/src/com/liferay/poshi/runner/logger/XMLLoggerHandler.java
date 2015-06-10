@@ -135,7 +135,9 @@ public final class XMLLoggerHandler {
 
 		loggerElement.setAttribute("data-status01", status);
 
-		if (status.equals("conditional-fail") || status.equals("pass")) {
+		if (status.equals("conditional-fail") || status.equals("fail") ||
+			status.equals("pass")) {
+
 			LoggerUtil.executeJavaScript(
 				"loggerInterface.fire('line-trigger', '" +
 					loggerElement.getID() + "', false)");

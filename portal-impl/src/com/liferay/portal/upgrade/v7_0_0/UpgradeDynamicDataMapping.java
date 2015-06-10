@@ -428,7 +428,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				ddmFormField.setType("ddm-documentlibrary");
 			}
 			else if (Validator.equals(dataType, "image")) {
-				ddmFormField.setNamespace("ddm");
+				ddmFormField.setFieldNamespace("ddm");
 				ddmFormField.setType("ddm-image");
 			}
 		}

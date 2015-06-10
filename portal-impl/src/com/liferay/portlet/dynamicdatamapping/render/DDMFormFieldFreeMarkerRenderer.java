@@ -136,7 +136,6 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		DDMFormField ddmFormField, Map<String, Object> fieldContext) {
 
 		fieldContext.put("dataType", ddmFormField.getDataType());
-		fieldContext.put("fieldNamespace", ddmFormField.getNamespace());
 		fieldContext.put("indexType", ddmFormField.getIndexType());
 		fieldContext.put(
 			"localizable", Boolean.toString(ddmFormField.isLocalizable()));
@@ -204,8 +203,8 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 			sb.append(
 				processFTL(
-					request, response, ddmFormField.getNamespace(), "option",
-					mode, readOnly, freeMarkerContext));
+					request, response, ddmFormField.getFieldNamespace(),
+					"option", mode, readOnly, freeMarkerContext));
 		}
 
 		return sb.toString();
@@ -371,7 +370,7 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 
 			sb.append(
 				processFTL(
-					request, response, ddmFormField.getNamespace(),
+					request, response, ddmFormField.getFieldNamespace(),
 					ddmFormField.getType(), mode, readOnly, freeMarkerContext));
 
 			fieldRepetition--;

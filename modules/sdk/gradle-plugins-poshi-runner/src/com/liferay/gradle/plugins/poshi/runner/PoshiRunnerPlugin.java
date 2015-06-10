@@ -14,8 +14,9 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
-import com.liferay.gradle.plugins.poshi.runner.util.GradleUtil;
 import com.liferay.gradle.plugins.poshi.runner.util.OSDetector;
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.StringUtil;
 
 import java.io.File;
 
@@ -32,6 +33,7 @@ import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.Dependency;
 import org.gradle.api.artifacts.ResolvableDependencies;
 import org.gradle.api.file.FileTree;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.reporting.DirectoryReport;
 import org.gradle.api.tasks.Copy;
 import org.gradle.api.tasks.JavaExec;
@@ -58,6 +60,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	@Override
 	public void apply(Project project) {
+		GradleUtil.applyPlugin(project, BasePlugin.class);
+
 		final PoshiRunnerExtension poshiRunnerExtension =
 			GradleUtil.addExtension(
 				project, "poshiRunner", PoshiRunnerExtension.class);
@@ -124,8 +128,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.poshi.runner", poshiRunnerExtension.getVersion(),
-			null);
+			"com.liferay.poshi.runner", poshiRunnerExtension.getVersion());
 	}
 
 	protected void addPoshiRunnerDependenciesSikuli(
@@ -153,7 +156,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		GradleUtil.addDependency(
 			project, CONFIGURATION_NAME, "org.bytedeco.javacpp-presets",
-			"opencv", poshiRunnerExtension.getOpenCVVersion(), classifier);
+			"opencv", poshiRunnerExtension.getOpenCVVersion(), classifier,
+			true);
 	}
 
 	protected void addTasksExpandPoshiRunner(Project project) {
@@ -167,7 +171,10 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Test test = GradleUtil.addTask(
 			project, RUN_POSHI_TASK_NAME, Test.class);
 
-		test.dependsOn(EXPAND_POSHI_RUNNER_TASK_NAME);
+		test.dependsOn(
+			BasePlugin.CLEAN_TASK_NAME +
+				StringUtil.capitalize(RUN_POSHI_TASK_NAME),
+			EXPAND_POSHI_RUNNER_TASK_NAME);
 
 		test.include("com/liferay/poshi/runner/PoshiRunner.class");
 

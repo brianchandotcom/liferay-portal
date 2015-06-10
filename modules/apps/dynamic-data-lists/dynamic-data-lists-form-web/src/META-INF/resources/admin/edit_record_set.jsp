@@ -93,22 +93,16 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 						function() {
 							Liferay.DDM.Renderer.FieldTypes.register(fieldTypes);
 
-							var formBuilder = new Liferay.DDL.FormBuilder(
-								{
-									definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
-									layouts: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>
-								}
-							).render('#<portlet:namespace />formBuilder');
-
 							new Liferay.DDL.Portlet(
 								{
 									editForm: event.form,
-									formBuilder: formBuilder,
+									definition: <%= ddlFormAdminDisplayContext.getSerializedDDMForm() %>,
+									layout: <%= ddlFormAdminDisplayContext.getSerializedDDMFormLayout() %>,
 									namespace: '<portlet:namespace />'
 								}
 							);
 						},
-						['liferay-ddl-form-builder', 'liferay-ddl-portlet'].concat(fieldModules)
+						['liferay-ddl-portlet'].concat(fieldModules)
 					);
 
 					<portlet:namespace />init();

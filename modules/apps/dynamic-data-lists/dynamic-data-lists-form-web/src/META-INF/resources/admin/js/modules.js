@@ -71,6 +71,7 @@
 							},
 							path: 'form_portlet.js',
 							requires: [
+								'liferay-ddl-form-builder',
 								'liferay-ddl-form-builder-definition-serializer',
 								'liferay-ddl-form-builder-layout-serializer',
 								'liferay-portlet-base'

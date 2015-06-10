@@ -11,7 +11,14 @@ AUI.add(
 					editForm: {
 					},
 
+					definition: {
+					},
+
+					layout: {
+					},
+
 					formBuilder: {
+						valueFn: '_valueFormBuilder'
 					}
 				},
 
@@ -34,6 +41,7 @@ AUI.add(
 						);
 
 						instance.bindUI();
+						instance.renderUI();
 					},
 
 					bindUI: function() {
@@ -46,6 +54,12 @@ AUI.add(
 						instance._eventHandlers = [
 							Liferay.on('destroyPortlet', A.bind('_onDestroyPortlet', instance))
 						];
+					},
+
+					renderUI: function() {
+						var instance = this;
+
+						instance.get('formBuilder').render(instance.one('#formBuilder'));
 					},
 
 					destructor: function() {
@@ -88,6 +102,17 @@ AUI.add(
 						var name = window[instance.ns('nameEditor')].getHTML();
 
 						instance.one('#name').val(name);
+					},
+
+					_valueFormBuilder: function() {
+						var instance = this;
+
+						return new Liferay.DDL.FormBuilder(
+							{
+								definition: instance.get('definition'),
+								layouts: instance.get('layout')
+							}
+						)
 					}
 				}
 			}
@@ -97,6 +122,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-form', 'liferay-portlet-base']
+		requires: ['liferay-ddl-form-builder', 'liferay-ddl-form-builder-definition-serializer', 'liferay-ddl-form-builder-layout-serializer', 'liferay-form', 'liferay-portlet-base']
 	}
 );

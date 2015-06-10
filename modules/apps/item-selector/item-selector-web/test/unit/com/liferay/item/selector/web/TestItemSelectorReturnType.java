@@ -19,8 +19,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 /**
  * @author Roberto Díaz
  */
-
-public enum TestItemSelectorReturnTypes implements ItemSelectorReturnType {
+public enum TestItemSelectorReturnType implements ItemSelectorReturnType {
 
 	FILE_ENTRY, STRING, URL;
 

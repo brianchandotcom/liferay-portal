@@ -2,10 +2,8 @@ Bundle-Name: Liferay Item Selector Criteria API
 Bundle-SymbolicName: com.liferay.item.selector.criteria.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.item.selector.criteria,\
 	com.liferay.item.selector.criteria.file.criterion,\
-	com.liferay.item.selector.criteria.file.returnTypes,\
 	com.liferay.item.selector.criteria.image.criterion,\
-	com.liferay.item.selector.criteria.image.returnTypes,\
 	com.liferay.item.selector.criteria.url.criterion,\
-	com.liferay.item.selector.criteria.url.returnTypes
 Include-Resource: classes

@@ -16,7 +16,7 @@ package com.liferay.item.selector.criteria.file.criterion;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
-import com.liferay.item.selector.criteria.file.returnTypes.FileItemSelectorReturnTypes;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 
 import java.util.Set;
 
@@ -31,8 +31,8 @@ public class FileItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private static final Set<ItemSelectorReturnType>
 		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
-			FileItemSelectorReturnTypes.BASE_64,
-			FileItemSelectorReturnTypes.FILE_ENTRY,
-			FileItemSelectorReturnTypes.URL);
+			DefaultItemSelectorReturnType.BASE_64,
+			DefaultItemSelectorReturnType.FILE_ENTRY,
+			DefaultItemSelectorReturnType.URL);
 
 }

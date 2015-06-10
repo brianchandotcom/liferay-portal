@@ -23,8 +23,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.DefaultItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion" %><%@
-page import="com.liferay.item.selector.criteria.url.returnTypes.URLItemSelectorReturnTypes" %><%@
 page import="com.liferay.layout.item.selector.web.LayoutItemSelectorView" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@

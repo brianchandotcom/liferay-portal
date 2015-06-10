@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class MediaItemSelectorCriterionHandler
 	implements ItemSelectorCriterionHandler
-		<MediaItemSelectorCriterion, TestItemSelectorReturnTypes> {
+		<MediaItemSelectorCriterion, TestItemSelectorReturnType> {
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -35,13 +35,13 @@ public class MediaItemSelectorCriterionHandler
 	@Override
 	public List
 		<ItemSelectorView
-			<MediaItemSelectorCriterion, TestItemSelectorReturnTypes>>
+			<MediaItemSelectorCriterion, TestItemSelectorReturnType>>
 				getItemSelectorViews(
 					MediaItemSelectorCriterion mediaItemSelectorCriterion) {
 
 		List
 			<ItemSelectorView
-				<MediaItemSelectorCriterion, TestItemSelectorReturnTypes>>
+				<MediaItemSelectorCriterion, TestItemSelectorReturnType>>
 					itemSelectorViews = new ArrayList<>();
 
 		itemSelectorViews.add(new MediaItemSelectorView());

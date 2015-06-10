@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class FlickrItemSelectorCriterionHandler
 	implements ItemSelectorCriterionHandler
-		<FlickrItemSelectorCriterion, TestItemSelectorReturnTypes> {
+		<FlickrItemSelectorCriterion, TestItemSelectorReturnType> {
 
 	@Override
 	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -35,12 +35,12 @@ public class FlickrItemSelectorCriterionHandler
 	@Override
 	public List
 		<ItemSelectorView<FlickrItemSelectorCriterion,
-			TestItemSelectorReturnTypes>>
+			TestItemSelectorReturnType>>
 			getItemSelectorViews(
 				FlickrItemSelectorCriterion flickrItemSelectorCriterion) {
 
 		List<ItemSelectorView
-			<FlickrItemSelectorCriterion, TestItemSelectorReturnTypes>>
+			<FlickrItemSelectorCriterion, TestItemSelectorReturnType>>
 				itemSelectorViews = new ArrayList<>();
 
 		itemSelectorViews.add(new FlickrItemSelectorView());

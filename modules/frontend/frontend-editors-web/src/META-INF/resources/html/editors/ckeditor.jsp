@@ -444,7 +444,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 			Set<ItemSelectorReturnType> urlItemSelectorDesiredReturnTypes = new HashSet<ItemSelectorReturnType>();
 
-			urlItemSelectorDesiredReturnTypes.add(URLItemSelectorReturnTypes.URL);
+			urlItemSelectorDesiredReturnTypes.add(DefaultItemSelectorReturnType.URL);
 
 			urlItemSelectorCriterion.setItemSelectorDesiredReturnTypes(urlItemSelectorDesiredReturnTypes);
 
@@ -471,7 +471,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 			Set<ItemSelectorReturnType> imageItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
 
-			imageItemSelectorReturnTypes.add(ImageItemSelectorReturnTypes.URL);
+			imageItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
 
 			imageItemSelectorCriterion.setItemSelectorDesiredReturnTypes(imageItemSelectorReturnTypes);
 

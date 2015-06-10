@@ -46,8 +46,7 @@ public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
 		getInmutableSet(
-			TestItemSelectorReturnTypes.STRING,
-			TestItemSelectorReturnTypes.URL);
+			TestItemSelectorReturnType.STRING, TestItemSelectorReturnType.URL);
 
 	private String[] _tags = {"me", "photo", "picture"};
 	private String _user = "anonymous";

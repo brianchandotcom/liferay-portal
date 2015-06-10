@@ -33,7 +33,7 @@ import javax.servlet.ServletResponse;
  */
 public class FlickrItemSelectorView
 	implements ItemSelectorView
-		<FlickrItemSelectorCriterion, TestItemSelectorReturnTypes> {
+		<FlickrItemSelectorCriterion, TestItemSelectorReturnType> {
 
 	@Override
 	public Class<FlickrItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -41,7 +41,7 @@ public class FlickrItemSelectorView
 	}
 
 	@Override
-	public Set<TestItemSelectorReturnTypes>
+	public Set<TestItemSelectorReturnType>
 		getItemSelectorSupportedReturnTypes() {
 
 		return null;
@@ -65,12 +65,12 @@ public class FlickrItemSelectorView
 			"<html>" + FlickrItemSelectorView.class.getName() + "</html>");
 	}
 
-	private static final Set<TestItemSelectorReturnTypes>
+	private static final Set<TestItemSelectorReturnType>
 		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
 
 	static {
 		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
-			TestItemSelectorReturnTypes.URL);
+			TestItemSelectorReturnType.URL);
 	}
 
 }

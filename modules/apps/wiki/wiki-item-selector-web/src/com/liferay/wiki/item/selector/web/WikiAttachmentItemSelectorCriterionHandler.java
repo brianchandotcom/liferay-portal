@@ -16,6 +16,7 @@ package com.liferay.wiki.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ItemSelectorCriterionHandler.class)
 public class WikiAttachmentItemSelectorCriterionHandler
 	implements ItemSelectorCriterionHandler
-		<WikiAttachmentItemSelectorCriterion,
-		 WikiAttachmentItemSelectorReturnTypes> {
+		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	@Override
 	public Class<WikiAttachmentItemSelectorCriterion>
@@ -41,8 +41,7 @@ public class WikiAttachmentItemSelectorCriterionHandler
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<ItemSelectorView
-		<WikiAttachmentItemSelectorCriterion,
-			WikiAttachmentItemSelectorReturnTypes>>
+		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType>>
 			getItemSelectorViews(
 				WikiAttachmentItemSelectorCriterion
 					wikiAttachmentItemSelectorCriterion) {

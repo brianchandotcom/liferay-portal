@@ -26,9 +26,6 @@ import java.util.TimeZone;
  */
 public class CalendarImpl extends CalendarBaseImpl {
 
-	public CalendarImpl() {
-	}
-
 	@Override
 	public CalendarResource getCalendarResource() throws PortalException {
 		return CalendarResourceLocalServiceUtil.getCalendarResource(

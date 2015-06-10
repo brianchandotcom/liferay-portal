@@ -35,7 +35,7 @@ public abstract class BaseItemSelectorCriterion
 	}
 
 	@Override
-	public void setItemSelectorDesiredReturnTypes(
+	public void setDesiredItemSelectorReturnTypes(
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
 
 		if (!_availableItemSelectorReturnTypes.containsAll(

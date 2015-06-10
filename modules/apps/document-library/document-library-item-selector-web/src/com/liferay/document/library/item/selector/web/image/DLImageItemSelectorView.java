@@ -41,15 +41,15 @@ public class DLImageItemSelectorView
 	}
 
 	@Override
+	public String[] getMimeTypes() {
+		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
+	}
+
+	@Override
 	public Set<DefaultItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
 		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
-	}
-
-	@Override
-	public String[] getMimeTypes() {
-		return PropsValues.DL_FILE_ENTRY_PREVIEW_IMAGE_MIME_TYPES;
 	}
 
 	@Override

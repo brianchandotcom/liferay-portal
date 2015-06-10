@@ -198,17 +198,17 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
 		String eventName) {
 
-		Set<ItemSelectorReturnType> urlItemSelectorDesiredReturnTypes =
+		Set<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		urlItemSelectorDesiredReturnTypes.add(
+		urlDesiredItemSelectorReturnTypes.add(
 			DefaultItemSelectorReturnType.URL);
 
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			new URLItemSelectorCriterion();
 
-		urlItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
-			urlItemSelectorDesiredReturnTypes);
+		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			urlDesiredItemSelectorReturnTypes);
 
 		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
 			liferayPortletResponse, eventName, urlItemSelectorCriterion);
@@ -219,14 +219,14 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
-		Set<ItemSelectorReturnType> imageItemSelectorDesiredReturnTypes =
+		Set<ItemSelectorReturnType> imageDesiredItemSelectorReturnTypes =
 			new HashSet<>();
 
-		imageItemSelectorDesiredReturnTypes.add(
+		imageDesiredItemSelectorReturnTypes.add(
 			DefaultItemSelectorReturnType.URL);
 
-		imageItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
-			imageItemSelectorDesiredReturnTypes);
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			imageDesiredItemSelectorReturnTypes);
 
 		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
 			liferayPortletResponse, eventName, imageItemSelectorCriterion);

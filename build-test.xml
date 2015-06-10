@@ -1023,6 +1023,55 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="print-gc-logs">
+		<sequential>
+			<if>
+				<available file="/tmp/ant-gc.log" />
+				<then>
+					<loadfile property="ant-gc-log" srcFile="/tmp/ant-gc.log" />
+
+					<echo>
+	Ant GC log:
+
+	${ant-gc-log}</echo>
+				</then>
+				<else>
+					<echo>Unable to read /tmp/ant-gc.log</echo>
+				</else>
+			</if>
+
+			<if>
+				<available file="/tmp/tomcat-gc.log" />
+				<then>
+					<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
+
+					<echo>
+	Tomcat GC log:
+
+	${tomcat-gc-log}</echo>
+				</then>
+				<else>
+					<echo>Unable to read /tmp/tomcat-gc.log</echo>
+				</else>
+			</if>
+
+			<if>
+				<available file="/tmp/tsant-gc.log" />
+				<then>
+					<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
+
+					<echo>
+	Tsant GC log:
+
+	${tsant-gc-log}</echo>
+				</then>
+				<else>
+					<echo>Unable to read /tmp/tsant-gc.log</echo>
+				</else>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="record-git-commit-plugins">
 		<sequential>
 			<script classpathref="project.classpath" language="beanshell">
@@ -6054,50 +6103,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 		</if>
 
-		<if>
-			<available file="/tmp/ant-gc.log" />
-			<then>
-				<loadfile property="ant-gc-log" srcFile="/tmp/ant-gc.log" />
-
-				<echo>
-Ant GC log:
-
-${ant-gc-log}</echo>
-			</then>
-			<else>
-				<echo>Unable to read /tmp/ant-gc.log</echo>
-			</else>
-		</if>
-
-		<if>
-			<available file="/tmp/tomcat-gc.log" />
-			<then>
-				<loadfile property="tomcat-gc-log" srcFile="/tmp/tomcat-gc.log" />
-
-				<echo>
-Tomcat GC log:
-
-${tomcat-gc-log}</echo>
-			</then>
-			<else>
-				<echo>Unable to read /tmp/tomcat-gc.log</echo>
-			</else>
-		</if>
-
-		<if>
-			<available file="/tmp/tsant-gc.log" />
-			<then>
-				<loadfile property="tsant-gc-log" srcFile="/tmp/tsant-gc.log" />
-
-				<echo>
-Tsant GC log:
-
-${tsant-gc-log}</echo>
-			</then>
-			<else>
-				<echo>Unable to read /tmp/tsant-gc.log</echo>
-			</else>
-		</if>
+		<print-gc-logs />
 	</target>
 
 	<target name="test-integration">

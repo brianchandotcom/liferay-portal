@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auto.login;
+package com.liferay.portal.security.auto.login.rememberme;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

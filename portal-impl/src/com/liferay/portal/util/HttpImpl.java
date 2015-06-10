@@ -776,6 +776,10 @@ public class HttpImpl implements Http {
 			}
 		}
 
+		if (parts.isEmpty()) {
+			return StringPool.SLASH;
+		}
+
 		StringBundler sb = new StringBundler(parts.size() * 2 + 2);
 
 		for (String part : parts) {
@@ -786,10 +790,6 @@ public class HttpImpl implements Http {
 		if (Validator.isNotNull(queryString)) {
 			sb.append(StringPool.QUESTION);
 			sb.append(queryString);
-		}
-
-		if (sb.length() == 0) {
-			return StringPool.SLASH;
 		}
 
 		return sb.toString();

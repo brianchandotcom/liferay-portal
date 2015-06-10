@@ -135,8 +135,8 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 	}
 
 	private boolean _isInternalProperty(String name) {
-		if (name.equals("class") ||
-			name.equals("availableItemSelectorReturnTypes") ||
+		if (name.equals("availableItemSelectorReturnTypes") ||
+			name.equals("class") ||
 			name.equals("desiredItemSelectorReturnTypes")) {
 
 			return true;

@@ -106,8 +106,7 @@ public class ItemSelectorImpl implements ItemSelector {
 								itemSelectorCriterion);
 
 			for (ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
-				itemSelectorView :
-					itemSelectorViews) {
+					itemSelectorView : itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
 					portletResponse, itemSelectedEventName,
@@ -346,8 +345,7 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private final ConcurrentMap
-		<String,
-		 ItemSelectorCriterionHandler
+		<String, ItemSelectorCriterionHandler
 			 <ItemSelectorCriterion, ItemSelectorReturnType>>
 				_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
 

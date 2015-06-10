@@ -74,17 +74,11 @@
 						'liferay-ddm-form-field': {
 							path: 'field.js',
 							requires: [
-								'aui-boolean-data-editor',
-								'aui-form-builder-field-base',
-								'aui-form-field',
-								'aui-options-data-editor',
-								'aui-radio-group-data-editor',
-								'aui-tabs-data-editor',
-								'aui-text-data-editor',
-								'liferay-ddm-form-field-types'
+								'liferay-ddm-form-renderer-field-types',
+								'liferay-ddm-form-renderer-util'
 							]
 						},
-						'liferay-ddm-form-field-types': {
+						'liferay-ddm-form-renderer-field-types': {
 							path: 'field_types.js',
 							requires: [
 								'array-extras',
@@ -100,16 +94,15 @@
 							path: 'form.js',
 							requires: [
 								'array-extras',
-								'liferay-ddm-form-field',
-								'liferay-ddm-form-field-types',
+								'liferay-ddm-form-renderer-field',
+								'liferay-ddm-form-renderer-field-types',
 								'liferay-ddm-form-renderer-util'
 							]
 						},
 						'liferay-ddm-form-renderer-util': {
 							path: 'util.js',
 							requires: [
-								'array-extras',
-								'liferay-ddm-form-field'
+								'array-extras'
 							]
 						}
 					},

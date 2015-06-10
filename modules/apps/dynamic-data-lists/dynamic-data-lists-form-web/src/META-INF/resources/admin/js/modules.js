@@ -80,7 +80,7 @@
 				ddm: {
 					base: '/o/ddm-form-renderer/js/',
 					modules: {
-						'liferay-ddm-form-field': {
+						'liferay-ddm-form-renderer-field': {
 							path: 'field.js',
 							requires: [
 								'aui-boolean-data-editor',
@@ -95,7 +95,7 @@
 								'liferay-text-field'
 							]
 						},
-						'liferay-ddm-form-field-types': {
+						'liferay-ddm-form-renderer-field-types': {
 							path: 'field_types.js',
 							requires: [
 								'array-extras',

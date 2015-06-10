@@ -463,6 +463,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder-field-base', 'aui-form-field', 'liferay-ddm-form-renderer-field-types']
+		requires: ['liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
 	}
 );

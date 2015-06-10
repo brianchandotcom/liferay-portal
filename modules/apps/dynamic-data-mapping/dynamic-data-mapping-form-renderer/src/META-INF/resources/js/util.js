@@ -74,6 +74,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'liferay-ddm-form-renderer-field']
+		requires: ['array-extras']
 	}
 );

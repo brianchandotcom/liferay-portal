@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -116,6 +117,9 @@ public class DefaultDDMStructureUtil {
 
 			DDMFormLayout ddmFormLayout = DDMUtil.getDefaultDDMFormLayout(
 				ddmForm);
+
+			serviceContext.setAttribute(
+				"status", WorkflowConstants.STATUS_APPROVED);
 
 			ddmStructure = DDMStructureLocalServiceUtil.addStructure(
 				userId, groupId,

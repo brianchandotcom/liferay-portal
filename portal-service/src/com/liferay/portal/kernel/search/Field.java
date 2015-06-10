@@ -214,6 +214,10 @@ public class Field implements Serializable {
 		return _fields;
 	}
 
+	public GeoLocationPoint getGeoLocationPoint() {
+		return _geoLocationPoint;
+	}
+
 	public Map<Locale, String> getLocalizedValues() {
 		return _localizedValues;
 	}
@@ -286,6 +290,10 @@ public class Field implements Serializable {
 	@Deprecated
 	public void setBoost(float boost) {
 		_boost = boost;
+	}
+
+	public void setGeoLocationPoint(GeoLocationPoint geoLocationPoint) {
+		_geoLocationPoint = geoLocationPoint;
 	}
 
 	public void setLocalizedValues(Map<Locale, String> localizedValues) {
@@ -395,16 +403,9 @@ public class Field implements Serializable {
 
 	}
 
-	public GeoLocationPoint getGeoLocationPoint() {
-		return _geoLocationPoint;
-	}
-
-	public void setGeoLocationPoint(GeoLocationPoint geoLocationPoint) {
-		_geoLocationPoint = geoLocationPoint;
-	}
-
 	private float _boost = 1;
 	private final List<Field> _fields = new ArrayList<>();
+	private GeoLocationPoint _geoLocationPoint;
 	private Map<Locale, String> _localizedValues;
 	private String _name;
 	private boolean _numeric;
@@ -413,6 +414,5 @@ public class Field implements Serializable {
 	private boolean _sortable;
 	private boolean _tokenized;
 	private String[] _values;
-	private GeoLocationPoint _geoLocationPoint;
 
 }

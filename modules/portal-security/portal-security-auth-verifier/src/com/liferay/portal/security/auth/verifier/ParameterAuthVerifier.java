@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.security.auto.login.ParameterAutoLogin;
+import com.liferay.portal.security.auto.login.parameter.ParameterAutoLogin;
 
 import java.util.Properties;
 
@@ -68,6 +68,11 @@ public class ParameterAuthVerifier
 		catch (AutoLoginException ale) {
 			throw new AuthException(ale);
 		}
+	}
+
+	@Override
+	protected boolean isEnabled(long companyId) {
+		return true;
 	}
 
 }

@@ -16,6 +16,7 @@ package com.liferay.item.selector.criteria.file.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriterion;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class FileItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<FileItemSelectorCriterion> {
+	extends BaseItemSelectorCriterionHandler
+		<FileItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	@Override
 	public Class<FileItemSelectorCriterion> getItemSelectorCriterionClass() {

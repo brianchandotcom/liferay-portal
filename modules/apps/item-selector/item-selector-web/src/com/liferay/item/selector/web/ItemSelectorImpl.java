@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorRendering;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.item.selector.web.constants.ItemSelectorPortletKeys;
@@ -91,16 +92,21 @@ public class ItemSelectorImpl implements ItemSelector {
 			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
 				itemSelectorCriterion.getClass();
 
-			ItemSelectorCriterionHandler<ItemSelectorCriterion>
-				itemSelectorCriterionHandler =
-					_itemSelectionCriterionHandlers.get(
-						itemSelectorCriterionClass.getName());
+			ItemSelectorCriterionHandler
+				<ItemSelectorCriterion, ItemSelectorReturnType>
+					itemSelectorCriterionHandler =
+						_itemSelectionCriterionHandlers.get(
+							itemSelectorCriterionClass.getName());
 
-			List<ItemSelectorView<ItemSelectorCriterion>> itemSelectorViews =
-				itemSelectorCriterionHandler.getItemSelectorViews(
-					itemSelectorCriterion);
+			List
+				<ItemSelectorView
+					<ItemSelectorCriterion, ItemSelectorReturnType>>
+						itemSelectorViews =
+							itemSelectorCriterionHandler.getItemSelectorViews(
+								itemSelectorCriterion);
 
-			for (ItemSelectorView<ItemSelectorCriterion> itemSelectorView :
+			for (ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
+				itemSelectorView :
 					itemSelectorViews) {
 
 				PortletURL portletURL = getItemSelectorURL(
@@ -222,7 +228,7 @@ public class ItemSelectorImpl implements ItemSelector {
 		for (String itemSelectorCriterionClassName :
 				itemSelectorCriterionClassNames) {
 
-			ItemSelectorCriterionHandler<?> itemSelectorCriterionHandler =
+			ItemSelectorCriterionHandler<?, ?> itemSelectorCriterionHandler =
 				_itemSelectionCriterionHandlers.get(
 					itemSelectorCriterionClassName);
 
@@ -312,9 +318,11 @@ public class ItemSelectorImpl implements ItemSelector {
 		policy = ReferencePolicy.DYNAMIC
 	)
 	@SuppressWarnings("rawtypes")
-	protected <T extends ItemSelectorCriterion> void
-		setItemSelectionCriterionHandler(
-			ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
+	protected
+		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> void
+			setItemSelectionCriterionHandler(
+				ItemSelectorCriterionHandler
+					<T, S> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
@@ -324,9 +332,11 @@ public class ItemSelectorImpl implements ItemSelector {
 			(ItemSelectorCriterionHandler)itemSelectionCriterionHandler);
 	}
 
-	protected <T extends ItemSelectorCriterion>
-		void unsetItemSelectionCriterionHandler(
-			ItemSelectorCriterionHandler<T> itemSelectionCriterionHandler) {
+	protected
+		<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
+			void unsetItemSelectionCriterionHandler(
+				ItemSelectorCriterionHandler
+					<T, S> itemSelectionCriterionHandler) {
 
 		Class<T> itemSelectorCriterionClass =
 			itemSelectionCriterionHandler.getItemSelectorCriterionClass();
@@ -336,7 +346,9 @@ public class ItemSelectorImpl implements ItemSelector {
 	}
 
 	private final ConcurrentMap
-		<String, ItemSelectorCriterionHandler<ItemSelectorCriterion>>
-			_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
+		<String,
+		 ItemSelectorCriterionHandler
+			 <ItemSelectorCriterion, ItemSelectorReturnType>>
+				_itemSelectionCriterionHandlers = new ConcurrentHashMap<>();
 
 }

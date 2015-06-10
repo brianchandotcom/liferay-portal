@@ -25,40 +25,48 @@ public abstract class BaseItemSelectorCriterion
 	implements ItemSelectorCriterion {
 
 	@Override
-	public Set<Class<?>> getAvailableReturnTypes() {
-		return _availableReturnTypes;
+	public Set<ItemSelectorReturnType> getAvailableItemSelectorReturnTypes() {
+		return _availableItemSelectorReturnTypes;
 	}
 
 	@Override
-	public Set<Class<?>> getDesiredReturnTypes() {
-		return _desiredReturnTypes;
+	public Set<ItemSelectorReturnType> getDesiredItemSelectorReturnTypes() {
+		return _desiredItemSelectorReturnTypes;
 	}
 
 	@Override
-	public void setDesiredReturnTypes(Set<Class<?>> desiredReturnTypes) {
-		if (!_availableReturnTypes.containsAll(desiredReturnTypes)) {
+	public void setDesiredItemSelectorReturnTypes(
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes) {
+
+		if (!_availableItemSelectorReturnTypes.containsAll(
+				desiredItemSelectorReturnTypes)) {
+
 			throw new IllegalArgumentException(
 				"Desired return types must be a subset of available return " +
 					"types");
 		}
 
-		_desiredReturnTypes = desiredReturnTypes;
+		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;
 	}
 
-	protected static Set<Class<?>> getInmutableSet(Class<?>... classes) {
-		Set<Class<?>> set = new HashSet<>();
+	protected static Set<ItemSelectorReturnType> getInmutableSet(
+		ItemSelectorReturnType... itemSelectorReturnTypes) {
 
-		Collections.addAll(set, classes);
+		Set<ItemSelectorReturnType> set = new HashSet<>();
+
+		Collections.addAll(set, itemSelectorReturnTypes);
 
 		return Collections.unmodifiableSet(set);
 	}
 
-	protected BaseItemSelectorCriterion(Set<Class<?>> availableReturnTypes) {
-		_availableReturnTypes = availableReturnTypes;
-		_desiredReturnTypes = _availableReturnTypes;
+	protected BaseItemSelectorCriterion(
+		Set<ItemSelectorReturnType> availableItemSelectorReturnTypes) {
+
+		_availableItemSelectorReturnTypes = availableItemSelectorReturnTypes;
+		_desiredItemSelectorReturnTypes = _availableItemSelectorReturnTypes;
 	}
 
-	private final Set<Class<?>> _availableReturnTypes;
-	private Set<Class<?>> _desiredReturnTypes;
+	private final Set<ItemSelectorReturnType> _availableItemSelectorReturnTypes;
+	private Set<ItemSelectorReturnType> _desiredItemSelectorReturnTypes;
 
 }

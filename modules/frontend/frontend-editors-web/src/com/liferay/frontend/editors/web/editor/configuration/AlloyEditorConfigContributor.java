@@ -16,6 +16,8 @@ package com.liferay.frontend.editors.web.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
+import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
@@ -29,8 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-
-import java.net.URL;
 
 import java.util.HashSet;
 import java.util.Locale;
@@ -198,14 +198,17 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
 		String eventName) {
 
-		Set<Class<?>> desiredReturnTypes = new HashSet<>();
+		Set<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes =
+			new HashSet<>();
 
-		desiredReturnTypes.add(URL.class);
+		urlDesiredItemSelectorReturnTypes.add(
+			DefaultItemSelectorReturnType.URL);
 
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			new URLItemSelectorCriterion();
 
-		urlItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			urlDesiredItemSelectorReturnTypes);
 
 		PortletURL layoutItemSelectorURL = _itemSelector.getItemSelectorURL(
 			liferayPortletResponse, eventName, urlItemSelectorCriterion);
@@ -216,7 +219,14 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		ItemSelectorCriterion imageItemSelectorCriterion =
 			new ImageItemSelectorCriterion();
 
-		imageItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		Set<ItemSelectorReturnType> imageDesiredItemSelectorReturnTypes =
+			new HashSet<>();
+
+		imageDesiredItemSelectorReturnTypes.add(
+			DefaultItemSelectorReturnType.URL);
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			imageDesiredItemSelectorReturnTypes);
 
 		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
 			liferayPortletResponse, eventName, imageItemSelectorCriterion);

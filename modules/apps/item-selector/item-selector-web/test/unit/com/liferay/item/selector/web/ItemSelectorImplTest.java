@@ -15,6 +15,7 @@
 package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorRendering;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.ItemSelectorViewRenderer;
 import com.liferay.portal.json.JSONFactoryImpl;
@@ -25,8 +26,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.PortletURLFactory;
 import com.liferay.portlet.PortletURLFactoryUtil;
-
-import java.net.URL;
 
 import java.util.HashSet;
 import java.util.List;
@@ -53,11 +52,13 @@ public class ItemSelectorImplTest extends PowerMockito {
 	public void setUp() {
 		_flickrItemSelectorCriterion = new FlickrItemSelectorCriterion();
 
-		Set<Class<?>> desiredReturnTypes = new HashSet<>();
+		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+			new HashSet<>();
 
-		desiredReturnTypes.add(URL.class);
+		desiredItemSelectorReturnTypes.add(TestItemSelectorReturnType.URL);
 
-		_flickrItemSelectorCriterion.setDesiredReturnTypes(desiredReturnTypes);
+		_flickrItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			desiredItemSelectorReturnTypes);
 
 		_itemSelectorImpl = new ItemSelectorImpl();
 
@@ -103,7 +104,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			MediaItemSelectorCriterion.class.getName() + "," +
 				FlickrItemSelectorCriterion.class.getName(),
 			parameters.get(ItemSelectorImpl.PARAMETER_CRITERIA)[0]);
-		Assert.assertNull(parameters.get("0_desiredReturnTypes"));
+		Assert.assertNull(parameters.get("0_desiredItemSelectorReturnTypes"));
 		Assert.assertNotNull(parameters.get("0_json")[0]);
 		Assert.assertNotNull(parameters.get("1_json")[0]);
 
@@ -142,7 +143,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_mediaItemSelectorCriterion.getMaxSize(),
 			mediaItemSelectorCriterion.getMaxSize());
 		Assert.assertTrue(
-			(ItemSelectorView<?>)
+			(ItemSelectorView<?, ?>)
 				mediaItemSelectorViewRenderer.getItemSelectorView()
 					instanceof MediaItemSelectorView);
 
@@ -157,7 +158,7 @@ public class ItemSelectorImplTest extends PowerMockito {
 			_flickrItemSelectorCriterion.getUser(),
 			flickrItemSelectorCriterion.getUser());
 		Assert.assertTrue(
-			(ItemSelectorView<?>)
+			(ItemSelectorView<?, ?>)
 				flickrItemSelectorViewRenderer.getItemSelectorView()
 					instanceof FlickrItemSelectorView);
 		Assert.assertEquals(2, itemSelectorViewRenderers.size());

@@ -15,12 +15,15 @@
 package com.liferay.layout.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
 
 import java.io.IOException;
 
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -36,7 +39,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorView.class)
 public class LayoutItemSelectorView
-	implements ItemSelectorView<URLItemSelectorCriterion> {
+	implements ItemSelectorView
+		<URLItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	public static final String ITEM_SELECTED_EVENT_NAME =
 		LayoutItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
@@ -51,6 +55,13 @@ public class LayoutItemSelectorView
 	@Override
 	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return URLItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<DefaultItemSelectorReturnType>
+		getSupportedItemSelectorReturnTypes() {
+
+		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
 	}
 
 	@Override
@@ -77,6 +88,14 @@ public class LayoutItemSelectorView
 			"/o/layout-item-selector-web/layouts.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	private static final Set<DefaultItemSelectorReturnType>
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES = new HashSet<>();
+
+	static {
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
+			DefaultItemSelectorReturnType.URL);
 	}
 
 }

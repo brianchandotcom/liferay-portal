@@ -30,12 +30,15 @@ import java.util.Set;
 public enum ReturnType implements ItemSelectorReturnType {
 
 	BASE_64 {
+
 		@Override
 		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay) {
 			return StringPool.BLANK;
 		}
+
 	},
 	FILE_ENTRY {
+
 		@Override
 		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 			throws Exception {
@@ -51,14 +54,17 @@ public enum ReturnType implements ItemSelectorReturnType {
 
 			return fileEntryJSONObject.toString();
 		}
+
 	},
 	URL {
+
 		@Override
 		public String getValue(FileEntry fileEntry, ThemeDisplay themeDisplay)
 			throws Exception {
 
 			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
 		}
+
 	};
 
 	public static ReturnType parse(
@@ -77,7 +83,7 @@ public enum ReturnType implements ItemSelectorReturnType {
 		}
 
 		throw new IllegalArgumentException(
-			"Invalid itemSelectorReturnType " +
+			"Invalid item selector return type " +
 				itemSelectorReturnType.getName());
 	}
 

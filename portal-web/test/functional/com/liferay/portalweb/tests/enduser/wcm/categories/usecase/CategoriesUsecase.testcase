@@ -707,7 +707,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWCWithCategoryViaAP" priority="4">
+	<command known-issues="LPS-55978" name="ExportImportWCWithCategoryViaAP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

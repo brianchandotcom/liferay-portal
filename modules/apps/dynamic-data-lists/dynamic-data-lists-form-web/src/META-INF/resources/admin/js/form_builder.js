@@ -3,7 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
-		var FormBuilderField = Liferay.DDL.FormBuilderField;
 		var FormBuilderUtil = Liferay.DDL.FormBuilderUtil;
 		var Lang = A.Lang;
 
@@ -74,7 +73,7 @@ AUI.add(
 
 						new Liferay.DDL.LayoutVisitor(
 							{
-								columnHandler: A.bind('_columnDestructor', instance),
+								fieldHandler: A.bind('destroyField', instance),
 								layouts: instance.get('layouts')
 							}
 						).visit();
@@ -88,18 +87,6 @@ AUI.add(
 						FormBuilder.superclass._afterFieldSettingsModalSave.apply(instance, arguments);
 
 						field.renderTemplate();
-					},
-
-					_columnDestructor: function(column) {
-						var instance = this;
-
-						var value = column.get('value');
-
-						if (A.instanceOf(value, FormBuilderField)) {
-							value.destroy();
-						}
-
-						column.destroy();
 					},
 
 					_onClickFieldType: function(event) {
@@ -148,6 +135,12 @@ AUI.add(
 								definition: instance.get('definition')
 							}
 						);
+					},
+
+					destroyField: function(field) {
+						var instance = this;
+
+						field.destroy();
 					},
 
 					findTypeOfField: function(field) {

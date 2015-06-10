@@ -15,13 +15,8 @@
 package com.liferay.layout.admin.web.portlet;
 
 import com.liferay.layout.admin.web.constants.LayoutAdminPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
-
-import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,17 +34,6 @@ public class LayoutAdminEditPortletProvider
 	@Override
 	public String getPortletId() {
 		return LayoutAdminPortletKeys.GROUP_PAGES;
-	}
-
-	@Override
-	public PortletURL getPortletURL(HttpServletRequest request)
-		throws PortalException {
-
-		PortletURL portletURL = super.getPortletURL(request);
-
-		portletURL.setParameter("mvcPath", "/view.jsp");
-
-		return portletURL;
 	}
 
 }

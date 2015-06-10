@@ -134,7 +134,6 @@ public class LayoutsAdminDisplayContext {
 	public PortletURL getEditLayoutURL() {
 		PortletURL editLayoutURL = _liferayPortletResponse.createRenderURL();
 
-		editLayoutURL.setParameter("mvcPath", "/view.jsp");
 		editLayoutURL.setParameter("tabs1", getTabs1());
 		editLayoutURL.setParameter("redirect", getRedirect());
 		editLayoutURL.setParameter("groupId", String.valueOf(getLiveGroupId()));

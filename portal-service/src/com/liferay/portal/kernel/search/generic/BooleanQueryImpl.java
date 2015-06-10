@@ -418,11 +418,6 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
-	public Object getWrappedQuery() {
-		return this;
-	}
-
-	@Override
 	public boolean hasClauses() {
 		return !_booleanClauses.isEmpty();
 	}

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.search.generic.StringQueryImpl;
+import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
@@ -87,7 +87,7 @@ public class DummyIndexSearcher implements IndexSearcher {
 		hits.setCollatedSpellCheckResult(StringPool.BLANK);
 		hits.setDocs(new Document[0]);
 		hits.setLength(0);
-		hits.setQuery(new StringQueryImpl(StringPool.BLANK));
+		hits.setQuery(new StringQuery(StringPool.BLANK));
 		hits.setQuerySuggestions(new String[0]);
 		hits.setQueryTerms(new String[0]);
 		hits.setLength(0);

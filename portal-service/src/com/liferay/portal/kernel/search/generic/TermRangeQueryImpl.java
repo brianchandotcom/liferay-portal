@@ -58,11 +58,6 @@ public class TermRangeQueryImpl extends BaseQueryImpl
 	}
 
 	@Override
-	public Object getWrappedQuery() {
-		return this;
-	}
-
-	@Override
 	public boolean includesLower() {
 		return _includesLower;
 	}

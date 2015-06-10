@@ -28,7 +28,7 @@ public class StringQueryFactoryImpl implements StringQueryFactory {
 
 	@Override
 	public Query create(String query) {
-		return new StringQueryImpl(query);
+		return new StringQuery(query);
 	}
 
 }

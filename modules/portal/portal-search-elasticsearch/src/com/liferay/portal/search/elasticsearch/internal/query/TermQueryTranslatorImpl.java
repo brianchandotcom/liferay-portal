@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.search.QueryTerm;
 import com.liferay.portal.kernel.search.TermQuery;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.query.TermQueryTranslator;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
@@ -64,6 +65,10 @@ public class TermQueryTranslatorImpl implements TermQueryTranslator {
 
 		if (!termQuery.isDefaultBoost()) {
 			matchQueryBuilder.boost(termQuery.getBoost());
+		}
+
+		if (Validator.isNotNull(termQuery.getAnalyzer())) {
+			matchQueryBuilder.analyzer(termQuery.getAnalyzer());
 		}
 
 		return matchQueryBuilder;

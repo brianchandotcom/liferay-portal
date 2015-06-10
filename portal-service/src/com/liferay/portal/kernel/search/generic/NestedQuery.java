@@ -15,21 +15,17 @@
 package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
-import com.liferay.portal.kernel.search.QueryTerm;
-import com.liferay.portal.kernel.search.WildcardQuery;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
  * @author Michael C. Han
  */
-public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
+public class NestedQuery extends BaseQueryImpl {
 
-	public WildcardQueryImpl(QueryTerm queryTerm) {
-		_queryTerm = queryTerm;
-	}
-
-	public WildcardQueryImpl(String field, String value) {
-		this(new QueryTermImpl(field, value));
+	public NestedQuery(String path, Query query) {
+		_path = path;
+		_query = query;
 	}
 
 	@Override
@@ -37,11 +33,15 @@ public class WildcardQueryImpl extends BaseQueryImpl implements WildcardQuery {
 		return queryVisitor.visitQuery(this);
 	}
 
-	@Override
-	public QueryTerm getQueryTerm() {
-		return _queryTerm;
+	public String getPath() {
+		return _path;
 	}
 
-	private final QueryTerm _queryTerm;
+	public Query getQuery() {
+		return _query;
+	}
+
+	private final String _path;
+	private final Query _query;
 
 }

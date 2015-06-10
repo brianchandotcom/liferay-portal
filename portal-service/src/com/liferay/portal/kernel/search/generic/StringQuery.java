@@ -12,15 +12,29 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.generic;
+
+import com.liferay.portal.kernel.search.BaseQueryImpl;
+import com.liferay.portal.kernel.search.Query;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Bruno Farache
  */
-public interface TermQuery extends Query {
+public class StringQuery extends BaseQueryImpl implements Query {
 
-	public String getAnalyzer();
+	public StringQuery(String query) {
+		_query = query;
+	}
 
-	public QueryTerm getQueryTerm();
+	public String getQuery() {
+		return _query;
+	}
+
+	@Override
+	public String toString() {
+		return _query;
+	}
+
+	private final String _query;
 
 }

@@ -16,26 +16,43 @@ package com.liferay.portal.kernel.search.generic;
 
 import com.liferay.portal.kernel.search.BaseQueryImpl;
 import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
+
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * @author Bruno Farache
+ * @author Michael C. Han
  */
-public class StringQueryImpl extends BaseQueryImpl implements Query {
-
-	public StringQueryImpl(String query) {
-		_query = query;
-	}
+public class DisMaxQuery extends BaseQueryImpl {
 
 	@Override
-	public Object getWrappedQuery() {
-		return this;
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visitQuery(this);
 	}
 
-	@Override
-	public String toString() {
-		return _query;
+	public void addQuery(Query query) {
+		_queries.add(query);
 	}
 
-	private final String _query;
+	public Set<Query> getQueries() {
+		return Collections.unmodifiableSet(_queries);
+	}
+
+	public Float getTieBreaker() {
+		return _tieBreaker;
+	}
+
+	public boolean isEmpty() {
+		return _queries.isEmpty();
+	}
+
+	public void setTieBreaker(Float tieBreaker) {
+		_tieBreaker = tieBreaker;
+	}
+
+	private final Set<Query> _queries = new HashSet<>();
+	private Float _tieBreaker;
 
 }

@@ -38,15 +38,20 @@ public class TermQueryImpl extends BaseQueryImpl implements TermQuery {
 	}
 
 	@Override
+	public String getAnalyzer() {
+		return _analyzer;
+	}
+
+	@Override
 	public QueryTerm getQueryTerm() {
 		return _queryTerm;
 	}
 
-	@Override
-	public Object getWrappedQuery() {
-		return this;
+	public void setAnalyzer(String analyzer) {
+		_analyzer = analyzer;
 	}
 
+	private String _analyzer;
 	private final QueryTerm _queryTerm;
 
 }

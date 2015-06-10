@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.search.elasticsearch.query;
+
+import com.liferay.portal.kernel.search.generic.MatchQuery;
+
+import org.elasticsearch.index.query.QueryBuilder;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface TermQuery extends Query {
+public interface MatchQueryTranslator {
 
-	public String getAnalyzer();
-
-	public QueryTerm getQueryTerm();
+	public QueryBuilder translate(MatchQuery matchQuery);
 
 }

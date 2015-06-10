@@ -12,15 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.portal.kernel.search.generic;
+
+import com.liferay.portal.kernel.search.BaseQueryImpl;
+import com.liferay.portal.kernel.search.query.QueryVisitor;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Michael C. Han
  */
-public interface TermQuery extends Query {
+public class MatchAllQuery extends BaseQueryImpl {
 
-	public String getAnalyzer();
-
-	public QueryTerm getQueryTerm();
+	@Override
+	public <T> T accept(QueryVisitor<T> queryVisitor) {
+		return queryVisitor.visitQuery(this);
+	}
 
 }

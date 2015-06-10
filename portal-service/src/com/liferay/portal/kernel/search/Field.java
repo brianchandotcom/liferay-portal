@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.search;
 
+import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -86,6 +87,8 @@ public class Field implements Serializable {
 	public static final String EXPIRATION_DATE = "expirationDate";
 
 	public static final String FOLDER_ID = "folderId";
+
+	public static final String GEO_LOCATION = "geoLocation";
 
 	public static final String GROUP_ID = "groupId";
 
@@ -392,6 +395,14 @@ public class Field implements Serializable {
 
 	}
 
+	public GeoLocationPoint getGeoLocationPoint() {
+		return _geoLocationPoint;
+	}
+
+	public void setGeoLocationPoint(GeoLocationPoint geoLocationPoint) {
+		_geoLocationPoint = geoLocationPoint;
+	}
+
 	private float _boost = 1;
 	private final List<Field> _fields = new ArrayList<>();
 	private Map<Locale, String> _localizedValues;
@@ -402,5 +413,6 @@ public class Field implements Serializable {
 	private boolean _sortable;
 	private boolean _tokenized;
 	private String[] _values;
+	private GeoLocationPoint _geoLocationPoint;
 
 }

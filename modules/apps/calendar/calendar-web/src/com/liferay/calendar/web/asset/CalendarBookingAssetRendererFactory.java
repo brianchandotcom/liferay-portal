@@ -14,6 +14,7 @@
 
 package com.liferay.calendar.web.asset;
 
+import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
@@ -21,7 +22,6 @@ import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.ActionKeys;
 import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;

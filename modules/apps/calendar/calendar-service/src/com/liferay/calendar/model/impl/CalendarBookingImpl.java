@@ -35,9 +35,6 @@ import java.util.TimeZone;
  */
 public class CalendarBookingImpl extends CalendarBookingBaseImpl {
 
-	public CalendarBookingImpl() {
-	}
-
 	@Override
 	public Calendar getCalendar() throws PortalException {
 		return CalendarLocalServiceUtil.getCalendar(getCalendarId());

@@ -21,6 +21,7 @@ import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.io.Serializable;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 

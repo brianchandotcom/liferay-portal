@@ -26,9 +26,6 @@ import java.io.IOException;
 public class CalendarNotificationTemplateImpl
 	extends CalendarNotificationTemplateBaseImpl {
 
-	public CalendarNotificationTemplateImpl() {
-	}
-
 	@Override
 	public String getNotificationTypeSettings() {
 		if (_notificationTypeSettingsProperties == null) {

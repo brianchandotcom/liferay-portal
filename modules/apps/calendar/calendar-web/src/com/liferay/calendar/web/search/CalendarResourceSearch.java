@@ -14,9 +14,9 @@
 
 package com.liferay.calendar.web.search;
 
+import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.util.CalendarResourceUtil;
-import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

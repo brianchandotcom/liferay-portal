@@ -44,7 +44,7 @@ public class FlickrItemSelectorView
 	public Set<TestItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
-		return null;
+		return _TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
 	}
 
 	@Override

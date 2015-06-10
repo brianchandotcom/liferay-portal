@@ -17,7 +17,7 @@ package com.liferay.portlet.exportimport.lar;
 /**
  * @author     Raymond Augé
  * @deprecated As of 7.0.0, see {@link
- *             com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent}
+ *             com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent}
  */
 @Deprecated
 public interface PortletDataContextListener {

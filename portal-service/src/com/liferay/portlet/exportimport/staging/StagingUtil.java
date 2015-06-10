@@ -68,7 +68,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalServiceUtil#
+	 *             com.liferay.portlet.exportimport.service.StagingLocalServiceUtil#
 	 *             checkDefaultLayoutSetBranches(long, Group, boolean, boolean,
 	 *             boolean, ServiceContext)}
 	 */
@@ -195,7 +195,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -208,7 +208,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -221,7 +221,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             PortletRequest, Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -236,7 +236,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#disableStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#disableStaging(
 	 *             PortletRequest, Group, ServiceContext)}
 	 */
 	@Deprecated
@@ -250,7 +250,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#enableLocalStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableLocalStaging(
 	 *             long, Group, boolean, boolean, ServiceContext)}
 	 */
 	@Deprecated
@@ -267,7 +267,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link
-	 *             com.liferay.portal.service.StagingLocalService#enableRemoteStaging(
+	 *             com.liferay.portlet.exportimport.service.StagingLocalService#enableRemoteStaging(
 	 *             long, Group, boolean, boolean, String, int, String, boolean,
 	 *             long, ServiceContext)}
 	 */
@@ -311,7 +311,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, moved to {@link
-	 *             com.liferay.portal.kernel.lar.ExportImportHelperUtil#getMissingParentLayouts(
+	 *             com.liferay.portlet.exportimport.ExportImportHelperUtil#getMissingParentLayouts(
 	 *             Layout, long)}
 	 */
 	@Deprecated
@@ -370,7 +370,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             )}
 	 */
 	@Deprecated
@@ -380,7 +380,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             PortletRequest)}
 	 */
 	@Deprecated
@@ -666,7 +666,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
+	 *             com.liferay.portlet.exportimport.lar.ExportImportDateUtil#updateLastPublishDate(
 	 *             long, boolean, com.liferay.portal.kernel.util.DateRange,
 	 *             Date)}
 	 */
@@ -681,7 +681,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portal.kernel.lar.ExportImportDateUtil#updateLastPublishDate(
+	 *             com.liferay.portlet.exportimport.lar.ExportImportDateUtil#updateLastPublishDate(
 	 *             String, PortletPreferences,
 	 *             com.liferay.portal.kernel.util.DateRange, Date)}
 	 */

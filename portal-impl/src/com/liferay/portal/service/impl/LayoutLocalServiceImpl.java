@@ -741,7 +741,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information to export. For information on the keys used in
 	 *             the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layouts as a byte array
@@ -768,7 +768,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information to export. For information on the keys used in
 	 *             the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layout as a byte array
@@ -811,7 +811,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information to export. For information on the keys used in
 	 *             the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the layouts as a File
@@ -900,7 +900,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information to export. For information on the keys used in
 	 *             the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the portlet information as a byte array
@@ -958,7 +958,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information to export. For information on the keys used in
 	 *             the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      startDate the export's start date
 	 * @param      endDate the export's end date
 	 * @return     the portlet information as a file
@@ -1711,11 +1711,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information will be imported. For information on the keys
 	 *             used in the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      bytes the byte array with the data
 	 * @throws     PortalException if a group or user with the primary key could
 	 *             not be found, or if some other portal exception occurred
-	 * @see        com.liferay.portal.lar.LayoutImporter
+	 * @see        com.liferay.portlet.exportimport.lar.LayoutImporter
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -1737,11 +1737,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information will be imported. For information on the keys
 	 *             used in the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      file the LAR file with the data
 	 * @throws     PortalException if a group or user with the primary key could
 	 *             not be found, or if some other portal exception occurred
-	 * @see        com.liferay.portal.lar.LayoutImporter
+	 * @see        com.liferay.portlet.exportimport.lar.LayoutImporter
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -1763,11 +1763,11 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information will be imported. For information on the keys
 	 *             used in the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      is the input stream
 	 * @throws     PortalException if a group or user with the primary key could
 	 *             not be found, or if some other portal exception occurred
-	 * @see        com.liferay.portal.lar.LayoutImporter
+	 * @see        com.liferay.portlet.exportimport.lar.LayoutImporter
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
@@ -1910,7 +1910,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information will be imported. For information on the keys
 	 *             used in the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      file the LAR file with the data
 	 * @throws     PortalException if a group, layout, portlet or user with the
 	 *             primary key could not be found
@@ -1937,7 +1937,7 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 * @param      parameterMap the mapping of parameters indicating which
 	 *             information will be imported. For information on the keys
 	 *             used in the map see {@link
-	 *             com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	 *             com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	 * @param      is the input stream
 	 * @throws     PortalException if a group, portlet, layout or user with the
 	 *             primary key could not be found

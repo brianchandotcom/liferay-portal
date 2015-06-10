@@ -34,6 +34,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -274,6 +276,9 @@ public class JspServlet extends HttpServlet {
 
 	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 
+	private static final Pattern _ORIGINAL_JSP = Pattern.compile(
+		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
+
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final Bundle _jspBundle;
@@ -312,6 +317,14 @@ public class JspServlet extends HttpServlet {
 		}
 
 		private URL getExtension(String path) {
+			Matcher matcher = _ORIGINAL_JSP.matcher(path);
+
+			if (matcher.matches()) {
+				path = matcher.group("file") + matcher.group("extension");
+
+				return _bundle.getEntry("META-INF/resources" + path);
+			}
+
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				"META-INF/resources", path.substring(1), false);
 

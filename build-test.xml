@@ -4690,52 +4690,6 @@ plugins.includes=marketplace-portlet</echo>
 		</if>
 	</target>
 
-	<target name="prepare-test-properties">
-		<get-database-property property.name="database.driver" />
-		<get-database-property property.name="database.password" />
-		<get-database-property property.name="database.url" />
-		<get-database-property property.name="database.username" />
-
-		<echo file="portal-impl/test/portal-test-ext.properties">
-jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url}
-jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}
-		</echo>
-
-		<if>
-			<equals arg1="${database.type}" arg2="db2" />
-			<then>
-				<echo file="portal-impl/test/portal-test-ext.properties" append="true">
-
-hibernate.dialect=com.liferay.portal.dao.orm.hibernate.DB2Dialect
-custom.sql.function.isnull=CAST(? AS VARCHAR(32672)) IS NULL
-custom.sql.function.isnotnull=CAST(? AS VARCHAR(32672)) IS NOT NULL</echo>
-			</then>
-			<elseif>
-				<equals arg1="${database.type}" arg2="oracle" />
-				<then>
-					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
-
-jdbc.default.acquireIncrement=1
-jdbc.default.maxPoolSize=5
-jdbc.default.minPoolSize=1
-jdbc.default.numHelperThreads=1</echo>
-				</then>
-			</elseif>
-			<elseif>
-				<equals arg1="${database.type}" arg2="sybase" />
-				<then>
-					<echo file="portal-impl/test/portal-test-ext.properties" append="true">
-
-hibernate.dialect=org.hibernate.dialect.SybaseDialect
-custom.sql.function.isnull=CONVERT(VARCHAR,?) IS NULL
-custom.sql.function.isnotnull=CONVERT(VARCHAR,?) IS NOT NULL</echo>
-				</then>
-			</elseif>
-		</if>
-	</target>
-
 	<target name="prepare-virtual-host-name-properties">
 		<if>
 			<isset property="virtual.host.name" />

@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
@@ -166,6 +167,15 @@ public class DocumentImpl implements Document {
 		String name, InputStream is, String fileExt, int maxStringLength) {
 
 		addText(name, FileUtil.extractText(is, fileExt, maxStringLength));
+	}
+
+	@Override
+	public void addGeoLocation(double latitude, double longitude) {
+		Field field = new Field(Field.GEO_LOCATION);
+
+		field.setGeoLocationPoint(new GeoLocationPoint(latitude, longitude));
+
+		add(field);
 	}
 
 	@Override

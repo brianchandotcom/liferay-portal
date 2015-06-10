@@ -143,9 +143,9 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	protected void addStructureVersion(
 			long structureVersionId, long groupId, long companyId, long userId,
 			String userName, Timestamp createDate, long structureId,
-			String name, String description, String definition,
-			String storageType, int type, int status, long statusByUserId,
-			String statusByUserName, Timestamp statusDate)
+			long parentStructureId, String name, String description,
+			String definition, String storageType, int type, int status,
+			long statusByUserId, String statusByUserName, Timestamp statusDate)
 		throws Exception {
 
 		Connection con = null;
@@ -158,10 +158,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 			sb.append("insert into DDMStructureVersion (structureVersionId, ");
 			sb.append("groupId, companyId, userId, userName, createDate, ");
-			sb.append("structureId, version, name, description, definition, ");
-			sb.append("storageType, type_, status, statusByUserId, ");
-			sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ");
-			sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+			sb.append("structureId, version, parentStructureId, name, ");
+			sb.append("description, definition, storageType, type_, status, ");
+			sb.append("statusByUserId, statusByUserName, statusDate) values ");
+			sb.append("(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 			String sql = sb.toString();
 
@@ -175,15 +175,16 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			ps.setTimestamp(6, createDate);
 			ps.setLong(7, structureId);
 			ps.setString(8, DDMStructureConstants.VERSION_DEFAULT);
-			ps.setString(9, name);
-			ps.setString(10, description);
-			ps.setString(11, definition);
-			ps.setString(12, storageType);
-			ps.setInt(13, type);
-			ps.setInt(14, status);
-			ps.setLong(15, statusByUserId);
-			ps.setString(16, statusByUserName);
-			ps.setTimestamp(17, statusDate);
+			ps.setLong(9, parentStructureId);
+			ps.setString(10, name);
+			ps.setString(11, description);
+			ps.setString(12, definition);
+			ps.setString(13, storageType);
+			ps.setInt(14, type);
+			ps.setInt(15, status);
+			ps.setLong(16, statusByUserId);
+			ps.setString(17, statusByUserName);
+			ps.setTimestamp(18, statusDate);
 
 			ps.executeUpdate();
 		}
@@ -633,6 +634,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 				long userId = rs.getLong("userId");
 				String userName = rs.getString("userName");
 				Timestamp modifiedDate = rs.getTimestamp("modifiedDate");
+				long parentStructureId = rs.getLong("parentStructureId");
 				String name = rs.getString("name");
 				String description = rs.getString("description");
 				String storageType = rs.getString("storageType");
@@ -650,9 +652,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 				addStructureVersion(
 					structureVersionId, groupId, companyId, userId, userName,
-					modifiedDate, structureId, name, description, definition,
-					storageType, type, WorkflowConstants.STATUS_APPROVED,
-					userId, userName, modifiedDate);
+					modifiedDate, structureId, parentStructureId, name,
+					description, definition, storageType, type,
+					WorkflowConstants.STATUS_APPROVED, userId, userName,
+					modifiedDate);
 
 				String ddmFormLayoutDefinition =
 					getDefaultDDMFormLayoutDefinition(ddmForm);

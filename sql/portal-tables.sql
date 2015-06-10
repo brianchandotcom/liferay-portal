@@ -457,6 +457,7 @@ create table DDMStructureVersion (
 	createDate DATE null,
 	structureId LONG,
 	version VARCHAR(75) null,
+	parentStructureId LONG,
 	name STRING null,
 	description STRING null,
 	definition TEXT null,

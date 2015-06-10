@@ -23,6 +23,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
+import com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
@@ -34,6 +35,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Eduardo Lundgren
  * @author Marcellus Tavares
+ * @author Leonardo Barros
  */
 public class DDMUtil {
 
@@ -65,6 +67,12 @@ public class DDMUtil {
 		DDMStructure ddmStructure, String script) {
 
 		return getDDM().getDDMFormFieldsJSONArray(ddmStructure, script);
+	}
+
+	public static JSONArray getDDMFormFieldsJSONArray(
+		DDMStructureVersion ddmStructureVersion, String script) {
+
+		return getDDM().getDDMFormFieldsJSONArray(ddmStructureVersion, script);
 	}
 
 	public static DDMPermissionHandler getDDMPermissionHandler(

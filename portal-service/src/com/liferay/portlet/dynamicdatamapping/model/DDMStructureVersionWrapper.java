@@ -61,6 +61,7 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("structureId", getStructureId());
 		attributes.put("version", getVersion());
+		attributes.put("parentStructureId", getParentStructureId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("definition", getDefinition());
@@ -122,6 +123,12 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Long parentStructureId = (Long)attributes.get("parentStructureId");
+
+		if (parentStructureId != null) {
+			setParentStructureId(parentStructureId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -222,6 +229,17 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public Date getCreateDate() {
 		return _ddmStructureVersion.getCreateDate();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
+		return _ddmStructureVersion.getDDMForm();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout getDDMFormLayout()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersion.getDDMFormLayout();
 	}
 
 	@Override
@@ -410,6 +428,16 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	/**
+	* Returns the parent structure ID of this d d m structure version.
+	*
+	* @return the parent structure ID of this d d m structure version
+	*/
+	@Override
+	public long getParentStructureId() {
+		return _ddmStructureVersion.getParentStructureId();
+	}
+
+	/**
 	* Returns the primary key of this d d m structure version.
 	*
 	* @return the primary key of this d d m structure version
@@ -482,6 +510,12 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public java.lang.String getStorageType() {
 		return _ddmStructureVersion.getStorageType();
+	}
+
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getStructure()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmStructureVersion.getStructure();
 	}
 
 	/**
@@ -697,6 +731,12 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 		_ddmStructureVersion.setCreateDate(createDate);
 	}
 
+	@Override
+	public void setDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+		_ddmStructureVersion.setDDMForm(ddmForm);
+	}
+
 	/**
 	* Sets the definition of this d d m structure version.
 	*
@@ -863,6 +903,16 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public void setNew(boolean n) {
 		_ddmStructureVersion.setNew(n);
+	}
+
+	/**
+	* Sets the parent structure ID of this d d m structure version.
+	*
+	* @param parentStructureId the parent structure ID of this d d m structure version
+	*/
+	@Override
+	public void setParentStructureId(long parentStructureId) {
+		_ddmStructureVersion.setParentStructureId(parentStructureId);
 	}
 
 	/**

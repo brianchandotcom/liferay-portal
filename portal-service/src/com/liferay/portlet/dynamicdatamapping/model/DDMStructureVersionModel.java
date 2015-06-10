@@ -197,6 +197,20 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	public void setVersion(String version);
 
 	/**
+	 * Returns the parent structure ID of this d d m structure version.
+	 *
+	 * @return the parent structure ID of this d d m structure version
+	 */
+	public long getParentStructureId();
+
+	/**
+	 * Sets the parent structure ID of this d d m structure version.
+	 *
+	 * @param parentStructureId the parent structure ID of this d d m structure version
+	 */
+	public void setParentStructureId(long parentStructureId);
+
+	/**
 	 * Returns the name of this d d m structure version.
 	 *
 	 * @return the name of this d d m structure version

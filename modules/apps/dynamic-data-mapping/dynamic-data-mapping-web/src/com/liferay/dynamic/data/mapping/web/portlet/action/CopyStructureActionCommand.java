@@ -14,15 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
-import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,6 +29,15 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
+
+import java.util.Locale;
+import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
@@ -61,13 +61,9 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 			portletRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(portletRequest, "description");
-		
-		int status = ParamUtil.getInteger(portletRequest, "status");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			DDMStructure.class.getName(), portletRequest);
-		
-		serviceContext.setAttribute("status", status);
 
 		DDMStructure structure = _ddmStructureService.copyStructure(
 			classPK, nameMap, descriptionMap, serviceContext);

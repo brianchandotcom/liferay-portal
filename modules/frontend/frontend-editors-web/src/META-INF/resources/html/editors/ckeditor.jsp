@@ -442,11 +442,11 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			<%
 			ItemSelectorCriterion urlItemSelectorCriterion = new URLItemSelectorCriterion();
 
-			Set<ItemSelectorReturnType> urlDesiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
+			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
 
-			urlDesiredItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
+			desiredItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
 
-			urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(urlDesiredItemSelectorReturnTypes);
+			urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
 
 			PortletURL urlItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", urlItemSelectorCriterion);
 			%>
@@ -469,11 +469,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 				imageItemSelectorCriterion = new ImageItemSelectorCriterion();
 			}
 
-			Set<ItemSelectorReturnType> imageItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
-
-			imageItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
-
-			imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(imageItemSelectorReturnTypes);
+			imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
 
 			PortletURL imageItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", imageItemSelectorCriterion);
 			%>

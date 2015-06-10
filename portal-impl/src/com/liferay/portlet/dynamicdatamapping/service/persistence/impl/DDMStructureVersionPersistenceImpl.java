@@ -1710,6 +1710,7 @@ public class DDMStructureVersionPersistenceImpl extends BasePersistenceImpl<DDMS
 		ddmStructureVersionImpl.setCreateDate(ddmStructureVersion.getCreateDate());
 		ddmStructureVersionImpl.setStructureId(ddmStructureVersion.getStructureId());
 		ddmStructureVersionImpl.setVersion(ddmStructureVersion.getVersion());
+		ddmStructureVersionImpl.setParentStructureId(ddmStructureVersion.getParentStructureId());
 		ddmStructureVersionImpl.setName(ddmStructureVersion.getName());
 		ddmStructureVersionImpl.setDescription(ddmStructureVersion.getDescription());
 		ddmStructureVersionImpl.setDefinition(ddmStructureVersion.getDefinition());

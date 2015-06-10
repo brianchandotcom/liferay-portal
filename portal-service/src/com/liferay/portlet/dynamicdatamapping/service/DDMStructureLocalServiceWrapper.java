@@ -1194,6 +1194,15 @@ public class DDMStructureLocalServiceWrapper implements DDMStructureLocalService
 		return _ddmStructureLocalService.hasDLFileEntryTypeDDMStructures(fileEntryTypeId);
 	}
 
+	@Override
+	public void revertStructure(long userId, long structureId,
+		java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmStructureLocalService.revertStructure(userId, structureId, version,
+			serviceContext);
+	}
+
 	/**
 	* Returns an ordered range of all the structures matching the groups and
 	* class name IDs, and matching the keywords in the structure names and

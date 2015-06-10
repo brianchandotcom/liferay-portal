@@ -131,6 +131,8 @@ public class DDMStructureVersionPersistenceTest {
 
 		newDDMStructureVersion.setVersion(RandomTestUtil.randomString());
 
+		newDDMStructureVersion.setParentStructureId(RandomTestUtil.nextLong());
+
 		newDDMStructureVersion.setName(RandomTestUtil.randomString());
 
 		newDDMStructureVersion.setDescription(RandomTestUtil.randomString());
@@ -170,6 +172,8 @@ public class DDMStructureVersionPersistenceTest {
 			newDDMStructureVersion.getStructureId());
 		Assert.assertEquals(existingDDMStructureVersion.getVersion(),
 			newDDMStructureVersion.getVersion());
+		Assert.assertEquals(existingDDMStructureVersion.getParentStructureId(),
+			newDDMStructureVersion.getParentStructureId());
 		Assert.assertEquals(existingDDMStructureVersion.getName(),
 			newDDMStructureVersion.getName());
 		Assert.assertEquals(existingDDMStructureVersion.getDescription(),
@@ -241,10 +245,10 @@ public class DDMStructureVersionPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("DDMStructureVersion",
 			"structureVersionId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"structureId", true, "version", true, "name", true, "description",
-			true, "definition", true, "storageType", true, "type", true,
-			"status", true, "statusByUserId", true, "statusByUserName", true,
-			"statusDate", true);
+			"structureId", true, "version", true, "parentStructureId", true,
+			"name", true, "description", true, "definition", true,
+			"storageType", true, "type", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -479,6 +483,8 @@ public class DDMStructureVersionPersistenceTest {
 		ddmStructureVersion.setStructureId(RandomTestUtil.nextLong());
 
 		ddmStructureVersion.setVersion(RandomTestUtil.randomString());
+
+		ddmStructureVersion.setParentStructureId(RandomTestUtil.nextLong());
 
 		ddmStructureVersion.setName(RandomTestUtil.randomString());
 

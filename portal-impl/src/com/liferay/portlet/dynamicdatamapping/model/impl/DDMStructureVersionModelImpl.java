@@ -85,6 +85,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			{ "createDate", Types.TIMESTAMP },
 			{ "structureId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
+			{ "parentStructureId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "definition", Types.CLOB },
@@ -95,7 +96,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			{ "statusByUserName", Types.VARCHAR },
 			{ "statusDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description STRING null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureVersion.structureVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructureVersion.structureVersionId ASC";
@@ -137,6 +138,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setStructureId(soapModel.getStructureId());
 		model.setVersion(soapModel.getVersion());
+		model.setParentStructureId(soapModel.getParentStructureId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setDefinition(soapModel.getDefinition());
@@ -219,6 +221,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		attributes.put("createDate", getCreateDate());
 		attributes.put("structureId", getStructureId());
 		attributes.put("version", getVersion());
+		attributes.put("parentStructureId", getParentStructureId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("definition", getDefinition());
@@ -283,6 +286,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 		if (version != null) {
 			setVersion(version);
+		}
+
+		Long parentStructureId = (Long)attributes.get("parentStructureId");
+
+		if (parentStructureId != null) {
+			setParentStructureId(parentStructureId);
 		}
 
 		String name = (String)attributes.get("name");
@@ -474,6 +483,17 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	public String getOriginalVersion() {
 		return GetterUtil.getString(_originalVersion);
+	}
+
+	@JSON
+	@Override
+	public long getParentStructureId() {
+		return _parentStructureId;
+	}
+
+	@Override
+	public void setParentStructureId(long parentStructureId) {
+		_parentStructureId = parentStructureId;
 	}
 
 	@JSON
@@ -798,6 +818,14 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		_statusDate = statusDate;
 	}
 
+	public com.liferay.portlet.dynamicdatamapping.model.DDMForm getDDMForm() {
+		return null;
+	}
+
+	public void setDDMForm(
+		com.liferay.portlet.dynamicdatamapping.model.DDMForm ddmForm) {
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #isApproved}
 	 */
@@ -1008,6 +1036,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		ddmStructureVersionImpl.setCreateDate(getCreateDate());
 		ddmStructureVersionImpl.setStructureId(getStructureId());
 		ddmStructureVersionImpl.setVersion(getVersion());
+		ddmStructureVersionImpl.setParentStructureId(getParentStructureId());
 		ddmStructureVersionImpl.setName(getName());
 		ddmStructureVersionImpl.setDescription(getDescription());
 		ddmStructureVersionImpl.setDefinition(getDefinition());
@@ -1089,6 +1118,8 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 		ddmStructureVersionModelImpl._setOriginalStatus = false;
 
+		setDDMForm(null);
+
 		ddmStructureVersionModelImpl._columnBitmask = 0;
 	}
 
@@ -1130,6 +1161,8 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		if ((version != null) && (version.length() == 0)) {
 			ddmStructureVersionCacheModel.version = null;
 		}
+
+		ddmStructureVersionCacheModel.parentStructureId = getParentStructureId();
 
 		ddmStructureVersionCacheModel.name = getName();
 
@@ -1186,12 +1219,14 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			ddmStructureVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		ddmStructureVersionCacheModel._ddmForm = getDDMForm();
+
 		return ddmStructureVersionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(35);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("{structureVersionId=");
 		sb.append(getStructureVersionId());
@@ -1209,6 +1244,8 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		sb.append(getStructureId());
 		sb.append(", version=");
 		sb.append(getVersion());
+		sb.append(", parentStructureId=");
+		sb.append(getParentStructureId());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1234,7 +1271,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(55);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -1272,6 +1309,10 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		sb.append(
 			"<column><column-name>version</column-name><column-value><![CDATA[");
 		sb.append(getVersion());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>parentStructureId</column-name><column-value><![CDATA[");
+		sb.append(getParentStructureId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1330,6 +1371,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	private boolean _setOriginalStructureId;
 	private String _version;
 	private String _originalVersion;
+	private long _parentStructureId;
 	private String _name;
 	private String _nameCurrentLanguageId;
 	private String _description;

@@ -31,6 +31,8 @@ public class Sort implements Serializable {
 
 	public static final int FLOAT_TYPE = 5;
 
+	public static final int GEO_DISTANCE_TYPE = 10;
+
 	public static final int INT_TYPE = 4;
 
 	public static final int LONG_TYPE = 6;

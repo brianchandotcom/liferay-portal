@@ -90,7 +90,19 @@ public class GradleUtil {
 		Project project, String configurationName, String group, String name,
 		String version, boolean transitive) {
 
+		return addDependency(
+			project, configurationName, group, name, version, null, transitive);
+	}
+
+	public static Dependency addDependency(
+		Project project, String configurationName, String group, String name,
+		String version, String classifier, boolean transitive) {
+
 		Map<String, Object> dependencyNotation = new HashMap<>();
+
+		if (Validator.isNotNull(classifier)) {
+			dependencyNotation.put("classifier", classifier);
+		}
 
 		dependencyNotation.put("group", group);
 		dependencyNotation.put("name", name);

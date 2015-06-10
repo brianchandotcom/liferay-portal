@@ -38,16 +38,18 @@ DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
 		url="<%= viewStructureVersionURL %>"
 	/>
 
-	<portlet:actionURL name="revertStructure" var="revertURL">
-		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
-		<portlet:param name="structureId" value="<%= String.valueOf(structureVersion.getStructureId()) %>" />
-		<portlet:param name="version" value="<%= structureVersion.getVersion() %>" />
-	</portlet:actionURL>
+	<c:if test="<%= structureVersion.isApproved() %>">
+		<portlet:actionURL name="revertStructure" var="revertURL">
+			<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="structureId" value="<%= String.valueOf(structureVersion.getStructureId()) %>" />
+			<portlet:param name="version" value="<%= structureVersion.getVersion() %>" />
+		</portlet:actionURL>
 
-	<liferay-ui:icon
-		iconCssClass="icon-undo"
-		message="revert"
-		url="<%= revertURL %>"
-	/>
+		<liferay-ui:icon
+			iconCssClass="icon-undo"
+			message="revert"
+			url="<%= revertURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

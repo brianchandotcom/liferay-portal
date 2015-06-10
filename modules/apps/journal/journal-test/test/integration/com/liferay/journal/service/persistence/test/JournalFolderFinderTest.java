@@ -36,12 +36,18 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Zsolt Berentey
@@ -76,6 +82,20 @@ public class JournalFolderFinderTest {
 
 		JournalArticleLocalServiceUtil.moveArticleToTrash(
 			TestPropsValues.getUserId(), article);
+
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_bundleContext = bundle.getBundleContext();
+
+		_serviceReference = _bundleContext.getServiceReference(
+			JournalFolderFinder.class);
+
+		_journalFolderFinder = _bundleContext.getService(_serviceReference);
+	}
+
+	@After
+	public void tearDown() {
+		_bundleContext.ungetService(_serviceReference);
 	}
 
 	@Test
@@ -86,21 +106,21 @@ public class JournalFolderFinderTest {
 
 		Assert.assertEquals(
 			3,
-			JournalFolderFinderUtil.countF_A_ByG_F(
+			_journalFolderFinder.countF_A_ByG_F(
 				_group.getGroupId(), _folder1.getFolderId(), queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
 		Assert.assertEquals(
 			1,
-			JournalFolderFinderUtil.countF_A_ByG_F(
+			_journalFolderFinder.countF_A_ByG_F(
 				_group.getGroupId(), _folder1.getFolderId(), queryDefinition));
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
 		Assert.assertEquals(
 			2,
-			JournalFolderFinderUtil.countF_A_ByG_F(
+			_journalFolderFinder.countF_A_ByG_F(
 				_group.getGroupId(), _folder1.getFolderId(), queryDefinition));
 	}
 
@@ -110,7 +130,7 @@ public class JournalFolderFinderTest {
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
-		List<Object> results = JournalFolderFinderUtil.findF_A_ByG_F(
+		List<Object> results = _journalFolderFinder.findF_A_ByG_F(
 			_group.getGroupId(), _folder1.getFolderId(), queryDefinition);
 
 		Assert.assertEquals(3, results.size());
@@ -134,7 +154,7 @@ public class JournalFolderFinderTest {
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH);
 
-		results = JournalFolderFinderUtil.findF_A_ByG_F(
+		results = _journalFolderFinder.findF_A_ByG_F(
 			_group.getGroupId(), _folder1.getFolderId(), queryDefinition);
 
 		Assert.assertEquals(1, results.size());
@@ -155,7 +175,7 @@ public class JournalFolderFinderTest {
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 
-		results = JournalFolderFinderUtil.findF_A_ByG_F(
+		results = _journalFolderFinder.findF_A_ByG_F(
 			_group.getGroupId(), _folder1.getFolderId(), queryDefinition);
 
 		Assert.assertEquals(2, results.size());
@@ -182,8 +202,7 @@ public class JournalFolderFinderTest {
 
 		LastSessionRecorderUtil.syncLastSessionState();
 
-		List<JournalFolder> folders =
-			JournalFolderFinderUtil.findF_ByNoAssets();
+		List<JournalFolder> folders = _journalFolderFinder.findF_ByNoAssets();
 
 		Assert.assertEquals(1, folders.size());
 
@@ -192,8 +211,11 @@ public class JournalFolderFinderTest {
 		Assert.assertEquals(_folder2.getFolderId(), folder.getFolderId());
 	}
 
+	private BundleContext _bundleContext;
 	private JournalFolder _folder1;
 	private JournalFolder _folder2;
 	private Group _group;
+	private JournalFolderFinder _journalFolderFinder;
+	private ServiceReference<JournalFolderFinder> _serviceReference;
 
 }

@@ -6,8 +6,8 @@ AUI.add(
 		var DefinitionSerializer = A.Component.create(
 			{
 				ATTRS: {
-					columnHandler: {
-						valueFn: '_valueColumnHandler'
+					fieldHandler: {
+						valueFn: '_valueFieldHandler'
 					},
 
 					fields: {
@@ -40,18 +40,6 @@ AUI.add(
 						return definition;
 					},
 
-					serializeColumn: function(column) {
-						var instance = this;
-
-						var value = column.get('value');
-
-						if (A.instanceOf(value, Liferay.DDM.Renderer.Field)) {
-							var field = instance.serializeField(value);
-
-							instance.get('fields').push(field);
-						}
-					},
-
 					serializeField: function(field) {
 						var instance = this;
 
@@ -68,19 +56,21 @@ AUI.add(
 							}
 						);
 
-						return A.merge(
-							config,
-							{
-								dataType: 'string',
-								type: field.get('fieldType')
-							}
+						instance.get('fields').push(
+							A.merge(
+								config,
+								{
+									dataType: 'string',
+									type: field.get('fieldType')
+								}
+							)
 						);
 					},
 
-					_valueColumnHandler: function() {
+					_valueFieldHandler: function() {
 						var instance = this;
 
-						return instance.serializeColumn;
+						return instance.serializeField;
 					}
 				}
 			}

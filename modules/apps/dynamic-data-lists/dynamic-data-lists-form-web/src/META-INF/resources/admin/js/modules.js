@@ -36,6 +36,7 @@
 							path: 'form_layout_deserializer.js',
 							requires: [
 								'aui-layout',
+								'aui-form-builder-field-list',
 								'liferay-ddl-form-builder-field-support',
 								'liferay-ddm-form-field-types'
 							]
@@ -51,6 +52,7 @@
 						'liferay-ddl-form-builder-layout-visitor': {
 							path: 'form_layout_visitor.js',
 							requires: [
+								'aui-form-builder-field-list',
 								'aui-layout'
 							]
 						},

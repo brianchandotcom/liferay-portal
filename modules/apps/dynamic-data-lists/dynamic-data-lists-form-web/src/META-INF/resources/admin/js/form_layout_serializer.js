@@ -61,10 +61,21 @@ AUI.add(
 					serializeColumn: function(column) {
 						var instance = this;
 
-						return {
-							fieldName: column.get('value').get('name'),
+						var fieldsList = column.get('value');
+
+						var serializedColumn = {
 							size: column.get('size')
 						};
+
+						if (A.instanceOf(fieldsList, A.FormBuilderFieldList)) {
+							var fields = fieldsList.get('fields');
+
+							if (fields.length > 0) {
+								serializedColumn.fieldName = fields[0].get('name');
+							}
+						}
+
+						return serializedColumn;
 					},
 
 					serializePage: function(page, index) {
@@ -94,22 +105,6 @@ AUI.add(
 						return {
 							columns: instance.visitColumns(row.get('cols'))
 						};
-					},
-
-					visitColumns: function(columns) {
-						var instance = this;
-
-						return AArray.map(
-							AArray.filter(
-								columns,
-								function(item) {
-									var value = item.get('value');
-
-									return A.instanceOf(value, Field);
-								}
-							),
-							A.bind('visitColumn', instance)
-						);
 					}
 				}
 			}
@@ -119,6 +114,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-layout', 'json', 'liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-renderer-field']
+		requires: ['liferay-ddl-form-builder-layout-visitor', 'liferay-ddm-form-renderer-field']
 	}
 );

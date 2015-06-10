@@ -11,6 +11,10 @@ AUI.add(
 						value: EMPTY_FN
 					},
 
+					fieldHandler: {
+						value: EMPTY_FN
+					},
+
 					layouts: {
 						value: []
 					},
@@ -40,6 +44,12 @@ AUI.add(
 
 						var columnHandler = instance.get('columnHandler');
 
+						var fieldsList = column.get('value');
+
+						if (A.instanceOf(fieldsList, A.FormBuilderFieldList)) {
+							instance.visitFields(fieldsList.get('fields'));
+						}
+
 						return columnHandler.apply(instance, arguments);
 					},
 
@@ -47,6 +57,20 @@ AUI.add(
 						var instance = this;
 
 						return AArray.map(columns, A.bind('visitColumn', instance));
+					},
+
+					visitField: function(field) {
+						var instance = this;
+
+						var fieldHandler = instance.get('fieldHandler');
+
+						return fieldHandler.apply(instance, arguments);
+					},
+
+					visitFields: function(fields) {
+						var instance = this;
+
+						return AArray.map(fields, A.bind('visitField', instance));
 					},
 
 					visitPage: function(page, index) {
@@ -88,6 +112,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-layout']
+		requires: ['aui-form-builder-field-list', 'aui-layout']
 	}
 );

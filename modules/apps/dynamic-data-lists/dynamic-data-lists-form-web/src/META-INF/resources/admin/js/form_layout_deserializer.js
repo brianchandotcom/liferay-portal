@@ -53,10 +53,13 @@ AUI.add(
 						);
 
 						if (column.fieldName) {
-							deserializedColumn.set(
-								'value',
-								instance.deserializeField(deserializedColumn, column.fieldName)
+							var fieldsList = new A.FormBuilderFieldList(
+								{
+									fields: [instance.deserializeField(deserializedColumn, column.fieldName)]
+								}
 							);
+
+							deserializedColumn.set('value', fieldsList);
 						}
 
 						return deserializedColumn;
@@ -171,6 +174,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-layout', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-layout', 'aui-form-builder-field-list', 'liferay-ddl-form-builder-field', 'liferay-ddl-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer-util']
 	}
 );

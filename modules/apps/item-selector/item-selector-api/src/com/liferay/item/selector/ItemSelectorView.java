@@ -33,7 +33,7 @@ public interface ItemSelectorView
 
 	public Class<T> getItemSelectorCriterionClass();
 
-	public Set<S> getItemSelectorSupportedReturnTypes();
+	public Set<S> getSupportedItemSelectorReturnTypes();
 
 	public String getTitle(Locale locale);
 

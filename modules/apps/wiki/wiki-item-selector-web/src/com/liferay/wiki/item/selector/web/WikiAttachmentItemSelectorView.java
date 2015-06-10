@@ -58,9 +58,9 @@ public class WikiAttachmentItemSelectorView
 
 	@Override
 	public Set<DefaultItemSelectorReturnType>
-		getItemSelectorSupportedReturnTypes() {
+		getSupportedItemSelectorReturnTypes() {
 
-		return _WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
+		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
 	}
 
 	@Override
@@ -92,10 +92,10 @@ public class WikiAttachmentItemSelectorView
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
-		_WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES = new HashSet<>();
 
 	static {
-		_WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
+		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
 			DefaultItemSelectorReturnType.URL);
 	}
 

@@ -177,7 +177,7 @@ public class ItemSelectorCriterionSerializer<T extends ItemSelectorCriterion> {
 
 		if (desiredItemSelectorReturnTypes.isEmpty()) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("No valid item selector return types found");
+				_log.warn("No valid desired item selector return types found");
 			}
 		}
 

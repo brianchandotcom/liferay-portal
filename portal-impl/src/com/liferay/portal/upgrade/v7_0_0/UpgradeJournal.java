@@ -184,8 +184,10 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			addStructureVersion(
 				ddmStructureVersionId, groupId, companyId,
 				getDefaultUserId(companyId), StringPool.BLANK, now,
-				ddmStructureId, localizedName, localizedDescription, definition,
-				storageType, DDMStructureConstants.TYPE_DEFAULT,
+				ddmStructureId,
+				DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
+				localizedName, localizedDescription, definition, storageType,
+				DDMStructureConstants.TYPE_DEFAULT,
 				WorkflowConstants.STATUS_APPROVED, getDefaultUserId(companyId),
 				StringPool.BLANK, now);
 

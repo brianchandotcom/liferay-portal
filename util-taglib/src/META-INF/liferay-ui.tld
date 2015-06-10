@@ -1521,6 +1521,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates a <![CDATA[<code>liferay-ui:error</code>]]> component to display PrincipalException-related error messages.</description>
+		<name>error-principal</name>
+		<tag-class>com.liferay.taglib.ui.ErrorPrincipalTag</tag-class>
+	</tag>
+	<tag>
 		<description>Creates a flag icon that lets users report inappropriate content.</description>
 		<name>flags</name>
 		<tag-class>com.liferay.taglib.ui.FlagsTag</tag-class>

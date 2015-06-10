@@ -167,7 +167,7 @@
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Comments#ENTRY_COUNT_PANEL" value1="${commentCount} Comments" />
-		<execute function="AssertTextEquals" locator1="CPBlogsEntry#COMMENT" value1="${entryComment}" />
+		<execute function="AssertTextEquals" locator1="Comments#COMMENT_BODY" value1="${entryComment}" />
 	</command>
 
 	<command name="viewDefaultCP">

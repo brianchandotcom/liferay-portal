@@ -5906,6 +5906,14 @@ jdbc.default.username=${database.username}
 jdbc.default.password=${database.password}]]></echo>
 	</target>
 
+	<target name="set-portal-impl-portal-test-ext-properties">
+		<get-database-property property.name="database.username" />
+
+		<echo file="portal-impl/test/portal-test-ext.properties"><![CDATA[liferay.home=${project.dir}
+jdbc.default.username=${database.username}
+module.framework.base.dir=${project.dir}/osgi]]></echo>
+	</target>
+
 	<target name="setup-testable-tomcat">
 		<setup-testable-tomcat />
 	</target>

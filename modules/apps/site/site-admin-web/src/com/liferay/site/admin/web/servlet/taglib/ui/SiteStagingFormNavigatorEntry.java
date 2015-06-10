@@ -23,7 +23,10 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -68,6 +71,15 @@ public class SiteStagingFormNavigatorEntry extends BaseSiteFormNavigatorEntry {
 	@Override
 	protected String getJspPath() {
 		return "/site/staging.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 
 }

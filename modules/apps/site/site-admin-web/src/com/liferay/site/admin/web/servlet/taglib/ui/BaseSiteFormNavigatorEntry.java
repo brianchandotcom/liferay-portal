@@ -34,7 +34,11 @@ public abstract class BaseSiteFormNavigatorEntry
 
 	@Override
 	protected ServletContext getServletContext(HttpServletRequest request) {
-		return request.getServletContext();
+		return servletContext;
 	}
+
+	protected abstract void setServletContext(ServletContext servletContext);
+
+	protected ServletContext servletContext;
 
 }

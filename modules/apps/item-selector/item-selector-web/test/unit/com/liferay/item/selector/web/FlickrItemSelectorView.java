@@ -14,11 +14,13 @@
 
 package com.liferay.item.selector.web;
 
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.item.selector.ItemSelectorView;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 

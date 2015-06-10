@@ -16,7 +16,6 @@ AUI.add(
 		var FormBuilderFieldSupport = function() {};
 
 		FormBuilderFieldSupport.ATTRS = {
-			// TODO - Remove this. Not consistent
 			content: {
 				getter: function() {
 					var instance = this;

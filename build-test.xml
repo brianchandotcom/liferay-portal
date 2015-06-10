@@ -1459,37 +1459,20 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 								<arg line="${app.server.start.executable.arg.line}" />
 							</exec>
+
+							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
 						</then>
 						<else>
 							<parallel>
+								<sequential>
+									<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" />
+								</sequential>
 								<daemons>
-									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
+									<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" failonerror="true" resolveexecutable="true">
 										<arg line="${app.server.start.executable.arg.line}" />
 									</exec>
 								</daemons>
 							</parallel>
-						</else>
-					</if>
-
-					<if>
-						<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
-						<then>
-							<waitfor maxwait="5" maxwaitunit="minute">
-								<http url="http://localhost:${test.app.server.leading.port.number}180/console" />
-							</waitfor>
-						</then>
-						<elseif>
-							<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
-							<then>
-								<waitfor maxwait="1" maxwaitunit="minute">
-									<http url="http://localhost:${test.app.server.leading.port.number}080" />
-								</waitfor>
-							</then>
-						</elseif>
-						<else>
-							<waitfor maxwait="5" maxwaitunit="minute">
-								<http url="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
-							</waitfor>
 						</else>
 					</if>
 				</then>
@@ -1620,6 +1603,37 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<record action="stop" name="log" />
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="wait-for-app-server">
+		<attribute name="app.server.bin.dir" />
+		<sequential>
+			<local name="app.server.waiting.url" />
+
+			<if>
+				<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.admin.bin.dir}" />
+				<then>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}180/console" />
+				</then>
+				<elseif>
+					<equals arg1="@{app.server.bin.dir}" arg2="${app.server.tcat.agent.bin.dir}" />
+					<then>
+						<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080" />
+					</then>
+				</elseif>
+				<else>
+					<property name="app.server.waiting.url" value="http://localhost:${test.app.server.leading.port.number}080/web/guest" />
+				</else>
+			</if>
+
+			<local name="app.server.waiting.timeout" />
+
+			<waitfor maxwait="5" maxwaitunit="minute" timeoutproperty="app.server.waiting.timeout">
+				<http url="${app.server.waiting.url}" />
+			</waitfor>
+
+			<fail if="app.server.waiting.timeout" message="App server waiting timeout on ${app.server.waiting.url}" />
 		</sequential>
 	</macrodef>
 

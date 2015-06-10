@@ -34,6 +34,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
@@ -274,6 +276,9 @@ public class JspServlet extends HttpServlet {
 
 	private static final Class<?>[] _INTERFACES = {ServletContext.class};
 
+	private static final Pattern _ORIGINAL_JSP = Pattern.compile(
+		"^(?<file>.*)(\\.(portal|original))(?<extension>\\.(jsp|jspf))$");
+
 	private Bundle[] _allParticipatingBundles;
 	private Bundle _bundle;
 	private final Bundle _jspBundle;
@@ -311,7 +316,15 @@ public class JspServlet extends HttpServlet {
 			return method.invoke(_servletContext, args);
 		}
 
-		private URL getExtension(String path, boolean isFiFo) {
+		private URL getExtension(String path) {
+			Matcher matcher = _ORIGINAL_JSP.matcher(path);
+
+			if (matcher.matches()) {
+				path = matcher.group("file") + matcher.group("extension");
+
+				return _bundle.getEntry("META-INF/resources" + path);
+			}
+
 			Enumeration<URL> enumeration = _bundle.findEntries(
 				"META-INF/resources", path.substring(1), false);
 
@@ -321,21 +334,7 @@ public class JspServlet extends HttpServlet {
 
 			List<URL> urls = Collections.list(enumeration);
 
-			if (isFiFo) {
-				return urls.get(0);
-			}
-
 			return urls.get(urls.size() - 1);
-		}
-
-		private String getOriginalResourcePath(String path) {
-			String resourceExtensionPattern = "(\\.portal\\.)(jsp|jspf)";
-
-			if (isOriginalJsporJspfPath(path)) {
-				path = path.replaceAll(resourceExtensionPattern, ".$2");
-			}
-
-			return path;
 		}
 
 		private URL getResource(String path) {
@@ -344,14 +343,10 @@ public class JspServlet extends HttpServlet {
 					path = '/' + path;
 				}
 
-				URL url = getExtension(path, false);
+				URL url = getExtension(path);
 
 				if (url != null) {
 					return url;
-				}
-
-				if ((url == null) && isOriginalJsporJspfPath(path)) {
-					path = getOriginalResourcePath(path);
 				}
 
 				url = _servletContext.getResource(path);
@@ -392,16 +387,7 @@ public class JspServlet extends HttpServlet {
 		}
 
 		private InputStream getResourceAsStream(String path) {
-			URL url = null;
-
-			if ((url == null) && isOriginalJsporJspfPath(path)) {
-				path = getOriginalResourcePath(path);
-
-				url = getExtension(path, true);
-			}
-			else {
-				url = getResource(path);
-			}
+			URL url = getResource(path);
 
 			if (url == null) {
 				return null;
@@ -434,12 +420,6 @@ public class JspServlet extends HttpServlet {
 			}
 
 			return paths;
-		}
-
-		private boolean isOriginalJsporJspfPath(String path) {
-			String resourcePathPattern = "^.*(\\.portal\\.)(jsp|jspf)$";
-
-			return path.matches(resourcePathPattern);
 		}
 
 		private final ServletContext _servletContext;

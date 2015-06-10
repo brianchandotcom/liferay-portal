@@ -44,7 +44,7 @@ public class MediaItemSelectorView
 	public Set<TestItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
-		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -66,10 +66,10 @@ public class MediaItemSelectorView
 	}
 
 	private static final Set<TestItemSelectorReturnType>
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES = new HashSet<>();
+		_supportedItemSelectorReturnTypes = new HashSet<>();
 
 	static {
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
+		_supportedItemSelectorReturnTypes.add(
 			TestItemSelectorReturnType.URL);
 	}
 

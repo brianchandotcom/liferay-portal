@@ -61,7 +61,7 @@ public class LayoutItemSelectorView
 	public Set<DefaultItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
-		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -91,10 +91,10 @@ public class LayoutItemSelectorView
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES = new HashSet<>();
+		_supportedItemSelectorReturnTypes = new HashSet<>();
 
 	static {
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
+		_supportedItemSelectorReturnTypes.add(
 			DefaultItemSelectorReturnType.URL);
 	}
 

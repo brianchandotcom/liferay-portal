@@ -43,7 +43,7 @@ public class DLFileItemSelectorView
 	public Set<DefaultItemSelectorReturnType>
 		getSupportedItemSelectorReturnTypes() {
 
-		return SUPPORTED_ITEM_SELECTOR_RETURN_TYPES;
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -55,12 +55,12 @@ public class DLFileItemSelectorView
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES = new HashSet<>();
+		_supportedItemSelectorReturnTypes = new HashSet<>();
 
 	static {
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
+		_supportedItemSelectorReturnTypes.add(
 			DefaultItemSelectorReturnType.FILE_ENTRY);
-		SUPPORTED_ITEM_SELECTOR_RETURN_TYPES.add(
+		_supportedItemSelectorReturnTypes.add(
 			DefaultItemSelectorReturnType.URL);
 	}
 

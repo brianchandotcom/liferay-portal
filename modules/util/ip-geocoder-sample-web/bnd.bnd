@@ -5,7 +5,6 @@ Import-Package:\
 	com.liferay.ip.geocoder,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
-	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
@@ -17,6 +16,8 @@ Import-Package:\
 	com.liferay.portal.servlet.filters.dynamiccss,\
 	com.liferay.portal.webserver,\
 	com.liferay.portlet,\
+	\
+	com.liferay.portlet.exportimport.lar,\
 	*
 Web-ContextPath: /ip-geocoder-sample-web
 

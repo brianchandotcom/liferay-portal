@@ -61,6 +61,7 @@ import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -88,6 +89,7 @@ import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.context.ServletContextHelper;
 import org.osgi.service.http.runtime.HttpServiceRuntime;
@@ -217,8 +219,13 @@ public class PortletTracker
 	}
 
 	@Activate
+	@Modified
 	protected void activate(ComponentContext componentContext) {
 		_componentContext = componentContext;
+
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+		}
 
 		BundleContext bundleContext = _componentContext.getBundleContext();
 
@@ -1016,6 +1023,25 @@ public class PortletTracker
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
+		Dictionary<String, Object> componentProperties =
+			_componentContext.getProperties();
+
+		for (Enumeration<String> keys = componentProperties.keys();
+				keys.hasMoreElements();) {
+
+			String key = keys.nextElement();
+
+			if (!key.startsWith(_JSP_SERVLET_INIT_PARAM)) {
+				continue;
+			}
+
+			String paramName =
+				_SERVLET_INIT_PARAM +
+					key.substring(_JSP_SERVLET_INIT_PARAM.length());
+
+			properties.put(paramName, componentProperties.get(key));
+		}
+
 		properties.put(
 			HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_SELECT,
 			contextName);
@@ -1211,7 +1237,11 @@ public class PortletTracker
 		}
 	}
 
+	private static final String _JSP_SERVLET_INIT_PARAM =
+		"jsp.servlet.init.param.";
 	private static final String _NAMESPACE = "com.liferay.portlet.";
+	private static final String _SERVLET_INIT_PARAM =
+		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 
 	private static final Log _log = LogFactoryUtil.getLog(PortletTracker.class);
 

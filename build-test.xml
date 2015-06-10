@@ -5893,6 +5893,19 @@ jdbc.default.password=${database.mysql.password}</echo>
 		</if>
 	</target>
 
+	<target name="set-portal-impl-portal-ext-properties">
+		<get-database-property property.name="database.driver" />
+		<get-database-property property.name="database.password" />
+		<get-database-property property.name="database.url" />
+		<get-database-property property.name="database.username" />
+
+		<echo file="portal-impl/src/portal-ext.properties"><![CDATA[liferay.home=${project.dir}
+jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}]]></echo>
+	</target>
+
 	<target name="setup-testable-tomcat">
 		<setup-testable-tomcat />
 	</target>

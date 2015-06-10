@@ -26,10 +26,11 @@ import java.util.Set;
 public class URLItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public URLItemSelectorCriterion() {
-		super(_AVAILABLE_RETURN_TYPES);
+		super(_availableItemSelectorReturnTypes);
 	}
 
-	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
-		getImmutableSet(DefaultItemSelectorReturnType.URL);
+	private static final Set<ItemSelectorReturnType>
+		_availableItemSelectorReturnTypes = getImmutableSet(
+			DefaultItemSelectorReturnType.URL);
 
 }

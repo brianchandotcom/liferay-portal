@@ -25,7 +25,7 @@ import java.util.Set;
 public class MediaItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public MediaItemSelectorCriterion() {
-		super(_AVAILABLE_RETURN_TYPES);
+		super(_availableItemSelectorReturnTypes);
 	}
 
 	public String getFileExtension() {
@@ -44,8 +44,8 @@ public class MediaItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_maxSize = maxSize;
 	}
 
-	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
-		getImmutableSet(
+	private static final Set<ItemSelectorReturnType>
+		_availableItemSelectorReturnTypes = getImmutableSet(
 			TestItemSelectorReturnType.FILE_ENTRY,
 			TestItemSelectorReturnType.URL);
 

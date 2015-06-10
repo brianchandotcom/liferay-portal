@@ -59,6 +59,10 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
+		if (!isEnabled(companyId)) {
+			return null;
+		}
+
 		String remoteAddr = request.getRemoteAddr();
 
 		if (isAccessAllowed(companyId, request)) {
@@ -125,6 +129,17 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		}
 
 		return SSOUtil.isAccessAllowed(request, hostsAllowed);
+	}
+
+	protected boolean isEnabled(long companyId) {
+		RequestHeaderAutoLoginConfiguration configuration = _getConfiguration(
+			companyId);
+
+		if (configuration == null) {
+			return false;
+		}
+
+		return configuration.enabled();
 	}
 
 	protected boolean isLDAPImportEnabled(long companyId) {

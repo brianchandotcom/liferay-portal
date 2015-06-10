@@ -29,9 +29,17 @@ public interface RequestHeaderAutoLoginConfiguration {
 			"Input a list of comma delimited IPs that can automatically " +
 			"authenticate via request headers. Input a blank list to allow " +
 			"any IP to automatically authenticate via request headers. " +
-			"SERVER_IP will be replaced with the IP of the host server."
+			"SERVER_IP will be replaced with the IP of the host server.",
+		required = false
 	)
 	public String authHostsAllowed();
+
+	@Meta.AD(
+		deflt = "false",
+		description = "Set this to true to enable RequestHeaderAutoLogin",
+		required = false
+	)
+	public boolean enabled();
 
 	@Meta.AD(
 		deflt = "false",

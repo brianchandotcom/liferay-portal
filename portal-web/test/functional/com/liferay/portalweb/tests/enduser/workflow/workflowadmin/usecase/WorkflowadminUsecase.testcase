@@ -36,7 +36,7 @@
 
 	<command known-issues="LRQA-12687" name="AddBlogsEntriesWithPortalScopeWorkflowAndAssertWorkflowScope" priority="5">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
 		<execute macro="Workflow#configurePortalWorkflow">
@@ -450,7 +450,7 @@
 
 	<command name="DeactivateAndActivateUploadedDefinition" priority="3">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -473,7 +473,7 @@
 
 	<command name="DeactivateAndDeleteUploadedDefinition" priority="4">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -494,7 +494,7 @@
 
 	<command name="UploadDefinition" priority="5">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">
@@ -631,7 +631,7 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<execute macro="Page#gotoMyAccount">

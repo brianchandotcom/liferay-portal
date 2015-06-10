@@ -190,8 +190,6 @@
 	</command>
 
 	<command name="configurePortalWorkflow">
-		<execute function="AssertClick" locator1="CPPortalWorkflowconfiguration#NAVIGATION_DEFAULT_CONFIGURATION" value1="Default Configuration" />
-
 		<execute function="Select" locator1="CPPortalWorkflowconfigurationDefaultconfiguration#${workflowResourceKey}" value1="${workflowDefinition}" />
 		<execute function="AssertClick" locator1="CPPortalWorkflowconfigurationDefaultconfiguration#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="CPPortalWorkflowconfigurationDefaultconfiguration#SUCCESS_MESSAGE" value1="Your request completed successfully." />
@@ -399,12 +397,10 @@
 
 	<command name="tearDownPortalWorkflow">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
 		<var name="noWorkflow" value="No Workflow" />
-
-		<execute function="Click" locator1="CPPortalWorkflowconfiguration#NAVIGATION_DEFAULT_CONFIGURATION" />
 
 		<execute function="Select" locator1="CPPortalWorkflowconfigurationDefaultconfiguration#RESOURCE_TABLE_PAGE_REVISION_SELECT" value1="${noWorkflow}" />
 		<execute function="Select" locator1="CPPortalWorkflowconfigurationDefaultconfiguration#RESOURCE_TABLE_USER_SELECT" value1="${noWorkflow}" />
@@ -447,7 +443,7 @@
 
 	<command name="tearDownSpecificWorkflowDefinition">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
@@ -484,7 +480,7 @@
 
 	<command name="tearDownWorkflowDefinitionsViaWorkflowCP">
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<while>

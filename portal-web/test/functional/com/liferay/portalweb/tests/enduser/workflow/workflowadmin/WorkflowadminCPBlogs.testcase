@@ -33,7 +33,7 @@
 		<description message="This is a use case for LPS-35577." />
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Definition" />
 		</execute>
 
 		<execute macro="Workflow#uploadDefinition">

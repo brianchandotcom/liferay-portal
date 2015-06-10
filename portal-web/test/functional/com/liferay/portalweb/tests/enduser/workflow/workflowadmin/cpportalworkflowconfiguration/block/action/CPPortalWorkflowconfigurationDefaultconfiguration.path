@@ -23,27 +23,6 @@
 	<td></td>
 	<td></td>
 </tr>
-<!--NAVIGATION-->
-<tr>
-	<td>NAVIGATION_DEFINITIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Definitions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_DEFAULT_CONFIGURATION</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Default Configuration')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>NAVIGATION_SUBMISSIONS</td>
-	<td>//ul[contains(@class,'nav') and contains(@class,'nav-tabs')]/li/a[contains(.,'Submissions')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
 <!--RESOURCE_TABLE-->
 <tr>
 	<td>RESOURCE_TABLE_PAGE_REVISION</td>

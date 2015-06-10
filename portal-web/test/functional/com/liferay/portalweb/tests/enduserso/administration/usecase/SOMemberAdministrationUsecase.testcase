@@ -58,7 +58,7 @@
 		</execute>
 
 		<execute macro="Page#gotoCP">
-			<var name="portletName" value="Workflow" />
+			<var name="portletName" value="Workflow Configuration" />
 		</execute>
 
 		<execute macro="Workflow#configurePortalWorkflow">

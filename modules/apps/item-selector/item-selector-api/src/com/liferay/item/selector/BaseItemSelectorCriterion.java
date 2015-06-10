@@ -42,8 +42,8 @@ public abstract class BaseItemSelectorCriterion
 				desiredItemSelectorReturnTypes)) {
 
 			throw new IllegalArgumentException(
-				"Desired return types must be a subset of available return " +
-					"types");
+				"Desired item selector return types must be a subset of " +
+					"available item selector return types");
 		}
 
 		_desiredItemSelectorReturnTypes = desiredItemSelectorReturnTypes;

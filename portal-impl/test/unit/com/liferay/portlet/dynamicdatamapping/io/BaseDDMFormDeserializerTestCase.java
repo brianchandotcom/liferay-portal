@@ -96,6 +96,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		testDecimalDDMFormField(ddmFormFieldsMap.get("Decimal3479"));
 		testDocumentLibraryDDMFormField(
 			ddmFormFieldsMap.get("Documents_and_Media4036"));
+		testHTMLDDMFormField(ddmFormFieldsMap.get("HTML4512"));
 		testNestedDDMFormFields(ddmFormFieldsMap.get("Text6980"));
 		testRadioDDMFormField(ddmFormFieldsMap.get("Radio5699"));
 	}
@@ -138,6 +139,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 	protected void testDateDDMFormField(DDMFormField ddmFormField) {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("date", ddmFormField.getDataType());
+		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
 		Assert.assertEquals("ddm-date", ddmFormField.getType());
 		Assert.assertTrue(ddmFormField.isShowLabel());
 	}
@@ -145,6 +147,7 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 	protected void testDecimalDDMFormField(DDMFormField ddmFormField) {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("double", ddmFormField.getDataType());
+		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
 		Assert.assertEquals("ddm-decimal", ddmFormField.getType());
 	}
 
@@ -157,7 +160,19 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 	protected void testDocumentLibraryDDMFormField(DDMFormField ddmFormField) {
 		Assert.assertNotNull(ddmFormField);
 		Assert.assertEquals("document-library", ddmFormField.getDataType());
+		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
 		Assert.assertEquals("ddm-documentlibrary", ddmFormField.getType());
+		Assert.assertTrue(ddmFormField.isShowLabel());
+	}
+
+	protected void testHTMLDDMFormField(DDMFormField ddmFormField) {
+		Assert.assertNotNull(ddmFormField);
+		Assert.assertEquals("html", ddmFormField.getDataType());
+		Assert.assertEquals("ddm", ddmFormField.getFieldNamespace());
+		Assert.assertEquals("ddm-text-html", ddmFormField.getType());
+		Assert.assertFalse(ddmFormField.isReadOnly());
+		Assert.assertFalse(ddmFormField.isRepeatable());
+		Assert.assertFalse(ddmFormField.isRequired());
 		Assert.assertTrue(ddmFormField.isShowLabel());
 	}
 

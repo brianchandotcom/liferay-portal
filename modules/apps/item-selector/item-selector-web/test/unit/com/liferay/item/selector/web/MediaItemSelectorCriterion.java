@@ -46,8 +46,8 @@ public class MediaItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	private static final Set<ItemSelectorReturnType> _AVAILABLE_RETURN_TYPES =
 		getInmutableSet(
-			TestItemSelectorReturnTypes.FILE_ENTRY,
-			TestItemSelectorReturnTypes.URL);
+			TestItemSelectorReturnType.FILE_ENTRY,
+			TestItemSelectorReturnType.URL);
 
 	private String _fileExtension = "*";
 	private long _maxSize = -1;

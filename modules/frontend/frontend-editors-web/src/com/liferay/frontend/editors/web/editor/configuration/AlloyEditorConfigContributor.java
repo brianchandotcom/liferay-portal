@@ -17,10 +17,9 @@ package com.liferay.frontend.editors.web.editor.configuration;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
-import com.liferay.item.selector.criteria.image.returnTypes.ImageItemSelectorReturnTypes;
 import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
-import com.liferay.item.selector.criteria.url.returnTypes.URLItemSelectorReturnTypes;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -202,7 +201,8 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		Set<ItemSelectorReturnType> urlItemSelectorDesiredReturnTypes =
 			new HashSet<>();
 
-		urlItemSelectorDesiredReturnTypes.add(URLItemSelectorReturnTypes.URL);
+		urlItemSelectorDesiredReturnTypes.add(
+			DefaultItemSelectorReturnType.URL);
 
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			new URLItemSelectorCriterion();
@@ -223,7 +223,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			new HashSet<>();
 
 		imageItemSelectorDesiredReturnTypes.add(
-			ImageItemSelectorReturnTypes.URL);
+			DefaultItemSelectorReturnType.URL);
 
 		imageItemSelectorCriterion.setItemSelectorDesiredReturnTypes(
 			imageItemSelectorDesiredReturnTypes);

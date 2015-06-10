@@ -15,6 +15,7 @@
 package com.liferay.wiki.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 
 import java.io.IOException;
 
@@ -35,8 +36,7 @@ import javax.servlet.ServletResponse;
  */
 public class WikiAttachmentItemSelectorView
 	implements ItemSelectorView
-		<WikiAttachmentItemSelectorCriterion,
-		 WikiAttachmentItemSelectorReturnTypes> {
+		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	public static final String ITEM_SELECTED_EVENT_NAME =
 		WikiAttachmentItemSelectorView.class.getName() +
@@ -57,7 +57,7 @@ public class WikiAttachmentItemSelectorView
 	}
 
 	@Override
-	public Set<WikiAttachmentItemSelectorReturnTypes>
+	public Set<DefaultItemSelectorReturnType>
 		getItemSelectorSupportedReturnTypes() {
 
 		return _WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
@@ -91,12 +91,12 @@ public class WikiAttachmentItemSelectorView
 		requestDispatcher.include(request, response);
 	}
 
-	private static final Set<WikiAttachmentItemSelectorReturnTypes>
+	private static final Set<DefaultItemSelectorReturnType>
 		_WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
 
 	static {
 		_WIKI_ATTACHMENT_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
-			WikiAttachmentItemSelectorReturnTypes.URL);
+			DefaultItemSelectorReturnType.URL);
 	}
 
 }

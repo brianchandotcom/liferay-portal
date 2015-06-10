@@ -16,6 +16,7 @@ package com.liferay.wiki.item.selector.web;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 
 import java.util.Set;
 
@@ -45,7 +46,7 @@ public class WikiAttachmentItemSelectorCriterion
 
 	private static final Set<ItemSelectorReturnType>
 		_AVAILABLE_ITEM_SELECTOR_RETURN_TYPES = getInmutableSet(
-			WikiAttachmentItemSelectorReturnTypes.URL);
+			DefaultItemSelectorReturnType.URL);
 
 	private long _wikiPageResourceId;
 

@@ -33,7 +33,7 @@ import javax.servlet.ServletResponse;
  */
 public class MediaItemSelectorView
 	implements ItemSelectorView
-		<MediaItemSelectorCriterion, TestItemSelectorReturnTypes> {
+		<MediaItemSelectorCriterion, TestItemSelectorReturnType> {
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -41,7 +41,7 @@ public class MediaItemSelectorView
 	}
 
 	@Override
-	public Set<TestItemSelectorReturnTypes>
+	public Set<TestItemSelectorReturnType>
 		getItemSelectorSupportedReturnTypes() {
 
 		return _TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES;
@@ -65,12 +65,12 @@ public class MediaItemSelectorView
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
 
-	private static final Set<TestItemSelectorReturnTypes>
+	private static final Set<TestItemSelectorReturnType>
 		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES = new HashSet<>();
 
 	static {
 		_TEST_ITEM_SELECTOR_SUPPORTED_RETURN_TYPES.add(
-			TestItemSelectorReturnTypes.URL);
+			TestItemSelectorReturnType.URL);
 	}
 
 }

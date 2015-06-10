@@ -20,7 +20,7 @@
 String closeRedirect = ParamUtil.getString(request, "closeRedirect");
 
 DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA_MAPPING_STRUCTURE);
-		 
+
 DDMStructureVersion structureVersion = structure.getStructureVersion();
 
 long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
@@ -40,8 +40,8 @@ boolean copyDisplayTemplates = ParamUtil.getBoolean(request, "copyDisplayTemplat
 	<aui:input name="classNameId" type="hidden" value="<%= String.valueOf(classNameId) %>" />
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= String.valueOf(scopeClassNameId) %>" />
-	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 	<aui:input name="status" type="hidden" value="<%= structureVersion.getStatus() %>" />
+	<aui:input name="saveAndContinue" type="hidden" value="<%= true %>" />
 
 	<liferay-ui:error exception="<%= StructureNameException.class %>" message="please-enter-a-valid-name" />
 

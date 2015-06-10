@@ -48,7 +48,7 @@ AUI.add(
 				NAME: 'availableField'
 			}
 		);
-		
+
 		var ReadOnlyFormBuilderSupport = function() {};
 
 		ReadOnlyFormBuilderSupport.ATTRS = {
@@ -67,13 +67,13 @@ AUI.add(
 						instance.set('allowRemoveRequiredFields',false);
 						instance.set('enableEditing',false);
 						instance.translationManager.hide();
-						
+
 						instance.after('render', instance._afterRenderReadOnlyFormBuilder);
 
 						instance.after('*:render', instance._afterFieldRender);
 
 						instance.dropContainer.delegate('mouseover', instance._onMouseOverFieldReadOnlyFormBuilder, '.form-builder-field');
-					}	
+					}
 				},
 
 				_afterRenderReadOnlyFormBuilder: function() {
@@ -106,7 +106,7 @@ AUI.add(
 
 					field.get('boundingBox').removeClass('form-builder-field-hover');
 				}
-				
+
 			}
 		);
 
@@ -207,7 +207,7 @@ AUI.add(
 				},
 
 				EXTENDS: A.FormBuilder,
-				
+
 				AUGMENTS: [ReadOnlyFormBuilderSupport],
 
 				LOCALIZABLE_FIELD_ATTRS: ['label', 'options', 'predefinedValue', 'style', 'tip'],
@@ -820,7 +820,7 @@ AUI.add(
 				}
 			]
 		};
-		
+
 		AVAILABLE_FIELDS.WCM_STRUCTURE = AVAILABLE_FIELDS.WCM_STRUCTURE.concat(AVAILABLE_FIELDS.DDM_STRUCTURE);
 
 		LiferayFormBuilder.AVAILABLE_FIELDS = AVAILABLE_FIELDS;

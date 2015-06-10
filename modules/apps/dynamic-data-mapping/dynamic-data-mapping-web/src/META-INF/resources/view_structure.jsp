@@ -20,10 +20,9 @@
 String redirect = ParamUtil.getString(request, "redirect");
 
 long structureVersionId = ParamUtil.getLong(request, "structureVersionId");
+String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace", renderResponse.getNamespace());
 
 DDMStructureVersion structureVersion = DDMStructureVersionServiceUtil.getStructureVersion(structureVersionId);
-
-String portletResourceNamespace = ParamUtil.getString(request, "portletResourceNamespace", renderResponse.getNamespace());
 
 String script = BeanParamUtil.getString(structureVersion, request, "definition");
 
@@ -36,29 +35,26 @@ if (fieldsJSONArray != null) {
 }
 
 PortletURL backURL = renderResponse.createRenderURL();
+
 backURL.setParameter("mvcPath", "/view_structure_history.jsp");
+backURL.setParameter("redirect", redirect);
 backURL.setParameter("structureId", String.valueOf(structureVersion.getStructureId()));
-
 %>
-
-<aui:model-context bean="<%= structureVersion %>" model="<%= DDMStructureVersion.class %>" />
 
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
 	localizeTitle="<%= false %>"
-	showBackURL="<%= true %>"
-	title="<%= structureVersion.getName(locale) %>"
+	title='<%= LanguageUtil.format(request, "x-version-x", new Object[] {structureVersion.getName(locale), structureVersion.getVersion()}) %>'
 />
+
+<aui:model-context bean="<%= structureVersion %>" model="<%= DDMStructureVersion.class %>" />
 
 <aui:input disabled="<%= true %>" name="name" />
 
 <aui:input disabled="<%= true %>" name="description" />
 
-<%
-readOnlyForm = true;
-%>
 <%@ include file="/form_builder.jspf" %>
 
 <aui:button-row>
-	<aui:button href="<%= redirect %>" type="cancel" />
+	<aui:button href="<%= backURL.toString() %>" type="cancel" />
 </aui:button-row>

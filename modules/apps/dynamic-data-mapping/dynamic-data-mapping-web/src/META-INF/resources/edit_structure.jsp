@@ -27,7 +27,7 @@ DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA
 
 DDMStructureVersion structureVersion = null;
 
-if(Validator.isNotNull(structure)) {
+if (Validator.isNotNull(structure)) {
 	structureVersion = structure.getStructureVersion();
 }
 
@@ -60,9 +60,13 @@ if (fieldsJSONArray != null) {
 }
 %>
 
-<portlet:actionURL name="addStructure" var="addStructureURL" />
+<portlet:actionURL name="addStructure" var="addStructureURL">
+	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+</portlet:actionURL>
 
-<portlet:actionURL name="updateStructure" var="updateStructureURL" />
+<portlet:actionURL name="updateStructure" var="updateStructureURL">
+	<portlet:param name="mvcPath" value="/edit_structure.jsp" />
+</portlet:actionURL>
 
 <%
 String requestUpdateStructureURL = ParamUtil.getString(request, "updateStructureURL");
@@ -80,8 +84,8 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	<aui:input name="classPK" type="hidden" value="<%= String.valueOf(classPK) %>" />
 	<aui:input name="scopeClassNameId" type="hidden" value="<%= scopeClassNameId %>" />
 	<aui:input name="definition" type="hidden" />
+	<aui:input name="status" type="hidden" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
-	<aui:input name="status" type="hidden" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
 
 	<liferay-ui:error exception="<%= LocaleException.class %>">
 
@@ -119,33 +123,33 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	/>
 
 	<aui:model-context bean="<%= structure %>" model="<%= DDMStructure.class %>" />
-	
+
 	<c:if test="<%= structureVersion != null %>">
 		<aui:workflow-status model="<%= DDMStructure.class %>" status="<%= structureVersion.getStatus() %>" version="<%= structureVersion.getVersion() %>" />
-		
+
 		<div class="structure-history-toolbar" id="<portlet:namespace />structureHistoryToolbar"></div>
-		
+
 		<aui:script use="aui-toolbar,aui-dialog-iframe-deprecated,liferay-util-window">
 			var toolbarChildren = [
 				<portlet:renderURL var="viewHistoryURL">
 					<portlet:param name="mvcPath" value="/view_structure_history.jsp" />
-					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="redirect" value="<%= redirect %>" />
 					<portlet:param name="structureId" value="<%= String.valueOf(structure.getStructureId()) %>" />
 				</portlet:renderURL>
-	
+
 				{
 					icon: 'icon-time',
 					label: '<%= UnicodeLanguageUtil.get(request, "view-history") %>',
 					on: {
 						click: function(event) {
 							event.domEvent.preventDefault();
-	
+
 							window.location.href = '<%= viewHistoryURL %>';
 						}
 					}
 				}
 			];
-		
+
 			new A.Toolbar(
 				{
 					boundingBox: '#<portlet:namespace />structureHistoryToolbar',
@@ -235,9 +239,9 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 <%@ include file="/form_builder.jspf" %>
 
 <aui:button-row>
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
-	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructureAsDraft();" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+	<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
 
 	<aui:button href="<%= redirect %>" type="cancel" />
 </aui:button-row>
@@ -278,19 +282,18 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 		form.fm('removeParentStructureButton').attr('disabled', true).addClass('disabled');
 	}
 
-	function <portlet:namespace />saveStructure() {
+	function <portlet:namespace />saveStructure(draft) {
 		var form = AUI.$('#<portlet:namespace />fm');
 
 		form.fm('definition').val(<portlet:namespace />formBuilder.getContentValue());
 
+		if (draft) {
+			form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>);
+		}
+		else {
+			form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>);
+		}
+
 		submitForm(form);
-	}
-	
-	function <portlet:namespace />saveStructureAsDraft() {
-		var form = AUI.$('#<portlet:namespace />fm');
-
-		form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>);
-
-		<portlet:namespace />saveStructure();
 	}
 </aui:script>

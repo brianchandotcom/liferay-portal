@@ -18,7 +18,7 @@
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
-		 
+
 long structureId = ParamUtil.getLong(request, "structureId");
 
 DDMStructure structure = DDMStructureServiceUtil.getStructure(structureId);
@@ -30,79 +30,72 @@ portletURL.setParameter("redirect", redirect);
 portletURL.setParameter("structureId", String.valueOf(structureId));
 
 PortletURL backURL = renderResponse.createRenderURL();
+
 backURL.setParameter("mvcPath", "/edit_structure.jsp");
-backURL.setParameter("redirect", currentURL);
+backURL.setParameter("redirect", redirect);
 backURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(DDMStructure.class)));
 backURL.setParameter("classPK", String.valueOf(structure.getStructureId()));
 %>
 
 <liferay-ui:header
 	backURL="<%= backURL.toString() %>"
-	showBackURL="<%= true %>"
 	title='<%= LanguageUtil.format(request, "x-history", structure.getName(locale), false) %>'
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
+	<liferay-ui:search-container
+		searchContainer="<%= new StructureSearch(renderRequest, portletURL) %>"
+		total="<%= DDMStructureVersionServiceUtil.getStructureVersionsCount(structureId) %>"
+	>
 
-	<%
-	SearchContainer searchContainer = new SearchContainer(renderRequest, portletURL, new ArrayList(), null);
+		<liferay-ui:search-container-results
+			results="<%= DDMStructureVersionServiceUtil.getStructureVersions(structureId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator()) %>"
+		/>
 
-	List headerNames = searchContainer.getHeaderNames();
+		<liferay-ui:search-container-row
+			className="com.liferay.portlet.dynamicdatamapping.model.DDMStructureVersion"
+			keyProperty="structureVersionId"
+			modelVar="structureVersion"
+		>
 
-	headerNames.add("id");
-	headerNames.add("version");
-	headerNames.add("status");
-	headerNames.add("author");
-	headerNames.add(StringPool.BLANK);
+			<portlet:renderURL var="rowURL">
+				<portlet:param name="mvcPath" value="/view_structure.jsp" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="structureVersionId" value="<%= String.valueOf(structureVersion.getStructureVersionId()) %>" />
+				<portlet:param name="formBuilderReadOnly" value="<%= String.valueOf(Boolean.TRUE) %>" />
+			</portlet:renderURL>
 
-	int total = DDMStructureVersionServiceUtil.getStructureVersionsCount(structureId);
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="id"
+				property="structureVersionId"
+			/>
 
-	searchContainer.setTotal(total);
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="version"
+				property="version"
+			/>
 
-	List<DDMStructureVersion> results = DDMStructureVersionServiceUtil.getStructureVersions(structureId, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+			<liferay-ui:search-container-column-status
+				href="<%= rowURL %>"
+				name="status"
+				status="<%= structureVersion.getStatus() %>"
+			/>
 
-	searchContainer.setResults(results);
+			<liferay-ui:search-container-column-text
+				href="<%= rowURL %>"
+				name="author"
+				value="<%= PortalUtil.getUserName(structureVersion) %>"
+			/>
 
-	List resultRows = searchContainer.getResultRows();
+			<liferay-ui:search-container-column-jsp
+				align="right"
+				cssClass="entry-action"
+				path="/structure_version_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
 
-	for (int i = 0; i < results.size(); i++) {
-		DDMStructureVersion structureVersion = results.get(i);
-
-		structureVersion = structureVersion.toEscapedModel();
-
-		ResultRow row = new ResultRow(structureVersion, structureVersion.getStructureVersionId(), i);
-
-		PortletURL rowURL = renderResponse.createRenderURL();
-
-		rowURL.setParameter("mvcPath", "/view_structure.jsp");
-		rowURL.setParameter("redirect", currentURL);
-		rowURL.setParameter("structureVersionId", String.valueOf(structureVersion.getStructureVersionId()));
-
-		// Structure version id
-
-		row.addText(String.valueOf(structureVersion.getStructureVersionId()), rowURL);
-
-		// Version
-
-		row.addText(structureVersion.getVersion(), rowURL);
-
-		// Status
-
-		row.addStatus(structureVersion.getStatus(), structureVersion.getStatusByUserId(), structureVersion.getStatusDate(), rowURL);
-
-		// Author
-
-		row.addText(PortalUtil.getUserName(structureVersion), rowURL);
-
-		// Action
-
-		row.addJSP("/structure_version_action.jsp", "entry-action", application, request, response);
-
-		// Add result row
-
-		resultRows.add(row);
-	}
-	%>
-
-	<liferay-ui:search-iterator searchContainer="<%= searchContainer %>" />
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
 </aui:form>

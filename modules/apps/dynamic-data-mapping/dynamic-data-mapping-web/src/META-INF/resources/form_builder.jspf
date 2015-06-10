@@ -212,7 +212,7 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 
 	var formBuilder = new Liferay.FormBuilder(
 		{
-			readOnly: <%= readOnlyForm %>,
+			readOnly: <%= ParamUtil.getBoolean(request, "formBuilderReadOnly") %>,
 			allowRemoveRequiredFields: true,
 			availableFields: availableFields,
 			boundingBox: '#<portlet:namespace />formBuilder',

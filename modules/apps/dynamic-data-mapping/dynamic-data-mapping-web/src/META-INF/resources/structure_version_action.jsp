@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String redirect = ParamUtil.getString(request, "redirect");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
@@ -25,8 +27,9 @@ DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="viewStructureVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 		<portlet:param name="mvcPath" value="/view_structure.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="structureVersionId" value="<%= String.valueOf(structureVersion.getStructureVersionId()) %>" />
+		<portlet:param name="formBuilderReadOnly" value="<%= String.valueOf(Boolean.TRUE) %>" />
 	</liferay-portlet:renderURL>
 
 	<liferay-ui:icon
@@ -37,9 +40,9 @@ DDMStructureVersion structureVersion = (DDMStructureVersion)row.getObject();
 
 	<portlet:actionURL name="revertStructure" var="revertURL">
 		<portlet:param name="mvcPath" value="/edit_structure.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="structureId" value="<%= String.valueOf(structureVersion.getStructureId()) %>" />
-		<portlet:param name="structureVersionId" value="<%= String.valueOf(structureVersion.getStructureVersionId()) %>" />
+		<portlet:param name="version" value="<%= structureVersion.getVersion() %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

@@ -57,7 +57,7 @@ public class ItemSelectorViewRendererImpl implements ItemSelectorViewRenderer {
 	public ItemSelectorView<ItemSelectorCriterion, ItemSelectorReturnType>
 		getItemSelectorView() {
 
-			return _itemSelectorView;
+		return _itemSelectorView;
 	}
 
 	@Override

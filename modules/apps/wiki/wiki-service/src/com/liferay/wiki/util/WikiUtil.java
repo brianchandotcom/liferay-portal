@@ -26,11 +26,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -44,10 +40,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletURLUtil;
-import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.wiki.engine.WikiEngine;
 import com.liferay.wiki.engine.impl.WikiEngineTracker;
@@ -228,54 +220,6 @@ public class WikiUtil {
 		}
 
 		return new DiffVersionsInfo(diffVersions, nextVersion, previousVersion);
-	}
-
-	public static List<Object> getEntries(Hits hits) {
-		List<Object> entries = new ArrayList<>();
-
-		for (Document document : hits.getDocs()) {
-			String entryClassName = GetterUtil.getString(
-				document.get(Field.ENTRY_CLASS_NAME));
-			long entryClassPK = GetterUtil.getLong(
-				document.get(Field.ENTRY_CLASS_PK));
-
-			try {
-				Object obj = null;
-
-				if (entryClassName.equals(DLFileEntry.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.CLASS_PK));
-
-					WikiPageLocalServiceUtil.getPage(classPK);
-
-					obj = DLFileEntryLocalServiceUtil.getDLFileEntry(
-						entryClassPK);
-				}
-				else if (entryClassName.equals(MBMessage.class.getName())) {
-					long classPK = GetterUtil.getLong(
-						document.get(Field.CLASS_PK));
-
-					WikiPageLocalServiceUtil.getPage(classPK);
-
-					obj = MBMessageLocalServiceUtil.getMessage(entryClassPK);
-				}
-				else if (entryClassName.equals(WikiPage.class.getName())) {
-					obj = WikiPageLocalServiceUtil.getPage(entryClassPK);
-				}
-
-				entries.add(obj);
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Wiki search index is stale and contains entry " +
-							"{className=" + entryClassName + ", classPK=" +
-								entryClassPK + "}");
-				}
-			}
-		}
-
-		return entries;
 	}
 
 	public static String getFormatLabel(String format, Locale locale)

@@ -1914,3 +1914,32 @@ needed to be removed for the Message Boards portlet to be placed into
 its own OSGi bundle.
 
 ---------------------------------------
+
+### Removed WikiUtil.getEntries method
+- **Date:** 2015-Jun-10
+- **JIRA Ticket:** LPS-56242
+
+#### What changed?
+
+The method `getEntries()` has been removed from class `WikiUtil`
+
+#### Who is affected?
+
+Any JSP hook or ext plugin that uses the method will be affected. As
+the class was located in portal-impl, regular portlets and other safe
+extension points won't be affected.
+
+#### How should I update my code?
+
+You should review the JSP or ext plugin, updating it to remove any
+reference to the new class and mimicking the original JSP code. In
+case you need equivalent functionality to the one provided by
+`WikiUtil.getEntries()` you may use the `SearchResultUtil`
+class. While not totally equivalent, it offers similar functionality.
+
+#### Why was this change made?
+
+The `WikiUtil.getEntries()` method was no longer used, and it contained
+hardcoded references to classes that will me moved into OSGi modules.
+
+---------------------------------------

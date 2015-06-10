@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffHtmlUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -230,10 +231,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 					node.getGroupId(), WikiConstants.SERVICE_NAME));
 
 		if (wikiGroupServiceSettings.pageCommentsEnabled()) {
-			mbMessageLocalService.addDiscussionMessage(
-				userId, page.getUserName(), page.getGroupId(),
-				WikiPage.class.getName(), resourcePrimKey,
-				WorkflowConstants.ACTION_PUBLISH);
+			CommentManagerUtil.addDiscussion(
+				userId, page.getGroupId(), WikiPage.class.getName(),
+				resourcePrimKey, page.getUserName());
 		}
 
 		// Workflow
@@ -656,9 +656,9 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 
 		expandoRowLocalService.deleteRows(page.getPrimaryKey());
 
-		// Message boards
+		// Comments
 
-		mbMessageLocalService.deleteDiscussionMessages(
+		CommentManagerUtil.deleteDiscussion(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
 		// Trash

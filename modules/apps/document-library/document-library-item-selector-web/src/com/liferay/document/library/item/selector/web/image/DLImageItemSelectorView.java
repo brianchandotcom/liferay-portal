@@ -16,11 +16,15 @@ package com.liferay.document.library.item.selector.web.image;
 
 import com.liferay.document.library.item.selector.web.BaseDLItemSelectorView;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.util.PropsValues;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,7 +33,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorView.class)
 public class DLImageItemSelectorView
-	extends BaseDLItemSelectorView<ImageItemSelectorCriterion> {
+	extends BaseDLItemSelectorView
+		<ImageItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -42,11 +47,26 @@ public class DLImageItemSelectorView
 	}
 
 	@Override
+	public Set<DefaultItemSelectorReturnType>
+		getSupportedItemSelectorReturnTypes() {
+
+		return _supportedItemSelectorReturnTypes;
+	}
+
+	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
 		return resourceBundle.getString("images");
 	}
+
+	private static final Set<DefaultItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new DefaultItemSelectorReturnType[] {
+					DefaultItemSelectorReturnType.FILE_ENTRY,
+					DefaultItemSelectorReturnType.URL
+				}));
 
 }

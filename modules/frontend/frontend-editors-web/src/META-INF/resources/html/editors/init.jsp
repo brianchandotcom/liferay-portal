@@ -24,6 +24,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
+page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.DefaultItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion" %><%@
 page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@

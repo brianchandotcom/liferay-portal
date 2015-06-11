@@ -15,11 +15,14 @@
 package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import java.util.Collections;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -30,11 +33,19 @@ import javax.servlet.ServletResponse;
  * @author Iván Zaera
  */
 public class MediaItemSelectorView
-	implements ItemSelectorView<MediaItemSelectorCriterion> {
+	implements ItemSelectorView
+		<MediaItemSelectorCriterion, TestItemSelectorReturnType> {
 
 	@Override
 	public Class<MediaItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return MediaItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<TestItemSelectorReturnType>
+		getSupportedItemSelectorReturnTypes() {
+
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -54,5 +65,12 @@ public class MediaItemSelectorView
 		printWriter.print(
 			"<html>" + MediaItemSelectorView.class.getName() + "</html>");
 	}
+
+	private static final Set<TestItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new TestItemSelectorReturnType[] {
+					TestItemSelectorReturnType.URL
+				}));
 
 }

@@ -16,6 +16,7 @@ package com.liferay.item.selector.criteria.image.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
+import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 
 import org.osgi.service.component.annotations.Component;
@@ -25,7 +26,8 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(service = ItemSelectorCriterionHandler.class)
 public class ImageItemSelectorCriterionHandler
-	extends BaseItemSelectorCriterionHandler<ImageItemSelectorCriterion> {
+	extends BaseItemSelectorCriterionHandler
+		<ImageItemSelectorCriterion, ItemSelectorReturnType> {
 
 	@Override
 	public Class<ImageItemSelectorCriterion> getItemSelectorCriterionClass() {

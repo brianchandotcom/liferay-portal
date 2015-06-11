@@ -98,16 +98,15 @@ if (fileEntryId != 0) {
 PortletURL itemSelectorURL = liferayPortletResponse.createRenderURL(PortletKeys.ITEM_SELECTOR);
 
 itemSelectorURL.setParameter("criteria", "com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion");
-itemSelectorURL.setParameter("itemSelectedEventName", liferayPortletResponse.getNamespace() + "selectImage");
+itemSelectorURL.setParameter("itemSelectedEventName", randomNamespace + "selectImage");
 
 JSONObject itemSelectorJSONParamJSONObject = JSONFactoryUtil.createJSONObject();
 
-JSONArray desiredReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
+JSONArray desiredItemSelectorReturnTypesJSONArray = JSONFactoryUtil.createJSONArray();
 
-desiredReturnTypesJSONArray.put(URL.class.getName());
-desiredReturnTypesJSONArray.put(FileEntry.class.getName());
+desiredItemSelectorReturnTypesJSONArray.put("FILE_ENTRY");
 
-itemSelectorJSONParamJSONObject.put("desiredReturnTypes", desiredReturnTypesJSONArray);
+itemSelectorJSONParamJSONObject.put("desiredItemSelectorReturnTypes", desiredItemSelectorReturnTypesJSONArray);
 
 itemSelectorURL.setParameter("0_json", itemSelectorJSONParamJSONObject.toString());
 

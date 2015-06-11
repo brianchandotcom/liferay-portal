@@ -19,23 +19,45 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Roberto Díaz
  */
-public abstract class
-	BaseItemSelectorCriterionHandler<T extends ItemSelectorCriterion>
+public abstract class BaseItemSelectorCriterionHandler
+	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType>
 		implements ItemSelectorCriterionHandler {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ItemSelectorView<T>>
-		getItemSelectorViews(
-			ItemSelectorCriterion fileItemSelectorCriterion) {
+	public List<ItemSelectorView<T, S>>
+		getItemSelectorViews(ItemSelectorCriterion itemSelectorCriterion) {
 
-		return (List)Collections.unmodifiableList(_itemSelectorViews);
+		List<ItemSelectorView<T, S>> filteredItemSelectedViews =
+			new ArrayList<>();
+
+		for (ItemSelectorView itemSelectorView : _itemSelectorViews) {
+			Set<S> supportedItemSelectorReturnTypes =
+				itemSelectorView.getSupportedItemSelectorReturnTypes();
+
+			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
+				itemSelectorCriterion.getDesiredItemSelectorReturnTypes();
+
+			for (ItemSelectorReturnType desiredItemSelectorReturnType :
+					desiredItemSelectorReturnTypes) {
+
+				if (supportedItemSelectorReturnTypes.contains(
+						desiredItemSelectorReturnType)) {
+
+					filteredItemSelectedViews.add(itemSelectorView);
+				}
+			}
+		}
+
+		return (List)Collections.unmodifiableList(filteredItemSelectedViews);
 	}
 
 	private final ServiceTrackerList<ItemSelectorView> _itemSelectorViews =

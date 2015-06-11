@@ -15,8 +15,7 @@
 package com.liferay.item.selector.web;
 
 import com.liferay.item.selector.BaseItemSelectorCriterion;
-
-import java.net.URL;
+import com.liferay.item.selector.ItemSelectorReturnType;
 
 import java.util.Set;
 
@@ -26,7 +25,7 @@ import java.util.Set;
 public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 
 	public FlickrItemSelectorCriterion() {
-		super(_AVAILABLE_RETURN_TYPES);
+		super(_availableItemSelectorReturnTypes);
 	}
 
 	public String[] getTags() {
@@ -45,8 +44,9 @@ public class FlickrItemSelectorCriterion extends BaseItemSelectorCriterion {
 		_user = user;
 	}
 
-	private static final Set<Class<?>> _AVAILABLE_RETURN_TYPES =
-		getInmutableSet(URL.class, String.class);
+	private static final Set<ItemSelectorReturnType>
+		_availableItemSelectorReturnTypes = getImmutableSet(
+			TestItemSelectorReturnType.STRING, TestItemSelectorReturnType.URL);
 
 	private String[] _tags = {"me", "photo", "picture"};
 	private String _user = "anonymous";

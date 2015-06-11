@@ -19,11 +19,12 @@ import java.util.List;
 /**
  * @author Iván Zaera
  */
-public interface ItemSelectorCriterionHandler<T extends ItemSelectorCriterion> {
+public interface ItemSelectorCriterionHandler
+	<T extends ItemSelectorCriterion, S extends ItemSelectorReturnType> {
 
 	public Class<T> getItemSelectorCriterionClass();
 
-	public List<ItemSelectorView<T>> getItemSelectorViews(
+	public List<ItemSelectorView<T, S>> getItemSelectorViews(
 		T itemSelectorCriterion);
 
 }

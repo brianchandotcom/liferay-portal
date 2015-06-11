@@ -15,11 +15,15 @@
 package com.liferay.wiki.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 
+import java.util.Collections;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.portlet.PortletURL;
 
@@ -32,7 +36,8 @@ import javax.servlet.ServletResponse;
  * @author Iván Zaera
  */
 public class WikiAttachmentItemSelectorView
-	implements ItemSelectorView<WikiAttachmentItemSelectorCriterion> {
+	implements ItemSelectorView
+		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	public static final String ITEM_SELECTED_EVENT_NAME =
 		WikiAttachmentItemSelectorView.class.getName() +
@@ -50,6 +55,13 @@ public class WikiAttachmentItemSelectorView
 		getItemSelectorCriterionClass() {
 
 		return WikiAttachmentItemSelectorCriterion.class;
+	}
+
+	@Override
+	public Set<DefaultItemSelectorReturnType>
+		getSupportedItemSelectorReturnTypes() {
+
+		return _supportedItemSelectorReturnTypes;
 	}
 
 	@Override
@@ -79,5 +91,12 @@ public class WikiAttachmentItemSelectorView
 
 		requestDispatcher.include(request, response);
 	}
+
+	private static final Set<DefaultItemSelectorReturnType>
+		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
+			SetUtil.fromArray(
+				new DefaultItemSelectorReturnType[] {
+					DefaultItemSelectorReturnType.URL
+				}));
 
 }

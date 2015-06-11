@@ -425,6 +425,13 @@ public class DDMTemplateServiceUtil {
 			structureClassNameId);
 	}
 
+	public static void revertTemplate(long templateId,
+		java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().revertTemplate(templateId, version, serviceContext);
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

@@ -566,6 +566,21 @@ public class DDMTemplateServiceSoap {
 		}
 	}
 
+	public static void revertTemplate(long templateId,
+		java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			DDMTemplateServiceUtil.revertTemplate(templateId, version,
+				serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

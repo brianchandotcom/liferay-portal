@@ -382,6 +382,10 @@ public interface DDMTemplateService extends BaseService {
 	public int getTemplatesByStructureClassNameIdCount(long groupId,
 		long structureClassNameId);
 
+	public void revertTemplate(long templateId, java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

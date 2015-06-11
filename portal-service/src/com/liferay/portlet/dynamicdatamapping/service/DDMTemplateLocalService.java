@@ -734,6 +734,11 @@ public interface DDMTemplateLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTemplatesCount(long groupId, long classNameId, long classPK);
 
+	public void revertTemplate(long userId, long templateId,
+		java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

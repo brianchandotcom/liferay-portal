@@ -521,6 +521,12 @@ public class DDMTemplateVersionWrapper implements DDMTemplateVersion,
 		return _ddmTemplateVersion.getStatusDate();
 	}
 
+	@Override
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _ddmTemplateVersion.getTemplate();
+	}
+
 	/**
 	* Returns the template ID of this d d m template version.
 	*

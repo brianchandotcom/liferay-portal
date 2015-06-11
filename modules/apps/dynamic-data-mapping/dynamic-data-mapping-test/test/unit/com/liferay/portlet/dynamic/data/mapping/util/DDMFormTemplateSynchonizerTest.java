@@ -17,7 +17,7 @@ package com.liferay.portlet.dynamic.data.mapping.util;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
+import com.liferay.portlet.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;

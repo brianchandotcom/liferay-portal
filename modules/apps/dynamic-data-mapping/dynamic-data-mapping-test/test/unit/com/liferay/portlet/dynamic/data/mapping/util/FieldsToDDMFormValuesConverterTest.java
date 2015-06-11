@@ -15,7 +15,7 @@
 package com.liferay.portlet.dynamic.data.mapping.util;
 
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
+import com.liferay.portlet.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;

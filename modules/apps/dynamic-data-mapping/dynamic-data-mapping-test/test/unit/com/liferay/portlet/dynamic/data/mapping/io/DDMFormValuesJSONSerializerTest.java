@@ -17,7 +17,7 @@ package com.liferay.portlet.dynamic.data.mapping.io;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
+import com.liferay.portlet.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormValuesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;

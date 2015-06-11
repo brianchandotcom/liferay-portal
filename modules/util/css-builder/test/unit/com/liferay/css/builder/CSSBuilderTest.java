@@ -45,7 +45,9 @@ public class CSSBuilderTest {
 	public static void setUpClass() throws Exception {
 		URL url = CSSBuilderTest.class.getResource("dependencies");
 
-		_DOCROOT_DIR_NAME = url.getFile();
+		Path path = Paths.get(url.toURI());
+
+		_DOCROOT_DIR_NAME = path.toString();
 	}
 
 	@After

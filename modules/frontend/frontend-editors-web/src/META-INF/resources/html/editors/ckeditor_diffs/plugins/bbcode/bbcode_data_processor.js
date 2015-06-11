@@ -542,9 +542,7 @@
 			var hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
-				var decodedLink = decodeURIComponent(hrefAttribute);
-
-				if (decodedLink.indexOf(newThreadURL) >= 0) {
+				if (hrefAttribute.indexOf(newThreadURL) >= 0) {
 					hrefAttribute = newThreadURL;
 				}
 

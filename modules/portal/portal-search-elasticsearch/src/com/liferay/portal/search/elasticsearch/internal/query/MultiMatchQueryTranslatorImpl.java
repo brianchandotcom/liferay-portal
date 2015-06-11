@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.query.MultiMatchQueryTranslator;
 
 import java.util.Map;
-import java.util.Set;
 
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.MatchQueryBuilder;

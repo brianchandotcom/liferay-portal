@@ -160,7 +160,7 @@ public class JournalArticleExpirationTest {
 		calendar.setTime(
 			new Date(System.currentTimeMillis() + timeUnit * timeValue));
 
-		User user = UserLocalServiceUtil.fetchUser(TestPropsValues.getUserId());
+		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
 
 		calendar.setTimeZone(user.getTimeZone());
 

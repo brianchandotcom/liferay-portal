@@ -17,8 +17,8 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency org="com.liferay" name="com.liferay.ruby.gems" rev="1.0.0-SNAPSHOT" />
-		<dependency org="org.jruby" name="jruby-complete" rev="1.7.20" />
+		<dependency name="com.liferay.ruby.gems" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="jruby-complete" org="org.jruby" rev="1.7.20" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

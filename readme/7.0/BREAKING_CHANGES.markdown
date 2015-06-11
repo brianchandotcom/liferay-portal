@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `50d72f6`.*
+*This document has been reviewed through commit `5211d38`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1914,29 +1914,29 @@ structure and template versions, audit columns were also added to such models.
 
 ---------------------------------------
 
-### Removed method `getEntries` from `DL`, `DLImpl` and `DLUtil`
+### Removed Method getEntries from DL, DLImpl, and DLUtil Classes
 - **Date:** 2015-Jun-10
 - **JIRA Ticket:** LPS-56247
 
 #### What changed?
 
-The method `getEntries` was removed from `DL`, `DLImpl` and `DLUtil`.
+The method `getEntries` was removed from the `DL`, `DLImpl`, and `DLUtil`
+classes.
 
 #### Who is affected?
 
-Any caller of the `getEntries` method will be affected.
+This affects any caller of the `getEntries` method.
 
 #### How should I update my code?
 
-You may use the `SearchResultUtil` class to process the search
-results. Note that this class is not completely equivalent; if you
-need exactly the same behavior as the removed method, you will need to
-add use some custom code.
+You may use the `SearchResultUtil` class to process the search results. Note
+that this class is not completely equivalent; if you need exactly the same
+behavior as the removed method, you will need to add custom code.
 
 #### Why was this change made?
 
-That method was no longer used, and contained hardcoded references to
-classes that will be moved into OSGi bundles.
+The `getEntries` method was no longer used, and contained hardcoded references
+to classes that will be moved into OSGi bundles.
 
 ---------------------------------------
 ### Removed WikiUtil.getEntries method

@@ -1239,7 +1239,9 @@ public class PortletTracker
 
 	private static final String _JSP_SERVLET_INIT_PARAM =
 		"jsp.servlet.init.param.";
+
 	private static final String _NAMESPACE = "com.liferay.portlet.";
+
 	private static final String _SERVLET_INIT_PARAM =
 		HttpWhiteboardConstants.HTTP_WHITEBOARD_SERVLET_INIT_PARAM_PREFIX;
 

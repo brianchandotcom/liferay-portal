@@ -83,7 +83,8 @@ public class UserAssetRenderer extends BaseAssetRenderer {
 			getControlPanelPlid(liferayPortletRequest), PortletKeys.USERS_ADMIN,
 			PortletRequest.RENDER_PHASE);
 
-		portletURL.setParameter("struts_action", "/users_admin/edit_user");
+		portletURL.setParameter(
+			"mvcPath", "/html/portlet/users_admin/edit_user.jsp");
 		portletURL.setParameter("p_u_i_d", String.valueOf(_user.getUserId()));
 
 		return portletURL;

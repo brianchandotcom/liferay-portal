@@ -28,7 +28,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 %>
 
 <div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
-	<c:if test="<%= Validator.isNotNull(displayStyleURL) %>">
+	<c:if test="<%= displayStyleURL != null %>">
 		<aui:nav-bar>
 			<aui:nav collapsible="<%= true %>" cssClass="nav-display-style-buttons navbar-nav" icon="th-list" id="displayStyleButtons">
 				<liferay-ui:app-view-display-style

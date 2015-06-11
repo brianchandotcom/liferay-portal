@@ -201,15 +201,9 @@
 
 		<action path="/directory/view" forward="portlet.directory.view" />
 
-		<action path="/directory/view_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">
-			<forward name="portlet.users_admin.edit_organization" path="portlet.directory.view_organization" />
-			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
-		</action>
+		<action path="/directory/view_organization" forward="portlet.directory.view_organization" />
 
-		<action path="/directory/view_user" type="com.liferay.portlet.usersadmin.action.EditUserAction">
-			<forward name="portlet.users_admin.edit_user" path="portlet.directory.view_user" />
-			<forward name="portlet.users_admin.error" path="portlet.directory.error" />
-		</action>
+		<action path="/directory/view_user" forward="portlet.directory.view_user" />
 
 		<!-- Dockbar -->
 

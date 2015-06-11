@@ -14,17 +14,18 @@
 
 package com.liferay.css.builder;
 
-import java.io.File;
+import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 import java.util.Arrays;
-
-import org.apache.commons.io.FileUtils;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -46,8 +47,31 @@ public class CSSBuilderTest {
 
 	@After
 	public void tearDown() throws Exception {
-		FileUtils.deleteDirectory(
-			new File(_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME));
+		Files.walkFileTree(
+			Paths.get(_DOCROOT_DIR_NAME + _DIR_NAME + _SASS_CACHE_DIR_NAME),
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+						Path path, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+				@Override
+				public FileVisitResult postVisitDirectory(
+						Path path, IOException ioe)
+					throws IOException {
+
+					Files.delete(path);
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
 	}
 
 	@Test

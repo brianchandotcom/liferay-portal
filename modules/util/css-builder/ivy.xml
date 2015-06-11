@@ -21,14 +21,6 @@
 		<dependency name="com.liferay.rtl.css" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.sass.compiler.jni" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.sass.compiler.ruby" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-		<dependency name="commons-beanutils" org="commons-beanutils" rev="1.9.2" />
-		<dependency name="commons-configuration" org="commons-configuration" rev="1.10" />
-		<dependency name="commons-digester" org="commons-digester" rev="2.1" />
-		<dependency name="commons-io" org="commons-io" rev="2.4" />
-		<dependency name="commons-lang" org="commons-lang" rev="2.6" />
-		<dependency name="commons-logging-api" org="commons-logging" rev="1.1" />
-		<dependency name="easyconf" org="easyconf" rev="0.9.5" transitive="false" />
-		<dependency name="xstream" org="com.thoughtworks.xstream" rev="1.4.8" />
 	</dependencies>
 
 </ivy-module>

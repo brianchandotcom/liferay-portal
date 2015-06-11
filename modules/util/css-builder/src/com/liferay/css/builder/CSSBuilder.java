@@ -34,7 +34,6 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**
@@ -259,10 +258,12 @@ public class CSSBuilder {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		return StringUtils.replaceEach(
-			dirName + "/" + fileName, new String[] {"\\", "//"},
-			new String[] {"/", "/"}
-		);
+		fileName = dirName + "/" + fileName;
+
+		fileName = fileName.replace('\\', '/');
+		fileName = fileName.replace("//", "/");
+
+		return fileName;
 	}
 
 	private String _parseSass(String fileName, String content)

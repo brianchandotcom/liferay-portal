@@ -1,7 +1,7 @@
 <definition>
 	<var name="userEmailAddress" value="test@liferay.com" />
 	<var name="userPassword" value="test" />
-	<var name="userReminderQueryAnswer" value="test" />
+	<var name="userPasswordReminderAnswer" value="test" />
 
 	<command name="_signIn">
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
@@ -41,31 +41,19 @@
 		</execute>
 	</command>
 
-	<command name="agreeToTermsOfUse">
+	<command name="agreeToTermsOfUse" summary="Agree to Liferay Portal Terms of Use">
 		<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
 	</command>
 
-	<command name="setNewPassword">
-		<if>
-			<isset var="userNewPassword" />
-			<then>
-				<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${userNewPassword}" />
-				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${userNewPassword}" />
+	<command name="setNewPassword" summary="Set '${userNewPassword}' as new user password">
+		<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${userNewPassword}" />
+		<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${userNewPassword}" />
 
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-			</then>
-		</if>
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
-	<command name="setReminderQuery">
-		<if>
-			<isset var="userReminderQueryQuestion" />
-			<then>
-				<execute function="Select" locator1="Select#QUESTION" value1="${userReminderQueryQuestion}" />
-			</then>
-		</if>
-
-		<execute function="Type" locator1="TextInput#ANSWER" value1="${userReminderQueryAnswer}" />
+	<command name="setPasswordReminder" summary="Enter '${userPasswordReminderAnswer}' as password reminder">
+		<execute function="Type" locator1="TextInput#ANSWER" value1="${userPasswordReminderAnswer}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -103,7 +91,7 @@
 			<var name="userNewPassword" value="${userNewPassword}" />
 		</execute>
 
-		<execute macro="SignIn#setReminderQuery">
+		<execute macro="SignIn#setPasswordReminder">
 			<var name="userReminderQueryAnswer" value="${userReminderQueryAnswer}" />
 		</execute>
 	</command>
@@ -130,7 +118,7 @@
 		</execute>
 	</command>
 
-	<command name="signInTestSetup" summary="Set up test by signing in as super admin">
+	<command name="signInTestSetup" summary="Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'">
 		<execute macro="SignOut#signOut" />
 
 		<execute macro="SignIn#signIn" />
@@ -145,7 +133,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Select#QUESTION" />
 			<then>
-				<execute macro="SignIn#setReminderQuery" />
+				<execute macro="SignIn#setPasswordReminder" />
 			</then>
 		</if>
 	</command>

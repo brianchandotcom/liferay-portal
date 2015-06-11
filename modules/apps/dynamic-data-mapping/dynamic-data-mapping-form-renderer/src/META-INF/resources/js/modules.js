@@ -20,6 +20,24 @@
 					},
 					root: '/o/ddm-type-checkbox/'
 				},
+				'field-options': {
+					base: '/o/ddm-type-options/',
+					modules: {
+						'liferay-ddm-form-field-options': {
+							path: 'options_field.js',
+							requires: [
+								'liferay-ddm-form-renderer-field'
+							]
+						},
+						'liferay-ddm-form-field-options-template': {
+							path: 'options.soy.js',
+							requires: [
+								'soyutils'
+							]
+						}
+					},
+					root: '/o/ddm-type-options/'
+				},
 				'field-radio': {
 					base: '/o/ddm-type-radio/',
 					modules: {

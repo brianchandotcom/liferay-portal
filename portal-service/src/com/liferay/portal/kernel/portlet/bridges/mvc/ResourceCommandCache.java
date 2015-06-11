@@ -33,26 +33,28 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
- * @author Michael C. Han
+ * @author Sergio González
  */
 public class ResourceCommandCache {
 
-	public static final String ACTION_PACKAGE_NAME = "action.package.prefix";
-
-	public static final ActionCommand EMPTY = new ActionCommand() {
+	public static final ResourceCommand EMPTY = new ResourceCommand() {
 
 		@Override
 		public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse) {
+			ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) {
 
 			return false;
 		}
 
 	};
+
+	public static final String RESOURCE_PACKAGE_NAME =
+		"resource.package.prefix";
 
 	public ResourceCommandCache(String packagePrefix, String portletName) {
 		if (Validator.isNotNull(packagePrefix) &&
@@ -66,11 +68,11 @@ public class ResourceCommandCache {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(action.command.name=*)(javax.portlet.name=" + portletName +
-				")(objectClass=" + ActionCommand.class.getName() + "))");
+			"(&(resource.command.name=*)(javax.portlet.name=" + portletName +
+				")(objectClass=" + ResourceCommand.class.getName() + "))");
 
 		_serviceTracker = registry.trackServices(
-			filter, new ActionCommandServiceTrackerCustomizer());
+			filter, new ResourceCommandServiceTrackerCustomizer());
 
 		_serviceTracker.open();
 	}
@@ -79,15 +81,15 @@ public class ResourceCommandCache {
 		_serviceTracker.close();
 	}
 
-	public ActionCommand getActionCommand(String actionCommandName) {
+	public ResourceCommand getResourceCommand(String resourceCommandName) {
 		String className = null;
 
 		try {
-			ActionCommand actionCommand = _actionCommandCache.get(
-				actionCommandName);
+			ResourceCommand resourceCommand = _resourceCommandCache.get(
+				resourceCommandName);
 
-			if (actionCommand != null) {
-				return actionCommand;
+			if (resourceCommand != null) {
+				return resourceCommand;
 			}
 
 			if (Validator.isNull(_packagePrefix)) {
@@ -97,122 +99,126 @@ public class ResourceCommandCache {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(_packagePrefix);
-			sb.append(Character.toUpperCase(actionCommandName.charAt(0)));
-			sb.append(actionCommandName.substring(1));
-			sb.append(_ACTION_COMMAND_POSTFIX);
+			sb.append(Character.toUpperCase(resourceCommandName.charAt(0)));
+			sb.append(resourceCommandName.substring(1));
+			sb.append(_RESOURCE_COMMAND_POSTFIX);
 
 			className = sb.toString();
 
-			actionCommand = (ActionCommand)InstanceFactory.newInstance(
+			resourceCommand = (ResourceCommand)InstanceFactory.newInstance(
 				className);
 
-			_actionCommandCache.put(actionCommandName, actionCommand);
+			_resourceCommandCache.put(resourceCommandName, resourceCommand);
 
-			return actionCommand;
+			return resourceCommand;
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
-				_log.warn("Unable to instantiate ActionCommand " + className);
+				_log.warn("Unable to instantiate ResourceCommand " + className);
 			}
 
-			_actionCommandCache.put(actionCommandName, EMPTY);
+			_resourceCommandCache.put(resourceCommandName, EMPTY);
 
 			return EMPTY;
 		}
 	}
 
-	public List<ActionCommand> getActionCommandChain(
-		String actionCommandChain) {
+	public List<ResourceCommand> getResourceCommandChain(
+		String resourceCommandChain) {
 
-		List<ActionCommand> actionCommands = _actionCommandChainCache.get(
-			actionCommandChain);
+		List<ResourceCommand> resourceCommands = _resourceCommandChainCache.get(
+			resourceCommandChain);
 
-		if (actionCommands != null) {
-			return actionCommands;
+		if (resourceCommands != null) {
+			return resourceCommands;
 		}
 
-		actionCommands = new ArrayList<>();
+		resourceCommands = new ArrayList<>();
 
-		String[] actionCommandNames = StringUtil.split(actionCommandChain);
+		String[] resourceCommandNames = StringUtil.split(resourceCommandChain);
 
-		for (String actionCommandName : actionCommandNames) {
-			ActionCommand actionCommand = getActionCommand(actionCommandName);
+		for (String resourceCommandName : resourceCommandNames) {
+			ResourceCommand resourceCommand = getResourceCommand(
+				resourceCommandName);
 
-			if (actionCommand != EMPTY) {
-				actionCommands.add(actionCommand);
+			if (resourceCommand != EMPTY) {
+				resourceCommands.add(resourceCommand);
 			}
 			else {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
-						"Unable to find ActionCommand " + actionCommandChain);
+						"Unable to find ResourceCommand " +
+							resourceCommandChain);
 				}
 			}
 		}
 
-		_actionCommandChainCache.put(actionCommandChain, actionCommands);
+		_resourceCommandChainCache.put(resourceCommandChain, resourceCommands);
 
-		return actionCommands;
+		return resourceCommands;
 	}
 
 	public boolean isEmpty() {
-		return _actionCommandCache.isEmpty();
+		return _resourceCommandCache.isEmpty();
 	}
 
-	private static final String _ACTION_COMMAND_POSTFIX = "ActionCommand";
+	private static final String _RESOURCE_COMMAND_POSTFIX = "ResourceCommand";
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ActionCommandCache.class);
+		ResourceCommandCache.class);
 
-	private final Map<String, ActionCommand> _actionCommandCache =
-		new ConcurrentHashMap<>();
-	private final Map<String, List<ActionCommand>> _actionCommandChainCache =
-		new ConcurrentHashMap<>();
 	private final String _packagePrefix;
-	private final ServiceTracker<ActionCommand, ActionCommand> _serviceTracker;
+	private final Map<String, ResourceCommand> _resourceCommandCache =
+		new ConcurrentHashMap<>();
+	private final Map<String, List<ResourceCommand>>
+		_resourceCommandChainCache = new ConcurrentHashMap<>();
+	private final ServiceTracker<ResourceCommand, ResourceCommand>
+		_serviceTracker;
 
-	private class ActionCommandServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<ActionCommand, ActionCommand> {
+	private class ResourceCommandServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<ResourceCommand, ResourceCommand> {
 
 		@Override
-		public ActionCommand addingService(
-			ServiceReference<ActionCommand> serviceReference) {
+		public ResourceCommand addingService(
+			ServiceReference<ResourceCommand> serviceReference) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
-			ActionCommand actionCommand = registry.getService(serviceReference);
+			ResourceCommand resourceCommand = registry.getService(
+				serviceReference);
 
-			String actionCommandName = (String)serviceReference.getProperty(
-				"action.command.name");
+			String resourceCommandName = (String)serviceReference.getProperty(
+				"resource.command.name");
 
-			_actionCommandCache.put(actionCommandName, actionCommand);
+			_resourceCommandCache.put(resourceCommandName, resourceCommand);
 
-			return actionCommand;
+			return resourceCommand;
 		}
 
 		@Override
 		public void modifiedService(
-			ServiceReference<ActionCommand> serviceReference,
-			ActionCommand actionCommand) {
+			ServiceReference<ResourceCommand> serviceReference,
+			ResourceCommand resourceCommand) {
 		}
 
 		@Override
 		public void removedService(
-			ServiceReference<ActionCommand> serviceReference,
-			ActionCommand actionCommand) {
+			ServiceReference<ResourceCommand> serviceReference,
+			ResourceCommand resourceCommand) {
 
 			Registry registry = RegistryUtil.getRegistry();
 
 			registry.ungetService(serviceReference);
 
-			String actionCommandName = (String)serviceReference.getProperty(
-				"action.command.name");
+			String resourceCommandName = (String)serviceReference.getProperty(
+				"resource.command.name");
 
-			_actionCommandCache.remove(actionCommandName);
+			_resourceCommandCache.remove(resourceCommandName);
 
-			for (List<ActionCommand> actionCommands :
-					_actionCommandChainCache.values()) {
+			for (List<ResourceCommand> resourceCommands :
+					_resourceCommandChainCache.values()) {
 
-				actionCommands.remove(actionCommand);
+				resourceCommands.remove(resourceCommand);
 			}
 		}
 

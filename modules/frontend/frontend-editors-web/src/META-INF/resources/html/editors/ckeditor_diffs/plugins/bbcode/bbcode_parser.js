@@ -337,7 +337,10 @@
 
 	var MAP_LIST_STYLES = {
 		1: 'list-style-type: decimal;',
-		a: 'list-style-type: lower-alpha;'
+		a: 'list-style-type: lower-alpha;',
+		i: 'list-style-type: lower-roman;',
+		A: 'list-style-type: upper-alpha;',
+		I: 'list-style-type: upper-roman;'
 	};
 
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {

@@ -23,7 +23,8 @@ AUI.add(
 								contentBox: container.one('.auto-fields'),
 								fieldIndexes: instance.getQualifiedName(),
 								namespace: instance.get('portletNamespace'),
-								sortable: true
+								sortable: true,
+								sortableHandle: '.ddm-options-row'
 							}
 						).render();
 					},

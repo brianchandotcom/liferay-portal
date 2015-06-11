@@ -1,0 +1,62 @@
+{namespace ddm}
+
+/**
+ * Prints the DDM Form Options field.
+ *
+ * @param label
+ * @param name
+ * @param value
+ */
+{template .options}
+	<div class="form-group field-wrapper" data-fieldname="{$name}">
+		<span class="control-label">{$label}</span>
+
+		<input name="{$name}" type="hidden" />
+
+		<div class="auto-fields">
+			{if length($value) == 0}
+				{call ddm.option data="all"}
+					{param label: '' /}
+					{param value: '' /}
+				{/call}
+			{else}
+				{foreach $option in $value}
+					{call ddm.option data="all"}
+						{param label: $option.label /}
+						{param value: $option.value /}
+					{/call}
+				{/foreach}
+			{/if}
+		</div>
+	</div>
+{/template}
+
+/**
+ * Prints one option
+ *
+ * @param label
+ * @param value
+ */
+{template .option}
+	<div class="lfr-form-row">
+		<div class="row">
+			<div class="col-md-4">
+				<label>Label</label>
+			</div>
+			<div class="col-md-4">
+				<label>Value</label>
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4">
+				<input class="ddm-options-field-label" name="label" value="{$label}" />
+			</div>
+			<div class="col-md-4">
+				<input class="ddm-options-field-value" name="value" value="{$value}" />
+			</div>
+			<div class="col-md-4"></div>
+		</div>
+	</div>
+{/template}

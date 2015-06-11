@@ -32,9 +32,12 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
@@ -179,6 +182,30 @@ public class JournalFeedStagedModelDataHandler
 
 			feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		}
+
+		Group targetLayoutGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+			portletDataContext.getCompanyId(),
+			StringPool.SLASH + oldGroupFriendlyURL);
+
+		boolean privateLayout = false;
+
+		String servletMapping = StringPool.SLASH + friendlyURLParts[1];
+
+		if (!servletMapping.equals(
+				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING)) {
+
+			privateLayout = true;
+		}
+
+		String targetLayoutFriendlyURL = StringPool.SLASH + friendlyURLParts[3];
+
+		Layout targetLayout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			targetLayoutGroup.getGroupId(), privateLayout,
+			targetLayoutFriendlyURL);
+
+		portletDataContext.addReferenceElement(
+			feed, feedElement, targetLayout,
+			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 		portletDataContext.addClassedModel(
 			feedElement, ExportImportPathUtil.getModelPath(feed), feed);

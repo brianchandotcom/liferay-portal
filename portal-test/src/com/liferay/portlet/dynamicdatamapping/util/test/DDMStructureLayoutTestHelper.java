@@ -57,7 +57,7 @@ public class DDMStructureLayoutTestHelper {
 
 		for (String ddmFormFieldName : ddmFormFieldNames) {
 			ddmFormLayoutColumns.add(
-				new DDMFormLayoutColumn(ddmFormFieldName, size));
+				new DDMFormLayoutColumn(size, ddmFormFieldName));
 		}
 
 		return ddmFormLayoutColumns;

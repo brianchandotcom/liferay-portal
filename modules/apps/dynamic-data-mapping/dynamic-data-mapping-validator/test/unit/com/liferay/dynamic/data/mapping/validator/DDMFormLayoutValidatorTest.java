@@ -32,12 +32,12 @@ import org.junit.Test;
 public class DDMFormLayoutValidatorTest {
 
 	@Test(expected = DDMFormLayoutValidationException.class)
-	public void testDuplicateFieldName() throws Exception {
+	public void testDuplicateFieldNames() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
-			"field", 6);
+			6, "field1", "field2", "field3");
 
 		DDMFormLayoutColumn ddmFormLayoutColumn2 = createDDMFormLayoutColumn(
-			"field", 6);
+			6, "field1", "field3");
 
 		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
 			ddmFormLayoutColumn1);
@@ -58,10 +58,10 @@ public class DDMFormLayoutValidatorTest {
 	@Test(expected = DDMFormLayoutValidationException.class)
 	public void testInvalidRowSize() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn1 = createDDMFormLayoutColumn(
-			"field1", 6);
+			6, "field1");
 
 		DDMFormLayoutColumn ddmFormLayoutColumn2 = createDDMFormLayoutColumn(
-			"field2", 7);
+			7, "field2");
 
 		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
 			ddmFormLayoutColumn1);
@@ -91,7 +91,7 @@ public class DDMFormLayoutValidatorTest {
 	@Test
 	public void testValidDDMFormLayout() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
-			"field", 12);
+			12, "field");
 
 		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
 			ddmFormLayoutColumn);
@@ -110,7 +110,7 @@ public class DDMFormLayoutValidatorTest {
 	@Test(expected = DDMFormLayoutValidationException.class)
 	public void testWrongDefaultLocaleSetForPageTitle() throws Exception {
 		DDMFormLayoutColumn ddmFormLayoutColumn = createDDMFormLayoutColumn(
-			"field", 12);
+			12, "field");
 
 		DDMFormLayoutRow ddmFormLayoutRow = createDDMFormLayoutRow(
 			ddmFormLayoutColumn);
@@ -139,10 +139,10 @@ public class DDMFormLayoutValidatorTest {
 	}
 
 	private DDMFormLayoutColumn createDDMFormLayoutColumn(
-		String fieldName, int size) {
+		int size, String... fieldNames) {
 
 		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			fieldName, size);
+			size, fieldNames);
 
 		return ddmFormLayoutColumn;
 	}

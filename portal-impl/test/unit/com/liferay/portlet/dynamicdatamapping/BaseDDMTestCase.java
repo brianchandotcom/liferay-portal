@@ -65,6 +65,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -189,6 +190,15 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		return createDDMFormFieldValue(StringUtil.randomString(), name, value);
 	}
 
+	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
+		int size, String... fieldNames) {
+
+		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
+			size, fieldNames);
+
+		return ddmFormLayoutColumn;
+	}
+
 	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(
 		String... fieldNames) {
 
@@ -197,10 +207,16 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 		int size = 12 / fieldNames.length;
 
 		for (String fieldName : fieldNames) {
-			ddmFormLayoutColumns.add(new DDMFormLayoutColumn(fieldName, size));
+			ddmFormLayoutColumns.add(new DDMFormLayoutColumn(size, fieldName));
 		}
 
 		return ddmFormLayoutColumns;
+	}
+
+	protected DDMFormLayoutRow createDDMFormLayoutRow(
+		DDMFormLayoutColumn... ddmFormLayoutColumns) {
+
+		return createDDMFormLayoutRow(Arrays.asList(ddmFormLayoutColumns));
 	}
 
 	protected DDMFormLayoutRow createDDMFormLayoutRow(

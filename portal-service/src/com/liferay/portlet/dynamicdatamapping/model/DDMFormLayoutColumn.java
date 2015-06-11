@@ -14,6 +14,11 @@
 
 package com.liferay.portlet.dynamicdatamapping.model;
 
+import com.liferay.portal.kernel.util.ListUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Marcellus Tavares
  */
@@ -22,23 +27,33 @@ public class DDMFormLayoutColumn {
 	public static final int FULL = 12;
 
 	public DDMFormLayoutColumn(DDMFormLayoutColumn ddmFormLayoutColumn) {
-		this(ddmFormLayoutColumn._ddmFormFieldName, ddmFormLayoutColumn._size);
+		_ddmFormFieldNames = new ArrayList<>(
+			ddmFormLayoutColumn._ddmFormFieldNames);
+		_size = ddmFormLayoutColumn._size;
 	}
 
-	public DDMFormLayoutColumn(String ddmFormFieldName, int size) {
-		_ddmFormFieldName = ddmFormFieldName;
+	public DDMFormLayoutColumn(int size, String... ddmFormFieldNames) {
 		_size = size;
+		_ddmFormFieldNames = ListUtil.toList(ddmFormFieldNames);
 	}
 
-	public String getDDMFormFieldName() {
-		return _ddmFormFieldName;
+	public String getDDMFormFieldName(int index) {
+		return _ddmFormFieldNames.get(index);
+	}
+
+	public List<String> getDDMFormFieldNames() {
+		return _ddmFormFieldNames;
 	}
 
 	public int getSize() {
 		return _size;
 	}
 
-	private final String _ddmFormFieldName;
+	public void setDDMFormFieldNames(List<String> ddmFormFieldNames) {
+		_ddmFormFieldNames = ddmFormFieldNames;
+	}
+
+	private List<String> _ddmFormFieldNames = new ArrayList<>();
 	private final int _size;
 
 }

@@ -17,57 +17,61 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer");
+SearchContainer contextSearchContainer = (SearchContainer)request.getAttribute("liferay-ui:user-group-search-container-results:searchContainer");
 UserGroupDisplayTerms searchTerms = (UserGroupDisplayTerms)request.getAttribute("liferay-ui:user-group-search-container-results:searchTerms");
 LinkedHashMap<String, Object> userGroupParams = (LinkedHashMap<String, Object>)request.getAttribute("liferay-ui:user-group-search-container-results:userGroupParams");
+
+String portletName = ParamUtil.getString(request, "p_p_id");
 %>
 
-<liferay-ui:search-container-results>
-	<c:choose>
-		<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
+<liferay-ui:search-container searchContainer="<%= contextSearchContainer %>">
+	<liferay-ui:search-container-results>
+		<c:choose>
+			<c:when test="<%= portletName.equals(PortletKeys.DIRECTORY) && PropsValues.USER_GROUPS_INDEXER_ENABLED && PropsValues.USER_GROUPS_SEARCH_WITH_INDEX %>">
 
-			<%
-			userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
+				<%
+				userGroupParams.put("expandoAttributes", searchTerms.getKeywords());
 
-			Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
+				Sort sort = SortFactoryUtil.getSort(UserGroup.class, searchContainer.getOrderByCol(), searchContainer.getOrderByType());
 
-			BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
+				BaseModelSearchResult<UserGroup> baseModelSearchResult = null;
 
-			if (searchTerms.isAdvancedSearch()) {
-				baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
-			}
-			else {
-				baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
-			}
+				if (searchTerms.isAdvancedSearch()) {
+					baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), sort);
+				}
+				else {
+					baseModelSearchResult = UserGroupLocalServiceUtil.searchUserGroups(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), sort);
+				}
 
-			results = baseModelSearchResult.getBaseModels();
+				results = baseModelSearchResult.getBaseModels();
 
-			searchContainer.setResults(results);
-			searchContainer.setTotal(baseModelSearchResult.getLength());
-			%>
+				searchContainer.setResults(results);
+				searchContainer.setTotal(baseModelSearchResult.getLength());
+				%>
 
-		</c:when>
-		<c:otherwise>
+			</c:when>
+			<c:otherwise>
 
-			<%
-			if (searchTerms.isAdvancedSearch()) {
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
+				<%
+				if (searchTerms.isAdvancedSearch()) {
+					total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator());
 
-				searchContainer.setTotal(total);
+					searchContainer.setTotal(total);
 
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
-			else {
-				total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
+					results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getName(), searchTerms.getDescription(), userGroupParams, searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				}
+				else {
+					total = UserGroupLocalServiceUtil.searchCount(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams);
 
-				searchContainer.setTotal(total);
+					searchContainer.setTotal(total);
 
-				results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
-			}
+					results = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, searchContainer.getStart(), searchContainer.getEnd(), searchContainer.getOrderByComparator());
+				}
 
-			searchContainer.setResults(results);
-			%>
+				searchContainer.setResults(results);
+				%>
 
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:search-container-results>
+			</c:otherwise>
+		</c:choose>
+	</liferay-ui:search-container-results>
+</liferay-ui:search-container>

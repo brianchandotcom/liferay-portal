@@ -136,7 +136,7 @@ public class BrowserTag extends IncludeTag {
 
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
-	private String _displayStyle = null;
+	private String _displayStyle;
 	private PortletURL _displayStyleURL;
 	private String _idPrefix;
 	private String _itemSelectedEventName;

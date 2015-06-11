@@ -352,10 +352,6 @@ public class InputEditorTag extends IncludeTag {
 		request.setAttribute("liferay-ui:input-editor:width", _width);
 
 		request.setAttribute("liferay-ui:input-editor:data", getData());
-
-		Editor editor = getEditor(request);
-
-		editor.setItemSelectorAttribute(request);
 	}
 
 	private static final String _EDITOR_WYSIWYG_DEFAULT = PropsUtil.get(

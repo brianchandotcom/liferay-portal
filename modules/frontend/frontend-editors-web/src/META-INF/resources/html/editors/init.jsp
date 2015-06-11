@@ -22,8 +22,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.item.selector.ItemSelector" %><%@
-page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@
+<%@ page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.BrowserSnifferUtil" %><%@
@@ -46,8 +45,7 @@ page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.util.Encryptor" %>
 
 <%@ page import="java.util.Locale" %><%@
-page import="java.util.Map" %><%@
-page import="java.util.Set" %>
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletResponse" %><%@

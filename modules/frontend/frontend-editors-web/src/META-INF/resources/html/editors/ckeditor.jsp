@@ -19,17 +19,14 @@
 <%
 String portletId = portletDisplay.getRootPortletId();
 
-boolean allowBrowseDocuments = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:allowBrowseDocuments"));
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
-Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
-boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
+boolean inlineEdit = GetterUtil.getBoolean((String) request.getAttribute("liferay-ui:input-editor:inlineEdit"));
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
-ItemSelector itemSelector = (ItemSelector)request.getAttribute("liferay-ui:input-editor:itemSelector");
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 
 String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");

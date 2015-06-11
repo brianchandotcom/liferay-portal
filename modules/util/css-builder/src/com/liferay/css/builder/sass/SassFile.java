@@ -14,7 +14,7 @@
 
 package com.liferay.css.builder.sass;
 
-import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.portal.util.AggregateUtil;
 
@@ -33,7 +33,10 @@ import java.util.List;
  */
 public class SassFile implements SassFragment {
 
-	public SassFile(String docrootDirName, String fileName) {
+	public SassFile(
+		CSSBuilder cssBuilder, String docrootDirName, String fileName) {
+
+		_cssBuilder = cssBuilder;
 		_docrootDirName = docrootDirName;
 		_fileName = fileName;
 
@@ -144,7 +147,7 @@ public class SassFile implements SassFragment {
 
 		String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(_fileName);
 
-		if (RTLCSSUtil.isExcludedPath(_fileName)) {
+		if (_cssBuilder.isRtlExcludedPath(_fileName)) {
 			return;
 		}
 
@@ -170,6 +173,7 @@ public class SassFile implements SassFragment {
 	private static final String _BASE_URL = "@base_url@";
 
 	private final String _baseDir;
+	private final CSSBuilder _cssBuilder;
 	private final String _docrootDirName;
 	private long _elapsedTime;
 	private final String _fileName;

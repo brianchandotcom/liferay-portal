@@ -17,6 +17,8 @@ package com.liferay.css.builder;
 import com.liferay.css.builder.sass.SassFile;
 import com.liferay.css.builder.sass.SassFileWithMediaQuery;
 import com.liferay.css.builder.sass.SassString;
+import com.liferay.portal.kernel.regex.PatternFactory;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.sass.compiler.SassCompiler;
@@ -33,6 +35,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -70,12 +74,15 @@ public class CSSBuilder {
 
 		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String[] rtlExcludedPathRegexps = StringUtil.split(
+			arguments.get("sass.rtl.excluded.path.regexps"));
 		String sassCompilerClassName = arguments.get(
 			"sass.compiler.class.name");
 
 		try {
 			CSSBuilder CSSBuilder = new CSSBuilder(
-				docrootDirName, portalCommonDirName, sassCompilerClassName);
+				docrootDirName, portalCommonDirName, rtlExcludedPathRegexps,
+				sassCompilerClassName);
 
 			CSSBuilder.execute(dirNames);
 		}
@@ -86,11 +93,13 @@ public class CSSBuilder {
 
 	public CSSBuilder(
 			String docrootDirName, String portalCommonDirName,
-			String sassCompilerClassName)
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
+		_rtlExcludedPathPatterns = PatternFactory.compile(
+			rtlExcludedPathRegexps);
 
 		_initSassCompiler(sassCompilerClassName);
 	}
@@ -113,6 +122,18 @@ public class CSSBuilder {
 		}
 	}
 
+	public boolean isRtlExcludedPath(String filePath) {
+		for (Pattern pattern : _rtlExcludedPathPatterns) {
+			Matcher matcher = pattern.matcher(filePath);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _addSassString(
 			SassFile sassFile, String fileName, String sassContent)
 		throws Exception {
@@ -126,7 +147,7 @@ public class CSSBuilder {
 		String cssContent = _parseSass(
 			fileName, CSSBuilderUtil.parseStaticTokens(sassContent));
 
-		sassFile.addSassFragment(new SassString(fileName, cssContent));
+		sassFile.addSassFragment(new SassString(this, fileName, cssContent));
 	}
 
 	private SassFile _build(String fileName) throws Exception {
@@ -136,7 +157,7 @@ public class CSSBuilder {
 			return sassFile;
 		}
 
-		sassFile = new SassFile(_docrootDirName, fileName);
+		sassFile = new SassFile(this, _docrootDirName, fileName);
 
 		SassFile previousSassFile = _sassFileCache.putIfAbsent(
 			fileName, sassFile);
@@ -408,6 +429,7 @@ public class CSSBuilder {
 
 	private final String _docrootDirName;
 	private final String _portalCommonDirName;
+	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
 	private final ConcurrentMap<String, SassFile> _sassFileCache =
 		new ConcurrentHashMap<>();

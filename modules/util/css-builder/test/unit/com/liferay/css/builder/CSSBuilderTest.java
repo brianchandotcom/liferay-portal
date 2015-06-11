@@ -78,7 +78,7 @@ public class CSSBuilderTest {
 	public void testSassToCssBuilder() throws Exception {
 		CSSBuilder cssBuilder = new CSSBuilder(
 			_DOCROOT_DIR_NAME, "../../../portal-web/docroot/html/css/common",
-			"jni");
+			new String[0], "jni");
 
 		cssBuilder.execute(Arrays.asList(new String[] {_DIR_NAME}));
 

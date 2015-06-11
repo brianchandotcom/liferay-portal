@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.renderer;
 
 import com.liferay.dynamic.data.mapping.form.renderer.internal.DDMFormLayoutTransformer;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
@@ -59,9 +60,16 @@ public class DDMFormLayoutTransformerTest {
 		DDMFormLayoutRow ddmFormLayoutRow2 = new DDMFormLayoutRow();
 
 		ddmFormLayoutRow2.setDDMFormLayoutColumns(
-			createDDMFormLayoutColumns("Field_3", "Field_4", "Field_5"));
+			createDDMFormLayoutColumns("Field_3"));
 
 		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow2);
+
+		DDMFormLayoutRow ddmFormLayoutRow3 = new DDMFormLayoutRow();
+
+		ddmFormLayoutRow3.addDDMFormLayoutColumn(
+			new DDMFormLayoutColumn(12, "Field_4", "Field_5"));
+
+		ddmFormLayoutPage.addDDMFormLayoutRow(ddmFormLayoutRow3);
 
 		ddmFormLayout.addDDMFormLayoutPage(ddmFormLayoutPage);
 
@@ -87,7 +95,7 @@ public class DDMFormLayoutTransformerTest {
 
 		List<Object> rows = (List<Object>)page1.get("rows");
 
-		Assert.assertEquals(2, rows.size());
+		Assert.assertEquals(3, rows.size());
 
 		Map<String, Object> row1 = (Map<String, Object>)rows.get(0);
 
@@ -96,37 +104,51 @@ public class DDMFormLayoutTransformerTest {
 		Assert.assertEquals(2, columnsRow1.size());
 
 		assertColumnEquals(
-			"Rendered Field 1", 6, (Map<String, Object>)columnsRow1.get(0));
+			new String[] {"Rendered Field 1"}, 6,
+			(Map<String, Object>)columnsRow1.get(0));
 		assertColumnEquals(
-			"Rendered Field 2", 6, (Map<String, Object>)columnsRow1.get(1));
+			new String[] {"Rendered Field 2"}, 6,
+			(Map<String, Object>)columnsRow1.get(1));
 
 		Map<String, Object> row2 = (Map<String, Object>)rows.get(1);
 
 		List<Object> columnsRow2 = (List<Object>)row2.get("columns");
 
-		Assert.assertEquals(3, columnsRow2.size());
+		Assert.assertEquals(1, columnsRow2.size());
 
 		assertColumnEquals(
-			"Rendered Field 3", 4, (Map<String, Object>)columnsRow2.get(0));
+			new String[] {"Rendered Field 3"}, 12,
+			(Map<String, Object>)columnsRow2.get(0));
+
+		Map<String, Object> row3 = (Map<String, Object>)rows.get(2);
+
+		List<Object> columnsRow3 = (List<Object>)row3.get("columns");
+
+		Assert.assertEquals(1, columnsRow3.size());
+
 		assertColumnEquals(
-			"Rendered Field 4", 4, (Map<String, Object>)columnsRow2.get(1));
-		assertColumnEquals(
-			"Rendered Field 5", 4, (Map<String, Object>)columnsRow2.get(2));
+			new String[] {"Rendered Field 4", "Rendered Field 5"}, 12,
+			(Map<String, Object>)columnsRow3.get(0));
 	}
 
+	@SuppressWarnings("unchecked")
 	protected void assertColumnEquals(
-		String expectedRenderedDDMFormField, int expectedSize,
+		String[] expectedRenderedDDMFormFields, int expectedSize,
 		Map<String, Object> actualColumn) {
 
-		Assert.assertEquals(
-			expectedRenderedDDMFormField, actualColumn.get("field"));
+		List<String> actualRenderedDDMFormFields =
+			(List<String>)actualColumn.get("fields");
+
+		Assert.assertArrayEquals(
+			expectedRenderedDDMFormFields,
+			ArrayUtil.toStringArray(actualRenderedDDMFormFields));
 		Assert.assertEquals(expectedSize, actualColumn.get("size"));
 	}
 
 	protected DDMFormLayoutColumn createDDMFormLayoutColumn(
 		String ddmFormFieldName, int size) {
 
-		return new DDMFormLayoutColumn(ddmFormFieldName, size);
+		return new DDMFormLayoutColumn(size, ddmFormFieldName);
 	}
 
 	protected List<DDMFormLayoutColumn> createDDMFormLayoutColumns(

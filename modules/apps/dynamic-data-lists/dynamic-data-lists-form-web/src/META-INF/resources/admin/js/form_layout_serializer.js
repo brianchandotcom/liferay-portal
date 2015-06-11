@@ -16,6 +16,10 @@ AUI.add(
 						valueFn: '_valueColumnHandler'
 					},
 
+					fieldHandler: {
+						valueFn: '_valueFieldHandler'
+					},
+
 					pageHandler: {
 						valueFn: '_valuePageHandler'
 					},
@@ -34,6 +38,12 @@ AUI.add(
 						var instance = this;
 
 						return instance.serializeColumn;
+					},
+
+					_valueFieldHandler: function() {
+						var instance = this;
+
+						return instance.serializeField;
 					},
 
 					_valuePageHandler: function() {
@@ -67,15 +77,19 @@ AUI.add(
 							size: column.get('size')
 						};
 
-						if (A.instanceOf(fieldsList, A.FormBuilderFieldList)) {
-							var fields = fieldsList.get('fields');
+						serializedColumn.fieldNames = [];
 
-							if (fields.length > 0) {
-								serializedColumn.fieldName = fields[0].get('name');
-							}
+						if (A.instanceOf(fieldsList, A.FormBuilderFieldList)) {
+							serializedColumn.fieldNames = instance.visitFields(fieldsList.get('fields'));
 						}
 
 						return serializedColumn;
+					},
+
+					serializeField: function(field) {
+						var instance = this;
+
+						return field.get('name');
 					},
 
 					serializePage: function(page, index) {
@@ -105,6 +119,28 @@ AUI.add(
 						return {
 							columns: instance.visitColumns(row.get('cols'))
 						};
+					},
+
+					visitColumns: function(rows) {
+						var instance = this;
+
+						return AArray.filter(
+							LayoutSerializer.superclass.visitColumns.apply(instance, arguments),
+							function(item) {
+								return item.fieldNames.length > 0;
+							}
+						);
+					},
+
+					visitRows: function(rows) {
+						var instance = this;
+
+						return AArray.filter(
+							LayoutSerializer.superclass.visitRows.apply(instance, arguments),
+							function(item) {
+								return item.columns.length > 0;
+							}
+						);
 					}
 				}
 			}

@@ -52,10 +52,10 @@ AUI.add(
 							}
 						);
 
-						if (column.fieldName) {
+						if (column.fieldNames && column.fieldNames.length > 0) {
 							var fieldsList = new A.FormBuilderFieldList(
 								{
-									fields: [instance.deserializeField(deserializedColumn, column.fieldName)]
+									fields: instance.deserializeFields(deserializedColumn, column.fieldNames)
 								}
 							);
 
@@ -108,6 +108,12 @@ AUI.add(
 						var fieldClass = FormBuilderUtil.getFieldClass(fieldClassName);
 
 						return (new fieldClass(fieldConfig)).render();
+					},
+
+					deserializeFields: function(deserializedColumn, fieldNames) {
+						var instance = this;
+
+						return AArray.map(fieldNames, A.bind('deserializeField', instance, deserializedColumn));
 					},
 
 					deserializePage: function(page) {

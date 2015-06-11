@@ -21,6 +21,7 @@ import com.liferay.portal.DuplicateOrganizationException;
 import com.liferay.portal.EmailAddressException;
 import com.liferay.portal.NoSuchCountryException;
 import com.liferay.portal.NoSuchListTypeException;
+import com.liferay.portal.NoSuchOrgLaborException;
 import com.liferay.portal.NoSuchOrganizationException;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.OrganizationNameException;
@@ -36,6 +37,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.service.OrgLaborServiceUtil;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.UserGroupServiceUtil;
 import com.liferay.portal.service.UserServiceUtil;
@@ -53,73 +55,13 @@ import javax.portlet.RenderResponse;
  */
 public class UsersAdminPortlet extends MVCPortlet {
 
-	public void deleteOrgLabor(ActionRequest actionRequest) throws Exception {
+	public void deleteOrgLabor(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
 
 		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
-	}
-
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateOrgLabor(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteOrgLabor(actionRequest);
-			}
-
-			sendRedirect(actionRequest, actionResponse);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrgLaborException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.users_admin.error");
-			}
-			else if (e instanceof NoSuchListTypeException) {
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getOrgLabor(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrgLaborException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.users_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(renderRequest, "portlet.users_admin.edit_org_labor"));
 	}
 
 	public void updateOrganizationUserGroups(
@@ -169,7 +111,10 @@ public class UsersAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void updateOrgLabor(ActionRequest actionRequest) throws Exception {
+	public void updateOrgLabor(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
 
 		long organizationId = ParamUtil.getLong(
@@ -225,6 +170,8 @@ public class UsersAdminPortlet extends MVCPortlet {
 		if (SessionErrors.contains(
 				renderRequest, NoSuchOrganizationException.class.getName()) ||
 			SessionErrors.contains(
+				renderRequest, NoSuchOrgLaborException.class.getName()) ||
+			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 
 			include("/error.jsp", renderRequest, renderResponse);
@@ -244,6 +191,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 			cause instanceof MembershipPolicyException ||
 			cause instanceof NoSuchCountryException ||
 			cause instanceof NoSuchListTypeException ||
+			cause instanceof NoSuchOrgLaborException ||
 			cause instanceof NoSuchRegionException ||
 			cause instanceof OrganizationNameException ||
 			cause instanceof OrganizationParentException ||

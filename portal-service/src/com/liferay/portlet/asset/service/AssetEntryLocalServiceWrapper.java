@@ -494,12 +494,12 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	public java.util.List<com.liferay.portlet.asset.model.AssetEntry> getEntries(
 		long[] groupIds, long[] classNameIds, java.lang.String keywords,
 		java.lang.String userName, java.lang.String title,
-		java.lang.String description, boolean advancedSearch,
-		boolean andOperator, int start, int end, java.lang.String orderByCol1,
-		java.lang.String orderByCol2, java.lang.String orderByType1,
-		java.lang.String orderByType2) {
+		java.lang.String description, java.lang.Boolean listable,
+		boolean advancedSearch, boolean andOperator, int start, int end,
+		java.lang.String orderByCol1, java.lang.String orderByCol2,
+		java.lang.String orderByType1, java.lang.String orderByType2) {
 		return _assetEntryLocalService.getEntries(groupIds, classNameIds,
-			keywords, userName, title, description, advancedSearch,
+			keywords, userName, title, description, listable, advancedSearch,
 			andOperator, start, end, orderByCol1, orderByCol2, orderByType1,
 			orderByType2);
 	}
@@ -514,9 +514,10 @@ public class AssetEntryLocalServiceWrapper implements AssetEntryLocalService,
 	public int getEntriesCount(long[] groupIds, long[] classNameIds,
 		java.lang.String keywords, java.lang.String userName,
 		java.lang.String title, java.lang.String description,
-		boolean advancedSearch, boolean andOperator) {
+		java.lang.Boolean listable, boolean advancedSearch, boolean andOperator) {
 		return _assetEntryLocalService.getEntriesCount(groupIds, classNameIds,
-			keywords, userName, title, description, advancedSearch, andOperator);
+			keywords, userName, title, description, listable, advancedSearch,
+			andOperator);
 	}
 
 	@Override

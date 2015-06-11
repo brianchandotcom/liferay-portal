@@ -24,6 +24,14 @@ String typeSelection = ParamUtil.getString(request, "typeSelection");
 long subtypeSelectionId = ParamUtil.getLong(request, "subtypeSelectionId");
 String eventName = ParamUtil.getString(request, "eventName", liferayPortletResponse.getNamespace() + "selectAsset");
 
+Boolean listable = null;
+
+String listableValue = ParamUtil.getString(request, "listable", null);
+
+if (Validator.isNotNull(listableValue)) {
+	listable = ParamUtil.getBoolean(request, "listable", true);
+}
+
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("selectedGroupIds", StringUtil.merge(selectedGroupIds));
@@ -31,6 +39,10 @@ portletURL.setParameter("refererAssetEntryId", String.valueOf(refererAssetEntryI
 portletURL.setParameter("typeSelection", typeSelection);
 portletURL.setParameter("subtypeSelectionId", String.valueOf(subtypeSelectionId));
 portletURL.setParameter("eventName", eventName);
+
+if (listable != null) {
+	portletURL.setParameter("listable", String.valueOf(listable));
+}
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
@@ -67,11 +79,11 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 					<c:when test="<%= AssetBrowserWebConfigurationValues.SEARCH_WITH_DATABASE %>">
 
 						<%
-						int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
+						int assetEntriesTotal = AssetEntryLocalServiceUtil.getEntriesCount(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), listable, searchTerms.isAdvancedSearch(), searchTerms.isAndOperator());
 
 						searchContainer.setTotal(assetEntriesTotal);
 
-						List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), "modifiedDate", "title", "DESC", "ASC");
+						List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getEntries(selectedGroupIds, new long[] {assetRendererFactory.getClassNameId()}, searchTerms.getKeywords(), searchTerms.getUserName(), searchTerms.getTitle(), searchTerms.getDescription(), listable, searchTerms.isAdvancedSearch(), searchTerms.isAndOperator(), searchContainer.getStart(), searchContainer.getEnd(), "modifiedDate", "title", "DESC", "ASC");
 
 						searchContainer.setResults(assetEntries);
 						%>

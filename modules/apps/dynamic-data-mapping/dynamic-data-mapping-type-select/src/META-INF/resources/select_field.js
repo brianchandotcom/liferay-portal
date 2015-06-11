@@ -11,13 +11,27 @@ AUI.add(
 				NAME: 'liferay-ddm-form-field-select',
 
 				prototype: {
+					getOptions: function() {
+						var instance = this;
+
+						return _.map(
+							instance.get('definition').options,
+							function(item) {
+								return {
+									label: item.label[instance.get('locale')],
+									value: item.value
+								};
+							}
+						);
+					},
+
 					getTemplateContext: function() {
 						var instance = this;
 
 						return A.merge(
 								SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								options: []
+								options: instance.getOptions()
 							}
 						);
 					}

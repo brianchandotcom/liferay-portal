@@ -29,7 +29,7 @@ public interface SelectDDMFormFieldTypeSettings
 	@DDMFormField
 	public boolean multiple();
 
-	@DDMFormField(dataType = "ddm-options", type = "select")
+	@DDMFormField(dataType = "ddm-options", type = "options")
 	public DDMFormFieldOptions options();
 
 }

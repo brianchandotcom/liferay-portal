@@ -127,7 +127,7 @@ public class JournalArticleExpirationTest {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
-		Calendar expirationDateCalendar = getExpirationCalendar(Time.MINUTE, 1);
+		Calendar expirationDateCalendar = getExpirationCalendar(Time.HOUR, 1);
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			TestPropsValues.getUserId(), groupId,
@@ -164,20 +164,18 @@ public class JournalArticleExpirationTest {
 
 		JournalArticle article = addArticle(_group.getGroupId(), approved);
 
-		Date originalExpirationDate = article.getExpirationDate();
-
 		// Add a version of the article, changing expire date
 
 		article = updateArticle(article, mode);
 
-		// Wait until the original article expire date passes
-
-		long waitTime = originalExpirationDate.getTime() - new Date().getTime();
-
-		Thread.sleep(waitTime);
+		Date expirationDate = article.getExpirationDate();
 
 		// Simulate automatic expiration
 
+		article.setExpirationDate(
+			new Date(expirationDate.getTime() - (Time.HOUR * 2)));
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		JournalArticleLocalServiceUtil.checkArticles();
 
 		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
@@ -227,7 +225,7 @@ public class JournalArticleExpirationTest {
 				expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
 				expirationDateCalendar.get(Calendar.YEAR),
 				expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
-				expirationDateCalendar.get(Calendar.MINUTE), true, 0, 0, 0, 0,
+				expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0,
 				0, true, article.getIndexable(), article.isSmallImage(),
 				article.getSmallImageURL(), null, null, null, serviceContext);
 		}

@@ -45,6 +45,14 @@ public class URLEditorConfigContributor extends BaseEditorConfigContributor {
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
+		boolean allowBrowseDocuments = GetterUtil.getBoolean(
+			inputEditorTaglibAttributes.get(
+				"liferay-ui:input-editor:allowBrowseDocuments"));
+
+		if (!allowBrowseDocuments) {
+			return;
+		}
+
 		ItemSelectorCriterion urlItemSelectorCriterion =
 			new URLItemSelectorCriterion();
 

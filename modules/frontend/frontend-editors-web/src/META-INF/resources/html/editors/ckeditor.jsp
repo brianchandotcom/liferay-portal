@@ -17,8 +17,6 @@
 <%@ include file="/html/editors/init.jsp" %>
 
 <%
-LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletResponse;
-
 String portletId = portletDisplay.getRootPortletId();
 
 boolean allowBrowseDocuments = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:allowBrowseDocuments"));
@@ -409,9 +407,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		var filebrowserFlashBrowseUrl = '';
 		var filebrowserImageBrowseLinkUrl = '';
 		var filebrowserImageBrowseUrl = '';
-
-		<c:if test="<%= allowBrowseDocuments %>">
-		</c:if>
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 

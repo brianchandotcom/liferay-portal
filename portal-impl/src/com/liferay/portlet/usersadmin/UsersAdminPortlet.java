@@ -91,7 +91,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 				"portlet.users_admin.edit_organization_assignments"));
 	}
 
-	protected void updateOrganizationUserGroups(ActionRequest actionRequest)
+	public void updateOrganizationUserGroups(ActionRequest actionRequest)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(
@@ -111,7 +111,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		UserGroupServiceUtil.unsetGroupUserGroups(groupId, removeUserGroupIds);
 	}
 
-	protected void updateOrganizationUsers(ActionRequest actionRequest)
+	public void updateOrganizationUsers(ActionRequest actionRequest)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(

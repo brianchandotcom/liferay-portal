@@ -20,5 +20,4 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  * @author Pei-Jung Lan
  */
 public class MyAccountPortlet extends MVCPortlet {
-
 }

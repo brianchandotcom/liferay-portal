@@ -72,4 +72,11 @@ public class DDMFormJSONDeserializerTest
 		Assert.assertEquals("true", ddmFormField.getVisibilityExpression());
 	}
 
+	@Override
+	protected void testDecimalDDMFormField(DDMFormField ddmFormField) {
+		super.testDecimalDDMFormField(ddmFormField);
+
+		Assert.assertEquals("false", ddmFormField.getVisibilityExpression());
+	}
+
 }

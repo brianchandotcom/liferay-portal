@@ -76,7 +76,7 @@
 				"pt_BR": ""
 			},
 			"type": "ddm-decimal",
-			"visibilityExpression": "true"
+			"visibilityExpression": "false"
 		},
 		{
 			"dataType": "document-library",

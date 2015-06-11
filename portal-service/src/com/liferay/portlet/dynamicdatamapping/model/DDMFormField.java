@@ -143,7 +143,7 @@ public class DDMFormField implements Serializable {
 	}
 
 	public boolean isMultiple() {
-		return MapUtil.getBoolean(_properties, "localizable");
+		return MapUtil.getBoolean(_properties, "multiple");
 	}
 
 	public boolean isReadOnly() {

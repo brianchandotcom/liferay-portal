@@ -614,9 +614,9 @@ public class EditFileEntryMVCActionCommand extends BaseMVCActionCommand {
 		else if (e instanceof FileExtensionException) {
 			errorMessage = themeDisplay.translate(
 				"please-enter-a-file-with-a-valid-extension-x",
-					StringUtil.merge(
-						getAllowedFileExtensions(
-							portletConfig, actionRequest, actionResponse)));
+				StringUtil.merge(
+					getAllowedFileExtensions(
+						portletConfig, actionRequest, actionResponse)));
 		}
 		else if (e instanceof FileNameException) {
 			errorMessage = themeDisplay.translate(

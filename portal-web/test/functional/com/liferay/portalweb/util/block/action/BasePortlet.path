@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>TITLE</td>
-	<td>//div[@id='main-content']//h1[@class='portlet-title']/span[1]</td>
+	<td>//span[contains(@class,'portlet-title') and contains(.,'${key_portletName}')]</td>
 	<td>Portlet Header</td>
 </tr>
 <tr>

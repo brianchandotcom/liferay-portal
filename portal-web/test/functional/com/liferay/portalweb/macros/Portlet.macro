@@ -329,6 +329,8 @@
 	</command>
 
 	<command name="viewPG">
+		<var name="key_portletName" value="${portletName}" />
+
 		<execute macro="Portlet#viewTitle">
 			<var name="portletName" value="${portletName}" />
 		</execute>

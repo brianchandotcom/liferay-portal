@@ -1,7 +1,7 @@
 <definition>
 	<var name="userEmailAddress" value="test@liferay.com" />
 	<var name="userPassword" value="test" />
-	<var name="userReminderQueryAnswer" value="test" />
+	<var name="userPasswordReminderAnswer" value="test" />
 
 	<command name="_signIn">
 		<execute function="Type" locator1="TextInput#EMAIL_ADDRESS" value1="${userEmailAddress}" />
@@ -57,15 +57,15 @@
 		</if>
 	</command>
 
-	<command name="setReminderQuery" summary="Enter '${userReminderQueryAnswer}' as password reminder">
+	<command name="setPasswordReminder" summary="Enter '${userPasswordReminderAnswer}' as password reminder">
 		<if>
 			<isset var="userReminderQueryQuestion" />
 			<then>
-				<execute function="Select" locator1="Select#QUESTION" value1="${userReminderQueryQuestion}" />
+				<execute function="Select" locator1="Select#QUESTION" value1="${userPasswordReminderQuestion}" />
 			</then>
 		</if>
 
-		<execute function="Type" locator1="TextInput#ANSWER" value1="${userReminderQueryAnswer}" />
+		<execute function="Type" locator1="TextInput#ANSWER" value1="${userPasswordReminderAnswer}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
@@ -103,7 +103,7 @@
 			<var name="userNewPassword" value="${userNewPassword}" />
 		</execute>
 
-		<execute macro="SignIn#setReminderQuery">
+		<execute macro="SignIn#setPasswordReminder">
 			<var name="userReminderQueryAnswer" value="${userReminderQueryAnswer}" />
 		</execute>
 	</command>
@@ -145,7 +145,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Select#QUESTION" />
 			<then>
-				<execute macro="SignIn#setReminderQuery" />
+				<execute macro="SignIn#setPasswordReminder" />
 			</then>
 		</if>
 	</command>

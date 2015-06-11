@@ -14,7 +14,7 @@
 
 		<execute macro="SignIn#agreeToTermsOfUse" />
 
-		<execute macro="SignIn#setReminderQuery" />
+		<execute macro="SignIn#setPasswordReminder" />
 
 		<execute macro="Smoke#viewWelcomePage" />
 	</command>

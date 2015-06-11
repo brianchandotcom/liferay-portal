@@ -12,24 +12,16 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier;
+package com.liferay.portal.security.auth.verifier.parameter;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
 import com.liferay.portal.kernel.security.auto.login.AutoLoginException;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
-import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
-import com.liferay.portal.security.auto.login.basicauthheader.BasicAuthHeaderAutoLogin;
-import com.liferay.portal.util.Portal;
+import com.liferay.portal.security.auto.login.parameter.ParameterAutoLogin;
 
 import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,19 +31,18 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"auth.verifier.BasicAuthHeaderAuthVerifier.basic_auth=false",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.hosts.allowed=",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.urls.excludes=/api/liferay/*",
-		"auth.verifier.BasicAuthHeaderAuthVerifier.urls.includes=/api/*,/xmlrpc/*"
+		"auth.verifier.ParameterAuthVerifier.hosts.allowed=255.255.255.255",
+		"auth.verifier.ParameterAuthVerifier.urls.excludes=*",
+		"auth.verifier.ParameterAuthVerifier.urls.includes="
 	},
 	service = AuthVerifier.class
 )
-public class BasicAuthHeaderAuthVerifier
-	extends BasicAuthHeaderAutoLogin implements AuthVerifier {
+public class ParameterAuthVerifier
+	extends ParameterAutoLogin implements AuthVerifier {
 
 	@Override
 	public String getAuthType() {
-		return HttpServletRequest.BASIC_AUTH;
+		return getClass().getSimpleName();
 	}
 
 	@Override
@@ -71,26 +62,6 @@ public class BasicAuthHeaderAuthVerifier
 				authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
 				authVerifierResult.setUserId(Long.valueOf(credentials[0]));
 			}
-			else {
-
-				// Deprecated
-
-				boolean forcedBasicAuth = MapUtil.getBoolean(
-					accessControlContext.getSettings(), "basic_auth");
-
-				if (forcedBasicAuth) {
-					HttpServletResponse response =
-						accessControlContext.getResponse();
-
-					response.setHeader(
-						HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
-
-					response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-
-					authVerifierResult.setState(
-						AuthVerifierResult.State.INVALID_CREDENTIALS);
-				}
-			}
 
 			return authVerifierResult;
 		}
@@ -103,11 +74,5 @@ public class BasicAuthHeaderAuthVerifier
 	protected boolean isEnabled(long companyId) {
 		return true;
 	}
-
-	private static final String _BASIC_REALM =
-		"Basic realm=\"" + Portal.PORTAL_REALM + "\"";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BasicAuthHeaderAuthVerifier.class);
 
 }

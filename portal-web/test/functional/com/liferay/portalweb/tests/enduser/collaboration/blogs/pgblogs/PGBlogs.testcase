@@ -287,7 +287,7 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletName" value="Blogs" />
+			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -359,7 +359,7 @@
 		</execute>
 		
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletName" value="Blogs" />
+			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -1625,7 +1625,7 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletName" value="Blogs" />
+			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
@@ -1662,7 +1662,7 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
-			<var name="portletName" value="Blogs" />
+			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />

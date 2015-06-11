@@ -12,6 +12,19 @@
 {/template}
 
 /**
+ * Prints a list of fields.
+ *
+ * @param fields
+ */
+{template .fields}
+	{foreach $field in $fields}
+		{call ddm.field data="all"}
+			{param field: $field /}
+		{/call}
+	{/foreach}
+{/template}
+
+/**
  * Prints the JavaScript form renderer.
  *
  * @param containerId
@@ -106,8 +119,8 @@
  */
 {template .multiple_page_form_row_column}
 	<div class="col-md-{$column.size}">
-		{call ddm.field data="all"}
-			{param field: $column.field /}
+		{call ddm.fields data="all"}
+			{param fields: $column.fields /}
 		{/call}
 	</div>
 {/template}

@@ -50,9 +50,7 @@ public class DDMFormLayoutTransformer {
 		Map<String, Object> column = new HashMap<>();
 
 		column.put(
-			"field",
-			_renderedDDMFormFieldsMap.get(
-				ddmFormLayoutColumn.getDDMFormFieldName()));
+			"fields", getFields(ddmFormLayoutColumn.getDDMFormFieldNames()));
 		column.put("size", ddmFormLayoutColumn.getSize());
 
 		return column;
@@ -68,6 +66,17 @@ public class DDMFormLayoutTransformer {
 		}
 
 		return columns;
+	}
+
+	protected List<String> getFields(List<String> ddmFormFieldNames) {
+		List<String> renderedDDMFormFields = new ArrayList<>();
+
+		for (String ddmFormFieldName : ddmFormFieldNames) {
+			renderedDDMFormFields.add(
+				_renderedDDMFormFieldsMap.get(ddmFormFieldName));
+		}
+
+		return renderedDDMFormFields;
 	}
 
 	protected Map<String, Object> getPage(DDMFormLayoutPage ddmFormLayoutPage) {

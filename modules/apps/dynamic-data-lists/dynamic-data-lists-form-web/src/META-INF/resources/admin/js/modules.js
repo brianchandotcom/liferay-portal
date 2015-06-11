@@ -29,7 +29,14 @@
 							path: 'form_builder_field_support.js',
 							requires: [
 								'aui-form-field',
-								'liferay-ddm-form-field-types'
+								'liferay-ddm-form-field-checkbox-template',
+								'liferay-ddm-form-field-options-template',
+								'liferay-ddm-form-field-radio-template',
+								'liferay-ddm-form-field-select-template',
+								'liferay-ddm-form-field-text-template',
+								'liferay-ddm-form-field-types',
+								'liferay-ddm-form-renderer',
+								'liferay-ddm-form-renderer-field'
 							]
 						},
 						'liferay-ddl-form-builder-layout-deserializer': {
@@ -86,13 +93,8 @@
 						'liferay-ddm-form-renderer-field': {
 							path: 'field.js',
 							requires: [
-								'aui-boolean-data-editor',
 								'aui-form-builder-field-base',
 								'aui-form-field',
-								'aui-options-data-editor',
-								'aui-radio-group-data-editor',
-								'aui-tabs-data-editor',
-								'aui-text-data-editor',
 								'liferay-checkbox-field',
 								'liferay-ddm-form-field-types',
 								'liferay-text-field'
@@ -144,7 +146,25 @@
 					},
 					root: '/o/ddm-type-checkbox/'
 				},
-				radio: {
+				'field-options': {
+					base: '/o/ddm-type-options/',
+					modules: {
+						'liferay-ddm-form-field-options': {
+							path: 'options_field.js',
+							requires: [
+								'liferay-ddm-form-renderer-field'
+							]
+						},
+						'liferay-ddm-form-field-options-template': {
+							path: 'options.soy.js',
+							requires: [
+								'soyutils'
+							]
+						}
+					},
+					root: '/o/ddm-type-options/'
+				},
+				'field-radio': {
 					base: '/o/ddm-type-radio/',
 					modules: {
 						'liferay-ddm-form-field-radio': {
@@ -162,7 +182,7 @@
 					},
 					root: '/o/ddm-type-radio/'
 				},
-				select: {
+				'field-select': {
 					base: '/o/ddm-type-select/',
 					modules: {
 						'liferay-ddm-form-field-select': {
@@ -180,7 +200,7 @@
 					},
 					root: '/o/ddm-type-select/'
 				},
-				text: {
+				'field-text': {
 					base: '/o/ddm-type-text/',
 					modules: {
 						'liferay-ddm-form-field-text-template': {

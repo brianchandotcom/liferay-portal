@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -56,6 +57,7 @@ public class MVCPortlet extends LiferayPortlet {
 		super.destroy();
 
 		_actionCommandCache.close();
+		_renderCommandCache.close();
 		_resourceCommandCache.close();
 	}
 
@@ -199,6 +201,13 @@ public class MVCPortlet extends LiferayPortlet {
 			ActionCommand.class.getName(),
 			ActionCommand.ACTION_COMMAND_POSTFIX);
 
+		_renderCommandCache = new <RenderCommand>CommandCache(
+			RenderCommand.EMPTY,
+			getInitParameter(RenderCommand.RENDER_PACKAGE_NAME),
+			getPortletName(), "render.command.name",
+			RenderCommand.class.getName(),
+			RenderCommand.RENDER_COMMAND_POSTFIX);
+
 		_resourceCommandCache = new <ResourceCommand>CommandCache(
 			ResourceCommand.EMPTY,
 			getInitParameter(ResourceCommand.RESOURCE_PACKAGE_NAME),
@@ -237,6 +246,28 @@ public class MVCPortlet extends LiferayPortlet {
 		if (copyRequestParameters) {
 			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 		}
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		String renderName = ParamUtil.getString(renderRequest, "struts_action");
+
+		RenderCommand renderCommand = _renderCommandCache.getCommand(
+			renderName);
+
+		if (renderCommand != RenderCommand.EMPTY) {
+			String mvcPath = renderCommand.processCommand(
+				renderRequest, renderResponse);
+
+			if (Validator.isNotNull(mvcPath)) {
+				renderRequest.setAttribute("mvcPath", mvcPath);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -406,6 +437,10 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String getPath(PortletRequest portletRequest) {
 		String mvcPath = portletRequest.getParameter("mvcPath");
 
+		if (mvcPath == null) {
+			mvcPath = (String)portletRequest.getAttribute("mvcPath");
+		}
+
 		// Check deprecated parameter
 
 		if (mvcPath == null) {
@@ -528,6 +563,7 @@ public class MVCPortlet extends LiferayPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
 	private CommandCache<ActionCommand> _actionCommandCache;
+	private CommandCache<RenderCommand> _renderCommandCache;
 	private CommandCache<ResourceCommand> _resourceCommandCache;
 
 }

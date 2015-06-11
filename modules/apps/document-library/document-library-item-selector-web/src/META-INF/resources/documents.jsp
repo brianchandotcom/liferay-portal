@@ -34,7 +34,6 @@ searchContainer.setResults(DLAppServiceUtil.getFileEntries(repositoryId, folderI
 <item-selector-ui:browser
 	displayStyle="<%= dlItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
 	displayStyleURL="<%= dlItemSelectorViewDisplayContext.getPortletURL() %>"
-	idPrefix="<%= dlItemSelectorViewDisplayContext.getTitle(locale) %>"
 	itemSelectedEventName="<%= dlItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	returnType="<%= ReturnType.parseFirst(itemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"

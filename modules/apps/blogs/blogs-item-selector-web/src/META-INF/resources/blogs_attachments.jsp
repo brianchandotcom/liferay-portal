@@ -31,7 +31,6 @@ searchContainer.setResults(PortletFileRepositoryUtil.getPortletFileEntries(scope
 
 <item-selector-ui:browser
 	displayStyle="<%= blogsItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	idPrefix="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
 	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	returnType="<%= ReturnType.parseFirst(blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"

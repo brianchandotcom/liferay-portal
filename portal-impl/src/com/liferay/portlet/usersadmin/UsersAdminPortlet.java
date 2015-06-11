@@ -64,6 +64,120 @@ public class UsersAdminPortlet extends MVCPortlet {
 		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
 	}
 
+	@Override
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			Organization organization = null;
+
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				organization = updateOrganization(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteOrganizations(actionRequest);
+			}
+
+			String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+			if (organization != null) {
+				redirect = HttpUtil.setParameter(
+					redirect, actionResponse.getNamespace() + "organizationId",
+					organization.getOrganizationId());
+			}
+
+			sendRedirect(actionRequest, actionResponse, redirect);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchOrganizationException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.users_admin.error");
+			}
+			else if (e instanceof AddressCityException ||
+					 e instanceof AddressStreetException ||
+					 e instanceof AddressZipException ||
+					 e instanceof DuplicateOrganizationException ||
+					 e instanceof EmailAddressException ||
+					 e instanceof NoSuchCountryException ||
+					 e instanceof NoSuchListTypeException ||
+					 e instanceof NoSuchRegionException ||
+					 e instanceof OrganizationNameException ||
+					 e instanceof OrganizationParentException ||
+					 e instanceof PhoneNumberException ||
+					 e instanceof RequiredOrganizationException ||
+					 e instanceof WebsiteURLException) {
+
+				if (e instanceof NoSuchListTypeException) {
+					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
+
+					SessionErrors.add(
+						actionRequest,
+						e.getClass().getName() + nslte.getType());
+				}
+				else {
+					SessionErrors.add(actionRequest, e.getClass());
+				}
+
+				if (e instanceof RequiredOrganizationException) {
+					String redirect = PortalUtil.escapeRedirect(
+						ParamUtil.getString(actionRequest, "redirect"));
+
+					long organizationId = ParamUtil.getLong(
+						actionRequest, "organizationId");
+
+					if (organizationId > 0) {
+						redirect = HttpUtil.setParameter(
+							redirect,
+							actionResponse.getNamespace() + "organizationId",
+							organizationId);
+					}
+
+					if (Validator.isNotNull(redirect)) {
+						actionResponse.sendRedirect(redirect);
+					}
+				}
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		try {
+			ActionUtil.getOrganization(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchOrganizationException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return actionMapping.findForward("portlet.users_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		return actionMapping.findForward(
+			getForward(renderRequest, "portlet.users_admin.edit_organization"));
+	}
+
 	public void updateOrganizationUserGroups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -162,6 +276,17 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
+	protected void deleteOrganizations(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] deleteOrganizationIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteOrganizationIds"), 0L);
+
+		for (long deleteOrganizationId : deleteOrganizationIds) {
+			OrganizationServiceUtil.deleteOrganization(deleteOrganizationId);
+		}
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -203,6 +328,112 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	protected Organization updateOrganization(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long organizationId = ParamUtil.getLong(
+			actionRequest, "organizationId");
+
+		long parentOrganizationId = ParamUtil.getLong(
+			actionRequest, "parentOrganizationSearchContainerPrimaryKeys",
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);
+		String name = ParamUtil.getString(actionRequest, "name");
+		long statusId = ParamUtil.getLong(actionRequest, "statusId");
+		String type = ParamUtil.getString(actionRequest, "type");
+		long regionId = ParamUtil.getLong(actionRequest, "regionId");
+		long countryId = ParamUtil.getLong(actionRequest, "countryId");
+		String comments = ParamUtil.getString(actionRequest, "comments");
+		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
+
+		byte[] logoBytes = null;
+
+		long fileEntryId = ParamUtil.getLong(actionRequest, "fileEntryId");
+
+		if (fileEntryId > 0) {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				fileEntryId);
+
+			logoBytes = FileUtil.getBytes(fileEntry.getContentStream());
+		}
+
+		boolean site = ParamUtil.getBoolean(actionRequest, "site");
+		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
+		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
+			actionRequest);
+		List<OrgLabor> orgLabors = UsersAdminUtil.getOrgLabors(actionRequest);
+		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
+		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Organization.class.getName(), actionRequest);
+
+		Organization organization = null;
+
+		if (organizationId <= 0) {
+
+			// Add organization
+
+			organization = OrganizationServiceUtil.addOrganization(
+				parentOrganizationId, name, type, regionId, countryId, statusId,
+				comments, site, addresses, emailAddresses, orgLabors, phones,
+				websites, serviceContext);
+		}
+		else {
+
+			// Update organization
+
+			organization = OrganizationServiceUtil.updateOrganization(
+				organizationId, parentOrganizationId, name, type, regionId,
+				countryId, statusId, comments, !deleteLogo, logoBytes, site,
+				addresses, emailAddresses, orgLabors, phones, websites,
+				serviceContext);
+		}
+
+		// Layout set prototypes
+
+		long publicLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "publicLayoutSetPrototypeId");
+		long privateLayoutSetPrototypeId = ParamUtil.getLong(
+			actionRequest, "privateLayoutSetPrototypeId");
+		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "publicLayoutSetPrototypeLinkEnabled",
+			(publicLayoutSetPrototypeId > 0));
+		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
+			actionRequest, "privateLayoutSetPrototypeLinkEnabled",
+			(privateLayoutSetPrototypeId > 0));
+
+		Group organizationGroup = organization.getGroup();
+
+		if (GroupPermissionUtil.contains(
+				themeDisplay.getPermissionChecker(), organizationGroup,
+				ActionKeys.UPDATE)) {
+
+			SitesUtil.updateLayoutSetPrototypesLinks(
+				organizationGroup, publicLayoutSetPrototypeId,
+				privateLayoutSetPrototypeId,
+				publicLayoutSetPrototypeLinkEnabled,
+				privateLayoutSetPrototypeLinkEnabled);
+		}
+
+		// Reminder queries
+
+		String reminderQueries = actionRequest.getParameter("reminderQueries");
+
+		PortletPreferences portletPreferences = organization.getPreferences();
+
+		LocalizationUtil.setLocalizedPreferencesValues(
+			actionRequest, portletPreferences, "reminderQueries");
+
+		portletPreferences.setValue("reminderQueries", reminderQueries);
+
+		portletPreferences.store();
+
+		return organization;
 	}
 
 }

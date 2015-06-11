@@ -84,11 +84,11 @@ else {
 
 <aui:fieldset>
 
-	<!-- LPS-38289&LPS-55993 -->
+	<!-- LPS-38289 & LPS-55993 -->
 
 	<input class="hide" type="password"/>
 
-	<!-- /LPS-38289&LPS-55993 -->
+	<!-- /LPS-38289 & LPS-55993 -->
 
 	<c:if test="<%= portletName.equals(PortletKeys.MY_ACCOUNT) %>">
 		<aui:input autocomplete="off" label="current-password" name="password0" size="30" type="password" />

@@ -811,7 +811,7 @@ public class DDMImpl implements DDM {
 
 		ddmFormLayoutRow.addDDMFormLayoutColumn(
 			new DDMFormLayoutColumn(
-				ddmFormField.getName(), DDMFormLayoutColumn.FULL));
+				DDMFormLayoutColumn.FULL, ddmFormField.getName()));
 
 		return ddmFormLayoutRow;
 	}

@@ -36,12 +36,15 @@ import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequestBuilder;
 import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.deletebyquery.DeleteByQueryRequestBuilder;
-import org.elasticsearch.action.deletebyquery.DeleteByQueryResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.FilterBuilders;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermFilterBuilder;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -141,30 +144,38 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			SearchContext searchContext, String className)
 		throws SearchException {
 
+		SearchResponseScroller searchResponseScroller = null;
+
 		try {
+			MatchAllQueryBuilder matchAllQueryBuilder =
+				QueryBuilders.matchAllQuery();
+
+			TermFilterBuilder termFilterBuilder = FilterBuilders.termFilter(
+				Field.ENTRY_CLASS_NAME, className);
+
+			termFilterBuilder.cache(false);
+
+			QueryBuilder queryBuilder = QueryBuilders.filteredQuery(
+				matchAllQueryBuilder, termFilterBuilder);
+
 			Client client = _elasticsearchConnectionManager.getClient();
 
-			DeleteByQueryRequestBuilder deleteByQueryRequestBuilder =
-				client.prepareDeleteByQuery(
-					String.valueOf(searchContext.getCompanyId()));
+			searchResponseScroller = new SearchResponseScroller(
+				client, searchContext, queryBuilder,
+				TimeValue.timeValueSeconds(30), DocumentTypes.LIFERAY);
 
-			BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+			searchResponseScroller.prepare();
 
-			boolQueryBuilder.must(
-				QueryBuilders.termQuery(Field.ENTRY_CLASS_NAME, className));
-
-			deleteByQueryRequestBuilder.setQuery(boolQueryBuilder);
-
-			Future<DeleteByQueryResponse> future =
-				deleteByQueryRequestBuilder.execute();
-
-			DeleteByQueryResponse deleteByQueryResponse = future.get();
-
-			LogUtil.logActionResponse(_log, deleteByQueryResponse);
+			searchResponseScroller.scroll(_searchHitsProcessor);
 		}
 		catch (Exception e) {
 			throw new SearchException(
 				"Unable to delete data for entity " + className, e);
+		}
+		finally {
+			if (searchResponseScroller != null) {
+				searchResponseScroller.close();
+			}
 		}
 	}
 
@@ -211,6 +222,11 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			DocumentTypes.LIFERAY, searchContext, documents, true);
 	}
 
+	@Activate
+	protected void activate() {
+		_searchHitsProcessor = new DeleteDocumentsSearchHitsProcessor(this);
+	}
+
 	@Reference(unbind = "-")
 	protected void setElasticsearchConnectionManager(
 		ElasticsearchConnectionManager elasticsearchConnectionManager) {
@@ -232,5 +248,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private ElasticsearchUpdateDocumentCommand
 		_elasticsearchUpdateDocumentCommand;
+	private SearchHitsProcessor _searchHitsProcessor;
 
 }

@@ -235,6 +235,7 @@
 		<action path="/blogs/view_entry" type="com.liferay.portlet.blogs.action.EditEntryAction">
 			<forward name="portlet.blogs.edit_entry" path="portlet.blogs.view_entry" />
 			<forward name="portlet.blogs.error" path="portlet.blogs.error" />
+			<forward name="portlet.blogs.view" path="portlet.blogs.view" />
 		</action>
 
 		<!-- Blogs Admin -->

@@ -60,7 +60,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<div class="entry-title">
 					<h2>
 						<c:choose>
-							<c:when test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
+							<c:when test='<%= !strutsAction.equals("/blogs/view_entry") || ParamUtil.getLong(renderRequest, "categoryId") > 0 || Validator.isNotNull(ParamUtil.getString(renderRequest, "tag")) %>'>
 								<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
 							</c:when>
 							<c:otherwise>

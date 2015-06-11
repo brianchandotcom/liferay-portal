@@ -30,7 +30,7 @@ int mergeFailCount = SitesUtil.getMergeFailCount(layoutPrototype);
 	String randomNamespace = PortalUtil.generateRandomKey(request, "portlet_layout_prototypes_merge_alert") + StringPool.UNDERLINE;
 	%>
 
-	<portlet:actionURL name="layoutResetMergeFailCountAndMerge" var="portletURL">
+	<portlet:actionURL name="resetMergeFailCountAndMerge" var="portletURL">
 		<portlet:param name="mvcPath" value="/view.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="layoutPrototypeId" value="<%= String.valueOf(layoutPrototype.getLayoutPrototypeId()) %>" />

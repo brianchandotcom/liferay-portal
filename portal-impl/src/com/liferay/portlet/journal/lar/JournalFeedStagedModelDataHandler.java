@@ -183,7 +183,7 @@ public class JournalFeedStagedModelDataHandler
 			feed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 		}
 
-		Group layoutGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
+		Group targetLayoutGroup = GroupLocalServiceUtil.fetchFriendlyURLGroup(
 			portletDataContext.getCompanyId(),
 			StringPool.SLASH + oldGroupFriendlyURL);
 
@@ -197,13 +197,14 @@ public class JournalFeedStagedModelDataHandler
 			privateLayout = true;
 		}
 
-		String layoutFriendlyURL = StringPool.SLASH + friendlyURLParts[3];
+		String targetLayoutFriendlyURL = StringPool.SLASH + friendlyURLParts[3];
 
-		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-			layoutGroup.getGroupId(), privateLayout, layoutFriendlyURL);
+		Layout targetLayout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			targetLayoutGroup.getGroupId(), privateLayout,
+			targetLayoutFriendlyURL);
 
 		portletDataContext.addReferenceElement(
-			feed, feedElement, layout,
+			feed, feedElement, targetLayout,
 			PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 		portletDataContext.addClassedModel(

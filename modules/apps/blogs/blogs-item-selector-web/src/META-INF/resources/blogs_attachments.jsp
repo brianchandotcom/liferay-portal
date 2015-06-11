@@ -25,10 +25,18 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = (BlogsItemSelectorCriterion)request.getAttribute(BlogsItemSelectorView.BLOGS_ITEM_SELECTOR_CRITERION);
 
-Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(userId, groupId);
+Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(userId, groupId);
 
-searchContainer.setTotal(PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId()));
-searchContainer.setResults(PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId()));
+int total = 0;
+List<FileEntry> results = new ArrayList<FileEntry>();
+
+if (folder != null) {
+	total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId());
+	results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId());
+}
+
+searchContainer.setTotal(total);
+searchContainer.setResults(results);
 %>
 
 <item-selector-ui:browser

@@ -1,0 +1,60 @@
+<definition component-name="portal-collaboration">
+	<property name="testray.main.component.name" value="Bookmarks" />
+
+	<var name="pageName" value="Bookmarks Page" />
+	<var name="portletName" value="Bookmarks" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="Bookmark#tearDownCP" />
+
+		<execute macro="BookmarksFolder#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="AddBookmark" priority="5">
+		<var name="bookmarkDescription" value="Test Bookmark Description" />
+		<var name="bookmarkName" value="Test Bookmark Name" />
+		<var name="bookmarkURL" value="http://www.liferay.com" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Bookmark#addPG">
+			<var name="bookmarkDescription" value="${bookmarkDescription}" />
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Bookmark#gotoPG">
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+
+		<execute macro="Bookmark#viewPG">
+			<var name="bookmarkName" value="${bookmarkName}" />
+			<var name="bookmarkURL" value="${bookmarkURL}" />
+		</execute>
+	</command>
+</definition>

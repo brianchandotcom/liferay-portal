@@ -46,25 +46,13 @@
 	</command>
 
 	<command name="setNewPassword" summary="Set '${userNewPassword}' as new user password">
-		<if>
-			<isset var="userNewPassword" />
-			<then>
-				<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${userNewPassword}" />
-				<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${userNewPassword}" />
+		<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${userNewPassword}" />
+		<execute function="Type" locator1="TextInput#ENTER_AGAIN" value1="${userNewPassword}" />
 
-				<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
-			</then>
-		</if>
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
 	</command>
 
 	<command name="setPasswordReminder" summary="Enter '${userPasswordReminderAnswer}' as password reminder">
-		<if>
-			<isset var="userReminderQueryQuestion" />
-			<then>
-				<execute function="Select" locator1="Select#QUESTION" value1="${userPasswordReminderQuestion}" />
-			</then>
-		</if>
-
 		<execute function="Type" locator1="TextInput#ANSWER" value1="${userPasswordReminderAnswer}" />
 
 		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />

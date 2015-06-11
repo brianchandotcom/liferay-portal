@@ -270,8 +270,7 @@ public class MVCPortlet extends LiferayPortlet {
 			throw new PortletException(e);
 		}
 
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
+		String actionName = getCommandName(actionRequest);
 
 		if (!actionName.contains(StringPool.COMMA)) {
 			ActionCommand actionCommand = _actionCommandCache.getActionCommand(
@@ -314,8 +313,7 @@ public class MVCPortlet extends LiferayPortlet {
 			throw new PortletException(e);
 		}
 
-		String resourceName = ParamUtil.getString(
-			resourceRequest, ActionRequest.ACTION_NAME);
+		String resourceName = getCommandName(resourceRequest);
 
 		if (!resourceName.contains(StringPool.COMMA)) {
 			ResourceCommand resourceCommand =
@@ -387,6 +385,17 @@ public class MVCPortlet extends LiferayPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
+	}
+
+	protected String getCommandName(PortletRequest portletRequest) {
+		String commandName = portletRequest.getParameter(
+			ActionRequest.ACTION_NAME);
+
+		if (commandName == null) {
+			commandName = portletRequest.getParameter("struts_action");
+		}
+
+		return commandName;
 	}
 
 	protected String getPath(PortletRequest portletRequest) {

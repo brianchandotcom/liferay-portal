@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.dynamic.data.mapping.io;
 
-import com.liferay.portlet.dynamicdatamapping.io.BaseDDMFormSerializerTestCase;
+import com.liferay.portlet.dynamic.data.mapping.io.BaseDDMFormSerializerTestCase;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;

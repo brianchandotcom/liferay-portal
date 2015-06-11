@@ -14,8 +14,8 @@
 
 package com.liferay.item.selector.web;
 
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.item.selector.ItemSelectorView;
+import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;

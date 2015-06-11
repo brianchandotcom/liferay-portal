@@ -18,11 +18,9 @@
 
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.sass.compiler.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-		<dependency name="jna" org="net.java.dev.jna" rev="4.1.0" />
-		<dependency name="jnaerator-runtime" org="com.nativelibs4java" rev="0.11">
-			<exclude name="jna-jnaerator" />
-		</dependency>
-		<dependency name="ochafik-util" org="com.nativelibs4java" rev="0.11" />
+		<dependency conf="provided->master" name="jna" org="net.java.dev.jna" rev="4.1.0" />
+		<dependency conf="provided->master" name="jnaerator-runtime" org="com.nativelibs4java" rev="0.11" />
+		<dependency conf="provided->master" name="ochafik-util" org="com.nativelibs4java" rev="0.11" />
 		<dependency conf="test->default" name="junit" org="junit" rev="4.12" />
 	</dependencies>
 </ivy-module>

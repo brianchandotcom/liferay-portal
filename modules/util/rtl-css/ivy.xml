@@ -17,6 +17,9 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="ph-css" org="com.helger" rev="3.9.1" />
+		<dependency conf="provided->master" name="annotations" org="com.google.code.findbugs" rev="2.0.3" />
+		<dependency conf="provided->master" name="ph-commons" org="com.helger" rev="5.6.0" />
+		<dependency conf="provided->master" name="ph-css" org="com.helger" rev="3.9.1" />
+		<dependency conf="provided->master" name="slf4j-api" org="org.slf4j" rev="1.7.10" />
 	</dependencies>
 </ivy-module>

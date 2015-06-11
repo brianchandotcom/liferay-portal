@@ -139,6 +139,7 @@
 		</execute>
 
 		<execute macro="BlogsEntryComment#viewCP">
+			<var name="commentCount" value="1" />
 			<var name="entryComment" value="${entryComment}" />
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>

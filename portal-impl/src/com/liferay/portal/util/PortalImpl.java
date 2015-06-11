@@ -1107,27 +1107,29 @@ public class PortalImpl implements Portal {
 			}
 
 			if ((pos > 0) && (pos < canonicalURL.length())) {
-				String friendlyURL = canonicalURL.substring(pos);
+				String currentURL = canonicalURL.substring(pos);
 
-				int[] friendlyURLIndex = getGroupFriendlyURLIndex(friendlyURL);
+				int[] friendlyURLIndex = getGroupFriendlyURLIndex(currentURL);
+
+				boolean replaceFriendlyURL = true;
 
 				if (friendlyURLIndex != null) {
 					int y = friendlyURLIndex[1];
 
-					friendlyURL = friendlyURL.substring(y);
+					currentURL = currentURL.substring(y);
 
-					if (friendlyURL.equals(StringPool.SLASH)) {
-						friendlyURL = StringPool.BLANK;
+					if (currentURL.equals(StringPool.SLASH)) {
+						replaceFriendlyURL = false;
 					}
 				}
 
-				if (Validator.isNotNull(friendlyURL)) {
+				if (replaceFriendlyURL) {
 					String canonicalURLPrefix = canonicalURL.substring(0, pos);
 
 					String canonicalURLSuffix = canonicalURL.substring(pos);
 
 					canonicalURLSuffix = StringUtil.replaceFirst(
-						canonicalURLSuffix, friendlyURL,
+						canonicalURLSuffix, layout.getFriendlyURL(),
 						layout.getFriendlyURL(locale));
 
 					canonicalURL = canonicalURLPrefix.concat(

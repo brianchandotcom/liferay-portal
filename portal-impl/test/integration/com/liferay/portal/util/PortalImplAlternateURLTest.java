@@ -134,6 +134,26 @@ public class PortalImplAlternateURLTest {
 			LocaleUtil.SPAIN, LocaleUtil.SPAIN, StringPool.BLANK);
 	}
 
+	protected String generateAssetPublisherContentURL(
+		String portalDomain, String languageId, String groupFriendlyURL) {
+
+		StringBundler sb = new StringBundler(11);
+
+		sb.append("http://");
+		sb.append(portalDomain);
+		sb.append(languageId);
+		sb.append(PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
+		sb.append(Portal.FRIENDLY_URL_SEPARATOR);
+		sb.append("asset_publisher");
+		sb.append(groupFriendlyURL);
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append(StringPool.CONTENT);
+		sb.append(StringPool.FORWARD_SLASH);
+		sb.append("content-title");
+
+		return sb.toString();
+	}
+
 	protected String generateURL(
 		String portalDomain, String languageId, String groupFriendlyURL,
 		String layoutFriendlyURL) {
@@ -193,6 +213,24 @@ public class PortalImplAlternateURLTest {
 			layout.getFriendlyURL());
 
 		Assert.assertEquals(expectedAlternateURL, actualAlternateURL);
+
+		String canonicalAssetPublisherContentURL =
+			generateAssetPublisherContentURL(
+				portalDomain, StringPool.BLANK, _group.getFriendlyURL());
+
+		String actualAssetPublisherContentAlternateURL =
+			PortalUtil.getAlternateURL(
+				canonicalAssetPublisherContentURL,
+				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
+				alternateLocale, layout);
+
+		String expectedAssetPublisherContentAlternateURL =
+			generateAssetPublisherContentURL(
+				portalDomain, expectedI18nPath, _group.getFriendlyURL());
+
+		Assert.assertEquals(
+			expectedAssetPublisherContentAlternateURL,
+			actualAssetPublisherContentAlternateURL);
 	}
 
 	private static Locale _defaultLocale;

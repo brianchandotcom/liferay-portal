@@ -326,54 +326,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void exportUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		String keywords = ParamUtil.getString(actionRequest, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			DynamicActionRequest dynamicActionRequest =
-				new DynamicActionRequest(actionRequest);
-
-			dynamicActionRequest.setParameter("keywords", StringPool.BLANK);
-
-			actionRequest = dynamicActionRequest;
-		}
-
-		String csv = getUsersCSV(actionRequest, actionResponse);
-
-		String fileName = "users.csv";
-		byte[] bytes = csv.getBytes();
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			actionRequest);
-		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			actionResponse);
-
-		ServletResponseUtil.sendFile(
-			request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
-
-		actionRequest.setAttribute(
-			WebKeys.REDIRECT, ActionConstants.COMMON_NULL);
-	}
-
-	public void restoreUsers(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		long[] deleteUserIds = StringUtil.split(
-			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
-
-		for (long deleteUserId : deleteUserIds) {
-			int status = WorkflowConstants.STATUS_APPROVED;
-
-			UserServiceUtil.updateStatus(
-				deleteUserId, status, new ServiceContext());
-		}
-	}
-
-	public void updateLockout(
+	public void editLockout(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -382,7 +335,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		UserServiceUtil.updateLockoutById(user.getUserId(), false);
 	}
 
-	public void updateOrganization(
+	public void editOrganization(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -495,7 +448,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void updateOrganizationUserGroups(
+	public void editOrganizationUserGroups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -521,7 +474,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void updateOrganizationUsers(
+	public void editOrganizationUsers(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -542,7 +495,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void updateOrgLabor(
+	public void editOrgLabor(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -593,7 +546,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 	}
 
-	public void updateUser(
+	public void editUser(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -809,6 +762,53 @@ public class UsersAdminPortlet extends MVCPortlet {
 			!StringUtil.equalsIgnoreCase(oldEmailAddress, emailAddress)) {
 
 			SessionMessages.add(actionRequest, "verificationEmailSent");
+		}
+	}
+
+	public void exportUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		String keywords = ParamUtil.getString(actionRequest, "keywords");
+
+		if (Validator.isNotNull(keywords)) {
+			DynamicActionRequest dynamicActionRequest =
+				new DynamicActionRequest(actionRequest);
+
+			dynamicActionRequest.setParameter("keywords", StringPool.BLANK);
+
+			actionRequest = dynamicActionRequest;
+		}
+
+		String csv = getUsersCSV(actionRequest, actionResponse);
+
+		String fileName = "users.csv";
+		byte[] bytes = csv.getBytes();
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			actionRequest);
+		HttpServletResponse response = PortalUtil.getHttpServletResponse(
+			actionResponse);
+
+		ServletResponseUtil.sendFile(
+			request, response, fileName, bytes, ContentTypes.TEXT_CSV_UTF8);
+
+		actionRequest.setAttribute(
+			WebKeys.REDIRECT, ActionConstants.COMMON_NULL);
+	}
+
+	public void restoreUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long[] deleteUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "deleteUserIds"), 0L);
+
+		for (long deleteUserId : deleteUserIds) {
+			int status = WorkflowConstants.STATUS_APPROVED;
+
+			UserServiceUtil.updateStatus(
+				deleteUserId, status, new ServiceContext());
 		}
 	}
 

@@ -203,10 +203,21 @@ public class DLFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 					DLFolder dlFolder = (DLFolder)object;
 
-					Document document = getDocument(dlFolder);
+					try {
+						Document document = getDocument(dlFolder);
 
-					if (document != null) {
-						actionableDynamicQuery.addDocument(document);
+						if (document != null) {
+							actionableDynamicQuery.addDocument(document);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index file entry: " +
+									dlFolder.getFolderId() + " - " +
+									dlFolder.getName(),
+								e);
+						}
 					}
 				}
 

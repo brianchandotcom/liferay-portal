@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -189,9 +191,20 @@ public class BlogsIndexer extends BaseIndexer {
 
 					BlogsEntry entry = (BlogsEntry)object;
 
-					Document document = getDocument(entry);
+					try {
+						Document document = getDocument(entry);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index blog: " +
+									entry.getEntryId() + " - " +
+									entry.getTitle(),
+								e);
+						}
+					}
 				}
 
 			});
@@ -199,5 +212,7 @@ public class BlogsIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(BlogsIndexer.class);
 
 }

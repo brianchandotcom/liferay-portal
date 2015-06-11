@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -283,9 +284,20 @@ public class DDLIndexer extends BaseIndexer {
 		Collection<Document> documents = new ArrayList<>(records.size());
 
 		for (DDLRecord record : records) {
-			Document document = getDocument(record);
+			try {
+				Document document = getDocument(record);
 
-			documents.add(document);
+				documents.add(document);
+			}
+			catch (SearchException e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Unable to index ddl record: " +
+							record.getRecordId() + " - " +
+							record.getVersion(),
+						e);
+				}
+			}
 		}
 
 		SearchEngineUtil.updateDocuments(

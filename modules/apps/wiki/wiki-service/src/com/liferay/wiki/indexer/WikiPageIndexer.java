@@ -327,9 +327,19 @@ public class WikiPageIndexer
 
 					WikiPage page = (WikiPage)object;
 
-					Document document = getDocument(page);
+					try {
+						Document document = getDocument(page);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to page: " + page.getPageId() + " - " +
+									page.getTitle(),
+								e);
+						}
+					}
 				}
 
 			});

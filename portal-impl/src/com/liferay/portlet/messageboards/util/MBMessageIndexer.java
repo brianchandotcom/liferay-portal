@@ -453,9 +453,19 @@ public class MBMessageIndexer
 						return;
 					}
 
-					Document document = getDocument(message);
+					try {
+						Document document = getDocument(message);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index message: " +
+									message.getMessageId(),
+								e);
+						}
+					}
 				}
 
 			});

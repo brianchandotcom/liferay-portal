@@ -16,6 +16,8 @@ package com.liferay.portlet.calendar.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -122,9 +124,20 @@ public class CalIndexer extends BaseIndexer {
 
 					CalEvent event = (CalEvent)object;
 
-					Document document = getDocument(event);
+					try {
+						Document document = getDocument(event);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index cal event: " +
+									event.getEventId() + " - " +
+									event.getTitle(),
+								e);
+						}
+					}
 				}
 
 			});
@@ -132,5 +145,7 @@ public class CalIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(CalIndexer.class);
 
 }

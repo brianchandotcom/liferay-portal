@@ -458,9 +458,20 @@ public class UserIndexer extends BaseIndexer {
 					User user = (User)object;
 
 					if (!user.isDefaultUser()) {
-						Document document = getDocument(user);
+						try {
+							Document document = getDocument(user);
 
-						actionableDynamicQuery.addDocument(document);
+							actionableDynamicQuery.addDocument(document);
+						}
+						catch (PortalException e) {
+							if (_log.isWarnEnabled()) {
+								_log.warn(
+									"Unable to index user: " +
+										user.getUserId() + " - " +
+										user.getScreenName(),
+									e);
+							}
+						}
 					}
 				}
 

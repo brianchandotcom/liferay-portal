@@ -628,10 +628,21 @@ public class DLFileEntryIndexer
 
 					DLFileEntry dlFileEntry = (DLFileEntry)object;
 
-					Document document = getDocument(dlFileEntry);
+					try {
+						Document document = getDocument(dlFileEntry);
 
-					if (document != null) {
-						actionableDynamicQuery.addDocument(document);
+						if (document != null) {
+							actionableDynamicQuery.addDocument(document);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index file entry: " +
+									dlFileEntry.getFileEntryId() + " - " +
+									dlFileEntry.getTitle(),
+								e);
+						}
 					}
 				}
 

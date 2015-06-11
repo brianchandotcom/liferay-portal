@@ -185,11 +185,21 @@ public class AssetVocabularyIndexer extends BaseIndexer {
 
 					AssetVocabulary assetVocabulary = (AssetVocabulary)object;
 
-					Document document = getDocument(assetVocabulary);
+					try {
+						Document document = getDocument(assetVocabulary);
 
-					if (document != null) {
-						actionableDynamicQuery.addDocument(document);
+						if (document != null) {
+							actionableDynamicQuery.addDocument(document);
+						}
 					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index vocabulary: " +
+									assetVocabulary.getVocabularyId() + " - " +
+									assetVocabulary.getName(),
+								e);
+						} }
 				}
 
 			});

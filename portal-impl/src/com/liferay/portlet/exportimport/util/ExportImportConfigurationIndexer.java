@@ -17,6 +17,8 @@ package com.liferay.portlet.exportimport.util;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -300,9 +302,24 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 					ExportImportConfiguration exportImportConfiguration =
 						(ExportImportConfiguration)object;
 
-					Document document = getDocument(exportImportConfiguration);
+					try {
+						Document document = getDocument(
+							exportImportConfiguration);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index export import " +
+									"configuration: " +
+									exportImportConfiguration.
+										getExportImportConfigurationId() +
+									" - " +
+									exportImportConfiguration.getName(),
+								e);
+						}
+					}
 				}
 
 			});
@@ -314,5 +331,8 @@ public class ExportImportConfigurationIndexer extends BaseIndexer {
 	private static final String _PREFIX_PARAMETER = "parameter_";
 
 	private static final String _PREFIX_SETTING = "setting_";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ExportImportConfigurationIndexer.class);
 
 }

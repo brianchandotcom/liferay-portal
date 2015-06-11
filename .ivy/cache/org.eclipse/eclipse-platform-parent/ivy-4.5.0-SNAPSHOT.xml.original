@@ -21,6 +21,14 @@
   <artifactId>eclipse-platform-parent</artifactId>
   <version>4.5.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+  <!--
+     See maven-enforcer-plugin configuration to actually break the build if
+     run with older maven.
+     prerequisites section is kept for now as even if it doesn't break the build, it
+     is used by other plugins like versions-maven-plugin which check and warn
+     for using plugins with older than they require Maven version.
+     If version number changed in one place, be sure to change in the other.
+  -->
   <prerequisites>
     <maven>3.1.1</maven>
   </prerequisites>
@@ -55,15 +63,23 @@
     <releaseNumberSDK>4.5</releaseNumberSDK>
     <releaseNumberPlatform>4.5</releaseNumberPlatform>
 
+    <!-- using snapshot, or locally built (forked) snapshot version for bug 461207 and bug 431116
+    <tycho.version>0.23.0-SNAPSHOT</tycho.version>
+    <tycho-extras.version>0.23.0-SNAPSHOT</tycho-extras.version>
+    -->
 
-    <tycho.version>0.22.0</tycho.version>
-    <tycho-extras.version>0.22.0</tycho-extras.version>
-    <cbi-plugins.version>1.1.1</cbi-plugins.version>
+    <!-- For using Tycho 23 (currently "staged", removed staged repo below, once released)  -->
+    <tycho.version>0.23.0</tycho.version>
+    <tycho-extras.version>0.23.0</tycho-extras.version>
+
+
+    <cbi-plugins.version>1.1.2</cbi-plugins.version>
+
     <!--
       The tycho-eclipserun-plugin will create its instance of Eclipse from this
       'eclipiserun-repo' repository, such as for computing .api-descriptions.
     -->
-    <eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5M5-201501291830/</eclipserun-repo>
+    <eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5RC3-201505280700/</eclipserun-repo>
 
     <comparator.repo>http://download.eclipse.org/eclipse/updates/4.5-I-builds</comparator.repo>
 
@@ -73,21 +89,28 @@
       a copy of the EMF features and ECF features into our own repository. This is required since we merely "require" EMF (not "include" it).
       And, of course, in the PDE target file, the URL is expected to be the actual URL, not a variable.
     -->
-    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201501230347/</emf-repo.url>
+    <emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201505120501/</emf-repo.url>
 
-    <ecf-repo.url>http://download.eclipse.org/rt/ecf/3.9.2/site.p2/</ecf-repo.url>
+    <ecf-repo.url>http://download.eclipse.org/rt/ecf/448916.1/site.p2/</ecf-repo.url>
 
+    <!-- using snapshot repo for Tycho 0.23.0-SNAPSHOT, such as for bug 461207 -->
+    <!-- Does it hurt to always leave snapshot repo here? Even if not used? 
+    <tycho-snapshot-repo.url>https://repo.eclipse.org/content/repositories/tycho-snapshots/</tycho-snapshot-repo.url>
+    -->
     <tycho-repo.url>https://oss.sonatype.org/content/repositories/public/</tycho-repo.url>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</cbi-jdt-repo.url>
-    <cbi-jdt-version>3.11.0.v20150118-1315</cbi-jdt-version>
-    
-    <!-- 
-        This jetty-version is used by the help system in building the JSPs, 
-        and should change when ever our "shipped" version of Jetty changes. 
+    <!-- jdt.core and jdt.compiler.apt should "match", come from same build, and be signed 
+         by same certificate. See bug 462783. -->
+    <cbi-jdt-version>3.11.0.v20150601-1755</cbi-jdt-version>
+    <cbi-jdt-apt-version>1.2.0.v20150514-0146</cbi-jdt-apt-version>
+
+    <!--
+        This jetty-version is used by the help system in building the pre-compiled JSPs,
+        and should change when ever our "shipped" version of Jetty changes.
      -->
-    <jetty-version>9.2.5.v20141112</jetty-version>
+    <jetty-version>9.2.9.v20150224</jetty-version>
 
     <!--
        Production bundles are produced by ignoring the compiler warnings specified
@@ -106,9 +129,15 @@
     <tests.ignoredWarnings>-warn:-deprecation,raw,unchecked,discouraged</tests.ignoredWarnings>
 
     <eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</eclipse-repo.url>
+    <!-- comment out snapshots repo, when not intending to use snapshots. releases come from "eclipse-repo.url"  
     <cbi-snapshots-repo.url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</cbi-snapshots-repo.url>
-    <!-- this eclipse-p2-repo.url is specifically for the build individual bundles profile. -->
-    <eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-N-builds</eclipse-p2-repo.url>
+    -->
+
+    <!-- this eclipse-p2-repo.url is specifically for the build individual bundles profile and Gerrit jobs.
+         Usually set to N-builds for main dev. cycle, but set to I-builds during RC time (since there are
+         no N-builds, but daily I-builds).
+    -->
+    <eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-I-builds</eclipse-p2-repo.url>
 
     <!--
         If configuration is not specified at all, in signing plugin, the default
@@ -138,7 +167,20 @@
     </snapshotRepository>
   </distributionManagement>
   <pluginRepositories>
-   
+
+<!-- only for Tycho snapshots
+    <pluginRepository>
+      <id>tycho-snapshots</id>
+      <url>${tycho-snapshot-repo.url}</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </pluginRepository>
+ -->
+
     <pluginRepository>
       <id>tycho</id>
       <url>${tycho-repo.url}</url>
@@ -159,6 +201,7 @@
         <enabled>true</enabled>
       </snapshots>
     </pluginRepository>
+    <!-- comment out cbi snapshots, if not intending to use
     <pluginRepository>
       <id>cbi-snapshots</id>
       <url>${cbi-snapshots-repo.url}</url>
@@ -166,6 +209,7 @@
         <enabled>true</enabled>
       </snapshots>
     </pluginRepository>
+     -->
     <pluginRepository>
       <id>eclipse</id>
       <url>${eclipse-repo.url}</url>
@@ -191,6 +235,10 @@
         <version>${cbi-plugins.version}</version>
         <executions>
           <execution>
+          <!--
+            Default lifecycle phase: 'GENERATE_SOURCES'
+            See https://maven.apache.org/ref/3.1.1/maven-core/lifecycles.html
+          -->
             <goals>
               <goal>generate-api-build-xml</goal>
             </goals>
@@ -322,9 +370,53 @@
               <escapeString>\</escapeString>
             </configuration>
           </execution>
+           <execution>
+            <id>saveproperties</id>
+            <configuration>
+              <outputDirectory>${project.build.directory}</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>saveproperties</directory>
+                  <filtering>true</filtering>
+                </resource>
+              </resources>
+            </configuration>
+            <phase>validate</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+          </execution>
         </executions>
       </plugin>
-
+      <plugin>
+        <!--
+           This maven-enforcer-plugin configuration to actually break the build if
+           run with older maven.
+           prerequisites section is kept for now as even if it doesn't break the build, it
+           is used by other plugins like versions-maven-plugin which check and warn
+           for using plugins with older than they require Maven version.
+           If version number changed in one place, be sure to change in the other.
+        -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+          <execution>
+            <id>enforce-maven</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <requireMavenVersion>
+                  <version>3.1.1</version>
+                </requireMavenVersion>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
@@ -348,6 +440,11 @@
               <artifactId>org.eclipse.jdt.core</artifactId>
               <version>${cbi-jdt-version}</version>
             </dependency>
+            <dependency>
+              <groupId>org.eclipse.jdt</groupId>
+              <artifactId>org.eclipse.jdt.compiler.apt</artifactId>
+              <version>${cbi-jdt-apt-version}</version>
+            </dependency>
           </dependencies>
           <configuration>
             <compilerArgs>
@@ -358,9 +455,14 @@
               <args>-encoding</args>
               <args>${project.build.sourceEncoding}</args>
               <args>-proceedOnError</args>
+              <!-- Use this form, for Tycho 22 or less.
               <args>-log</args>
               <args>${project.build.directory}/@dot.xml</args>
+              -->
             </compilerArgs>
+            <!-- Use this form for Tycho 23 or greater -->
+            <log>xml</log>
+            <logDirectory>${project.build.directory}/compilelogs</logDirectory>
             <showWarnings>true</showWarnings>
             <excludeResources>
               <exclude>**/package.html</exclude>
@@ -397,7 +499,7 @@
             <archive>
               <addMavenDescriptor>false</addMavenDescriptor>
             </archive>
-            <additionalFileSets>
+            <additionalFileSets combine.children="append"> 
               <fileSet>
                 <directory>${project.build.directory}</directory>
                 <includes>
@@ -696,9 +798,12 @@
                   <url>${eclipserun-repo}</url>
                 </repository>
               </repositories>
-              <!-- this is to fix some lucene 3.x compatibility issue -->
-              <argLine>-Dhelp.lucene.tokenizer=standard</argLine>
-              <!-- actuall indexer call -->
+              <!-- 
+                 This is to fix some lucene 3.x compatibility issues. 
+                 Required for 4.2 and earlier. Not for 4.3 and later. 
+                <argLine>-Dhelp.lucene.tokenizer=standard</argLine>
+              -->
+              <!-- actual indexer call -->
               <appArgLine>-data target/apibuild-workspace -application org.eclipse.ant.core.antRunner -buildfile target/.apibuild.xml</appArgLine>
               <dependencies>
                 <!-- list of bundles that we need -->
@@ -742,19 +847,6 @@
             </executions>
           </plugin>
         </plugins>
-        <resources>
-          <!--
-           This task is to save properties we are explicitly interested in using later,
-           such as when displaying in other reports or php pages. It depends on having
-           the "template" file be part of the 'saveproperties' directory. Its only purpose
-           is to "fill in" the property values named in that file.
-       -->
-          <resource>
-            <directory>saveproperties</directory>
-            <filtering>true</filtering>
-          </resource>
-        </resources>
-
       </build>
     </profile>
 

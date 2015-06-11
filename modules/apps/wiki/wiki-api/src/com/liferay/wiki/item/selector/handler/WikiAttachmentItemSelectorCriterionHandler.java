@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.item.selector.web;
+package com.liferay.wiki.item.selector.handler;
 
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
 import java.util.ArrayList;
 import java.util.List;

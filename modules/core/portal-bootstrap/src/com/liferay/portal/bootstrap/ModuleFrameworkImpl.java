@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -734,7 +733,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 	private void _installInitialBundle(String location) {
 		boolean start = false;
-		int startLevel = PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL;
 
 		int index = location.lastIndexOf(StringPool.AT);
 
@@ -745,9 +743,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			for (String part : parts) {
 				if (part.equals("start")) {
 					start = true;
-				}
-				else {
-					startLevel = GetterUtil.getInteger(part);
 				}
 			}
 
@@ -816,15 +811,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 				bundleTracker.open();
 
 				countDownLatch.await();
-			}
-
-			if (((bundle.getState() & Bundle.UNINSTALLED) == 0) &&
-				(startLevel > 0)) {
-
-				BundleStartLevel bundleStartLevel = bundle.adapt(
-					BundleStartLevel.class);
-
-				bundleStartLevel.setStartLevel(startLevel);
 			}
 		}
 		catch (Exception e) {

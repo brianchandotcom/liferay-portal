@@ -51,6 +51,9 @@
 		<property name="nextMethodInterceptor" ref="systemEventAdvice" />
 	</bean>
 	<bean id="systemEventAdvice" class="com.liferay.portal.systemevent.SystemEventAdvice">
+		<property name="nextMethodInterceptor" ref="serviceContextAdvice" />
+	</bean>
+	<bean id="serviceContextAdvice" class="com.liferay.portal.service.ServiceContextAdvice">
 		<property name="nextMethodInterceptor" ref="transactionAdvice" />
 	</bean>
 	<bean id="transactionAdvice" class="com.liferay.portal.dao.jdbc.aop.DynamicDataSourceAdviceFactoryUtil" factory-method="createDynamicDataSourceAdvice">

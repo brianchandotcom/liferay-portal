@@ -500,7 +500,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_DIR,
-			_getFelixFileInstallDir());
+			PropsValues.MODULE_FRAMEWORK_PORTAL_DIR);
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_LOG_LEVEL,
 			_getFelixFileInstallLogLevel());
@@ -576,8 +576,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	}
 
 	private String _getFelixFileInstallDir() {
-		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
-			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
+		return StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
 	}
 
 	private String _getFelixFileInstallLogLevel() {

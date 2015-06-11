@@ -411,20 +411,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		var filebrowserImageBrowseUrl = '';
 
 		<c:if test="<%= allowBrowseDocuments %>">
-
-			<%
-			ItemSelectorCriterion urlItemSelectorCriterion = new URLItemSelectorCriterion();
-
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
-
-			desiredItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
-
-			urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
-
-			PortletURL urlItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", urlItemSelectorCriterion);
-			%>
-
-			filebrowserBrowseUrl = '<%= urlItemSelectorURL %>';
 		</c:if>
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;

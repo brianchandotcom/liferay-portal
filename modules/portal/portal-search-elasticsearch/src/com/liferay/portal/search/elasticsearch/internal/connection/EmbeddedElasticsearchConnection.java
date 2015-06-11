@@ -122,6 +122,9 @@ public class EmbeddedElasticsearchConnection
 	protected void loadRequiredDefaultConfigurations(
 		ImmutableSettings.Builder builder) {
 
+		builder.put(
+			"bootstrap.mlockall",
+			elasticsearchConfiguration.bootstrapMlockAll());
 		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
 		builder.put(
 			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
@@ -135,6 +138,9 @@ public class EmbeddedElasticsearchConnection
 			"path.data",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
 		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
+		builder.put(
+			"path.repo",
+			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch_repo");
 		builder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 

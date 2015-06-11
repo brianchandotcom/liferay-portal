@@ -41,11 +41,11 @@
 		</execute>
 	</command>
 
-	<command name="agreeToTermsOfUse">
+	<command name="agreeToTermsOfUse" summary="Agree to Liferay Portal Terms of Use">
 		<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
 	</command>
 
-	<command name="setNewPassword">
+	<command name="setNewPassword" summary="Set '${userNewPassword}' as new user password">
 		<if>
 			<isset var="userNewPassword" />
 			<then>
@@ -57,7 +57,7 @@
 		</if>
 	</command>
 
-	<command name="setReminderQuery">
+	<command name="setReminderQuery" summary="Enter '${userReminderQueryAnswer}' as password reminder">
 		<if>
 			<isset var="userReminderQueryQuestion" />
 			<then>
@@ -130,7 +130,7 @@
 		</execute>
 	</command>
 
-	<command name="signInTestSetup" summary="Set up test by signing in as super admin">
+	<command name="signInTestSetup" summary="Sign in to Liferay Portal as '${userEmailAddress}' using the password '${userPassword}'">
 		<execute macro="SignOut#signOut" />
 
 		<execute macro="SignIn#signIn" />

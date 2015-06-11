@@ -115,6 +115,8 @@
 			<forward name="portal.update_password" path="portal.update_password" />
 		</action>
 
+		<action path="/portal/update_portlet_title" type="com.liferay.portal.action.UpdatePortletTitleAction" />
+
 		<action path="/portal/update_reminder_query" type="com.liferay.portal.action.UpdateReminderQueryAction">
 			<forward name="portal.update_reminder_query" path="portal.update_reminder_query" />
 		</action>

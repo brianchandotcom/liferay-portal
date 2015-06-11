@@ -1008,11 +1008,6 @@ else {
 				{
 					canEditTitle: <%= showConfigurationIcon && portletDecorate %>,
 					columnPos: <%= columnPos %>,
-
-					<liferay-portlet:actionURL name="editTitle" portletName="<%= PortletKeys.PORTLET_CONFIGURATION %>" var="editTitleURL" />
-
-					editTitleURL: '<%= HtmlUtil.escapeJS(editTitleURL.toString()) %>',
-
 					isStatic: '<%= staticVar %>',
 					namespacedId: 'p_p_id<%= HtmlUtil.escapeJS(renderResponseImpl.getNamespace()) %>',
 					portletId: '<%= HtmlUtil.escapeJS(portletDisplay.getId()) %>',

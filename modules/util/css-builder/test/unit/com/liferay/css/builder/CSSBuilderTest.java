@@ -14,6 +14,9 @@
 
 package com.liferay.css.builder;
 
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+
 import java.io.IOException;
 
 import java.net.URL;
@@ -101,7 +104,10 @@ public class CSSBuilderTest {
 	private String _read(String fileName) throws Exception {
 		Path path = Paths.get(fileName);
 
-		return new String(Files.readAllBytes(path));
+		String s = new String(Files.readAllBytes(path), StringPool.UTF8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private static final String _DIR_NAME = "/css";

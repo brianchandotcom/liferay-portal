@@ -172,7 +172,8 @@ public class SassFile implements SassFragment {
 		}
 
 		Path path = Paths.get(file.toURI());
-		Files.write(path, content.getBytes()); //creates, overwrites
+
+		Files.write(path, content.getBytes(StringPool.UTF8));
 	}
 
 	private static final String _BASE_URL = "@base_url@";

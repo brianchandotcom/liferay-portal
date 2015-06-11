@@ -420,7 +420,11 @@ public class CSSBuilder {
 	}
 
 	private String _read(File file) throws Exception {
-		return new String(Files.readAllBytes(file.toPath()));
+		String s = new String(
+			Files.readAllBytes(file.toPath()), StringPool.UTF8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private static final String _CSS_COMMENT_BEGIN = "/*";

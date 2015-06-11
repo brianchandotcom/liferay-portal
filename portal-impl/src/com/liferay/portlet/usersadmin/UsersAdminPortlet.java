@@ -53,6 +53,69 @@ import javax.portlet.RenderResponse;
  */
 public class UsersAdminPortlet extends MVCPortlet {
 
+	@Override
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
+				updateOrgLabor(actionRequest);
+			}
+			else if (cmd.equals(Constants.DELETE)) {
+				deleteOrgLabor(actionRequest);
+			}
+
+			sendRedirect(actionRequest, actionResponse);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchOrgLaborException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.users_admin.error");
+			}
+			else if (e instanceof NoSuchListTypeException) {
+				SessionErrors.add(actionRequest, e.getClass());
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		try {
+			ActionUtil.getOrgLabor(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchOrgLaborException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return actionMapping.findForward("portlet.users_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		return actionMapping.findForward(
+			getForward(renderRequest, "portlet.users_admin.edit_org_labor"));
+	}
+
 	public void updateOrganizationUserGroups(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -100,6 +163,14 @@ public class UsersAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
+	protected void deleteOrgLabor(ActionRequest actionRequest)
+		throws Exception {
+
+		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
+
+		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
+	}
+
 	@Override
 	protected void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -138,6 +209,56 @@ public class UsersAdminPortlet extends MVCPortlet {
 		}
 
 		return false;
+	}
+
+	protected void updateOrgLabor(ActionRequest actionRequest)
+		throws Exception {
+
+		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
+
+		long organizationId = ParamUtil.getLong(
+			actionRequest, "organizationId");
+		long typeId = ParamUtil.getLong(actionRequest, "typeId");
+
+		int sunOpen = ParamUtil.getInteger(actionRequest, "sunOpen");
+		int sunClose = ParamUtil.getInteger(actionRequest, "sunClose");
+
+		int monOpen = ParamUtil.getInteger(actionRequest, "monOpen");
+		int monClose = ParamUtil.getInteger(actionRequest, "monClose");
+
+		int tueOpen = ParamUtil.getInteger(actionRequest, "tueOpen");
+		int tueClose = ParamUtil.getInteger(actionRequest, "tueClose");
+
+		int wedOpen = ParamUtil.getInteger(actionRequest, "wedOpen");
+		int wedClose = ParamUtil.getInteger(actionRequest, "wedClose");
+
+		int thuOpen = ParamUtil.getInteger(actionRequest, "thuOpen");
+		int thuClose = ParamUtil.getInteger(actionRequest, "thuClose");
+
+		int friOpen = ParamUtil.getInteger(actionRequest, "friOpen");
+		int friClose = ParamUtil.getInteger(actionRequest, "friClose");
+
+		int satOpen = ParamUtil.getInteger(actionRequest, "satOpen");
+		int satClose = ParamUtil.getInteger(actionRequest, "satClose");
+
+		if (orgLaborId <= 0) {
+
+			// Add organization labor
+
+			OrgLaborServiceUtil.addOrgLabor(
+				organizationId, typeId, sunOpen, sunClose, monOpen, monClose,
+				tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
+				friOpen, friClose, satOpen, satClose);
+		}
+		else {
+
+			// Update organization labor
+
+			OrgLaborServiceUtil.updateOrgLabor(
+				orgLaborId, typeId, sunOpen, sunClose, monOpen, monClose,
+				tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
+				friOpen, friClose, satOpen, satClose);
+		}
 	}
 
 }

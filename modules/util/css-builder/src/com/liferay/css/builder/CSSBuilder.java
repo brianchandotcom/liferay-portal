@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.tools.css.builder;
+package com.liferay.css.builder;
 
+import com.liferay.css.builder.sass.SassFile;
+import com.liferay.css.builder.sass.SassFileWithMediaQuery;
+import com.liferay.css.builder.sass.SassString;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.CSSBuilderUtil;
-import com.liferay.portal.tools.css.builder.sass.SassFile;
-import com.liferay.portal.tools.css.builder.sass.SassFileWithMediaQuery;
-import com.liferay.portal.tools.css.builder.sass.SassString;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
 import com.liferay.sass.compiler.jni.internal.JniSassCompiler;

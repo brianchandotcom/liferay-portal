@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.css.builder.sass;
+package com.liferay.css.builder.sass;
 
 /**
  * @author Minhchau Dang

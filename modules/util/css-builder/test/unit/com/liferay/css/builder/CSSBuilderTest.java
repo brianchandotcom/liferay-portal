@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.tools.css.builder;
+package com.liferay.css.builder;
 
 import java.io.File;
 

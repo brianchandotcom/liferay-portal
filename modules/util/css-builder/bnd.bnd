@@ -8,5 +8,4 @@ Include-Resource:\
     @../../../portal-impl/portal-impl.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
     @../../../portal-impl/portal-impl.jar!/com/liferay/portal/servlet/filters/dynamiccss/RTLCSSUtil.class
 Main-Class: com.liferay.css.builder.CSSBuilder
-Private-Package:\
-	com.liferay.css.builder.sass
+Private-Package: com.liferay.css.builder.sass

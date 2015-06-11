@@ -39,9 +39,7 @@ public class CSSBuilderTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Class clazz = CSSBuilderTest.class;
-
-		URL url = clazz.getResource("dependencies");
+		URL url = CSSBuilderTest.class.getResource("dependencies");
 
 		_DOCROOT_DIR_NAME = url.getFile();
 	}

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortlet;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -193,13 +192,19 @@ public class MVCPortlet extends LiferayPortlet {
 		copyRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("copy-request-parameters"), true);
 
-		_actionCommandCache = new ActionCommandCache(
-			getInitParameter(ActionCommandCache.ACTION_PACKAGE_NAME),
-			getPortletName());
+		_actionCommandCache = new <ActionCommand>CommandCache(
+			ActionCommand.EMPTY,
+			getInitParameter(ActionCommand.ACTION_PACKAGE_NAME),
+			getPortletName(), "action.command.name",
+			ActionCommand.class.getName(),
+			ActionCommand.ACTION_COMMAND_POSTFIX);
 
-		_resourceCommandCache = new ResourceCommandCache(
-			getInitParameter(ResourceCommandCache.RESOURCE_PACKAGE_NAME),
-			getPortletName());
+		_resourceCommandCache = new <ResourceCommand>CommandCache(
+			ResourceCommand.EMPTY,
+			getInitParameter(ResourceCommand.RESOURCE_PACKAGE_NAME),
+			getPortletName(), "resource.command.name",
+			ResourceCommand.class.getName(),
+			ResourceCommand.RESOURCE_COMMAND_POSTFIX);
 	}
 
 	public void invokeTaglibDiscussion(
@@ -273,17 +278,17 @@ public class MVCPortlet extends LiferayPortlet {
 		String actionName = getCommandName(actionRequest);
 
 		if (!actionName.contains(StringPool.COMMA)) {
-			ActionCommand actionCommand = _actionCommandCache.getActionCommand(
+			ActionCommand actionCommand = _actionCommandCache.getCommand(
 				actionName);
 
-			if (actionCommand != ActionCommandCache.EMPTY) {
+			if (actionCommand != ActionCommand.EMPTY) {
 				return actionCommand.processCommand(
 					actionRequest, actionResponse);
 			}
 		}
 		else {
 			List<ActionCommand> actionCommands =
-				_actionCommandCache.getActionCommandChain(actionName);
+				_actionCommandCache.getCommandChain(actionName);
 
 			if (!actionCommands.isEmpty()) {
 				for (ActionCommand actionCommand : actionCommands) {
@@ -316,17 +321,17 @@ public class MVCPortlet extends LiferayPortlet {
 		String resourceName = getCommandName(resourceRequest);
 
 		if (!resourceName.contains(StringPool.COMMA)) {
-			ResourceCommand resourceCommand =
-				_resourceCommandCache.getResourceCommand(resourceName);
+			ResourceCommand resourceCommand = _resourceCommandCache.getCommand(
+				resourceName);
 
-			if (resourceCommand != ResourceCommandCache.EMPTY) {
+			if (resourceCommand != ResourceCommand.EMPTY) {
 				return resourceCommand.processCommand(
 					resourceRequest, resourceResponse);
 			}
 		}
 		else {
 			List<ResourceCommand> resourceCommands =
-				_resourceCommandCache.getResourceCommandChain(resourceName);
+				_resourceCommandCache.getCommandChain(resourceName);
 
 			if (!resourceCommands.isEmpty()) {
 				for (ResourceCommand resourceCommand : resourceCommands) {
@@ -522,7 +527,7 @@ public class MVCPortlet extends LiferayPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
-	private ActionCommandCache _actionCommandCache;
-	private ResourceCommandCache _resourceCommandCache;
+	private CommandCache<ActionCommand> _actionCommandCache;
+	private CommandCache<ResourceCommand> _resourceCommandCache;
 
 }

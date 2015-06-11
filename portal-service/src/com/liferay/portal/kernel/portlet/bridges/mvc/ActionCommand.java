@@ -23,6 +23,21 @@ import javax.portlet.PortletResponse;
  */
 public interface ActionCommand {
 
+	public static final String ACTION_COMMAND_POSTFIX = "ActionCommand";
+
+	public static final String ACTION_PACKAGE_NAME = "action.package.prefix";
+
+	public static final ActionCommand EMPTY = new ActionCommand() {
+
+		@Override
+		public boolean processCommand(
+			PortletRequest portletRequest, PortletResponse portletResponse) {
+
+			return false;
+		}
+
+	};
+
 	public boolean processCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws PortletException;

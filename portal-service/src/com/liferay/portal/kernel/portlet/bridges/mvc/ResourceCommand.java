@@ -23,6 +23,23 @@ import javax.portlet.ResourceResponse;
  */
 public interface ResourceCommand {
 
+	public static final ResourceCommand EMPTY = new ResourceCommand() {
+
+		@Override
+		public boolean processCommand(
+			ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) {
+
+			return false;
+		}
+
+	};
+
+	public static final String RESOURCE_COMMAND_POSTFIX = "ResourceCommand";
+
+	public static final String RESOURCE_PACKAGE_NAME =
+		"resource.package.prefix";
+
 	public boolean processCommand(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException;

@@ -57,9 +57,24 @@ public class DDMFormLayoutJSONDeserializerImpl
 		JSONObject jsonObject) {
 
 		DDMFormLayoutColumn ddmFormLayoutColumn = new DDMFormLayoutColumn(
-			jsonObject.getString("fieldName"), jsonObject.getInt("size"));
+			jsonObject.getInt("size"));
+
+		setDDMFormLayouColumnFieldNames(
+			jsonObject.getJSONArray("fieldNames"), ddmFormLayoutColumn);
 
 		return ddmFormLayoutColumn;
+	}
+
+	protected List<String> getDDMFormLayoutColumnFieldNames(
+		JSONArray jsonArray) {
+
+		List<String> ddmFormFieldNames = new ArrayList<>();
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			ddmFormFieldNames.add(jsonArray.getString(i));
+		}
+
+		return ddmFormFieldNames;
 	}
 
 	protected List<DDMFormLayoutColumn> getDDMFormLayoutColumns(
@@ -143,6 +158,15 @@ public class DDMFormLayoutJSONDeserializerImpl
 		}
 
 		return title;
+	}
+
+	protected void setDDMFormLayouColumnFieldNames(
+		JSONArray jsonArray, DDMFormLayoutColumn ddmFormLayoutColumn) {
+
+		List<String> ddmFormLayoutColumnNames =
+			getDDMFormLayoutColumnFieldNames(jsonArray);
+
+		ddmFormLayoutColumn.setDDMFormFieldNames(ddmFormLayoutColumnNames);
 	}
 
 	protected void setDDMFormLayoutDefaultLocale(

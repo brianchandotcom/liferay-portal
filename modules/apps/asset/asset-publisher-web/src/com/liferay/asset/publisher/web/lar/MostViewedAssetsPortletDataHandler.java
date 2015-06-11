@@ -27,7 +27,6 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"javax.portlet.name=" + AssetPublisherPortletKeys.MOST_VIEWED_ASSETS
 	},
-
 	service = PortletDataHandler.class
 )
 public class MostViewedAssetsPortletDataHandler

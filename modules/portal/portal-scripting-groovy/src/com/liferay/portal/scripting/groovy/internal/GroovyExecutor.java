@@ -94,6 +94,8 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 	@Activate
 	protected void activate(Map<String, Object> properties) {
 		initScriptingExecutorClassLoader();
+
+		_groovyShell = new GroovyShell(getScriptingExecutorClassLoader());
 	}
 
 	protected GroovyShell getGroovyShell(ClassLoader[] classLoaders) {
@@ -101,7 +103,8 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 			if (_groovyShell == null) {
 				synchronized (this) {
 					if (_groovyShell == null) {
-						_groovyShell = new GroovyShell();
+						_groovyShell = new GroovyShell(
+							getScriptingExecutorClassLoader());
 					}
 				}
 			}
@@ -128,7 +131,7 @@ public class GroovyExecutor extends BaseScriptingExecutor {
 		return groovyShell;
 	}
 
-	private volatile GroovyShell _groovyShell = new GroovyShell();
+	private volatile GroovyShell _groovyShell;
 	private final ConcurrentMap<ClassLoader, GroovyShell> _groovyShells =
 		new ConcurrentReferenceKeyHashMap<>(
 			FinalizeManager.WEAK_REFERENCE_FACTORY);

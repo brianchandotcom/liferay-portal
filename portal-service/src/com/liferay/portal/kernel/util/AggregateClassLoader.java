@@ -46,12 +46,14 @@ public class AggregateClassLoader extends ClassLoader {
 			return parentClassLoader;
 		}
 
-		if (classLoaders.length == 1) {
-			return classLoaders[0];
-		}
+		AggregateClassLoader aggregateClassLoader = null;
 
-		AggregateClassLoader aggregateClassLoader = new AggregateClassLoader(
-			parentClassLoader);
+		if (parentClassLoader instanceof AggregateClassLoader) {
+			aggregateClassLoader = (AggregateClassLoader)parentClassLoader;
+		}
+		else {
+			aggregateClassLoader = new AggregateClassLoader(parentClassLoader);
+		}
 
 		for (ClassLoader classLoader : classLoaders) {
 			aggregateClassLoader.addClassLoader(classLoader);
@@ -95,7 +97,7 @@ public class AggregateClassLoader extends ClassLoader {
 		}
 		else {
 			_classLoaderReferences.add(
-				new EqualityWeakReference<ClassLoader>(classLoader));
+				new EqualityWeakReference<>(classLoader));
 		}
 	}
 

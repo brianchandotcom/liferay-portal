@@ -30,7 +30,7 @@ Organization organization = OrganizationServiceUtil.fetchOrganization(organizati
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/edit_organization_assignments");
+portletURL.setParameter("mvcPath", "/html/portlet/users_admin/edit_organization_assignments.jsp");
 portletURL.setParameter("tabs1", tabs1);
 portletURL.setParameter("tabs2", tabs2);
 portletURL.setParameter("redirect", redirect);
@@ -50,11 +50,11 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 <liferay-ui:membership-policy-error />
 
 <portlet:actionURL var="editAssignmentsURL">
-	<portlet:param name="struts_action" value="/users_admin/edit_organization_assignments" />
+	<portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_organization_assignments.jsp" />
 </portlet:actionURL>
 
 <aui:form action="<%= editAssignmentsURL %>" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />
 	<aui:input name="tabs2" type="hidden" value="<%= tabs2 %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
@@ -128,7 +128,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-
 	function <portlet:namespace />updateOrganizationUsers(assignmentsRedirect) {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= Constants.CMD %>').val('organization_users');
+		form.fm('<%= ActionRequest.ACTION_NAME %>').val('editOrganizationUsers');
 		form.fm('assignmentsRedirect').val(assignmentsRedirect);
 		form.fm('addUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 		form.fm('removeUserIds').val(Liferay.Util.listUncheckedExcept(form, '<portlet:namespace />allRowIds'));

@@ -29,7 +29,7 @@ String usersListView = ParamUtil.get(request, "usersListView", UserConstants.LIS
 
 PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("struts_action", "/users_admin/view_users");
+portletURL.setParameter("mvcPath", "/html/portlet/users_admin/view.jsp");
 portletURL.setParameter("usersListView", usersListView);
 
 if (Validator.isNotNull(viewUsersRedirect)) {
@@ -49,7 +49,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 <aui:form action="<%= portletURLString %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "search();" %>'>
 	<liferay-portlet:renderURLParams varImpl="portletURL" />
-	<aui:input name="<%= Constants.CMD %>" type="hidden" />
+	<aui:input name="<%= ActionRequest.ACTION_NAME %>" type="hidden" />
 	<aui:input name="toolbarItem" type="hidden" value="<%= toolbarItem %>" />
 	<aui:input name="redirect" type="hidden" value="<%= portletURLString %>" />
 
@@ -130,15 +130,15 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	}
 
 	function <portlet:namespace />deleteUsers(cmd) {
-		if (((cmd == '<%= Constants.DEACTIVATE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == '<%= Constants.DELETE %>') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == '<%= Constants.RESTORE %>')) {
+		if (((cmd == 'deactivateUsers') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-deactivate-the-selected-users") %>')) || ((cmd == 'deleteUsers') && confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-permanently-delete-the-selected-users") %>')) || (cmd == 'restoreUsers')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');
-			form.fm('<%= Constants.CMD %>').val(cmd);
+			form.fm('<%= ActionRequest.ACTION_NAME %>').val(cmd);
 			form.fm('redirect').val(form.fm('usersRedirect').val());
 			form.fm('deleteUserIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds', '<portlet:namespace />rowIdsUser'));
 
-			submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_user" /></portlet:actionURL>');
+			submitForm(form, '<portlet:actionURL><portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_user.jsp" /></portlet:actionURL>');
 		}
 	}
 
@@ -195,11 +195,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 		form.fm('redirect').val(form.fm('organizationsRedirect').val());
 		form.fm('deleteOrganizationIds').val(organizationIds);
 
-		submitForm(form, '<portlet:actionURL><portlet:param name="struts_action" value="/users_admin/edit_organization" /></portlet:actionURL>');
+		submitForm(form, '<portlet:actionURL name="deleteOrganizations"><portlet:param name="mvcPath" value="/html/portlet/users_admin/edit_organization.jsp" /></portlet:actionURL>');
 	}
 
 	function <portlet:namespace />getUsersCount(className, ids, status, callback) {
@@ -220,7 +219,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		var form = AUI.$(document.<portlet:namespace />fm);
 
 		form.attr('method', 'post');
-		form.fm('<%= Constants.CMD %>').val('');
 
 		submitForm(form, '<%= portletURLString %>');
 	}
@@ -230,7 +228,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 		<%
 		PortletURL showUsersURL = renderResponse.createRenderURL();
 
-		showUsersURL.setParameter("struts_action", "/users_admin/view_users");
+		showUsersURL.setParameter("mvcPath", "/html/portlet/users_admin/view.jsp");
 		showUsersURL.setParameter("usersListView", usersListView);
 
 		long organizationId = ParamUtil.getLong(request, "organizationId", OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID);

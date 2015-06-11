@@ -74,9 +74,6 @@ public class BlogsItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/blogs-item-selector-web/blogs_attachments.jsp");
-
 		BlogsItemSelectorViewDisplayContext
 			blogsItemSelectorViewDisplayContext =
 				new BlogsItemSelectorViewDisplayContext(
@@ -86,6 +83,9 @@ public class BlogsItemSelectorView
 		request.setAttribute(
 			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			blogsItemSelectorViewDisplayContext);
+
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
+			"/o/blogs-item-selector-web/blogs_attachments.jsp");
 
 		requestDispatcher.include(request, response);
 	}

@@ -15,6 +15,9 @@
 package com.liferay.css.builder.sass;
 
 import com.liferay.css.builder.CSSBuilder;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.portal.util.AggregateUtil;
 
@@ -40,13 +43,13 @@ public class SassFile implements SassFragment {
 		_docrootDirName = docrootDirName;
 		_fileName = fileName;
 
-		int pos = fileName.lastIndexOf('/');
+		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		if (pos != -1) {
 			_baseDir = fileName.substring(0, pos + 1);
 		}
 		else {
-			_baseDir = "";
+			_baseDir = StringPool.BLANK;
 		}
 	}
 
@@ -68,7 +71,7 @@ public class SassFile implements SassFragment {
 			return _ltrContent;
 		}
 
-		StringBuilder sb = new StringBuilder(_sassFragments.size());
+		StringBundler sb = new StringBundler(_sassFragments.size());
 
 		for (SassFragment sassFragment : _sassFragments) {
 			String ltrContent = sassFragment.getLtrContent();
@@ -96,7 +99,7 @@ public class SassFile implements SassFragment {
 			return _rtlContent;
 		}
 
-		StringBuilder sb = new StringBuilder(_sassFragments.size());
+		StringBundler sb = new StringBundler(_sassFragments.size());
 
 		for (SassFragment sassFragment : _sassFragments) {
 			String rtlContent = sassFragment.getRtlContent();
@@ -124,7 +127,7 @@ public class SassFile implements SassFragment {
 
 	@Override
 	public String toString() {
-		StringBuilder sb = new StringBuilder(5);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("Parsed ");
 		sb.append(_fileName);
@@ -137,7 +140,8 @@ public class SassFile implements SassFragment {
 
 	public void writeCacheFiles() throws Exception {
 		File ltrCacheFile = new File(
-			_docrootDirName, CSSBuilderUtil.getCacheFileName(_fileName, ""));
+			_docrootDirName,
+			CSSBuilderUtil.getCacheFileName(_fileName, StringPool.BLANK));
 
 		_writeFile(ltrCacheFile, getLtrContent());
 
@@ -152,7 +156,8 @@ public class SassFile implements SassFragment {
 		}
 
 		File rtlCacheFile = new File(
-			_docrootDirName, CSSBuilderUtil.getCacheFileName(rtlFileName, ""));
+			_docrootDirName,
+			CSSBuilderUtil.getCacheFileName(rtlFileName, StringPool.BLANK));
 
 		_writeFile(rtlCacheFile, getRtlContent());
 

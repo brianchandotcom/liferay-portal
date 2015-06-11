@@ -18,7 +18,11 @@ import com.liferay.css.builder.sass.SassFile;
 import com.liferay.css.builder.sass.SassFileWithMediaQuery;
 import com.liferay.css.builder.sass.SassString;
 import com.liferay.portal.kernel.regex.PatternFactory;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.sass.compiler.SassCompiler;
@@ -56,14 +60,14 @@ public class CSSBuilder {
 
 		String dirName = arguments.get("sass.dir");
 
-		if ((dirName != null) && !dirName.equals("")) {
+		if (Validator.isNotNull(dirName)) {
 			dirNames.add(dirName);
 		}
 		else {
 			for (int i = 0;; i++ ) {
 				dirName = arguments.get("sass.dir." + i);
 
-				if ((dirName != null) && !dirName.equals("")) {
+				if (Validator.isNotNull(dirName)) {
 					dirNames.add(dirName);
 				}
 				else {
@@ -208,20 +212,22 @@ public class CSSBuilder {
 	}
 
 	private String _fixRelativePath(String fileName) {
-		String[] paths = fileName.split("/");
+		String[] paths = StringUtil.split(fileName, CharPool.SLASH);
 
-		StringBuilder sb = new StringBuilder(paths.length * 2);
+		StringBundler sb = new StringBundler(paths.length * 2);
 
 		for (String path : paths) {
-			if (path.isEmpty() || path.equals(".")) {
+			if (path.isEmpty() || path.equals(StringPool.PERIOD)) {
 				continue;
 			}
 
-			if (path.equals("..") && (sb.length() >= 2)) {
+			if (path.equals(StringPool.DOUBLE_PERIOD) && (sb.length() >= 2)) {
+				sb.setIndex(sb.index() - 2);
+
 				continue;
 			}
 
-			sb.append("/");
+			sb.append(StringPool.SLASH);
 			sb.append(path);
 		}
 
@@ -279,12 +285,11 @@ public class CSSBuilder {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		fileName = dirName + "/" + fileName;
-
-		fileName = fileName.replace('\\', '/');
-		fileName = fileName.replace("//", "/");
-
-		return fileName;
+		return StringUtil.replace(
+			dirName + StringPool.SLASH + fileName,
+			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
+			new String[] {StringPool.SLASH, StringPool.SLASH}
+		);
 	}
 
 	private String _parseSass(String fileName, String content)
@@ -302,7 +307,7 @@ public class CSSBuilder {
 
 		return _sassCompiler.compileString(
 			content, _portalCommonDirName + File.pathSeparator + cssThemePath,
-			"");
+			StringPool.BLANK);
 	}
 
 	private void _parseSassFile(SassFile sassFile) throws Exception {
@@ -320,7 +325,7 @@ public class CSSBuilder {
 
 		int pos = 0;
 
-		StringBuilder sb = new StringBuilder();
+		StringBundler sb = new StringBundler();
 
 		while (true) {
 			int commentX = content.indexOf(_CSS_COMMENT_BEGIN, pos);
@@ -348,12 +353,13 @@ public class CSSBuilder {
 			else {
 				sb.append(content.substring(pos, importX));
 
-				String mediaQuery = "";
+				String mediaQuery = StringPool.BLANK;
 
-				int mediaQueryImportX =
-					content.indexOf(')', importX + _CSS_IMPORT_BEGIN.length());
+				int mediaQueryImportX = content.indexOf(
+					CharPool.CLOSE_PARENTHESIS,
+					importX + _CSS_IMPORT_BEGIN.length());
 				int mediaQueryImportY = content.indexOf(
-					';', importX + _CSS_IMPORT_BEGIN.length());
+					CharPool.SEMICOLON, importX + _CSS_IMPORT_BEGIN.length());
 
 				String importFileName = null;
 
@@ -371,14 +377,14 @@ public class CSSBuilder {
 				}
 
 				if (!importFileName.isEmpty()) {
-					if (importFileName.charAt(0) != '/') {
+					if (importFileName.charAt(0) != CharPool.SLASH) {
 						importFileName = _fixRelativePath(
 							sassFile.getBaseDir().concat(importFileName));
 					}
 
 					SassFile importSassFile = _build(importFileName);
 
-					if ((mediaQuery != null) && !mediaQuery.equals("")) {
+					if (Validator.isNotNull(mediaQuery)) {
 						sassFile.addSassFragment(
 							new SassFileWithMediaQuery(
 								importSassFile, mediaQuery));
@@ -390,7 +396,7 @@ public class CSSBuilder {
 
 				// LEP-7540
 
-				if ((mediaQuery != null) && !mediaQuery.equals("")) {
+				if (Validator.isNotNull(mediaQuery)) {
 					pos = mediaQueryImportY + 1;
 				}
 				else {

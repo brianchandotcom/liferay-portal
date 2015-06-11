@@ -28,7 +28,7 @@ public class SassString implements SassFragment {
 		throws Exception {
 
 		if (fileName.contains("_rtl")) {
-			_ltrContent = "";
+			_ltrContent = StringPool.BLANK;
 			_rtlContent = cssContent;
 		}
 		else {

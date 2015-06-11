@@ -14,6 +14,9 @@
 
 package com.liferay.css.builder.sass;
 
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Minhchau Dang
  * @author Shuyang Zhou
@@ -27,28 +30,28 @@ public class SassFileWithMediaQuery implements SassFragment {
 
 	@Override
 	public String getLtrContent() {
-		StringBuilder sb = new StringBuilder(6);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CSS_MEDIA_QUERY);
-		sb.append(" ");
+		sb.append(StringPool.SPACE);
 		sb.append(_mediaQuery);
-		sb.append("{");
+		sb.append(StringPool.OPEN_CURLY_BRACE);
 		sb.append(_sassFile.getLtrContent());
-		sb.append("}");
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
 	}
 
 	@Override
 	public String getRtlContent() {
-		StringBuilder sb = new StringBuilder(6);
+		StringBundler sb = new StringBundler(6);
 
 		sb.append(_CSS_MEDIA_QUERY);
-		sb.append(" ");
+		sb.append(StringPool.SPACE);
 		sb.append(_mediaQuery);
-		sb.append("{");
+		sb.append(StringPool.OPEN_CURLY_BRACE);
 		sb.append(_sassFile.getRtlContent());
-		sb.append("}");
+		sb.append(StringPool.CLOSE_CURLY_BRACE);
 
 		return sb.toString();
 	}

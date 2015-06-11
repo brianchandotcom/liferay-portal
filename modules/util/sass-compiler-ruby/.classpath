@@ -28,33 +28,9 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/asm-analysis.jar" />
-	<classpathentry kind="lib" path="lib/asm-commons.jar" />
-	<classpathentry kind="lib" path="lib/asm-tree.jar" />
-	<classpathentry kind="lib" path="lib/asm-util.jar" />
-	<classpathentry kind="lib" path="lib/asm.jar" />
-	<classpathentry kind="lib" path="lib/bytelist.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.ruby.gems.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.api.jar" />
-	<classpathentry kind="lib" path="lib/invokebinder.jar" />
-	<classpathentry kind="lib" path="lib/jcodings.jar" />
-	<classpathentry kind="lib" path="lib/jffi.jar" />
-	<classpathentry kind="lib" path="lib/jnr-constants.jar" />
-	<classpathentry kind="lib" path="lib/jnr-enxio.jar" />
-	<classpathentry kind="lib" path="lib/jnr-ffi.jar" />
-	<classpathentry kind="lib" path="lib/jnr-netdb.jar" />
-	<classpathentry kind="lib" path="lib/jnr-posix.jar" />
-	<classpathentry kind="lib" path="lib/jnr-unixsocket.jar" />
-	<classpathentry kind="lib" path="lib/jnr-x86asm.jar" />
-	<classpathentry kind="lib" path="lib/joda-time.jar" />
-	<classpathentry kind="lib" path="lib/joni.jar" />
-	<classpathentry kind="lib" path="lib/jruby-core.jar" />
-	<classpathentry kind="lib" path="lib/jruby-stdlib.jar" />
-	<classpathentry kind="lib" path="lib/jzlib.jar" />
-	<classpathentry kind="lib" path="lib/nailgun-server.jar" />
-	<classpathentry kind="lib" path="lib/options.jar" />
-	<classpathentry kind="lib" path="lib/snakeyaml.jar" />
-	<classpathentry kind="lib" path="lib/yecht.jar" />
+	<classpathentry kind="lib" path="lib/jruby-complete.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/junit/junit/jars/junit-4.12.jar" />
 	<classpathentry kind="output" path="bin" />

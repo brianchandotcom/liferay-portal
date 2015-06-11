@@ -33,9 +33,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Iván Zaera
  */
+@Component
 public class WikiAttachmentItemSelectorView
 	implements ItemSelectorView
 		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
@@ -70,7 +73,7 @@ public class WikiAttachmentItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
-		return resourceBundle.getString("attachments");
+		return resourceBundle.getString("page-attachments");
 	}
 
 	@Override

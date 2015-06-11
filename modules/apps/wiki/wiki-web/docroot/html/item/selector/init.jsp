@@ -25,11 +25,11 @@ page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion" %><%@
-page import="com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView" %><%@
 page import="com.liferay.wiki.model.WikiPage" %><%@
 page import="com.liferay.wiki.model.WikiPageResource" %><%@
 page import="com.liferay.wiki.service.WikiPageLocalServiceUtil" %><%@
-page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %>
+page import="com.liferay.wiki.service.WikiPageResourceLocalServiceUtil" %><%@
+page import="com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

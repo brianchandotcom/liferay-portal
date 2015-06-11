@@ -64,6 +64,12 @@ public class DDMFormRendererHelper {
 		}
 	}
 
+	public void setExpressionEvaluator(
+		ExpressionEvaluator expressionEvaluator) {
+
+		_expressionEvaluator = expressionEvaluator;
+	}
+
 	protected DDMFormFieldRenderingContext
 		createDDMFormFieldRenderingContext() {
 
@@ -155,6 +161,15 @@ public class DDMFormRendererHelper {
 		return renderedDDMFormFieldValuesMap;
 	}
 
+	protected boolean isDDMFormFieldVisible(DDMFormField ddmFormField) {
+		if (Validator.isNull(ddmFormField.getVisibilityExpression())) {
+			return true;
+		}
+
+		return _expressionEvaluator.evaluateBooleanExpression(
+			ddmFormField.getVisibilityExpression());
+	}
+
 	protected String renderDDMFormField(
 			DDMFormField ddmFormField,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
@@ -177,7 +192,9 @@ public class DDMFormRendererHelper {
 			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
 				ddmFormField, ddmFormFieldRenderingContext);
 
-			return wrapDDMFormFieldHTML(ddmFormFieldHTML);
+			boolean visible = isDDMFormFieldVisible(ddmFormField);
+
+			return wrapDDMFormFieldHTML(ddmFormFieldHTML, visible);
 		}
 		catch (PortalException pe) {
 			throw new DDMFormRenderingException(pe);
@@ -329,10 +346,18 @@ public class DDMFormRendererHelper {
 			value.getString(ddmFormFieldRenderingContext.getLocale()));
 	}
 
-	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
-		StringBundler sb = new StringBundler(3);
+	protected String wrapDDMFormFieldHTML(
+		String ddmFormFieldHTML, boolean visible) {
 
-		sb.append("<div class=\"lfr-ddm-form-field-container\">");
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<div class=\"lfr-ddm-form-field-container");
+
+		if (!visible) {
+			sb.append(" hidden");
+		}
+
+		sb.append("\">");
 		sb.append(ddmFormFieldHTML);
 		sb.append("</div>");
 
@@ -343,5 +368,6 @@ public class DDMFormRendererHelper {
 	private final Map<String, DDMFormField> _ddmFormFieldsMap;
 	private final DDMFormRenderingContext _ddmFormRenderingContext;
 	private final DDMFormValues _ddmFormValues;
+	private ExpressionEvaluator _expressionEvaluator;
 
 }

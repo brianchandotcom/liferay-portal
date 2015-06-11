@@ -134,12 +134,16 @@ public class DDMFormField implements Serializable {
 		return MapUtil.getString(_properties, "type");
 	}
 
+	public String getVisibilityExpression() {
+		return MapUtil.getString(_properties, "visibilityExpression");
+	}
+
 	public boolean isLocalizable() {
 		return MapUtil.getBoolean(_properties, "localizable");
 	}
 
 	public boolean isMultiple() {
-		return MapUtil.getBoolean(_properties, "localizable");
+		return MapUtil.getBoolean(_properties, "multiple");
 	}
 
 	public boolean isReadOnly() {
@@ -246,6 +250,10 @@ public class DDMFormField implements Serializable {
 
 	public void setType(String type) {
 		_properties.put("type", type);
+	}
+
+	public void setVisibilityExpression(String visibilityExpression) {
+		_properties.put("visibilityExpression", visibilityExpression);
 	}
 
 	private DDMForm _ddmForm;

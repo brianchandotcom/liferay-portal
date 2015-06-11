@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.validator.internal;
 
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormLayoutValidator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayout;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutColumn;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormLayoutPage;
@@ -71,16 +72,18 @@ public class DDMFormLayoutValidatorImpl implements DDMFormLayoutValidator {
 				for (DDMFormLayoutColumn ddmFormLayoutColumn :
 						ddmFormLayoutRow.getDDMFormLayoutColumns()) {
 
-					String ddmFormFieldName =
-						ddmFormLayoutColumn.getDDMFormFieldName();
+					Set<String> intersect = SetUtil.intersect(
+						ddmFormFieldNames,
+						ddmFormLayoutColumn.getDDMFormFieldNames());
 
-					if (ddmFormFieldNames.contains(ddmFormFieldName)) {
+					if (!intersect.isEmpty()) {
 						throw new DDMFormLayoutValidationException(
-							"Field name " + ddmFormFieldName +
-								" is defined more than once");
+							"Field names " + intersect +
+								" were defined more than once");
 					}
 
-					ddmFormFieldNames.add(ddmFormFieldName);
+					ddmFormFieldNames.addAll(
+						ddmFormLayoutColumn.getDDMFormFieldNames());
 				}
 			}
 		}

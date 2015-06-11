@@ -53,6 +53,12 @@ import javax.portlet.RenderResponse;
  */
 public class UsersAdminPortlet extends MVCPortlet {
 
+	public void deleteOrgLabor(ActionRequest actionRequest) throws Exception {
+		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
+
+		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -163,57 +169,7 @@ public class UsersAdminPortlet extends MVCPortlet {
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	protected void deleteOrgLabor(ActionRequest actionRequest)
-		throws Exception {
-
-		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
-
-		OrgLaborServiceUtil.deleteOrgLabor(orgLaborId);
-	}
-
-	@Override
-	protected void doDispatch(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-
-		if (SessionErrors.contains(
-				renderRequest, NoSuchOrganizationException.class.getName()) ||
-			SessionErrors.contains(
-				renderRequest, PrincipalException.class.getName())) {
-
-			include("/error.jsp", renderRequest, renderResponse);
-		}
-		else {
-			super.doDispatch(renderRequest, renderResponse);
-		}
-	}
-
-	@Override
-	protected boolean isSessionErrorException(Throwable cause) {
-		if (cause instanceof AddressCityException ||
-			cause instanceof AddressStreetException ||
-			cause instanceof AddressZipException ||
-			cause instanceof DuplicateOrganizationException ||
-			cause instanceof EmailAddressException ||
-			cause instanceof MembershipPolicyException ||
-			cause instanceof NoSuchCountryException ||
-			cause instanceof NoSuchListTypeException ||
-			cause instanceof NoSuchRegionException ||
-			cause instanceof OrganizationNameException ||
-			cause instanceof OrganizationParentException ||
-			cause instanceof PhoneNumberException ||
-			cause instanceof RequiredOrganizationException ||
-			cause instanceof WebsiteURLException) {
-
-			return true;
-		}
-
-		return false;
-	}
-
-	protected void updateOrgLabor(ActionRequest actionRequest)
-		throws Exception {
-
+	public void updateOrgLabor(ActionRequest actionRequest) throws Exception {
 		long orgLaborId = ParamUtil.getLong(actionRequest, "orgLaborId");
 
 		long organizationId = ParamUtil.getLong(
@@ -259,6 +215,46 @@ public class UsersAdminPortlet extends MVCPortlet {
 				tueOpen, tueClose, wedOpen, wedClose, thuOpen, thuClose,
 				friOpen, friClose, satOpen, satClose);
 		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchOrganizationException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof AddressCityException ||
+			cause instanceof AddressStreetException ||
+			cause instanceof AddressZipException ||
+			cause instanceof DuplicateOrganizationException ||
+			cause instanceof EmailAddressException ||
+			cause instanceof MembershipPolicyException ||
+			cause instanceof NoSuchCountryException ||
+			cause instanceof NoSuchListTypeException ||
+			cause instanceof NoSuchRegionException ||
+			cause instanceof OrganizationNameException ||
+			cause instanceof OrganizationParentException ||
+			cause instanceof PhoneNumberException ||
+			cause instanceof RequiredOrganizationException ||
+			cause instanceof WebsiteURLException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

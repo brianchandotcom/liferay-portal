@@ -30,7 +30,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.lar.LayoutExporter;
 import com.liferay.portlet.exportimport.lar.LayoutImporter;
 import com.liferay.portlet.exportimport.lar.PortletExporter;

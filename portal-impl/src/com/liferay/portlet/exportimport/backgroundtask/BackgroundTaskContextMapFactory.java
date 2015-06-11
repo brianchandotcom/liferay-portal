@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * @author     Michael C. Han
  * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationSettingsMapFactory}
+ *             com.liferay.portlet.exportimport.configuration.ExportImportConfigurationSettingsMapFactory}
  */
 @Deprecated
 public class BackgroundTaskContextMapFactory {

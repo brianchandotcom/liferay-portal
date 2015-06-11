@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.exportimportconfiguration;
+package com.liferay.portlet.exportimport.configuration;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -79,10 +79,11 @@ public class ExportImportConfigurationFactory {
 
 		Map<String, Serializable> settingsMap =
 			ExportImportConfigurationSettingsMapFactory.buildSettingsMap(
-				user.getUserId(), sourceGroupId, targetGroupId, privateLayout,
-				ExportImportHelperUtil.getAllLayoutIds(
-					sourceGroupId, privateLayout),
-				parameterMap, user.getLocale(), user.getTimeZone());
+					user.getUserId(), sourceGroupId, targetGroupId,
+					privateLayout,
+					ExportImportHelperUtil.getAllLayoutIds(
+							sourceGroupId, privateLayout),
+					parameterMap, user.getLocale(), user.getTimeZone());
 
 		return ExportImportConfigurationLocalServiceUtil.
 			addExportImportConfiguration(

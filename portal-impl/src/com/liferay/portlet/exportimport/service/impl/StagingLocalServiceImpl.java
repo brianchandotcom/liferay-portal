@@ -55,7 +55,7 @@ import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.util.comparator.RepositoryModelTitleComparator;
 import com.liferay.portlet.exportimport.RemoteExportException;
-import com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portlet.exportimport.lar.ExportImportDateUtil;
 import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.portlet.exportimport.lar.MissingReferences;

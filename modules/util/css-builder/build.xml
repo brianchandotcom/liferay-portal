@@ -2,7 +2,5 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="sass-compiler-api,sass-compiler-jni,sass-compiler-ruby" />
-
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 </project>

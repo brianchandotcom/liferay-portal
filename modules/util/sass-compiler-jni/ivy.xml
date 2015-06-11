@@ -17,6 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
+		<dependency name="com.liferay.sass.compiler.api" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="jna" org="net.java.dev.jna" rev="4.1.0" />
 		<dependency name="jnaerator-runtime" org="com.nativelibs4java" rev="0.11">
 			<exclude name="jna-jnaerator" />

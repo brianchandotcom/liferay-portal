@@ -14,84 +14,47 @@
 
 package com.liferay.portlet.usersadmin;
 
+import com.liferay.portal.AddressCityException;
+import com.liferay.portal.AddressStreetException;
+import com.liferay.portal.AddressZipException;
+import com.liferay.portal.DuplicateOrganizationException;
+import com.liferay.portal.EmailAddressException;
+import com.liferay.portal.NoSuchCountryException;
+import com.liferay.portal.NoSuchListTypeException;
+import com.liferay.portal.NoSuchOrganizationException;
+import com.liferay.portal.NoSuchRegionException;
+import com.liferay.portal.OrganizationNameException;
+import com.liferay.portal.OrganizationParentException;
+import com.liferay.portal.PhoneNumberException;
+import com.liferay.portal.RequiredOrganizationException;
+import com.liferay.portal.WebsiteURLException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.membershippolicy.MembershipPolicyException;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserGroupServiceUtil;
+import com.liferay.portal.service.UserServiceUtil;
+
+import java.io.IOException;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 /**
  * @author Pei-Jung Lan
  */
 public class UsersAdminPortlet extends MVCPortlet {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
-
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals("organization_user_groups")) {
-				updateOrganizationUserGroups(actionRequest);
-			}
-			else if (cmd.equals("organization_users")) {
-				updateOrganizationUsers(actionRequest);
-			}
-
-			if (Validator.isNotNull(cmd)) {
-				String redirect = ParamUtil.getString(
-					actionRequest, "assignmentsRedirect");
-
-				sendRedirect(actionRequest, actionResponse, redirect);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof MembershipPolicyException) {
-				SessionErrors.add(actionRequest, e.getClass(), e);
-			}
-			else if (e instanceof NoSuchOrganizationException ||
-					 e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.users_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getOrganization(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrganizationException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.users_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest,
-				"portlet.users_admin.edit_organization_assignments"));
-	}
-
-	public void updateOrganizationUserGroups(ActionRequest actionRequest)
+	public void updateOrganizationUserGroups(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(
@@ -109,9 +72,15 @@ public class UsersAdminPortlet extends MVCPortlet {
 
 		UserGroupServiceUtil.addGroupUserGroups(groupId, addUserGroupIds);
 		UserGroupServiceUtil.unsetGroupUserGroups(groupId, removeUserGroupIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
-	public void updateOrganizationUsers(ActionRequest actionRequest)
+	public void updateOrganizationUsers(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long organizationId = ParamUtil.getLong(
@@ -124,6 +93,51 @@ public class UsersAdminPortlet extends MVCPortlet {
 
 		UserServiceUtil.addOrganizationUsers(organizationId, addUserIds);
 		UserServiceUtil.unsetOrganizationUsers(organizationId, removeUserIds);
+
+		String redirect = ParamUtil.getString(
+			actionRequest, "assignmentsRedirect");
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if (SessionErrors.contains(
+				renderRequest, NoSuchOrganizationException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, PrincipalException.class.getName())) {
+
+			include("/error.jsp", renderRequest, renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof AddressCityException ||
+			cause instanceof AddressStreetException ||
+			cause instanceof AddressZipException ||
+			cause instanceof DuplicateOrganizationException ||
+			cause instanceof EmailAddressException ||
+			cause instanceof MembershipPolicyException ||
+			cause instanceof NoSuchCountryException ||
+			cause instanceof NoSuchListTypeException ||
+			cause instanceof NoSuchRegionException ||
+			cause instanceof OrganizationNameException ||
+			cause instanceof OrganizationParentException ||
+			cause instanceof PhoneNumberException ||
+			cause instanceof RequiredOrganizationException ||
+			cause instanceof WebsiteURLException) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 }

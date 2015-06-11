@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/html/item/selector/init.jsp" %>
 
 <%
 String displayStyle = ParamUtil.getString(request, "displayStyle");

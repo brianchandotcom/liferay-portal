@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.wiki.item.selector.web;
+package com.liferay.wiki.web.item.selector.view;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
 import java.io.IOException;
 
@@ -87,7 +88,7 @@ public class WikiAttachmentItemSelectorView
 			wikiAttachmentItemSelectorCriterion);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-item-selector-web/attachments.jsp");
+			"/o/wiki-web/html/item/selector/attachments.jsp");
 
 		requestDispatcher.include(request, response);
 	}

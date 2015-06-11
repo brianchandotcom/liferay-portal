@@ -84,11 +84,11 @@ public class CSSBuilder {
 			"sass.compiler.class.name");
 
 		try {
-			CSSBuilder CSSBuilder = new CSSBuilder(
+			CSSBuilder cssBuilder = new CSSBuilder(
 				docrootDirName, portalCommonDirName, rtlExcludedPathRegexps,
 				sassCompilerClassName);
 
-			CSSBuilder.execute(dirNames);
+			cssBuilder.execute(dirNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
@@ -237,7 +237,7 @@ public class CSSBuilder {
 	private void _initSassCompiler(String sassCompilerClassName)
 		throws Exception {
 
-		if ((sassCompilerClassName == null) ||
+		if (Validator.isNull(sassCompilerClassName) ||
 			sassCompilerClassName.equals("jni")) {
 
 			try {
@@ -247,12 +247,12 @@ public class CSSBuilder {
 				System.out.println(
 					"Unable to load native compiler, falling back to Ruby");
 
-				_sassCompiler = new RubySassCompiler("jit", 5, _TMP_DIR);
+				_sassCompiler = new RubySassCompiler();
 			}
 		}
 		else {
 			try {
-				_sassCompiler = new RubySassCompiler("jit", 5, _TMP_DIR);
+				_sassCompiler = new RubySassCompiler();
 			}
 			catch (Exception e) {
 				System.out.println(
@@ -434,8 +434,6 @@ public class CSSBuilder {
 	private static final String _CSS_IMPORT_BEGIN = "@import url(";
 
 	private static final String _CSS_IMPORT_END = ");";
-
-	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 
 	private final String _docrootDirName;
 	private final String _portalCommonDirName;

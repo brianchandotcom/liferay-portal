@@ -143,7 +143,7 @@ public class SassFile implements SassFragment {
 			_docrootDirName,
 			CSSBuilderUtil.getCacheFileName(_fileName, StringPool.BLANK));
 
-		_writeFile(ltrCacheFile, getLtrContent());
+		_write(ltrCacheFile, getLtrContent());
 
 		File ltrFile = new File(_docrootDirName, _fileName);
 
@@ -159,12 +159,12 @@ public class SassFile implements SassFragment {
 			_docrootDirName,
 			CSSBuilderUtil.getCacheFileName(rtlFileName, StringPool.BLANK));
 
-		_writeFile(rtlCacheFile, getRtlContent());
+		_write(rtlCacheFile, getRtlContent());
 
 		rtlCacheFile.setLastModified(ltrFile.lastModified());
 	}
 
-	private void _writeFile(File file, String content) throws Exception {
+	private void _write(File file, String content) throws Exception {
 		File parentFile = file.getParentFile();
 
 		if (!parentFile.exists()) {

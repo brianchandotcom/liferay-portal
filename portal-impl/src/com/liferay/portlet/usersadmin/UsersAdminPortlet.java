@@ -21,4 +21,109 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
  */
 public class UsersAdminPortlet extends MVCPortlet {
 
+	@Override
+	public void processAction(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
+		throws Exception {
+
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
+
+		try {
+			if (cmd.equals("organization_user_groups")) {
+				updateOrganizationUserGroups(actionRequest);
+			}
+			else if (cmd.equals("organization_users")) {
+				updateOrganizationUsers(actionRequest);
+			}
+
+			if (Validator.isNotNull(cmd)) {
+				String redirect = ParamUtil.getString(
+					actionRequest, "assignmentsRedirect");
+
+				sendRedirect(actionRequest, actionResponse, redirect);
+			}
+		}
+		catch (Exception e) {
+			if (e instanceof MembershipPolicyException) {
+				SessionErrors.add(actionRequest, e.getClass(), e);
+			}
+			else if (e instanceof NoSuchOrganizationException ||
+					 e instanceof PrincipalException) {
+
+				SessionErrors.add(actionRequest, e.getClass());
+
+				setForward(actionRequest, "portlet.users_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+	}
+
+	@Override
+	public ActionForward render(
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		try {
+			ActionUtil.getOrganization(renderRequest);
+		}
+		catch (Exception e) {
+			if (e instanceof NoSuchOrganizationException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return actionMapping.findForward("portlet.users_admin.error");
+			}
+			else {
+				throw e;
+			}
+		}
+
+		return actionMapping.findForward(
+			getForward(
+				renderRequest,
+				"portlet.users_admin.edit_organization_assignments"));
+	}
+
+	protected void updateOrganizationUserGroups(ActionRequest actionRequest)
+		throws Exception {
+
+		long organizationId = ParamUtil.getLong(
+			actionRequest, "organizationId");
+
+		Organization organization =
+			OrganizationLocalServiceUtil.getOrganization(organizationId);
+
+		long groupId = organization.getGroupId();
+
+		long[] addUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserGroupIds"), 0L);
+		long[] removeUserGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserGroupIds"), 0L);
+
+		UserGroupServiceUtil.addGroupUserGroups(groupId, addUserGroupIds);
+		UserGroupServiceUtil.unsetGroupUserGroups(groupId, removeUserGroupIds);
+	}
+
+	protected void updateOrganizationUsers(ActionRequest actionRequest)
+		throws Exception {
+
+		long organizationId = ParamUtil.getLong(
+			actionRequest, "organizationId");
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		UserServiceUtil.addOrganizationUsers(organizationId, addUserIds);
+		UserServiceUtil.unsetOrganizationUsers(organizationId, removeUserIds);
+	}
+
 }

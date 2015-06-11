@@ -1964,6 +1964,6 @@ class. While not totally equivalent, it offers similar functionality.
 #### Why was this change made?
 
 The `WikiUtil.getEntries()` method was no longer used, and it contained
-hardcoded references to classes that will me moved into OSGi modules.
+hardcoded references to classes that will be moved into OSGi modules.
 
 ---------------------------------------

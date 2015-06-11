@@ -12,11 +12,20 @@
  * details.
  */
 
-package com.liferay.blogs.item.selector.web;
+package com.liferay.blogs.item.selector.web.display.context;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
+import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Roberto Díaz
@@ -38,8 +47,15 @@ public class BlogsItemSelectorViewDisplayContext {
 		return _blogsItemSelectorCriterion;
 	}
 
-	public BlogsItemSelectorView getBlogsItemSelectorView() {
-		return _blogsItemSelectorView;
+	public String getDisplayStyle(HttpServletRequest request) {
+		return ParamUtil.getString(request, "displayStyle");
+	}
+
+	public long getFolderId(long userId, long groupId) throws PortalException {
+		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			userId, groupId);
+
+		return folder.getFolderId();
 	}
 
 	public String getItemSelectedEventName() {
@@ -48,6 +64,10 @@ public class BlogsItemSelectorViewDisplayContext {
 
 	public PortletURL getPortletURL() {
 		return _portletURL;
+	}
+
+	public String getTitle(Locale locale) {
+		return _blogsItemSelectorView.getTitle(locale);
 	}
 
 	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;

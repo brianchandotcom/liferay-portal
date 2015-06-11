@@ -758,9 +758,21 @@ public class JournalArticleIndexer
 						article = latestIndexableArticle;
 					}
 
-					Document document = getDocument(article);
+					try {
+						Document document = getDocument(article);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index article: " +
+									article.getArticleId() + " - " +
+									article.getTitle() + " - " +
+									article.getVersion(),
+								e);
+						}
+					}
 				}
 
 			});

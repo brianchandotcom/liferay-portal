@@ -239,10 +239,21 @@ public class AssetCategoryIndexer extends BaseIndexer {
 
 					AssetCategory category = (AssetCategory)object;
 
-					Document document = getDocument(category);
+					try {
+						Document document = getDocument(category);
 
-					if (document != null) {
-						actionableDynamicQuery.addDocument(document);
+						if (document != null) {
+							actionableDynamicQuery.addDocument(document);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index category: " +
+									category.getCategoryId() + " - " +
+									category.getName(),
+								e);
+						}
 					}
 				}
 

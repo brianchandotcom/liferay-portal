@@ -185,9 +185,20 @@ public class BookmarksFolderIndexer extends BaseIndexer {
 
 					BookmarksFolder folder = (BookmarksFolder)object;
 
-					Document document = getDocument(folder);
+					try {
+						Document document = getDocument(folder);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index bookmark folder: " +
+									folder.getFolderId() + " - " +
+									folder.getName(),
+								e);
+						}
+					}
 				}
 
 			});

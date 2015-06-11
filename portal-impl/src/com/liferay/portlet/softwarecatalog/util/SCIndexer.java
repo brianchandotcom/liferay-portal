@@ -16,6 +16,8 @@ package com.liferay.portlet.softwarecatalog.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -209,9 +211,20 @@ public class SCIndexer extends BaseIndexer {
 
 					SCProductEntry productEntry = (SCProductEntry)object;
 
-					Document document = getDocument(productEntry);
+					try {
+						Document document = getDocument(productEntry);
 
-					actionableDynamicQuery.addDocument(document);
+						actionableDynamicQuery.addDocument(document);
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to product entry: " +
+									productEntry.getProductEntryId() + " - " +
+									productEntry.getName(),
+								e);
+						}
+					}
 				}
 
 			});
@@ -219,5 +232,7 @@ public class SCIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(SCIndexer.class);
 
 }

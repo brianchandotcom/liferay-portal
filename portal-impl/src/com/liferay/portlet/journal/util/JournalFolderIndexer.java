@@ -178,10 +178,21 @@ public class JournalFolderIndexer extends BaseIndexer implements FolderIndexer {
 
 					JournalFolder folder = (JournalFolder)object;
 
-					Document document = getDocument(folder);
+					try {
+						Document document = getDocument(folder);
 
-					if (document != null) {
-						actionableDynamicQuery.addDocument(document);
+						if (document != null) {
+							actionableDynamicQuery.addDocument(document);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index folder: " +
+									folder.getFolderId() + " - " +
+									folder.getName(),
+								e);
+						}
 					}
 				}
 

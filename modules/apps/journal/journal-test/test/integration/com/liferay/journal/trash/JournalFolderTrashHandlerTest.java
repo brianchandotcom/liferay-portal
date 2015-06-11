@@ -34,6 +34,7 @@ import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.After;
@@ -49,7 +50,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -78,13 +80,64 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndDeleteDraft() throws Exception {
+	public void testAddBaseModelWithDraftStatus() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraft() throws Exception {
+	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatus() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatus() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusIsNotVisible()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusRestoreStatus()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusRestoreUniqueTitle()
+		throws Exception {
 	}
 
 	@Ignore()
@@ -108,7 +161,27 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndRestoreIndexable()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore()
@@ -121,6 +194,18 @@ public class JournalFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIsNotVisible() throws Exception {
 	}
 
 	@Override

@@ -51,6 +51,7 @@ import com.liferay.portlet.journal.service.JournalArticleResourceLocalServiceUti
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.util.HashMap;
@@ -70,7 +71,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 @Sync
-public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class JournalArticleTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule

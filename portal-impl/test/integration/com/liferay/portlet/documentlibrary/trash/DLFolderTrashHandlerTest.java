@@ -33,6 +33,7 @@ import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
+import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import org.junit.ClassRule;
@@ -45,7 +46,8 @@ import org.junit.Test;
  * @author Eudaldo Alonso
  */
 @Sync
-public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
+public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase
+	implements WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -57,13 +59,64 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndDeleteDraft() throws Exception {
+	public void testAddBaseModelWithDraftStatus() throws Exception {
 	}
 
 	@Ignore()
 	@Override
 	@Test
-	public void testTrashAndRestoreDraft() throws Exception {
+	public void testAddBaseModelWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testAddBaseModelWithDraftStatusIsNotVisible() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatus() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndDeleteWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatus() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusIsNotVisible()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusRestoreStatus()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashAndRestoreWithDraftStatusRestoreUniqueTitle()
+		throws Exception {
 	}
 
 	@Ignore()
@@ -87,7 +140,27 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore()
 	@Override
 	@Test
+	public void testTrashVersionBaseModelAndDeleteIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
 	public void testTrashVersionBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndRestoreIndexable()
+		throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionBaseModelAndRestoreIsVisible()
+		throws Exception {
 	}
 
 	@Ignore()
@@ -100,6 +173,18 @@ public class DLFolderTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIndexable() throws Exception {
+	}
+
+	@Ignore()
+	@Override
+	@Test
+	public void testTrashVersionParentBaseModelIsNotVisible() throws Exception {
 	}
 
 	@Override

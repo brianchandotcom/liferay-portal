@@ -99,7 +99,7 @@ UserGroupSearch userGroupSearch = new UserGroupSearch(renderRequest, portletURL)
 		/>
 	</liferay-ui:search-container-row>
 
-	<c:if test="<%= !results.isEmpty() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
+	<c:if test="<%= !searchContainer.getResults().isEmpty() && PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_USER_GROUP) %>">
 		<div class="separator"><!-- --></div>
 
 		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteUserGroups();" %>' value="delete" />

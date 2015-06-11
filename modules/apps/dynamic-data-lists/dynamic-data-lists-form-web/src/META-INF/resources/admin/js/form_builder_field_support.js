@@ -177,7 +177,15 @@ AUI.add(
 
 				container.append('<button style="display: none;" type="submit" />');
 
+				container.attr('id', A.guid());
+
 				container.on('submit', A.bind('_onSubmitSettings', instance));
+
+				Liferay.Form.register(
+					{
+						id: container.attr('id')
+					}
+				);
 
 				return new Liferay.DDM.Renderer.Form(
 					{
@@ -235,6 +243,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-field-checkbox', 'liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field']
+		requires: ['liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-options-template', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-field']
 	}
 );

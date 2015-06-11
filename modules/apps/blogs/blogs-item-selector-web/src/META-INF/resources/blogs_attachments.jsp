@@ -17,22 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
-BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (BlogsItemSelectorViewDisplayContext)request.getAttribute(BlogsItemSelectorView.BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
+String displayStyle = ParamUtil.getString(request, "displayStyle");
 
-BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDisplayContext.getBlogsItemSelectorCriterion();
+PortletURL portletURL = (PortletURL)request.getAttribute(BlogsItemSelectorView.PORTLET_URL);
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(), null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
-long folderId = blogsItemSelectorViewDisplayContext.getFolderId(themeDisplay.getUserId(), scopeGroupId);
+BlogsItemSelectorCriterion blogsItemSelectorCriterion = (BlogsItemSelectorCriterion)request.getAttribute(BlogsItemSelectorView.BLOGS_ITEM_SELECTOR_CRITERION);
 
-searchContainer.setTotal(PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folderId));
-searchContainer.setResults(PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folderId));
+Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(userId, groupId);
+
+searchContainer.setTotal(PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId()));
+searchContainer.setResults(PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId()));
 %>
 
 <item-selector-ui:browser
-	displayStyle="<%= blogsItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
-	itemSelectedEventName="<%= blogsItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
+	displayStyle="<%= displayStyle %>"
+	itemSelectedEventName="<%= GetterUtil.getString(request.getAttribute(BlogsItemSelectorView.ITEM_SELECTED_EVENT_NAME)) %>"
 	returnType="<%= ReturnType.parseFirst(blogsItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= searchContainer %>"
-	tabName="<%= blogsItemSelectorViewDisplayContext.getTitle(locale) %>"
+	tabName="blogs-images"
 />

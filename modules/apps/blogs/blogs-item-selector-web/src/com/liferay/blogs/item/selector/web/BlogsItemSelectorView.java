@@ -15,7 +15,6 @@
 package com.liferay.blogs.item.selector.web;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
-import com.liferay.blogs.item.selector.web.display.context.BlogsItemSelectorViewDisplayContext;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -44,8 +43,15 @@ public class BlogsItemSelectorView
 	implements ItemSelectorView
 		<BlogsItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
-	public static final String BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
-		"BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
+	public static final String BLOGS_ITEM_SELECTOR_CRITERION =
+		BlogsItemSelectorView.class.getName() +
+			"#BLOGS_ITEM_SELECTOR_CRITERION";
+
+	public static final String ITEM_SELECTED_EVENT_NAME =
+		BlogsItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
+
+	public static final String PORTLET_URL =
+		BlogsItemSelectorView.class.getName() + "#PORTLET_URL";
 
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -74,15 +80,10 @@ public class BlogsItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		BlogsItemSelectorViewDisplayContext
-			blogsItemSelectorViewDisplayContext =
-				new BlogsItemSelectorViewDisplayContext(
-					blogsItemSelectorCriterion, this, itemSelectedEventName,
-					portletURL);
-
+		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
+		request.setAttribute(PORTLET_URL, portletURL);
 		request.setAttribute(
-			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
-			blogsItemSelectorViewDisplayContext);
+			BLOGS_ITEM_SELECTOR_CRITERION, blogsItemSelectorCriterion);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			"/o/blogs-item-selector-web/blogs_attachments.jsp");

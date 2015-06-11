@@ -106,6 +106,25 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="generate-jdbc-properties">
+		<attribute name="properties.file" />
+		<element name="post-action" optional="true" />
+		<sequential>
+			<get-database-property property.name="database.driver" />
+			<get-database-property property.name="database.password" />
+			<get-database-property property.name="database.url" />
+			<get-database-property property.name="database.username" />
+
+			<echo file="@{properties.file}"><![CDATA[liferay.home=${project.dir}
+jdbc.default.driverClassName=${database.driver}
+jdbc.default.url=${database.url}
+jdbc.default.username=${database.username}
+jdbc.default.password=${database.password}]]></echo>
+
+			<post-action />
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-auto-deploy-dir">
 		<sequential>
 			<var name="auto.deploy.dir" unset="true" />
@@ -1196,6 +1215,23 @@ ${tomcat-gc-log}
 					</antelope:stringutil>
 				 </else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="set-portal-impl-portal-ext-properties">
+		<sequential>
+			<generate-jdbc-properties properties.file="portal-impl/src/portal-ext.properties" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="set-portal-impl-portal-test-ext-properties">
+		<sequential>
+			<generate-jdbc-properties properties.file="portal-impl/test/portal-test-ext.properties">
+				<post-action>
+					<echo file="@{properties.file}" append="true"><![CDATA[
+module.framework.base.dir=${project.dir}/osgi]]></echo>
+				</post-action>
+			</generate-jdbc-properties>
 		</sequential>
 	</macrodef>
 
@@ -5894,30 +5930,11 @@ jdbc.default.password=${database.mysql.password}</echo>
 	</target>
 
 	<target name="set-portal-impl-portal-ext-properties">
-		<get-database-property property.name="database.driver" />
-		<get-database-property property.name="database.password" />
-		<get-database-property property.name="database.url" />
-		<get-database-property property.name="database.username" />
-
-		<echo file="portal-impl/src/portal-ext.properties"><![CDATA[liferay.home=${project.dir}
-jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url}
-jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}]]></echo>
+		<set-portal-impl-portal-ext-properties />
 	</target>
 
 	<target name="set-portal-impl-portal-test-ext-properties">
-		<get-database-property property.name="database.driver" />
-		<get-database-property property.name="database.password" />
-		<get-database-property property.name="database.url" />
-		<get-database-property property.name="database.username" />
-
-		<echo file="portal-impl/test/portal-test-ext.properties"><![CDATA[liferay.home=${project.dir}
-jdbc.default.driverClassName=${database.driver}
-jdbc.default.url=${database.url}
-jdbc.default.username=${database.username}
-jdbc.default.password=${database.password}
-module.framework.base.dir=${project.dir}/osgi]]></echo>
+		<set-portal-impl-portal-test-ext-properties />
 	</target>
 
 	<target name="setup-testable-tomcat">

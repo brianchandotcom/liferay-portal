@@ -12,20 +12,19 @@
  * details.
  */
 
-package com.liferay.wiki.editor.configuration;
+package com.liferay.item.selector.editor.configuration;
 
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
+import com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion;
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.wiki.constants.WikiPortletKeys;
-import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -39,16 +38,8 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Sergio González
  */
-@Component(
-	property = {
-		"javax.portlet.name=" + WikiPortletKeys.WIKI,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_ADMIN,
-		"javax.portlet.name=" + WikiPortletKeys.WIKI_DISPLAY
-	},
-	service = EditorConfigContributor.class
-)
-public class WikiAttachmentEditorConfigContributor
-	extends BaseEditorConfigContributor {
+@Component(service = EditorConfigContributor.class)
+public class ImageEditorConfigContributor extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(
@@ -56,30 +47,15 @@ public class WikiAttachmentEditorConfigContributor
 		ThemeDisplay themeDisplay,
 		LiferayPortletResponse liferayPortletResponse) {
 
-		Map<String, String> fileBrowserParamsMap =
-			(Map<String, String>)inputEditorTaglibAttributes.get(
-				"liferay-ui:input-editor:fileBrowserParams");
-
-		long wikiPageResourcePrimKey = 0;
-
-		if (fileBrowserParamsMap != null) {
-			wikiPageResourcePrimKey = GetterUtil.getLong(
-				fileBrowserParamsMap.get("wikiPageResourcePrimKey"));
-		}
-
-		if (wikiPageResourcePrimKey == 0) {
-			return;
-		}
-
-		ItemSelectorCriterion attachmentItemSelectorCriterion =
-			new WikiAttachmentItemSelectorCriterion(wikiPageResourcePrimKey);
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
 
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
 			new HashSet<>();
 
 		desiredItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
 
-		attachmentItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			desiredItemSelectorReturnTypes);
 
 		String name = GetterUtil.getString(
@@ -87,7 +63,7 @@ public class WikiAttachmentEditorConfigContributor
 
 		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			liferayPortletResponse, name + "selectItem",
-			attachmentItemSelectorCriterion);
+			imageItemSelectorCriterion);
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());

@@ -34,9 +34,5 @@ Map<String,String> fileBrowserParams = new HashMap();
 
 fileBrowserParams.put("attachmentURLPrefix", attachmentURLPrefix);
 
-if ((wikiPage != null) && !wikiPage.isNew()) {
-	fileBrowserParams.put("tabs1Names", "attachments");
-}
-
 fileBrowserParams.put("wikiPageResourcePrimKey", String.valueOf(resourcePrimKey));
 %>

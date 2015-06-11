@@ -26,7 +26,6 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.item.selector.ItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
 page import="com.liferay.item.selector.criteria.DefaultItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.image.criterion.ImageItemSelectorCriterion" %><%@
 page import="com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion" %><%@
 page import="com.liferay.portal.kernel.editor.configuration.EditorOptions" %><%@
 page import="com.liferay.portal.kernel.json.JSONObject" %><%@
@@ -49,8 +48,7 @@ page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.SessionClicks" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
-page import="com.liferay.util.Encryptor" %><%@
-page import="com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion" %>
+page import="com.liferay.util.Encryptor" %>
 
 <%@ page import="java.util.HashSet" %><%@
 page import="java.util.Locale" %><%@

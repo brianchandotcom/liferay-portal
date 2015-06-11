@@ -427,20 +427,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			filebrowserBrowseUrl = '<%= urlItemSelectorURL %>';
 
 			<%
-			String tabs1Names = null;
-
-			if (fileBrowserParamsMap != null) {
-				tabs1Names = fileBrowserParamsMap.get("tabs1Names");
-			}
-
-			ItemSelectorCriterion imageItemSelectorCriterion = null;
-
-			if (Validator.isNotNull(tabs1Names) && tabs1Names.equals("attachments")) {
-				imageItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(GetterUtil.getLong(fileBrowserParamsMap.get("wikiPageResourcePrimKey")));
-			}
-			else {
-				imageItemSelectorCriterion = new ImageItemSelectorCriterion();
-			}
+			ItemSelectorCriterion imageItemSelectorCriterion = new ImageItemSelectorCriterion();
 
 			imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
 

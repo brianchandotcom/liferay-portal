@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `991422f`.*
+*This document has been reviewed through commit `5211d38`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1804,8 +1804,43 @@ The `getQueryString` method was an unnecessary convenience method.
 
 ---------------------------------------
 
+### Removed mbMessages and fileEntryTuples Attributes from app-view-search-entry Tag
+- **Date:** 2015-May-27
+- **JIRA Ticket:** LPS-55886
+
+#### What changed?
+
+The `mbMessages` and `fileEntryTuples` attributes from the
+`app-view-search-entry` tag have been removed. Related methods `getMbMessages`,
+`getFileEntryTuples`, and `addMbMessage` have also been removed from the
+`SearchResult` class.
+
+#### Who is affected?
+
+This affects developers that use the `app-view-search-entry` tag in their views,
+have developed hooks to customize the tag JSP, or have developed a portlet that
+uses that tag. Also, any custom code that uses the `SearchResult` class may be
+affected.
+
+#### How should I update my code?
+
+The new attributes `commentRelatedSearchResults` and
+`fileEntryRelatedSearchResults` should be used instead. The expected value is
+the one returned by the `getCommentRelatedSearchResults` and
+`getFileEntryRelatedSearchResults` methods in `SearchResult`.
+
+When adding comments to the `SearchResult`, the new `addComment` method should
+be used instead of the `addMbMessage` method.
+
+#### Why was this change made?
+
+As part of the modularization efforts, references to `MBMessage` needed to be
+removed for the Message Boards portlet to be placed into its own OSGi bundle.
+
+---------------------------------------
+
 ### Replaced Method getPermissionQuery with getPermissionFilter in SearchPermissionChecker, and getFacetQuery with getFacetBooleanFilter in Indexer
-- **Date:** 2015-Jun-2
+- **Date:** 2015-Jun-02
 - **JIRA Ticket:** LPS-56064
 
 #### What changed?
@@ -1849,15 +1884,15 @@ removed as opposed to deprecated.
 
 ---------------------------------------
 
-### Added userId parameter to `update` operations of DDMStructureLocalService DDMTemplateLocalService services
-- **Date:** 2015-Jun-5
+### Added userId Parameter to Update Operations of DDMStructureLocalService and DDMTemplateLocalService
+- **Date:** 2015-Jun-05
 - **JIRA Ticket:** LPS-50939
 
 #### What changed?
 
-A new parameter `long userId` was added in some of the methods starting with  
-`updateStructure` and `updateTemplate` of DDMStructure and DDMTemplate 
-Local services respectively.
+A new parameter `userId` has been added to the `updateStructure` and
+`updateTemplate` methods of the `DDMStructureLocalService` and
+`DDMTemplateLocalService` classes, respectively.
 
 #### Who is affected?
 
@@ -1866,78 +1901,42 @@ that implements the interface methods.
 
 #### How should I update my code?
 
-Any code calling/implementing 
-`DDMStructureLocalServiceUtil.updateStructure(...)` or 
-`DDMTemplateLocalServiceUtil.updateTemplate(...)` 
-should pass the new userId parameter.
+Any code calling/implementing
+`DDMStructureLocalServiceUtil.updateStructure(...)` or
+`DDMTemplateLocalServiceUtil.updateTemplate(...)` should pass the new `userId`
+parameter.
 
 #### Why was this change made?
 
-In order to add support to structure and template versions, audit columns were
-also added to such models. For the service to keep track which the user is
-modifying the structure or template, the `userId` parameter is required.
+For the service to keep track of which user is modifying the structure or
+template, the `userId` parameter was required. In order to add support to
+structure and template versions, audit columns were also added to such models.
 
 ---------------------------------------
 
-### Removed mbMessages and fileEntryTuples attributes from app-view-search-entry tag
-- **Date:** 2015-May-27
-- **JIRA Ticket:** LPS-55886
-
-#### What changed?
-
-The `mbMessages` and `fileEntryTuples` attributes from the
-`app-view-search-entry` tag have been removed. Related methods
-`getMbMessages`, `getFileEntryTuples`, and `addMbMessage` have been
-removed as well from `SearchResult`.
-
-#### Who is affected?
-
-Any developers that use the `app-view-search-entry` tag in their
-views, or that have developed hooks to customize the taglib JSP or any
-portlet that uses that taglib. Also, any custom code that uses the
-`SearchResult` class may be affected as well.
-
-#### How should I update my code?
-
-The new attributes `commentRelatedSearchResults` and
-`fileEntryRelatedSearchResults` should be used instead. The expected
-value is the one returned by the `getCommentRelatedSearchResults` and
-`getFileEntryRelatedSearchResults` methods in `SearchResult`.
-
-When adding comments to the `SearchResult` the new `addComment` method
-should be used instead of `addMbMessage`.
-
-#### Why was this change made?
-
-As part of the modularization efforts, references to `MBMessage`
-needed to be removed for the Message Boards portlet to be placed into
-its own OSGi bundle.
-
----------------------------------------
-
-### Removed method `getEntries` from `DL`, `DLImpl` and `DLUtil`
+### Removed Method getEntries from DL, DLImpl, and DLUtil Classes
 - **Date:** 2015-Jun-10
 - **JIRA Ticket:** LPS-56247
 
 #### What changed?
 
-The method `getEntries` was removed from `DL`, `DLImpl` and `DLUtil`.
+The method `getEntries` was removed from the `DL`, `DLImpl`, and `DLUtil`
+classes.
 
 #### Who is affected?
 
-Any caller of the `getEntries` method will be affected.
+This affects any caller of the `getEntries` method.
 
 #### How should I update my code?
 
-You may use the `SearchResultUtil` class to process the search
-results. Note that this class is not completely equivalent; if you
-need exactly the same behavior as the removed method, you will need to
-add use some custom code.
+You may use the `SearchResultUtil` class to process the search results. Note
+that this class is not completely equivalent; if you need exactly the same
+behavior as the removed method, you will need to add custom code.
 
 #### Why was this change made?
 
-That method was no longer used, and contained hardcoded references to
-classes that will be moved into OSGi bundles.
+The `getEntries` method was no longer used, and contained hardcoded references
+to classes that will be moved into OSGi bundles.
 
 ---------------------------------------
 ### Removed WikiUtil.getEntries method
@@ -1965,6 +1964,6 @@ class. While not totally equivalent, it offers similar functionality.
 #### Why was this change made?
 
 The `WikiUtil.getEntries()` method was no longer used, and it contained
-hardcoded references to classes that will me moved into OSGi modules.
+hardcoded references to classes that will be moved into OSGi modules.
 
 ---------------------------------------

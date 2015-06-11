@@ -64,7 +64,13 @@
 
 	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
-	var REGEX_LIST_ALPHA = /(upper|lower)-alpha/i;
+	var REGEX_LIST_LOWER_ALPHA = /lower-alpha/i;
+
+	var REGEX_LIST_LOWER_ROMAN = /lower-roman/i;
+
+	var REGEX_LIST_UPPER_ALPHA = /upper-alpha/i;
+
+	var REGEX_LIST_UPPER_ROMAN = /upper-roman/i;
 
 	var REGEX_NEWLINE = /\r?\n/g;
 
@@ -570,8 +576,17 @@
 
 			var listStyleType = element.style.listStyleType;
 
-			if (REGEX_LIST_ALPHA.test(listStyleType)) {
+			if (REGEX_LIST_LOWER_ALPHA.test(listStyleType)) {
 				listTagsIn.push('a]');
+			}
+			else if (REGEX_LIST_LOWER_ROMAN.test(listStyleType)) {
+				listTagsIn.push('i]');
+			} 
+			else if (REGEX_LIST_UPPER_ALPHA.test(listStyleType)) {
+				listTagsIn.push('A]');
+			}
+			else if (REGEX_LIST_UPPER_ROMAN.test(listStyleType)) {
+				listTagsIn.push('I]');
 			}
 			else {
 				listTagsIn.push('1]');

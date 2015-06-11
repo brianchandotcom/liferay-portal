@@ -324,6 +324,7 @@
 		</execute>
 
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
+			<var name="portletNameBorderless" value="Blogs" />
 			<var name="soPage" value="${soPage}" />
 		</execute>
 

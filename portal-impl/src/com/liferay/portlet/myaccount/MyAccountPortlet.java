@@ -15,6 +15,8 @@
 package com.liferay.portlet.myaccount;
 
 import com.liferay.portal.UserPasswordException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -25,12 +27,17 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.pwd.PwdAuthenticator;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.RenderRequestImpl;
 import com.liferay.portlet.usersadmin.UsersAdminPortlet;
 
 import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -87,6 +94,41 @@ public class MyAccountPortlet extends UsersAdminPortlet {
 		}
 
 		super.editUser(actionRequest, actionResponse);
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		if ((renderRequest.getRemoteUser() == null) ||
+			!renderRequest.getWindowState().equals(WindowState.MAXIMIZED)) {
+
+			super.render(renderRequest, renderResponse);
+
+			return;
+		}
+
+		try {
+			User user = PortalUtil.getUser(renderRequest);
+
+			RenderRequestImpl renderRequestImpl =
+				(RenderRequestImpl)renderRequest;
+
+			DynamicServletRequest dynamicRequest =
+				(DynamicServletRequest)
+					renderRequestImpl.getHttpServletRequest();
+
+			dynamicRequest.setParameter(
+				"p_u_i_d", String.valueOf(user.getUserId()));
+
+			include(
+				"/html/portlet/my_account/edit_user.jsp", renderRequest,
+				renderResponse);
+		}
+		catch (PortalException pe) {
+			super.render(renderRequest, renderResponse);
+		}
 	}
 
 	protected boolean redirectToLogin(

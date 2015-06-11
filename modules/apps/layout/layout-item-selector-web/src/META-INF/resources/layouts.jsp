@@ -18,7 +18,7 @@
 
 <%
 String itemSelectedEventName = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_EVENT_NAME);
-URLItemSelectorCriterion urlItemSelectorCriterion = (URLItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
+LayoutItemSelectorCriterion layoutItemSelectorCriterion = (LayoutItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
 
 long groupId = themeDisplay.getScopeGroupId();
 
@@ -206,7 +206,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			<%
 			String itemSelectorReturnTypeName = StringPool.BLANK;
 
-			for (ItemSelectorReturnType desiredItemSelectorReturnType : urlItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
+			for (ItemSelectorReturnType desiredItemSelectorReturnType : layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
 				itemSelectorReturnTypeName = desiredItemSelectorReturnType.getName();
 
 				break;

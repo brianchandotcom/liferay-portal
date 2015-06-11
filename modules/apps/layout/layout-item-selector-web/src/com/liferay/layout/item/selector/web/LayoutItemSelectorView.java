@@ -16,7 +16,7 @@ package com.liferay.layout.item.selector.web;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
-import com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion;
+import com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = ItemSelectorView.class)
 public class LayoutItemSelectorView
 	implements ItemSelectorView
-		<URLItemSelectorCriterion, DefaultItemSelectorReturnType> {
+		<LayoutItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
 	public static final String ITEM_SELECTED_EVENT_NAME =
 		LayoutItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
@@ -54,8 +54,8 @@ public class LayoutItemSelectorView
 		LayoutItemSelectorView.class.getName() + "#PORTLET_URL";
 
 	@Override
-	public Class<URLItemSelectorCriterion> getItemSelectorCriterionClass() {
-		return URLItemSelectorCriterion.class;
+	public Class<LayoutItemSelectorCriterion> getItemSelectorCriterionClass() {
+		return LayoutItemSelectorCriterion.class;
 	}
 
 	@Override
@@ -76,13 +76,13 @@ public class LayoutItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			URLItemSelectorCriterion urlItemSelectorCriterion,
+			LayoutItemSelectorCriterion layoutItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
 		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
 		request.setAttribute(
-			LAYOUT_ITEM_SELECTOR_CRITERION, urlItemSelectorCriterion);
+			LAYOUT_ITEM_SELECTOR_CRITERION, layoutItemSelectorCriterion);
 		request.setAttribute(PORTLET_URL, portletURL);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
@@ -95,7 +95,8 @@ public class LayoutItemSelectorView
 		_supportedItemSelectorReturnTypes = Collections.unmodifiableSet(
 			SetUtil.fromArray(
 				new DefaultItemSelectorReturnType[] {
-					DefaultItemSelectorReturnType.URL
+					DefaultItemSelectorReturnType.URL,
+					DefaultItemSelectorReturnType.UUID
 				}));
 
 }

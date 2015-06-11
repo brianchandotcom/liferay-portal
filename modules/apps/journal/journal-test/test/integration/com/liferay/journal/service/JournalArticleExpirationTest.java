@@ -15,6 +15,7 @@
 package com.liferay.journal.service;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.Sync;
@@ -28,7 +29,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
@@ -127,7 +130,7 @@ public class JournalArticleExpirationTest {
 				WorkflowConstants.ACTION_SAVE_DRAFT);
 		}
 
-		Calendar expirationDateCalendar = getExpirationCalendar(Time.MINUTE, 1);
+		Calendar expirationDateCalendar = getExpirationCalendar(Time.HOUR, 1);
 
 		return JournalArticleLocalServiceUtil.addArticle(
 			TestPropsValues.getUserId(), groupId,
@@ -149,10 +152,17 @@ public class JournalArticleExpirationTest {
 			true, true, false, null, null, null, null, serviceContext);
 	}
 
-	protected Calendar getExpirationCalendar(long timeUnit, int timeValue) {
+	protected Calendar getExpirationCalendar(long timeUnit, int timeValue)
+		throws PortalException {
+
 		Calendar calendar = new GregorianCalendar();
 
-		calendar.setTime(new Date(new Date().getTime() + timeUnit * timeValue));
+		calendar.setTime(
+			new Date(System.currentTimeMillis() + timeUnit * timeValue));
+
+		User user = UserLocalServiceUtil.getUser(TestPropsValues.getUserId());
+
+		calendar.setTimeZone(user.getTimeZone());
 
 		return calendar;
 	}
@@ -164,20 +174,18 @@ public class JournalArticleExpirationTest {
 
 		JournalArticle article = addArticle(_group.getGroupId(), approved);
 
-		Date originalExpirationDate = article.getExpirationDate();
-
 		// Add a version of the article, changing expire date
 
 		article = updateArticle(article, mode);
 
-		// Wait until the original article expire date passes
-
-		long waitTime = originalExpirationDate.getTime() - new Date().getTime();
-
-		Thread.sleep(waitTime);
+		Date expirationDate = article.getExpirationDate();
 
 		// Simulate automatic expiration
 
+		article.setExpirationDate(
+			new Date(expirationDate.getTime() - (Time.HOUR * 2)));
+
+		JournalArticleLocalServiceUtil.updateJournalArticle(article);
 		JournalArticleLocalServiceUtil.checkArticles();
 
 		article = JournalArticleLocalServiceUtil.getArticle(article.getId());
@@ -227,7 +235,7 @@ public class JournalArticleExpirationTest {
 				expirationDateCalendar.get(Calendar.DAY_OF_MONTH),
 				expirationDateCalendar.get(Calendar.YEAR),
 				expirationDateCalendar.get(Calendar.HOUR_OF_DAY),
-				expirationDateCalendar.get(Calendar.MINUTE), true, 0, 0, 0, 0,
+				expirationDateCalendar.get(Calendar.MINUTE), false, 0, 0, 0, 0,
 				0, true, article.getIndexable(), article.isSmallImage(),
 				article.getSmallImageURL(), null, null, null, serviceContext);
 		}

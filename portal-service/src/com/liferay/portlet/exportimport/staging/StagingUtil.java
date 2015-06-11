@@ -370,7 +370,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             )}
 	 */
 	@Deprecated
@@ -380,7 +380,7 @@ public class StagingUtil {
 
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             com.liferay.portlet.exportimport.exportimportconfiguration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
+	 *             com.liferay.portlet.exportimport.configuration.ExportImportConfigurationParameterMapFactory#buildParameterMap(
 	 *             PortletRequest)}
 	 */
 	@Deprecated

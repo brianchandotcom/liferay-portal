@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.exportimport.exportimportconfiguration;
+package com.liferay.portlet.exportimport.configuration;
 
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;

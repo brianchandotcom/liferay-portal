@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -753,13 +752,11 @@ public class CustomSQL {
 	protected void read(ClassLoader classLoader, String source)
 		throws Exception {
 
-		InputStream is = classLoader.getResourceAsStream(source);
+		try (InputStream is = classLoader.getResourceAsStream(source)) {
+			if (is == null) {
+				return;
+			}
 
-		if (is == null) {
-			return;
-		}
-
-		try {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Loading " + source);
 			}
@@ -783,9 +780,6 @@ public class CustomSQL {
 					_sqlPool.put(id, content);
 				}
 			}
-		}
-		finally {
-			StreamUtil.cleanUp(is);
 		}
 	}
 

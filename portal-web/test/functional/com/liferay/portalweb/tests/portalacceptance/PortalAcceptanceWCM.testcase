@@ -1,0 +1,3333 @@
+<definition component-name="portal-wcm">
+	<property name="testray.main.component.name" value="Web Content Administration" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<command name="AddCategory" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="AddChildSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewChildCP">
+			<var name="childSiteName" value="Child SiteName" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="AddFolder" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentFolder#addCP">
+			<var name="folderDescription" value="WC Folder Description" />
+			<var name="folderName" value="WC Folder Name" />
+		</execute>
+	</command>
+
+	<command name="AddMember" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command name="AddMembersSiteUser" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#viewMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51156" name="AddPageTemplate" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+	</command>
+
+	<command name="AddRSSADTViaPortletConfiguration" priority="3">
+		<var name="siteName" value="Test Site Name" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="ADT Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="RSS" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="RSS" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addManualViaRSS">
+			<var name="siteName" value="Test Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="RSS" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="RSS#viewCustomADT">
+			<var name="feedContentTitle" value="Liferay Blogs - General NYT > Technology" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51696" name="AddSelectTagViaBlogs" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#addTagsCP">
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#addSelectTagMultipleViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag name 1,tag name 3" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="AddSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="AddSitePageTemplate" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="pageTemplateName" value="Page Template Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitePage#viewPageTemplatePG" >
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+	</command>
+
+	<command name="AddSitePublicChildPage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="siteChildPageName" value="Site Child Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="SitePage#viewChildPG">
+			<var name="childPageCount" value="1" />
+			<var name="pageName" value="Site Page" />
+			<var name="siteChildPageName" value="Site Child Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-child-page" />
+			<var name="siteURL" value="true" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51696" name="AddSitePublicPage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="SitePage#viewPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageURL" value="http://localhost:8080/web/site-name/site-page" />
+			<var name="siteURL" value="true" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="AddSiteTeam" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="AddSiteTeams" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team1 Description" />
+			<var name="teamName" value="Site Team1 Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team2 Description" />
+			<var name="teamName" value="Site Team2 Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team3 Description" />
+			<var name="teamName" value="Site Team3 Name" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamDescription" value="Site Team1 Description" />
+			<var name="teamName" value="Site Team1 Name" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamDescription" value="Site Team2 Description" />
+			<var name="teamName" value="Site Team2 Name" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamDescription" value="Site Team3 Description" />
+			<var name="teamName" value="Site Team3 Name" />
+		</execute>
+	</command>
+
+	<command name="AddSiteTemplate" priority="5">
+		<var name="siteTemplateActive" value="Yes" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="AddSubcategory" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#viewCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51696" name="AddTagViaBlogs" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="Tag#addViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55977" name="AddTemplateWithStructure" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="WebContentStructures#addCP">
+			<var name="structureDescription" value="WC Structure Description" />
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="DynamicDataMapping#addField">
+			<var name="field" value="Text" />
+			<var name="fieldFieldLabel" value="Text" />
+			<var name="fieldName" value="Text" />
+		</execute>
+
+		<execute macro="WebContentStructures#saveCP">
+			<var name="structureName" value="WC Structure Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#addCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateFieldNames" value="Text" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentTemplates#viewCP">
+			<var name="structureName" value="WC Structure Name" />
+			<var name="templateDescription" value="WC Template Description" />
+			<var name="templateLanguage" value="ftl" />
+			<var name="templateName" value="WC Template Name" />
+			<var name="templateScript"><![CDATA[${Text.getData()}]]></var>
+		</execute>
+	</command>
+
+	<command name="AddVocabulary" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Vocabulary#viewCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command name="AddWCWithTranslation" priority="5">
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Test Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC Content" />
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="WebContent#addTranslation">
+			<var name="localizedContent" value="WC Contenido" />
+			<var name="localizedLanguage" value="Spanish (Spain)" />
+			<var name="localizedTitle" value="WC Titulo" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="LanguagePortlet#selectLanguagePG">
+			<var name="language" value="Spanish (Spain)" />
+		</execute>
+
+		<execute function="Refresh" />
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC Contenido" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditPGViaWCD" />
+
+		<execute macro="WebContent#viewTranslationPGViaWCD">
+			<var name="localizedTitle" value="WC Titulo" />
+			<var name="webContentTranslationLanguage" value="español (España)" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51687" name="AddWebContent" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command name="AddWebContentViaWCD" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContent#addPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="ADTBreadcrumb" priority="3">
+		<var name="siteName" value="Test Site Name" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="ADT Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewADTApplied">
+			<var name="breadcrumbADTType" value="horizontal" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletNameBorderless" value="Breadcrumb" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="selectADTType" value="Arrows" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="Test Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewADTApplied">
+			<var name="breadcrumbADTType" value="arrows" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="ADTCategoriesNavigation" priority="3">
+		<var name="siteName" value="Test Site Name" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="ADT Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Categories Navigation" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addPG">
+			<var name="adtFile" value="adt_categories_navigation_multi_column.ftl" />
+			<var name="adtType" value="Categories Navigation" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CategoriesNavigationPortlet#viewDefaultPG">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="Categories Navigation" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CategoriesNavigationPortlet#viewCustomADTMultiColumnPG">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="CategoriesNavigationPortlet#viewCustomADTMultiColumnPG">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51696" name="ADTTagsNavigationPortlet" priority="3">
+		<var name="siteName" value="Test Site Name" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="${siteName}" />
+			<var name="sitePageName" value="ADT Test Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#activateStagingCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Tags Navigation" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag name 2,tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewDefaultPG">
+			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addPG">
+			<var name="adtFile" value="adt_tags_color.ftl" />
+			<var name="adtType" value="Tags Navigation" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="ApplicationDisplayTemplates#addADTviaPortletPG">
+			<var name="adtType" value="Tags Navigation" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewADTColorByPopularityPG">
+			<var name="adtTagColor" value="green" />
+			<var name="tagName" value="tag name 1" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewADTColorByPopularityPG">
+			<var name="adtTagColor" value="orange" />
+			<var name="tagName" value="tag name 2" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="pageStaging" value="true" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Staging#gotoPublishToLive" />
+
+		<execute macro="Staging#publishToLive" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="ADT Test Page" />
+			<var name="siteName" value="${siteName}" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewADTColorByPopularityPG">
+			<var name="adtTagColor" value="red" />
+			<var name="tagName" value="tag name 3" />
+		</execute>
+	</command>
+
+	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
+		<var name="globalSiteName" value="Global" />
+		<var name="pageName" value="Asset Publisher Page" />
+		<var name="portletName" value="Asset Publisher" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent1 Content" />
+			<var name="webContentTitle" value="WC WebContent1 Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent1 Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Global" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Global Content" />
+			<var name="webContentTitle" value="WC WebContent Global Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Global Title" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Site Content" />
+			<var name="webContentTitle" value="WC WebContent Site Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Site Title" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureAddSiteScopes">
+			<var name="addGlobalSite" value="true" />
+			<var name="addOtherSite" value="true" />
+			<var name="globalSite" value="Global" />
+			<var name="otherSiteName" value="Liferay" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteNameHidden" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent1 Content" />
+			<var name="assetTitle" value="WC WebContent1 Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Global Content" />
+			<var name="assetTitle" value="WC WebContent Global Title" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewAssetPG">
+			<var name="assetContent" value="WC WebContent Site Content" />
+			<var name="assetTitle" value="WC WebContent Site Title" />
+		</execute>
+	</command>
+
+	<command name="AssignMembersSiteTeamUser" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#assignMembersCP">
+			<var name="siteName" value="Site Name" />
+			<var name="teamName" value="Site Team Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#viewMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="teamName" value="Site Team Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Language Test Page" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="currentPortalLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+			<var name="defaultSiteLanguage" value="Spanish (Spain)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#configureCurrentLanguagesCP">
+			<var name="currentPortalLanguages" value="Arabic (Saudi Arabia),Czech (Czech Republic),French (France)" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Language Test Page" />
+		</execute>
+
+		<execute macro="Page#viewPageLocalization">
+			<var name="defaultSiteLanguageKey" value="es_ES" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+		</execute>
+
+		<execute macro="Site#viewCurrentLanguagesCP">
+			<var name="availableSiteLanguages" value="Arabic (Saudi Arabia),Czech (Czech Republic),French (France)" />
+			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+			<var name="defaultSiteLanguage" value="English (United States)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+	</command>
+
+	<command name="ConfigureAPPortletDisplayPage" priority="5">
+		<var name="portletName" value="Asset Publisher" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureDisplayPagePG" />
+	</command>
+
+	<command name="ConfigureAPPortletSelectedWebContent" priority="5">
+		<var name="portletName" value="Asset Publisher" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#configureSelectedPG">
+			<var name="selectedAsset" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Asset Publisher Page" />
+		</execute>
+
+		<execute macro="AssetPublisherPortlet#viewSelectedPG">
+			<var name="selectedAsset" value="Basic Web Content" />
+			<var name="selectedAssetConfiguration" value="Web Content Article" />
+		</execute>
+	</command>
+
+	<command name="DeleteCategory" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#deleteByActionsCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51156" name="DeletePageTemplate" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#deleteCP">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#viewDefaultCP">
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="DeleteSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#deleteCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="DeleteSitePages" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<for list="Site Page 1,Site Page 2,Site Page 3" param="sitePageName">
+			<execute macro="Page#gotoCP">
+				<var name="portletName" value="Sites" />
+			</execute>
+
+			<execute macro="SitePage#addCP">
+				<var name="siteName" value="Site Name" />
+				<var name="sitePageName" value="${sitePageName}" />
+				<var name="sitePagePrivacy" value="Public" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitePage#deleteSitepagesCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="${sitePageName2}" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="DeleteSiteTeam" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#deleteCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#viewDefaultCP">
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+	</command>
+
+	<command name="DeleteSiteTemplate" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#deleteCP">
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewDefaultCP">
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteSubcategoryViaArrow" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#deleteViaArrowCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command name="DeleteVocabulary" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+
+		<execute macro="Vocabulary#deleteByActionsCP">
+			<var name="vocabularyName" value="${vocabularyName}" />
+		</execute>
+	</command>
+
+	<command name="DeleteWebcontent" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#deleteCP">
+			<var name="assetName" value="WC WebContent Title" />
+			<var name="assetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#viewDefaultCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55813" name="DisableShowCurrentSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Parent Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="siteChildPageName" value="Child Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Parent Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Site Name,Parent Page Name,Child Page Name" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="uncheckSetupName" value="Show Current Site" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Parent Page Name,Child Page Name" />
+		</execute>
+
+		<execute macro="Breadcrumb#saveDisplayPreview" />
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Parent Page Name,Child Page Name" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListNotVisible" value="Site Name" />
+			<var name="breadcrumbListVisible" value="Parent Page Name,Child Page Name" />
+			<var name="pathLocator" value="PAGE" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkSetupName" value="Show Current Site" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Site Name,Parent Page Name,Child Page Name" />
+		</execute>
+
+		<execute macro="Breadcrumb#saveDisplayPreview" />
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Parent Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListVisible" value="Site Name,Parent Page Name,Child Page Name" />
+			<var name="pathLocator" value="PAGE" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55813" name="DisableShowPage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addChildCP">
+			<var name="siteChildPageName" value="Child Page Name" />
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="Welcome" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Breadcrumb" />
+		</execute>
+
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Welcome,Child Page Name" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="checkSetupName" value="Show Guest Site" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Liferay,Welcome,Child Page Name" />
+		</execute>
+
+		<execute macro="Breadcrumb#configureBreadcrumb">
+			<var name="uncheckSetupName" value="Show Page" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewConfigurationPreview">
+			<var name="breadcrumbListVisible" value="Liferay" />
+		</execute>
+
+		<execute macro="Breadcrumb#saveDisplayPreview" />
+
+		<execute macro="Page#gotoChildPagePG">
+			<var name="childPageName" value="Child Page Name" />
+			<var name="pageName" value="Welcome" />
+		</execute>
+
+		<execute macro="Breadcrumb#viewPG">
+			<var name="breadcrumbListNotVisible" value="Welcome,Child Page Name" />
+			<var name="breadcrumbListVisible" value="Liferay" />
+			<var name="pathLocator" value="PAGE" />
+		</execute>
+	</command>
+
+	<command name="DisplayStyleOptions" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sites Directory" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName 1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Child SiteName 1" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName 2" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Child SiteName 2" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="parentSiteName" value="Site Name" />
+			<var name="siteName" value="Child SiteName 3" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Child SiteName 3" />
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewDefaultConfigurationPG" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewDescriptivePG">
+			<var name="siteName" value="Liferay" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewDescriptivePG">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="SitesDirectory#configureSetupPG">
+			<var name="directorySites" value="Parent Level" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="PGSitesdirectory#INFO_MESSAGE" value1="No sites were found." />
+
+		<execute macro="SitesDirectory#configureSetupPG">
+			<var name="directoryDisplayStyle" value="List Hierarchy" />
+			<var name="directorySites" value="Top Level" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="SitesDirectory#viewListHierarchyPG">
+			<var name="availableSiteName" value="Liferay" />
+			<var name="childSiteName1" value="Child SiteName 1" />
+			<var name="childSiteName2" value="Child SiteName 2" />
+			<var name="childSiteName3" value="Child SiteName 3" />
+			<var name="currentSiteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55859" name="DisplayTagCloud" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Tags Navigation" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
+			<var name="showAssetCount" value="true" />
+			<var name="showUnusedTags" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#configureDisplayStylePG">
+			<var name="displayTemplate" value="Cloud" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addTagsCP">
+			<var name="tagName1" value="first tag" />
+			<var name="tagName2" value="second tag" />
+			<var name="tagName3" value="third tag" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="first tag,second tag" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="tagNameList" value="first tag" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="first tag (2)" />
+			<var name="tagPopularityLevel" value="6" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="second tag (1)" />
+			<var name="tagPopularityLevel" value="3" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="third tag (0)" />
+			<var name="tagPopularityLevel" value="1" />
+		</execute>
+	</command>
+
+	<command name="EditCategory" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Category#editCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="categoryNameEdit" value="Category Name Edit" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command name="EditPageTemplate" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Page Templates" />
+		</execute>
+
+		<execute macro="PageTemplate#addCP">
+			<var name="pageTemplateActive" value="Yes" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+
+		<execute macro="PageTemplate#editCP">
+			<var name="pageTemplateActive" value="No" />
+			<var name="pageTemplateName" value="Page Template Name" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="EditSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#editCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteNameEdit" value="Site Name Edit" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#viewCP">
+			<var name="siteName" value="Site Name Edit" />
+		</execute>
+	</command>
+
+	<command name="EditSitePage" priority="4">
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePagePrivacy" value="Public" />
+			<var name="siteScopeSelected" value="Liferay" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#editCP">
+			<var name="sitePageName" value="Site Page" />
+			<var name="sitePageNameEdit" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPagesCP" >
+			<var name="portletName" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePage#gotoCP">
+			<var name="sitePageName" value="Site Page Edit" />
+		</execute>
+
+		<execute macro="SitePage#viewCP">
+			<var name="sitePageName" value="Site Page Edit" />
+		</execute>
+	</command>
+
+	<command name="EditSiteTeam" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Teams" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Team#addCP">
+			<var name="teamDescription" value="Site Team Description" />
+			<var name="teamName" value="Site Team Name" />
+		</execute>
+
+		<execute macro="Team#editCP">
+			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
+			<var name="teamNameEdit" value="Site Team Name Edit" />
+		</execute>
+
+		<execute macro="Team#viewCP">
+			<var name="teamDescription" value="Site Team Description Edit" />
+			<var name="teamName" value="Site Team Name Edit" />
+		</execute>
+	</command>
+
+	<command name="EditSiteTemplateStatus" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addSiteTemplateCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#editTemplateStatusCP">
+			<var name="siteTemplateActiveEdit" value="No" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewTemplateStatusCP">
+			<var name="siteTemplateActiveEdit" value="No" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+	</command>
+
+	<command name="EditSubcategory" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Category#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#addCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Subcategory#editCP">
+			<var name="categoryName" value="Category Name" />
+			<var name="subcategoryName" value="Subcategory Name" />
+			<var name="subcategoryNameEdit" value="Subcategory Name Edit" />
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+	</command>
+
+	<command name="EditTag" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+
+		<execute macro="Tag#editCP">
+			<var name="tagName" value="tag name" />
+		</execute>
+	</command>
+
+	<command name="EditVocabulary" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Categories" />
+		</execute>
+
+		<execute macro="Vocabulary#addCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+		</execute>
+
+		<execute macro="Vocabulary#editCP">
+			<var name="vocabularyName" value="Vocabulary Name" />
+			<var name="vocabularyNameEdit" value="Vocabulary Name Edit" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51687" name="EditWebContent" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#editCP">
+			<var name="webContentContentEdit" value="WC WebContent Content Edit" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+			<var name="webContentTitleEdit" value="WC WebContent Title Edit" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title Edit" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="WC WebContent Content Edit" />
+			<var name="webContentTitle" value="WC WebContent Title Edit" />
+		</execute>
+	</command>
+
+	<command name="JoinSiteOpen" priority="5">
+		<var name="password" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+	</command>
+
+	<command name="JoinSitePrivateNo" priority="5">
+		<var name="membershipType" value="Private" />
+		<var name="password" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="membershipType" value="Private" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+	</command>
+
+	<command name="JoinSiteRestricted" priority="5">
+		<var name="membershipType" value="Restricted" />
+		<var name="password" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="membershipType" value="${membershipType}" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Site#approveJoinSiteRestrictedViaMySitesPG">
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#viewMySitesViaMySitesPG">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+	</command>
+
+	<command name="LeaveSite" priority="5">
+		<var name="password" value="test" />
+		<var name="siteName" value="Site Name" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" >
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#joinViaMySitesPG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="Page#gotoMyDashboard" />
+
+		<execute macro="Site#leaveViaMySitesPG">
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="${password}" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+	</command>
+
+	<command name="OrganizationsView" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addSiteCP">
+			<var name="orgName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="allowManualMembershipManagement" value="true" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addMemberCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#manageMembershipOptionsInSites">
+			<var name="allowManualMembershipManagement" value="true" />
+			<var name="orgName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Organization Name 1" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="CPSitememberships#USER_TABLE_LABEL" value1="1 User" />
+
+		<execute macro="Site#viewMemberOrganizationCP">
+			<var name="orgName" value="Organization Name 1" />
+			<var name="toolTip" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name 2" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="Organization#addCP">
+			<var name="orgName" value="Organization Name 3" />
+			<var name="orgType" value="Regular Organization" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteScopeName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Site#addMemberOrganizationCP">
+			<var name="orgName" value="Organization Name 2" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Site#viewMemberOrganizationCP">
+			<var name="orgName" value="Organization Name 2" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Site#addMemberOrganizationCP">
+			<var name="orgName" value="Organization Name 3" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Organization Name 1" />
+		</execute>
+
+		<execute macro="Site#viewMemberOrganizationCP">
+			<var name="orgName" value="Organization Name 3" />
+		</execute>
+	</command>
+
+	<command name="RemoveMember" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#addMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoUsersCP">
+			<var name="portletName" value="Site Memberships" />
+			<var name="siteScopeName" value="Site Name" />
+		</execute>
+
+		<execute macro="Site#removeMemberCP">
+			<var name="siteName" value="Site Name" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51696" name="RemoveTagViaBlogs" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Tag#addMultipleViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#viewMultipleViaBlogsPG">
+			<var name="entryContent" value="Entry Content" />
+			<var name="entryTitle" value="Entry Title" />
+			<var name="tagNameList" value="tag name 1,tag name 2,tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Tag#removeTagViaBlogsPG">
+			<var name="entryTitle" value="Entry Title" />
+			<var name="pageName" value="Page Name" />
+			<var name="tagName1" value="tag name 1" />
+		</execute>
+	</command>
+
+	<command name="RemoveWCDPortletSite" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-51687" name="RestoreWebcontent" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#moveToRecycleBinCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#restoreCP">
+			<var name="assetName" value="WC WebContent Title" />
+			<var name="assetRestoreLocation" value="Home" />
+			<var name="assetType" value="Web Content Article" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-55978" name="SearchSite" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#searchCP">
+			<var name="siteName" value="Site Name" />
+		</execute>
+	</command>
+
+	<command name="SearchTag" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name 1" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name 2" />
+		</execute>
+
+		<execute macro="Tag#addCP">
+			<var name="tagName" value="tag name 3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#searchTagCP">
+			<var name="tagName1" value="tag name 1" />
+			<var name="tagName2" value="tag name 2" />
+			<var name="tagName3" value="tag name 3" />
+		</execute>
+	</command>
+
+	<command name="SearchWebContent" priority="4">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#searchCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentFolder" value="Home" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContent#searchNoResultsCP">
+			<var name="searchQuery" value="WC2 WebContent2 Title2" />
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentFolder" value="Home" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+	</command>
+
+	<command name="SelectWebContent" priority="5">
+		<var name="pageName" value="Web Content Display Page" />
+		<var name="portletName" value="Web Content Display" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addCP">
+			<var name="webContentContent" value="WC WebContent Content" />
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#publish" />
+
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="WebContentDisplayPortlet#selectWebContent">
+			<var name="webContentTitle" value="WC WebContent Title" />
+		</execute>
+
+		<execute macro="WebContent#viewPGViaWCD">
+			<var name="webContentContent" value="WC WebContent Content" />
+		</execute>
+	</command>
+
+	<command name="SiteTemplateLocalization" priority="5">
+		<property name="web.plugins.includes" value="kaleo-web" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#addCP">
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Site Templates" />
+		</execute>
+
+		<execute macro="SiteTemplates#viewNoSiteOrWorkflowLinksCP">
+			<var name="currentPortalLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+			<var name="portletCategoryName" value="Configuration" />
+			<var name="portletCategoryName2" value="Users" />
+			<var name="portletNames" value="Site Settings,Social Activities,Workflow Configuration" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="portletNames" value="Site Settings,Social Activities,Workflow Configuration" />
+			<var name="siteName" value="Site Name from Template" />
+			<var name="siteTemplateActive" value="Yes" />
+			<var name="siteTemplateName" value="Site Template Name" />
+			<var name="siteType" value="Site Template" />
+			<var name="uncheckPropagation" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name from Template" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="English (United States),German (Germany),Spanish (Spain)" />
+			<var name="defaultSiteLanguage" value="Spanish (Spain)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name from Template" />
+		</execute>
+
+		<execute macro="Site#viewSiteClonedFromSiteTemplateCP">
+			<var name="clonedFromTemplate" value="true" />
+			<var name="siteTemplateName" value="Site Template Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Site Name not from Template" />
+		</execute>
+
+		<execute macro="Page#gotoConfigurationCP">
+			<var name="portletName" value="Site Settings" />
+			<var name="siteScopeName" value="Site Name not from Template" />
+		</execute>
+
+		<execute macro="Site#viewSiteClonedFromSiteTemplateCP">
+			<var name="clonedFromTemplate" value="false" />
+		</execute>
+	</command>
+
+	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#viewDefaultLanguageCP">
+			<var name="defaultPortalLanguage" value="English (United States)" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="siteType" value="Blank" />
+		</execute>
+
+		<execute macro="Site#configureCurrentLanguagesCP">
+			<var name="currentSiteLanguages" value="Portuguese (Brazil),Spanish (Spain)" />
+			<var name="defaultSiteLanguage" value="Spanish (Spain)" />
+			<var name="displaySettings" value="Display Settings" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Site Name" />
+			<var name="sitePageName" value="Site Page Name" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Site Page Name" />
+			<var name="siteName" value="Site Name" />
+			<var name="siteURL" value="true" />
+		</execute>
+
+		<execute macro="Page#viewFriendlyURLLanguageOptionsPG">
+			<var name="assertUnavailableLanguages" value="true" />
+			<var name="currentLanguageList" value="DETAILS_FRIENDLY_URL_PORTUGUESE_BRAZIL,DETAILS_FRIENDLY_URL_SPANISH_SPAIN" />
+			<var name="unavailableLanguageList" value="DETAILS_FRIENDLY_URL_ENGLISH_UNITED_STATES" />
+		</execute>
+	</command>
+
+	<command name="ViewTagCloudDisplayConfiguration" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Tag Cloud Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tag Cloud Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Tag Cloud" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tag Cloud Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloudConfiguration">
+			<var name="displayTemplate" value="Cloud" />
+		</execute>
+	</command>
+
+	<command known-issues="LPS-54823" name="ViewTagCloudIncrease" priority="5">
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Tags Navigation" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#configureFlaggableSettingsPG">
+			<var name="showAssetCount" value="true" />
+			<var name="showUnusedTags" value="true" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#configureDisplayStylePG">
+			<var name="displayTemplate" value="Cloud" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Asset Publisher" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Tags" />
+		</execute>
+
+		<execute macro="Tag#addTagsCP">
+			<var name="tagName1" value="first tag" />
+			<var name="tagName2" value="second tag" />
+			<var name="tagName3" value="third tag" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="first tag,second tag" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentFile" value="Document_1.txt" />
+			<var name="dmDocumentSize" value="0KB" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="tagNameList" value="first tag" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="first tag (2)" />
+			<var name="tagPopularityLevel" value="6" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="second tag (1)" />
+			<var name="tagPopularityLevel" value="3" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithTagCP">
+			<var name="tagNameList" value="first tag,second tag" />
+			<var name="webContentContent" value="Web Content2 Content" />
+			<var name="webContentTitle" value="Web Content2 Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Tags Navigation Page" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="first tag (3)" />
+			<var name="tagPopularityLevel" value="6" />
+		</execute>
+
+		<execute macro="TagsNavigationPortlet#viewTagCloud">
+			<var name="tagName" value="second tag (2)" />
+			<var name="tagPopularityLevel" value="4" />
+		</execute>
+	</command>
+</definition>

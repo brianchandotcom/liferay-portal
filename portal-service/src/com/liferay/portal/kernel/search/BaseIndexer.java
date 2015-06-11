@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.filter.QueryFilter;
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.search.hits.HitsProcessor;
 import com.liferay.portal.kernel.search.hits.HitsProcessorRegistryUtil;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -1417,7 +1418,15 @@ public abstract class BaseIndexer implements Indexer {
 
 		searchContext.setSearchEngineId(getSearchEngineId());
 
-		BooleanQuery fullQuery = getFullQuery(searchContext);
+		Query fullQuery = getFullQuery(searchContext);
+
+		if (!fullQuery.hasChildren()) {
+			BooleanFilter preBooleanFilter = fullQuery.getPreBooleanFilter();
+
+			fullQuery = new MatchAllQuery();
+
+			fullQuery.setPreBooleanFilter(preBooleanFilter);
+		}
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();
 

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
@@ -206,8 +207,16 @@ public class FacetedSearcher extends BaseSearcher {
 			queryBooleanFilter.addRequiredTerm(
 				Field.COMPANY_ID, searchContext.getCompanyId());
 
-			BooleanQuery fullQuery = createFullQuery(
-				queryBooleanFilter, searchContext);
+			Query fullQuery = getFullQuery(searchContext);
+
+			if (!fullQuery.hasChildren()) {
+				BooleanFilter preBooleanFilter =
+					fullQuery.getPreBooleanFilter();
+
+				fullQuery = new MatchAllQuery();
+
+				fullQuery.setPreBooleanFilter(preBooleanFilter);
+			}
 
 			QueryConfig queryConfig = searchContext.getQueryConfig();
 

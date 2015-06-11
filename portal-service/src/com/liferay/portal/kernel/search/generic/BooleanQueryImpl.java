@@ -418,6 +418,11 @@ public class BooleanQueryImpl extends BaseBooleanQueryImpl {
 	}
 
 	@Override
+	public boolean hasChildren() {
+		return hasClauses();
+	}
+
+	@Override
 	public boolean hasClauses() {
 		return !_booleanClauses.isEmpty();
 	}

@@ -40,6 +40,8 @@ public interface Query extends Serializable {
 	@Deprecated
 	public Object getWrappedQuery();
 
+	public boolean hasChildren();
+
 	public boolean isDefaultBoost();
 
 	public void setBoost(float boost);

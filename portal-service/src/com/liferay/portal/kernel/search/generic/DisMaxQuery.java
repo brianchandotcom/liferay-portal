@@ -44,6 +44,11 @@ public class DisMaxQuery extends BaseQueryImpl {
 		return _tieBreaker;
 	}
 
+	@Override
+	public boolean hasChildren() {
+		return !isEmpty();
+	}
+
 	public boolean isEmpty() {
 		return _queries.isEmpty();
 	}

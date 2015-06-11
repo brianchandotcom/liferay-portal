@@ -36,8 +36,8 @@ public class MatchQuery extends BaseQueryImpl {
 		return _analyzer;
 	}
 
-	public Float getCutOffRequency() {
-		return _cutOffRequency;
+	public Float getCutOffFrequency() {
+		return _cutOffFrequency;
 	}
 
 	public String getField() {
@@ -100,8 +100,8 @@ public class MatchQuery extends BaseQueryImpl {
 		_analyzer = analyzer;
 	}
 
-	public void setCutOffRequency(Float cutOffRequency) {
-		_cutOffRequency = cutOffRequency;
+	public void setCutOffFrequency(Float cutOffFrequency) {
+		_cutOffFrequency = cutOffFrequency;
 	}
 
 	public void setFuzziness(Float fuzziness) {
@@ -178,7 +178,7 @@ public class MatchQuery extends BaseQueryImpl {
 	}
 
 	private String _analyzer;
-	private Float _cutOffRequency;
+	private Float _cutOffFrequency;
 	private final String _field;
 	private Float _fuzziness;
 	private RewriteMethod _fuzzyRewriteMethod;

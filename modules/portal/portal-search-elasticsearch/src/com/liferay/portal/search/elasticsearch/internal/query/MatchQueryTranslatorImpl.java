@@ -41,8 +41,8 @@ public class MatchQueryTranslatorImpl
 			matchQueryBuilder.analyzer(matchQuery.getAnalyzer());
 		}
 
-		if (matchQuery.getCutOffRequency() != null) {
-			matchQueryBuilder.cutoffFrequency(matchQuery.getCutOffRequency());
+		if (matchQuery.getCutOffFrequency() != null) {
+			matchQueryBuilder.cutoffFrequency(matchQuery.getCutOffFrequency());
 		}
 
 		if (matchQuery.getFuzziness() != null) {

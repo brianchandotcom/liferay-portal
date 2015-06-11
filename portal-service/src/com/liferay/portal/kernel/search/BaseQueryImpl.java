@@ -56,6 +56,11 @@ public abstract class BaseQueryImpl implements Query {
 	}
 
 	@Override
+	public boolean hasChildren() {
+		return false;
+	}
+
+	@Override
 	public boolean isDefaultBoost() {
 		if (_boost == BOOST_DEFAULT) {
 			return true;

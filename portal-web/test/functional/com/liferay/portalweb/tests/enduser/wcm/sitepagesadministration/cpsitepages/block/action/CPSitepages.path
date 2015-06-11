@@ -82,12 +82,12 @@
 <!--TOOLBAR-->
 <tr>
 	<td>TOOLBAR_ADD_PAGE</td>
-	<td>//ul[contains(@id,'_156_navTag')]/li/a[contains(.,'Add Page')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'Add Page')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOOLBAR_VIEW_PAGES</td>
-	<td>//ul[contains(@id,'_156_navTag')]/li/a[contains(.,'View Pages')]</td>
+	<td>//ul[contains(@id,'navTag')]/li/a[contains(.,'View Pages')]</td>
 	<td></td>
 </tr>
 <tr>

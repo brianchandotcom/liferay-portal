@@ -66,7 +66,7 @@
 </tr>
 <tr>
 	<td>MENU_USER_INFORMATION_SITES</td>
-	<td>//a[contains(@id,'sitesLink')]</td>
+	<td>//li[contains(@id,'sitesTab')]/a[contains(@id,'sitesLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -247,7 +247,7 @@
 <!--SITES_SELECT-->
 <tr>
 	<td>SITES_SELECT_IFRAME</td>
-	<td>//iframe[contains(@id,'selectGroup_iframe_')]</td>
+	<td>//iframe[contains(@id,'selectSite_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

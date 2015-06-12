@@ -1,0 +1,81 @@
+<definition component-name="portal-acceptance">
+	<property name="testray.main.component.name" value="Documents Management" />
+
+	<var name="pageName" value="Documents and Media Page" />
+	<var name="portletName" value="Documents and Media" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="DMDocument#tearDownCP" />
+
+		<execute macro="DMFolder#tearDownCP" />
+
+		<execute macro="DMDocumentType#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="DeleteDocument" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#deletePG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+	</command>
+
+	<command name="DownloadDocumentWithSlashesInTitleViaDocumentView" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#downloadPG">
+			<var name="dmDocumentTitle" value="/D/M/Document Title" />
+		</execute>
+	</command>
+
+	<command name="EditDocument" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="DMDocument#addPG">
+			<var name="dmDocumentDescription" value="DM Document Description" />
+			<var name="dmDocumentFile" value="Document_1.doc" />
+			<var name="dmDocumentTitle" value="DM Document Title" />
+		</execute>
+
+		<execute macro="DMDocument#editPG">
+			<var name="dmDocumentTitle" value="DM Document Title" />
+			<var name="dmDocumentTitleEdit" value="DM Document Title Edit" />
+		</execute>
+	</command>
+</definition>

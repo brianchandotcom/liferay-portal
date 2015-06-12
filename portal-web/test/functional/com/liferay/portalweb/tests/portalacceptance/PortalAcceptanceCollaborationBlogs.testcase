@@ -1,0 +1,149 @@
+<definition component-name="portal-acceptance">
+	<property name="portlet.plugins.includes" value="notifications-portlet" />
+	<property name="testray.main.component.name" value="Blogs" />
+
+	<var name="pageName" value="Blogs Page" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="BlogsEntry#tearDownCP" />
+
+		<execute macro="Blogs#tearDownConfigurationDisplaySettingsPG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#tearDownConfigurationScopePG">
+			<var name="pageName" value="${pageName}" />
+			<var name="portletNameBorderless" value="Blogs" />
+		</execute>
+
+		<execute macro="Blogs#tearDownSubscribePG" />
+
+		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Organization#tearDownCP" />
+
+		<execute macro="User#tearDownCP" />
+
+		<execute macro="ServerAdministration#tearDownMailServerSettings" />
+	</tear-down>
+
+	<command name="AddBlogsEntryComment" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#addPG">
+			<var name="entryComment" value="Blogs Entry Comment" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="DeleteBlogsEntry" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#addCP">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#moveToRecycleBinCP">
+			<var name="assetType" value="Blogs Entry" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#deleteCP">
+			<var name="assetName" value="Blogs Entry Title" />
+			<var name="assetType" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Recycle Bin" />
+		</execute>
+
+		<execute macro="RecycleBin#viewDefaultCP">
+			<var name="assetName" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewDefaultCP">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
+	<command name="EditBlogsEntry" priority="5">
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Blogs#addEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Blogs#editEntryPG">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryContentEdit" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+			<var name="entryTitleEdit" value="Blogs Entry Title Edit" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		</execute>
+
+		<execute macro="BlogsEntry#viewEntry" >
+			<var name="entryContent" value="Blogs Entry Content Edit" />
+			<var name="entryTitle" value="Blogs Entry Title Edit" />
+		</execute>
+	</command>
+</definition>

@@ -94,27 +94,27 @@
 <!--TASKS_TABLE-->
 <tr>
 	<td>TASKS_TABLE_TASK</td>
-	<td>//div[@id='_158_workflowTasksSearchContainerSearchContainer']/table/tbody/tr/td[1]/span</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]/table/tbody/tr/td[1]/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASKS_TABLE_DUE_DATE</td>
-	<td>//div[@id='_158_workflowTasksSearchContainerSearchContainer']/table/tbody/tr/td[2]</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]/table/tbody/tr/td[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASKS_TABLE_COMPLETED</td>
-	<td>//div[@id='_158_workflowTasksSearchContainerSearchContainer']/table/tbody/tr/td[3]</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]/table/tbody/tr/td[3]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASKS_TABLE_ASSIGN_TO_ME</td>
-	<td>//div[@id='_158_workflowTasksSearchContainerSearchContainer']/table/tbody/tr/td[4]/span/a/span</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]/table/tbody/tr/td[4]/span/a/span</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TASKS_TABLE_ACTIONS</td>
-	<td>//div[@id='_158_workflowTasksSearchContainerSearchContainer']/table/tbody/tr/td[4]/div/a</td>
+	<td>//div[contains(@id,'workflowTasksSearchContainerSearchContainer')]/table/tbody/tr/td[4]/div/a</td>
 	<td></td>
 </tr>
 <tr>

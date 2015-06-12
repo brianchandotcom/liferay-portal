@@ -877,7 +877,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49879" name="OrganizationUserManagement" priority="3">
+	<command  name="OrganizationUserManagement" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

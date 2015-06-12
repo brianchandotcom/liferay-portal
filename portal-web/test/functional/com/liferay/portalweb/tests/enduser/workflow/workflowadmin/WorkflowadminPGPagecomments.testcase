@@ -41,7 +41,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-55550" name="ApprovePageCommentPG" priority="5">
+	<command name="ApprovePageCommentPG" priority="5">
 		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />
 
@@ -148,7 +148,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command known-issues="LPS-55550" name="RejectPageCommentPG" priority="5">
+	<command name="RejectPageCommentPG" priority="5">
 		<var name="commentAuthor" value="Test Test (You)" />
 		<var name="commentBody" value="Page Comment Comment" />
 

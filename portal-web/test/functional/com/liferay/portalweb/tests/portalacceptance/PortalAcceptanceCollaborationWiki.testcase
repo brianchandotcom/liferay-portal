@@ -1,0 +1,183 @@
+<definition component-name="portal-acceptance">
+	<property name="testray.main.component.name" value="Wiki" />
+
+	<var name="pageName" value="Wiki Test Page" />
+	<var name="portletName" value="Wiki" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="WikiNode#addMainCP" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="${portletName}" />
+		</execute>
+	</set-up>
+
+	<tear-down>
+		<execute macro="WikiPage#tearDownCP" />
+
+		<execute macro="WikiNode#tearDownCP" />
+
+		<execute macro="Page#tearDownPG" />
+	</tear-down>
+
+	<command name="AddWikiFrontPageChildPage" priority="5">
+		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
+		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#addChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoChildPagePG">
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+
+		<execute macro="WikiPage#viewChildPagePG">
+			<var name="wikiChildPageContent" value="${wikiChildPageContent}" />
+			<var name="wikiChildPageTitle" value="${wikiChildPageTitle}" />
+		</execute>
+	</command>
+
+	<command name="DeleteWikiFrontPage" priority="5">
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageTitle" value="FrontPage" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoAllPagesPG" />
+
+		<execute macro="WikiPage#deletePG">
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+		</execute>
+	</command>
+
+	<command name="DeleteWikiNode" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#addCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="WikiNode#deleteCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#viewNoCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+	</command>
+
+	<command name="EditWikiFrontPage" priority="5">
+		<var name="wikiPageContent" value="Wiki FrontPage Content" />
+		<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
+		<var name="wikiPageRevision" value="1.2" />
+		<var name="wikiPageTitle" value="FrontPage" />
+		<var name="wikiPageUsername" value="Test Test" />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#addFrontPagePG">
+			<var name="wikiPageContent" value="${wikiPageContent}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#editFrontPagePG">
+			<var name="wikiPageContentEdit" value="${wikiPageContentEdit}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="WikiPage#gotoPG">
+			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
+			<var name="wikiPageRevision" value="${wikiPageRevision}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />
+			<var name="wikiPageUsername" value="${wikiPageUsername}" />
+		</execute>
+
+		<execute macro="WikiPage#viewPG">
+			<var name="wikiPageContent" value="${wikiPageContentEdit}" />
+			<var name="wikiPageTitle" value="${wikiPageTitle}" />>
+		</execute>
+	</command>
+
+	<command name="EditWikiNode" priority="5">
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#addCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+		</execute>
+
+		<execute macro="WikiNode#editCP">
+			<var name="wikiNodeName" value="Wiki Node Name" />
+			<var name="wikiNodeNameEdit" value="Wiki Node Name Edit" />
+		</execute>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="WikiNode#viewCP">
+			<var name="numberOfWikiPages" value="0" />
+			<var name="wikiNodeName" value="Wiki Node Name Edit" />
+		</execute>
+	</command>
+</definition>

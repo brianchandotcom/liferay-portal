@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>ADD_PAGE_NAME_FIELD</td>
-	<td>//input[@id='_156_addLayoutName']</td>
+	<td>//input[contains(@id,'addLayoutName')]</td>
 	<td></td>
 </tr>
 <tr>

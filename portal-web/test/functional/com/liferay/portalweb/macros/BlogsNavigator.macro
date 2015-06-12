@@ -5,8 +5,6 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 
-		<execute function="Pause" locator1="1000" />
-
 		<execute function="Click" locator1="Comments#COMMENT_FIELD" />
 	</command>
 

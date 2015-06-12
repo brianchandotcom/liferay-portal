@@ -47,37 +47,37 @@
 <!--PENDING_TABLE-->
 <tr>
 	<td>PENDING_TABLE_DEFINITION</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_TABLE_ASSET_TITLE</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_TABLE_ASSET_TYPE</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[3]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_TABLE_STATUS</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[4]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_TABLE_LAST_ACTIVITY_DATE</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[5]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_TABLE_END_DATE</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]/a</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[6]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PENDING_TABLE_WITHDRAW_SUBMISSION</td>
-	<td>//div[@id='_158_workflowInstancesSearchContainerSearchContainer']//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a/span</td>
+	<td>//div[contains(@id,'workflowInstancesSearchContainerSearchContainer')]//tr[contains(.,'${key_workflowAssetTitle}')]/td[7]/span/a/span</td>
 	<td></td>
 </tr>
 </tbody>

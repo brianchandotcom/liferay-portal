@@ -27,4 +27,4 @@
 	<iframe frameborder="0" id="embeddedIframe" src="<%= HtmlUtil.escapeHREF(typeSettingsProperties.getProperty("url")) %>" width="100%"></iframe>
 </div>
 
-<%@ include file="/html/portal/layout/view/common.jspf" %>
+<liferay-ui:layout-common />

@@ -34,6 +34,4 @@
 	</c:otherwise>
 </c:choose>
 
-<form action="#" id="hrefFm" method="post" name="hrefFm">
-	<span></span>
-</form>
+<liferay-ui:layout-common />

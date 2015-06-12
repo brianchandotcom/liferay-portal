@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Raymond Augé
  * @author Michael Young
  */
-@Component(immediate = true, service = JournalContent.class)
+@Component(service = JournalContent.class)
 @DoPrivileged
 public class JournalContentImpl implements JournalContent {
 
@@ -57,14 +57,14 @@ public class JournalContentImpl implements JournalContent {
 			return;
 		}
 
-		_portalCache.removeAll();
+		_getPortalCache().removeAll();
 	}
 
 	@Override
 	public void clearCache(
 		long groupId, String articleId, String ddmTemplateKey) {
 
-		_portalCacheIndexer.removeIndexedCacheKeys(
+		_getPortalCacheIndexer().removeIndexedCacheKeys(
 			JournalContentKey.getIndex(groupId, articleId, ddmTemplateKey));
 	}
 
@@ -165,7 +165,7 @@ public class JournalContentImpl implements JournalContent {
 			groupId, articleId, version, ddmTemplateKey, layoutSetId, viewMode,
 			languageId, page, secure);
 
-		JournalArticleDisplay articleDisplay = _portalCache.get(
+		JournalArticleDisplay articleDisplay = _getPortalCache().get(
 			journalContentKey);
 
 		boolean lifecycleRender = false;
@@ -183,7 +183,7 @@ public class JournalContentImpl implements JournalContent {
 			if ((articleDisplay != null) && articleDisplay.isCacheable() &&
 				lifecycleRender) {
 
-				_portalCache.put(journalContentKey, articleDisplay);
+				_getPortalCache().put(journalContentKey, articleDisplay);
 			}
 		}
 
@@ -286,14 +286,33 @@ public class JournalContentImpl implements JournalContent {
 
 	protected static final String CACHE_NAME = JournalContent.class.getName();
 
+	private PortalCache<JournalContentKey, JournalArticleDisplay>
+			_getPortalCache() {
+
+		if (_portalCache == null) {
+			_portalCache = MultiVMPoolUtil.getCache(CACHE_NAME);
+		}
+
+		return _portalCache;
+	}
+
+	private PortalCacheIndexer<String, JournalContentKey, JournalArticleDisplay>
+		_getPortalCacheIndexer() {
+
+		if (_portalCacheIndexer == null) {
+			_portalCacheIndexer = new PortalCacheIndexer<>(_getPortalCache());
+		}
+
+		return _portalCacheIndexer;
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalContentImpl.class);
 
-	private static final PortalCache<JournalContentKey, JournalArticleDisplay>
-		_portalCache = MultiVMPoolUtil.getCache(CACHE_NAME);
-	private static final PortalCacheIndexer
-		<String, JournalContentKey, JournalArticleDisplay> _portalCacheIndexer =
-			new PortalCacheIndexer<>(_portalCache);
+	private static PortalCache<JournalContentKey, JournalArticleDisplay>
+		_portalCache;
+	private static PortalCacheIndexer
+		<String, JournalContentKey, JournalArticleDisplay> _portalCacheIndexer;
 
 	private static class JournalContentKey implements IndexedCacheKey<String> {
 

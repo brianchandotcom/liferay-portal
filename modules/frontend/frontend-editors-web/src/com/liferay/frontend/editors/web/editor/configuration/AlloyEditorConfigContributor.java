@@ -105,6 +105,52 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		_itemSelector = itemSelector;
 	}
 
+	protected JSONObject getStyleFormatsJSONObject() {
+		String[] styleFormats = {
+			"{name: 'Normal', style: { element: 'p', type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Heading 1', style: { element: 'h1', type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Heading 2', style: { element: 'h2', type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Heading 3', style: { element: 'h3', type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Heading 4', style: { element: 'h4', type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Preformatted Text', style: { element:'pre', type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Cited Work', style: { element:'cite', type: " +
+				_CKEDITOR_STYLE_INLINE + "}}",
+			"{name: 'Computer Code', style: { element:'code', type: " +
+				_CKEDITOR_STYLE_INLINE + "}}",
+			"{name: 'Info Message', style: { element: 'div', attributes: " +
+				"{'class':'portlet-msg-info'}, type: " +
+					_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Alert Message', style: { element: 'div', attributes: " +
+				"{'class': 'portlet-msg-alert'}, type: " +
+				_CKEDITOR_STYLE_BLOCK + "}}",
+			"{name: 'Error Message', style: { element: 'div', attributes: " +
+				"{'class': 'portlet-msg-error'}, type: " +
+					_CKEDITOR_STYLE_BLOCK + "}}"
+		};
+
+		JSONArray stylesJsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (String styleFormat : styleFormats) {
+			stylesJsonArray.put(toJSONObject(styleFormat));
+		}
+
+		JSONObject configJsonObject = JSONFactoryUtil.createJSONObject();
+
+		configJsonObject.put("styles", stylesJsonArray);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+		jsonObject.put("name", "styles");
+		jsonObject.put("cfg", configJsonObject);
+
+		return jsonObject;
+	}
+
 	protected JSONObject getToolbarsAddJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -183,11 +229,16 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 	protected JSONObject getToolbarsStylesSelectionsTextJSONObject() {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		jsonObject.put(
-			"buttons",
-			toJSONArray(
-				"['styles', 'bold', 'italic', 'underline', 'link', " +
-					"'twitter']"));
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		jsonArray.put(getStyleFormatsJSONObject());
+		jsonArray.put("bold");
+		jsonArray.put("italic");
+		jsonArray.put("underline");
+		jsonArray.put("link");
+		jsonArray.put("twitter");
+
+		jsonObject.put("buttons", jsonArray);
 		jsonObject.put("name", "text");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 
@@ -236,6 +287,10 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put(
 			"filebrowserImageBrowseUrl", dlItemSelectorURL.toString());
 	}
+
+	private static final int _CKEDITOR_STYLE_BLOCK = 1;
+
+	private static final int _CKEDITOR_STYLE_INLINE = 2;
 
 	private ItemSelector _itemSelector;
 

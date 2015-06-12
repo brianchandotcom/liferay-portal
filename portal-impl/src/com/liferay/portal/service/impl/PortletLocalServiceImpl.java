@@ -305,7 +305,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 	public Portlet deployRemotePortlet(Portlet portlet, String categoryName)
 		throws PortalException {
 
-		return deployRemotePortlet(portlet, new String[] {categoryName});
+		return deployRemotePortlet(portlet, new String[]{categoryName});
 	}
 
 	@Override
@@ -788,10 +788,13 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		String servletContextName, ServletContext servletContext, String[] xmls,
 		PluginPackage pluginPackage) {
 
+		Map<String, Portlet> portletsMap = null;
+		Set<String> liferayPortletIds = null;
+
 		try {
 			Set<String> servletURLPatterns = _readWebXML(xmls[3]);
 
-			Map<String, Portlet> portletsMap = _readPortletXML(
+			portletsMap = _readPortletXML(
 				servletContextName, servletContext, xmls[0], servletURLPatterns,
 				pluginPackage);
 
@@ -800,44 +803,51 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 					servletContextName, servletContext, xmls[1],
 					servletURLPatterns, pluginPackage));
 
-			Set<String> liferayPortletIds = _readLiferayPortletXML(
+			liferayPortletIds = _readLiferayPortletXML(
 				servletContextName, xmls[2], portletsMap);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-			// Check for missing entries in liferay-portlet.xml
+			return Collections.emptyList();
+		}
 
-			for (String portletId : portletsMap.keySet()) {
-				if (_log.isWarnEnabled() &&
-					!liferayPortletIds.contains(portletId)) {
+		// Check for missing entries in liferay-portlet.xml
 
-					_log.warn(
-						"Portlet with the name " + portletId +
-							" is described in portlet.xml but does not " +
-								"have a matching entry in liferay-portlet.xml");
-				}
+		for (String portletId : portletsMap.keySet()) {
+			if (_log.isWarnEnabled() &&
+				!liferayPortletIds.contains(portletId)) {
+
+				_log.warn(
+					"Portlet with the name " + portletId +
+						" is described in portlet.xml but does not " +
+							"have a matching entry in liferay-portlet.xml");
 			}
+		}
 
-			// Check for missing entries in portlet.xml
+		// Check for missing entries in portlet.xml
 
-			for (String portletId : liferayPortletIds) {
-				if (_log.isWarnEnabled() &&
-					!portletsMap.containsKey(portletId)) {
+		for (String portletId : liferayPortletIds) {
+			if (_log.isWarnEnabled() &&
+				!portletsMap.containsKey(portletId)) {
 
-					_log.warn(
-						"Portlet with the name " + portletId +
-							" is described in liferay-portlet.xml but does " +
-								"not have a matching entry in portlet.xml");
-				}
+				_log.warn(
+					"Portlet with the name " + portletId +
+						" is described in liferay-portlet.xml but does " +
+							"not have a matching entry in portlet.xml");
 			}
+		}
 
-			// Return the new portlets
+		PortletBagFactory portletBagFactory = new PortletBagFactory();
 
-			PortletBagFactory portletBagFactory = new PortletBagFactory();
+		portletBagFactory.setClassLoader(
+			ClassLoaderPool.getClassLoader(servletContextName));
+		portletBagFactory.setServletContext(servletContext);
+		portletBagFactory.setWARFile(true);
 
-			portletBagFactory.setClassLoader(
-				ClassLoaderPool.getClassLoader(servletContextName));
-			portletBagFactory.setServletContext(servletContext);
-			portletBagFactory.setWARFile(true);
+		// Return the new portlets
 
+		try {
 			for (Map.Entry<String, Portlet> entry : portletsMap.entrySet()) {
 				Portlet portlet = _portletsMap.remove(entry.getKey());
 
@@ -865,6 +875,19 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+
+			// Clean up portlets added prior to error.
+
+			for (Map.Entry<String, Portlet> entry : portletsMap.entrySet()) {
+				Portlet portlet = _portletsMap.remove(entry.getKey());
+
+				if (portlet != null) {
+					PortletInstanceFactoryUtil.clear(portlet);
+
+					PortletConfigFactoryUtil.destroy(portlet);
+					PortletContextFactory.destroy(portlet);
+				}
+			}
 
 			return Collections.emptyList();
 		}

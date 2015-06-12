@@ -1491,6 +1491,26 @@ public abstract class BaseTrashHandlerTestCase {
 		if (isAssetableModel()) {
 			Assert.assertFalse(isAssetEntryVisible(baseModel));
 		}
+	}
+
+	@Test
+	public void testTrashGrandparentBaseModelIsNotVisibleParent()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> grandparentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, (Long)grandparentBaseModel.getPrimaryKeyObj(),
+			serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveParentBaseModelToTrash(
+			(Long)grandparentBaseModel.getPrimaryKeyObj());
 
 		if (isAssetableParentModel()) {
 			Assert.assertFalse(isAssetEntryVisible(parentBaseModel));

@@ -961,8 +961,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
 
-		Assert.assertFalse(isInTrashContainer(baseModel));
-
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertTrue(isInTrashContainer(baseModel));
@@ -1210,6 +1208,21 @@ public abstract class BaseTrashHandlerTestCase {
 			getAssetClassPK(baseModel));
 
 		Assert.assertFalse(restorable);
+	}
+
+	@Test
+	public void testTrashBaseModelIsInTrashContainer() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		Assert.assertFalse(isInTrashContainer(baseModel));
 	}
 
 	@Test

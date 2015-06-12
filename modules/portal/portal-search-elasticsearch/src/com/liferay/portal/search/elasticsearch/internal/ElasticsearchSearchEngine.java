@@ -293,9 +293,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
 
-		String location = SystemProperties.get("java.io.tmpdir") + "/es_backup";
-
-		builder.put("location", location);
+		builder.put("location", "es_backup");
 
 		putRepositoryRequestBuilder.setSettings(builder);
 

@@ -8,9 +8,7 @@ Bundle-ClassPath: \
 	lib/elasticsearch-analysis-phonetic.jar,\
 	lib/elasticsearch-analysis-smartcn.jar,\
 	lib/elasticsearch-analysis-stempel.jar,\
-	lib/elasticsearch-groovy.jar,\
 	lib/elasticsearch.jar,\
-	lib/groovy-all.jar,\
 	lib/icu4j.jar,\
 	lib/jts.jar,\
 	lib/lucene-analyzers-common.jar,\
@@ -30,6 +28,7 @@ Bundle-ClassPath: \
 	lib/lucene-sandbox.jar,\
 	lib/lucene-spatial.jar,\
 	lib/lucene-suggest.jar,\
+	lib/snakeyaml.jar,\
 	lib/spatial4j.jar
 Bundle-Name: Liferay Portal Search Elasticsearch
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch
@@ -39,25 +38,7 @@ Import-Package:\
 	!com.sun.jna.*,\
 	!com.thoughtworks.qdox.*,\
 	!com.thoughtworks.xstream.*,\
-	!groovyjarjarantlr.*,\
-	!groovyjarjarantlr.actions.cpp.*,\
-	!groovyjarjarantlr.actions.csharp.*,\
-	!groovyjarjarantlr.actions.java.*,\
-	!groovyjarjarantlr.actions.python.*,\
-	!groovyjarjarantlr.ASdebug.*,\
-	!groovyjarjarantlr.build.*,\
-	!groovyjarjarantlr.collections.*,\
-	!groovyjarjarantlr.collections.impl.*,\
-	!groovyjarjarantlr.debug.*,\
-	!groovyjarjarantlr.debug.misc.*,\
-	!groovyjarjarantlr.preprocessor.*,\
-	!groovyjarjarasm.asm.*,\
-	!groovyjarjarasm.asm.commons.*,\
-	!groovyjarjarasm.asm.signature.*,\
-	!groovyjarjarasm.asm.tree.*,\
-	!groovyjarjarasm.asm.tree.analysis.*,\
-	!groovyjarjarasm.asm.util.*,\
-	!groovyjarjarcommonscli.*,\
+	!groovy.*,\
 	!jline.*,\
 	!junit.*,\
 	!org.antlr.stringtemplate.*,\
@@ -67,6 +48,7 @@ Import-Package:\
 	!org.apache.lucene.expressions.*,\
 	!org.apache.tomcat.jni.*,\
 	!org.bouncycastle.*,\
+	!org.codehaus.groovy.*,\
 	!org.eclipse.jetty.npn.*,\
 	!org.elasticsearch.index.shard.service.*,\
 	!org.fusesource.*,\
@@ -86,9 +68,7 @@ Include-Resource:\
 	lib/elasticsearch-analysis-phonetic.jar=lib/elasticsearch-analysis-phonetic.jar,\
 	lib/elasticsearch-analysis-smartcn.jar=lib/elasticsearch-analysis-smartcn.jar,\
 	lib/elasticsearch-analysis-stempel.jar=lib/elasticsearch-analysis-stempel.jar,\
-	lib/elasticsearch-groovy.jar=lib/elasticsearch-groovy.jar,\
 	lib/elasticsearch.jar=lib/elasticsearch.jar,\
-	lib/groovy-all.jar=lib/groovy-all.jar,\
 	lib/icu4j.jar=lib/icu4j.jar,\
 	lib/jts.jar=lib/jts.jar,\
 	lib/lucene-analyzers-common.jar=lib/lucene-analyzers-common.jar,\
@@ -108,4 +88,5 @@ Include-Resource:\
 	lib/lucene-sandbox.jar=lib/lucene-sandbox.jar,\
 	lib/lucene-spatial.jar=lib/lucene-spatial.jar,\
 	lib/lucene-suggest.jar=lib/lucene-suggest.jar,\
+	lib/snakeyaml.jar=lib/snakeyaml.jar,\
 	lib/spatial4j.jar=lib/spatial4j.jar

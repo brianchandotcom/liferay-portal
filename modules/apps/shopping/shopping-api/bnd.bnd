@@ -1,5 +1,14 @@
 Bundle-Name: Liferay Shopping API
 Bundle-SymbolicName: com.liferay.shopping.api
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.shopping.*
+Export-Package:	\
+	com.liferay.shopping,\
+	com.liferay.shopping.configuration,\
+	com.liferay.shopping.constants,\
+	com.liferay.shopping.exception,\
+	com.liferay.shopping.model,\
+	com.liferay.shopping.service,\
+	com.liferay.shopping.service.persistence,\
+	com.liferay.shopping.settings,\
+	com.liferay.shopping.util.comparator
 Include-Resource: classes

@@ -2537,13 +2537,12 @@ go]]></replacevalue>
 
 	<target name="copy-sikuli-temp-files">
 		<if>
-			<os family="unix" />
+			<isset property="env.JENKINS_HOME" />
 			<then>
-				<mkdir dir="lib/development/libs" />
-
-				<copy todir="lib/development/libs">
-					<fileset dir="tools/selenium/sikuli/linux" />
-				</copy>
+				<mirrors-get
+					dest="lib/opencv-linux-x86.jar"
+					src="http://repo1.maven.org/maven2/org/bytedeco/javacpp-presets/opencv/2.4.9-0.9/opencv-2.4.9-0.9-linux-x86.jar"
+				/>
 			</then>
 		</if>
 	</target>

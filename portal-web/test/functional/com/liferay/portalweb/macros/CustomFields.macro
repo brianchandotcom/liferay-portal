@@ -12,6 +12,8 @@
 		<execute function="Select" locator1="CPCustomfieldsResourceAddcustomfield#TYPE_SELECT" value1="${customFieldType}" />
 		<execute function="AssertClick" locator1="CPCustomfieldsResourceAddcustomfield#SAVE_BUTTON" value1="Save" />
 
+		<var name="key_customFieldName" value="${customFieldName}" />
+
 		<execute function="AssertTextEquals" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_NAME" value1="${customFieldName}" />
 	</command>
 

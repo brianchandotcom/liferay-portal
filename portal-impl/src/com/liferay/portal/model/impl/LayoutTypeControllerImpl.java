@@ -102,9 +102,6 @@ public class LayoutTypeControllerImpl implements LayoutTypeController {
 			if (_type.equals(LayoutConstants.TYPE_PANEL)) {
 				path += "/portal/layout/view/panel.jsp";
 			}
-			else if (_type.equals(LayoutConstants.TYPE_CONTROL_PANEL)) {
-				path += "/portal/layout/view/control_panel.jsp";
-			}
 			else {
 				path += "/portal/layout/view/portlet.jsp";
 			}

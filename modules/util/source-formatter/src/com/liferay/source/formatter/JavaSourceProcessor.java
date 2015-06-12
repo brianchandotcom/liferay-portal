@@ -576,11 +576,11 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int packagePathX = packagePath.indexOf("/src/");
 
 		if (packagePathX == -1) {
-			packagePathX = packagePath.indexOf("/unit/");
+			packagePathX = packagePath.indexOf("/integration/");
 		}
 
 		if (packagePathX == -1) {
-			packagePathX = packagePath.indexOf("/integration/");
+			packagePathX = packagePath.indexOf("/unit/");
 		}
 
 		if (packagePathX != -1) {

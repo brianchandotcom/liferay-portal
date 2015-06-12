@@ -153,12 +153,11 @@ public class JavaClass {
 	}
 
 	public String getClassName() {
-		if (_outerClass == null) {
-			return _packagePath + StringPool.PERIOD + _name;
-		}
-		else {
+		if (_outerClass != null) {
 			return _outerClass.getClassName() + StringPool.DOLLAR + _name;
 		}
+
+		return _packagePath + StringPool.PERIOD + _name;
 	}
 
 	public String getContent() {

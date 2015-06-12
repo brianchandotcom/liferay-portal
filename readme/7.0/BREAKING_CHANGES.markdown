@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `5211d38`.*
+*This document has been reviewed through commit `92185c4`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1920,7 +1920,7 @@ structure and template versions, audit columns were also added to such models.
 
 #### What changed?
 
-The method `getEntries` was removed from the `DL`, `DLImpl`, and `DLUtil`
+The method `getEntries` has been removed from the `DL`, `DLImpl`, and `DLUtil`
 classes.
 
 #### Who is affected?
@@ -1939,27 +1939,28 @@ The `getEntries` method was no longer used, and contained hardcoded references
 to classes that will be moved into OSGi bundles.
 
 ---------------------------------------
-### Removed WikiUtil.getEntries method
+
+### Removed WikiUtil.getEntries Method
 - **Date:** 2015-Jun-10
 - **JIRA Ticket:** LPS-56242
 
 #### What changed?
 
-The method `getEntries()` has been removed from class `WikiUtil`
+The method `getEntries()` has been removed from class `WikiUtil`.
 
 #### Who is affected?
 
-Any JSP hook or ext plugin that uses the method will be affected. As
-the class was located in portal-impl, regular portlets and other safe
-extension points won't be affected.
+Any JSP hook or ext plugin that uses this method is affected. As the class was
+located in portal-impl, regular portlets and other safe extension points won't
+be affected.
 
 #### How should I update my code?
 
-You should review the JSP or ext plugin, updating it to remove any
-reference to the new class and mimicking the original JSP code. In
-case you need equivalent functionality to the one provided by
-`WikiUtil.getEntries()` you may use the `SearchResultUtil`
-class. While not totally equivalent, it offers similar functionality.
+You should review the JSP or ext plugin, updating it to remove any reference to
+the new class and mimicking the original JSP code. In case you need equivalent
+functionality to the one provided by `WikiUtil.getEntries()` you may use the
+`SearchResultUtil` class. While not totally equivalent, it offers similar
+functionality.
 
 #### Why was this change made?
 

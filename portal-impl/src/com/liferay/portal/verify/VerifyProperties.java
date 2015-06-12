@@ -449,17 +449,17 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.hosts.allowed",
-			"auth.verifier.ParameterAuthVerifier.hosts.allowed",
+			"auth.verifier.RequestParameterAuthVerifier.hosts.allowed",
 			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.urls.excludes",
-			"auth.verifier.ParameterAuthVerifier.urls.excludes",
+			"auth.verifier.RequestParameterAuthVerifier.urls.excludes",
 			"com.liferay.portal.security.auth.verifier"
 		},
 		new String[] {
 			"auth.verifier.ParameterAutoLogin.urls.includes",
-			"auth.verifier.ParameterAuthVerifier.urls.includes",
+			"auth.verifier.RequestParameterAuthVerifier.urls.includes",
 			"com.liferay.portal.security.auth.verifier"
 		},
 
@@ -1090,12 +1090,12 @@ public class VerifyProperties extends VerifyProcess {
 
 		new String[] {
 			"request.header.auth.hosts.allowed", "authHostsAllowed",
-			"com.liferay.portal.security.auto.login.requestheader"
+			"com.liferay.portal.security.auto.login.request.header"
 		},
 
 		new String[] {
 			"request.header.auth.import.from.ldap", "importFromLDAP",
-			"com.liferay.portal.security.auto.login.requestheader"
+			"com.liferay.portal.security.auto.login.request.header"
 		},
 
 		// RSS

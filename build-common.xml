@@ -960,9 +960,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 
 			<if>
 				<and>
-					<not>
-						<equals arg1="@{test.type}" arg2="unit" />
-					</not>
+					<equals arg1="@{test.type}" arg2="integration" />
 					<isset property="database.type" />
 				</and>
 				<then>

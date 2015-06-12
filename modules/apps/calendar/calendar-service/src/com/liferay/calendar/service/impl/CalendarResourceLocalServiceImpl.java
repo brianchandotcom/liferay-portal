@@ -21,7 +21,7 @@ import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarResourceLocalServiceBaseImpl;
-import com.liferay.calendar.util.PortletPropsValues;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
@@ -71,7 +71,8 @@ public class CalendarResourceLocalServiceImpl
 			classPK = calendarResourceId;
 		}
 
-		if (PortletPropsValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE ||
+		if (CalendarServiceConfigurationValues
+				.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE ||
 			Validator.isNull(code)) {
 
 			code = String.valueOf(calendarResourceId);
@@ -119,8 +120,8 @@ public class CalendarResourceLocalServiceImpl
 			calendarLocalService.addCalendar(
 				userId, calendarResource.getGroupId(), calendarResourceId,
 				nameMap, descriptionMap, calendarResource.getTimeZoneId(),
-				PortletPropsValues.CALENDAR_COLOR_DEFAULT, true, false, false,
-				serviceContext);
+				CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT, true,
+				false, false, serviceContext);
 		}
 
 		// Asset

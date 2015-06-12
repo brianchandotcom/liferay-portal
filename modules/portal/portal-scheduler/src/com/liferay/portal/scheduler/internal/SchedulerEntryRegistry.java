@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.deploy.hot;
+package com.liferay.portal.scheduler.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

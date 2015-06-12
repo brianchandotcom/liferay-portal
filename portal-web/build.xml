@@ -76,21 +76,19 @@
 
 		<mkdir dir="${sass.tmp.dir}" />
 
-		<path id="web-lib.classpath">
-			<fileset dir="${project.dir}/lib/portal" includes="*.jar" />
+		<path id="css.builder.classpath">
+			<fileset dir="${sdk.dir}/dependencies/com.liferay.css.builder/lib" includes="*.jar" />
 		</path>
 
 		<java
-			classname="com.liferay.portal.tools.SassToCssBuilder"
-			classpathref="web.classpath"
+			classname="com.liferay.css.builder.CSSBuilder"
+			classpathref="css.builder.classpath"
 			fork="true"
 			newenvironment="true"
 			outputproperty="build-css.output"
 		>
 			<jvmarg value="-Xmx1024m" />
 			<jvmarg value="-Djava.io.tmpdir=${sass.tmp.dir}" />
-			<jvmarg value="-Djava.util.logging.config.file=${project.dir}/portal-impl/src/com/liferay/portal/tools/dependencies/portal-tools-logging.properties" />
-			<jvmarg value="-Dliferay.lib.portal.dir=${basedir}/../lib/portal" />
 			<arg value="sass.dir=/html/portlet" />
 			<arg value="sass.docroot.dir=${basedir}/docroot" />
 			<arg value="sass.portal.common.dir=${basedir}/docroot/html/css/common" />

@@ -6202,9 +6202,14 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			<property name="test.type" value="unit" />
 		</ant>
 
-		<ant dir="portal-impl" target="test-class-group" inheritAll="false">
-			<property name="test.type" value="integration" />
-		</ant>
+		<database-test-run-test database.test.sequence="${database.test.sequence}">
+			<test-action>
+				<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+					<property name="database.type" value="${database.type}" />
+					<property name="test.type" value="integration" />
+				</ant>
+			</test-action>
+		</database-test-run-test>
 
 		<ant dir="util-java" target="test-class-group" inheritAll="false" />
 

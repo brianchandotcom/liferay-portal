@@ -972,33 +972,15 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							</fileset>
 						</path>
 						<sequential>
-							<local name="results.file.truncated" />
-							<local name="results.file.namespaced" />
+							<local name="class.name" />
 
-							<loadresource property="results.file.truncated">
-								<string value="@{results.file}" />
-								<filterchain>
-									<tokenfilter>
-										<replacestring from="${basedir}/" to="" />
-									</tokenfilter>
-								</filterchain>
-							</loadresource>
+							<basename file="@{results.file}" property="class.name" suffix=".xml" />
 
-							<loadresource property="results.file.namespaced">
-								<propertyresource name="results.file.truncated" />
-								<filterchain>
-									<tokenfilter>
-										<replacestring from="test-results/@{test.type}/TEST-" to="" />
-										<replacestring from=".xml" to="-${database.type}" />
-									</tokenfilter>
-								</filterchain>
-							</loadresource>
-
-							<xmltask source="${results.file.truncated}" dest="test-results/@{test.type}/TEST-${results.file.namespaced}.xml">
-								<replace path="/testsuite/@name" withText="${results.file.namespaced}" />
+							<xmltask source="@{results.file}" dest="test-results/@{test.type}/TEST-${class.name}-${database.type}.xml">
+								<replace path="/testsuite/@name" withText="${class.name}-${database.type}" />
 							</xmltask>
 
-							<delete file="${results.file.truncated}" />
+							<delete file="@{results.file}" />
 						</sequential>
 					</for>
 				</then>

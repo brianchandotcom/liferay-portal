@@ -98,6 +98,13 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashBaseModelAndParentIsInContainerBaseModel()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashBaseModelAndParentIsNotVisible() throws Exception {
 	}
 

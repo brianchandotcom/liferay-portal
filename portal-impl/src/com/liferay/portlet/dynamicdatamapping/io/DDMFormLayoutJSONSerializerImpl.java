@@ -63,22 +63,6 @@ public class DDMFormLayoutJSONSerializerImpl
 			"defaultLanguageId", LocaleUtil.toLanguageId(defaultLocale));
 	}
 
-	protected void addFieldNames(
-		JSONObject jsonObject, List<String> ddmFormFieldNames) {
-
-		if (ddmFormFieldNames.isEmpty()) {
-			return;
-		}
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (String ddmFormFieldName : ddmFormFieldNames) {
-			jsonArray.put(ddmFormFieldName);
-		}
-
-		jsonObject.put("fieldNames", jsonArray);
-	}
-
 	protected void addDescription(
 		JSONObject pageJSONObject, LocalizedValue description) {
 
@@ -97,6 +81,22 @@ public class DDMFormLayoutJSONSerializerImpl
 		}
 
 		pageJSONObject.put("description", jsonObject);
+	}
+
+	protected void addFieldNames(
+		JSONObject jsonObject, List<String> ddmFormFieldNames) {
+
+		if (ddmFormFieldNames.isEmpty()) {
+			return;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (String ddmFormFieldName : ddmFormFieldNames) {
+			jsonArray.put(ddmFormFieldName);
+		}
+
+		jsonObject.put("fieldNames", jsonArray);
 	}
 
 	protected void addPages(

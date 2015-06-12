@@ -350,6 +350,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
 
+		if (PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL <=
+				frameworkStartLevel.getStartLevel()) {
+
+			return;
+		}
+
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_RUNTIME_START_LEVEL);
 	}
@@ -409,6 +415,12 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		FrameworkStartLevel frameworkStartLevel = _framework.adapt(
 			FrameworkStartLevel.class);
+
+		if (PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL <=
+				frameworkStartLevel.getStartLevel()) {
+
+			return;
+		}
 
 		frameworkStartLevel.setStartLevel(
 			PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL);

@@ -37,7 +37,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.ImageUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
-import com.liferay.portlet.dynamicdatamapping.InvalidStructureVersionException;
+import com.liferay.portlet.dynamicdatamapping.InvalidTemplateVersionException;
 import com.liferay.portlet.dynamicdatamapping.NoSuchTemplateException;
 import com.liferay.portlet.dynamicdatamapping.RequiredTemplateException;
 import com.liferay.portlet.dynamicdatamapping.TemplateDuplicateTemplateKeyException;
@@ -876,7 +876,7 @@ public class DDMTemplateLocalServiceImpl
 				templateId, version);
 
 		if (!templateVersion.isApproved()) {
-			throw new InvalidStructureVersionException(
+			throw new InvalidTemplateVersionException(
 				"Unable to revert from an unapproved file version");
 		}
 

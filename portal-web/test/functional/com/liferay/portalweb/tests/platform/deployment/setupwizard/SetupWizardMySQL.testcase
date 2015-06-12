@@ -18,7 +18,6 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databaseNameDefault" value="false" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />
@@ -43,7 +42,6 @@
 			<var name="administratorFirstName" value="Test" />
 			<var name="administratorLastName" value="Test" />
 			<var name="databaseName" value="lportal1" />
-			<var name="databaseNameDefault" value="false" />
 			<var name="databasePassword" property-value="database.mysql.password" />
 			<var name="databaseType" value="MySQL" />
 			<var name="databaseUserName" property-value="database.mysql.username" />

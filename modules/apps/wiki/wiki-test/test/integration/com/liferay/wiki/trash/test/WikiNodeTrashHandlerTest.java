@@ -71,6 +71,12 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashAndDeleteWithDraftStatusIsNotFound() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashAndRestoreWithDraftStatus() throws Exception {
 	}
 

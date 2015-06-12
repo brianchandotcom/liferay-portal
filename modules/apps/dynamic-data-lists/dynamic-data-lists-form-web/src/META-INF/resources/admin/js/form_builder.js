@@ -84,9 +84,9 @@ AUI.add(
 
 						var field = event.field;
 
-						FormBuilder.superclass._afterFieldSettingsModalSave.apply(instance, arguments);
-
 						field.renderTemplate();
+
+						FormBuilder.superclass._afterFieldSettingsModalSave.apply(instance, arguments);
 					},
 
 					_onClickFieldType: function(event) {

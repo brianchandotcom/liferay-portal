@@ -197,6 +197,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'aui-tabview', 'liferay-ddm-form-renderer-field', 'liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['array-extras', 'aui-tabview', 'liferay-ddm-form-field', 'liferay-ddm-form-field-checkbox', 'liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-options', 'liferay-ddm-form-field-options-template', 'liferay-ddm-form-field-radio', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template', 'liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
 	}
 );

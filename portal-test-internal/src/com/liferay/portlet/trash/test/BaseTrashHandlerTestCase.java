@@ -1446,21 +1446,19 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		if (!isBaseModelMoveableFromTrash()) {
-			return;
-		}
+		if (isBaseModelMoveableFromTrash()) {
+			moveBaseModelFromTrash(baseModel, group, serviceContext);
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
-
-		if (isBaseModelContainerModel()) {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 2,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-		}
-		else {
-			Assert.assertEquals(
-				initialBaseModelsSearchCount + 1,
-				searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			if (isBaseModelContainerModel()) {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 2,
+					searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			}
+			else {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 1,
+					searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
+			}
 		}
 	}
 

@@ -118,6 +118,12 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashBaseModelIsInTrashContainer() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashBaseModelWithParentIsRestorable() throws Exception {
 	}
 

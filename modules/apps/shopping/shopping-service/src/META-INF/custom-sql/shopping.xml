@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingItemFinder.countByG_C">
+	<sql id="com.liferay.shopping.service.persistence.ShoppingItemFinder.countByG_C">
 		<![CDATA[
 			SELECT
 				COUNT(DISTINCT ShoppingItem.itemId) AS COUNT_VALUE
@@ -12,7 +12,7 @@
 				[$CATEGORY_ID$]
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingCouponFinder.countByG_C_C_A_DT">
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCouponFinder.countByG_C_C_A_DT">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -27,8 +27,8 @@
 					(discountType = ? [$AND_OR_NULL_CHECK$])
 				)
 		]]>
-	</sql>
-	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder.countByG_C_U_N_PPPS">
+	</sql>   
+	<sql id="com.liferay.shopping.service.persistence.ShoppingOrderFinder.countByG_C_U_N_PPPS">
 		<![CDATA[
 			SELECT
 				COUNT(*) AS COUNT_VALUE
@@ -50,7 +50,7 @@
 				)
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingCouponFinder.findByG_C_C_A_DT">
+	<sql id="com.liferay.shopping.service.persistence.ShoppingCouponFinder.findByG_C_C_A_DT">
 		<![CDATA[
 			SELECT
 				{ShoppingCoupon.*}
@@ -68,7 +68,7 @@
 				createDate ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.shopping.service.persistence.ShoppingOrderFinder.findByG_C_U_N_PPPS">
+	<sql id="com.liferay.shopping.service.persistence.ShoppingOrderFinder.findByG_C_U_N_PPPS">
 		<![CDATA[
 			SELECT
 				{ShoppingOrder.*}

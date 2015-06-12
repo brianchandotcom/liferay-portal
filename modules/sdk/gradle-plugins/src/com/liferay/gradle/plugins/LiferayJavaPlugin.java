@@ -16,7 +16,9 @@ package com.liferay.gradle.plugins;
 
 import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
 import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
+import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
+import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
 import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
@@ -345,14 +347,16 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 							GradleUtil.getExtension(
 								project, LiferayExtension.class);
 
+						TomcatAppServer tomcatAppServer =
+							(TomcatAppServer)liferayExtension.getAppServer(
+								"tomcat");
+
 						xml = xml.replace(
 							"${app.server.tomcat.manager.password}",
-							liferayExtension.getAppServerProperty(
-								"tomcat", "managerPassword"));
+							tomcatAppServer.getManagerPassword());
 						xml = xml.replace(
 							"${app.server.tomcat.manager.user}",
-							liferayExtension.getAppServerProperty(
-								"tomcat", "managerUserName"));
+							tomcatAppServer.getManagerUserName());
 						xml = xml.replace(
 							"${jmx.remote.port}",
 							String.valueOf(
@@ -1183,8 +1187,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			return;
 		}
 
-		setupTestableTomcatTask.setTomcatDir(
-			liferayExtension.getAppServerDir());
+		AppServer appServer = liferayExtension.getAppServer("tomcat");
+
+		setupTestableTomcatTask.setTomcatDir(appServer.getDir());
 	}
 
 	protected void configureTaskSetupTestableTomcatJmx(
@@ -1203,20 +1208,21 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		SetupTestableTomcatTask setupTestableTomcatTask,
 		LiferayExtension liferayExtension) {
 
+		TomcatAppServer tomcatAppServer =
+			(TomcatAppServer)liferayExtension.getAppServer("tomcat");
+
 		if (Validator.isNull(
 				setupTestableTomcatTask.getTomcatManagerPassword())) {
 
 			setupTestableTomcatTask.setTomcatManagerPassword(
-				liferayExtension.getAppServerProperty(
-					"tomcat", "managerPassword"));
+				tomcatAppServer.getManagerPassword());
 		}
 
 		if (Validator.isNull(
 				setupTestableTomcatTask.getTomcatManagerUserName())) {
 
 			setupTestableTomcatTask.setTomcatManagerUserName(
-				liferayExtension.getAppServerProperty(
-					"tomcat", "managerUserName"));
+				tomcatAppServer.getManagerUserName());
 		}
 	}
 
@@ -1243,9 +1249,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			return;
 		}
 
-		String tomcatZipUrl = liferayExtension.getAppServerProperty("zipUrl");
+		AppServer appServer = liferayExtension.getAppServer("tomcat");
 
-		setupTestableTomcatTask.setTomcatZipUrl(tomcatZipUrl);
+		setupTestableTomcatTask.setTomcatZipUrl(appServer.getZipUrl());
 	}
 
 	protected void configureTaskTest(Project project) {

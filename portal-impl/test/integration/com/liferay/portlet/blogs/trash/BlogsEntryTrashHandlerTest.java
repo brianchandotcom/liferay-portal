@@ -224,6 +224,12 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashParentIsNotVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashParentWithBaseModelIsInTrashContainer()
 		throws Exception {
 	}

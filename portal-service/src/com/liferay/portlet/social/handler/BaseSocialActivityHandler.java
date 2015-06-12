@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
@@ -24,67 +25,80 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseSocialActivityHandler
-	implements SocialActivityHandler {
+public abstract class BaseSocialActivityHandler<T extends ClassedModel>
+	implements SocialActivityHandler<T> {
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
+		String className = getClassName(classedModel);
+		long primaryKey = getPrimaryKey(classedModel);
+
 		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
-			if (classPK != groupId) {
+			if (primaryKey != groupId) {
 				getSocialActivityLocalService().addActivity(
-					userId, groupId, className, classPK,
+					userId, groupId, className, primaryKey,
 					SocialActivityConstants.TYPE_SUBSCRIBE, extraData, 0);
 			}
 		}
 		else {
 			getSocialActivityLocalService().addActivity(
-				userId, groupId, className, classPK, type, extraData,
+				userId, groupId, className, primaryKey, type, extraData,
 				receiverUserId);
 		}
 	}
 
 	@Override
 	public void addUniqueActivity(
-			long userId, long groupId, Date createDate, String className,
-			long classPK, int type, String extraData, long receiverUserId)
+			long userId, long groupId, Date createDate, T classedModel,
+			int type, String extraData, long receiverUserId)
 		throws PortalException {
 
+		String className = getClassName(classedModel);
+		long primaryKey = getPrimaryKey(classedModel);
+
 		getSocialActivityLocalService().addUniqueActivity(
-			userId, groupId, createDate, className, classPK, type, extraData,
+			userId, groupId, createDate, className, primaryKey, type, extraData,
 			receiverUserId);
 	}
 
 	@Override
 	public void addUniqueActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
+		String className = getClassName(classedModel);
+		long primaryKey = getPrimaryKey(classedModel);
+
 		getSocialActivityLocalService().addUniqueActivity(
-			userId, groupId, className, classPK, type, extraData,
+			userId, groupId, className, primaryKey, type, extraData,
 			receiverUserId);
 	}
 
 	@Override
-	public void deleteActivities(String className, long classPK)
-		throws PortalException {
+	public void deleteActivities(T classedModel) throws PortalException {
+		String className = getClassName(classedModel);
+		long primaryKey = getPrimaryKey(classedModel);
 
-		getSocialActivityLocalService().deleteActivities(className, classPK);
+		getSocialActivityLocalService().deleteActivities(className, primaryKey);
 	}
 
 	@Override
 	public void updateLastSocialActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, T classedModel, int type,
 			Date createDate)
 		throws PortalException {
 
+		String className = getClassName(classedModel);
+		long primaryKey = getPrimaryKey(classedModel);
+
 		SocialActivity lastSocialActivity =
 			getSocialActivityLocalService().fetchFirstActivity(
-				className, classPK, type);
+				className, primaryKey, type);
 
 		if (lastSocialActivity != null) {
 			lastSocialActivity.setCreateDate(createDate.getTime());
@@ -93,6 +107,20 @@ public abstract class BaseSocialActivityHandler
 			getSocialActivityLocalService().updateSocialActivity(
 				lastSocialActivity);
 		}
+	}
+
+	protected String getClassName(T classedModel) {
+		return classedModel.getModelClassName();
+	}
+
+	protected long getPrimaryKey(T classedModel) {
+		if (!(classedModel.getPrimaryKeyObj() instanceof Long)) {
+			throw new IllegalArgumentException(
+				"Only models with a primary key of type Long can make use " +
+					"of SocialActivityHandlers");
+		}
+
+		return (Long)classedModel.getPrimaryKeyObj();
 	}
 
 	protected abstract SocialActivityLocalService

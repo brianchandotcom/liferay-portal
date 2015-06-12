@@ -3604,8 +3604,7 @@ public class JournalArticleLocalServiceImpl
 		extraDataJSONObject.put("title", article.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, article.getGroupId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(),
+			userId, article.getGroupId(), article,
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -3803,8 +3802,7 @@ public class JournalArticleLocalServiceImpl
 		extraDataJSONObject.put("title", article.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, article.getGroupId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(),
+			userId, article.getGroupId(), article,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -5808,17 +5806,13 @@ public class JournalArticleLocalServiceImpl
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityHandlerUtil.addActivity(
-						user.getUserId(), article.getGroupId(),
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey(),
+						user.getUserId(), article.getGroupId(), article,
 						JournalActivityKeys.UPDATE_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
 					SocialActivityHandlerUtil.addUniqueActivity(
-						user.getUserId(), article.getGroupId(),
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey(),
+						user.getUserId(), article.getGroupId(), article,
 						JournalActivityKeys.ADD_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}

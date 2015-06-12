@@ -97,8 +97,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		// Social
 
-		SocialActivityHandlerUtil.deleteActivities(
-			entry.getClassName(), entry.getClassPK());
+		SocialActivityHandlerUtil.deleteActivities(entry);
 	}
 
 	@Override
@@ -380,7 +379,7 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		if (!user.isDefaultUser()) {
 			SocialActivityHandlerUtil.addActivity(
-				user.getUserId(), assetEntry.getGroupId(), className, classPK,
+				user.getUserId(), assetEntry.getGroupId(), assetEntry,
 				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
 		}
 

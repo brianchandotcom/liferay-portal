@@ -629,8 +629,8 @@ public class JournalFolderLocalServiceImpl
 		extraDataJSONObject.put("title", title);
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, folder.getGroupId(), JournalFolder.class.getName(),
-			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, folder.getGroupId(), folder,
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return folder;
@@ -734,8 +734,7 @@ public class JournalFolderLocalServiceImpl
 		extraDataJSONObject.put("title", folder.getName());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, folder.getGroupId(), JournalFolder.class.getName(),
-			folder.getFolderId(),
+			userId, folder.getGroupId(), folder,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}

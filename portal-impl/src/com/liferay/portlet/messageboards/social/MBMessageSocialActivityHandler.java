@@ -41,14 +41,11 @@ import java.util.List;
 	property = "model.className=com.liferay.portlet.messageboards.model.MBMessage",
 	service = SocialActivityHandler.class
 )
-public class MBMessageSocialActivityHandler extends BaseSocialActivityHandler {
+public class MBMessageSocialActivityHandler
+	extends BaseSocialActivityHandler<MBMessage> {
 
 	@Override
-	public void deleteActivities(String className, long classPK)
-		throws PortalException {
-
-		MBMessage message = mbMessageLocalService.getMBMessage(classPK);
-
+	public void deleteActivities(MBMessage message) throws PortalException {
 		deleteDiscussionSocialActivities(BlogsEntry.class.getName(), message);
 	}
 

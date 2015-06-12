@@ -15,34 +15,34 @@
 package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.ClassedModel;
 
 import java.util.Date;
 
 /**
  * @author Adolfo Pérez
  */
-public interface SocialActivityHandler {
+public interface SocialActivityHandler<T extends ClassedModel> {
 
 	public void addActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException;
 
 	public void addUniqueActivity(
-			long userId, long groupId, Date createDate, String className,
-			long classPK, int type, String extraData, long receiverUserId)
+			long userId, long groupId, Date createDate, T classedModel,
+			int type, String extraData, long receiverUserId)
 		throws PortalException;
 
 	public void addUniqueActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException;
 
-	public void deleteActivities(String className, long classPK)
-		throws PortalException;
+	public void deleteActivities(T classedModel) throws PortalException;
 
 	public void updateLastSocialActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, T classedModel, int type,
 			Date createDate)
 		throws PortalException;
 

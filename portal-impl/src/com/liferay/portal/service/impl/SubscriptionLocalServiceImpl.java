@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.ClassName;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.SubscriptionConstants;
 import com.liferay.portal.model.User;
@@ -151,7 +150,7 @@ public class SubscriptionLocalServiceImpl
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, groupId, className, classPK,
+				userId, groupId, assetEntry,
 				SocialActivityConstants.TYPE_SUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}
@@ -224,18 +223,12 @@ public class SubscriptionLocalServiceImpl
 			subscription.getClassNameId(), subscription.getClassPK());
 
 		if (assetEntry != null) {
-			ClassName className = classNameLocalService.getClassName(
-				subscription.getClassNameId());
-
-			String subscriptionClassName = className.getValue();
-
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				subscription.getUserId(), assetEntry.getGroupId(),
-				subscriptionClassName, subscription.getClassPK(),
+				subscription.getUserId(), assetEntry.getGroupId(), subscription,
 				SocialActivityConstants.TYPE_UNSUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}

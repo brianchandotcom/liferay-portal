@@ -15,6 +15,7 @@
 package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.model.ClassedModel;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -25,81 +26,88 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class SocialActivityHandlerImpl implements SocialActivityHandler {
+public class SocialActivityHandlerImpl
+	implements SocialActivityHandler<ClassedModel> {
 
 	public SocialActivityHandlerImpl(
-		SocialActivityHandler defaultSocialActivityHandler) {
+		SocialActivityHandler<ClassedModel> defaultSocialActivityHandler) {
 
 		_defaultSocialActivityHandler = defaultSocialActivityHandler;
 	}
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, ClassedModel classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
-			className);
+		SocialActivityHandler<ClassedModel> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.addActivity(
-			userId, groupId, className, classPK, type, extraData,
-			receiverUserId);
+			userId, groupId, classedModel, type, extraData, receiverUserId);
 	}
 
 	@Override
 	public void addUniqueActivity(
-			long userId, long groupId, Date createDate, String className,
-			long classPK, int type, String extraData, long receiverUserId)
-		throws PortalException {
-
-		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
-			className);
-
-		socialActivityHandler.addUniqueActivity(
-			userId, groupId, createDate, className, classPK, type, extraData,
-			receiverUserId);
-	}
-
-	@Override
-	public void addUniqueActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, ClassedModel classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
-			className);
+		SocialActivityHandler<ClassedModel> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.addUniqueActivity(
-			userId, groupId, className, classPK, type, extraData,
+			userId, groupId, classedModel, type, extraData, receiverUserId);
+	}
+
+	@Override
+	public void addUniqueActivity(
+			long userId, long groupId, Date createDate,
+			ClassedModel classedModel, int type, String extraData,
+			long receiverUserId)
+		throws PortalException {
+
+		SocialActivityHandler<ClassedModel> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
+
+		socialActivityHandler.addUniqueActivity(
+			userId, groupId, createDate, classedModel, type, extraData,
 			receiverUserId);
 	}
 
 	@Override
-	public void deleteActivities(String className, long classPK)
+	public void deleteActivities(ClassedModel classedModel)
 		throws PortalException {
 
-		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
-			className);
+		SocialActivityHandler<ClassedModel> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
 
-		socialActivityHandler.deleteActivities(className, classPK);
+		socialActivityHandler.deleteActivities(classedModel);
 	}
 
 	@Override
 	public void updateLastSocialActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, ClassedModel classedModel, int type,
 			Date createDate)
 		throws PortalException {
 
-		SocialActivityHandler socialActivityHandler = getSocialActivityHandler(
-			className);
+		SocialActivityHandler<ClassedModel> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.updateLastSocialActivity(
-			userId, groupId, className, classPK, type, createDate);
+			userId, groupId, classedModel, type, createDate);
 	}
 
-	protected SocialActivityHandler getSocialActivityHandler(String className) {
-		SocialActivityHandler socialActivityHandler =
+	protected void activate() {
+		_serviceTrackerMap.open();
+	}
+
+	@SuppressWarnings("unchecked")
+	protected SocialActivityHandler<ClassedModel> getSocialActivityHandler(
+		String className) {
+
+		SocialActivityHandler<ClassedModel> socialActivityHandler =
 			_serviceTrackerMap.getService(className);
 
 		if (socialActivityHandler != null) {
@@ -109,8 +117,10 @@ public class SocialActivityHandlerImpl implements SocialActivityHandler {
 		return _defaultSocialActivityHandler;
 	}
 
-	private final SocialActivityHandler _defaultSocialActivityHandler;
+	private final SocialActivityHandler<ClassedModel>
+		_defaultSocialActivityHandler;
 
+	@SuppressWarnings("rawtypes")
 	private final ServiceTrackerMap<String, SocialActivityHandler>
 		_serviceTrackerMap = ServiceTrackerCollections.singleValueMap(
 			SocialActivityHandler.class, "(model.className=*)",

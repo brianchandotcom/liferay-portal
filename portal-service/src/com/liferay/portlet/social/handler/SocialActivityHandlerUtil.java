@@ -16,6 +16,7 @@ package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.portal.model.ClassedModel;
 
 import java.util.Date;
 
@@ -24,66 +25,66 @@ import java.util.Date;
  */
 public class SocialActivityHandlerUtil {
 
-	public static void addActivity(
-			long userId, long groupId, String className, long classPK, int type,
+	public static <T extends ClassedModel> void addActivity(
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityHandler().addActivity(
-			userId, groupId, className, classPK, type, extraData,
-			receiverUserId);
+			userId, groupId, classedModel, type, extraData, receiverUserId);
 	}
 
-	public static void addUniqueActivity(
-			long userId, long groupId, Date createDate, String className,
-			long classPK, int type, String extraData, long receiverUserId)
+	public static <T extends ClassedModel> void addUniqueActivity(
+			long userId, long groupId, Date createDate, T classedModel,
+			int type, String extraData, long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityHandler().addUniqueActivity(
-			userId, groupId, createDate, className, classPK, type, extraData,
+			userId, groupId, createDate, classedModel, type, extraData,
 			receiverUserId);
 	}
 
-	public static void addUniqueActivity(
-			long userId, long groupId, String className, long classPK, int type,
+	public static <T extends ClassedModel> void addUniqueActivity(
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityHandler().addUniqueActivity(
-			userId, groupId, className, classPK, type, extraData,
-			receiverUserId);
+			userId, groupId, classedModel, type, extraData, receiverUserId);
 	}
 
-	public static void deleteActivities(String className, long classPK)
+	public static <T extends ClassedModel> void deleteActivities(T classedModel)
 		throws PortalException {
 
-		getSocialActivityHandler().deleteActivities(className, classPK);
+		getSocialActivityHandler().deleteActivities(classedModel);
 	}
 
-	public static SocialActivityHandler getSocialActivityHandler() {
+	public static SocialActivityHandler<ClassedModel>
+		getSocialActivityHandler() {
+
 		PortalRuntimePermission.checkGetBeanProperty(
 			SocialActivityHandlerUtil.class);
 
 		return _socialActivityHandler;
 	}
 
-	public static void updateLastSocialActivity(
-			long userId, long groupId, String className, long classPK, int type,
+	public static <T extends ClassedModel> void updateLastSocialActivity(
+			long userId, long groupId, T classedModel, int type,
 			Date createDate)
 		throws PortalException {
 
 		getSocialActivityHandler().updateLastSocialActivity(
-			userId, groupId, className, classPK, type, createDate);
+			userId, groupId, classedModel, type, createDate);
 	}
 
 	public void setSocialActivityHandler(
-		SocialActivityHandler socialActivityHandler) {
+		SocialActivityHandler<ClassedModel> socialActivityHandler) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_socialActivityHandler = socialActivityHandler;
 	}
 
-	private static SocialActivityHandler _socialActivityHandler;
+	private static SocialActivityHandler<ClassedModel> _socialActivityHandler;
 
 }

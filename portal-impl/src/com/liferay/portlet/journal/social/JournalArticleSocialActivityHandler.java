@@ -12,24 +12,35 @@
  * details.
  */
 
-package com.liferay.portlet.social.handler;
+package com.liferay.portlet.journal.social;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portlet.social.handler.SocialActivityHandler;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez
  */
-public class DefaultSocialActivityHandler
-	extends BaseSocialActivityHandler<ClassedModel> {
+@OSGiBeanProperties(
+	property = "model.className=com.liferay.journal.model.JournalArticle",
+	service = SocialActivityHandler.class
+)
+public class JournalArticleSocialActivityHandler
+	extends BaseSocialActivityHandler<JournalArticle> {
+
+	@Override
+	protected long getPrimaryKey(JournalArticle journalArticle) {
+		return journalArticle.getResourcePrimKey();
+	}
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return _socialActivityLocalService;
+		return socialActivityLocalService;
 	}
 
 	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService _socialActivityLocalService;
+	protected SocialActivityLocalService socialActivityLocalService;
 
 }

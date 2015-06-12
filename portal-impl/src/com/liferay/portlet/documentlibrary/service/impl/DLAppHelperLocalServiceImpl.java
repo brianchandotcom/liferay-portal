@@ -580,9 +580,7 @@ public class DLAppHelperLocalServiceImpl
 			extraDataJSONObject.put("title", fileShortcut.getToTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, fileShortcut.getGroupId(),
-				DLFileShortcutConstants.getClassName(),
-				fileShortcut.getFileShortcutId(),
+				userId, fileShortcut.getGroupId(), fileShortcut,
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				extraDataJSONObject.toString(), 0);
 		}
@@ -623,9 +621,7 @@ public class DLAppHelperLocalServiceImpl
 			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(),
+			userId, fileShortcut.getGroupId(), fileShortcut,
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -947,8 +943,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileEntry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(),
+			userId, fileEntry.getGroupId(), fileEntry,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
@@ -975,9 +970,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileShortcut.getToTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileShortcut.getGroupId(),
-			DLFileShortcutConstants.getClassName(),
-			fileShortcut.getFileShortcutId(),
+			userId, fileShortcut.getGroupId(), fileShortcut,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1039,8 +1032,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", folder.getName());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
-			folder.getFolderId(),
+			userId, folder.getGroupId(), folder,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
@@ -1369,10 +1361,8 @@ public class DLAppHelperLocalServiceImpl
 
 				SocialActivityHandlerUtil.addUniqueActivity(
 					latestFileVersion.getStatusByUserId(),
-					fileEntry.getGroupId(), activityCreateDate,
-					DLFileEntryConstants.getClassName(),
-					fileEntry.getFileEntryId(), activityType,
-					extraDataJSONObject.toString(), 0);
+					fileEntry.getGroupId(), activityCreateDate, fileEntry,
+					activityType, extraDataJSONObject.toString(), 0);
 
 				// Subscriptions
 
@@ -1509,8 +1499,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileEntry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(),
+			userId, fileEntry.getGroupId(), fileEntry,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1609,8 +1598,7 @@ public class DLAppHelperLocalServiceImpl
 			"title", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileEntry.getGroupId(), DLFileEntryConstants.getClassName(),
-			fileEntry.getFileEntryId(),
+			userId, fileEntry.getGroupId(), fileEntry,
 			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1691,8 +1679,7 @@ public class DLAppHelperLocalServiceImpl
 			extraDataJSONObject.put("title", folder.getName());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, folder.getGroupId(), DLFolderConstants.class.getName(),
-				folder.getFolderId(),
+				userId, folder.getGroupId(), folder,
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				extraDataJSONObject.toString(), 0);
 		}
@@ -1755,8 +1742,8 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", folder.getName());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, folder.getGroupId(), DLFolderConstants.getClassName(),
-			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, folder.getGroupId(), folder,
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return new LiferayFolder(dlFolder);

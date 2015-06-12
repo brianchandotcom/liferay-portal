@@ -253,7 +253,7 @@ public class RatingsEntryLocalServiceImpl
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, assetEntry.getGroupId(), className, classPK,
+				userId, assetEntry.getGroupId(), assetEntry,
 				SocialActivityConstants.TYPE_ADD_VOTE,
 				extraDataJSONObject.toString(), 0);
 		}

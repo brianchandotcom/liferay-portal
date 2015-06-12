@@ -35,51 +35,47 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
 	property = "model.className=com.liferay.portlet.messageboards.model.MBThread",
 	service = SocialActivityHandler.class
 )
-public class MBThreadSocialActivityHandler extends BaseSocialActivityHandler {
+public class MBThreadSocialActivityHandler
+	extends BaseSocialActivityHandler<MBThread> {
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, String className, long classPK, int type,
+			long userId, long groupId, MBThread thread, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
 		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
-			addSubscribeSocialActivity(userId, groupId, classPK, extraData);
+			addSubscribeSocialActivity(userId, groupId, thread, extraData);
 		}
 		else if (type == SocialActivityConstants.TYPE_VIEW) {
 			addViewSocialActivity(
-				userId, classPK, type, extraData, receiverUserId);
+				userId, thread, type, extraData, receiverUserId);
 		}
 		else {
 			super.addActivity(
-				userId, groupId, className, classPK, type, extraData,
-				receiverUserId);
+				userId, groupId, thread, type, extraData, receiverUserId);
 		}
 	}
 
 	protected void addSubscribeSocialActivity(
-			long userId, long groupId, long classPK, String extraData)
+			long userId, long groupId, MBThread thread, String extraData)
 		throws PortalException {
 
 		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject(
 			extraData);
 
-		MBThread mbThread = mbThreadLocalService.getMBThread(classPK);
-
-		extraDataJSONObject.put("threadId", classPK);
+		extraDataJSONObject.put("threadId", thread.getThreadId());
 
 		socialActivityLocalService.addActivity(
 			userId, groupId, MBMessage.class.getName(),
-			mbThread.getRootMessageId(), SocialActivityConstants.TYPE_SUBSCRIBE,
+			thread.getRootMessageId(), SocialActivityConstants.TYPE_SUBSCRIBE,
 			extraDataJSONObject.toString(), 0);
 	}
 
 	protected void addViewSocialActivity(
-			long userId, long classPK, int type, String extraData,
+			long userId, MBThread thread, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
-
-		MBThread thread = mbThreadLocalService.getThread(classPK);
 
 		if (thread.getRootMessageUserId() == userId) {
 			return;

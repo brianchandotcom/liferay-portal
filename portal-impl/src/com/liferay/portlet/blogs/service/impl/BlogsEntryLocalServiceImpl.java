@@ -1049,8 +1049,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", entry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, entry.getGroupId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, entry.getGroupId(), entry,
+			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		// Workflow
@@ -1114,8 +1114,8 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", entry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, trashEntry.getGroupId(), BlogsEntry.class.getName(),
-			entryId, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, trashEntry.getGroupId(), entry,
+			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return entry;
@@ -1524,15 +1524,13 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityHandlerUtil.addActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
+						user.getUserId(), entry.getGroupId(), entry,
 						BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
 					SocialActivityHandlerUtil.addUniqueActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
+						user.getUserId(), entry.getGroupId(), entry,
 						BlogsActivityKeys.ADD_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}
@@ -1579,8 +1577,7 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 
 				if (serviceContext.isCommandUpdate()) {
 					SocialActivityHandlerUtil.addActivity(
-						user.getUserId(), entry.getGroupId(),
-						BlogsEntry.class.getName(), entryId,
+						user.getUserId(), entry.getGroupId(), entry,
 						BlogsActivityKeys.UPDATE_ENTRY,
 						extraDataJSONObject.toString(), 0);
 				}

@@ -436,6 +436,7 @@
 		<exception>ContentData</exception>
 		<exception>ContentName</exception>
 		<exception>InvalidStructureVersion</exception>
+		<exception>InvalidTemplateVersion</exception>
 		<exception>RequiredStructure</exception>
 		<exception>RequiredTemplate</exception>
 		<exception>Storage</exception>

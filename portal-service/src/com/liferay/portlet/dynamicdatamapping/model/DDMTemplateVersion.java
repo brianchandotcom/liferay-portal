@@ -35,4 +35,6 @@ public interface DDMTemplateVersion extends DDMTemplateVersionModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portlet.dynamicdatamapping.model.impl.DDMTemplateVersionImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portlet.dynamicdatamapping.model.DDMTemplate getTemplate()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

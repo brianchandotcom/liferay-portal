@@ -27,7 +27,7 @@ DDMStructure structure = (DDMStructure)request.getAttribute(WebKeys.DYNAMIC_DATA
 
 DDMStructureVersion structureVersion = null;
 
-if (Validator.isNotNull(structure)) {
+if (structure != null) {
 	structureVersion = structure.getStructureVersion();
 }
 

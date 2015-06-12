@@ -888,6 +888,15 @@ public class DDMTemplateLocalServiceWrapper implements DDMTemplateLocalService,
 			classPK);
 	}
 
+	@Override
+	public void revertTemplate(long userId, long templateId,
+		java.lang.String version,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_ddmTemplateLocalService.revertTemplate(userId, templateId, version,
+			serviceContext);
+	}
+
 	/**
 	* Returns an ordered range of all the templates matching the group, class
 	* name ID, class PK, type, and mode, and matching the keywords in the

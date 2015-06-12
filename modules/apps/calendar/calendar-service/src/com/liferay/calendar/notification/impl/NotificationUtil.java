@@ -21,8 +21,9 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.notification.NotificationField;
 import com.liferay.calendar.notification.NotificationTemplateType;
 import com.liferay.calendar.notification.NotificationType;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationUtil;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.util.PortletPropsKeys;
-import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.StringPool;
@@ -33,7 +34,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.util.ContentUtil;
-import com.liferay.util.portlet.PortletProps;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -79,7 +79,8 @@ public class NotificationUtil {
 			PortletPropsKeys.CALENDAR_NOTIFICATION_PREFIX + StringPool.PERIOD +
 			notificationField.toString();
 
-		String templatePath = PortletProps.get(propertyName, filter);
+		String templatePath = CalendarServiceConfigurationUtil.get(
+			propertyName, filter);
 
 		return ContentUtil.get(templatePath);
 	}
@@ -240,6 +241,7 @@ public class NotificationUtil {
 	}
 
 	private static final long _CHECK_INTERVAL =
-		PortletPropsValues.CALENDAR_NOTIFICATION_CHECK_INTERVAL * Time.MINUTE;
+		CalendarServiceConfigurationValues
+			.CALENDAR_NOTIFICATION_CHECK_INTERVAL * Time.MINUTE;
 
 }

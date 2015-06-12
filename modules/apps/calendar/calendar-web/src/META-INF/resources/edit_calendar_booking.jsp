@@ -74,9 +74,9 @@ endTimeJCalendar.setFirstDayOfWeek(weekStartsOn + 1);
 endTime = endTimeJCalendar.getTimeInMillis();
 
 long firstReminder = BeanParamUtil.getLong(calendarBooking, request, "firstReminder");
-String firstReminderType = BeanParamUtil.getString(calendarBooking, request, "firstReminderType", PortletPropsValues.CALENDAR_NOTIFICATION_DEFAULT_TYPE);
+String firstReminderType = BeanParamUtil.getString(calendarBooking, request, "firstReminderType", CalendarServiceConfigurationValues.CALENDAR_NOTIFICATION_DEFAULT_TYPE.name());
 long secondReminder = BeanParamUtil.getLong(calendarBooking, request, "secondReminder");
-String secondReminderType = BeanParamUtil.getString(calendarBooking, request, "secondReminderType", PortletPropsValues.CALENDAR_NOTIFICATION_DEFAULT_TYPE);
+String secondReminderType = BeanParamUtil.getString(calendarBooking, request, "secondReminderType", CalendarServiceConfigurationValues.CALENDAR_NOTIFICATION_DEFAULT_TYPE.name());
 
 int status = BeanParamUtil.getInteger(calendarBooking, request, "status");
 

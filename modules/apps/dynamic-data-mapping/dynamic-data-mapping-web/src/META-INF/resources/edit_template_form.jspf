@@ -36,11 +36,11 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 <%@ include file="/form_builder.jspf" %>
 
 <aui:script>
-	function <portlet:namespace />attachValueChange() {
+	function <portlet:namespace />attachValueChange(formBuilder) {
 		AUI.$('#<portlet:namespace />mode').on(
 			'change',
 			function(event) {
-				<portlet:namespace />toggleMode(AUI.$(event.currentTarget).val());
+				<portlet:namespace />toggleMode(formBuilder, AUI.$(event.currentTarget).val());
 			}
 		);
 	}
@@ -48,35 +48,34 @@ String fieldsJSONArrayString = fieldsJSONArray.toString();
 	Liferay.on(
 		'<portlet:namespace />formBuilderLoaded',
 		function(event) {
-			<portlet:namespace />attachValueChange();
+			var formBuilder = event.formBuilder;
 
-			<portlet:namespace />toggleMode('<%= HtmlUtil.escape(mode) %>');
+			<portlet:namespace />attachValueChange(formBuilder);
+
+			<portlet:namespace />toggleMode(formBuilder, '<%= HtmlUtil.escape(mode) %>');
 		}
 	);
 
-	function <portlet:namespace />setFieldsHiddenAttributes(mode, item, index) {
-		var hiddenAttributesMap = <portlet:namespace />formBuilder.MAP_HIDDEN_FIELD_ATTRS;
+	function <portlet:namespace />setFieldsHiddenAttributes(formBuilder, mode, item, index) {
+		var hiddenAttributesMap = formBuilder.MAP_HIDDEN_FIELD_ATTRS;
 
 		var hiddenAttributes = hiddenAttributesMap[item.get('type')] || hiddenAttributesMap.DEFAULT;
 
 		if (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>') {
-
 			hiddenAttributes = AUI._.without(hiddenAttributes, 'readOnly');
 		}
 
 		item.set('hiddenAttributes', hiddenAttributes);
 	}
 
-	function <portlet:namespace />toggleMode(mode) {
+	function <portlet:namespace />toggleMode(formBuilder, mode) {
 		var _ = AUI._;
-
-		var formBuilder = <portlet:namespace />formBuilder;
 
 		var modeEdit = (mode === '<%= DDMTemplateConstants.TEMPLATE_MODE_EDIT %>');
 
 		formBuilder.set('allowRemoveRequiredFields', modeEdit);
 
-		var setFieldsHiddenAttributes = _.bindKey(window, '<portlet:namespace />setFieldsHiddenAttributes', mode);
+		var setFieldsHiddenAttributes = _.bindKey(window, '<portlet:namespace />setFieldsHiddenAttributes', formBuilder, mode);
 
 		_.forEach(formBuilder.get('fields')._items, setFieldsHiddenAttributes);
 

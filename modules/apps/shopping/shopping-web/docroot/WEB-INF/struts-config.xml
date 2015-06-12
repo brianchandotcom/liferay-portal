@@ -5,41 +5,41 @@
 	<action-mappings>
 		<!-- Shopping -->
 		<action path="/shopping/cart" type="com.liferay.shopping.web.action.CartAction">
-			<forward name="portlet.shopping.cart" path="portlet.shopping.cart" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.cart" path="/portlet/shopping/cart.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/checkout" type="com.liferay.shopping.web.action.CheckoutAction">
-			<forward name="portlet.shopping.checkout_first" path="portlet.shopping.checkout_first" />
-			<forward name="portlet.shopping.checkout_second" path="portlet.shopping.checkout_second" />
-			<forward name="portlet.shopping.checkout_third" path="portlet.shopping.checkout_third" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.checkout_first" path="/portlet/shopping/checkout_first.jsp" />
+			<forward name="portlet.shopping.checkout_second" path="/portlet/shopping/checkout_second.jsp" />
+			<forward name="portlet.shopping.checkout_third" path="/portlet/shopping/checkout_third.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/edit_category" type="com.liferay.shopping.web.action.EditCategoryAction">
-			<forward name="portlet.shopping.edit_category" path="portlet.shopping.edit_category" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.edit_category" path="/portlet/shopping/edit_category.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/edit_coupon" type="com.liferay.shopping.web.action.EditCouponAction">
-			<forward name="portlet.shopping.edit_coupon" path="portlet.shopping.edit_coupon" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.edit_coupon" path="/portlet/shopping/edit_coupon.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/edit_item" type="com.liferay.shopping.web.action.EditItemAction">
-			<forward name="portlet.shopping.edit_item" path="portlet.shopping.edit_item" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.edit_item" path="/portlet/shopping/edit_item.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/edit_item_quantities" forward="portlet.shopping.edit_item_quantities" />
 
 		<action path="/shopping/edit_order" type="com.liferay.shopping.web.action.EditOrderAction">
-			<forward name="portlet.shopping.edit_order" path="portlet.shopping.edit_order" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.edit_order" path="/portlet/shopping/edit_order.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/edit_order_discussion" type="com.liferay.portlet.messageboards.action.EditDiscussionAction">
-			<forward name="portlet.message_boards.error" path="portlet.shopping.error" />
+			<forward name="portlet.message_boards.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/notify" type="com.liferay.shopping.web.action.PayPalNotificationAction" />
@@ -47,23 +47,23 @@
 		<action path="/shopping/search" forward="portlet.shopping.search" />
 
 		<action path="/shopping/select_category" type="com.liferay.shopping.web.action.EditCategoryAction">
-			<forward name="portlet.shopping.edit_category" path="portlet.shopping.select_category" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.edit_category" path="/portlet/shopping/select_category.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 
 		<action path="/shopping/view" type="com.liferay.shopping.web.action.ViewAction">
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-			<forward name="portlet.shopping.view" path="portlet.shopping.view" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
+			<forward name="portlet.shopping.view" path="/portlet/shopping/view.jsp" />
 		</action>
 
 		<action path="/shopping/view_coupon" type="com.liferay.shopping.web.action.ViewCouponAction">
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
-			<forward name="portlet.shopping.view_coupon" path="portlet.shopping.view_coupon" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
+			<forward name="portlet.shopping.view_coupon" path="/portlet/shopping/view_coupon.jsp" />
 		</action>
 
 		<action path="/shopping/view_item" type="com.liferay.shopping.web.action.EditItemAction">
-			<forward name="portlet.shopping.edit_item" path="portlet.shopping.view_item" />
-			<forward name="portlet.shopping.error" path="portlet.shopping.error" />
+			<forward name="portlet.shopping.edit_item" path="/portlet/shopping/view_item.jsp" />
+			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />
 		</action>
 	</action-mappings>
 </struts-config>

@@ -6142,7 +6142,13 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 
 		<ant dir="portal-service" target="test-class-group" inheritAll="false" />
 
-		<ant dir="portal-impl" target="test-class-group" inheritAll="false" />
+		<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+			<property name="test.type" value="unit" />
+		</ant>
+
+		<ant dir="portal-impl" target="test-class-group" inheritAll="false">
+			<property name="test.type" value="integration" />
+		</ant>
 
 		<ant dir="util-java" target="test-class-group" inheritAll="false" />
 

@@ -67,8 +67,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		try {
 			return doRender(ddmForm, ddmFormLayout, ddmFormRenderingContext);
 		}
-		catch (TemplateException te) {
-			throw new DDMFormRenderingException(te);
+		catch (DDMFormRenderingException ddmfre) {
+			throw ddmfre;
+		}
+		catch (PortalException pe) {
+			throw new DDMFormRenderingException(pe);
 		}
 	}
 
@@ -80,8 +83,11 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		try {
 			return doRender(ddmForm, ddmFormRenderingContext);
 		}
-		catch (TemplateException te) {
-			throw new DDMFormRenderingException(te);
+		catch (DDMFormRenderingException ddmfre) {
+			throw ddmfre;
+		}
+		catch (PortalException pe) {
+			throw new DDMFormRenderingException(pe);
 		}
 	}
 
@@ -95,7 +101,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	protected String doRender(
 			DDMForm ddmForm, DDMFormLayout ddmFormLayout,
 			DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException, TemplateException {
+		throws PortalException {
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
@@ -114,7 +120,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 
 	protected String doRender(
 			DDMForm ddmForm, DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException, TemplateException {
+		throws PortalException {
 
 		Template template = TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _templateResource, false);
@@ -185,7 +191,7 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 	protected void populateCommonContext(
 			Template template, DDMForm ddmForm,
 			DDMFormRenderingContext ddmFormRenderingContext)
-		throws DDMFormRenderingException {
+		throws PortalException {
 
 		template.put("containerId", StringUtil.randomId());
 		template.put(
@@ -194,16 +200,9 @@ public class DDMFormRendererImpl implements DDMFormRenderer {
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			DDMFormFieldTypeRegistryUtil.getDDMFormFieldTypes();
 
-		try {
-			template.put(
-				"fieldTypes",
-				DDMFormFieldTypesJSONSerializerUtil.serialize(
-					ddmFormFieldTypes));
-		}
-		catch (PortalException pe) {
-			throw new DDMFormRenderingException(pe);
-		}
-
+		template.put(
+			"fieldTypes",
+			DDMFormFieldTypesJSONSerializerUtil.serialize(ddmFormFieldTypes));
 		template.put(
 			"portletNamespace", ddmFormRenderingContext.getPortletNamespace());
 

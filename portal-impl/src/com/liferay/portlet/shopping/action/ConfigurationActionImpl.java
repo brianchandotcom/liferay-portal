@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.shopping.action;
 
-import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -31,7 +31,8 @@ import javax.portlet.PortletConfig;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ConfigurationActionImpl extends SettingsConfigurationAction {
+public class ConfigurationActionImpl
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

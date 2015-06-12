@@ -29,7 +29,7 @@ import javax.portlet.ReadOnlyException;
  * @author Iván Zaera
  */
 public class DefaultConfigurationAction
-	extends SettingsConfigurationAction
+	extends BaseJSPSettingsConfigurationAction
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
 	public DefaultConfigurationAction() {

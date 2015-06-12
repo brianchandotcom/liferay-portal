@@ -38,61 +38,61 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 
 	@Override
 	public void addActivity(
-			long userId, T classedModel, int type, String extraData,
+			long userId, T model, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
 
 		SocialActivityHandler<T> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
+			getSocialActivityHandler(model.getModelClassName());
 
 		socialActivityHandler.addActivity(
-			userId, classedModel, type, extraData, receiverUserId);
+			userId, model, type, extraData, receiverUserId);
 	}
 
 	@Override
 	public void addUniqueActivity(
-			long userId, Date createDate, T classedModel, int type,
-			String extraData, long receiverUserId)
-		throws PortalException {
-
-		SocialActivityHandler<T> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
-
-		socialActivityHandler.addUniqueActivity(
-			userId, createDate, classedModel, type, extraData, receiverUserId);
-	}
-
-	@Override
-	public void addUniqueActivity(
-			long userId, T classedModel, int type, String extraData,
+			long userId, Date createDate, T model, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
 
 		SocialActivityHandler<T> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
+			getSocialActivityHandler(model.getModelClassName());
 
 		socialActivityHandler.addUniqueActivity(
-			userId, classedModel, type, extraData, receiverUserId);
+			userId, createDate, model, type, extraData, receiverUserId);
 	}
 
 	@Override
-	public void deleteActivities(T classedModel) throws PortalException {
-		SocialActivityHandler<T> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
+	public void addUniqueActivity(
+			long userId, T model, int type, String extraData,
+			long receiverUserId)
+		throws PortalException {
 
-		socialActivityHandler.deleteActivities(classedModel);
+		SocialActivityHandler<T> socialActivityHandler =
+			getSocialActivityHandler(model.getModelClassName());
+
+		socialActivityHandler.addUniqueActivity(
+			userId, model, type, extraData, receiverUserId);
+	}
+
+	@Override
+	public void deleteActivities(T model) throws PortalException {
+		SocialActivityHandler<T> socialActivityHandler =
+			getSocialActivityHandler(model.getModelClassName());
+
+		socialActivityHandler.deleteActivities(model);
 	}
 
 	@Override
 	public void updateLastSocialActivity(
-			long userId, T classedModel, int type, Date createDate)
+			long userId, T model, int type, Date createDate)
 		throws PortalException {
 
 		SocialActivityHandler<T> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
+			getSocialActivityHandler(model.getModelClassName());
 
 		socialActivityHandler.updateLastSocialActivity(
-			userId, classedModel, type, createDate);
+			userId, model, type, createDate);
 	}
 
 	protected void activate() {

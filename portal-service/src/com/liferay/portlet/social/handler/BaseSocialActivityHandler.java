@@ -32,70 +32,70 @@ public abstract class BaseSocialActivityHandler
 
 	@Override
 	public void addActivity(
-			long userId, T classedModel, int type, String extraData,
+			long userId, T model, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
 
-		String className = getClassName(classedModel);
-		long primaryKey = getPrimaryKey(classedModel);
+		String className = getClassName(model);
+		long primaryKey = getPrimaryKey(model);
 
 		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
-			if (primaryKey != classedModel.getGroupId()) {
+			if (primaryKey != model.getGroupId()) {
 				getSocialActivityLocalService().addActivity(
-					userId, classedModel.getGroupId(), className, primaryKey,
+					userId, model.getGroupId(), className, primaryKey,
 					SocialActivityConstants.TYPE_SUBSCRIBE, extraData, 0);
 			}
 		}
 		else {
 			getSocialActivityLocalService().addActivity(
-				userId, classedModel.getGroupId(), className, primaryKey, type,
+				userId, model.getGroupId(), className, primaryKey, type,
 				extraData, receiverUserId);
 		}
 	}
 
 	@Override
 	public void addUniqueActivity(
-			long userId, Date createDate, T classedModel, int type,
-			String extraData, long receiverUserId)
-		throws PortalException {
-
-		String className = getClassName(classedModel);
-		long primaryKey = getPrimaryKey(classedModel);
-
-		getSocialActivityLocalService().addUniqueActivity(
-			userId, classedModel.getGroupId(), createDate, className,
-			primaryKey, type, extraData, receiverUserId);
-	}
-
-	@Override
-	public void addUniqueActivity(
-			long userId, T classedModel, int type, String extraData,
+			long userId, Date createDate, T model, int type, String extraData,
 			long receiverUserId)
 		throws PortalException {
 
-		String className = getClassName(classedModel);
-		long primaryKey = getPrimaryKey(classedModel);
+		String className = getClassName(model);
+		long primaryKey = getPrimaryKey(model);
 
 		getSocialActivityLocalService().addUniqueActivity(
-			userId, classedModel.getGroupId(), className, primaryKey, type,
+			userId, model.getGroupId(), createDate, className, primaryKey, type,
 			extraData, receiverUserId);
 	}
 
 	@Override
-	public void deleteActivities(T classedModel) throws PortalException {
-		String className = getClassName(classedModel);
-		long primaryKey = getPrimaryKey(classedModel);
+	public void addUniqueActivity(
+			long userId, T model, int type, String extraData,
+			long receiverUserId)
+		throws PortalException {
+
+		String className = getClassName(model);
+		long primaryKey = getPrimaryKey(model);
+
+		getSocialActivityLocalService().addUniqueActivity(
+			userId, model.getGroupId(), className, primaryKey, type, extraData,
+			receiverUserId);
+	}
+
+	@Override
+	public void deleteActivities(T model) throws PortalException {
+		String className = getClassName(model);
+		long primaryKey = getPrimaryKey(model);
 
 		getSocialActivityLocalService().deleteActivities(className, primaryKey);
 	}
 
 	@Override
 	public void updateLastSocialActivity(
-			long userId, T classedModel, int type, Date createDate)
+			long userId, T model, int type, Date createDate)
 		throws PortalException {
 
-		String className = getClassName(classedModel);
-		long primaryKey = getPrimaryKey(classedModel);
+		String className = getClassName(model);
+		long primaryKey = getPrimaryKey(model);
 
 		SocialActivity lastSocialActivity =
 			getSocialActivityLocalService().fetchFirstActivity(

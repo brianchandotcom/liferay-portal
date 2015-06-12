@@ -26,24 +26,24 @@ import java.util.Date;
 public interface SocialActivityHandler<T extends ClassedModel & GroupedModel> {
 
 	public void addActivity(
-			long userId, T classedModel, int type, String extraData,
+			long userId, T model, int type, String extraData,
 			long receiverUserId)
 		throws PortalException;
 
 	public void addUniqueActivity(
-			long userId, Date createDate, T classedModel, int type,
-			String extraData, long receiverUserId)
-		throws PortalException;
-
-	public void addUniqueActivity(
-			long userId, T classedModel, int type, String extraData,
+			long userId, Date createDate, T model, int type, String extraData,
 			long receiverUserId)
 		throws PortalException;
 
-	public void deleteActivities(T classedModel) throws PortalException;
+	public void addUniqueActivity(
+			long userId, T model, int type, String extraData,
+			long receiverUserId)
+		throws PortalException;
+
+	public void deleteActivities(T model) throws PortalException;
 
 	public void updateLastSocialActivity(
-			long userId, T classedModel, int type, Date createDate)
+			long userId, T model, int type, Date createDate)
 		throws PortalException;
 
 }

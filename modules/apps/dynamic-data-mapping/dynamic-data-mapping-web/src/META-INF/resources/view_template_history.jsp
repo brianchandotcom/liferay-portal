@@ -42,7 +42,6 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 />
 
 <aui:form action="<%= portletURL.toString() %>" method="post" name="fm">
-
 	<liferay-ui:search-container
 		searchContainer="<%= new TemplateSearch(renderRequest, portletURL) %>"
 		total="<%= DDMTemplateVersionServiceUtil.getTemplateVersionsCount(templateId) %>"
@@ -58,7 +57,7 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 		>
 
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_template_record.jsp" />
+				<portlet:param name="mvcPath" value="/view_template_version.jsp" />
 				<portlet:param name="redirect" value="<%= redirect %>" />
 				<portlet:param name="templateVersionId" value="<%= String.valueOf(templateVersion.getTemplateVersionId()) %>" />
 				<portlet:param name="formBuilderReadOnly" value="<%= Boolean.TRUE.toString() %>" />
@@ -93,10 +92,8 @@ backURL.setParameter("templateId", String.valueOf(templateId));
 				cssClass="entry-action"
 				path="/template_version_action.jsp"
 			/>
-
 		</liferay-ui:search-container-row>
 
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
-
 </aui:form>

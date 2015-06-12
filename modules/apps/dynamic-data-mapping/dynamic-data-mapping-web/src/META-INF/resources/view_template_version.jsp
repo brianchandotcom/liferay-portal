@@ -26,6 +26,7 @@ DDMTemplateVersion templateVersion = DDMTemplateVersionServiceUtil.getTemplateVe
 DDMTemplate template = templateVersion.getTemplate();
 
 PortletURL backURL = renderResponse.createRenderURL();
+
 backURL.setParameter("mvcPath", "/view_template_history.jsp");
 backURL.setParameter("redirect", redirect);
 backURL.setParameter("templateId", String.valueOf(template.getTemplateId()));

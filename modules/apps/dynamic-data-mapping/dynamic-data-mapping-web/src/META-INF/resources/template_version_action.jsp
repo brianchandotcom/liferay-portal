@@ -26,7 +26,7 @@ DDMTemplateVersion templateVersion = (DDMTemplateVersion)row.getObject();
 
 <liferay-ui:icon-menu icon="<%= StringPool.BLANK %>" message="<%= StringPool.BLANK %>">
 	<liferay-portlet:renderURL portletName="<%= PortletKeys.DYNAMIC_DATA_MAPPING %>" var="viewTemplateVersionURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
-		<portlet:param name="mvcPath" value="/view_template_record.jsp" />
+		<portlet:param name="mvcPath" value="/view_template_version.jsp" />
 		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="templateVersionId" value="<%= String.valueOf(templateVersion.getTemplateVersionId()) %>" />
 		<portlet:param name="formBuilderReadOnly" value="<%= String.valueOf(Boolean.TRUE) %>" />
@@ -39,7 +39,6 @@ DDMTemplateVersion templateVersion = (DDMTemplateVersion)row.getObject();
 	/>
 
 	<c:if test="<%= templateVersion.isApproved() %>">
-
 		<portlet:actionURL name="revertTemplate" var="revertURL">
 			<portlet:param name="mvcPath" value="/edit_template.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
@@ -52,6 +51,5 @@ DDMTemplateVersion templateVersion = (DDMTemplateVersion)row.getObject();
 			message="revert"
 			url="<%= revertURL %>"
 		/>
-
 	</c:if>
 </liferay-ui:icon-menu>

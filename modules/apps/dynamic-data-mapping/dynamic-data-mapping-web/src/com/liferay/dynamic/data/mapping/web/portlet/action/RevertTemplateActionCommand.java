@@ -48,7 +48,6 @@ public class RevertTemplateActionCommand extends BaseActionCommand {
 		throws Exception {
 
 		long templateId = ParamUtil.getLong(portletRequest, "templateId");
-
 		String version = ParamUtil.getString(portletRequest, "version");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(

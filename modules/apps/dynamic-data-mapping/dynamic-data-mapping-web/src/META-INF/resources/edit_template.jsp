@@ -30,7 +30,7 @@ DDMTemplate template = (DDMTemplate)request.getAttribute(WebKeys.DYNAMIC_DATA_MA
 
 DDMTemplateVersion templateVersion = null;
 
-if (Validator.isNotNull(template)) {
+if (template != null) {
 	templateVersion = template.getTemplateVersion();
 }
 
@@ -94,9 +94,9 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 	<aui:input name="classPK" type="hidden" value="<%= classPK %>" />
 	<aui:input name="resourceClassNameId" type="hidden" value="<%= resourceClassNameId %>" />
 	<aui:input name="type" type="hidden" value="<%= type %>" />
+	<aui:input name="status" type="hidden" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
 	<aui:input name="structureAvailableFields" type="hidden" value="<%= structureAvailableFields %>" />
 	<aui:input name="saveAndContinue" type="hidden" value="<%= false %>" />
-	<aui:input name="status" type="hidden" value="<%= String.valueOf(WorkflowConstants.STATUS_APPROVED) %>" />
 
 	<liferay-ui:error exception="<%= TemplateNameException.class %>" message="please-enter-a-valid-name" />
 	<liferay-ui:error exception="<%= TemplateScriptException.class %>" message="please-enter-a-valid-script" />
@@ -398,7 +398,9 @@ boolean showCacheableInput = ParamUtil.getBoolean(request, "showCacheableInput")
 
 		function <portlet:namespace />saveDraftTemplate() {
 			var form = AUI.$('#<portlet:namespace />fm');
+
 			form.fm('status').val(<%= String.valueOf(WorkflowConstants.STATUS_DRAFT) %>);
+
 			Liferay.fire('<%= renderResponse.getNamespace() + "saveTemplate" %>');
 		}
 

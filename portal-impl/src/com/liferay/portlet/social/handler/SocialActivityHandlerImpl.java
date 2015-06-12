@@ -51,21 +51,7 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 
 	@Override
 	public void addUniqueActivity(
-			long userId, long groupId, Date createDate, T classedModel,
-			int type, String extraData, long receiverUserId)
-		throws PortalException {
-
-		SocialActivityHandler<T> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
-
-		socialActivityHandler.addUniqueActivity(
-			userId, groupId, createDate, classedModel, type, extraData,
-			receiverUserId);
-	}
-
-	@Override
-	public void addUniqueActivity(
-			long userId, long groupId, T classedModel, int type,
+			long userId, Date createDate, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
@@ -73,7 +59,20 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.addUniqueActivity(
-			userId, groupId, classedModel, type, extraData, receiverUserId);
+			userId, createDate, classedModel, type, extraData, receiverUserId);
+	}
+
+	@Override
+	public void addUniqueActivity(
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
+		throws PortalException {
+
+		SocialActivityHandler<T> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
+
+		socialActivityHandler.addUniqueActivity(
+			userId, classedModel, type, extraData, receiverUserId);
 	}
 
 	@Override

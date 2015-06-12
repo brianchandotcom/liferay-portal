@@ -1357,9 +1357,8 @@ public class DLAppHelperLocalServiceImpl
 				extraDataJSONObject.put("title", fileEntry.getTitle());
 
 				SocialActivityHandlerUtil.addUniqueActivity(
-					latestFileVersion.getStatusByUserId(),
-					fileEntry.getGroupId(), activityCreateDate, fileEntry,
-					activityType, extraDataJSONObject.toString(), 0);
+					latestFileVersion.getStatusByUserId(), activityCreateDate,
+					fileEntry, activityType, extraDataJSONObject.toString(), 0);
 
 				// Subscriptions
 

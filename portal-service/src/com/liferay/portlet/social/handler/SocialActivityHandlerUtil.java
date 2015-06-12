@@ -37,23 +37,22 @@ public class SocialActivityHandlerUtil {
 
 	public static <T extends ClassedModel & GroupedModel>
 		void addUniqueActivity(
-			long userId, long groupId, Date createDate, T classedModel,
-			int type, String extraData, long receiverUserId)
-		throws PortalException {
-
-		getSocialActivityHandler().addUniqueActivity(
-			userId, groupId, createDate, classedModel, type, extraData,
-			receiverUserId);
-	}
-
-	public static <T extends ClassedModel & GroupedModel>
-		void addUniqueActivity(
-			long userId, long groupId, T classedModel, int type,
+			long userId, Date createDate, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityHandler().addUniqueActivity(
-			userId, groupId, classedModel, type, extraData, receiverUserId);
+			userId, createDate, classedModel, type, extraData, receiverUserId);
+	}
+
+	public static <T extends ClassedModel & GroupedModel>
+		void addUniqueActivity(
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
+		throws PortalException {
+
+		getSocialActivityHandler().addUniqueActivity(
+			userId, classedModel, type, extraData, receiverUserId);
 	}
 
 	public static <T extends ClassedModel & GroupedModel> void deleteActivities(

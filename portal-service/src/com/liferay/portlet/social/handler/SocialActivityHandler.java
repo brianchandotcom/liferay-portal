@@ -31,13 +31,13 @@ public interface SocialActivityHandler<T extends ClassedModel & GroupedModel> {
 		throws PortalException;
 
 	public void addUniqueActivity(
-			long userId, long groupId, Date createDate, T classedModel,
-			int type, String extraData, long receiverUserId)
+			long userId, Date createDate, T classedModel, int type,
+			String extraData, long receiverUserId)
 		throws PortalException;
 
 	public void addUniqueActivity(
-			long userId, long groupId, T classedModel, int type,
-			String extraData, long receiverUserId)
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
 		throws PortalException;
 
 	public void deleteActivities(T classedModel) throws PortalException;

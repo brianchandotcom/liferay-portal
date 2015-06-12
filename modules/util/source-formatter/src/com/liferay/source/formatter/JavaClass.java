@@ -842,14 +842,14 @@ public class JavaClass {
 		}
 
 		if (pos == -1) {
-			pos = line.indexOf(StringPool.OPEN_CURLY_BRACE);
+			pos = line.indexOf(CharPool.OPEN_CURLY_BRACE);
 		}
 
 		if (pos != -1) {
 			line = line.substring(0, pos);
 		}
 
-		pos = line.indexOf(StringPool.LESS_THAN);
+		pos = line.indexOf(CharPool.LESS_THAN);
 
 		if (pos != -1) {
 			line = line.substring(0, pos);
@@ -857,7 +857,7 @@ public class JavaClass {
 
 		line = line.trim();
 
-		pos = line.lastIndexOf(StringPool.SPACE);
+		pos = line.lastIndexOf(CharPool.SPACE);
 
 		return line.substring(pos + 1);
 	}
@@ -865,7 +865,7 @@ public class JavaClass {
 	protected String getConstructorOrMethodName(String line, int pos) {
 		line = line.substring(0, pos);
 
-		int x = line.lastIndexOf(StringPool.SPACE);
+		int x = line.lastIndexOf(CharPool.SPACE);
 
 		return line.substring(x + 1);
 	}
@@ -1014,7 +1014,7 @@ public class JavaClass {
 
 		if (javaTermStartPosition != -1) {
 			int javaTermEndPosition =
-				_content.lastIndexOf(StringPool.CLOSE_CURLY_BRACE) -
+				_content.lastIndexOf(CharPool.CLOSE_CURLY_BRACE) -
 					_indent.length() + 1;
 
 			JavaTerm javaTerm = getJavaTerm(
@@ -1041,8 +1041,8 @@ public class JavaClass {
 			return null;
 		}
 
-		int x = line.indexOf(StringPool.EQUAL);
-		int y = line.indexOf(StringPool.OPEN_PARENTHESIS);
+		int x = line.indexOf(CharPool.EQUAL);
+		int y = line.indexOf(CharPool.OPEN_PARENTHESIS);
 
 		if (line.startsWith(_indent + accessModifier + " static ")) {
 			if (line.contains(" class ") || line.contains(" enum ")) {
@@ -1123,10 +1123,10 @@ public class JavaClass {
 			   !line.endsWith(StringPool.SEMICOLON)) {
 
 			posStartNextLine =
-				content.indexOf(StringPool.NEW_LINE, posStartNextLine) + 1;
+				content.indexOf(CharPool.NEW_LINE, posStartNextLine) + 1;
 
 			int posEndNextline = content.indexOf(
-				StringPool.NEW_LINE, posStartNextLine);
+				CharPool.NEW_LINE, posStartNextLine);
 
 			String nextLine = content.substring(
 				posStartNextLine, posEndNextline);
@@ -1174,14 +1174,14 @@ public class JavaClass {
 	}
 
 	protected String getVariableName(String line) {
-		int x = line.indexOf(StringPool.EQUAL);
-		int y = line.lastIndexOf(StringPool.SPACE);
+		int x = line.indexOf(CharPool.EQUAL);
+		int y = line.lastIndexOf(CharPool.SPACE);
 
 		if (x != -1) {
 			line = line.substring(0, x);
 			line = StringUtil.trim(line);
 
-			y = line.lastIndexOf(StringPool.SPACE);
+			y = line.lastIndexOf(CharPool.SPACE);
 
 			return line.substring(y + 1);
 		}
@@ -1265,7 +1265,7 @@ public class JavaClass {
 			   !content.startsWith(_indent + "protected") &&
 			   !content.startsWith(_indent + "public")) {
 
-			content = content.substring(content.indexOf("\n") + 1);
+			content = content.substring(content.indexOf(CharPool.NEW_LINE) + 1);
 		}
 
 		int indentLinesCount =

@@ -59,7 +59,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int y = x;
 
 		while (true) {
-			y = annotation.indexOf(StringPool.CLOSE_CURLY_BRACE, y + 1);
+			y = annotation.indexOf(CharPool.CLOSE_CURLY_BRACE, y + 1);
 
 			if (!isInsideQuotes(annotation, y)) {
 				break;
@@ -78,13 +78,13 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String previousPropertyNameAndValue = null;
 
 		for (String parameterProperty : parameterPropertiesArray) {
-			x = parameterProperty.indexOf(StringPool.QUOTE);
-			y = parameterProperty.indexOf(StringPool.EQUAL, x);
+			x = parameterProperty.indexOf(CharPool.QUOTE);
+			y = parameterProperty.indexOf(CharPool.EQUAL, x);
 
 			int z = x;
 
 			while (true) {
-				z = parameterProperty.indexOf(StringPool.QUOTE, z + 1);
+				z = parameterProperty.indexOf(CharPool.QUOTE, z + 1);
 
 				if ((z == -1) || !isInsideQuotes(parameterProperty, z)) {
 					break;
@@ -176,7 +176,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 	protected void checkAnnotationParameters(
 		String fileName, String javaTermName, String annotation) {
 
-		int x = annotation.indexOf(StringPool.OPEN_PARENTHESIS);
+		int x = annotation.indexOf(CharPool.OPEN_PARENTHESIS);
 
 		String annotationParameters = stripQuotes(
 			annotation.substring(x + 1), CharPool.QUOTE);
@@ -187,14 +187,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		String previousParameterName = StringPool.BLANK;
 
 		while (true) {
-			x = annotationParameters.indexOf(StringPool.EQUAL, x + 1);
+			x = annotationParameters.indexOf(CharPool.EQUAL, x + 1);
 
 			if (x == -1) {
 				return;
 			}
 
 			if (Validator.isNotNull(previousParameterName)) {
-				y = annotationParameters.lastIndexOf(StringPool.COMMA, x);
+				y = annotationParameters.lastIndexOf(CharPool.COMMA, x);
 
 				if (y == -1) {
 					return;
@@ -212,8 +212,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				continue;
 			}
 
-			x = annotation.indexOf(StringPool.AT);
-			y = annotation.indexOf(StringPool.OPEN_PARENTHESIS);
+			x = annotation.indexOf(CharPool.AT);
+			y = annotation.indexOf(CharPool.OPEN_PARENTHESIS);
 
 			if ((x == -1) || (x > y)) {
 				return;
@@ -314,7 +314,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		regexPattern = stripQuotes(regexPattern, CharPool.QUOTE);
 
-		i = regexPattern.indexOf(StringPool.COMMA);
+		i = regexPattern.indexOf(CharPool.COMMA);
 
 		if (i != -1) {
 			regexPattern = regexPattern.substring(0, i);
@@ -567,7 +567,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		String className = file.getName();
 
-		int pos = className.lastIndexOf(StringPool.PERIOD);
+		int pos = className.lastIndexOf(CharPool.PERIOD);
 
 		className = className.substring(0, pos);
 
@@ -588,7 +588,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				CharPool.SLASH, packagePathX + 1);
 		}
 
-		int packagePathY = packagePath.lastIndexOf(StringPool.SLASH);
+		int packagePathY = packagePath.lastIndexOf(CharPool.SLASH);
 
 		if (packagePathX >= packagePathY) {
 			packagePath = StringPool.BLANK;
@@ -1088,7 +1088,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 				String codeBlock = content.substring(pos + 1, matcher1.end());
 
 				String firstLine = codeBlock.substring(
-					0, codeBlock.indexOf("\n"));
+					0, codeBlock.indexOf(CharPool.NEW_LINE));
 
 				Matcher matcher2 = _incorrectCloseCurlyBracePattern2.matcher(
 					firstLine);
@@ -1317,7 +1317,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 			if (Validator.isNull(previousLine)) {
 				baseLeadingWhitespace =
-					line.indexOf(StringPool.OPEN_PARENTHESIS) + 1;
+					line.indexOf(CharPool.OPEN_PARENTHESIS) + 1;
 			}
 			else if (previousLine.endsWith("|") || previousLine.endsWith("&") ||
 					 previousLine.endsWith("^")) {
@@ -1462,7 +1462,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							fileName, "import: " + fileName + " " + lineCount);
 					}
 
-					int pos = line.lastIndexOf(StringPool.PERIOD);
+					int pos = line.lastIndexOf(CharPool.PERIOD);
 
 					if (pos != -1) {
 						String importPackageName = line.substring(7, pos);
@@ -1675,7 +1675,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 							}
 
 							int x = line.lastIndexOf(
-								StringPool.CLOSE_CURLY_BRACE);
+								CharPool.CLOSE_CURLY_BRACE);
 
 							return StringUtil.replace(
 								content, "\n" + line + "\n",
@@ -1747,7 +1747,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						x = line.indexOf(" = ");
 
 						if (x != -1) {
-							int y = line.indexOf(StringPool.QUOTE);
+							int y = line.indexOf(CharPool.QUOTE);
 
 							if ((y == -1) || (x < y)) {
 								processErrorMessage(
@@ -1927,7 +1927,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 							if (previousLine.endsWith(StringPool.PERIOD)) {
 								int x = trimmedLine.indexOf(
-									StringPool.OPEN_PARENTHESIS);
+									CharPool.OPEN_PARENTHESIS);
 
 								if ((x != -1) &&
 									((getLineLength(previousLine) + x) <
@@ -2077,7 +2077,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			line, StringPool.SPACE + StringPool.TAB, StringPool.TAB);
 
 		for (int x = 0;;) {
-			x = line.indexOf(StringPool.EQUAL, x + 1);
+			x = line.indexOf(CharPool.EQUAL, x + 1);
 
 			if (x == -1) {
 				break;
@@ -2170,8 +2170,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		for (int x = -1;;) {
-			int posComma = line.indexOf(StringPool.COMMA, x + 1);
-			int posSemicolon = line.indexOf(StringPool.SEMICOLON, x + 1);
+			int posComma = line.indexOf(CharPool.COMMA, x + 1);
+			int posSemicolon = line.indexOf(CharPool.SEMICOLON, x + 1);
 
 			if ((posComma == -1) && (posSemicolon == -1)) {
 				break;
@@ -2234,7 +2234,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					x);
 			}
 
-			y = content.indexOf(StringPool.NEW_LINE, y + 1);
+			y = content.indexOf(CharPool.NEW_LINE, y + 1);
 
 			if (y < x) {
 				return content;
@@ -2302,7 +2302,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 						nextLineStartPos);
 
 					nextLineStartPos =
-						content.indexOf("\n", nextLineStartPos) + 1;
+						content.indexOf(CharPool.NEW_LINE, nextLineStartPos) +
+							1;
 				}
 			}
 
@@ -2388,7 +2389,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		if (trimmedLine.startsWith("+ ") || trimmedLine.startsWith("- ") ||
 			trimmedLine.startsWith("|| ") || trimmedLine.startsWith("&& ")) {
 
-			int pos = trimmedLine.indexOf(StringPool.SPACE);
+			int pos = trimmedLine.indexOf(CharPool.SPACE);
 
 			String linePart = trimmedLine.substring(0, pos);
 
@@ -2506,18 +2507,18 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			String tempLine = trimmedLine;
 
 			for (int pos = 0;;) {
-				pos = tempLine.indexOf(StringPool.DASH);
+				pos = tempLine.indexOf(CharPool.DASH);
 
 				if (pos == -1) {
-					pos = tempLine.indexOf(StringPool.PLUS);
+					pos = tempLine.indexOf(CharPool.PLUS);
 				}
 
 				if (pos == -1) {
-					pos = tempLine.indexOf(StringPool.SLASH);
+					pos = tempLine.indexOf(CharPool.SLASH);
 				}
 
 				if (pos == -1) {
-					pos = tempLine.indexOf(StringPool.STAR);
+					pos = tempLine.indexOf(CharPool.STAR);
 				}
 
 				if (pos == -1) {
@@ -2547,15 +2548,15 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 					tempLine.substring(0, pos) + tempLine.substring(pos + 1);
 			}
 
-			int x = trimmedLine.indexOf(StringPool.OPEN_PARENTHESIS);
+			int x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS);
 
 			if (x == 0) {
-				x = trimmedLine.indexOf(StringPool.OPEN_PARENTHESIS, 1);
+				x = trimmedLine.indexOf(CharPool.OPEN_PARENTHESIS, 1);
 			}
 
 			if (x != -1) {
-				int y = trimmedLine.indexOf(StringPool.CLOSE_PARENTHESIS, x);
-				int z = trimmedLine.indexOf(StringPool.QUOTE);
+				int y = trimmedLine.indexOf(CharPool.CLOSE_PARENTHESIS, x);
+				int z = trimmedLine.indexOf(CharPool.QUOTE);
 
 				if (((x + 1) != y) && ((z == -1) || (z > x))) {
 					char previousChar = trimmedLine.charAt(x - 1);
@@ -2589,7 +2590,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			(line.endsWith(") {") ||
 			 !line.endsWith(StringPool.OPEN_CURLY_BRACE))) {
 
-			int x = trimmedLine.indexOf(StringPool.COMMA);
+			int x = trimmedLine.indexOf(CharPool.COMMA);
 
 			if (x != -1) {
 				while ((previousLineLength + 1 + x) < _MAX_LINE_LENGTH) {
@@ -2613,7 +2614,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 					String partAfterComma = trimmedLine.substring(x + 1);
 
-					int pos = partAfterComma.indexOf(StringPool.COMMA);
+					int pos = partAfterComma.indexOf(CharPool.COMMA);
 
 					if (pos == -1) {
 						break;
@@ -2643,7 +2644,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 
 		if (StringUtil.count(previousLine, StringPool.OPEN_PARENTHESIS) > 1) {
 			int pos = trimmedPreviousLine.lastIndexOf(
-				StringPool.OPEN_PARENTHESIS, trimmedPreviousLine.length() - 2);
+				CharPool.OPEN_PARENTHESIS, trimmedPreviousLine.length() - 2);
 
 			if ((pos > 0) &&
 				Character.isLetterOrDigit(
@@ -2750,7 +2751,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		for (x = 0;;) {
-			x = line.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
+			x = line.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
 
 			if (x == -1) {
 				break;
@@ -2761,7 +2762,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			}
 		}
 
-		x = line.indexOf(StringPool.PERIOD);
+		x = line.indexOf(CharPool.PERIOD);
 
 		if (x != -1) {
 			return x + 1;
@@ -2865,7 +2866,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		int x = 0;
 
 		for (int i = 1; i < lineCount; i++) {
-			x = content.indexOf("\n", x + 1);
+			x = content.indexOf(CharPool.NEW_LINE, x + 1);
 
 			if (x == -1) {
 				return x;
@@ -2882,7 +2883,8 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			return null;
 		}
 
-		int nextLineEndPos = content.indexOf("\n", nextLineStartPos);
+		int nextLineEndPos = content.indexOf(
+			CharPool.NEW_LINE, nextLineStartPos);
 
 		if (nextLineEndPos == -1) {
 			return content.substring(nextLineStartPos);
@@ -3080,7 +3082,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 			 trimmedLine.startsWith("protected ") ||
 			 trimmedLine.startsWith("public "))) {
 
-			int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
+			int x = line.indexOf(CharPool.OPEN_PARENTHESIS);
 
 			if ((x != -1) &&
 				(line.charAt(x + 1) != CharPool.CLOSE_PARENTHESIS)) {
@@ -3101,7 +3103,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		}
 
 		if (line.endsWith(StringPool.SEMICOLON)) {
-			int x = line.indexOf(StringPool.OPEN_PARENTHESIS);
+			int x = line.indexOf(CharPool.OPEN_PARENTHESIS);
 
 			if (x != -1) {
 				char c = line.charAt(x - 1);

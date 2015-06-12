@@ -16,7 +16,10 @@ package com.liferay.layout.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -36,6 +39,15 @@ public class LayoutSetMobileDeviceRulesFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/layout_set/mobile_device_rules.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 
 }

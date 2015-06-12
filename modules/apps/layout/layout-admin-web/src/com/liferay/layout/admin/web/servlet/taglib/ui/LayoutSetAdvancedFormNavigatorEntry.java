@@ -22,7 +22,10 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.model.User;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -58,6 +61,15 @@ public class LayoutSetAdvancedFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/layout_set/advanced.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

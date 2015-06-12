@@ -55,6 +55,18 @@ import org.osgi.service.component.annotations.Modified;
 public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			XSLContentConfiguration.class.getName(), _xslContentConfiguration);
+
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -63,18 +75,6 @@ public class XSLContentConfigurationAction extends DefaultConfigurationAction {
 		validateUrls(actionRequest);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		renderRequest.setAttribute(
-			XSLContentConfiguration.class.getName(), _xslContentConfiguration);
-
-		return super.render(portletConfig, renderRequest, renderResponse);
 	}
 
 	@Activate

@@ -49,6 +49,18 @@ import org.osgi.service.component.annotations.Modified;
 public class IFrameConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			IFrameConfiguration.class.getName(), _iFrameConfiguration);
+
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -82,18 +94,6 @@ public class IFrameConfigurationAction extends DefaultConfigurationAction {
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		renderRequest.setAttribute(
-			IFrameConfiguration.class.getName(), _iFrameConfiguration);
-
-		return super.render(portletConfig, renderRequest, renderResponse);
 	}
 
 	@Activate

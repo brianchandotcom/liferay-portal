@@ -47,7 +47,7 @@ public class NavigationMenuConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String render(
+	public void include(
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
@@ -56,7 +56,7 @@ public class NavigationMenuConfigurationAction
 			NavigationMenuWebConfiguration.class.getName(),
 			_navigationMenuWebConfiguration);
 
-		return super.render(portletConfig, renderRequest, renderResponse);
+		super.include(portletConfig, renderRequest, renderResponse);
 	}
 
 	@Activate

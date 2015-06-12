@@ -185,6 +185,12 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashGrandparentBaseModelIsNotVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
 	}
 

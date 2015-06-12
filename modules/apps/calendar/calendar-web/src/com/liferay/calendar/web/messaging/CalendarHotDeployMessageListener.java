@@ -15,7 +15,7 @@
 package com.liferay.calendar.web.messaging;
 
 import com.liferay.calendar.service.CalendarImporterLocalServiceUtil;
-import com.liferay.calendar.util.PortletPropsValues;
+import com.liferay.calendar.web.configuration.CalendarWebConfigurationValues;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.HotDeployMessageListener;
@@ -35,7 +35,7 @@ public class CalendarHotDeployMessageListener extends HotDeployMessageListener {
 
 	@Override
 	protected void onDeploy(Message message) throws Exception {
-		if (!PortletPropsValues.CALENDAR_SYNC_CALEVENTS_ON_STARTUP) {
+		if (!CalendarWebConfigurationValues.CALENDAR_SYNC_CALEVENTS_ON_STARTUP) {
 			return;
 		}
 

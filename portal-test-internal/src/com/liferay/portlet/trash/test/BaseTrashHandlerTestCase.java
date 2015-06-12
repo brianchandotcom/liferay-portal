@@ -1441,14 +1441,12 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		if (!isBaseModelMoveableFromTrash()) {
-			return;
-		}
+		if (isBaseModelMoveableFromTrash()) {
+			moveBaseModelFromTrash(baseModel, group, serviceContext);
 
-		moveBaseModelFromTrash(baseModel, group, serviceContext);
-
-		if (isAssetableModel()) {
-			Assert.assertTrue(isAssetEntryVisible(baseModel));
+			if (isAssetableModel()) {
+				Assert.assertTrue(isAssetEntryVisible(baseModel));
+			}
 		}
 	}
 

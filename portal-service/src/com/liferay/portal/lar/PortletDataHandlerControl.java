@@ -17,11 +17,11 @@ package com.liferay.portal.lar;
 /**
  * @author     Raymond Augé
  * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.lar.PortletDataHandlerControl}
+ *             com.liferay.portlet.exportimport.lar.PortletDataHandlerControl}
  */
 @Deprecated
 public class PortletDataHandlerControl
-	extends com.liferay.portal.kernel.lar.PortletDataHandlerControl {
+	extends com.liferay.portlet.exportimport.lar.PortletDataHandlerControl {
 
 	public PortletDataHandlerControl(String namespace, String controlName) {
 		super(namespace, controlName);

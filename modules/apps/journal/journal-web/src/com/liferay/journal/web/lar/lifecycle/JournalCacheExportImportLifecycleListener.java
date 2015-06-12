@@ -15,9 +15,9 @@
 package com.liferay.journal.web.lar.lifecycle;
 
 import com.liferay.journal.web.constants.JournalPortletKeys;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleListener;
-import com.liferay.portal.lar.lifecycle.BaseExportImportLifecycleListener;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lifecycle.BaseExportImportLifecycleListener;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleListener;
 import com.liferay.portlet.journal.util.JournalContentUtil;
 
 import org.osgi.service.component.annotations.Component;

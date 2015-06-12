@@ -15,7 +15,7 @@
 package com.liferay.layout.set.prototype.web.lar;
 
 import com.liferay.layout.set.prototype.web.constants.LayoutSetPrototypePortletKeys;
-import com.liferay.portal.kernel.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import javax.servlet.ServletContext;
 

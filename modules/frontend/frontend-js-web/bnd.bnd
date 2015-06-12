@@ -12,7 +12,6 @@ Import-Package:\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.json,\
 	com.liferay.portal.kernel.language,\
-	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
 	com.liferay.portal.kernel.plugin,\
@@ -22,7 +21,6 @@ Import-Package:\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.taglib.ui,\
 	com.liferay.portal.kernel.settings,\
-	com.liferay.portal.kernel.staging,\
 	com.liferay.portal.kernel.template,\
 	com.liferay.portal.kernel.upload,\
 	com.liferay.portal.kernel.util,\
@@ -61,6 +59,8 @@ Import-Package:\
 	com.liferay.portlet.dynamicdatamapping.service.permission,\
 	com.liferay.portlet.dynamicdatamapping.storage,\
 	com.liferay.portlet.expando.model,\
+	com.liferay.portlet.exportimport.lar,\
+	com.liferay.portlet.exportimport.staging,\
 	com.liferay.portlet.journal,\
 	com.liferay.portlet.journal.model,\
 	com.liferay.portlet.journal.service,\

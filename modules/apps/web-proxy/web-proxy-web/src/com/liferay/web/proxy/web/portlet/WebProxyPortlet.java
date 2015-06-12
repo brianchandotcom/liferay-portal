@@ -70,7 +70,6 @@ import org.portletbridge.portlet.PortletBridgeServlet;
 		"javax.portlet.display-name=Web Proxy",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.authenticatorClassName=org.portletbridge.portlet.DefaultBridgeAuthenticator",
-		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.cssRegex=(?:url\\((?:'|\")?(.*?)(?:'|\")?\\))|(?:@import\\s+[^url](?:'|\")?(.*?)(?:'|\")|;|\\s+|$)",
 		"javax.portlet.init-param.editStylesheet=classpath:/org/portletbridge/xsl/pages/edit.xsl",
 		"javax.portlet.init-param.errorStylesheet=classpath:/org/portletbridge/xsl/pages/error.xsl",

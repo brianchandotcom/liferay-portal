@@ -26,9 +26,9 @@ catch (Exception e) {
 }
 %>
 
-<liferay-util:include page="tabs1.jsp">
-	<liferay-util:param name="tabs1" value="cart" />
-</liferay-util:include>
+	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
+		<liferay-util:param name="tabs1" value="cart" />
+	</liferay-util:include>
 
 <div class="alert alert-success">
 	<liferay-ui:message key="thank-you-for-your-purchase" />

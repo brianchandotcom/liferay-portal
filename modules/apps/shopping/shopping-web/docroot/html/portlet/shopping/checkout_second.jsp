@@ -64,7 +64,7 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	<aui:input name="ccVerNumber" type="hidden" value="<%= order.getCcVerNumber() %>" />
 	<aui:input name="comments" type="hidden" value="<%= order.getComments() %>" />
 
-	<liferay-util:include page="tabs1.jsp">
+	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="cart" />
 	</liferay-util:include>
 
@@ -148,6 +148,9 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</c:if>
 
 	<%
+	
+	com.pfellwock.P.print("checkout-second-2");
+	
 	boolean showAvailability = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY);
 
 	StringBundler itemIds = new StringBundler();
@@ -326,19 +329,22 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />viewCoupon() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					height: 200,
-					width: 280
-				},
-				id: '<portlet:namespace />viewCoupon',
-				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
-			}
-		);
-	}
-</aui:script>
+
+<c:if test="<%= coupon != null %>">
+	<aui:script>
+		function <portlet:namespace />viewCoupon() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						height: 200,
+						width: 280
+					},
+					id: '<portlet:namespace />viewCoupon',
+					refreshWindow: window,
+					title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
+				}
+			);
+		}
+	</aui:script>
+</c:if>

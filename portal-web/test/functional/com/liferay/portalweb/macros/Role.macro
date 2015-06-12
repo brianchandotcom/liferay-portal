@@ -177,6 +177,17 @@
 		</execute>
 	</command>
 
+	<command name="deleteCP">
+		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="Name" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+
+		<var name="key_roleName" value="${roleName}" />
+
+		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+		<execute function="AssertClickNoError" locator1="CPRoles#ROLE_MENULIST_DELETE" value1="Delete" />
+		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+	</command>
+
 	<command name="editCP">
 		<var name="key_roleName" value="${roleName}" />
 
@@ -752,6 +763,13 @@
 
 		<execute function="AssertTextEquals" locator1="CPRolesEdit#HEADER" value1="${roleName}" />
 		<execute function="AssertTextEquals" locator1="CPRolesEdit#NAME_FIELD" value1="${roleName}" />
+	</command>
+
+	<command name="viewDefaultCP">
+		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="Name" />
+		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
+
+		<execute function="AssertTextEquals" locator1="CPRoles#INFO_MESSAGE" value1="No roles were found." />
 	</command>
 
 	<command name="viewNoXSSCP">

@@ -13,5 +13,3 @@
  * details.
  */
 --%>
-
-<%@ include file="/html/portal/layout/edit/init.jsp" %>

@@ -63,7 +63,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 			<liferay-ui:panel defaultState="closed" extended="<%= false %>" id="calendarResourceDetailsPanel" persistState="<%= true %>" title="details">
 				<c:choose>
 					<c:when test="<%= calendarResource == null %>">
-						<c:if test="<%= !PortletPropsValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE %>">
+						<c:if test="<%= !CalendarServiceConfigurationValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE %>">
 							<aui:input name="code" />
 						</c:if>
 					</c:when>
@@ -124,7 +124,7 @@ String code = BeanParamUtil.getString(calendarResource, request, "code");
 	}
 
 	<c:choose>
-		<c:when test="<%= PortletPropsValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE %>">
+		<c:when test="<%= CalendarServiceConfigurationValues.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE %>">
 			Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />name);
 		</c:when>
 		<c:otherwise>

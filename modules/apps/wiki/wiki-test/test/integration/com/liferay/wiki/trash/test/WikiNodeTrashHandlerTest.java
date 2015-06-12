@@ -207,12 +207,6 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
-	public void testTrashMoveBaseModel() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashMoveBaseModelIndexable() throws Exception {
 	}
 
@@ -238,6 +232,12 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Override
 	@Test
 	public void testTrashParentAndDeleteParent() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
 	}
 
 	@Ignore

@@ -1430,27 +1430,6 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashMoveBaseModel() throws Exception {
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
-
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
-
-		if (isBaseModelMoveableFromTrash()) {
-			moveBaseModelFromTrash(baseModel, group, serviceContext);
-
-			if (isAssetableModel()) {
-				Assert.assertTrue(isAssetEntryVisible(baseModel));
-			}
-		}
-	}
-
-	@Test
 	public void testTrashMoveBaseModelIndexable() throws Exception {
 		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
 
@@ -1630,6 +1609,27 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		if (isBaseModelMoveableFromTrash()) {
+			moveBaseModelFromTrash(baseModel, group, serviceContext);
+
+			if (isAssetableModel()) {
+				Assert.assertTrue(isAssetEntryVisible(baseModel));
+			}
+		}
 	}
 
 	@Test

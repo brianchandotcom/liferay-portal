@@ -39,5 +39,6 @@
 	<classpathentry kind="lib" path="lib/ph-commons.jar" />
 	<classpathentry kind="lib" path="lib/ph-css.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
+	<classpathentry kind="lib" path="lib/slf4j-log4j12.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

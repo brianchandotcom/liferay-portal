@@ -21,6 +21,6 @@
 		<dependency name="com.liferay.rtl.css" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.sass.compiler.jni" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.sass.compiler.ruby" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="slf4j-log4j12" org="org.slf4j" rev="1.7.2" />
 	</dependencies>
-
 </ivy-module>

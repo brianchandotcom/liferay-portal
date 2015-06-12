@@ -14,16 +14,25 @@
 
 package com.liferay.shopping.upgrade.v1_0_0;
 
-import java.util.Collections;
-import java.util.List;
-
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.upgrade.util.classname.ClassNameDependency;
 import com.liferay.portal.upgrade.util.classname.ClassNameDependencyUpgrader;
 import com.liferay.portal.upgrade.util.classname.dependency.ResourcePermissionClassNameDependency;
+import com.liferay.shopping.model.ShoppingCart;
+import com.liferay.shopping.model.ShoppingCartItem;
+import com.liferay.shopping.model.ShoppingCategory;
+import com.liferay.shopping.model.ShoppingCoupon;
+import com.liferay.shopping.model.ShoppingItem;
+import com.liferay.shopping.model.ShoppingItemField;
+import com.liferay.shopping.model.ShoppingItemPrice;
+import com.liferay.shopping.model.ShoppingOrder;
+import com.liferay.shopping.model.ShoppingOrderItem;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
- * @author Miguel Pastor
+ * @author Philip Jones
  */
 public class UpgradeClassNames extends UpgradeProcess {
 
@@ -41,24 +50,57 @@ public class UpgradeClassNames extends UpgradeProcess {
 
 		classNameDependencyUpgrader.upgrade();
 
-		/**
 		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingChoice",
-			ShoppingChoice.class.getName(), classNameDependencies);
+			"com.liferay.portlet.shopping.model.ShoppingCart",
+			ShoppingCart.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
 
 		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingQuestion",
-			ShoppingQuestion.class.getName(), classNameDependencies);
+			"com.liferay.portlet.shopping.model.ShoppingCartItem",
+			ShoppingCartItem.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
 
 		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
-			"com.liferay.portlet.shopping.model.ShoppingVote",
-			ShoppingVote.class.getName(), classNameDependencies);
-			
-			**/
+			"com.liferay.portlet.shopping.model.ShoppingCategory",
+			ShoppingCategory.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.shopping.model.ShoppingCoupon",
+			ShoppingCoupon.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.shopping.model.ShoppingItem",
+			ShoppingItem.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.shopping.model.ShoppingItemField",
+			ShoppingItemField.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.shopping.model.ShoppingItemPrice",
+			ShoppingItemPrice.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.shopping.model.ShoppingOrder",
+			ShoppingOrder.class.getName(), classNameDependencies);
+
+		classNameDependencyUpgrader.upgrade();
+
+		classNameDependencyUpgrader = new ClassNameDependencyUpgrader(
+			"com.liferay.portlet.shopping.model.ShoppingOrderItem",
+			ShoppingOrderItem.class.getName(), classNameDependencies);
 
 		classNameDependencyUpgrader.upgrade();
 	}

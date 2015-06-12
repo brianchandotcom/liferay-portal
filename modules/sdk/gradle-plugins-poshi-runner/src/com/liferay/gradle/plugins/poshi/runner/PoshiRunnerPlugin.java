@@ -14,8 +14,8 @@
 
 package com.liferay.gradle.plugins.poshi.runner;
 
-import com.liferay.gradle.plugins.poshi.runner.util.OSDetector;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.OSDetector;
 import com.liferay.gradle.util.StringUtil;
 
 import java.io.File;

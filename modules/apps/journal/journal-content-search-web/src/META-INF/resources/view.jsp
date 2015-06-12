@@ -26,8 +26,20 @@
 	</c:if>
 </portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="post" name="fm">
+<aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
 	<div class="form-search">
 		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
 	</div>
 </aui:form>
+
+<aui:script>
+	function <portlet:namespace />search() {
+		var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
+
+		keywords = keywords.replace(/^\s+|\s+$/, '');
+
+		if (keywords != '') {
+			submitForm(document.<portlet:namespace />fm);
+		}
+	}
+</aui:script>

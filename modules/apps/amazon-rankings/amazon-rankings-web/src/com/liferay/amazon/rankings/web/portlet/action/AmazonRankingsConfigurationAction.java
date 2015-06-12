@@ -52,6 +52,19 @@ public class AmazonRankingsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			AmazonRankingsConfiguration.class.getName(),
+			_amazonRankingsConfiguration);
+
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -66,19 +79,6 @@ public class AmazonRankingsConfigurationAction
 		setPreference(actionRequest, "isbns", isbns);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		renderRequest.setAttribute(
-			AmazonRankingsConfiguration.class.getName(),
-			_amazonRankingsConfiguration);
-
-		return super.render(portletConfig, renderRequest, renderResponse);
 	}
 
 	@Activate

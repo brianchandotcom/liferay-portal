@@ -71,6 +71,19 @@ public class NestedPortletsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			NestedPortletsConfiguration.class.getName(),
+			_nestedPortletsConfiguration);
+
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -97,19 +110,6 @@ public class NestedPortletsConfigurationAction
 		}
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
-	}
-
-	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		renderRequest.setAttribute(
-			NestedPortletsConfiguration.class.getName(),
-			_nestedPortletsConfiguration);
-
-		return super.render(portletConfig, renderRequest, renderResponse);
 	}
 
 	@Activate

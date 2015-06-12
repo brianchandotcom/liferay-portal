@@ -17,9 +17,9 @@ package com.liferay.calendar.workflow;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.ActionKeys;
-import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -120,7 +120,8 @@ public class CalendarBookingApprovalWorkflowImpl
 		CalendarResource calendarResource =
 			calendarBooking.getCalendarResource();
 
-		if (PortletPropsValues.CALENDAR_AUTO_APPROVE_GROUP_EVENT &&
+		if (CalendarServiceConfigurationValues
+				.CALENDAR_AUTO_APPROVE_GROUP_EVENT &&
 			calendarResource.isGroup() &&
 			CalendarPermission.contains(
 				permissionChecker, calendarBooking.getCalendar(),

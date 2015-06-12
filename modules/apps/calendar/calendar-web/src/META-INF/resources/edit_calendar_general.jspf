@@ -83,7 +83,7 @@
 <aui:script use="liferay-calendar-simple-color-picker">
 	window.<portlet:namespace />colorPicker = new Liferay.SimpleColorPicker(
 		{
-			color: '<%= ColorUtil.toHexString((calendar != null) ? calendar.getColor() : PortletPropsValues.CALENDAR_COLOR_DEFAULT) %>',
+			color: '<%= ColorUtil.toHexString((calendar != null) ? calendar.getColor() : CalendarServiceConfigurationValues.CALENDAR_COLOR_DEFAULT) %>',
 			on: {
 				colorChange: function(event) {
 					A.one('#<portlet:namespace />color').val(parseInt(event.newVal.substring(1), 16));

@@ -12,22 +12,18 @@
  * details.
  */
 
-package com.liferay.calendar.util;
+package com.liferay.calendar.web.configuration;
 
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.util.portlet.PortletProps;
 
 /**
- * @author Eduardo Lundgren
- * @author Fabio Pezzutto
- * @author Andrea Di Giorgi
- * @author Bruno Basto
+ * @author Adam Brandizzi
  */
-public class PortletPropsValues {
+public class CalendarWebConfigurationValues {
 
 	public static final boolean CALENDAR_SYNC_CALEVENTS_ON_STARTUP =
 		GetterUtil.getBoolean(
-			PortletProps.get(
-				PortletPropsKeys.CALENDAR_SYNC_CALEVENTS_ON_STARTUP));
+			CalendarWebConfigurationUtil.get(
+				"calendar.sync.calevents.on.startup"));
 
 }

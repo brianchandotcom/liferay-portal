@@ -28,9 +28,9 @@ import com.liferay.calendar.notification.impl.NotificationUtil;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.service.base.CalendarBookingLocalServiceBaseImpl;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.calendar.social.CalendarActivityKeys;
 import com.liferay.calendar.util.JCalendarUtil;
-import com.liferay.calendar.util.PortletPropsValues;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingApprovalWorkflow;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
@@ -1148,8 +1148,9 @@ public class CalendarBookingLocalServiceImpl
 			User sender = userLocalService.fetchUser(
 				serviceContext.getUserId());
 
-			NotificationType notificationType = NotificationType.parse(
-				PortletPropsValues.CALENDAR_NOTIFICATION_DEFAULT_TYPE);
+			NotificationType notificationType =
+				CalendarServiceConfigurationValues
+					.CALENDAR_NOTIFICATION_DEFAULT_TYPE;
 
 			NotificationUtil.notifyCalendarBookingRecipients(
 				calendarBooking, notificationType, notificationTemplateType,

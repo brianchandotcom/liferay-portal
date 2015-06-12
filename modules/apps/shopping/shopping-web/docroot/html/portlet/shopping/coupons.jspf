@@ -36,8 +36,9 @@ portletURL.setParameter("tabs1", tabs1);
 	%>
 
 	<liferay-ui:search-form
-		page="coupon_search.jsp"
+		page="/html/portlet/shopping/coupon_search.jsp"
 		searchContainer="<%= searchContainer %>"
+		servletContext="<%= application %>"
 	/>
 
 	<%

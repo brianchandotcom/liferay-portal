@@ -2071,6 +2071,66 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
+	public void testTrashVersionParentBaseModelAndCustomRestore()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		List<Integer> originalStatuses = new ArrayList<>();
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = expireBaseModel(baseModel, serviceContext);
+
+		WorkflowedModel workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_PUBLISH);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		serviceContext.setWorkflowAction(WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		baseModel = updateBaseModel(
+			(Long)baseModel.getPrimaryKeyObj(), serviceContext);
+
+		workflowedModel = getWorkflowedModel(baseModel);
+
+		originalStatuses.add(workflowedModel.getStatus());
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		if (!isBaseModelMoveableFromTrash()) {
+			restoreParentBaseModelFromTrash(
+				(Long)parentBaseModel.getPrimaryKeyObj());
+
+			List<? extends WorkflowedModel> childrenWorkflowedModels =
+				getChildrenWorkflowedModels(parentBaseModel);
+
+			for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
+				WorkflowedModel childrenWorkflowedModel =
+					childrenWorkflowedModels.get(i - 1);
+
+				int originalStatus = originalStatuses.get(
+					childrenWorkflowedModels.size() - i);
+
+				Assert.assertEquals(
+					originalStatus, childrenWorkflowedModel.getStatus());
+			}
+		}
+	}
+
+	@Test
 	public void testTrashVersionParentBaseModelAndRestore() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -2128,24 +2188,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 			if (isAssetableModel()) {
 				Assert.assertTrue(isAssetEntryVisible(baseModel));
-			}
-		}
-		else {
-			restoreParentBaseModelFromTrash(
-				(Long)parentBaseModel.getPrimaryKeyObj());
-
-			List<? extends WorkflowedModel> childrenWorkflowedModels =
-				getChildrenWorkflowedModels(parentBaseModel);
-
-			for (int i = 1; i <= childrenWorkflowedModels.size(); i++) {
-				WorkflowedModel childrenWorkflowedModel =
-					childrenWorkflowedModels.get(i - 1);
-
-				int originalStatus = originalStatuses.get(
-					childrenWorkflowedModels.size() - i);
-
-				Assert.assertEquals(
-					originalStatus, childrenWorkflowedModel.getStatus());
 			}
 		}
 	}

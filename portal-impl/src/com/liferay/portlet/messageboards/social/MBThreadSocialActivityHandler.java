@@ -40,20 +40,20 @@ public class MBThreadSocialActivityHandler
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, MBThread thread, int type,
-			String extraData, long receiverUserId)
+			long userId, MBThread thread, int type, String extraData,
+			long receiverUserId)
 		throws PortalException {
 
 		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
-			addSubscribeSocialActivity(userId, groupId, thread, extraData);
+			addSubscribeSocialActivity(
+				userId, thread.getGroupId(), thread, extraData);
 		}
 		else if (type == SocialActivityConstants.TYPE_VIEW) {
 			addViewSocialActivity(
 				userId, thread, type, extraData, receiverUserId);
 		}
 		else {
-			super.addActivity(
-				userId, groupId, thread, type, extraData, receiverUserId);
+			super.addActivity(userId, thread, type, extraData, receiverUserId);
 		}
 	}
 

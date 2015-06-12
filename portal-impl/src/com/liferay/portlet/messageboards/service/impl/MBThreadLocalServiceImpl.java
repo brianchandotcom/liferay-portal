@@ -894,8 +894,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", message.getSubject());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, thread.getGroupId(), thread,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, thread, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return thread;
@@ -1012,8 +1011,7 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", message.getSubject());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, thread.getGroupId(), thread,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, thread, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
 

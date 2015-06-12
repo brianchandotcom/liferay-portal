@@ -379,8 +379,8 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		if (!user.isDefaultUser()) {
 			SocialActivityHandlerUtil.addActivity(
-				user.getUserId(), assetEntry.getGroupId(), assetEntry,
-				SocialActivityConstants.TYPE_VIEW, StringPool.BLANK, 0);
+				user.getUserId(), assetEntry, SocialActivityConstants.TYPE_VIEW,
+				StringPool.BLANK, 0);
 		}
 
 		return assetEntry;

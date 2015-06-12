@@ -27,12 +27,12 @@ import java.util.Date;
 public class SocialActivityHandlerUtil {
 
 	public static <T extends ClassedModel & GroupedModel> void addActivity(
-			long userId, long groupId, T classedModel, int type,
-			String extraData, long receiverUserId)
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
 		throws PortalException {
 
 		getSocialActivityHandler().addActivity(
-			userId, groupId, classedModel, type, extraData, receiverUserId);
+			userId, classedModel, type, extraData, receiverUserId);
 	}
 
 	public static <T extends ClassedModel & GroupedModel>

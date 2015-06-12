@@ -150,8 +150,7 @@ public class SubscriptionLocalServiceImpl
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, groupId, assetEntry,
-				SocialActivityConstants.TYPE_SUBSCRIBE,
+				userId, assetEntry, SocialActivityConstants.TYPE_SUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}
 
@@ -228,7 +227,7 @@ public class SubscriptionLocalServiceImpl
 			extraDataJSONObject.put("title", assetEntry.getTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				subscription.getUserId(), assetEntry.getGroupId(), subscription,
+				subscription.getUserId(), subscription,
 				SocialActivityConstants.TYPE_UNSUBSCRIBE,
 				extraDataJSONObject.toString(), 0);
 		}

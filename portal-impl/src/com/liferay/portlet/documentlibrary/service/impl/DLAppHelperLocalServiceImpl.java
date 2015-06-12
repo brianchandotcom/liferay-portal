@@ -580,7 +580,7 @@ public class DLAppHelperLocalServiceImpl
 			extraDataJSONObject.put("title", fileShortcut.getToTitle());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, fileShortcut.getGroupId(), fileShortcut,
+				userId, fileShortcut,
 				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				extraDataJSONObject.toString(), 0);
 		}
@@ -621,8 +621,7 @@ public class DLAppHelperLocalServiceImpl
 			"title", TrashUtil.getOriginalTitle(fileShortcut.getToTitle()));
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileShortcut.getGroupId(), fileShortcut,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, fileShortcut, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		// Trash
@@ -943,8 +942,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileEntry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileEntry.getGroupId(), fileEntry,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, fileEntry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
 
@@ -970,7 +968,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileShortcut.getToTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileShortcut.getGroupId(), fileShortcut,
+			userId, fileShortcut,
 			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
@@ -1032,8 +1030,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", folder.getName());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, folder.getGroupId(), folder,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, folder, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
 
@@ -1499,8 +1496,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", fileEntry.getTitle());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileEntry.getGroupId(), fileEntry,
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+			userId, fileEntry, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return fileEntry;
@@ -1598,8 +1594,7 @@ public class DLAppHelperLocalServiceImpl
 			"title", TrashUtil.getOriginalTitle(fileEntry.getTitle()));
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, fileEntry.getGroupId(), fileEntry,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, fileEntry, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		// Workflow
@@ -1679,8 +1674,7 @@ public class DLAppHelperLocalServiceImpl
 			extraDataJSONObject.put("title", folder.getName());
 
 			SocialActivityHandlerUtil.addActivity(
-				userId, folder.getGroupId(), folder,
-				SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+				userId, folder, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 				extraDataJSONObject.toString(), 0);
 		}
 
@@ -1742,8 +1736,7 @@ public class DLAppHelperLocalServiceImpl
 		extraDataJSONObject.put("title", folder.getName());
 
 		SocialActivityHandlerUtil.addActivity(
-			userId, folder.getGroupId(), folder,
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return new LiferayFolder(dlFolder);

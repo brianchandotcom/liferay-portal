@@ -38,15 +38,15 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, T classedModel, int type,
-			String extraData, long receiverUserId)
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
 		throws PortalException {
 
 		SocialActivityHandler<T> socialActivityHandler =
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.addActivity(
-			userId, groupId, classedModel, type, extraData, receiverUserId);
+			userId, classedModel, type, extraData, receiverUserId);
 	}
 
 	@Override

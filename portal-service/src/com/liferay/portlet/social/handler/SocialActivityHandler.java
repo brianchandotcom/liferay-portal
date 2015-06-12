@@ -26,8 +26,8 @@ import java.util.Date;
 public interface SocialActivityHandler<T extends ClassedModel & GroupedModel> {
 
 	public void addActivity(
-			long userId, long groupId, T classedModel, int type,
-			String extraData, long receiverUserId)
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
 		throws PortalException;
 
 	public void addUniqueActivity(

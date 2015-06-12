@@ -32,24 +32,24 @@ public abstract class BaseSocialActivityHandler
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, T classedModel, int type,
-			String extraData, long receiverUserId)
+			long userId, T classedModel, int type, String extraData,
+			long receiverUserId)
 		throws PortalException {
 
 		String className = getClassName(classedModel);
 		long primaryKey = getPrimaryKey(classedModel);
 
 		if (type == SocialActivityConstants.TYPE_SUBSCRIBE) {
-			if (primaryKey != groupId) {
+			if (primaryKey != classedModel.getGroupId()) {
 				getSocialActivityLocalService().addActivity(
-					userId, groupId, className, primaryKey,
+					userId, classedModel.getGroupId(), className, primaryKey,
 					SocialActivityConstants.TYPE_SUBSCRIBE, extraData, 0);
 			}
 		}
 		else {
 			getSocialActivityLocalService().addActivity(
-				userId, groupId, className, primaryKey, type, extraData,
-				receiverUserId);
+				userId, classedModel.getGroupId(), className, primaryKey, type,
+				extraData, receiverUserId);
 		}
 	}
 

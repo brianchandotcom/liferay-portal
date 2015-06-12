@@ -78,4 +78,30 @@
 			<var name="roleType" value="${roleType}" />
 		</execute>
 	</command>
+
+	<command name="DeleteRegularRole" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#addCP">
+			<var name="roleName" value="Roles Regrole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#deleteCP">
+			<var name="roleName" value="Roles Regrole Name" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Roles" />
+		</execute>
+
+		<execute macro="Role#viewDefaultCP">
+			<var name="roleName" value="Roles Regrole Name" />
+		</execute>
+	</command>
 </definition>

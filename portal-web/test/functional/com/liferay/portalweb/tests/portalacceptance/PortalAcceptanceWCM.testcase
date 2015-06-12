@@ -1,4 +1,4 @@
-<definition component-name="portal-wcm">
+<definition component-name="portal-acceptance">
 	<property name="testray.main.component.name" value="Web Content Administration" />
 
 	<set-up>

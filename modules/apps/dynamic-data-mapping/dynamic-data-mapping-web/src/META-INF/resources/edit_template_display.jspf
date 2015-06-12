@@ -451,13 +451,19 @@ if (Validator.isNotNull(scriptContent)) {
 	Liferay.on(
 		'<portlet:namespace />refreshEditor',
 		function(event) {
-			document.<portlet:namespace />fm.action="<%= refreshTemplateURL %>";
+			var form = A.one('#<portlet:namespace />fm');
 
+			form.attr('action', '<%= refreshTemplateURL %>');
+
+			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
+				Liferay.fire('<portlet:namespace />saveTemplate');
+			}
 			<c:if test="<%= template == null %>">
-				editorContentElement.val(STR_EMPTY);
+				else {
+					editorContentElement.val(STR_EMPTY);
+				}
 			</c:if>
 
-			var form = A.one('#<portlet:namespace />fm');
 			submitForm(form, null, null, false);
 		}
 	);

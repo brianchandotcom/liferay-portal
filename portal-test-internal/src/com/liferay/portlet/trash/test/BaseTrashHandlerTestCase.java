@@ -454,10 +454,6 @@ public abstract class BaseTrashHandlerTestCase {
 			initialBaseModelsCount,
 			getNotInTrashBaseModelsCount(parentBaseModel));
 
-		if (isAssetableModel()) {
-			Assert.assertNull(fetchAssetEntry(baseModel));
-		}
-
 		Assert.assertEquals(1, getDeletionSystemEventCount(trashHandler, -1));
 	}
 
@@ -495,6 +491,32 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
+	}
+
+	@Test
+	public void testTrashAndDeleteWithApprovedStatusIsNotFound()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		baseModel = getBaseModel((Long)baseModel.getPrimaryKeyObj());
+
+		moveBaseModelToTrash((Long)baseModel.getPrimaryKeyObj());
+
+		TrashHandler trashHandler = TrashHandlerRegistryUtil.getTrashHandler(
+			getBaseModelClassName());
+
+		trashHandler.deleteTrashEntry(getTrashEntryClassPK(baseModel));
+
+		if (isAssetableModel()) {
+			Assert.assertNull(fetchAssetEntry(baseModel));
+		}
 	}
 
 	@Test

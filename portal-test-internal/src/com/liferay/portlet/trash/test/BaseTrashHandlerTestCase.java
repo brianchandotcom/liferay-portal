@@ -1537,8 +1537,6 @@ public abstract class BaseTrashHandlerTestCase {
 
 		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
 
-		Assert.assertTrue(isInTrashContainer(baseModel));
-
 		Assert.assertEquals(
 			initialBaseModelsCount,
 			getNotInTrashBaseModelsCount(parentBaseModel));

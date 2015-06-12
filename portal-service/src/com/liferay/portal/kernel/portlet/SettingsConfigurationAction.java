@@ -63,7 +63,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Iván Zaera
  */
-public class SettingsConfigurationAction
+public abstract class SettingsConfigurationAction
 	extends LiferayPortlet
 	implements ConfigurationAction, ResourceServingConfigurationAction {
 
@@ -190,6 +190,11 @@ public class SettingsConfigurationAction
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #include(PortletConfig, RenderRequest, RenderResponse)}
+	 *
+	 */
 	@Override
 	public String render(
 			PortletConfig portletConfig, RenderRequest renderRequest,

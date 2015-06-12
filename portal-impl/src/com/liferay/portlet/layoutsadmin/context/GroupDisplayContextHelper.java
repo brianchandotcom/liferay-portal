@@ -14,13 +14,13 @@
 
 package com.liferay.portlet.layoutsadmin.context;
 
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import javax.servlet.http.HttpServletRequest;
 

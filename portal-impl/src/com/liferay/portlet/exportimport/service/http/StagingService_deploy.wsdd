@@ -2,7 +2,7 @@
 
 <deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
 	<service name="Portlet_ExportImport_StagingService" provider="java:RPC" style="rpc" use="encoded">
-		<typeMapping xmlns:ns="http://lar.kernel.portal.liferay.com" qname="ns:MissingReferences" type="java:com.liferay.portal.kernel.lar.MissingReferences" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
+		<typeMapping xmlns:ns="http://lar.exportimport.portlet.liferay.com" qname="ns:MissingReferences" type="java:com.liferay.portlet.exportimport.lar.MissingReferences" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<typeMapping xmlns:ns="http://model.exportimport.portlet.liferay.com" qname="ns:ExportImportConfigurationSoap" type="java:com.liferay.portlet.exportimport.model.ExportImportConfigurationSoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>
 		<operation xmlns:operNS="urn:http.service.exportimport.portlet.liferay.com" name="cleanUpStagingRequest" qname="operNS:cleanUpStagingRequest" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stagingRequestId" type="tns:long"></parameter>
@@ -11,7 +11,7 @@
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="groupId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="checksum" type="tns:string"></parameter>
 		</operation>
-		<operation xmlns:operNS="urn:http.service.exportimport.portlet.liferay.com" xmlns:rtns="http://lar.kernel.portal.liferay.com" name="publishStagingRequest" qname="operNS:publishStagingRequest" returnQName="publishStagingRequestReturn" returnType="rtns:MissingReferences" soapAction="">
+		<operation xmlns:operNS="urn:http.service.exportimport.portlet.liferay.com" xmlns:rtns="http://lar.exportimport.portlet.liferay.com" name="publishStagingRequest" qname="operNS:publishStagingRequest" returnQName="publishStagingRequestReturn" returnType="rtns:MissingReferences" soapAction="">
 			<parameter xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="stagingRequestId" type="tns:long"></parameter>
 			<parameter xmlns:tns="http://model.exportimport.portlet.liferay.com" qname="exportImportConfiguration" type="tns:ExportImportConfigurationSoap"></parameter>
 		</operation>
@@ -22,7 +22,7 @@
 		</operation>
 		<parameter name="allowedMethods" value="cleanUpStagingRequest createStagingRequest publishStagingRequest updateStagingRequest" />
 		<parameter name="className" value="com.liferay.portlet.exportimport.service.http.StagingServiceSoap" />
-		<parameter name="schemaUnqualified" value="http://lar.kernel.portal.liferay.com,http://model.exportimport.portlet.liferay.com,http://xml.apache.org/xml-soap" />
+		<parameter name="schemaUnqualified" value="http://lar.exportimport.portlet.liferay.com,http://model.exportimport.portlet.liferay.com,http://xml.apache.org/xml-soap" />
 		<parameter name="typeMappingVersion" value="1.2" />
 		<parameter name="wsdlPortType" value="StagingServiceSoap" />
 		<parameter name="wsdlServiceElement" value="StagingServiceSoapService" />

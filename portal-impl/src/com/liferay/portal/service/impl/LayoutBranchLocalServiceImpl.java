@@ -17,7 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.LayoutBranchNameException;
 import com.liferay.portal.NoSuchLayoutBranchException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.LayoutBranch;
@@ -28,6 +27,7 @@ import com.liferay.portal.model.LayoutSetBranch;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutBranchLocalServiceBaseImpl;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.util.List;
 

@@ -55,7 +55,7 @@ public class StagingServiceWrapper implements StagingService,
 	}
 
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long stagingRequestId,
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -69,7 +69,7 @@ public class StagingServiceWrapper implements StagingService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences publishStagingRequest(
+	public com.liferay.portlet.exportimport.lar.MissingReferences publishStagingRequest(
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -100,7 +100,7 @@ public class StagingServiceWrapper implements StagingService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateStagingRequest(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateStagingRequest(
 		long stagingRequestId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap)
 		throws com.liferay.portal.kernel.exception.PortalException {

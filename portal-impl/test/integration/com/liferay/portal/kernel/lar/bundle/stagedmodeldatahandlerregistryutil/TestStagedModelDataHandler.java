@@ -14,10 +14,10 @@
 
 package com.liferay.portal.kernel.lar.bundle.stagedmodeldatahandlerregistryutil;
 
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.User;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.List;
 import java.util.Map;

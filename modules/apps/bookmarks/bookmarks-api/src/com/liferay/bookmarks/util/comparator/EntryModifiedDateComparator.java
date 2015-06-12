@@ -15,7 +15,7 @@
 package com.liferay.bookmarks.util.comparator;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.portal.kernel.lar.StagedModelModifiedDateComparator;
+import com.liferay.portlet.exportimport.lar.StagedModelModifiedDateComparator;
 
 /**
  * @author Brian Wing Shun Chan

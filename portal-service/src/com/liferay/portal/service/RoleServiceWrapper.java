@@ -121,6 +121,12 @@ public class RoleServiceWrapper implements RoleService,
 		_roleService.deleteRole(roleId);
 	}
 
+	@Override
+	public com.liferay.portal.model.Role fetchRole(long roleId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _roleService.fetchRole(roleId);
+	}
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

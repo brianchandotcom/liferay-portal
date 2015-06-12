@@ -170,6 +170,14 @@ public class RoleServiceImpl extends RoleServiceBaseImpl {
 		roleLocalService.deleteRole(roleId);
 	}
 
+	@Override
+	public Role fetchRole(long roleId) throws PortalException {
+		RolePermissionUtil.check(
+			getPermissionChecker(), roleId, ActionKeys.VIEW);
+
+		return roleLocalService.fetchRole(roleId);
+	}
+
 	/**
 	 * Returns all the roles associated with the group.
 	 *

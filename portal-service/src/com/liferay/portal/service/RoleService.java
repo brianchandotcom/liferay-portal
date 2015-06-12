@@ -124,6 +124,10 @@ public interface RoleService extends BaseService {
 	*/
 	public void deleteRole(long roleId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.Role fetchRole(long roleId)
+		throws PortalException;
+
 	/**
 	* Returns the Spring bean ID for this bean.
 	*

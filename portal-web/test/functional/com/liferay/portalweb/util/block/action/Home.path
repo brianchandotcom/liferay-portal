@@ -510,7 +510,7 @@
 </tr>
 <tr>
 	<td>PAGE_COLUMN_2_SIGN_IN_PORTLET</td>
-	<td>//div[@id='column-2']/div/div/section/header/h1[contains(.,'Sign In')]</td>
+	<td>//div[@id='column-2']//section/header/h1[contains(.,'Sign In')]</td>
 	<td></td>
 </tr>
 <tr>

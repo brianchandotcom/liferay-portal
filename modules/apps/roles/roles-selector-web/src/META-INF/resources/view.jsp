@@ -33,7 +33,9 @@ if (group != null) {
 
 String groupDescriptiveName = group.getDescriptiveName(locale);
 
-Role role = ActionUtil.getRole(request);
+long roleId = ParamUtil.getLong(request, "roleId");
+
+Role role = RoleLocalServiceUtil.fetchRole(roleId);
 
 if (role != null) {
 	String roleName = role.getName();
@@ -42,8 +44,6 @@ if (role != null) {
 		throw new NoSuchRoleException();
 	}
 }
-
-long roleId = BeanParamUtil.getLong(role, request, "roleId");
 
 int roleType = ParamUtil.getInteger(request, "roleType", RoleConstants.TYPE_SITE);
 

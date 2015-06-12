@@ -40,8 +40,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Brian Wing Shun Chan
  */
-public class ActionUtil
-	extends com.liferay.portlet.rolesadmin.action.ActionUtil {
+public class ActionUtil {
 
 	public static void copyPreferences(
 			HttpServletRequest request, Layout targetLayout,

@@ -974,14 +974,14 @@ Please set the environment variable ANT_OPTS to the recommended value of
 							</fileset>
 						</path>
 						<sequential>
-							<local name="results.file.truncated"/>
-							<local name="results.file.namespaced"/>
+							<local name="results.file.truncated" />
+							<local name="results.file.namespaced" />
 
 							<loadresource property="results.file.truncated">
 								<string value="@{results.file}" />
 								<filterchain>
 									<tokenfilter>
-										<replacestring from="${basedir}/" to=""/>
+										<replacestring from="${basedir}/" to="" />
 									</tokenfilter>
 								</filterchain>
 							</loadresource>
@@ -990,8 +990,8 @@ Please set the environment variable ANT_OPTS to the recommended value of
 								<propertyresource name="results.file.truncated" />
 								<filterchain>
 									<tokenfilter>
-										<replacestring from="test-results/@{test.type}/TEST-" to=""/>
-										<replacestring from=".xml" to="-${database.type}"/>
+										<replacestring from="test-results/@{test.type}/TEST-" to="" />
+										<replacestring from=".xml" to="-${database.type}" />
 									</tokenfilter>
 								</filterchain>
 							</loadresource>

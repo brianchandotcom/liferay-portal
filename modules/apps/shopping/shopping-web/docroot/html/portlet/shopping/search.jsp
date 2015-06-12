@@ -163,7 +163,7 @@ String keywords = ParamUtil.getString(request, "keywords");
 
 		// Action
 
-		row.addJSP("item_action.jsp", "entry-action");
+		row.addJSP("/html/portlet/shopping/item_action.jsp", "entry-action", application, request, response);
 
 		// Add result row
 

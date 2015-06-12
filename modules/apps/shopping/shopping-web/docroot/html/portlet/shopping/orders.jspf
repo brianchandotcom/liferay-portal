@@ -100,7 +100,7 @@ portletURL.setParameter("tabs1", tabs1);
 
 		// Action
 
-		row.addJSP("order_action.jsp", "entry-action");
+		row.addJSP("/html/portlet/shopping/order_action.jsp", "entry-action", application, request, response);
 
 		// Add result row
 

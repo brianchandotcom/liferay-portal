@@ -1,4 +1,4 @@
-<definition component-name="portal-collaboration">
+<definition component-name="portal-acceptance">
 	<property name="testray.main.component.name" value="Bookmarks" />
 
 	<var name="pageName" value="Bookmarks Page" />

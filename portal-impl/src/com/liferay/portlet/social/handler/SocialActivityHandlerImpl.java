@@ -85,15 +85,14 @@ public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
 
 	@Override
 	public void updateLastSocialActivity(
-			long userId, long groupId, T classedModel, int type,
-			Date createDate)
+			long userId, T classedModel, int type, Date createDate)
 		throws PortalException {
 
 		SocialActivityHandler<T> socialActivityHandler =
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.updateLastSocialActivity(
-			userId, groupId, classedModel, type, createDate);
+			userId, classedModel, type, createDate);
 	}
 
 	protected void activate() {

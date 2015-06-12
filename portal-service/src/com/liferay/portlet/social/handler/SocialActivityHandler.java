@@ -43,8 +43,7 @@ public interface SocialActivityHandler<T extends ClassedModel & GroupedModel> {
 	public void deleteActivities(T classedModel) throws PortalException;
 
 	public void updateLastSocialActivity(
-			long userId, long groupId, T classedModel, int type,
-			Date createDate)
+			long userId, T classedModel, int type, Date createDate)
 		throws PortalException;
 
 }

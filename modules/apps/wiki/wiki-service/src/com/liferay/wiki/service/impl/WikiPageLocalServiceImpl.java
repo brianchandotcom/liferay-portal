@@ -3329,7 +3329,7 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				Date createDate = new Date(now.getTime() + 1);
 
 				SocialActivityHandlerUtil.updateLastSocialActivity(
-					serviceContext.getUserId(), page.getGroupId(), page,
+					serviceContext.getUserId(), page,
 					WikiActivityKeys.UPDATE_PAGE, createDate);
 			}
 			else {

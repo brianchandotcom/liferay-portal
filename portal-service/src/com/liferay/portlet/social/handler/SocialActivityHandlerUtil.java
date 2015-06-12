@@ -74,12 +74,11 @@ public class SocialActivityHandlerUtil {
 
 	public static <T extends ClassedModel & GroupedModel>
 		void updateLastSocialActivity(
-			long userId, long groupId, T classedModel, int type,
-			Date createDate)
+			long userId, T classedModel, int type, Date createDate)
 		throws PortalException {
 
 		getSocialActivityHandler().updateLastSocialActivity(
-			userId, groupId, classedModel, type, createDate);
+			userId, classedModel, type, createDate);
 	}
 
 	public <T extends ClassedModel & GroupedModel>

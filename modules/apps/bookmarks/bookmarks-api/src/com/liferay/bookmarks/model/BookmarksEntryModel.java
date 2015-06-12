@@ -330,6 +330,20 @@ public interface BookmarksEntryModel extends BaseModel<BookmarksEntry>,
 	public void setPriority(int priority);
 
 	/**
+	 * Returns the last publish date of this bookmarks entry.
+	 *
+	 * @return the last publish date of this bookmarks entry
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this bookmarks entry.
+	 *
+	 * @param lastPublishDate the last publish date of this bookmarks entry
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the status of this bookmarks entry.
 	 *
 	 * @return the status of this bookmarks entry

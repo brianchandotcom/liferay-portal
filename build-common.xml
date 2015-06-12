@@ -957,6 +957,54 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<formatter type="xml" />
 				<test.classes />
 			</junit>
+
+			<if>
+				<and>
+					<not>
+						<equals arg1="@{test.type}" arg2="unit" />
+					</not>
+					<isset property="database.type" />
+				</and>
+				<then>
+					<for param="results.file">
+						<path>
+							<fileset dir="test-results/@{test.type}">
+								<include name="TEST-*.xml" />
+								<exclude name="TEST-*-*.xml" />
+							</fileset>
+						</path>
+						<sequential>
+							<local name="results.file.truncated"/>
+							<local name="results.file.namespaced"/>
+
+							<loadresource property="results.file.truncated">
+								<string value="@{results.file}" />
+								<filterchain>
+									<tokenfilter>
+										<replacestring from="${basedir}/" to=""/>
+									</tokenfilter>
+								</filterchain>
+							</loadresource>
+
+							<loadresource property="results.file.namespaced">
+								<propertyresource name="results.file.truncated" />
+								<filterchain>
+									<tokenfilter>
+										<replacestring from="test-results/@{test.type}/TEST-" to=""/>
+										<replacestring from=".xml" to="-${database.type}"/>
+									</tokenfilter>
+								</filterchain>
+							</loadresource>
+
+							<xmltask source="${results.file.truncated}" dest="test-results/@{test.type}/TEST-${results.file.namespaced}.xml">
+								<replace path="/testsuite/@name" withText="${results.file.namespaced}" />
+							</xmltask>
+
+							<delete file="${results.file.truncated}" />
+						</sequential>
+					</for>
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 

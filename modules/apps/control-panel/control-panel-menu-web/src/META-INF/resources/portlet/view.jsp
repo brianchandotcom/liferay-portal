@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/portlet/init.jsp" %>
 
 <div class="portal-add-content">
 	<div class="control-panel-tools">

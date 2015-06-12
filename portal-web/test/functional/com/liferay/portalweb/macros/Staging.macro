@@ -889,4 +889,18 @@
 
 		<execute function="AssertTextEquals" locator1="PGStaging#STAGING_MENU_STATUS" value1="${stagingWorkflowStatus}" />
 	</command>
+
+	<command name="viewValidationError">
+		<execute function="AssertClick" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_LINK" value1="Current and Previous" />
+
+		<execute function="AssertClick" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_DETAILS" value1="Details" />
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_DETAILS_STATUS" value1="${validateErrorMessage}" />
+
+		<execute function="SelectFrameTop" value1="relative=top" />
+
+		<execute function="Refresh" />
+	</command>
 </definition>

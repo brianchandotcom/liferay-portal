@@ -434,6 +434,7 @@
 		<execute macro="LAR#gotoImportSiteCmd" />
 
 		<execute macro="LAR#selectImportFileSiteCmd">
+			<var name="importCampaignValidationError" value="${importCampaignValidationError}" />
 			<var name="importValidationMissingItem" value="${importValidationMissingItem}" />
 			<var name="larFileName" value="${larFileName}" />
 		</execute>
@@ -442,7 +443,6 @@
 			<not>
 				<or>
 					<isset var="importValidationMissingItem" />
-					<isset var="importCampaignValidationError" />
 					<isset var="importFail" />
 				</or>
 			</not>

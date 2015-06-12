@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>EXPORT_FILE_NAME</td>
-	<td>//input[@id='_86_exportFileName']</td>
+	<td>//input[contains(@id,'exportFileName')]</td>
 	<td></td>
 </tr>
 <tr>

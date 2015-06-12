@@ -2455,9 +2455,11 @@
 			<var name="publishValidation" value="true" />
 		</execute>
 
-		<execute function="AssertConsoleTextPresent" value1="Cannot import rule Content Visited from user segment User Segment Name because it refers to a missing Asset" />
+		<execute macro="Staging#gotoPublishToLive" />
 
-		<execute function="AssertConsoleTextPresent" value1="Cannot import custom data for tracking action Content in campaignCampaign Name" />
+		<execute macro="Staging#viewValidationError">
+			<var name="validateErrorMessage" value="The original Referenced Asset does not exist in the current environment." />
+		</execute>
 	</command>
 
 	<command known-issues="LPS-54232" name="StagingUncheckAppCTRefAllAndContentAll" priority="4">

@@ -16,6 +16,7 @@ package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.collections.ServiceReferenceMapper;
 import com.liferay.registry.collections.ServiceTrackerCollections;
@@ -26,22 +27,22 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public class SocialActivityHandlerImpl
-	implements SocialActivityHandler<ClassedModel> {
+public class SocialActivityHandlerImpl<T extends ClassedModel & GroupedModel>
+	implements SocialActivityHandler<T> {
 
 	public SocialActivityHandlerImpl(
-		SocialActivityHandler<ClassedModel> defaultSocialActivityHandler) {
+		SocialActivityHandler<T> defaultSocialActivityHandler) {
 
 		_defaultSocialActivityHandler = defaultSocialActivityHandler;
 	}
 
 	@Override
 	public void addActivity(
-			long userId, long groupId, ClassedModel classedModel, int type,
+			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler<ClassedModel> socialActivityHandler =
+		SocialActivityHandler<T> socialActivityHandler =
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.addActivity(
@@ -50,25 +51,11 @@ public class SocialActivityHandlerImpl
 
 	@Override
 	public void addUniqueActivity(
-			long userId, long groupId, ClassedModel classedModel, int type,
-			String extraData, long receiverUserId)
+			long userId, long groupId, Date createDate, T classedModel,
+			int type, String extraData, long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler<ClassedModel> socialActivityHandler =
-			getSocialActivityHandler(classedModel.getModelClassName());
-
-		socialActivityHandler.addUniqueActivity(
-			userId, groupId, classedModel, type, extraData, receiverUserId);
-	}
-
-	@Override
-	public void addUniqueActivity(
-			long userId, long groupId, Date createDate,
-			ClassedModel classedModel, int type, String extraData,
-			long receiverUserId)
-		throws PortalException {
-
-		SocialActivityHandler<ClassedModel> socialActivityHandler =
+		SocialActivityHandler<T> socialActivityHandler =
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.addUniqueActivity(
@@ -77,10 +64,21 @@ public class SocialActivityHandlerImpl
 	}
 
 	@Override
-	public void deleteActivities(ClassedModel classedModel)
+	public void addUniqueActivity(
+			long userId, long groupId, T classedModel, int type,
+			String extraData, long receiverUserId)
 		throws PortalException {
 
-		SocialActivityHandler<ClassedModel> socialActivityHandler =
+		SocialActivityHandler<T> socialActivityHandler =
+			getSocialActivityHandler(classedModel.getModelClassName());
+
+		socialActivityHandler.addUniqueActivity(
+			userId, groupId, classedModel, type, extraData, receiverUserId);
+	}
+
+	@Override
+	public void deleteActivities(T classedModel) throws PortalException {
+		SocialActivityHandler<T> socialActivityHandler =
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.deleteActivities(classedModel);
@@ -88,11 +86,11 @@ public class SocialActivityHandlerImpl
 
 	@Override
 	public void updateLastSocialActivity(
-			long userId, long groupId, ClassedModel classedModel, int type,
+			long userId, long groupId, T classedModel, int type,
 			Date createDate)
 		throws PortalException {
 
-		SocialActivityHandler<ClassedModel> socialActivityHandler =
+		SocialActivityHandler<T> socialActivityHandler =
 			getSocialActivityHandler(classedModel.getModelClassName());
 
 		socialActivityHandler.updateLastSocialActivity(
@@ -104,10 +102,10 @@ public class SocialActivityHandlerImpl
 	}
 
 	@SuppressWarnings("unchecked")
-	protected SocialActivityHandler<ClassedModel> getSocialActivityHandler(
+	protected SocialActivityHandler<T> getSocialActivityHandler(
 		String className) {
 
-		SocialActivityHandler<ClassedModel> socialActivityHandler =
+		SocialActivityHandler<T> socialActivityHandler =
 			_serviceTrackerMap.getService(className);
 
 		if (socialActivityHandler != null) {
@@ -117,8 +115,7 @@ public class SocialActivityHandlerImpl
 		return _defaultSocialActivityHandler;
 	}
 
-	private final SocialActivityHandler<ClassedModel>
-		_defaultSocialActivityHandler;
+	private final SocialActivityHandler<T> _defaultSocialActivityHandler;
 
 	@SuppressWarnings("rawtypes")
 	private final ServiceTrackerMap<String, SocialActivityHandler>

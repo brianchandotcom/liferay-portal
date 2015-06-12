@@ -16,6 +16,7 @@ package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portlet.social.model.SocialActivity;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
@@ -25,7 +26,8 @@ import java.util.Date;
 /**
  * @author Adolfo Pérez
  */
-public abstract class BaseSocialActivityHandler<T extends ClassedModel>
+public abstract class BaseSocialActivityHandler
+		<T extends ClassedModel & GroupedModel>
 	implements SocialActivityHandler<T> {
 
 	@Override

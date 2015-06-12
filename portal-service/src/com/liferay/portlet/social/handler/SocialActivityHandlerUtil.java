@@ -17,6 +17,7 @@ package com.liferay.portlet.social.handler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.GroupedModel;
 
 import java.util.Date;
 
@@ -25,7 +26,7 @@ import java.util.Date;
  */
 public class SocialActivityHandlerUtil {
 
-	public static <T extends ClassedModel> void addActivity(
+	public static <T extends ClassedModel & GroupedModel> void addActivity(
 			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
@@ -34,7 +35,8 @@ public class SocialActivityHandlerUtil {
 			userId, groupId, classedModel, type, extraData, receiverUserId);
 	}
 
-	public static <T extends ClassedModel> void addUniqueActivity(
+	public static <T extends ClassedModel & GroupedModel>
+		void addUniqueActivity(
 			long userId, long groupId, Date createDate, T classedModel,
 			int type, String extraData, long receiverUserId)
 		throws PortalException {
@@ -44,7 +46,8 @@ public class SocialActivityHandlerUtil {
 			receiverUserId);
 	}
 
-	public static <T extends ClassedModel> void addUniqueActivity(
+	public static <T extends ClassedModel & GroupedModel>
+		void addUniqueActivity(
 			long userId, long groupId, T classedModel, int type,
 			String extraData, long receiverUserId)
 		throws PortalException {
@@ -53,14 +56,16 @@ public class SocialActivityHandlerUtil {
 			userId, groupId, classedModel, type, extraData, receiverUserId);
 	}
 
-	public static <T extends ClassedModel> void deleteActivities(T classedModel)
+	public static <T extends ClassedModel & GroupedModel> void deleteActivities(
+			T classedModel)
 		throws PortalException {
 
 		getSocialActivityHandler().deleteActivities(classedModel);
 	}
 
-	public static SocialActivityHandler<ClassedModel>
-		getSocialActivityHandler() {
+	@SuppressWarnings("unchecked")
+	public static <T extends ClassedModel & GroupedModel>
+		SocialActivityHandler<T> getSocialActivityHandler() {
 
 		PortalRuntimePermission.checkGetBeanProperty(
 			SocialActivityHandlerUtil.class);
@@ -68,7 +73,8 @@ public class SocialActivityHandlerUtil {
 		return _socialActivityHandler;
 	}
 
-	public static <T extends ClassedModel> void updateLastSocialActivity(
+	public static <T extends ClassedModel & GroupedModel>
+		void updateLastSocialActivity(
 			long userId, long groupId, T classedModel, int type,
 			Date createDate)
 		throws PortalException {
@@ -77,14 +83,16 @@ public class SocialActivityHandlerUtil {
 			userId, groupId, classedModel, type, createDate);
 	}
 
-	public void setSocialActivityHandler(
-		SocialActivityHandler<ClassedModel> socialActivityHandler) {
+	public <T extends ClassedModel & GroupedModel>
+		void setSocialActivityHandler(
+			SocialActivityHandler<T> socialActivityHandler) {
 
 		PortalRuntimePermission.checkSetBeanProperty(getClass());
 
 		_socialActivityHandler = socialActivityHandler;
 	}
 
-	private static SocialActivityHandler<ClassedModel> _socialActivityHandler;
+	@SuppressWarnings("rawtypes")
+	private static SocialActivityHandler _socialActivityHandler;
 
 }

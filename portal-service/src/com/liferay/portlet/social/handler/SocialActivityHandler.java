@@ -16,13 +16,14 @@ package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.GroupedModel;
 
 import java.util.Date;
 
 /**
  * @author Adolfo Pérez
  */
-public interface SocialActivityHandler<T extends ClassedModel> {
+public interface SocialActivityHandler<T extends ClassedModel & GroupedModel> {
 
 	public void addActivity(
 			long userId, long groupId, T classedModel, int type,

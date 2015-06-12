@@ -16,13 +16,15 @@ package com.liferay.portlet.social.handler;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.model.ClassedModel;
+import com.liferay.portal.model.GroupedModel;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
 /**
  * @author Adolfo Pérez
  */
 public class DefaultSocialActivityHandler
-	extends BaseSocialActivityHandler<ClassedModel> {
+		<T extends ClassedModel & GroupedModel>
+	extends BaseSocialActivityHandler<T> {
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {

@@ -1374,6 +1374,34 @@ public abstract class BaseTrashHandlerTestCase {
 
 		Assert.assertEquals(
 			initialTrashEntriesCount, getTrashEntriesCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testTrashGrandparentBaseModelAndRestoreParentModelIsNotInTrashContainer()
+		throws Exception {
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		BaseModel<?> grandparentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, (Long)grandparentBaseModel.getPrimaryKeyObj(),
+			serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveParentBaseModelToTrash(
+			(Long)grandparentBaseModel.getPrimaryKeyObj());
+
+		TrashHandler parentTrashHandler =
+			TrashHandlerRegistryUtil.getTrashHandler(
+				getParentBaseModelClassName());
+
+		parentTrashHandler.restoreTrashEntry(
+			TestPropsValues.getUserId(),
+			(Long)grandparentBaseModel.getPrimaryKeyObj());
 
 		Assert.assertFalse(isInTrashContainer(baseModel));
 		Assert.assertFalse(isInTrashContainer(parentBaseModel));

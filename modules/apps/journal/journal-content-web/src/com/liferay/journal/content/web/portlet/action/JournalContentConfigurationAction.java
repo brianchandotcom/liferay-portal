@@ -32,6 +32,9 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,6 +55,11 @@ public class JournalContentConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/configuration.jsp";
+	}
+
+	@Override
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -66,6 +74,15 @@ public class JournalContentConfigurationAction
 		setPreference(actionRequest, "groupId", String.valueOf(articleGroupId));
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.journal.content.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected long getArticleGroupId(PortletRequest portletRequest) {

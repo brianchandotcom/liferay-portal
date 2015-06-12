@@ -70,7 +70,6 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.info.short-title=Summary",
 		"javax.portlet.info.title=Summary",
 		"javax.portlet.init-param.clear-request-parameters=true",
-		"javax.portlet.init-param.config-template=/summary/configuration.jsp",
 		"javax.portlet.init-param.view-template=/summary/view.jsp",
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator,guest,power-user,user",

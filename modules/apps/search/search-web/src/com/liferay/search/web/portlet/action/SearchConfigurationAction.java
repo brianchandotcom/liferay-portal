@@ -27,8 +27,12 @@ import com.liferay.search.web.util.SearchFacetTracker;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
+import javax.portlet.RenderRequest;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alexander Chow
@@ -39,6 +43,11 @@ import org.osgi.service.component.annotations.Component;
 	service = ConfigurationAction.class
 )
 public class SearchConfigurationAction extends DefaultConfigurationAction {
+
+	@Override
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/configuration.jsp";
+	}
 
 	@Override
 	public void processAction(
@@ -79,6 +88,14 @@ public class SearchConfigurationAction extends DefaultConfigurationAction {
 			actionRequest, "searchConfiguration", jsonObject.toString());
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.search.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 }

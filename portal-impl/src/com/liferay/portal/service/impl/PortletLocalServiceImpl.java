@@ -850,9 +850,9 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 				portlet = entry.getValue();
 
-				portletBagFactory.create(portlet);
-
 				_portletsMap.put(entry.getKey(), portlet);
+
+				portletBagFactory.create(portlet);
 			}
 
 			// Sprite images

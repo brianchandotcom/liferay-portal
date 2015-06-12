@@ -98,7 +98,7 @@ portletURL.setParameter("categoryId", String.valueOf(categoryId));
 
 			// Action
 
-			row.addJSP("category_action.jsp", "entry-action");
+			row.addJSP("/html/portlet/shopping/category_action.jsp", "entry-action", application, request, response);
 
 			// Add result row
 

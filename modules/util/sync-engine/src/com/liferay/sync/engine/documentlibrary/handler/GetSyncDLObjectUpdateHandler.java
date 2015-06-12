@@ -633,6 +633,9 @@ public class GetSyncDLObjectUpdateHandler extends BaseSyncDLObjectHandler {
 			if (filePathChanged) {
 				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_RENAMED_REMOTE);
 			}
+			else {
+				sourceSyncFile.setUiEvent(SyncFile.UI_EVENT_NONE);
+			}
 
 			SyncFileService.update(sourceSyncFile);
 		}

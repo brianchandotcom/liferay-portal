@@ -182,6 +182,12 @@ public class FileUtil {
 			filePath.toString(), startTime);
 
 		for (SyncFile deletedSyncFile : deletedSyncFiles) {
+			if (!Files.notExists(
+					Paths.get(deletedSyncFile.getFilePathName()))) {
+
+				continue;
+			}
+
 			if (deletedSyncFile.getTypePK() == 0) {
 				SyncFileService.deleteSyncFile(deletedSyncFile, false);
 

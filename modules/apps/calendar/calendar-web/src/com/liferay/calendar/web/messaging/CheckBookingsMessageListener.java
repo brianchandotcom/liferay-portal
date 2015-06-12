@@ -16,7 +16,7 @@ package com.liferay.calendar.web.messaging;
 
 import com.liferay.calendar.constants.PortletKeys;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.calendar.util.PortletPropsValues;
+import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.portal.kernel.messaging.BaseSchedulerEntryMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
@@ -42,7 +42,8 @@ public class CheckBookingsMessageListener
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 		schedulerEntry.setTriggerValue(
-			PortletPropsValues.CALENDAR_NOTIFICATION_CHECK_INTERVAL);
+			CalendarServiceConfigurationValues
+				.CALENDAR_NOTIFICATION_CHECK_INTERVAL);
 	}
 
 	@Override

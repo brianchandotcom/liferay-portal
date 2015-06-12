@@ -14,6 +14,12 @@
 
 package com.liferay.shopping.upgrade;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.portal.upgrade.util.UpgradePortletId;
+import com.liferay.shopping.upgrade.v1_0_0.UpgradeClassNames;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +27,7 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.portal.upgrade.util.UpgradePortletId;
-import com.liferay.shopping.upgrade.v1_0_0.UpgradeClassNames;
+import org.springframework.context.ApplicationContext;
 
 /**
  * @author Peter Fellwock
@@ -35,8 +37,6 @@ import com.liferay.shopping.upgrade.v1_0_0.UpgradeClassNames;
 )
 public class ShoppingServiceUpgrade {
 
-	
-	/**
 	@Reference(
 		target =
 			"(org.springframework.context.service.name=" +
@@ -61,13 +61,15 @@ public class ShoppingServiceUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		upgradeProcesses.add(new UpgradeClassNames());
+		
+		upgradeProcesses.add(new UpgradeShopping());
+		
+		upgradeProcesses.add(new UpgradeShoppingPreferences());
 
 		_releaseLocalService.updateRelease(
 			"com.liferay.shopping.service", upgradeProcesses, 1, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;
-	
-	**/
 
 }

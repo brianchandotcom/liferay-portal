@@ -4,38 +4,38 @@
 		module="rt.equinox.bundles"
 		revision="4.5.0-SNAPSHOT"
 		status="integration"
-		publication="20150308145729"
+		publication="20150611125753"
 	>
 		<description homepage="" />
 		<m:properties__tycho.scmUrl>scm:git:git://git.eclipse.org/gitroot/equinox/rt.equinox.bundles.git</m:properties__tycho.scmUrl>
 		<m:properties__buildType>I</m:properties__buildType>
-		<m:properties__tycho-extras.version>0.22.0</m:properties__tycho-extras.version>
+		<m:properties__tycho-extras.version>0.23.0</m:properties__tycho-extras.version>
 		<m:properties__cbi-jdt-repo.url>https://repo.eclipse.org/content/repositories/eclipse-staging/</m:properties__cbi-jdt-repo.url>
 		<m:properties__eclipse-repo.url>https://repo.eclipse.org/content/repositories/releases/</m:properties__eclipse-repo.url>
-		<m:properties__cbi-snapshots-repo.url>https://repo.eclipse.org/content/repositories/cbi-snapshots/</m:properties__cbi-snapshots-repo.url>
 		<m:properties__releaseNumberSDK>4.5</m:properties__releaseNumberSDK>
 		<m:properties__skipTests>true</m:properties__skipTests>
-		<m:properties__eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-N-builds</m:properties__eclipse-p2-repo.url>
+		<m:properties__eclipse-p2-repo.url>http://download.eclipse.org/eclipse/updates/4.5-I-builds</m:properties__eclipse-p2-repo.url>
 		<m:properties__tycho-repo.url>https://oss.sonatype.org/content/repositories/public/</m:properties__tycho-repo.url>
-		<m:properties__cbi-jdt-version>3.11.0.v20150118-1315</m:properties__cbi-jdt-version>
+		<m:properties__cbi-jdt-apt-version>1.2.0.v20150514-0146</m:properties__cbi-jdt-apt-version>
+		<m:properties__cbi-jdt-version>3.11.0.v20150601-1755</m:properties__cbi-jdt-version>
 		<m:properties__releaseName>Mars</m:properties__releaseName>
-		<m:properties__eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5M5-201501291830/</m:properties__eclipserun-repo>
+		<m:properties__eclipserun-repo>http://download.eclipse.org/eclipse/updates/4.5milestones/S-4.5RC3-201505280700/</m:properties__eclipserun-repo>
 		<m:properties__buildTimestamp>${maven.build.timestamp}</m:properties__buildTimestamp>
 		<m:properties__comparator.repo>http://download.eclipse.org/eclipse/updates/4.5-I-builds</m:properties__comparator.repo>
 		<m:properties__jgit.dirtyWorkingTree>ignore</m:properties__jgit.dirtyWorkingTree>
 		<m:properties__releaseNumberPlatform>4.5</m:properties__releaseNumberPlatform>
 		<m:properties__defaultSigning-excludeInnerJars>false</m:properties__defaultSigning-excludeInnerJars>
 		<m:properties__buildId>${buildType}${buildTimestamp}</m:properties__buildId>
-		<m:properties__jetty-version>9.2.5.v20141112</m:properties__jetty-version>
+		<m:properties__jetty-version>9.2.9.v20150224</m:properties__jetty-version>
 		<m:properties__maven.build.timestamp.format>yyyyMMdd-HHmm</m:properties__maven.build.timestamp.format>
-		<m:properties__emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201501230347/</m:properties__emf-repo.url>
+		<m:properties__emf-repo.url>http://download.eclipse.org/modeling/emf/emf/updates/2.11milestones/base/S201505120501/</m:properties__emf-repo.url>
 		<m:properties__tests.ignoredWarnings>-warn:-deprecation,raw,unchecked,discouraged</m:properties__tests.ignoredWarnings>
-		<m:properties__cbi-plugins.version>1.1.1</m:properties__cbi-plugins.version>
-		<m:properties__tycho.version>0.22.0</m:properties__tycho.version>
+		<m:properties__cbi-plugins.version>1.1.2</m:properties__cbi-plugins.version>
+		<m:properties__tycho.version>0.23.0</m:properties__tycho.version>
 		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
-		<m:properties__ecf-repo.url>http://download.eclipse.org/rt/ecf/3.9.2/site.p2/</m:properties__ecf-repo.url>
+		<m:properties__ecf-repo.url>http://download.eclipse.org/rt/ecf/448916.1/site.p2/</m:properties__ecf-repo.url>
 		<m:properties__code.ignoredWarnings>-warn:-deprecation,unavoidableGenericProblems</m:properties__code.ignoredWarnings>
-		<m:maven.plugins>org.eclipse.tycho__tycho-maven-plugin__0.22.0|org.eclipse.cbi.maven.plugins__eclipse-cbi-plugin__1.1.1|org.eclipse.tycho__target-platform-configuration__null|org.eclipse.tycho__tycho-source-plugin__null|org.apache.maven.plugins__maven-resources-plugin__null|org.eclipse.tycho__tycho-maven-plugin__0.22.0|org.eclipse.cbi.maven.plugins__eclipse-cbi-plugin__1.1.1|org.eclipse.tycho__target-platform-configuration__null|org.eclipse.tycho__tycho-source-plugin__null|org.apache.maven.plugins__maven-resources-plugin__null</m:maven.plugins>
+		<m:maven.plugins>org.eclipse.tycho__tycho-maven-plugin__0.23.0|org.eclipse.cbi.maven.plugins__eclipse-cbi-plugin__1.1.2|org.eclipse.tycho__target-platform-configuration__null|org.eclipse.tycho__tycho-source-plugin__null|org.apache.maven.plugins__maven-resources-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__1.4|org.eclipse.tycho__tycho-maven-plugin__0.23.0|org.eclipse.cbi.maven.plugins__eclipse-cbi-plugin__1.1.2|org.eclipse.tycho__target-platform-configuration__null|org.eclipse.tycho__tycho-source-plugin__null|org.apache.maven.plugins__maven-resources-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__1.4</m:maven.plugins>
 	</info>
 	<configurations>
 		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>

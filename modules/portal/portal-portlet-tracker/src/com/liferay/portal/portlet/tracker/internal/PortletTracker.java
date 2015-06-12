@@ -1166,8 +1166,7 @@ public class PortletTracker
 		HttpServiceRuntime httpServiceRuntime, Map<String, Object> properties) {
 
 		List<String> httpServiceEndpoints = StringPlus.asList(
-			properties.get(
-				HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT_ATTRIBUTE));
+			properties.get(HttpServiceRuntimeConstants.HTTP_SERVICE_ENDPOINT));
 
 		if (!httpServiceEndpoints.isEmpty()) {
 			_httpServiceEndpoint = httpServiceEndpoints.get(0);

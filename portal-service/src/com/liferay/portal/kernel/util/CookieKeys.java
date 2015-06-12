@@ -216,7 +216,7 @@ public class CookieKeys {
 
 	public static boolean isEncodedCookie(String name) {
 		if (name.equals(ID) || name.equals(LOGIN) || name.equals(PASSWORD) ||
-			name.equals(SCREEN_NAME)) {
+			name.equals(SCREEN_NAME) || name.equals(USER_UUID)) {
 
 			return true;
 		}

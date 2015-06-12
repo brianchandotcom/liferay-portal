@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.tools.sass;
+package com.liferay.css.builder.sass;
 
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
+import com.liferay.rtl.css.RTLCSSConverter;
 
 /**
  * @author Minhchau Dang
@@ -23,7 +24,9 @@ import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
  */
 public class SassString implements SassFragment {
 
-	public SassString(String fileName, String cssContent) throws Exception {
+	public SassString(CSSBuilder cssBuilder, String fileName, String cssContent)
+		throws Exception {
+
 		if (fileName.contains("_rtl")) {
 			_ltrContent = StringPool.BLANK;
 			_rtlContent = cssContent;
@@ -31,8 +34,8 @@ public class SassString implements SassFragment {
 		else {
 			_ltrContent = cssContent;
 
-			if (!RTLCSSUtil.isExcludedPath(fileName)) {
-				_rtlContent = RTLCSSUtil.getRtlCss(fileName, cssContent);
+			if (!cssBuilder.isRtlExcludedPath(fileName)) {
+				_rtlContent = _getRtlCss(fileName, cssContent);
 			}
 			else {
 				_rtlContent = null;
@@ -49,6 +52,27 @@ public class SassString implements SassFragment {
 	public String getRtlContent() {
 		return _rtlContent;
 	}
+
+	private String _getRtlCss(String fileName, String css) throws Exception {
+		String rtlCss = css;
+
+		try {
+			if (_rtlCSSConverter == null) {
+				_rtlCSSConverter = new RTLCSSConverter();
+			}
+
+			rtlCss = _rtlCSSConverter.process(rtlCss);
+		}
+		catch (Exception e) {
+			System.out.println(
+				"Unable to generate RTL version for " + fileName +
+					StringPool.COMMA_AND_SPACE + e.getMessage());
+		}
+
+		return rtlCss;
+	}
+
+	private static RTLCSSConverter _rtlCSSConverter;
 
 	private final String _ltrContent;
 	private final String _rtlContent;

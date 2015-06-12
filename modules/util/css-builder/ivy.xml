@@ -17,9 +17,10 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="provided->master" name="annotations" org="com.google.code.findbugs" rev="2.0.3" />
-		<dependency conf="provided->master" name="ph-commons" org="com.helger" rev="5.6.0" />
-		<dependency conf="provided->master" name="ph-css" org="com.helger" rev="3.9.1" />
-		<dependency conf="provided->master" name="slf4j-api" org="org.slf4j" rev="1.7.10" />
+		<dependency name="ant" org="org.apache.ant"  rev="1.9.4" />
+		<dependency name="com.liferay.rtl.css" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.sass.compiler.jni" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.sass.compiler.ruby" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="slf4j-log4j12" org="org.slf4j" rev="1.7.2" />
 	</dependencies>
 </ivy-module>

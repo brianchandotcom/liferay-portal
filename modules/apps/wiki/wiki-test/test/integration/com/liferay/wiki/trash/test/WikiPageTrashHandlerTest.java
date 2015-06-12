@@ -204,12 +204,6 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashMoveBaseModelIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashMyBaseModel() throws Exception {
 	}
 
@@ -217,6 +211,12 @@ public class WikiPageTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentAndRestoreIndexable() throws Exception {
 	}
 
 	@Ignore

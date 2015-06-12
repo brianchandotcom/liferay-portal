@@ -162,12 +162,6 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
-	public void testTrashMoveBaseModelIndexable() throws Exception {
-	}
-
-	@Ignore
-	@Override
-	@Test
 	public void testTrashMyBaseModel() throws Exception {
 	}
 
@@ -193,6 +187,12 @@ public class BlogsEntryTrashHandlerTest
 	@Override
 	@Test
 	public void testTrashParentAndRestoreBaseModelIsVisible() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
+	public void testTrashParentAndRestoreIndexable() throws Exception {
 	}
 
 	@Ignore

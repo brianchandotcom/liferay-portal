@@ -1430,39 +1430,6 @@ public abstract class BaseTrashHandlerTestCase {
 	}
 
 	@Test
-	public void testTrashMoveBaseModelIndexable() throws Exception {
-		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
-
-		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
-
-		int initialBaseModelsSearchCount = searchBaseModelsCount(
-			getBaseModelClass(), group.getGroupId());
-
-		BaseModel<?> parentBaseModel = getParentBaseModel(
-			group, serviceContext);
-
-		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
-
-		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
-
-		if (isBaseModelMoveableFromTrash()) {
-			moveBaseModelFromTrash(baseModel, group, serviceContext);
-
-			if (isBaseModelContainerModel()) {
-				Assert.assertEquals(
-					initialBaseModelsSearchCount + 2,
-					searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			}
-			else {
-				Assert.assertEquals(
-					initialBaseModelsSearchCount + 1,
-					searchBaseModelsCount(getBaseModelClass(), group.getGroupId()));
-			}
-		}
-	}
-
-	@Test
 	public void testTrashMyBaseModel() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
@@ -1622,6 +1589,41 @@ public abstract class BaseTrashHandlerTestCase {
 
 			if (isAssetableModel()) {
 				Assert.assertTrue(isAssetEntryVisible(baseModel));
+			}
+		}
+	}
+
+	@Test
+	public void testTrashParentAndRestoreIndexable() throws Exception {
+		Assume.assumeTrue(this instanceof WhenIsIndexableBaseModel);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+		int initialBaseModelsSearchCount = searchBaseModelsCount(
+			getBaseModelClass(), group.getGroupId());
+
+		BaseModel<?> parentBaseModel = getParentBaseModel(
+			group, serviceContext);
+
+		baseModel = addBaseModel(parentBaseModel, true, serviceContext);
+
+		moveParentBaseModelToTrash((Long)parentBaseModel.getPrimaryKeyObj());
+
+		if (isBaseModelMoveableFromTrash()) {
+			moveBaseModelFromTrash(baseModel, group, serviceContext);
+
+			if (isBaseModelContainerModel()) {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 2,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
+			}
+			else {
+				Assert.assertEquals(
+					initialBaseModelsSearchCount + 1,
+					searchBaseModelsCount(
+						getBaseModelClass(), group.getGroupId()));
 			}
 		}
 	}

@@ -40,7 +40,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 	<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
 </portlet:renderURL>
 
-<aui:form action="<%= searchURL %>" method="post" name="fm">
+<aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
 
 	<%
 	PortletURL renderURL = renderResponse.createRenderURL();
@@ -138,3 +138,15 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 <%!
 private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.journal_content_search.search_jsp");
 %>
+
+<aui:script>
+	function <portlet:namespace />search() {
+		var keywords = document.<portlet:namespace />fm.<portlet:namespace />keywords.value;
+
+		keywords = keywords.replace(/^\s+|\s+$/, '');
+
+		if (keywords != '') {
+			submitForm(document.<portlet:namespace />fm);
+		}
+	}
+</aui:script>

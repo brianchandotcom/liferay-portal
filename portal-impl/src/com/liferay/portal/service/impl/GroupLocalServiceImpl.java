@@ -923,12 +923,6 @@ public class GroupLocalServiceImpl extends GroupLocalServiceBaseImpl {
 
 			expandoRowLocalService.deleteRows(group.getGroupId());
 
-			// Shopping
-
-			shoppingCartLocalService.deleteGroupCarts(group.getGroupId());
-			shoppingCategoryLocalService.deleteCategories(group.getGroupId());
-			shoppingCouponLocalService.deleteCoupons(group.getGroupId());
-			shoppingOrderLocalService.deleteOrders(group.getGroupId());
 
 			// Social
 

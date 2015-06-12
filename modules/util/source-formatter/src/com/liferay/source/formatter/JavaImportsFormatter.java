@@ -16,9 +16,9 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -72,7 +72,7 @@ public class JavaImportsFormatter extends ImportsFormatter {
 				continue;
 			}
 
-			int y = line.lastIndexOf(StringPool.PERIOD);
+			int y = line.lastIndexOf(CharPool.PERIOD);
 
 			String importPackage = line.substring(x + 7, y);
 

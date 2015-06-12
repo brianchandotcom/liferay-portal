@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
@@ -275,14 +276,14 @@ public class JavaTerm {
 			return;
 		}
 
-		x = _content.indexOf(StringPool.OPEN_PARENTHESIS, x);
+		x = _content.indexOf(CharPool.OPEN_PARENTHESIS, x);
 
 		int y = x;
 
 		String parameters = StringPool.BLANK;
 
 		while (true) {
-			y = _content.indexOf(StringPool.CLOSE_PARENTHESIS, y + 1);
+			y = _content.indexOf(CharPool.CLOSE_PARENTHESIS, y + 1);
 
 			if (y == -1) {
 				return;
@@ -315,7 +316,7 @@ public class JavaTerm {
 				parameters = parameters.substring(6);
 			}
 
-			x = parameters.indexOf(StringPool.SPACE, x + 1);
+			x = parameters.indexOf(CharPool.SPACE, x + 1);
 
 			if (x == -1) {
 				return;
@@ -334,7 +335,7 @@ public class JavaTerm {
 
 			_parameterTypes.add(parameterType);
 
-			y = parameters.indexOf(StringPool.COMMA, x);
+			y = parameters.indexOf(CharPool.COMMA, x);
 
 			if (y == -1) {
 				_parameterNames.add(parameters.substring(x + 1));
@@ -354,7 +355,7 @@ public class JavaTerm {
 		int pos = -1;
 
 		while (true) {
-			pos = parameters.indexOf(StringPool.SPACE, pos + 1);
+			pos = parameters.indexOf(CharPool.SPACE, pos + 1);
 
 			if (pos == -1) {
 				return parameters;

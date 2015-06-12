@@ -16,6 +16,7 @@ package com.liferay.source.formatter;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -154,7 +155,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
 
-				int pos = line.indexOf(StringPool.EQUAL);
+				int pos = line.indexOf(CharPool.EQUAL);
 
 				if (pos == -1) {
 					continue;
@@ -215,7 +216,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 					continue;
 				}
 
-				int pos = line.indexOf(StringPool.EQUAL);
+				int pos = line.indexOf(CharPool.EQUAL);
 
 				if (pos == -1) {
 					continue;
@@ -223,7 +224,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 				String property = StringUtil.trim(line.substring(0, pos));
 
-				pos = property.indexOf(StringPool.OPEN_BRACKET);
+				pos = property.indexOf(CharPool.OPEN_BRACKET);
 
 				if (pos != -1) {
 					property = property.substring(0, pos);
@@ -249,7 +250,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 		String path = StringPool.BLANK;
 
-		int pos = fileName.lastIndexOf(StringPool.SLASH);
+		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		if (pos != -1) {
 			path = fileName.substring(0, pos + 1);
@@ -282,7 +283,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				value, StringPool.COMMA);
 
 			for (String propertyFileName : propertyFileNames) {
-				pos = propertyFileName.indexOf(StringPool.AT);
+				pos = propertyFileName.indexOf(CharPool.AT);
 
 				if (pos != -1) {
 					propertyFileName = propertyFileName.substring(0, pos);

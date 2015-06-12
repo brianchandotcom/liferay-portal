@@ -68,7 +68,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				count = _importCountMap.get(importName);
 			}
 			else {
-				int pos = importName.lastIndexOf(StringPool.PERIOD);
+				int pos = importName.lastIndexOf(CharPool.PERIOD);
 
 				String importClassName = importName.substring(pos + 1);
 
@@ -98,13 +98,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 				break;
 			}
 
-			x = content.indexOf(StringPool.QUOTE, x);
+			x = content.indexOf(CharPool.QUOTE, x);
 
 			if (x == -1) {
 				break;
 			}
 
-			int y = content.indexOf(StringPool.QUOTE, x + 1);
+			int y = content.indexOf(CharPool.QUOTE, x + 1);
 
 			if (y == -1) {
 				break;
@@ -193,8 +193,8 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		List<String> unneededImports) {
 
 		for (String importLine : importLines) {
-			int x = importLine.indexOf(StringPool.QUOTE);
-			int y = importLine.indexOf(StringPool.QUOTE, x + 1);
+			int x = importLine.indexOf(CharPool.QUOTE);
+			int y = importLine.indexOf(CharPool.QUOTE, x + 1);
 
 			if ((x == -1) || (y == -1)) {
 				continue;
@@ -203,7 +203,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			String className = importLine.substring(x + 1, y);
 
 			className = className.substring(
-				className.lastIndexOf(StringPool.PERIOD) + 1);
+				className.lastIndexOf(CharPool.PERIOD) + 1);
 
 			String regex = "[^A-Za-z0-9_\"]" + className + "[^A-Za-z0-9_\"]";
 
@@ -712,7 +712,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					if (!trimmedLine.startsWith(StringPool.FORWARD_SLASH) &&
 						!trimmedLine.startsWith(StringPool.GREATER_THAN)) {
 
-						int pos = trimmedLine.indexOf(StringPool.EQUAL);
+						int pos = trimmedLine.indexOf(CharPool.EQUAL);
 
 						if (pos != -1) {
 							String attribute = trimmedLine.substring(0, pos);
@@ -856,9 +856,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 					int x = line.indexOf("<%@ include file");
 
 					if (x != -1) {
-						x = line.indexOf(StringPool.QUOTE, x);
+						x = line.indexOf(CharPool.QUOTE, x);
 
-						int y = line.indexOf(StringPool.QUOTE, x + 1);
+						int y = line.indexOf(CharPool.QUOTE, x + 1);
 
 						if (y != -1) {
 							String includeFileName = line.substring(x + 1, y);
@@ -1265,7 +1265,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		int x = line.indexOf(" = ");
 
 		if (x == -1) {
-			int y = line.lastIndexOf(" ");
+			int y = line.lastIndexOf(CharPool.SPACE);
 
 			if (y != -1) {
 				variableName = line.substring(y + 1, line.length() - 1);
@@ -1274,7 +1274,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 		else {
 			line = line.substring(0, x);
 
-			int y = line.lastIndexOf(" ");
+			int y = line.lastIndexOf(CharPool.SPACE);
 
 			if (y != -1) {
 				variableName = line.substring(y + 1);
@@ -1310,9 +1310,9 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		x = line.indexOf(StringPool.QUOTE, x);
+		x = line.indexOf(CharPool.QUOTE, x);
 
-		int y = line.indexOf(StringPool.QUOTE, x + 1);
+		int y = line.indexOf(CharPool.QUOTE, x + 1);
 
 		if ((x == -1) || (y == -1)) {
 			return false;
@@ -1375,13 +1375,13 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 			return false;
 		}
 
-		y = content.indexOf(StringPool.QUOTE, y);
+		y = content.indexOf(CharPool.QUOTE, y);
 
 		if (y == -1) {
 			return false;
 		}
 
-		int z = content.indexOf(StringPool.QUOTE, y + 1);
+		int z = content.indexOf(CharPool.QUOTE, y + 1);
 
 		if (z == -1) {
 			return false;
@@ -1498,7 +1498,7 @@ public class JSPSourceProcessor extends BaseSourceProcessor {
 
 			String importName = importCount.getKey();
 
-			int y = importName.lastIndexOf(StringPool.PERIOD);
+			int y = importName.lastIndexOf(CharPool.PERIOD);
 
 			String importClassName = importName.substring(y + 1);
 

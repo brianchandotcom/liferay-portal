@@ -463,7 +463,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			return content;
 		}
 
-		int y = fileName.indexOf("/", x);
+		int y = fileName.indexOf(CharPool.SLASH, x);
 
 		String correctProjectElementText =
 			"<project name=\"" + fileName.substring(x, y) + "\"";
@@ -471,8 +471,8 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		if (!content.contains(correctProjectElementText)) {
 			x = content.indexOf("<project name=\"");
 
-			y = content.indexOf("\"", x) + 1;
-			y = content.indexOf("\"", y) + 1;
+			y = content.indexOf(CharPool.QUOTE, x) + 1;
+			y = content.indexOf(CharPool.QUOTE, y) + 1;
 
 			content =
 				content.substring(0, x) + correctProjectElementText +
@@ -941,7 +941,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		Set<String> urlPatterns = new TreeSet<>();
 
 		for (String locale : locales) {
-			int pos = locale.indexOf(StringPool.UNDERLINE);
+			int pos = locale.indexOf(CharPool.UNDERLINE);
 
 			String languageCode = locale.substring(0, pos);
 
@@ -1023,8 +1023,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 		while ((line = unsyncBufferedReader.readLine()) != null) {
 			line = StringUtil.trim(line);
 
-			String columnName = line.substring(
-				0, line.indexOf(StringPool.SPACE));
+			String columnName = line.substring(0, line.indexOf(CharPool.SPACE));
 
 			columnName = StringUtil.replace(
 				columnName, StringPool.UNDERLINE, StringPool.BLANK);
@@ -1044,7 +1043,7 @@ public class XMLSourceProcessor extends BaseSourceProcessor {
 			return _tablesContent;
 		}
 
-		int pos = fileName.lastIndexOf(StringPool.SLASH);
+		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		return getContent(fileName.substring(0, pos) + "/sql/tables.sql", 1);
 	}

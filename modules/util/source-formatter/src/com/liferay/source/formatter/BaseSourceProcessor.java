@@ -885,7 +885,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		throws IOException {
 
 		for (int x = absolutePath.length();;) {
-			x = absolutePath.lastIndexOf(StringPool.SLASH, x);
+			x = absolutePath.lastIndexOf(CharPool.SLASH, x);
 
 			if (x == -1) {
 				break;
@@ -1074,7 +1074,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String releaseVersion = ReleaseInfo.getVersion();
 
-		int pos = releaseVersion.lastIndexOf(StringPool.PERIOD);
+		int pos = releaseVersion.lastIndexOf(CharPool.PERIOD);
 
 		_mainReleaseVersion = releaseVersion.substring(0, pos) + ".0";
 
@@ -1137,14 +1137,14 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	protected boolean hasRedundantParentheses(String s) {
 		if (!s.contains("&&") && !s.contains("||")) {
 			for (int x = 0;;) {
-				x = s.indexOf(StringPool.CLOSE_PARENTHESIS);
+				x = s.indexOf(CharPool.CLOSE_PARENTHESIS);
 
 				if (x == -1) {
 					break;
 				}
 
 				int y = s.substring(0, x).lastIndexOf(
-					StringPool.OPEN_PARENTHESIS);
+					CharPool.OPEN_PARENTHESIS);
 
 				if (y == -1) {
 					break;
@@ -1279,8 +1279,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 		String s = line;
 
-		int x = s.indexOf(StringPool.LESS_THAN);
-		int y = s.indexOf(StringPool.SPACE);
+		int x = s.indexOf(CharPool.LESS_THAN);
+		int y = s.indexOf(CharPool.SPACE);
 
 		if ((x == -1) || (x >= y)) {
 			return line;
@@ -1296,7 +1296,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		boolean wrongOrder = false;
 
 		for (x = 0;;) {
-			x = s.indexOf(StringPool.EQUAL);
+			x = s.indexOf(CharPool.EQUAL);
 
 			if ((x == -1) || (s.length() <= (x + 1))) {
 				return line;
@@ -1436,7 +1436,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			s = s.substring(y + 1);
 
 			if (s.startsWith(StringPool.GREATER_THAN)) {
-				x = s.indexOf(StringPool.SPACE);
+				x = s.indexOf(CharPool.SPACE);
 
 				if (x == -1) {
 					return line;
@@ -1464,8 +1464,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	protected String stripRedundantParentheses(String s) {
 		for (int x = 0;;) {
-			x = s.indexOf(StringPool.OPEN_PARENTHESIS, x + 1);
-			int y = s.indexOf(StringPool.CLOSE_PARENTHESIS, x);
+			x = s.indexOf(CharPool.OPEN_PARENTHESIS, x + 1);
+			int y = s.indexOf(CharPool.CLOSE_PARENTHESIS, x);
 
 			if ((x == -1) || (y == -1)) {
 				return s;

@@ -179,12 +179,15 @@
 
 	<command name="deleteCP">
 		<execute function="Type#sendKeys" locator1="CPRoles#SEARCH_FIELD" value1="Name" />
+
 		<execute function="AssertClick" locator1="CPRoles#SEARCH_BUTTON" value1="Search" />
 
 		<var name="key_roleName" value="${roleName}" />
 
 		<execute function="Click" locator1="CPRoles#ROLE_TABLE_ACTIONS" />
+
 		<execute function="AssertClickNoError" locator1="CPRoles#ROLE_MENULIST_DELETE" value1="Delete" />
+
 		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 	</command>
 

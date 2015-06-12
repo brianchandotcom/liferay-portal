@@ -25,6 +25,7 @@
 		<var name="key_customFieldName" value="${customFieldName}" />
 
 		<execute function="Click" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS" />
+
 		<execute function="AssertClick" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_MENULIST_EDIT" value1="Edit" />
 
 		<if>

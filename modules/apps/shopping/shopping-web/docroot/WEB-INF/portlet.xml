@@ -17,7 +17,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<security-role-ref>
 			<role-name>power-user</role-name>
 		</security-role-ref>
@@ -45,7 +45,7 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
-		<resource-bundle>com.liferay.portlet.StrutsResourceBundle</resource-bundle>
+		<resource-bundle>content.Language</resource-bundle>
 		<security-role-ref>
 			<role-name>administrator</role-name>
 		</security-role-ref>

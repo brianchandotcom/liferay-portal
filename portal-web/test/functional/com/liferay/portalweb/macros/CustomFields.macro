@@ -17,6 +17,33 @@
 		<execute function="AssertTextEquals" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_NAME" value1="${customFieldName}" />
 	</command>
 
+	<command name="editCP">
+		<var name="key_resourceName" value="${resourceName}" />
+
+		<execute function="AssertClick" locator1="CPCustomfields#RESOURCE_TABLE_RESOURCE_LINK" value1="${resourceName}" />
+
+		<var name="key_customFieldName" value="${customFieldName}" />
+
+		<execute function="Click" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_TABLE_ACTIONS" />
+		<execute function="AssertClick" locator1="CPCustomfieldsResource#CUSTOM_FIELDS_MENULIST_EDIT" value1="Edit" />
+
+		<if>
+			<isset var="defaultValue" />
+			<then>
+				<if>
+					<equals arg1="${customFieldType}" arg2="True/False" />
+					<then>
+						<execute function="Select" locator1="CPCustomfieldsResourceAddcustomfield#DEFAULT_VALUE_SELECT" value1="${defaultValue}" />
+					</then>
+				</if>
+			</then>
+		</if>
+
+		<execute function="AssertClick" locator1="CPCustomfieldsResourceAddcustomfield#SAVE_BUTTON" value1="Save" />
+
+		<execute function="AssertTextEquals" locator1="CPCustomfieldsResource#SUCCESS_MESSAGE" value1="Your request completed successfully." />
+	</command>
+
 	<command name="tearDownCP">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Custom Fields" />

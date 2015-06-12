@@ -222,6 +222,13 @@ public class WikiPageTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashParentWithBaseModelIsInTrashContainer()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashRecentBaseModel() throws Exception {
 	}
 

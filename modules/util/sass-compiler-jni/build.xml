@@ -2,8 +2,6 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="sass-compiler-api" />
-
 	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
 	<macrodef name="build-libsass">

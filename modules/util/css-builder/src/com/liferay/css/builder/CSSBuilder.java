@@ -12,25 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.tools;
+package com.liferay.css.builder;
 
+import com.liferay.css.builder.sass.SassFile;
+import com.liferay.css.builder.sass.SassFileWithMediaQuery;
+import com.liferay.css.builder.sass.SassString;
+import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.tools.sass.SassFile;
-import com.liferay.portal.tools.sass.SassFileWithMediaQuery;
-import com.liferay.portal.tools.sass.SassString;
-import com.liferay.portal.util.FastDateFormatFactoryImpl;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.PropsImpl;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.tools.ArgumentsUtil;
+import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
 import com.liferay.sass.compiler.jni.internal.JniSassCompiler;
@@ -38,11 +32,15 @@ import com.liferay.sass.compiler.ruby.internal.RubySassCompiler;
 
 import java.io.File;
 
+import java.nio.file.Files;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.DirectoryScanner;
 
@@ -53,7 +51,7 @@ import org.apache.tools.ant.DirectoryScanner;
  * @author Shuyang Zhou
  * @author David Truong
  */
-public class SassToCssBuilder {
+public class CSSBuilder {
 
 	public static void main(String[] args) throws Exception {
 		Map<String, String> arguments = ArgumentsUtil.parseArguments(args);
@@ -80,29 +78,32 @@ public class SassToCssBuilder {
 
 		String docrootDirName = arguments.get("sass.docroot.dir");
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
+		String[] rtlExcludedPathRegexps = StringUtil.split(
+			arguments.get("sass.rtl.excluded.path.regexps"));
 		String sassCompilerClassName = arguments.get(
 			"sass.compiler.class.name");
 
 		try {
-			SassToCssBuilder sassToCssBuilder = new SassToCssBuilder(
-				docrootDirName, portalCommonDirName, sassCompilerClassName);
+			CSSBuilder cssBuilder = new CSSBuilder(
+				docrootDirName, portalCommonDirName, rtlExcludedPathRegexps,
+				sassCompilerClassName);
 
-			sassToCssBuilder.execute(dirNames);
+			cssBuilder.execute(dirNames);
 		}
 		catch (Exception e) {
 			ArgumentsUtil.processMainException(arguments, e);
 		}
 	}
 
-	public SassToCssBuilder(
+	public CSSBuilder(
 			String docrootDirName, String portalCommonDirName,
-			String sassCompilerClassName)
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		_docrootDirName = docrootDirName;
 		_portalCommonDirName = portalCommonDirName;
-
-		_initUtil();
+		_rtlExcludedPathPatterns = PatternFactory.compile(
+			rtlExcludedPathRegexps);
 
 		_initSassCompiler(sassCompilerClassName);
 	}
@@ -125,6 +126,18 @@ public class SassToCssBuilder {
 		}
 	}
 
+	public boolean isRtlExcludedPath(String filePath) {
+		for (Pattern pattern : _rtlExcludedPathPatterns) {
+			Matcher matcher = pattern.matcher(filePath);
+
+			if (matcher.matches()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	private void _addSassString(
 			SassFile sassFile, String fileName, String sassContent)
 		throws Exception {
@@ -138,7 +151,7 @@ public class SassToCssBuilder {
 		String cssContent = _parseSass(
 			fileName, CSSBuilderUtil.parseStaticTokens(sassContent));
 
-		sassFile.addSassFragment(new SassString(fileName, cssContent));
+		sassFile.addSassFragment(new SassString(this, fileName, cssContent));
 	}
 
 	private SassFile _build(String fileName) throws Exception {
@@ -148,7 +161,7 @@ public class SassToCssBuilder {
 			return sassFile;
 		}
 
-		sassFile = new SassFile(_docrootDirName, fileName);
+		sassFile = new SassFile(this, _docrootDirName, fileName);
 
 		SassFile previousSassFile = _sassFileCache.putIfAbsent(
 			fileName, sassFile);
@@ -224,7 +237,7 @@ public class SassToCssBuilder {
 	private void _initSassCompiler(String sassCompilerClassName)
 		throws Exception {
 
-		if ((sassCompilerClassName == null) ||
+		if (Validator.isNull(sassCompilerClassName) ||
 			sassCompilerClassName.equals("jni")) {
 
 			try {
@@ -234,16 +247,12 @@ public class SassToCssBuilder {
 				System.out.println(
 					"Unable to load native compiler, falling back to Ruby");
 
-				_sassCompiler = new RubySassCompiler(
-					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
-					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+				_sassCompiler = new RubySassCompiler();
 			}
 		}
 		else {
 			try {
-				_sassCompiler = new RubySassCompiler(
-					PropsValues.SCRIPTING_JRUBY_COMPILE_MODE,
-					PropsValues.SCRIPTING_JRUBY_COMPILE_THRESHOLD, _TMP_DIR);
+				_sassCompiler = new RubySassCompiler();
 			}
 			catch (Exception e) {
 				System.out.println(
@@ -252,26 +261,6 @@ public class SassToCssBuilder {
 				_sassCompiler = new JniSassCompiler();
 			}
 		}
-	}
-
-	private void _initUtil() {
-		FastDateFormatFactoryUtil fastDateFormatFactoryUtil =
-			new FastDateFormatFactoryUtil();
-
-		fastDateFormatFactoryUtil.setFastDateFormatFactory(
-			new FastDateFormatFactoryImpl());
-
-		FileUtil fileUtil = new FileUtil();
-
-		fileUtil.setFile(new FileImpl());
-
-		Class<?> clazz = getClass();
-
-		ClassLoader classLoader = clazz.getClassLoader();
-
-		PortalClassLoaderUtil.setClassLoader(classLoader);
-
-		PropsUtil.setProps(new PropsImpl());
 	}
 
 	private boolean _isModified(String dirName, String[] fileNames)
@@ -318,7 +307,7 @@ public class SassToCssBuilder {
 
 		return _sassCompiler.compileString(
 			content, _portalCommonDirName + File.pathSeparator + cssThemePath,
-			"");
+			StringPool.BLANK);
 	}
 
 	private void _parseSassFile(SassFile sassFile) throws Exception {
@@ -332,7 +321,7 @@ public class SassToCssBuilder {
 			return;
 		}
 
-		String content = FileUtil.read(file);
+		String content = _read(file);
 
 		int pos = 0;
 
@@ -424,11 +413,18 @@ public class SassToCssBuilder {
 		File rtlCustomFile = new File(_docrootDirName, rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
-			_addSassString(
-				sassFile, rtlCustomFileName, FileUtil.read(rtlCustomFile));
+			_addSassString(sassFile, rtlCustomFileName, _read(rtlCustomFile));
 		}
 
 		sassFile.setElapsedTime(System.currentTimeMillis() - start);
+	}
+
+	private String _read(File file) throws Exception {
+		String s = new String(
+			Files.readAllBytes(file.toPath()), StringPool.UTF8);
+
+		return StringUtil.replace(
+			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
 	}
 
 	private static final String _CSS_COMMENT_BEGIN = "/*";
@@ -439,11 +435,9 @@ public class SassToCssBuilder {
 
 	private static final String _CSS_IMPORT_END = ");";
 
-	private static final String _TMP_DIR = SystemProperties.get(
-		SystemProperties.TMP_DIR);
-
 	private final String _docrootDirName;
 	private final String _portalCommonDirName;
+	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
 	private final ConcurrentMap<String, SassFile> _sassFileCache =
 		new ConcurrentHashMap<>();

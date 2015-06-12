@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.portal.tools.sass;
+package com.liferay.css.builder.sass;
 
+import com.liferay.css.builder.CSSBuilder;
 import com.liferay.portal.kernel.util.CharPool;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.servlet.filters.dynamiccss.RTLCSSUtil;
 import com.liferay.portal.tools.CSSBuilderUtil;
 import com.liferay.portal.util.AggregateUtil;
 
 import java.io.File;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +36,10 @@ import java.util.List;
  */
 public class SassFile implements SassFragment {
 
-	public SassFile(String docrootDirName, String fileName) {
+	public SassFile(
+		CSSBuilder cssBuilder, String docrootDirName, String fileName) {
+
+		_cssBuilder = cssBuilder;
 		_docrootDirName = docrootDirName;
 		_fileName = fileName;
 
@@ -137,7 +143,7 @@ public class SassFile implements SassFragment {
 			_docrootDirName,
 			CSSBuilderUtil.getCacheFileName(_fileName, StringPool.BLANK));
 
-		FileUtil.write(ltrCacheFile, getLtrContent());
+		_write(ltrCacheFile, getLtrContent());
 
 		File ltrFile = new File(_docrootDirName, _fileName);
 
@@ -145,7 +151,7 @@ public class SassFile implements SassFragment {
 
 		String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(_fileName);
 
-		if (RTLCSSUtil.isExcludedPath(_fileName)) {
+		if (_cssBuilder.isRtlExcludedPath(_fileName)) {
 			return;
 		}
 
@@ -153,14 +159,27 @@ public class SassFile implements SassFragment {
 			_docrootDirName,
 			CSSBuilderUtil.getCacheFileName(rtlFileName, StringPool.BLANK));
 
-		FileUtil.write(rtlCacheFile, getRtlContent());
+		_write(rtlCacheFile, getRtlContent());
 
 		rtlCacheFile.setLastModified(ltrFile.lastModified());
+	}
+
+	private void _write(File file, String content) throws Exception {
+		File parentFile = file.getParentFile();
+
+		if (!parentFile.exists()) {
+			parentFile.mkdirs();
+		}
+
+		Path path = Paths.get(file.toURI());
+
+		Files.write(path, content.getBytes(StringPool.UTF8));
 	}
 
 	private static final String _BASE_URL = "@base_url@";
 
 	private final String _baseDir;
+	private final CSSBuilder _cssBuilder;
 	private final String _docrootDirName;
 	private long _elapsedTime;
 	private final String _fileName;

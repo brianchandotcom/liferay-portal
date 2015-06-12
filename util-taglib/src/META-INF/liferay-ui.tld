@@ -3275,6 +3275,11 @@
 		</attribute>
 	</tag>
 	<tag>
+		<name>layout-common</name>
+		<tag-class>com.liferay.taglib.ui.LayoutCommonTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<name>layout-templates-list</name>
 		<tag-class>com.liferay.taglib.ui.LayoutTemplatesListTag</tag-class>
 		<body-content>JSP</body-content>

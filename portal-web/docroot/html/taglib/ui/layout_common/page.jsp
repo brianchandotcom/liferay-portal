@@ -14,14 +14,21 @@
  */
 --%>
 
-<c:if test="<%= !themeDisplay.isFacebook() && !themeDisplay.isStateExclusive() && !themeDisplay.isStatePopUp() && !themeDisplay.isWidget() && !(PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP && Validator.equals(themeDisplay.getControlPanelCategory(), PortletCategoryKeys.MY)) %>">
+<%@ include file="/html/taglib/init.jsp" %>
+
+<%
+boolean includeStaticPortlets = GetterUtil.getBoolean(request.getAttribute("liferay-ui:layout_common:includeStaticPortlets"));
+boolean includeWebServerDisplayNode = GetterUtil.getBoolean(request.getAttribute("liferay-ui:layout_common:includeWebServerDisplayNode"));
+%>
+
+<c:if test="<%= includeStaticPortlets %>">
 
 	<%
 	for (String portletId : PropsValues.LAYOUT_STATIC_PORTLETS_ALL) {
 		if (PortletLocalServiceUtil.hasPortlet(company.getCompanyId(), portletId)) {
 	%>
 
-			<liferay-portlet:runtime portletName="<%= portletId %>" />
+		<liferay-portlet:runtime portletName="<%= portletId %>" />
 
 	<%
 		}
@@ -30,7 +37,7 @@
 
 </c:if>
 
-<c:if test="<%= PropsValues.WEB_SERVER_DISPLAY_NODE && !themeDisplay.isStatePopUp() %>">
+<c:if test="<%= includeWebServerDisplayNode %>">
 	<div class="alert alert-info">
 		<liferay-ui:message key="node" />: <%= StringUtil.toLowerCase(PortalUtil.getComputerName()) + StringPool.COLON + PortalUtil.getPortalLocalPort(false) %>
 	</div>

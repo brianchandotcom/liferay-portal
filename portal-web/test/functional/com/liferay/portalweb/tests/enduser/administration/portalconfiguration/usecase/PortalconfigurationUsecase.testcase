@@ -11,6 +11,22 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
+	<command name="AddPortalInstance" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="www.able.com" />
+			<var name="virtualHost" value="www.able.com" />
+			<var name="webId" value="www.able.com" />
+		</execute>
+
+		<execute macro="PortalInstances#viewCP">
+			<var name="virtualHost" value="www.able.com" />
+		</execute>
+	</command>
+
 	<command name="DefaultPortalLandingPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />

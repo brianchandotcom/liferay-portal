@@ -31,9 +31,9 @@ import com.liferay.portal.kernel.scheduler.JobState;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
-import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerState;
 import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
@@ -42,15 +42,10 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InetAddressUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CompanyConstants;
-import com.liferay.portal.model.Portlet;
-import com.liferay.portal.model.PortletApp;
-import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -60,8 +55,11 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
-import javax.servlet.ServletContext;
-
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -69,6 +67,8 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.component.annotations.ReferencePolicyOption;
+import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Michael C. Han
@@ -88,35 +88,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 			message = new Message();
 		}
 
-		ClassLoader classLoader = null;
-
-		if (Validator.isNull(portletId)) {
-			classLoader = PortalClassLoaderUtil.getClassLoader();
-		}
-		else {
-			Portlet portlet = _portletLocalService.getPortletById(portletId);
-
-			PortletApp portletApp = portlet.getPortletApp();
-
-			ServletContext servletContext = portletApp.getServletContext();
-
-			classLoader = servletContext.getClassLoader();
-		}
-
-		if (classLoader == null) {
-			throw new SchedulerException(
-				"Unable to find class loader for portlet " + portletId);
-		}
-
-		SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
-
-		schedulerEntry.setClassLoader(classLoader);
-		schedulerEntry.setEventListenerClass(messageListenerClassName);
-
 		message.put(
-			SchedulerEngine.MESSAGE_LISTENER,
-			schedulerEntry.getEventMessageListener());
-
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
+			messageListenerClassName);
 		message.put(SchedulerEngine.PORTLET_ID, portletId);
 
 		schedule(
@@ -645,8 +619,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		Message message = new Message();
 
 		message.put(
-			SchedulerEngine.MESSAGE_LISTENER,
-			schedulerEntry.getEventMessageListener());
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
+			schedulerEntry.getEventListenerClass());
 		message.put(SchedulerEngine.PORTLET_ID, portletId);
 
 		schedule(
@@ -768,7 +742,9 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 	}
 
 	@Activate
-	protected void activate() {
+	protected void activate(ComponentContext componentContext)
+		throws Exception {
+
 		_auditMessageSchedulerJob = GetterUtil.getBoolean(
 			_props.get(PropsKeys.AUDIT_MESSAGE_SCHEDULER_JOB));
 
@@ -785,6 +761,20 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 			_schedulerEngine = clusterSchedulerEngine;
 		}
+
+		if (GetterUtil.getBoolean(_props.get(PropsKeys.SCHEDULER_ENABLED))) {
+			_bundleContext = componentContext.getBundleContext();
+
+			Filter filter = _bundleContext.createFilter(
+				"(&(javax.portlet.name=*)(objectClass=" +
+					SchedulerEntry.class.getName() + "))");
+
+			_serviceTracker = new ServiceTracker<>(
+				_bundleContext, filter,
+				new SchedulerEntryServiceTrackerCustomizer());
+
+			_serviceTracker.open();
+		}
 	}
 
 	protected void addWeeklyDayPos(
@@ -797,6 +787,12 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 
 	@Deactivate
 	protected void deactivate() {
+		if (_serviceTracker != null) {
+			_serviceTracker.close();
+
+			_serviceTracker = null;
+		}
+
 		try {
 			shutdown();
 		}
@@ -805,6 +801,8 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 				_log.warn("Unable to shutdown scheduler", e);
 			}
 		}
+
+		_bundleContext = null;
 	}
 
 	protected SchedulerEngine getSchedulerEngine() {
@@ -837,17 +835,6 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_jsonFactory = jsonFactory;
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = portletLocalService;
-	}
-
 	@Reference(unbind = "-")
 	protected void setProps(Props props) {
 		_props = props;
@@ -862,22 +849,92 @@ public class SchedulerEngineHelperImpl implements SchedulerEngineHelper {
 		_auditRouter = null;
 	}
 
-	protected void unsetPortletLocalService(
-		PortletLocalService portletLocalService) {
-
-		_portletLocalService = null;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SchedulerEngineHelperImpl.class);
 
 	private boolean _auditMessageSchedulerJob;
 	private volatile AuditRouter _auditRouter;
+	private volatile BundleContext _bundleContext;
 	private ClusterLink _clusterLink;
 	private ClusterMasterExecutor _clusterMasterExecutor;
 	private JSONFactory _jsonFactory;
-	private volatile PortletLocalService _portletLocalService;
 	private Props _props;
 	private SchedulerEngine _schedulerEngine;
+	private volatile ServiceTracker<SchedulerEntry, SchedulerEntry>
+		_serviceTracker;
+
+	private class SchedulerEntryServiceTrackerCustomizer
+		implements ServiceTrackerCustomizer<SchedulerEntry, SchedulerEntry> {
+
+		@Override
+		public SchedulerEntry addingService(
+			ServiceReference<SchedulerEntry> serviceReference) {
+
+			Bundle bundle = serviceReference.getBundle();
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			SchedulerEntry schedulerEntry = bundleContext.getService(
+				serviceReference);
+
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry instanceof StorageTypeAware) {
+				StorageTypeAware storageTypeAware =
+					(StorageTypeAware)schedulerEntry;
+
+				storageType = storageTypeAware.getStorageType();
+			}
+
+			String portletId = (String)serviceReference.getProperty(
+				"javax.portlet.name");
+
+			try {
+				schedule(schedulerEntry, storageType, portletId, 0);
+
+				return schedulerEntry;
+			}
+			catch (SchedulerException e) {
+				_log.error(e, e);
+			}
+
+			return null;
+		}
+
+		@Override
+		public void modifiedService(
+			ServiceReference<SchedulerEntry> serviceReference,
+			SchedulerEntry schedulerEntry) {
+		}
+
+		@Override
+		public void removedService(
+			ServiceReference<SchedulerEntry> serviceReference,
+			SchedulerEntry schedulerEntry) {
+
+			Bundle bundle = serviceReference.getBundle();
+
+			BundleContext bundleContext = bundle.getBundleContext();
+
+			bundleContext.ungetService(serviceReference);
+
+			StorageType storageType = StorageType.MEMORY_CLUSTERED;
+
+			if (schedulerEntry instanceof StorageTypeAware) {
+				StorageTypeAware storageTypeAware =
+					(StorageTypeAware)schedulerEntry;
+
+				storageType = storageTypeAware.getStorageType();
+			}
+
+			try {
+				unschedule(schedulerEntry, storageType);
+			}
+			catch (SchedulerException e) {
+				_log.error(e, e);
+			}
+		}
+
+	}
 
 }

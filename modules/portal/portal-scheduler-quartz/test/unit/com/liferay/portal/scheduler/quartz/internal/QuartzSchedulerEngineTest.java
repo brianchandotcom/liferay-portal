@@ -193,7 +193,8 @@ public class QuartzSchedulerEngineTest {
 		Message message = new Message();
 
 		message.put(
-			SchedulerEngine.MESSAGE_LISTENER, new TestMessageListener());
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
+			TestMessageListener.class.getName());
 
 		_quartzSchedulerEngine.schedule(
 			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, message,
@@ -416,7 +417,8 @@ public class QuartzSchedulerEngineTest {
 		Message message = new Message();
 
 		message.put(
-			SchedulerEngine.MESSAGE_LISTENER, new TestMessageListener());
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
+			TestMessageListener.class.getName());
 		message.put(SchedulerEngine.PORTLET_ID, _TEST_PORTLET_ID);
 
 		_quartzSchedulerEngine.schedule(
@@ -595,7 +597,8 @@ public class QuartzSchedulerEngineTest {
 		Message message = new Message();
 
 		message.put(
-			SchedulerEngine.MESSAGE_LISTENER, new TestMessageListener());
+			SchedulerEngine.MESSAGE_LISTENER_CLASS_NAME,
+			TestMessageListener.class.getName());
 
 		_quartzSchedulerEngine.schedule(
 			trigger, StringPool.BLANK, _TEST_DESTINATION_NAME, message,

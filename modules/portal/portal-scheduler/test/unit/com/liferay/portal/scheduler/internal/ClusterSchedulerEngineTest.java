@@ -83,6 +83,10 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.Filter;
+import org.osgi.service.component.ComponentContext;
+
 /**
  * @author Tina Tian
  */
@@ -107,6 +111,22 @@ public class ClusterSchedulerEngineTest {
 
 		setUpClusterSchedulerEngine();
 
+		_componentContext = Mockito.mock(ComponentContext.class);
+
+		BundleContext bundleContext = Mockito.mock(BundleContext.class);
+
+		Mockito.when(
+			_componentContext.getBundleContext()
+		).thenReturn(
+			bundleContext
+		);
+
+		Mockito.when(
+			bundleContext.createFilter(Mockito.anyString())
+		).thenReturn(
+			Mockito.mock(Filter.class)
+		);
+
 		_schedulerEngineHelperImpl.setSchedulerEngine(_clusterSchedulerEngine);
 
 		_clusterSchedulerEngine.setSchedulerEngineHelper(
@@ -116,10 +136,10 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testCreateClusterSchedulerEngine1() {
+	public void testCreateClusterSchedulerEngine1() throws Exception {
 		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
 
-		_schedulerEngineHelperImpl.activate();
+		_schedulerEngineHelperImpl.activate(_componentContext);
 
 		SchedulerEngine schedulerEngine =
 			_schedulerEngineHelperImpl.getSchedulerEngine();
@@ -130,7 +150,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testCreateClusterSchedulerEngine2() {
+	public void testCreateClusterSchedulerEngine2() throws Exception {
 		Mockito.when(
 			_props.get(PropsKeys.SCHEDULER_ENABLED)
 		).thenReturn(
@@ -139,7 +159,7 @@ public class ClusterSchedulerEngineTest {
 
 		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
 
-		_schedulerEngineHelperImpl.activate();
+		_schedulerEngineHelperImpl.activate(_componentContext);
 
 		SchedulerEngine schedulerEngine =
 			_schedulerEngineHelperImpl.getSchedulerEngine();
@@ -148,7 +168,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testCreateClusterSchedulerEngine3() {
+	public void testCreateClusterSchedulerEngine3() throws Exception {
 		Mockito.when(
 			_clusterLink.isEnabled()
 		).thenReturn(
@@ -157,7 +177,7 @@ public class ClusterSchedulerEngineTest {
 
 		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
 
-		_schedulerEngineHelperImpl.activate();
+		_schedulerEngineHelperImpl.activate(_componentContext);
 
 		SchedulerEngine schedulerEngine =
 			_schedulerEngineHelperImpl.getSchedulerEngine();
@@ -166,7 +186,7 @@ public class ClusterSchedulerEngineTest {
 	}
 
 	@Test
-	public void testCreateClusterSchedulerEngine4() {
+	public void testCreateClusterSchedulerEngine4() throws Exception {
 		Mockito.when(
 			_clusterLink.isEnabled()
 		).thenReturn(
@@ -181,7 +201,7 @@ public class ClusterSchedulerEngineTest {
 
 		_schedulerEngineHelperImpl.setSchedulerEngine(_mockSchedulerEngine);
 
-		_schedulerEngineHelperImpl.activate();
+		_schedulerEngineHelperImpl.activate(_componentContext);
 
 		SchedulerEngine schedulerEngine =
 			_schedulerEngineHelperImpl.getSchedulerEngine();
@@ -1981,6 +2001,7 @@ public class ClusterSchedulerEngineTest {
 	private ClusterInvokeAcceptor _clusterInvokeAcceptor;
 	private ClusterLink _clusterLink;
 	private ClusterSchedulerEngine _clusterSchedulerEngine;
+	private ComponentContext _componentContext;
 	private Map<String, ObjectValuePair<SchedulerResponse, TriggerState>>
 		_memoryClusteredJobs;
 	private final MockClusterMasterExecutor _mockClusterMasterExecutor =

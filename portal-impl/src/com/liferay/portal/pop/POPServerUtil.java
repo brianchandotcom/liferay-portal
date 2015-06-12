@@ -121,8 +121,6 @@ public class POPServerUtil {
 		try {
 			SchedulerEntry schedulerEntry = new SchedulerEntryImpl();
 
-			schedulerEntry.setClassLoader(
-				POPNotificationsMessageListener.class.getClassLoader());
 			schedulerEntry.setEventListenerClass(
 				POPNotificationsMessageListener.class.getName());
 			schedulerEntry.setTimeUnit(TimeUnit.MINUTE);

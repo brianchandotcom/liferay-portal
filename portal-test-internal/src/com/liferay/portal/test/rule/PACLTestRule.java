@@ -16,7 +16,6 @@ package com.liferay.portal.test.rule;
 
 import com.liferay.portal.deploy.hot.HookHotDeployListener;
 import com.liferay.portal.deploy.hot.IndexerPostProcessorRegistry;
-import com.liferay.portal.deploy.hot.SchedulerEntryRegistry;
 import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.kernel.deploy.hot.DependencyManagementThreadLocal;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
@@ -243,7 +242,6 @@ public class PACLTestRule implements TestRule {
 		ServiceTestUtil.initPermissions();
 
 		new IndexerPostProcessorRegistry();
-		new SchedulerEntryRegistry();
 		new ServiceWrapperRegistry();
 	}
 

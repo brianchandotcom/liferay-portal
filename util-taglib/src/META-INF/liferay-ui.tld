@@ -4911,35 +4911,42 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Creates icons and links to share content on social outlets such as Facebook and Twitter.</description>
 		<name>social-bookmarks</name>
 		<tag-class>com.liferay.taglib.ui.SocialBookmarksTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
+			<description>An ID for the content being shared.</description>
 			<name>contentId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The display style of the bookmarks. Options are <![CDATA[<code>menu</code>]]>, <![CDATA[<code>simple</code>]]>, <![CDATA[<code>vertical</code>]]>, and <![CDATA[<code>horizontal</code>]]>.</description>
 			<name>displayStyle</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The value to be used in the social-bookmark link <![CDATA[<code>target</code>]]> attribute. Options include any valid value for the anchor tag <![CDATA[<code>target</code>]]> attribute such as <![CDATA[<code>_blank</code>]]>.</description>
 			<name>target</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The title of the content being shared.</description>
 			<name>title</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>The types of social outlets to bookmark such as <![CDATA[<code>Facebook</code>]]>, <![CDATA[<code>Plusone</code>]]>, and <![CDATA[<code>Twitter</code>]]>.</description>
 			<name>types</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
+			<description>A URL to the content being shared.</description>
 			<name>url</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

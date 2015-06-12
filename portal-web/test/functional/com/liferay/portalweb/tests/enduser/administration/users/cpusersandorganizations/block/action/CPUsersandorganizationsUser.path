@@ -528,12 +528,12 @@
 <!--CUSTOM_FIELDS-->
 <tr>
 	<td>CUSTOM_FIELDS_LABEL</td>
-	<td>//div/span[@class='control-label' and contains(.,'${customFieldName}')]</td>
+	<td>//div/span[@class='control-label' and contains(.,'${key_customFieldName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CUSTOM_FIELDS_SELECT</td>
-	<td>//div[contains(.,'${customFieldName}')]/select</td>
+	<td>//div[contains(.,'${key_customFieldName}')]/select</td>
 	<td></td>
 </tr>
 </tbody>

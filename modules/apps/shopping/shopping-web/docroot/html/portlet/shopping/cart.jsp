@@ -113,7 +113,7 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="itemIds" type="hidden" />
 
-	<liferay-util:include page="tabs1.jsp">
+	<liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
 		<liferay-util:param name="tabs1" value="cart" />
 	</liferay-util:include>
 
@@ -513,22 +513,27 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	</aui:button-row>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />viewCoupon() {
-		Liferay.Util.openWindow(
-			{
-				dialog: {
-					height: 200,
-					width: 280
-				},
-				id: '<portlet:namespace />viewCoupon',
-				refreshWindow: window,
-				title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
-				uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
-			}
-		);
-	}
-</aui:script>
+
+
+<c:if test="<%= coupon != null %>">
+	<aui:script>
+		function <portlet:namespace />viewCoupon() {
+			Liferay.Util.openWindow(
+				{
+					dialog: {
+						height: 200,
+						width: 280
+					},
+					id: '<portlet:namespace />viewCoupon',
+					refreshWindow: window,
+					title: '<%= UnicodeLanguageUtil.get(request, "coupon") %>',
+					uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/shopping/view_coupon" /><portlet:param name="couponId" value="<%= String.valueOf(coupon.getCouponId()) %>" /></portlet:renderURL>'
+				}
+			);
+		}
+	</aui:script>
+</c:if>
+
 
 <%!
 private static int _getMaxQuantity(ShoppingItemPrice[] itemPrices) {

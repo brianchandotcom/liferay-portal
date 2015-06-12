@@ -1,21 +1,30 @@
 Bundle-Name: Liferay Shopping Service
 Bundle-SymbolicName: com.liferay.shopping.service
 Bundle-Version: 1.0.0
-Export-Package:\
+Export-Package:	\
 	com.liferay.shopping.lar,\
-	com.liferay.shopping.model,\
 	com.liferay.shopping.model.impl,\
-	com.liferay.shopping.service.permission,\
-	com.liferay.shopping.service,\
+	com.liferay.shopping.service.base,\
+	com.liferay.shopping.service.configuration.configurator,\
+	com.liferay.shopping.service.http,\
 	com.liferay.shopping.service.impl,\
+	com.liferay.shopping.service.permission,\
+	com.liferay.shopping.service.permission.impl,\
+	com.liferay.shopping.upgrade,\
+	com.liferay.shopping.upgrade.v1_0_0,\
 	com.liferay.shopping.util,\
-	com.liferay.shopping.service.persistence,\
-	com.liferay.util.service,\
-	com.liferay.shopping.util,\
-	com.liferay.util,\
-	com.liferay.util.dao.orm,\
-	com.liferay.shopping.util.comparator,\
-	*
+	com.liferay.shopping.verify,\
+	com.liferay.shopping.verify.model
 Include-Resource:\
-	classes
+	classes,\
+	custom-sql/default.xml=classes/META-INF/custom-sql/shopping.xml,\
+	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/CreditCard.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQL.class,\
+	@../../../../util-java/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
+
 Liferay-Service: true
+Require-Capability:\
+	liferay.extender;\
+	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
+Spring-Context: META-INF/*-spring.xml;timeout:=${spring.extender.time.to.wait}

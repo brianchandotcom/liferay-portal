@@ -113,14 +113,14 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 				_CKEDITOR_STYLE_BLOCK + "}}",
 			"{name: 'Heading 4', style: { element: 'h4', type: " +
 				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Preformatted Text', style: { element:'pre', type: " +
+			"{name: 'Preformatted Text', style: { element: 'pre', type: " +
 				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Cited Work', style: { element:'cite', type: " +
+			"{name: 'Cited Work', style: { element: 'cite', type: " +
 				_CKEDITOR_STYLE_INLINE + "}}",
-			"{name: 'Computer Code', style: { element:'code', type: " +
+			"{name: 'Computer Code', style: { element: 'code', type: " +
 				_CKEDITOR_STYLE_INLINE + "}}",
 			"{name: 'Info Message', style: { element: 'div', attributes: " +
-				"{'class':'portlet-msg-info'}, type: " +
+				"{'class': 'portlet-msg-info'}, type: " +
 					_CKEDITOR_STYLE_BLOCK + "}}",
 			"{name: 'Alert Message', style: { element: 'div', attributes: " +
 				"{'class': 'portlet-msg-alert'}, type: " +
@@ -217,7 +217,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 			"AlloyEditor.SelectionGetArrowBoxClasses.table");
 		jsonObject.put("name", "table");
 		jsonObject.put("setPosition", "AlloyEditor.SelectionSetPosition.table");
-		jsonObject.put("test", "AlloyEditor.SelectionTest.table");
+		jsonObject.put("test", "AlloyEeditor.SelectionTest.table");
 
 		return jsonObject;
 	}
@@ -235,6 +235,7 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonArray.put("twitter");
 
 		jsonObject.put("buttons", jsonArray);
+
 		jsonObject.put("name", "text");
 		jsonObject.put("test", "AlloyEditor.SelectionTest.text");
 

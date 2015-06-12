@@ -243,6 +243,12 @@ public class WikiNodeTrashHandlerTest extends BaseTrashHandlerTestCase {
 	@Ignore
 	@Override
 	@Test
+	public void testTrashParentIndexable() throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashParentWithBaseModelIsInTrashContainer()
 		throws Exception {
 	}

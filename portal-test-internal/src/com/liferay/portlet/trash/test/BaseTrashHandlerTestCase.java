@@ -255,10 +255,6 @@ public abstract class BaseTrashHandlerTestCase {
 		Assert.assertEquals(
 			initialTrashEntriesSearchCount,
 			searchTrashEntriesCount(getSearchKeywords(), serviceContext));
-
-		if (isAssetableModel()) {
-			Assert.assertTrue(isAssetEntryVisible(baseModel));
-		}
 	}
 
 	@Test

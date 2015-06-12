@@ -24,7 +24,10 @@ import com.liferay.portal.model.User;
 
 import java.util.Locale;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -70,6 +73,15 @@ public class SiteRecycleBinFormNavigatorEntry
 	@Override
 	protected String getJspPath() {
 		return "/site/recycle_bin.jsp";
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
+		unbind = "-"
+	)
+	protected void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 
 }

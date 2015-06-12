@@ -17,11 +17,8 @@ package com.liferay.dynamic.data.mapping.web.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
-import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -51,13 +48,6 @@ public class RefreshTemplateActionCommand extends BaseActionCommand {
 			portletRequest,
 			PortalUtil.getPortletId(portletRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
-
-		String redirect = ParamUtil.getString(portletRequest, "redirect");
-
-		redirect = HttpUtil.setParameter(
-			redirect, "mvcPath", "/edit_template.jsp");
-
-		portletRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 }

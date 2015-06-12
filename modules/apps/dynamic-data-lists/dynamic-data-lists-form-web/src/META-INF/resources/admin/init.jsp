@@ -21,41 +21,46 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException" %><%@
-page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormDisplayContext" %><%@
+<%@ page import="com.liferay.dynamic.data.lists.exception.RecordSetNameException" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.context.DDLFormAdminDisplayContext" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetDisplayTerms" %><%@
+page import="com.liferay.dynamic.data.lists.form.web.search.RecordSetSearch" %><%@
 page import="com.liferay.dynamic.data.lists.model.DDLRecordSet" %><%@
-page import="com.liferay.dynamic.data.lists.model.DDLRecordSetConstants" %><%@
-page import="com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil" %><%@
-page import="com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingException" %><%@
+page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
-page import="com.liferay.portal.kernel.util.Constants" %><%@
-page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.portal.security.auth.PrincipalException" %><%@
+page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureException" %><%@
-page import="com.liferay.portlet.dynamicdatamapping.NoSuchStructureLayoutException" %>
+page import="com.liferay.portlet.dynamicdatamapping.StructureDefinitionException" %><%@
+page import="com.liferay.portlet.dynamicdatamapping.StructureLayoutException" %><%@
+page import="com.liferay.taglib.search.ResultRow" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
-<portlet:defineObjects />
+<%@ page import="javax.portlet.PortletURL" %><%@
+page import="javax.portlet.WindowState" %>
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
 
-DDLFormDisplayContext ddlFormDisplayContext = new DDLFormDisplayContext(request, portletPreferences);
+DDLFormAdminDisplayContext ddlFormAdminDisplayContext = new DDLFormAdminDisplayContext(renderRequest, renderResponse);
+
+WindowState windowState = liferayPortletRequest.getWindowState();
 %>
 
-<%@ include file="/init-ext.jsp" %>
+<%@ include file="/admin/init-ext.jsp" %>
+
+<aui:script>
+	Liferay.namespace('Forms').portletNamespace = '<portlet:namespace />';
+</aui:script>

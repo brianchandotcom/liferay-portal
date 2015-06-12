@@ -20,10 +20,25 @@ package com.liferay.portlet.dynamicdatamapping.registry;
 public abstract class BaseDDMFormFieldType implements DDMFormFieldType {
 
 	@Override
+	public String getDDMFormFieldTypeJavaScriptClass() {
+		return "Liferay.DDM.Renderer.Field";
+	}
+
+	@Override
+	public String getDDMFormFieldTypeJavaScriptModule() {
+		return "liferay-ddm-form-renderer-field";
+	}
+
+	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings() {
 
 		return DefaultDDMFormFieldTypeSettings.class;
+	}
+
+	@Override
+	public String getIcon() {
+		return "icon-ok-circle";
 	}
 
 }

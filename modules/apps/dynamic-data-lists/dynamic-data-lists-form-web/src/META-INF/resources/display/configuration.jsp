@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/display/init.jsp" %>
 
 <%
 int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);

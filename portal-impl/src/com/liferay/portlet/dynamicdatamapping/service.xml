@@ -447,6 +447,7 @@
 		<exception>StructureDuplicateElement</exception>
 		<exception>StructureDuplicateStructureKey</exception>
 		<exception>StructureField</exception>
+		<exception>StructureLayout</exception>
 		<exception>StructureName</exception>
 		<exception>TemplateDuplicateTemplateKey</exception>
 		<exception>TemplateName</exception>

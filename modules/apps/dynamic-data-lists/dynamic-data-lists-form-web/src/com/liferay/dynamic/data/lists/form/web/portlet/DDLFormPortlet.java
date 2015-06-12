@@ -65,10 +65,10 @@ import org.osgi.service.component.annotations.Reference;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Dynamic Data Lists Form",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.config-template=/configuration.jsp",
+		"javax.portlet.init-param.config-template=/display/configuration.jsp",
 		"javax.portlet.init-param.copy-request-parameters=true",
-		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.template-path=/display/",
+		"javax.portlet.init-param.view-template=/display/view.jsp",
 		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
@@ -141,7 +141,7 @@ public class DDLFormPortlet extends MVCPortlet {
 			SessionErrors.contains(
 				renderRequest, PrincipalException.class.getName())) {
 
-			include(templatePath + "error.jsp", renderRequest, renderResponse);
+			include(templatePath + "/error.jsp", renderRequest, renderResponse);
 		}
 		else {
 			super.doDispatch(renderRequest, renderResponse);

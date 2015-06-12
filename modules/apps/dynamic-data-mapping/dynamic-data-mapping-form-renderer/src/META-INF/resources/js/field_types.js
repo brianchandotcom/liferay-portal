@@ -3,7 +3,6 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 		var AObject = A.Object;
-		var Util = Liferay.DDM.Renderer.Util;
 
 		var FieldTypes = {
 			_fieldTypes: [],
@@ -12,21 +11,22 @@ AUI.add(
 				var instance = this;
 
 				var defaultConfig = {
+					definition: config.settings,
 					fieldType: config.name
 				};
-
-				var fieldClass = Util.getFieldClass(defaultConfig);
 
 				var fieldType = new A.FormBuilderFieldType(
 					{
 						defaultConfig: defaultConfig,
-						fieldClass: fieldClass,
+						fieldClass: Liferay.DDM.Renderer.Field,
 						icon: config.icon,
-						label: config.label
+						label: config.name
 					}
 				);
 
+				fieldType.set('className', config.javaScriptClass);
 				fieldType.set('name', config.name);
+				fieldType.set('settings', config.settings);
 				fieldType.set('templateNamespace', config.templateNamespace);
 
 				return fieldType;
@@ -72,6 +72,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['array-extras', 'aui-form-builder-field-type', 'liferay-ddm-form-renderer-util']
+		requires: ['array-extras', 'aui-form-builder-field-type', 'liferay-ddm-form-field-checkbox-template', 'liferay-ddm-form-field-radio-template', 'liferay-ddm-form-field-select-template', 'liferay-ddm-form-field-text-template', 'liferay-ddm-form-renderer-util']
 	}
 );

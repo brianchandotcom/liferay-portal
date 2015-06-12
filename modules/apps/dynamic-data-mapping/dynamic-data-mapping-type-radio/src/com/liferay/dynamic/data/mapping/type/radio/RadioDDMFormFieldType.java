@@ -44,6 +44,16 @@ public class RadioDDMFormFieldType extends BaseDDMFormFieldType {
 	}
 
 	@Override
+	public String getDDMFormFieldTypeJavaScriptClass() {
+		return "Liferay.DDM.Field.Radio";
+	}
+
+	@Override
+	public String getDDMFormFieldTypeJavaScriptModule() {
+		return "liferay-ddm-form-field-radio";
+	}
+
+	@Override
 	public Class<? extends DDMFormFieldTypeSettings>
 		getDDMFormFieldTypeSettings() {
 

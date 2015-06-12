@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.io;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
 
@@ -33,7 +34,9 @@ public class DDMFormFieldTypesJSONSerializerUtil {
 		return _ddmFormFieldTypesJSONSerializer;
 	}
 
-	public static String serialize(List<DDMFormFieldType> ddmFormFieldTypes) {
+	public static String serialize(List<DDMFormFieldType> ddmFormFieldTypes)
+		throws PortalException {
+
 		return getDDMFormFieldTypesJSONSerializer().serialize(
 			ddmFormFieldTypes);
 	}

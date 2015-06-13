@@ -23,7 +23,17 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 page import="com.liferay.blogs.item.selector.web.BlogsItemSelectorView" %><%@
 page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %>
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
+page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
+page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %><%@
+page import="com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
+
+<%@ page import="javax.portlet.PortletURL" %>
 
 <portlet:defineObjects />
 

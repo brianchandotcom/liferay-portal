@@ -25,7 +25,7 @@ SearchContainer searchContainer = new SearchContainer(renderRequest, null, null,
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = (BlogsItemSelectorCriterion)request.getAttribute(BlogsItemSelectorView.BLOGS_ITEM_SELECTOR_CRITERION);
 
-Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(userId, groupId);
+Folder folder = BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
 int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();

@@ -100,8 +100,7 @@ public class BlogsContentEditorConfigContributor
 
 		jsonObject.put(
 			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
-		jsonObject.put(
-			"filebrowserImageBrowseUrl", itemSelectorURL.toString());
+		jsonObject.put("filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
 	private ItemSelector _itemSelector;

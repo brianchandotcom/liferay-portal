@@ -136,11 +136,14 @@ public class EmbeddedElasticsearchConnection
 		builder.put("node.local", true);
 		builder.put(
 			"path.data",
-			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch");
+			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
 		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		builder.put(
+			"path.plugins",
+			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/plugins");
+		builder.put(
 			"path.repo",
-			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch_repo");
+			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
 		builder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 

@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Document Library Test
+Bundle-SymbolicName: com.liferay.document.library.test
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.document.library.events,\
+	*
+Include-Resource:\
+	classes,\
+	test-classes/integration,\
+	../../../../portal-impl/test/test-portal-impl.properties

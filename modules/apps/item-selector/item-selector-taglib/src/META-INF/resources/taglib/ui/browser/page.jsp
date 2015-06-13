@@ -18,20 +18,21 @@
 
 <%
 String displayStyle = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:displayStyle"), "descriptive");
-String idPrefix = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:idPrefix"));
 String itemSelectedEventName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:itemSelectedEventName"));
 ReturnType returnType = (ReturnType)request.getAttribute("liferay-ui:item-selector-browser:returnType");
 SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-ui:item-selector-browser:searchContainer");
 String tabName = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:tabName"));
 String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:item-selector-browser:uploadMessage"));
+
+String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_browser_page") + StringPool.UNDERLINE;
 %>
 
-<div class="lfr-item-viewer" id="<%= idPrefix %>ItemSelectorContainer">
+<div class="lfr-item-viewer" id="<%= randomNamespace %>ItemSelectorContainer">
 	<c:if test="<%= ReturnType.BASE_64.equals(returnType) %>">
 		<div class="drop-zone">
-			<label class="btn btn-primary" for="<%= idPrefix %>InputFile"><liferay-ui:message key="select-file" /></label>
+			<label class="btn btn-primary" for="<%= randomNamespace %>InputFile"><liferay-ui:message key="select-file" /></label>
 
-			<input class="hide" id="<%= idPrefix %>InputFile" type="file" />
+			<input class="hide" id="<%= randomNamespace %>InputFile" type="file" />
 
 			<p>
 				<%= uploadMessage %>
@@ -156,7 +157,7 @@ String uploadMessage = GetterUtil.getString(request.getAttribute("liferay-ui:ite
 					Liferay.Util.getOpener().Liferay.fire('<%= itemSelectedEventName %>', event);
 				}
 			},
-			rootNode: '#<%= idPrefix %>ItemSelectorContainer'
+			rootNode: '#<%= randomNamespace %>ItemSelectorContainer'
 		}
 	);
 </aui:script>

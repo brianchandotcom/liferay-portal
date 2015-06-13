@@ -542,6 +542,30 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 		blogsEntryLocalService.deleteEntry(entry);
 	}
 
+	@Override
+	public Folder fetchAttachmentsFolder(long userId, long groupId) {
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		Repository repository =
+			PortletFileRepositoryUtil.fetchPortletRepository(
+				groupId, PortletKeys.BLOGS);
+
+		try {
+			Folder folder = PortletFileRepositoryUtil.getPortletFolder(
+				repository.getRepositoryId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, PortletKeys.BLOGS);
+
+			return folder;
+		}
+		catch (Exception e) {
+		}
+
+		return null;
+	}
+
 	/**
 	 * @deprecated As of 6.2.0, replaced by {@link #getCompanyEntries(long,
 	 *             Date, QueryDefinition)}

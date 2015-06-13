@@ -325,6 +325,12 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.Folder fetchAttachmentsFolder(
+		long userId, long groupId) {
+		return _blogsEntryLocalService.fetchAttachmentsFolder(userId, groupId);
+	}
+
+	@Override
 	public com.liferay.portlet.blogs.model.BlogsEntry fetchBlogsEntry(
 		long entryId) {
 		return _blogsEntryLocalService.fetchBlogsEntry(entryId);

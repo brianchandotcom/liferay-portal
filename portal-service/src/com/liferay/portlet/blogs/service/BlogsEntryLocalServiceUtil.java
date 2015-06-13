@@ -306,6 +306,11 @@ public class BlogsEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.portal.kernel.repository.model.Folder fetchAttachmentsFolder(
+		long userId, long groupId) {
+		return getService().fetchAttachmentsFolder(userId, groupId);
+	}
+
 	public static com.liferay.portlet.blogs.model.BlogsEntry fetchBlogsEntry(
 		long entryId) {
 		return getService().fetchBlogsEntry(entryId);

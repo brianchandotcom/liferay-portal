@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.document.library.verify.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -33,7 +34,8 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.verify.VerifyDocumentLibrary;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -70,12 +72,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  * @author Eudaldo Alonso
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync
 public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
@@ -83,7 +87,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
@@ -327,7 +331,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 		byte[] bytes = FileUtil.getBytes(
 			getClass(),
-			"/com/liferay/portlet/documentlibrary/service/dependencies" +
+			"/com/liferay/document/library/service/test/dependencies" +
 				"/ddmstructure.xml");
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(

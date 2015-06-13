@@ -910,6 +910,7 @@ Please set the environment variable ANT_OPTS to the recommended value of
 				<jvmarg value="-Dfile.encoding=UTF-8" />
 				<jvmarg value="-Dfixed.issues=${fixed.issues}" />
 				<jvmarg value="-Djava.net.preferIPv4Stack=true" />
+				<jvmarg value="-Dliferay.log.dir=${liferay.home}/logs" />
 				<jvmarg value="-Dliferay.mode=test" />
 				<misc />
 				<jvmarg value="-Duser.timezone=GMT" />

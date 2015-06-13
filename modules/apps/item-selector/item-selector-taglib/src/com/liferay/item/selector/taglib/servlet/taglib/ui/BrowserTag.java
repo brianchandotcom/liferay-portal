@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.taglib.util.IncludeTag;
 
+import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 
@@ -31,6 +33,10 @@ public class BrowserTag extends IncludeTag {
 
 	public void setDisplayStyle(String displayStyle) {
 		_displayStyle = displayStyle;
+	}
+
+	public void setDisplayStyleURL(PortletURL displayStyleURL) {
+		_displayStyleURL = displayStyleURL;
 	}
 
 	public void setIdPrefix(String idPrefix) {
@@ -68,13 +74,22 @@ public class BrowserTag extends IncludeTag {
 	protected void cleanUp() {
 		super.cleanUp();
 
-		_displayStyle = "icon";
+		_displayStyle = null;
+		_displayStyleURL = null;
 		_idPrefix = null;
 		_itemSelectedEventName = null;
 		_returnType = null;
 		_searchContainer = null;
 		_tabName = null;
 		_uploadMessage = null;
+	}
+
+	protected String getDisplayStyle() {
+		if (Validator.isNotNull(_displayStyle)) {
+			return _displayStyle;
+		}
+
+		return _DEFAULT_DISPLAY_STYLE;
 	}
 
 	@Override
@@ -96,7 +111,10 @@ public class BrowserTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:displayStyle", _displayStyle);
+			"liferay-ui:item-selector-browser:displayStyle", getDisplayStyle());
+		request.setAttribute(
+			"liferay-ui:item-selector-browser:displayStyleURL",
+			_displayStyleURL);
 		request.setAttribute(
 			"liferay-ui:item-selector-browser:idPrefix", _idPrefix);
 		request.setAttribute(
@@ -114,9 +132,12 @@ public class BrowserTag extends IncludeTag {
 			getUploadMessage());
 	}
 
+	private static final String _DEFAULT_DISPLAY_STYLE = "icon";
+
 	private static final String _PAGE = "/taglib/ui/browser/page.jsp";
 
 	private String _displayStyle;
+	private PortletURL _displayStyleURL;
 	private String _idPrefix;
 	private String _itemSelectedEventName;
 	private ReturnType _returnType;

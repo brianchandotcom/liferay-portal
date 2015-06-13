@@ -76,32 +76,32 @@ public class BlogsContentEditorConfigContributor
 		JSONObject jsonObject, LiferayPortletResponse liferayPortletResponse,
 		String eventName) {
 
-		ItemSelectorCriterion blogsItemSelectorCriterion =
-			new BlogsItemSelectorCriterion();
-
-		ItemSelectorCriterion imageItemSelectorCriterion =
-			new ImageItemSelectorCriterion();
-
 		Set<ItemSelectorReturnType>
 			blogsContentEditorDesiredItemSelectorReturnTypes = new HashSet<>();
 
 		blogsContentEditorDesiredItemSelectorReturnTypes.add(
 			DefaultItemSelectorReturnType.URL);
 
-		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			blogsContentEditorDesiredItemSelectorReturnTypes);
+		ItemSelectorCriterion blogsItemSelectorCriterion =
+			new BlogsItemSelectorCriterion();
 
 		blogsItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
 			blogsContentEditorDesiredItemSelectorReturnTypes);
 
-		PortletURL dlItemSelectorURL = _itemSelector.getItemSelectorURL(
+		ItemSelectorCriterion imageItemSelectorCriterion =
+			new ImageItemSelectorCriterion();
+
+		imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
+			blogsContentEditorDesiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = _itemSelector.getItemSelectorURL(
 			liferayPortletResponse, eventName, blogsItemSelectorCriterion,
 			imageItemSelectorCriterion);
 
 		jsonObject.put(
-			"filebrowserImageBrowseLinkUrl", dlItemSelectorURL.toString());
+			"filebrowserImageBrowseLinkUrl", itemSelectorURL.toString());
 		jsonObject.put(
-			"filebrowserImageBrowseUrl", dlItemSelectorURL.toString());
+			"filebrowserImageBrowseUrl", itemSelectorURL.toString());
 	}
 
 	private ItemSelector _itemSelector;

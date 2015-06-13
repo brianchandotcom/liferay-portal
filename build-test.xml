@@ -5350,6 +5350,7 @@ if (ppstate.equals("normal")) {
 					directoryScanner.setBasedir(project.getBaseDir());
 					directoryScanner.setExcludes(
 						new String[] {
+							"portal-service/test/unit/com/liferay/portal/log/assertor/PortalLogAssertorTest.java",
 							"modules/apps/social/social-networking-test/test/integration/**/*Test.java",
 							"modules/portal/portal-json-web-service-extender/test/integration/**/*Test.java",
 							"modules/portal/portal-template-freemarker/test/integration/**/*Test.java",
@@ -6390,6 +6391,10 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 		<antcall target="rebuild-database" inheritAll="false" />
 
 		<ant dir="modules" target="test-class-group" inheritAll="false" />
+
+		<ant dir="portal-service" target="test-class" inheritAll="false">
+			<property name="test.class" value="PortalLogAssertorTest" />
+		</ant>
 
 		<ant antfile="build-test-tck.xml" target="record-test-tck-package-names" />
 

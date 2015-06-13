@@ -439,6 +439,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCOPE_DEFAULT</td>
+	<td>//div[contains(.,'Scope')]//a[contains(@id,'_menu')]/span[contains(.,'${key_scopeDefault}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SCOPE_SELECTION</td>
 	<td>//ul[contains(@class,'lfr-menu-list')]/li/a[contains(.,'${key_scopeSelection}')]</td>
 	<td></td>

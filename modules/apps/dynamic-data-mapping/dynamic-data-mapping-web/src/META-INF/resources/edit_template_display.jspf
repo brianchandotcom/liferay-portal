@@ -453,6 +453,8 @@ if (Validator.isNotNull(scriptContent)) {
 		function(event) {
 			var form = A.one('#<portlet:namespace />fm');
 
+			form.attr('action', '<%= refreshTemplateURL %>');
+
 			if (richEditor.getEditor().getSession().getUndoManager().hasUndo()) {
 				Liferay.fire('<portlet:namespace />saveTemplate');
 			}

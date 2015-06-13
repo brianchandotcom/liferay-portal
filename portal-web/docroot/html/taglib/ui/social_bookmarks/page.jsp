@@ -26,6 +26,7 @@
 		<c:choose>
 			<c:when test='<%= displayStyle.equals("menu") %>'>
 				<aui:button icon="icon-share" value="share">
+
 					<%
 					for (int i = 0; i < typesArray.length; i++) {
 					%>
@@ -37,6 +38,7 @@
 					<%
 					}
 					%>
+
 				</aui:button>
 
 				<aui:script use="liferay-social-bookmarks">

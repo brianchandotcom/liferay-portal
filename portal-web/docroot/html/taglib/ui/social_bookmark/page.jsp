@@ -20,11 +20,7 @@
 	<c:when test='<%= displayStyle.equals("menu") %>'>
 		<c:if test="<%= Validator.isNotNull(postUrl) %>">
 			<aui:a cssClass="social-bookmark" href="<%= postUrl %>">
-				<liferay-ui:icon
-					image="<%= icon %>"
-					label="<%= true %>"
-					message="<%= type %>"
-				/>
+				<liferay-ui:icon image="<%= icon %>" label="<%= true %>" message="<%= type %>" />
 			</aui:a>
 		</c:if>
 	</c:when>

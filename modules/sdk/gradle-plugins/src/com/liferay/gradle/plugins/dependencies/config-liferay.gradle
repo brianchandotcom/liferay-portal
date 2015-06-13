@@ -87,12 +87,15 @@ liferay {
 		}
 
 		tomcat {
+			binDir = "${->liferay.appServers.tomcat.dir}/bin"
 			deployDir = "${->liferay.appServers.tomcat.dir}/webapps"
 			dir = "${->liferay.appServerParentDir}/tomcat-${->liferay.appServers.tomcat.version}"
 			libGlobalDir = "${->liferay.appServers.tomcat.dir}/lib/ext"
 			managerPassword = "tomcat"
 			managerUserName = "tomcat"
 			portalDir = "${->liferay.appServers.tomcat.dir}/webapps/ROOT"
+			startExecutable = "catalina${->fileSuffixBat}"
+			startExecutableArgs = ["run"]
 			version = "7.0.62"
 			zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-7/v${->liferay.appServers.tomcat.version}/bin/apache-tomcat-${->liferay.appServers.tomcat.version}.zip"
 		}

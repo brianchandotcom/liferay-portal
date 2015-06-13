@@ -14,9 +14,16 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.OSDetector;
+
 import java.io.File;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.gradle.api.Project;
+import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
@@ -28,16 +35,20 @@ public class AppServer {
 		_project = project;
 	}
 
+	public File getBinDir() {
+		return GradleUtil.toFile(_project, _binDir);
+	}
+
 	public File getDeployDir() {
-		return _project.file(_deployDir);
+		return GradleUtil.toFile(_project, _deployDir);
 	}
 
 	public File getDir() {
-		return _project.file(_dir);
+		return GradleUtil.toFile(_project, _dir);
 	}
 
 	public File getLibGlobalDir() {
-		return _project.file(_libGlobalDir);
+		return GradleUtil.toFile(_project, _libGlobalDir);
 	}
 
 	public String getName() {
@@ -45,15 +56,31 @@ public class AppServer {
 	}
 
 	public File getPortalDir() {
-		return _project.file(_portalDir);
+		return GradleUtil.toFile(_project, _portalDir);
+	}
+
+	public int getPortNumber() {
+		return _portNumber;
+	}
+
+	public String getStartExecutable() {
+		return GradleUtil.toString(_startExecutable);
+	}
+
+	public List<String> getStartExecutableArgs() {
+		return GradleUtil.toStringList(_startExecutableArgs);
 	}
 
 	public String getVersion() {
-		return String.valueOf(_version);
+		return GradleUtil.toString(_version);
 	}
 
 	public String getZipUrl() {
-		return String.valueOf(_zipUrl);
+		return GradleUtil.toString(_zipUrl);
+	}
+
+	public void setBinDir(Object binDir) {
+		_binDir = binDir;
 	}
 
 	public void setDeployDir(Object deployDir) {
@@ -72,6 +99,20 @@ public class AppServer {
 		_portalDir = portalDir;
 	}
 
+	public void setPortNumber(int portNumber) {
+		_portNumber = portNumber;
+	}
+
+	public void setStartExecutable(Object startExecutable) {
+		_startExecutable = startExecutable;
+	}
+
+	public void setStartExecutableArgs(Iterable<?> startExecutableArgs) {
+		_startExecutableArgs.clear();
+
+		GUtil.addToCollection(_startExecutableArgs, startExecutableArgs);
+	}
+
 	public void setVersion(Object version) {
 		_version = version;
 	}
@@ -80,12 +121,25 @@ public class AppServer {
 		_zipUrl = zipUrl;
 	}
 
+	protected String getFileSuffixBat() {
+		if (OSDetector.isWindows()) {
+			return ".bat";
+		}
+		else {
+			return ".sh";
+		}
+	}
+
+	private Object _binDir;
 	private Object _deployDir;
 	private Object _dir;
 	private Object _libGlobalDir;
 	private final String _name;
 	private Object _portalDir;
+	private int _portNumber = 8080;
 	private final Project _project;
+	private Object _startExecutable;
+	private final List<Object> _startExecutableArgs = new ArrayList<>();
 	private Object _version;
 	private Object _zipUrl;
 

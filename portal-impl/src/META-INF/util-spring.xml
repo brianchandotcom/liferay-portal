@@ -1055,21 +1055,12 @@
 			<bean class="com.liferay.portlet.imagegallerydisplay.display.context.IGDisplayContextProviderImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider" class="com.liferay.portlet.journal.atom.JournalArticleAtomCollectionProvider" />
-	<bean id="com.liferay.portlet.journal.events.JournalArticleServicePreAction" class="com.liferay.portlet.journal.events.JournalArticleServicePreAction" />
-	<bean id="com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalArticleStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalFeedStagedModelDataHandler" />
-	<bean id="com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler" class="com.liferay.portlet.journal.lar.JournalFolderStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalArticlePermission" class="com.liferay.portlet.journal.service.permission.JournalArticlePermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFeedPermission" class="com.liferay.portlet.journal.service.permission.JournalFeedPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalFolderPermission" class="com.liferay.portlet.journal.service.permission.JournalFolderPermission" />
 	<bean id="com.liferay.portlet.journal.service.permission.JournalPermission" class="com.liferay.portlet.journal.service.permission.JournalPermission" />
 	<bean id="com.liferay.portlet.journal.social.JournalArticleActivityInterpreter" class="com.liferay.portlet.journal.social.JournalArticleActivityInterpreter" />
 	<bean id="com.liferay.portlet.journal.social.JournalFolderActivityInterpreter" class="com.liferay.portlet.journal.social.JournalFolderActivityInterpreter" />
-	<bean id="com.liferay.portlet.journal.trash.JournalArticleTrashHandler" class="com.liferay.portlet.journal.trash.JournalArticleTrashHandler" />
-	<bean id="com.liferay.portlet.journal.trash.JournalFolderTrashHandler" class="com.liferay.portlet.journal.trash.JournalFolderTrashHandler" />
-	<bean id="com.liferay.portlet.journal.util.JournalArticleIndexer" class="com.liferay.portlet.journal.util.JournalArticleIndexer" />
-	<bean id="com.liferay.portlet.journal.util.JournalArticleSitemapURLProvider" class="com.liferay.portlet.journal.util.JournalArticleSitemapURLProvider" />
 	<bean id="com.liferay.portlet.journal.util.JournalContent" class="com.liferay.portlet.journal.util.JournalContentImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalContentUtil" class="com.liferay.portlet.journal.util.JournalContentUtil">
 		<property name="journalContent" ref="com.liferay.portlet.journal.util.JournalContent" />
@@ -1078,14 +1069,11 @@
 	<bean id="com.liferay.portlet.journal.util.JournalConverterUtil" class="com.liferay.portlet.journal.util.JournalConverterUtil">
 		<property name="journalConverter" ref="com.liferay.portlet.journal.util.JournalConverter" />
 	</bean>
-	<bean id="com.liferay.portlet.journal.util.JournalFolderIndexer" class="com.liferay.portlet.journal.util.JournalFolderIndexer" />
-	<bean id="com.liferay.portlet.journal.util.JournalOpenSearchImpl" class="com.liferay.portlet.journal.util.JournalOpenSearchImpl" />
 	<bean id="com.liferay.portlet.journal.util.JournalValidatorUtil" class="com.liferay.portlet.journal.util.JournalValidatorUtil">
 		<property name="JournalValidator">
 			<bean class="com.liferay.portlet.journal.util.JournalValidatorImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler" class="com.liferay.portlet.journal.workflow.JournalArticleWorkflowHandler" />
 	<bean id="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" class="com.liferay.portlet.layoutprototypes.lar.LayoutPrototypeStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutFriendlyURLStagedModelDataHandler" />
 	<bean id="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler" class="com.liferay.portlet.layoutsadmin.lar.LayoutStagedModelDataHandler">

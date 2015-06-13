@@ -247,6 +247,10 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.repository.model.Folder fetchAttachmentsFolder(
+		long userId, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portlet.blogs.model.BlogsEntry fetchBlogsEntry(
 		long entryId);
 

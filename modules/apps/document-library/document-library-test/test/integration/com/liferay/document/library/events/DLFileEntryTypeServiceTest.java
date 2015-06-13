@@ -34,6 +34,10 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalUtil;
@@ -48,10 +52,13 @@ import com.liferay.portlet.dynamicdatamapping.io.DDMFormXSDDeserializerUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.util.List;
 import java.util.Locale;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -72,8 +79,13 @@ public class DLFileEntryTypeServiceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		SimpleAction simpleAction =
-			new AddDefaultDocumentLibraryStructuresAction();
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		SimpleAction simpleAction = registry.getService(
+			AddDefaultDocumentLibraryStructuresAction.class);
 
 		String companyIdString = String.valueOf(TestPropsValues.getCompanyId());
 
@@ -113,6 +125,12 @@ public class DLFileEntryTypeServiceTest {
 				_marketingBannerDLFileEntryType = dlFileEntryType;
 			}
 		}
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -313,6 +331,30 @@ public class DLFileEntryTypeServiceTest {
 			dlFileEntryType.getPrimaryKey(), dlFileEntry.getFileEntryTypeId());
 	}
 
+	protected void setUpPermissionThreadLocal() {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+		});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	private ServiceContext _getFolderServiceContext(
 			DLFileEntryType... dlFileEntryTypes)
 		throws PortalException {
@@ -347,6 +389,8 @@ public class DLFileEntryTypeServiceTest {
 	private Group _group;
 
 	private DLFileEntryType _marketingBannerDLFileEntryType;
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private Folder _subfolder;
 
 }

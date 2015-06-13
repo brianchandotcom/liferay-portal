@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
@@ -293,9 +292,7 @@ public class ElasticsearchSearchEngine extends BaseSearchEngine {
 
 		ImmutableSettings.Builder builder = ImmutableSettings.settingsBuilder();
 
-		String location = SystemProperties.get("java.io.tmpdir") + "/es_backup";
-
-		builder.put("location", location);
+		builder.put("location", "es_backup");
 
 		putRepositoryRequestBuilder.setSettings(builder);
 

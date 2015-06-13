@@ -28,6 +28,9 @@ public interface ElasticsearchConfiguration {
 	public String additionalConfigurations();
 
 	@Meta.AD(deflt = "false", required = false)
+	public boolean bootstrapMlockAll();
+
+	@Meta.AD(deflt = "false", required = false)
 	public boolean clientTransportIgnoreClusterName();
 
 	@Meta.AD(deflt = "5s", required = false)

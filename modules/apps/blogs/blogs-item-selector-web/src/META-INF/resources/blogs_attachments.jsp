@@ -21,7 +21,7 @@ String displayStyle = ParamUtil.getString(request, "displayStyle");
 
 PortletURL portletURL = (PortletURL)request.getAttribute(BlogsItemSelectorView.PORTLET_URL);
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, SearchContainer.DEFAULT_CUR_PARAM, SearchContainer.DEFAULT_DELTA, portletURL, null, null);
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = (BlogsItemSelectorCriterion)request.getAttribute(BlogsItemSelectorView.BLOGS_ITEM_SELECTOR_CRITERION);
 

@@ -20,6 +20,9 @@ package com.liferay.portal.bootstrap;
  */
 public interface FrameworkPropsKeys {
 
+	public static final String FELIX_FILEINSTALL_ACTIVE_LEVEL =
+		"felix.fileinstall.active.level";
+
 	public static final String FELIX_FILEINSTALL_DIR = "felix.fileinstall.dir";
 
 	public static final String FELIX_FILEINSTALL_LOG_LEVEL =
@@ -27,6 +30,15 @@ public interface FrameworkPropsKeys {
 
 	public static final String FELIX_FILEINSTALL_POLL =
 		"felix.fileinstall.poll";
+
+	public static final String FELIX_FILEINSTALL_START_ACTIVATION_POLICY =
+		"felix.fileinstall.bundles.startActivationPolicy";
+
+	public static final String FELIX_FILEINSTALL_START_LEVEL =
+		"felix.fileinstall.start.level";
+
+	public static final String FELIX_FILEINSTALL_START_TRANSIENT =
+		"felix.fileinstall.bundles.startTransient";
 
 	public static final String FELIX_FILEINSTALL_TMPDIR =
 		"felix.fileinstall.tmpdir";

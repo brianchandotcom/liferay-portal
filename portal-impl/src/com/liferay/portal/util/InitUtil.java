@@ -19,14 +19,20 @@ import com.liferay.portal.cache.CacheRegistryImpl;
 import com.liferay.portal.configuration.ConfigurationFactoryImpl;
 import com.liferay.portal.dao.db.DBFactoryImpl;
 import com.liferay.portal.dao.jdbc.DataSourceFactoryImpl;
+import com.liferay.portal.deploy.hot.IndexerPostProcessorRegistry;
+import com.liferay.portal.deploy.hot.ServiceWrapperRegistry;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.log.SanitizerLogWrapper;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -40,6 +46,8 @@ import com.liferay.portal.module.framework.ModuleFrameworkUtilAdapter;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.security.lang.SecurityManagerUtil;
 import com.liferay.portal.spring.context.ArrayApplicationContext;
+import com.liferay.registry.dependency.ServiceDependencyListener;
+import com.liferay.registry.dependency.ServiceDependencyManager;
 import com.liferay.util.log4j.Log4JUtil;
 
 import com.sun.syndication.io.XmlReader;
@@ -162,6 +170,35 @@ public class InitUtil {
 		_initialized = true;
 	}
 
+	public static void initServiceDependencyManager(
+		final InitContext initContext) {
+
+		ServiceDependencyManager serviceDependencyManager =
+			new ServiceDependencyManager();
+
+		serviceDependencyManager.addServiceDependencyListener(
+			new ServiceDependencyListener() {
+
+				@Override
+				public void destroy() {
+				}
+
+				@Override
+				public void dependenciesFulfilled() {
+					initContext.indexerPostProcessorRegistry =
+						new IndexerPostProcessorRegistry();
+					initContext.serviceWrapperRegistry =
+						new ServiceWrapperRegistry();
+				}
+
+			});
+
+		serviceDependencyManager.registerDependencies(
+			MessageBus.class, PortalExecutorManager.class,
+			SchedulerEngineHelper.class,
+			SingleDestinationMessageSenderFactory.class);
+	}
+
 	public synchronized static void initWithSpring(
 		boolean initModuleFramework) {
 
@@ -204,6 +241,8 @@ public class InitUtil {
 
 				ModuleFrameworkUtilAdapter.startFramework();
 			}
+
+			initServiceDependencyManager(_initContext);
 
 			applicationContext = new ClassPathXmlApplicationContext(
 				configLocations.toArray(new String[configLocations.size()]),
@@ -249,8 +288,26 @@ public class InitUtil {
 		}
 	}
 
+	public static class InitContext {
+
+		public void close() {
+			if (indexerPostProcessorRegistry != null) {
+				indexerPostProcessorRegistry.close();
+			}
+
+			if (serviceWrapperRegistry != null) {
+				serviceWrapperRegistry.close();
+			}
+		}
+
+		private IndexerPostProcessorRegistry indexerPostProcessorRegistry;
+		private ServiceWrapperRegistry serviceWrapperRegistry;
+
+	}
+
 	private static final boolean _PRINT_TIME = false;
 
+	private static final InitContext _initContext = new InitContext();
 	private static boolean _initialized;
 	private static boolean _neverInitialized = true;
 

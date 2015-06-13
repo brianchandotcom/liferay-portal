@@ -1,5 +1,14 @@
 Bundle-Name: Liferay Journal Service
 Bundle-SymbolicName: com.liferay.journal.service
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.journal.atom,\
+	com.liferay.journal.lar,\
+	com.liferay.journal.model.impl,\
+	com.liferay.journal.model.listener,\
+	com.liferay.journal.service.model.listener,\
+	com.liferay.journal.trash,\
+	com.liferay.journal.util,\
+	com.liferay.journal.workflow
 Include-Resource:\
 	classes

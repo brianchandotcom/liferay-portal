@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Document Library Item Selector API
-Bundle-SymbolicName: com.liferay.document.library.item.selector
+Bundle-Name: Liferay Blogs Item Selector API
+Bundle-SymbolicName: com.liferay.blogs.item.selector
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.blogs.item.selector.criterion

@@ -63,6 +63,13 @@ update DDMTemplate set versionUserId = userId;
 update DDMTemplate set versionUserName = userName;
 update DDMTemplate set version = '1.0';
 
+create table DDMTemplateLink (
+	templateLinkId LONG not null primary key,
+	classNameId LONG,
+	classPK LONG,
+	templateId LONG
+);
+
 create table DDMTemplateVersion (
 	templateVersionId LONG not null primary key,
 	groupId LONG,

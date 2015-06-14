@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Event Admin Cluster
+Bundle-SymbolicName: com.liferay.portal.event.admin.cluster
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.event.admin.cluster
+Include-Resource: classes

@@ -52,7 +52,8 @@ public class MentionsCompanySettingsFormNavigatorEntry
 	}
 
 	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -67,24 +68,21 @@ public class MentionsCompanySettingsFormNavigatorEntry
 		request.setAttribute(
 			MentionsWebKeys.COMPANY_MENTIONS_ENABLED, companyMentionsEnabled);
 
-		super.render(request, response);
+		super.include(request, response);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.mentions.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Override
 	protected String getJspPath() {
 		return "/META-INF/resources/portal_settings/mentions.jsp";
 	}
-
-	@Override
-	protected ServletContext getServletContext() {
-		return _servletContext;
-	}
-
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.mentions.web)")
-	protected void setServletContext(ServletContext servletContext) {
-		_servletContext = servletContext;
-	}
-
-	private ServletContext _servletContext;
 
 }

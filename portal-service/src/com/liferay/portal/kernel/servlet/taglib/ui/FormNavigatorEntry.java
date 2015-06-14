@@ -75,6 +75,20 @@ public interface FormNavigatorEntry<T> {
 	public String getLabel(Locale locale);
 
 	/**
+	 * Renders the HTML that needs to be displayed when the form navigator entry
+	 * is displayed.
+	 *
+	 * @param  request the request with which the form navigator entry is
+	 *         rendered
+	 * @param  response the response with which the form navigator entry is
+	 *         rendered
+	 * @throws IOException if an IO exception occurs
+	 */
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
+
+	/**
 	 * Returns <code>true</code> if the form navigator entry should be
 	 * displayed.
 	 *
@@ -85,18 +99,5 @@ public interface FormNavigatorEntry<T> {
 	 *         displayed; <code>false</code> otherwise
 	 */
 	public boolean isVisible(User user, T formModelBean);
-
-	/**
-	 * Renders the HTML that needs to be displayed when the form navigator entry
-	 * is displayed.
-	 *
-	 * @param  request the request with which the form navigator entry is
-	 *         rendered
-	 * @param  response the response with which the form navigator entry is
-	 *         rendered
-	 * @throws IOException if an IO exception occurs
-	 */
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException;
 
 }

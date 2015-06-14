@@ -12,18 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.servlet.taglib.ui;
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.servlet.ServletContextPool;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.model.User;
-import com.liferay.portal.spring.context.PortalContextLoaderListener;
+import com.liferay.portal.kernel.portlet.PortletBag;
+import com.liferay.portal.kernel.portlet.PortletBagPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.PortletConstants;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
-
-import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -32,30 +32,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Sergio González
+ * @author Julio Camarero
  */
-public abstract class BaseFormNavigatorEntry<T>
-	implements FormNavigatorEntry<T> {
+public abstract class BaseJSPFormNavigatorEntry<T>
+	extends BaseFormNavigatorEntry<T> implements FormNavigatorEntry<T> {
 
 	@Override
-	public abstract String getCategoryKey();
-
-	@Override
-	public abstract String getFormNavigatorId();
-
-	@Override
-	public abstract String getKey();
-
-	@Override
-	public abstract String getLabel(Locale locale);
-
-	@Override
-	public boolean isVisible(User user, T formModelBean) {
-		return true;
-	}
-
-	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
+	public void include(
+			HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
 
 		ServletContext servletContext = getServletContext(request);
@@ -75,14 +59,33 @@ public abstract class BaseFormNavigatorEntry<T>
 		}
 	}
 
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	protected abstract String getJspPath();
 
 	protected ServletContext getServletContext(HttpServletRequest request) {
-		return ServletContextPool.get(
-			PortalContextLoaderListener.getPortalServletContextName());
+		if (_servletContext != null) {
+			return _servletContext;
+		}
+
+		String portletId = PortalUtil.getPortletId(request);
+
+		if (Validator.isNotNull(portletId)) {
+			String rootPortletId = PortletConstants.getRootPortletId(portletId);
+
+			PortletBag portletBag = PortletBagPool.get(rootPortletId);
+
+			return portletBag.getServletContext();
+		}
+
+		return (ServletContext)request.getAttribute(WebKeys.CTX);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		BaseFormNavigatorEntry.class);
+		BaseJSPFormNavigatorEntry.class);
+
+	private ServletContext _servletContext;
 
 }

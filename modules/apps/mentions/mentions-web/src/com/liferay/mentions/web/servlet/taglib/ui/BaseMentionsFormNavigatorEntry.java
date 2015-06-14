@@ -14,26 +14,17 @@
 
 package com.liferay.mentions.web.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-import com.liferay.portal.model.User;
-
-import java.io.IOException;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Sergio González
  */
 public abstract class BaseMentionsFormNavigatorEntry
+	extends BaseJSPFormNavigatorEntry<Object>
 	implements FormNavigatorEntry<Object> {
 
 	@Override
@@ -48,38 +39,5 @@ public abstract class BaseMentionsFormNavigatorEntry
 
 		return resourceBundle.getString("mentions");
 	}
-
-	@Override
-	public boolean isVisible(User user, Object formModelBean) {
-		return true;
-	}
-
-	@Override
-	public void render(HttpServletRequest request, HttpServletResponse response)
-		throws IOException {
-
-		ServletContext servletContext = getServletContext();
-
-		RequestDispatcher requestDispatcher =
-			servletContext.getRequestDispatcher(getJspPath());
-
-		try {
-			requestDispatcher.include(request, response);
-		}
-		catch (ServletException se) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Unable to include JSP", se);
-			}
-
-			throw new IOException("Unable to include JSP", se);
-		}
-	}
-
-	protected abstract String getJspPath();
-
-	protected abstract ServletContext getServletContext();
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		BaseMentionsFormNavigatorEntry.class);
 
 }

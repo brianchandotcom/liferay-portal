@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 
 import java.util.Locale;
@@ -24,7 +25,7 @@ import java.util.Locale;
  */
 @OSGiBeanProperties
 public class DeprecatedFormNavigatorEntry
-	extends BaseFormNavigatorEntry<Object> {
+	extends BaseJSPFormNavigatorEntry<Object> {
 
 	public DeprecatedFormNavigatorEntry(
 		String key, String label, String categoryKey, String formNavigatorId,

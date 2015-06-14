@@ -14,31 +14,19 @@
 
 package com.liferay.site.admin.web.servlet.taglib.ui;
 
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.servlet.taglib.ui.BaseFormNavigatorEntry;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Sergio González
  */
 public abstract class BaseSiteFormNavigatorEntry
-	extends BaseFormNavigatorEntry<Group> {
+	extends BaseJSPFormNavigatorEntry<Group> {
 
 	@Override
 	public String getFormNavigatorId() {
 		return FormNavigatorConstants.FORM_NAVIGATOR_ID_SITES;
 	}
-
-	@Override
-	protected ServletContext getServletContext(HttpServletRequest request) {
-		return servletContext;
-	}
-
-	protected abstract void setServletContext(ServletContext servletContext);
-
-	protected ServletContext servletContext;
 
 }

@@ -37,17 +37,17 @@ public class LayoutSetJavaScriptFormNavigatorEntry
 	}
 
 	@Override
-	protected String getJspPath() {
-		return "/layout_set/javascript.jsp";
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
 	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/layout_set/javascript.jsp";
 	}
 
 }

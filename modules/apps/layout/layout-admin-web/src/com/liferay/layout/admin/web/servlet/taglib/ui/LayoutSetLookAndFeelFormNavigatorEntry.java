@@ -37,17 +37,17 @@ public class LayoutSetLookAndFeelFormNavigatorEntry
 	}
 
 	@Override
-	protected String getJspPath() {
-		return "/layout_set/look_and_feel.jsp";
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
 	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/layout_set/look_and_feel.jsp";
 	}
 
 }

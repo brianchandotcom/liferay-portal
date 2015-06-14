@@ -72,17 +72,17 @@ public class SiteContentSharingFormNavigatorEntry
 	}
 
 	@Override
-	protected String getJspPath() {
-		return "/site/content_sharing.jsp";
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
 		unbind = "-"
 	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/site/content_sharing.jsp";
 	}
 
 }

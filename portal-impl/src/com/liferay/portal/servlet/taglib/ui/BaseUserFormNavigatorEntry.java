@@ -15,6 +15,7 @@
 package com.liferay.portal.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.model.User;
 
@@ -24,7 +25,7 @@ import java.util.Locale;
  * @author Pei-Jung Lan
  */
 public abstract class BaseUserFormNavigatorEntry
-	extends BaseFormNavigatorEntry<User> {
+	extends BaseJSPFormNavigatorEntry<User> {
 
 	@Override
 	public String getFormNavigatorId() {

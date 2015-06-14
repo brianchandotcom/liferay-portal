@@ -12,38 +12,43 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.servlet.taglib.ui;
+package com.liferay.portal.kernel.servlet.taglib.ui;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.model.User;
+
+import java.io.IOException;
 
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Sergio González
  */
-public abstract class BaseLayoutSetFormNavigatorEntry
-	extends BaseJSPFormNavigatorEntry<LayoutSet> {
+public abstract class BaseFormNavigatorEntry<T>
+	implements FormNavigatorEntry<T> {
 
 	@Override
-	public String getCategoryKey() {
-		return StringPool.BLANK;
-	}
+	public abstract String getCategoryKey();
 
 	@Override
-	public String getFormNavigatorId() {
-		return FormNavigatorConstants.FORM_NAVIGATOR_ID_LAYOUT_SET;
-	}
+	public abstract String getFormNavigatorId();
 
 	@Override
 	public abstract String getKey();
 
 	@Override
-	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, getKey());
+	public abstract String getLabel(Locale locale);
+
+	@Override
+	public abstract void include(
+			HttpServletRequest request, HttpServletResponse response)
+		throws IOException;
+
+	@Override
+	public boolean isVisible(User user, T formModelBean) {
+		return true;
 	}
 
 }

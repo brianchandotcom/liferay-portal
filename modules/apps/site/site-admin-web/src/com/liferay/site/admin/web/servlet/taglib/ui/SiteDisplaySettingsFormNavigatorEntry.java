@@ -62,17 +62,17 @@ public class SiteDisplaySettingsFormNavigatorEntry
 	}
 
 	@Override
-	protected String getJspPath() {
-		return "/site/display_settings.jsp";
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.admin.web)",
 		unbind = "-"
 	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/site/display_settings.jsp";
 	}
 
 }

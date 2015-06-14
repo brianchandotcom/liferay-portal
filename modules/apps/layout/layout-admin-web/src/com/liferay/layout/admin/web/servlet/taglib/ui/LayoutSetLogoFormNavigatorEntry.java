@@ -62,17 +62,17 @@ public class LayoutSetLogoFormNavigatorEntry
 	}
 
 	@Override
-	protected String getJspPath() {
-		return "/layout_set/logo.jsp";
-	}
-
-	@Override
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.layout.admin.web)",
 		unbind = "-"
 	)
-	protected void setServletContext(ServletContext servletContext) {
-		this.servletContext = servletContext;
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
+	}
+
+	@Override
+	protected String getJspPath() {
+		return "/layout_set/logo.jsp";
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

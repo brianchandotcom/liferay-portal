@@ -8,3 +8,4 @@ Include-Resource:\
 	@lib/nekohtml.jar,\
 	@lib/org.portletbridge.core.jar,\
 	@lib/org.portletbridge.portlet.jar
+Web-ContextPath: /web-proxy-web

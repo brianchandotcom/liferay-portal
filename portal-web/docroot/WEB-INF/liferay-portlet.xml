@@ -204,7 +204,7 @@
 		<portlet-name>33</portlet-name>
 		<icon>/html/icons/blogs.png</icon>
 		<struts-path>blogs</struts-path>
-		<configuration-action-class>com.liferay.portal.kernel.portlet.SettingsConfigurationAction</configuration-action-class>
+		<configuration-action-class>com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction</configuration-action-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.portlet.blogs.messaging.CheckEntryMessageListener</scheduler-event-listener-class>
 			<trigger>

@@ -1968,3 +1968,35 @@ The `WikiUtil.getEntries()` method was no longer used, and it contained
 hardcoded references to classes that will be moved into OSGi modules.
 
 ---------------------------------------
+
+### Removed render Method from ConfigurationAction API
+- **Date:** 2015-Jun-14
+- **JIRA Ticket:** LPS-56300
+
+#### What changed?
+
+The method `render` has been removed from the interface `ConfigurationAction`.
+
+#### Who is affected?
+
+Any Java code calling the method render on any ConfigurationAction class or
+overwritting the render method of a ConfigurationAction class.
+
+#### How should I update my code?
+
+The method render was used to return the path of jsp including the configuration
+of a portlet. That method is now available for Configurations extending the
+BaseJSPSettingsConfigurationAction and it is called getJspPath.
+
+If any logic was added to override the render method, it can now be added in the
+include method. 
+
+#### Why was this change made?
+
+This change was part of a needed changes to support adding configuration for
+portlets based on other technology different to JSP (such as freemarker). 
+The method include can now be used to create configuration UIs written in
+freemarker or any other framework.
+
+---------------------------------------
+

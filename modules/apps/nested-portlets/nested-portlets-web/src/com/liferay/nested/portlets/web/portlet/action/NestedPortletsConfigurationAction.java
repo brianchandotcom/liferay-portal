@@ -50,10 +50,13 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jorge Ferrer
@@ -71,6 +74,23 @@ public class NestedPortletsConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			NestedPortletsConfiguration.class.getName(),
+			_nestedPortletsConfiguration);
+
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
+
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
@@ -100,16 +120,12 @@ public class NestedPortletsConfigurationAction
 	}
 
 	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		renderRequest.setAttribute(
-			NestedPortletsConfiguration.class.getName(),
-			_nestedPortletsConfiguration);
-
-		return super.render(portletConfig, renderRequest, renderResponse);
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.nested.portlets.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Activate

@@ -64,10 +64,13 @@ import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -82,6 +85,11 @@ import org.osgi.service.component.annotations.Component;
 )
 public class AssetPublisherConfigurationAction
 	extends DefaultConfigurationAction {
+
+	@Override
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/configuration.jsp";
+	}
 
 	@Override
 	public void postProcess(
@@ -200,6 +208,15 @@ public class AssetPublisherConfigurationAction
 				actionResponse.sendRedirect(redirect);
 			}
 		}
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.asset.publisher.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	protected void addScope(

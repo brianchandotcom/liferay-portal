@@ -32,10 +32,13 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -50,6 +53,24 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class AmazonRankingsConfigurationAction
 	extends DefaultConfigurationAction {
+
+	@Override
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/display/configuration.jsp";
+	}
+
+	@Override
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception {
+
+		renderRequest.setAttribute(
+			AmazonRankingsConfiguration.class.getName(),
+			_amazonRankingsConfiguration);
+
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
 
 	@Override
 	public void processAction(
@@ -69,16 +90,12 @@ public class AmazonRankingsConfigurationAction
 	}
 
 	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		renderRequest.setAttribute(
-			AmazonRankingsConfiguration.class.getName(),
-			_amazonRankingsConfiguration);
-
-		return super.render(portletConfig, renderRequest, renderResponse);
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.amazon.rankings.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Activate

@@ -15,7 +15,7 @@
 package com.liferay.portlet.documentlibrary.action;
 
 import com.liferay.portal.NoSuchRepositoryEntryException;
-import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,7 +33,8 @@ import javax.portlet.PortletConfig;
  * @author Jorge Ferrer
  * @author Sergio González
  */
-public class ConfigurationActionImpl extends SettingsConfigurationAction {
+public class ConfigurationActionImpl
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

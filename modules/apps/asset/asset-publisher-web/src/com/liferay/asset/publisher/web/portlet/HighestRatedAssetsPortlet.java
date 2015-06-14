@@ -39,7 +39,6 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Highest Rated Assets",
 		"javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.config-template=/configuration.jsp",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.preferences=classpath:/META-INF/portlet-preferences/highest-rated-assets-default-portlet-preferences.xml",

@@ -28,7 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.item.selector.ItemSelector" %><%@
 page import="com.liferay.item.selector.ItemSelectorReturnType" %><%@
-page import="com.liferay.item.selector.criteria.url.criterion.URLItemSelectorCriterion" %><%@
+page import="com.liferay.item.selector.criteria.DefaultItemSelectorReturnType" %><%@
+page import="com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion" %><%@
 page import="com.liferay.journal.web.asset.JournalArticleAssetRenderer" %><%@
 page import="com.liferay.journal.web.configuration.JournalWebConfigurationValues" %><%@
 page import="com.liferay.journal.web.constants.JournalPortletKeys" %><%@

@@ -111,13 +111,15 @@ boolean changeStructure = GetterUtil.getBoolean(request.getAttribute("edit_artic
 
 		ItemSelector itemSelector = (ItemSelector)request.getAttribute(JournalWebKeys.ITEM_SELECTOR);
 
-		URLItemSelectorCriterion urlItemSelectorCriterion = new URLItemSelectorCriterion();
+		LayoutItemSelectorCriterion layoutItemSelectorCriterion = new LayoutItemSelectorCriterion();
 
 		Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
 
-		urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+		desiredItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.UUID);
 
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, urlItemSelectorCriterion);
+		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
+
+		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, eventName, layoutItemSelectorCriterion);
 		%>
 
 		<aui:script sandbox="<%= true %>">

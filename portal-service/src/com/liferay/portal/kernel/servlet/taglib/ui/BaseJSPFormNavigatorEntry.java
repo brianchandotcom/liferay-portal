@@ -35,8 +35,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Julio Camarero
  */
 public abstract class BaseJSPFormNavigatorEntry<T>
-	extends BaseFormNavigatorEntry<T>
-	implements FormNavigatorEntry<T> {
+	extends BaseFormNavigatorEntry<T> implements FormNavigatorEntry<T> {
 
 	@Override
 	public void include(

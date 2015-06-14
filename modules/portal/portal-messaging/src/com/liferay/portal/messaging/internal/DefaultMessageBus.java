@@ -211,23 +211,6 @@ public class DefaultMessageBus implements MessageBus {
 		return destination.unregister(messageListener);
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)"
-	)
-	protected synchronized void addDestination(
-		Destination destination, Map<String, Object> properties) {
-
-		if (_destinations.containsKey(destination.getName())) {
-			replace(destination);
-		}
-		else {
-			doAddDestination(destination);
-		}
-	}
-
 	@Deactivate
 	protected void deactivate() {
 		shutdown(true);
@@ -263,7 +246,26 @@ public class DefaultMessageBus implements MessageBus {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)"
+		target = "(destination.name=*)",
+		unbind = "unregisterDestination"
+	)
+	protected synchronized void registerDestination(
+		Destination destination, Map<String, Object> properties) {
+
+		if (_destinations.containsKey(destination.getName())) {
+			replace(destination);
+		}
+		else {
+			doAddDestination(destination);
+		}
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(destination.name=*)",
+		unbind = "unregisterDestinationEventListener"
 	)
 	protected synchronized void registerDestinationEventListener(
 		DestinationEventListener destinationEventListener,
@@ -290,7 +292,8 @@ public class DefaultMessageBus implements MessageBus {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "unregisterMessageBusEventListener"
 	)
 	protected void registerMessageBusEventListener(
 		MessageBusEventListener messageBusEventListener) {
@@ -302,7 +305,8 @@ public class DefaultMessageBus implements MessageBus {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(destination.name=*)"
+		target = "(destination.name=*)",
+		unbind = "unregisterMessageListener"
 	)
 	protected synchronized void registerMessageListener(
 		MessageListener messageListener, Map<String, Object> properties) {
@@ -327,7 +331,7 @@ public class DefaultMessageBus implements MessageBus {
 		}
 	}
 
-	protected synchronized void removeDestination(
+	protected synchronized void unregisterDestination(
 		Destination destination, Map<String, Object> properties) {
 
 		removeDestination(destination.getName());

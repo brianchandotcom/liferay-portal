@@ -39,10 +39,6 @@ public class BrowserTag extends IncludeTag {
 		_displayStyleURL = displayStyleURL;
 	}
 
-	public void setIdPrefix(String idPrefix) {
-		_idPrefix = idPrefix;
-	}
-
 	public void setItemSelectedEventName(String itemSelectedEventName) {
 		_itemSelectedEventName = itemSelectedEventName;
 	}
@@ -76,7 +72,6 @@ public class BrowserTag extends IncludeTag {
 
 		_displayStyle = null;
 		_displayStyleURL = null;
-		_idPrefix = null;
 		_itemSelectedEventName = null;
 		_returnType = null;
 		_searchContainer = null;
@@ -116,8 +111,6 @@ public class BrowserTag extends IncludeTag {
 			"liferay-ui:item-selector-browser:displayStyleURL",
 			_displayStyleURL);
 		request.setAttribute(
-			"liferay-ui:item-selector-browser:idPrefix", _idPrefix);
-		request.setAttribute(
 			"liferay-ui:item-selector-browser:itemSelectedEventName",
 			_itemSelectedEventName);
 		request.setAttribute(
@@ -138,7 +131,6 @@ public class BrowserTag extends IncludeTag {
 
 	private String _displayStyle;
 	private PortletURL _displayStyleURL;
-	private String _idPrefix;
 	private String _itemSelectedEventName;
 	private ReturnType _returnType;
 	private SearchContainer<?> _searchContainer;

@@ -24,11 +24,6 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<name>idPrefix</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
 			<name>itemSelectedEventName</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

@@ -52,8 +52,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 import javax.portlet.ValidatorException;
@@ -188,35 +186,6 @@ public abstract class SettingsConfigurationAction
 				actionResponse.sendRedirect(redirect);
 			}
 		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #include(PortletConfig, RenderRequest, RenderResponse)}
-	 *
-	 */
-	@Override
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		PortletConfig selPortletConfig = getSelPortletConfig(renderRequest);
-
-		String configTemplate = selPortletConfig.getInitParameter(
-			"config-template");
-
-		if (Validator.isNotNull(configTemplate)) {
-			return configTemplate;
-		}
-
-		String configJSP = selPortletConfig.getInitParameter("config-jsp");
-
-		if (Validator.isNotNull(configJSP)) {
-			return configJSP;
-		}
-
-		return "/configuration.jsp";
 	}
 
 	@Override

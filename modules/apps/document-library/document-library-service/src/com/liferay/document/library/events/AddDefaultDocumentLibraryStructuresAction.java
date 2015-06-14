@@ -72,8 +72,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Roberto Díaz
  */
 @Component(
-	immediate = true, 
-	service = AddDefaultDocumentLibraryStructuresAction.class
+	immediate = true, service = AddDefaultDocumentLibraryStructuresAction.class
 )
 public class AddDefaultDocumentLibraryStructuresAction extends SimpleAction {
 

@@ -44,7 +44,10 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<%
 				String strutsAction = ParamUtil.getString(request, "struts_action");
 
-				boolean viewSingleEntry = (strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry")) && (ParamUtil.getLong(renderRequest, "categoryId") == 0) && Validator.isNull(ParamUtil.getString(renderRequest, "tag"));
+				long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+				String assetTagName = ParamUtil.getString(request, "tag");
+
+				boolean viewSingleEntry = (strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry")) && (assetCategoryId == 0) && Validator.isNull(assetTagName);
 				%>
 
 				<c:if test="<%= !entry.isApproved() %>">

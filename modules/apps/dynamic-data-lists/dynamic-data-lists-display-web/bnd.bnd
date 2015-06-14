@@ -10,3 +10,4 @@ Include-Resource:\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\
 	META-INF/resources=src/META-INF/resources,\
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/log4j/Log4JUtil.class
+Web-ContextPath: /ddl-display-web

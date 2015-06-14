@@ -5,3 +5,4 @@ Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/ContentUtil.class
+Web-ContextPath: /invitation-web

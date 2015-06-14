@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.document.library.events.test;
+package com.liferay.document.library.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.events.AddDefaultDocumentLibraryStructuresAction;

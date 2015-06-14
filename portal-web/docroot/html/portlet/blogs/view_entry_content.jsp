@@ -43,6 +43,11 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 				<%
 				String strutsAction = ParamUtil.getString(request, "struts_action");
+
+				long assetCategoryId = ParamUtil.getLong(request, "categoryId");
+				String assetTagName = ParamUtil.getString(request, "tag");
+
+				boolean viewSingleEntry = (strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry")) && (assetCategoryId == 0) && Validator.isNull(assetTagName);
 				%>
 
 				<c:if test="<%= !entry.isApproved() %>">
@@ -60,7 +65,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 				<div class="entry-title">
 					<h2>
 						<c:choose>
-							<c:when test='<%= !strutsAction.equals("/blogs/view_entry") %>'>
+							<c:when test="<%= !viewSingleEntry %>">
 								<aui:a href="<%= viewEntryURL %>"><%= HtmlUtil.escape(entry.getTitle()) %></aui:a>
 							</c:when>
 							<c:otherwise>
@@ -169,7 +174,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 
 			<div class="entry-body">
 				<c:choose>
-					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_ABSTRACT) && !strutsAction.equals("/blogs/view_entry") && !strutsAction.equals("/blogs_admin/view_entry") %>'>
+					<c:when test="<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_ABSTRACT) && !viewSingleEntry %>">
 						<c:if test="<%= entry.isSmallImage() %>">
 							<div class="asset-small-image">
 								<img alt="" class="asset-small-image" src="<%= HtmlUtil.escape(entry.getSmallImageURL(themeDisplay)) %>" width="150" />
@@ -192,7 +197,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 							<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</aui:a>
 						</div>
 					</c:when>
-					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry") %>'>
+					<c:when test="<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || viewSingleEntry %>">
 						<div>
 							<%= entry.getContent() %>
 						</div>
@@ -207,7 +212,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 						</liferay-ui:custom-attributes-available>
 
 					</c:when>
-					<c:when test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_TITLE) && !strutsAction.equals("/blogs/view_entry") && !strutsAction.equals("/blogs_admin/view_entry") %>'>
+					<c:when test="<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_TITLE) && !viewSingleEntry %>">
 						<div class="read-more">
 							<aui:a href="<%= viewEntryURL %>"><liferay-ui:message arguments='<%= new Object[] {"hide-accessible", HtmlUtil.escape(entry.getTitle())} %>' key="read-more-x-about-x" translateArguments="<%= false %>" /> &raquo;</aui:a>
 						</div>
@@ -292,7 +297,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view_entry_content.jsp
 					</div>
 				</liferay-ui:asset-tags-available>
 
-				<c:if test='<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || strutsAction.equals("/blogs/view_entry") || strutsAction.equals("/blogs_admin/view_entry") %>'>
+				<c:if test="<%= blogsPortletInstanceSettings.getDisplayStyle().equals(BlogsUtil.DISPLAY_STYLE_FULL_CONTENT) || viewSingleEntry %>">
 					<c:if test="<%= blogsPortletInstanceSettings.isEnableRelatedAssets() %>">
 						<div class="entry-links">
 							<liferay-ui:asset-links

@@ -48,6 +48,9 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(label = "%predefined-value", type = "text")
 	public LocalizedValue predefinedValue();
 
+	@DDMFormField(label = "%read-only")
+	public boolean readOnly();
+
 	@DDMFormField(label = "%repeatable")
 	public boolean repeatable();
 

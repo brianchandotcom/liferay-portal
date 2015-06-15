@@ -96,7 +96,7 @@ public class JournalArticleFinderTest {
 		_basicWebContentDDMStructure = DDMStructureTestUtil.addStructure(
 			_group.getGroupId(), JournalArticle.class.getName());
 
-		_basicWebContentTemplate = DDMTemplateTestUtil.addTemplate(
+		_basicWebContentDDMTemplate = DDMTemplateTestUtil.addTemplate(
 			_group.getGroupId(), _basicWebContentDDMStructure.getStructureId());
 
 		JournalArticle article = JournalTestUtil.addArticleWithXMLContent(
@@ -104,7 +104,7 @@ public class JournalArticleFinderTest {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			"<title>Article 1</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
-			_basicWebContentTemplate.getTemplateKey());
+			_basicWebContentDDMTemplate.getTemplateKey());
 
 		_articles.add(article);
 
@@ -127,7 +127,7 @@ public class JournalArticleFinderTest {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			"<title>Article 3</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
-			_basicWebContentTemplate.getTemplateKey());
+			_basicWebContentDDMTemplate.getTemplateKey());
 
 		_articles.add(article);
 
@@ -191,7 +191,7 @@ public class JournalArticleFinderTest {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT,
 			"<title>Article 1</title>",
 			_basicWebContentDDMStructure.getStructureKey(),
-			_basicWebContentTemplate.getTemplateKey());
+			_basicWebContentDDMTemplate.getTemplateKey());
 
 		article.setUserId(_USER_ID);
 		article.setStatus(WorkflowConstants.STATUS_DRAFT);
@@ -200,9 +200,9 @@ public class JournalArticleFinderTest {
 
 		_articles.add(article);
 
-		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-		queryDefinition.setUserId(_USER_ID);
 		queryDefinition.setIncludeOwner(true);
+		queryDefinition.setUserId(_USER_ID);
+		queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
 
 		testQueryByG_C(
 			_group.getGroupId(), Collections.<Long>emptyList(),
@@ -217,10 +217,11 @@ public class JournalArticleFinderTest {
 
 	@Test
 	public void testFindByExpirationDate() throws Exception {
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<>();
 
 		// Status any
+
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -289,10 +290,11 @@ public class JournalArticleFinderTest {
 
 	@Test
 	public void testQueryByC_G_F_C_A_V_T_D_C_T_S_T_D_R() throws Exception {
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<>();
 
 		// Status any
+
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -301,7 +303,6 @@ public class JournalArticleFinderTest {
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, "Article",
 			null, null, null, (String)null, null, null, null, null, true,
 			queryDefinition, 3);
-
 		testQueryByC_G_F_C_A_V_T_D_C_T_S_T_D_R(
 			_group.getCompanyId(), _group.getGroupId(), _folderIds,
 			JournalArticleConstants.CLASSNAME_ID_DEFAULT, null, null, null,
@@ -331,10 +332,11 @@ public class JournalArticleFinderTest {
 
 	@Test
 	public void testQueryByG_C_S() throws Exception {
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<>();
 
 		// Status any
+
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -370,10 +372,11 @@ public class JournalArticleFinderTest {
 
 	@Test
 	public void testQueryByG_F() throws Exception {
-		QueryDefinition<JournalArticle> queryDefinition =
-			new QueryDefinition<>();
 
 		// Status any
+
+		QueryDefinition<JournalArticle> queryDefinition =
+			new QueryDefinition<>();
 
 		queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
 
@@ -591,7 +594,7 @@ public class JournalArticleFinderTest {
 	private JournalArticle _article;
 	private final List<JournalArticle> _articles = new ArrayList<>();
 	private DDMStructure _basicWebContentDDMStructure;
-	private DDMTemplate _basicWebContentTemplate;
+	private DDMTemplate _basicWebContentDDMTemplate;
 	private BundleContext _bundleContext;
 	private DDMStructure _ddmStructure;
 	private JournalFolder _folder;

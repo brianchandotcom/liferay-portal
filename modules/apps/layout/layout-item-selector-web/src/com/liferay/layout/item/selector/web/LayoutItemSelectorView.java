@@ -17,6 +17,7 @@ package com.liferay.layout.item.selector.web;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.item.selector.criteria.layout.criterion.LayoutItemSelectorCriterion;
+import com.liferay.layout.item.selector.web.display.context.LayoutItemSelectorViewDisplayContext;
 import com.liferay.portal.kernel.util.SetUtil;
 
 import java.io.IOException;
@@ -43,15 +44,8 @@ public class LayoutItemSelectorView
 	implements ItemSelectorView
 		<LayoutItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
-	public static final String ITEM_SELECTED_EVENT_NAME =
-		LayoutItemSelectorView.class.getName() + "#ITEM_SELECTED_EVENT_NAME";
-
-	public static final String LAYOUT_ITEM_SELECTOR_CRITERION =
-		LayoutItemSelectorView.class.getName() +
-			"#LAYOUT_ITEM_SELECTOR_CRITERION";
-
-	public static final String PORTLET_URL =
-		LayoutItemSelectorView.class.getName() + "#PORTLET_URL";
+	public static final String LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+		"LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<LayoutItemSelectorCriterion> getItemSelectorCriterionClass() {
@@ -80,10 +74,14 @@ public class LayoutItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
+		LayoutItemSelectorViewDisplayContext
+			layoutItemSelectorViewDisplayContext =
+				new LayoutItemSelectorViewDisplayContext(
+					layoutItemSelectorCriterion, itemSelectedEventName);
+
 		request.setAttribute(
-			LAYOUT_ITEM_SELECTOR_CRITERION, layoutItemSelectorCriterion);
-		request.setAttribute(PORTLET_URL, portletURL);
+			LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			layoutItemSelectorViewDisplayContext);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			"/o/layout-item-selector-web/layouts.jsp");

@@ -147,13 +147,18 @@
 		</execute>
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
-			<var name="enableDisplaySettingsComments" value="false" />
-			<var name="enableDisplaySettingsRelatedAssets" value="false" />
-			<var name="enableDisplaySettingsSocialBookmarks" value="false" />
+
+		<execute macro="BlogsConfiguration#selectMaximumItemstoDisplay">
 			<var name="maximumItemsToDisplay" value="75" />
 		</execute>
 
+		<execute macro="BlogsConfiguration#uncheckComments" />
+		<execute macro="BlogsConfiguration#uncheckRelatedAssets" />
+		<execute macro="BlogsConfiguration#uncheckSocialBookmarks" />
+
 		<execute macro="BlogsConfiguration#saveConfigurationIFrame" />
+
+		<execute macro="BlogsConfiguration#configureRSSPG">
 			<var name="enableRSSSubscriptionCheckbox" value="false" />
 		</execute>
 

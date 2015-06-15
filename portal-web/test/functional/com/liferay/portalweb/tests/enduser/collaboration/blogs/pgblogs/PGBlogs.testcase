@@ -1601,6 +1601,8 @@
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
+		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
+
 		<execute macro="BlogsConfiguration#selectDisplayTemplate">
 			<var name="displayTemplate" value="Abstract" />
 		</execute>
@@ -1708,6 +1710,8 @@
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
 
+		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
+
 		<execute macro="BlogsConfiguration#selectDisplayTemplate">
 			<var name="displayTemplate" value="Full Content" />
 		</execute>
@@ -1803,6 +1807,8 @@
 		<execute macro="BlogsNavigator#gotoConfigurationSetupPG">
 			<var name="portletNameBorderless" value="Blogs" />
 		</execute>
+
+		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
 
 		<execute macro="BlogsConfiguration#selectDisplayTemplate">
 			<var name="displayTemplate" value="Title" />

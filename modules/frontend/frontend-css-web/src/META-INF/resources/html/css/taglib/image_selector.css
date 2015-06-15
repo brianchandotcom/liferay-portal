@@ -85,17 +85,15 @@
 			max-width: 100%;
 		}
 
+		&.drop-enabled .image-wrapper {
+			height : 100px;
+		}
+
 		.image-wrapper {
 			height : 400px;
 			overflow: hidden;
 			position: relative;
 			width: 100%;
-		}
-
-		&.drop-enabled {
-			.image-wrapper {
-				height : 100px;
-			}
 		}
 	}
 

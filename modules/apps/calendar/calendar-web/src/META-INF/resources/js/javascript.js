@@ -116,7 +116,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/add-calendar-booking': {
+						'/calendar.calendarbooking/add-calendar-booking': {
 							allDay: schedulerEvent.get('allDay'),
 							calendarId: schedulerEvent.get('calendarId'),
 							childCalendarIds: STR_BLANK,
@@ -286,7 +286,7 @@ AUI.add(
 
 				instance.invokeService(
 						{
-							'/calendar-portlet.calendar/delete-calendar': {
+							'/calendar.calendar/delete-calendar': {
 								calendarId: calendarId
 							}
 						},
@@ -303,7 +303,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/move-calendar-booking-to-trash': {
+						'/calendar.calendarbooking/move-calendar-booking-to-trash': {
 							calendarBookingId: schedulerEvent.get('calendarBookingId')
 						}
 					},
@@ -322,7 +322,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/delete-calendar-booking-instance': {
+						'/calendar.calendarbooking/delete-calendar-booking-instance': {
 							allFollowing: allFollowing,
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
 							startTime: CalendarUtil.toUTC(schedulerEvent.get('startDate')).getTime()
@@ -504,7 +504,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/get-calendar-booking': {
+						'/calendar.calendarbooking/get-calendar-booking': {
 							calendarBookingId: calendarBookingId
 						}
 					},
@@ -568,7 +568,7 @@ AUI.add(
 				var url = Liferay.PortletURL.createResourceURL();
 
 				url.setParameters(parameters);
-				url.setPortletId('1_WAR_calendarportlet');
+				url.setPortletId('com_liferay_calendar_web_portlet_CalendarPortlet');
 				url.setResourceId(resourceId);
 
 				A.io.request(
@@ -620,7 +620,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/invoke-transition': {
+						'/calendar.calendarbooking/invoke-transition': {
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
 							status: status,
 							userId: USER_ID
@@ -756,7 +756,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/update-offset-and-duration': {
+						'/calendar.calendarbooking/update-offset-and-duration': {
 							allDay: schedulerEvent.get('allDay'),
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
 							calendarId: schedulerEvent.get('calendarId'),
@@ -809,7 +809,7 @@ AUI.add(
 
 				instance.invokeService(
 					{
-						'/calendar-portlet.calendarbooking/update-calendar-booking-instance': {
+						'/calendar.calendarbooking/update-calendar-booking-instance': {
 							allDay: schedulerEvent.get('allDay'),
 							allFollowing: allFollowing,
 							calendarBookingId: schedulerEvent.get('calendarBookingId'),
@@ -1235,7 +1235,7 @@ AUI.add(
 						if (instance.get('permissions.UPDATE')) {
 							CalendarUtil.invokeService(
 								{
-									'/calendar-portlet.calendar/update-color': {
+									'/calendar.calendar/update-color': {
 										calendarId: calendarId,
 										color: parseInt(color.substr(1), 16)
 									}

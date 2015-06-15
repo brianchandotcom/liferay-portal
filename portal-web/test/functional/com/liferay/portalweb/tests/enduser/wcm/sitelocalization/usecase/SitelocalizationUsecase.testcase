@@ -197,7 +197,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
+	<command name="NoLocalePrependedWhenLocaleMatchMyPreferredLocalization" priority="3">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -342,7 +342,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="PortletInteractionLocalization" priority="5">
+	<command name="PortletInteractionLocalization" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

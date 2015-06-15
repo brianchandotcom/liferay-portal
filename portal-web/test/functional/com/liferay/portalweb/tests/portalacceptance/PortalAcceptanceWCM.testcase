@@ -20,7 +20,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddChildSite" priority="5">
+	<command name="AddChildSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -268,7 +268,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddSite" priority="5">
+	<command name="AddSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -394,7 +394,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddSiteTeam" priority="5">
+	<command name="AddSiteTeam" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -419,7 +419,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddSiteTeams" priority="5">
+	<command name="AddSiteTeams" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -764,7 +764,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="ADTBreadcrumb" priority="3">
+	<command name="ADTBreadcrumb" priority="3">
 		<var name="siteName" value="Test Site Name" />
 
 		<execute macro="User#firstLoginPG" />
@@ -817,7 +817,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="ADTCategoriesNavigation" priority="3">
+	<command name="ADTCategoriesNavigation" priority="3">
 		<var name="siteName" value="Test Site Name" />
 
 		<execute macro="User#firstLoginPG" />
@@ -1465,7 +1465,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="DeleteSite" priority="5">
+	<command name="DeleteSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1483,7 +1483,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="DeleteSitePages" priority="4">
+	<command name="DeleteSitePages" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -1515,7 +1515,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="DeleteSiteTeam" priority="5">
+	<command name="DeleteSiteTeam" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -2103,7 +2103,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="EditSite" priority="5">
+	<command name="EditSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -2944,7 +2944,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="SearchSite" priority="5">
+	<command name="SearchSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

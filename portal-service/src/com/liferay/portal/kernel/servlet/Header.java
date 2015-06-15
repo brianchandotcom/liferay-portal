@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import java.util.Collection;
-import java.util.Iterator;
+import java.net.HttpCookie;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -77,7 +76,7 @@ public class Header implements Externalizable {
 
 	public void addToResponse(String key, HttpServletResponse response) {
 		if (_type == Type.COOKIE) {
-			addCookieToResponse(response);
+			response.addCookie(_cookieValue);
 		}
 		else if (_type == Type.DATE) {
 			response.addDateHeader(key, _dateValue);
@@ -171,7 +170,9 @@ public class Header implements Externalizable {
 
 	public void setToResponse(String key, HttpServletResponse response) {
 		if (_type == Type.COOKIE) {
-			addCookieToResponse(response);
+			HttpCookie httpCookie = CookieUtil.toHttpCookie(_cookieValue);
+
+			response.setHeader(HttpHeaders.SET_COOKIE, httpCookie.toString());
 		}
 		else if (_type == Type.DATE) {
 			response.setDateHeader(key, _dateValue);
@@ -265,23 +266,6 @@ public class Header implements Externalizable {
 		hashCode = HashUtil.hash(hashCode, cookie.getVersion());
 
 		return hashCode;
-	}
-
-	private void addCookieToResponse(HttpServletResponse response) {
-		Collection<String> setCookieHeaders = response.getHeaders(
-			HttpHeaders.SET_COOKIE);
-
-		Iterator<String> iterator = setCookieHeaders.iterator();
-
-		while (iterator.hasNext()) {
-			String cookieValue = iterator.next();
-
-			if (cookieValue.startsWith(_cookieValue.getName())) {
-				return;
-			}
-		}
-
-		response.addCookie(_cookieValue);
 	}
 
 	private Cookie _cookieValue;

@@ -25,6 +25,8 @@ boolean showExtraInfo = ParamUtil.getBoolean(request, "showExtraInfo");
 		<liferay-util:include page="/html/portlet/document_library/view_file_entry_simple_view.jsp" />
 	</c:when>
 	<c:otherwise>
-		<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp" />
+		<liferay-util:include page="/html/portlet/document_library/view_file_entry.jsp">
+			<liferay-util:param name="includeBreadcrumb" value="<%= Boolean.FALSE.toString() %>" />
+		</liferay-util:include>
 	</c:otherwise>
 </c:choose>

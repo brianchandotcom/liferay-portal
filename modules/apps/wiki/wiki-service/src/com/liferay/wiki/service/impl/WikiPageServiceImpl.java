@@ -15,6 +15,7 @@
 package com.liferay.wiki.service.impl;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -485,6 +486,27 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 	@Override
 	public List<WikiPage> getPages(
+			long groupId, long nodeId, boolean head, long userId,
+			boolean includeOwner, int status, int start, int end,
+			OrderByComparator<WikiPage> obc)
+		throws PortalException {
+
+		WikiNodePermissionChecker.check(
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+
+		QueryDefinition<WikiPage> queryDefinition = new QueryDefinition<>(
+			status, userId, includeOwner);
+
+		queryDefinition.setStart(start);
+		queryDefinition.setEnd(end);
+		queryDefinition.setOrderByComparator(obc);
+
+		return wikiPageFinder.filterFindByG_N_H_S(
+			groupId, nodeId, head, queryDefinition);
+	}
+
+	@Override
+	public List<WikiPage> getPages(
 			long groupId, long userId, long nodeId, int status, int start,
 			int end)
 		throws PortalException {
@@ -513,6 +535,22 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 
 		return wikiPagePersistence.filterCountByG_N_H_S(
 			groupId, nodeId, head, WorkflowConstants.STATUS_APPROVED);
+	}
+
+	@Override
+	public int getPagesCount(
+			long groupId, long nodeId, boolean head, long userId,
+			boolean includeOwner, int status)
+		throws PortalException {
+
+		WikiNodePermissionChecker.check(
+			getPermissionChecker(), nodeId, ActionKeys.VIEW);
+
+		QueryDefinition<WikiPage> queryDefinition = new QueryDefinition<>(
+			status, userId, includeOwner);
+
+		return wikiPageFinder.filterCountByG_N_H_S(
+			groupId, nodeId, head, queryDefinition);
 	}
 
 	@Override

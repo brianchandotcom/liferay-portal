@@ -2,8 +2,7 @@
 <!DOCTYPE project>
 
 <project>
-	<property name="import.shared" value="../item-selector/item-selector-api,journal-service" />
-	<property name="osgi.ide.dependencies" value="rome.jar" />
+	<property name="import.shared" value="journal-api" />
 
 	<import file="../../../../tools/sdk/build-common-osgi-plugin.xml" />
 

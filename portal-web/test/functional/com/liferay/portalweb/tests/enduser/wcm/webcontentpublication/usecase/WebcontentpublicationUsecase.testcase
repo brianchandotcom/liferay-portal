@@ -1706,7 +1706,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewBlogsEntriesViaRelatedAssets" priority="4">
+	<command name="ViewBlogsEntriesViaRelatedAssets" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>
@@ -1870,7 +1870,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewRelatedAssetsViaRelatedAssetsPortlet" priority="3">
+	<command name="ViewRelatedAssetsViaRelatedAssetsPortlet" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Asset Publisher Page" />
 		</execute>
@@ -1989,7 +1989,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewRelatedAssetViaDMPortlet" priority="3">
+	<command name="ViewRelatedAssetViaDMPortlet" priority="3">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Blogs Page" />
 		</execute>

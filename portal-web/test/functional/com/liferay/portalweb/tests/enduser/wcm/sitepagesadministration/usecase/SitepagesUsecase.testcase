@@ -431,7 +431,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewSecureContentAndPageAsGuest" priority="4">
+	<command name="ViewSecureContentAndPageAsGuest" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -631,7 +631,7 @@
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewSecureContentAndPageAsSiteMember" priority="4">
+	<command name="ViewSecureContentAndPageAsSiteMember" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -882,7 +882,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewSecureContentAndPageAsUser" priority="4">
+	<command name="ViewSecureContentAndPageAsUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Server Administration" />
 		</execute>
@@ -1103,7 +1103,7 @@
 		<execute function="AssertTextEquals" locator1="Home#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
-	<command known-issues="LPS-51696" name="WebContentAdministrationSitesPagesPanel" priority="3">
+	<command name="WebContentAdministrationSitesPagesPanel" priority="3">
 		<execute macro="Page#addPG">
 			<var name="componentName" value="Collaboration" />
 			<var name="pageName" value="Panel Test Page" />

@@ -170,7 +170,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="HideFoldersFromRelatedAssetsSelector" priority="5">
+	<command name="HideFoldersFromRelatedAssetsSelector" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

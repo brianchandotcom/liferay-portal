@@ -214,7 +214,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="AddSelectTagViaBlogs" priority="5">
+	<command name="AddSelectTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -366,7 +366,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="AddSitePublicPage" priority="5">
+	<command name="AddSitePublicPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -520,7 +520,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="AddTagViaBlogs" priority="5">
+	<command name="AddTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -932,7 +932,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="ADTTagsNavigationPortlet" priority="3">
+	<command name="ADTTagsNavigationPortlet" priority="3">
 		<var name="siteName" value="Test Site Name" />
 
 		<execute macro="User#firstLoginPG" />
@@ -2802,7 +2802,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="RemoveTagViaBlogs" priority="5">
+	<command name="RemoveTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

@@ -331,7 +331,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="SitesDynamicTemplates" priority="5">
+	<command name="SitesDynamicTemplates" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Site Templates" />
 		</execute>

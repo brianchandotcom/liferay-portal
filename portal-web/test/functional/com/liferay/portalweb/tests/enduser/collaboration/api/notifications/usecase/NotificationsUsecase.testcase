@@ -16,7 +16,7 @@
 		<execute macro="User#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-51696" name="MarkNotificationAsReadAndAcceptRequest" priority="5">
+	<command name="MarkNotificationAsReadAndAcceptRequest" priority="5">
 		<property name="portlet.plugins.includes" value="contacts-portlet,microblogs-portlet,notifications-portlet,private-messaging-portlet,so-portlet" />
 
 		<execute macro="Page#gotoCP">

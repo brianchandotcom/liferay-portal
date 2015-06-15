@@ -27,7 +27,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-51696" name="RecycleBinBlogs" priority="3">
+	<command name="RecycleBinBlogs" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -217,7 +217,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="RecycleBinEntriesMaxAge" priority="4">
+	<command name="RecycleBinEntriesMaxAge" priority="4">
 		<property name="custom.properties" value="trash.entries.max.age=86400${line.separator}company.settings.form.configuration=general,authentication,users,mail-host-names,email-notifications,content-sharing,recycle-bin" />
 
 		<execute macro="Page#gotoCP">
@@ -476,7 +476,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="RecycleBinScheduledCleanup" priority="3">
+	<command name="RecycleBinScheduledCleanup" priority="3">
 		<property name="custom.properties" value="trash.entry.check.interval=1${line.separator}trash.entries.max.age=1" />
 
 		<execute macro="Page#gotoPG">
@@ -521,7 +521,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="RecycleBinSearchBlogsEntries" priority="3">
+	<command name="RecycleBinSearchBlogsEntries" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -716,7 +716,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="RecycleBinStaging" priority="3">
+	<command name="RecycleBinStaging" priority="3">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Test Page" />
 			<var name="siteName" value="Site Name" />

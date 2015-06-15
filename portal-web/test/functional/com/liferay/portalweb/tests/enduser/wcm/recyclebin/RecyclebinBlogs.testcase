@@ -11,7 +11,7 @@
 		<execute macro="BlogsEntry#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-51696" name="DeleteBlogsEntry" priority="5">
+	<command name="DeleteBlogsEntry" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -57,7 +57,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="DeleteDraftBlogsEntry" priority="5">
+	<command name="DeleteDraftBlogsEntry" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
@@ -102,7 +102,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="RestoreBlogsEntry" priority="5">
+	<command name="RestoreBlogsEntry" priority="5">
 		<var name="assetRestoreLocation" value="Blogs" />
 
 		<execute macro="Page#gotoContentCP">

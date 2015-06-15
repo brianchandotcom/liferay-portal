@@ -15,67 +15,6 @@
 		<execute function="Check" locator1="Checkbox#ENABLE_SOCIAL_BOOKMARKS" />
 	</command>
 
-	<command name="configureDisplaySettingsPG">
-		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
-
-		<if>
-			<isset var="maximumItemsToDisplay" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="${maximumItemsToDisplay}" />
-			</then>
-		</if>
-
-		<if>
-			<isset var="displayTemplate" />
-			<then>
-				<execute function="Select" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
-			</then>
-		</if>
-
-		<if>
-			<equals arg1="${enableDisplaySettingsRelatedAssets}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDisplaySettingsRelatedAssets}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_RELATED_ASSET_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<equals arg1="${enableDisplaySettingsComments}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDisplaySettingsComments}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_COMMENTS_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<if>
-			<equals arg1="${enableDisplaySettingsSocialBookmarks}" arg2="true" />
-			<then>
-				<execute function="Check" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-			</then>
-			<elseif>
-				<equals arg1="${enableDisplaySettingsSocialBookmarks}" arg2="false" />
-				<then>
-					<execute function="Uncheck" locator1="PGBlogsConfiguration#DISPLAY_SETTINGS_ENABLE_SOCIAL_BOOKMARKS_CHECKBOX" />
-				</then>
-			</elseif>
-		</if>
-
-		<execute function="AssertClick" locator1="PGBlogsConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute function="AssertTextEquals" locator1="PGBlogsConfiguration#SUCCESS_MESSAGE" value1="You have successfully updated the setup." />
-		<execute function="SelectFrame" value1="relative=top" />
-	</command>
-
 	<command name="configureRSSPG">
 		<execute function="SelectFrame" locator1="PGBlogsConfiguration#CONFIGURATION_IFRAME" />
 

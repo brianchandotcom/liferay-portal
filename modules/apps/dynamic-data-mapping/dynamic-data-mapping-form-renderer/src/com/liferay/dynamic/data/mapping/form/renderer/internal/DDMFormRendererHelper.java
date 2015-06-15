@@ -248,6 +248,10 @@ public class DDMFormRendererHelper {
 		setDDMFormFieldRenderingContextValue(
 			ddmFormFieldValue.getValue(), ddmFormFieldRenderingContext);
 
+		boolean visible = isDDMFormFieldVisible(ddmFormField);
+
+		ddmFormFieldRenderingContext.setVisible(visible);
+
 		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
 

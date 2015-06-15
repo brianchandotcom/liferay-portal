@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<project
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+>
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>sample.css.builder</groupId>
+	<artifactId>sample.css.builder</artifactId>
+	<name>Sample CSS Builder Project</name>
+	<version>1.0.0</version>
+	<description>Sample CSS Builder Project</description>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.css.builder</artifactId>
+				<version>1.0.1</version>
+				<configuration>
+					<docrootDirName>css</docrootDirName>
+					<portalCommonDirName>../../../../portal-web/docroot/html/css/common</portalCommonDirName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

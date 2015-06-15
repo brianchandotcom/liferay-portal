@@ -48,7 +48,7 @@ public class RatingsEntryLocalServiceImpl
 		RatingsEntry entry = ratingsEntryPersistence.fetchByU_C_C(
 			userId, classNameId, classPK);
 
-		deleteEntry(entry, userId, className, classPK);
+		ratingsEntryLocalService.deleteEntry(entry, userId, className, classPK);
 	}
 
 	@Override

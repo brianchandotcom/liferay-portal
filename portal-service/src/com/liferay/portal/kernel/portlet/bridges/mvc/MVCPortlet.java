@@ -250,10 +250,10 @@ public class MVCPortlet extends LiferayPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		String renderName = ParamUtil.getString(renderRequest, "struts_action");
+		String mvcAction = ParamUtil.getString(renderRequest, "mvcAction");
 
 		RenderCommand renderCommand = _renderCommandCache.getCommand(
-			renderName);
+			mvcAction);
 
 		if (renderCommand != RenderCommand.EMPTY) {
 			String mvcPath = renderCommand.processCommand(
@@ -425,7 +425,7 @@ public class MVCPortlet extends LiferayPortlet {
 			ActionRequest.ACTION_NAME);
 
 		if (commandName == null) {
-			commandName = portletRequest.getParameter("struts_action");
+			commandName = portletRequest.getParameter("mvcAction");
 		}
 
 		return commandName;

@@ -30,4 +30,4 @@ page import="com.liferay.portlet.expando.service.permission.ExpandoColumnPermiss
 page import="com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil" %><%@
 page import="com.liferay.portlet.expando.util.comparator.CustomAttributesDisplayComparator" %>
 
-<%@ include file="/html/portlet/expando/init-ext.jsp" %>
+<%@ include file="/init-ext.jsp" %>

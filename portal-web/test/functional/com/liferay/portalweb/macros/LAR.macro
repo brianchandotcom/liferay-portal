@@ -366,6 +366,7 @@
 		</execute>
 
 		<execute function="AssertClick" locator1="CPSitepages#TOOLBAR_IMPORT" value1="Import" />
+		<execute function="SelectFrame" locator1="BasePortletExport#EXPORT_IMPORT_IFRAME" />
 	</command>
 
 	<command name="importDDL">

@@ -216,13 +216,23 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			</c:if>
 
 			<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (themeDisplay.isShowLayoutTemplatesIcon() || themeDisplay.isShowPageSettingsIcon()) %>">
-				<portlet:renderURL var="editLayoutURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-					<portlet:param name="struts_action" value="/dockbar/edit_layout_panel" />
-					<portlet:param name="closeRedirect" value="<%= PortalUtil.getLayoutURL(layout, themeDisplay) %>" />
-					<portlet:param name="selPlid" value="<%= String.valueOf(plid) %>" />
-				</portlet:renderURL>
 
-				<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= HtmlUtil.escapeAttribute(editLayoutURL) %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
+				<%
+				PortletURL editPageURL = PortletProviderUtil.getPortletURL(request, Layout.class.getName(), PortletProvider.Action.EDIT);
+
+				editPageURL.setParameter("tabs1", layout.isPrivateLayout() ? "private-pages" : "public-pages");
+				editPageURL.setParameter("groupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
+				editPageURL.setParameter("selPlid", String.valueOf(layout.getPlid()));
+				editPageURL.setParameter("treeId", "layoutsTree");
+				editPageURL.setParameter("viewLayout", Boolean.TRUE.toString());
+
+				String editPageURLString = HttpUtil.setParameter(editPageURL.toString(), "controlPanelCategory", "current_site");
+
+				editPageURLString = HttpUtil.setParameter(editPageURLString, "doAsGroupId", String.valueOf(groupDisplayContextHelper.getLiveGroupId()));
+				editPageURLString = HttpUtil.setParameter(editPageURLString, "refererPlid", String.valueOf(layout.getPlid()));
+				%>
+
+				<aui:nav-item cssClass="page-edit-controls" href="<%= editPageURLString %>" iconCssClass="icon-edit" label="edit" />
 			</c:if>
 
 			<c:if test="<%= !group.isControlPanel() && !group.isUserPersonalPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">

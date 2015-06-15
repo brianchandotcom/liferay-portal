@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.repository.social;
+package com.liferay.portal.repository.liferayrepository.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.repository.model.Folder;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
 import com.liferay.portlet.social.handler.SocialActivityHandler;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
@@ -26,15 +26,15 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
  * @author Adolfo Pérez
  */
 @OSGiBeanProperties(
-	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFolder",
+	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFileEntry",
 	service = SocialActivityHandler.class
 )
-public class FolderSocialActivityHandler
-	extends BaseSocialActivityHandler<Folder> {
+public class LiferayFileEntrySocialActivityHandler
+	extends BaseSocialActivityHandler<FileEntry> {
 
 	@Override
-	protected String getClassName(Folder folder) {
-		return DLFolderConstants.getClassName();
+	protected String getClassName(FileEntry classedModel) {
+		return DLFileEntryConstants.getClassName();
 	}
 
 	@Override

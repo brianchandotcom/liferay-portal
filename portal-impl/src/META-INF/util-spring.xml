@@ -229,9 +229,9 @@
 			<bean class="com.liferay.portal.repository.util.RepositoryTrashImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.repository.social.FileEntrySocialActivityHandler" class="com.liferay.portal.repository.social.FileEntrySocialActivityHandler" />
-	<bean id="com.liferay.portal.repository.social.FileShortcutSocialActivityHandler" class="com.liferay.portal.repository.social.FileShortcutSocialActivityHandler" />
-	<bean id="com.liferay.portal.repository.social.FolderSocialActivityHandler" class="com.liferay.portal.repository.social.FolderSocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityHandler" class="com.liferay.portal.repository.liferayrepository.social.LiferayFileEntrySocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityHandler" class="com.liferay.portal.repository.liferayrepository.social.LiferayFileShortcutSocialActivityHandler" />
+	<bean id="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityHandler" class="com.liferay.portal.repository.liferayrepository.social.LiferayFolderSocialActivityHandler" />
 	<bean id="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil" class="com.liferay.portal.kernel.resiliency.spi.SPIRegistryUtil">
 		<property name="sPIRegistry">
 			<bean class="com.liferay.portal.resiliency.spi.SPIRegistryImpl">

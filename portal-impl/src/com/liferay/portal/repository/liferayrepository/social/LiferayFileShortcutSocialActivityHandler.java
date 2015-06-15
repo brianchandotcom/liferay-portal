@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.repository.social;
+package com.liferay.portal.repository.liferayrepository.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
@@ -29,7 +29,7 @@ import com.liferay.portlet.social.service.SocialActivityLocalService;
 	property = "model.className=com.liferay.portal.repository.liferayrepository.model.LiferayFileShortcut",
 	service = SocialActivityHandler.class
 )
-public class FileShortcutSocialActivityHandler
+public class LiferayFileShortcutSocialActivityHandler
 	extends BaseSocialActivityHandler<FileShortcut> {
 
 	@Override

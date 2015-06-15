@@ -69,3 +69,17 @@ sourceSets {
 }
 
 group = "com.liferay"
+
+if (project.path in [":util:css-builder"]) {
+	apply plugin: "com.liferay.maven.plugin.builder"
+
+	afterEvaluate {
+		buildPluginDescriptor {
+			pomArtifactId = bundle.instructions["Bundle-SymbolicName"]
+		}
+	}
+
+	buildPluginDescriptor {
+		configurationScopeMapping "provided", "provided"
+	}
+}

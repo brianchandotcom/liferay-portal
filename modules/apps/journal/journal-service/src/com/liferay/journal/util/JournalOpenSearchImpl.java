@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -40,11 +40,13 @@ import java.util.List;
 
 import javax.portlet.PortletURL;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Wesley Gong
  */
-@OSGiBeanProperties
+@Component(immediate = true, service = OpenSearch.class)
 public class JournalOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String TITLE = "Liferay Journal Search: ";

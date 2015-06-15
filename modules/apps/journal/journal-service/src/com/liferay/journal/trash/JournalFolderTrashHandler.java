@@ -15,8 +15,8 @@
 package com.liferay.journal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
@@ -37,13 +37,18 @@ import com.liferay.portlet.trash.model.TrashEntry;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for the journal folder entity.
  *
  * @author Eudaldo Alonso
  */
-@OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.portlet.journal.model.JournalFolder"}
+@Component(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
+	},
+	service = TrashHandler.class
 )
 public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 

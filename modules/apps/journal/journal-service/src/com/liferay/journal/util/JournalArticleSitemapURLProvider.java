@@ -16,7 +16,6 @@ package com.liferay.journal.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -36,10 +35,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
-@OSGiBeanProperties
+@Component(immediate = true, service = SitemapURLProvider.class)
 public class JournalArticleSitemapURLProvider implements SitemapURLProvider {
 
 	@Override

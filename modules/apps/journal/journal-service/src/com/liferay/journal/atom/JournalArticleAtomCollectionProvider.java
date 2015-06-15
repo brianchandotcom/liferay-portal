@@ -16,12 +16,12 @@ package com.liferay.journal.atom;
 
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
+import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 import com.liferay.portal.kernel.atom.AtomEntryContent;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.atom.BaseAtomCollectionAdapter;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -41,13 +41,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Igor Spasic
  */
-@OSGiBeanProperties(
+@Component(
 	property = {
 		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
-	}
+	},
+	service = AtomCollectionAdapter.class
 )
 public class JournalArticleAtomCollectionProvider
 	extends BaseAtomCollectionAdapter<JournalArticle> {

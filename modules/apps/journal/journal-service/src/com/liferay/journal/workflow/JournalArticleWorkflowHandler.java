@@ -17,10 +17,10 @@ package com.liferay.journal.workflow;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.workflow.WorkflowHandler;
 import com.liferay.portal.model.WorkflowDefinitionLink;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -40,14 +40,19 @@ import java.io.Serializable;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Bruno Farache
  * @author Marcellus Tavares
  * @author Juan Fernández
  * @author Julio Camarero
  */
-@OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.portlet.journal.model.JournalArticle"}
+@Component(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	},
+	service = WorkflowHandler.class
 )
 public class JournalArticleWorkflowHandler
 	extends BaseWorkflowHandler<JournalArticle> {

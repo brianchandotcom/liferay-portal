@@ -16,10 +16,10 @@ package com.liferay.journal.events;
 
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -32,11 +32,16 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  *
  * @author Julio Camarero
  */
-@OSGiBeanProperties(property = {"key=servlet.service.events.pre"})
+@Component(
+	property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
 public class JournalArticleServicePreAction extends Action {
 
 	@Override

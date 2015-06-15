@@ -19,8 +19,8 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ContainerModel;
@@ -49,6 +49,8 @@ import java.util.List;
 
 import javax.portlet.PortletRequest;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * Implements trash handling for the journal article entity.
  *
@@ -56,8 +58,11 @@ import javax.portlet.PortletRequest;
  * @author Sergio González
  * @author Zsolt Berentey
  */
-@OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.portlet.journal.model.JournalArticle"}
+@Component(
+	property = {
+		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
+	},
+	service = TrashHandler.class
 )
 public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 

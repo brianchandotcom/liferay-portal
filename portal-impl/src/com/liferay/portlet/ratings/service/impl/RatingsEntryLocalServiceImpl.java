@@ -17,6 +17,8 @@ package com.liferay.portlet.ratings.service.impl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.systemevent.SystemEvent;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -41,16 +43,27 @@ public class RatingsEntryLocalServiceImpl
 	public void deleteEntry(long userId, String className, long classPK)
 		throws PortalException {
 
-		// Entry
-
 		long classNameId = classNameLocalService.getClassNameId(className);
 
 		RatingsEntry entry = ratingsEntryPersistence.fetchByU_C_C(
 			userId, classNameId, classPK);
 
+		ratingsEntryLocalService.deleteEntry(entry, userId, className, classPK);
+	}
+
+	@Override
+	@SystemEvent(type = SystemEventConstants.TYPE_DELETE)
+	public void deleteEntry(
+			RatingsEntry entry, long userId, String className, long classPK)
+		throws PortalException {
+
+		// Entry
+
 		if (entry == null) {
 			return;
 		}
+
+		long classNameId = classNameLocalService.getClassNameId(className);
 
 		double oldScore = entry.getScore();
 

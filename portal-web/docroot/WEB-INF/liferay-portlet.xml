@@ -644,21 +644,6 @@
 		<css-class-wrapper>portlet-admin</css-class-wrapper>
 	</portlet>
 	<portlet>
-		<portlet-name>139</portlet-name>
-		<icon>/html/icons/expando.png</icon>
-		<control-panel-entry-category>configuration</control-panel-entry-category>
-		<control-panel-entry-weight>2.0</control-panel-entry-weight>
-		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>true</use-default-template>
-		<private-request-attributes>false</private-request-attributes>
-		<private-session-attributes>false</private-session-attributes>
-		<render-weight>50</render-weight>
-		<header-portlet-css>/html/portlet/expando/css/main.css</header-portlet-css>
-		<css-class-wrapper>portlet-expando</css-class-wrapper>
-		<add-default-resource>true</add-default-resource>
-		<system>true</system>
-	</portlet>
-	<portlet>
 		<portlet-name>142</portlet-name>
 		<icon>/html/icons/flags.png</icon>
 		<struts-path>flags</struts-path>

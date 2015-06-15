@@ -147,4 +147,19 @@
 			<var name="userPassword" value="${userPassword}" />
 		</execute>
 	</command>
+
+	<command name="signInViaGoogle">
+		<execute macro="Navigator#openURL" />
+
+		<execute function="AssertClick" locator1="Link#GOOGLE_LOGIN" value1="Google" />
+
+		<execute function="SelectWindow" locator1="GoogleLogin#PAGE_TITLE" />
+
+		<execute macro="GoogleLogin#accountSignIn">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userPassword" value="${userPassword}" />
+		</execute>
+
+		<execute macro="GoogleLogin#acceptConditions" />
+	</command>
 </definition>

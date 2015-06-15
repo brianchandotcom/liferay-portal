@@ -19,6 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 long teamId = ParamUtil.getLong(request, "teamId");
 
 Team team = TeamLocalServiceUtil.fetchTeam(teamId);
@@ -41,7 +47,9 @@ if (group.isOrganization()) {
 	title='<%= ((team == null) ? LanguageUtil.get(request, "new-team") : HtmlUtil.escape(team.getName())) %>'
 />
 
-<portlet:actionURL name="editTeam" var="editTeamURL" />
+<portlet:actionURL name="editTeam" var="editTeamURL">
+	<portlet:param name="mvcPath" value="/edit_team.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= editTeamURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

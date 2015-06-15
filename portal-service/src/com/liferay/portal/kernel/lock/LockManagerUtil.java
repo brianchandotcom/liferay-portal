@@ -25,47 +25,47 @@ import com.liferay.registry.ServiceTracker;
 public class LockManagerUtil {
 
 	public static void clear() {
-		_instance._clear();
+		_getInstance().clear();
 	}
 
 	public static Lock createLock(
 		long lockId, long companyId, long userId, String userName) {
 
-		return _instance._createLock(lockId, companyId, userId, userName);
+		return _getInstance().createLock(lockId, companyId, userId, userName);
 	}
 
 	public static Lock getLock(String className, long key)
 		throws PortalException {
 
-		return _instance._getLock(className, key);
+		return _getInstance().getLock(className, key);
 	}
 
 	public static Lock getLock(String className, String key)
 		throws PortalException {
 
-		return _instance._getLock(className, key);
+		return _getInstance().getLock(className, key);
 	}
 
 	public static Lock getLockByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException {
 
-		return _instance._getLockByUuidAndCompanyId(uuid, companyId);
+		return _getInstance().getLockByUuidAndCompanyId(uuid, companyId);
 	}
 
 	public static boolean hasLock(long userId, String className, long key) {
-		return _instance._hasLock(userId, className, key);
+		return _getInstance().hasLock(userId, className, key);
 	}
 
 	public static boolean hasLock(long userId, String className, String key) {
-		return _instance._hasLock(userId, className, key);
+		return _getInstance().hasLock(userId, className, key);
 	}
 
 	public static boolean isLocked(String className, long key) {
-		return _instance._isLocked(className, key);
+		return _getInstance().isLocked(className, key);
 	}
 
 	public static boolean isLocked(String className, String key) {
-		return _instance._isLocked(className, key);
+		return _getInstance().isLocked(className, key);
 	}
 
 	public static Lock lock(
@@ -73,7 +73,7 @@ public class LockManagerUtil {
 			boolean inheritable, long expirationTime)
 		throws PortalException {
 
-		return _instance._lock(
+		return _getInstance().lock(
 			userId, className, key, owner, inheritable, expirationTime);
 	}
 
@@ -82,148 +82,53 @@ public class LockManagerUtil {
 			boolean inheritable, long expirationTime)
 		throws PortalException {
 
-		return _instance._lock(
+		return _getInstance().lock(
 			userId, className, key, owner, inheritable, expirationTime);
 	}
 
 	public static Lock lock(String className, String key, String owner) {
-		return _instance._lock(className, key, owner);
+		return _getInstance().lock(className, key, owner);
 	}
 
 	public static Lock lock(
 		String className, String key, String expectedOwner,
 		String updatedOwner) {
 
-		return _instance._lock(className, key, expectedOwner, updatedOwner);
+		return _getInstance().lock(className, key, expectedOwner, updatedOwner);
 	}
 
 	public static Lock refresh(String uuid, long companyId, long expirationTime)
 		throws PortalException {
 
-		return _instance._refresh(uuid, companyId, expirationTime);
+		return _getInstance().refresh(uuid, companyId, expirationTime);
 	}
 
 	public static void unlock(String className, long key) {
-		_instance._unlock(className, key);
+		_getInstance().unlock(className, key);
 	}
 
 	public static void unlock(String className, String key) {
-		_instance._unlock(className, key);
+		_getInstance().unlock(className, key);
 	}
 
 	public static void unlock(String className, String key, String owner) {
-		_instance._unlock(className, key, owner);
+		_getInstance().unlock(className, key, owner);
+	}
+
+	private static LockManager _getInstance() {
+		return _instance._serviceTracker.getService();
 	}
 
 	private LockManagerUtil() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		ServiceTracker<LockManager, LockManager> serviceTracker =
-			registry.trackServices(LockManager.class);
+		_serviceTracker = registry.trackServices(LockManager.class);
 
-		serviceTracker.open();
-
-		try {
-			_lockHelper = serviceTracker.waitForService(0);
-		}
-		catch (Exception e) {
-			throw new IllegalStateException(
-				"Unable to initialize lock manager util", e);
-		}
-		finally {
-			serviceTracker.close();
-		}
-	}
-
-	private void _clear() {
-		_lockHelper.clear();
-	}
-
-	private Lock _createLock(
-		long lockId, long companyId, long userId, String userName) {
-
-		return _lockHelper.createLock(lockId, companyId, userId, userName);
-	}
-
-	private Lock _getLock(String className, long key) throws PortalException {
-		return _lockHelper.getLock(className, key);
-	}
-
-	private Lock _getLock(String className, String key) throws PortalException {
-		return _lockHelper.getLock(className, key);
-	}
-
-	private Lock _getLockByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException {
-
-		return _lockHelper.getLockByUuidAndCompanyId(uuid, companyId);
-	}
-
-	private boolean _hasLock(long userId, String className, long key) {
-		return _lockHelper.hasLock(userId, className, key);
-	}
-
-	private boolean _hasLock(long userId, String className, String key) {
-		return _lockHelper.hasLock(userId, className, key);
-	}
-
-	private boolean _isLocked(String className, long key) {
-		return _lockHelper.isLocked(className, key);
-	}
-
-	private boolean _isLocked(String className, String key) {
-		return _lockHelper.isLocked(className, key);
-	}
-
-	private Lock _lock(
-			long userId, String className, long key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException {
-
-		return _lockHelper.lock(
-			userId, className, key, owner, inheritable, expirationTime);
-	}
-
-	private Lock _lock(
-			long userId, String className, String key, String owner,
-			boolean inheritable, long expirationTime)
-		throws PortalException {
-
-		return _lockHelper.lock(
-			userId, className, key, owner, inheritable, expirationTime);
-	}
-
-	private Lock _lock(String className, String key, String owner) {
-		return _lockHelper.lock(className, key, owner);
-	}
-
-	private Lock _lock(
-		String className, String key, String expectedOwner,
-		String updatedOwner) {
-
-		return _lockHelper.lock(className, key, expectedOwner, updatedOwner);
-	}
-
-	private Lock _refresh(String uuid, long companyId, long expirationTime)
-		throws PortalException {
-
-		return _lockHelper.refresh(uuid, companyId, expirationTime);
-	}
-
-	private void _unlock(String className, long key) {
-		_lockHelper.unlock(className, key);
-	}
-
-	private void _unlock(String className, String key) {
-		_lockHelper.unlock(className, key);
-	}
-
-	private void _unlock(String className, String key, String owner) {
-		_lockHelper.unlock(className, key, owner);
+		_serviceTracker.open();
 	}
 
 	private static final LockManagerUtil _instance = new LockManagerUtil();
 
-	private final LockManager _lockHelper;
+	private final ServiceTracker<LockManager, LockManager> _serviceTracker;
 
 }

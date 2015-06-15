@@ -22,5 +22,6 @@
 		<dependency name="com.liferay.sass.compiler.jni" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.sass.compiler.ruby" org="com.liferay" rev="1.0.0" />
 		<dependency name="slf4j-log4j12" org="org.slf4j" rev="1.7.2" />
+		<dependency conf="provided->master" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
 	</dependencies>
 </ivy-module>

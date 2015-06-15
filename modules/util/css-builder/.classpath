@@ -35,6 +35,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.jni.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.sass.compiler.ruby.jar" />
 	<classpathentry kind="lib" path="lib/jruby-complete.jar" />
+	<classpathentry kind="lib" path="lib/maven-plugin-api.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-log4j12.jar" />
 	<classpathentry kind="output" path="bin" />

@@ -42,7 +42,6 @@ import com.liferay.portlet.messageboards.service.MBThreadServiceUtil;
 import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
 import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
-import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 import com.liferay.portlet.trash.test.WhenIsIndexableBaseModel;
 
 import java.io.InputStream;
@@ -63,8 +62,7 @@ import org.junit.Test;
 @Sync
 public class MBThreadTrashHandlerTest
 	extends BaseTrashHandlerTestCase
-	implements WhenIsAssetableBaseModel, WhenIsAssetableParentModel,
-	WhenIsIndexableBaseModel {
+	implements WhenIsAssetableBaseModel, WhenIsIndexableBaseModel {
 
 	@ClassRule
 	@Rule
@@ -389,11 +387,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableParentModel() {
-		return false;
 	}
 
 	@Override

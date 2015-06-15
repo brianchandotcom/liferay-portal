@@ -30,7 +30,6 @@ import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.WhenIsAssetableParentModel;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -41,8 +40,7 @@ import org.junit.Test;
  * @author Eduardo Garcia
  */
 @Sync
-public class MBCategoryTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsAssetableParentModel {
+public class MBCategoryTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -294,11 +292,6 @@ public class MBCategoryTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableParentModel() {
-		return false;
 	}
 
 	@Override

@@ -1481,6 +1481,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelAndRestoreParentModelIsVisibleParent()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsAssetableParentModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1504,9 +1506,7 @@ public abstract class BaseTrashHandlerTestCase {
 			TestPropsValues.getUserId(),
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
 
-		if (isAssetableParentModel()) {
-			Assert.assertTrue(isAssetEntryVisible(parentBaseModel));
-		}
+		Assert.assertTrue(isAssetEntryVisible(parentBaseModel));
 	}
 
 	@Test
@@ -1535,6 +1535,8 @@ public abstract class BaseTrashHandlerTestCase {
 	public void testTrashGrandparentBaseModelIsNotVisibleParent()
 		throws Exception {
 
+		Assume.assumeTrue(this instanceof WhenIsAssetableParentModel);
+
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(group.getGroupId());
 
@@ -1550,9 +1552,7 @@ public abstract class BaseTrashHandlerTestCase {
 		moveParentBaseModelToTrash(
 			(Long)grandparentBaseModel.getPrimaryKeyObj());
 
-		if (isAssetableParentModel()) {
-			Assert.assertFalse(isAssetEntryVisible(parentBaseModel));
-		}
+		Assert.assertFalse(isAssetEntryVisible(parentBaseModel));
 	}
 
 	@Test
@@ -2673,10 +2673,6 @@ public abstract class BaseTrashHandlerTestCase {
 		throws Exception {
 
 		return (WorkflowedModel)baseModel;
-	}
-
-	protected boolean isAssetableParentModel() {
-		return true;
 	}
 
 	protected boolean isAssetEntryVisible(ClassedModel classedModel)

@@ -252,8 +252,7 @@ public class MVCPortlet extends LiferayPortlet {
 
 		String mvcAction = ParamUtil.getString(renderRequest, "mvcAction");
 
-		RenderCommand renderCommand = _renderCommandCache.getCommand(
-			mvcAction);
+		RenderCommand renderCommand = _renderCommandCache.getCommand(mvcAction);
 
 		if (renderCommand != RenderCommand.EMPTY) {
 			String mvcPath = renderCommand.processCommand(
@@ -303,11 +302,12 @@ public class MVCPortlet extends LiferayPortlet {
 			throw new PortletException(e);
 		}
 
-		String actionName = getCommandName(actionRequest);
+		String commandName = actionRequest.getParameter(
+			ActionRequest.ACTION_NAME);
 
-		if (!actionName.contains(StringPool.COMMA)) {
+		if (!commandName.contains(StringPool.COMMA)) {
 			ActionCommand actionCommand = _actionCommandCache.getCommand(
-				actionName);
+				commandName);
 
 			if (actionCommand != ActionCommand.EMPTY) {
 				return actionCommand.processCommand(
@@ -316,7 +316,7 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 		else {
 			List<ActionCommand> actionCommands =
-				_actionCommandCache.getCommandChain(actionName);
+				_actionCommandCache.getCommandChain(commandName);
 
 			if (!actionCommands.isEmpty()) {
 				for (ActionCommand actionCommand : actionCommands) {
@@ -346,11 +346,11 @@ public class MVCPortlet extends LiferayPortlet {
 			throw new PortletException(e);
 		}
 
-		String resourceName = getCommandName(resourceRequest);
+		String commandName = resourceRequest.getResourceID();
 
-		if (!resourceName.contains(StringPool.COMMA)) {
+		if (!commandName.contains(StringPool.COMMA)) {
 			ResourceCommand resourceCommand = _resourceCommandCache.getCommand(
-				resourceName);
+				commandName);
 
 			if (resourceCommand != ResourceCommand.EMPTY) {
 				return resourceCommand.processCommand(
@@ -359,7 +359,7 @@ public class MVCPortlet extends LiferayPortlet {
 		}
 		else {
 			List<ResourceCommand> resourceCommands =
-				_resourceCommandCache.getCommandChain(resourceName);
+				_resourceCommandCache.getCommandChain(commandName);
 
 			if (!resourceCommands.isEmpty()) {
 				for (ResourceCommand resourceCommand : resourceCommands) {
@@ -418,17 +418,6 @@ public class MVCPortlet extends LiferayPortlet {
 		else {
 			super.doDispatch(renderRequest, renderResponse);
 		}
-	}
-
-	protected String getCommandName(PortletRequest portletRequest) {
-		String commandName = portletRequest.getParameter(
-			ActionRequest.ACTION_NAME);
-
-		if (commandName == null) {
-			commandName = portletRequest.getParameter("mvcAction");
-		}
-
-		return commandName;
 	}
 
 	protected String getPath(PortletRequest portletRequest) {

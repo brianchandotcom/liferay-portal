@@ -52,7 +52,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
@@ -193,8 +192,8 @@ public class RSSResourceCommand implements ResourceCommand {
 
 		ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
-		rssURL.setParameter(ActionRequest.ACTION_NAME, "rss");
 		rssURL.setParameter("feedTitle", title);
+		rssURL.setResourceID("rss");
 
 		selfSyndLink.setHref(rssURL.toString());
 

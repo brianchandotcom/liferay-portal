@@ -38,8 +38,7 @@ page import="com.liferay.portlet.social.service.SocialActivityLocalServiceUtil" 
 
 <%@ page import="java.util.List" %>
 
-<%@ page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.ResourceURL" %>
+<%@ page import="javax.portlet.ResourceURL" %>
 
 <portlet:defineObjects />
 

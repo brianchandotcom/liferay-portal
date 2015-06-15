@@ -28,13 +28,23 @@ public class CSSBuilderTask extends Task {
 
 	@Override
 	public void execute() throws BuildException {
-		try {
-			Project project = getProject();
+		Project project = getProject();
 
+		Thread currentThread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+
+		currentThread.setContextClassLoader(
+			CSSBuilderTask.class.getClassLoader());
+
+		try {
 			CSSBuilderInvoker.invoke(project.getBaseDir(), _cssBuilderArgs);
 		}
 		catch (Exception e) {
 			throw new BuildException(e);
+		}
+		finally {
+			currentThread.setContextClassLoader(contextClassLoader);
 		}
 	}
 

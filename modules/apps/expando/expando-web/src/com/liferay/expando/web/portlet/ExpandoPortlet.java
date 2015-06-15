@@ -14,6 +14,7 @@
 
 package com.liferay.expando.web.portlet;
 
+import com.liferay.expando.web.constants.ExpandoPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -65,25 +66,25 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.icon=/icons/expando.png",
+		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.control-panel-entry-category=configuration",
 		"com.liferay.portlet.control-panel-entry-weight=2.0",
+		"com.liferay.portlet.css-class-wrapper=portlet-expando",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.icon=/icons/expando.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
-		"com.liferay.portlet.use-default-template=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
-		"com.liferay.portlet.css-class-wrapper=portlet-expando",
-		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.system=true",
-		"com.liferay.portlet.display-category=category.hidden",
-		"javax.portlet.portlet-name=com_liferay_expando_web_portlet_ExpandoPortlet",
+		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=Custom Fields",
+		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.expiration-cache=0",
 		"javax.portlet.portlet-mode=text/html",
+		"javax.portlet.portlet-name=" + ExpandoPortletKeys.EXPANDO,
 		"javax.portlet.resource-bundle=content.Language"
 	},
 	service = Portlet.class

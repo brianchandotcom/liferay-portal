@@ -14,14 +14,18 @@
 
 package com.liferay.blogs.item.selector.web.display.context;
 
+import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
+import com.liferay.blogs.item.selector.web.BlogsItemSelectorView;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
 
 /**
  * @author Roberto Díaz
@@ -29,55 +33,46 @@ import java.util.Locale;
 public class BlogsItemSelectorViewDisplayContext {
 
 	public BlogsItemSelectorViewDisplayContext(
-		T itemSelectorCriterion, DLItemSelectorView<T, S> dlItemSelectorView,
+		BlogsItemSelectorCriterion blogsItemSelectorCriterion,
+		BlogsItemSelectorView blogsItemSelectorView,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		_itemSelectorCriterion = itemSelectorCriterion;
-		_dlItemSelectorView = dlItemSelectorView;
+		_blogsItemSelectorCriterion = blogsItemSelectorCriterion;
+		_blogsItemSelectorView = blogsItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
+	}
+
+	public BlogsItemSelectorCriterion getBlogsItemSelectorCriterion() {
+		return _blogsItemSelectorCriterion;
 	}
 
 	public String getDisplayStyle(HttpServletRequest request) {
 		return ParamUtil.getString(request, "displayStyle");
 	}
 
-	public long getFolderId(HttpServletRequest request) {
-		return ParamUtil.getLong(
-			request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	public long getFolderId(long userId, long groupId) throws PortalException {
+		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+			userId, groupId);
+
+		return folder.getFolderId();
 	}
 
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
 	}
 
-	public T getItemSelectorCriterion() {
-		return _itemSelectorCriterion;
-	}
-
-	public String[] getMimeTypes() {
-		return _dlItemSelectorView.getMimeTypes();
-	}
-
 	public PortletURL getPortletURL() {
 		return _portletURL;
 	}
 
-	public long getRepositoryId(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return ParamUtil.getLong(
-			request, "repositoryId", themeDisplay.getScopeGroupId());
-	}
-
 	public String getTitle(Locale locale) {
-		return _dlItemSelectorView.getTitle(locale);
+		return _blogsItemSelectorView.getTitle(locale);
 	}
 
-	private final DLItemSelectorView<T, S> _dlItemSelectorView;
+	private final BlogsItemSelectorCriterion _blogsItemSelectorCriterion;
+	private final BlogsItemSelectorView _blogsItemSelectorView;
 	private final String _itemSelectedEventName;
-	private final T _itemSelectorCriterion;
 	private final PortletURL _portletURL;
 
 }

@@ -473,6 +473,16 @@
 		</if>
 	</command>
 
+	<command name="viewRSVP">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<var name="key_rsvp" value="${rsvp}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
+	</command>
+
 	<command name="viewSelectedView">
 		<var method="StringUtil#upperCase(${view})" name="viewUppercase" />
 

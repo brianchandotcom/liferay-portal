@@ -14,8 +14,8 @@
 
 package com.liferay.portal.kernel.lar.lifecycle.bundle.exportimportlifecycleeventlistenerregistryutil;
 
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
-import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleListener;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleListener;
 
 import org.osgi.service.component.annotations.Component;
 

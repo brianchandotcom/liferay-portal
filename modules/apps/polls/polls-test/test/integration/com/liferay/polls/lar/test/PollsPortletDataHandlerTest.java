@@ -20,9 +20,9 @@ import com.liferay.polls.lar.PollsPortletDataHandler;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.util.test.PollsTestUtil;
-import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.lar.test.BasePortletDataHandlerTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;

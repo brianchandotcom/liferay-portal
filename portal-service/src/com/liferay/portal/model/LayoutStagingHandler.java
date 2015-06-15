@@ -18,8 +18,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -33,6 +31,8 @@ import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.LayoutTypePortletFactoryUtil;
 import com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator;
+import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.io.Serializable;
 

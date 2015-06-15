@@ -27,7 +27,6 @@ page import="com.liferay.portal.UserPasswordException" %><%@
 page import="com.liferay.portal.UserReminderQueryException" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterExecutorUtil" %><%@
 page import="com.liferay.portal.kernel.cluster.ClusterNode" %><%@
-page import="com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler" %><%@
 page import="com.liferay.portal.kernel.parsers.bbcode.BBCodeTranslatorUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletConfigurationLayoutUtil" %><%@
 page import="com.liferay.portal.kernel.servlet.HttpHeaders" %><%@
@@ -40,7 +39,8 @@ page import="com.liferay.portal.struts.PortletRequestProcessor" %><%@
 page import="com.liferay.portal.util.PortletCategoryUtil" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProvider" %><%@
 page import="com.liferay.portal.util.TermsOfUseContentProviderRegistryUtil" %><%@
-page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %>
+page import="com.liferay.portlet.admin.util.PortalAdministrationApplicationType" %><%@
+page import="com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler" %>
 
 <%@ page import="org.apache.struts.action.ActionMapping" %><%@
 page import="org.apache.struts.taglib.tiles.ComponentConstants" %><%@

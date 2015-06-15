@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.NotificationThreadLocal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
-import com.liferay.portal.staging.StagingAdvicesThreadLocal;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 /**
  * @author Brian Wing Shun Chan

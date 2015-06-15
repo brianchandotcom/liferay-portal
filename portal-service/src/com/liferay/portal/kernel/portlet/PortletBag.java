@@ -17,8 +17,6 @@ package com.liferay.portal.kernel.portlet;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
-import com.liferay.portal.kernel.lar.PortletDataHandler;
-import com.liferay.portal.kernel.lar.StagedModelDataHandler;
 import com.liferay.portal.kernel.notifications.UserNotificationDefinition;
 import com.liferay.portal.kernel.notifications.UserNotificationHandler;
 import com.liferay.portal.kernel.poller.PollerProcessor;
@@ -37,6 +35,8 @@ import com.liferay.portlet.ControlPanelEntry;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.expando.model.CustomAttributesDisplay;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.social.model.SocialActivityInterpreter;
 import com.liferay.portlet.social.model.SocialRequestInterpreter;
 

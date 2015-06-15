@@ -16,11 +16,11 @@ package com.liferay.portal.servlet.filters.cache;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.exportimport.lar.ExportImportThreadLocal;
 import com.liferay.util.servlet.filters.CacheResponseData;
 
 /**

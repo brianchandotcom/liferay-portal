@@ -17,8 +17,6 @@ package com.liferay.portal.service.impl;
 import com.liferay.portal.NoSuchLayoutRevisionException;
 import com.liferay.portal.NoSuchPortletPreferencesException;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.staging.MergeLayoutPrototypesThreadLocal;
-import com.liferay.portal.kernel.staging.StagingUtil;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -35,6 +33,8 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.base.LayoutRevisionLocalServiceBaseImpl;
 import com.liferay.portal.util.comparator.LayoutRevisionCreateDateComparator;
+import com.liferay.portlet.exportimport.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.portlet.exportimport.staging.StagingUtil;
 
 import java.util.ArrayList;
 import java.util.Date;

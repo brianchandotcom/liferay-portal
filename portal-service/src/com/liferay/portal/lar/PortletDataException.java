@@ -17,11 +17,11 @@ package com.liferay.portal.lar;
 /**
  * @author     Raymond Augé
  * @deprecated As of 6.2.0, moved to {@link
- *             com.liferay.portal.kernel.lar.PortletDataException}
+ *             com.liferay.portlet.exportimport.lar.PortletDataException}
  */
 @Deprecated
 public class PortletDataException
-	extends com.liferay.portal.kernel.lar.PortletDataException {
+	extends com.liferay.portlet.exportimport.lar.PortletDataException {
 
 	public PortletDataException() {
 	}

@@ -14,11 +14,11 @@
 
 package com.liferay.portlet.documentlibrary.lar;
 
-import com.liferay.portal.kernel.lar.DataLevel;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.lar.DataLevel;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 
 import javax.portlet.PortletPreferences;
 

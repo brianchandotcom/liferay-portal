@@ -146,14 +146,14 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureDisplaySettingsPG">
+		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
 			<var name="enableDisplaySettingsComments" value="false" />
 			<var name="enableDisplaySettingsRelatedAssets" value="false" />
 			<var name="enableDisplaySettingsSocialBookmarks" value="false" />
 			<var name="maximumItemsToDisplay" value="75" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureRSSPG">
+		<execute macro="BlogsConfiguration#saveConfigurationIFrame" />
 			<var name="enableRSSSubscriptionCheckbox" value="false" />
 		</execute>
 
@@ -167,9 +167,9 @@
 			<var name="portletOption" value="Configuration" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewDefaultConfiguration" />
+		<execute macro="BlogsConfiguration#viewDefaultConfiguration" />
 
-		<execute macro="BlogsPortlet#viewDefaultConfigurationRSS" />
+		<execute macro="BlogsConfiguration#viewDefaultConfigurationRSS" />
 	</command>
 
 	<command name="DemoTrackbackURL" priority="5">
@@ -780,7 +780,7 @@
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
-		<execute macro="BlogsPortlet#selectScopePG">
+		<execute macro="BlogsConfiguration#selectScopePG">
 			<var name="scopeSelection" value="${pageName2}" />
 		</execute>
 
@@ -805,7 +805,7 @@
 			<var name="portletName" value="Blogs" />
 		</execute>
 
-		<execute macro="BlogsPortlet#selectScopeCP">
+		<execute macro="BlogsConfiguration#selectScopeCP">
 			<var name="scopeDefault" value="Default" />
 			<var name="scopeSelection" value="${pageName2}" />
 		</execute>
@@ -829,7 +829,7 @@
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
-		<execute macro="BlogsPortlet#viewScopeSelection">
+		<execute macro="BlogsConfiguration#viewScopeSelection">
 			<var name="scopeSelection" value="${scopeSelection}" />
 		</execute>
 
@@ -843,7 +843,7 @@
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
-		<execute macro="BlogsPortlet#selectScopePG">
+		<execute macro="BlogsConfiguration#selectScopePG">
 			<var name="scopeSelection" value="${pageName2}" />
 		</execute>
 

@@ -889,7 +889,7 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<execute macro="BlogsPortlet#configureScopePG">
+		<execute macro="BlogsConfiguration#configureScopePG">
 			<var name="scopeSelection" value="Blogs Page 2" />
 		</execute>
 

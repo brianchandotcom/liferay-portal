@@ -311,7 +311,7 @@
 			<var name="soPage" value="${soPage}" />
 		</execute>
 
-		<execute macro="BlogsPortlet#selectDisplayTemplate">
+		<execute macro="BlogsConfiguration#selectDisplayTemplate">
 			<var name="displayTemplate" value="Abstract" />
 		</execute>
 
@@ -330,7 +330,7 @@
 
 		<execute macro="BlogsNavigator#gotoConfigurationScopePG" />
 
-		<execute macro="BlogsPortlet#selectScopePG">
+		<execute macro="BlogsConfiguration#selectScopePG">
 			<var name="scopeSelection" value="Liferay" />
 		</execute>
 	</command>

@@ -19,8 +19,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
+import com.liferay.portal.kernel.settings.SettingsException;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -56,6 +60,7 @@ import com.liferay.shopping.exception.ShippingStreetException;
 import com.liferay.shopping.exception.ShippingZipException;
 import com.liferay.shopping.model.ShoppingCart;
 import com.liferay.shopping.model.ShoppingCartItem;
+import com.liferay.shopping.model.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.model.ShoppingItemField;
 import com.liferay.shopping.model.ShoppingOrder;
@@ -64,13 +69,10 @@ import com.liferay.shopping.model.ShoppingOrderItem;
 import com.liferay.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.shopping.service.base.ShoppingOrderLocalServiceBaseImpl;
 import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
+import com.liferay.shopping.util.ShoppingServiceComponentProvider;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
-
-import java.util.Currency;
-import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -303,8 +305,9 @@ public class ShoppingOrderLocalServiceImpl
 
 		Map<ShoppingCartItem, Integer> items = cart.getItems();
 
+		
 		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			ShoppingGroupServiceSettings.getInstance(cart.getGroupId());
+			getShoppingGroupServiceSettings(cart.getGroupId());
 
 		if (!ShoppingUtil.meetsMinOrder(shoppingGroupServiceSettings, items)) {
 			throw new CartMinOrderException();
@@ -418,9 +421,10 @@ public class ShoppingOrderLocalServiceImpl
 			ShoppingOrder order, String emailType,
 			ServiceContext serviceContext)
 		throws PortalException {
-
+		
 		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			ShoppingGroupServiceSettings.getInstance(order.getGroupId());
+			getShoppingGroupServiceSettings(order.getGroupId());
+		
 
 		if (emailType.equals("confirmation") &&
 			shoppingGroupServiceSettings.isEmailOrderConfirmationEnabled()) {
@@ -512,7 +516,7 @@ public class ShoppingOrderLocalServiceImpl
 			orderId);
 
 		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			ShoppingGroupServiceSettings.getInstance(order.getGroupId());
+				getShoppingGroupServiceSettings(order.getGroupId());
 
 		validate(
 			shoppingGroupServiceSettings, billingFirstName, billingLastName,
@@ -762,6 +766,20 @@ public class ShoppingOrderLocalServiceImpl
 				throw new CCExpirationException();
 			}
 		}
+	}
+	
+	private static ShoppingGroupServiceSettings 
+		getShoppingGroupServiceSettings(long groupId) throws SettingsException{
+	
+		ShoppingServiceComponentProvider shoppingServiceComponentProvider = 
+			ShoppingServiceComponentProvider.getShoppingServiceComponentProvider();
+	
+		SettingsFactory settingsFactory = shoppingServiceComponentProvider.getSettingsFactory();
+		
+		return settingsFactory.getSettings(
+					ShoppingGroupServiceSettings.class,
+					new GroupServiceSettingsLocator(
+							groupId, ShoppingConstants.SERVICE_NAME));
 	}
 
 }

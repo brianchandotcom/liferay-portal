@@ -22,6 +22,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -55,10 +57,13 @@ import com.liferay.shopping.exception.ShippingStateException;
 import com.liferay.shopping.exception.ShippingStreetException;
 import com.liferay.shopping.exception.ShippingZipException;
 import com.liferay.shopping.model.ShoppingCart;
+import com.liferay.shopping.model.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
 import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
+import com.liferay.shopping.util.ShoppingServiceComponentProvider;
 import com.liferay.shopping.util.ShoppingUtil;
+import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 
 /**
  * @author Brian Wing Shun Chan
@@ -159,10 +164,19 @@ public class CheckoutAction extends CartAction {
 			WebKeys.THEME_DISPLAY);
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
+	
+		ShoppingWebComponentProvider shoppingWebComponentProvider = 
+			ShoppingWebComponentProvider.getShoppingWebComponentProvider();
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			ShoppingGroupServiceSettings.getInstance(
-				themeDisplay.getScopeGroupId());
+		SettingsFactory settingsFactory = 
+			shoppingWebComponentProvider.getSettingsFactory();
+			
+		ShoppingGroupServiceSettings shoppingGroupServiceSettings = 
+			settingsFactory.getSettings(
+				ShoppingGroupServiceSettings.class,
+				new GroupServiceSettingsLocator(
+					themeDisplay.getScopeGroupId(), 
+					ShoppingConstants.SERVICE_NAME));
 
 		String returnURL = ShoppingUtil.getPayPalReturnURL(
 			((ActionResponseImpl)actionResponse).createActionURL(), order);

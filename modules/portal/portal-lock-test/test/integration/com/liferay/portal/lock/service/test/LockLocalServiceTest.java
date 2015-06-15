@@ -22,9 +22,8 @@ import com.liferay.portal.kernel.dao.orm.ORMException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.lock.model.Lock;
 import com.liferay.portal.lock.service.LockLocalServiceUtil;
-import com.liferay.portal.test.rule.ExpectedLog;
-import com.liferay.portal.test.rule.ExpectedLogs;
-import com.liferay.portal.test.rule.ExpectedType;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.sql.BatchUpdateException;
@@ -34,6 +33,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
@@ -63,46 +65,51 @@ public class LockLocalServiceTest {
 		LockLocalServiceUtil.unlock("className", "key");
 	}
 
-	@ExpectedLogs(
-		expectedLogs = {
-			@ExpectedLog(
-				expectedLog =
-					"Deadlock found when trying to get lock; try restarting " +
-						"transaction",
-				expectedType = ExpectedType.EXACT
-			)
-		},
-		level = "ERROR", loggerClass = JDBCExceptionReporter.class
-	)
 	@Test
 	public void testMutualExcludeLockingParallel() throws Exception {
-		ExecutorService executorService = Executors.newFixedThreadPool(10);
+		try (CaptureAppender captureAppender =
+			Log4JLoggerTestUtil.configureLog4JLogger(
+				JDBCExceptionReporter.class.getName(), Level.ERROR)) {
 
-		List<LockingJob> lockingJobs = new ArrayList<>();
+			ExecutorService executorService = Executors.newFixedThreadPool(10);
 
-		for (int i = 0; i < 10; i++) {
-			LockingJob lockingJob = new LockingJob(
-				"className", "key", "owner-" + i, 10);
+			List<LockingJob> lockingJobs = new ArrayList<>();
 
-			lockingJobs.add(lockingJob);
+			for (int i = 0; i < 10; i++) {
+				LockingJob lockingJob = new LockingJob(
+					"className", "key", "owner-" + i, 10);
 
-			executorService.execute(lockingJob);
-		}
+				lockingJobs.add(lockingJob);
 
-		executorService.shutdown();
+				executorService.execute(lockingJob);
+			}
 
-		Assert.assertTrue(
-			executorService.awaitTermination(600, TimeUnit.SECONDS));
+			executorService.shutdown();
 
-		for (LockingJob lockingJob : lockingJobs) {
-			SystemException systemException = lockingJob.getSystemException();
+			Assert.assertTrue(
+				executorService.awaitTermination(600, TimeUnit.SECONDS));
 
-			if (systemException != null) {
-				throw systemException;
+			for (LockingJob lockingJob : lockingJobs) {
+				SystemException systemException =
+					lockingJob.getSystemException();
+
+				if (systemException != null) {
+					throw systemException;
+				}
+			}
+
+			Assert.assertFalse(
+				LockLocalServiceUtil.isLocked("className", "key"));
+
+			for (LoggingEvent loggingEvent :
+					captureAppender.getLoggingEvents()) {
+
+				Assert.assertEquals(
+					"Deadlock found when trying to get lock; try restarting " +
+						"transaction",
+					loggingEvent.getMessage());
 			}
 		}
-
-		Assert.assertFalse(LockLocalServiceUtil.isLocked("className", "key"));
 	}
 
 	@Test

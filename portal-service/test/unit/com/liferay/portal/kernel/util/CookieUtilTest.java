@@ -16,6 +16,8 @@ package com.liferay.portal.kernel.util;
 
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
+import java.net.HttpCookie;
+
 import javax.servlet.http.Cookie;
 
 import org.junit.Assert;
@@ -154,6 +156,30 @@ public class CookieUtilTest {
 
 		Assert.assertTrue(
 			CookieUtil.equals(cookie2, CookieUtil.deserialize(bytes)));
+	}
+
+	@Test
+	public void testToHttpCookie() {
+		Cookie cookie = new Cookie("name", "value");
+
+		cookie.setComment("comment");
+		cookie.setDomain("domain");
+		cookie.setHttpOnly(true);
+		cookie.setMaxAge(1);
+		cookie.setPath("path");
+		cookie.setSecure(true);
+		cookie.setVersion(1);
+
+		HttpCookie httpCookie = CookieUtil.toHttpCookie(cookie);
+
+		Assert.assertEquals(cookie.getComment(), httpCookie.getComment());
+		Assert.assertEquals(cookie.getDomain(), httpCookie.getDomain());
+		Assert.assertEquals(cookie.getMaxAge(), httpCookie.getMaxAge());
+		Assert.assertEquals(cookie.getName(), httpCookie.getName());
+		Assert.assertEquals(cookie.getPath(), httpCookie.getPath());
+		Assert.assertEquals(cookie.getSecure(), httpCookie.getSecure());
+		Assert.assertEquals(cookie.getValue(), httpCookie.getValue());
+		Assert.assertEquals(cookie.getVersion(), httpCookie.getVersion());
 	}
 
 	@Test

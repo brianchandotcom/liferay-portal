@@ -2,7 +2,7 @@
 	var toHex = function(val) {
 		val = parseInt(val, 10).toString(16);
 
-		if (val.length == 1) {
+		if (val.length === 1) {
 			val = '0' + val;
 		}
 
@@ -102,12 +102,9 @@
 
 	var TAG_TD = 'td';
 
-	var emoticonImages;
-	var emoticonPath;
-	var emoticonSymbols;
-	var newThreadURL;
-
-	var BBCodeDataProcessor = function() {};
+	var BBCodeDataProcessor = function(editor) {
+		this._editor = editor;
+	};
 
 	BBCodeDataProcessor.prototype = {
 		constructor: BBCodeDataProcessor,
@@ -127,9 +124,9 @@
 
 			if (!instance._bbcodeConverter) {
 				var converterConfig = {
-					emoticonImages: emoticonImages,
-					emoticonPath: emoticonPath,
-					emoticonSymbols: emoticonSymbols
+					emoticonImages: this._editor.config.smiley_images,
+					emoticonPath: this._editor.config.smiley_path,
+					emoticonSymbols: this._editor.config.smiley_symbols
 				};
 
 				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(converterConfig);
@@ -167,8 +164,8 @@
 					if (parentTagName) {
 						parentTagName = parentTagName.toLowerCase();
 
-						if (parentTagName == TAG_PARAGRAPH && parentNode.style.cssText ||
-							CKEDITOR.env.gecko && element.tagName && element.tagName.toLowerCase() == TAG_BR && parentTagName == TAG_TD && !element.nextSibling) {
+						if (parentTagName === TAG_PARAGRAPH && parentNode.style.cssText ||
+							CKEDITOR.env.gecko && element.tagName && element.tagName.toLowerCase() === TAG_BR && parentTagName === TAG_TD && !element.nextSibling) {
 
 							allowNewLine = false;
 						}
@@ -180,11 +177,9 @@
 		},
 
 		_checkParentElement: function(element, tagName) {
-			var instance = this;
-
 			var parentNode = element.parentNode;
 
-			return parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() == tagName;
+			return parentNode && parentNode.tagName && parentNode.tagName.toLowerCase() === tagName;
 		},
 
 		_convert: function(data) {
@@ -207,9 +202,9 @@
 			color = color.replace(
 				REGEX_COLOR_RGB,
 				function(match, red, green, blue, offset, string) {
-					var r = toHex(red);
-					var g = toHex(green);
 					var b = toHex(blue);
+					var g = toHex(green);
+					var r = toHex(red);
 
 					color = '#' + r + g + b;
 
@@ -245,10 +240,10 @@
 			if (imagePath) {
 				var image = imagePath.substring(imagePath.lastIndexOf('/') + 1);
 
-				var imageIndex = instance._getImageIndex(emoticonImages, image);
+				var imageIndex = instance._getImageIndex(this._editor.config.emoticonImages, image);
 
 				if (imageIndex >= 0) {
-					emoticonSymbol = emoticonSymbols[imageIndex];
+					emoticonSymbol = this._editor.config.emoticonSymbols[imageIndex];
 				}
 			}
 
@@ -390,7 +385,7 @@
 
 			if (parentNode &&
 				parentNode.tagName &&
-				parentNode.tagName.toLowerCase() == TAG_BLOCKQUOTE &&
+				parentNode.tagName.toLowerCase() === TAG_BLOCKQUOTE &&
 				!parentNode.getAttribute(TAG_CITE)) {
 
 				var endResult = instance._endResult;
@@ -435,12 +430,12 @@
 			if (tagName) {
 				tagName = tagName.toLowerCase();
 
-				if (tagName == TAG_LI) {
+				if (tagName === TAG_LI) {
 					if (!instance._isLastItemNewLine()) {
 						instance._endResult.push(NEW_LINE);
 					}
 				}
-				else if (tagName == TAG_PRE || tagName == TAG_CODE) {
+				else if (tagName === TAG_PRE || tagName === TAG_CODE) {
 					instance._inPRE = false;
 				}
 			}
@@ -542,8 +537,8 @@
 			var hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
-				if (hrefAttribute.indexOf(newThreadURL) >= 0) {
-					hrefAttribute = newThreadURL;
+				if (hrefAttribute.indexOf(this._editor.config.newThreadURL) >= 0) {
+					hrefAttribute = this._editor.config.newThreadURL;
 				}
 
 				var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';
@@ -565,8 +560,6 @@
 		},
 
 		_handleOrderedList: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[list=');
 
 			var listStyleType = element.style.listStyleType;
@@ -616,7 +609,7 @@
 
 			var alignment = style.textAlign.toLowerCase();
 
-			if (alignment == 'center') {
+			if (alignment === 'center') {
 				stylesTagsIn.push('[center]');
 
 				stylesTagsOut.push('[/center]');
@@ -628,7 +621,7 @@
 
 			var alignment = style.textAlign.toLowerCase();
 
-			if (alignment == 'justify') {
+			if (alignment === 'justify') {
 				stylesTagsIn.push('[justify]');
 
 				stylesTagsOut.push('[/justify]');
@@ -640,7 +633,7 @@
 
 			var alignment = style.textAlign.toLowerCase();
 
-			if (alignment == 'left') {
+			if (alignment === 'left') {
 				stylesTagsIn.push('[left]');
 
 				stylesTagsOut.push('[/left]');
@@ -652,7 +645,7 @@
 
 			var alignment = style.textAlign.toLowerCase();
 
-			if (alignment == 'right') {
+			if (alignment === 'right') {
 				stylesTagsIn.push('[right]');
 
 				stylesTagsOut.push('[/right]');
@@ -664,7 +657,7 @@
 
 			var fontWeight = style.fontWeight;
 
-			if (fontWeight.toLowerCase() == 'bold') {
+			if (fontWeight.toLowerCase() === 'bold') {
 				stylesTagsIn.push('[b]');
 
 				stylesTagsOut.push('[/b]');
@@ -720,7 +713,7 @@
 
 			var fontStyle = style.fontStyle;
 
-			if (fontStyle.toLowerCase() == 'italic') {
+			if (fontStyle.toLowerCase() === 'italic') {
 				stylesTagsIn.push('[i]');
 
 				stylesTagsOut.push('[/i]');
@@ -732,7 +725,7 @@
 
 			var tagName = element.tagName;
 
-			if ((!tagName || tagName.toLowerCase() != TAG_LINK) && element.style) {
+			if ((!tagName || tagName.toLowerCase() !== TAG_LINK) && element.style) {
 				instance._handleStyleAlignCenter(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleAlignJustify(element, stylesTagsIn, stylesTagsOut);
 				instance._handleStyleAlignLeft(element, stylesTagsIn, stylesTagsOut);
@@ -751,12 +744,12 @@
 
 			var textDecoration = style.textDecoration.toLowerCase();
 
-			if (textDecoration == 'line-through') {
+			if (textDecoration === 'line-through') {
 				stylesTagsIn.push('[s]');
 
 				stylesTagsOut.push('[/s]');
 			}
-			else if (textDecoration == 'underline') {
+			else if (textDecoration === 'underline') {
 				stylesTagsIn.push('[u]');
 
 				stylesTagsOut.push('[/u]');
@@ -764,8 +757,6 @@
 		},
 
 		_handleTable: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[table]', NEW_LINE);
 
 			listTagsOut.push('[/table]');
@@ -782,40 +773,30 @@
 		},
 
 		_handleTableCell: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[td]');
 
 			listTagsOut.push('[/td]', NEW_LINE);
 		},
 
 		_handleTableHeader: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[th]');
 
 			listTagsOut.push('[/th]', NEW_LINE);
 		},
 
 		_handleTableRow: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[tr]', NEW_LINE);
 
 			listTagsOut.push('[/tr]', NEW_LINE);
 		},
 
 		_handleUnderline: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[u]');
 
 			listTagsOut.push('[/u]');
 		},
 
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
-			var instance = this;
-
 			listTagsIn.push('[list]');
 
 			listTagsOut.push('[/list]');
@@ -854,13 +835,6 @@
 			requires: ['htmlwriter'],
 
 			init: function(editor) {
-				var editorConfig = editor.config;
-
-				emoticonImages = editorConfig.smiley_images;
-				emoticonPath = editorConfig.smiley_path;
-				emoticonSymbols = editorConfig.smiley_symbols;
-				newThreadURL = editorConfig.newThreadURL;
-
 				editor.dataProcessor = new BBCodeDataProcessor(editor);
 
 				editor.fire('customDataProcessorLoaded');

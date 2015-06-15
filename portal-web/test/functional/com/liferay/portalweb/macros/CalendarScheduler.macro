@@ -473,6 +473,27 @@
 		</if>
 	</command>
 
+	<command name="viewNoRSVP">
+		<execute macro="CalendarScheduler#selectSpecificEvent">
+			<var name="eventTitle" value="${eventTitle}" />
+		</execute>
+
+		<var name="key_rsvp" value="Yes" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" />
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" />
+
+		<var name="key_rsvp" value="Maybe" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" />
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" />
+
+		<var name="key_rsvp" value="No" />
+
+		<execute function="AssertElementPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_ACTIVE" />
+		<execute function="AssertElementNotPresent" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" />
+	</command>
+
 	<command name="viewRSVP">
 		<execute macro="CalendarScheduler#selectSpecificEvent">
 			<var name="eventTitle" value="${eventTitle}" />

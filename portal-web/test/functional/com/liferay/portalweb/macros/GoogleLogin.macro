@@ -1,0 +1,28 @@
+<definition>
+	<command name="acceptConditions">
+		<execute function="AssertClick" locator1="GoogleLogin#ACCEPT" value1="Accept" />
+
+		<execute function="AssertClick" locator1="Button#I_AGREE" value1="I Agree" />
+
+		<execute function="Type" locator1="TextInput#ANSWER" value1="test" />
+
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="accountSignIn">
+		<if>
+			<condition function="IsElementPresent" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" />
+			<then>
+				<execute function="Type" locator1="GoogleLogin#LOGIN_EMAIL_FIELD" value1="${userEmailAddress}" />
+
+				<execute function="Click" locator1="GoogleLogin#LOGIN_NEXT_BUTTON" />
+
+				<execute function="Type" locator1="GoogleLogin#LOGIN_PASSWORD_FIELD" value1="${userPassword}" />
+
+				<execute function="Click" locator1="GoogleLogin#LOGIN_SIGN_IN_BUTTON" />
+
+				<execute function="Pause" locator1="5000" />
+			</then>
+		</if>
+	</command>
+</definition>

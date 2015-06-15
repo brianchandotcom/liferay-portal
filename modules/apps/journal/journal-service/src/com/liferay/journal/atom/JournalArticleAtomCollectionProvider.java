@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.atom;
+package com.liferay.journal.atom;
 
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;

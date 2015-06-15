@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.workflow;
+package com.liferay.journal.workflow;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -47,9 +47,7 @@ import java.util.Map;
  * @author Julio Camarero
  */
 @OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
-	}
+	property = {"model.class.name=com.liferay.portlet.journal.model.JournalArticle"}
 )
 public class JournalArticleWorkflowHandler
 	extends BaseWorkflowHandler<JournalArticle> {

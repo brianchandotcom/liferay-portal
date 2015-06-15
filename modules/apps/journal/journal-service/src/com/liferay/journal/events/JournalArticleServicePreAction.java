@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.events;
+package com.liferay.journal.events;
 
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;

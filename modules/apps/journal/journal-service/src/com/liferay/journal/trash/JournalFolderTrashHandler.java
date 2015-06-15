@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.trash;
+package com.liferay.journal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
@@ -43,9 +43,7 @@ import javax.portlet.PortletRequest;
  * @author Eudaldo Alonso
  */
 @OSGiBeanProperties(
-	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
-	}
+	property = {"model.class.name=com.liferay.portlet.journal.model.JournalFolder"}
 )
 public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 

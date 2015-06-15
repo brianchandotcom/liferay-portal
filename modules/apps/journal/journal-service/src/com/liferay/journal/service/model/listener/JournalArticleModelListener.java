@@ -12,17 +12,22 @@
  * details.
  */
 
-package com.liferay.portlet.journal.model;
+package com.liferay.journal.service.model.listener;
 
 import com.liferay.portal.model.BaseModelListener;
+import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.util.JournalContentUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jon Steer
  * @author Raymond Augé
  */
+@Component(immediate = true, service = ModelListener.class)
 public class JournalArticleModelListener
 	extends BaseModelListener<JournalArticle> {
 

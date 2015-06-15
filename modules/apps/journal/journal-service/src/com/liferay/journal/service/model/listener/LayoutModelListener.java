@@ -12,24 +12,32 @@
  * details.
  */
 
-package com.liferay.portlet.journal.model;
+package com.liferay.journal.service.model.listener;
 
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.service.SubscriptionLocalServiceUtil;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.ModelListener;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
-public class GroupModelListener extends BaseModelListener<Group> {
+@Component(immediate = true, service = ModelListener.class)
+public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
-	public void onBeforeRemove(Group group) throws ModelListenerException {
+	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
-			SubscriptionLocalServiceUtil.deleteSubscriptions(
-				group.getCompanyId(), JournalArticle.class.getName(),
-				group.getGroupId());
+			JournalArticleLocalServiceUtil.deleteLayoutArticleReferences(
+				layout.getGroupId(), layout.getUuid());
+
+			JournalContentSearchLocalServiceUtil.deleteLayoutContentSearches(
+				layout.getGroupId(), layout.isPrivateLayout(),
+				layout.getLayoutId());
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);

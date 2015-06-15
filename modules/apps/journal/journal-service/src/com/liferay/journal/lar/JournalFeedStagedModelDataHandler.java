@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.lar;
+package com.liferay.journal.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -43,6 +43,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.journal.FeedTargetLayoutFriendlyUrlException;
+import com.liferay.portlet.journal.lar.JournalCreationStrategy;
+import com.liferay.portlet.journal.lar.JournalCreationStrategyFactory;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalFeed;
 import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.lar;
+package com.liferay.journal.lar;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.util;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -63,6 +63,8 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.permission.JournalArticlePermission;
+import com.liferay.portlet.journal.util.JournalContentUtil;
+import com.liferay.portlet.journal.util.JournalConverterUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
 
 import java.io.Serializable;

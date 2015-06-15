@@ -14,6 +14,7 @@
 
 package com.liferay.expando.web.portlet;
 
+import com.liferay.expando.web.constants.ExpandoPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -78,7 +79,7 @@ import org.osgi.service.component.annotations.Component;
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.system=true",
 		"com.liferay.portlet.display-category=category.hidden",
-		"javax.portlet.portlet-name=com_liferay_expando_web_portlet_ExpandoPortlet",
+		"javax.portlet.portlet-name=" + ExpandoPortletKeys.EXPANDO,
 		"javax.portlet.display-name=Custom Fields",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",

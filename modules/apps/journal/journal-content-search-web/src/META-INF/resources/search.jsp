@@ -36,8 +36,8 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 <portlet:renderURL var="searchURL">
 	<portlet:param name="mvcPath" value="/search.jsp" />
 	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="showListed" value="<%= String.valueOf(showListed) %>" />
-	<portlet:param name="targetPortletId" value="<%= targetPortletId %>" />
+	<portlet:param name="showListed" value="<%= String.valueOf(journalContentSearchPortletInstanceConfiguration.showListed()) %>" />
+	<portlet:param name="targetPortletId" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 </portlet:renderURL>
 
 <aui:form action="<%= searchURL %>" method="post" name="fm" onSubmit='<%= renderResponse.getNamespace() + "search(); event.preventDefault();" %>'>
@@ -72,7 +72,7 @@ String keywords = ParamUtil.getString(request, "keywords", defaultKeywords);
 
 		ContentHits contentHits = new ContentHits();
 
-		contentHits.setShowListed(showListed);
+		contentHits.setShowListed(journalContentSearchPortletInstanceConfiguration.showListed());
 
 		contentHits.recordHits(hits, layout.getGroupId(), layout.isPrivateLayout(), searchContainer.getStart(), searchContainer.getEnd());
 

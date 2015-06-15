@@ -23,7 +23,7 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.journal.content.search.web.configuration.JournalContentSearchWebConfigurationValues" %><%@
+<%@ page import="com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration" %><%@
 page import="com.liferay.journal.content.search.web.util.ContentHits" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
@@ -43,7 +43,6 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ListUtil" %><%@
 page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
-page import="com.liferay.portal.kernel.util.PrefsParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
@@ -73,17 +72,11 @@ page import="javax.portlet.WindowState" %>
 <%
 WindowState windowState = liferayPortletRequest.getWindowState();
 
+JournalContentSearchPortletInstanceConfiguration journalContentSearchPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(JournalContentSearchPortletInstanceConfiguration.class);
+
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
 
 String currentURL = currentURLObj.toString();
-
-boolean showListed = PrefsParamUtil.getBoolean(portletPreferences, request, "showListed", JournalContentSearchWebConfigurationValues.SHOW_LISTED);
-
-String targetPortletId = StringPool.BLANK;
-
-if (!showListed) {
-	targetPortletId = PrefsParamUtil.getString(portletPreferences, request, "targetPortletId", StringPool.BLANK);
-}
 %>
 
 <%@ include file="/init-ext.jsp" %>

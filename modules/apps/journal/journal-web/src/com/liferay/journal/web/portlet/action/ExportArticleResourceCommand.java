@@ -18,7 +18,6 @@ import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.journal.web.util.ExportArticleUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseResourceCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.ResourceCommand;
-import com.liferay.portal.util.PortalUtil;
 
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
@@ -44,12 +43,7 @@ public class ExportArticleResourceCommand extends BaseResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		try {
-			ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
-		}
-		catch (Exception e) {
-			PortalUtil.sendError(e, resourceRequest, resourceResponse);
-		}
+		ExportArticleUtil.sendFile(resourceRequest, resourceResponse);
 	}
 
 }

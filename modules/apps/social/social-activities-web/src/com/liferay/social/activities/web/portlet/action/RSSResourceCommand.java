@@ -82,10 +82,6 @@ public class RSSResourceCommand implements ResourceCommand {
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		if (!(resourceResponse instanceof MimeResponse)) {
-			return false;
-		}
-
 		PortletPreferences portletPreferences =
 			resourceRequest.getPreferences();
 

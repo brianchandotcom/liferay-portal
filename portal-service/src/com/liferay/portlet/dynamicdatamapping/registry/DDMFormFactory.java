@@ -48,15 +48,17 @@ public class DDMFormFactory {
 				continue;
 			}
 
-			DDMFormField ddmFormField = createDDMFormField(method);
+			DDMFormField ddmFormField = createDDMFormField(clazz, method);
 
 			ddmForm.addDDMFormField(ddmFormField);
 		}
 	}
 
-	protected static DDMFormField createDDMFormField(Method method) {
+	protected static DDMFormField createDDMFormField(
+		Class<?> clazz, Method method) {
+
 		DDMFormFactoryHelper ddmFormFactoryHelper = new DDMFormFactoryHelper(
-			method);
+			clazz, method);
 
 		String name = ddmFormFactoryHelper.getDDMFormFieldName();
 		String type = ddmFormFactoryHelper.getDDMFormFieldType();
@@ -65,6 +67,7 @@ public class DDMFormFactory {
 
 		ddmFormField.setDataType(
 			ddmFormFactoryHelper.getDDMFormFieldDataType());
+		ddmFormField.setLabel(ddmFormFactoryHelper.getDDMFormFieldLabel());
 		ddmFormField.setLocalizable(
 			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
 		ddmFormField.setVisibilityExpression(

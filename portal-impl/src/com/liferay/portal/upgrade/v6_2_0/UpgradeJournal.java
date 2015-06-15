@@ -299,10 +299,6 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		return ddmStructureId;
 	}
 
-	protected long getDDMStructureId(long groupId, String structureId) {
-		return getDDMStructureId(groupId, 0, structureId, true);
-	}
-
 	protected long getDDMStructureId(
 		long groupId, String structureId, boolean warn) {
 

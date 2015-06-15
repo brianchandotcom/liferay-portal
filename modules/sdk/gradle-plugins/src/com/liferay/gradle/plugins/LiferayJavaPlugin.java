@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.css.builder.BuildCSSTask;
+import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.javadoc.formatter.JavadocFormatterPlugin;
 import com.liferay.gradle.plugins.lang.builder.BuildLangTask;
@@ -21,7 +23,6 @@ import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
-import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
@@ -90,8 +91,6 @@ import org.gradle.api.tasks.testing.logging.TestLoggingContainer;
  * @author Andrea Di Giorgi
  */
 public class LiferayJavaPlugin implements Plugin<Project> {
-
-	public static final String BUILD_CSS_TASK_NAME = "buildCss";
 
 	public static final String DEPLOY_TASK_NAME = "deploy";
 
@@ -230,16 +229,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return testIntegrationSourceSet;
 	}
 
-	protected BuildCssTask addTaskBuildCss(Project project) {
-		BuildCssTask buildCssTask = GradleUtil.addTask(
-			project, BUILD_CSS_TASK_NAME, BuildCssTask.class);
-
-		buildCssTask.setDescription("Compiles CSS files.");
-		buildCssTask.setGroup(BasePlugin.BUILD_GROUP);
-
-		return buildCssTask;
-	}
-
 	protected Copy addTaskDeploy(Project project) {
 		Copy copy = GradleUtil.addTask(project, DEPLOY_TASK_NAME, Copy.class);
 
@@ -315,7 +304,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void addTasks(Project project) {
-		addTaskBuildCss(project);
 		addTaskDeploy(project);
 		addTaskExpandPortalWeb(project);
 		addTaskFormatWSDL(project);
@@ -348,6 +336,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, OptionalBasePlugin.class);
 		GradleUtil.applyPlugin(project, ProvidedBasePlugin.class);
 
+		GradleUtil.applyPlugin(project, CSSBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, JavadocFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, LangBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, ServiceBuilderPlugin.class);
@@ -512,27 +501,51 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, TEST_INTEGRATION_SOURCE_SET_NAME, classesDir, srcDir);
 	}
 
-	protected void configureTaskBuildCss(
+	protected void configureTaskBuildCSS(
 		Project project, LiferayExtension liferayExtension) {
 
-		BuildCssTask buildCssTask = (BuildCssTask)GradleUtil.getTask(
-			project, BUILD_CSS_TASK_NAME);
+		BuildCSSTask buildCSSTask = (BuildCSSTask)GradleUtil.getTask(
+			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 
-		configureTaskBuildCssPortalCommonDir(buildCssTask);
-		configureTaskBuildCssRootDirs(buildCssTask);
+		configureTaskBuildCSSDocrootDirName(buildCSSTask);
+		configureTaskBuildCSSPortalCommonDirName(buildCSSTask);
 	}
 
-	protected void configureTaskBuildCssPortalCommonDir(
-		BuildCssTask buildCssTask) {
+	protected void configureTaskBuildCSSDocrootDirName(
+		BuildCSSTask buildCSSTask) {
 
-		if (buildCssTask.getPortalCommonDir() != null) {
+		Project project = buildCSSTask.getProject();
+
+		String docrootDirName = buildCSSTask.getDocrootDirName();
+
+		if (Validator.isNotNull(docrootDirName) &&
+			FileUtil.exists(project, docrootDirName)) {
+
+			return;
+		}
+
+		File resourcesDir = getResourcesDir(project);
+
+		buildCSSTask.setDocrootDirName(project.relativePath(resourcesDir));
+	}
+
+	protected void configureTaskBuildCSSPortalCommonDirName(
+		BuildCSSTask buildCSSTask) {
+
+		Project project = buildCSSTask.getProject();
+
+		String portalCommonDirName = buildCSSTask.getPortalCommonDirName();
+
+		if (Validator.isNotNull(portalCommonDirName) &&
+			FileUtil.exists(project, portalCommonDirName)) {
+
 			return;
 		}
 
 		Task expandPortalWebTask = GradleUtil.getTask(
-			buildCssTask.getProject(), EXPAND_PORTAL_WEB_TASK_NAME);
+			project, EXPAND_PORTAL_WEB_TASK_NAME);
 
-		buildCssTask.dependsOn(expandPortalWebTask);
+		buildCSSTask.dependsOn(expandPortalWebTask);
 
 		TaskOutputs taskOutputs = expandPortalWebTask.getOutputs();
 
@@ -541,24 +554,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		File portalCommonDir = new File(
 			fileCollection.getSingleFile(), "html/css/common");
 
-		buildCssTask.setPortalCommonDir(portalCommonDir);
-	}
-
-	protected void configureTaskBuildCssRootDirs(BuildCssTask buildCssTask) {
-		FileCollection rootDirs = buildCssTask.getRootDirs();
-
-		if (!rootDirs.isEmpty()) {
-			return;
-		}
-
-		Project project = buildCssTask.getProject();
-
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, SourceSet.MAIN_SOURCE_SET_NAME);
-
-		SourceDirectorySet sourceDirectorySet = sourceSet.getResources();
-
-		buildCssTask.setRootDirs(sourceDirectorySet.getSrcDirs());
+		buildCSSTask.setPortalCommonDirName(
+			project.relativePath(portalCommonDir));
 	}
 
 	protected void configureTaskBuildLang(Project project) {
@@ -818,7 +815,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected void configureTaskClassesDependsOn(Task classesTask) {
-		classesTask.dependsOn(BUILD_CSS_TASK_NAME);
+		classesTask.dependsOn(CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
 	}
 
 	protected void configureTaskClean(Project project) {
@@ -975,7 +972,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	protected void configureTasks(
 		Project project, LiferayExtension liferayExtension) {
 
-		configureTaskBuildCss(project, liferayExtension);
+		configureTaskBuildCSS(project, liferayExtension);
 		configureTaskBuildLang(project);
 		configureTaskClasses(project);
 		configureTaskClean(project);

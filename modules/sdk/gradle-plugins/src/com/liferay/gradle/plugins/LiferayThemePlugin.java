@@ -14,9 +14,9 @@
 
 package com.liferay.gradle.plugins;
 
+import com.liferay.gradle.plugins.css.builder.CSSBuilderPlugin;
 import com.liferay.gradle.plugins.extensions.LiferayExtension;
 import com.liferay.gradle.plugins.extensions.LiferayThemeExtension;
-import com.liferay.gradle.plugins.tasks.BuildCssTask;
 import com.liferay.gradle.plugins.tasks.BuildThumbnailsTask;
 import com.liferay.gradle.plugins.tasks.CompileThemeTask;
 import com.liferay.gradle.util.FileUtil;
@@ -93,15 +93,6 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected LiferayExtension addLiferayExtension(Project project) {
 		return GradleUtil.addExtension(
 			project, LiferayPlugin.PLUGIN_NAME, LiferayThemeExtension.class);
-	}
-
-	@Override
-	protected BuildCssTask addTaskBuildCss(Project project) {
-		BuildCssTask buildCssTask = super.addTaskBuildCss(project);
-
-		buildCssTask.dependsOn(COMPILE_THEME_TASK_NAME);
-
-		return buildCssTask;
 	}
 
 	protected BuildThumbnailsTask addTaskBuildThumbnails(Project project) {
@@ -189,6 +180,18 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 				}
 			}
 		}
+	}
+
+	@Override
+	protected void configureTaskBuildCSS(
+		Project project, LiferayExtension liferayExtension) {
+
+		super.configureTaskBuildCSS(project, liferayExtension);
+
+		Task task = GradleUtil.getTask(
+			project, CSSBuilderPlugin.BUILD_CSS_TASK_NAME);
+
+		task.dependsOn(COMPILE_THEME_TASK_NAME);
 	}
 
 	protected void configureTaskBuildThumbnails(

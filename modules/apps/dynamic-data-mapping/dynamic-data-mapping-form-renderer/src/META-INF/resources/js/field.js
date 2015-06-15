@@ -355,9 +355,10 @@ AUI.add(
 						var label = definition.name;
 
 						if (definition.label) {
-							label = definition.label;
-
-							if (label[instance.get('locale')]) {
+							if (Lang.isString(definition.label)) {
+								label = definition.label;
+							}
+							else if (label[instance.get('locale')]) {
 								label = label[instance.get('locale')];
 							}
 						}

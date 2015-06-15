@@ -120,6 +120,10 @@
 
 				<execute macro="CalendarEvent#save" />
 
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+
 				<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
 					<var name="endDate" value="${endDate}" />
 					<var name="endDateTime" value="${endDateTime}" />
@@ -153,6 +157,10 @@
 					</if>
 
 					<execute macro="CalendarEvent#save" />
+
+					<execute macro="Page#gotoPG">
+						<var name="pageName" value="${pageName}" />
+					</execute>
 
 					<var name="key_endDate" value="${endDate}" />
 					<var name="key_endDateTime" value="${endDateTime}" />
@@ -196,6 +204,10 @@
 					</if>
 
 					<execute macro="CalendarEvent#save" />
+
+					<execute macro="Page#gotoPG">
+						<var name="pageName" value="${pageName}" />
+					</execute>
 
 					<var name="key_endDate" value="${endDate}" />
 					<var name="key_endDateTime" value="${endDateTime}" />
@@ -391,6 +403,10 @@
 				</if>
 
 				<execute macro="CalendarEvent#save" />
+
+				<execute macro="Page#gotoPG">
+					<var name="pageName" value="${pageName}" />
+				</execute>
 
 				<execute macro="CalendarScheduler#_viewRegularEventTitleViaMonthView">
 					<var name="endDate" value="${endDate}" />

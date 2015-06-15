@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="EditPublishTemplate" priority="4">
+	<command name="EditPublishTemplate" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -751,7 +751,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="StagingBlogs" priority="4">
+	<command name="StagingBlogs" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -974,7 +974,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="StagingBlogsCP" priority="5">
+	<command name="StagingBlogsCP" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -2098,7 +2098,7 @@
 		<execute function="AssertTextEquals" locator1="PGWebcontentdisplay#WEB_CONTENT_MESSAGE_WORKFLOW_UNAPPROVED_MESSAGE" value1="Web Content Title is not approved." />
 	</command>
 
-	<command known-issues="LPS-51696" name="StagingLocalLiveLock" priority="5">
+	<command name="StagingLocalLiveLock" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -3740,7 +3740,7 @@
 		<execute macro="Staging#publishToLive" />
 	</command>
 
-	<command known-issues="LPS-51696" name="StagingWithPublishTemplate" priority="5" >
+	<command name="StagingWithPublishTemplate" priority="5" >
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

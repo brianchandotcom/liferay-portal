@@ -30,7 +30,7 @@
 		<execute macro="SitePage#deleteSitepagesPG" />
 	</command>
 
-	<command known-issues="LPS-55978" name="AddPageWithMultipleChildPagesToSite" priority="4">
+	<command name="AddPageWithMultipleChildPagesToSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -71,7 +71,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddSitePrivateChildPage" priority="5">
+	<command name="AddSitePrivateChildPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -113,7 +113,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddSitePrivatePage" priority="5">
+	<command name="AddSitePrivatePage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -142,7 +142,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="AddSitePrivatePagePortlet" priority="5">
+	<command name="AddSitePrivatePagePortlet" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -219,7 +219,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="AddSitePublicPage" priority="5">
+	<command name="AddSitePublicPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddSitePublicPagePortlet" priority="5">
+	<command name="AddSitePublicPagePortlet" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -305,7 +305,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="CopyApplicationsFromPageToPage" priority="4">
+	<command name="CopyApplicationsFromPageToPage" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -345,7 +345,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="DeleteSitePages" priority="4">
+	<command name="DeleteSitePages" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -410,7 +410,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="SaveEmbeddedPageType" priority="4">
+	<command name="SaveEmbeddedPageType" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -438,7 +438,7 @@
 		<execute macro="SitePage#embeddedPageTypePG" />
 	</command>
 
-	<command known-issues="LPS-51696" name="SavePortletPageType" priority="4">
+	<command name="SavePortletPageType" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -467,7 +467,7 @@
 		<execute macro="Blogs#viewControlsPG" />
 	</command>
 
-	<command known-issues="LPS-51696" name="ViewNoInfoMessageWhenChangingSiteTemplateAsUser" priority="4">
+	<command name="ViewNoInfoMessageWhenChangingSiteTemplateAsUser" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

@@ -155,7 +155,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55978" name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
+	<command name="AddExistingPageAsDisplayPageInSiteCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

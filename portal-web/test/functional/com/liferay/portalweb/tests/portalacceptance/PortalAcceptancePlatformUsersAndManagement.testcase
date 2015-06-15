@@ -243,6 +243,55 @@
 		</execute>
 	</command>
 
+	<command name="AddCustomFieldUserBoolean" priority="5">
+		<var name="customFieldName" value="Boolean" />
+		<var name="customFieldType" value="True/False" />
+		<var name="resourceName" value="User" />
+		<var name="userEmailAddress" value="userea@liferay.com" />
+		<var name="userFirstName" value="userfn" />
+		<var name="userLastName" value="userln" />
+		<var name="userScreenName" value="usersn" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="${customFieldName}" />
+			<var name="customFieldType" value="${customFieldType}" />
+			<var name="resourceName" value="${resourceName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="${userEmailAddress}" />
+			<var name="userFirstName" value="${userFirstName}" />
+			<var name="userLastName" value="${userLastName}" />
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+
+		<var name="key_customFieldName" value="${customFieldName}" />
+
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />
+		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="False" />
+	</command>
+
 	<!-- testcase name was changed from AddMember to AddMembertoOrganization due to duplicate name -->
 
 	<command name="AddMembertoOrganization" priority="5">
@@ -399,6 +448,22 @@
 		</execute>
 	</command>
 
+	<command name="AddPortalInstance" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="www.able.com" />
+			<var name="virtualHost" value="www.able.com" />
+			<var name="webId" value="www.able.com" />
+		</execute>
+
+		<execute macro="PortalInstances#viewCP">
+			<var name="virtualHost" value="www.able.com" />
+		</execute>
+	</command>
+
 	<command name="AddRegularRole" priority="5">
 		<var name="roleName" value="Roles Regrole Name" />
 		<var name="roleType" value="Regular" />
@@ -489,6 +554,35 @@
 		</execute>
 	</command>
 
+	<command name="DefaultPortalLandingPage" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Settings" />
+		</execute>
+
+		<execute macro="PortalSettings#editDefaultLandingPageCP">
+			<var name="defaultLandingPage" value="/web/guest/landing" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Sites" />
+		</execute>
+
+		<execute macro="SitePage#addCP">
+			<var name="siteName" value="Liferay" />
+			<var name="sitePageName" value="landing" />
+			<var name="sitePagePrivacy" value="Public" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@liferay.com" />
+		</execute>
+
+		<execute function="AssertLocation" value1="http://localhost:8080/web/guest/landing" />
+	</command>
+
 	<command name="DeleteOrganization" priority="5">
 		<var name="orgName" value="Organization Name" />
 		<var name="orgType" value="Regular Organization" />
@@ -508,6 +602,22 @@
 
 		<execute macro="Organization#deleteCP">
 			<var name="orgName" value="${orgName}" />
+		</execute>
+	</command>
+
+	<command name="DeletePortalInstance" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="www.able.com" />
+			<var name="virtualHost" value="www.able.com" />
+			<var name="webId" value="www.able.com" />
+		</execute>
+
+		<execute macro="PortalInstances#deleteCP">
+			<var name="virtualHost" value="www.able.com" />
 		</execute>
 	</command>
 
@@ -584,6 +694,58 @@
 		</execute>
 
 		<execute macro="UserGroup#deleteCP" />
+	</command>
+
+	<command name="EditCustomFieldUserBoolean" priority="5">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#addCP">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldType" value="True/False" />
+			<var name="resourceName" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Custom Fields" />
+		</execute>
+
+		<execute macro="CustomFields#editCP">
+			<var name="customFieldName" value="Boolean" />
+			<var name="customFieldType" value="True/False" />
+			<var name="defaultValue" value="True" />
+			<var name="resourceName" value="User" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#viewCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute function="AssertClick" locator1="CPUsersandorganizationsUser#MENU_MISCELLANEOUS_CUSTOM_FIELDS" value1="Custom Fields" />
+
+		<var name="key_customFieldName" value="Boolean" />
+
+		<execute function="AssertTextEquals" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_LABEL" value1="Boolean" />
+		<execute function="AssertSelectedLabel" locator1="CPUsersandorganizationsUser#CUSTOM_FIELDS_SELECT" value1="True" />
 	</command>
 
 	<command name="EditOrganization" priority="5">

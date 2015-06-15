@@ -100,9 +100,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table BookmarksEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table BookmarksEntry (uuid_ VARCHAR(75) null,entryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,resourceBlockId LONG,folderId LONG,treePath STRING null,name VARCHAR(255) null,url STRING null,description STRING null,visits INTEGER,priority INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table BookmarksEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY bookmarksEntry.folderId ASC, bookmarksEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY BookmarksEntry.folderId ASC, BookmarksEntry.name ASC";
@@ -160,6 +161,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -244,6 +246,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -371,6 +374,12 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -749,6 +758,17 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		_statusDate = statusDate;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -1021,6 +1041,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		bookmarksEntryImpl.setStatusByUserId(getStatusByUserId());
 		bookmarksEntryImpl.setStatusByUserName(getStatusByUserName());
 		bookmarksEntryImpl.setStatusDate(getStatusDate());
+		bookmarksEntryImpl.setLastPublishDate(getLastPublishDate());
 
 		bookmarksEntryImpl.resetOriginalValues();
 
@@ -1233,12 +1254,21 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 			bookmarksEntryCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			bookmarksEntryCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			bookmarksEntryCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return bookmarksEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1280,6 +1310,8 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1287,7 +1319,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.bookmarks.model.BookmarksEntry");
@@ -1373,6 +1405,10 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1417,6 +1453,7 @@ public class BookmarksEntryModelImpl extends BaseModelImpl<BookmarksEntry>
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private BookmarksEntry _escapedModel;
 }

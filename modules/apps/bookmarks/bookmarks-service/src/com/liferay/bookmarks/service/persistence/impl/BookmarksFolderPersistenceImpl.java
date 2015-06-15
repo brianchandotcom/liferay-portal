@@ -7223,6 +7223,7 @@ public class BookmarksFolderPersistenceImpl extends BasePersistenceImpl<Bookmark
 		bookmarksFolderImpl.setStatusByUserId(bookmarksFolder.getStatusByUserId());
 		bookmarksFolderImpl.setStatusByUserName(bookmarksFolder.getStatusByUserName());
 		bookmarksFolderImpl.setStatusDate(bookmarksFolder.getStatusDate());
+		bookmarksFolderImpl.setLastPublishDate(bookmarksFolder.getLastPublishDate());
 
 		return bookmarksFolderImpl;
 	}

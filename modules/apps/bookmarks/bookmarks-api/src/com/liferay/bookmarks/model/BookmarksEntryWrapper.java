@@ -74,6 +74,7 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -199,6 +200,12 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -296,6 +303,16 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public long getGroupId() {
 		return _bookmarksEntry.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this bookmarks entry.
+	*
+	* @return the last publish date of this bookmarks entry
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _bookmarksEntry.getLastPublishDate();
 	}
 
 	/**
@@ -720,6 +737,16 @@ public class BookmarksEntryWrapper implements BookmarksEntry,
 	@Override
 	public void setGroupId(long groupId) {
 		_bookmarksEntry.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this bookmarks entry.
+	*
+	* @param lastPublishDate the last publish date of this bookmarks entry
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_bookmarksEntry.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

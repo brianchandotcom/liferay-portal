@@ -26,7 +26,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -59,6 +62,16 @@ public class DLImageItemSelectorView
 			"content/Language", locale);
 
 		return resourceBundle.getString("images");
+	}
+
+	@Reference(
+		target =
+			"(osgi.web.symbolicname=" +
+				"com.liferay.document.library.item.selector.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>

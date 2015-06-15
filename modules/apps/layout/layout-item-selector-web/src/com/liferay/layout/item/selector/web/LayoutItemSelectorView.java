@@ -30,11 +30,13 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -50,6 +52,10 @@ public class LayoutItemSelectorView
 	@Override
 	public Class<LayoutItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return LayoutItemSelectorCriterion.class;
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -83,10 +89,20 @@ public class LayoutItemSelectorView
 			LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			layoutItemSelectorViewDisplayContext);
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/layout-item-selector-web/layouts.jsp");
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher("/layouts.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.layout.item.selector.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
@@ -96,5 +112,7 @@ public class LayoutItemSelectorView
 					DefaultItemSelectorReturnType.URL,
 					DefaultItemSelectorReturnType.UUID
 				}));
+
+	private ServletContext _servletContext;
 
 }

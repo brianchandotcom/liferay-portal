@@ -30,11 +30,13 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Roberto Díaz
@@ -50,6 +52,10 @@ public class BlogsItemSelectorView
 	@Override
 	public Class<BlogsItemSelectorCriterion> getItemSelectorCriterionClass() {
 		return BlogsItemSelectorCriterion.class;
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -84,10 +90,20 @@ public class BlogsItemSelectorView
 			BLOGS_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			blogsItemSelectorViewDisplayContext);
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/blogs-item-selector-web/blogs_attachments.jsp");
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher("/blogs_attachments.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.blogs.item.selector.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
@@ -97,5 +113,7 @@ public class BlogsItemSelectorView
 					DefaultItemSelectorReturnType.FILE_ENTRY,
 					DefaultItemSelectorReturnType.URL
 				}));
+
+	private ServletContext _servletContext;
 
 }

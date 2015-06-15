@@ -30,11 +30,13 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Iván Zaera
@@ -53,6 +55,10 @@ public class WikiAttachmentItemSelectorView
 		getItemSelectorCriterionClass() {
 
 		return WikiAttachmentItemSelectorCriterion.class;
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -88,10 +94,20 @@ public class WikiAttachmentItemSelectorView
 			WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
 			wikiAttachmentItemSelectorViewDisplayContext);
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-web/html/item/selector/attachments.jsp");
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(
+				"/html/item/selector/attachments.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
@@ -100,5 +116,7 @@ public class WikiAttachmentItemSelectorView
 				new DefaultItemSelectorReturnType[] {
 					DefaultItemSelectorReturnType.URL
 				}));
+
+	private ServletContext _servletContext;
 
 }

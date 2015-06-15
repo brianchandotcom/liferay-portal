@@ -64,6 +64,7 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		attributes.put("questionId", getQuestionId());
 		attributes.put("choiceId", getChoiceId());
 		attributes.put("voteDate", getVoteDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
@@ -135,6 +136,12 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 		if (voteDate != null) {
 			setVoteDate(voteDate);
 		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
+		}
 	}
 
 	@Override
@@ -196,6 +203,16 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	@Override
 	public long getGroupId() {
 		return _pollsVote.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this polls vote.
+	*
+	* @return the last publish date of this polls vote
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _pollsVote.getLastPublishDate();
 	}
 
 	/**
@@ -379,6 +396,16 @@ public class PollsVoteWrapper implements PollsVote, ModelWrapper<PollsVote> {
 	@Override
 	public void setGroupId(long groupId) {
 		_pollsVote.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this polls vote.
+	*
+	* @param lastPublishDate the last publish date of this polls vote
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_pollsVote.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

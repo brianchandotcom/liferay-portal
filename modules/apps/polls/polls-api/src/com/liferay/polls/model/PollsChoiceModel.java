@@ -342,6 +342,20 @@ public interface PollsChoiceModel extends BaseModel<PollsChoice>, LocalizedModel
 	public void setDescriptionMap(Map<Locale, String> descriptionMap,
 		Locale defaultLocale);
 
+	/**
+	 * Returns the last publish date of this polls choice.
+	 *
+	 * @return the last publish date of this polls choice
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this polls choice.
+	 *
+	 * @param lastPublishDate the last publish date of this polls choice
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
 	@Override
 	public boolean isNew();
 

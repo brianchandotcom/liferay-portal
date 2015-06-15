@@ -45,6 +45,7 @@ public class PollsVoteSoap implements Serializable {
 		soapModel.setQuestionId(model.getQuestionId());
 		soapModel.setChoiceId(model.getChoiceId());
 		soapModel.setVoteDate(model.getVoteDate());
+		soapModel.setLastPublishDate(model.getLastPublishDate());
 
 		return soapModel;
 	}
@@ -185,6 +186,14 @@ public class PollsVoteSoap implements Serializable {
 		_voteDate = voteDate;
 	}
 
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	private String _uuid;
 	private long _voteId;
 	private long _groupId;
@@ -196,4 +205,5 @@ public class PollsVoteSoap implements Serializable {
 	private long _questionId;
 	private long _choiceId;
 	private Date _voteDate;
+	private Date _lastPublishDate;
 }

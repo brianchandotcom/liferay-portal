@@ -15,6 +15,7 @@
 		<field name="description" type="String" localized="true">
 			<hint name="max-length">1000</hint>
 		</field>
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.polls.model.PollsQuestion">
 		<field name="uuid" type="String" />
@@ -37,6 +38,7 @@
 			<hint name="default-month-delta">1</hint>
 		</field>
 		<field name="lastVoteDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 	<model name="com.liferay.polls.model.PollsVote">
 		<field name="uuid" type="String" />
@@ -50,5 +52,6 @@
 		<field name="questionId" type="long" />
 		<field name="choiceId" type="long" />
 		<field name="voteDate" type="Date" />
+		<field name="lastPublishDate" type="Date" />
 	</model>
 </model-hints>

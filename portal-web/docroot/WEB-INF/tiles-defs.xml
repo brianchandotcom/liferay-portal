@@ -898,26 +898,6 @@
 		<put name="portlet_content" value="/portlet/software_catalog/view_product_entry.jsp" />
 	</definition>
 
-	<!-- Staging Bar -->
-
-	<definition name="portlet.staging_bar.edit_layout_branch" path="/portlet/staging_bar/edit_layout_branch.jsp" />
-
-	<definition name="portlet.staging_bar.edit_layout_set_branch" path="/portlet/staging_bar/edit_layout_set_branch.jsp" />
-
-	<definition name="portlet.staging_bar.error" path="/portlet/staging_bar/error.jsp" />
-
-	<definition name="portlet.staging_bar.merge_layout_set_branch" path="/portlet/staging_bar/merge_layout_set_branch.jsp" />
-
-	<definition name="portlet.staging_bar.view" path="/portlet/staging_bar/view.jsp" />
-
-	<definition name="portlet.staging_bar.view_layout_branches" path="/portlet/staging_bar/view_layout_branches.jsp" />
-
-	<definition name="portlet.staging_bar.view_layout_revision_details" path="/portlet/staging_bar/view_layout_revision_details.jsp" />
-
-	<definition name="portlet.staging_bar.view_layout_revisions" path="/portlet/staging_bar/view_layout_revisions.jsp" />
-
-	<definition name="portlet.staging_bar.view_layout_set_branches" path="/portlet/staging_bar/view_layout_set_branches.jsp" />
-
 	<!-- User Statistics -->
 
 	<definition name="portlet.user_statistics" extends="portlet" />

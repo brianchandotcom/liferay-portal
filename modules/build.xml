@@ -45,6 +45,7 @@
 		<dirset dir="apps/site-navigation" includes="*" />
 		<dirset dir="apps/social" excludes="social-networking-*" includes="*" />
 		<dirset dir="apps/social-office" includes="*" />
+		<dirset dir="apps/staging-bar" includes="*" />
 		<dirset dir="apps/translator" includes="*" />
 		<dirset dir="apps/trash" includes="*" />
 		<dirset dir="apps/unit-converter" includes="*" />

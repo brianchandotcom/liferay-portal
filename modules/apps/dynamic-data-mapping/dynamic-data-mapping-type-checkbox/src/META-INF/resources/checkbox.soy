@@ -8,9 +8,10 @@
  * @param label
  * @param name
  * @param status
+ * @param visible
  */
 {template .checkbox}
-	<div class="form-group field-wrapper form-inline" data-fieldname="{$name}">
+	<div class="form-group field-wrapper form-inline{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<label for="{$name}">
 			<input class="field" dir="{$dir}" id="{$name}" name="{$name}" type="checkbox" {$status} value="true" />
 

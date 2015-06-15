@@ -8,9 +8,10 @@
  * @param label
  * @param name
  * @param value
+ * @param visible
  */
 {template .text}
-	<div class="form-group field-wrapper" data-fieldname="{$name}">
+	<div class="form-group field-wrapper{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<label class="control-fieldLabel" for="{$name}">
 			{$label}
 		</label>

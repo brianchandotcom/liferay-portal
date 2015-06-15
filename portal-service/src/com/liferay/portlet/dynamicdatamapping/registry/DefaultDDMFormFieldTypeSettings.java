@@ -29,7 +29,14 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(visibilityExpression = "false")
 	public String fieldNamespace();
 
-	@DDMFormField(label = "%index-type", type = "select")
+	@DDMFormField(
+		label = "%index-type",
+		optionLabels = {
+			"%not-indexable", "%indexable-keyword", "%indexable-text"
+		},
+		optionValues = { StringPool.BLANK, "keyword", "text" },
+		type = "select"
+	)
 	public String indexType();
 
 	@DDMFormField(label = "%label", type = "text")

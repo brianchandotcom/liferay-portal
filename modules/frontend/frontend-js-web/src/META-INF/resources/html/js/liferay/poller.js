@@ -98,7 +98,9 @@ AUI.add(
 					var portlet = _portlets[portletId];
 
 					if (portlet) {
-						if (chunkData && _portletIdsMap[portletId]) {
+						var currentPortletId = _portletIdsMap[portletId];
+
+						if (chunkData && currentPortletId) {
 							chunkData.initialRequest = portlet.initialRequest;
 						}
 
@@ -109,7 +111,7 @@ AUI.add(
 							_delayIndex = 0;
 						}
 
-						if (portlet.initialRequest && _portletIdsMap[portletId]) {
+						if (portlet.initialRequest && currentPortletId) {
 							send = true;
 
 							portlet.initialRequest = false;

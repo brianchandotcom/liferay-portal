@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,15 +48,15 @@ public class RevertRecordActionCommand extends AddRecordActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long recordId = ParamUtil.getLong(portletRequest, "recordId");
+		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
-		String version = ParamUtil.getString(portletRequest, "version");
+		String version = ParamUtil.getString(actionRequest, "version");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), portletRequest);
+			DDLRecord.class.getName(), actionRequest);
 
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
 	}

@@ -90,10 +90,10 @@ public class RenderStructureFieldRenderCommand extends BaseResourceCommand {
 		throws Exception {
 
 		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(resourceRequest);
+			PortalUtil.getHttpServletResponse(resourceResponse);
 
 		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(resourceResponse);
+			PortalUtil.getHttpServletRequest(resourceRequest);
 
 		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
 

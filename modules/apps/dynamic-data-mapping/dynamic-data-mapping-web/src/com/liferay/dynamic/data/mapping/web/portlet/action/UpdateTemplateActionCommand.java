@@ -31,8 +31,8 @@ import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,14 +53,14 @@ public class UpdateTemplateActionCommand extends AddTemplateActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMTemplate template = updateTemplate(portletRequest);
+		DDMTemplate template = updateTemplate(actionRequest);
 
-		updatePortletPreferences(portletRequest, template);
+		updatePortletPreferences(actionRequest, template);
 
-		setRedirectAttribute(portletRequest, template);
+		setRedirectAttribute(actionRequest, template);
 	}
 
 	@Reference
@@ -70,11 +70,11 @@ public class UpdateTemplateActionCommand extends AddTemplateActionCommand {
 		_ddmTemplateService = ddmTemplateService;
 	}
 
-	protected DDMTemplate updateTemplate(PortletRequest portletRequest)
+	protected DDMTemplate updateTemplate(ActionRequest actionRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		long templateId = ParamUtil.getLong(uploadPortletRequest, "templateId");
 

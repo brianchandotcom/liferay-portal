@@ -16,8 +16,8 @@ package com.liferay.portal.kernel.portlet.bridges.mvc.bundle.actioncommand;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,9 +42,9 @@ public class TestActionCommand1 implements ActionCommand {
 
 	@Override
 	public boolean processCommand(
-		PortletRequest portletRequest, PortletResponse portletResponse) {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		portletRequest.setAttribute(
+		actionRequest.setAttribute(
 			TEST_ACTION_COMMAND_ATTRIBUTE, TEST_ACTION_COMMAND_ATTRIBUTE);
 
 		return true;

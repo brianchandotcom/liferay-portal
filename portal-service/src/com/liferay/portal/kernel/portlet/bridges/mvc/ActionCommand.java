@@ -14,12 +14,13 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 /**
  * @author Michael C. Han
+ * @author Sergio González
  */
 public interface ActionCommand {
 
@@ -31,7 +32,7 @@ public interface ActionCommand {
 
 		@Override
 		public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse) {
+			ActionRequest actionRequest, ActionResponse actionResponse) {
 
 			return false;
 		}
@@ -39,7 +40,7 @@ public interface ActionCommand {
 	};
 
 	public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException;
 
 }

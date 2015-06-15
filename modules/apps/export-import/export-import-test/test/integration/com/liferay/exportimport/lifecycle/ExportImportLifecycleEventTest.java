@@ -16,6 +16,8 @@ package com.liferay.exportimport.lifecycle;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
@@ -38,13 +40,20 @@ import com.liferay.portal.lar.PortletExporter;
 import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.ThrowableInformation;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -123,15 +132,37 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedLayoutLocalPublishing() throws Exception {
-		try {
-			StagingUtil.publishLayouts(
-				TestPropsValues.getUserId(), _group.getGroupId(),
-				RandomTestUtil.nextInt(), false, new long[0], _parameterMap);
-		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					BackgroundTaskMessageListener.class.getName(),
+					Level.ERROR)) {
+
+			try {
+				StagingUtil.publishLayouts(
+					TestPropsValues.getUserId(), _group.getGroupId(),
+					RandomTestUtil.nextInt(), false, new long[0],
+					_parameterMap);
 			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info(t, t);
+				}
+			}
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to execute background task", loggingEvent.getMessage());
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Throwable throwable = throwableInformation.getThrowable();
+
+			Assert.assertSame(SystemException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(
@@ -184,21 +215,43 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 	public void testFailedPortletLocalPublishing() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		try {
-			StagingUtil.publishPortlet(
-				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
-				0, 0, StringPool.BLANK, _parameterMap);
-		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					BackgroundTaskMessageListener.class.getName(),
+					Level.ERROR)) {
+
+			try {
+				StagingUtil.publishPortlet(
+					user.getUserId(), _group.getGroupId(),
+					_liveGroup.getGroupId(), 0, 0, StringPool.BLANK,
+					_parameterMap);
 			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info(t, t);
+				}
+			}
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to execute background task", loggingEvent.getMessage());
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Throwable throwable = throwableInformation.getThrowable();
+
+			Assert.assertSame(SystemException.class, throwable.getClass());
 		}
 
-		Assert.assertTrue(
-			_firedExportImportLifecycleEventsMap.containsKey(
-				ExportImportLifecycleConstants.
-					EVENT_PUBLICATION_PORTLET_LOCAL_FAILED));
+			Assert.assertTrue(
+				_firedExportImportLifecycleEventsMap.containsKey(
+					ExportImportLifecycleConstants.
+						EVENT_PUBLICATION_PORTLET_LOCAL_FAILED));
 	}
 
 	@Test

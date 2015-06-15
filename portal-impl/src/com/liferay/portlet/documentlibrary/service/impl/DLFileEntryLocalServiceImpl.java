@@ -913,8 +913,12 @@ public class DLFileEntryLocalServiceImpl
 						dlFileVersionLocalService.getLatestFileVersion(
 							dlFileEntry.getFileEntryId(), true);
 
-					dlFileEntry.setModifiedDate(
-						dlLatestFileVersion.getCreateDate());
+					dlLatestFileVersion.setModifiedDate(new Date());
+					dlLatestFileVersion.setStatusDate(new Date());
+
+					dlFileVersionPersistence.update(dlLatestFileVersion);
+
+					dlFileEntry.setModifiedDate(new Date());
 					dlFileEntry.setFileName(dlLatestFileVersion.getFileName());
 					dlFileEntry.setExtension(
 						dlLatestFileVersion.getExtension());

@@ -1021,7 +1021,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 *         with the "STATUS_" prefix.
 	 * @param  start the lower bound of the range of web content articles to
 	 *         return
-	 * @param  includeOwner whether to include the user web content or not
 	 * @param  end the upper bound of the range of web content articles to
 	 *         return (not inclusive)
 	 * @param  orderByComparator the comparator to order the web content
@@ -1193,7 +1192,6 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	 * @param  status the web content article's workflow status. For more
 	 *         information see {@link WorkflowConstants} for constants starting
 	 *         with the "STATUS_" prefix.
-	 * @param  includeOwner whether to include the user web content or not
 	 * @return the range of matching web content articles ordered by the
 	 *         comparator
 	 * @throws PortalException if the root folder could not be found, if the

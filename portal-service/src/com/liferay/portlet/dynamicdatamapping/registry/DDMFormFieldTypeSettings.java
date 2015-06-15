@@ -26,7 +26,7 @@ public interface DDMFormFieldTypeSettings {
 	@DDMFormField(visibilityExpression = "false")
 	public String dataType();
 
-	@DDMFormField
+	@DDMFormField(label = "%name")
 	public String name();
 
 	@DDMFormField(visibilityExpression = "false")

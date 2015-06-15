@@ -223,7 +223,7 @@ public class JournalArticleAssetRenderer
 
 		PortletURL portletURL = liferayPortletResponse.createLiferayPortletURL(
 			getControlPanelPlid(liferayPortletRequest),
-			JournalPortletKeys.JOURNAL, PortletRequest.ACTION_PHASE);
+			JournalPortletKeys.JOURNAL, PortletRequest.RESOURCE_PHASE);
 
 		portletURL.setParameter(ActionRequest.ACTION_NAME, "exportArticle");
 		portletURL.setParameter(

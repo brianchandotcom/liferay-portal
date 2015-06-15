@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=view",
+		"command.name=view",
 		"javax.portlet.name=" + InvitationPortletKeys.INVITATION
 	},
 	service = ActionCommand.class

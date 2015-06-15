@@ -194,25 +194,22 @@ public class MVCPortlet extends LiferayPortlet {
 		copyRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("copy-request-parameters"), true);
 
-		_actionCommandCache = new <ActionCommand>CommandCache(
+		_actionCommandCache = new CommandCache(
 			ActionCommand.EMPTY,
 			getInitParameter(ActionCommand.ACTION_PACKAGE_NAME),
-			getPortletName(), "action.command.name",
-			ActionCommand.class.getName(),
+			getPortletName(), "command.name", ActionCommand.class.getName(),
 			ActionCommand.ACTION_COMMAND_POSTFIX);
 
-		_renderCommandCache = new <RenderCommand>CommandCache(
+		_renderCommandCache = new CommandCache(
 			RenderCommand.EMPTY,
 			getInitParameter(RenderCommand.RENDER_PACKAGE_NAME),
-			getPortletName(), "render.command.name",
-			RenderCommand.class.getName(),
+			getPortletName(), "command.name", RenderCommand.class.getName(),
 			RenderCommand.RENDER_COMMAND_POSTFIX);
 
-		_resourceCommandCache = new <ResourceCommand>CommandCache(
+		_resourceCommandCache = new CommandCache(
 			ResourceCommand.EMPTY,
 			getInitParameter(ResourceCommand.RESOURCE_PACKAGE_NAME),
-			getPortletName(), "resource.command.name",
-			ResourceCommand.class.getName(),
+			getPortletName(), "command.name", ResourceCommand.class.getName(),
 			ResourceCommand.RESOURCE_COMMAND_POSTFIX);
 	}
 

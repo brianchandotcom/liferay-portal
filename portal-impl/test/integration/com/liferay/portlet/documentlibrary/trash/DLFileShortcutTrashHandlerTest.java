@@ -41,7 +41,6 @@ import com.liferay.portlet.documentlibrary.service.DLFileShortcutLocalServiceUti
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.util.test.DLAppTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -54,8 +53,7 @@ import org.junit.Test;
  * @author Eudaldo Alonso
  */
 @Sync
-public class DLFileShortcutTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsAssetableBaseModel {
+public class DLFileShortcutTrashHandlerTest extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -324,11 +322,6 @@ public class DLFileShortcutTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableModel() {
-		return false;
 	}
 
 	@Override

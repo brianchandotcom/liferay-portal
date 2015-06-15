@@ -28,7 +28,6 @@ import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 import com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalServiceUtil;
 import com.liferay.portlet.layoutsadmin.util.test.ExportImportConfigurationTestUtil;
 import com.liferay.portlet.trash.test.BaseTrashHandlerTestCase;
-import com.liferay.portlet.trash.test.WhenIsAssetableBaseModel;
 
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -40,7 +39,7 @@ import org.junit.Test;
  */
 @Sync
 public class ExportImportConfigurationTrashHandlerTest
-	extends BaseTrashHandlerTestCase implements WhenIsAssetableBaseModel {
+	extends BaseTrashHandlerTestCase {
 
 	@ClassRule
 	@Rule
@@ -391,11 +390,6 @@ public class ExportImportConfigurationTrashHandlerTest
 	@Override
 	protected String getUniqueTitle(BaseModel<?> baseModel) {
 		return null;
-	}
-
-	@Override
-	protected boolean isAssetableModel() {
-		return false;
 	}
 
 	@Override

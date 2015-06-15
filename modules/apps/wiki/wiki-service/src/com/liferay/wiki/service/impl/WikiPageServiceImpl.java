@@ -496,9 +496,9 @@ public class WikiPageServiceImpl extends WikiPageServiceBaseImpl {
 		QueryDefinition<WikiPage> queryDefinition = new QueryDefinition<>(
 			status, userId, includeOwner);
 
-		queryDefinition.setStart(start);
 		queryDefinition.setEnd(end);
 		queryDefinition.setOrderByComparator(obc);
+		queryDefinition.setStart(start);
 
 		return wikiPageFinder.filterFindByG_N_H_S(
 			groupId, nodeId, head, queryDefinition);

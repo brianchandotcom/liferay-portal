@@ -25,14 +25,14 @@ import javax.portlet.RenderResponse;
  */
 public interface ConfigurationAction {
 
+	public void include(
+			PortletConfig portletConfig, RenderRequest renderRequest,
+			RenderResponse renderResponse)
+		throws Exception;
+
 	public void processAction(
 			PortletConfig portletConfig, ActionRequest actionRequest,
 			ActionResponse actionResponse)
-		throws Exception;
-
-	public String render(
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
 		throws Exception;
 
 }

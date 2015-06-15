@@ -27,10 +27,13 @@ import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Modified;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
@@ -47,7 +50,12 @@ public class NavigationMenuConfigurationAction
 	extends DefaultConfigurationAction {
 
 	@Override
-	public String render(
+	public String getJspPath(RenderRequest renderRequest) {
+		return "/configuration.jsp";
+	}
+
+	@Override
+	public void include(
 			PortletConfig portletConfig, RenderRequest renderRequest,
 			RenderResponse renderResponse)
 		throws Exception {
@@ -56,7 +64,16 @@ public class NavigationMenuConfigurationAction
 			NavigationMenuWebConfiguration.class.getName(),
 			_navigationMenuWebConfiguration);
 
-		return super.render(portletConfig, renderRequest, renderResponse);
+		super.include(portletConfig, renderRequest, renderResponse);
+	}
+
+	@Override
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.web)",
+		unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		super.setServletContext(servletContext);
 	}
 
 	@Activate

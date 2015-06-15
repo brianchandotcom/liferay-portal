@@ -524,7 +524,7 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 				renderRequest = ActionUtil.getWrappedRenderRequest(
 					renderRequest, null);
 
-				renderEditConfiguration(renderRequest, renderResponse, portlet);
+				renderEditConfiguration(renderRequest, portlet);
 			}
 			else if (mvcPath.endsWith("edit_public_render_parameters.jsp")) {
 				PortletPreferences portletPreferences =
@@ -749,32 +749,18 @@ public class PortletConfigurationPortlet extends MVCPortlet {
 	}
 
 	protected void renderEditConfiguration(
-			RenderRequest renderRequest, RenderResponse renderResponse,
-			Portlet portlet)
+			RenderRequest renderRequest, Portlet portlet)
 		throws Exception {
-
-		PortletConfig portletConfig = (PortletConfig)renderRequest.getAttribute(
-			JavaConstants.JAVAX_PORTLET_CONFIG);
 
 		ConfigurationAction configurationAction = getConfigurationAction(
 			portlet);
 
-		if (configurationAction == null) {
-			return;
+		if (configurationAction != null) {
+			renderRequest.setAttribute(
+				WebKeys.CONFIGURATION_ACTION, configurationAction);
 		}
-
-		String path = configurationAction.render(
-			portletConfig, renderRequest, renderResponse);
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Configuration action returned render path " + path);
-		}
-
-		if (Validator.isNotNull(path)) {
-			renderRequest.setAttribute(WebKeys.CONFIGURATION_ACTION_PATH, path);
-		}
-		else {
-			_log.error("Configuration action returned a null path");
+		else if (_log.isDebugEnabled()) {
+			_log.debug("Configuration action is null");
 		}
 	}
 

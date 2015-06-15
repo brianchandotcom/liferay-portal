@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.admin.portlet.action;
 
-import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -24,7 +24,7 @@ import javax.portlet.PortletConfig;
  * @author Iván Zaera
  */
 public class WikiGroupServiceSettingsConfigurationAction
-	extends SettingsConfigurationAction {
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

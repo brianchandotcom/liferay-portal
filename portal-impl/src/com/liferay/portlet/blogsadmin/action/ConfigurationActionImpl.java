@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.blogsadmin.action;
 
-import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -26,7 +26,8 @@ import javax.portlet.PortletConfig;
 /**
  * @author Iván Zaera
  */
-public class ConfigurationActionImpl extends SettingsConfigurationAction {
+public class ConfigurationActionImpl
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

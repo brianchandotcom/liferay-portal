@@ -410,11 +410,14 @@ public class AuthVerifierPipeline {
 			String[] urlsIncludes = StringUtil.split(
 				properties.getProperty("urls.includes"));
 
-			if ((urlsIncludes.length == 0) && _log.isWarnEnabled()) {
-				_log.warn(
-					"Auth verifier " +
-						authVerifierConfiguration.getAuthVerifierClassName() +
+			if (urlsIncludes.length == 0) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Auth verifier " +
+							authVerifierConfiguration.
+								getAuthVerifierClassName() +
 							" does not have URLs configured");
+				}
 
 				return false;
 			}

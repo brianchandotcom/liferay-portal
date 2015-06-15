@@ -331,17 +331,19 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 			con = DataAccess.getUpgradeOptimizedConnection();
 
 			ps = con.prepareStatement(
-				"select groupId, resourcePrimKey, structureId from " +
-					"JournalArticle where structureId != ''");
+				"select companyId, groupId, resourcePrimKey, structureId " +
+					"from JournalArticle where structureId != ''");
 
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+				long companyId = rs.getLong("companyId");
 				long groupId = rs.getLong("groupId");
 				long resourcePrimKey = rs.getLong("resourcePrimKey");
 				String structureId = rs.getString("structureId");
 
-				long ddmStructureId = getDDMStructureId(groupId, structureId);
+				long ddmStructureId = getDDMStructureId(
+					groupId, getCompanyGroupId(companyId), structureId);
 
 				runSQL(
 					"update AssetEntry set classTypeId = " +

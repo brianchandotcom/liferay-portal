@@ -31,7 +31,7 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		upgradeBookmarksFolder();
 	}
 
-	private void upgradeBookmarksEntry() throws Exception {
+	protected void upgradeBookmarksEntry() throws Exception {
 		try {
 			runSQL("alter table BookmarksEntry add lastPublishDate DATE null");
 		}
@@ -44,7 +44,7 @@ public class UpgradeLastPublishDate extends UpgradeProcess {
 		}
 	}
 
-	private void upgradeBookmarksFolder() throws Exception {
+	protected void upgradeBookmarksFolder() throws Exception {
 		try {
 			runSQL("alter table BookmarksFolder add lastPublishDate DATE null");
 		}

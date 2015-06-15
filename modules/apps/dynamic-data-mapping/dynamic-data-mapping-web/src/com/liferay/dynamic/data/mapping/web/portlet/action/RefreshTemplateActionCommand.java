@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=refreshTemplate",
+		"command.name=refreshTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},
@@ -41,12 +41,12 @@ public class RefreshTemplateActionCommand extends BaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		SessionMessages.add(
-			portletRequest,
-			PortalUtil.getPortletId(portletRequest) +
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
 				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
 	}
 

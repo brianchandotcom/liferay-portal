@@ -37,8 +37,8 @@ import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=updateWorkflowDefinition",
+		"command.name=updateWorkflowDefinition",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
 	},
 	service = ActionCommand.class
@@ -57,19 +57,19 @@ public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String name = ParamUtil.getString(portletRequest, "name");
+		String name = ParamUtil.getString(actionRequest, "name");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "title");
-		int version = ParamUtil.getInteger(portletRequest, "version");
+			actionRequest, "title");
+		int version = ParamUtil.getInteger(actionRequest, "version");
 
 		File file = uploadPortletRequest.getFile("file");
 
@@ -87,7 +87,7 @@ public class UpdateWorkflowDefitionActionCommand extends BaseActionCommand {
 					getTitle(titleMap), getFileBytes(file));
 		}
 
-		portletRequest.setAttribute(
+		actionRequest.setAttribute(
 			WebKeys.WORKFLOW_DEFINITION, workflowDefinition);
 	}
 

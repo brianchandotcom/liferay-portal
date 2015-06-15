@@ -19,8 +19,8 @@ import com.liferay.dynamic.data.lists.exporter.DDLExporterFactory;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetServiceUtil;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
-import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
@@ -30,8 +30,8 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -45,33 +45,33 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=exportRecordSet",
+		"command.name=exportRecordSet",
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS
 	},
-	service = ActionCommand.class
+	service = ResourceCommand.class
 )
-public class ExportRecordSetAction extends BaseActionCommand {
+public class ExportRecordSetResourceCommand extends BaseResourceCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
+			resourceRequest);
 		HttpServletResponse response = PortalUtil.getHttpServletResponse(
-			portletResponse);
+			resourceResponse);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+		long recordSetId = ParamUtil.getLong(resourceRequest, "recordSetId");
 
 		DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(
 			recordSetId);
 
 		String fileExtension = ParamUtil.getString(
-			portletRequest, "fileExtension");
+			resourceRequest, "fileExtension");
 
 		String fileName =
 			recordSet.getName(themeDisplay.getLocale()) + CharPool.PERIOD +

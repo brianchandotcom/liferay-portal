@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteTemplate",
+		"command.name=deleteTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},
@@ -42,26 +42,26 @@ public class DeleteTemplateActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] deleteTemplateIds = null;
 
-		long templateId = ParamUtil.getLong(portletRequest, "templateId");
+		long templateId = ParamUtil.getLong(actionRequest, "templateId");
 
 		if (templateId > 0) {
 			deleteTemplateIds = new long[] {templateId};
 		}
 		else {
 			deleteTemplateIds = StringUtil.split(
-				ParamUtil.getString(portletRequest, "deleteTemplateIds"), 0L);
+				ParamUtil.getString(actionRequest, "deleteTemplateIds"), 0L);
 		}
 
 		for (long deleteTemplateId : deleteTemplateIds) {
 			_ddmTemplateService.deleteTemplate(deleteTemplateId);
 		}
 
-		setRedirectAttribute(portletRequest);
+		setRedirectAttribute(actionRequest);
 	}
 
 	@Reference

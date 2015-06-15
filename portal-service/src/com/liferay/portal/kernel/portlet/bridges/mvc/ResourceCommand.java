@@ -14,33 +14,34 @@
 
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
- * @author Michael C. Han
  * @author Sergio González
  */
-public interface ActionCommand {
+public interface ResourceCommand {
 
-	public static final String ACTION_COMMAND_POSTFIX = "ActionCommand";
-
-	public static final String ACTION_PACKAGE_NAME = "action.package.prefix";
-
-	public static final ActionCommand EMPTY = new ActionCommand() {
+	public static final ResourceCommand EMPTY = new ResourceCommand() {
 
 		@Override
 		public boolean processCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse) {
+			ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) {
 
 			return false;
 		}
 
 	};
 
+	public static final String RESOURCE_COMMAND_POSTFIX = "ResourceCommand";
+
+	public static final String RESOURCE_PACKAGE_NAME =
+		"resource.package.prefix";
+
 	public boolean processCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException;
 
 }

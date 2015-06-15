@@ -29,8 +29,9 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -41,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=copyTemplate",
+		"command.name=copyTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},
@@ -49,18 +50,18 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CopyTemplateActionCommand extends DDMBaseActionCommand {
 
-	protected DDMTemplate copyTemplate(PortletRequest portletRequest)
+	protected DDMTemplate copyTemplate(ActionRequest actionRequest)
 		throws Exception {
 
-		long templateId = ParamUtil.getLong(portletRequest, "templateId");
+		long templateId = ParamUtil.getLong(actionRequest, "templateId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMTemplate.class.getName(), portletRequest);
+			DDMTemplate.class.getName(), actionRequest);
 
 		return _ddmTemplateService.copyTemplate(
 			templateId, nameMap, descriptionMap, serviceContext);
@@ -68,12 +69,12 @@ public class CopyTemplateActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMTemplate template = copyTemplate(portletRequest);
+		DDMTemplate template = copyTemplate(actionRequest);
 
-		setRedirectAttribute(portletRequest, template);
+		setRedirectAttribute(actionRequest, template);
 	}
 
 	@Override

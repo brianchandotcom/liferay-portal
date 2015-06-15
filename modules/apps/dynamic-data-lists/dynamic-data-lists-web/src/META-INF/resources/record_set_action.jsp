@@ -73,8 +73,7 @@ boolean hasViewPermission = portletName.equals(PortletKeys.DYNAMIC_DATA_LISTS) &
 	</c:if>
 
 	<c:if test="<%= hasViewPermission %>">
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportRecordSetURL">
-			<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="exportRecordSet" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
 			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 		</liferay-portlet:resourceURL>
 

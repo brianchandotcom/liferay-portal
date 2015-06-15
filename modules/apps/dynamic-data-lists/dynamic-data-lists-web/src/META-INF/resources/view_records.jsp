@@ -84,8 +84,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 					<aui:nav-item href="<%= addRecordURL %>" iconCssClass="icon-plus" label='<%= LanguageUtil.format(request, "add-x", HtmlUtil.escape(ddmStructure.getName(locale)), false) %>' />
 				</c:if>
 
-				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" var="exportRecordSetURL">
-					<portlet:param name="<%= ActionRequest.ACTION_NAME %>" value="exportRecordSet" />
+				<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="exportRecordSet" var="exportRecordSetURL">
 					<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
 				</liferay-portlet:resourceURL>
 

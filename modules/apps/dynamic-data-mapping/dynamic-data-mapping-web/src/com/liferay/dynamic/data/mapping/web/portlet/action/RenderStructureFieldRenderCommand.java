@@ -15,8 +15,8 @@
 package com.liferay.dynamic.data.mapping.web.portlet.action;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.BaseResourceCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ResourceCommand;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -33,8 +33,8 @@ import com.liferay.portlet.dynamicdatamapping.render.DDMFormFieldRenderingContex
 
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,12 +49,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=renderStructureField",
+		"command.name=renderStructureField",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
-	service = ActionCommand.class
+	service = ResourceCommand.class
 )
-public class RenderStructureFieldActionCommand extends BaseActionCommand {
+public class RenderStructureFieldRenderCommand extends BaseResourceCommand {
 
 	protected DDMFormFieldRenderingContext createDDMFormFieldRenderingContext(
 		HttpServletRequest request, HttpServletResponse response) {
@@ -86,14 +86,14 @@ public class RenderStructureFieldActionCommand extends BaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
 		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(portletResponse);
+			PortalUtil.getHttpServletResponse(resourceResponse);
 
 		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(portletRequest);
+			PortalUtil.getHttpServletRequest(resourceRequest);
 
 		DDMFormField ddmFormField = getDDMFormField(httpServletRequest);
 

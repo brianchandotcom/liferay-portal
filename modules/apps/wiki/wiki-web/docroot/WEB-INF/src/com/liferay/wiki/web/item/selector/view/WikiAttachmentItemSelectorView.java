@@ -18,6 +18,7 @@ import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
@@ -43,16 +44,9 @@ public class WikiAttachmentItemSelectorView
 	implements ItemSelectorView
 		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
-	public static final String ITEM_SELECTED_EVENT_NAME =
-		WikiAttachmentItemSelectorView.class.getName() +
-			"#ITEM_SELECTED_EVENT_NAME";
-
-	public static final String PORTLET_URL =
-		WikiAttachmentItemSelectorView.class.getName() + "#PORTLET_URL";
-
-	public static final String WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION =
-		WikiAttachmentItemSelectorView.class.getName() +
-			"#WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION";
+	public static final String
+		WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+			"WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<WikiAttachmentItemSelectorCriterion>
@@ -84,11 +78,15 @@ public class WikiAttachmentItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
-		request.setAttribute(PORTLET_URL, portletURL);
+		WikiAttachmentItemSelectorViewDisplayContext
+			wikiAttachmentItemSelectorViewDisplayContext =
+				new WikiAttachmentItemSelectorViewDisplayContext(
+					wikiAttachmentItemSelectorCriterion, this,
+					itemSelectedEventName, portletURL);
+
 		request.setAttribute(
-			WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION,
-			wikiAttachmentItemSelectorCriterion);
+			WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			wikiAttachmentItemSelectorViewDisplayContext);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			"/o/wiki-web/html/item/selector/attachments.jsp");

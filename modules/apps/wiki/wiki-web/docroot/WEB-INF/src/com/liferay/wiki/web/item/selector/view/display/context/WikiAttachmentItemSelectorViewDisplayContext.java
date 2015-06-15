@@ -14,16 +14,18 @@
 
 package com.liferay.wiki.web.item.selector.view.display.context;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
-import org.apache.ecs.html.S;
-import org.apache.poi.ss.formula.functions.T;
+import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.model.WikiPage;
+import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.web.item.selector.view.WikiAttachmentItemSelectorView;
+
+import java.util.Locale;
 
 import javax.portlet.PortletURL;
+
 import javax.servlet.http.HttpServletRequest;
-import java.util.Locale;
 
 /**
  * @author Roberto Díaz
@@ -31,11 +33,14 @@ import java.util.Locale;
 public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public WikiAttachmentItemSelectorViewDisplayContext(
-		T itemSelectorCriterion, DLItemSelectorView<T, S> dlItemSelectorView,
+		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
+		WikiAttachmentItemSelectorView
+			wikiAttachmentItemSelectorView,
 		String itemSelectedEventName, PortletURL portletURL) {
 
-		_itemSelectorCriterion = itemSelectorCriterion;
-		_dlItemSelectorView = dlItemSelectorView;
+		_wikiAttachmentItemSelectorCriterion =
+			wikiAttachmentItemSelectorCriterion;
+		_wikiAttachmentItemSelectorView = wikiAttachmentItemSelectorView;
 		_itemSelectedEventName = itemSelectedEventName;
 		_portletURL = portletURL;
 	}
@@ -44,42 +49,34 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 		return ParamUtil.getString(request, "displayStyle");
 	}
 
-	public long getFolderId(HttpServletRequest request) {
-		return ParamUtil.getLong(
-			request, "folderId", DLFolderConstants.DEFAULT_PARENT_FOLDER_ID);
-	}
-
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
-	}
-
-	public T getItemSelectorCriterion() {
-		return _itemSelectorCriterion;
-	}
-
-	public String[] getMimeTypes() {
-		return _dlItemSelectorView.getMimeTypes();
 	}
 
 	public PortletURL getPortletURL() {
 		return _portletURL;
 	}
 
-	public long getRepositoryId(HttpServletRequest request) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return ParamUtil.getLong(
-			request, "repositoryId", themeDisplay.getScopeGroupId());
-	}
-
 	public String getTitle(Locale locale) {
-		return _dlItemSelectorView.getTitle(locale);
+		return _wikiAttachmentItemSelectorView.getTitle(locale);
 	}
 
-	private final DLItemSelectorView<T, S> _dlItemSelectorView;
+	public WikiAttachmentItemSelectorCriterion
+		getWikiAttachmentItemSelectorCriterion() {
+
+		return _wikiAttachmentItemSelectorCriterion;
+	}
+
+	public WikiPage getWikiPage() throws PortalException {
+		return WikiPageLocalServiceUtil.getPage(
+			_wikiAttachmentItemSelectorCriterion.getWikiPageResourceId());
+	}
+
 	private final String _itemSelectedEventName;
-	private final T _itemSelectorCriterion;
 	private final PortletURL _portletURL;
+	private final WikiAttachmentItemSelectorCriterion
+		_wikiAttachmentItemSelectorCriterion;
+	private final WikiAttachmentItemSelectorView
+		_wikiAttachmentItemSelectorView;
 
 }

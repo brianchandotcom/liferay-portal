@@ -17,27 +17,23 @@
 <%@ include file="/html/item/selector/init.jsp" %>
 
 <%
-String displayStyle = ParamUtil.getString(request, "displayStyle");
+WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDisplayContext = (WikiAttachmentItemSelectorViewDisplayContext)request.getAttribute(WikiAttachmentItemSelectorView.WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
-PortletURL portletURL = (PortletURL)request.getAttribute(WikiAttachmentItemSelectorView.PORTLET_URL);
+WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAttachmentItemSelectorViewDisplayContext.getWikiAttachmentItemSelectorCriterion();
 
-SearchContainer wikiAttachmentsSearchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, portletURL, null, null);
+SearchContainer wikiAttachmentsSearchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, null);
 
-WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = (WikiAttachmentItemSelectorCriterion)request.getAttribute(WikiAttachmentItemSelectorView.WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION);
-
-WikiPageResource pageResource = WikiPageResourceLocalServiceUtil.fetchWikiPageResource(wikiAttachmentItemSelectorCriterion.getWikiPageResourceId());
-
-WikiPage wikiPage = WikiPageLocalServiceUtil.getPage(pageResource.getNodeId(), pageResource.getTitle());
+WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
 wikiAttachmentsSearchContainer.setTotal(wikiPage.getAttachmentsFileEntriesCount());
 wikiAttachmentsSearchContainer.setResults(wikiPage.getAttachmentsFileEntries(wikiAttachmentsSearchContainer.getStart(), wikiAttachmentsSearchContainer.getEnd()));
 %>
 
 <item-selector-ui:browser
-	displayStyle="<%= displayStyle %>"
-	displayStyleURL="<%= portletURL %>"
-	itemSelectedEventName="<%= GetterUtil.getString(request.getAttribute(WikiAttachmentItemSelectorView.ITEM_SELECTED_EVENT_NAME)) %>"
+	displayStyle="<%= wikiAttachmentItemSelectorViewDisplayContext.getDisplayStyle(request) %>"
+	displayStyleURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL() %>"
+	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	returnType="<%= ReturnType.parseFirst(wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
 	searchContainer="<%= wikiAttachmentsSearchContainer %>"
-	tabName="attachments"
+	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

@@ -54,9 +54,13 @@
 	<tear-down>
 		<execute macro="Blogs#tearDownSubscribePG" />
 
+		<execute macro="Blogs#tearDownCP" />
+
 		<execute macro="NotificationsPortlet#tearDownUserDeliveries" />
 
 		<execute macro="Page#tearDownPG" />
+
+		<execute macro="User#tearDownCP" />
 	</tear-down>
 
 	<command name="MarkAllNotificationsAsRead" priority="4">

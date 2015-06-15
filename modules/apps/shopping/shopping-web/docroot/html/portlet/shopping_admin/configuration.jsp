@@ -17,7 +17,7 @@
 <%@ include file="/html/portlet/shopping/init.jsp" %>
 
 <%
-shoppingGroupServiceSettings = ShoppingGroupServiceSettings.getInstance(themeDisplay.getSiteGroupId(), request.getParameterMap());
+shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceSettings.class, new ParameterMapSettingsLocator(request.getParameterMap(), new GroupServiceSettingsLocator(scopeGroupId, ShoppingConstants.SERVICE_NAME)));
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
@@ -96,10 +96,12 @@ shoppingGroupServiceSettings = ShoppingGroupServiceSettings.getInstance(themeDis
 				<aui:select label="currency" name="preferences--currencyId--">
 
 					<%
-					for (int i = 0; i < ShoppingGroupServiceSettings.CURRENCY_IDS.length; i++) {
+					String[] currencyIds = shoppingGroupServiceSettings.getCurrencyIds();
+					
+					for (int i = 0; i < currencyIds.length; i++) {
 					%>
 
-						<aui:option label="<%= ShoppingGroupServiceSettings.CURRENCY_IDS[i] %>" selected="<%= shoppingGroupServiceSettings.getCurrencyId().equals(ShoppingGroupServiceSettings.CURRENCY_IDS[i]) %>" />
+						<aui:option label="<%= currencyIds[i] %>" selected="<%= shoppingGroupServiceSettings.getCurrencyId().equals(currencyIds[i]) %>" />
 
 					<%
 					}

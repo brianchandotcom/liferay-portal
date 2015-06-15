@@ -603,16 +603,6 @@
 		<execute function="Click" locator1="CPWebcontentCategorization#TAGS_ADD_BUTTON" />
 
 		<execute macro="WebContent#publish" />
-
-		<execute macro="WebContent#viewTitle">
-			<var name="webContentTitle" value="${webContentTitle}" />
-		</execute>
-
-		<for list="${tagNameList}" param="tagName">
-			<var name="key_tagName" value="${tagName}" />
-
-			<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TAG" value1="${tagName}" />
-		</for>
 	</command>
 
 	<command name="addWithWorkflowCP">
@@ -1509,6 +1499,19 @@
 		<execute function="AssertClick" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TITLE" value1="${webContentTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CPWebcontentEditwebcontent#TITLE_FIELD" value1="${webContentTitle}" />
+	</command>
+
+	<command name="viewWithTagCP">
+		<execute macro="WebContent#viewTitle">
+			<var name="webContentTitle" value="${webContentTitle}" />
+		</execute>
+
+		<for list="${tagNameList}" param="tagName">
+			<var name="key_tagName" value="${tagName}" />
+			<var name="key_webContentTitle" value="${webContentTitle}" />
+
+			<execute function="AssertTextEquals#assertPartialText" locator1="CPWebcontent#ENTRY_DESCRIPTIVE_TAG" value1="${tagName}" />
+		</for>
 	</command>
 
 	<command name="viewWithWorkflowCP">

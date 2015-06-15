@@ -41,7 +41,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PortletKeys;
+import com.liferay.staging.bar.web.portlet.constants.StagingBarPortletKeys;
 
 import java.io.IOException;
 
@@ -392,7 +392,7 @@ public class StagingBarPortlet extends MVCPortlet {
 				actionRequest,
 				PortalUtil.getPortletId(actionRequest) +
 					SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				PortletKeys.STAGING_BAR);
+				StagingBarPortletKeys.STAGING_BAR);
 
 			Map<String, String> data = new HashMap<>();
 

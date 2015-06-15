@@ -66,7 +66,7 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -90,6 +90,8 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", lastPublishDate=");
+		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -148,6 +150,13 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 			pollsChoiceImpl.setDescription(description);
 		}
 
+		if (lastPublishDate == Long.MIN_VALUE) {
+			pollsChoiceImpl.setLastPublishDate(null);
+		}
+		else {
+			pollsChoiceImpl.setLastPublishDate(new Date(lastPublishDate));
+		}
+
 		pollsChoiceImpl.resetOriginalValues();
 
 		return pollsChoiceImpl;
@@ -166,6 +175,7 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		questionId = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
@@ -207,6 +217,8 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeLong(lastPublishDate);
 	}
 
 	public String uuid;
@@ -220,4 +232,5 @@ public class PollsChoiceCacheModel implements CacheModel<PollsChoice>,
 	public long questionId;
 	public String name;
 	public String description;
+	public long lastPublishDate;
 }

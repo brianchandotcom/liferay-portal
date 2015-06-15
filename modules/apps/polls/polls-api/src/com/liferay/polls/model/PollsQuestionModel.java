@@ -427,6 +427,20 @@ public interface PollsQuestionModel extends BaseModel<PollsQuestion>,
 	public void setExpirationDate(Date expirationDate);
 
 	/**
+	 * Returns the last publish date of this polls question.
+	 *
+	 * @return the last publish date of this polls question
+	 */
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this polls question.
+	 *
+	 * @param lastPublishDate the last publish date of this polls question
+	 */
+	public void setLastPublishDate(Date lastPublishDate);
+
+	/**
 	 * Returns the last vote date of this polls question.
 	 *
 	 * @return the last vote date of this polls question

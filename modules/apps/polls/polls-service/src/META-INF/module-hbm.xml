@@ -19,6 +19,7 @@
 		<property name="questionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.polls.model.impl.PollsQuestionImpl" table="PollsQuestion">
 		<id name="questionId" type="long">
@@ -34,6 +35,7 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastVoteDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.polls.model.impl.PollsVoteImpl" table="PollsVote">
@@ -49,6 +51,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="questionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="choiceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
 		<property name="voteDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

@@ -91,9 +91,10 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 			{ "title", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "expirationDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP },
 			{ "lastVoteDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PollsQuestion (uuid_ VARCHAR(75) null,questionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,expirationDate DATE null,lastVoteDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table PollsQuestion (uuid_ VARCHAR(75) null,questionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,title STRING null,description STRING null,expirationDate DATE null,lastPublishDate DATE null,lastVoteDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsQuestion";
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsQuestion.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY PollsQuestion.createDate DESC";
@@ -138,6 +139,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		model.setTitle(soapModel.getTitle());
 		model.setDescription(soapModel.getDescription());
 		model.setExpirationDate(soapModel.getExpirationDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 		model.setLastVoteDate(soapModel.getLastVoteDate());
 
 		return model;
@@ -214,6 +216,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("lastVoteDate", getLastVoteDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -288,6 +291,12 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Date lastVoteDate = (Date)attributes.get("lastVoteDate");
@@ -666,6 +675,17 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	@JSON
 	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
+	@JSON
+	@Override
 	public Date getLastVoteDate() {
 		return _lastVoteDate;
 	}
@@ -805,6 +825,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		pollsQuestionImpl.setTitle(getTitle());
 		pollsQuestionImpl.setDescription(getDescription());
 		pollsQuestionImpl.setExpirationDate(getExpirationDate());
+		pollsQuestionImpl.setLastPublishDate(getLastPublishDate());
 		pollsQuestionImpl.setLastVoteDate(getLastVoteDate());
 
 		pollsQuestionImpl.resetOriginalValues();
@@ -955,6 +976,15 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 			pollsQuestionCacheModel.expirationDate = Long.MIN_VALUE;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			pollsQuestionCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			pollsQuestionCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		Date lastVoteDate = getLastVoteDate();
 
 		if (lastVoteDate != null) {
@@ -969,7 +999,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -993,6 +1023,8 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		sb.append(getDescription());
 		sb.append(", expirationDate=");
 		sb.append(getExpirationDate());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append(", lastVoteDate=");
 		sb.append(getLastVoteDate());
 		sb.append("}");
@@ -1002,7 +1034,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.polls.model.PollsQuestion");
@@ -1053,6 +1085,10 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 		sb.append(getExpirationDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>lastVoteDate</column-name><column-value><![CDATA[");
 		sb.append(getLastVoteDate());
 		sb.append("]]></column-value></column>");
@@ -1085,6 +1121,7 @@ public class PollsQuestionModelImpl extends BaseModelImpl<PollsQuestion>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private Date _expirationDate;
+	private Date _lastPublishDate;
 	private Date _lastVoteDate;
 	private long _columnBitmask;
 	private PollsQuestion _escapedModel;

@@ -31,6 +31,7 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services-groovy.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-base-services.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-core.jar" />
+	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
 	<classpathentry kind="lib" path="lib/slf4j-log4j12.jar" />
 	<classpathentry kind="output" path="bin" />

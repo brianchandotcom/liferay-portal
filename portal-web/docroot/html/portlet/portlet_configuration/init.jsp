@@ -20,6 +20,7 @@
 page import="com.liferay.portal.NoSuchResourceException" %><%@
 page import="com.liferay.portal.PortletItemNameException" %><%@
 page import="com.liferay.portal.ResourcePrimKeyException" %><%@
+page import="com.liferay.portal.kernel.portlet.ConfigurationAction" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletModeFactory" %><%@
 page import="com.liferay.portal.kernel.settings.ArchivedSettings" %><%@
 page import="com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil" %><%@

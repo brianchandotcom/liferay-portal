@@ -6,3 +6,4 @@ Include-Resource:\
 	META-INF/resources=src/META-INF/resources,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/RSSUtil.class,\
 	@../../../../util-java/util-java.jar!/com/liferay/util/portlet/PortletProps.class
+Web-ContextPath: /social-networking-web

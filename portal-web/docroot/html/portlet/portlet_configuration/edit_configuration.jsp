@@ -19,8 +19,6 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 String returnToFullPageURL = ParamUtil.getString(request, "returnToFullPageURL");
-
-String path = (String)request.getAttribute(WebKeys.CONFIGURATION_ACTION_PATH);
 %>
 
 <c:if test="<%= !layout.isTypeControlPanel() && !windowState.equals(LiferayWindowState.EXCLUSIVE) %>">
@@ -47,6 +45,10 @@ String path = (String)request.getAttribute(WebKeys.CONFIGURATION_ACTION_PATH);
 	</div>
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(portletResource) && Validator.isNotNull(path) %>">
-	<liferay-util:include page="<%= path %>" portletId="<%= portletResource %>" />
-</c:if>
+<%
+ConfigurationAction configurationAction = (ConfigurationAction)request.getAttribute(WebKeys.CONFIGURATION_ACTION);
+
+if (configurationAction != null) {
+	configurationAction.include(portletConfig, renderRequest, renderResponse);
+}
+%>

@@ -16,7 +16,7 @@ package com.liferay.bookmarks.web.portlet.action;
 
 import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksFolderLocalServiceUtil;
-import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portlet.documentlibrary.NoSuchFolderException;
@@ -29,7 +29,7 @@ import javax.portlet.PortletConfig;
  * @author Sergio González
  */
 public class BookmarksGroupServiceSettingsConfigurationAction
-	extends SettingsConfigurationAction {
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

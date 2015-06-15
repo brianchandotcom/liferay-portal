@@ -14,7 +14,7 @@
 
 package com.liferay.wiki.web.wiki.portlet.action;
 
-import com.liferay.portal.kernel.portlet.SettingsConfigurationAction;
+import com.liferay.portal.kernel.portlet.BaseJSPSettingsConfigurationAction;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -26,7 +26,7 @@ import javax.portlet.PortletConfig;
  * @author Bruno Farache
  */
 public class WikiGroupServiceSettingsConfigurationAction
-	extends SettingsConfigurationAction {
+	extends BaseJSPSettingsConfigurationAction {
 
 	@Override
 	public void processAction(

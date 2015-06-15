@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portlet.dynamicdatamapping.model.DDMFormFieldOptions;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
@@ -112,6 +113,29 @@ public class DDMFormFactoryHelper {
 		}
 
 		return "string";
+	}
+
+	protected DDMFormFieldOptions getDDMFormFieldOptions() {
+		DDMFormFieldOptions ddmFormFieldOptions = new DDMFormFieldOptions();
+
+		String[] optionLabels = _ddmFormField.optionLabels();
+		String[] optionValues = _ddmFormField.optionValues();
+
+		if ((optionLabels == null) || (optionValues == null)) {
+			return ddmFormFieldOptions;
+		}
+
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
+
+		for (int i = 0; i < optionLabels.length; i++) {
+			for (Locale currentLocale : availableLocales) {
+				ddmFormFieldOptions.addOptionLabel(
+					optionValues[i], currentLocale,
+					getLocalizedLabel(currentLocale, optionLabels[i]));
+			}
+		}
+
+		return ddmFormFieldOptions;
 	}
 
 	protected String getLocalizedLabel(Locale locale, String label) {

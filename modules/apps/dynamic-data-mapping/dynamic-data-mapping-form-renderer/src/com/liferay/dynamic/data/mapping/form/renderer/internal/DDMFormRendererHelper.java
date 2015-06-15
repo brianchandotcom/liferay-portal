@@ -192,9 +192,7 @@ public class DDMFormRendererHelper {
 			String ddmFormFieldHTML = ddmFormFieldRenderer.render(
 				ddmFormField, ddmFormFieldRenderingContext);
 
-			boolean visible = isDDMFormFieldVisible(ddmFormField);
-
-			return wrapDDMFormFieldHTML(ddmFormFieldHTML, visible);
+			return wrapDDMFormFieldHTML(ddmFormFieldHTML);
 		}
 		catch (PortalException pe) {
 			throw new DDMFormRenderingException(pe);
@@ -229,6 +227,10 @@ public class DDMFormRendererHelper {
 			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextName(
 			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
+
+		boolean visible = isDDMFormFieldVisible(ddmFormField);
+
+		ddmFormFieldRenderingContext.setVisible(visible);
 
 		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
@@ -346,17 +348,10 @@ public class DDMFormRendererHelper {
 			value.getString(ddmFormFieldRenderingContext.getLocale()));
 	}
 
-	protected String wrapDDMFormFieldHTML(
-		String ddmFormFieldHTML, boolean visible) {
-
-		StringBundler sb = new StringBundler(5);
+	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("<div class=\"lfr-ddm-form-field-container");
-
-		if (!visible) {
-			sb.append(" hidden");
-		}
-
 		sb.append("\">");
 		sb.append(ddmFormFieldHTML);
 		sb.append("</div>");

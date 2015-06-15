@@ -25,7 +25,7 @@ import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 public interface DefaultDDMFormFieldTypeSettings
 	extends DDMFormFieldTypeSettings {
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "false")
 	public String fieldNamespace();
 
 	@DDMFormField
@@ -55,7 +55,7 @@ public interface DefaultDDMFormFieldTypeSettings
 	@DDMFormField(type = "text")
 	public LocalizedValue tip();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "false")
 	public String visibilityExpression();
 
 }

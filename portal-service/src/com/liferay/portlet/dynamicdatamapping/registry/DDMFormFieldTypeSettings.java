@@ -23,13 +23,13 @@ import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
 @DDMForm
 public interface DDMFormFieldTypeSettings {
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "false")
 	public String dataType();
 
 	@DDMFormField
 	public String name();
 
-	@DDMFormField
+	@DDMFormField(visibilityExpression = "false")
 	public String type();
 
 }

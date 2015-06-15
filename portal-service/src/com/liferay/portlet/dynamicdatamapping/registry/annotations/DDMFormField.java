@@ -36,4 +36,6 @@ public @interface DDMFormField {
 
 	public String type() default StringPool.BLANK;
 
+	public String visibilityExpression() default StringPool.TRUE;
+
 }

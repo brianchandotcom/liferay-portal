@@ -84,6 +84,7 @@ public abstract class BaseDDMFormFieldRenderer implements DDMFormFieldRenderer {
 		template.put("label", ddmFormFieldRenderingContext.getLabel());
 		template.put("name", ddmFormFieldRenderingContext.getName());
 		template.put("value", ddmFormFieldRenderingContext.getValue());
+		template.put("visible", ddmFormFieldRenderingContext.isVisible());
 	}
 
 	protected String render(Template template) throws PortalException {

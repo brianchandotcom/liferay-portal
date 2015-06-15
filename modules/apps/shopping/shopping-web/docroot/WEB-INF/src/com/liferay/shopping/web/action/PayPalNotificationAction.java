@@ -31,6 +31,8 @@ import org.apache.struts.action.ActionMapping;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
@@ -38,10 +40,12 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.shopping.exception.NoSuchOrderException;
+import com.liferay.shopping.model.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
 import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
 import com.liferay.shopping.util.ShoppingUtil;
+import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
 
 /**
  * @author Brian Wing Shun Chan
@@ -150,10 +154,19 @@ public class PayPalNotificationAction extends Action {
 		String ppInvoice = ParamUtil.getString(request, "invoice");
 
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(ppInvoice);
+	
+		ShoppingWebComponentProvider shoppingWebComponentProvider = 
+				ShoppingWebComponentProvider.getShoppingWebComponentProvider();
 
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-			ShoppingGroupServiceSettings.getInstance(order.getGroupId());
-
+		SettingsFactory settingsFactory = 
+			shoppingWebComponentProvider.getSettingsFactory();
+			
+		ShoppingGroupServiceSettings shoppingGroupServiceSettings = 
+			settingsFactory.getSettings(
+				ShoppingGroupServiceSettings.class,
+				new GroupServiceSettingsLocator(
+					order.getGroupId(), ShoppingConstants.SERVICE_NAME));
+		
 		// Receiver email address
 
 		String ppReceiverEmail = ParamUtil.getString(request, "receiver_email");

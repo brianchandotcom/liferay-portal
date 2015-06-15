@@ -353,6 +353,8 @@
 	</command>
 
 	<command name="viewTitle" summary="Assert that the ${portletName} portlet title has the text '${portletName}'">
+		<var name="key_portletName" value="${portletName}" />
+
 		<execute function="AssertTextEquals" locator1="BasePortlet#TITLE" value1="${portletName}" />
 	</command>
 </definition>

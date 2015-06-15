@@ -93,6 +93,14 @@
 		<execute function="AssertTextEquals" locator1="PGBlogsConfigurationScope#SCOPE_MENULIST" value1="${scopeSelection}" />
 	</command>
 
+	<command name="saveConfigurationIFrame">
+		<execute function="AssertClick" locator1="Button#SAVE" value1="Save" />
+	</command>
+
+	<command name="selectConfigurationIFrame">
+		<execute function="SelectFrame" locator1="Configuration#CONFIGURATION_IFRAME" />
+	</command>
+
 	<command name="selectDisplayTemplate">
 		<execute function="Select" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="${displayTemplate}" />
 	</command>

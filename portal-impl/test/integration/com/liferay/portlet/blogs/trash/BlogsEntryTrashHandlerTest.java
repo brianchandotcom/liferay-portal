@@ -183,6 +183,13 @@ public class BlogsEntryTrashHandlerTest
 	@Ignore
 	@Override
 	@Test
+	public void testTrashGrandparentBaseModelIsNotVisibleParent()
+		throws Exception {
+	}
+
+	@Ignore
+	@Override
+	@Test
 	public void testTrashIsRestorableBaseModel() throws Exception {
 	}
 

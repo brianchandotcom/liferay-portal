@@ -345,11 +345,10 @@
 				</execute>
 			</then>
 			<else>
-				<execute macro="CalendarScheduler#selectSpecificEvent">
+				<execute macro="CalendarScheduler#viewRSVP">
 					<var name="eventTitle" value="${eventTitle}" />
+					<var name="rsvp"  value="${rsvp}" />
 				</execute>
-
-				<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_EVENT_DIALOG_BOX_ATTEND_INACTIVE" value1="${rsvp}" />
 			</else>
 		</if>
 	</command>

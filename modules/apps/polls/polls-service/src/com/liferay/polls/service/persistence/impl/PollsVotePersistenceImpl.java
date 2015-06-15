@@ -3048,6 +3048,7 @@ public class PollsVotePersistenceImpl extends BasePersistenceImpl<PollsVote>
 		pollsVoteImpl.setModifiedDate(pollsVote.getModifiedDate());
 		pollsVoteImpl.setQuestionId(pollsVote.getQuestionId());
 		pollsVoteImpl.setChoiceId(pollsVote.getChoiceId());
+		pollsVoteImpl.setLastPublishDate(pollsVote.getLastPublishDate());
 		pollsVoteImpl.setVoteDate(pollsVote.getVoteDate());
 
 		return pollsVoteImpl;

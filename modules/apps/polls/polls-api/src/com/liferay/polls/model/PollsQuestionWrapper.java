@@ -65,6 +65,7 @@ public class PollsQuestionWrapper implements PollsQuestion,
 		attributes.put("title", getTitle());
 		attributes.put("description", getDescription());
 		attributes.put("expirationDate", getExpirationDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 		attributes.put("lastVoteDate", getLastVoteDate());
 
 		return attributes;
@@ -136,6 +137,12 @@ public class PollsQuestionWrapper implements PollsQuestion,
 
 		if (expirationDate != null) {
 			setExpirationDate(expirationDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 
 		Date lastVoteDate = (Date)attributes.get("lastVoteDate");
@@ -291,6 +298,16 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public long getGroupId() {
 		return _pollsQuestion.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this polls question.
+	*
+	* @return the last publish date of this polls question
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _pollsQuestion.getLastPublishDate();
 	}
 
 	/**
@@ -646,6 +663,16 @@ public class PollsQuestionWrapper implements PollsQuestion,
 	@Override
 	public void setGroupId(long groupId) {
 		_pollsQuestion.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the last publish date of this polls question.
+	*
+	* @param lastPublishDate the last publish date of this polls question
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_pollsQuestion.setLastPublishDate(lastPublishDate);
 	}
 
 	/**

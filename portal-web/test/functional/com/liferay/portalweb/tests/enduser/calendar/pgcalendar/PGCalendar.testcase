@@ -3063,7 +3063,7 @@
 		</execute>
 	</command>
 
-	<command name="EnableAutoApprovalForEvents" priority="3">
+	<command known-issues="LPS-51310" name="EnableAutoApprovalForEvents" priority="3">
 		<description message="This is a use case for LPS-53057." />
 
 		<property name="portlet.properties.calendar-portlet" value="calendar.auto.approve.group.event=true" />

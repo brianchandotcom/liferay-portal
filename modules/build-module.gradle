@@ -67,3 +67,5 @@ sourceSets {
 		compileClasspath += configurations.portal
 	}
 }
+
+group = "com.liferay"

@@ -979,11 +979,6 @@
 	<command name="save">
 		<execute function="Click" locator1="PGCalendarAddevent#SAVE_BUTTON" />
 		<execute function="AssertTextEquals" locator1="PGCalendarAddevent#SUCCESS_MESSAGE" value1="Your request completed successfully." />
-		<execute function="SelectFrame" value1="relative=top" />
-
-		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
-		</execute>
 	</command>
 
 	<command name="selectCalendar">

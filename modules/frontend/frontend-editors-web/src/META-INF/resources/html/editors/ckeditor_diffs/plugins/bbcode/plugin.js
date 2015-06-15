@@ -54,7 +54,7 @@
 							);
 						},
 						icon: editor.config.imagesPath + 'code.png',
-						label: Liferay.Language.get('code')
+						label: editor.config.lang.code
 					}
 				);
 			}

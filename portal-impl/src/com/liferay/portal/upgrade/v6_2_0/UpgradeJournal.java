@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.upgrade.v6_2_0.util.JournalFeedTable;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsUtil;
@@ -225,17 +226,49 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		super.doUpgrade();
 	}
 
+	protected long getCompanyGroupId(long companyId) throws Exception {
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		try {
+			con = DataAccess.getUpgradeOptimizedConnection();
+
+			ps = con.prepareStatement(
+				"select groupId from Group_ where classNameId = ? and " +
+					"classPK = ?");
+
+			ps.setLong(1, PortalUtil.getClassNameId(Company.class.getName()));
+			ps.setLong(2, companyId);
+
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				return rs.getLong("groupId");
+			}
+
+			return 0;
+		}
+		finally {
+			DataAccess.cleanUp(con, ps, rs);
+		}
+	}
+
 	protected long getDDMStructureClassNameId() {
 		return PortalUtil.getClassNameId(
 			"com.liferay.portlet.dynamicdatamapping.model.DDMStructure");
 	}
 
-	protected long getDDMStructureId(long groupId, String structureId) {
-		return getDDMStructureId(groupId, structureId, true);
+	protected long getDDMStructureId(
+		long groupId, long companyGroupId, String structureId) {
+
+		return getDDMStructureId(groupId, companyGroupId, structureId, true);
 	}
 
 	protected long getDDMStructureId(
-		long groupId, String structureId, boolean warn) {
+		long groupId, long companyGroupId, String structureId, boolean warn) {
+
+		String globalGroupOr = "";
 
 		if (Validator.isNull(structureId)) {
 			return 0;
@@ -243,13 +276,20 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 		Long ddmStructureId = _ddmStructureIds.get(groupId + "#" + structureId);
 
+		if ((ddmStructureId == null) && (companyGroupId != 0)) {
+			ddmStructureId = _ddmStructureIds.get(
+				companyGroupId + "#" + structureId);
+
+			globalGroupOr = " or global group";
+		}
+
 		if (ddmStructureId == null) {
 			if (warn) {
 				if (_log.isWarnEnabled()) {
 					_log.warn(
 						"Unable to get the DDM structure ID for group " +
-							groupId + " and journal structure ID " +
-								structureId);
+							groupId + globalGroupOr + " and journal " +
+								"structure ID " + structureId);
 				}
 			}
 
@@ -257,6 +297,16 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 
 		return ddmStructureId;
+	}
+
+	protected long getDDMStructureId(long groupId, String structureId) {
+		return getDDMStructureId(groupId, 0, structureId, true);
+	}
+
+	protected long getDDMStructureId(
+		long groupId, String structureId, boolean warn) {
+
+		return getDDMStructureId(groupId, 0, structureId, warn);
 	}
 
 	protected Locale getDefaultLocale(String xml) {
@@ -495,7 +545,8 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 
 				long classNameId = getDDMStructureClassNameId();
 
-				long classPK = getDDMStructureId(groupId, structureId);
+				long classPK = getDDMStructureId(
+					groupId, getCompanyGroupId(companyId), structureId);
 
 				addDDMTemplate(
 					uuid_, ddmTemplateId, groupId, companyId, userId, userName,

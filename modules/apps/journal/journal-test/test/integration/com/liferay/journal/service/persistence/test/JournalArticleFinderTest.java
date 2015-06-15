@@ -419,6 +419,7 @@ public class JournalArticleFinderTest {
 
 		QueryDefinition<JournalArticle> queryDefinition = new QueryDefinition<>(
 			WorkflowConstants.STATUS_ANY);
+
 		queryDefinition.setUserId(TestPropsValues.getUserId());
 
 		testQueryByG_C(

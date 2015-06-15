@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
@@ -556,6 +557,12 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 	}
 
 	protected void setUpLanguageUtil() {
+		whenLanguageGetAvailableLocalesThen(
+			SetUtil.fromArray(
+				new Locale[] {
+					LocaleUtil.BRAZIL, LocaleUtil.SPAIN, LocaleUtil.US
+				}));
+
 		whenLanguageGet(LocaleUtil.BRAZIL, "no", "Não");
 		whenLanguageGet(LocaleUtil.BRAZIL, "yes", "Sim");
 		whenLanguageGet(LocaleUtil.SPAIN, "latitude", "Latitud");
@@ -692,6 +699,16 @@ public abstract class BaseDDMTestCase extends PowerMockito {
 			_language.get(Matchers.eq(locale), Matchers.eq(key))
 		).thenReturn(
 			returnValue
+		);
+	}
+
+	protected void whenLanguageGetAvailableLocalesThen(
+		Set<Locale> availableLocales) {
+
+		when(
+			_language.getAvailableLocales()
+		).thenReturn(
+			availableLocales
 		);
 	}
 

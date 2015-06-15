@@ -57,6 +57,7 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		setUpDDMTemplateLocalServiceUtil();
 		setUpHtmlUtil();
 		setUpJSONFactoryUtil();
+		setUpLanguageUtil();
 		setUpLocaleUtil();
 		setUpPropsUtil();
 		setUpSAXReaderUtil();

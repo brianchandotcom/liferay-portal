@@ -14,6 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.util;
 
+import com.liferay.portlet.dynamicdatamapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFactory;
@@ -23,12 +24,18 @@ import com.liferay.portlet.dynamicdatamapping.registry.DefaultDDMFormFieldTypeSe
 import java.util.Map;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
  * @author Marcellus Tavares
  */
-public class DDMFormFactoryTest {
+public class DDMFormFactoryTest extends BaseDDMTestCase {
+
+	@Before
+	public void setUp() {
+		setUpLanguageUtil();
+	}
 
 	@Test
 	public void testCreateDDMFormFieldTypeSettingsDDMForm() {
@@ -56,7 +63,7 @@ public class DDMFormFactoryTest {
 
 		Assert.assertNotNull(indexTypeDDMFormField);
 		Assert.assertEquals("string", indexTypeDDMFormField.getDataType());
-		Assert.assertEquals("text", indexTypeDDMFormField.getType());
+		Assert.assertEquals("select", indexTypeDDMFormField.getType());
 
 		DDMFormField labelDDMFormField = ddmFormFieldsMap.get("label");
 

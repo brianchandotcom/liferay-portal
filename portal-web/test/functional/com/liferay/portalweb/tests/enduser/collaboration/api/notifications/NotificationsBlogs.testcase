@@ -19,6 +19,36 @@
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="${portletName}" />
 		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#addCP">
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userFirstName" value="userfn" />
+			<var name="userLastName" value="userln" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#editPasswordCP">
+			<var name="password" value="password" />
+			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Users and Organizations" />
+		</execute>
+
+		<execute macro="User#assignRegularRoleCP">
+			<var name="roleName" value="Administrator" />
+			<var name="userScreenName" value="usersn" />
+		</execute>
 	</set-up>
 
 	<tear-down>

@@ -474,13 +474,6 @@ AUI.add(
 				showFn: showPanelFn,
 				tpl: TPL_ADD_CONTENT
 			},
-			'editLayoutPanel': {
-				css: CSS_EDIT_LAYOUT_CONTENT,
-				id: STR_EDIT_LAYOUT_PANEL,
-				node: null,
-				showFn: showPanelFn,
-				tpl: TPL_EDIT_LAYOUT_PANEL
-			},
 			'previewPanel': {
 				css: CSS_PREVIEW_CONTENT,
 				id: STR_PREVIEW_PANEL,

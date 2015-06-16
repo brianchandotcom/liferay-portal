@@ -201,6 +201,10 @@ boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("
 			var config = A.merge(editorConfig, defaultConfig);
 
 			tinyMCE.init(config);
+
+			var tinyMCEEditor = tinyMCE.editors['<%= name %>'];
+
+			<liferay-util:dynamic-include key='<%= "js#" + editorName + "#onEditorCreate" %>' />
 		},
 
 		initInstanceCallback: function() {

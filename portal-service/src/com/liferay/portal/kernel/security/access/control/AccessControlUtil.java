@@ -20,8 +20,10 @@ import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermissio
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +60,30 @@ public class AccessControlUtil {
 		getAccessControl().initContextUser(userId);
 	}
 
+	public static boolean isAccessAllowed(
+		HttpServletRequest request, Set<String> hostsAllowed) {
+
+		if (hostsAllowed.isEmpty()) {
+			return true;
+		}
+
+		String remoteAddr = request.getRemoteAddr();
+
+		if (hostsAllowed.contains(remoteAddr)) {
+			return true;
+		}
+
+		String computerAddress = PortalUtil.getComputerAddress();
+
+		if (computerAddress.equals(remoteAddr) &&
+			hostsAllowed.contains(_SERVER_IP)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void setAccessControlContext(
 		AccessControlContext accessControlContext) {
 
@@ -78,6 +104,8 @@ public class AccessControlUtil {
 
 		_accessControl = accessControl;
 	}
+
+	private static final String _SERVER_IP = "SERVER_IP";
 
 	private static AccessControl _accessControl;
 	private static final ThreadLocal<AccessControlContext>

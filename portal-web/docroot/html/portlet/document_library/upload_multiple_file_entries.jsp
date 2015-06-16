@@ -208,6 +208,8 @@ long folderId = BeanParamUtil.getLong(fileEntry, request, "folderId");
 											}
 
 											Liferay.fire('filesSaved');
+
+											commonFileMetadataContainer.unplug(A.LoadingMask);
 										}
 									},
 									dataType: 'JSON',

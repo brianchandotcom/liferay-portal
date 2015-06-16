@@ -44,30 +44,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 		"mvc.command.name=addRecord"
 	},
 	service = MVCActionCommand.class
 )
 public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
-
-	@Reference
-	public void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
-
-	@Reference
-	public void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference
-	public void setDDMFormValuesJSONDeserializer(
-		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
-
-		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -108,6 +90,25 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 		return _ddmFormValuesJSONDeserializer.deserialize(
 			ddmForm, serializedDDMFormValues);
+	}
+
+	@Reference
+	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
+	}
+
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Reference
+	protected void setDDMFormValuesJSONDeserializer(
+		DDMFormValuesJSONDeserializer ddmFormValuesJSONDeserializer) {
+
+		_ddmFormValuesJSONDeserializer = ddmFormValuesJSONDeserializer;
 	}
 
 	private DDLRecordService _ddlRecordService;

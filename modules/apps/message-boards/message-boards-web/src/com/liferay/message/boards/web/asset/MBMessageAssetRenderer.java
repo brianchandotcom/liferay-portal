@@ -70,6 +70,11 @@ public class MBMessageAssetRenderer
 	}
 
 	@Override
+	public Object getEntry() {
+		return _message;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _message.getGroupId();
 	}

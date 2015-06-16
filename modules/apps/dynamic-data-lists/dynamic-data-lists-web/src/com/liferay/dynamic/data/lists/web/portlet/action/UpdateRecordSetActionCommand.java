@@ -47,13 +47,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UpdateRecordSetActionCommand extends AddRecordSetActionCommand {
 
-	@Reference
-	public void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
 	@Override
 	protected void doProcessCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
@@ -64,6 +57,13 @@ public class UpdateRecordSetActionCommand extends AddRecordSetActionCommand {
 		updateWorkflowDefinitionLink(portletRequest, recordSet);
 
 		updatePortletPreferences(portletRequest, recordSet);
+	}
+
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
 	}
 
 	protected DDLRecordSet updateRecordSet(PortletRequest portletRequest)

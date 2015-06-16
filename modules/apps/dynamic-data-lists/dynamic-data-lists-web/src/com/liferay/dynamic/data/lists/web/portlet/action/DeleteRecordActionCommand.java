@@ -40,11 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class DeleteRecordActionCommand extends BaseActionCommand {
 
-	@Reference
-	public void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
-
 	@Override
 	protected void doProcessCommand(
 			PortletRequest portletRequest, PortletResponse portletResponse)
@@ -53,6 +48,11 @@ public class DeleteRecordActionCommand extends BaseActionCommand {
 		long recordId = ParamUtil.getLong(portletRequest, "recordId");
 
 		_ddlRecordService.deleteRecord(recordId);
+	}
+
+	@Reference
+	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
 	}
 
 	private DDLRecordService _ddlRecordService;

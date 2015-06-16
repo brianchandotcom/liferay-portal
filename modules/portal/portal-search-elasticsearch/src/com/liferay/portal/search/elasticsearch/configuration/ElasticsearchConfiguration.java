@@ -48,6 +48,15 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpEnabled();
 
+	@Meta.AD(deflt = "", required = false)
+	public String networkBindHost();
+
+	@Meta.AD(deflt = "", required = false)
+	public String networkHost();
+
+	@Meta.AD(deflt = "", required = false)
+	public String networkPublishHost();
+
 	@Meta.AD(deflt = "EMBEDDED", required = false)
 	public String operationMode();
 
@@ -56,5 +65,8 @@ public interface ElasticsearchConfiguration {
 
 	@Meta.AD(deflt = "localhost:9300", required = false)
 	public String transportAddresses();
+
+	@Meta.AD(deflt = "", required = false)
+	public String transportTcpPort();
 
 }

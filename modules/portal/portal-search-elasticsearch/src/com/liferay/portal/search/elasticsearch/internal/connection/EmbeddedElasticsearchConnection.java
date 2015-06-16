@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
@@ -148,6 +149,26 @@ public class EmbeddedElasticsearchConnection
 		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
 		builder.put("index.number_of_replicas", 0);
 		builder.put("index.number_of_shards", 1);
+
+		String networkBindHost = elasticsearchConfiguration.networkBindHost();
+
+		if (Validator.isNotNull(networkBindHost)) {
+			builder.put("network.bind.host", networkBindHost);
+		}
+
+		String networkHost = elasticsearchConfiguration.networkHost();
+
+		if (Validator.isNotNull(networkHost)) {
+			builder.put("network.host", networkHost);
+		}
+
+		String networkPublishHost =
+			elasticsearchConfiguration.networkPublishHost();
+
+		if (Validator.isNotNull(networkPublishHost)) {
+			builder.put("network.publish.host", networkPublishHost);
+		}
+
 		builder.put("node.client", false);
 		builder.put("node.data", true);
 		builder.put("node.local", true);
@@ -163,6 +184,12 @@ public class EmbeddedElasticsearchConnection
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
 		builder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
+
+		String transportTcpPort = elasticsearchConfiguration.transportTcpPort();
+
+		if (Validator.isNotNull(transportTcpPort)) {
+			builder.put("transport.tcp.port", transportTcpPort);
+		}
 
 		if (PortalRunMode.isTestMode()) {
 			builder.put("index.refresh_interval", "1ms");

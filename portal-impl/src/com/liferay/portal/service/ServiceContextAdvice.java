@@ -14,10 +14,9 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.spring.aop.ChainableMethodAdvice;
 
-import java.util.LinkedList;
+import java.lang.reflect.Method;
 
 import org.aopalliance.intercept.MethodInvocation;
 
@@ -27,52 +26,54 @@ import org.aopalliance.intercept.MethodInvocation;
 public class ServiceContextAdvice extends ChainableMethodAdvice {
 
 	@Override
-	public Object before(MethodInvocation methodInvocation) {
-		Object[] arguments = methodInvocation.getArguments();
+	public Object invoke(MethodInvocation methodInvocation) throws Throwable {
+		if (!hasServiceContextParameter(methodInvocation.getMethod())) {
+			serviceBeanAopCacheManager.removeMethodInterceptor(
+				methodInvocation, this);
+		}
 
-		LinkedList<Boolean> linkedList = _popServiceContext.get();
+		boolean hasPushedServiceContext = pushServiceContext(methodInvocation);
 
-		if (arguments != null) {
-			for (int i = arguments.length - 1; i >= 0; i--) {
-				if (arguments[i] instanceof ServiceContext) {
-					ServiceContext serviceContext =
-						(ServiceContext)arguments[i];
+		try {
+			return methodInvocation.proceed();
+		}
+		finally {
+			if (hasPushedServiceContext) {
+				ServiceContextThreadLocal.popServiceContext();
+			}
+		}
+	}
 
-					if (serviceContext == null) {
-						linkedList.push(false);
-					}
-					else {
-						ServiceContextThreadLocal.pushServiceContext(
-							serviceContext);
+	protected boolean hasServiceContextParameter(Method method) {
+		Class<?>[] parameterTypes = method.getParameterTypes();
 
-						linkedList.push(true);
-					}
-
-					return null;
-				}
+		for (int i = parameterTypes.length - 1; i >= 0; i--) {
+			if (ServiceContext.class.isAssignableFrom(parameterTypes[i])) {
+				return true;
 			}
 		}
 
-		linkedList.push(false);
-
-		serviceBeanAopCacheManager.removeMethodInterceptor(
-			methodInvocation, this);
-
-		return null;
+		return false;
 	}
 
-	@Override
-	public void duringFinally(MethodInvocation methodInvocation) {
-		LinkedList<Boolean> linkedList = _popServiceContext.get();
+	protected boolean pushServiceContext(MethodInvocation methodInvocation) {
+		Object[] arguments = methodInvocation.getArguments();
 
-		if (linkedList.pop()) {
-			ServiceContextThreadLocal.popServiceContext();
+		if (arguments == null) {
+			return false;
 		}
-	}
 
-	private static final ThreadLocal<LinkedList<Boolean>> _popServiceContext =
-		new AutoResetThreadLocal<>(
-			ServiceContextAdvice.class.getName() + "._popServiceContext",
-			new LinkedList<Boolean>());
+		for (int i = arguments.length - 1; i >= 0; i--) {
+			if (arguments[i] instanceof ServiceContext) {
+				ServiceContext serviceContext = (ServiceContext)arguments[i];
+
+				ServiceContextThreadLocal.pushServiceContext(serviceContext);
+
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 }

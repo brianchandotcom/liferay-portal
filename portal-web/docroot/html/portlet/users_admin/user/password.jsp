@@ -132,7 +132,7 @@ else {
 		$('#<portlet:namespace />reminderQueryQuestion').on(
 			'change',
 			function(event) {
-				var customQuestion = ($(event.currentTarget).val() == '<%= UsersAdmin.CUSTOM_QUESTION %>');
+				var customQuestion = $(event.currentTarget).val() == '<%= UsersAdmin.CUSTOM_QUESTION %>';
 
 				var focusInput;
 

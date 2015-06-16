@@ -424,6 +424,11 @@ public class PoshiRunnerValidation {
 			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
 			"test-case");
 
+		if (filePath.endsWith(".function")) {
+			multiplePrimaryAttributeNames = null;
+			primaryAttributeNames = Arrays.asList("function", "selenium");
+		}
+
 		String primaryAttributeName = _getPrimaryAttributeName(
 			element, multiplePrimaryAttributeNames, primaryAttributeNames,
 			filePath);
@@ -573,16 +578,34 @@ public class PoshiRunnerValidation {
 
 		_validateDefinitionElement(element, filePath);
 		_validateHasChildElements(element, filePath);
-		_validateRequiredChildElementNames(
-			element, Arrays.asList("command"), filePath);
+		_validateRequiredChildElementName(element, "command", filePath);
 
-		List<Element> childElements = element.elements();
+		List<Element> commandElements = element.elements();
 
-		for (Element childElement : childElements) {
-			_validateCommandElement(childElement, filePath);
-			_validateHasChildElements(childElement, filePath);
+		for (Element commandElement : commandElements) {
+			_validateCommandElement(commandElement, filePath);
+			_validateHasChildElements(commandElement, filePath);
 
-			_parseElements(childElement, filePath);
+			List<Element> commandChildElements = commandElement.elements();
+
+			for (Element commandChildElement : commandChildElements) {
+				String childElementName = commandChildElement.getName();
+
+				if (childElementName.equals("execute")) {
+					_validateExecuteElement(commandChildElement, filePath);
+				}
+				else if (childElementName.equals("if")) {
+					_validateIfElement(commandChildElement, filePath);
+				}
+				else {
+					_exceptions.add(
+						new Exception(
+							"Invalid " + childElementName +
+								" child elements\n " + filePath + ":" +
+								commandChildElement.attributeValue(
+									"line-number")));
+				}
+			}
 		}
 	}
 

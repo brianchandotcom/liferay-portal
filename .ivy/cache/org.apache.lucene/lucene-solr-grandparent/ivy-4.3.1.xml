@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+	<info organisation="org.apache.lucene"
+		module="lucene-solr-grandparent"
+		revision="4.3.1"
+		status="release"
+		publication="20130615143044"
+	>
+		<license name="Apache 2" url="http://www.apache.org/licenses/LICENSE-2.0.txt" />
+		<description homepage="http://lucene.apache.org">
+		Grandparent POM for Apache Lucene Core and Apache Solr
+		</description>
+		<m:properties__vc-dev-base-url>https://svn.apache.org/repos/asf/lucene/dev/branches/branch_4x</m:properties__vc-dev-base-url>
+		<m:dependency.management__org.easymock__easymock__scope>test</m:dependency.management__org.easymock__easymock__scope>
+		<m:dependency.management__org.apache.uima__AlchemyAPIAnnotator__version>2.3.1</m:dependency.management__org.apache.uima__AlchemyAPIAnnotator__version>
+		<m:properties__tika.version>1.3</m:properties__tika.version>
+		<m:properties__tests.timezone>random</m:properties__tests.timezone>
+		<m:dependency.management__org.apache.httpcomponents__httpmime__exclusion_0>commons-logging__commons-logging</m:dependency.management__org.apache.httpcomponents__httpmime__exclusion_0>
+		<m:properties__vc-browse-base-url>http://svn.apache.org/viewvc/lucene/dev/branches/branch_4x</m:properties__vc-browse-base-url>
+		<m:dependency.management__org.slf4j__jcl-over-slf4j__version>1.6.6</m:dependency.management__org.slf4j__jcl-over-slf4j__version>
+		<m:dependency.management__org.apache.velocity__velocity__version>1.7</m:dependency.management__org.apache.velocity__velocity__version>
+		<m:dependency.management__org.eclipse.jetty__jetty-servlet__version>8.1.8.v20121106</m:dependency.management__org.eclipse.jetty__jetty-servlet__version>
+		<m:properties__tests.locale>random</m:properties__tests.locale>
+		<m:properties__httpcomponents.version>4.2.3</m:properties__httpcomponents.version>
+		<m:dependency.management__log4j__log4j__version>1.2.16</m:dependency.management__log4j__log4j__version>
+		<m:properties__tests.iters>1</m:properties__tests.iters>
+		<m:dependency.management__org.apache.zookeeper__zookeeper__version>3.4.5</m:dependency.management__org.apache.zookeeper__zookeeper__version>
+		<m:dependency.management__net.arnx__jsonic__version>1.2.7</m:dependency.management__net.arnx__jsonic__version>
+		<m:properties__tests.postingsformat>random</m:properties__tests.postingsformat>
+		<m:properties__commons-io.version>2.1</m:properties__commons-io.version>
+		<m:properties__tests.codec>random</m:properties__tests.codec>
+		<m:dependency.management__org.apache.tika__tika-core__version>1.3</m:dependency.management__org.apache.tika__tika-core__version>
+		<m:dependency.management__javax.servlet__servlet-api__version>2.4</m:dependency.management__javax.servlet__servlet-api__version>
+		<m:dependency.management__commons-cli__commons-cli__version>1.2</m:dependency.management__commons-cli__commons-cli__version>
+		<m:properties__organization.logo>http://www.apache.org/images/asf_logo_wide.gif</m:properties__organization.logo>
+		<m:dependency.management__org.apache.uima__Tagger__version>2.3.1</m:dependency.management__org.apache.uima__Tagger__version>
+		<m:properties__distMgmtSnapshotsUrl>https://repository.apache.org/content/repositories/snapshots</m:properties__distMgmtSnapshotsUrl>
+		<m:dependency.management__org.eclipse.jetty__jetty-util__version>8.1.8.v20121106</m:dependency.management__org.eclipse.jetty__jetty-util__version>
+		<m:dependency.management__jline__jline__version>0.9.1</m:dependency.management__jline__jline__version>
+		<m:dependency.management__junit__junit__version>4.10</m:dependency.management__junit__junit__version>
+		<m:properties__base.specification.version>4.3.1</m:properties__base.specification.version>
+		<m:dependency.management__javax.mail__mail__version>1.4.1</m:dependency.management__javax.mail__mail__version>
+		<m:dependency.management__commons-fileupload__commons-fileupload__version>1.2.1</m:dependency.management__commons-fileupload__commons-fileupload__version>
+		<m:properties__gpg.useagent>true</m:properties__gpg.useagent>
+		<m:properties__maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss</m:properties__maven.build.timestamp.format>
+		<m:maven.plugins>org.apache.maven.plugins__maven-remote-resources-plugin__null|org.apache.maven.plugins__maven-remote-resources-plugin__null|org.codehaus.gmaven__gmaven-plugin__null|org.codehaus.mojo__buildnumber-maven-plugin__null|org.apache.maven.plugins__maven-enforcer-plugin__null|null__maven-jar-plugin__null|org.apache.felix__maven-bundle-plugin__2.3.7</m:maven.plugins>
+		<m:dependency.management__org.carrot2__morfologik-polish__version>1.5.5</m:dependency.management__org.carrot2__morfologik-polish__version>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_4>asm__asm</m:dependency.management__org.apache.tika__tika-parsers__exclusion_4>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_3>org.gagravarr__vorbis-java-core</m:dependency.management__org.apache.tika__tika-parsers__exclusion_3>
+		<m:properties__distMgmtSnapshotsName>Apache Development Snapshot Repository</m:properties__distMgmtSnapshotsName>
+		<m:properties__tests.infostream>${tests.verbose}</m:properties__tests.infostream>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_5>org.aspectj__aspectjrt</m:dependency.management__org.apache.tika__tika-parsers__exclusion_5>
+		<m:dependency.management__org.apache.httpcomponents__httpmime__version>4.2.3</m:dependency.management__org.apache.httpcomponents__httpmime__version>
+		<m:properties__slf4j.version>1.6.6</m:properties__slf4j.version>
+		<m:properties__tests.directory>random</m:properties__tests.directory>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_0>com.adobe.xmp__xmpcore</m:dependency.management__org.apache.tika__tika-parsers__exclusion_0>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_2>org.apache.geronimo.specs__geronimo-stax-api_1.0_spec</m:dependency.management__org.apache.tika__tika-parsers__exclusion_2>
+		<m:dependency.management__org.apache.tika__tika-parsers__exclusion_1>commons-logging__commons-logging</m:dependency.management__org.apache.tika__tika-parsers__exclusion_1>
+		<m:dependency.management__org.eclipse.jetty.orbit__javax.servlet__version>3.0.0.v201112011016</m:dependency.management__org.eclipse.jetty.orbit__javax.servlet__version>
+		<m:properties__jetty.version>8.1.8.v20121106</m:properties__jetty.version>
+		<m:dependency.management__org.apache.tika__tika-parsers__version>1.3</m:dependency.management__org.apache.tika__tika-parsers__version>
+		<m:dependency.management__org.eclipse.jetty__jetty-server__version>8.1.8.v20121106</m:dependency.management__org.eclipse.jetty__jetty-server__version>
+		<m:dependency.management__junit__junit__exclusion_0>org.hamcrest__hamcrest-core</m:dependency.management__junit__junit__exclusion_0>
+		<m:dependency.management__commons-io__commons-io__version>2.1</m:dependency.management__commons-io__commons-io__version>
+		<m:dependency.management__org.carrot2__carrot2-mini__version>3.6.2</m:dependency.management__org.carrot2__carrot2-mini__version>
+		<m:dependency.management__org.restlet.jee__org.restlet.ext.servlet__version>2.1.1</m:dependency.management__org.restlet.jee__org.restlet.ext.servlet__version>
+		<m:dependency.management__org.eclipse.jetty__jetty-webapp__version>8.1.8.v20121106</m:dependency.management__org.eclipse.jetty__jetty-webapp__version>
+		<m:dependency.management__org.apache.velocity__velocity-tools__version>2.0</m:dependency.management__org.apache.velocity__velocity-tools__version>
+		<m:dependency.management__org.codehaus.woodstox__wstx-asl__version>3.2.7</m:dependency.management__org.codehaus.woodstox__wstx-asl__version>
+		<m:dependency.management__xerces__xercesImpl__version>2.9.1</m:dependency.management__xerces__xercesImpl__version>
+		<m:dependency.management__com.carrotsearch.randomizedtesting__randomizedtesting-runner__version>2.0.9</m:dependency.management__com.carrotsearch.randomizedtesting__randomizedtesting-runner__version>
+		<m:dependency.management__org.apache.uima__uimaj-core__version>2.3.1</m:dependency.management__org.apache.uima__uimaj-core__version>
+		<m:dependency.management__org.slf4j__slf4j-api__version>1.6.6</m:dependency.management__org.slf4j__slf4j-api__version>
+		<m:properties__restlet.version>2.1.1</m:properties__restlet.version>
+		<m:dependency.management__xerces__xercesImpl__exclusion_0>xml-apis__xml-apis</m:dependency.management__xerces__xercesImpl__exclusion_0>
+		<m:dependency.management__org.easymock__easymock__version>3.0</m:dependency.management__org.easymock__easymock__version>
+		<m:properties__java.compat.version>1.6</m:properties__java.compat.version>
+		<m:dependency.management__org.noggit__noggit__version>0.5</m:dependency.management__org.noggit__noggit__version>
+		<m:dependency.management__javax.activation__activation__version>1.1</m:dependency.management__javax.activation__activation__version>
+		<m:dependency.management__commons-logging__commons-logging__version>1.1.1</m:dependency.management__commons-logging__commons-logging__version>
+		<m:dependency.management__org.apache.httpcomponents__httpclient__version>4.2.3</m:dependency.management__org.apache.httpcomponents__httpclient__version>
+		<m:properties__log4j.version>1.2.16</m:properties__log4j.version>
+		<m:properties__tests.nightly>false</m:properties__tests.nightly>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:properties__tests.verbose>false</m:properties__tests.verbose>
+		<m:dependency.management__org.slf4j__slf4j-log4j12__version>1.6.6</m:dependency.management__org.slf4j__slf4j-log4j12__version>
+		<m:dependency.management__jakarta-regexp__jakarta-regexp__version>1.4</m:dependency.management__jakarta-regexp__jakarta-regexp__version>
+		<m:dependency.management__commons-lang__commons-lang__version>2.6</m:dependency.management__commons-lang__commons-lang__version>
+		<m:dependency.management__org.restlet.jee__org.restlet__version>2.1.1</m:dependency.management__org.restlet.jee__org.restlet__version>
+		<m:dependency.management__com.spatial4j__spatial4j__version>0.3</m:dependency.management__com.spatial4j__spatial4j__version>
+		<m:dependency.management__org.apache.uima__WhitespaceTokenizer__version>2.3.1</m:dependency.management__org.apache.uima__WhitespaceTokenizer__version>
+		<m:dependency.management__org.slf4j__jul-to-slf4j__version>1.6.6</m:dependency.management__org.slf4j__jul-to-slf4j__version>
+		<m:dependency.management__org.apache.uima__OpenCalaisAnnotator__version>2.3.1</m:dependency.management__org.apache.uima__OpenCalaisAnnotator__version>
+		<m:dependency.management__com.ibm.icu__icu4j__version>49.1</m:dependency.management__com.ibm.icu__icu4j__version>
+		<m:properties__sourceReleaseAssemblyDescriptor>source-release</m:properties__sourceReleaseAssemblyDescriptor>
+		<m:dependency.management__commons-digester__commons-digester__version>1.7</m:dependency.management__commons-digester__commons-digester__version>
+		<m:properties__tests.multiplier>1</m:properties__tests.multiplier>
+		<m:dependency.management__com.cybozu.labs__langdetect__version>1.1-20120112</m:dependency.management__com.cybozu.labs__langdetect__version>
+		<m:dependency.management__hsqldb__hsqldb__version>1.8.0.10</m:dependency.management__hsqldb__hsqldb__version>
+		<m:dependency.management__commons-codec__commons-codec__version>1.7</m:dependency.management__commons-codec__commons-codec__version>
+		<m:dependency.management__org.apache.ant__ant__version>1.8.2</m:dependency.management__org.apache.ant__ant__version>
+		<m:dependency.management__org.apache.ant__ant__exclusion_0>org.apache.ant__ant-launcher</m:dependency.management__org.apache.ant__ant__exclusion_0>
+		<m:dependency.management__org.apache.derby__derby__version>10.9.1.0</m:dependency.management__org.apache.derby__derby__version>
+		<m:properties__tests.luceneMatchVersion>4.3</m:properties__tests.luceneMatchVersion>
+		<m:dependency.management__org.apache.commons__commons-compress__version>1.4.1</m:dependency.management__org.apache.commons__commons-compress__version>
+		<m:properties__vc-anonymous-base-url>http://svn.apache.org/repos/asf/lucene/dev/branches/branch_4x</m:properties__vc-anonymous-base-url>
+		<m:dependency.management__com.google.guava__guava__version>13.0.1</m:dependency.management__com.google.guava__guava__version>
+		<m:dependency.management__commons-digester__commons-digester__exclusion_0>xml-apis__xml-apis</m:dependency.management__commons-digester__commons-digester__exclusion_0>
+	</info>
+	<configurations>
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime,master"/>
+		<conf name="master" visibility="public" description="contains only the artifact published by this module itself, with no transitive dependencies"/>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths."/>
+		<conf name="provided" visibility="public" description="this is much like compile, but indicates you expect the JDK or a container to provide it. It is only available on the compilation classpath, and is not transitive."/>
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile"/>
+		<conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime"/>
+		<conf name="system" visibility="public" description="this scope is similar to provided except that you have to provide the JAR which contains it explicitly. The artifact is always available and is not looked up in a repository."/>
+		<conf name="sources" visibility="public" description="this configuration contains the source artifact of this module, if any."/>
+		<conf name="javadoc" visibility="public" description="this configuration contains the javadoc artifact of this module, if any."/>
+		<conf name="optional" visibility="public" description="contains all optional dependencies"/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="junit" name="junit" rev="4.10" force="true" conf="test->runtime(*),master(*)">
+			<exclude org="org.hamcrest" module="hamcrest-core" name="*" type="*" ext="*" conf="" matcher="exact"/>
+		</dependency>
+		<override org="com.ibm.icu" module="icu4j" matcher="exact" rev="49.1"/>
+		<override org="com.google.guava" module="guava" matcher="exact" rev="13.0.1"/>
+		<override org="commons-codec" module="commons-codec" matcher="exact" rev="1.7"/>
+		<override org="commons-cli" module="commons-cli" matcher="exact" rev="1.2"/>
+		<override org="commons-digester" module="commons-digester" matcher="exact" rev="1.7"/>
+		<override org="commons-fileupload" module="commons-fileupload" matcher="exact" rev="1.2.1"/>
+		<override org="commons-io" module="commons-io" matcher="exact" rev="2.1"/>
+		<override org="org.apache.httpcomponents" module="httpclient" matcher="exact" rev="4.2.3"/>
+		<override org="org.apache.httpcomponents" module="httpmime" matcher="exact" rev="4.2.3"/>
+		<override org="org.noggit" module="noggit" matcher="exact" rev="0.5"/>
+		<override org="commons-lang" module="commons-lang" matcher="exact" rev="2.6"/>
+		<override org="commons-logging" module="commons-logging" matcher="exact" rev="1.1.1"/>
+		<override org="hsqldb" module="hsqldb" matcher="exact" rev="1.8.0.10"/>
+		<override org="jakarta-regexp" module="jakarta-regexp" matcher="exact" rev="1.4"/>
+		<override org="javax.activation" module="activation" matcher="exact" rev="1.1"/>
+		<override org="javax.mail" module="mail" matcher="exact" rev="1.4.1"/>
+		<override org="jline" module="jline" matcher="exact" rev="0.9.1"/>
+		<override org="junit" module="junit" matcher="exact" rev="4.10"/>
+		<override org="org.apache.ant" module="ant" matcher="exact" rev="1.8.2"/>
+		<override org="org.apache.commons" module="commons-compress" matcher="exact" rev="1.4.1"/>
+		<override org="net.arnx" module="jsonic" matcher="exact" rev="1.2.7"/>
+		<override org="com.cybozu.labs" module="langdetect" matcher="exact" rev="1.1-20120112"/>
+		<override org="org.apache.derby" module="derby" matcher="exact" rev="10.9.1.0"/>
+		<override org="org.apache.tika" module="tika-core" matcher="exact" rev="1.3"/>
+		<override org="org.apache.tika" module="tika-parsers" matcher="exact" rev="1.3"/>
+		<override org="org.apache.uima" module="AlchemyAPIAnnotator" matcher="exact" rev="2.3.1"/>
+		<override org="org.apache.uima" module="OpenCalaisAnnotator" matcher="exact" rev="2.3.1"/>
+		<override org="org.apache.uima" module="Tagger" matcher="exact" rev="2.3.1"/>
+		<override org="org.apache.uima" module="WhitespaceTokenizer" matcher="exact" rev="2.3.1"/>
+		<override org="org.apache.uima" module="uimaj-core" matcher="exact" rev="2.3.1"/>
+		<override org="org.apache.velocity" module="velocity" matcher="exact" rev="1.7"/>
+		<override org="org.apache.velocity" module="velocity-tools" matcher="exact" rev="2.0"/>
+		<override org="org.apache.zookeeper" module="zookeeper" matcher="exact" rev="3.4.5"/>
+		<override org="org.carrot2" module="carrot2-mini" matcher="exact" rev="3.6.2"/>
+		<override org="org.carrot2" module="morfologik-polish" matcher="exact" rev="1.5.5"/>
+		<override org="org.codehaus.woodstox" module="wstx-asl" matcher="exact" rev="3.2.7"/>
+		<override org="org.easymock" module="easymock" matcher="exact" rev="3.0"/>
+		<override org="org.eclipse.jetty" module="jetty-server" matcher="exact" rev="8.1.8.v20121106"/>
+		<override org="org.eclipse.jetty" module="jetty-servlet" matcher="exact" rev="8.1.8.v20121106"/>
+		<override org="org.eclipse.jetty" module="jetty-util" matcher="exact" rev="8.1.8.v20121106"/>
+		<override org="org.eclipse.jetty" module="jetty-webapp" matcher="exact" rev="8.1.8.v20121106"/>
+		<override org="org.restlet.jee" module="org.restlet" matcher="exact" rev="2.1.1"/>
+		<override org="org.restlet.jee" module="org.restlet.ext.servlet" matcher="exact" rev="2.1.1"/>
+		<override org="org.slf4j" module="jcl-over-slf4j" matcher="exact" rev="1.6.6"/>
+		<override org="org.slf4j" module="jul-to-slf4j" matcher="exact" rev="1.6.6"/>
+		<override org="org.slf4j" module="slf4j-api" matcher="exact" rev="1.6.6"/>
+		<override org="org.slf4j" module="slf4j-log4j12" matcher="exact" rev="1.6.6"/>
+		<override org="log4j" module="log4j" matcher="exact" rev="1.2.16"/>
+		<override org="org.eclipse.jetty.orbit" module="javax.servlet" matcher="exact" rev="3.0.0.v201112011016"/>
+		<override org="javax.servlet" module="servlet-api" matcher="exact" rev="2.4"/>
+		<override org="com.spatial4j" module="spatial4j" matcher="exact" rev="0.3"/>
+		<override org="xerces" module="xercesImpl" matcher="exact" rev="2.9.1"/>
+		<override org="com.carrotsearch.randomizedtesting" module="randomizedtesting-runner" matcher="exact" rev="2.0.9"/>
+	</dependencies>
+</ivy-module>

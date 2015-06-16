@@ -2993,7 +2993,7 @@ go]]></replacevalue>
 		/>
 	</target>
 
-	<target name="get-license-xml">
+	<target name="deploy-license-xml">
 		<if>
 			<matches pattern="http" string="${test.build.license.xml.zip.url}" />
 			<then>
@@ -4713,7 +4713,7 @@ module.framework.properties.osgi.console=11312</echo>
 			</elseif>
 		</if>
 
-		<antcall target="get-license-xml" />
+		<antcall target="deploy-license-xml" />
 
 		<if>
 			<matches pattern="http" string="${test.build.plugins.war.zip.url}" />

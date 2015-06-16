@@ -69,7 +69,6 @@ if (message != null) {
 	<liferay-ui:error exception="<%= CaptchaTextException.class %>" message="text-verification-failed" />
 	<liferay-ui:error exception="<%= DiscussionMaxCommentsException.class %>" message="maximum-number-of-comments-has-been-reached" />
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
-	<liferay-ui:error exception="<%= ReCaptchaException.class %>" message="recaptcha-verification-failed" />
 
 	<aui:model-context bean="<%= message %>" model="<%= MBMessage.class %>" />
 

@@ -93,7 +93,6 @@ else {
 	<liferay-ui:error exception="<%= MailingListOutEmailAddressException.class %>" message="please-enter-a-valid-outgoing-email-address" />
 	<liferay-ui:error exception="<%= MailingListOutServerNameException.class %>" message="please-enter-a-valid-outgoing-server-name" />
 	<liferay-ui:error exception="<%= MailingListOutUserNameException.class %>" message="please-enter-a-valid-outgoing-user-name" />
-	<liferay-ui:error exception="<%= ReCaptchaException.class %>" message="recaptcha-verification-failed" />
 
 	<aui:model-context bean="<%= category %>" model="<%= MBCategory.class %>" />
 

@@ -18,7 +18,6 @@ import com.liferay.portal.kernel.captcha.CaptchaConfigurationException;
 import com.liferay.portal.kernel.captcha.CaptchaMaxChallengesException;
 import com.liferay.portal.kernel.captcha.CaptchaTextException;
 import com.liferay.portal.kernel.captcha.CaptchaUtil;
-import com.liferay.portal.kernel.captcha.ReCaptchaException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -111,8 +110,7 @@ public class EditCategoryAction extends PortletAction {
 					 e instanceof MailingListInUserNameException ||
 					 e instanceof MailingListOutEmailAddressException ||
 					 e instanceof MailingListOutServerNameException ||
-					 e instanceof MailingListOutUserNameException ||
-					 e instanceof ReCaptchaException) {
+					 e instanceof MailingListOutUserNameException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
 			}

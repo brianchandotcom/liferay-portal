@@ -214,7 +214,6 @@ else {
 	<liferay-ui:error exception="<%= LockedThreadException.class %>" message="thread-is-locked" />
 	<liferay-ui:error exception="<%= MessageBodyException.class %>" message="please-enter-a-valid-message" />
 	<liferay-ui:error exception="<%= MessageSubjectException.class %>" message="please-enter-a-valid-subject" />
-	<liferay-ui:error exception="<%= ReCaptchaException.class %>" message="recaptcha-verification-failed" />
 
 	<liferay-ui:asset-categories-error />
 

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 
 import java.net.HttpCookie;
+
 import java.nio.ByteBuffer;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -14,28 +14,29 @@
 
 package com.liferay.journal.service.model.listener;
 
-import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
+import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.journal.service.JournalContentSearchLocalService;
 import com.liferay.portal.ModelListenerException;
 import com.liferay.portal.model.BaseModelListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.ModelListener;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, service = ModelListener.class)
+@Component(service = ModelListener.class)
 public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onBeforeRemove(Layout layout) throws ModelListenerException {
 		try {
-			JournalArticleLocalServiceUtil.deleteLayoutArticleReferences(
+			_journalArticleLocalService.deleteLayoutArticleReferences(
 				layout.getGroupId(), layout.getUuid());
 
-			JournalContentSearchLocalServiceUtil.deleteLayoutContentSearches(
+			_journalContentSearchLocalService.deleteLayoutContentSearches(
 				layout.getGroupId(), layout.isPrivateLayout(),
 				layout.getLayoutId());
 		}
@@ -43,5 +44,22 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference
+	protected void setJournalArticleLocalService(
+		JournalArticleLocalService journalArticleLocalService) {
+
+		_journalArticleLocalService = journalArticleLocalService;
+	}
+
+	@Reference
+	protected void setJournalContentSearchLocalService(
+		JournalContentSearchLocalService journalContentSearchLocalService) {
+
+		_journalContentSearchLocalService = journalContentSearchLocalService;
+	}
+
+	private JournalArticleLocalService _journalArticleLocalService;
+	private JournalContentSearchLocalService _journalContentSearchLocalService;
 
 }

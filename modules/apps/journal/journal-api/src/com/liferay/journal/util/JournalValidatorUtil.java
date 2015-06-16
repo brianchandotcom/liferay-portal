@@ -15,36 +15,41 @@
 package com.liferay.journal.util;
 
 import com.liferay.journal.exception.FolderNameException;
-import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 /**
  * @author David Zhang
  */
 public class JournalValidatorUtil {
 
-	public static JournalValidator getJournalValidator() {
-		PortalRuntimePermission.checkGetBeanProperty(
-			JournalValidatorUtil.class);
-
-		return _journalValidator;
-	}
-
 	public static boolean isValidName(String name) {
-		return getJournalValidator().isValidName(name);
+		return getInstance().isValidName(name);
 	}
 
 	public static final void validateFolderName(String folderName)
 		throws FolderNameException {
 
-		getJournalValidator().validateFolderName(folderName);
+		getInstance().validateFolderName(folderName);
 	}
 
-	public void setJournalValidator(JournalValidator journalValidator) {
-		PortalRuntimePermission.checkSetBeanProperty(getClass());
-
-		_journalValidator = journalValidator;
+	private static JournalValidator getInstance() {
+		return _instance._serviceTracker.getService();
 	}
 
-	private static JournalValidator _journalValidator;
+	private JournalValidatorUtil() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		_serviceTracker = registry.trackServices(JournalValidator.class);
+
+		_serviceTracker.open();
+	}
+
+	private static final JournalValidatorUtil _instance =
+		new JournalValidatorUtil();
+
+	private final ServiceTracker<JournalValidator, JournalValidator>
+		_serviceTracker;
 
 }

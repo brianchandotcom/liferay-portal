@@ -228,7 +228,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 * @param  classNameId the class name ID of the entity to which the asset
 	 *         tag had been applied
 	 * @return the asset tag
-	 * @throws PortalException if a asset tag with the primary key could not be
+	 * @throws PortalException if an asset tag with the primary key could not be
 	 *         found or if a portal exception occurred
 	 */
 	@Override
@@ -320,7 +320,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the asset tags of the asset entry
+	 * Returns the asset tags of the asset entry.
 	 *
 	 * @param  entryId the primary key of the asset entry
 	 * @return the asset tags of the asset entry
@@ -334,7 +334,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 * Returns the asset tags in the groups.
 	 *
 	 * @param  groupIds the primary keys of the groups
-	 * @return the asset tags that have been added in the groups
+	 * @return the asset tags in the groups
 	 */
 	@Override
 	public List<AssetTag> getGroupsTags(long[] groupIds) {
@@ -353,7 +353,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	 * Returns the asset tags in the group.
 	 *
 	 * @param  groupId the primary key of the group
-	 * @return the asset tags that have been added in the group
+	 * @return the asset tags in the group
 	 */
 	@Override
 	public List<AssetTag> getGroupTags(long groupId) {
@@ -503,7 +503,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the names of all the asset tags
+	 * Returns the names of all the asset tags.
 	 *
 	 * @return the names of all the asset tags
 	 */
@@ -513,7 +513,7 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Returns the names of the asset tags of the entity
+	 * Returns the names of the asset tags of the entity.
 	 *
 	 * @param  classNameId the class name ID of the entity
 	 * @param  classPK the primary key of the entity
@@ -646,8 +646,8 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 	}
 
 	/**
-	 * Applies an asset tag to all the asset entries of a second asset tag and
-	 * deletes the second asset tag.
+	 * Replaces all occurrences of the first asset tag with the second asset tag
+	 * and deletes the first asset tag.
 	 *
 	 * @param  fromTagId the primary key of the asset tag to be replaced
 	 * @param  toTagId the primary key of the asset tag to apply to the asset

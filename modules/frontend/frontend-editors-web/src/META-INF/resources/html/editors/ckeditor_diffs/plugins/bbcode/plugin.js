@@ -32,7 +32,7 @@
 				editor.ui.addButton(
 					'Code',
 					{
-						click : function() {
+						click: function() {
 							editor.focus();
 							editor.fire('saveSnapshot');
 
@@ -54,7 +54,7 @@
 							);
 						},
 						icon: editor.config.imagesPath + 'code.png',
-						label: Liferay.Language.get('code')
+						label: editor.config.lang.code
 					}
 				);
 			}

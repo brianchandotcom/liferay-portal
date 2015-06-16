@@ -28,11 +28,17 @@ public interface WikiPageFinder {
 	public int countByCreateDate(long groupId, long nodeId,
 		java.sql.Timestamp createDate, boolean before);
 
+	public int countByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
+
 	public int filterCountByCreateDate(long groupId, long nodeId,
 		java.util.Date createDate, boolean before);
 
 	public int filterCountByCreateDate(long groupId, long nodeId,
 		java.sql.Timestamp createDate, boolean before);
+
+	public int filterCountByG_N_H_S(long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
 		long groupId, long nodeId, java.util.Date createDate, boolean before,
@@ -41,6 +47,10 @@ public interface WikiPageFinder {
 	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByCreateDate(
 		long groupId, long nodeId, java.sql.Timestamp createDate,
 		boolean before, int start, int end);
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> filterFindByG_N_H_S(
+		long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
 
 	public com.liferay.wiki.model.WikiPage findByResourcePrimKey(
 		long resourcePrimKey)
@@ -55,4 +65,8 @@ public interface WikiPageFinder {
 		boolean before, int start, int end);
 
 	public java.util.List<com.liferay.wiki.model.WikiPage> findByNoAssets();
+
+	public java.util.List<com.liferay.wiki.model.WikiPage> findByG_N_H_S(
+		long groupId, long nodeId, boolean head,
+		com.liferay.portal.kernel.dao.orm.QueryDefinition<com.liferay.wiki.model.WikiPage> queryDefinition);
 }

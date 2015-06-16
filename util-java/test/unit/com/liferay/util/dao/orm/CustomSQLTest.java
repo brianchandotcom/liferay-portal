@@ -138,7 +138,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetAnyStatusIncludeOwner() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(true);
 
 		testSQL("((userId = ? AND status != ?)  OR  -1 = ?) ");
@@ -147,7 +147,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetAnyStatusNotIncludeOwner() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_ANY);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(false);
 
 		testSQL("(userId = ?  AND  -1 = ?) ");
@@ -163,7 +163,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetExcludeStatusIncludeOwner() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(true);
 
 		testSQL("((userId = ? AND status != ?)  OR  status != ?) ");
@@ -172,7 +172,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetExcludeStatusNotIncludeOwner() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(false);
 
 		testSQL("(userId = ?  AND  status != ?) ");
@@ -180,7 +180,7 @@ public class CustomSQLTest {
 
 	@Test
 	public void testGetIncludeOwner() {
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(true);
 
 		testSQL("((userId = ? AND status != ?)  OR  -1 = ?) ");
@@ -196,7 +196,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetIncludeStatusIncludeOwner() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(true);
 
 		testSQL("((userId = ? AND status != ?)  OR  status = ?) ");
@@ -205,7 +205,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetIncludeStatusNotIncludeOwner() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(false);
 
 		testSQL("(userId = ?  AND  status = ?) ");
@@ -213,7 +213,7 @@ public class CustomSQLTest {
 
 	@Test
 	public void testGetNotIncludeOwner() {
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(false);
 
 		testSQL("(userId = ?  AND  -1 = ?) ");
@@ -222,7 +222,7 @@ public class CustomSQLTest {
 	@Test
 	public void testGetTableName() {
 		_queryDefinition.setStatus(WorkflowConstants.STATUS_APPROVED);
-		_queryDefinition.setUserId(_USER_ID);
+		_queryDefinition.setOwnerUserId(_USER_ID);
 		_queryDefinition.setIncludeOwner(true);
 
 		String expected =

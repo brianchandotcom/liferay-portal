@@ -24,7 +24,7 @@
 				WikiPage.groupId = ? AND
 				WikiPage.nodeId = ? AND
 				WikiPage.head = ? AND
-				([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] [$STATUS$])
+				([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 		]]>
 	</sql>
 	<sql id="com.liferay.wiki.service.persistence.WikiPageFinder.findByResourcePrimKey">
@@ -81,7 +81,7 @@
 						WikiPage.groupId = ? AND
 						WikiPage.nodeId = ? AND
 						WikiPage.head = ? AND
-						([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] [$STATUS$])
+						([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] [$STATUS$])
 				)
 				TEMP_TABLE
 					INNER JOIN WikiPage ON

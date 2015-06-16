@@ -54,7 +54,7 @@
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
 				([$FOLDER_ID$]) AND
-				([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] [$STATUS$]) AND
+				([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
 		]]>
 	</sql>
@@ -220,7 +220,7 @@
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = ?) AND
 				([$FOLDER_ID$]) AND
-				([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] [$STATUS$]) AND
+				([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] [$STATUS$]) AND
 				(tempJournalArticle.id_ IS NULL)
 			ORDER BY
 				JournalArticle.id_ ASC
@@ -302,7 +302,7 @@
 			WHERE
 				(JournalArticle.groupId = ?) AND
 				(JournalArticle.classNameId = 0) AND
-				([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] ([$STATUS$]))
+				([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 				[$ARTICLE_FOLDER_ID$]
 		]]>
 	</sql>
@@ -331,7 +331,7 @@
 					WHERE
 						(JournalArticle.groupId = ?) AND
 						(JournalArticle.classNameId = 0) AND
-						([$OWNER$] [$OWNER_AND_OR_CONNECTOR$] ([$STATUS$]))
+						([$USER_ID$] [$USER_ID_AND_OR_CONNECTOR$] ([$STATUS$]))
 						[$ARTICLE_FOLDER_ID$]
 					GROUP BY
 						JournalArticle.resourcePrimKey, JournalArticle.folderId, JournalArticle.articleId

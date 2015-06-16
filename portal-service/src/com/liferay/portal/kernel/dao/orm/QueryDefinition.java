@@ -43,12 +43,13 @@ public class QueryDefinition<T> {
 	}
 
 	public QueryDefinition(
-		int status, boolean excludeStatus, long userId, boolean includeOwner,
-		int start, int end, OrderByComparator<T> orderByComparator) {
+		int status, boolean excludeStatus, long ownerUserId,
+		boolean includeOwner, int start, int end,
+		OrderByComparator<T> orderByComparator) {
 
 		_status = status;
 		_excludeStatus = excludeStatus;
-		_userId = userId;
+		_ownerUserId = ownerUserId;
 		_includeOwner = includeOwner;
 		_start = start;
 		_end = end;
@@ -63,7 +64,7 @@ public class QueryDefinition<T> {
 		this(status, 0, false, start, end, orderByComparator);
 	}
 
-	public QueryDefinition(int status, long userId, boolean includeOwner) {
+	public QueryDefinition(int status, long ownerUserId, boolean includeOwner) {
 		if (status == WorkflowConstants.STATUS_ANY) {
 			setStatus(WorkflowConstants.STATUS_IN_TRASH, true);
 		}
@@ -71,12 +72,12 @@ public class QueryDefinition<T> {
 			setStatus(status);
 		}
 
-		_userId = userId;
+		_ownerUserId = ownerUserId;
 		_includeOwner = includeOwner;
 	}
 
 	public QueryDefinition(
-		int status, long userId, boolean includeOwner, int start, int end,
+		int status, long ownerUserId, boolean includeOwner, int start, int end,
 		OrderByComparator<T> orderByComparator) {
 
 		if (status == WorkflowConstants.STATUS_ANY) {
@@ -86,7 +87,7 @@ public class QueryDefinition<T> {
 			setStatus(status);
 		}
 
-		_userId = userId;
+		_ownerUserId = ownerUserId;
 		_includeOwner = includeOwner;
 		_start = start;
 		_end = end;
@@ -122,16 +123,16 @@ public class QueryDefinition<T> {
 		return new TableNameOrderByComparator<>(_orderByComparator, tableName);
 	}
 
+	public long getOwnerUserId() {
+		return _ownerUserId;
+	}
+
 	public int getStart() {
 		return _start;
 	}
 
 	public int getStatus() {
 		return _status;
-	}
-
-	public long getUserId() {
-		return _userId;
 	}
 
 	public boolean isExcludeStatus() {
@@ -166,6 +167,10 @@ public class QueryDefinition<T> {
 		_orderByComparator = orderByComparator;
 	}
 
+	public void setOwnerUserId(long ownerUserId) {
+		_ownerUserId = ownerUserId;
+	}
+
 	public void setStart(int start) {
 		_start = start;
 	}
@@ -179,17 +184,13 @@ public class QueryDefinition<T> {
 		_status = status;
 	}
 
-	public void setUserId(long userId) {
-		_userId = userId;
-	}
-
 	private Map<String, Serializable> _attributes;
 	private int _end = QueryUtil.ALL_POS;
 	private boolean _excludeStatus;
 	private boolean _includeOwner;
 	private OrderByComparator<T> _orderByComparator;
+	private long _ownerUserId;
 	private int _start = QueryUtil.ALL_POS;
 	private int _status = WorkflowConstants.STATUS_ANY;
-	private long _userId;
 
 }

@@ -152,8 +152,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			qPos.add(groupId);
 
-			if (queryDefinition.getUserId() > 0) {
-				qPos.add(queryDefinition.getUserId());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
 				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 
@@ -230,8 +230,8 @@ public class JournalFolderFinderImpl extends BasePersistenceImpl<JournalFolder>
 
 			qPos.add(groupId);
 
-			if (queryDefinition.getUserId() > 0) {
-				qPos.add(queryDefinition.getUserId());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
 				qPos.add(WorkflowConstants.STATUS_IN_TRASH);
 			}
 

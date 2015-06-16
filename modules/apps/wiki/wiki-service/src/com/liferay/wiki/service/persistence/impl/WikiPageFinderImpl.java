@@ -322,8 +322,8 @@ public class WikiPageFinderImpl
 			qPos.add(nodeId);
 			qPos.add(head);
 
-			if (queryDefinition.getUserId() > 0) {
-				qPos.add(queryDefinition.getUserId());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
 
 				if (queryDefinition.isIncludeOwner()) {
 					qPos.add(WorkflowConstants.STATUS_IN_TRASH);
@@ -431,8 +431,8 @@ public class WikiPageFinderImpl
 			qPos.add(nodeId);
 			qPos.add(head);
 
-			if (queryDefinition.getUserId() > 0) {
-				qPos.add(queryDefinition.getUserId());
+			if (queryDefinition.getOwnerUserId() > 0) {
+				qPos.add(queryDefinition.getOwnerUserId());
 
 				if (queryDefinition.isIncludeOwner()) {
 					qPos.add(WorkflowConstants.STATUS_IN_TRASH);

@@ -90,6 +90,11 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getEntry() {
+		return _record;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _record.getGroupId();
 	}

@@ -5162,6 +5162,17 @@ if (ppstate.equals("normal")) {
 		<record-git-commit-portal />
 	</target>
 
+	<target name="record-test-case-method-names">
+		<gradle-execute failonerror="false" task="writePoshiProperties">
+			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-PcomponentNames=${component.names}" />
+			<arg value="-PproductNames=${product.names}" />
+			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+		</gradle-execute>
+
+		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
+	</target>
+
 	<target name="record-test-class-file-names">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[
@@ -5486,6 +5497,13 @@ if (ppstate.equals("normal")) {
 			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PposhiTestName=${poshi.test.name}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
+			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+		</gradle-execute>
+	</target>
+
+	<target name="run-poshi-validation">
+		<gradle-execute failonerror="false" task="validatePoshi">
+			<arg value="--build-file=portal-web/build-test.gradle" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
 		</gradle-execute>
 	</target>

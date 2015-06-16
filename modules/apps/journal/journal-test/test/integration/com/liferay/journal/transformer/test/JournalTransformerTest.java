@@ -15,7 +15,10 @@
 package com.liferay.journal.transformer.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.journal.transformer.RegexTransformerUtil;
+import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
@@ -40,9 +43,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMFormTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.util.JournalUtil;
-import com.liferay.portlet.journal.util.RegexTransformerUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -240,7 +240,7 @@ public class JournalTransformerTest {
 		sb.append("<script type=\"text/javascript\">");
 		sb.append("Liferay.Service.Asset.AssetEntry.incrementViewCounter");
 		sb.append("({userId:0, className:'");
-		sb.append("com.liferay.portlet.journal.model.JournalArticle', ");
+		sb.append("com.liferay.journal.model.JournalArticle', ");
 		sb.append("classPK:1});");
 		sb.append("</script>");
 

@@ -14,6 +14,17 @@
 
 package com.liferay.journal.web.lar;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.impl.JournalArticleImpl;
+import com.liferay.journal.model.impl.JournalFeedImpl;
+import com.liferay.journal.model.impl.JournalFolderImpl;
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.journal.service.JournalFeedLocalServiceUtil;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.permission.JournalPermission;
+import com.liferay.journal.util.JournalContentUtil;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
@@ -41,17 +52,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalFeed;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.impl.JournalArticleImpl;
-import com.liferay.portlet.journal.model.impl.JournalFeedImpl;
-import com.liferay.portlet.journal.model.impl.JournalFolderImpl;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFeedLocalServiceUtil;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalPermission;
-import com.liferay.portlet.journal.util.JournalContentUtil;
 
 import java.util.List;
 
@@ -91,8 +91,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Hugo Huijser
  * @author Daniel Kocsis
  * @author László Csontos
+ * @see    com.liferay.journal.lar.JournalCreationStrategy
  * @see    com.liferay.portlet.exportimport.lar.PortletDataHandler
- * @see    com.liferay.portlet.journal.lar.JournalCreationStrategy
  */
 @Component(
 	property = {"javax.portlet.name=" + JournalPortletKeys.JOURNAL},

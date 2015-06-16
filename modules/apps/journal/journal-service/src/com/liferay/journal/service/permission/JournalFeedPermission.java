@@ -20,17 +20,19 @@ import com.liferay.journal.service.JournalFeedLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portlet.exportimport.staging.permission.StagingPermissionUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Raymond Augé
  */
-@OSGiBeanProperties(
-	property = {"model.class.name=com.liferay.journal.model.JournalFeed"}
+@Component(
+	property = {"model.class.name=com.liferay.journal.model.JournalFeed"},
+	service = BaseModelPermissionChecker.class
 )
 public class JournalFeedPermission implements BaseModelPermissionChecker {
 

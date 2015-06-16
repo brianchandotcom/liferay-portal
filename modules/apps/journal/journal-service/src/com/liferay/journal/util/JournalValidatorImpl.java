@@ -18,9 +18,12 @@ import com.liferay.journal.exception.FolderNameException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author David Zhang
  */
+@Component(immediate = true, service = JournalValidator.class)
 public final class JournalValidatorImpl implements JournalValidator {
 
 	@Override

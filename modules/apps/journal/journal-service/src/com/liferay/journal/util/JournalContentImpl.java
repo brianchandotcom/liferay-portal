@@ -40,11 +40,14 @@ import javax.portlet.RenderRequest;
 
 import org.apache.commons.lang.time.StopWatch;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
  * @author Michael Young
  */
+@Component(immediate = true, service = JournalContent.class)
 @DoPrivileged
 public class JournalContentImpl implements JournalContent {
 

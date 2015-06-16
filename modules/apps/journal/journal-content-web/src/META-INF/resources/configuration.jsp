@@ -18,6 +18,7 @@
 
 <%
 JournalArticle article = journalContentDisplayContext.getArticle();
+JournalArticleDisplay articleDisplay = journalContentDisplayContext.getArticleDisplay();
 
 String ddmTemplateKey = journalContentDisplayContext.getDDMTemplateKey();
 %>

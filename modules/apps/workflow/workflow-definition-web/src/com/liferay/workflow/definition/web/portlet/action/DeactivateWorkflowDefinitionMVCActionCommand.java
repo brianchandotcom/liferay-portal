@@ -12,34 +12,30 @@
  * details.
  */
 
-package com.liferay.source.formatter.dependencies;
+package com.liferay.workflow.definition.web.portlet.action;
 
-import aQute.bnd.annotation.metatype.Meta;
-
-import com.liferay.util.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.util.PortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Hugo Huijser
+ * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=com_liferay_social_activities_portlet_SocialActivitiesPortlet",
-		"mvc.command.name=rss"
+		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION,
+		"mvc.command.name=deactivateWorkflowDefinition"
 	},
 	service = MVCActionCommand.class
 )
-public class ExceedMaxLineLength {
+public class DeactivateWorkflowDefinitionMVCActionCommand
+	extends RestoreWorkflowDefinitionMVCActionCommand {
 
-	public static final String TEST =
-		"This is very long line and therefore it will exceed the maximum allowed line length";
-
-	@Meta.AD(
-		deflt = "java.lang.Class|java.lang.ClassLoader|java.lang.ClassValue|java.lang.Thread",
-		required = false
-	)
-	public String[] restrictedClasses();
+	@Override
+	protected boolean isActive() {
+		return false;
+	}
 
 }

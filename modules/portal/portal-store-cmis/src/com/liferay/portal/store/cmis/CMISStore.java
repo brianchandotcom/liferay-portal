@@ -61,6 +61,9 @@ import org.apache.chemistry.opencmis.commons.enums.IncludeRelationships;
 import org.apache.chemistry.opencmis.commons.enums.UnfileObject;
 import org.apache.chemistry.opencmis.commons.impl.dataobjects.ContentStreamImpl;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -441,14 +444,18 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Activate
-	protected void activate(Map<String, Object> properties) {
+	protected void activate(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		_cmisConfiguration = Configurable.createConfigurable(
 			CMISConfiguration.class, properties);
 		_operationContext = createOperationContext();
+
 		_sessionFactory = SessionFactoryImpl.newInstance();
 
 		_session = createSession(
-			_cmisConfiguration, _operationContext, _sessionFactory);
+			bundleContext.getBundle(), _cmisConfiguration, _operationContext,
+			_sessionFactory);
 
 		_systemRootDir = getFolder(
 			_session.getRootFolder(), _cmisConfiguration.systemRootDir());
@@ -524,8 +531,8 @@ public class CMISStore extends BaseStore {
 	}
 
 	protected Session createSession(
-		CMISConfiguration cmisConfiguration, OperationContext operationContext,
-		SessionFactory sessionFactory) {
+		Bundle bundle, CMISConfiguration cmisConfiguration,
+		OperationContext operationContext, SessionFactory sessionFactory) {
 
 		Map<String, String> parameters = new HashMap<>();
 
@@ -546,16 +553,31 @@ public class CMISStore extends BaseStore {
 		parameters.put(
 			SessionParameter.USER, cmisConfiguration.credentialsUsername());
 
-		List<Repository> repositories = sessionFactory.getRepositories(
-			parameters);
+		Thread thread = Thread.currentThread();
 
-		Repository repository = repositories.get(0);
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
 
-		Session session = repository.createSession();
+		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
-		session.setDefaultContext(operationContext);
+		ClassLoader bundleClassLoader = bundleWiring.getClassLoader();
 
-		return session;
+		thread.setContextClassLoader(bundleClassLoader);
+
+		try {
+			List<Repository> repositories = sessionFactory.getRepositories(
+				parameters);
+
+			Repository repository = repositories.get(0);
+
+			Session session = repository.createSession();
+
+			session.setDefaultContext(operationContext);
+
+			return session;
+		}
+		finally {
+			thread.setContextClassLoader(contextClassLoader);
+		}
 	}
 
 	@Deactivate
@@ -720,9 +742,11 @@ public class CMISStore extends BaseStore {
 	}
 
 	@Modified
-	protected void modified(Map<String, Object> properties) {
+	protected void modified(
+		BundleContext bundleContext, Map<String, Object> properties) {
+
 		deactivate();
-		activate(properties);
+		activate(bundleContext, properties);
 	}
 
 	private CMISConfiguration _cmisConfiguration;

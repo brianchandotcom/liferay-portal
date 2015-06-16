@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.access.control;
+package com.liferay.portal.kernel.security.access.control;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AccessControlUtil {
 
 	public static AccessControl getAccessControl() {
-		if (_accessControl == null) {
-			_accessControl = new AccessControlImpl();
-		}
+		PortalRuntimePermission.checkGetBeanProperty(AccessControlUtil.class);
 
 		return _accessControl;
 	}
@@ -57,6 +57,30 @@ public class AccessControlUtil {
 		getAccessControl().initContextUser(userId);
 	}
 
+	public static boolean isAccessAllowed(
+		HttpServletRequest request, Set<String> hostsAllowed) {
+
+		if (hostsAllowed.isEmpty()) {
+			return true;
+		}
+
+		String remoteAddr = request.getRemoteAddr();
+
+		if (hostsAllowed.contains(remoteAddr)) {
+			return true;
+		}
+
+		String computerAddress = PortalUtil.getComputerAddress();
+
+		if (computerAddress.equals(remoteAddr) &&
+			hostsAllowed.contains(_SERVER_IP)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	public static void setAccessControlContext(
 		AccessControlContext accessControlContext) {
 
@@ -70,8 +94,12 @@ public class AccessControlUtil {
 	}
 
 	public void setAccessControl(AccessControl accessControl) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_accessControl = accessControl;
 	}
+
+	private static final String _SERVER_IP = "SERVER_IP";
 
 	private static AccessControl _accessControl;
 	private static final ThreadLocal<AccessControlContext>

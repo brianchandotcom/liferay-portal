@@ -249,6 +249,10 @@ public interface Portal {
 	 */
 	public String escapeRedirect(String url);
 
+	public void generateHttpAuthorizationHeaders(
+		HttpServletRequest request, HttpServletResponse response,
+		boolean digest);
+
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *

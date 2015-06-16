@@ -927,6 +927,36 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public void generateHttpAuthorizationHeaders(
+		HttpServletRequest request, HttpServletResponse response,
+		boolean digest) {
+
+		if (!digest) {
+			response.setHeader(HttpHeaders.WWW_AUTHENTICATE, _BASIC_REALM);
+			response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
+		}
+
+		// Must generate a new nonce for each 401 (RFC2617, 3.2.1)
+
+		long companyId = PortalInstances.getCompanyId(request);
+
+		String remoteAddress = request.getRemoteAddr();
+
+		String nonce = NonceUtil.generate(companyId, remoteAddress);
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(_DIGEST_REALM);
+		sb.append(", nonce=\"");
+		sb.append(nonce);
+		sb.append("\"");
+
+		response.setHeader(HttpHeaders.WWW_AUTHENTICATE, sb.toString());
+		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	}
+
+	@Override
 	public String generateRandomKey(HttpServletRequest request, String input) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -8374,6 +8404,12 @@ public class PortalImpl implements Portal {
 
 	private static final Log _logWebServerServlet = LogFactoryUtil.getLog(
 		WebServerServlet.class);
+
+	private static final String _BASIC_REALM =
+		"Basic realm=\"" + PORTAL_REALM + "\"";
+
+	private static final String _DIGEST_REALM =
+		"Digest realm=\"" + PORTAL_REALM + "\"";
 
 	private static final String _J_SECURITY_CHECK = "j_security_check";
 

@@ -14,9 +14,9 @@
 
 package com.liferay.portal.security.sso;
 
+import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.sso.SSO;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PrefsPropsUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.registry.Registry;
@@ -55,28 +55,15 @@ public class SSOUtil {
 		return _instance._getSignInUrl(companyId, signInURL);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by
+	 * {@link AccessControlUtil#isAccessAllowed(HttpServletRequest, Set)}
+	 */
+	@Deprecated
 	public static boolean isAccessAllowed(
 		HttpServletRequest request, Set<String> hostsAllowed) {
 
-		if (hostsAllowed.isEmpty()) {
-			return true;
-		}
-
-		String remoteAddr = request.getRemoteAddr();
-
-		if (hostsAllowed.contains(remoteAddr)) {
-			return true;
-		}
-
-		String computerAddress = PortalUtil.getComputerAddress();
-
-		if (computerAddress.equals(remoteAddr) &&
-			hostsAllowed.contains(_SERVER_IP)) {
-
-			return true;
-		}
-
-		return false;
+		return AccessControlUtil.isAccessAllowed(request, hostsAllowed);
 	}
 
 	public static boolean isLoginRedirectRequired(long companyId) {
@@ -184,8 +171,6 @@ public class SSOUtil {
 
 		return false;
 	}
-
-	private static final String _SERVER_IP = "SERVER_IP";
 
 	private static final SSOUtil _instance = new SSOUtil();
 

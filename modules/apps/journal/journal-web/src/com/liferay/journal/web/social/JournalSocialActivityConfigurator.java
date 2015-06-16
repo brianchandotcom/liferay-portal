@@ -32,7 +32,8 @@ public class JournalSocialActivityConfigurator {
 	@Activate
 	protected void activate() throws Exception {
 		String xml = new String(
-			FileUtil.getBytes(getClass(), "/WEB-INF/liferay-social.xml"));
+			FileUtil.getBytes(
+				getClass(), "/META-INF/social/liferay-social.xml"));
 
 		SocialConfigurationUtil.read(
 			getClass().getClassLoader(), new String[] {xml});

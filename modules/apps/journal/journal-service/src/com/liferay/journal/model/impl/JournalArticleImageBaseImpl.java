@@ -15,6 +15,7 @@
 package com.liferay.journal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.journal.model.JournalArticleImage;
 import com.liferay.journal.service.JournalArticleImageLocalServiceUtil;
 

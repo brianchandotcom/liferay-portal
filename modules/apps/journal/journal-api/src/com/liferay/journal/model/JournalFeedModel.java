@@ -15,14 +15,17 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
+
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -449,8 +452,7 @@ public interface JournalFeedModel extends BaseModel<JournalFeed>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalFeed journalFeed);
+	public int compareTo(com.liferay.journal.model.JournalFeed journalFeed);
 
 	@Override
 	public int hashCode();

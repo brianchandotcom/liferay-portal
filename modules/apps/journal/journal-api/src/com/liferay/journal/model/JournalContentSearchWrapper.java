@@ -15,6 +15,7 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -109,7 +110,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	}
 
 	@Override
-	public Object clone() {
+	public java.lang.Object clone() {
 		return new JournalContentSearchWrapper((JournalContentSearch)_journalContentSearch.clone());
 	}
 
@@ -125,7 +126,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	* @return the article ID of this journal content search
 	*/
 	@Override
-	public String getArticleId() {
+	public java.lang.String getArticleId() {
 		return _journalContentSearch.getArticleId();
 	}
 
@@ -180,7 +181,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	* @return the portlet ID of this journal content search
 	*/
 	@Override
-	public String getPortletId() {
+	public java.lang.String getPortletId() {
 		return _journalContentSearch.getPortletId();
 	}
 
@@ -250,7 +251,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	* @param articleId the article ID of this journal content search
 	*/
 	@Override
-	public void setArticleId(String articleId) {
+	public void setArticleId(java.lang.String articleId) {
 		_journalContentSearch.setArticleId(articleId);
 	}
 
@@ -328,7 +329,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	* @param portletId the portlet ID of this journal content search
 	*/
 	@Override
-	public void setPortletId(String portletId) {
+	public void setPortletId(java.lang.String portletId) {
 		_journalContentSearch.setPortletId(portletId);
 	}
 
@@ -368,7 +369,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	}
 
 	@Override
-	public String toString() {
+	public java.lang.String toString() {
 		return _journalContentSearch.toString();
 	}
 
@@ -378,7 +379,7 @@ public class JournalContentSearchWrapper implements JournalContentSearch,
 	}
 
 	@Override
-	public String toXmlString() {
+	public java.lang.String toXmlString() {
 		return _journalContentSearch.toXmlString();
 	}
 

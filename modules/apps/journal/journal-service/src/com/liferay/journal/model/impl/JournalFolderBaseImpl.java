@@ -15,11 +15,13 @@
 package com.liferay.journal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

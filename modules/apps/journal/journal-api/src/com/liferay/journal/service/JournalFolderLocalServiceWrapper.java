@@ -15,7 +15,7 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.journal.exception.NoSuchFolderException;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
@@ -35,9 +35,9 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder addFolder(
-		long userId, long groupId, long parentFolderId, String name,
-		String description,
+	public com.liferay.journal.model.JournalFolder addFolder(long userId,
+		long groupId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.addFolder(userId, groupId,
@@ -85,15 +85,14 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder deleteFolder(
-		long folderId)
+	public com.liferay.journal.model.JournalFolder deleteFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.deleteFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder deleteFolder(
-		long folderId, boolean includeTrashedEntries)
+	public com.liferay.journal.model.JournalFolder deleteFolder(long folderId,
+		boolean includeTrashedEntries)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.deleteFolder(folderId,
 			includeTrashedEntries);
@@ -227,20 +226,19 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder fetchFolder(
-		long folderId) {
+	public com.liferay.journal.model.JournalFolder fetchFolder(long folderId) {
 		return _journalFolderLocalService.fetchFolder(folderId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder fetchFolder(
-		long groupId, String name) {
+	public com.liferay.journal.model.JournalFolder fetchFolder(long groupId,
+		java.lang.String name) {
 		return _journalFolderLocalService.fetchFolder(groupId, name);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder fetchFolder(
-		long groupId, long parentFolderId, String name) {
+	public com.liferay.journal.model.JournalFolder fetchFolder(long groupId,
+		long parentFolderId, java.lang.String name) {
 		return _journalFolderLocalService.fetchFolder(groupId, parentFolderId,
 			name);
 	}
@@ -260,7 +258,7 @@ public class JournalFolderLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.journal.model.JournalFolder fetchJournalFolderByUuidAndGroupId(
-		String uuid, long groupId) {
+		java.lang.String uuid, long groupId) {
 		return _journalFolderLocalService.fetchJournalFolderByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -276,7 +274,7 @@ public class JournalFolderLocalServiceWrapper
 	* @return the Spring bean ID for this bean
 	*/
 	@Override
-	public String getBeanIdentifier() {
+	public java.lang.String getBeanIdentifier() {
 		return _journalFolderLocalService.getBeanIdentifier();
 	}
 
@@ -307,8 +305,7 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder getFolder(
-		long folderId)
+	public com.liferay.journal.model.JournalFolder getFolder(long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getFolder(folderId);
 	}
@@ -347,14 +344,14 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<Object> getFoldersAndArticles(
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId) {
 		return _journalFolderLocalService.getFoldersAndArticles(groupId,
 			folderId);
 	}
 
 	@Override
-	public java.util.List<Object> getFoldersAndArticles(
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return _journalFolderLocalService.getFoldersAndArticles(groupId,
@@ -362,7 +359,7 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<Object> getFoldersAndArticles(
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int status) {
 		return _journalFolderLocalService.getFoldersAndArticles(groupId,
 			folderId, status);
@@ -383,7 +380,7 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public int getFoldersAndArticlesCount(long groupId,
-		java.util.List<Long> folderIds, int status) {
+		java.util.List<java.lang.Long> folderIds, int status) {
 		return _journalFolderLocalService.getFoldersAndArticlesCount(groupId,
 			folderIds, status);
 	}
@@ -402,7 +399,7 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public long getInheritedWorkflowFolderId(long folderId)
-		throws NoSuchFolderException {
+		throws com.liferay.journal.exception.NoSuchFolderException {
 		return _journalFolderLocalService.getInheritedWorkflowFolderId(folderId);
 	}
 
@@ -430,7 +427,7 @@ public class JournalFolderLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.journal.model.JournalFolder getJournalFolderByUuidAndGroupId(
-		String uuid, long groupId)
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.getJournalFolderByUuidAndGroupId(uuid,
 			groupId);
@@ -462,7 +459,7 @@ public class JournalFolderLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalFolder> getJournalFoldersByUuidAndCompanyId(
-		String uuid, long companyId) {
+		java.lang.String uuid, long companyId) {
 		return _journalFolderLocalService.getJournalFoldersByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -479,7 +476,7 @@ public class JournalFolderLocalServiceWrapper
 	*/
 	@Override
 	public java.util.List<com.liferay.journal.model.JournalFolder> getJournalFoldersByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
+		java.lang.String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFolder> orderByComparator) {
 		return _journalFolderLocalService.getJournalFoldersByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
@@ -502,7 +499,7 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public long getOverridedDDMStructuresFolderId(long folderId)
-		throws NoSuchFolderException {
+		throws com.liferay.journal.exception.NoSuchFolderException {
 		return _journalFolderLocalService.getOverridedDDMStructuresFolderId(folderId);
 	}
 
@@ -514,14 +511,14 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public void getSubfolderIds(java.util.List<Long> folderIds,
+	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
 		long groupId, long folderId) {
 		_journalFolderLocalService.getSubfolderIds(folderIds, groupId, folderId);
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder moveFolder(
-		long folderId, long parentFolderId,
+	public com.liferay.journal.model.JournalFolder moveFolder(long folderId,
+		long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.moveFolder(folderId, parentFolderId,
@@ -552,7 +549,7 @@ public class JournalFolderLocalServiceWrapper
 
 	@Override
 	public void rebuildTree(long companyId, long parentFolderId,
-		String parentTreePath, boolean reindex)
+		java.lang.String parentTreePath, boolean reindex)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderLocalService.rebuildTree(companyId, parentFolderId,
 			parentTreePath, reindex);
@@ -570,7 +567,7 @@ public class JournalFolderLocalServiceWrapper
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_journalFolderLocalService.setBeanIdentifier(beanIdentifier);
 	}
 
@@ -589,7 +586,7 @@ public class JournalFolderLocalServiceWrapper
 	@Override
 	public void updateAsset(long userId,
 		com.liferay.journal.model.JournalFolder folder,
-		long[] assetCategoryIds, String[] assetTagNames,
+		long[] assetCategoryIds, java.lang.String[] assetTagNames,
 		long[] assetLinkEntryIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalFolderLocalService.updateAsset(userId, folder,
@@ -597,9 +594,9 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder updateFolder(
-		long userId, long groupId, long folderId, long parentFolderId,
-		String name, String description,
+	public com.liferay.journal.model.JournalFolder updateFolder(long userId,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -610,9 +607,9 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder updateFolder(
-		long userId, long groupId, long folderId, long parentFolderId,
-		String name, String description,
+	public com.liferay.journal.model.JournalFolder updateFolder(long userId,
+		long groupId, long folderId, long parentFolderId,
+		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -643,9 +640,9 @@ public class JournalFolderLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.journal.model.JournalFolder updateStatus(
-		long userId, com.liferay.journal.model.JournalFolder folder,
-		int status) throws com.liferay.portal.kernel.exception.PortalException {
+	public com.liferay.journal.model.JournalFolder updateStatus(long userId,
+		com.liferay.journal.model.JournalFolder folder, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolderLocalService.updateStatus(userId, folder, status);
 	}
 

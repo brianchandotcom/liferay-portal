@@ -15,6 +15,7 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
@@ -46,9 +47,9 @@ public interface JournalFolderService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link JournalFolderServiceUtil} to access the journal folder remote service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFolderServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public com.liferay.journal.model.JournalFolder addFolder(
-		long groupId, long parentFolderId, String name,
-		String description,
+	public com.liferay.journal.model.JournalFolder addFolder(long groupId,
+		long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -58,15 +59,15 @@ public interface JournalFolderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder fetchFolder(
-		long folderId) throws PortalException;
+	public com.liferay.journal.model.JournalFolder fetchFolder(long folderId)
+		throws PortalException;
 
 	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public String getBeanIdentifier();
+	public java.lang.String getBeanIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.portlet.dynamicdatamapping.model.DDMStructure> getDDMStructures(
@@ -74,12 +75,12 @@ public interface JournalFolderService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.journal.model.JournalFolder getFolder(
-		long folderId) throws PortalException;
+	public com.liferay.journal.model.JournalFolder getFolder(long folderId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<Long> getFolderIds(long groupId,
-											 long folderId) throws PortalException;
+	public java.util.List<java.lang.Long> getFolderIds(long groupId,
+		long folderId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalFolder> getFolders(
@@ -102,12 +103,12 @@ public interface JournalFolderService extends BaseService {
 		long groupId, long parentFolderId, int status, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<Object> getFoldersAndArticles(
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<Object> getFoldersAndArticles(
+	public java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc);
 
@@ -116,11 +117,11 @@ public interface JournalFolderService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId, long folderId,
-										  int status);
+		int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersAndArticlesCount(long groupId,
-										  java.util.List<Long> folderIds, int status);
+		java.util.List<java.lang.Long> folderIds, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFoldersCount(long groupId, long parentFolderId);
@@ -129,24 +130,24 @@ public interface JournalFolderService extends BaseService {
 	public int getFoldersCount(long groupId, long parentFolderId, int status);
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(java.util.List, long,
 	long, boolean)}
 	*/
-	@Deprecated
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(java.util.List<Long> folderIds,
-								long groupId, long folderId);
+	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
+		long groupId, long folderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public void getSubfolderIds(java.util.List<Long> folderIds,
-								long groupId, long folderId, boolean recurse);
+	public void getSubfolderIds(java.util.List<java.lang.Long> folderIds,
+		long groupId, long folderId, boolean recurse);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<Long> getSubfolderIds(long groupId,
-												long folderId, boolean recurse);
+	public java.util.List<java.lang.Long> getSubfolderIds(long groupId,
+		long folderId, boolean recurse);
 
-	public com.liferay.journal.model.JournalFolder moveFolder(
-		long folderId, long parentFolderId,
+	public com.liferay.journal.model.JournalFolder moveFolder(long folderId,
+		long parentFolderId,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
@@ -165,7 +166,7 @@ public interface JournalFolderService extends BaseService {
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public void setBeanIdentifier(String beanIdentifier);
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	public void subscribe(long groupId, long folderId)
 		throws PortalException;
@@ -173,18 +174,16 @@ public interface JournalFolderService extends BaseService {
 	public void unsubscribe(long groupId, long folderId)
 		throws PortalException;
 
-	public com.liferay.journal.model.JournalFolder updateFolder(
-		long groupId, long folderId, long parentFolderId,
-		String name, String description,
-		long[] ddmStructureIds, int restrictionType,
-		boolean mergeWithParentFolder,
+	public com.liferay.journal.model.JournalFolder updateFolder(long groupId,
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, long[] ddmStructureIds,
+		int restrictionType, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 
-	public com.liferay.journal.model.JournalFolder updateFolder(
-		long groupId, long folderId, long parentFolderId,
-		String name, String description,
-		boolean mergeWithParentFolder,
+	public com.liferay.journal.model.JournalFolder updateFolder(long groupId,
+		long folderId, long parentFolderId, java.lang.String name,
+		java.lang.String description, boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
 }

@@ -23,30 +23,30 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface JournalFeedFinder {
 	public int countByKeywords(long companyId, long groupId,
-							   String keywords);
+		java.lang.String keywords);
 
 	public int countByC_G_F_N_D(long companyId, long groupId,
-								String feedId, String name,
-								String description, boolean andOperator);
+		java.lang.String feedId, java.lang.String name,
+		java.lang.String description, boolean andOperator);
 
 	public int countByC_G_F_N_D(long companyId, long groupId,
-								String[] feedIds, String[] names,
-								String[] descriptions, boolean andOperator);
+		java.lang.String[] feedIds, java.lang.String[] names,
+		java.lang.String[] descriptions, boolean andOperator);
 
 	public java.util.List<com.liferay.journal.model.JournalFeed> findByKeywords(
-		long companyId, long groupId, String keywords, int start,
+		long companyId, long groupId, java.lang.String keywords, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFeed> obc);
 
 	public java.util.List<com.liferay.journal.model.JournalFeed> findByC_G_F_N_D(
-		long companyId, long groupId, String feedId,
-		String name, String description,
+		long companyId, long groupId, java.lang.String feedId,
+		java.lang.String name, java.lang.String description,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFeed> obc);
 
 	public java.util.List<com.liferay.journal.model.JournalFeed> findByC_G_F_N_D(
-		long companyId, long groupId, String[] feedIds,
-		String[] names, String[] descriptions,
+		long companyId, long groupId, java.lang.String[] feedIds,
+		java.lang.String[] names, java.lang.String[] descriptions,
 		boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.journal.model.JournalFeed> obc);
 }

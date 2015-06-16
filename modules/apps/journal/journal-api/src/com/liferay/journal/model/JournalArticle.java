@@ -15,6 +15,7 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.model.TreeModel;
@@ -54,28 +55,28 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 		};
 
 	@Override
-	public String buildTreePath()
+	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public long getArticleImageId(String elInstanceId,
-								  String elName, String languageId);
+	public long getArticleImageId(java.lang.String elInstanceId,
+		java.lang.String elName, java.lang.String languageId);
 
-	public String getArticleImageURL(
+	public java.lang.String getArticleImageURL(
 		com.liferay.portal.theme.ThemeDisplay themeDisplay);
 
 	public com.liferay.journal.model.JournalArticleResource getArticleResource()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
-	public String getArticleResourceUuid()
+	public java.lang.String getArticleResourceUuid()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getAvailableLanguageIds}
 	*/
-	@Deprecated()
-	public String[] getAvailableLocales();
+	@java.lang.Deprecated()
+	public java.lang.String[] getAvailableLocales();
 
-	public String getContentByLocale(String languageId);
+	public java.lang.String getContentByLocale(java.lang.String languageId);
 
 	public com.liferay.portlet.dynamicdatamapping.model.DDMStructure getDDMStructure()
 		throws com.liferay.portal.kernel.exception.PortalException;
@@ -86,8 +87,8 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 	/**
 	* @deprecated As of 6.2.0, replaced by {@link #getDefaultLanguageId}
 	*/
-	@Deprecated()
-	public String getDefaultLocale();
+	@java.lang.Deprecated()
+	public java.lang.String getDefaultLocale();
 
 	public com.liferay.portal.kernel.xml.Document getDocument();
 
@@ -96,44 +97,44 @@ public interface JournalArticle extends JournalArticleModel, PersistedModel,
 
 	public com.liferay.portal.model.Layout getLayout();
 
-	public String getSmallImageType()
+	public java.lang.String getSmallImageType()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getDDMStructureKey()}
 	*/
-	@Deprecated()
-	public String getStructureId();
+	@java.lang.Deprecated()
+	public java.lang.String getStructureId();
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey()}
 	*/
-	@Deprecated()
-	public String getTemplateId();
+	@java.lang.Deprecated()
+	public java.lang.String getTemplateId();
 
 	public boolean hasApprovedVersion();
 
 	/**
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
-	@Deprecated()
+	@java.lang.Deprecated()
 	public boolean isTemplateDriven();
 
-	public void setDefaultLanguageId(String defaultLanguageId);
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId);
 
 	public void setDocument(com.liferay.portal.kernel.xml.Document document);
 
-	public void setSmallImageType(String smallImageType);
+	public void setSmallImageType(java.lang.String smallImageType);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #setDDMStructureKey(String)}
 	*/
-	@Deprecated()
-	public void setStructureId(String ddmStructureKey);
+	@java.lang.Deprecated()
+	public void setStructureId(java.lang.String ddmStructureKey);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #setDDMTemplateKey(String)}
 	*/
-	@Deprecated()
-	public void setTemplateId(String ddmTemplateKey);
+	@java.lang.Deprecated()
+	public void setTemplateId(java.lang.String ddmTemplateKey);
 }

@@ -15,13 +15,17 @@
 package com.liferay.journal.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.journal.exception.NoSuchArticleResourceException;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
+
+import com.liferay.journal.model.JournalArticleResource;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.journal.model.JournalArticleResource;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
@@ -116,7 +120,7 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @return the matching journal article resources
 	*/
-	public static List<JournalArticleResource> findByUuid(String uuid) {
+	public static List<JournalArticleResource> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,7 +137,7 @@ public class JournalArticleResourceUtil {
 	* @return the range of matching journal article resources
 	*/
 	public static List<JournalArticleResource> findByUuid(
-		String uuid, int start, int end) {
+		java.lang.String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,7 +155,7 @@ public class JournalArticleResourceUtil {
 	* @return the ordered range of matching journal article resources
 	*/
 	public static List<JournalArticleResource> findByUuid(
-		String uuid, int start, int end,
+		java.lang.String uuid, int start, int end,
 		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
@@ -162,12 +166,12 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article resource
-	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource findByUuid_First(
-		String uuid,
+		java.lang.String uuid,
 		OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -179,7 +183,7 @@ public class JournalArticleResourceUtil {
 	* @return the first matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource fetchByUuid_First(
-		String uuid,
+		java.lang.String uuid,
 		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -190,12 +194,12 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article resource
-	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource findByUuid_Last(
-		String uuid,
+		java.lang.String uuid,
 		OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -207,7 +211,7 @@ public class JournalArticleResourceUtil {
 	* @return the last matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource fetchByUuid_Last(
-		String uuid,
+		java.lang.String uuid,
 		OrderByComparator<JournalArticleResource> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -219,12 +223,12 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article resource
-	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
 	public static JournalArticleResource[] findByUuid_PrevAndNext(
-		long resourcePrimKey, String uuid,
+		long resourcePrimKey, java.lang.String uuid,
 		OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(resourcePrimKey, uuid,
 			orderByComparator);
@@ -235,7 +239,7 @@ public class JournalArticleResourceUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(String uuid) {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -245,21 +249,21 @@ public class JournalArticleResourceUtil {
 	* @param uuid the uuid
 	* @return the number of matching journal article resources
 	*/
-	public static int countByUuid(String uuid) {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
 	/**
-	* Returns the journal article resource where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchArticleResourceException} if it could not be found.
+	* Returns the journal article resource where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.journal.NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching journal article resource
-	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
-	public static JournalArticleResource findByUUID_G(String uuid,
+	public static JournalArticleResource findByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -270,7 +274,7 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static JournalArticleResource fetchByUUID_G(String uuid,
+	public static JournalArticleResource fetchByUUID_G(java.lang.String uuid,
 		long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
@@ -283,7 +287,7 @@ public class JournalArticleResourceUtil {
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
-	public static JournalArticleResource fetchByUUID_G(String uuid,
+	public static JournalArticleResource fetchByUUID_G(java.lang.String uuid,
 		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -295,9 +299,9 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @return the journal article resource that was removed
 	*/
-	public static JournalArticleResource removeByUUID_G(String uuid,
+	public static JournalArticleResource removeByUUID_G(java.lang.String uuid,
 		long groupId)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -308,7 +312,7 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @return the number of matching journal article resources
 	*/
-	public static int countByUUID_G(String uuid, long groupId) {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -365,11 +369,11 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching journal article resource
-	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource findByGroupId_First(long groupId,
 		OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -391,11 +395,11 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching journal article resource
-	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource findByGroupId_Last(long groupId,
 		OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -418,12 +422,12 @@ public class JournalArticleResourceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next journal article resource
-	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
 	public static JournalArticleResource[] findByGroupId_PrevAndNext(
 		long resourcePrimKey, long groupId,
 		OrderByComparator<JournalArticleResource> orderByComparator)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(resourcePrimKey, groupId,
 			orderByComparator);
@@ -449,16 +453,16 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	* Returns the journal article resource where groupId = &#63; and articleId = &#63; or throws a {@link NoSuchArticleResourceException} if it could not be found.
+	* Returns the journal article resource where groupId = &#63; and articleId = &#63; or throws a {@link com.liferay.journal.NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param groupId the group ID
 	* @param articleId the article ID
 	* @return the matching journal article resource
-	* @throws NoSuchArticleResourceException if a matching journal article resource could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource findByG_A(long groupId,
-		String articleId)
-		throws NoSuchArticleResourceException {
+		java.lang.String articleId)
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByG_A(groupId, articleId);
 	}
 
@@ -470,7 +474,7 @@ public class JournalArticleResourceUtil {
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource fetchByG_A(long groupId,
-		String articleId) {
+		java.lang.String articleId) {
 		return getPersistence().fetchByG_A(groupId, articleId);
 	}
 
@@ -483,7 +487,7 @@ public class JournalArticleResourceUtil {
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	public static JournalArticleResource fetchByG_A(long groupId,
-		String articleId, boolean retrieveFromCache) {
+		java.lang.String articleId, boolean retrieveFromCache) {
 		return getPersistence().fetchByG_A(groupId, articleId, retrieveFromCache);
 	}
 
@@ -495,8 +499,8 @@ public class JournalArticleResourceUtil {
 	* @return the journal article resource that was removed
 	*/
 	public static JournalArticleResource removeByG_A(long groupId,
-		String articleId)
-		throws NoSuchArticleResourceException {
+		java.lang.String articleId)
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().removeByG_A(groupId, articleId);
 	}
 
@@ -507,7 +511,7 @@ public class JournalArticleResourceUtil {
 	* @param articleId the article ID
 	* @return the number of matching journal article resources
 	*/
-	public static int countByG_A(long groupId, String articleId) {
+	public static int countByG_A(long groupId, java.lang.String articleId) {
 		return getPersistence().countByG_A(groupId, articleId);
 	}
 
@@ -546,10 +550,10 @@ public class JournalArticleResourceUtil {
 	*
 	* @param resourcePrimKey the primary key of the journal article resource
 	* @return the journal article resource that was removed
-	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
 	public static JournalArticleResource remove(long resourcePrimKey)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().remove(resourcePrimKey);
 	}
 
@@ -559,14 +563,14 @@ public class JournalArticleResourceUtil {
 	}
 
 	/**
-	* Returns the journal article resource with the primary key or throws a {@link NoSuchArticleResourceException} if it could not be found.
+	* Returns the journal article resource with the primary key or throws a {@link com.liferay.journal.NoSuchArticleResourceException} if it could not be found.
 	*
 	* @param resourcePrimKey the primary key of the journal article resource
 	* @return the journal article resource
-	* @throws NoSuchArticleResourceException if a journal article resource with the primary key could not be found
+	* @throws com.liferay.journal.NoSuchArticleResourceException if a journal article resource with the primary key could not be found
 	*/
 	public static JournalArticleResource findByPrimaryKey(long resourcePrimKey)
-		throws NoSuchArticleResourceException {
+		throws com.liferay.journal.exception.NoSuchArticleResourceException {
 		return getPersistence().findByPrimaryKey(resourcePrimKey);
 	}
 
@@ -643,14 +647,7 @@ public class JournalArticleResourceUtil {
 	}
 
 	public static JournalArticleResourcePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (JournalArticleResourcePersistence)PortalBeanLocatorUtil.locate(JournalArticleResourcePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(JournalArticleResourceUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -660,5 +657,14 @@ public class JournalArticleResourceUtil {
 	public void setPersistence(JournalArticleResourcePersistence persistence) {
 	}
 
-	private static JournalArticleResourcePersistence _persistence;
+	private static ServiceTracker<JournalArticleResourcePersistence, JournalArticleResourcePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalArticleResourceUtil.class);
+
+		_serviceTracker = new ServiceTracker<JournalArticleResourcePersistence, JournalArticleResourcePersistence>(bundle.getBundleContext(),
+				JournalArticleResourcePersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

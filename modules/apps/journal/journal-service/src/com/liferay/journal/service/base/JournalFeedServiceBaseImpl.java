@@ -14,6 +14,11 @@
 
 package com.liferay.journal.service.base;
 
+import com.liferay.journal.model.JournalFeed;
+import com.liferay.journal.service.JournalFeedService;
+import com.liferay.journal.service.persistence.JournalFeedFinder;
+import com.liferay.journal.service.persistence.JournalFeedPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -24,16 +29,11 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.BaseServiceImpl;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
-import com.liferay.portal.service.persistence.UserFinder;
 import com.liferay.portal.service.persistence.UserPersistence;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureFinder;
+
 import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructurePersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoValuePersistence;
-import com.liferay.journal.model.JournalFeed;
-import com.liferay.journal.service.JournalFeedService;
-import com.liferay.journal.service.persistence.JournalFeedFinder;
-import com.liferay.journal.service.persistence.JournalFeedPersistence;
 
 import javax.sql.DataSource;
 
@@ -321,24 +321,6 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the user finder.
-	 *
-	 * @return the user finder
-	 */
-	public UserFinder getUserFinder() {
-		return userFinder;
-	}
-
-	/**
-	 * Sets the user finder.
-	 *
-	 * @param userFinder the user finder
-	 */
-	public void setUserFinder(UserFinder userFinder) {
-		this.userFinder = userFinder;
-	}
-
-	/**
 	 * Returns the d d m structure local service.
 	 *
 	 * @return the d d m structure local service
@@ -393,24 +375,6 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	public void setDDMStructurePersistence(
 		DDMStructurePersistence ddmStructurePersistence) {
 		this.ddmStructurePersistence = ddmStructurePersistence;
-	}
-
-	/**
-	 * Returns the d d m structure finder.
-	 *
-	 * @return the d d m structure finder
-	 */
-	public DDMStructureFinder getDDMStructureFinder() {
-		return ddmStructureFinder;
-	}
-
-	/**
-	 * Sets the d d m structure finder.
-	 *
-	 * @param ddmStructureFinder the d d m structure finder
-	 */
-	public void setDDMStructureFinder(DDMStructureFinder ddmStructureFinder) {
-		this.ddmStructureFinder = ddmStructureFinder;
 	}
 
 	/**
@@ -556,16 +520,12 @@ public abstract class JournalFeedServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = UserFinder.class)
-	protected UserFinder userFinder;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalService ddmStructureLocalService;
 	@BeanReference(type = com.liferay.portlet.dynamicdatamapping.service.DDMStructureService.class)
 	protected com.liferay.portlet.dynamicdatamapping.service.DDMStructureService ddmStructureService;
 	@BeanReference(type = DDMStructurePersistence.class)
 	protected DDMStructurePersistence ddmStructurePersistence;
-	@BeanReference(type = DDMStructureFinder.class)
-	protected DDMStructureFinder ddmStructureFinder;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoValueLocalService.class)
 	protected com.liferay.portlet.expando.service.ExpandoValueLocalService expandoValueLocalService;
 	@BeanReference(type = com.liferay.portlet.expando.service.ExpandoValueService.class)

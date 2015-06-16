@@ -15,6 +15,7 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -66,7 +67,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	public com.liferay.journal.model.JournalArticleResource createJournalArticleResource(
 		long resourcePrimKey);
 
-	public void deleteArticleResource(long groupId, String articleId)
+	public void deleteArticleResource(long groupId, java.lang.String articleId)
 		throws PortalException;
 
 	/**
@@ -165,11 +166,11 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		long groupId, String articleId);
+		long groupId, java.lang.String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		String uuid, long groupId);
+		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource fetchJournalArticleResource(
@@ -184,7 +185,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId);
+		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
@@ -195,11 +196,11 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getArticleResourcePrimKey(long groupId,
-										  String articleId);
+		java.lang.String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleResourcePrimKey(String uuid, long groupId,
-										  String articleId);
+	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
+		java.lang.String articleId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalArticleResource> getArticleResources(
@@ -210,7 +211,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public String getBeanIdentifier();
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Returns the journal article resource with the primary key.
@@ -233,7 +234,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.journal.model.JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId) throws PortalException;
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the journal article resources.
@@ -268,7 +269,7 @@ public interface JournalArticleResourceLocalService extends BaseLocalService,
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public void setBeanIdentifier(String beanIdentifier);
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the journal article resource in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

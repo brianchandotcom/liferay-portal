@@ -15,6 +15,11 @@
 package com.liferay.journal.service.base;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.model.JournalContentSearch;
+import com.liferay.journal.service.JournalContentSearchLocalService;
+import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -34,18 +39,13 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
-import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
-import com.liferay.portal.service.persistence.LayoutFinder;
 import com.liferay.portal.service.persistence.LayoutPersistence;
-import com.liferay.portal.service.persistence.PortletPreferencesFinder;
 import com.liferay.portal.service.persistence.PortletPreferencesPersistence;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.journal.model.JournalContentSearch;
-import com.liferay.journal.service.JournalContentSearchLocalService;
-import com.liferay.journal.service.persistence.JournalContentSearchPersistence;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -417,24 +417,6 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the group finder.
-	 *
-	 * @return the group finder
-	 */
-	public GroupFinder getGroupFinder() {
-		return groupFinder;
-	}
-
-	/**
-	 * Sets the group finder.
-	 *
-	 * @param groupFinder the group finder
-	 */
-	public void setGroupFinder(GroupFinder groupFinder) {
-		this.groupFinder = groupFinder;
-	}
-
-	/**
 	 * Returns the layout local service.
 	 *
 	 * @return the layout local service
@@ -488,24 +470,6 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	 */
 	public void setLayoutPersistence(LayoutPersistence layoutPersistence) {
 		this.layoutPersistence = layoutPersistence;
-	}
-
-	/**
-	 * Returns the layout finder.
-	 *
-	 * @return the layout finder
-	 */
-	public LayoutFinder getLayoutFinder() {
-		return layoutFinder;
-	}
-
-	/**
-	 * Sets the layout finder.
-	 *
-	 * @param layoutFinder the layout finder
-	 */
-	public void setLayoutFinder(LayoutFinder layoutFinder) {
-		this.layoutFinder = layoutFinder;
 	}
 
 	/**
@@ -563,25 +527,6 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	public void setPortletPreferencesPersistence(
 		PortletPreferencesPersistence portletPreferencesPersistence) {
 		this.portletPreferencesPersistence = portletPreferencesPersistence;
-	}
-
-	/**
-	 * Returns the portlet preferences finder.
-	 *
-	 * @return the portlet preferences finder
-	 */
-	public PortletPreferencesFinder getPortletPreferencesFinder() {
-		return portletPreferencesFinder;
-	}
-
-	/**
-	 * Sets the portlet preferences finder.
-	 *
-	 * @param portletPreferencesFinder the portlet preferences finder
-	 */
-	public void setPortletPreferencesFinder(
-		PortletPreferencesFinder portletPreferencesFinder) {
-		this.portletPreferencesFinder = portletPreferencesFinder;
 	}
 
 	public void afterPropertiesSet() {
@@ -658,24 +603,18 @@ public abstract class JournalContentSearchLocalServiceBaseImpl
 	protected com.liferay.portal.service.GroupService groupService;
 	@BeanReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = GroupFinder.class)
-	protected GroupFinder groupFinder;
 	@BeanReference(type = com.liferay.portal.service.LayoutLocalService.class)
 	protected com.liferay.portal.service.LayoutLocalService layoutLocalService;
 	@BeanReference(type = com.liferay.portal.service.LayoutService.class)
 	protected com.liferay.portal.service.LayoutService layoutService;
 	@BeanReference(type = LayoutPersistence.class)
 	protected LayoutPersistence layoutPersistence;
-	@BeanReference(type = LayoutFinder.class)
-	protected LayoutFinder layoutFinder;
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesLocalService.class)
 	protected com.liferay.portal.service.PortletPreferencesLocalService portletPreferencesLocalService;
 	@BeanReference(type = com.liferay.portal.service.PortletPreferencesService.class)
 	protected com.liferay.portal.service.PortletPreferencesService portletPreferencesService;
 	@BeanReference(type = PortletPreferencesPersistence.class)
 	protected PortletPreferencesPersistence portletPreferencesPersistence;
-	@BeanReference(type = PortletPreferencesFinder.class)
-	protected PortletPreferencesFinder portletPreferencesFinder;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 	private String _beanIdentifier;

@@ -15,6 +15,7 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -37,37 +38,37 @@ public interface JournalFeed extends JournalFeedModel, PersistedModel {
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getDDMRendererTemplateKey()}
 	*/
-	@Deprecated()
-	public String getRendererTemplateId();
+	@java.lang.Deprecated()
+	public java.lang.String getRendererTemplateId();
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getDDMStructureKey()}
 	*/
-	@Deprecated()
-	public String getStructureId();
+	@java.lang.Deprecated()
+	public java.lang.String getStructureId();
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #getDDMTemplateKey()}
 	*/
-	@Deprecated()
-	public String getTemplateId();
+	@java.lang.Deprecated()
+	public java.lang.String getTemplateId();
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
 	#setDDMRendererTemplateKey(String)}
 	*/
-	@Deprecated()
-	public void setRendererTemplateId(String rendererTemplateKey);
+	@java.lang.Deprecated()
+	public void setRendererTemplateId(java.lang.String rendererTemplateKey);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #setDDMStructureKey(String)}
 	*/
-	@Deprecated()
-	public void setStructureId(String structureKey);
+	@java.lang.Deprecated()
+	public void setStructureId(java.lang.String structureKey);
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link #setDDMTemplateKey(String)}
 	*/
-	@Deprecated()
-	public void setTemplateId(String templateKey);
+	@java.lang.Deprecated()
+	public void setTemplateId(java.lang.String templateKey);
 }

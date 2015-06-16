@@ -219,13 +219,12 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public Object clone() {
+	public java.lang.Object clone() {
 		return new JournalFeedWrapper((JournalFeed)_journalFeed.clone());
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalFeed journalFeed) {
+	public int compareTo(com.liferay.journal.model.JournalFeed journalFeed) {
 		return _journalFeed.compareTo(journalFeed);
 	}
 
@@ -245,7 +244,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the content field of this journal feed
 	*/
 	@Override
-	public String getContentField() {
+	public java.lang.String getContentField() {
 		return _journalFeed.getContentField();
 	}
 
@@ -265,7 +264,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the d d m renderer template key of this journal feed
 	*/
 	@Override
-	public String getDDMRendererTemplateKey() {
+	public java.lang.String getDDMRendererTemplateKey() {
 		return _journalFeed.getDDMRendererTemplateKey();
 	}
 
@@ -275,7 +274,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the d d m structure key of this journal feed
 	*/
 	@Override
-	public String getDDMStructureKey() {
+	public java.lang.String getDDMStructureKey() {
 		return _journalFeed.getDDMStructureKey();
 	}
 
@@ -285,7 +284,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the d d m template key of this journal feed
 	*/
 	@Override
-	public String getDDMTemplateKey() {
+	public java.lang.String getDDMTemplateKey() {
 		return _journalFeed.getDDMTemplateKey();
 	}
 
@@ -305,7 +304,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the description of this journal feed
 	*/
 	@Override
-	public String getDescription() {
+	public java.lang.String getDescription() {
 		return _journalFeed.getDescription();
 	}
 
@@ -320,7 +319,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the feed format of this journal feed
 	*/
 	@Override
-	public String getFeedFormat() {
+	public java.lang.String getFeedFormat() {
 		return _journalFeed.getFeedFormat();
 	}
 
@@ -330,7 +329,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the feed ID of this journal feed
 	*/
 	@Override
-	public String getFeedId() {
+	public java.lang.String getFeedId() {
 		return _journalFeed.getFeedId();
 	}
 
@@ -380,7 +379,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the name of this journal feed
 	*/
 	@Override
-	public String getName() {
+	public java.lang.String getName() {
 		return _journalFeed.getName();
 	}
 
@@ -390,7 +389,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the order by col of this journal feed
 	*/
 	@Override
-	public String getOrderByCol() {
+	public java.lang.String getOrderByCol() {
 		return _journalFeed.getOrderByCol();
 	}
 
@@ -400,7 +399,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the order by type of this journal feed
 	*/
 	@Override
-	public String getOrderByType() {
+	public java.lang.String getOrderByType() {
 		return _journalFeed.getOrderByType();
 	}
 
@@ -424,7 +423,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Deprecated
 	@Override
-	public String getRendererTemplateId() {
+	public java.lang.String getRendererTemplateId() {
 		return _journalFeed.getRendererTemplateId();
 	}
 
@@ -433,7 +432,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Deprecated
 	@Override
-	public String getStructureId() {
+	public java.lang.String getStructureId() {
 		return _journalFeed.getStructureId();
 	}
 
@@ -443,7 +442,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the target layout friendly url of this journal feed
 	*/
 	@Override
-	public String getTargetLayoutFriendlyUrl() {
+	public java.lang.String getTargetLayoutFriendlyUrl() {
 		return _journalFeed.getTargetLayoutFriendlyUrl();
 	}
 
@@ -453,7 +452,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the target portlet ID of this journal feed
 	*/
 	@Override
-	public String getTargetPortletId() {
+	public java.lang.String getTargetPortletId() {
 		return _journalFeed.getTargetPortletId();
 	}
 
@@ -462,7 +461,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Deprecated
 	@Override
-	public String getTemplateId() {
+	public java.lang.String getTemplateId() {
 		return _journalFeed.getTemplateId();
 	}
 
@@ -482,7 +481,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the user name of this journal feed
 	*/
 	@Override
-	public String getUserName() {
+	public java.lang.String getUserName() {
 		return _journalFeed.getUserName();
 	}
 
@@ -492,7 +491,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the user uuid of this journal feed
 	*/
 	@Override
-	public String getUserUuid() {
+	public java.lang.String getUserUuid() {
 		return _journalFeed.getUserUuid();
 	}
 
@@ -502,7 +501,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @return the uuid of this journal feed
 	*/
 	@Override
-	public String getUuid() {
+	public java.lang.String getUuid() {
 		return _journalFeed.getUuid();
 	}
 
@@ -552,7 +551,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param contentField the content field of this journal feed
 	*/
 	@Override
-	public void setContentField(String contentField) {
+	public void setContentField(java.lang.String contentField) {
 		_journalFeed.setContentField(contentField);
 	}
 
@@ -573,7 +572,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setDDMRendererTemplateKey(
-		String DDMRendererTemplateKey) {
+		java.lang.String DDMRendererTemplateKey) {
 		_journalFeed.setDDMRendererTemplateKey(DDMRendererTemplateKey);
 	}
 
@@ -583,7 +582,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param DDMStructureKey the d d m structure key of this journal feed
 	*/
 	@Override
-	public void setDDMStructureKey(String DDMStructureKey) {
+	public void setDDMStructureKey(java.lang.String DDMStructureKey) {
 		_journalFeed.setDDMStructureKey(DDMStructureKey);
 	}
 
@@ -593,7 +592,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param DDMTemplateKey the d d m template key of this journal feed
 	*/
 	@Override
-	public void setDDMTemplateKey(String DDMTemplateKey) {
+	public void setDDMTemplateKey(java.lang.String DDMTemplateKey) {
 		_journalFeed.setDDMTemplateKey(DDMTemplateKey);
 	}
 
@@ -613,7 +612,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param description the description of this journal feed
 	*/
 	@Override
-	public void setDescription(String description) {
+	public void setDescription(java.lang.String description) {
 		_journalFeed.setDescription(description);
 	}
 
@@ -641,7 +640,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param feedFormat the feed format of this journal feed
 	*/
 	@Override
-	public void setFeedFormat(String feedFormat) {
+	public void setFeedFormat(java.lang.String feedFormat) {
 		_journalFeed.setFeedFormat(feedFormat);
 	}
 
@@ -651,7 +650,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param feedId the feed ID of this journal feed
 	*/
 	@Override
-	public void setFeedId(String feedId) {
+	public void setFeedId(java.lang.String feedId) {
 		_journalFeed.setFeedId(feedId);
 	}
 
@@ -701,7 +700,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param name the name of this journal feed
 	*/
 	@Override
-	public void setName(String name) {
+	public void setName(java.lang.String name) {
 		_journalFeed.setName(name);
 	}
 
@@ -716,7 +715,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param orderByCol the order by col of this journal feed
 	*/
 	@Override
-	public void setOrderByCol(String orderByCol) {
+	public void setOrderByCol(java.lang.String orderByCol) {
 		_journalFeed.setOrderByCol(orderByCol);
 	}
 
@@ -726,7 +725,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param orderByType the order by type of this journal feed
 	*/
 	@Override
-	public void setOrderByType(String orderByType) {
+	public void setOrderByType(java.lang.String orderByType) {
 		_journalFeed.setOrderByType(orderByType);
 	}
 
@@ -751,7 +750,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Deprecated
 	@Override
-	public void setRendererTemplateId(String rendererTemplateKey) {
+	public void setRendererTemplateId(java.lang.String rendererTemplateKey) {
 		_journalFeed.setRendererTemplateId(rendererTemplateKey);
 	}
 
@@ -760,7 +759,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Deprecated
 	@Override
-	public void setStructureId(String structureKey) {
+	public void setStructureId(java.lang.String structureKey) {
 		_journalFeed.setStructureId(structureKey);
 	}
 
@@ -771,7 +770,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Override
 	public void setTargetLayoutFriendlyUrl(
-		String targetLayoutFriendlyUrl) {
+		java.lang.String targetLayoutFriendlyUrl) {
 		_journalFeed.setTargetLayoutFriendlyUrl(targetLayoutFriendlyUrl);
 	}
 
@@ -781,7 +780,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param targetPortletId the target portlet ID of this journal feed
 	*/
 	@Override
-	public void setTargetPortletId(String targetPortletId) {
+	public void setTargetPortletId(java.lang.String targetPortletId) {
 		_journalFeed.setTargetPortletId(targetPortletId);
 	}
 
@@ -790,7 +789,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	*/
 	@Deprecated
 	@Override
-	public void setTemplateId(String templateKey) {
+	public void setTemplateId(java.lang.String templateKey) {
 		_journalFeed.setTemplateId(templateKey);
 	}
 
@@ -810,7 +809,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param userName the user name of this journal feed
 	*/
 	@Override
-	public void setUserName(String userName) {
+	public void setUserName(java.lang.String userName) {
 		_journalFeed.setUserName(userName);
 	}
 
@@ -820,7 +819,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param userUuid the user uuid of this journal feed
 	*/
 	@Override
-	public void setUserUuid(String userUuid) {
+	public void setUserUuid(java.lang.String userUuid) {
 		_journalFeed.setUserUuid(userUuid);
 	}
 
@@ -830,7 +829,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	* @param uuid the uuid of this journal feed
 	*/
 	@Override
-	public void setUuid(String uuid) {
+	public void setUuid(java.lang.String uuid) {
 		_journalFeed.setUuid(uuid);
 	}
 
@@ -845,7 +844,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public String toString() {
+	public java.lang.String toString() {
 		return _journalFeed.toString();
 	}
 
@@ -855,7 +854,7 @@ public class JournalFeedWrapper implements JournalFeed,
 	}
 
 	@Override
-	public String toXmlString() {
+	public java.lang.String toXmlString() {
 		return _journalFeed.toXmlString();
 	}
 

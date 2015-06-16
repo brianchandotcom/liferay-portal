@@ -15,8 +15,11 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for JournalArticleResource. This utility wraps
@@ -63,7 +66,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	public static void deleteArticleResource(long groupId,
-		String articleId)
+		java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteArticleResource(groupId, articleId);
 	}
@@ -180,12 +183,12 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	public static com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		long groupId, String articleId) {
+		long groupId, java.lang.String articleId) {
 		return getService().fetchArticleResource(groupId, articleId);
 	}
 
 	public static com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		String uuid, long groupId) {
+		java.lang.String uuid, long groupId) {
 		return getService().fetchArticleResource(uuid, groupId);
 	}
 
@@ -202,7 +205,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	* @return the matching journal article resource, or <code>null</code> if a matching journal article resource could not be found
 	*/
 	public static com.liferay.journal.model.JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId) {
+		java.lang.String uuid, long groupId) {
 		return getService()
 				   .fetchJournalArticleResourceByUuidAndGroupId(uuid, groupId);
 	}
@@ -218,12 +221,12 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	public static long getArticleResourcePrimKey(long groupId,
-		String articleId) {
+		java.lang.String articleId) {
 		return getService().getArticleResourcePrimKey(groupId, articleId);
 	}
 
-	public static long getArticleResourcePrimKey(String uuid,
-		long groupId, String articleId) {
+	public static long getArticleResourcePrimKey(java.lang.String uuid,
+		long groupId, java.lang.String articleId) {
 		return getService().getArticleResourcePrimKey(uuid, groupId, articleId);
 	}
 
@@ -237,7 +240,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public static String getBeanIdentifier() {
+	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
 	}
 
@@ -263,7 +266,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	* @throws PortalException if a matching journal article resource could not be found
 	*/
 	public static com.liferay.journal.model.JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId)
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getJournalArticleResourceByUuidAndGroupId(uuid, groupId);
@@ -305,7 +308,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public static void setBeanIdentifier(String beanIdentifier) {
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
@@ -321,14 +324,7 @@ public class JournalArticleResourceLocalServiceUtil {
 	}
 
 	public static JournalArticleResourceLocalService getService() {
-		if (_service == null) {
-			_service = (JournalArticleResourceLocalService)PortalBeanLocatorUtil.locate(JournalArticleResourceLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(JournalArticleResourceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -338,5 +334,14 @@ public class JournalArticleResourceLocalServiceUtil {
 	public void setService(JournalArticleResourceLocalService service) {
 	}
 
-	private static JournalArticleResourceLocalService _service;
+	private static ServiceTracker<JournalArticleResourceLocalService, JournalArticleResourceLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalArticleResourceLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<JournalArticleResourceLocalService, JournalArticleResourceLocalService>(bundle.getBundleContext(),
+				JournalArticleResourceLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

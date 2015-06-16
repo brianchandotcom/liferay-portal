@@ -15,6 +15,11 @@
 package com.liferay.journal.service.base;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.service.JournalArticleResourceLocalService;
+import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -35,11 +40,9 @@ import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.journal.model.JournalArticleResource;
-import com.liferay.journal.service.JournalArticleResourceLocalService;
-import com.liferay.journal.service.persistence.JournalArticleResourcePersistence;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import javax.sql.DataSource;

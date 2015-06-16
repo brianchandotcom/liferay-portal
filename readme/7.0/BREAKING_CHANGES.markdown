@@ -2008,21 +2008,30 @@ FreeMarker or any other framework.
 
 #### What changed?
 
-The files `ckconfig.jsp`, `ckconfig-ext.jsp`, `ckconfig_bbcode.jsp`, `ckconfig_bbcode-ext.jsp`, `ckconfig_creole.jsp` and `ckconfig_creole-ext.jsp` have been removed and are no longer used to configure the CKEditor instances created using the `liferay-ui:input-editor` taglib.
+The files `ckconfig.jsp`, `ckconfig-ext.jsp`, `ckconfig_bbcode.jsp`,
+`ckconfig_bbcode-ext.jsp`, `ckconfig_creole.jsp` and `ckconfig_creole-ext.jsp`
+have been removed and are no longer used to configure the CKEditor instances
+created using the `liferay-ui:input-editor` taglib.
 
 #### Who is affected?
 
-Any hook or plugin-ext overriding these files to modify the editor configuration.
+Any hook or plugin-ext overriding these files to modify the editor
+configuration.
 
 #### How should I update my code?
 
 Depending on the changes, different extension methods are available:
-- For CKEditor configuration options, an implementation of `EditorConfigContributor` can be created to pass or modify the expected parameters.
-- For CKEditor instance manipulation (setting attributes, adding listeners...), a `DynamicInclude` extension point `js#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the possibility of injecting javascript when needed.
+- For CKEditor configuration options, an implementation of
+`EditorConfigContributor` can be created to pass or modify the expected
+parameters.
+- For CKEditor instance manipulation (setting attributes, adding listeners...),
+a `DynamicInclude` extension point
+`js#ckeditor[_creole|_bbcode]#onEditorCreated` has been added to provide the
+possibility of injecting javascript when needed.
 
 #### Why was this change made?
 
-This change is part of a greater effort to provide mechanisms to extend and configure any editor in Liferay Portal in a coherent and extensible way.
+This change is part of a greater effort to provide mechanisms to extend and
+configure any editor in Liferay Portal in a coherent and extensible way.
 
 ---------------------------------------
-

@@ -66,9 +66,20 @@ public class SourceFormatterTest {
 			sourceFormatter.format();
 		}
 		catch (SourceMismatchException sme) {
-			Assert.assertEquals(
-				sme.getFileName(), sme.getFormattedSource(),
-				sme.getOriginalSource());
+			try {
+				Assert.assertEquals(
+					sme.getFileName(), sme.getFormattedSource(),
+					sme.getOriginalSource());
+			}
+			catch (AssertionError ae) {
+				String message = ae.getMessage();
+
+				if (message.length() < 10000) {
+					throw ae;
+				}
+
+				throw new Exception(sme.getFileName());
+			}
 		}
 	}
 

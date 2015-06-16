@@ -5295,6 +5295,17 @@ if (ppstate.equals("normal")) {
 		<record-git-commit-portal />
 	</target>
 
+	<target name="record-test-case-method-names">
+		<gradle-execute failonerror="false" task="writePoshiProperties">
+			<arg value="--build-file=portal-web/build-test.gradle" />
+			<arg value="-PcomponentNames=${component.names}" />
+			<arg value="-PproductNames=${product.names}" />
+			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+		</gradle-execute>
+
+		<move file="portal-web/test.case.method.names.properties" tofile="test.case.method.names.properties" />
+	</target>
+
 	<target name="record-test-class-file-names">
 		<script classpathref="project.classpath" language="beanshell">
 			<![CDATA[

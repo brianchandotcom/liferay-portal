@@ -17,6 +17,14 @@ apply plugin: "com.liferay.poshi.runner"
 poshiRunner {
 	baseDir = file("test/functional")
 
+	if (project.hasProperty("componentNames")) {
+		poshiProperty "component.names", project.properties["componentNames"]
+	}
+
+	if (project.hasProperty("productNames")) {
+		poshiProperty "product.names", project.properties["productNames"]
+	}
+
 	if (project.hasProperty("seleniumLoggerEnabled")) {
 		poshiProperty "selenium.logger.enabled", project.properties["seleniumLoggerEnabled"]
 	}

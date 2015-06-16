@@ -34,7 +34,7 @@ boolean spreadsheet = ParamUtil.getBoolean(request, "spreadsheet");
 
 <c:choose>
 	<c:when test="<%= displayDDMTemplateId > 0 %>">
-		<liferay-util:include page="/view_template_records.jsp" />
+		<liferay-util:include page="/view_template_records.jsp" servletContext="<%= application %>" />
 	</c:when>
 	<c:otherwise>
 		<c:choose>

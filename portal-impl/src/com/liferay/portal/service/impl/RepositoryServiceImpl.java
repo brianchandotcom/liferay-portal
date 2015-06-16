@@ -101,7 +101,8 @@ public class RepositoryServiceImpl extends RepositoryServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getSupportedParameters(String, String)}
 	 */
 	@Deprecated
 	@Override

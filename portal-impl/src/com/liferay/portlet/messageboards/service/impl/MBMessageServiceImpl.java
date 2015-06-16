@@ -273,8 +273,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #deleteDiscussionMessage(
-	 *             long)}
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #deleteDiscussionMessage(long)}
 	 */
 	@Deprecated
 	@Override

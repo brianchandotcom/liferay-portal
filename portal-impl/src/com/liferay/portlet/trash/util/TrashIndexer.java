@@ -191,8 +191,8 @@ public class TrashIndexer extends BaseIndexer {
 
 	/**
 	 * @deprecated As of 7.0.0, added strictly to support backwards
-	 *             compatibility of {@link TrashHandler#getExcludeQuery(
-	 *             SearchContext)}
+	 *             compatibility of {@link
+	 *             TrashHandler#getExcludeQuery(SearchContext)}
 	 */
 	@Deprecated
 	protected void processTrashHandlerExcludeQuery(

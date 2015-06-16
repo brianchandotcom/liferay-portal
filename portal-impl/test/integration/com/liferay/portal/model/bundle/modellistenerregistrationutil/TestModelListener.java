@@ -22,7 +22,6 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock
- * @param <T>
  */
 @Component(
 	immediate = true,

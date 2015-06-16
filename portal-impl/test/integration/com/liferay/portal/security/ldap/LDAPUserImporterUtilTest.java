@@ -29,8 +29,8 @@ import org.junit.Rule;
 import org.junit.Test;
 
 /**
-* @author Peter Fellwock
-*/
+ * @author Peter Fellwock
+ */
 public class LDAPUserImporterUtilTest {
 
 	@ClassRule

@@ -43,7 +43,6 @@ import javax.portlet.RenderResponse;
  * @author Charles May
  * @author Drew Brokke
  */
-
 public class UserGroupsAdminPortlet extends MVCPortlet {
 
 	public void deleteUserGroups(

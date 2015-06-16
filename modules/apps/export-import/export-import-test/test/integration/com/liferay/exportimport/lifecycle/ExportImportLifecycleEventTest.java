@@ -248,10 +248,10 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 			Assert.assertSame(SystemException.class, throwable.getClass());
 		}
 
-			Assert.assertTrue(
-				_firedExportImportLifecycleEventsMap.containsKey(
-					ExportImportLifecycleConstants.
-						EVENT_PUBLICATION_PORTLET_LOCAL_FAILED));
+		Assert.assertTrue(
+			_firedExportImportLifecycleEventsMap.containsKey(
+				ExportImportLifecycleConstants.
+					EVENT_PUBLICATION_PORTLET_LOCAL_FAILED));
 	}
 
 	@Test

@@ -21,16 +21,18 @@ int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
 
 String keywords = ParamUtil.getString(request, "keywords");
 
+DDLDisplayContext ddlDisplayContext = new DDLDisplayContext(renderRequest, renderResponse);
+
 DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 %>
 
 <div class="alert alert-info">
 	<span class="displaying-help-message-holder <%= (selRecordSet == null) ? StringPool.BLANK : "hide" %>">
-		<liferay-ui:message key="please-select-a-form-from-the-list-below" />
+		<liferay-ui:message key="please-select-a-list-entry-from-the-list-below" />
 	</span>
 
 	<span class="displaying-record-set-id-holder <%= (selRecordSet == null) ? "hide" : StringPool.BLANK %>">
-		<liferay-ui:message key="displaying-form" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
+		<liferay-ui:message key="displaying-list" />: <span class="displaying-record-set-id"><%= (selRecordSet != null) ? HtmlUtil.escape(selRecordSet.getName(locale)) : StringPool.BLANK %></span>
 	</span>
 </div>
 
@@ -41,9 +43,9 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 <aui:form action="<%= configurationRenderURL %>" method="post" name="fm1">
 	<aui:input name="redirect" type="hidden" value="<%= configurationRenderURL.toString() %>" />
 
-	<aui:fieldset label="forms">
+	<aui:fieldset label="lists">
 		<liferay-ui:search-container
-			emptyResultsMessage="no-forms-were-found"
+			emptyResultsMessage="no-lists-were-found"
 			iteratorURL="<%= configurationRenderURL %>"
 			total="<%= DDLRecordSetServiceUtil.searchCount(company.getCompanyId(), scopeGroupId, keywords, DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS) %>"
 		>
@@ -118,7 +120,7 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 
 	<c:if test="<%= selRecordSet != null %>">
 		<aui:fieldset label="optional-configuration">
-			<aui:select helpMessage="select-the-display-template-used-to-diplay-the-form-entries" label="display-template" name="preferences--displayDDMTemplateId--">
+			<aui:select helpMessage="select-the-display-template-used-to-diplay-the-list-records" label="display-template" name="preferences--displayDDMTemplateId--">
 				<aui:option label="default" value="<%= 0 %>" />
 
 				<%
@@ -139,6 +141,32 @@ DDLRecordSet selRecordSet = ddlDisplayContext.getRecordSet();
 				%>
 
 			</aui:select>
+
+			<aui:select helpMessage="select-the-form-template-used-to-add-records-to-the-list" label="form-template" name="preferences--formDDMTemplateId--">
+				<aui:option label="default" value="<%= 0 %>" />
+
+				<%
+				List<DDMTemplate> templates = DDMTemplateLocalServiceUtil.getTemplates(scopeGroupId, PortalUtil.getClassNameId(DDMStructure.class), selRecordSet.getDDMStructureId(), DDMTemplateConstants.TEMPLATE_TYPE_FORM, DDMTemplateConstants.TEMPLATE_MODE_CREATE);
+
+				for (DDMTemplate template : templates) {
+					boolean selected = false;
+
+					if (ddlDisplayContext.getFormDDMTemplateId() == template.getTemplateId()) {
+						selected = true;
+					}
+				%>
+
+					<aui:option label="<%= HtmlUtil.escape(template.getName(locale)) %>" selected="<%= selected %>" value="<%= template.getTemplateId() %>" />
+
+				<%
+				}
+				%>
+
+			</aui:select>
+
+			<aui:input helpMessage="check-to-allow-users-to-add-records-to-the-list" name="preferences--editable--" type="checkbox" value="<%= ddlDisplayContext.isEditable() %>" />
+
+			<aui:input helpMessage="check-to-view-the-list-records-in-a-spreadsheet" label="spreadsheet-view" name="preferences--spreadsheet--" type="checkbox" value="<%= ddlDisplayContext.isSpreadsheet() %>" />
 		</aui:fieldset>
 	</c:if>
 

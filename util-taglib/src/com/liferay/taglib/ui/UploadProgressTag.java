@@ -1,3 +1,4 @@
+
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -40,6 +41,7 @@ public class UploadProgressTag extends IncludeTag {
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
+	@Deprecated
 	public void setRedirect(String redirect) {
 	}
 

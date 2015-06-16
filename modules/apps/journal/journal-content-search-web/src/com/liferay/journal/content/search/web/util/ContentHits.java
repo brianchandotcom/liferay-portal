@@ -14,13 +14,13 @@
 
 package com.liferay.journal.content.search.web.util;
 
+import com.liferay.journal.service.JournalContentSearchLocalServiceUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Time;
-import com.liferay.portlet.journal.service.JournalContentSearchLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,6 +14,8 @@
 
 package com.liferay.journal.web.ddm;
 
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -24,14 +26,12 @@ import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.util.BaseDDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 import java.util.Set;
 
@@ -112,7 +112,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 
 	@Override
 	public String getStorageType() {
-		return PropsValues.JOURNAL_ARTICLE_STORAGE_TYPE;
+		return JournalServiceConfigurationValues.JOURNAL_ARTICLE_STORAGE_TYPE;
 	}
 
 	@Override

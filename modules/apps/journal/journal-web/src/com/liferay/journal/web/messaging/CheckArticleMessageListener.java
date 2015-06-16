@@ -14,6 +14,7 @@
 
 package com.liferay.journal.web.messaging;
 
+import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.web.configuration.JournalWebConfigurationValues;
 import com.liferay.journal.web.constants.JournalPortletKeys;
 import com.liferay.journal.web.portlet.JournalPortlet;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEntry;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.TriggerType;
-import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;

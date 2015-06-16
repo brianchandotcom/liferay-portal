@@ -8,7 +8,7 @@ insert into DDMTemplate values ('${ddmTemplateModel.uuid}', ${ddmTemplateModel.t
 
 <#assign journalArticlePageCounts = dataFactory.getSequence(dataFactory.maxJournalArticlePageCount)>
 
-<#assign resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.portlet.journal", groupId)>
+<#assign resourcePermissionModels = dataFactory.newResourcePermissionModels("com.liferay.journal", groupId)>
 
 <#list resourcePermissionModels as resourcePermissionModel>
 	insert into ResourcePermission values (${resourcePermissionModel.mvccVersion}, ${resourcePermissionModel.resourcePermissionId}, ${resourcePermissionModel.companyId}, '${resourcePermissionModel.name}', ${resourcePermissionModel.scope}, '${resourcePermissionModel.primKey}', ${resourcePermissionModel.roleId}, ${resourcePermissionModel.ownerId}, ${resourcePermissionModel.actionIds});

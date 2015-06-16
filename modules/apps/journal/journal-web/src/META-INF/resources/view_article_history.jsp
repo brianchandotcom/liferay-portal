@@ -64,7 +64,7 @@ JournalArticle article = ActionUtil.getArticle(request);
 				/>
 
 				<liferay-ui:search-container-row
-					className="com.liferay.portlet.journal.model.JournalArticle"
+					className="com.liferay.journal.model.JournalArticle"
 					modelVar="articleVersion"
 				>
 

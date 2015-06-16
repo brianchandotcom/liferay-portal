@@ -330,7 +330,7 @@ String displayStyle = journalDisplayContext.getDisplayStyle();
 					<%
 					String folderImage = "folder_empty_article";
 
-					if (PropsValues.JOURNAL_FOLDER_ICON_CHECK_COUNT && (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0)) {
+					if (JournalServiceConfigurationValues.JOURNAL_FOLDER_ICON_CHECK_COUNT && (JournalFolderServiceUtil.getFoldersAndArticlesCount(scopeGroupId, curFolder.getFolderId()) > 0)) {
 						folderImage = "folder_full_article";
 					}
 

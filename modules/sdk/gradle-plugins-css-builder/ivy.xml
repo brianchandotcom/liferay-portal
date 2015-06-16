@@ -17,11 +17,11 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency name="ant" org="org.apache.ant"  rev="1.9.4" />
-		<dependency name="com.liferay.rtl.css" org="com.liferay" rev="1.0.0" />
-		<dependency name="com.liferay.sass.compiler.jni" org="com.liferay" rev="1.0.0" />
-		<dependency name="com.liferay.sass.compiler.ruby" org="com.liferay" rev="1.0.0" />
-		<dependency name="slf4j-log4j12" org="org.slf4j" rev="1.7.2" />
-		<dependency conf="provided->master" name="maven-plugin-api" org="org.apache.maven" rev="3.0.4" />
+		<dependency name="com.liferay.gradle.util" org="com.liferay" rev="1.0.6" />
+		<dependency conf="provided->default" name="groovy-all" org="org.codehaus.groovy" rev="2.3.9" />
+		<dependency conf="provided->default" name="org.gradle.gradle-base-services" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-base-services-groovy" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-core" org="com.liferay" rev="2.4" />
+		<dependency conf="provided->default" name="org.gradle.gradle-plugins" org="com.liferay" rev="2.4" />
 	</dependencies>
 </ivy-module>

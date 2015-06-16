@@ -1,0 +1,84 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.css.builder;
+
+/**
+ * @author Andrea Di Giorgi
+ */
+public class CSSBuilderArgs {
+
+	public static final String DIR_NAME = "/";
+
+	public static final String DOCROOT_DIR_NAME = "src/META-INF/resources";
+
+	public String[] getDirNames() {
+		return _dirNames;
+	}
+
+	public String getDocrootDirName() {
+		return _docrootDirName;
+	}
+
+	public String getPortalCommonDirName() {
+		return _portalCommonDirName;
+	}
+
+	public String[] getRtlExcludedPathRegexps() {
+		return _rtlExcludedPathRegexps;
+	}
+
+	public String getSassCompilerClassName() {
+		return _sassCompilerClassName;
+	}
+
+	public void setDirNames(String dirNames) {
+		setDirNames(_split(dirNames));
+	}
+
+	public void setDirNames(String[] dirNames) {
+		_dirNames = dirNames;
+	}
+
+	public void setDocrootDirName(String docrootDirName) {
+		_docrootDirName = docrootDirName;
+	}
+
+	public void setPortalCommonDirName(String portalCommonDirName) {
+		_portalCommonDirName = portalCommonDirName;
+	}
+
+	public void setRtlExcludedPathRegexps(String rtlExcludedPathRegexps) {
+		setRtlExcludedPathRegexps(_split(rtlExcludedPathRegexps));
+	}
+
+	public void setRtlExcludedPathRegexps(String[] rtlExcludedPathRegexps) {
+		_rtlExcludedPathRegexps = rtlExcludedPathRegexps;
+	}
+
+	public void setSassCompilerClassName(String sassCompilerClassName) {
+		_sassCompilerClassName = sassCompilerClassName;
+	}
+
+	private String[] _split(String s) {
+		return s.split(",");
+	}
+
+	private String[] _dirNames = {DIR_NAME};
+	private String _docrootDirName = DOCROOT_DIR_NAME;
+	private String _portalCommonDirName;
+	private String[] _rtlExcludedPathRegexps = new String[0];
+	private String _sassCompilerClassName;
+
+}

@@ -199,7 +199,7 @@ public class BuildPluginDescriptorTask extends DefaultTask {
 			return;
 		}
 
-		Set<Dependency> dependencies = configuration.getAllDependencies();
+		Set<Dependency> dependencies = configuration.getDependencies();
 
 		for (Dependency dependency : dependencies) {
 			Element dependencyEl = doc.createElement("dependency");

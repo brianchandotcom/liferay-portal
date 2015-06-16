@@ -19,6 +19,7 @@ import com.liferay.css.builder.sass.SassFileWithMediaQuery;
 import com.liferay.css.builder.sass.SassString;
 import com.liferay.portal.kernel.regex.PatternFactory;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -58,7 +59,8 @@ public class CSSBuilder {
 
 		List<String> dirNames = new ArrayList<>();
 
-		String dirName = arguments.get("sass.dir");
+		String dirName = GetterUtil.getString(
+			arguments.get("sass.dir"), CSSBuilderArgs.DIR_NAME);
 
 		if (Validator.isNotNull(dirName)) {
 			dirNames.add(dirName);
@@ -76,7 +78,8 @@ public class CSSBuilder {
 			}
 		}
 
-		String docrootDirName = arguments.get("sass.docroot.dir");
+		String docrootDirName = GetterUtil.getString(
+			arguments.get("sass.docroot.dir"), CSSBuilderArgs.DOCROOT_DIR_NAME);
 		String portalCommonDirName = arguments.get("sass.portal.common.dir");
 		String[] rtlExcludedPathRegexps = StringUtil.split(
 			arguments.get("sass.rtl.excluded.path.regexps"));

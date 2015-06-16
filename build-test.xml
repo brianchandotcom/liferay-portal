@@ -5631,6 +5631,7 @@ if (ppstate.equals("normal")) {
 			<arg value="-PposhiTestName=${poshi.test.name}" />
 			<arg value="-PseleniumLoggerEnabled=${test.selenium.logger.enabled}" />
 			<arg value="-PtestCaseAvailablePropertyNames=${test.case.available.property.names}" />
+			<arg value="-PtestSkipTearDown=${test.skip.tear.down}" />
 		</gradle-execute>
 	</target>
 

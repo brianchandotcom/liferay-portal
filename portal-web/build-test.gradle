@@ -33,6 +33,10 @@ poshiRunner {
 		poshiProperty "test.case.available.property.names", project.properties["testCaseAvailablePropertyNames"]
 	}
 
+	if (project.hasProperty("testSkipTearDown")) {
+		poshiProperty "test.skip.tear.down", project.properties["testSkipTearDown"]
+	}
+
 	version = "1.0.4"
 }
 

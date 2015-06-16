@@ -458,6 +458,10 @@ public class SPIAgentResponseTest {
 				}
 
 				@Override
+				public void reset() {
+				}
+
+				@Override
 				public void setContentLength(int contentLength) {
 				}
 

@@ -14,4 +14,6 @@ Import-Package:\
 	*
 Include-Resource:\
 	classes,\
+	META-INF/resources=src/META-INF/resources,\
 	@lib/org.freemarker.jar
+Web-ContextPath: /document-library-google-docs

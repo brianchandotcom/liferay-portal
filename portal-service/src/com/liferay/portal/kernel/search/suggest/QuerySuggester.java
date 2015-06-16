@@ -35,6 +35,10 @@ public interface QuerySuggester {
 			SearchContext searchContext, int max)
 		throws SearchException;
 
+	public SuggesterResults suggest(
+			SearchContext searchContext, Suggester suggester)
+		throws SearchException;
+
 	public String[] suggestKeywordQueries(SearchContext searchContext, int max)
 		throws SearchException;
 

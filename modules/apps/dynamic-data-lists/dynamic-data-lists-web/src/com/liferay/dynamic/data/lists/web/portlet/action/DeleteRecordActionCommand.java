@@ -33,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"action.command.name=deleteRecord",
-		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
 	},
 	service = ActionCommand.class
 )

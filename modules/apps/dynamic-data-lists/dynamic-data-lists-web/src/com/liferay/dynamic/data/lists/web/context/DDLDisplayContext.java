@@ -14,13 +14,13 @@
 
 package com.liferay.dynamic.data.lists.web.context;
 
-import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
+import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.lists.util.DDLUtil;
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
@@ -32,20 +32,14 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.WebKeys;
-import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldType;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldTypeRegistryUtil;
-import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldValueRendererAccessor;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMPermission;
 import com.liferay.portlet.dynamicdatamapping.service.permission.DDMTemplatePermission;
-import com.liferay.portlet.dynamicdatamapping.storage.DDMFormFieldValue;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplay;
 import com.liferay.portlet.dynamicdatamapping.util.DDMDisplayRegistryUtil;
 import com.liferay.portlet.dynamicdatamapping.util.DDMPermissionHandler;
 
-import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletPreferences;
@@ -79,17 +73,48 @@ public class DDLDisplayContext {
 		}
 	}
 
+	public String getAddDDMTemplateTitle() throws PortalException {
+		DDMDisplay ddmDisplay = getDDMDisplay();
+
+		return ddmDisplay.getEditTemplateTitle(
+			_recordSet.getDDMStructure(), null, getLocale());
+	}
+
 	public long getDisplayDDMTemplateId() {
 		return PrefsParamUtil.getLong(
 			_portletPreferences, _renderRequest, "displayDDMTemplateId");
 	}
 
-	public String getEditTemplateTitle() throws PortalException {
+	public String getEditDisplayDDMTemplateTitle() throws PortalException {
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet == null) {
+			return StringPool.BLANK;
+		}
+
 		DDMDisplay ddmDisplay = getDDMDisplay();
 
 		return ddmDisplay.getEditTemplateTitle(
-			_recordSet.getDDMStructure(), fetchDisplayDDMTemplate(),
+			recordSet.getDDMStructure(), fetchDisplayDDMTemplate(),
 			getLocale());
+	}
+
+	public String getEditFormDDMTemplateTitle() throws PortalException {
+		DDLRecordSet recordSet = getRecordSet();
+
+		if (recordSet == null) {
+			return StringPool.BLANK;
+		}
+
+		DDMDisplay ddmDisplay = getDDMDisplay();
+
+		return ddmDisplay.getEditTemplateTitle(
+			recordSet.getDDMStructure(), fetchFormDDMTemplate(), getLocale());
+	}
+
+	public long getFormDDMTemplateId() {
+		return PrefsParamUtil.getLong(
+			_portletPreferences, _renderRequest, "formDDMTemplateId");
 	}
 
 	public DDLRecordSet getRecordSet() {
@@ -126,27 +151,39 @@ public class DDLDisplayContext {
 			_portletPreferences, _renderRequest, "editable");
 	}
 
-	public boolean isShowAddDisplayDDMTemplateIcon() {
-		if (_hasAddDisplayDDMTemplatePermission != null) {
-			return _hasAddDisplayDDMTemplatePermission;
+	public boolean isShowAddDDMTemplateIcon() {
+		if (_hasAddDDMTemplatePermission != null) {
+			return _hasAddDDMTemplatePermission;
 		}
 
-		_hasAddDisplayDDMTemplatePermission = Boolean.FALSE;
+		_hasAddDDMTemplatePermission = Boolean.FALSE;
 
 		DDLRecordSet recordSet = getRecordSet();
 
 		if (recordSet == null) {
-			return _hasAddDisplayDDMTemplatePermission;
+			return _hasAddDDMTemplatePermission;
 		}
 
 		DDMPermissionHandler ddmPermissionHandler = getDDMPermissionHandler();
 
-		_hasAddDisplayDDMTemplatePermission = DDMPermission.contains(
+		_hasAddDDMTemplatePermission = DDMPermission.contains(
 			getPermissionChecker(), getScopeGroupId(),
 			ddmPermissionHandler.getResourceName(getStructureTypeClassNameId()),
 			ddmPermissionHandler.getAddTemplateActionId());
 
-		return _hasAddDisplayDDMTemplatePermission;
+		return _hasAddDDMTemplatePermission;
+	}
+
+	public boolean isShowAddRecordSetIcon() {
+		if (_hasAddRecordSetPermission != null) {
+			return _hasAddRecordSetPermission;
+		}
+
+		_hasAddRecordSetPermission = DDLPermission.contains(
+			getPermissionChecker(), getScopeGroupId(), getPortletId(),
+			ActionKeys.ADD_RECORD_SET);
+
+		return _hasAddRecordSetPermission;
 	}
 
 	public boolean isShowConfigurationIcon() throws PortalException {
@@ -182,6 +219,28 @@ public class DDLDisplayContext {
 		return _hasEditDisplayDDMTemplatePermission;
 	}
 
+	public boolean isShowEditFormDDMTemplateIcon() throws PortalException {
+		if (_hasEditFormDDMTemplatePermission != null) {
+			return _hasEditFormDDMTemplatePermission;
+		}
+
+		_hasEditFormDDMTemplatePermission = Boolean.FALSE;
+
+		if (getFormDDMTemplateId() == 0) {
+			return _hasEditFormDDMTemplatePermission;
+		}
+
+		_hasEditFormDDMTemplatePermission = DDMTemplatePermission.contains(
+			getPermissionChecker(), getScopeGroupId(), getFormDDMTemplateId(),
+			PortletKeys.DYNAMIC_DATA_LISTS, ActionKeys.UPDATE);
+
+		return _hasEditFormDDMTemplatePermission;
+	}
+
+	public boolean isShowEditRecordIcon() {
+		return true;
+	}
+
 	public boolean isShowIconsActions() throws PortalException {
 		if (_hasShowIconsActionPermission != null) {
 			return _hasShowIconsActionPermission;
@@ -201,8 +260,9 @@ public class DDLDisplayContext {
 			return _hasShowIconsActionPermission;
 		}
 
-		if (isShowConfigurationIcon() || isShowAddDisplayDDMTemplateIcon() ||
-			isShowEditDisplayDDMTemplateIcon()) {
+		if (isShowConfigurationIcon() || isShowAddDDMTemplateIcon() ||
+			isShowEditDisplayDDMTemplateIcon() ||
+			isShowEditFormDDMTemplateIcon()) {
 
 			_hasShowIconsActionPermission = Boolean.TRUE;
 		}
@@ -210,20 +270,9 @@ public class DDLDisplayContext {
 		return _hasShowIconsActionPermission;
 	}
 
-	public String renderRecordField(
-			DDLRecord record, DDMFormField ddmFormField, Locale locale)
-		throws PortalException {
-
-		List<DDMFormFieldValue> ddmFormFieldValues =
-			record.getDDMFormFieldValues(ddmFormField.getName());
-
-		DDMFormFieldValueRendererAccessor
-			ddmFormFieldValueRendererAccessor =
-				getDDMFormFieldValueRendererAccessor(ddmFormField, locale);
-
-		return ListUtil.toString(
-			ddmFormFieldValues, ddmFormFieldValueRendererAccessor,
-			StringPool.COMMA_AND_SPACE);
+	public boolean isSpreadsheet() {
+		return PrefsParamUtil.getBoolean(
+			_portletPreferences, _renderRequest, "spreadsheet");
 	}
 
 	protected DDMTemplate fetchDisplayDDMTemplate() {
@@ -237,20 +286,20 @@ public class DDLDisplayContext {
 		return _displayDDMTemplate;
 	}
 
-	protected DDMDisplay getDDMDisplay() {
-		return DDMDisplayRegistryUtil.getDDMDisplay(
-			PortletKeys.DYNAMIC_DATA_LISTS);
+	protected DDMTemplate fetchFormDDMTemplate() {
+		if (_formDDMTemplate != null) {
+			return _formDDMTemplate;
+		}
+
+		_formDDMTemplate = DDMTemplateLocalServiceUtil.fetchDDMTemplate(
+			getFormDDMTemplateId());
+
+		return _formDDMTemplate;
 	}
 
-	protected DDMFormFieldValueRendererAccessor
-		getDDMFormFieldValueRendererAccessor(
-			DDMFormField ddmFormField, Locale locale) {
-
-		DDMFormFieldType ddmFormFieldType =
-			DDMFormFieldTypeRegistryUtil.getDDMFormFieldType(
-				ddmFormField.getType());
-
-		return ddmFormFieldType.getDDMFormFieldValueRendererAccessor(locale);
+	protected DDMDisplay getDDMDisplay() {
+		return DDMDisplayRegistryUtil.getDDMDisplay(
+			DDLPortletKeys.DYNAMIC_DATA_LISTS);
 	}
 
 	protected DDMPermissionHandler getDDMPermissionHandler() {
@@ -323,8 +372,11 @@ public class DDLDisplayContext {
 	}
 
 	private DDMTemplate _displayDDMTemplate;
-	private Boolean _hasAddDisplayDDMTemplatePermission;
+	private DDMTemplate _formDDMTemplate;
+	private Boolean _hasAddDDMTemplatePermission;
+	private Boolean _hasAddRecordSetPermission;
 	private Boolean _hasEditDisplayDDMTemplatePermission;
+	private Boolean _hasEditFormDDMTemplatePermission;
 	private Boolean _hasShowIconsActionPermission;
 	private Boolean _hasViewPermission;
 	private final PortletPreferences _portletPreferences;

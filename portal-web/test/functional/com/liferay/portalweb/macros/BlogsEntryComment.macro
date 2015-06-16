@@ -59,7 +59,7 @@
 		<execute function="AssertTextNotPresent" value1="${entryComment}" />
 	</command>
 
-	<command name="editCP">
+	<command name="edit">
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
 
 		<execute function="AssertClick" locator1="Comments#EDIT_LINK" value1="Edit" />

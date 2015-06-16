@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.display.web.template;
+package com.liferay.dynamic.data.lists.web.template;
 
-import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -22,6 +21,7 @@ import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.util.DDLConstants;
+import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateVariableCodeHandler;
@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name="+ DDLDisplayPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
+		"javax.portlet.name="+ DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY
 	},
 	service = TemplateHandler.class
 )
@@ -158,7 +158,7 @@ public class DDLDisplayTemplateHandler extends BaseDDMTemplateHandler {
 	private final TemplateVariableCodeHandler _templateVariableCodeHandler =
 		new DDMTemplateVariableCodeHandler(
 			DDLDisplayTemplateHandler.class.getClassLoader(),
-			"com/liferay/dynamic/data/lists/display/web/template/dependencies/"
+			"com/liferay/dynamic/data/lists/web/template/dependencies/"
 		);
 
 }

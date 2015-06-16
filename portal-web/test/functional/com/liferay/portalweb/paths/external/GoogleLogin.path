@@ -9,8 +9,39 @@
 </thead>
 <tbody>
 <tr>
+	<td>PAGE_TITLE</td>
+	<td>title=Sign in - Google Accounts</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ACCEPT</td>
 	<td>//button[contains(.,'Accept')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--LOGIN-->
+<tr>
+	<td>LOGIN_EMAIL_FIELD</td>
+	<td>//input[contains(@id,'Email')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_PASSWORD_FIELD</td>
+	<td>//input[contains(@id,'Passwd')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_NEXT_BUTTON</td>
+	<td>//input[@id='next']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LOGIN_SIGN_IN_BUTTON</td>
+	<td>//input[@id='signIn']</td>
 	<td></td>
 </tr>
 <tr>

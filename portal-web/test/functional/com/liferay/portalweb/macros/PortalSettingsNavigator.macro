@@ -1,0 +1,9 @@
+<definition>
+	<command name="gotoAuthenticationGoogle">
+		<execute function="AssertClick" locator1="CPPortalsettingsAuthentication#NAVIGATION_GOOGLE" value1="Google" />
+	</command>
+
+	<command name="gotoMenuAuthentication">
+		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_AUTHENTICATION" value1="Authentication" />
+	</command>
+</definition>

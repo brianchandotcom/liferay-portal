@@ -58,6 +58,11 @@
 	<td>//div[contains(@id,'editLayoutPanelSidebar')]//a[contains(.,'Edit Page')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>EDIT_PAGE_SPANISH</td>
+	<td>//div[contains(@id,'editLayoutPanelSidebar')]//a[contains(.,'Editar la página')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

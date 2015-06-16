@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>SCRIPT_FIELD</td>
-	<td>//input[contains(@id,'script')]</td>
+	<td>//div[contains(.,'Script File')]/input[@type='file']</td>
 	<td></td>
 </tr>
 <tr>

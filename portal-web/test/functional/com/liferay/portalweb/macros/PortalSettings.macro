@@ -164,6 +164,14 @@
 		<execute function="AssertTextEquals" locator1="CPPortalsettingsAuthentication#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 	</command>
 
+	<command name="editConfigurationAuthenticationGoogle">
+		<execute function="Check" locator1="Checkbox#ENABLE_GOOGLE_AUTHENTICATION" />
+
+		<execute function="Type" locator1="TextInput#GOOGLE_CLIENT_ID" value1="${googleClientID}" />
+
+		<execute function="Type" locator1="TextInput#GOOGLE_CLIENT_SECRET" value1="${googleClientSecret}" />
+	</command>
+
 	<command name="editConfigurationUsersDefaultUserAssociationsOrganizationSitesCP">
 		<execute function="AssertClick" locator1="CPPortalsettings#MENU_CONFIGURATION_USERS" value1="Users" />
 

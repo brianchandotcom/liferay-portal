@@ -52,7 +52,7 @@ page import="com.liferay.portal.util.SessionClicks" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.util.Encryptor" %><%@
-page import="com.liferay.wiki.item.selector.web.WikiAttachmentItemSelectorCriterion" %>
+page import="com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion" %>
 
 <%@ page import="java.net.URL" %>
 

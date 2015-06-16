@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -39,14 +40,20 @@ public abstract class BaseDLItemSelectorView
 		return new String[0];
 	}
 
+	public ServletContext getServletContext() {
+		return _servletContext;
+	}
+
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response, T t,
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/document-library-item-selector-web/documents.jsp");
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher("/documents.jsp");
 
 		DLItemSelectorViewDisplayContext dlItemSelectorViewDisplayContext =
 			new DLItemSelectorViewDisplayContext(
@@ -58,5 +65,11 @@ public abstract class BaseDLItemSelectorView
 
 		requestDispatcher.include(request, response);
 	}
+
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
+	private ServletContext _servletContext;
 
 }

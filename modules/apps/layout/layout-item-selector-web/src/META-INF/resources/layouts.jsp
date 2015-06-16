@@ -17,8 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String itemSelectedEventName = (String)request.getAttribute(LayoutItemSelectorView.ITEM_SELECTED_EVENT_NAME);
-LayoutItemSelectorCriterion layoutItemSelectorCriterion = (LayoutItemSelectorCriterion)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_CRITERION);
+LayoutItemSelectorViewDisplayContext layoutItemSelectorViewDisplayContext = (LayoutItemSelectorViewDisplayContext)request.getAttribute(LayoutItemSelectorView.LAYOUT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT);
 
 long groupId = themeDisplay.getScopeGroupId();
 
@@ -157,7 +156,7 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 			var currentTarget = event.currentTarget;
 
 			Util.getOpener().Liferay.fire(
-				'<%= itemSelectedEventName %>',
+				'<%= layoutItemSelectorViewDisplayContext.getItemSelectedEventName() %>',
 				{
 
 					<%
@@ -205,6 +204,8 @@ if (group.getPrivateLayoutsPageCount() > 0) {
 
 			<%
 			String itemSelectorReturnTypeName = StringPool.BLANK;
+
+			LayoutItemSelectorCriterion layoutItemSelectorCriterion = layoutItemSelectorViewDisplayContext.getLayoutItemSelectorCriterion();
 
 			for (ItemSelectorReturnType desiredItemSelectorReturnType : layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) {
 				itemSelectorReturnTypeName = desiredItemSelectorReturnType.getName();

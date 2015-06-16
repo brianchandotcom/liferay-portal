@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.wiki.item.selector.web;
+package com.liferay.wiki.web.item.selector.view;
 
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.DefaultItemSelectorReturnType;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.wiki.item.selector.criterion.WikiAttachmentItemSelectorCriterion;
+import com.liferay.wiki.web.item.selector.view.display.context.WikiAttachmentItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
@@ -28,33 +30,35 @@ import java.util.Set;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Iván Zaera
  */
+@Component
 public class WikiAttachmentItemSelectorView
 	implements ItemSelectorView
 		<WikiAttachmentItemSelectorCriterion, DefaultItemSelectorReturnType> {
 
-	public static final String ITEM_SELECTED_EVENT_NAME =
-		WikiAttachmentItemSelectorView.class.getName() +
-			"#ITEM_SELECTED_EVENT_NAME";
-
-	public static final String PORTLET_URL =
-		WikiAttachmentItemSelectorView.class.getName() + "#PORTLET_URL";
-
-	public static final String WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION =
-		WikiAttachmentItemSelectorView.class.getName() +
-			"#WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION";
+	public static final String
+		WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT =
+			"WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT";
 
 	@Override
 	public Class<WikiAttachmentItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
 		return WikiAttachmentItemSelectorCriterion.class;
+	}
+
+	public ServletContext getServletContext() {
+		return _servletContext;
 	}
 
 	@Override
@@ -69,7 +73,7 @@ public class WikiAttachmentItemSelectorView
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(
 			"content/Language", locale);
 
-		return resourceBundle.getString("attachments");
+		return resourceBundle.getString("page-attachments");
 	}
 
 	@Override
@@ -80,16 +84,30 @@ public class WikiAttachmentItemSelectorView
 			PortletURL portletURL, String itemSelectedEventName)
 		throws IOException, ServletException {
 
-		request.setAttribute(ITEM_SELECTED_EVENT_NAME, itemSelectedEventName);
-		request.setAttribute(PORTLET_URL, portletURL);
-		request.setAttribute(
-			WIKI_ATTACHMENT_ITEM_SELECTOR_CRITERION,
-			wikiAttachmentItemSelectorCriterion);
+		WikiAttachmentItemSelectorViewDisplayContext
+			wikiAttachmentItemSelectorViewDisplayContext =
+				new WikiAttachmentItemSelectorViewDisplayContext(
+					wikiAttachmentItemSelectorCriterion, this,
+					itemSelectedEventName, portletURL);
 
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
-			"/o/wiki-item-selector-web/attachments.jsp");
+		request.setAttribute(
+			WIKI_ATTACHMENT_ITEM_SELECTOR_VIEW_DISPLAY_CONTEXT,
+			wikiAttachmentItemSelectorViewDisplayContext);
+
+		ServletContext servletContext = getServletContext();
+
+		RequestDispatcher requestDispatcher =
+			servletContext.getRequestDispatcher(
+				"/html/item/selector/attachments.jsp");
 
 		requestDispatcher.include(request, response);
+	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.wiki.web)", unbind = "-"
+	)
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
 	}
 
 	private static final Set<DefaultItemSelectorReturnType>
@@ -98,5 +116,7 @@ public class WikiAttachmentItemSelectorView
 				new DefaultItemSelectorReturnType[] {
 					DefaultItemSelectorReturnType.URL
 				}));
+
+	private ServletContext _servletContext;
 
 }

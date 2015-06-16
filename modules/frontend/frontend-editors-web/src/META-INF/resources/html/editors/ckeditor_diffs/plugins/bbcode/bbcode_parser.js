@@ -343,6 +343,12 @@
 		I: 'list-style-type: upper-roman;'
 	};
 
+	var MAP_LIST_BULLETED_STYLES = {
+		circle: 'list-style-type: circle;',
+		disc: 'list-style-type: disc;',
+		square: 'list-style-type: square;'
+	};
+
 	var MAP_TOKENS_EXCLUDE_NEW_LINE = {
 		'*': 3,
 		li: 3,
@@ -652,7 +658,10 @@
 
 			var listAttribute = token.attribute;
 
-			if (listAttribute) {
+			if (MAP_LIST_BULLETED_STYLES[listAttribute]) {
+				styleAttr = MAP_LIST_BULLETED_STYLES[listAttribute];
+			}
+			else {
 				tag = 'ol';
 
 				styleAttr = MAP_LIST_STYLES[listAttribute];

@@ -17,6 +17,7 @@
 		<dirset dir="document-library" includes="*" />
 		<dirset dir="dynamic-data-lists" includes="*" />
 		<dirset dir="dynamic-data-mapping" includes="*" />
+		<dirset dir="expando" includes="*" />
 		<dirset dir="export-import" includes="*" />
 		<dirset dir="hello-velocity" includes="*" />
 		<dirset dir="iframe" includes="*" />

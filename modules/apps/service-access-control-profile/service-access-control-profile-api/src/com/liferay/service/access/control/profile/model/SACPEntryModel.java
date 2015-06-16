@@ -212,6 +212,27 @@ public interface SACPEntryModel extends BaseModel<SACPEntry>, LocalizedModel,
 	public void setAllowedServiceSignatures(String allowedServiceSignatures);
 
 	/**
+	 * Returns the default profile of this s a c p entry.
+	 *
+	 * @return the default profile of this s a c p entry
+	 */
+	public boolean getDefaultProfile();
+
+	/**
+	 * Returns <code>true</code> if this s a c p entry is default profile.
+	 *
+	 * @return <code>true</code> if this s a c p entry is default profile; <code>false</code> otherwise
+	 */
+	public boolean isDefaultProfile();
+
+	/**
+	 * Sets whether this s a c p entry is default profile.
+	 *
+	 * @param defaultProfile the default profile of this s a c p entry
+	 */
+	public void setDefaultProfile(boolean defaultProfile);
+
+	/**
 	 * Returns the name of this s a c p entry.
 	 *
 	 * @return the name of this s a c p entry

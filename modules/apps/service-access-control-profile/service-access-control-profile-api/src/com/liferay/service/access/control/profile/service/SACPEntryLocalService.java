@@ -60,10 +60,12 @@ public interface SACPEntryLocalService extends BaseLocalService,
 
 	public com.liferay.service.access.control.profile.model.SACPEntry addSACPEntry(
 		long userId, java.lang.String allowedServiceSignatures,
-		java.lang.String name,
+		boolean defaultProfile, java.lang.String name,
 		java.util.Map<java.util.Locale, java.lang.String> titleMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws PortalException;
+
+	public void checkDefaultProfile(long companyId) throws PortalException;
 
 	/**
 	* Creates a new s a c p entry with the primary key. Does not add the s a c p entry to the database.

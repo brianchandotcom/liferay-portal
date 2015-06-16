@@ -7,6 +7,7 @@ create table SACPEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	allowedServiceSignatures STRING null,
+	defaultProfile BOOLEAN,
 	name VARCHAR(75) null,
 	title STRING null
 );

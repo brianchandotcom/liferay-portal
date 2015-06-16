@@ -55,7 +55,8 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences("displayDDMTemplateId", "recordSetId");
+		setDataPortletPreferences(
+			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 
@@ -70,7 +71,10 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 		}
 
 		portletPreferences.setValue("displayDDMTemplateId", StringPool.BLANK);
+		portletPreferences.setValue("editable", Boolean.TRUE.toString());
+		portletPreferences.setValue("formDDMTemplateId", StringPool.BLANK);
 		portletPreferences.setValue("recordSetId", StringPool.BLANK);
+		portletPreferences.setValue("spreadsheet", Boolean.FALSE.toString());
 
 		return portletPreferences;
 	}
@@ -123,6 +127,8 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			portletPreferences.getValue("recordSetId", null));
 		long importedDisplayDDMTemplateId = GetterUtil.getLong(
 			portletPreferences.getValue("displayDDMTemplateId", null));
+		long importedFormDDMTemplateId = GetterUtil.getLong(
+			portletPreferences.getValue("formDDMTemplateId", null));
 
 		Map<Long, Long> recordSetIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -139,9 +145,14 @@ public class DDLDisplayPortletDataHandler extends DDLPortletDataHandler {
 			templateIds, importedDisplayDDMTemplateId,
 			importedDisplayDDMTemplateId);
 
+		long formDDMTemplateId = MapUtil.getLong(
+			templateIds, importedFormDDMTemplateId, importedFormDDMTemplateId);
+
 		portletPreferences.setValue("recordSetId", String.valueOf(recordSetId));
 		portletPreferences.setValue(
 			"displayDDMTemplateId", String.valueOf(displayDDMTemplateId));
+		portletPreferences.setValue(
+			"formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 		return portletPreferences;
 	}

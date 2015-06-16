@@ -15,7 +15,9 @@
 package com.liferay.dynamic.data.lists.web.portlet;
 
 import com.liferay.dynamic.data.lists.exception.NoSuchRecordSetException;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
+import com.liferay.dynamic.data.lists.service.DDLRecordService;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
 import com.liferay.dynamic.data.lists.web.constants.DDLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +25,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.util.WebKeys;
@@ -44,8 +47,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.css-class-wrapper=dynamic-data-lists-display",
+		"com.liferay.portlet.css-class-wrapper=portlet-dynamic-data-lists-display",
 		"com.liferay.portlet.display-category=category.collaboration",
+		"com.liferay.portlet.header-portal-javascript=/o/ddm-web/js/custom_fields.js",
+		"com.liferay.portlet.header-portal-javascript=/o/ddm-web/js/main.js",
+		"com.liferay.portlet.header-portlet-css=/css/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/main.js",
 		"com.liferay.portlet.instanceable=true",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
@@ -58,7 +65,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.copy-request-parameters=true",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.init-param.view-template=/view_selected_record_set.jsp",
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=guest,power-user,user",
@@ -74,7 +81,9 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		throws IOException, PortletException {
 
 		try {
-			setRenderRequestAttributes(renderRequest, renderResponse);
+			setDDLRecordRequestAttribute(renderRequest);
+
+			setDDLRecordSetRequestAttribute(renderRequest);
 		}
 		catch (Exception e) {
 			if (isSessionErrorException(e)) {
@@ -92,6 +101,11 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		}
 
 		super.render(renderRequest, renderResponse);
+	}
+
+	@Reference
+	public void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
 	}
 
 	@Override
@@ -122,15 +136,21 @@ public class DDLDisplayPortlet extends MVCPortlet {
 		return false;
 	}
 
-	@Reference
-	protected void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
+	protected void setDDLRecordRequestAttribute(RenderRequest renderRequest)
+		throws PortalException {
 
-		_ddlRecordSetService = ddlRecordSetService;
+		long recordId = ParamUtil.getLong(renderRequest, "recordId");
+
+		DDLRecord record = null;
+
+		if (recordId > 0) {
+			record = _ddlRecordService.getRecord(recordId);
+		}
+
+		renderRequest.setAttribute(WebKeys.DYNAMIC_DATA_LISTS_RECORD, record);
 	}
 
-	protected void setRenderRequestAttributes(
-			RenderRequest renderRequest, RenderResponse renderResponse)
+	protected void setDDLRecordSetRequestAttribute(RenderRequest renderRequest)
 		throws PortalException {
 
 		long recordSetId = PrefsParamUtil.getLong(
@@ -140,15 +160,23 @@ public class DDLDisplayPortlet extends MVCPortlet {
 
 		if (recordSetId > 0) {
 			recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
-
-			renderRequest.setAttribute(
-				WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
 		}
+
+		renderRequest.setAttribute(
+			WebKeys.DYNAMIC_DATA_LISTS_RECORD_SET, recordSet);
+	}
+
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLDisplayPortlet.class);
 
+	private DDLRecordService _ddlRecordService;
 	private DDLRecordSetService _ddlRecordSetService;
 
 }

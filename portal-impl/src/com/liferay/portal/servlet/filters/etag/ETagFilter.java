@@ -95,7 +95,7 @@ public class ETagFilter extends BasePortalFilter {
 					restrictedByteBufferCacheServletResponse.getStatus()) ||
 				!ETagUtil.processETag(request, response, byteBuffer)) {
 
-				restrictedByteBufferCacheServletResponse.finishResponse();
+				restrictedByteBufferCacheServletResponse.finishResponse(false);
 
 				restrictedByteBufferCacheServletResponse.flushCache();
 			}

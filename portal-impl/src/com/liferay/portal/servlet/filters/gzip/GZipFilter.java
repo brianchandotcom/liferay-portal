@@ -124,7 +124,7 @@ public class GZipFilter extends BasePortalFilter {
 
 		processFilter(GZipFilter.class, request, gZipResponse, filterChain);
 
-		gZipResponse.finishResponse();
+		gZipResponse.finishResponse(true);
 	}
 
 	private static final String _COMPRESS = "compress";

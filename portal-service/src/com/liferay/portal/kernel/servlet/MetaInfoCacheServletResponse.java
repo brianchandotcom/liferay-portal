@@ -52,6 +52,8 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 			return;
 		}
 
+		resetThrough(response);
+
 		for (Map.Entry<String, Set<Header>> entry :
 				metaInfoDataBag._headers.entrySet()) {
 
@@ -190,10 +192,12 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		return _metaData._headers.containsKey(name);
 	}
 
-	public void finishResponse() throws IOException {
+	public void finishResponse(boolean reapplyMetaData) throws IOException {
 		HttpServletResponse response = (HttpServletResponse)getResponse();
 
-		finishResponse(_metaData, response);
+		if (reapplyMetaData) {
+			finishResponse(_metaData, response);
+		}
 
 		_committed = true;
 	}
@@ -611,6 +615,20 @@ public class MetaInfoCacheServletResponse extends HttpServletResponseWrapper {
 		private int _status = SC_OK;
 		private String _statusMessage;
 
+	}
+
+	protected static void resetThrough(HttpServletResponse response) {
+		if (response instanceof MetaInfoCacheServletResponse) {
+			MetaInfoCacheServletResponse metaInfoCacheServletResponse =
+				(MetaInfoCacheServletResponse)response;
+
+			resetThrough(
+				(HttpServletResponse)
+					metaInfoCacheServletResponse.getResponse());
+		}
+		else {
+			response.reset();
+		}
 	}
 
 	/**

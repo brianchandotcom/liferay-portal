@@ -114,6 +114,11 @@ public abstract class BaseAssetRenderer implements AssetRenderer {
 	}
 
 	@Override
+	public Object getEntry() {
+		return null;
+	}
+
+	@Override
 	@SuppressWarnings("unused")
 	public String getIconCssClass() throws PortalException {
 		return getAssetRendererFactory().getIconCssClass();

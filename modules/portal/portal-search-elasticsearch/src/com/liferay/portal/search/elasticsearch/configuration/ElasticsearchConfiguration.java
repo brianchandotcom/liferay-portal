@@ -64,6 +64,13 @@ public interface ElasticsearchConfiguration {
 	public String networkPublishHost();
 
 	@Meta.AD(
+		deflt = "true",
+		description = "Set to true to only log exceptions from Solr and not rethrow them",
+		required = false
+	)
+	public boolean logExceptionsOnly();
+
+	@Meta.AD(
 		deflt = "EMBEDDED", optionLabels = {"Embedded", "Remote"},
 		optionValues = {"EMBEDDED", "REMOTE"},
 		required = false

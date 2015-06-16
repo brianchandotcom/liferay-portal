@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.store;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.test.BaseStoreTestCase;
 
 import org.junit.ClassRule;
@@ -36,7 +37,20 @@ public class DBStoreTest extends BaseStoreTestCase {
 
 	@Override
 	protected Store getStore() {
-		return new DBStore();
+		String originalDLStoreImpl = PropsValues.DL_STORE_IMPL;
+
+		PropsValues.DL_STORE_IMPL = DBStore.class.getName();
+
+		StoreFactory.setInstance(null);
+
+		try {
+			return StoreFactory.getInstance();
+		}
+		finally {
+			PropsValues.DL_STORE_IMPL = originalDLStoreImpl;
+
+			StoreFactory.setInstance(null);
+		}
 	}
 
 }

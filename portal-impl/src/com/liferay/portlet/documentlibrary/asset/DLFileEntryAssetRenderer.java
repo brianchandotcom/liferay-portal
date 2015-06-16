@@ -109,6 +109,11 @@ public class DLFileEntryAssetRenderer
 	}
 
 	@Override
+	public Object getEntry() {
+		return _fileEntry;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _fileEntry.getGroupId();
 	}

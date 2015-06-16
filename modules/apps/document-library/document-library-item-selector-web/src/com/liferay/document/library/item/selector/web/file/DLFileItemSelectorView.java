@@ -59,12 +59,9 @@ public class DLFileItemSelectorView
 	}
 
 	@Reference(
-		target =
-			"(osgi.web.symbolicname=" +
-				"com.liferay.document.library.item.selector.web)",
+		target = "(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
 		unbind = "-"
 	)
-
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}

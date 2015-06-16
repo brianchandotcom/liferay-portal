@@ -21,12 +21,12 @@ WikiAttachmentItemSelectorViewDisplayContext wikiAttachmentItemSelectorViewDispl
 
 WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion = wikiAttachmentItemSelectorViewDisplayContext.getWikiAttachmentItemSelectorCriterion();
 
-SearchContainer wikiAttachmentsSearchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curPageAttachments", SearchContainer.DEFAULT_DELTA, wikiAttachmentItemSelectorViewDisplayContext.getPortletURL(), null, null);
 
 WikiPage wikiPage = wikiAttachmentItemSelectorViewDisplayContext.getWikiPage();
 
-wikiAttachmentsSearchContainer.setTotal(wikiPage.getAttachmentsFileEntriesCount());
-wikiAttachmentsSearchContainer.setResults(wikiPage.getAttachmentsFileEntries(wikiAttachmentsSearchContainer.getStart(), wikiAttachmentsSearchContainer.getEnd()));
+searchContainer.setTotal(wikiPage.getAttachmentsFileEntriesCount());
+searchContainer.setResults(wikiPage.getAttachmentsFileEntries(searchContainer.getStart(), searchContainer.getEnd()));
 %>
 
 <item-selector-ui:browser
@@ -34,6 +34,6 @@ wikiAttachmentsSearchContainer.setResults(wikiPage.getAttachmentsFileEntries(wik
 	displayStyleURL="<%= wikiAttachmentItemSelectorViewDisplayContext.getPortletURL() %>"
 	itemSelectedEventName="<%= wikiAttachmentItemSelectorViewDisplayContext.getItemSelectedEventName() %>"
 	returnType="<%= ReturnType.parseFirst(wikiAttachmentItemSelectorCriterion.getDesiredItemSelectorReturnTypes()) %>"
-	searchContainer="<%= wikiAttachmentsSearchContainer %>"
+	searchContainer="<%= searchContainer %>"
 	tabName="<%= wikiAttachmentItemSelectorViewDisplayContext.getTitle(locale) %>"
 />

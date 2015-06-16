@@ -3277,6 +3277,43 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 		<ant antfile="build-test-plugins.xml" target="deploy-simple-server-plugins" />
 	</target>
 
+	<target name="prepare-lcs-processor-bundle">
+		<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false">
+			<property name="app.server.parent.dir" value="${app.server.parent.dir}/processor" />
+		</ant>
+
+		<replaceregexp
+			file="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/conf/server.xml"
+			flags="g"
+			match="=&quot;8(\d\d\d)&quot;"
+			replace="=&quot;9\1&quot;"
+		/>
+
+		<copy
+			file="${project.dir}/lib/portal/log4j.jar"
+			tofile="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
+		/>
+
+		<copy
+			file="${lfrsite-lcs.dir}/jenkins/development/processor/plugins/webs/osb-lcs-processor-web/docroot/WEB-INF/src/processor-ext.properties"
+			tofile="${lp.plugins.dir}/webs/osb-lcs-processor-web/docroot/WEB-INF/src/processor-ext.properties"
+		/>
+
+		<delete dir="${lp.plugins.dir}/dist" failonerror="false" />
+
+		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
+
+		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
+
+		<ant dir="${lp.plugins.dir}" target="war">
+			<property name="plugins.includes" value="${plugins.includes.processor}" />
+		</ant>
+
+		<copy todir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/webapps">
+			<fileset dir="${lp.plugins.dir}/dist" />
+		</copy>
+	</target>
+
 	<target name="prepare-portal-ext-properties">
 		<prepare-fix-pack-bundle />
 
@@ -3795,43 +3832,6 @@ module.framework.properties.osgi.console=11312</echo>
 module.framework.properties.osgi.console=11312</echo>
 			</else>
 		</if>
-	</target>
-
-	<target name="prepare-lcs-processor-bundle">
-		<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false">
-			<property name="app.server.parent.dir" value="${app.server.parent.dir}/processor" />
-		</ant>
-
-		<replaceregexp
-			file="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/conf/server.xml"
-			flags="g"
-			match="=&quot;8(\d\d\d)&quot;"
-			replace="=&quot;9\1&quot;"
-		/>
-
-		<copy
-			file="${project.dir}/lib/portal/log4j.jar"
-			tofile="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/lib/log4j.jar"
-		/>
-
-		<copy
-			file="${lfrsite-lcs.dir}/jenkins/development/processor/plugins/webs/osb-lcs-processor-web/docroot/WEB-INF/src/processor-ext.properties"
-			tofile="${lp.plugins.dir}/webs/osb-lcs-processor-web/docroot/WEB-INF/src/processor-ext.properties"
-		/>
-
-		<delete dir="${lp.plugins.dir}/dist" failonerror="false" />
-
-		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
-
-		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
-
-		<ant dir="${lp.plugins.dir}" target="war">
-			<property name="plugins.includes" value="${plugins.includes.processor}" />
-		</ant>
-
-		<copy todir="${app.server.parent.dir}/processor/tomcat-${app.server.tomcat.version}/webapps">
-			<fileset dir="${lp.plugins.dir}/dist" />
-		</copy>
 	</target>
 
 	<target name="prepare-portal-properties">

@@ -23,7 +23,6 @@ Import-Package:\
 	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.notifications,\
-	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
@@ -31,7 +30,6 @@ Import-Package:\
 	com.liferay.portal.kernel.trash,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.workflow,\
-	com.liferay.portal.lar,\
 	com.liferay.portal.model,\
 	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\
@@ -46,6 +44,7 @@ Import-Package:\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.expando.model,\
+	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.social.model,\
 	com.liferay.portlet.trash.model,\
 	\

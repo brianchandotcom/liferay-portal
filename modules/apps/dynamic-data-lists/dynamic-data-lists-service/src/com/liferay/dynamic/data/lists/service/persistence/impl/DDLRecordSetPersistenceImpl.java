@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.lar.ExportImportThreadLocal;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -3249,28 +3248,25 @@ public class DDLRecordSetPersistenceImpl extends BasePersistenceImpl<DDLRecordSe
 			ddlRecordSet.setUuid(uuid);
 		}
 
-		if (!ExportImportThreadLocal.isImportInProcess()) {
-			ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
 
-			Date now = new Date();
+		Date now = new Date();
 
-			if (isNew && (ddlRecordSet.getCreateDate() == null)) {
-				if (serviceContext == null) {
-					ddlRecordSet.setCreateDate(now);
-				}
-				else {
-					ddlRecordSet.setCreateDate(serviceContext.getCreateDate(now));
-				}
+		if (isNew && (ddlRecordSet.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				ddlRecordSet.setCreateDate(now);
 			}
+			else {
+				ddlRecordSet.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
 
-			if (!ddlRecordSetModelImpl.hasSetModifiedDate()) {
-				if (serviceContext == null) {
-					ddlRecordSet.setModifiedDate(now);
-				}
-				else {
-					ddlRecordSet.setModifiedDate(serviceContext.getModifiedDate(
-							now));
-				}
+		if (!ddlRecordSetModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				ddlRecordSet.setModifiedDate(now);
+			}
+			else {
+				ddlRecordSet.setModifiedDate(serviceContext.getModifiedDate(now));
 			}
 		}
 

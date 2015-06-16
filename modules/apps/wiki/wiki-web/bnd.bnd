@@ -6,7 +6,6 @@ Import-Package:\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.notifications,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
@@ -17,7 +16,6 @@ Import-Package:\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.workflow,\
 	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.lar,\
 	com.liferay.portal.model,\
 	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\
@@ -31,6 +29,7 @@ Import-Package:\
 	com.liferay.portlet,\
 	com.liferay.portlet.asset.util,\
 	com.liferay.portlet.documentlibrary.antivirus,\
+	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portlet.portletdisplaytemplate.util,\
 	com.liferay.portlet.social.model,\
 	com.liferay.portlet.social.service,\

@@ -466,7 +466,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a byte array
@@ -494,7 +494,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layout as a byte array
@@ -536,7 +536,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the layouts as a File
@@ -645,7 +645,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a byte array
@@ -704,7 +704,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information to export. For information on the keys used in
 	the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param startDate the export's start date
 	* @param endDate the export's end date
 	* @return the portlet information as a file
@@ -890,7 +890,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _layoutLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 
@@ -1360,11 +1360,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param bytes the byte array with the data
 	* @throws PortalException if a group or user with the primary key could
 	not be found, or if some other portal exception occurred
-	* @see com.liferay.portal.lar.LayoutImporter
+	* @see com.liferay.portlet.exportimport.lar.LayoutImporter
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
@@ -1386,11 +1386,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @throws PortalException if a group or user with the primary key could
 	not be found, or if some other portal exception occurred
-	* @see com.liferay.portal.lar.LayoutImporter
+	* @see com.liferay.portlet.exportimport.lar.LayoutImporter
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
@@ -1412,11 +1412,11 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @throws PortalException if a group or user with the primary key could
 	not be found, or if some other portal exception occurred
-	* @see com.liferay.portal.lar.LayoutImporter
+	* @see com.liferay.portlet.exportimport.lar.LayoutImporter
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated
@@ -1563,7 +1563,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param file the LAR file with the data
 	* @throws PortalException if a group, layout, portlet or user with the
 	primary key could not be found
@@ -1591,7 +1591,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	* @param parameterMap the mapping of parameters indicating which
 	information will be imported. For information on the keys
 	used in the map see {@link
-	com.liferay.portal.kernel.lar.PortletDataHandlerKeys}.
+	com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys}.
 	* @param is the input stream
 	* @throws PortalException if a group, portlet, layout or user with the
 	primary key could not be found
@@ -2252,7 +2252,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2268,7 +2268,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2282,7 +2282,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		long userId, long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
@@ -2297,7 +2297,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportLayoutsFile(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportLayoutsFile(
 		long userId, long groupId, boolean privateLayout,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream)
@@ -2314,7 +2314,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.File file)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2330,7 +2330,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		com.liferay.portlet.exportimport.model.ExportImportConfiguration exportImportConfiguration,
 		java.io.InputStream inputStream)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -2344,7 +2344,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		long userId, long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.File file)
@@ -2359,7 +2359,7 @@ public class LayoutLocalServiceWrapper implements LayoutLocalService,
 	*/
 	@Deprecated
 	@Override
-	public com.liferay.portal.kernel.lar.MissingReferences validateImportPortletInfo(
+	public com.liferay.portlet.exportimport.lar.MissingReferences validateImportPortletInfo(
 		long userId, long plid, long groupId, java.lang.String portletId,
 		java.util.Map<java.lang.String, java.lang.String[]> parameterMap,
 		java.io.InputStream inputStream)

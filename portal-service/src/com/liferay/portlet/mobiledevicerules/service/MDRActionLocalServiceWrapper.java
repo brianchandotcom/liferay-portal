@@ -285,7 +285,7 @@ public class MDRActionLocalServiceWrapper implements MDRActionLocalService,
 
 	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.portal.kernel.lar.PortletDataContext portletDataContext) {
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
 		return _mdrActionLocalService.getExportActionableDynamicQuery(portletDataContext);
 	}
 

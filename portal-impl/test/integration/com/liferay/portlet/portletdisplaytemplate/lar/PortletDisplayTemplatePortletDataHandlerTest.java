@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.portletdisplaytemplate.lar;
 
-import com.liferay.portal.kernel.lar.PortletDataHandler;
 import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -30,6 +29,7 @@ import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMTemplateTestUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.List;
 

@@ -1,0 +1,126 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.productivity.center.panel.adapter;
+
+import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.productivity.center.panel.PanelApp;
+
+import java.util.Dictionary;
+import java.util.Map;
+
+import javax.portlet.Portlet;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+import org.osgi.framework.ServiceRegistration;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
+
+/**
+ * @author Adolfo Pérez
+ */
+class PortletPanelAppAdapterServiceTrackerCustomizer
+	implements ServiceTrackerCustomizer<Portlet, PanelApp> {
+
+	private final
+		Map<ServiceReference<Portlet>, ServiceRegistration<PanelApp>>
+			_serviceRegistrations;
+
+	public PortletPanelAppAdapterServiceTrackerCustomizer(
+		BundleContext bundleContext,
+		Map<ServiceReference<Portlet>, ServiceRegistration<PanelApp>>
+			serviceRegistrations) {
+
+		_bundleContext = bundleContext;
+		_serviceRegistrations = serviceRegistrations;
+	}
+
+	@Override
+	public PanelApp addingService(ServiceReference<Portlet> serviceReference) {
+		String portletId = (String)serviceReference.getProperty(
+			"javax.portlet.name");
+
+		if (Validator.isNull(portletId)) {
+			return null;
+		}
+
+		String controlPanelCategory = (String)serviceReference.getProperty(
+			"com.liferay.portlet.control-panel-entry-category");
+
+		if (Validator.isNull(controlPanelCategory)) {
+			return null;
+		}
+
+		PanelApp portletPanelAppAdapter = new PortletPanelAppAdapter(portletId);
+
+		Dictionary<String, Object> panelAppProperties =
+			new HashMapDictionary<>();
+
+		panelAppProperties.put("panel.category.key", controlPanelCategory);
+
+		Integer serviceRanking = getServiceRanking(serviceReference);
+
+		if (serviceRanking != null) {
+			panelAppProperties.put("service.ranking", serviceRanking);
+		}
+
+		ServiceRegistration<PanelApp> serviceRegistration =
+			_bundleContext.registerService(
+				PanelApp.class, portletPanelAppAdapter, panelAppProperties);
+
+		_serviceRegistrations.put(serviceReference, serviceRegistration);
+
+		return portletPanelAppAdapter;
+	}
+
+	protected Integer getServiceRanking(
+		ServiceReference<Portlet> serviceReference) {
+
+		String controlPanelEntryWeight = (String)serviceReference.getProperty(
+			"com.liferay.portlet.control-panel-entry-weight");
+
+		if (Validator.isNotNull(controlPanelEntryWeight)) {
+			try {
+				return (int)Math.ceil(
+					Double.parseDouble(controlPanelEntryWeight) * 100);
+			}
+			catch (NumberFormatException e) {
+			}
+		}
+
+		return null;
+	}
+
+	@Override
+	public void modifiedService(
+		ServiceReference<Portlet> serviceReference, PanelApp panelApp) {
+
+		removedService(serviceReference, panelApp);
+		addingService(serviceReference);
+	}
+
+	@Override
+	public void removedService(
+		ServiceReference<Portlet> serviceReference, PanelApp panelApp) {
+
+		ServiceRegistration<PanelApp> serviceRegistration =
+			_serviceRegistrations.remove(serviceReference);
+
+		serviceRegistration.unregister();
+	}
+
+	private final BundleContext _bundleContext;
+
+}

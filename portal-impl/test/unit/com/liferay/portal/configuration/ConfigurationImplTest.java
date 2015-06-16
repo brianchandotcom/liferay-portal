@@ -27,6 +27,7 @@ import java.net.URLStreamHandlerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 
 import org.junit.Assert;
@@ -150,7 +151,64 @@ public class ConfigurationImplTest {
 	}
 
 	@Test
-	public void testSystemPropertyOverride() throws IOException {
+	public void testSystemPropertyOverrideProperties() throws IOException {
+		TestResourceClassLoader testResourceClassLoader =
+			new TestResourceClassLoader();
+
+		testResourceClassLoader.addPropertiesResource(
+			ConfigurationImplTest.class.getName(),
+			"namespace.key1=value1\nnamespace.key2=value2");
+
+		ConfigurationImpl configurationImpl = new ConfigurationImpl(
+			testResourceClassLoader, ConfigurationImplTest.class.getName());
+
+		Properties properties = configurationImpl.getProperties(
+			"namespace.", false);
+
+		Assert.assertEquals(2, properties.size());
+		Assert.assertEquals("value1", properties.get("namespace.key1"));
+		Assert.assertEquals("value2", properties.get("namespace.key2"));
+
+		properties = configurationImpl.getProperties("namespace.", true);
+
+		Assert.assertEquals(2, properties.size());
+		Assert.assertEquals("value1", properties.get("key1"));
+		Assert.assertEquals("value2", properties.get("key2"));
+
+		configurationImpl.clearCache();
+
+		System.setProperty(
+			ConfigurationImplTest.class.getName() + ":namespace.key2",
+			"valuex");
+
+		try {
+			properties = configurationImpl.getProperties("namespace.", false);
+
+			Assert.assertEquals(2, properties.size());
+			Assert.assertEquals("value1", properties.get("namespace.key1"));
+			Assert.assertEquals("valuex", properties.get("namespace.key2"));
+
+			properties = configurationImpl.getProperties("namespace.", true);
+
+			Assert.assertEquals(2, properties.size());
+			Assert.assertEquals("value1", properties.get("key1"));
+			Assert.assertEquals("valuex", properties.get("key2"));
+
+			configurationImpl.clearCache();
+		}
+		finally {
+			System.clearProperty(
+				ConfigurationImplTest.class.getName() + ":namespace.key2");
+
+			Assert.assertEquals(
+				"value1", configurationImpl.get("namespace.key1"));
+			Assert.assertEquals(
+				"value2", configurationImpl.get("namespace.key2"));
+		}
+	}
+
+	@Test
+	public void testSystemPropertyOverrideSingleValue() throws IOException {
 		TestResourceClassLoader testResourceClassLoader =
 			new TestResourceClassLoader();
 

@@ -141,17 +141,9 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 					BackgroundTaskMessageListener.class.getName(),
 					Level.ERROR)) {
 
-			try {
-				StagingUtil.publishLayouts(
-					TestPropsValues.getUserId(), _group.getGroupId(),
-					RandomTestUtil.nextInt(), false, new long[0],
-					_parameterMap);
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info(t, t);
-				}
-			}
+			StagingUtil.publishLayouts(
+				TestPropsValues.getUserId(), _group.getGroupId(),
+				RandomTestUtil.nextInt(), false, new long[0], _parameterMap);
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
@@ -229,17 +221,9 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 					BackgroundTaskMessageListener.class.getName(),
 					Level.ERROR)) {
 
-			try {
-				StagingUtil.publishPortlet(
-					user.getUserId(), _group.getGroupId(),
-					_liveGroup.getGroupId(), 0, 0, StringPool.BLANK,
-					_parameterMap);
-			}
-			catch (Throwable t) {
-				if (_log.isInfoEnabled()) {
-					_log.info(t, t);
-				}
-			}
+			StagingUtil.publishPortlet(
+				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
+				0, 0, StringPool.BLANK, _parameterMap);
 
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();

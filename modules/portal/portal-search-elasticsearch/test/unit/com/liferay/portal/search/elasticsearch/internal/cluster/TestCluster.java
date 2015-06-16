@@ -14,7 +14,10 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
+
+import java.util.HashMap;
 
 /**
  * @author André de Oliveira
@@ -22,6 +25,9 @@ import com.liferay.portal.search.elasticsearch.internal.connection.Elasticsearch
 public class TestCluster {
 
 	public TestCluster(int size, Object object) {
+		_elasticsearchConfigurationProperties =
+			createElasticsearchConfigurationProperties(size);
+
 		_elasticsearchFixtures = new ElasticsearchFixture[size];
 
 		Class<?> clazz = object.getClass();
@@ -60,12 +66,32 @@ public class TestCluster {
 		destroyNodes();
 	}
 
+	protected HashMap<String, Object>
+		createElasticsearchConfigurationProperties(int size) {
+
+		HashMap<String, Object> properties = new HashMap<>();
+
+		int startingPort = 9310;
+
+		String range = String.valueOf(startingPort);
+
+		if (size > 1) {
+			int endingPort = startingPort + size - 1;
+			range = range + StringPool.MINUS + endingPort;
+		}
+
+		properties.put("discoveryZenPingUnicastHostsPort", range);
+		properties.put("transportTcpPort", range);
+
+		return properties;
+	}
+
 	private ElasticsearchFixture _createNode(int index) throws Exception {
 		ElasticsearchFixture elasticsearchFixture = new ElasticsearchFixture(
-			_prefix + "-" + index);
+			_prefix + "-" + index, _elasticsearchConfigurationProperties);
 
 		elasticsearchFixture.setClusterSettingsContext(
-			new TestClusterSettingsContext(index));
+			new TestClusterSettingsContext());
 
 		elasticsearchFixture.createNode();
 
@@ -74,40 +100,22 @@ public class TestCluster {
 		return elasticsearchFixture;
 	}
 
+	private final HashMap<String, Object> _elasticsearchConfigurationProperties;
 	private final ElasticsearchFixture[] _elasticsearchFixtures;
 	private final String _prefix;
 
 	private static class TestClusterSettingsContext
 		implements ClusterSettingsContext {
 
-		public TestClusterSettingsContext(int index) {
-			_hosts = _getHosts(index);
-		}
-
 		@Override
 		public String[] getHosts() {
-			return _hosts;
+			return new String[] { "127.0.0.1" };
 		}
 
 		@Override
 		public boolean isClusterEnabled() {
 			return true;
 		}
-
-		private String[] _getHosts(int index) {
-			String[] hosts = new String[index + 1];
-
-			for (int i = 0; i < hosts.length; i++) {
-				int port = _STARTING_PORT + i;
-				hosts[i] = "127.0.0.1:" + port;
-			}
-
-			return hosts;
-		}
-
-		private static final int _STARTING_PORT = 9300;
-
-		private final String[] _hosts;
 
 	}
 

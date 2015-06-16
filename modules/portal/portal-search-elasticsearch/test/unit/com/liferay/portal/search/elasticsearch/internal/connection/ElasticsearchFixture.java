@@ -47,7 +47,16 @@ import org.mockito.Mockito;
  */
 public class ElasticsearchFixture {
 
-	public ElasticsearchFixture(String subdirName) {
+	public ElasticsearchFixture(
+		String subdirName,
+		HashMap<String, Object> elasticsearchConfigurationProperties) {
+
+		elasticsearchConfigurationProperties.put(
+			"configurationPid", ElasticsearchConfiguration.class.getName());
+
+		_elasticsearchConfigurationProperties =
+			elasticsearchConfigurationProperties;
+
 		_tmpDirName = "tmp/" + subdirName;
 	}
 
@@ -153,6 +162,9 @@ public class ElasticsearchFixture {
 		unicastSettingsContributor.setClusterSettingsContext(
 			_clusterSettingsContext);
 
+		unicastSettingsContributor.activate(
+			_elasticsearchConfigurationProperties);
+
 		embeddedElasticsearchConnection.addSettingsContributor(
 			unicastSettingsContributor);
 	}
@@ -173,12 +185,8 @@ public class ElasticsearchFixture {
 
 		embeddedElasticsearchConnection.setProps(props);
 
-		HashMap<String, Object> properties = new HashMap<>();
-
-		properties.put(
-			"configurationPid", ElasticsearchConfiguration.class.getName());
-
-		embeddedElasticsearchConnection.activate(properties);
+		embeddedElasticsearchConnection.activate(
+			_elasticsearchConfigurationProperties);
 
 		return embeddedElasticsearchConnection;
 	}
@@ -188,6 +196,7 @@ public class ElasticsearchFixture {
 	}
 
 	private ClusterSettingsContext _clusterSettingsContext;
+	private final HashMap<String, Object> _elasticsearchConfigurationProperties;
 	private ElasticsearchConnection _elasticsearchConnection;
 	private final String _tmpDirName;
 

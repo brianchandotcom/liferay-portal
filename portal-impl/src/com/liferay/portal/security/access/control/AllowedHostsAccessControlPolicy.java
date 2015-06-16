@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.auth.AccessControlContext;
-import com.liferay.portal.security.sso.SSOUtil;
 
 import java.lang.reflect.Method;
 
@@ -63,7 +62,7 @@ public class AllowedHostsAccessControlPolicy extends BaseAccessControlPolicy {
 
 		Set<String> hostsAllowedSet = SetUtil.fromArray(hostsAllowed);
 
-		if (!SSOUtil.isAccessAllowed(request, hostsAllowedSet)) {
+		if (!AccessControlUtil.isAccessAllowed(request, hostsAllowedSet)) {
 			throw new SecurityException(
 				"Access denied for " + request.getRemoteAddr());
 		}

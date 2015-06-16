@@ -16,6 +16,7 @@ package com.liferay.portal.security.auto.login.request.header;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.access.control.AccessControlUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
 import com.liferay.portal.kernel.security.auto.login.BaseAutoLogin;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
@@ -29,7 +30,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.security.auto.login.request.header.configuration.RequestHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.request.header.constants.RequestHeaderAutoLoginConstants;
 import com.liferay.portal.security.exportimport.UserImporterUtil;
-import com.liferay.portal.security.sso.SSOUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
@@ -129,7 +129,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 			hostsAllowed.add(hostsAllowedArray[i]);
 		}
 
-		return SSOUtil.isAccessAllowed(request, hostsAllowed);
+		return AccessControlUtil.isAccessAllowed(request, hostsAllowed);
 	}
 
 	protected boolean isEnabled(long companyId) {

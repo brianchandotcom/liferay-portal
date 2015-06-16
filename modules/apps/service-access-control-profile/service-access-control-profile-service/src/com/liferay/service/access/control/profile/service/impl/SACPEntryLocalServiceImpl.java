@@ -196,8 +196,11 @@ public class SACPEntryLocalServiceImpl extends SACPEntryLocalServiceBaseImpl {
 			throw new DuplicateSACPEntryNameException();
 		}
 
+		if (!sacpEntry.isDefaultProfile()) {
+			sacpEntry.setName(name);
+		}
+
 		sacpEntry.setAllowedServiceSignatures(allowedServiceSignatures);
-		sacpEntry.setName(name);
 		sacpEntry.setTitleMap(titleMap);
 
 		sacpEntry = sacpEntryPersistence.update(sacpEntry, serviceContext);

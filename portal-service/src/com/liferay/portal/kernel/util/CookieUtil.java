@@ -21,6 +21,9 @@ import java.net.HttpCookie;
 
 import java.nio.ByteBuffer;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
 
 /**
@@ -107,6 +110,20 @@ public class CookieUtil {
 		}
 
 		return true;
+	}
+
+	public static Map<String, HttpCookie> parseHttpCookies(
+		String cookieString) {
+
+		Map<String, HttpCookie> httpCookies = new HashMap<>();
+
+		for (HttpCookie httpCookie : HttpCookie.parse(
+			"Set-Cookie2:" + cookieString)) {
+
+			httpCookies.put(httpCookie.getName(), httpCookie);
+		}
+
+		return httpCookies;
 	}
 
 	public static byte[] serialize(Cookie cookie) {

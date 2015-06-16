@@ -14,15 +14,21 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
 import java.net.HttpCookie;
 
+import java.util.Map;
+
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
+
+import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Shuyang Zhou
@@ -131,6 +137,22 @@ public class CookieUtilTest {
 		// Equals
 
 		Assert.assertTrue(CookieUtil.equals(cookie1, cookie2));
+	}
+
+	@Test
+	public void testParseHttpCookies() {
+		HttpServletResponse response = new MockHttpServletResponse();
+
+		response.setHeader(HttpHeaders.SET_COOKIE, "name1=value1,name2=value2");
+
+		Map<String, HttpCookie> map = CookieUtil.parseHttpCookies(
+			response.getHeader(HttpHeaders.SET_COOKIE));
+
+		Assert.assertEquals(2, map.size());
+		Assert.assertEquals(
+			new HttpCookie("name1", "value1"), map.get("name1"));
+		Assert.assertEquals(
+			new HttpCookie("name2", "value2"), map.get("name2"));
 	}
 
 	@Test

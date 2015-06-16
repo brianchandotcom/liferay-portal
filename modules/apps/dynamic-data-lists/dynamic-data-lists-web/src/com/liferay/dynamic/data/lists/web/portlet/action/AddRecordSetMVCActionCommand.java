@@ -57,21 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
-	@Reference
-	public void setDDLRecordSetService(
-		DDLRecordSetService ddlRecordSetService) {
-
-		_ddlRecordSetService = ddlRecordSetService;
-	}
-
-	@Reference
-	public void setWorkflowDefinitionLinkLocalService(
-		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
-
-		_workflowDefinitionLinkLocalService =
-			workflowDefinitionLinkLocalService;
-	}
-
 	protected DDLRecordSet addRecordSet(PortletRequest portletRequest)
 		throws PortalException {
 
@@ -135,6 +120,21 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 			WebKeys.THEME_DISPLAY);
 
 		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
+	}
+
+	@Reference
+	protected void setDDLRecordSetService(
+		DDLRecordSetService ddlRecordSetService) {
+
+		_ddlRecordSetService = ddlRecordSetService;
+	}
+
+	@Reference
+	protected void setWorkflowDefinitionLinkLocalService(
+		WorkflowDefinitionLinkLocalService workflowDefinitionLinkLocalService) {
+
+		_workflowDefinitionLinkLocalService =
+			workflowDefinitionLinkLocalService;
 	}
 
 	protected void updatePortletPreferences(

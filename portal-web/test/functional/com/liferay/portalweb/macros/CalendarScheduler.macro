@@ -480,6 +480,36 @@
 		<execute function="AssertElementPresent#assertVisible" locator1="PGCalendar#SCHEDULER_VIEW_${viewUppercase}" />
 	</command>
 
+	<command name="viewShowMoreLocalizedViaDayView">
+		<execute function="AssertClick" locator1="PGCalendar#VIEW_DAY_BUTTON" value1="${viewTypeLocalized}" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<var name="key_messageLocalized" value="${messageLocalized}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED" value1="${messageLocalized}" />
+	</command>
+
+	<command name="viewShowMoreLocalizedViaMonthView">
+		<execute function="AssertClick" locator1="PGCalendar#VIEW_MONTH_BUTTON" value1="${viewTypeLocalized}" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<var name="key_messageLocalized" value="${messageLocalized}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_MONTH_SHOW_MORE_LOCALIZED" value1="${messageLocalized}" />
+	</command>
+
+	<command name="viewShowMoreLocalizedViaWeekView">
+		<execute function="AssertClick" locator1="PGCalendar#VIEW_WEEK_BUTTON" value1="${viewTypeLocalized}" />
+
+		<execute function="Pause" locator1="5000" />
+
+		<var name="key_messageLocalized" value="${messageLocalized}" />
+
+		<execute function="AssertTextEquals" locator1="PGCalendar#SCHEDULER_VIEW_WEEK_SHOW_MORE_LOCALIZED" value1="${messageLocalized}" />
+	</command>
+
 	<command name="viewSpecificEventNotPresent">
 		<var name="key_eventTitle" value="${eventTitle}" />
 

@@ -427,6 +427,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_VIEW_DAY_SHOW_MORE_LOCALIZED</td>
+	<td>//div[contains(@class,'scheduler-view-day-content') and not(contains(@class,'scheduler-view-week-content'))]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -458,6 +463,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SCHEDULER_VIEW_WEEK_SHOW_MORE_LOCALIZED</td>
+	<td>//div[contains(@class,'scheduler-view-week-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -486,6 +496,11 @@
 <tr>
 	<td>SCHEDULER_VIEW_MONTH_CURRENT_DAY</td>
 	<td>//td[contains(@class,'scheduler-view-table-colgrid-today')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SCHEDULER_VIEW_MONTH_SHOW_MORE_LOCALIZED</td>
+	<td>//div[contains(@class,'scheduler-view-month-content')]//a[@class='scheduler-view-table-more' and contains(.,'${key_messageLocalized}')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -61,6 +61,11 @@ public class MBCategoryAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getEntry() {
+		return _category;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _category.getGroupId();
 	}

@@ -70,6 +70,11 @@ public class LayoutRevisionAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getEntry() {
+		return _layoutRevision;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _layoutRevision.getGroupId();
 	}

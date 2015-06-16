@@ -79,6 +79,11 @@ public class DLFolderAssetRenderer
 	}
 
 	@Override
+	public Object getEntry() {
+		return _folder;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _folder.getGroupId();
 	}

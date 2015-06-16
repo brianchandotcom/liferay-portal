@@ -113,6 +113,11 @@ public class WikiPageAssetRenderer
 	}
 
 	@Override
+	public Object getEntry() {
+		return _page;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _page.getGroupId();
 	}

@@ -61,6 +61,11 @@ public class UserAssetRenderer extends BaseJSPAssetRenderer {
 	}
 
 	@Override
+	public Object getEntry() {
+		return _user;
+	}
+
+	@Override
 	public long getGroupId() {
 		return 0;
 	}

@@ -81,6 +81,11 @@ public class BlogsEntryAssetRenderer
 	}
 
 	@Override
+	public Object getEntry() {
+		return _entry;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _entry.getGroupId();
 	}

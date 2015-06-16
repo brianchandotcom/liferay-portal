@@ -174,17 +174,16 @@ public class ExpandoPortlet extends MVCPortlet {
 				renderRequest, ValueDataException.class.getName())) {
 
 			include(
-				"/html/portlet/expando/edit_expando.jsp", renderRequest,
+				"/edit_expando.jsp", renderRequest,
 				renderResponse);
 		}
-
-		if (SessionErrors.contains(
+		else if (SessionErrors.contains(
 				renderRequest, NoSuchColumnException.class.getName()) ||
 			SessionErrors.contains(
 				renderRequest, PrincipalException.getNestedClasses())) {
 
 			include(
-				"/html/portlet/expando/error.jsp", renderRequest,
+				"/error.jsp", renderRequest,
 				renderResponse);
 		}
 		else {

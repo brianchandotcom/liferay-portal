@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.security.access.control;
+package com.liferay.portal.kernel.security.access.control;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.access.control.AccessControl;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
+import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.portal.kernel.util.AutoResetThreadLocal;
 import com.liferay.portal.security.auth.AccessControlContext;
 import com.liferay.portal.security.auth.AuthException;
@@ -34,9 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AccessControlUtil {
 
 	public static AccessControl getAccessControl() {
-		if (_accessControl == null) {
-			_accessControl = new AccessControlImpl();
-		}
+		PortalRuntimePermission.checkGetBeanProperty(AccessControlUtil.class);
 
 		return _accessControl;
 	}
@@ -70,6 +68,8 @@ public class AccessControlUtil {
 	}
 
 	public void setAccessControl(AccessControl accessControl) {
+		PortalRuntimePermission.checkSetBeanProperty(getClass());
+
 		_accessControl = accessControl;
 	}
 

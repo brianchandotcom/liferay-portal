@@ -170,11 +170,15 @@
 			<var name="pageName" value="${pageName1}" />
 		</execute>
 
-		<execute macro="BlogsEntryComment#addPG">
-			<var name="entryComment" value="${entryComment1}" />
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="${entryContent1}" />
 			<var name="entryTitle" value="${entryTitle1}" />
 		</execute>
 
+		<execute macro="BlogsEntryComment#add">
+			<var name="entryComment" value="${entryComment1}" />
+		</execute>
+
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName1}" />
 		</execute>
@@ -195,9 +199,13 @@
 			<var name="pageName" value="${pageName1}" />
 		</execute>
 
-		<execute macro="BlogsEntryComment#addPG">
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="${entryContent2}" />
+			<var name="entryTitle" value="${entryTitle2}" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#add">
 			<var name="entryComment" value="${entryComment2}" />
-			<var name="entryTitle" value="${entryTitle2}" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -220,9 +228,13 @@
 			<var name="pageName" value="${pageName1}" />
 		</execute>
 
-		<execute macro="BlogsEntryComment#addPG">
-			<var name="entryComment" value="${entryComment3}" />
+		<execute macro="BlogsNavigator#gotoEntryPG">
+			<var name="entryContent" value="${entryContent3}" />
 			<var name="entryTitle" value="${entryTitle3}" />
+		</execute>
+
+		<execute macro="BlogsEntryComment#add">
+			<var name="entryComment" value="${entryComment3}" />
 		</execute>
 
 		<execute macro="Page#addPG">

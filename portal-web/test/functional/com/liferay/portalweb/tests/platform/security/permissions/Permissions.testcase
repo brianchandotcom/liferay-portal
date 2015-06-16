@@ -36,6 +36,6 @@
 			<var name="pageName" value="Blogs Page" />
 		</execute>
 
-		<execute macro="BlogsPortlet#viewNoPermissionPG" />
+		<execute macro="BlogsConfiguration#viewNoPermissionPG" />
 	</command>
 </definition>

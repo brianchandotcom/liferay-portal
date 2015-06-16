@@ -82,17 +82,17 @@
 	</command>
 
 	<command name="addMultipleViaBlogsPG">
-		<execute function="AssertClick" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
-		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute macro="BlogsEntry#addTitle">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsAdd#CATEGORIZATION_DROPDOWN" value1="Categorization" />
-			</then>
-		</if>
+		<execute macro="BlogsEntry#addContent">
+			<var name="entryContent" value="${entryContent}" />
+		</execute>
+
+		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
 
 		<for list="${tagNameList}" param="tagName">
 			<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
@@ -105,17 +105,17 @@
 	</command>
 
 	<command name="addSelectTagMultipleViaBlogsPG">
-		<execute function="AssertClick" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
-		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute macro="BlogsEntry#addTitle">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsAdd#CATEGORIZATION_DROPDOWN" value1="Categorization" />
-			</then>
-		</if>
+		<execute macro="BlogsEntry#addContent">
+			<var name="entryContent" value="${entryContent}" />
+		</execute>
+
+		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
 
 		<execute function="AssertClick" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_SELECT_BUTTON" value1="Select" />
 
@@ -161,24 +161,29 @@
 	</command>
 
 	<command name="addViaBlogsPG">
-		<execute function="AssertClick" locator1="PGBlogs#ADD_ENTRY_BUTTON" value1="Add Blog Entry" />
+		<execute function="AssertClick" locator1="Blogs#ADD_BLOGS_ENTRY" value1="Add Blog Entry" />
 
-		<execute function="Type" locator1="PGBlogsAdd#TITLE_FIELD" value1="${entryTitle}" />
-		<execute function="Type" locator1="PGBlogsAdd#CONTENT_FIELD" value1="${entryContent}" />
+		<execute macro="BlogsEntry#addTitle">
+			<var name="entryTitle" value="${entryTitle}" />
+		</execute>
+
+		<execute macro="BlogsEntry#addContent">
+			<var name="entryContent" value="${entryContent}" />
+		</execute>
 
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
 
-		<if>
-			<condition function="IsElementNotPresent" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" />
-			<then>
-				<execute function="AssertClick" locator1="PGBlogsAdd#CATEGORIZATION_DROPDOWN" value1="Categorization" />
-			</then>
-		</if>
+		<execute function="Pause" locator1="3000" />
 
 		<execute function="Type#clickAtSendKeys" locator1="PGBlogsAdd#CATEGORIZATION_TAGS_FIELD" value1="${tagName}" />
+
+		<execute function="Pause" locator1="3000" />
+
 		<execute function="AssertClick" locator1="PGBlogsAdd#PUBLISH_BUTTON" value1="Publish" />
+
+		<execute function="Pause" locator1="3000" />
 
 		<execute function="AssertTextEquals" locator1="PGBlogs#SUCCESS_MESSAGE" value1="Your request completed successfully." />
 
@@ -330,6 +335,8 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute function="AssertClick" locator1="PGBlogs#ENTRY_EDIT" value1="Edit" />
+
+		<execute function="Click" locator1="PGBlogsAdd#SETTINGS_TAB" />
 
 		<var name="key_tagName" value="${tagName1}" />
 

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>SUCCESS_MESSAGE_RECYCLE_BIN</td>
-	<td>//form[@id='_182_undoForm']</td>
+	<td>//form[contains(@id,'undoForm')]</td>
 	<td></td>
 </tr>
 <tr>

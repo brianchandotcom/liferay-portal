@@ -275,6 +275,10 @@ public final class XMLLoggerHandler {
 							_getMacroExecuteLoggerElement(
 								childElement, "macro-mobile"));
 					}
+					else if (childElement.attributeValue("test-case") != null) {
+						loggerElement.addChildLoggerElement(
+							_getTestCaseExecuteLoggerElement(childElement));
+					}
 				}
 				else if (childElementName.equals("fail")) {
 					loggerElement.addChildLoggerElement(
@@ -617,6 +621,52 @@ public final class XMLLoggerHandler {
 			loggerElement.addChildLoggerElement(
 				_getLineContainerLoggerElement(childElement));
 		}
+
+		return loggerElement;
+	}
+
+	private static LoggerElement _getTestCaseCommandLoggerElement(
+			String classCommandName)
+		throws Exception {
+
+		String className =
+			PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+				classCommandName);
+
+		if (className.equals("super")) {
+			className = PoshiRunnerGetterUtil.getExtendedTestCaseName();
+
+			classCommandName = classCommandName.replaceFirst(
+				"super", className);
+		}
+
+		Element commandElement = PoshiRunnerContext.getTestCaseCommandElement(
+			classCommandName);
+
+		Element rootElement = PoshiRunnerContext.getTestCaseRootElement(
+			className);
+
+		return _getChildContainerLoggerElement(commandElement, rootElement);
+	}
+
+	private static LoggerElement _getTestCaseExecuteLoggerElement(
+			Element executeElement)
+		throws Exception {
+
+		LoggerElement loggerElement = _getLineGroupLoggerElement(
+			"test-case", executeElement);
+
+		String classCommandName = executeElement.attributeValue("test-case");
+
+		PoshiRunnerStackTraceUtil.pushStackTrace(executeElement);
+
+		loggerElement.addChildLoggerElement(
+			_getTestCaseCommandLoggerElement(classCommandName));
+
+		PoshiRunnerStackTraceUtil.popStackTrace();
+
+		loggerElement.addChildLoggerElement(
+			_getClosingLineContainerLoggerElement(executeElement));
 
 		return loggerElement;
 	}

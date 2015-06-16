@@ -119,12 +119,28 @@ public final class PoshiRunnerStackTraceUtil {
 			classCommandName = element.attributeValue("macro-mobile");
 			classType = "macro";
 		}
+		else if (element.attributeValue("test-case") != null) {
+			classCommandName = element.attributeValue("test-case");
+
+			String className =
+				PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
+					classCommandName);
+
+			if (className.equals("super")) {
+				className = PoshiRunnerGetterUtil.getExtendedTestCaseName();
+
+				classCommandName = classCommandName.replaceFirst(
+					"super", className);
+			}
+
+			classType = "test-case";
+		}
 		else {
 			printStackTrace();
 
 			throw new Exception(
-				"Missing (function|macro|macro-desktop|macro-mobile) " +
-					"attribute");
+				"Missing (function|macro|macro-desktop|macro-mobile|" +
+					"test-case) attribute");
 		}
 
 		_pushFilePath(classCommandName, classType);

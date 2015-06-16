@@ -37,7 +37,7 @@ if (fileEntryId != 0) {
 }
 %>
 
-<div class="taglib-image-selector <%= fileEntryId == 0 ? "drop-zone" : StringPool.BLANK %> <%= !draggableImage.equals("none") ? "draggable-image " + draggableImage : StringPool.BLANK %>" id="<%= randomNamespace %>taglibImageSelector">
+<div class="drop-zone <%= fileEntryId == 0 ? "drop-enabled" : StringPool.BLANK %> <%= !draggableImage.equals("none") ? "draggable-image " + draggableImage : StringPool.BLANK %> taglib-image-selector" id="<%= randomNamespace %>taglibImageSelector">
 	<aui:input name='<%= paramName + "Id" %>' type="hidden" value="<%= fileEntryId %>" />
 	<aui:input name='<%= paramName + "CropRegion" %>' type="hidden" value="<%= cropRegion %>" />
 

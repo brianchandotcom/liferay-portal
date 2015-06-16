@@ -3149,7 +3149,7 @@ go]]></replacevalue>
 	</target>
 
 	<target name="prepare-lcs-gateway-bundle">
-		<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false">
+		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
 			<property name="app.server.parent.dir" value="${app.server.parent.dir}/gateway" />
 		</ant>
 
@@ -3174,7 +3174,7 @@ go]]></replacevalue>
 
 		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
 
-		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
 
 		<ant dir="${lp.plugins.dir}" target="war" >
 			<property name="plugins.includes" value="${plugins.includes.gateway}" />
@@ -3188,11 +3188,11 @@ go]]></replacevalue>
 	<target name="prepare-lcs-portal-bundle">
 		<antcall target="prepare-portal-ext-properties" />
 
-		<antcall target="rebuild-database" inheritAll="false" />
+		<antcall inheritAll="false" target="rebuild-database" />
 
 		<loadfile property="lcs.portal.bundle.properties" srcFile="${lfrsite-lcs.dir}/jenkins/development/portal/artifacts/liferay/portal-ext.properties" />
 
-		<echo file="${app.server.classes.portal.dir}/portal-ext.properties" append="true">
+		<echo append="true" file="${app.server.classes.portal.dir}/portal-ext.properties">
 
 ${lcs.portal.bundle.properties}</echo>
 
@@ -3278,7 +3278,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 	</target>
 
 	<target name="prepare-lcs-processor-bundle">
-		<ant antfile="build-dist.xml" target="unzip-tomcat" inheritAll="false">
+		<ant antfile="build-dist.xml" inheritAll="false" target="unzip-tomcat">
 			<property name="app.server.parent.dir" value="${app.server.parent.dir}/processor" />
 		</ant>
 
@@ -3303,7 +3303,7 @@ osb.lcs.portlet.oauth.consumer.secret=${osb.lcs.portlet.oauth.consumer.secret}</
 
 		<property file="${lfrsite-lcs.dir}/jenkins/build.development.properties" />
 
-		<ant dir="${lp.plugins.dir}" target="clean" inheritAll="false" />
+		<ant dir="${lp.plugins.dir}" inheritAll="false" target="clean" />
 
 		<ant dir="${lp.plugins.dir}" target="war">
 			<property name="plugins.includes" value="${plugins.includes.processor}" />

@@ -36,8 +36,8 @@ import java.io.File;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=addTemplate",
+		"command.name=addTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},
@@ -56,11 +56,11 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddTemplateActionCommand extends DDMBaseActionCommand {
 
-	protected DDMTemplate addTemplate(PortletRequest portletRequest)
+	protected DDMTemplate addTemplate(ActionRequest actionRequest)
 		throws Exception {
 
 		UploadPortletRequest uploadPortletRequest =
-			PortalUtil.getUploadPortletRequest(portletRequest);
+			PortalUtil.getUploadPortletRequest(actionRequest);
 
 		long groupId = ParamUtil.getLong(uploadPortletRequest, "groupId");
 		long classNameId = ParamUtil.getLong(
@@ -101,14 +101,14 @@ public class AddTemplateActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMTemplate template = addTemplate(portletRequest);
+		DDMTemplate template = addTemplate(actionRequest);
 
-		updatePortletPreferences(portletRequest, template);
+		updatePortletPreferences(actionRequest, template);
 
-		setRedirectAttribute(portletRequest, template);
+		setRedirectAttribute(actionRequest, template);
 	}
 
 	protected String getFileScriptContent(

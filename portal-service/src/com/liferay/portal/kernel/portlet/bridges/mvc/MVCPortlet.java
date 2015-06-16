@@ -57,6 +57,8 @@ public class MVCPortlet extends LiferayPortlet {
 		super.destroy();
 
 		_actionCommandCache.close();
+		_renderCommandCache.close();
+		_resourceCommandCache.close();
 	}
 
 	@Override
@@ -192,11 +194,23 @@ public class MVCPortlet extends LiferayPortlet {
 		copyRequestParameters = GetterUtil.getBoolean(
 			getInitParameter("copy-request-parameters"), true);
 
-		String packagePrefix = getInitParameter(
-			ActionCommandCache.ACTION_PACKAGE_NAME);
+		_actionCommandCache = new CommandCache(
+			ActionCommand.EMPTY,
+			getInitParameter(ActionCommand.ACTION_PACKAGE_NAME),
+			getPortletName(), "command.name", ActionCommand.class.getName(),
+			ActionCommand.ACTION_COMMAND_POSTFIX);
 
-		_actionCommandCache = new ActionCommandCache(
-			packagePrefix, getPortletName());
+		_renderCommandCache = new CommandCache(
+			RenderCommand.EMPTY,
+			getInitParameter(RenderCommand.RENDER_PACKAGE_NAME),
+			getPortletName(), "command.name", RenderCommand.class.getName(),
+			RenderCommand.RENDER_COMMAND_POSTFIX);
+
+		_resourceCommandCache = new CommandCache(
+			ResourceCommand.EMPTY,
+			getInitParameter(ResourceCommand.RESOURCE_PACKAGE_NAME),
+			getPortletName(), "command.name", ResourceCommand.class.getName(),
+			ResourceCommand.RESOURCE_COMMAND_POSTFIX);
 	}
 
 	public void invokeTaglibDiscussion(
@@ -229,6 +243,27 @@ public class MVCPortlet extends LiferayPortlet {
 		if (copyRequestParameters) {
 			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 		}
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		String mvcAction = ParamUtil.getString(renderRequest, "mvcAction");
+
+		RenderCommand renderCommand = _renderCommandCache.getCommand(mvcAction);
+
+		if (renderCommand != RenderCommand.EMPTY) {
+			String mvcPath = renderCommand.processCommand(
+				renderRequest, renderResponse);
+
+			if (Validator.isNotNull(mvcPath)) {
+				renderRequest.setAttribute("mvcPath", mvcPath);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -267,21 +302,21 @@ public class MVCPortlet extends LiferayPortlet {
 			throw new PortletException(e);
 		}
 
-		String actionName = ParamUtil.getString(
-			actionRequest, ActionRequest.ACTION_NAME);
+		String commandName = actionRequest.getParameter(
+			ActionRequest.ACTION_NAME);
 
-		if (!actionName.contains(StringPool.COMMA)) {
-			ActionCommand actionCommand = _actionCommandCache.getActionCommand(
-				actionName);
+		if (!commandName.contains(StringPool.COMMA)) {
+			ActionCommand actionCommand = _actionCommandCache.getCommand(
+				commandName);
 
-			if (actionCommand != ActionCommandCache.EMPTY) {
+			if (actionCommand != ActionCommand.EMPTY) {
 				return actionCommand.processCommand(
 					actionRequest, actionResponse);
 			}
 		}
 		else {
 			List<ActionCommand> actionCommands =
-				_actionCommandCache.getActionCommandChain(actionName);
+				_actionCommandCache.getCommandChain(commandName);
 
 			if (!actionCommands.isEmpty()) {
 				for (ActionCommand actionCommand : actionCommands) {
@@ -311,25 +346,24 @@ public class MVCPortlet extends LiferayPortlet {
 			throw new PortletException(e);
 		}
 
-		String actionName = ParamUtil.getString(
-			resourceRequest, ActionRequest.ACTION_NAME);
+		String commandName = resourceRequest.getResourceID();
 
-		if (!actionName.contains(StringPool.COMMA)) {
-			ActionCommand actionCommand = _actionCommandCache.getActionCommand(
-				actionName);
+		if (!commandName.contains(StringPool.COMMA)) {
+			ResourceCommand resourceCommand = _resourceCommandCache.getCommand(
+				commandName);
 
-			if (actionCommand != ActionCommandCache.EMPTY) {
-				return actionCommand.processCommand(
+			if (resourceCommand != ResourceCommand.EMPTY) {
+				return resourceCommand.processCommand(
 					resourceRequest, resourceResponse);
 			}
 		}
 		else {
-			List<ActionCommand> actionCommands =
-				_actionCommandCache.getActionCommandChain(actionName);
+			List<ResourceCommand> resourceCommands =
+				_resourceCommandCache.getCommandChain(commandName);
 
-			if (!actionCommands.isEmpty()) {
-				for (ActionCommand actionCommand : actionCommands) {
-					if (!actionCommand.processCommand(
+			if (!resourceCommands.isEmpty()) {
+				for (ResourceCommand resourceCommand : resourceCommands) {
+					if (!resourceCommand.processCommand(
 							resourceRequest, resourceResponse)) {
 
 						return false;
@@ -388,6 +422,10 @@ public class MVCPortlet extends LiferayPortlet {
 
 	protected String getPath(PortletRequest portletRequest) {
 		String mvcPath = portletRequest.getParameter("mvcPath");
+
+		if (mvcPath == null) {
+			mvcPath = (String)portletRequest.getAttribute("mvcPath");
+		}
 
 		// Check deprecated parameter
 
@@ -510,6 +548,8 @@ public class MVCPortlet extends LiferayPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
-	private ActionCommandCache _actionCommandCache;
+	private CommandCache<ActionCommand> _actionCommandCache;
+	private CommandCache<RenderCommand> _renderCommandCache;
+	private CommandCache<ResourceCommand> _resourceCommandCache;
 
 }

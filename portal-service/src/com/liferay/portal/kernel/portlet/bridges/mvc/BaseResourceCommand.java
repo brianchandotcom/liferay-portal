@@ -15,29 +15,32 @@
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
+import java.io.IOException;
+
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public abstract class BaseActionCommand implements ActionCommand {
+public abstract class BaseResourceCommand implements ResourceCommand {
 
 	@Override
 	public boolean processCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
 		try {
-			doProcessCommand(actionRequest, actionResponse);
+			doProcessCommand(resourceRequest, resourceResponse);
 
-			return SessionErrors.isEmpty(actionRequest);
+			return SessionErrors.isEmpty(resourceRequest);
 		}
 		catch (PortletException pe) {
 			throw pe;
@@ -48,27 +51,28 @@ public abstract class BaseActionCommand implements ActionCommand {
 	}
 
 	protected abstract void doProcessCommand(
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception;
 
-	protected PortletConfig getPortletConfig(ActionRequest actionRequest) {
-		String portletId = PortalUtil.getPortletId(actionRequest);
+	protected PortletConfig getPortletConfig(ResourceRequest resourceRequest) {
+		String portletId = PortalUtil.getPortletId(resourceRequest);
 
 		return PortletConfigFactoryUtil.get(portletId);
 	}
 
-	protected void hideDefaultErrorMessage(ActionRequest actionRequest) {
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
-	}
+	protected void include(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
+			String jspPath)
+		throws IOException, PortletException {
 
-	protected void hideDefaultSuccessMessage(ActionRequest actionRequest) {
-		SessionMessages.add(
-			actionRequest,
-			PortalUtil.getPortletId(actionRequest) +
-				SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_SUCCESS_MESSAGE);
+		PortletConfig portletConfig = getPortletConfig(resourceRequest);
+
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		PortletRequestDispatcher portletRequestDispatcher =
+			portletContext.getRequestDispatcher(jspPath);
+
+		portletRequestDispatcher.include(resourceRequest, resourceResponse);
 	}
 
 }

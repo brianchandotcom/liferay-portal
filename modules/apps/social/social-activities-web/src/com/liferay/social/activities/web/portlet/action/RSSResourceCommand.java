@@ -17,7 +17,7 @@ package com.liferay.social.activities.web.portlet.action;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.ActionCommand;
+import com.liferay.portal.kernel.portlet.bridges.mvc.ResourceCommand;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -52,12 +52,11 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import javax.portlet.ResourceURL;
 
 import org.osgi.service.component.annotations.Component;
@@ -71,23 +70,20 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=rss",
+		"command.name=rss",
 		"javax.portlet.name=" + SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
 	},
-	service = ActionCommand.class
+	service = ResourceCommand.class
 )
-public class RSSAction implements ActionCommand {
+public class RSSResourceCommand implements ResourceCommand {
 
 	@Override
 	public boolean processCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException {
 
-		if (!(portletResponse instanceof MimeResponse)) {
-			return false;
-		}
-
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
+		PortletPreferences portletPreferences =
+			resourceRequest.getPreferences();
 
 		boolean enableRss = GetterUtil.getBoolean(
 			portletPreferences.getValue("enableRss", null));
@@ -95,7 +91,7 @@ public class RSSAction implements ActionCommand {
 		if (!PortalUtil.isRSSFeedsEnabled() || !enableRss) {
 			try {
 				PortalUtil.sendRSSFeedsDisabledError(
-					portletRequest, portletResponse);
+					resourceRequest, resourceResponse);
 			}
 			catch (Exception e) {
 			}
@@ -103,12 +99,12 @@ public class RSSAction implements ActionCommand {
 			return false;
 		}
 
-		MimeResponse mimeResponse = (MimeResponse)portletResponse;
+		MimeResponse mimeResponse = (MimeResponse)resourceResponse;
 
 		try {
 			PortletResponseUtil.sendFile(
-				portletRequest, mimeResponse, null,
-				getRSS(portletRequest, portletResponse),
+				resourceRequest, mimeResponse, null,
+				getRSS(resourceRequest, resourceResponse),
 				ContentTypes.TEXT_XML_UTF8);
 		}
 		catch (Exception e) {
@@ -119,13 +115,13 @@ public class RSSAction implements ActionCommand {
 	}
 
 	protected String exportToRSS(
-			PortletRequest portletRequest, PortletResponse portletResponse,
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse,
 			String title, String description, String format, double version,
 			String displayStyle, List<SocialActivity> socialActivities,
 			ServiceContext serviceContext)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		SyndFeed syndFeed = new SyndFeedImpl();
@@ -188,12 +184,12 @@ public class RSSAction implements ActionCommand {
 		syndLinks.add(selfSyndLink);
 
 		LiferayPortletResponse liferayPortletResponse =
-			(LiferayPortletResponse)portletResponse;
+			(LiferayPortletResponse)resourceResponse;
 
 		ResourceURL rssURL = liferayPortletResponse.createResourceURL();
 
-		rssURL.setParameter(ActionRequest.ACTION_NAME, "rss");
 		rssURL.setParameter("feedTitle", title);
+		rssURL.setResourceID("rss");
 
 		selfSyndLink.setHref(rssURL.toString());
 
@@ -214,37 +210,37 @@ public class RSSAction implements ActionCommand {
 	}
 
 	protected byte[] getRSS(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {
 
-		String feedTitle = ParamUtil.getString(portletRequest, "feedTitle");
+		String feedTitle = ParamUtil.getString(resourceRequest, "feedTitle");
 		String format = ParamUtil.getString(
-			portletRequest, "type", RSSUtil.FORMAT_DEFAULT);
+			resourceRequest, "type", RSSUtil.FORMAT_DEFAULT);
 		double version = ParamUtil.getDouble(
-			portletRequest, "version", RSSUtil.VERSION_DEFAULT);
+			resourceRequest, "version", RSSUtil.VERSION_DEFAULT);
 		String displayStyle = ParamUtil.getString(
-			portletRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
+			resourceRequest, "displayStyle", RSSUtil.DISPLAY_STYLE_DEFAULT);
 		int max = ParamUtil.getInteger(
-			portletRequest, "max", SearchContainer.DEFAULT_DELTA);
+			resourceRequest, "max", SearchContainer.DEFAULT_DELTA);
 
 		List<SocialActivity> socialActivities = getSocialActivities(
-			portletRequest, max);
+			resourceRequest, max);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			portletRequest);
+			resourceRequest);
 
 		String rss = exportToRSS(
-			portletRequest, portletResponse, feedTitle, null, format, version,
+			resourceRequest, resourceResponse, feedTitle, null, format, version,
 			displayStyle, socialActivities, serviceContext);
 
 		return rss.getBytes(StringPool.UTF8);
 	}
 
 	protected List<SocialActivity> getSocialActivities(
-			PortletRequest portletRequest, int max)
+			ResourceRequest resourceRequest, int max)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)resourceRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Group group = GroupLocalServiceUtil.getGroup(

@@ -22,8 +22,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseTransactionalActionComm
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteRecordSet",
+		"command.name=deleteRecordSet",
 		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM_ADMIN
 	},
 	service = ActionCommand.class
@@ -44,10 +44,10 @@ public class DeleteRecordSetActionCommand
 
 	@Override
 	protected void doTransactionalCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 

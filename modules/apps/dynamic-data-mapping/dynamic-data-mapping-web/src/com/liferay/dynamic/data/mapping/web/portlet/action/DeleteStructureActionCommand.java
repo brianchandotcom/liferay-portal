@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.service.DDMStructureService;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteStructure",
+		"command.name=deleteStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
@@ -41,26 +41,26 @@ public class DeleteStructureActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] deleteStructureIds = null;
 
-		long structureId = ParamUtil.getLong(portletRequest, "classPK");
+		long structureId = ParamUtil.getLong(actionRequest, "classPK");
 
 		if (structureId > 0) {
 			deleteStructureIds = new long[] {structureId};
 		}
 		else {
 			deleteStructureIds = StringUtil.split(
-				ParamUtil.getString(portletRequest, "deleteStructureIds"), 0L);
+				ParamUtil.getString(actionRequest, "deleteStructureIds"), 0L);
 		}
 
 		for (long deleteStructureId : deleteStructureIds) {
 			_ddmStructureService.deleteStructure(deleteStructureId);
 		}
 
-		setRedirectAttribute(portletRequest);
+		setRedirectAttribute(actionRequest);
 	}
 
 	@Reference

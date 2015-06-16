@@ -33,8 +33,9 @@ import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,47 +46,47 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=copyStructure",
+		"command.name=copyStructure",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING
 	},
 	service = ActionCommand.class
 )
 public class CopyStructureActionCommand extends DDMBaseActionCommand {
 
-	protected DDMStructure copyStructure(PortletRequest portletRequest)
+	protected DDMStructure copyStructure(ActionRequest actionRequest)
 		throws Exception {
 
-		long classPK = ParamUtil.getLong(portletRequest, "classPK");
+		long classPK = ParamUtil.getLong(actionRequest, "classPK");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), portletRequest);
+			DDMStructure.class.getName(), actionRequest);
 
 		DDMStructure structure = _ddmStructureService.copyStructure(
 			classPK, nameMap, descriptionMap, serviceContext);
 
-		copyTemplates(portletRequest, classPK, structure.getStructureId());
+		copyTemplates(actionRequest, classPK, structure.getStructureId());
 
 		return structure;
 	}
 
 	protected void copyTemplates(
-			PortletRequest portletRequest, long oldClassPK, long newClassPK)
+			ActionRequest actionRequest, long oldClassPK, long newClassPK)
 		throws Exception {
 
 		long classNameId = PortalUtil.getClassNameId(DDMStructure.class);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMTemplate.class.getName(), portletRequest);
+			DDMTemplate.class.getName(), actionRequest);
 
 		long resourceClassNameId = ParamUtil.getLong(
-			portletRequest, "resourceClassNameId");
+			actionRequest, "resourceClassNameId");
 		boolean copyDisplayTemplates = ParamUtil.getBoolean(
-			portletRequest, "copyDisplayTemplates");
+			actionRequest, "copyDisplayTemplates");
 
 		if (copyDisplayTemplates) {
 			_ddmTemplateService.copyTemplates(
@@ -94,7 +95,7 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 		}
 
 		boolean copyFormTemplates = ParamUtil.getBoolean(
-			portletRequest, "copyFormTemplates");
+			actionRequest, "copyFormTemplates");
 
 		if (copyFormTemplates) {
 			_ddmTemplateService.copyTemplates(
@@ -105,12 +106,12 @@ public class CopyStructureActionCommand extends DDMBaseActionCommand {
 
 	@Override
 	protected void doProcessCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMStructure structure = copyStructure(portletRequest);
+		DDMStructure structure = copyStructure(actionRequest);
 
-		setRedirectAttribute(portletRequest, structure);
+		setRedirectAttribute(actionRequest, structure);
 	}
 
 	@Override

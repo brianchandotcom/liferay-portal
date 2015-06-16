@@ -14,6 +14,9 @@
 
 package com.liferay.journal.util;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.service.JournalArticleServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -24,9 +27,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutSetLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.model.JournalArticleConstants;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.layoutsadmin.util.SitemapURLProvider;
 import com.liferay.portlet.layoutsadmin.util.SitemapUtil;
 

@@ -694,17 +694,19 @@
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
+		<execute function="Click" locator1="DockbarEditPanel#EDIT_PAGE" value1="Edit Page" />
+
 		<var name="key_defaultSiteLanguageKey" value="${defaultSiteLanguageKey}" />
 
 		<if>
-			<condition function="IsElementNotPresent" locator1="DockbarEditpanel#SEO_HTML_TITLE" />
+			<condition function="IsElementNotPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE" />
 			<then>
-				<execute function="AssertClick" locator1="DockbarEditpanel#SEO_PANEL_TOGGLE" value1="SEO" />
+				<execute function="AssertClick" locator1="SitePagesEditPage#SEO_PANEL_LINK" value1="SEO" />
 			</then>
 		</if>
 
-		<execute function="AssertElementPresent" locator1="DockbarEditpanel#SEO_HTML_TITLE" />
-		<execute function="AssertElementPresent" locator1="DockbarEditpanel#SEO_META_TAGS_DESCRIPTION" />
+		<execute function="AssertElementPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE" />
+		<execute function="AssertElementPresent" locator1="SitePagesEditPage#SEO_HTML_TITLE_META_TAGS" />
 	</command>
 
 	<command name="viewPageOrderStagingLivePG">

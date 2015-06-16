@@ -151,13 +151,23 @@
 </tr>
 <!--SEO-->
 <tr>
+	<td>SEO_PANEL_LINK</td>
+	<td>//li/a[contains(@id,'seoLink')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SEO_PANEL_TOGGLE</td>
 	<td>//div[@id='_145_seo']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEO_HTML_TITLE</td>
-	<td>//div[@id='_145_titleContentBox']//li[contains(@class,'lfr-input-localized-default') and contains(@data-value,'${key_defaultSiteLanguageKey}')]</td>
+	<td>//div[contains(.,'HTML Title')]/span/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO_HTML_TITLE_META_TAGS</td>
+	<td>//div[contains(.,'HTML Title')]/span//ul/li[@data-value='${key_defaultSiteLanguageKey}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.util;
 
+import com.liferay.journal.exception.FolderNameException;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.journal.FolderNameException;
 
 /**
  * @author David Zhang

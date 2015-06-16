@@ -14,6 +14,9 @@
 
 package com.liferay.journal.atom;
 
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.service.JournalArticleServiceUtil;
+import com.liferay.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.portal.atom.AtomPager;
 import com.liferay.portal.atom.AtomUtil;
 import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
@@ -28,9 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.journal.model.JournalArticle;
-import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
-import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,9 +47,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Igor Spasic
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalArticle"
-	},
+	property = {"model.class.name=com.liferay.journal.model.JournalArticle"},
 	service = AtomCollectionAdapter.class
 )
 public class JournalArticleAtomCollectionProvider

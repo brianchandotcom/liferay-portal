@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portlet.journal.lar;
+package com.liferay.journal.lar;
 
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
-import com.liferay.portlet.journal.model.JournalArticle;
 
 /**
  * An interface defining how newly created content should be added to the

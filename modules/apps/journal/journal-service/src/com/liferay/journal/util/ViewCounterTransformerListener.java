@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.util;
+package com.liferay.journal.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -56,7 +56,7 @@ public class ViewCounterTransformerListener extends BaseTransformerListener {
 		sb.append("<script type=\"text/javascript\">");
 		sb.append("Liferay.Service.Asset.AssetEntry.incrementViewCounter");
 		sb.append("({userId:0, className:'");
-		sb.append("com.liferay.portlet.journal.model.JournalArticle', ");
+		sb.append("com.liferay.journal.model.JournalArticle', ");
 		sb.append("classPK:");
 		sb.append(articleResourcePK);
 		sb.append("});");

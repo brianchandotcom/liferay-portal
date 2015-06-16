@@ -14,6 +14,12 @@
 
 package com.liferay.journal.trash;
 
+import com.liferay.journal.exception.InvalidDDMStructureException;
+import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
+import com.liferay.journal.service.JournalFolderLocalServiceUtil;
+import com.liferay.journal.service.permission.JournalFolderPermission;
+import com.liferay.journal.util.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -25,12 +31,6 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.journal.InvalidDDMStructureException;
-import com.liferay.portlet.journal.model.JournalFolder;
-import com.liferay.portlet.journal.model.JournalFolderConstants;
-import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
-import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
-import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.trash.RestoreEntryException;
 import com.liferay.portlet.trash.TrashEntryConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
@@ -45,9 +45,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.portlet.journal.model.JournalFolder"
-	},
+	property = {"model.class.name=com.liferay.journal.model.JournalFolder"},
 	service = TrashHandler.class
 )
 public class JournalFolderTrashHandler extends JournalBaseTrashHandler {

@@ -64,6 +64,7 @@ public class DLImageItemSelectorView
 		return resourceBundle.getString("images");
 	}
 
+	@Override
 	@Reference(
 		target ="(osgi.web.symbolicname=com.liferay.document.library.item.selector.web)",
 		unbind = "-"

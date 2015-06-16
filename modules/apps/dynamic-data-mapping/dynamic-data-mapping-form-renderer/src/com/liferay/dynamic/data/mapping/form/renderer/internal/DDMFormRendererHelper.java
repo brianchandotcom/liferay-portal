@@ -161,15 +161,6 @@ public class DDMFormRendererHelper {
 		return renderedDDMFormFieldValuesMap;
 	}
 
-	protected boolean isDDMFormFieldVisible(DDMFormField ddmFormField) {
-		if (Validator.isNull(ddmFormField.getVisibilityExpression())) {
-			return true;
-		}
-
-		return _expressionEvaluator.evaluateBooleanExpression(
-			ddmFormField.getVisibilityExpression());
-	}
-
 	protected String renderDDMFormField(
 			DDMFormField ddmFormField,
 			DDMFormFieldRenderingContext ddmFormFieldRenderingContext)
@@ -227,10 +218,9 @@ public class DDMFormRendererHelper {
 			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextName(
 			ddmFormFieldParameterName, ddmFormFieldRenderingContext);
-
-		boolean visible = isDDMFormFieldVisible(ddmFormField);
-
-		ddmFormFieldRenderingContext.setVisible(visible);
+		setDDMFormFieldRenderingContextVisible(
+			ddmFormField.getVisibilityExpression(),
+			ddmFormFieldRenderingContext);
 
 		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
@@ -247,10 +237,9 @@ public class DDMFormRendererHelper {
 			ddmFormField.getLabel(), ddmFormFieldRenderingContext);
 		setDDMFormFieldRenderingContextValue(
 			ddmFormFieldValue.getValue(), ddmFormFieldRenderingContext);
-
-		boolean visible = isDDMFormFieldVisible(ddmFormField);
-
-		ddmFormFieldRenderingContext.setVisible(visible);
+		setDDMFormFieldRenderingContextVisible(
+			ddmFormField.getVisibilityExpression(),
+			ddmFormFieldRenderingContext);
 
 		return renderDDMFormField(ddmFormField, ddmFormFieldRenderingContext);
 	}
@@ -350,6 +339,20 @@ public class DDMFormRendererHelper {
 
 		ddmFormFieldRenderingContext.setValue(
 			value.getString(ddmFormFieldRenderingContext.getLocale()));
+	}
+
+	protected void setDDMFormFieldRenderingContextVisible(
+		String visibilityExpression,
+		DDMFormFieldRenderingContext ddmFormFieldRenderingContext) {
+
+		boolean visible = true;
+
+		if (Validator.isNotNull(visibilityExpression)) {
+			visible = _expressionEvaluator.evaluateBooleanExpression(
+				visibilityExpression);
+		}
+
+		ddmFormFieldRenderingContext.setVisible(visible);
 	}
 
 	protected String wrapDDMFormFieldHTML(String ddmFormFieldHTML) {

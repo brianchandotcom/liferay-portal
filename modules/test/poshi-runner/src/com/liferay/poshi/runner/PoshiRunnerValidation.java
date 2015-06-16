@@ -126,6 +126,10 @@ public class PoshiRunnerValidation {
 			"description", "echo", "execute", "fail", "for", "if", "property",
 			"take-screenshot", "task", "var", "while");
 
+		if (filePath.endsWith(".function")) {
+			possibleElementNames = Arrays.asList("execute", "if");
+		}
+
 		for (Element childElement : childElements) {
 			String elementName = childElement.getName();
 
@@ -423,6 +427,11 @@ public class PoshiRunnerValidation {
 		List<String> primaryAttributeNames = Arrays.asList(
 			"function", "macro", "macro-desktop", "macro-mobile", "selenium",
 			"test-case");
+
+		if (filePath.endsWith(".function")) {
+			multiplePrimaryAttributeNames = null;
+			primaryAttributeNames = Arrays.asList("function", "selenium");
+		}
 
 		String primaryAttributeName = _getPrimaryAttributeName(
 			element, multiplePrimaryAttributeNames, primaryAttributeNames,

@@ -67,7 +67,7 @@ PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, life
 
 String currentURL = currentURLObj.toString();
 
-JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(request, portletPreferences);
+JournalContentDisplayContext journalContentDisplayContext = new JournalContentDisplayContext(request, response, portletPreferences);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -362,8 +362,7 @@ public class ServiceBuilderArgs {
 	private String _propsUtil = "com.liferay.portal.util.PropsUtil";
 	private String[] _readOnlyPrefixes = READ_ONLY_PREFIXES;
 	private boolean _readOnlyPrefixesSet;
-	private String _remotingFileName =
-		"../portal-web/docroot/WEB-INF/remoting-servlet.xml";
+	private String _remotingFileName;
 	private String[] _resourceActionsConfigs = RESOURCE_ACTION_CONFIGS;
 	private boolean _resourceActionsConfigsSet;
 	private String _resourcesDirName = "src";

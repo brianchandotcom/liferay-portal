@@ -38,9 +38,14 @@ public class PanelCategoryRegistry {
 	public Iterable<PanelCategory> getChildPanelCategories(
 		PanelCategory panelCategory) {
 
+		return getChildPanelCategories(panelCategory.getKey());
+	}
+
+	public Iterable<PanelCategory> getChildPanelCategories(
+		String panelCategoryKey) {
+
 		Iterable<PanelCategory> childPanelCategories =
-			_childPanelCategoriesServiceTrackerMap.getService(
-				panelCategory.getKey());
+			_childPanelCategoriesServiceTrackerMap.getService(panelCategoryKey);
 
 		if (childPanelCategories == null) {
 			return Collections.emptyList();

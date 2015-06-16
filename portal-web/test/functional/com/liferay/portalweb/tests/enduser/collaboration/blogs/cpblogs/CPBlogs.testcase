@@ -242,6 +242,58 @@
 		</execute>
 	</command>
 
+	<command name="DeleteBlogsEntries" priority="5">
+		<var name="blogsEntryCounterList" value="1,2,3" />
+
+		<for list="${blogsEntryCounterList}" param="entryCount" >
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Blogs" />
+			</execute>
+
+			<execute macro="Blogs#addEntry">
+				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+		</for>
+
+		<for list="${blogsEntryCounterList}" param="entryCount" >
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Blogs" />
+			</execute>
+
+			<execute macro="BlogsNavigator#gotoEntryCP">
+				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+
+			<execute macro="BlogsEntry#viewEntry">
+				<var name="entryContent" value="Blogs Entry${entryCount} Content" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+		</for>
+
+		<for list="${blogsEntryCounterList}" param="entryCount" >
+			<execute macro="Page#gotoContentCP">
+				<var name="portletName" value="Blogs" />
+			</execute>
+
+			<execute macro="BlogsNavigator#moveToRecycleBinCP">
+				<var name="assetType" value="Blogs Entry" />
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoContentCP">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<for list="${blogsEntryCounterList}" param="entryCount" >
+			<execute macro="BlogsEntry#viewNoCP">
+				<var name="entryTitle" value="Blogs Entry${entryCount} Title" />
+			</execute>
+		</for>
+	</command>
+
 	<command name="DeleteBlogsEntryComment" priority="4">
 		<var name="entryComment" value="Blogs Entry Comment Body" />
 		<var name="entryContent" value="Blogs Entry Content" />

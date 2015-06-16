@@ -124,6 +124,8 @@ public class ConfigurationImpl
 	@Override
 	public void clearCache() {
 		_values.clear();
+
+		_properties = null;
 	}
 
 	@Override

@@ -14,18 +14,34 @@
 
 package com.liferay.portal.search.elasticsearch.internal.cluster;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+
+import java.util.Map;
 
 import org.elasticsearch.common.settings.ImmutableSettings;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author André de Oliveira
  */
-@Component(immediate = true, service = SettingsContributor.class)
+@Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
+	immediate = true, service = SettingsContributor.class
+)
 public class UnicastSettingsContributor implements SettingsContributor {
+
+	@Activate
+	public void activate(Map<String, Object> properties) {
+		elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+	}
 
 	@Override
 	public void populate(ImmutableSettings.Builder builder) {
@@ -33,9 +49,7 @@ public class UnicastSettingsContributor implements SettingsContributor {
 			return;
 		}
 
-		builder.putArray(
-			"discovery.zen.ping.unicast.hosts",
-			_clusterSettingsContext.getHosts());
+		builder.putArray("discovery.zen.ping.unicast.hosts", _getHosts());
 
 		builder.put("node.local", false);
 	}
@@ -45,6 +59,30 @@ public class UnicastSettingsContributor implements SettingsContributor {
 		ClusterSettingsContext clusterSettingsContext) {
 
 		_clusterSettingsContext = clusterSettingsContext;
+	}
+
+	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+
+	private String[] _getHosts() {
+		String[] hosts = _clusterSettingsContext.getHosts();
+
+		String port =
+			elasticsearchConfiguration.discoveryZenPingUnicastHostsPort();
+
+		int pos = port.indexOf(CharPool.MINUS);
+
+		if (pos == -1) {
+			port = CharPool.COLON + port;
+		}
+		else {
+			port = CharPool.OPEN_BRACKET + port + CharPool.CLOSE_BRACKET;
+		}
+
+		for (int i = 0; i < hosts.length; i++) {
+			hosts[i] = hosts[i] + port;
+		}
+
+		return hosts;
 	}
 
 	private ClusterSettingsContext _clusterSettingsContext;

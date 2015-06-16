@@ -42,6 +42,9 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "LiferayElasticSearch", required = false)
 	public String clusterName();
 
+	@Meta.AD(deflt = "9300-9400", required = false)
+	public String discoveryZenPingUnicastHostsPort();
+
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpCORSEnabled();
 

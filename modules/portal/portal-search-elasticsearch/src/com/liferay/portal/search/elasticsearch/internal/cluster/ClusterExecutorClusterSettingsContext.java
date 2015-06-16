@@ -42,7 +42,7 @@ public class ClusterExecutorClusterSettingsContext
 
 			InetAddress bindInetAddress = clusterNode.getBindInetAddress();
 
-			addresses[i] = bindInetAddress.getHostAddress() + _PORT_RANGES;
+			addresses[i] = bindInetAddress.getHostAddress();
 		}
 
 		return addresses;
@@ -57,8 +57,6 @@ public class ClusterExecutorClusterSettingsContext
 	protected void setClusterExecutor(ClusterExecutor clusterExecutor) {
 		_clusterExecutor = clusterExecutor;
 	}
-
-	private static final String _PORT_RANGES = "[9300-9350]";
 
 	private ClusterExecutor _clusterExecutor;
 

@@ -482,6 +482,8 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
+		<liferay-util:dynamic-include key='<%= "js#" + editorName + "#onEditorCreate" %>' />
+
 		<c:if test='<%= (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customDialogDefinition")) %>'>
 			ckEditor.on(
 				'dialogDefinition',

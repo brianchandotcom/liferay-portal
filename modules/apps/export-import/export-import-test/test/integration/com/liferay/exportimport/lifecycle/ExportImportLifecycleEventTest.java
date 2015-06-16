@@ -16,6 +16,10 @@ package com.liferay.exportimport.lifecycle;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portal.kernel.lar.lifecycle.ExportImportLifecycleEvent;
@@ -38,13 +42,20 @@ import com.liferay.portal.lar.PortletExporter;
 import com.liferay.portal.lar.PortletImporter;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portlet.journal.model.JournalFolderConstants;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
+import org.apache.log4j.spi.ThrowableInformation;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -90,11 +101,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			layoutExporter.exportLayoutsAsFile(
 				0, false, new long[0], _parameterMap, new Date(), new Date());
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchGroupException nsge) {
+			Assert.assertEquals(
+				"No Group exists with the primary key 0", nsge.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -109,11 +121,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			layoutImporter.importLayouts(
 				TestPropsValues.getUserId(), 0, false, _parameterMap, null);
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchGroupException nsge) {
+			Assert.assertEquals(
+				"No Group exists with the primary key 0", nsge.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -123,15 +136,29 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 
 	@Test
 	public void testFailedLayoutLocalPublishing() throws Exception {
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					BackgroundTaskMessageListener.class.getName(),
+					Level.ERROR)) {
+
 			StagingUtil.publishLayouts(
 				TestPropsValues.getUserId(), _group.getGroupId(),
 				RandomTestUtil.nextInt(), false, new long[0], _parameterMap);
-		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to execute background task", loggingEvent.getMessage());
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Throwable throwable = throwableInformation.getThrowable();
+
+			Assert.assertSame(SystemException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(
@@ -144,15 +171,19 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 	public void testFailedPortletExport() throws Exception {
 		PortletExporter portletExporter = PortletExporter.getInstance();
 
+		long plid = RandomTestUtil.nextLong();
+
 		try {
 			portletExporter.exportPortletInfoAsFile(
-				RandomTestUtil.nextLong(), _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, new Date(), new Date());
+				plid, _group.getGroupId(), StringPool.BLANK, _parameterMap,
+				new Date(), new Date());
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchLayoutException nsle) {
+			Assert.assertEquals(
+				"No Layout exists with the primary key " + plid,
+				nsle.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -168,11 +199,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 			portletImporter.importPortletInfo(
 				TestPropsValues.getUserId(), 0, 0, StringPool.BLANK,
 				_parameterMap, null);
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchLayoutException nsle) {
+			Assert.assertEquals(
+				"No Layout exists with the primary key 0", nsle.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -184,15 +216,29 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 	public void testFailedPortletLocalPublishing() throws Exception {
 		User user = TestPropsValues.getUser();
 
-		try {
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					BackgroundTaskMessageListener.class.getName(),
+					Level.ERROR)) {
+
 			StagingUtil.publishPortlet(
 				user.getUserId(), _group.getGroupId(), _liveGroup.getGroupId(),
 				0, 0, StringPool.BLANK, _parameterMap);
-		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Unable to execute background task", loggingEvent.getMessage());
+
+			ThrowableInformation throwableInformation =
+				loggingEvent.getThrowableInformation();
+
+			Throwable throwable = throwableInformation.getThrowable();
+
+			Assert.assertSame(SystemException.class, throwable.getClass());
 		}
 
 		Assert.assertTrue(

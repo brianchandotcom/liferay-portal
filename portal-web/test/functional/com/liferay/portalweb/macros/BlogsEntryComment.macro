@@ -34,33 +34,12 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 	</command>
 
-	<command name="deleteCP">
-		<execute macro="BlogsNavigator#gotoEntryCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
+	<command name="delete">
 		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
 
 		<execute function="AssertClickNoError" locator1="Comments#DELETE_LINK" value1="Delete" />
 
 		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
-		<execute function="AssertTextNotPresent" value1="${entryComment}" />
-	</command>
-
-	<command name="deletePG">
-		<execute macro="BlogsNavigator#gotoEntryPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute function="MouseOver" locator1="Comments#COMMENT_BODY" />
-
-		<execute function="AssertClickNoError" locator1="Comments#DELETE_LINK" value1="Delete" />
-
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
 
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Your request processed successfully." />
 		<execute function="AssertTextNotPresent" value1="${entryComment}" />

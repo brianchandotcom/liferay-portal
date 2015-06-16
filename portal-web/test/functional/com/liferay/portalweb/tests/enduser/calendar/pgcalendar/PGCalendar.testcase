@@ -4260,6 +4260,56 @@
 		</execute>
 	</command>
 
+	<command name="ViewShowMoreLocalization" priority="5">
+		<description message="This is a use case LPS-54786." />
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<for list="1,2,3,4,5,6" param="eventNumber">
+			<execute macro="CalendarNavigator#gotoAddEvent" />
+
+			<execute macro="CalendarEvent#add">
+				<var name="eventTitle" value="Calendar Event ${eventNumber}" />
+				<var name="eventType" value="All Day" />
+			</execute>
+		</for>
+
+		<execute macro="MyAccount#configureDisplaySettingsLanguage">
+			<var name="languageName" value="español (España)" />
+			<var name="myAccount" value="My Account" />
+			<var name="saveButton" value="Save" />
+			<var name="successMessage" value="Su petición ha terminado con éxito." />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewShowMoreLocalizedViaDayView">
+			<var name="messageLocalized" value="Mostrar 1 más" />
+			<var name="viewTypeLocalized" value="Día" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewShowMoreLocalizedViaWeekView">
+			<var name="messageLocalized" value="Mostrar 1 más" />
+			<var name="viewTypeLocalized" value="Semana" />
+		</execute>
+
+		<execute macro="CalendarScheduler#viewShowMoreLocalizedViaMonthView">
+			<var name="messageLocalized" value="Mostrar 4 más" />
+			<var name="viewTypeLocalized" value="Mes" />
+		</execute>
+
+		<execute macro="MyAccount#configureDisplaySettingsLanguage">
+			<var name="languageName" value="English (United States)" />
+			<var name="myAccount" value="Mi cuenta" />
+			<var name="saveButton" value="Guardar" />
+			<var name="successMessage" value="Your request completed successfully." />
+		</execute>
+	</command>
+
 	<command name="ViewSiteCalendarRSSFeed" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

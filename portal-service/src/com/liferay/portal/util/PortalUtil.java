@@ -289,6 +289,13 @@ public class PortalUtil {
 		return getPortal().escapeRedirect(url);
 	}
 
+	public static void generateHttpAuthorizationHeaders(
+		HttpServletRequest request, HttpServletResponse response,
+		boolean digest) {
+
+		getPortal().generateHttpAuthorizationHeaders(request, response, digest);
+	}
+
 	/**
 	 * Generates a random key to identify the request based on the input string.
 	 *

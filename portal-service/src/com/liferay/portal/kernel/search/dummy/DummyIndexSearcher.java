@@ -20,8 +20,11 @@ import com.liferay.portal.kernel.search.HitsImpl;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.search.suggest.Suggester;
+import com.liferay.portal.kernel.search.suggest.SuggesterResults;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
@@ -72,6 +75,14 @@ public class DummyIndexSearcher implements IndexSearcher {
 		SearchContext searchContext, int max) {
 
 		return Collections.emptyMap();
+	}
+
+	@Override
+	public SuggesterResults suggest(
+			SearchContext searchContext, Suggester suggester)
+		throws SearchException {
+
+		return new SuggesterResults();
 	}
 
 	@Override

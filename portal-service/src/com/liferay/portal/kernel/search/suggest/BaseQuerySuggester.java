@@ -45,4 +45,11 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 		return CollatorUtil.collate(suggestions, keywords);
 	}
 
+	@Override
+	public SuggesterResults suggest(
+		SearchContext searchContext, Suggester suggester) {
+
+		return new SuggesterResults();
+	}
+
 }

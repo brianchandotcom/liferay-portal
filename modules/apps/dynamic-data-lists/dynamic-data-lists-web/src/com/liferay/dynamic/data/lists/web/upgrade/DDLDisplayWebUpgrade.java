@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.display.web.upgrade;
+package com.liferay.dynamic.data.lists.web.upgrade;
 
 import com.liferay.dynamic.data.lists.display.web.constants.DDLDisplayPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.TransactionalTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
@@ -70,11 +71,11 @@ public class WikiPageFinderTest {
 
 		WikiTestUtil.addPage(
 			_user.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			"test approved", true);
+			RandomTestUtil.randomString(), true);
 
 		WikiPage userDraft = WikiTestUtil.addPage(
 			_user.getUserId(), _group.getGroupId(), _node.getNodeId(),
-			"test draft", false);
+			RandomTestUtil.randomString(), false);
 
 		userDraft.setHead(true);
 
@@ -82,7 +83,7 @@ public class WikiPageFinderTest {
 	}
 
 	@Test
-	public void testFindByG_N_H_SApprovedStatus() throws Exception {
+	public void testQueryByG_N_H_SApprovedStatus() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		int count = WikiPageServiceUtil.getPagesCount(
@@ -99,7 +100,9 @@ public class WikiPageFinderTest {
 	}
 
 	@Test
-	public void testFindByG_N_H_SApprovedStatusIncludeOwner() throws Exception {
+	public void testQueryByG_N_H_SApprovedStatusIncludeOwner()
+		throws Exception {
+
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		int count = WikiPageServiceUtil.getPagesCount(
@@ -118,7 +121,7 @@ public class WikiPageFinderTest {
 	}
 
 	@Test
-	public void testFindByG_N_H_SDraftStatusIncludeOwner() throws Exception {
+	public void testQueryByG_N_H_SDraftStatusIncludeOwner() throws Exception {
 		ServiceTestUtil.setUser(TestPropsValues.getUser());
 
 		int count = WikiPageServiceUtil.getPagesCount(

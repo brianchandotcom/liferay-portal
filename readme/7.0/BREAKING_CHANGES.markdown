@@ -20,7 +20,7 @@ feature or API will be dropped in an upcoming version.
 replaces an old API, in spite of the old API being kept in Liferay Portal for
 backwards compatibility.
 
-*This document has been reviewed through commit `92185c4`.*
+*This document has been reviewed through commit `6d3a2a4`.*
 
 ## Breaking Changes Contribution Guidelines
 
@@ -1979,24 +1979,26 @@ The method `render` has been removed from the interface `ConfigurationAction`.
 
 #### Who is affected?
 
-Any Java code calling the method render on any ConfigurationAction class or
-overwritting the render method of a ConfigurationAction class.
+This affects any Java code calling the method `render` on a
+`ConfigurationAction` class, or Java code overwriting the `render` method of a
+`ConfigurationAction` class.
 
 #### How should I update my code?
 
-The method render was used to return the path of jsp including the configuration
-of a portlet. That method is now available for Configurations extending the
-BaseJSPSettingsConfigurationAction and it is called getJspPath.
+The method `render` was used to return the path of a JSP, including the
+configuration of a portlet. That method is now available for configurations
+extending the `BaseJSPSettingsConfigurationAction` class, and is called
+`getJspPath`.
 
-If any logic was added to override the render method, it can now be added in the
-include method. 
+If any logic was added to override the `render` method, it can now be added in
+the `include` method.
 
 #### Why was this change made?
 
-This change was part of a needed changes to support adding configuration for
-portlets based on other technology different to JSP (such as freemarker). 
-The method include can now be used to create configuration UIs written in
-freemarker or any other framework.
+This change was part of needed modifications to support adding configuration for
+portlets based on other technology different than JSP (e.g., FreeMarker). The
+method `include` can now be used to create configuration UIs written in
+FreeMarker or any other framework.
 
 ---------------------------------------
 

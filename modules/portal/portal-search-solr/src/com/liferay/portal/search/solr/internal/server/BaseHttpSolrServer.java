@@ -54,26 +54,27 @@ public class BaseHttpSolrServer extends SolrServer {
 		return _httpSolrServer.getParser();
 	}
 
-	@Override
-	public NamedList<Object> request(SolrRequest solrRequest)
+	public NamedList<Object> request(
+			SolrRequest solrRequest, ResponseParser responseParser,
+			String collection)
 		throws IOException, SolrServerException {
 
 		if (_stopped.get()) {
 			return null;
 		}
 
-		return _httpSolrServer.request(solrRequest);
+		return _httpSolrServer.request(solrRequest, responseParser, collection);
 	}
 
-	public NamedList<Object> request(
-			SolrRequest solrRequest, ResponseParser responseParser)
+	@Override
+	public NamedList<Object> request(SolrRequest solrRequest, String collection)
 		throws IOException, SolrServerException {
 
 		if (_stopped.get()) {
 			return null;
 		}
 
-		return _httpSolrServer.request(solrRequest, responseParser);
+		return _httpSolrServer.request(solrRequest, collection);
 	}
 
 	public void setAllowCompression(boolean allowCompression) {

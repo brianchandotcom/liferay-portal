@@ -14,8 +14,6 @@
 
 package com.liferay.frontend.editors.web.editor.configuration.extension;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.StreamUtil;
 
@@ -75,14 +73,11 @@ public class CKEditorCreoleOnEditorCreateDynamicInclude
 
 	private static final String _JS_DIALOG_DEFINITION_INCLUDE_PATH =
 		"/META-INF/resources/html/editors/ckeditor/extension/" +
-		"creole_dialog_definition.js";
+			"creole_dialog_definition.js";
 
 	private static final String _JS_DIALOG_SHOW_INCLUDE_PATH =
 		"/META-INF/resources/html/editors/ckeditor/extension/" +
-		"creole_dialog_show.js";
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CKEditorCreoleOnEditorCreateDynamicInclude.class);
+			"creole_dialog_show.js";
 
 	private BundleContext _bundleContext;
 

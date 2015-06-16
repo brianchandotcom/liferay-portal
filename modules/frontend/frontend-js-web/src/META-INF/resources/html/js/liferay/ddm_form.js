@@ -1595,13 +1595,13 @@ AUI.add(
 
 						var formNode = instance.get('formNode');
 
-						var liferayForm = null;
+						var formName = null;
 
 						if (formNode) {
-							liferayForm = Liferay.Form.get(formNode.attr('name'));
+							formName = formNode.attr('name');
 						}
 
-						return liferayForm;
+						return Liferay.Form.get(formName);
 					},
 
 					_valueTranslationManager: function() {

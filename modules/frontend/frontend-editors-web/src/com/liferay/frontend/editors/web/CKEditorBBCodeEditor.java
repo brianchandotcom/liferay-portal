@@ -47,7 +47,7 @@ public class CKEditorBBCodeEditor extends BaseEditor {
 
 	@Override
 	protected String getJspPath() {
-		return "/editors/ckeditor_bbcode.jsp";
+		return "/editors/ckeditor.jsp";
 	}
 
 	private ItemSelector _itemSelector;

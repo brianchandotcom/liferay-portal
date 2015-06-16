@@ -31,10 +31,13 @@ public class PortletExportImportBackgroundTaskStatusMessageTranslator
 		clearBackgroundTaskStatus(backgroundTaskStatus);
 
 		long portletModelAdditionCountersTotal = GetterUtil.getLong(
-			message.get("portletModelAdditionCountersTotal"));
+			message.get(
+				StagingBackgroundTaskConstants.
+					PORTLET_MODEL_ADDITION_COUNTERS_TOTAL));
 
 		backgroundTaskStatus.setAttribute(
-			"allModelAdditionCountersTotal", portletModelAdditionCountersTotal);
+			StagingBackgroundTaskConstants.ALL_MODEL_ADDITION_COUNTERS_TOTAL,
+			portletModelAdditionCountersTotal);
 
 		super.translatePortletMessage(backgroundTaskStatus, message);
 	}

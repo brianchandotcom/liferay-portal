@@ -72,6 +72,10 @@
 
 	var REGEX_LIST_UPPER_ROMAN = /upper-roman/i;
 
+	var REGEX_LIST_CIRCLE = /circle/i;
+
+	var REGEX_LIST_SQUARE = /square/i;
+
 	var REGEX_NEWLINE = /\r?\n/g;
 
 	var REGEX_PERCENT = /%$/i;
@@ -818,7 +822,19 @@
 		},
 
 		_handleUnorderedList: function(element, listTagsIn, listTagsOut) {
-			listTagsIn.push('[list]');
+			listTagsIn.push('[list=');
+
+			var listStyleType = element.style.listStyleType;
+
+			if (REGEX_LIST_CIRCLE.test(listStyleType)) {
+				listTagsIn.push('circle]');
+			}
+			else if (REGEX_LIST_SQUARE.test(listStyleType)) {
+				listTagsIn.push('square]');
+			}
+			else {
+				listTagsIn.push('disc]');
+			}
 
 			listTagsOut.push('[/list]');
 		},

@@ -14,13 +14,12 @@
 
 package com.liferay.sync.engine.service.persistence;
 
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.Where;
+
 import com.liferay.sync.engine.model.SyncUser;
 
 import java.sql.SQLException;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Dennis Ju
@@ -34,17 +33,15 @@ public class SyncUserPersistence extends BasePersistenceImpl<SyncUser, Long> {
 	public SyncUser fetchBySyncAccountId(long syncAccountId)
 		throws SQLException {
 
-		Map<String, Object> fieldValues = new HashMap<>();
+		QueryBuilder<SyncUser, Long> queryBuilder = queryBuilder();
 
-		fieldValues.put("syncAccountId", syncAccountId);
+		queryBuilder.limit(1L);
 
-		List<SyncUser> syncUsers = queryForFieldValues(fieldValues);
+		Where<SyncUser, Long> where = queryBuilder.where();
 
-		if ((syncUsers == null) || syncUsers.isEmpty()) {
-			return null;
-		}
+		where.eq("syncAccountId", syncAccountId);
 
-		return syncUsers.get(0);
+		return where.queryForFirst();
 	}
 
 }

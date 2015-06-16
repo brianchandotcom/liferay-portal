@@ -17,15 +17,14 @@ package com.liferay.sync.engine.service.persistence;
 import com.j256.ormlite.dao.GenericRawResults;
 import com.j256.ormlite.dao.RawRowMapper;
 import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.SelectArg;
 import com.j256.ormlite.stmt.Where;
 
 import com.liferay.sync.engine.model.SyncSite;
 
 import java.sql.SQLException;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Shinn Lok
@@ -39,35 +38,35 @@ public class SyncSitePersistence extends BasePersistenceImpl<SyncSite, Long> {
 	public SyncSite fetchByF_S(String filePathName, long syncAccountId)
 		throws SQLException {
 
-		Map<String, Object> fieldValues = new HashMap<>();
+		QueryBuilder<SyncSite, Long> queryBuilder = queryBuilder();
 
-		fieldValues.put("filePathName", filePathName);
-		fieldValues.put("syncAccountId", syncAccountId);
+		queryBuilder.limit(1L);
 
-		List<SyncSite> syncSites = queryForFieldValuesArgs(fieldValues);
+		Where<SyncSite, Long> where = queryBuilder.where();
 
-		if ((syncSites == null) || syncSites.isEmpty()) {
-			return null;
-		}
+		where.eq("filePathName", new SelectArg(filePathName));
+		where.eq("syncAccountId", syncAccountId);
 
-		return syncSites.get(0);
+		where.and(2);
+
+		return where.queryForFirst();
 	}
 
 	public SyncSite fetchByG_S(long groupId, long syncAccountId)
 		throws SQLException {
 
-		Map<String, Object> fieldValues = new HashMap<>();
+		QueryBuilder<SyncSite, Long> queryBuilder = queryBuilder();
 
-		fieldValues.put("groupId", groupId);
-		fieldValues.put("syncAccountId", syncAccountId);
+		queryBuilder.limit(1L);
 
-		List<SyncSite> syncSites = queryForFieldValues(fieldValues);
+		Where<SyncSite, Long> where = queryBuilder.where();
 
-		if ((syncSites == null) || syncSites.isEmpty()) {
-			return null;
-		}
+		where.eq("groupId", groupId);
+		where.eq("syncAccountId", syncAccountId);
 
-		return syncSites.get(0);
+		where.and(2);
+
+		return where.queryForFirst();
 	}
 
 	public List<SyncSite> findBySyncAccountId(long syncAccountId)
@@ -81,7 +80,7 @@ public class SyncSitePersistence extends BasePersistenceImpl<SyncSite, Long> {
 
 		QueryBuilder<SyncSite, Long> queryBuilder = queryBuilder();
 
-		queryBuilder = queryBuilder.selectColumns("syncSiteId");
+		queryBuilder.selectColumns("syncSiteId");
 
 		Where<SyncSite, Long> where = queryBuilder.where();
 

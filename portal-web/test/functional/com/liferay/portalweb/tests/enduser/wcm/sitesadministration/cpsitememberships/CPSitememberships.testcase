@@ -300,6 +300,7 @@
 
 		<execute macro="Team#editCP">
 			<var name="teamDescriptionEdit" value="Site Team Description Edit" />
+			<var name="teamName" value="Site Team Name" />
 			<var name="teamNameEdit" value="Site Team Name Edit" />
 		</execute>
 

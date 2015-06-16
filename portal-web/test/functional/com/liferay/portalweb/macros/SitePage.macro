@@ -644,7 +644,11 @@
 
 	<command name="viewPageTemplatePG">
 		<execute function="AssertTextEquals#assertPartialText" locator1="Dockbar#PAGE_INFO_MESSAGE" value1="This page is linked to a page template. Disable the automatic propagation of changes to this page to be able to make modifications." />
+
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
+
+		<execute function="Click" locator1="DockbarEditPanel#EDIT_PAGE" value1="Edit Page" />
+
 		<execute function="AssertTextEquals" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
 	</command>

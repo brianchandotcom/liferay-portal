@@ -115,7 +115,7 @@
 <!--USER_SEARCH-->
 <tr>
 	<td>USER_SEARCH_FIELD</td>
-	<td>//span[@class='form-search']//input[contains(@name,'_174_keywords_users')]</td>
+	<td>//span[@class='form-search']//input[contains(@name,'keywords_users')]</td>
 	<td></td>
 </tr>
 <tr>

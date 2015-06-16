@@ -214,6 +214,8 @@ public class PoshiRunnerExecutor {
 
 		String message = element.attributeValue("message");
 
+		XMLLoggerHandler.updateStatus(element, "fail");
+
 		if (Validator.isNotNull(message)) {
 			throw new Exception(
 				PoshiRunnerVariablesUtil.replaceCommandVars(message));

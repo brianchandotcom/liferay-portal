@@ -379,7 +379,7 @@ public final class CommandLoggerHandler {
 
 		loggerElement.setAttribute("alt", screenshotName + errorLinkId);
 		loggerElement.setAttribute(
-			"src", "screenshot/" + screenshotName + errorLinkId + ".jpg");
+			"src", "screenshots/" + screenshotName + errorLinkId + ".jpg");
 		loggerElement.setName("img");
 
 		return loggerElement;
@@ -489,7 +489,7 @@ public final class CommandLoggerHandler {
 
 		LiferaySeleniumHelper.captureScreen(
 			PoshiRunnerGetterUtil.getCanonicalPath(".") + "/test-results/" +
-				testClassCommandName + "/screenshot/" + screenshotName +
+				testClassCommandName + "/screenshots/" + screenshotName +
 					errorLinkId + ".jpg");
 	}
 

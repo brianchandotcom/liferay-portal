@@ -1980,7 +1980,7 @@ The method `render` has been removed from the interface `ConfigurationAction`.
 #### Who is affected?
 
 This affects any Java code calling the method `render` on a
-`ConfigurationAction` class, or Java code overwriting the `render` method of a
+`ConfigurationAction` class, or Java classes overriding the `render` method of a
 `ConfigurationAction` class.
 
 #### How should I update my code?

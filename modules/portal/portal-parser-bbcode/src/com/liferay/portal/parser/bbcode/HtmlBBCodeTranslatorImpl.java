@@ -57,6 +57,12 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		_listStyles.put("i", "list-style: lower-roman outside;");
 		_listStyles.put("I", "list-style: upper-roman outside;");
 
+		_listBulletedStyles = new HashMap<>();
+
+		_listBulletedStyles.put("circle", "list-style: circle outside;");
+		_listBulletedStyles.put("disc", "list-style: disc outside;");
+		_listBulletedStyles.put("square", "list-style: square outside;");
+
 		_excludeNewLineTypes = new HashMap<>();
 
 		_excludeNewLineTypes.put("*", BBCodeParser.TYPE_TAG_START_END);
@@ -457,13 +463,13 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		String listAttribute = bbCodeItem.getAttribute();
 
-		if (listAttribute != null) {
+		if (_listStyles.get(listAttribute) != null ) {
 			listStyle = _listStyles.get(listAttribute);
 
 			tag = "ol";
 		}
 		else {
-			listStyle = "list-style: disc outside;";
+			listStyle = _listBulletedStyles.get(listAttribute);
 
 			tag = "ul";
 		}
@@ -773,6 +779,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private final Pattern _imagePattern = Pattern.compile(
 		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,512}$",
 		Pattern.CASE_INSENSITIVE);
+	private final Map<String, String> _listBulletedStyles;
 	private final Map<String, String> _listStyles;
 	private final Pattern _tagPattern = Pattern.compile(
 		"^/?(?:b|center|code|colou?r|email|i|img|justify|left|pre|q|quote|" +

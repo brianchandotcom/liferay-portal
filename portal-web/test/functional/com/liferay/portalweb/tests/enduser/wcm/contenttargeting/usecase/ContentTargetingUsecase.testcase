@@ -1866,7 +1866,15 @@
 		<execute macro="WebContent#addWithCategoryCP">
 			<var name="categoryName" value="Male Users" />
 			<var name="vocabularyName" value="User Segment" />
-			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentContent" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="webContentTitle" value="Web Content Title" />
 		</execute>
 
@@ -1976,14 +1984,30 @@
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryContentList" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content Content" />
+			<var name="entryContentText" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="preview1Text" value="Male Users" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
@@ -1992,7 +2016,15 @@
 		<execute function="Refresh" />
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
-			<var name="entryContentText" value="Web Content Content" />
+			<var name="entryContentText" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />
@@ -2011,14 +2043,30 @@
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">
-			<var name="viewEntryContentList" value="Web Content Content" />
+			<var name="viewEntryContentList" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="viewEntryTitleList" value="Web Content Title" />
 		</execute>
 
 		<execute function="Refresh" />
 
 		<execute macro="UserSegmentContentDisplayPortlet#viewEntryPG">
-			<var name="entryContentText" value="Web Content Content" />
+			<var name="entryContentText" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="preview1Text" value="Male Users" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewUserSegmentSelected" value="Male Users" />
@@ -2027,7 +2075,15 @@
 		<execute function="Refresh" />
 
 		<execute macro="CampaignDisplayPortlet#viewPG">
-			<var name="entryContentText" value="Web Content Content" />
+			<var name="entryContentText" value="Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content
+
+				Web Content Content" />
 			<var name="preview1Text" value="Campaign Name" />
 			<var name="preview2Text" value="Default" />
 			<var name="viewCampaignSelected" value="Campaign Name" />

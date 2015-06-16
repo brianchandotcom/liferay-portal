@@ -20,6 +20,7 @@ import com.liferay.poshi.runner.util.HtmlUtil;
 import com.liferay.poshi.runner.util.PropsValues;
 import com.liferay.poshi.runner.util.Validator;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.Stack;
@@ -358,6 +359,50 @@ public class WebDriverHelper {
 		return GetterUtil.getInteger(pageYOffset);
 	}
 
+	public static String getSelectedLabel(
+		WebDriver webDriver, String selectLocator, String timeout) {
+
+		try {
+			WebElement selectLocatorWebElement = getWebElement(
+				webDriver, selectLocator, timeout);
+
+			Select select = new Select(selectLocatorWebElement);
+
+			WebElement firstSelectedOptionWebElement =
+				select.getFirstSelectedOption();
+
+			return firstSelectedOptionWebElement.getText();
+		}
+		catch (Exception e) {
+			return null;
+		}
+	}
+
+	public static String[] getSelectedLabels(
+		WebDriver webDriver, String selectLocator) {
+
+		WebElement selectLocatorWebElement = getWebElement(
+			webDriver, selectLocator);
+
+		Select select = new Select(selectLocatorWebElement);
+
+		List<WebElement> allSelectedOptionsWebElements =
+			select.getAllSelectedOptions();
+
+		String[] selectedOptionsWebElements =
+			new String[allSelectedOptionsWebElements.size()];
+
+		for (int i = 0; i < allSelectedOptionsWebElements.size(); i++) {
+			WebElement webElement = allSelectedOptionsWebElements.get(i);
+
+			if (webElement != null) {
+				selectedOptionsWebElements[i] = webElement.getText();
+			}
+		}
+
+		return selectedOptionsWebElements;
+	}
+
 	public static int getViewportHeight(WebDriver webDriver) {
 		WebElement bodyWebElement = getWebElement(webDriver, "//body");
 
@@ -422,6 +467,20 @@ public class WebDriverHelper {
 		return !webElements.isEmpty();
 	}
 
+	public static boolean isNotSelectedLabel(
+		WebDriver webDriver, String selectLocator, String pattern) {
+
+		if (isElementNotPresent(webDriver, selectLocator)) {
+			return false;
+		}
+
+		String[] selectedLabels = getSelectedLabels(webDriver, selectLocator);
+
+		List<String> selectedLabelsList = Arrays.asList(selectedLabels);
+
+		return !selectedLabelsList.contains(pattern);
+	}
+
 	public static boolean isPartialText(
 		WebDriver webDriver, String locator, String value) {
 
@@ -430,6 +489,16 @@ public class WebDriverHelper {
 		String text = webElement.getText();
 
 		return text.contains(value);
+	}
+
+	public static boolean isSelectedLabel(
+		WebDriver webDriver, String selectLocator, String pattern) {
+
+		if (isElementNotPresent(webDriver, selectLocator)) {
+			return false;
+		}
+
+		return pattern.equals(getSelectedLabel(webDriver, selectLocator, "1"));
 	}
 
 	public static void makeVisible(WebDriver webDriver, String locator) {

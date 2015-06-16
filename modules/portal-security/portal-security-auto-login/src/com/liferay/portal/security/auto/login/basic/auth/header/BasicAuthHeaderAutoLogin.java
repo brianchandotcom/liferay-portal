@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.auto.login.basic.auth.header;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.auto.login.AutoLogin;
@@ -24,12 +25,24 @@ import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.CompanyConstants;
+import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.AuthException;
+import com.liferay.portal.security.auth.Authenticator;
 import com.liferay.portal.security.auto.login.basic.auth.header.configuration.BasicAuthHeaderAutoLoginConfiguration;
 import com.liferay.portal.security.auto.login.basic.auth.header.constants.BasicAuthHeaderAutoLoginConstants;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.login.util.LoginUtil;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
@@ -135,8 +148,7 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 			decodedCredentials.substring(0, pos));
 		String password = decodedCredentials.substring(pos + 1);
 
-		long userId = LoginUtil.getAuthenticatedUserId(
-			request, login, password, null);
+		long userId = getAuthenticatedUserId(request, login, password, null);
 
 		String[] credentials = new String[3];
 
@@ -145,6 +157,87 @@ public class BasicAuthHeaderAutoLogin extends BaseAutoLogin {
 		credentials[2] = Boolean.TRUE.toString();
 
 		return credentials;
+	}
+
+	protected long getAuthenticatedUserId(
+			HttpServletRequest request, String login, String password,
+			String authType)
+		throws PortalException {
+
+		long userId = GetterUtil.getLong(login);
+
+		Company company = PortalUtil.getCompany(request);
+
+		String requestURI = request.getRequestURI();
+
+		String contextPath = PortalUtil.getPathContext();
+
+		if (requestURI.startsWith(contextPath.concat("/api/liferay"))) {
+			throw new AuthException();
+		}
+		else {
+			Map<String, String[]> headerMap = new HashMap<>();
+
+			Enumeration<String> enu1 = request.getHeaderNames();
+
+			while (enu1.hasMoreElements()) {
+				String name = enu1.nextElement();
+
+				Enumeration<String> enu2 = request.getHeaders(name);
+
+				List<String> headers = new ArrayList<>();
+
+				while (enu2.hasMoreElements()) {
+					String value = enu2.nextElement();
+
+					headers.add(value);
+				}
+
+				headerMap.put(
+					name, headers.toArray(new String[headers.size()]));
+			}
+
+			Map<String, String[]> parameterMap = request.getParameterMap();
+			Map<String, Object> resultsMap = new HashMap<>();
+
+			if (Validator.isNull(authType)) {
+				authType = company.getAuthType();
+			}
+
+			int authResult = Authenticator.FAILURE;
+
+			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
+				authResult = UserLocalServiceUtil.authenticateByEmailAddress(
+					company.getCompanyId(), login, password, headerMap,
+					parameterMap, resultsMap);
+
+				userId = MapUtil.getLong(resultsMap, "userId", userId);
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
+				authResult = UserLocalServiceUtil.authenticateByScreenName(
+					company.getCompanyId(), login, password, headerMap,
+					parameterMap, resultsMap);
+
+				userId = MapUtil.getLong(resultsMap, "userId", userId);
+			}
+			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
+				authResult = UserLocalServiceUtil.authenticateByUserId(
+					company.getCompanyId(), userId, password, headerMap,
+					parameterMap, resultsMap);
+			}
+
+			if (authResult != Authenticator.SUCCESS) {
+				User user = UserLocalServiceUtil.fetchUser(userId);
+
+				if (user != null) {
+					UserLocalServiceUtil.checkLockout(user);
+				}
+
+				throw new AuthException();
+			}
+		}
+
+		return userId;
 	}
 
 	protected boolean isEnabled(long companyId) {

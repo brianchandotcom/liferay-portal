@@ -16,6 +16,8 @@ package com.liferay.exportimport.lifecycle;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.journal.test.util.JournalTestUtil;
+import com.liferay.portal.NoSuchGroupException;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.backgroundtask.messaging.BackgroundTaskMessageListener;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.exportimportconfiguration.ExportImportConfigurationParameterMapFactory;
@@ -99,11 +101,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			layoutExporter.exportLayoutsAsFile(
 				0, false, new long[0], _parameterMap, new Date(), new Date());
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchGroupException nsge) {
+			Assert.assertEquals(
+				"No Group exists with the primary key 0", nsge.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -118,11 +121,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 		try {
 			layoutImporter.importLayouts(
 				TestPropsValues.getUserId(), 0, false, _parameterMap, null);
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchGroupException nsge) {
+			Assert.assertEquals(
+				"No Group exists with the primary key 0", nsge.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -175,15 +179,19 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 	public void testFailedPortletExport() throws Exception {
 		PortletExporter portletExporter = PortletExporter.getInstance();
 
+		long plid = RandomTestUtil.nextLong();
+
 		try {
 			portletExporter.exportPortletInfoAsFile(
-				RandomTestUtil.nextLong(), _group.getGroupId(),
-				StringPool.BLANK, _parameterMap, new Date(), new Date());
+				plid, _group.getGroupId(), StringPool.BLANK, _parameterMap,
+				new Date(), new Date());
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchLayoutException nsle) {
+			Assert.assertEquals(
+				"No Layout exists with the primary key " + plid,
+				nsle.getMessage());
 		}
 
 		Assert.assertTrue(
@@ -199,11 +207,12 @@ public class ExportImportLifecycleEventTest extends PowerMockito {
 			portletImporter.importPortletInfo(
 				TestPropsValues.getUserId(), 0, 0, StringPool.BLANK,
 				_parameterMap, null);
+
+			Assert.fail();
 		}
-		catch (Throwable t) {
-			if (_log.isInfoEnabled()) {
-				_log.info(t, t);
-			}
+		catch (NoSuchLayoutException nsle) {
+			Assert.assertEquals(
+				"No Layout exists with the primary key 0", nsle.getMessage());
 		}
 
 		Assert.assertTrue(

@@ -14,21 +14,13 @@
 
 package com.liferay.portal.kernel.util;
 
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 
-import java.net.HttpCookie;
-
-import java.util.Map;
-
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
-
-import org.springframework.mock.web.MockHttpServletResponse;
 
 /**
  * @author Shuyang Zhou
@@ -140,22 +132,6 @@ public class CookieUtilTest {
 	}
 
 	@Test
-	public void testParseHttpCookies() {
-		HttpServletResponse response = new MockHttpServletResponse();
-
-		response.setHeader(HttpHeaders.SET_COOKIE, "name1=value1,name2=value2");
-
-		Map<String, HttpCookie> httpCookies = CookieUtil.parseHttpCookies(
-			response.getHeader(HttpHeaders.SET_COOKIE));
-
-		Assert.assertEquals(2, httpCookies.size());
-		Assert.assertEquals(
-			new HttpCookie("name1", "value1"), httpCookies.get("name1"));
-		Assert.assertEquals(
-			new HttpCookie("name2", "value2"), httpCookies.get("name2"));
-	}
-
-	@Test
 	public void testSerializationAndDeserialization() {
 		Cookie cookie1 = new Cookie("name1", null);
 
@@ -178,30 +154,6 @@ public class CookieUtilTest {
 
 		Assert.assertTrue(
 			CookieUtil.equals(cookie2, CookieUtil.deserialize(bytes)));
-	}
-
-	@Test
-	public void testToHttpCookie() {
-		Cookie cookie = new Cookie("name", "value");
-
-		cookie.setComment("comment");
-		cookie.setDomain("domain");
-		cookie.setHttpOnly(true);
-		cookie.setMaxAge(1);
-		cookie.setPath("path");
-		cookie.setSecure(true);
-		cookie.setVersion(1);
-
-		HttpCookie httpCookie = CookieUtil.toHttpCookie(cookie);
-
-		Assert.assertEquals(cookie.getComment(), httpCookie.getComment());
-		Assert.assertEquals(cookie.getDomain(), httpCookie.getDomain());
-		Assert.assertEquals(cookie.getMaxAge(), httpCookie.getMaxAge());
-		Assert.assertEquals(cookie.getName(), httpCookie.getName());
-		Assert.assertEquals(cookie.getPath(), httpCookie.getPath());
-		Assert.assertEquals(cookie.getSecure(), httpCookie.getSecure());
-		Assert.assertEquals(cookie.getValue(), httpCookie.getValue());
-		Assert.assertEquals(cookie.getVersion(), httpCookie.getVersion());
 	}
 
 	@Test

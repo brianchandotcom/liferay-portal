@@ -17,13 +17,7 @@ package com.liferay.portal.kernel.util;
 import com.liferay.portal.kernel.io.Deserializer;
 import com.liferay.portal.kernel.io.Serializer;
 
-import java.net.HttpCookie;
-
 import java.nio.ByteBuffer;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.Cookie;
 
@@ -113,21 +107,6 @@ public class CookieUtil {
 		return true;
 	}
 
-	public static Map<String, HttpCookie> parseHttpCookies(
-		String cookieString) {
-
-		Map<String, HttpCookie> httpCookies = new HashMap<>();
-
-		List<HttpCookie> httpCookiesList = HttpCookie.parse(
-			"Set-Cookie2:" + cookieString);
-
-		for (HttpCookie httpCookie : httpCookiesList) {
-			httpCookies.put(httpCookie.getName(), httpCookie);
-		}
-
-		return httpCookies;
-	}
-
 	public static byte[] serialize(Cookie cookie) {
 		Serializer serializer = new Serializer();
 
@@ -174,21 +153,6 @@ public class CookieUtil {
 		ByteBuffer byteBuffer = serializer.toByteBuffer();
 
 		return byteBuffer.array();
-	}
-
-	public static HttpCookie toHttpCookie(Cookie cookie) {
-		HttpCookie httpCookie = new HttpCookie(
-			cookie.getName(), cookie.getValue());
-
-		httpCookie.setComment(cookie.getComment());
-		httpCookie.setDomain(cookie.getDomain());
-		httpCookie.setHttpOnly(cookie.isHttpOnly());
-		httpCookie.setMaxAge(cookie.getMaxAge());
-		httpCookie.setPath(cookie.getPath());
-		httpCookie.setSecure(cookie.getSecure());
-		httpCookie.setVersion(cookie.getVersion());
-
-		return httpCookie;
 	}
 
 	public static String toString(Cookie cookie) {

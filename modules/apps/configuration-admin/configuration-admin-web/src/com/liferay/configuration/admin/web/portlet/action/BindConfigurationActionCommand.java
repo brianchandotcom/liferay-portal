@@ -57,7 +57,7 @@ import org.osgi.service.metatype.MetaTypeService;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=bindConfiguration",
+		"mvc.command.name=bindConfiguration",
 		"javax.portlet.name=" + ConfigurationAdminPortletKeys.CONFIGURATION_ADMIN
 	},
 	service = ActionCommand.class

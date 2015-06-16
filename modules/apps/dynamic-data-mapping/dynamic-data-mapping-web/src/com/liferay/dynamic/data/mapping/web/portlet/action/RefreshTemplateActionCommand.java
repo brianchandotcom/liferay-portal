@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=refreshTemplate",
+		"mvc.command.name=refreshTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},

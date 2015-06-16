@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=exportRecordSet",
+		"mvc.command.name=exportRecordSet",
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS
 	},
 	service = ActionCommand.class

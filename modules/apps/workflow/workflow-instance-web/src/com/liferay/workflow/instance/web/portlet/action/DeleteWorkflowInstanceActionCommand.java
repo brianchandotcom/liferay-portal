@@ -51,7 +51,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteWorkflowInstance",
+		"mvc.command.name=deleteWorkflowInstance",
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_INSTANCE,
 		"javax.portlet.name=" + WorkflowInstancePortletKeys.WORKFLOW_INSTANCE
 	},

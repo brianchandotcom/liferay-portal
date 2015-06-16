@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=edit",
+		"mvc.command.name=edit",
 		"javax.portlet.name=" + CurrencyConverterPortletKeys.CURRENCY_CONVERTER
 	},
 	service = ActionCommand.class

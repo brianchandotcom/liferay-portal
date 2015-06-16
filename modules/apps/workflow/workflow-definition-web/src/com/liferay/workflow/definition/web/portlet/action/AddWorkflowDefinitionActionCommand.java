@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=addWorkflowDefinition",
+		"mvc.command.name=addWorkflowDefinition",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
 	},
 	service = ActionCommand.class

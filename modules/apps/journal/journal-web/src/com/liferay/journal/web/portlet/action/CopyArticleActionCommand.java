@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=copyArticle",
+		"mvc.command.name=copyArticle",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
 	},
 	service = ActionCommand.class

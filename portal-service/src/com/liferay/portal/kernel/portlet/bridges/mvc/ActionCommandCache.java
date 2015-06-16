@@ -66,7 +66,7 @@ public class ActionCommandCache {
 		Registry registry = RegistryUtil.getRegistry();
 
 		Filter filter = registry.getFilter(
-			"(&(action.command.name=*)(javax.portlet.name=" + portletName +
+			"(&(mvc.command.name=*)(javax.portlet.name=" + portletName +
 				")(objectClass=" + ActionCommand.class.getName() + "))");
 
 		_serviceTracker = registry.trackServices(
@@ -181,10 +181,10 @@ public class ActionCommandCache {
 
 			ActionCommand actionCommand = registry.getService(serviceReference);
 
-			String actionCommandName = (String)serviceReference.getProperty(
-				"action.command.name");
+			String mvcCommandName = (String)serviceReference.getProperty(
+				"mvc.command.name");
 
-			_actionCommandCache.put(actionCommandName, actionCommand);
+			_actionCommandCache.put(mvcCommandName, actionCommand);
 
 			return actionCommand;
 		}
@@ -204,10 +204,10 @@ public class ActionCommandCache {
 
 			registry.ungetService(serviceReference);
 
-			String actionCommandName = (String)serviceReference.getProperty(
-				"action.command.name");
+			String mvcCommandName = (String)serviceReference.getProperty(
+				"mvc.command.name");
 
-			_actionCommandCache.remove(actionCommandName);
+			_actionCommandCache.remove(mvcCommandName);
 
 			for (List<ActionCommand> actionCommands :
 					_actionCommandChainCache.values()) {

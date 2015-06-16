@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=revertRecord",
+		"mvc.command.name=revertRecord",
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS
 	},
 	service = ActionCommand.class

@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=addRecord",
+		"mvc.command.name=addRecord",
 		"javax.portlet.name=" + DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM
 	},
 	service = ActionCommand.class

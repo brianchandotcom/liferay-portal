@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=assignWorkflowTask",
+		"mvc.command.name=assignWorkflowTask",
 		"javax.portlet.name=" + PortletKeys.MY_WORKFLOW_TASK
 	},
 	service = ActionCommand.class

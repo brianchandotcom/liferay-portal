@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=" + TestActionCommand1.TEST_ACTION_COMMAND_NAME,
+		"mvc.command.name=" + TestActionCommand1.TEST_ACTION_COMMAND_NAME,
 		"javax.portlet.name=" + TestPortlet.PORTLET_NAME
 	},
 	service = ActionCommand.class

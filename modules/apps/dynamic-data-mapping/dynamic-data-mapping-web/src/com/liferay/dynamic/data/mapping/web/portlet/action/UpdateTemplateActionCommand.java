@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=updateTemplate",
+		"mvc.command.name=updateTemplate",
 		"javax.portlet.name=" + PortletKeys.DYNAMIC_DATA_MAPPING,
 		"javax.portlet.name=" + PortletKeys.PORTLET_DISPLAY_TEMPLATE
 	},

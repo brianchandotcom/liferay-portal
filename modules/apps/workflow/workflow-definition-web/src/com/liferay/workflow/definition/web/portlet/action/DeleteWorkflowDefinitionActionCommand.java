@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=deleteWorkflowDefinition",
+		"mvc.command.name=deleteWorkflowDefinition",
 		"javax.portlet.name=" + PortletKeys.WORKFLOW_DEFINITION
 	},
 	service = ActionCommand.class

@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=save",
+		"mvc.command.name=save",
 		"javax.portlet.name=" + QuickNotePortletKeys.QUICK_NOTE
 	},
 	service = ActionCommand.class

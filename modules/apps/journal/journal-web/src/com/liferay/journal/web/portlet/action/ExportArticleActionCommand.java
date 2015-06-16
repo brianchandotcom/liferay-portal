@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=exportArticle",
+		"mvc.command.name=exportArticle",
 		"javax.portlet.name=" + JournalPortletKeys.JOURNAL
 	},
 	service = ActionCommand.class

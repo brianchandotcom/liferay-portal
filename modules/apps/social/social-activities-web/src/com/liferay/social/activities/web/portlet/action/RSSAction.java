@@ -71,7 +71,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"action.command.name=rss",
+		"mvc.command.name=rss",
 		"javax.portlet.name=" + SocialActivitiesPortletKeys.SOCIAL_ACTIVITIES
 	},
 	service = ActionCommand.class

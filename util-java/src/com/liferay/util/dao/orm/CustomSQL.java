@@ -149,7 +149,7 @@ public class CustomSQL {
 			}
 		}
 
-		if (queryDefinition.getUserId() > 0) {
+		if (queryDefinition.getOwnerUserId() > 0) {
 			if (queryDefinition.isIncludeOwner()) {
 				StringBundler sb = new StringBundler();
 

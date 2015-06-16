@@ -63,6 +63,8 @@ public interface AssetRenderer extends Renderer {
 
 	public Date getDisplayDate();
 
+	public Object getEntry();
+
 	public long getGroupId();
 
 	public String getNewName(String oldName, String token);

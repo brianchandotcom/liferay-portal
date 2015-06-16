@@ -126,6 +126,10 @@ public class PoshiRunnerValidation {
 			"description", "echo", "execute", "fail", "for", "if", "property",
 			"take-screenshot", "task", "var", "while");
 
+		if (filePath.endsWith(".function")) {
+			possibleElementNames = Arrays.asList("execute", "if");
+		}
+
 		for (Element childElement : childElements) {
 			String elementName = childElement.getName();
 
@@ -578,34 +582,16 @@ public class PoshiRunnerValidation {
 
 		_validateDefinitionElement(element, filePath);
 		_validateHasChildElements(element, filePath);
-		_validateRequiredChildElementName(element, "command", filePath);
+		_validateRequiredChildElementNames(
+			element, Arrays.asList("command"), filePath);
 
-		List<Element> commandElements = element.elements();
+		List<Element> childElements = element.elements();
 
-		for (Element commandElement : commandElements) {
-			_validateCommandElement(commandElement, filePath);
-			_validateHasChildElements(commandElement, filePath);
+		for (Element childElement : childElements) {
+			_validateCommandElement(childElement, filePath);
+			_validateHasChildElements(childElement, filePath);
 
-			List<Element> commandChildElements = commandElement.elements();
-
-			for (Element commandChildElement : commandChildElements) {
-				String childElementName = commandChildElement.getName();
-
-				if (childElementName.equals("execute")) {
-					_validateExecuteElement(commandChildElement, filePath);
-				}
-				else if (childElementName.equals("if")) {
-					_validateIfElement(commandChildElement, filePath);
-				}
-				else {
-					_exceptions.add(
-						new Exception(
-							"Invalid " + childElementName +
-								" child elements\n " + filePath + ":" +
-								commandChildElement.attributeValue(
-									"line-number")));
-				}
-			}
+			_parseElements(childElement, filePath);
 		}
 	}
 

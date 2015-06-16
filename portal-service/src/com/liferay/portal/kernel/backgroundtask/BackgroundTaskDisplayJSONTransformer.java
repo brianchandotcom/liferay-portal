@@ -51,12 +51,12 @@ public class BackgroundTaskDisplayJSONTransformer {
 	}
 
 	public static JSONObject createDetailsJSONObject(
-		String detailHeader, JSONArray detailItems, int status) {
+		String detailsHeader, JSONArray detailsItems, int status) {
 
 		JSONObject detailsJSON = JSONFactoryUtil.createJSONObject();
 
-		detailsJSON.put("detailHeader", detailHeader);
-		detailsJSON.put("detailItems", detailItems);
+		detailsJSON.put("detailsHeader", detailsHeader);
+		detailsJSON.put("detailsItems", detailsItems);
 		detailsJSON.put("status", status);
 
 		return detailsJSON;
@@ -69,7 +69,7 @@ public class BackgroundTaskDisplayJSONTransformer {
 			return null;
 		}
 
-		JSONArray detailItems = detailsJSON.getJSONArray("detailItems");
+		JSONArray detailItems = detailsJSON.getJSONArray("detailsItems");
 
 		if (detailItems == null) {
 			return detailsJSON;
@@ -108,10 +108,11 @@ public class BackgroundTaskDisplayJSONTransformer {
 			detailItem.put("itemsList", itemsList);
 		}
 
-		String detailHeader = detailsJSON.getString("detailHeader");
+		String detailHeader = detailsJSON.getString("detailsHeader");
 
-		detailsJSON.put("detailHeader", LanguageUtil.get(locale, detailHeader));
-		detailsJSON.put("detailItems", detailItems);
+		detailsJSON.put(
+			"detailsHeader", LanguageUtil.get(locale, detailHeader));
+		detailsJSON.put("detailsItems", detailItems);
 
 		return detailsJSON;
 	}

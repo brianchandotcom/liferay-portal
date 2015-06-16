@@ -20,6 +20,7 @@
 		<!-- Other fields -->
 
 		<column name="allowedServiceSignatures" type="String" />
+		<column name="defaultProfile" type="boolean" />
 		<column name="name" type="String" />
 		<column name="title" type="String" localized="true" />
 
@@ -35,6 +36,7 @@
 	</entity>
 	<exceptions>
 		<exception>DuplicateSACPEntryName</exception>
+		<exception>RequiredProfile</exception>
 		<exception>SACPEntryName</exception>
 		<exception>SACPEntryTitle</exception>
 	</exceptions>

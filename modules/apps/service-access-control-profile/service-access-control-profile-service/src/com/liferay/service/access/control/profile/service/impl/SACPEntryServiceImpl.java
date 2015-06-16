@@ -48,7 +48,7 @@ public class SACPEntryServiceImpl extends SACPEntryServiceBaseImpl {
 			SACPActionKeys.ACTION_ADD_SACP_ENTRY);
 
 		return sacpEntryLocalService.addSACPEntry(
-			getUserId(), allowedServiceSignatures, name, titleMap,
+			getUserId(), allowedServiceSignatures, false, name, titleMap,
 			serviceContext);
 	}
 

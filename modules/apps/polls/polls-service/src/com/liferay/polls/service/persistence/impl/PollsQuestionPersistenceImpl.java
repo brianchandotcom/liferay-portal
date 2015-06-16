@@ -2666,6 +2666,7 @@ public class PollsQuestionPersistenceImpl extends BasePersistenceImpl<PollsQuest
 		pollsQuestionImpl.setDescription(pollsQuestion.getDescription());
 		pollsQuestionImpl.setExpirationDate(pollsQuestion.getExpirationDate());
 		pollsQuestionImpl.setLastVoteDate(pollsQuestion.getLastVoteDate());
+		pollsQuestionImpl.setLastPublishDate(pollsQuestion.getLastPublishDate());
 
 		return pollsQuestionImpl;
 	}

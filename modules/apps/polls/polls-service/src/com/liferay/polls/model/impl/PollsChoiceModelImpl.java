@@ -89,9 +89,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "questionId", Types.BIGINT },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table PollsChoice (uuid_ VARCHAR(75) null,choiceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,name VARCHAR(75) null,description STRING null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsChoice";
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsChoice.questionId ASC, pollsChoice.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PollsChoice.questionId ASC, PollsChoice.name ASC";
@@ -137,6 +138,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		model.setQuestionId(soapModel.getQuestionId());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -212,6 +214,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		attributes.put("questionId", getQuestionId());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -285,6 +288,12 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -592,6 +601,17 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -702,6 +722,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		pollsChoiceImpl.setQuestionId(getQuestionId());
 		pollsChoiceImpl.setName(getName());
 		pollsChoiceImpl.setDescription(getDescription());
+		pollsChoiceImpl.setLastPublishDate(getLastPublishDate());
 
 		pollsChoiceImpl.resetOriginalValues();
 
@@ -861,12 +882,21 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 			pollsChoiceCacheModel.description = null;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			pollsChoiceCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			pollsChoiceCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return pollsChoiceCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -890,6 +920,8 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -897,7 +929,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.polls.model.PollsChoice");
@@ -947,6 +979,10 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -978,6 +1014,7 @@ public class PollsChoiceModelImpl extends BaseModelImpl<PollsChoice>
 	private String _originalName;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private PollsChoice _escapedModel;
 }

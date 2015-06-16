@@ -2600,6 +2600,7 @@ public class PollsChoicePersistenceImpl extends BasePersistenceImpl<PollsChoice>
 		pollsChoiceImpl.setQuestionId(pollsChoice.getQuestionId());
 		pollsChoiceImpl.setName(pollsChoice.getName());
 		pollsChoiceImpl.setDescription(pollsChoice.getDescription());
+		pollsChoiceImpl.setLastPublishDate(pollsChoice.getLastPublishDate());
 
 		return pollsChoiceImpl;
 	}

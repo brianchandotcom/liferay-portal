@@ -82,9 +82,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "questionId", Types.BIGINT },
 			{ "choiceId", Types.BIGINT },
-			{ "voteDate", Types.TIMESTAMP }
+			{ "voteDate", Types.TIMESTAMP },
+			{ "lastPublishDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table PollsVote (uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,voteDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table PollsVote (uuid_ VARCHAR(75) null,voteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,questionId LONG,choiceId LONG,voteDate DATE null,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table PollsVote";
 	public static final String ORDER_BY_JPQL = " ORDER BY pollsVote.voteId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY PollsVote.voteId ASC";
@@ -132,6 +133,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		model.setQuestionId(soapModel.getQuestionId());
 		model.setChoiceId(soapModel.getChoiceId());
 		model.setVoteDate(soapModel.getVoteDate());
+		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -207,6 +209,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		attributes.put("questionId", getQuestionId());
 		attributes.put("choiceId", getChoiceId());
 		attributes.put("voteDate", getVoteDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -280,6 +283,12 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 		if (voteDate != null) {
 			setVoteDate(voteDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -504,6 +513,17 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		_voteDate = voteDate;
 	}
 
+	@JSON
+	@Override
+	public Date getLastPublishDate() {
+		return _lastPublishDate;
+	}
+
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_lastPublishDate = lastPublishDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -552,6 +572,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		pollsVoteImpl.setQuestionId(getQuestionId());
 		pollsVoteImpl.setChoiceId(getChoiceId());
 		pollsVoteImpl.setVoteDate(getVoteDate());
+		pollsVoteImpl.setLastPublishDate(getLastPublishDate());
 
 		pollsVoteImpl.resetOriginalValues();
 
@@ -700,12 +721,21 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 			pollsVoteCacheModel.voteDate = Long.MIN_VALUE;
 		}
 
+		Date lastPublishDate = getLastPublishDate();
+
+		if (lastPublishDate != null) {
+			pollsVoteCacheModel.lastPublishDate = lastPublishDate.getTime();
+		}
+		else {
+			pollsVoteCacheModel.lastPublishDate = Long.MIN_VALUE;
+		}
+
 		return pollsVoteCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -729,6 +759,8 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 		sb.append(getChoiceId());
 		sb.append(", voteDate=");
 		sb.append(getVoteDate());
+		sb.append(", lastPublishDate=");
+		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -736,7 +768,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.polls.model.PollsVote");
@@ -786,6 +818,10 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 			"<column><column-name>voteDate</column-name><column-value><![CDATA[");
 		sb.append(getVoteDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
+		sb.append(getLastPublishDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -819,6 +855,7 @@ public class PollsVoteModelImpl extends BaseModelImpl<PollsVote>
 	private long _originalChoiceId;
 	private boolean _setOriginalChoiceId;
 	private Date _voteDate;
+	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private PollsVote _escapedModel;
 }

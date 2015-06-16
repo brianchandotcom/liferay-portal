@@ -9,7 +9,8 @@ create table PollsChoice (
 	modifiedDate DATE null,
 	questionId LONG,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	lastPublishDate DATE null
 );
 
 create table PollsQuestion (
@@ -24,7 +25,8 @@ create table PollsQuestion (
 	title STRING null,
 	description STRING null,
 	expirationDate DATE null,
-	lastVoteDate DATE null
+	lastVoteDate DATE null,
+	lastPublishDate DATE null
 );
 
 create table PollsVote (
@@ -38,5 +40,6 @@ create table PollsVote (
 	modifiedDate DATE null,
 	questionId LONG,
 	choiceId LONG,
-	voteDate DATE null
+	voteDate DATE null,
+	lastPublishDate DATE null
 );

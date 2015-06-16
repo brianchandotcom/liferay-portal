@@ -67,6 +67,11 @@ public class BookmarksEntryAssetRenderer
 	}
 
 	@Override
+	public Object getEntry() {
+		return _entry;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _entry.getGroupId();
 	}

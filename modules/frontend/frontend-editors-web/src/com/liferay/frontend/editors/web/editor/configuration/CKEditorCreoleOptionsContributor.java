@@ -41,12 +41,6 @@ public class CKEditorCreoleOptionsContributor
 		Map<String, Object> dynamicAttributes =
 			editorOptions.getDynamicAttributes();
 
-		dynamicAttributes.put("customDialogDefinition", Boolean.TRUE);
-
-		dynamicAttributes.put("customCellDialog", Boolean.TRUE);
-
-		dynamicAttributes.put("customTableDialog", Boolean.TRUE);
-
 		dynamicAttributes.put("useCustomDataProcessor", Boolean.TRUE);
 	}
 

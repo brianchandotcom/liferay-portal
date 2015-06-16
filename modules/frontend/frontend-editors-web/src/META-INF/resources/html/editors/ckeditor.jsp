@@ -21,8 +21,6 @@ LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletR
 
 String portletId = portletDisplay.getRootPortletId();
 
-boolean hideImageResizing = ParamUtil.getBoolean(request, "hideImageResizing");
-
 boolean allowBrowseDocuments = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:allowBrowseDocuments"));
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
@@ -75,20 +73,6 @@ EditorOptions editorOptions = (data != null) ? (EditorOptions)data.get("editorOp
 
 Map<String, Object> editorOptionsDynamicAttributes = (editorOptions != null) ? editorOptions.getDynamicAttributes() : null;
 %>
-
-<c:if test="<%= hideImageResizing %>">
-	<liferay-util:html-top outputKey="js_editor_ckeditor_hide_image_resizing">
-		<style type="text/css">
-			a.cke_dialog_tab {
-				display: none !important;
-			}
-
-			a.cke_dialog_tab_selected {
-				display: block !important;
-			}
-		</style>
-	</liferay-util:html-top>
-</c:if>
 
 <c:if test="<%= !skipEditorLoading %>">
 	<liferay-util:html-top outputKey="js_editor_ckeditor_skip_editor_loading">
@@ -484,85 +468,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		<liferay-util:dynamic-include key='<%= "js#" + editorName + "#onEditorCreate" %>' />
 
-		<c:if test='<%= (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customDialogDefinition")) %>'>
-			ckEditor.on(
-				'dialogDefinition',
-				function(event) {
-					var dialogDefinition = event.data.definition;
-
-					var dialogName = event.data.name;
-
-					var infoTab;
-
-					<c:if test='<%= GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customOnShowFn")) %>'>
-						var onShow = dialogDefinition.onShow;
-
-						dialogDefinition.onShow = function() {
-							if (typeof onShow === 'function') {
-								onShow.apply(this, arguments);
-							}
-
-							if (window.top != window.self) {
-								var editorElement = this.getParentEditor().container;
-
-								var documentPosition = editorElement.getDocumentPosition();
-
-								var dialogSize = this.getSize();
-
-								var x = documentPosition.x + ((editorElement.getSize('width', true) - dialogSize.width) / 2);
-								var y = documentPosition.y + ((editorElement.getSize('height', true) - dialogSize.height) / 2);
-
-								this.move(x, y, false);
-							}
-						};
-					</c:if>
-
-					<c:if test='<%= GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customCellDialog")) %>'>
-						if (dialogName === 'cellProperties') {
-							infoTab = dialogDefinition.getContents('info');
-
-							infoTab.remove('bgColor');
-							infoTab.remove('bgColorChoose');
-							infoTab.remove('borderColor');
-							infoTab.remove('borderColorChoose');
-							infoTab.remove('colSpan');
-							infoTab.remove('hAlign');
-							infoTab.remove('height');
-							infoTab.remove('htmlHeightType');
-							infoTab.remove('rowSpan');
-							infoTab.remove('vAlign');
-							infoTab.remove('width');
-							infoTab.remove('widthType');
-							infoTab.remove('wordWrap');
-
-							dialogDefinition.minHeight = 40;
-							dialogDefinition.minWidth = 210;
-						}
-					</c:if>
-
-					<c:if test='<%= GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("customTableDialog")) %>'>
-						if (dialogName === 'table' || dialogName === 'tableProperties') {
-							infoTab = dialogDefinition.getContents('info');
-
-							infoTab.remove('cmbAlign');
-							infoTab.remove('cmbWidthType');
-							infoTab.remove('cmbWidthType');
-							infoTab.remove('htmlHeightType');
-							infoTab.remove('txtBorder');
-							infoTab.remove('txtCellPad');
-							infoTab.remove('txtCellSpace');
-							infoTab.remove('txtHeight');
-							infoTab.remove('txtSummary');
-							infoTab.remove('txtWidth');
-
-							dialogDefinition.minHeight = 180;
-							dialogDefinition.minWidth = 210;
-						}
-					</c:if>
-				}
-			);
-		</c:if>
-
 		<c:if test="<%= inlineEdit && (Validator.isNotNull(inlineEditSaveURL)) %>">
 			inlineEditor = new Liferay.CKEditorInline(
 				{
@@ -671,70 +576,6 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 		);
 
 		ckEditor.on('dataReady', window['<%= name %>']._setStyles);
-
-		<%
-		if (toolbarSet.equals("creole")) {
-		%>
-
-		window['<%= name %>creoleDialogHandlers'] = function(event) {
-			var A = AUI();
-
-			var MODIFIED = 'modified';
-
-			var SELECTOR_HBOX_FIRST = '.cke_dialog_ui_hbox_first';
-
-			var dialog = event.data.definition.dialog;
-
-			if (dialog.getName() == 'image') {
-				var lockButton = A.one('.cke_btn_locked');
-
-				if (lockButton) {
-					var imageProperties = lockButton.ancestor(SELECTOR_HBOX_FIRST);
-
-					if (imageProperties) {
-						imageProperties.hide();
-					}
-				}
-
-				var imagePreviewBox = A.one('.ImagePreviewBox');
-
-				if (imagePreviewBox) {
-					imagePreviewBox.setStyle('width', 410);
-				}
-			}
-			else if (dialog.getName() == 'cellProperties') {
-				var containerNode = A.one('#' + dialog.getElement('cellType').$.id);
-
-				if (!containerNode.getData(MODIFIED)) {
-					containerNode.one(SELECTOR_HBOX_FIRST).hide();
-
-					containerNode.one('.cke_dialog_ui_hbox_child').hide();
-
-					var cellTypeWrapper = containerNode.one('.cke_dialog_ui_hbox_last');
-
-					cellTypeWrapper.replaceClass('cke_dialog_ui_hbox_last', 'cke_dialog_ui_hbox_first');
-
-					cellTypeWrapper.setStyle('width', '100%');
-
-					cellTypeWrapper.all('tr').each(
-						function(item, index, collection) {
-							if (index > 0) {
-								item.hide();
-							}
-						}
-					);
-
-					containerNode.setData(MODIFIED, true);
-				}
-			}
-		};
-
-		ckEditor.on('dialogShow', window['<%= name %>creoleDialogHandlers']);
-
-		<%
-		}
-		%>
-
 	};
 
 	<%

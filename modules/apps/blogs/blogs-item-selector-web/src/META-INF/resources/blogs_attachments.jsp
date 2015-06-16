@@ -29,8 +29,8 @@ int total = 0;
 List<FileEntry> results = new ArrayList<FileEntry>();
 
 if (folder != null) {
-	total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folderId);
-	results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folderId);
+	total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folder.getFolderId());
+	results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folder.getFolderId());
 }
 
 searchContainer.setTotal(total);

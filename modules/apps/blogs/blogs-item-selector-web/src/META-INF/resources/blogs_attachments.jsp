@@ -21,12 +21,20 @@ BlogsItemSelectorViewDisplayContext blogsItemSelectorViewDisplayContext = (Blogs
 
 BlogsItemSelectorCriterion blogsItemSelectorCriterion = blogsItemSelectorViewDisplayContext.getBlogsItemSelectorCriterion();
 
-SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL() , null, null);
+SearchContainer searchContainer = new SearchContainer(renderRequest, null, null, "curDocuments", SearchContainer.DEFAULT_DELTA, blogsItemSelectorViewDisplayContext.getPortletURL(), null, null);
 
-long folderId = blogsItemSelectorViewDisplayContext.getFolderId(themeDisplay.getUserId(), scopeGroupId);
+Folder folder = blogsItemSelectorViewDisplayContext.fetchAttachmentsFolder(themeDisplay.getUserId(), scopeGroupId);
 
-searchContainer.setTotal(PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folderId));
-searchContainer.setResults(PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folderId));
+int total = 0;
+List<FileEntry> results = new ArrayList<FileEntry>();
+
+if (folder != null) {
+	total = PortletFileRepositoryUtil.getPortletFileEntriesCount(scopeGroupId, folderId);
+	results = PortletFileRepositoryUtil.getPortletFileEntries(scopeGroupId, folderId);
+}
+
+searchContainer.setTotal(total);
+searchContainer.setResults(results);
 %>
 
 <item-selector-ui:browser

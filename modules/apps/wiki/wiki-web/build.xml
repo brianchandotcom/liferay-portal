@@ -3,7 +3,6 @@
 
 <project>
 	<property name="import.shared" value="wiki-service,../item-selector/item-selector-api,../item-selector/item-selector-criteria-api" />
-
 	<property name="osgi.auto.update.xml" value="true" />
 	<property name="osgi.ide.dependencies" value="struts.jar" />
 

@@ -51,11 +51,9 @@ public class BlogsItemSelectorViewDisplayContext {
 		return ParamUtil.getString(request, "displayStyle");
 	}
 
-	public long getFolderId(long userId, long groupId) throws PortalException {
-		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
+	public Folder fetchAttachmentsFolder(long userId, long groupId) {
+		return BlogsEntryLocalServiceUtil.fetchAttachmentsFolder(
 			userId, groupId);
-
-		return folder.getFolderId();
 	}
 
 	public String getItemSelectedEventName() {

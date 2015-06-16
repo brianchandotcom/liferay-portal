@@ -24,7 +24,12 @@ page import="com.liferay.blogs.item.selector.web.BlogsItemSelectorView" %><%@
 page import="com.liferay.blogs.item.selector.web.display.context.BlogsItemSelectorViewDisplayContext" %><%@
 page import="com.liferay.item.selector.taglib.ReturnType" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
+page import="com.liferay.portal.kernel.repository.model.Folder" %><%@
 page import="com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil" %>
+
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.List" %>
 
 <portlet:defineObjects />
 

@@ -15,16 +15,19 @@
 package com.liferay.journal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.model.JournalArticle;
+
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.journal.model.JournalArticle;
 
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+
 import java.util.Date;
 
 /**
@@ -338,7 +341,7 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
 
-		_defaultLanguageId = (String)objectInput.readObject();
+		_defaultLanguageId = (java.lang.String)objectInput.readObject();
 		_document = (com.liferay.portal.kernel.xml.Document)objectInput.readObject();
 	}
 
@@ -499,6 +502,6 @@ public class JournalArticleCacheModel implements CacheModel<JournalArticle>,
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public String _defaultLanguageId;
+	public java.lang.String _defaultLanguageId;
 	public com.liferay.portal.kernel.xml.Document _document;
 }

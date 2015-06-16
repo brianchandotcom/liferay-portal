@@ -15,10 +15,12 @@
 package com.liferay.journal.service.http;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.service.JournalFolderServiceUtil;
+
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.journal.service.JournalFolderServiceUtil;
 
 import java.rmi.RemoteException;
 
@@ -65,8 +67,8 @@ import java.rmi.RemoteException;
 @ProviderType
 public class JournalFolderServiceSoap {
 	public static com.liferay.journal.model.JournalFolderSoap addFolder(
-		long groupId, long parentFolderId, String name,
-		String description,
+		long groupId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -151,13 +153,13 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
-	public static Long[] getFolderIds(long groupId, long folderId)
+	public static java.lang.Long[] getFolderIds(long groupId, long folderId)
 		throws RemoteException {
 		try {
-			java.util.List<Long> returnValue = JournalFolderServiceUtil.getFolderIds(groupId,
+			java.util.List<java.lang.Long> returnValue = JournalFolderServiceUtil.getFolderIds(groupId,
 					folderId);
 
-			return returnValue.toArray(new Long[returnValue.size()]);
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -169,8 +171,7 @@ public class JournalFolderServiceSoap {
 	public static com.liferay.journal.model.JournalFolderSoap[] getFolders(
 		long groupId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.journal.model.JournalFolder> returnValue =
-				JournalFolderServiceUtil.getFolders(groupId);
+			java.util.List<com.liferay.journal.model.JournalFolder> returnValue = JournalFolderServiceUtil.getFolders(groupId);
 
 			return com.liferay.journal.model.JournalFolderSoap.toSoapModels(returnValue);
 		}
@@ -184,8 +185,8 @@ public class JournalFolderServiceSoap {
 	public static com.liferay.journal.model.JournalFolderSoap[] getFolders(
 		long groupId, long parentFolderId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.journal.model.JournalFolder> returnValue =
-				JournalFolderServiceUtil.getFolders(groupId, parentFolderId);
+			java.util.List<com.liferay.journal.model.JournalFolder> returnValue = JournalFolderServiceUtil.getFolders(groupId,
+					parentFolderId);
 
 			return com.liferay.journal.model.JournalFolderSoap.toSoapModels(returnValue);
 		}
@@ -200,9 +201,8 @@ public class JournalFolderServiceSoap {
 		long groupId, long parentFolderId, int status)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.journal.model.JournalFolder> returnValue =
-				JournalFolderServiceUtil.getFolders(groupId, parentFolderId,
-					status);
+			java.util.List<com.liferay.journal.model.JournalFolder> returnValue = JournalFolderServiceUtil.getFolders(groupId,
+					parentFolderId, status);
 
 			return com.liferay.journal.model.JournalFolderSoap.toSoapModels(returnValue);
 		}
@@ -217,9 +217,8 @@ public class JournalFolderServiceSoap {
 		long groupId, long parentFolderId, int start, int end)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.journal.model.JournalFolder> returnValue =
-				JournalFolderServiceUtil.getFolders(groupId, parentFolderId,
-					start, end);
+			java.util.List<com.liferay.journal.model.JournalFolder> returnValue = JournalFolderServiceUtil.getFolders(groupId,
+					parentFolderId, start, end);
 
 			return com.liferay.journal.model.JournalFolderSoap.toSoapModels(returnValue);
 		}
@@ -234,9 +233,8 @@ public class JournalFolderServiceSoap {
 		long groupId, long parentFolderId, int status, int start, int end)
 		throws RemoteException {
 		try {
-			java.util.List<com.liferay.journal.model.JournalFolder> returnValue =
-				JournalFolderServiceUtil.getFolders(groupId, parentFolderId,
-					status, start, end);
+			java.util.List<com.liferay.journal.model.JournalFolder> returnValue = JournalFolderServiceUtil.getFolders(groupId,
+					parentFolderId, status, start, end);
 
 			return com.liferay.journal.model.JournalFolderSoap.toSoapModels(returnValue);
 		}
@@ -323,7 +321,7 @@ public class JournalFolderServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(java.util.List, long,
 	long, boolean)}
 	*/
 	@Deprecated
@@ -353,13 +351,13 @@ public class JournalFolderServiceSoap {
 		}
 	}
 
-	public static Long[] getSubfolderIds(long groupId, long folderId,
+	public static java.lang.Long[] getSubfolderIds(long groupId, long folderId,
 		boolean recurse) throws RemoteException {
 		try {
-			java.util.List<Long> returnValue = JournalFolderServiceUtil.getSubfolderIds(groupId,
+			java.util.List<java.lang.Long> returnValue = JournalFolderServiceUtil.getSubfolderIds(groupId,
 					folderId, recurse);
 
-			return returnValue.toArray(new Long[returnValue.size()]);
+			return returnValue.toArray(new java.lang.Long[returnValue.size()]);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -454,7 +452,7 @@ public class JournalFolderServiceSoap {
 
 	public static com.liferay.journal.model.JournalFolderSoap updateFolder(
 		long groupId, long folderId, long parentFolderId,
-		String name, String description,
+		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -474,7 +472,7 @@ public class JournalFolderServiceSoap {
 
 	public static com.liferay.journal.model.JournalFolderSoap updateFolder(
 		long groupId, long folderId, long parentFolderId,
-		String name, String description,
+		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)

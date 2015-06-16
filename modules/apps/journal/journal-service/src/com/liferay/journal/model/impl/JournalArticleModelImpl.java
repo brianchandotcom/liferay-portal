@@ -15,6 +15,11 @@
 package com.liferay.journal.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleModel;
+import com.liferay.journal.model.JournalArticleSoap;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
@@ -38,17 +43,17 @@ import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
+
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeFactoryUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
-import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.model.JournalArticleModel;
-import com.liferay.journal.model.JournalArticleSoap;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.service.TrashEntryLocalServiceUtil;
 
 import java.io.Serializable;
+
 import java.sql.Types;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -123,13 +128,13 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
-	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+	public static final boolean ENTITY_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.entity.cache.enabled.com.liferay.journal.model.JournalArticle"),
 			true);
-	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.com.liferay.journal.model.JournalArticle"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.journal.model.JournalArticle"),
 			true);
 	public static final long DDMSTRUCTUREKEY_COLUMN_BITMASK = 1L;
@@ -221,7 +226,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return models;
 	}
 
-	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.portal.util.PropsUtil.get(
+	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.journal.model.JournalArticle"));
 
 	public JournalArticleModelImpl() {
@@ -1373,7 +1378,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_statusDate = statusDate;
 	}
 
-	public void setDefaultLanguageId(String defaultLanguageId) {
+	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
 	}
 
 	public com.liferay.portal.kernel.xml.Document getDocument() {

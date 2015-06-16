@@ -15,6 +15,7 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -25,10 +26,12 @@ import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.model.TrashedModel;
 import com.liferay.portal.model.WorkflowedModel;
 import com.liferay.portal.service.ServiceContext;
+
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.trash.model.TrashEntry;
 
 import java.io.Serializable;
+
 import java.util.Date;
 
 /**
@@ -559,8 +562,7 @@ public interface JournalFolderModel extends BaseModel<JournalFolder>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalFolder journalFolder);
+	public int compareTo(com.liferay.journal.model.JournalFolder journalFolder);
 
 	@Override
 	public int hashCode();

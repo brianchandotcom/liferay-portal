@@ -15,8 +15,11 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for JournalFolder. This utility wraps
@@ -40,8 +43,8 @@ public class JournalFolderServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.journal.service.impl.JournalFolderServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.journal.model.JournalFolder addFolder(
-		long groupId, long parentFolderId, String name,
-		String description,
+		long groupId, long parentFolderId, java.lang.String name,
+		java.lang.String description,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -70,7 +73,7 @@ public class JournalFolderServiceUtil {
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public static String getBeanIdentifier() {
+	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
 	}
 
@@ -86,7 +89,7 @@ public class JournalFolderServiceUtil {
 		return getService().getFolder(folderId);
 	}
 
-	public static java.util.List<Long> getFolderIds(long groupId,
+	public static java.util.List<java.lang.Long> getFolderIds(long groupId,
 		long folderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFolderIds(groupId, folderId);
@@ -118,14 +121,14 @@ public class JournalFolderServiceUtil {
 				   .getFolders(groupId, parentFolderId, status, start, end);
 	}
 
-	public static java.util.List<Object> getFoldersAndArticles(
+	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return getService()
 				   .getFoldersAndArticles(groupId, folderId, start, end, obc);
 	}
 
-	public static java.util.List<Object> getFoldersAndArticles(
+	public static java.util.List<java.lang.Object> getFoldersAndArticles(
 		long groupId, long folderId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<?> obc) {
 		return getService()
@@ -143,7 +146,7 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static int getFoldersAndArticlesCount(long groupId,
-		java.util.List<Long> folderIds, int status) {
+		java.util.List<java.lang.Long> folderIds, int status) {
 		return getService()
 				   .getFoldersAndArticlesCount(groupId, folderIds, status);
 	}
@@ -158,22 +161,22 @@ public class JournalFolderServiceUtil {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(List, long,
+	* @deprecated As of 7.0.0, replaced by {@link #getSubfolderIds(java.util.List, long,
 	long, boolean)}
 	*/
 	@Deprecated
 	public static void getSubfolderIds(
-		java.util.List<Long> folderIds, long groupId, long folderId) {
+		java.util.List<java.lang.Long> folderIds, long groupId, long folderId) {
 		getService().getSubfolderIds(folderIds, groupId, folderId);
 	}
 
 	public static void getSubfolderIds(
-		java.util.List<Long> folderIds, long groupId, long folderId,
+		java.util.List<java.lang.Long> folderIds, long groupId, long folderId,
 		boolean recurse) {
 		getService().getSubfolderIds(folderIds, groupId, folderId, recurse);
 	}
 
-	public static java.util.List<Long> getSubfolderIds(long groupId,
+	public static java.util.List<java.lang.Long> getSubfolderIds(long groupId,
 		long folderId, boolean recurse) {
 		return getService().getSubfolderIds(groupId, folderId, recurse);
 	}
@@ -209,7 +212,7 @@ public class JournalFolderServiceUtil {
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public static void setBeanIdentifier(String beanIdentifier) {
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
@@ -225,7 +228,7 @@ public class JournalFolderServiceUtil {
 
 	public static com.liferay.journal.model.JournalFolder updateFolder(
 		long groupId, long folderId, long parentFolderId,
-		String name, String description,
+		java.lang.String name, java.lang.String description,
 		long[] ddmStructureIds, int restrictionType,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -238,7 +241,7 @@ public class JournalFolderServiceUtil {
 
 	public static com.liferay.journal.model.JournalFolder updateFolder(
 		long groupId, long folderId, long parentFolderId,
-		String name, String description,
+		java.lang.String name, java.lang.String description,
 		boolean mergeWithParentFolder,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -248,14 +251,7 @@ public class JournalFolderServiceUtil {
 	}
 
 	public static JournalFolderService getService() {
-		if (_service == null) {
-			_service = (JournalFolderService)PortalBeanLocatorUtil.locate(JournalFolderService.class.getName());
-
-			ReferenceRegistry.registerReference(JournalFolderServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -265,5 +261,14 @@ public class JournalFolderServiceUtil {
 	public void setService(JournalFolderService service) {
 	}
 
-	private static JournalFolderService _service;
+	private static ServiceTracker<JournalFolderService, JournalFolderService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalFolderServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<JournalFolderService, JournalFolderService>(bundle.getBundleContext(),
+				JournalFolderService.class, null);
+
+		_serviceTracker.open();
+	}
 }

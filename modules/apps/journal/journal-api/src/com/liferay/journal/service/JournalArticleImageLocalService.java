@@ -15,6 +15,7 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -47,9 +48,9 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link JournalArticleImageLocalServiceUtil} to access the journal article image local service. Add custom service methods to {@link com.liferay.journal.service.impl.JournalArticleImageLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public void addArticleImageId(long articleImageId, long groupId,
-								  String articleId, double version,
-								  String elInstanceId, String elName,
-								  String languageId) throws PortalException;
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId) throws PortalException;
 
 	/**
 	* Adds the journal article image to the database. Also notifies the appropriate model listeners.
@@ -75,12 +76,12 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 
 	public void deleteArticleImage(long articleImageId);
 
-	public void deleteArticleImage(long groupId, String articleId,
-								   double version, String elInstanceId, String elName,
-								   String languageId);
+	public void deleteArticleImage(long groupId, java.lang.String articleId,
+		double version, java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId);
 
-	public void deleteImages(long groupId, String articleId,
-							 double version);
+	public void deleteImages(long groupId, java.lang.String articleId,
+		double version);
 
 	/**
 	* Deletes the journal article image with the primary key from the database. Also notifies the appropriate model listeners.
@@ -188,14 +189,14 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 		long articleImageId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleImageId(long groupId, String articleId,
-								  double version, String elInstanceId, String elName,
-								  String languageId);
+	public long getArticleImageId(long groupId, java.lang.String articleId,
+		double version, java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getArticleImageId(long groupId, String articleId,
-								  double version, String elInstanceId, String elName,
-								  String languageId, boolean tempImage);
+	public long getArticleImageId(long groupId, java.lang.String articleId,
+		double version, java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId, boolean tempImage);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalArticleImage> getArticleImages(
@@ -203,7 +204,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.journal.model.JournalArticleImage> getArticleImages(
-		long groupId, String articleId, double version);
+		long groupId, java.lang.String articleId, double version);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getArticleImagesCount(long groupId);
@@ -213,7 +214,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public String getBeanIdentifier();
+	public java.lang.String getBeanIdentifier();
 
 	/**
 	* Returns the journal article image with the primary key.
@@ -259,7 +260,7 @@ public interface JournalArticleImageLocalService extends BaseLocalService,
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public void setBeanIdentifier(String beanIdentifier);
+	public void setBeanIdentifier(java.lang.String beanIdentifier);
 
 	/**
 	* Updates the journal article image in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

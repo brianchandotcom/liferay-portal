@@ -15,6 +15,7 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -88,7 +89,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public Object clone() {
+	public java.lang.Object clone() {
 		return new JournalArticleResourceWrapper((JournalArticleResource)_journalArticleResource.clone());
 	}
 
@@ -104,7 +105,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @return the article ID of this journal article resource
 	*/
 	@Override
-	public String getArticleId() {
+	public java.lang.String getArticleId() {
 		return _journalArticleResource.getArticleId();
 	}
 
@@ -154,7 +155,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @return the uuid of this journal article resource
 	*/
 	@Override
-	public String getUuid() {
+	public java.lang.String getUuid() {
 		return _journalArticleResource.getUuid();
 	}
 
@@ -189,7 +190,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @param articleId the article ID of this journal article resource
 	*/
 	@Override
-	public void setArticleId(String articleId) {
+	public void setArticleId(java.lang.String articleId) {
 		_journalArticleResource.setArticleId(articleId);
 	}
 
@@ -262,7 +263,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	* @param uuid the uuid of this journal article resource
 	*/
 	@Override
-	public void setUuid(String uuid) {
+	public void setUuid(java.lang.String uuid) {
 		_journalArticleResource.setUuid(uuid);
 	}
 
@@ -277,7 +278,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public String toString() {
+	public java.lang.String toString() {
 		return _journalArticleResource.toString();
 	}
 
@@ -287,7 +288,7 @@ public class JournalArticleResourceWrapper implements JournalArticleResource,
 	}
 
 	@Override
-	public String toXmlString() {
+	public java.lang.String toXmlString() {
 		return _journalArticleResource.toXmlString();
 	}
 

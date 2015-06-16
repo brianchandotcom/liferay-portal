@@ -15,6 +15,7 @@
 package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -115,7 +116,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	}
 
 	@Override
-	public Object clone() {
+	public java.lang.Object clone() {
 		return new JournalArticleImageWrapper((JournalArticleImage)_journalArticleImage.clone());
 	}
 
@@ -131,7 +132,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @return the article ID of this journal article image
 	*/
 	@Override
-	public String getArticleId() {
+	public java.lang.String getArticleId() {
 		return _journalArticleImage.getArticleId();
 	}
 
@@ -151,7 +152,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @return the el instance ID of this journal article image
 	*/
 	@Override
-	public String getElInstanceId() {
+	public java.lang.String getElInstanceId() {
 		return _journalArticleImage.getElInstanceId();
 	}
 
@@ -161,7 +162,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @return the el name of this journal article image
 	*/
 	@Override
-	public String getElName() {
+	public java.lang.String getElName() {
 		return _journalArticleImage.getElName();
 	}
 
@@ -186,7 +187,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @return the language ID of this journal article image
 	*/
 	@Override
-	public String getLanguageId() {
+	public java.lang.String getLanguageId() {
 		return _journalArticleImage.getLanguageId();
 	}
 
@@ -266,7 +267,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @param articleId the article ID of this journal article image
 	*/
 	@Override
-	public void setArticleId(String articleId) {
+	public void setArticleId(java.lang.String articleId) {
 		_journalArticleImage.setArticleId(articleId);
 	}
 
@@ -291,7 +292,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @param elInstanceId the el instance ID of this journal article image
 	*/
 	@Override
-	public void setElInstanceId(String elInstanceId) {
+	public void setElInstanceId(java.lang.String elInstanceId) {
 		_journalArticleImage.setElInstanceId(elInstanceId);
 	}
 
@@ -301,7 +302,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @param elName the el name of this journal article image
 	*/
 	@Override
-	public void setElName(String elName) {
+	public void setElName(java.lang.String elName) {
 		_journalArticleImage.setElName(elName);
 	}
 
@@ -339,7 +340,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	* @param languageId the language ID of this journal article image
 	*/
 	@Override
-	public void setLanguageId(String languageId) {
+	public void setLanguageId(java.lang.String languageId) {
 		_journalArticleImage.setLanguageId(languageId);
 	}
 
@@ -394,7 +395,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	}
 
 	@Override
-	public String toString() {
+	public java.lang.String toString() {
 		return _journalArticleImage.toString();
 	}
 
@@ -404,7 +405,7 @@ public class JournalArticleImageWrapper implements JournalArticleImage,
 	}
 
 	@Override
-	public String toXmlString() {
+	public java.lang.String toXmlString() {
 		return _journalArticleImage.toXmlString();
 	}
 

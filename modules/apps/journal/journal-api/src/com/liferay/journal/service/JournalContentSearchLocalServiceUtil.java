@@ -15,8 +15,11 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for JournalContentSearch. This utility wraps
@@ -68,22 +71,22 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static void deleteArticleContentSearch(long groupId,
-		boolean privateLayout, long layoutId, String portletId) {
+		boolean privateLayout, long layoutId, java.lang.String portletId) {
 		getService()
 			.deleteArticleContentSearch(groupId, privateLayout, layoutId,
 			portletId);
 	}
 
 	public static void deleteArticleContentSearch(long groupId,
-		boolean privateLayout, long layoutId, String portletId,
-		String articleId) {
+		boolean privateLayout, long layoutId, java.lang.String portletId,
+		java.lang.String articleId) {
 		getService()
 			.deleteArticleContentSearch(groupId, privateLayout, layoutId,
 			portletId, articleId);
 	}
 
 	public static void deleteArticleContentSearches(long groupId,
-		String articleId) {
+		java.lang.String articleId) {
 		getService().deleteArticleContentSearches(groupId, articleId);
 	}
 
@@ -223,12 +226,12 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> getArticleContentSearches(
-		String articleId) {
+		java.lang.String articleId) {
 		return getService().getArticleContentSearches(articleId);
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> getArticleContentSearches(
-		long groupId, String articleId) {
+		long groupId, java.lang.String articleId) {
 		return getService().getArticleContentSearches(groupId, articleId);
 	}
 
@@ -237,7 +240,7 @@ public class JournalContentSearchLocalServiceUtil {
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public static String getBeanIdentifier() {
+	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
 	}
 
@@ -279,17 +282,17 @@ public class JournalContentSearchLocalServiceUtil {
 		return getService().getJournalContentSearchsCount();
 	}
 
-	public static java.util.List<Long> getLayoutIds(long groupId,
-		boolean privateLayout, String articleId) {
+	public static java.util.List<java.lang.Long> getLayoutIds(long groupId,
+		boolean privateLayout, java.lang.String articleId) {
 		return getService().getLayoutIds(groupId, privateLayout, articleId);
 	}
 
-	public static int getLayoutIdsCount(String articleId) {
+	public static int getLayoutIdsCount(java.lang.String articleId) {
 		return getService().getLayoutIdsCount(articleId);
 	}
 
 	public static int getLayoutIdsCount(long groupId, boolean privateLayout,
-		String articleId) {
+		java.lang.String articleId) {
 		return getService().getLayoutIdsCount(groupId, privateLayout, articleId);
 	}
 
@@ -300,7 +303,7 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> getPortletContentSearches(
-		String portletId) {
+		java.lang.String portletId) {
 		return getService().getPortletContentSearches(portletId);
 	}
 
@@ -309,13 +312,13 @@ public class JournalContentSearchLocalServiceUtil {
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public static void setBeanIdentifier(String beanIdentifier) {
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
 	public static com.liferay.journal.model.JournalContentSearch updateContentSearch(
 		long groupId, boolean privateLayout, long layoutId,
-		String portletId, String articleId)
+		java.lang.String portletId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContentSearch(groupId, privateLayout, layoutId,
@@ -324,7 +327,7 @@ public class JournalContentSearchLocalServiceUtil {
 
 	public static com.liferay.journal.model.JournalContentSearch updateContentSearch(
 		long groupId, boolean privateLayout, long layoutId,
-		String portletId, String articleId, boolean purge)
+		java.lang.String portletId, java.lang.String articleId, boolean purge)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContentSearch(groupId, privateLayout, layoutId,
@@ -333,7 +336,7 @@ public class JournalContentSearchLocalServiceUtil {
 
 	public static java.util.List<com.liferay.journal.model.JournalContentSearch> updateContentSearch(
 		long groupId, boolean privateLayout, long layoutId,
-		String portletId, String[] articleIds)
+		java.lang.String portletId, java.lang.String[] articleIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateContentSearch(groupId, privateLayout, layoutId,
@@ -352,14 +355,7 @@ public class JournalContentSearchLocalServiceUtil {
 	}
 
 	public static JournalContentSearchLocalService getService() {
-		if (_service == null) {
-			_service = (JournalContentSearchLocalService)PortalBeanLocatorUtil.locate(JournalContentSearchLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(JournalContentSearchLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -369,5 +365,14 @@ public class JournalContentSearchLocalServiceUtil {
 	public void setService(JournalContentSearchLocalService service) {
 	}
 
-	private static JournalContentSearchLocalService _service;
+	private static ServiceTracker<JournalContentSearchLocalService, JournalContentSearchLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalContentSearchLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<JournalContentSearchLocalService, JournalContentSearchLocalService>(bundle.getBundleContext(),
+				JournalContentSearchLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

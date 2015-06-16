@@ -16,7 +16,6 @@ package com.liferay.journal.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -183,24 +182,23 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public String buildTreePath()
+	public java.lang.String buildTreePath()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolder.buildTreePath();
 	}
 
 	@Override
-	public Object clone() {
+	public java.lang.Object clone() {
 		return new JournalFolderWrapper((JournalFolder)_journalFolder.clone());
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.journal.model.JournalFolder journalFolder) {
+	public int compareTo(com.liferay.journal.model.JournalFolder journalFolder) {
 		return _journalFolder.compareTo(journalFolder);
 	}
 
 	@Override
-	public java.util.List<Long> getAncestorFolderIds()
+	public java.util.List<java.lang.Long> getAncestorFolderIds()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalFolder.getAncestorFolderIds();
 	}
@@ -246,7 +244,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the container name of this journal folder
 	*/
 	@Override
-	public String getContainerModelName() {
+	public java.lang.String getContainerModelName() {
 		return _journalFolder.getContainerModelName();
 	}
 
@@ -266,7 +264,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the description of this journal folder
 	*/
 	@Override
-	public String getDescription() {
+	public java.lang.String getDescription() {
 		return _journalFolder.getDescription();
 	}
 
@@ -311,7 +309,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the name of this journal folder
 	*/
 	@Override
-	public String getName() {
+	public java.lang.String getName() {
 		return _journalFolder.getName();
 	}
 
@@ -392,7 +390,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the status by user name of this journal folder
 	*/
 	@Override
-	public String getStatusByUserName() {
+	public java.lang.String getStatusByUserName() {
 		return _journalFolder.getStatusByUserName();
 	}
 
@@ -402,7 +400,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the status by user uuid of this journal folder
 	*/
 	@Override
-	public String getStatusByUserUuid() {
+	public java.lang.String getStatusByUserUuid() {
 		return _journalFolder.getStatusByUserUuid();
 	}
 
@@ -453,7 +451,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the tree path of this journal folder
 	*/
 	@Override
-	public String getTreePath() {
+	public java.lang.String getTreePath() {
 		return _journalFolder.getTreePath();
 	}
 
@@ -473,7 +471,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the user name of this journal folder
 	*/
 	@Override
-	public String getUserName() {
+	public java.lang.String getUserName() {
 		return _journalFolder.getUserName();
 	}
 
@@ -483,7 +481,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the user uuid of this journal folder
 	*/
 	@Override
-	public String getUserUuid() {
+	public java.lang.String getUserUuid() {
 		return _journalFolder.getUserUuid();
 	}
 
@@ -493,7 +491,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @return the uuid of this journal folder
 	*/
 	@Override
-	public String getUuid() {
+	public java.lang.String getUuid() {
 		return _journalFolder.getUuid();
 	}
 
@@ -678,7 +676,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param description the description of this journal folder
 	*/
 	@Override
-	public void setDescription(String description) {
+	public void setDescription(java.lang.String description) {
 		_journalFolder.setDescription(description);
 	}
 
@@ -736,7 +734,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param name the name of this journal folder
 	*/
 	@Override
-	public void setName(String name) {
+	public void setName(java.lang.String name) {
 		_journalFolder.setName(name);
 	}
 
@@ -816,7 +814,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param statusByUserName the status by user name of this journal folder
 	*/
 	@Override
-	public void setStatusByUserName(String statusByUserName) {
+	public void setStatusByUserName(java.lang.String statusByUserName) {
 		_journalFolder.setStatusByUserName(statusByUserName);
 	}
 
@@ -826,7 +824,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param statusByUserUuid the status by user uuid of this journal folder
 	*/
 	@Override
-	public void setStatusByUserUuid(String statusByUserUuid) {
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
 		_journalFolder.setStatusByUserUuid(statusByUserUuid);
 	}
 
@@ -846,7 +844,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param treePath the tree path of this journal folder
 	*/
 	@Override
-	public void setTreePath(String treePath) {
+	public void setTreePath(java.lang.String treePath) {
 		_journalFolder.setTreePath(treePath);
 	}
 
@@ -866,7 +864,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param userName the user name of this journal folder
 	*/
 	@Override
-	public void setUserName(String userName) {
+	public void setUserName(java.lang.String userName) {
 		_journalFolder.setUserName(userName);
 	}
 
@@ -876,7 +874,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param userUuid the user uuid of this journal folder
 	*/
 	@Override
-	public void setUserUuid(String userUuid) {
+	public void setUserUuid(java.lang.String userUuid) {
 		_journalFolder.setUserUuid(userUuid);
 	}
 
@@ -886,7 +884,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	* @param uuid the uuid of this journal folder
 	*/
 	@Override
-	public void setUuid(String uuid) {
+	public void setUuid(java.lang.String uuid) {
 		_journalFolder.setUuid(uuid);
 	}
 
@@ -901,7 +899,7 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public String toString() {
+	public java.lang.String toString() {
 		return _journalFolder.toString();
 	}
 
@@ -911,12 +909,12 @@ public class JournalFolderWrapper implements JournalFolder,
 	}
 
 	@Override
-	public String toXmlString() {
+	public java.lang.String toXmlString() {
 		return _journalFolder.toXmlString();
 	}
 
 	@Override
-	public void updateTreePath(String treePath) {
+	public void updateTreePath(java.lang.String treePath) {
 		_journalFolder.updateTreePath(treePath);
 	}
 

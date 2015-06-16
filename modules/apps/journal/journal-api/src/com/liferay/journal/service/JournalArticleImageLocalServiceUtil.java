@@ -15,8 +15,11 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
-import com.liferay.portal.kernel.bean.PortalBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for JournalArticleImage. This utility wraps
@@ -40,9 +43,9 @@ public class JournalArticleImageLocalServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.journal.service.impl.JournalArticleImageLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static void addArticleImageId(long articleImageId, long groupId,
-		String articleId, double version,
-		String elInstanceId, String elName,
-		String languageId)
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService()
 			.addArticleImageId(articleImageId, groupId, articleId, version,
@@ -81,15 +84,15 @@ public class JournalArticleImageLocalServiceUtil {
 	}
 
 	public static void deleteArticleImage(long groupId,
-		String articleId, double version,
-		String elInstanceId, String elName,
-		String languageId) {
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId) {
 		getService()
 			.deleteArticleImage(groupId, articleId, version, elInstanceId,
 			elName, languageId);
 	}
 
-	public static void deleteImages(long groupId, String articleId,
+	public static void deleteImages(long groupId, java.lang.String articleId,
 		double version) {
 		getService().deleteImages(groupId, articleId, version);
 	}
@@ -221,18 +224,18 @@ public class JournalArticleImageLocalServiceUtil {
 	}
 
 	public static long getArticleImageId(long groupId,
-		String articleId, double version,
-		String elInstanceId, String elName,
-		String languageId) {
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId) {
 		return getService()
 				   .getArticleImageId(groupId, articleId, version,
 			elInstanceId, elName, languageId);
 	}
 
 	public static long getArticleImageId(long groupId,
-		String articleId, double version,
-		String elInstanceId, String elName,
-		String languageId, boolean tempImage) {
+		java.lang.String articleId, double version,
+		java.lang.String elInstanceId, java.lang.String elName,
+		java.lang.String languageId, boolean tempImage) {
 		return getService()
 				   .getArticleImageId(groupId, articleId, version,
 			elInstanceId, elName, languageId, tempImage);
@@ -244,7 +247,7 @@ public class JournalArticleImageLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.journal.model.JournalArticleImage> getArticleImages(
-		long groupId, String articleId, double version) {
+		long groupId, java.lang.String articleId, double version) {
 		return getService().getArticleImages(groupId, articleId, version);
 	}
 
@@ -257,7 +260,7 @@ public class JournalArticleImageLocalServiceUtil {
 	*
 	* @return the Spring bean ID for this bean
 	*/
-	public static String getBeanIdentifier() {
+	public static java.lang.String getBeanIdentifier() {
 		return getService().getBeanIdentifier();
 	}
 
@@ -310,7 +313,7 @@ public class JournalArticleImageLocalServiceUtil {
 	*
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
-	public static void setBeanIdentifier(String beanIdentifier) {
+	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
 		getService().setBeanIdentifier(beanIdentifier);
 	}
 
@@ -326,14 +329,7 @@ public class JournalArticleImageLocalServiceUtil {
 	}
 
 	public static JournalArticleImageLocalService getService() {
-		if (_service == null) {
-			_service = (JournalArticleImageLocalService)PortalBeanLocatorUtil.locate(JournalArticleImageLocalService.class.getName());
-
-			ReferenceRegistry.registerReference(JournalArticleImageLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
@@ -343,5 +339,14 @@ public class JournalArticleImageLocalServiceUtil {
 	public void setService(JournalArticleImageLocalService service) {
 	}
 
-	private static JournalArticleImageLocalService _service;
+	private static ServiceTracker<JournalArticleImageLocalService, JournalArticleImageLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(JournalArticleImageLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<JournalArticleImageLocalService, JournalArticleImageLocalService>(bundle.getBundleContext(),
+				JournalArticleImageLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

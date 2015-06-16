@@ -15,6 +15,7 @@
 package com.liferay.journal.service;
 
 import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
@@ -58,7 +59,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteArticleResource(long groupId, String articleId)
+	public void deleteArticleResource(long groupId, java.lang.String articleId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_journalArticleResourceLocalService.deleteArticleResource(groupId,
 			articleId);
@@ -188,14 +189,14 @@ public class JournalArticleResourceLocalServiceWrapper
 
 	@Override
 	public com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		long groupId, String articleId) {
+		long groupId, java.lang.String articleId) {
 		return _journalArticleResourceLocalService.fetchArticleResource(groupId,
 			articleId);
 	}
 
 	@Override
 	public com.liferay.journal.model.JournalArticleResource fetchArticleResource(
-		String uuid, long groupId) {
+		java.lang.String uuid, long groupId) {
 		return _journalArticleResourceLocalService.fetchArticleResource(uuid,
 			groupId);
 	}
@@ -215,7 +216,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.journal.model.JournalArticleResource fetchJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId) {
+		java.lang.String uuid, long groupId) {
 		return _journalArticleResourceLocalService.fetchJournalArticleResourceByUuidAndGroupId(uuid,
 			groupId);
 	}
@@ -234,14 +235,14 @@ public class JournalArticleResourceLocalServiceWrapper
 
 	@Override
 	public long getArticleResourcePrimKey(long groupId,
-		String articleId) {
+		java.lang.String articleId) {
 		return _journalArticleResourceLocalService.getArticleResourcePrimKey(groupId,
 			articleId);
 	}
 
 	@Override
-	public long getArticleResourcePrimKey(String uuid, long groupId,
-		String articleId) {
+	public long getArticleResourcePrimKey(java.lang.String uuid, long groupId,
+		java.lang.String articleId) {
 		return _journalArticleResourceLocalService.getArticleResourcePrimKey(uuid,
 			groupId, articleId);
 	}
@@ -258,7 +259,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	* @return the Spring bean ID for this bean
 	*/
 	@Override
-	public String getBeanIdentifier() {
+	public java.lang.String getBeanIdentifier() {
 		return _journalArticleResourceLocalService.getBeanIdentifier();
 	}
 
@@ -286,7 +287,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	*/
 	@Override
 	public com.liferay.journal.model.JournalArticleResource getJournalArticleResourceByUuidAndGroupId(
-		String uuid, long groupId)
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _journalArticleResourceLocalService.getJournalArticleResourceByUuidAndGroupId(uuid,
 			groupId);
@@ -333,7 +334,7 @@ public class JournalArticleResourceLocalServiceWrapper
 	* @param beanIdentifier the Spring bean ID for this bean
 	*/
 	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
+	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		_journalArticleResourceLocalService.setBeanIdentifier(beanIdentifier);
 	}
 

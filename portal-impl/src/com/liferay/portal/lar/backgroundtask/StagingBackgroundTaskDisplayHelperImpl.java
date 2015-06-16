@@ -14,12 +14,8 @@
 
 package com.liferay.portal.lar.backgroundtask;
 
-import com.liferay.portal.LARFileException;
-import com.liferay.portal.LARFileSizeException;
-import com.liferay.portal.LARTypeException;
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
-import com.liferay.portal.MissingReferenceException;
 import com.liferay.portal.PortletIdException;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayJSONTransformer;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -54,6 +50,10 @@ import com.liferay.portlet.documentlibrary.DuplicateFileException;
 import com.liferay.portlet.documentlibrary.FileExtensionException;
 import com.liferay.portlet.documentlibrary.FileNameException;
 import com.liferay.portlet.documentlibrary.FileSizeException;
+import com.liferay.portlet.exportimport.LARFileException;
+import com.liferay.portlet.exportimport.LARFileSizeException;
+import com.liferay.portlet.exportimport.LARTypeException;
+import com.liferay.portlet.exportimport.MissingReferenceException;
 
 import java.io.Serializable;
 

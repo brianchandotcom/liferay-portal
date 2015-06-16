@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.lar.backgroundtask.StagingBackgroundTaskDisplay;
 import com.liferay.portal.model.BackgroundTask;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;

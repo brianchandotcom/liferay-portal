@@ -37,12 +37,12 @@ public abstract class BaseBackgroundTaskDisplay
 	}
 
 	@Override
-	public JSONObject getDetails() {
-		return getDetails(LocaleUtil.getDefault());
+	public JSONObject getDetailsJSONObject() {
+		return getDetailsJSONObject(LocaleUtil.getDefault());
 	}
 
 	@Override
-	public JSONObject getDetails(Locale locale) {
+	public JSONObject getDetailsJSONObject(Locale locale) {
 		JSONObject detailsJSON = createMessageDetails(_backgroundTask);
 
 		return BackgroundTaskDisplayJSONTransformer.translateDetailsJSON(

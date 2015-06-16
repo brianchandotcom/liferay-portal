@@ -25,9 +25,9 @@ import java.util.Locale;
  */
 public interface BackgroundTaskDisplay extends Serializable {
 
-	public JSONObject getDetails();
+	public JSONObject getDetailsJSONObject();
 
-	public JSONObject getDetails(Locale locale);
+	public JSONObject getDetailsJSONObject(Locale locale);
 
 	public String getMessage();
 

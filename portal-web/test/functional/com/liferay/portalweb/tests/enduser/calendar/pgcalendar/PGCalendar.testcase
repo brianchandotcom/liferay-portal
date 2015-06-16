@@ -4260,7 +4260,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewShowMoreLocalization" priority="5">
+	<command known-issues="LPS-56092" name="ViewShowMoreLocalization" priority="5">
 		<description message="This is a use case LPS-54786." />
 
 		<execute macro="Page#gotoPG">

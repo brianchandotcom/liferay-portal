@@ -1,8 +1,8 @@
 AUI.add(
 	'liferay-form-placeholders',
 	function(A) {
-		var AObject = A.Object;
 		var ANode = A.Node;
+		var AObject = A.Object;
 
 		var CSS_PLACEHOLDER = 'text-placeholder';
 

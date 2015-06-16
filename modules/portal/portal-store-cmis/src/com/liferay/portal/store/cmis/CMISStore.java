@@ -444,20 +444,19 @@ public class CMISStore extends BaseStore {
 	protected void activate(Map<String, Object> properties) {
 		_cmisConfiguration = Configurable.createConfigurable(
 			CMISConfiguration.class, properties);
+		_operationContext = createOperationContext();
+		_sessionFactory = SessionFactoryImpl.newInstance();
 
-		initializeOperationContext();
+		_session = createSession(
+			_cmisConfiguration, _operationContext, _sessionFactory);
 
-		Folder systemRootDir = getFolder(
-			SessionHolder.session.getRootFolder(),
-			_cmisConfiguration.systemRootDir());
+		_systemRootDir = getFolder(
+			_session.getRootFolder(), _cmisConfiguration.systemRootDir());
 
-		if (systemRootDir == null) {
-			systemRootDir = createFolder(
-				SessionHolder.session.getRootFolder(),
-				_cmisConfiguration.systemRootDir());
+		if (_systemRootDir == null) {
+			_systemRootDir = createFolder(
+				_session.getRootFolder(), _cmisConfiguration.systemRootDir());
 		}
-
-		_systemRootDir = systemRootDir;
 	}
 
 	protected Document createDocument(
@@ -483,10 +482,85 @@ public class CMISStore extends BaseStore {
 		properties.put(
 			PropertyIds.OBJECT_TYPE_ID, BaseTypeId.CMIS_FOLDER.value());
 
-		ObjectId objectId = SessionHolder.session.createFolder(
-			properties, parentFolderId);
+		ObjectId objectId = _session.createFolder(properties, parentFolderId);
 
-		return (Folder)SessionHolder.session.getObject(objectId);
+		return (Folder) _session.getObject(objectId);
+	}
+
+	protected OperationContextImpl createOperationContext() {
+		Set<String> defaultFilterSet = new HashSet<>();
+
+		// Base
+
+		defaultFilterSet.add(PropertyIds.BASE_TYPE_ID);
+		defaultFilterSet.add(PropertyIds.CREATED_BY);
+		defaultFilterSet.add(PropertyIds.CREATION_DATE);
+		defaultFilterSet.add(PropertyIds.LAST_MODIFIED_BY);
+		defaultFilterSet.add(PropertyIds.LAST_MODIFICATION_DATE);
+		defaultFilterSet.add(PropertyIds.NAME);
+		defaultFilterSet.add(PropertyIds.OBJECT_ID);
+		defaultFilterSet.add(PropertyIds.OBJECT_TYPE_ID);
+
+		// Document
+
+		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_LENGTH);
+		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_MIME_TYPE);
+		defaultFilterSet.add(PropertyIds.IS_VERSION_SERIES_CHECKED_OUT);
+		defaultFilterSet.add(PropertyIds.VERSION_LABEL);
+		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_BY);
+		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_ID);
+		defaultFilterSet.add(PropertyIds.VERSION_SERIES_ID);
+
+		// Folder
+
+		defaultFilterSet.add(PropertyIds.PARENT_ID);
+		defaultFilterSet.add(PropertyIds.PATH);
+
+		// Operation context
+
+		return new OperationContextImpl(
+			defaultFilterSet, false, true, false, IncludeRelationships.NONE,
+			null, false, "cmis:name ASC", true, 1000);
+	}
+
+	protected Session createSession(
+		CMISConfiguration cmisConfiguration, OperationContext operationContext,
+		SessionFactory sessionFactory) {
+
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put(
+			SessionParameter.ATOMPUB_URL, cmisConfiguration.repositoryUrl());
+		parameters.put(
+			SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
+		parameters.put(SessionParameter.COMPRESSION, Boolean.TRUE.toString());
+
+		Locale locale = LocaleUtil.getDefault();
+
+		parameters.put(
+			SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
+		parameters.put(
+			SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
+		parameters.put(
+			SessionParameter.PASSWORD, cmisConfiguration.credentialsPassword());
+		parameters.put(
+			SessionParameter.USER, cmisConfiguration.credentialsUsername());
+
+		List<Repository> repositories = sessionFactory.getRepositories(
+			parameters);
+
+		Repository repository = repositories.get(0);
+
+		Session session = repository.createSession();
+
+		session.setDefaultContext(operationContext);
+
+		return session;
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_systemRootDir = null;
 	}
 
 	protected void doGetFileNames(
@@ -645,95 +719,16 @@ public class CMISStore extends BaseStore {
 		return versions;
 	}
 
-	protected void initializeOperationContext() {
-		Set<String> defaultFilterSet = new HashSet<>();
-
-		// Base
-
-		defaultFilterSet.add(PropertyIds.BASE_TYPE_ID);
-		defaultFilterSet.add(PropertyIds.CREATED_BY);
-		defaultFilterSet.add(PropertyIds.CREATION_DATE);
-		defaultFilterSet.add(PropertyIds.LAST_MODIFIED_BY);
-		defaultFilterSet.add(PropertyIds.LAST_MODIFICATION_DATE);
-		defaultFilterSet.add(PropertyIds.NAME);
-		defaultFilterSet.add(PropertyIds.OBJECT_ID);
-		defaultFilterSet.add(PropertyIds.OBJECT_TYPE_ID);
-
-		// Document
-
-		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_LENGTH);
-		defaultFilterSet.add(PropertyIds.CONTENT_STREAM_MIME_TYPE);
-		defaultFilterSet.add(PropertyIds.IS_VERSION_SERIES_CHECKED_OUT);
-		defaultFilterSet.add(PropertyIds.VERSION_LABEL);
-		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_BY);
-		defaultFilterSet.add(PropertyIds.VERSION_SERIES_CHECKED_OUT_ID);
-		defaultFilterSet.add(PropertyIds.VERSION_SERIES_ID);
-
-		// Folder
-
-		defaultFilterSet.add(PropertyIds.PARENT_ID);
-		defaultFilterSet.add(PropertyIds.PATH);
-
-		// Operation context
-
-		_operationContext = new OperationContextImpl(
-			defaultFilterSet, false, true, false, IncludeRelationships.NONE,
-			null, false, "cmis:name ASC", true, 1000);
-	}
-
 	@Modified
 	protected void modified(Map<String, Object> properties) {
 		deactivate();
 		activate(properties);
 	}
 
+	private CMISConfiguration _cmisConfiguration;
+	private OperationContext _operationContext;
+	private Session _session;
+	private SessionFactory _sessionFactory;
 	private Folder _systemRootDir;
-
-	private static volatile CMISConfiguration _cmisConfiguration;
-
-	private static OperationContext _operationContext;
-
-	private static final SessionFactory _sessionFactory =
-		SessionFactoryImpl.newInstance();
-
-	private static class SessionHolder {
-
-		private static final Session session;
-
-		static {
-			Map<String, String> parameters = new HashMap<>();
-
-			parameters.put(
-				SessionParameter.ATOMPUB_URL,
-				_cmisConfiguration.repositoryUrl());
-			parameters.put(
-				SessionParameter.BINDING_TYPE, BindingType.ATOMPUB.value());
-			parameters.put(
-				SessionParameter.COMPRESSION, Boolean.TRUE.toString());
-
-			Locale locale = LocaleUtil.getDefault();
-
-			parameters.put(
-				SessionParameter.LOCALE_ISO3166_COUNTRY, locale.getCountry());
-			parameters.put(
-				SessionParameter.LOCALE_ISO639_LANGUAGE, locale.getLanguage());
-			parameters.put(
-				SessionParameter.PASSWORD,
-				_cmisConfiguration.credentialsPassword());
-			parameters.put(
-				SessionParameter.USER,
-				_cmisConfiguration.credentialsUsername());
-
-			List<Repository> repositories = _sessionFactory.getRepositories(
-				parameters);
-
-			Repository repository = repositories.get(0);
-
-			session = repository.createSession();
-
-			session.setDefaultContext(_operationContext);
-		}
-
-	}
 
 }

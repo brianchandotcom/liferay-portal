@@ -18,6 +18,11 @@ import com.liferay.gradle.util.GradleUtil;
 import com.liferay.gradle.util.OSDetector;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.net.HttpURLConnection;
+import java.net.Socket;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +42,10 @@ public class AppServer {
 
 	public File getBinDir() {
 		return GradleUtil.toFile(_project, _binDir);
+	}
+
+	public String getCheckPath() {
+		return GradleUtil.toString(_checkPath);
 	}
 
 	public File getDeployDir() {
@@ -71,6 +80,14 @@ public class AppServer {
 		return GradleUtil.toStringList(_startExecutableArgs);
 	}
 
+	public String getStopExecutable() {
+		return GradleUtil.toString(_stopExecutable);
+	}
+
+	public List<String> getStopExecutableArgs() {
+		return GradleUtil.toStringList(_stopExecutableArgs);
+	}
+
 	public String getVersion() {
 		return GradleUtil.toString(_version);
 	}
@@ -79,8 +96,45 @@ public class AppServer {
 		return GradleUtil.toString(_zipUrl);
 	}
 
+	public boolean isReachable() {
+		try {
+			URL url = new URL(
+				"http", "localhost", getPortNumber(), getCheckPath());
+
+			HttpURLConnection httpURLConnection =
+				(HttpURLConnection)url.openConnection();
+
+			httpURLConnection.setRequestMethod("GET");
+
+			int responseCode = httpURLConnection.getResponseCode();
+
+			if ((responseCode > 0) && (responseCode < 400)) {
+				return true;
+			}
+		}
+		catch (IOException ioe) {
+		}
+
+		return false;
+	}
+
+	public boolean isStarted() {
+		try {
+			new Socket("localhost", getPortNumber());
+		}
+		catch (IOException ioe) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public void setBinDir(Object binDir) {
 		_binDir = binDir;
+	}
+
+	public void setCheckPath(Object checkPath) {
+		_checkPath = checkPath;
 	}
 
 	public void setDeployDir(Object deployDir) {
@@ -113,6 +167,16 @@ public class AppServer {
 		GUtil.addToCollection(_startExecutableArgs, startExecutableArgs);
 	}
 
+	public void setStopExecutable(Object stopExecutable) {
+		_stopExecutable = stopExecutable;
+	}
+
+	public void setStopExecutableArgs(Iterable<?> stopExecutableArgs) {
+		_stopExecutableArgs.clear();
+
+		GUtil.addToCollection(_stopExecutableArgs, stopExecutableArgs);
+	}
+
 	public void setVersion(Object version) {
 		_version = version;
 	}
@@ -131,6 +195,7 @@ public class AppServer {
 	}
 
 	private Object _binDir;
+	private Object _checkPath = "/web/guest";
 	private Object _deployDir;
 	private Object _dir;
 	private Object _libGlobalDir;
@@ -140,6 +205,8 @@ public class AppServer {
 	private final Project _project;
 	private Object _startExecutable;
 	private final List<Object> _startExecutableArgs = new ArrayList<>();
+	private Object _stopExecutable;
+	private final List<Object> _stopExecutableArgs = new ArrayList<>();
 	private Object _version;
 	private Object _zipUrl;
 

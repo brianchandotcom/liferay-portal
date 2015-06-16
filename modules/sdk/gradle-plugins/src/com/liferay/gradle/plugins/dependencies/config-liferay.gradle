@@ -96,6 +96,7 @@ liferay {
 			portalDir = "${->liferay.appServers.tomcat.dir}/webapps/ROOT"
 			startExecutable = "catalina${->fileSuffixBat}"
 			startExecutableArgs = ["run"]
+			stopExecutable = "shutdown${->fileSuffixBat}"
 			version = "7.0.62"
 			zipUrl = "http://archive.apache.org/dist/tomcat/tomcat-7/v${->liferay.appServers.tomcat.version}/bin/apache-tomcat-${->liferay.appServers.tomcat.version}.zip"
 		}

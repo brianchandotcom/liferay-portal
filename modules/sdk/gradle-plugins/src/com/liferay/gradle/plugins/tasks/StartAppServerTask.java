@@ -14,14 +14,11 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.extensions.AppServer;
 import com.liferay.gradle.util.GradleUtil;
+import com.liferay.gradle.util.Validator;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.net.HttpURLConnection;
-import java.net.Socket;
-import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,29 +26,27 @@ import java.util.concurrent.Callable;
 
 import org.gradle.api.DefaultTask;
 import org.gradle.api.GradleException;
-import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.specs.Spec;
-import org.gradle.api.tasks.Input;
 import org.gradle.api.tasks.InputDirectory;
-import org.gradle.api.tasks.Optional;
+import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
-import org.gradle.util.GUtil;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class StartAppServerTask extends DefaultTask {
+public class StartAppServerTask extends DefaultTask implements AppServerTask {
 
 	public StartAppServerTask() {
-		_project = getProject();
-
 		onlyIf(
 			new Spec<Task>() {
 
 				@Override
 				public boolean isSatisfiedBy(Task task) {
-					if (isPortalStarted()) {
+					StartAppServerTask startAppServerTask =
+						(StartAppServerTask)task;
+
+					if (startAppServerTask.isAppServerStarted()) {
 						return false;
 					}
 
@@ -63,166 +58,135 @@ public class StartAppServerTask extends DefaultTask {
 
 	@InputDirectory
 	public File getAppServerBinDir() {
-		return GradleUtil.toFile(_project, _appServerBinDir);
+		return _appServer.getBinDir();
 	}
 
-	public long getAppServerCheckInterval() {
-		return _appServerCheckInterval;
-	}
-
-	@Input
-	public int getAppServerPortNumber() {
-		return _appServerPortNumber;
-	}
-
-	@Input
 	public String getAppServerStartExecutable() {
-		return GradleUtil.toString(_appServerStartExecutable);
+		return _appServer.getStartExecutable();
 	}
 
-	@Input
 	public List<String> getAppServerStartExecutableArgs() {
-		return GradleUtil.toStringList(_appServerStartExecutableArgs);
+		return _appServer.getStartExecutableArgs();
 	}
 
-	@Input
-	public String getAppServerStartPath() {
-		return GradleUtil.toString(_appServerStartPath);
+	@InputFile
+	public File getAppServerStartExecutableFile() {
+		return new File(getAppServerBinDir(), getAppServerStartExecutable());
 	}
 
-	@Input
-	public long getAppServerStartTimeout() {
-		return _appServerStartTimeout;
-	}
-
-	@Input
-	@Optional
+	@Override
 	public String getAppServerType() {
-		return GradleUtil.toString(_appServerType);
+		return _appServerType;
 	}
 
-	public boolean isPortalStarted() {
-		try {
-			new Socket("localhost", getAppServerPortNumber());
-		}
-		catch (IOException ioe) {
-			return false;
+	public long getCheckInterval() {
+		return _checkInterval;
+	}
+
+	public String getCheckPath() {
+		return _appServer.getCheckPath();
+	}
+
+	public long getTimeout() {
+		return _timeout;
+	}
+
+	public boolean isAppServerReachable() {
+		return _appServer.isReachable();
+	}
+
+	public boolean isAppServerStarted() {
+		return _appServer.isStarted();
+	}
+
+	@Override
+	public void merge(AppServer appServer) {
+		if (getAppServerBinDir() == null) {
+			setAppServerBinDir(appServer.getBinDir());
 		}
 
-		return true;
+		if (Validator.isNull(getAppServerStartExecutable())) {
+			setAppServerStartExecutable(appServer.getStartExecutable());
+		}
+
+		List<String> appServerStartExecutableArgs =
+			getAppServerStartExecutableArgs();
+
+		if (appServerStartExecutableArgs.isEmpty()) {
+			setAppServerStartExecutableArgs(appServer.getStartExecutableArgs());
+		}
 	}
 
 	public void setAppServerBinDir(Object appServerBinDir) {
-		_appServerBinDir = appServerBinDir;
-	}
-
-	public void setAppServerCheckInterval(long appServerCheckInteval) {
-		_appServerCheckInterval = appServerCheckInteval;
-	}
-
-	public void setAppServerPortNumber(int appServerPortNumber) {
-		_appServerPortNumber = appServerPortNumber;
+		_appServer.setBinDir(appServerBinDir);
 	}
 
 	public void setAppServerStartExecutable(Object appServerStartExecutable) {
-		_appServerStartExecutable = appServerStartExecutable;
+		_appServer.setStartExecutable(appServerStartExecutable);
 	}
 
 	public void setAppServerStartExecutableArgs(
 		Iterable<?> appServerStartExecutableArgs) {
 
-		_appServerStartExecutableArgs.clear();
-
-		GUtil.addToCollection(
-			_appServerStartExecutableArgs, appServerStartExecutableArgs);
+		_appServer.setStartExecutableArgs(appServerStartExecutableArgs);
 	}
 
-	public void setAppServerStartPath(Object appServerStartPath) {
-		_appServerStartPath = appServerStartPath;
-	}
-
-	public void setAppServerStartTimeout(long appServerStartTimeout) {
-		_appServerStartTimeout = appServerStartTimeout;
-	}
-
-	public void setAppServerType(Object appServerType) {
+	public void setAppServerType(String appServerType) {
 		_appServerType = appServerType;
+	}
+
+	public void setCheckInterval(long checkInterval) {
+		_checkInterval = checkInterval;
+	}
+
+	public void setCheckPath(Object checkPath) {
+		_appServer.setCheckPath(checkPath);
+	}
+
+	public void setTimeout(long timeout) {
+		_timeout = timeout;
 	}
 
 	@TaskAction
 	public void startAppServer() throws Exception {
 		List<String> commands = new ArrayList<>();
 
-		File binDir = getAppServerBinDir();
+		File appServerStartExecutableFile = getAppServerStartExecutableFile();
 
-		File startExecutableFile = new File(
-			binDir, getAppServerStartExecutable());
-
-		commands.add(startExecutableFile.getAbsolutePath());
+		commands.add(appServerStartExecutableFile.getAbsolutePath());
 		commands.addAll(getAppServerStartExecutableArgs());
 
 		ProcessBuilder processBuilder = new ProcessBuilder(commands);
 
-		processBuilder.directory(binDir);
-		processBuilder.inheritIO();
+		processBuilder.directory(getAppServerBinDir());
 		processBuilder.redirectErrorStream(true);
 
 		processBuilder.start();
 
-		boolean started = GradleUtil.waitFor(
-			_appServerStartCheckCallable, getAppServerCheckInterval(),
-			getAppServerStartTimeout());
-
-		if (!started) {
-			throw new GradleException(
-				"App Server timeout on " + getAppServerStartURL());
-		}
-	}
-
-	protected URL getAppServerStartURL() throws Exception {
-		return new URL(
-			"http", "localhost", getAppServerPortNumber(),
-			getAppServerStartPath());
-	}
-
-	private Object _appServerBinDir;
-	private long _appServerCheckInterval = 500;
-	private int _appServerPortNumber = 8080;
-
-	private final Callable<Boolean> _appServerStartCheckCallable =
-		new Callable<Boolean>() {
+		Callable<Boolean> callable = new Callable<Boolean>() {
 
 			@Override
 			public Boolean call() throws Exception {
-				try {
-					URL url = getAppServerStartURL();
-
-					HttpURLConnection httpURLConnection =
-						(HttpURLConnection)url.openConnection();
-
-					httpURLConnection.setRequestMethod("GET");
-
-					int responseCode = httpURLConnection.getResponseCode();
-
-					if ((responseCode > 0) && (responseCode < 400)) {
-						return true;
-					}
-
-					return false;
+				if (isAppServerReachable()) {
+					return true;
 				}
-				catch (IOException ioe) {
-					return false;
-				}
+
+				return false;
 			}
 
 		};
 
-	private Object _appServerStartExecutable;
-	private final List<Object> _appServerStartExecutableArgs =
-		new ArrayList<>();
-	private Object _appServerStartPath = "/web/guest";
-	private long _appServerStartTimeout = 5 * 60 * 1000;
-	private Object _appServerType;
-	private final Project _project;
+		boolean success = GradleUtil.waitFor(
+			callable, getCheckInterval(), getTimeout());
+
+		if (!success) {
+			throw new GradleException("Timeout while starting App Server");
+		}
+	}
+
+	private final AppServer _appServer = new AppServer(null, getProject());
+	private String _appServerType;
+	private long _checkInterval = 500;
+	private long _timeout = 5 * 60 * 1000;
 
 }

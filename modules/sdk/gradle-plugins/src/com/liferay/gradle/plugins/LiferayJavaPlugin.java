@@ -25,10 +25,12 @@ import com.liferay.gradle.plugins.lang.builder.LangBuilderPlugin;
 import com.liferay.gradle.plugins.service.builder.BuildServiceTask;
 import com.liferay.gradle.plugins.service.builder.ServiceBuilderPlugin;
 import com.liferay.gradle.plugins.source.formatter.SourceFormatterPlugin;
+import com.liferay.gradle.plugins.tasks.AppServerTask;
 import com.liferay.gradle.plugins.tasks.DirectDeployTask;
 import com.liferay.gradle.plugins.tasks.InitGradleTask;
 import com.liferay.gradle.plugins.tasks.SetupTestableTomcatTask;
 import com.liferay.gradle.plugins.tasks.StartAppServerTask;
+import com.liferay.gradle.plugins.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
@@ -53,7 +55,6 @@ import java.nio.file.Files;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -119,6 +120,9 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	public static final String START_TESTABLE_TOMCAT_TASK_NAME =
 		"startTestableTomcat";
+
+	public static final String STOP_TESTABLE_TOMCAT_TASK_NAME =
+		"stopTestableTomcat";
 
 	public static final String TEST_INTEGRATION_SOURCE_SET_NAME =
 		"testIntegration";
@@ -330,6 +334,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		addTaskSetupArquillian(project);
 		addTaskSetupTestableTomcat(project);
 		addTaskStartTestableTomcat(project);
+		addTaskStopTestableTomcat(project);
 		addTaskTestIntegration(project);
 		addTaskWar(project);
 	}
@@ -437,7 +442,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 						(StartAppServerTask)GradleUtil.getTask(
 							task.getProject(), START_TESTABLE_TOMCAT_TASK_NAME);
 
-					if (startTestableTomcatTask.isPortalStarted()) {
+					if (startTestableTomcatTask.isAppServerStarted()) {
 						return false;
 					}
 
@@ -480,6 +485,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			});
 
 		return startTestableTomcatTask;
+	}
+
+	protected StopAppServerTask addTaskStopTestableTomcat(Project project) {
+		StopAppServerTask stopTestableTomcatTask = GradleUtil.addTask(
+			project, STOP_TESTABLE_TOMCAT_TASK_NAME, StopAppServerTask.class);
+
+		stopTestableTomcatTask.setAppServerType("tomcat");
+
+		return stopTestableTomcatTask;
 	}
 
 	protected Test addTaskTestIntegration(Project project) {
@@ -1186,8 +1200,34 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskJar(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
 		configureTaskStartTestableTomcat(project, liferayExtension);
+		configureTasksAppServer(project, liferayExtension);
 		configureTasksDirectDeploy(project);
-		configureTasksStartAppServer(project);
+	}
+
+	protected void configureTasksAppServer(
+		Project project, final LiferayExtension liferayExtension) {
+
+		TaskContainer taskContainer = project.getTasks();
+
+		taskContainer.withType(
+			AppServerTask.class,
+			new Action<AppServerTask>() {
+
+				@Override
+				public void execute(AppServerTask appServerTask) {
+					String appServerType = appServerTask.getAppServerType();
+
+					if (Validator.isNull(appServerType)) {
+						return;
+					}
+
+					AppServer appServer = liferayExtension.getAppServer(
+						appServerType);
+
+					appServerTask.merge(appServer);
+				}
+
+			});
 	}
 
 	protected void configureTasksDirectDeploy(Project project) {
@@ -1313,84 +1353,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		setupTestableTomcatTask.setTomcatZipUrl(appServer.getZipUrl());
 	}
 
-	protected void configureTasksStartAppServer(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			StartAppServerTask.class,
-			new Action<StartAppServerTask>() {
-
-				@Override
-				public void execute(StartAppServerTask startAppServerTask) {
-					LiferayExtension liferayExtension = GradleUtil.getExtension(
-						startAppServerTask.getProject(),
-						LiferayExtension.class);
-
-					configureTaskStartAppServerBinDir(
-						startAppServerTask, liferayExtension);
-					configureTaskStartAppServerStartExecutableArgs(
-						startAppServerTask, liferayExtension);
-					configureTaskStartAppServerStartExecutable(
-						startAppServerTask, liferayExtension);
-				}
-
-			});
-	}
-
-	protected void configureTaskStartAppServerBinDir(
-		StartAppServerTask startAppServerTask,
-		LiferayExtension liferayExtension) {
-
-		if ((startAppServerTask.getAppServerBinDir() != null) ||
-			Validator.isNull(startAppServerTask.getAppServerType())) {
-
-			return;
-		}
-
-		AppServer appServer = liferayExtension.getAppServer(
-			startAppServerTask.getAppServerType());
-
-		startAppServerTask.setAppServerBinDir(appServer.getBinDir());
-	}
-
-	protected void configureTaskStartAppServerStartExecutable(
-		StartAppServerTask startAppServerTask,
-		LiferayExtension liferayExtension) {
-
-		if (Validator.isNotNull(
-				startAppServerTask.getAppServerStartExecutable()) ||
-			Validator.isNull(startAppServerTask.getAppServerType())) {
-
-			return;
-		}
-
-		AppServer appServer = liferayExtension.getAppServer(
-			startAppServerTask.getAppServerType());
-
-		startAppServerTask.setAppServerStartExecutable(
-			appServer.getStartExecutable());
-	}
-
-	protected void configureTaskStartAppServerStartExecutableArgs(
-		StartAppServerTask startAppServerTask,
-		LiferayExtension liferayExtension) {
-
-		List<String> appServerStartExecutableArgs =
-			startAppServerTask.getAppServerStartExecutableArgs();
-
-		if (!appServerStartExecutableArgs.isEmpty() ||
-			Validator.isNull(startAppServerTask.getAppServerType())) {
-
-			return;
-		}
-
-		AppServer appServer = liferayExtension.getAppServer(
-			startAppServerTask.getAppServerType());
-
-		startAppServerTask.setAppServerStartExecutableArgs(
-			appServer.getStartExecutableArgs());
-	}
-
 	protected void configureTaskStartTestableTomcat(
 		Project project, LiferayExtension liferayExtension) {
 
@@ -1398,7 +1360,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			(StartAppServerTask)GradleUtil.getTask(
 				project, START_TESTABLE_TOMCAT_TASK_NAME);
 
-		configureTaskEnabledWithAppServer(startTestableTomcatTask, "tomcat");
+		if (!configureTaskEnabledWithAppServer(
+				startTestableTomcatTask, "tomcat")) {
+
+			return;
+		}
 	}
 
 	protected void configureTaskTest(Project project) {

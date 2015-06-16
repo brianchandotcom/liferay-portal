@@ -165,13 +165,14 @@ public final class XMLLoggerHandler {
 		List<Element> childElements = element.elements();
 
 		if ((!childElements.isEmpty() && !_isExecutingFunction(element)) ||
-			_isExecutingMacro(element)) {
+			_isExecutingMacro(element) || _isExecutingTestCase(element)) {
 
 			sb.append(_getBtnItemText("btn-collapse"));
 		}
 
 		if (!childElements.isEmpty() &&
-			(_isExecutingFunction(element) || _isExecutingMacro(element))) {
+			(_isExecutingFunction(element) || _isExecutingMacro(element) ||
+			 _isExecutingTestCase(element))) {
 
 			sb.append(_getBtnItemText("btn-var"));
 		}
@@ -650,6 +651,14 @@ public final class XMLLoggerHandler {
 			(element.attributeValue("macro-desktop") != null) ||
 			(element.attributeValue("macro-mobile") != null)) {
 
+			return true;
+		}
+
+		return false;
+	}
+
+	private static boolean _isExecutingTestCase(Element element) {
+		if (element.attributeValue("test-case") != null) {
 			return true;
 		}
 

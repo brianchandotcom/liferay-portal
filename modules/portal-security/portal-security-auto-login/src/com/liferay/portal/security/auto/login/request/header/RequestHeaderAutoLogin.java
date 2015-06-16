@@ -109,34 +109,12 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 		return credentials;
 	}
 
-	protected RequestHeaderAutoLoginConfiguration
-		getRequestHeaderAutoLoginConfiguration(long companyId) {
-
-		try {
-			RequestHeaderAutoLoginConfiguration
-				requestHeaderAutoLoginConfiguration =
-					_settingsFactory.getSettings(
-						RequestHeaderAutoLoginConfiguration.class,
-						new CompanyServiceSettingsLocator(
-							companyId,
-							RequestHeaderAutoLoginConstants.SERVICE_NAME));
-
-			return requestHeaderAutoLoginConfiguration;
-		}
-		catch (SettingsException se) {
-			_log.error(
-				"Unable to get request header auto login configuration", se);
-		}
-
-		return null;
-	}
-
 	protected boolean isAccessAllowed(
 		long companyId, HttpServletRequest request) {
 
 		RequestHeaderAutoLoginConfiguration
 			requestHeaderAutoLoginConfiguration =
-				getRequestHeaderAutoLoginConfiguration(companyId);
+				_getRequestHeaderAutoLoginConfiguration(companyId);
 
 		if (requestHeaderAutoLoginConfiguration == null) {
 			return false;
@@ -157,7 +135,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	protected boolean isEnabled(long companyId) {
 		RequestHeaderAutoLoginConfiguration
 			requestHeaderAutoLoginConfiguration =
-				getRequestHeaderAutoLoginConfiguration(companyId);
+				_getRequestHeaderAutoLoginConfiguration(companyId);
 
 		if (requestHeaderAutoLoginConfiguration == null) {
 			return false;
@@ -169,7 +147,7 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	protected boolean isLDAPImportEnabled(long companyId) {
 		RequestHeaderAutoLoginConfiguration
 			requestHeaderAutoLoginConfiguration =
-				getRequestHeaderAutoLoginConfiguration(companyId);
+				_getRequestHeaderAutoLoginConfiguration(companyId);
 
 		if (requestHeaderAutoLoginConfiguration == null) {
 			return false;
@@ -181,6 +159,28 @@ public class RequestHeaderAutoLogin extends BaseAutoLogin {
 	@Reference
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
+	}
+
+	private RequestHeaderAutoLoginConfiguration
+		_getRequestHeaderAutoLoginConfiguration(long companyId) {
+
+		try {
+			RequestHeaderAutoLoginConfiguration
+				requestHeaderAutoLoginConfiguration =
+					_settingsFactory.getSettings(
+						RequestHeaderAutoLoginConfiguration.class,
+						new CompanyServiceSettingsLocator(
+							companyId,
+							RequestHeaderAutoLoginConstants.SERVICE_NAME));
+
+			return requestHeaderAutoLoginConfiguration;
+		}
+		catch (SettingsException se) {
+			_log.error(
+				"Unable to get request header auto login configuration", se);
+		}
+
+		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

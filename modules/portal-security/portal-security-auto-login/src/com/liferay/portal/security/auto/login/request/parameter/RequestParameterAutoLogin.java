@@ -127,8 +127,25 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		return _PASSWORD_PARAM;
 	}
 
-	protected RequestParameterAutoLoginConfiguration
-		getRequestParameterAutoLoginConfiguration(long companyId) {
+	protected boolean isEnabled(long companyId) {
+		RequestParameterAutoLoginConfiguration
+			requestParameterAutoLoginConfiguration =
+				_getRequestParameterAutoLoginConfiguration(companyId);
+
+		if (requestParameterAutoLoginConfiguration == null) {
+			return false;
+		}
+
+		return requestParameterAutoLoginConfiguration.enabled();
+	}
+
+	@Reference
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
+	private RequestParameterAutoLoginConfiguration
+		_getRequestParameterAutoLoginConfiguration(long companyId) {
 
 		try {
 			RequestParameterAutoLoginConfiguration
@@ -147,23 +164,6 @@ public class RequestParameterAutoLogin extends BaseAutoLogin {
 		}
 
 		return null;
-	}
-
-	protected boolean isEnabled(long companyId) {
-		RequestParameterAutoLoginConfiguration
-			requestParameterAutoLoginConfiguration =
-				getRequestParameterAutoLoginConfiguration(companyId);
-
-		if (requestParameterAutoLoginConfiguration == null) {
-			return false;
-		}
-
-		return requestParameterAutoLoginConfiguration.enabled();
-	}
-
-	@Reference
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
 	}
 
 	private static final String _LOGIN_PARAM = "parameterAutoLoginLogin";

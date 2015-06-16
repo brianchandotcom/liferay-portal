@@ -66,10 +66,27 @@ public class SourceFormatterTest {
 			sourceFormatter.format();
 		}
 		catch (SourceMismatchException sme) {
-			Assert.assertEquals(
-				sme.getFileName(), sme.getFormattedSource(),
-				sme.getOriginalSource());
+			try {
+				Assert.assertEquals(
+					sme.getFileName(), sme.getFormattedSource(),
+					sme.getOriginalSource());
+			}
+			catch (AssertionError ae) {
+				String message = ae.getMessage();
+
+				if (message.length() >= _MAX_MESSAGE_SIZE) {
+					message =
+						"Truncated message :\n" +
+						message.substring(0, _MAX_MESSAGE_SIZE);
+
+					throw new AssertionError(message, ae.getCause());
+				}
+
+				throw ae;
+			}
 		}
 	}
+
+	private static final int _MAX_MESSAGE_SIZE = 10000;
 
 }

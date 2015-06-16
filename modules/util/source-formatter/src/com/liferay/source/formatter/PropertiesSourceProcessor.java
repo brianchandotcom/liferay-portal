@@ -41,21 +41,13 @@ import org.apache.commons.io.IOUtils;
  */
 public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
-	public PropertiesSourceProcessor() {
-		try {
-			_portalPortalPropertiesContent = formatPortalPortalProperties();
-		}
-		catch (Exception e) {
-			_portalPortalPropertiesContent = StringPool.BLANK;
-		}
-	}
-
 	@Override
 	public String[] getIncludes() {
 		if (portalSource) {
 			return new String[] {
-				"**\\portal-ext.properties", "**\\portal-legacy-*.properties",
-				"**\\portlet.properties", "**\\source-formatter.properties"
+				"**\\portal.properties", "**\\portal-ext.properties",
+				"**\\portal-legacy-*.properties", "**\\portlet.properties",
+				"**\\source-formatter.properties"
 			};
 		}
 
@@ -70,18 +62,22 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 			File file, String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (fileName.endsWith("portlet.properties")) {
-			return formatPortletProperties(fileName, content);
-		}
+		String newContent = content;
 
-		if (fileName.endsWith("source-formatter.properties")) {
+		if (fileName.endsWith("portlet.properties")) {
+			newContent = formatPortletProperties(fileName, content);
+		}
+		else if (fileName.endsWith("source-formatter.properties")) {
 			formatSourceFormatterProperties(fileName, content);
+		}
+		else if (portalSource && fileName.endsWith("portal.properties")) {
+			newContent = formatPortalPortalProperties(fileName, content);
 		}
 		else {
 			formatPortalProperties(fileName, content);
 		}
 
-		return content;
+		return newContent;
 	}
 
 	@Override
@@ -89,25 +85,9 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		return getFileNames(new String[0], getIncludes());
 	}
 
-	protected String formatPortalPortalProperties() throws Exception {
-		if (!portalSource) {
-			ClassLoader classLoader =
-				PropertiesSourceProcessor.class.getClassLoader();
-
-			URL url = classLoader.getResource("portal.properties");
-
-			if (url != null) {
-				return IOUtils.toString(url);
-			}
-
-			return StringPool.BLANK;
-		}
-
-		String fileName = "portal-impl/src/portal.properties";
-
-		File file = getFile(fileName, 4);
-
-		String content = FileUtil.read(file);
+	protected String formatPortalPortalProperties(
+			String fileName, String content)
+		throws Exception {
 
 		StringBundler sb = new StringBundler();
 
@@ -120,7 +100,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				line = trimLine(line, true);
 
 				if (line.startsWith(StringPool.TAB)) {
-					line = line.replaceFirst(
+					line = line.replace(
 						StringPool.TAB, StringPool.FOUR_SPACES);
 				}
 
@@ -134,8 +114,6 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 		if (newContent.endsWith("\n")) {
 			newContent = newContent.substring(0, newContent.length() - 1);
 		}
-
-		processFormattedFile(file, fileName, content, newContent);
 
 		return newContent;
 	}
@@ -152,6 +130,8 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 			int previousPos = -1;
 
+			String portalPortalPropertiesContent = getPortalPortalProperties();
+
 			while ((line = unsyncBufferedReader.readLine()) != null) {
 				lineCount++;
 
@@ -163,7 +143,7 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 
 				String property = StringUtil.trim(line.substring(0, pos + 1));
 
-				pos = _portalPortalPropertiesContent.indexOf(
+				pos = portalPortalPropertiesContent.indexOf(
 					StringPool.FOUR_SPACES + property);
 
 				if (pos == -1) {
@@ -301,6 +281,34 @@ public class PropertiesSourceProcessor extends BaseSourceProcessor {
 				}
 			}
 		}
+	}
+
+	protected String getPortalPortalProperties() throws Exception {
+		if (_portalPortalPropertiesContent != null) {
+			return _portalPortalPropertiesContent;
+		}
+
+		if (portalSource) {
+			File file = getFile("portal-impl/src/portal.properties", 4);
+
+			_portalPortalPropertiesContent = FileUtil.read(file);
+
+			return _portalPortalPropertiesContent;
+		}
+
+		ClassLoader classLoader =
+			PropertiesSourceProcessor.class.getClassLoader();
+
+		URL url = classLoader.getResource("portal.properties");
+
+		if (url != null) {
+			_portalPortalPropertiesContent = IOUtils.toString(url);
+		}
+		else {
+			_portalPortalPropertiesContent = StringPool.BLANK;
+		}
+
+		return _portalPortalPropertiesContent;
 	}
 
 	private String _portalPortalPropertiesContent;

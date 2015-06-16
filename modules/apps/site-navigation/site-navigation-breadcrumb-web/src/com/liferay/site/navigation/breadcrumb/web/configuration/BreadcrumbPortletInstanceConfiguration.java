@@ -26,8 +26,7 @@ public interface BreadcrumbPortletInstanceConfiguration {
 
 	/**
 	 * Set a DDM template ID that starts with the prefix "ddmTemplate_" (i.e.
-	 * ddmTemplate_BREADCRUMB-HORIZONTAL-FTL) to use as the display
-	 * style.
+	 * ddmTemplate_BREADCRUMB-HORIZONTAL-FTL) to use as the display style.
 	 */
 	@Meta.AD(deflt = "", required = false)
 	public String displayStyle();

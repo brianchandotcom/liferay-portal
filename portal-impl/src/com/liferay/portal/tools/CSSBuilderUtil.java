@@ -26,7 +26,6 @@ import java.io.File;
  * @author Eduardo Lundgren
  * @author Shuyang Zhou
  */
-
 public class CSSBuilderUtil {
 
 	public static File getCacheFile(String fileName) {

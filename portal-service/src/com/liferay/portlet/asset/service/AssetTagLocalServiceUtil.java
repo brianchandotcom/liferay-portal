@@ -69,6 +69,18 @@ public class AssetTagLocalServiceUtil {
 		return getService().addAssetTag(assetTag);
 	}
 
+	/**
+	* Adds an asset tag.
+	*
+	* @param userId the primary key of the user adding the asset tag
+	* @param groupId the primary key of the group in which the asset tag is to
+	be added
+	* @param name the asset tag's name
+	* @param serviceContext the service context to be applied
+	* @return the asset tag that was added
+	* @throws PortalException if a user with the primary key could not be found
+	or if a portal exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTag addTag(long userId,
 		long groupId, java.lang.String name,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -76,6 +88,15 @@ public class AssetTagLocalServiceUtil {
 		return getService().addTag(userId, groupId, name, serviceContext);
 	}
 
+	/**
+	* Adds resources for the asset tag.
+	*
+	* @param tag the asset tag for which to add resources
+	* @param addGroupPermissions whether to add group permissions
+	* @param addGuestPermissions whether to add guest permissions
+	* @throws PortalException if resources could not be added for the asset tag
+	or if a portal exception occurred
+	*/
 	public static void addTagResources(
 		com.liferay.portlet.asset.model.AssetTag tag,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -84,6 +105,15 @@ public class AssetTagLocalServiceUtil {
 			.addTagResources(tag, addGroupPermissions, addGuestPermissions);
 	}
 
+	/**
+	* Adds resources for the asset tag using the group and guest permissions.
+	*
+	* @param tag the asset tag for which to add resources
+	* @param groupPermissions the group permissions to be applied
+	* @param guestPermissions the guest permissions to be applied
+	* @throws PortalException if resources could not be added for the asset tag
+	or if a portal exception occurred
+	*/
 	public static void addTagResources(
 		com.liferay.portlet.asset.model.AssetTag tag,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
@@ -92,22 +122,21 @@ public class AssetTagLocalServiceUtil {
 	}
 
 	/**
-	* Returns the tags matching the group and names, creating new tags with the
-	* names if the group doesn't already have them.
+	* Returns the asset tags matching the group and names, creating new asset
+	* tags matching the names if the group doesn't already have them.
 	*
 	* <p>
-	* For each name, if a tag with that name doesn't already exist for the
-	* group, this method creates a new tag with that name for the group.
+	* For each name, if an asset tag with the name doesn't already exist in the
+	* group, this method creates a new asset tag with the name in the group.
 	* </p>
 	*
-	* @param userId the primary key of the user
-	* @param group ID the primary key of the tag's group
-	* @param names the tag names
-	* @return the tags matching the group and names and new tags matching the
-	names that don't already exist for the group
-	* @throws PortalException if a matching group could not be found, if the
-	tag's key or value were invalid, or if a portal exception
-	occurred
+	* @param userId the primary key of the user checking the asset tags
+	* @param group the group in which to check the asset tags
+	* @param names the asset tag names
+	* @return the asset tags matching the group and names and new asset tags
+	matching the names that don't already exist in the group
+	* @throws PortalException if a matching group could not be found or if a
+	portal exception occurred
 	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
 		long userId, com.liferay.portal.model.Group group,
@@ -116,6 +145,19 @@ public class AssetTagLocalServiceUtil {
 		return getService().checkTags(userId, group, names);
 	}
 
+	/**
+	* Returns the asset tags matching the group and names, creating new asset
+	* tags matching the names if the group doesn't already have them.
+	*
+	* @param userId the primary key of the user checking the asset tags
+	* @param groupId the primary key of the group in which check the asset
+	tags
+	* @param names the asset tag names
+	* @return the asset tags matching the group and names and new asset tags
+	matching the names that don't already exist in the group
+	* @throws PortalException if a matching group could not be found or if a
+	portal exception occurred
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> checkTags(
 		long userId, long groupId, java.lang.String[] names)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -137,6 +179,16 @@ public class AssetTagLocalServiceUtil {
 		return getService().createAssetTag(tagId);
 	}
 
+	/**
+	* Decrements the number of assets to which the asset tag has been applied.
+	*
+	* @param tagId the primary key of the asset tag
+	* @param classNameId the class name ID of the entity to which the asset
+	tag had been applied
+	* @return the asset tag
+	* @throws PortalException if an asset tag with the primary key could not be
+	found or if a portal exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTag decrementAssetCount(
 		long tagId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -184,6 +236,13 @@ public class AssetTagLocalServiceUtil {
 		return getService().deleteAssetTag(tagId);
 	}
 
+	/**
+	* Deletes all asset tags in the group.
+	*
+	* @param groupId the primary key of the group in which to delete all asset
+	tags
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static void deleteGroupTags(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteGroupTags(groupId);
@@ -198,11 +257,24 @@ public class AssetTagLocalServiceUtil {
 		return getService().deletePersistedModel(persistedModel);
 	}
 
+	/**
+	* Deletes the asset tag.
+	*
+	* @param tag the asset tag to be deleted
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static void deleteTag(com.liferay.portlet.asset.model.AssetTag tag)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTag(tag);
 	}
 
+	/**
+	* Deletes the asset tag.
+	*
+	* @param tagId the primary key of the asset tag
+	* @throws PortalException if no asset tag could be found with the primary
+	key or if a portal exception occurred
+	*/
 	public static void deleteTag(long tagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteTag(tagId);
@@ -291,6 +363,14 @@ public class AssetTagLocalServiceUtil {
 		return getService().fetchAssetTag(tagId);
 	}
 
+	/**
+	* Returns the asset tag with the name in the group.
+	*
+	* @param groupId the primary key of the group
+	* @param name the asset tag's name
+	* @return the asset tag with the name in the group or <code>null</code> if
+	it could not be found
+	*/
 	public static com.liferay.portlet.asset.model.AssetTag fetchTag(
 		long groupId, java.lang.String name) {
 		return getService().fetchTag(groupId, name);
@@ -378,25 +458,57 @@ public class AssetTagLocalServiceUtil {
 		return getService().getBeanIdentifier();
 	}
 
+	/**
+	* Returns the asset tags of the asset entry.
+	*
+	* @param entryId the primary key of the asset entry
+	* @return the asset tags of the asset entry
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getEntryTags(
 		long entryId) {
 		return getService().getEntryTags(entryId);
 	}
 
+	/**
+	* Returns the asset tags in the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the asset tags in the group
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupTags(
 		long groupId) {
 		return getService().getGroupTags(groupId);
 	}
 
+	/**
+	* Returns a range of all the asset tags in the group.
+	*
+	* @param groupId the primary key of the group
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the range of matching asset tags
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupTags(
 		long groupId, int start, int end) {
 		return getService().getGroupTags(groupId, start, end);
 	}
 
+	/**
+	* Returns the number of asset tags in the group.
+	*
+	* @param groupId the primary key of the group
+	* @return the number of asset tags in the group
+	*/
 	public static int getGroupTagsCount(long groupId) {
 		return getService().getGroupTagsCount(groupId);
 	}
 
+	/**
+	* Returns the asset tags in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @return the asset tags in the groups
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getGroupsTags(
 		long[] groupIds) {
 		return getService().getGroupsTags(groupIds);
@@ -424,51 +536,126 @@ public class AssetTagLocalServiceUtil {
 			socialActivityCounterName, startPeriod, endPeriod);
 	}
 
+	/**
+	* Returns the asset tag with the name in the group.
+	*
+	* @param groupId the primary key of the group
+	* @param name the name of the asset tag
+	* @return the asset tag with the name in the group
+	* @throws PortalException if a matching asset tag could not be found
+	*/
 	public static com.liferay.portlet.asset.model.AssetTag getTag(
 		long groupId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTag(groupId, name);
 	}
 
+	/**
+	* Returns the asset tag with the primary key.
+	*
+	* @param tagId the primary key of the asset tag
+	* @return the asset tag with the primary key
+	* @throws PortalException if an asset tag with the primary key could not be
+	found
+	*/
 	public static com.liferay.portlet.asset.model.AssetTag getTag(long tagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTag(tagId);
 	}
 
+	/**
+	* Returns the primary keys of the asset tags with the names in the group.
+	*
+	* @param groupId the primary key of the group
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the group
+	*/
 	public static long[] getTagIds(long groupId, java.lang.String[] names) {
 		return getService().getTagIds(groupId, names);
 	}
 
+	/**
+	* Returns the primary keys of the asset tags with the name in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param name the name of the asset tags
+	* @return the primary keys of the asset tags with the name in the groups
+	*/
 	public static long[] getTagIds(long[] groupIds, java.lang.String name) {
 		return getService().getTagIds(groupIds, name);
 	}
 
+	/**
+	* Returns the primary keys of the asset tags with the names in the groups.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param names the names of the asset tags
+	* @return the primary keys of the asset tags with the names in the groups
+	*/
 	public static long[] getTagIds(long[] groupIds, java.lang.String[] names) {
 		return getService().getTagIds(groupIds, names);
 	}
 
+	/**
+	* Returns the names of all the asset tags.
+	*
+	* @return the names of all the asset tags
+	*/
 	public static java.lang.String[] getTagNames() {
 		return getService().getTagNames();
 	}
 
+	/**
+	* Returns the names of the asset tags of the entity
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the names of the asset tags of the entity
+	*/
 	public static java.lang.String[] getTagNames(java.lang.String className,
 		long classPK) {
 		return getService().getTagNames(className, classPK);
 	}
 
+	/**
+	* Returns the names of the asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @return the names of the asset tags of the entity
+	*/
 	public static java.lang.String[] getTagNames(long classNameId, long classPK) {
 		return getService().getTagNames(classNameId, classPK);
 	}
 
+	/**
+	* Returns all the asset tags.
+	*
+	* @return the asset tags
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags() {
 		return getService().getTags();
 	}
 
+	/**
+	* Returns the asset tags of the entity.
+	*
+	* @param className the class name of the entity
+	* @param classPK the primary key of the entity
+	* @return the asset tags of the entity
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		java.lang.String className, long classPK) {
 		return getService().getTags(className, classPK);
 	}
 
+	/**
+	* Returns the asset tags of the entity.
+	*
+	* @param classNameId the class name ID of the entity
+	* @param classPK the primary key of the entity
+	* @return the asset tags of the entity
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> getTags(
 		long classNameId, long classPK) {
 		return getService().getTags(classNameId, classPK);
@@ -498,26 +685,72 @@ public class AssetTagLocalServiceUtil {
 		return getService().hasAssetEntryAssetTags(entryId);
 	}
 
+	/**
+	* Returns <code>true</code> if the group contains an asset tag with the
+	* name.
+	*
+	* @param groupId the primary key of the group
+	* @param name the name of the asset tag
+	* @return <code>true</code> if the group contains an asset tag with the
+	name; <code>false</code> otherwise.
+	*/
 	public static boolean hasTag(long groupId, java.lang.String name) {
 		return getService().hasTag(groupId, name);
 	}
 
+	/**
+	* Increments the number of assets to which the asset tag has been applied.
+	*
+	* @param tagId the primary key of the asset tag
+	* @param classNameId the class name ID of the entity to which the asset
+	tag is being applied
+	* @return the asset tag
+	* @throws PortalException if a asset tag with the primary key could not be
+	found or if a portal exception occurred
+	*/
 	public static com.liferay.portlet.asset.model.AssetTag incrementAssetCount(
 		long tagId, long classNameId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().incrementAssetCount(tagId, classNameId);
 	}
 
+	/**
+	* Replaces all occurrences of the first asset tag with the second asset tag
+	* and deletes the first asset tag.
+	*
+	* @param fromTagId the primary key of the asset tag to be replaced
+	* @param toTagId the primary key of the asset tag to apply to the asset
+	entries of the other asset tag
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static void mergeTags(long fromTagId, long toTagId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().mergeTags(fromTagId, toTagId);
 	}
 
+	/**
+	* Returns the asset tags in the group whose names match the pattern.
+	*
+	* @param groupId the primary key of the group
+	* @param name the pattern to match
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags in the group whose names match the pattern
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> search(
 		long groupId, java.lang.String name, int start, int end) {
 		return getService().search(groupId, name, start, end);
 	}
 
+	/**
+	* Returns the asset tags in the groups whose names match the pattern.
+	*
+	* @param groupIds the primary keys of the groups
+	* @param name the pattern to match
+	* @param start the lower bound of the range of asset tags
+	* @param end the upper bound of the range of asset tags (not inclusive)
+	* @return the asset tags in the groups whose names match the pattern
+	*/
 	public static java.util.List<com.liferay.portlet.asset.model.AssetTag> search(
 		long[] groupIds, java.lang.String name, int start, int end) {
 		return getService().search(groupIds, name, start, end);

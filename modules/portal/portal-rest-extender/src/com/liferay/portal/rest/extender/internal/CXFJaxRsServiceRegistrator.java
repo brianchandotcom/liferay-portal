@@ -29,8 +29,8 @@ import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.provider.json.JSONProvider;
 
 /**
-* @author Carlos Sierra Andrés
-*/
+ * @author Carlos Sierra Andrés
+ */
 public class CXFJaxRsServiceRegistrator {
 
 	public CXFJaxRsServiceRegistrator(Map<String, Object> properties) {

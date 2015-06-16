@@ -457,7 +457,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Deletes the file shortcut. This method is only supported by the Liferay
 	 * repository.
 	 *
-	 * @param fileShortcut the file shortcut
+	 * @param  fileShortcut the file shortcut
 	 * @throws PortalException if the file shortcut could not be found
 	 */
 	@Override
@@ -1229,8 +1229,9 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * Updates all file shortcuts to the existing file entry to the new file
 	 * entry. This method is only supported by the Liferay repository.
 	 *
-	 * @param oldToFileEntryId the primary key of the old file entry pointed to
-	 * @param newToFileEntryId the primary key of the new file entry to point to
+	 * @param  oldToFileEntryId the primary key of the old file entry pointed to
+	 * @param  newToFileEntryId the primary key of the new file entry to point
+	 *         to
 	 */
 	@Override
 	public void updateFileShortcuts(
@@ -1245,7 +1246,7 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 
 	/**
 	 * Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	 *            long)}
+	 * long)}
 	 */
 	@Deprecated
 	@Override

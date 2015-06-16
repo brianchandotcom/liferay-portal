@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Export Import Service
+Bundle-SymbolicName: com.liferay.exportimport.service
+Bundle-Version: 1.0.0
+Include-Resource: classes

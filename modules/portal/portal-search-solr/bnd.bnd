@@ -11,7 +11,8 @@ Bundle-ClassPath: \
 	lib/lucene-suggest.jar,\
 	lib/noggit.jar,\
 	lib/solr-solrj.jar,\
-	lib/wstx-asl.jar,\
+	lib/stax2-api.jar,\
+	lib/woodstox-core-asl.jar,\
 	lib/zookeeper.jar
 Bundle-Name: Liferay Portal Search Solr
 Bundle-SymbolicName: com.liferay.portal.search.solr
@@ -39,5 +40,6 @@ Include-Resource:\
 	lib/lucene-suggest.jar=lib/lucene-suggest.jar,\
 	lib/noggit.jar=lib/noggit.jar,\
 	lib/solr-solrj.jar=lib/solr-solrj.jar,\
-	lib/wstx-asl.jar=lib/wstx-asl.jar,\
+	lib/stax2-api.jar=lib/stax2-api.jar,\
+	lib/woodstox-core-asl.jar=lib/woodstox-core-asl.jar,\
 	lib/zookeeper.jar=lib/zookeeper.jar

@@ -123,10 +123,12 @@
 			var instance = this;
 
 			if (!instance._bbcodeConverter) {
+				var editorConfig = this._editor.config;
+
 				var converterConfig = {
-					emoticonImages: this._editor.config.smiley_images,
-					emoticonPath: this._editor.config.smiley_path,
-					emoticonSymbols: this._editor.config.smiley_symbols
+					emoticonImages: editorConfig.smiley_images,
+					emoticonPath: editorConfig.smiley_path,
+					emoticonSymbols: editorConfig.smiley_symbols
 				};
 
 				instance._bbcodeConverter = new CKEDITOR.BBCode2HTML(converterConfig);
@@ -238,12 +240,14 @@
 			var imagePath = element.getAttribute('src');
 
 			if (imagePath) {
+				var editorConfig = this._editor.config;
+
 				var image = imagePath.substring(imagePath.lastIndexOf('/') + 1);
 
-				var imageIndex = instance._getImageIndex(this._editor.config.emoticonImages, image);
+				var imageIndex = instance._getImageIndex(editorConfig.emoticonImages, image);
 
 				if (imageIndex >= 0) {
-					emoticonSymbol = this._editor.config.emoticonSymbols[imageIndex];
+					emoticonSymbol = editorConfig.emoticonSymbols[imageIndex];
 				}
 			}
 
@@ -537,8 +541,10 @@
 			var hrefAttribute = element.getAttribute('href');
 
 			if (hrefAttribute) {
-				if (hrefAttribute.indexOf(this._editor.config.newThreadURL) >= 0) {
-					hrefAttribute = this._editor.config.newThreadURL;
+				var editorConfig = this._editor.config;
+
+				if (hrefAttribute.indexOf(editorConfig.newThreadURL) >= 0) {
+					hrefAttribute = editorConfig.newThreadURL;
 				}
 
 				var linkHandler = MAP_LINK_HANDLERS[hrefAttribute.indexOf(STR_MAILTO)] || 'url';

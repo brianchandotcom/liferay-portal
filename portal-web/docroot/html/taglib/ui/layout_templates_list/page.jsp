@@ -24,27 +24,29 @@ List<LayoutTemplate> layoutTemplates = (List<LayoutTemplate>)request.getAttribut
 
 <aui:fieldset>
 	<aui:row cssClass="lfr-page-layouts">
+		<ul>
 
-		<%
-		layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
+			<%
+			layoutTemplates = PluginUtil.restrictPlugins(layoutTemplates, user);
 
-		for (int i = 0; i < layoutTemplates.size(); i++) {
-			LayoutTemplate layoutTemplate = layoutTemplates.get(i);
-		%>
+			for (int i = 0; i < layoutTemplates.size(); i++) {
+				LayoutTemplate layoutTemplate = layoutTemplates.get(i);
+			%>
 
-			<div class="lfr-layout-template radio">
-				<label for="<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>">
-					<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" wrappedField="<%= true %>" />
+				<li class="lfr-layout-template radio">
+					<label for="<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>">
+						<aui:input checked="<%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) %>" id='<%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>' label="" name="layoutTemplateId" type="radio" value="<%= layoutTemplate.getLayoutTemplateId() %>" wrappedField="<%= true %>" />
 
-					<img alt="" class="layout-template-entry modify-link <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="25" onclick="document.getElementById('<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" width="25" />
+						<img alt="" class="layout-template-entry modify-link <%= layoutTemplateId.equals(layoutTemplate.getLayoutTemplateId()) ? "layout-selected" : StringPool.BLANK %>" height="25" onclick="document.getElementById('<portlet:namespace /><%= layoutTemplateIdPrefix + "layoutTemplateId" + i %>').checked = true;" src="<%= layoutTemplate.getStaticResourcePath() %><%= HtmlUtil.escapeAttribute(layoutTemplate.getThumbnailPath()) %>" width="25" />
 
-					<span><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
-				</label>
-			</div>
+						<span><%= HtmlUtil.escape(layoutTemplate.getName(locale)) %></span>
+					</label>
+				</li>
 
-		<%
-		}
-		%>
+			<%
+			}
+			%>
 
+		</ul>
 	</aui:row>
 </aui:fieldset>

@@ -12,33 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.search.solr.internal.server;
+package com.liferay.portal.search.solr.configuration;
 
-import java.util.Comparator;
+import aQute.bnd.annotation.metatype.Meta;
 
 /**
  * @author Michael C. Han
  */
-public class SolrServerWrapperComparator
-	implements Comparator<SolrServerWrapper> {
+@Meta.OCD(
+	id = "com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration"
+)
+public interface SolrHttpClientFactoryConfiguration {
 
-	@Override
-	public int compare(
-		SolrServerWrapper solrServerWrapper1,
-		SolrServerWrapper solrServerWrapper2) {
+	@Meta.AD(deflt = "solr", required = false)
+	public String basicAuthPassword();
 
-		if (solrServerWrapper1.getInvocationCount() >
-				solrServerWrapper2.getInvocationCount()) {
+	@Meta.AD(deflt = "solr", required = false)
+	public String basicAuthUserName();
 
-			return 1;
-		}
-		else if (solrServerWrapper1.getInvocationCount() <
-					solrServerWrapper2.getInvocationCount()) {
+	@Meta.AD(deflt = "20", required = false)
+	public int defaultMaxConnectionsPerRoute();
 
-			return -1;
-		}
-
-		return 0;
-	}
+	@Meta.AD(deflt = "20", required = false)
+	public int maxTotalConnections();
 
 }

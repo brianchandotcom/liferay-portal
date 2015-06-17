@@ -405,7 +405,7 @@ public class MicroblogsEntryLocalServiceImpl
 		return microblogsEntry;
 	}
 
-	protected static long getSubscriptionId(
+	protected long getSubscriptionId(
 		long userId, MicroblogsEntry microblogsEntry) {
 
 		try {
@@ -528,7 +528,7 @@ public class MicroblogsEntryLocalServiceImpl
 		}
 	}
 
-	private static class NotificationProcessCallable
+	private class NotificationProcessCallable
 		implements ProcessCallable<Serializable> {
 
 		public NotificationProcessCallable(

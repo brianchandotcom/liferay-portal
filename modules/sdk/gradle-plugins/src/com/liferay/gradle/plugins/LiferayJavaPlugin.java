@@ -1502,26 +1502,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		return project.file("lib");
 	}
 
-	protected boolean getProperty(
-		Project project, String name, boolean defaultValue) {
-
-		if (!project.hasProperty(name)) {
-			return defaultValue;
-		}
-
-		Object value = project.property(name);
-
-		if (value instanceof Boolean) {
-			return (Boolean)value;
-		}
-
-		if (value instanceof String) {
-			return Boolean.parseBoolean((String)value);
-		}
-
-		return defaultValue;
-	}
-
 	protected File getResourcesDir(Project project) {
 		SourceSet sourceSet = GradleUtil.getSourceSet(
 			project, SourceSet.MAIN_SOURCE_SET_NAME);
@@ -1542,12 +1522,12 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 	}
 
 	protected boolean isAddDefaultDependencies(Project project) {
-		return getProperty(
+		return GradleUtil.getProperty(
 			project, _ADD_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
 	}
 
 	protected boolean isAddTestDefaultDependencies(Project project) {
-		return getProperty(
+		return GradleUtil.getProperty(
 			project, _ADD_TEST_DEFAULT_DEPENDENCIES_PROPERTY_NAME, true);
 	}
 

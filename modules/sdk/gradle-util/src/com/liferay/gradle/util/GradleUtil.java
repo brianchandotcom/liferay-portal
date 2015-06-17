@@ -253,6 +253,26 @@ public class GradleUtil {
 		return null;
 	}
 
+	public static boolean getProperty(
+		Project project, String name, boolean defaultValue) {
+
+		if (!project.hasProperty(name)) {
+			return defaultValue;
+		}
+
+		Object value = project.property(name);
+
+		if (value instanceof Boolean) {
+			return (Boolean)value;
+		}
+
+		if (value instanceof String) {
+			return Boolean.parseBoolean((String)value);
+		}
+
+		return defaultValue;
+	}
+
 	public static SourceSet getSourceSet(Project project, String name) {
 		JavaPluginConvention javaPluginConvention = getConvention(
 			project, JavaPluginConvention.class);

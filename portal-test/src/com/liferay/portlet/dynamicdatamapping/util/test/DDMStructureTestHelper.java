@@ -88,6 +88,17 @@ public class DDMStructureTestHelper {
 			storageType, type);
 	}
 
+	public DDMStructure addStructure(
+			long classNameId, String structureKey, String name,
+			String definition, String storageType, int type)
+		throws Exception {
+
+		DDMForm ddmForm = toDDMForm(definition);
+
+		return addStructure(
+			classNameId, structureKey, name, ddmForm, storageType, type);
+	}
+
 	public DDMForm toDDMForm(String definition) throws Exception {
 		DDMXMLUtil.validateXML(definition);
 

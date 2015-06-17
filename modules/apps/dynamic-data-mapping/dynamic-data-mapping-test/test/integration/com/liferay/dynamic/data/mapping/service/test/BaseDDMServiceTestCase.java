@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.portlet.dynamicdatamapping.service.test;
+package com.liferay.dynamic.data.mapping.service.test;
 
-import com.liferay.portal.kernel.locale.test.LocaleTestUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
@@ -36,10 +36,15 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureLayoutTestHelper;
 import com.liferay.portlet.dynamicdatamapping.util.test.DDMStructureTestHelper;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.junit.Before;
 
 /**
  * @author Eduardo Garcia
+ * @author Rafael Praxedes
  */
 public class BaseDDMServiceTestCase {
 
@@ -158,10 +163,9 @@ public class BaseDDMServiceTestCase {
 
 		return DDMTemplateLocalServiceUtil.addTemplate(
 			TestPropsValues.getUserId(), group.getGroupId(), classNameId,
-			classPK, sourceClassNameId, templateKey,
-			LocaleTestUtil.getDefaultLocaleMap(name),
-			LocaleTestUtil.getDefaultLocaleMap(description), type, mode,
-			language, script, false, false, null, null,
+			classPK, sourceClassNameId, templateKey, getDefaultLocaleMap(name),
+			getDefaultLocaleMap(description), type, mode, language, script,
+			false, false, null, null,
 			ServiceContextTestUtil.getServiceContext());
 	}
 
@@ -185,7 +189,15 @@ public class BaseDDMServiceTestCase {
 	}
 
 	protected String getBasePath() {
-		return "com/liferay/portlet/dynamicdatamapping/dependencies/";
+		return "com/liferay/dynamic/data/mapping/dependencies/";
+	}
+
+	protected Map<Locale, String> getDefaultLocaleMap(String value) {
+		Map<Locale, String> map = new HashMap<>();
+
+		map.put(LocaleUtil.getSiteDefault(), value);
+
+		return map;
 	}
 
 	protected String getTestTemplateScript(String language) throws Exception {

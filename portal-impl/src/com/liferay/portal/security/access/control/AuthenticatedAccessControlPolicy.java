@@ -40,10 +40,16 @@ public class AuthenticatedAccessControlPolicy extends BaseAccessControlPolicy {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		ServiceAccessControlProfile defaultServiceAccessControlProfile =
-			ServiceAccessControlProfileManagerUtil.
-				getDefaultServiceAccessControlProfile(
-					permissionChecker.getCompanyId());
+		ServiceAccessControlProfile defaultServiceAccessControlProfile = null;
+
+		if (ServiceAccessControlProfileManagerUtil.
+			getServiceAccessControlProfileManager() != null) {
+
+			defaultServiceAccessControlProfile= 
+				ServiceAccessControlProfileManagerUtil.
+					getDefaultServiceAccessControlProfile(
+						permissionChecker.getCompanyId());
+		}
 
 		if ((defaultServiceAccessControlProfile == null) &&
 			!accessControlled.guestAccessEnabled() &&

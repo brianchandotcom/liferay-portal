@@ -1232,6 +1232,8 @@ public class DLAppLocalServiceImpl extends DLAppLocalServiceBaseImpl {
 	 * @param  oldToFileEntryId the primary key of the old file entry pointed to
 	 * @param  newToFileEntryId the primary key of the new file entry to point
 	 *         to
+	 * @throws PortalException if a file entry for any one of the primary keys
+	 *         could not be found
 	 */
 	@Override
 	public void updateFileShortcuts(

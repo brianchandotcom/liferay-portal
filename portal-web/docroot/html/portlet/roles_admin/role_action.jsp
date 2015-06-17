@@ -100,6 +100,7 @@ if (name.equals(RoleConstants.GUEST) || name.equals(RoleConstants.OWNER) || name
 
 	<c:if test="<%= !role.isSystem() && RolePermissionUtil.contains(permissionChecker, role.getRoleId(), ActionKeys.DELETE) %>">
 		<portlet:actionURL name="deleteRole" var="deleteRoleURL">
+			<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role.jsp" />
 			<portlet:param name="redirect" value="<%= redirect %>" />
 			<portlet:param name="roleId" value="<%= String.valueOf(role.getRoleId()) %>" />
 		</portlet:actionURL>

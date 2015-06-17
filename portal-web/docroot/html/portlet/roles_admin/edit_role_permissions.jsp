@@ -400,7 +400,6 @@ portletURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 	function <portlet:namespace />updateActions() {
 		var form = AUI.$(document.<portlet:namespace />fm);
 
-		form.fm('<%= ActionRequest.ACTION_NAME %>').val('updateActions');
 		form.fm('redirect').val('<%= portletURL.toString() %>');
 		form.fm('selectedTargets').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 

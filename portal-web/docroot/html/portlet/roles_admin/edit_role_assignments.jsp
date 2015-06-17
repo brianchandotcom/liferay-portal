@@ -58,7 +58,9 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 	<liferay-util:param name="backURL" value="<%= redirect %>" />
 </liferay-util:include>
 
-<portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL" />
+<portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
+	<portlet:param name="mvcPath" value="/html/portlet/roles_admin/edit_role_assignments.jsp" />
+</portlet:actionURL>
 
 <aui:form action="<%= editRoleAssignmentsURL %>" method="post" name="fm">
 	<aui:input name="tabs1" type="hidden" value="<%= tabs1 %>" />

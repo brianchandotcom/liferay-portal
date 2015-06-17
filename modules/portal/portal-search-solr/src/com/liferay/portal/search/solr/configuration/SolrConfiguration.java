@@ -42,10 +42,10 @@ public interface SolrConfiguration {
 	)
 	public boolean logExceptionsOnly();
 
-	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
+	@Meta.AD(deflt = "http://localhost:8080/solr/liferay", required = false)
 	public String[] readURL();
 
-	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
+	@Meta.AD(deflt = "http://localhost:8080/solr/liferay", required = false)
 	public String[] writeURL();
 
 	@Meta.AD(deflt = "localhost:9983", required = false)

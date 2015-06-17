@@ -535,8 +535,8 @@
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -544,47 +544,44 @@
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySearchTerm" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Blogs" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Entry" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Content" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Blogs1 Entry1 Content1" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 
 	<command name="SearchBlogsEntryTitle" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
-
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Blogs" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoContentCP">
@@ -592,33 +589,33 @@
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="${entryTitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entrySearchTerm" value="Blogs Entry Title" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Blogs" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Entry" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Title" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="BlogsEntry#searchNoCP">
-			<var name="entryContent" value="${entryContent}" />
+			<var name="entryContent" value="Blogs Entry Content" />
 			<var name="entrySearchTerm" value="Blogs1 Entry1 Title1" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 	</command>
 

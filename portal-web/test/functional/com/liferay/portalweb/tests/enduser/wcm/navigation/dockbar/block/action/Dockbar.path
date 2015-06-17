@@ -25,7 +25,12 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//a[@id='_145_editLayoutPanel']</td>
+	<td>//a[@title='Edit']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EDIT_SPANISH</td>
+	<td>//a[@title='Editar']</td>
 	<td></td>
 </tr>
 <tr>

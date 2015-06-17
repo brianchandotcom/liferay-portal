@@ -14,13 +14,13 @@
 
 package com.liferay.portal.search.solr.http;
 
-import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 
 /**
  * @author Michael C. Han
  */
 public interface SSLSocketFactoryBuilder {
 
-	public SSLSocketFactory build() throws Exception;
+	public SSLConnectionSocketFactory build() throws Exception;
 
 }

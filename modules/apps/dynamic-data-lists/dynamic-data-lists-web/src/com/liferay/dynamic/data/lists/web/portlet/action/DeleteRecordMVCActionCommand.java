@@ -33,16 +33,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 		"mvc.command.name=deleteRecord"
 	},
 	service = MVCActionCommand.class
 )
 public class DeleteRecordMVCActionCommand extends BaseMVCActionCommand {
-
-	@Reference
-	public void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -52,6 +48,11 @@ public class DeleteRecordMVCActionCommand extends BaseMVCActionCommand {
 		long recordId = ParamUtil.getLong(portletRequest, "recordId");
 
 		_ddlRecordService.deleteRecord(recordId);
+	}
+
+	@Reference
+	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
 	}
 
 	private DDLRecordService _ddlRecordService;

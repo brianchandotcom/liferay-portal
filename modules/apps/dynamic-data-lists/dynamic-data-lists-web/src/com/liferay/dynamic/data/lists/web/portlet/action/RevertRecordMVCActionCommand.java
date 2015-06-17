@@ -35,16 +35,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS,
+		"javax.portlet.name=" + DDLPortletKeys.DYNAMIC_DATA_LISTS_DISPLAY,
 		"mvc.command.name=revertRecord"
 	},
 	service = MVCActionCommand.class
 )
 public class RevertRecordMVCActionCommand extends AddRecordMVCActionCommand {
-
-	@Reference
-	public void setDDLRecordService(DDLRecordService ddlRecordService) {
-		_ddlRecordService = ddlRecordService;
-	}
 
 	@Override
 	protected void doProcessAction(
@@ -59,6 +55,11 @@ public class RevertRecordMVCActionCommand extends AddRecordMVCActionCommand {
 			DDLRecord.class.getName(), portletRequest);
 
 		_ddlRecordService.revertRecord(recordId, version, serviceContext);
+	}
+
+	@Reference
+	protected void setDDLRecordService(DDLRecordService ddlRecordService) {
+		_ddlRecordService = ddlRecordService;
 	}
 
 	private DDLRecordService _ddlRecordService;

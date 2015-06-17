@@ -135,6 +135,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 
 			ResultRow row = new ResultRow(record, record.getRecordId(), i);
 
+			row.setParameter("editable", String.valueOf(editable));
 			row.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 			row.setParameter("hasDeletePermission", String.valueOf(hasDeletePermission));
 			row.setParameter("hasUpdatePermission", String.valueOf(hasUpdatePermission));
@@ -145,6 +146,7 @@ portletURL.setParameter("recordSetId", String.valueOf(recordSet.getRecordSetId()
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("recordId", String.valueOf(record.getRecordId()));
 			rowURL.setParameter("version", recordVersion.getVersion());
+			rowURL.setParameter("editable", String.valueOf(editable));
 			rowURL.setParameter("formDDMTemplateId", String.valueOf(formDDMTemplateId));
 
 			// Columns

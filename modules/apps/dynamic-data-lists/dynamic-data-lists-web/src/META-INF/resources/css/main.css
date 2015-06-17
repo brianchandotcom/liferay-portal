@@ -2,7 +2,7 @@
 	display: none;
 }
 
-.portlet-dynamic-data-lists, .portlet-dynamic-data-list-display {
+.portlet-dynamic-data-lists, .portlet-dynamic-data-lists-display {
 	.lfr-spreadsheet-container .table {
 		overflow: auto;
 

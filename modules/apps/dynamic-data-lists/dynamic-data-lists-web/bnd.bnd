@@ -3,7 +3,9 @@ Bundle-SymbolicName: com.liferay.dynamic.data.lists.web
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.dynamic.data.lists.web.asset,\
+	com.liferay.dynamic.data.lists.web.constants,\
 	com.liferay.dynamic.data.lists.web.lar
 Include-Resource:\
 	classes,\
 	META-INF/resources=src/META-INF/resources
+Web-ContextPath: /ddl-web

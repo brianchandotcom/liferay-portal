@@ -112,7 +112,7 @@ AUI.add(
 
 						instance._eventHandlers = [
 							instance.get('container').delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance),
-							instance.get('form').after(['liferay-form-field:remove', 'liferay-form-field:repeat'], A.bind('_syncRepeatableField', instance))
+							instance.get('form').after(['liferay-ddm-form-renderer-field:removed', 'liferay-ddm-form-renderer-field:repeated'], A.bind('_syncRepeatableField', instance))
 						];
 					},
 
@@ -217,6 +217,12 @@ AUI.add(
 						return Lang.String.unescapeHTML(inputNode.val());
 					},
 
+					isSibling: function(field) {
+						var instance = this;
+
+						return field.get('name') === instance.get('name');
+					},
+
 					remove: function() {
 						var instance = this;
 
@@ -229,7 +235,7 @@ AUI.add(
 						instance.get('container').remove(true);
 
 						instance.fire(
-							'remove',
+							'removed',
 							{
 								field: instance
 							}
@@ -293,7 +299,7 @@ AUI.add(
 								form: form,
 								parent: instance.get('parent'),
 								portletNamespace: instance.get('portletNamespace'),
-								repeatedIndex: index + 1
+								repeatedIndex: index
 							}
 						);
 
@@ -306,7 +312,7 @@ AUI.add(
 						instance.get('container').insert(field.get('container'), 'after');
 
 						instance.fire(
-							'repeat',
+							'repeated',
 							{
 								field: field
 							}
@@ -416,12 +422,18 @@ AUI.add(
 					_syncRepeatableField: function(event) {
 						var instance = this;
 
-						if (instance.get('repeatable')) {
-							var fieldNode = instance.getInputNode();
+						var field = event.field;
 
-							instance.set('repeatedIndex', instance._valueRepeatedIndex());
+						if (field !== instance && instance.isSibling(field)) {
+							var inputNode = instance.getInputNode();
 
-							fieldNode.attr('name', instance.getQualifiedName());
+							var repeatedIndex = instance._valueRepeatedIndex();
+
+							instance.set('repeatedIndex', repeatedIndex);
+
+							var qualifiedName = instance.getQualifiedName();
+
+							inputNode.attr('name', qualifiedName);
 
 							instance.syncRepeatablelUI();
 						}

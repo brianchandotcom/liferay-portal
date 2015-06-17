@@ -52,9 +52,11 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -82,6 +84,7 @@ import org.gradle.api.file.DuplicatesStrategy;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.file.SourceDirectorySet;
+import org.gradle.api.internal.ConventionMapping;
 import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.plugins.JavaPluginConvention;
@@ -558,15 +561,50 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 		test.dependsOn(SETUP_ARQUILLIAN_TASK_NAME);
 
-		SourceSet sourceSet = GradleUtil.getSourceSet(
-			project, TEST_INTEGRATION_SOURCE_SET_NAME);
-
-		SourceSetOutput sourceSetOutput = sourceSet.getOutput();
-
-		test.setClasspath(sourceSet.getRuntimeClasspath());
 		test.setDescription("Runs the integration tests.");
 		test.setGroup("verification");
-		test.setTestClassesDir(sourceSetOutput.getClassesDir());
+
+		ConventionMapping conventionMapping = test.getConventionMapping();
+
+		final SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		conventionMapping.map(
+			"classpath",
+			new Callable<FileCollection>() {
+
+				@Override
+				public FileCollection call() throws Exception {
+					return sourceSet.getRuntimeClasspath();
+				}
+
+			});
+
+		conventionMapping.map(
+			"testClassesDir",
+			new Callable<File>() {
+
+				@Override
+				public File call() throws Exception {
+					SourceSetOutput sourceSetOutput = sourceSet.getOutput();
+
+					return sourceSetOutput.getClassesDir();
+				}
+
+			});
+
+		conventionMapping.map(
+			"testSrcDirs",
+			new Callable<List<File>>() {
+
+				@Override
+				public List<File> call() throws Exception {
+					SourceDirectorySet sourceDirectorySet = sourceSet.getJava();
+
+					return new ArrayList<>(sourceDirectorySet.getSrcDirs());
+				}
+
+			});
 
 		return test;
 	}

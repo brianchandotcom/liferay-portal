@@ -39,12 +39,12 @@ public class DDLFormConfigurationAction extends DefaultConfigurationAction {
 
 	@Override
 	public String getJspPath(RenderRequest renderRequest) {
-		return "/configuration.jsp";
+		return "/display/configuration.jsp";
 	}
 
 	@Override
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.display.web)",
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",
 		unbind = "-"
 	)
 	public void setServletContext(ServletContext servletContext) {

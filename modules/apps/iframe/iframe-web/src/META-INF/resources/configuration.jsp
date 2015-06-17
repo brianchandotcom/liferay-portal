@@ -113,7 +113,7 @@ String htmlAttributes =
 
 		<liferay-ui:panel collapsible="<%= true %>" extended="<%= true %>" id="iframeDisplaySettingsPanel" persistState="<%= true %>" title="display-settings">
 			<aui:fieldset>
-				<aui:input label="resize-automatically" name="preferences--resizeAutomatically--" type="checkbox" value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>" />
+				<aui:input helpMessage="resize-automatically-help" label="resize-automatically" name="preferences--resizeAutomatically--" type="checkbox" value="<%= iFramePortletInstanceConfiguration.resizeAutomatically() %>" />
 
 				<div id="<portlet:namespace />displaySettings">
 					<aui:input name="preferences--heightMaximized--" type="text" value="<%= iFramePortletInstanceConfiguration.heightMaximized() %>">

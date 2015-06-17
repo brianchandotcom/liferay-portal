@@ -11,6 +11,8 @@
 	<bean id="com.liferay.portal.model.LayoutModelListener" class="com.liferay.portal.model.LayoutModelListener" />
 	<bean id="com.liferay.portal.model.LayoutSetModelListener" class="com.liferay.portal.model.LayoutSetModelListener" />
 	<bean id="com.liferay.portal.model.PortletPreferencesModelListener" class="com.liferay.portal.model.PortletPreferencesModelListener" />
+	<bean id="com.liferay.portal.model.ResourceBlock" class="com.liferay.portal.security.permission.ResourceBlockModelListener" />
+	<bean id="com.liferay.portal.model.ResourcePermission" class="com.liferay.portal.security.permission.ResourcePermissionModelListener" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutModelListener" />
 	<bean id="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" class="com.liferay.portal.service.impl.LayoutSetPrototypeLayoutSetModelListener" />
 	<bean id="com.liferay.portlet.asset.model.AssetEntryModelListener" class="com.liferay.portlet.asset.model.AssetEntryModelListener" />

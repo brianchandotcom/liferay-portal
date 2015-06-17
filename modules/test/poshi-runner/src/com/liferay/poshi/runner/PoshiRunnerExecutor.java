@@ -701,6 +701,15 @@ public class PoshiRunnerExecutor {
 				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
 					classCommandName);
 			}
+			else if (element.attributeValue("attribute") != null) {
+				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+				String attributeName = element.attributeValue("attribute");
+				String locator = element.attributeValue("locator");
+
+				varValue = liferaySelenium.getAttribute(
+					locator + "@" + attributeName);
+			}
 			else if ((element.attributeValue("group") != null) &&
 					 (element.attributeValue("input") != null) &&
 					 (element.attributeValue("pattern") != null)) {

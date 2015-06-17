@@ -933,4 +933,119 @@
 			<var name="entryTitle" value="${entryTitle}" />
 		</execute>
 	</command>
+
+	<command name="ViewDeactivatedPortalInstance" priority="4">
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#addCP">
+			<var name="mailDomain" value="www.able.com" />
+			<var name="virtualHost" value="www.able.com" />
+			<var name="webId" value="www.able.com" />
+		</execute>
+
+		<execute macro="Page#openURL" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Blogs" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Wiki Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Wiki Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Wiki" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Language Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Language Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Language" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#firstLoginPG">
+			<var name="password" value="test" />
+			<var name="userEmailAddress" value="test@www.able.com" />
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		</execute>
+
+		<execute macro="Page#viewNoPG">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="Page#viewNoPG">
+			<var name="pageName" value="Wiki Page" />
+		</execute>
+
+		<execute macro="Page#viewNoPG">
+			<var name="pageName" value="Language Page" />
+		</execute>
+
+		<execute macro="Page#addPG">
+			<var name="defaultURL" value="false" />
+			<var name="pageName" value="Web Content Page" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Page" />
+			<var name="virtualHostsURL" value="www.able.com:8080" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Web Content Page" />
+			<var name="virtualHostsURL" value="www.able.com:8080" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Hello World" />
+		</execute>
+
+		<execute macro="User#logoutPG" />
+
+		<execute macro="User#loginPG" />
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="Page#gotoCP">
+			<var name="portletName" value="Portal Instances" />
+		</execute>
+
+		<execute macro="PortalInstances#deactivatePortalInstance">
+			<var name="virtualHost" value="www.able.com" />
+		</execute>
+
+		<execute macro="Page#openURL">
+			<var name="virtualHostsURL" value="http://www.able.com:8080" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Home#STATUS_MESSAGE" value1="This instance is inactive. Please contact the administrator." />
+	</command>
 </definition>

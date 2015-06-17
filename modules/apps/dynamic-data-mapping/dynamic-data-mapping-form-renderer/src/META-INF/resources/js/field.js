@@ -112,7 +112,7 @@ AUI.add(
 
 						instance._eventHandlers = [
 							instance.get('container').delegate('click', instance._handleToolbarClick, SELECTOR_REPEAT_BUTTONS, instance),
-							instance.get('form').after(['liferay-form-field:remove', 'liferay-form-field:repeat'], A.bind('_syncRepeatableField', instance))
+							instance.get('form').after(['liferay-form-field:removed', 'liferay-form-field:repeated'], A.bind('_syncRepeatableField', instance))
 						];
 					},
 
@@ -229,7 +229,7 @@ AUI.add(
 						instance.get('container').remove(true);
 
 						instance.fire(
-							'remove',
+							'removed',
 							{
 								field: instance
 							}
@@ -306,7 +306,7 @@ AUI.add(
 						instance.get('container').insert(field.get('container'), 'after');
 
 						instance.fire(
-							'repeat',
+							'repeated',
 							{
 								field: field
 							}

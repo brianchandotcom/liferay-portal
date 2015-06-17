@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.backgroundtask;
+package com.liferay.portlet.exportimport.backgroundtask;
 
 import com.liferay.portal.LayoutPrototypeException;
 import com.liferay.portal.LocaleException;
@@ -22,12 +22,6 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.lar.MissingReference;
-import com.liferay.portal.kernel.lar.MissingReferences;
-import com.liferay.portal.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelType;
-import com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelper;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -54,6 +48,11 @@ import com.liferay.portlet.exportimport.LARFileException;
 import com.liferay.portlet.exportimport.LARFileSizeException;
 import com.liferay.portlet.exportimport.LARTypeException;
 import com.liferay.portlet.exportimport.MissingReferenceException;
+import com.liferay.portlet.exportimport.lar.MissingReference;
+import com.liferay.portlet.exportimport.lar.MissingReferences;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 

@@ -16,10 +16,10 @@ package com.liferay.portlet.exportimport.lar;
 
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskStatusMessage;
 import com.liferay.portal.kernel.util.LongWrapper;
-import com.liferay.portal.lar.backgroundtask.StagingBackgroundTaskConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portlet.exportimport.backgroundtask.StagingBackgroundTaskConstants;
 
 import java.util.HashMap;
 import java.util.Map;

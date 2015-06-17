@@ -51,9 +51,9 @@
 			<bean class="com.liferay.portlet.exportimport.staging.LayoutStagingImpl" />
 		</property>
 	</bean>
-	<bean id="com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil" class="com.liferay.portal.kernel.lar.StagingBackgroundTaskDisplayHelperUtil">
+	<bean id="com.liferay.portlet.exportimport.backgroundtask.StagingBackgroundTaskDisplayHelperUtil" class="com.liferay.portlet.exportimport.backgroundtask.StagingBackgroundTaskDisplayHelperUtil">
 		<property name="stagingBackgroundTaskHelper">
-			<bean class="com.liferay.portal.lar.backgroundtask.StagingBackgroundTaskDisplayHelperImpl" />
+			<bean class="com.liferay.portlet.exportimport.backgroundtask.StagingBackgroundTaskDisplayHelperImpl" />
 		</property>
 	</bean>
 	<bean id="com.liferay.portlet.exportimport.staging.StagingUtil" class="com.liferay.portlet.exportimport.staging.StagingUtil">

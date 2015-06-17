@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.portal.kernel.lar;
+package com.liferay.portlet.exportimport.backgroundtask;
 
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portlet.exportimport.lar.MissingReference;
 
 import java.io.Serializable;
 

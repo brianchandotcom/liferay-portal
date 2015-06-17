@@ -715,14 +715,17 @@ public interface DLAppLocalService extends BaseLocalService {
 	* entry. This method is only supported by the Liferay repository.
 	*
 	* @param oldToFileEntryId the primary key of the old file entry pointed to
-	* @param newToFileEntryId the primary key of the new file entry to point to
+	* @param newToFileEntryId the primary key of the new file entry to point
+	to
+	* @throws PortalException if a file entry for any one of the primary keys
+	could not be found
 	*/
 	public void updateFileShortcuts(long oldToFileEntryId, long newToFileEntryId)
 		throws PortalException;
 
 	/**
 	* Deprecated as of 7.0.0, replaced by {@link #updateFileShortcuts(long,
-	*            long)}
+	* long)}
 	*/
 	@java.lang.Deprecated
 	public void updateFileShortcuts(long toRepositoryId, long oldToFileEntryId,

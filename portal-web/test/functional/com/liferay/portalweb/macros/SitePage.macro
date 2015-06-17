@@ -647,8 +647,6 @@
 
 		<execute function="Click#clickAtSidebarClickAt" locator1="Dockbar#EDIT" />
 
-		<execute function="Click" locator1="DockbarEditPanel#EDIT_PAGE" value1="Edit Page" />
-
 		<execute function="AssertTextEquals" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_LABEL" value1="Automatically apply changes done to the page template ${pageTemplateName}." />
 		<execute function="AssertChecked" locator1="DockbarEditpanel#DETAILS_AUTOMATICALLY_APPLY_CHANGES_TO_PAGE_TEMPLATE_CHECKBOX" />
 	</command>

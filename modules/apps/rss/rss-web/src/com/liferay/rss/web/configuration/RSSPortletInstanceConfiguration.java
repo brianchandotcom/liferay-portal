@@ -63,7 +63,7 @@ public interface RSSPortletInstanceConfiguration {
 	public String[] titles();
 
 	@Meta.AD(
-		deflt = "http://partners.userland.com/nytRss/technology.xml",
+		deflt = "http://www.ft.com/rss/companies/technology",
 		required = false
 	)
 	public String[] urls();

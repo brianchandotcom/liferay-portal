@@ -28,20 +28,11 @@ page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.log.LogFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.StringUtil" %><%@
-page import="com.liferay.portlet.PortletURLUtil" %>
+page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <%@ page import="java.util.List" %><%@
 page import="java.util.ResourceBundle" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
-
 <portlet:defineObjects />
 
 <liferay-theme:defineObjects />
-
-<%
-PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);
-
-String currentURL = currentURLObj.toString();
-%>

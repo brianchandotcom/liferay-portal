@@ -58,7 +58,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedLog =
 					"Unable to process runnable: ERROR: column \"unknown\" " +
-						"does not exist_  Position: 8 [Sanitized]",
+						"does not exist_",
 				expectedType = ExpectedType.EXACT
 			)
 		},
@@ -91,7 +91,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedLog =
 					"Unable to process runnable: ERROR: relation " +
-						"\"unknown\" does not exist_  Position: 21 [Sanitized]",
+						"\"unknown\" does not exist_",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -136,7 +136,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 			@ExpectedLog(
 				expectedLog =
 					"Unable to process runnable: ERROR: relation \"unknown\" " +
-						"does not exist_  Position: 21 [Sanitized]",
+						"does not exist_",
 				expectedType = ExpectedType.PREFIX
 			)
 		},

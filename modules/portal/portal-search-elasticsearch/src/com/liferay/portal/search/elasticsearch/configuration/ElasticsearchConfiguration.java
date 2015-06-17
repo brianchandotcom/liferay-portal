@@ -54,6 +54,13 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpEnabled();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "Set to true to only log exceptions from Solr and not rethrow them",
+		required = false
+	)
+	public boolean logExceptionsOnly();
+
 	@Meta.AD(deflt = "", required = false)
 	public String networkBindHost();
 

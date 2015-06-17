@@ -65,7 +65,6 @@ public abstract class BaseElasticsearchConnection
 			elasticsearchConfiguration.additionalConfigurations();
 
 		if (ArrayUtil.isNotEmpty(additionalConfigurations)) {
-
 			StringBundler sb = new StringBundler(
 				additionalConfigurations.length * 2);
 

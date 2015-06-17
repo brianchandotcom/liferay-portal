@@ -117,7 +117,8 @@ public class RepositoryServiceSoap {
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSupportedParameters(String, String)}
 	*/
 	@Deprecated
 	public static java.lang.String[] getSupportedParameters(long classNameId,

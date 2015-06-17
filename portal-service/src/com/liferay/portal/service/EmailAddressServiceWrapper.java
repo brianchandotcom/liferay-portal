@@ -60,6 +60,15 @@ public class EmailAddressServiceWrapper implements EmailAddressService,
 		_emailAddressService.deleteEmailAddress(emailAddressId);
 	}
 
+	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address with the primary key, or <code>null</code> if
+	an email address with the primary key could not be found or if
+	the user did not have permission to view the email address
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Override
 	public com.liferay.portal.model.EmailAddress fetchEmailAddress(
 		long emailAddressId)

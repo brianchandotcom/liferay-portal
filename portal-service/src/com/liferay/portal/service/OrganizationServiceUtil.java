@@ -288,6 +288,15 @@ public class OrganizationServiceUtil {
 		getService().deleteOrganization(organizationId);
 	}
 
+	/**
+	* Returns the organization with the primary key.
+	*
+	* @param organizationId the primary key of the organization
+	* @return the organization with the primary key, or <code>null</code> if an
+	organization with the primary key could not be found or if the
+	user did not have permission to view the organization
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.portal.model.Organization fetchOrganization(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

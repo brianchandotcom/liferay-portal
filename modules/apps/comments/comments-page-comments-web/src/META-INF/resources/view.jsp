@@ -17,16 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <c:if test="<%= LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.VIEW) %>">
-	<portlet:actionURL name="invokeTaglibDiscussion" var="discussionURL" />
-
-	<portlet:resourceURL id="invokeTaglibDiscussionPagination" var="discussionPaginationURL" />
-
 	<liferay-ui:discussion
 		className="<%= Layout.class.getName() %>"
 		classPK="<%= layout.getPlid() %>"
-		formAction="<%= discussionURL %>"
 		formName="fm"
-		paginationURL="<%= discussionPaginationURL %>"
 		redirect="<%= currentURL %>"
 		userId="<%= user.getUserId() %>"
 	/>

@@ -50,10 +50,6 @@ public class DiscussionTag extends IncludeTag {
 		_hideControls = hideControls;
 	}
 
-	public void setPaginationURL(String paginationURL) {
-		_paginationURL = paginationURL;
-	}
-
 	public void setRatingsEnabled(boolean ratingsEnabled) {
 		_ratingsEnabled = ratingsEnabled;
 	}
@@ -81,7 +77,6 @@ public class DiscussionTag extends IncludeTag {
 		_formAction = null;
 		_formName = "fm";
 		_hideControls = false;
-		_paginationURL = null;
 		_ratingsEnabled = true;
 		_redirect = null;
 		_userId = 0;
@@ -104,10 +99,6 @@ public class DiscussionTag extends IncludeTag {
 	}
 
 	protected String getPaginationURL(HttpServletRequest request) {
-		if (_paginationURL != null) {
-			return _paginationURL;
-		}
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -151,7 +142,6 @@ public class DiscussionTag extends IncludeTag {
 	private String _formAction;
 	private String _formName = "fm";
 	private boolean _hideControls;
-	private String _paginationURL;
 	private boolean _ratingsEnabled = true;
 	private String _redirect;
 	private long _userId;

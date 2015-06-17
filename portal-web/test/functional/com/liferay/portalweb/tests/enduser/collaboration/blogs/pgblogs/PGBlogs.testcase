@@ -957,7 +957,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+		<for list="${blogsEntrySearchResult}" param="searchTerm">
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -973,7 +973,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm">
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -986,8 +986,12 @@
 	</command>
 
 	<command name="SearchBlogsEntryContentQuotes" priority="5">
-		<var name="blogsEntrySearchResult">"Blogs","Entry","Content","Blogs Entry Content"</var>
-		<var name="blogsEntrySearchNoResult">"Blogs1","Entry1","Content1","Blogs1 Entry1 Content1"</var>
+		<var name="blogsEntrySearchResult">
+			"Blogs","Entry","Content","Blogs Entry Content"
+		</var>
+		<var name="blogsEntrySearchNoResult">
+			"Blogs1","Entry1","Content1","Blogs1 Entry1 Content1"
+		</var>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Search Page" />
@@ -1014,7 +1018,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+		<for list="${blogsEntrySearchResult}" param="searchTerm">
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1030,7 +1034,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm">
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1071,7 +1075,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+		<for list="${blogsEntrySearchResult}" param="searchTerm">
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1087,7 +1091,7 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm">
 			<execute macro="Search#searchPG">
 				<var name="searchTerm" value="${searchTerm}" />
 			</execute>
@@ -1100,8 +1104,12 @@
 	</command>
 
 	<command name="SearchBlogsEntryTitleQuotes" priority="5">
-		<var name="blogsEntrySearchResult">"Blogs","Entry","Title","Blogs Entry Title"</var>
-		<var name="blogsEntrySearchNoResult">"Blogs1","Entry1","Title1","Blogs1 Entry1 Title1"</var>
+		<var name="blogsEntrySearchResult">
+			"Blogs","Entry","Title","Blogs Entry Title"
+		</var>
+		<var name="blogsEntrySearchNoResult">
+			"Blogs1","Entry1","Title1","Blogs1 Entry1 Title1"
+		</var>
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Search Page" />

@@ -86,7 +86,7 @@ else {
 
 	<!-- LPS-38289 & LPS-55993 -->
 
-	<input class="hide" type="password"/>
+	<input class="hide" type="password" />
 
 	<!-- /LPS-38289 & LPS-55993 -->
 

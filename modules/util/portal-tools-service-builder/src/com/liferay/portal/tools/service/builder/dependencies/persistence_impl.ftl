@@ -950,9 +950,9 @@ public class ${entity.name}PersistenceImpl extends BasePersistenceImpl<${entity.
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
 				<#if entity.PKClassName == "String">
-					query.append(StringPool.QUOTE);
+					query.append(StringPool.APOSTROPHE);
 					query.append((String)primaryKey);
-					query.append(StringPool.QUOTE);
+					query.append(StringPool.APOSTROPHE);
 				<#else>
 					query.append(String.valueOf(primaryKey));
 				</#if>

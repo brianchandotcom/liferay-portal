@@ -334,6 +334,7 @@
 
 		<execute function="AssertClick" locator1="CPUsersandorganizations#ORGANIZATION_MENULIST_ASSIGN_ORGANIZATION_ROLES" value1="Assign Organization Roles" />
 
+		<execute function="SelectFrame" locator1="//iframe[contains(@class,'dialog-iframe-node')]" />
 		<execute function="AssertTextEquals" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
 		<execute function="Click" locator1="//tr[contains(.,'${roleName}')]/td[1]/a" value1="${roleName}" />
 

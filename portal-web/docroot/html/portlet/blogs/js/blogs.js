@@ -109,8 +109,8 @@ AUI.add(
 						instance._captionNode = AUI.$('.entry-cover-image-caption');
 
 						var eventHandles = [
-							Liferay.on('imageDeleted', instance._removeCaption, instance),
-							Liferay.on('imageUploaded', instance._showCaption, instance)
+							Liferay.on('coverImageDeleted', instance._removeCaption, instance),
+							Liferay.on(['coverImageUploaded', 'coverImageSelected'], instance._showCaption, instance)
 						];
 
 						var publishButton = instance.one('#publishButton');
@@ -236,11 +236,11 @@ AUI.add(
 						var constants = instance.get('constants');
 						var entry = instance.get('entry');
 
-						var title = window[instance.ns('titleEditor')].getHTML();
-						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
 						var content = window[instance.ns('contentEditor')].getHTML();
-						var description = window[instance.ns('descriptionEditor')].getHTML();
 						var coverImageCaption = window[instance.ns('coverImageCaptionEditor')].getHTML();
+						var description = window[instance.ns('descriptionEditor')].getHTML();
+						var subtitle = window[instance.ns('subtitleEditor')].getHTML();
+						var title = window[instance.ns('titleEditor')].getHTML();
 
 						var form = instance._getPrincipalForm();
 

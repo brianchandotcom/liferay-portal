@@ -35,6 +35,12 @@ public interface SolrConfiguration {
 	@Meta.AD(deflt = "solr", required = false)
 	public String basicAuthUserName();
 
+	@Meta.AD(
+		deflt = "REPLICATED", optionLabels = {"Cloud", "Replicated"},
+		optionValues = {"CLOUD", "REPLICATED"}, required = false
+	)
+	public String clientType();
+
 	@Meta.AD(deflt = "20", required = false)
 	public int defaultMaxConnectionsPerRoute();
 
@@ -57,6 +63,9 @@ public interface SolrConfiguration {
 	@Meta.AD(deflt = "20", required = false)
 	public int maxTotalConnections();
 
+	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
+	public String[] readURL();
+
 	@Meta.AD(deflt = "secret", required = false)
 	public String trustStorePassword();
 
@@ -66,13 +75,16 @@ public interface SolrConfiguration {
 	@Meta.AD(deflt = "JKS", required = false)
 	public String trustStoreType();
 
-	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
-	public String url();
-
 	@Meta.AD(deflt = "true", required = false)
 	public boolean verifyServerCertificate();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean verifyServerName();
+
+	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
+	public String[] writeURL();
+
+	@Meta.AD(deflt = "localhost:9983", required = false)
+	public String zkHost();
 
 }

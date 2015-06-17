@@ -196,7 +196,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="ApproveInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -333,7 +333,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="ApproveInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -737,7 +737,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="RejectInDMFolderSingleApproverTypeSpecificWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -874,7 +874,7 @@
 		</execute>
 	</command>
 
-	<command name="RejectInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="RejectInDMFolderSingleApproverWorkflowWithNoHomeFolderWorkflowCP" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

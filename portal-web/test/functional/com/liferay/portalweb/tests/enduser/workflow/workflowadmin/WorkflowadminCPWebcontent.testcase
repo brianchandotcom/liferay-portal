@@ -248,7 +248,7 @@
 		</execute>
 	</command>
 
-	<command name="ApproveInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
+	<command known-issues="LPS-56092" name="ApproveInWebContentFolderSingleApproverStructureSpecificWorkflowCP" priority="4">
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
 		<execute macro="WebContentStructures#addCP">

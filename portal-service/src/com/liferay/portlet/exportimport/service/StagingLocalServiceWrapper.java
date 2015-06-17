@@ -115,7 +115,6 @@ public class StagingLocalServiceWrapper implements StagingLocalService,
 	}
 
 	/**
-	* @throws PortalException
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated

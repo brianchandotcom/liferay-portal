@@ -118,7 +118,6 @@ public class StagingLocalServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated

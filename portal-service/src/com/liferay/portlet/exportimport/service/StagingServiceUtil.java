@@ -70,7 +70,6 @@ public class StagingServiceUtil {
 	}
 
 	/**
-	* @throws PortalException
 	* @deprecated As of 7.0.0, with no direct replacement
 	*/
 	@Deprecated

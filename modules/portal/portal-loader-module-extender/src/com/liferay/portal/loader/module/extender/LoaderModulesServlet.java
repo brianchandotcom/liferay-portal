@@ -417,19 +417,26 @@ public class LoaderModulesServlet extends HttpServlet
 		writer.print(_details.loader_modules_global_js_variable());
 		writer.println(".MAPS = {");
 
+		_processed = new HashSet<>();
 		deliminter = "";
 
 		for (LoaderModule loaderModule : values) {
 			String name = loaderModule.getName();
 			String version = loaderModule.getVersion();
 
+			if (_processed.contains(name)) {
+				continue;
+			}
+
+			_processed.add(name);
+
 			writer.write(deliminter);
 			writer.write("'");
 			writer.write(name);
-			writer.write('@');
-			writer.write(version);
 			writer.write("': '");
 			writer.write(name);
+			writer.write('@');
+			writer.write(version);
 			writer.write("'");
 
 			deliminter = ",\n";

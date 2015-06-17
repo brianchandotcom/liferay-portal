@@ -136,6 +136,8 @@ public class StoreFactory {
 			return store;
 		}
 
+		DBStore dbStore = (DBStore)store;
+
 		DB db = DBFactoryUtil.getDB();
 
 		String dbType = db.getType();
@@ -151,14 +153,12 @@ public class StoreFactory {
 			List<MethodInterceptor> methodInterceptors = Arrays.asList(
 				transactionAdviceMethodInterceptor, tempFileMethodInterceptor);
 
-			Store proxyStore = (Store)ProxyUtil.newProxyInstance(
+			store = (Store)ProxyUtil.newProxyInstance(
 				classLoader, new Class<?>[] {Store.class},
 				new MethodInterceptorInvocationHandler(
 					store, methodInterceptors));
 
-			((DBStore)store).setStoreProxy(proxyStore);
-
-			store = proxyStore;
+			dbStore.setStoreProxy(store);
 		}
 
 		return store;

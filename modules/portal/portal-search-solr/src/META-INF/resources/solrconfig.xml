@@ -1,22 +1,26 @@
 <?xml version="1.0"?>
 
 <config>
-	<luceneMatchVersion>LUCENE_43</luceneMatchVersion>
-	<lib dir="../lib" regex=".*\.jar" />
-	<lib dir="/total/crap/dir/ignored" />
+	<luceneMatchVersion>5.2.1</luceneMatchVersion>
 	<dataDir>${solr.data.dir:}</dataDir>
-	<directoryFactory class="${solr.directoryFactory:solr.StandardDirectoryFactory}" name="DirectoryFactory" />
-	<indexConfig/>
+	<directoryFactory class="${solr.directoryFactory:solr.NRTCachingDirectoryFactory}" name="DirectoryFactory" />
+	<codecFactory class="solr.SchemaCodecFactory" />
+	<schemaFactory class="ClassicIndexSchemaFactory" />
+	<indexConfig>
+		<lockType>${solr.lock.type:native}</lockType>
+		<infoStream>true</infoStream>
+	</indexConfig>
 	<jmx/>
 	<updateHandler class="solr.DirectUpdateHandler2">
 		<autoCommit>
-			<maxTime>15000</maxTime>
+			<maxTime>${solr.autoCommit.maxTime:15000}</maxTime>
 			<openSearcher>false</openSearcher>
 		</autoCommit>
 		<autoSoftCommit>
-			<maxTime>1000</maxTime>
+			<maxTime>${solr.autoSoftCommit.maxTime:-1}</maxTime>
 		</autoSoftCommit>
 		<updateLog>
+			<int name="numVersionBuckets">${solr.ulog.numVersionBuckets:65536}</int>
 			<str name="dir">${solr.data.dir:}</str>
 		</updateLog>
 	</updateHandler>
@@ -25,24 +29,15 @@
 		<filterCache autowarmCount="0" class="solr.FastLRUCache" initialSize="512" size="512" />
 		<queryResultCache autowarmCount="0" class="solr.LRUCache" initialSize="512" size="512" />
 		<documentCache autowarmCount="0" class="solr.LRUCache" initialSize="512" size="512" />
+		<cache autowarmCount="10" class="solr.search.LRUCache" initialSize="0" name="perSegFilter" regenerator="solr.NoOpRegenerator" size="10" />
 		<enableLazyFieldLoading>true</enableLazyFieldLoading>
 		<queryResultWindowSize>20</queryResultWindowSize>
 		<queryResultMaxDocsCached>200</queryResultMaxDocsCached>
-		<listener class="solr.QuerySenderListener" event="newSearcher">
-			<arr name="queries" />
-		</listener>
-		<listener class="solr.QuerySenderListener" event="firstSearcher">
-			<arr name="queries">
-				<lst>
-					<str name="q">static firstSearcher warming in solrconfig.xml</str>
-				</lst>
-			</arr>
-		</listener>
 		<useColdSearcher>false</useColdSearcher>
 		<maxWarmingSearchers>2</maxWarmingSearchers>
 	</query>
 	<requestDispatcher handleSelect="false">
-		<requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048000" />
+		<requestParsers addHttpRequestToContext="false" enableRemoteStreaming="true" formdataUploadLimitInKB="2048" multipartUploadLimitInKB="2048000" />
 		<httpCaching never304="true" />
 	</requestDispatcher>
 	<requestHandler class="solr.SearchHandler" name="/select">
@@ -123,11 +118,13 @@
 	</requestHandler>
 	<requestHandler class="solr.UpdateRequestHandler" name="/update">
 		<lst name="defaults">
+			<str name="df">text</str>
 			<str name="update.chain">replica</str>
 		</lst>
 	</requestHandler>
 	<requestHandler class="solr.extraction.ExtractingRequestHandler" name="/update/extract" startup="lazy">
 		<lst name="defaults">
+			<str name="df">text</str>
 			<str name="fmap.content">text</str>
 			<str name="lowernames">true</str>
 			<str name="uprefix">ignored_</str>
@@ -247,6 +244,7 @@
 	<searchComponent class="solr.TermsComponent" name="terms" />
 	<requestHandler class="solr.SearchHandler" name="/terms" startup="lazy">
 		<lst name="defaults">
+			<bool name="distrib">false</bool>
 			<bool name="terms">true</bool>
 		</lst>
 		<arr name="components">

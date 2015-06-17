@@ -875,31 +875,6 @@
 			<forward name="portlet.requests.view" path="portlet.requests.view" />
 		</action>
 
-		<!-- Roles Admin -->
-
-		<action path="/roles_admin/edit_role" type="com.liferay.portlet.rolesadmin.action.EditRoleAction">
-			<forward name="portlet.roles_admin.edit_role" path="portlet.roles_admin.edit_role" />
-			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />
-		</action>
-
-		<action path="/roles_admin/edit_role_assignments" type="com.liferay.portlet.rolesadmin.action.EditRoleAssignmentsAction">
-			<forward name="portlet.roles_admin.edit_role_assignments" path="portlet.roles_admin.edit_role_assignments" />
-			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />
-		</action>
-
-		<action path="/roles_admin/edit_role_permissions" type="com.liferay.portlet.rolesadmin.action.EditRolePermissionsAction">
-			<forward name="portlet.roles_admin.edit_role_permissions" path="portlet.roles_admin.edit_role_permissions" />
-			<forward name="portlet.roles_admin.error" path="portlet.roles_admin.error" />
-		</action>
-
-		<action path="/roles_admin/select_organization_role" forward="portlet.roles_admin.select_organization_role" />
-
-		<action path="/roles_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />
-
-		<action path="/roles_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
-
-		<action path="/roles_admin/view" forward="portlet.roles_admin.view" />
-
 		<!-- Shopping -->
 
 		<action path="/shopping/cart" type="com.liferay.portlet.shopping.action.CartAction">
@@ -1034,12 +1009,6 @@
 		<action path="/users_admin/get_users_count" type="com.liferay.portlet.usersadmin.action.GetUsersCountAction" />
 
 		<action path="/users_admin/select_organization" forward="portlet.users_admin.select_organization" />
-
-		<action path="/users_admin/select_organization_role" forward="portlet.roles_admin.select_organization_role" />
-
-		<action path="/users_admin/select_regular_role" forward="portlet.roles_admin.select_regular_role" />
-
-		<action path="/users_admin/select_site_role" forward="portlet.roles_admin.select_site_role" />
 
 		<action path="/users_admin/select_user_group" forward="portlet.user_groups_admin.select_user_group" />
 

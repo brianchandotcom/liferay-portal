@@ -112,7 +112,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						},
 						id: '<portlet:namespace />selectRegularRole',
 						title: '<liferay-ui:message arguments="regular-role" key="select-x" />',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_regular_role" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
+						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_regular_role.jsp" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
 					},
 					function(event) {
 						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -312,7 +312,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 						},
 						id: '<portlet:namespace />selectOrganizationRole',
 						title: '<liferay-ui:message arguments="organization-role" key="select-x" />',
-						uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_organization_role" /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
+						uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_organization_role.jsp" /><portlet:param name="step" value="1" /><portlet:param name="organizationIds" value="<%= StringUtil.merge(organizationIds) %>" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
 					},
 					function(event) {
 						<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);
@@ -461,7 +461,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 								},
 								id: '<portlet:namespace />selectSiteRole',
 								title: '<liferay-ui:message arguments="site-role" key="select-x" />',
-								uri: '<portlet:renderURL windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="struts_action" value="/users_admin/select_site_role" /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></portlet:renderURL>'
+								uri: '<liferay-portlet:renderURL portletName="<%= PortletKeys.ROLES_ADMIN %>" windowState="<%= LiferayWindowState.POP_UP.toString() %>"><portlet:param name="mvcPath" value="/html/portlet/roles_admin/select_site_role.jsp" /><portlet:param name="step" value="1" /><portlet:param name="p_u_i_d" value='<%= (selUser == null) ? "0" : String.valueOf(selUser.getUserId()) %>' /></liferay-portlet:renderURL>'
 							},
 							function(event) {
 								<portlet:namespace />selectRole(event.roleid, event.roletitle, event.searchcontainername, event.groupdescriptivename, event.groupid, event.iconcssclass);

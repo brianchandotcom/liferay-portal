@@ -535,15 +535,13 @@
 	<portlet>
 		<portlet-name>128</portlet-name>
 		<icon>/html/icons/roles_admin.png</icon>
-		<struts-path>roles_admin</struts-path>
-		<portlet-url-class>com.liferay.portal.struts.StrutsActionPortletURL</portlet-url-class>
 		<portlet-data-handler-class>com.liferay.portlet.rolesadmin.lar.RolesAdminPortletDataHandler</portlet-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.portlet.rolesadmin.lar.RoleStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>users</control-panel-entry-category>
 		<control-panel-entry-weight>3.0</control-panel-entry-weight>
 		<custom-attributes-display>com.liferay.portlet.rolesadmin.RoleCustomAttributesDisplay</custom-attributes-display>
 		<preferences-owned-by-group>true</preferences-owned-by-group>
-		<use-default-template>false</use-default-template>
+		<use-default-template>true</use-default-template>
 		<private-request-attributes>false</private-request-attributes>
 		<private-session-attributes>false</private-session-attributes>
 		<render-weight>50</render-weight>

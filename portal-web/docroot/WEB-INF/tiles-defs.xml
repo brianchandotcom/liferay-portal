@@ -742,42 +742,6 @@
 		<put name="portlet_content" value="/portlet/requests/view.jsp" />
 	</definition>
 
-	<!-- Roles Admin -->
-
-	<definition name="portlet.roles_admin" extends="portlet" />
-
-	<definition name="portlet.roles_admin.edit_role" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/edit_role.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.edit_role_assignments" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/edit_role_assignments.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.edit_role_permissions" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/edit_role_permissions.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.error" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/error.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.select_organization_role" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/select_organization_role.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.select_regular_role" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/select_regular_role.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.select_site_role" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/select_site_role.jsp" />
-	</definition>
-
-	<definition name="portlet.roles_admin.view" extends="portlet.roles_admin">
-		<put name="portlet_content" value="/portlet/roles_admin/view.jsp" />
-	</definition>
-
 	<!-- Shopping -->
 
 	<definition name="portlet.shopping" extends="portlet" />

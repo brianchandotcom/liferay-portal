@@ -17,10 +17,6 @@
 <%@ include file="/html/portlet/roles_admin/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD);
-
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -31,28 +27,19 @@ Role role = RoleServiceUtil.fetchRole(roleId);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
 
-String portletResourceLabel = null;
-
-if (Validator.isNotNull(portletResource)) {
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
-
-	portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
-}
-
 // Edit
 
 PortletURL editRoleURL = renderResponse.createRenderURL();
 
-editRoleURL.setParameter("struts_action", "/roles_admin/edit_role");
+editRoleURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role.jsp");
 editRoleURL.setParameter("redirect", backURL);
-editRoleURL.setParameter(Constants.CMD, Constants.VIEW);
 editRoleURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 // Define permissions
 
 PortletURL definePermissionsURL = renderResponse.createRenderURL();
 
-definePermissionsURL.setParameter("struts_action", "/roles_admin/edit_role_permissions");
+definePermissionsURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_permissions.jsp");
 definePermissionsURL.setParameter("redirect", backURL);
 definePermissionsURL.setParameter(Constants.CMD, Constants.VIEW);
 definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
@@ -61,11 +48,9 @@ definePermissionsURL.setParameter("roleId", String.valueOf(role.getRoleId()));
 
 PortletURL assignMembersURL = renderResponse.createRenderURL();
 
-assignMembersURL.setParameter("struts_action", "/roles_admin/edit_role_assignments");
+assignMembersURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", backURL);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-
-int pos = 0;
 
 String tabs1Names = StringPool.BLANK;
 String[] tabs1URLs = new String[0];

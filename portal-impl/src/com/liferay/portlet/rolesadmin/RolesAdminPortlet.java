@@ -12,19 +12,25 @@
  * details.
  */
 
-package com.liferay.portlet.rolesadmin.action;
+package com.liferay.portlet.rolesadmin;
 
+import com.liferay.portal.DuplicateRoleException;
 import com.liferay.portal.NoSuchRoleException;
+import com.liferay.portal.RequiredRoleException;
+import com.liferay.portal.RoleAssignmentException;
+import com.liferay.portal.RoleNameException;
 import com.liferay.portal.RolePermissionsException;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Portlet;
@@ -35,122 +41,44 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.security.permission.comparator.ActionComparator;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockServiceUtil;
 import com.liferay.portal.service.ResourcePermissionServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.struts.PortletAction;
+import com.liferay.portal.service.RoleServiceUtil;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.UserServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletCategoryKeys;
 import com.liferay.portal.util.PortletKeys;
-import com.liferay.portal.util.WebKeys;
+
+import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequestDispatcher;
+import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  * @author Connor McKay
+ * @author Drew Brokke
  */
-public class EditRolePermissionsAction extends PortletAction {
 
-	@Override
-	public void processAction(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ActionRequest actionRequest,
-			ActionResponse actionResponse)
-		throws Exception {
+public class RolesAdminPortlet extends MVCPortlet {
 
-		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
-
-		try {
-			if (cmd.equals("actions")) {
-				updateActions(actionRequest, actionResponse);
-			}
-			else if (cmd.equals("delete_permission")) {
-				deletePermission(actionRequest, actionResponse);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRoleException ||
-				e instanceof PrincipalException ||
-				e instanceof RolePermissionsException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-
-				setForward(actionRequest, "portlet.roles_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-	}
-
-	@Override
-	public ActionForward render(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, RenderRequest renderRequest,
-			RenderResponse renderResponse)
-		throws Exception {
-
-		try {
-			ActionUtil.getRole(renderRequest);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchRoleException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return actionMapping.findForward("portlet.roles_admin.error");
-			}
-			else {
-				throw e;
-			}
-		}
-
-		return actionMapping.findForward(
-			getForward(
-				renderRequest, "portlet.roles_admin.edit_role_permissions"));
-	}
-
-	@Override
-	public void serveResource(
-			ActionMapping actionMapping, ActionForm actionForm,
-			PortletConfig portletConfig, ResourceRequest resourceRequest,
-			ResourceResponse resourceResponse)
-		throws Exception {
-
-		PortletContext portletContext = portletConfig.getPortletContext();
-
-		PortletRequestDispatcher portletRequestDispatcher =
-			portletContext.getRequestDispatcher(
-				"/html/portlet/roles_admin/view_resources.jsp");
-
-		ActionUtil.getRole(resourceRequest);
-
-		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
-	protected void deletePermission(
+	public void deletePermission(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -207,59 +135,87 @@ public class EditRolePermissionsAction extends PortletAction {
 		}
 	}
 
-	protected void updateAction(
-			Role role, long groupId, String selResource, String actionId,
-			boolean selected, int scope, String[] groupIds)
+	public void deleteRole(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long companyId = role.getCompanyId();
-		long roleId = role.getRoleId();
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
 
-		if (selected) {
-			if (scope == ResourceConstants.SCOPE_COMPANY) {
-				ResourcePermissionServiceUtil.addResourcePermission(
-					groupId, companyId, selResource, scope,
-					String.valueOf(role.getCompanyId()), roleId, actionId);
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
-				ResourcePermissionServiceUtil.addResourcePermission(
-					groupId, companyId, selResource,
-					ResourceConstants.SCOPE_GROUP_TEMPLATE,
-					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
-					roleId, actionId);
-			}
-			else if (scope == ResourceConstants.SCOPE_GROUP) {
-				ResourcePermissionServiceUtil.removeResourcePermissions(
-					groupId, companyId, selResource,
-					ResourceConstants.SCOPE_GROUP, roleId, actionId);
+		RoleServiceUtil.deleteRole(roleId);
+	}
 
-				for (String curGroupId : groupIds) {
-					ResourcePermissionServiceUtil.addResourcePermission(
-						groupId, companyId, selResource,
-						ResourceConstants.SCOPE_GROUP, curGroupId, roleId,
-						actionId);
-				}
-			}
+	public Role editRole(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		String name = ParamUtil.getString(actionRequest, "name");
+		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
+			actionRequest, "title");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		int type = ParamUtil.getInteger(
+			actionRequest, "type", RoleConstants.TYPE_REGULAR);
+		String subtype = ParamUtil.getString(actionRequest, "subtype");
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Role.class.getName(), actionRequest);
+
+		if (roleId <= 0) {
+
+			// Add role
+
+			return RoleServiceUtil.addRole(
+				null, 0, name, titleMap, descriptionMap, type, subtype,
+				serviceContext);
 		}
 		else {
 
-			// Remove company, group template, and group permissions
+			// Update role
 
-			ResourcePermissionServiceUtil.removeResourcePermissions(
-				groupId, companyId, selResource,
-				ResourceConstants.SCOPE_COMPANY, roleId, actionId);
-
-			ResourcePermissionServiceUtil.removeResourcePermissions(
-				groupId, companyId, selResource,
-				ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId, actionId);
-
-			ResourcePermissionServiceUtil.removeResourcePermissions(
-				groupId, companyId, selResource, ResourceConstants.SCOPE_GROUP,
-				roleId, actionId);
+			return RoleServiceUtil.updateRole(
+				roleId, name, titleMap, descriptionMap, subtype,
+				serviceContext);
 		}
 	}
 
-	protected void updateActions(
+	public void editRoleAssignments(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+		Role role = RoleLocalServiceUtil.getRole(roleId);
+
+		if (role.getName().equals(RoleConstants.OWNER)) {
+			throw new RoleAssignmentException(role.getName());
+		}
+
+		long[] addUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addUserIds"), 0L);
+		long[] removeUserIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeUserIds"), 0L);
+
+		if (!ArrayUtil.isEmpty(addUserIds) ||
+			!ArrayUtil.isEmpty(removeUserIds)) {
+
+			UserServiceUtil.addRoleUsers(roleId, addUserIds);
+			UserServiceUtil.unsetRoleUsers(roleId, removeUserIds);
+		}
+
+		long[] addGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "addGroupIds"), 0L);
+		long[] removeGroupIds = StringUtil.split(
+			ParamUtil.getString(actionRequest, "removeGroupIds"), 0L);
+
+		if (!ArrayUtil.isEmpty(addGroupIds) ||
+			!ArrayUtil.isEmpty(removeGroupIds)) {
+
+			GroupServiceUtil.addRoleGroups(roleId, addGroupIds);
+			GroupServiceUtil.unsetRoleGroups(roleId, removeGroupIds);
+		}
+	}
+
+	public void updateActions(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -390,6 +346,118 @@ public class EditRolePermissionsAction extends PortletAction {
 
 		if (Validator.isNotNull(redirect)) {
 			actionResponse.sendRedirect(redirect);
+		}
+	}
+
+	@Override
+	protected void doDispatch(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		long roleId = ParamUtil.getLong(renderRequest, "roleId");
+
+		if (SessionErrors.contains(
+				renderRequest, RequiredRoleException.class.getName()) &&
+			(roleId < 1)) {
+
+			include(
+				"/html/portlet/roles_admin/view.jsp", renderRequest,
+				renderResponse);
+		}
+		else if (SessionErrors.contains(
+					renderRequest, DuplicateRoleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RequiredRoleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RoleNameException.class.getName())) {
+
+			include(
+				"/html/portlet/roles_admin/edit_role.jsp", renderRequest,
+				renderResponse);
+		}
+		else if (SessionErrors.contains(
+					renderRequest, PrincipalException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, NoSuchRoleException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RoleAssignmentException.class.getName()) ||
+			SessionErrors.contains(
+				renderRequest, RolePermissionsException.class.getName())) {
+
+			include(
+				"/html/portlet/roles_admin/error.jsp", renderRequest,
+				renderResponse);
+		}
+		else {
+			super.doDispatch(renderRequest, renderResponse);
+		}
+	}
+
+	@Override
+	protected boolean isSessionErrorException(Throwable cause) {
+		if (cause instanceof DuplicateRoleException ||
+			cause instanceof NoSuchRoleException ||
+			cause instanceof PrincipalException ||
+			cause instanceof RequiredRoleException ||
+			cause instanceof RoleAssignmentException ||
+			cause instanceof RoleNameException ||
+			cause instanceof RolePermissionsException) {
+
+			return true;
+		}
+
+		return false;
+	}
+
+	protected void updateAction(
+			Role role, long groupId, String selResource, String actionId,
+			boolean selected, int scope, String[] groupIds)
+		throws Exception {
+
+		long companyId = role.getCompanyId();
+		long roleId = role.getRoleId();
+
+		if (selected) {
+			if (scope == ResourceConstants.SCOPE_COMPANY) {
+				ResourcePermissionServiceUtil.addResourcePermission(
+					groupId, companyId, selResource, scope,
+					String.valueOf(role.getCompanyId()), roleId, actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP_TEMPLATE) {
+				ResourcePermissionServiceUtil.addResourcePermission(
+					groupId, companyId, selResource,
+					ResourceConstants.SCOPE_GROUP_TEMPLATE,
+					String.valueOf(GroupConstants.DEFAULT_PARENT_GROUP_ID),
+					roleId, actionId);
+			}
+			else if (scope == ResourceConstants.SCOPE_GROUP) {
+				ResourcePermissionServiceUtil.removeResourcePermissions(
+					groupId, companyId, selResource,
+					ResourceConstants.SCOPE_GROUP, roleId, actionId);
+
+				for (String curGroupId : groupIds) {
+					ResourcePermissionServiceUtil.addResourcePermission(
+						groupId, companyId, selResource,
+						ResourceConstants.SCOPE_GROUP, curGroupId, roleId,
+						actionId);
+				}
+			}
+		}
+		else {
+
+			// Remove company, group template, and group permissions
+
+			ResourcePermissionServiceUtil.removeResourcePermissions(
+				groupId, companyId, selResource,
+				ResourceConstants.SCOPE_COMPANY, roleId, actionId);
+
+			ResourcePermissionServiceUtil.removeResourcePermissions(
+				groupId, companyId, selResource,
+				ResourceConstants.SCOPE_GROUP_TEMPLATE, roleId, actionId);
+
+			ResourcePermissionServiceUtil.removeResourcePermissions(
+				groupId, companyId, selResource, ResourceConstants.SCOPE_GROUP,
+				roleId, actionId);
 		}
 	}
 

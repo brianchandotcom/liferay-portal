@@ -45,6 +45,9 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "9300-9400", required = false)
 	public String discoveryZenPingUnicastHostsPort();
 
+	@Meta.AD(deflt = "", required = false)
+	public String httpCORSConfigurations();
+
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpCORSEnabled();
 
@@ -60,7 +63,11 @@ public interface ElasticsearchConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String networkPublishHost();
 
-	@Meta.AD(deflt = "EMBEDDED", required = false)
+	@Meta.AD(
+		deflt = "EMBEDDED", optionLabels = {"Embedded", "Remote"},
+		optionValues = {"EMBEDDED", "REMOTE"},
+		required = false
+	)
 	public String operationMode();
 
 	@Meta.AD(deflt = "5", required = false)

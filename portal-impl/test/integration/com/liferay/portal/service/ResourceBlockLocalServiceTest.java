@@ -78,6 +78,10 @@ public class ResourceBlockLocalServiceTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
+				expectedLog = "Batch entry 0 insert into ResourceBlock ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
 						"transaction",
@@ -85,6 +89,11 @@ public class ResourceBlockLocalServiceTest {
 			),
 			@ExpectedLog(
 				expectedLog = "Duplicate entry ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
+				expectedLog =
+					"ERROR: duplicate key value violates unique constraint ",
 				expectedType = ExpectedType.PREFIX
 			)
 		},
@@ -168,14 +177,24 @@ public class ResourceBlockLocalServiceTest {
 	@ExpectedLogs(
 		expectedLogs = {
 			@ExpectedLog(
+				expectedLog = "Batch entry 0 insert into ResourceBlock ",
+				expectedType = ExpectedType.PREFIX
+			),
+			@ExpectedLog(
 				expectedLog =
 					"Deadlock found when trying to get lock; try restarting " +
 						"transaction",
-				expectedType = ExpectedType.EXACT),
+				expectedType = ExpectedType.EXACT
+			),
 			@ExpectedLog(
 				expectedLog = "Duplicate entry ",
 				expectedType = ExpectedType.PREFIX
-	)
+			),
+			@ExpectedLog(
+				expectedLog =
+					"ERROR: duplicate key value violates unique constraint ",
+				expectedType = ExpectedType.PREFIX
+			)
 		},
 		level = "ERROR", loggerClass = JDBCExceptionReporter.class
 	)

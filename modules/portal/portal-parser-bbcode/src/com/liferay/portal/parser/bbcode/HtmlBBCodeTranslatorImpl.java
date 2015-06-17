@@ -463,7 +463,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		String listAttribute = bbCodeItem.getAttribute();
 
-		if (_listStyles.get(listAttribute) != null ) {
+		if (_listStyles.get(listAttribute) != null) {
 			listStyle = _listStyles.get(listAttribute);
 
 			tag = "ol";

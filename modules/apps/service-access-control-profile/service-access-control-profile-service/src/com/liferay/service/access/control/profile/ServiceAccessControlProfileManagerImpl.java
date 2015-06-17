@@ -153,7 +153,6 @@ public class ServiceAccessControlProfileManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessControlProfileManagerImpl.class);
 
-
 	private SACPEntryLocalService _sacpEntryLocalService;
 	private SACPEntryService _sacpEntryService;
 	private volatile SettingsFactory _settingsFactory;

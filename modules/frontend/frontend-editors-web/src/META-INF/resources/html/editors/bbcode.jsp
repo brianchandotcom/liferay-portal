@@ -18,6 +18,7 @@
 
 <%
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
+String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 String name = namespace + GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 %>
@@ -27,13 +28,17 @@ String name = namespace + GetterUtil.getString((String)request.getAttribute("lif
 </div>
 
 <aui:script use="liferay-bbcode-editor">
-	window['<%= name %>'] = new Liferay.Editor.bbCode(
+	var bbCodeEditor = new Liferay.Editor.bbCode(
 		{
 			textarea: '#<%= name %>'
 		}
 	);
 
+	<liferay-util:dynamic-include key='<%= "js#" + editorName + "#onEditorCreate" %>' />
+
+	window['<%= name %>'] = bbCodeEditor;
+
 	<c:if test="<%= Validator.isNotNull(initMethod) %>">
-		window['<%= name %>'].setHTML(<%= HtmlUtil.escape(namespace + initMethod) %>());
+		bbCodeEditor.setHTML(<%= HtmlUtil.escape(namespace + initMethod) %>());
 	</c:if>
 </aui:script>

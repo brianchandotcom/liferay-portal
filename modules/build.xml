@@ -28,6 +28,7 @@
 		<dirset dir="apps/marketplace" includes="*" />
 		<dirset dir="apps/mentions" excludes="mentions-editor-config" includes="*" />
 		<dirset dir="apps/message-boards" includes="*" />
+		<dirset dir="apps/microblogs" includes="*" />
 		<dirset dir="apps/nested-portlets" includes="*" />
 		<dirset dir="apps/network-utilities" includes="*" />
 		<dirset dir="apps/password-generator" includes="*" />

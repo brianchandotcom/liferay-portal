@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.microblogs" auto-namespace-tables="false">
+	<namespace>Microblogs</namespace>
+	<entity name="MicroblogsEntry" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="microblogsEntryId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="creatorClassNameId" type="long" />
+		<column name="creatorClassPK" type="long" />
+		<column name="content" type="String" />
+		<column name="type" type="int" />
+		<column name="parentMicroblogsEntryId" type="long" />
+		<column name="socialRelationType" type="int" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
+		<finder name="U_T" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="CCNI_CCPK" return-type="Collection">
+			<finder-column name="creatorClassNameId" />
+			<finder-column name="creatorClassPK" arrayable-operator="OR" />
+		</finder>
+		<finder name="CCNI_T" return-type="Collection">
+			<finder-column name="creatorClassNameId" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="T_P" return-type="Collection">
+			<finder-column name="type" />
+			<finder-column name="parentMicroblogsEntryId" />
+		</finder>
+		<finder name="CCNI_CCPK_T" return-type="Collection">
+			<finder-column name="creatorClassNameId" />
+			<finder-column name="creatorClassPK" arrayable-operator="OR" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="U_C_T_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="createDate" />
+			<finder-column name="type" />
+			<finder-column name="socialRelationType" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="Group" />
+		<reference package-path="com.liferay.portal" entity="Subscription" />
+		<reference package-path="com.liferay.portal" entity="UserNotificationEvent" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetEntry" />
+		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
+	</entity>
+	<exceptions>
+		<exception>UnsupportedMicroblogsEntry</exception>
+	</exceptions>
+</service-builder>

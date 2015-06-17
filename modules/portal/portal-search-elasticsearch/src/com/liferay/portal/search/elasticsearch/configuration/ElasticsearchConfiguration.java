@@ -25,7 +25,7 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface ElasticsearchConfiguration {
 
 	@Meta.AD(deflt = "", required = false)
-	public String additionalConfigurations();
+	public String[] additionalConfigurations();
 
 	@Meta.AD(deflt = "false", required = false)
 	public boolean bootstrapMlockAll();
@@ -46,7 +46,7 @@ public interface ElasticsearchConfiguration {
 	public String discoveryZenPingUnicastHostsPort();
 
 	@Meta.AD(deflt = "", required = false)
-	public String httpCORSConfigurations();
+	public String[] httpCORSConfigurations();
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean httpCORSEnabled();
@@ -74,7 +74,7 @@ public interface ElasticsearchConfiguration {
 	public int retryOnConflict();
 
 	@Meta.AD(deflt = "localhost:9300", required = false)
-	public String transportAddresses();
+	public String[] transportAddresses();
 
 	@Meta.AD(deflt = "", required = false)
 	public String transportTcpPort();

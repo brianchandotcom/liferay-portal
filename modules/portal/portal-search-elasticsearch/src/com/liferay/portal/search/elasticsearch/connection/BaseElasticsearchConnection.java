@@ -16,7 +16,9 @@ package com.liferay.portal.search.elasticsearch.connection;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
@@ -59,11 +61,20 @@ public abstract class BaseElasticsearchConnection
 
 		loadOptionalDefaultConfigurations(builder);
 
-		if (Validator.isNotNull(
-				elasticsearchConfiguration.additionalConfigurations())) {
+		String[] additionalConfigurations =
+			elasticsearchConfiguration.additionalConfigurations();
 
-			builder.loadFromSource(
-				elasticsearchConfiguration.additionalConfigurations());
+		if (ArrayUtil.isNotEmpty(additionalConfigurations)) {
+
+			StringBundler sb = new StringBundler(
+				additionalConfigurations.length * 2);
+
+			for (String additionalConfiguration : additionalConfigurations) {
+				sb.append(additionalConfiguration);
+				sb.append(StringPool.NEW_LINE);
+			}
+
+			builder.loadFromSource(sb.toString());
 		}
 
 		loadRequiredDefaultConfigurations(builder);

@@ -199,17 +199,14 @@ public class EmbeddedElasticsearchConnection
 			return;
 		}
 
-		String httpCORSConfigurations =
+		String[] httpCORSConfigurations =
 			elasticsearchConfiguration.httpCORSConfigurations();
 
-		String[] httpCORSConfigurationArray = StringUtil.split(
-			httpCORSConfigurations, StringPool.PIPE);
-
-		if (ArrayUtil.isEmpty(httpCORSConfigurationArray)) {
+		if (ArrayUtil.isEmpty(httpCORSConfigurations)) {
 			return;
 		}
 
-		for (String httpCORSConfiguration : httpCORSConfigurationArray) {
+		for (String httpCORSConfiguration : httpCORSConfigurations) {
 			String[] httpCORSConfigurationPair = StringUtil.split(
 				httpCORSConfiguration, StringPool.EQUAL);
 

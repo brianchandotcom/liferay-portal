@@ -469,6 +469,26 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				public void execute(Task task) {
 					Project project = task.getProject();
 
+					File testablePortalStartedFile = new File(
+						project.getRootDir(),
+						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+
+					try {
+						Files.createFile(testablePortalStartedFile.toPath());
+					}
+					catch (Exception e) {
+					}
+				}
+
+			});
+
+		startTestableTomcatTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
 					LiferayExtension liferayExtension = GradleUtil.getExtension(
 						project, LiferayExtension.class);
 
@@ -492,6 +512,42 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			project, STOP_TESTABLE_TOMCAT_TASK_NAME, StopAppServerTask.class);
 
 		stopTestableTomcatTask.setAppServerType("tomcat");
+
+		stopTestableTomcatTask.doLast(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					Project project = task.getProject();
+
+					File testablePortalStartedFile = new File(
+						project.getRootDir(),
+						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+
+					project.delete(testablePortalStartedFile);
+				}
+
+			});
+
+		stopTestableTomcatTask.onlyIf(
+			new Spec<Task>() {
+
+				@Override
+				public boolean isSatisfiedBy(Task task) {
+					Project project = task.getProject();
+
+					File testablePortalStartedFile = new File(
+						project.getRootDir(),
+						_TESTABLE_PORTAL_STARTED_FILE_NAME);
+
+					if (testablePortalStartedFile.exists()) {
+						return true;
+					}
+
+					return false;
+				}
+
+			});
 
 		return stopTestableTomcatTask;
 	}
@@ -1200,6 +1256,8 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskJar(project);
 		configureTaskSetupTestableTomcat(project, liferayExtension);
 		configureTaskStartTestableTomcat(project, liferayExtension);
+		configureTaskTestIntegration(project, liferayExtension);
+
 		configureTasksAppServer(project, liferayExtension);
 		configureTasksDirectDeploy(project);
 	}
@@ -1328,6 +1386,28 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	protected void configureTaskTestForkEvery(Test test) {
 		test.setForkEvery(1L);
+	}
+
+	protected void configureTaskTestIntegration(
+		Project project, LiferayExtension liferayExtension) {
+
+		SourceSet sourceSet = GradleUtil.getSourceSet(
+			project, TEST_INTEGRATION_SOURCE_SET_NAME);
+
+		File srcDir = getSrcDir(sourceSet.getResources());
+
+		File skipManagedAppServerFile = new File(
+			srcDir, _SKIP_MANAGED_APP_SERVER_FILE_NAME);
+
+		if (!skipManagedAppServerFile.exists()) {
+			Test test = (Test)GradleUtil.getTask(
+				project, TEST_INTEGRATION_TASK_NAME);
+
+			if (configureTaskEnabledWithAppServer(test, "tomcat")) {
+				test.dependsOn(START_TESTABLE_TOMCAT_TASK_NAME);
+				test.finalizedBy(STOP_TESTABLE_TOMCAT_TASK_NAME);
+			}
+		}
 	}
 
 	protected void configureTaskTestLogging(Test test) {
@@ -1542,5 +1622,11 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 
 	private static final String _REPOSITORY_URL =
 		"http://cdn.repository.liferay.com/nexus/content/groups/public";
+
+	private static final String _SKIP_MANAGED_APP_SERVER_FILE_NAME =
+		"skip.managed.app.server";
+
+	private static final String _TESTABLE_PORTAL_STARTED_FILE_NAME =
+		".testable.portal.started";
 
 }

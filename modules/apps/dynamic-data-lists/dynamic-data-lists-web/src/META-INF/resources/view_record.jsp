@@ -27,6 +27,7 @@ long recordSetId = BeanParamUtil.getLong(record, request, "recordSetId");
 
 DDLRecordSet recordSet = DDLRecordSetServiceUtil.getRecordSet(recordSetId);
 
+boolean editable = ParamUtil.getBoolean(request, "editable", true);
 long formDDMTemplateId = ParamUtil.getLong(request, "formDDMTemplateId");
 
 DDMStructure ddmStructure = recordSet.getDDMStructure(formDDMTemplateId);
@@ -78,7 +79,7 @@ DDLRecordVersion latestRecordVersion = record.getLatestRecordVersion();
 	%>
 
 	<aui:button-row>
-		<c:if test="<%= DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
+		<c:if test="<%= editable && DDLRecordSetPermission.contains(permissionChecker, record.getRecordSet(), ActionKeys.UPDATE) && version.equals(latestRecordVersion.getVersion()) %>">
 			<portlet:renderURL var="editRecordURL" windowState="<%= WindowState.MAXIMIZED.toString() %>">
 				<portlet:param name="mvcPath" value="/edit_record.jsp" />
 				<portlet:param name="redirect" value="<%= redirect %>" />

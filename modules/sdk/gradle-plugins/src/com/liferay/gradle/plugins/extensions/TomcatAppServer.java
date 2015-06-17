@@ -14,6 +14,8 @@
 
 package com.liferay.gradle.plugins.extensions;
 
+import com.liferay.gradle.util.GradleUtil;
+
 import org.gradle.api.Project;
 
 /**
@@ -21,27 +23,27 @@ import org.gradle.api.Project;
  */
 public class TomcatAppServer extends AppServer {
 
-	public TomcatAppServer(String name, Project project) {
-		super(name, project);
+	public TomcatAppServer(Project project) {
+		super("tomcat", project);
 	}
 
 	public String getManagerPassword() {
-		return _managerPassword;
+		return GradleUtil.toString(_managerPassword);
 	}
 
 	public String getManagerUserName() {
-		return _managerUserName;
+		return GradleUtil.toString(_managerUserName);
 	}
 
-	public void setManagerPassword(String managerPassword) {
+	public void setManagerPassword(Object managerPassword) {
 		_managerPassword = managerPassword;
 	}
 
-	public void setManagerUserName(String managerUserName) {
+	public void setManagerUserName(Object managerUserName) {
 		_managerUserName = managerUserName;
 	}
 
-	private String _managerPassword;
-	private String _managerUserName;
+	private Object _managerPassword;
+	private Object _managerUserName;
 
 }

@@ -14,7 +14,10 @@
 
 package com.liferay.gradle.plugins.tasks;
 
+import com.liferay.gradle.plugins.extensions.AppServer;
+import com.liferay.gradle.plugins.extensions.TomcatAppServer;
 import com.liferay.gradle.util.FileUtil;
+import com.liferay.gradle.util.Validator;
 
 import groovy.lang.Closure;
 
@@ -55,7 +58,13 @@ import org.w3c.dom.NodeList;
 /**
  * @author Andrea Di Giorgi
  */
-public class SetupTestableTomcatTask extends DefaultTask {
+public class SetupTestableTomcatTask
+	extends DefaultTask implements AppServerTask {
+
+	@Override
+	public String getAppServerType() {
+		return "tomcat";
+	}
 
 	@Input
 	public int getJmxRemotePort() {
@@ -69,22 +78,22 @@ public class SetupTestableTomcatTask extends DefaultTask {
 
 	@InputDirectory
 	public File getTomcatDir() {
-		return _tomcatDir;
+		return _tomcatAppServer.getDir();
 	}
 
 	@Input
 	public String getTomcatManagerPassword() {
-		return _tomcatManagerPassword;
+		return _tomcatAppServer.getManagerPassword();
 	}
 
 	@Input
 	public String getTomcatManagerUserName() {
-		return _tomcatManagerUserName;
+		return _tomcatAppServer.getManagerUserName();
 	}
 
 	@Input
 	public String getTomcatZipUrl() {
-		return _tomcatZipUrl;
+		return _tomcatAppServer.getZipUrl();
 	}
 
 	@Input
@@ -100,6 +109,27 @@ public class SetupTestableTomcatTask extends DefaultTask {
 	@Input
 	public boolean isJmxRemoteSsl() {
 		return _jmxRemoteSsl;
+	}
+
+	@Override
+	public void merge(AppServer appServer) {
+		TomcatAppServer tomcatAppServer = (TomcatAppServer)appServer;
+
+		if (getTomcatDir() == null) {
+			setTomcatDir(tomcatAppServer.getDir());
+		}
+
+		if (Validator.isNull(getTomcatManagerPassword())) {
+			setTomcatManagerPassword(tomcatAppServer.getManagerPassword());
+		}
+
+		if (Validator.isNull(getTomcatManagerUserName())) {
+			setTomcatManagerUserName(tomcatAppServer.getManagerUserName());
+		}
+
+		if (Validator.isNull(getTomcatZipUrl())) {
+			setTomcatZipUrl(tomcatAppServer.getZipUrl());
+		}
 	}
 
 	public void setDebugLogging(boolean debugLogging) {
@@ -122,20 +152,20 @@ public class SetupTestableTomcatTask extends DefaultTask {
 		_moduleFrameworkBaseDir = moduleFrameworkBaseDir;
 	}
 
-	public void setTomcatDir(File tomcatDir) {
-		_tomcatDir = tomcatDir;
+	public void setTomcatDir(Object tomcatDir) {
+		_tomcatAppServer.setDir(tomcatDir);
 	}
 
-	public void setTomcatManagerPassword(String tomcatManagerPassword) {
-		_tomcatManagerPassword = tomcatManagerPassword;
+	public void setTomcatManagerPassword(Object tomcatManagerPassword) {
+		_tomcatAppServer.setManagerPassword(tomcatManagerPassword);
 	}
 
-	public void setTomcatManagerUserName(String tomcatManagerUserName) {
-		_tomcatManagerUserName = tomcatManagerUserName;
+	public void setTomcatManagerUserName(Object tomcatManagerUserName) {
+		_tomcatAppServer.setManagerUserName(tomcatManagerUserName);
 	}
 
-	public void setTomcatZipUrl(String tomcatZipUrl) {
-		_tomcatZipUrl = tomcatZipUrl;
+	public void setTomcatZipUrl(Object tomcatZipUrl) {
+		_tomcatAppServer.setZipUrl(tomcatZipUrl);
 	}
 
 	@TaskAction
@@ -374,9 +404,7 @@ public class SetupTestableTomcatTask extends DefaultTask {
 	private File _moduleFrameworkBaseDir;
 	private final DateFormat _timestampDateFormat = new SimpleDateFormat(
 		"yyyyMMddkkmmssSSS");
-	private File _tomcatDir;
-	private String _tomcatManagerPassword;
-	private String _tomcatManagerUserName;
-	private String _tomcatZipUrl;
+	private final TomcatAppServer _tomcatAppServer = new TomcatAppServer(
+		getProject());
 
 }

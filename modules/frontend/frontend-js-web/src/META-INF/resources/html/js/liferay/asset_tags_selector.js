@@ -54,20 +54,20 @@ AUI.add(
 
 		var TPL_LOADING = '<div class="loading-animation" />';
 
-		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search row">' +
-				'<input class="col-md-12 lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
+		var TPL_SEARCH_FORM = '<form action="javascript:;" class="form-search lfr-tag-selector-search">' +
+				'<input class="form-control lfr-tag-selector-input search-query" placeholder="{0}" type="text" />' +
 			'</form>';
 
 		var TPL_SUGGESTIONS_QUERY = 'select * from search.termextract where context="{0}"';
 
 		var TPL_TAG = new A.Template(
-			'<fieldset class="{[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
+			'<div class="lfr-tag-selector-tags {[(!values.tags || !values.tags.length) ? "', CSS_NO_MATCHES, '" : "', STR_BLANK, '" ]}">',
 				'<tpl for="tags">',
-					'<label class="checkbox" title="{name}"><input {checked} type="checkbox" value="{name}" />{name}</label>',
+					'<label class="checkbox" title="{name}"><input {checked} type="checkbox" value="{name}" /> <span class="lfr-tag-text">{name}</span></label>',
 				'</tpl>',
 
 				'<div class="lfr-tag-message">{message}</div>',
-			'</fieldset>'
+			'</div>'
 		);
 
 		var TPL_TAGS_CONTAINER = '<div class="' + CSS_TAGS_LIST + '"></div>';

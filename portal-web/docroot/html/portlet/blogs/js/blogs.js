@@ -110,8 +110,7 @@ AUI.add(
 
 						var eventHandles = [
 							Liferay.on('coverImageDeleted', instance._removeCaption, instance),
-							Liferay.on('coverImageSelected', instance._showCaption, instance),
-							Liferay.on('coverImageUploaded', instance._showCaption, instance)
+							Liferay.on(['coverImageUploaded', 'coverImageSelected'], instance._showCaption, instance)
 						];
 
 						var publishButton = instance.one('#publishButton');

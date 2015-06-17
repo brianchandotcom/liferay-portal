@@ -277,6 +277,18 @@ public class GradleUtil {
 		return prefix + StringUtil.capitalize(fileName);
 	}
 
+	public static String getTaskPrefixedProperty(Task task, String name) {
+		String suffix = "." + name;
+
+		String value = System.getProperty(task.getPath() + suffix);
+
+		if (Validator.isNull(value)) {
+			value = System.getProperty(task.getName() + suffix);
+		}
+
+		return value;
+	}
+
 	public static void removeDependencies(
 		Project project, String configurationName,
 		String[] dependencyNotations) {

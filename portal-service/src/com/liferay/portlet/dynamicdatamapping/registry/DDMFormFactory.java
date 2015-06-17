@@ -67,6 +67,8 @@ public class DDMFormFactory {
 			ddmFormFactoryHelper.getDDMFormFieldDataType());
 		ddmFormField.setLocalizable(
 			ddmFormFactoryHelper.isDDMFormFieldLocalizable(method));
+		ddmFormField.setVisibilityExpression(
+			ddmFormFactoryHelper.getDDMFormFieldVisibilityExpression());
 
 		return ddmFormField;
 	}

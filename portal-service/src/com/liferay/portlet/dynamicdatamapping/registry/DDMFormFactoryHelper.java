@@ -14,6 +14,7 @@
 
 package com.liferay.portlet.dynamicdatamapping.registry;
 
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 import com.liferay.portlet.dynamicdatamapping.registry.annotations.DDMFormField;
@@ -53,6 +54,14 @@ public class DDMFormFactoryHelper {
 		}
 
 		return "text";
+	}
+
+	public String getDDMFormFieldVisibilityExpression() {
+		if (Validator.isNotNull(_ddmFormField.visibilityExpression())) {
+			return _ddmFormField.visibilityExpression();
+		}
+
+		return StringPool.TRUE;
 	}
 
 	public boolean isDDMFormFieldLocalizable(Method method) {

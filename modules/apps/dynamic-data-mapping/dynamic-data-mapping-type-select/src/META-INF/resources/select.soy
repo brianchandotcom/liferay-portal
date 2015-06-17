@@ -9,9 +9,10 @@
  * @param multiple
  * @param name
  * @param options
+ * @param visible
  */
 {template .select}
-	<div class="form-group field-wrapper" data-fieldname="{$name}">
+	<div class="form-group field-wrapper{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="form-group input-select-wrapper">
 			<label class="control-label" for="{$name}">
 				{$label}

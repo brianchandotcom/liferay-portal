@@ -76,6 +76,11 @@ AUI.add(
 
 					value: {
 						value: ''
+					},
+
+					visible: {
+						getter: '_getVisible',
+						readOnly: true
 					}
 				},
 
@@ -198,7 +203,8 @@ AUI.add(
 								label: instance.get('label'),
 								name: instance.getQualifiedName(),
 								placeholder: '',
-								value: value || ''
+								value: value || '',
+								visible: instance.get('visible')
 							}
 						);
 					},
@@ -384,6 +390,14 @@ AUI.add(
 						return instance.get('definition').repeatable === true;
 					},
 
+					_getVisible: function() {
+						var instance = this;
+
+						var visibilityExpression = instance.get('definition').visibilityExpression || 'true';
+
+						return A.DataType.Boolean.parse(visibilityExpression);
+					},
+
 					_handleToolbarClick: function(event) {
 						var instance = this;
 
@@ -468,6 +482,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-datatype', 'liferay-ddm-form-renderer-field-types', 'liferay-ddm-form-renderer-util']
 	}
 );

@@ -92,6 +92,7 @@
 						'liferay-ddm-form-field': {
 							path: 'field.js',
 							requires: [
+								'aui-datatype',
 								'liferay-ddm-form-renderer-field-types',
 								'liferay-ddm-form-renderer-util'
 							]

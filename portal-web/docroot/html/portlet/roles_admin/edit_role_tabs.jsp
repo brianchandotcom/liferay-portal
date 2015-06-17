@@ -17,10 +17,6 @@
 <%@ include file="/html/portlet/roles_admin/init.jsp" %>
 
 <%
-String cmd = ParamUtil.getString(request, Constants.CMD);
-
-String tabs1 = ParamUtil.getString(request, "tabs1");
-
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
@@ -30,14 +26,6 @@ long roleId = ParamUtil.getLong(request, "roleId");
 Role role = RoleServiceUtil.fetchRole(roleId);
 
 String portletResource = ParamUtil.getString(request, "portletResource");
-
-String portletResourceLabel = null;
-
-if (Validator.isNotNull(portletResource)) {
-	Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletResource);
-
-	portletResourceLabel = PortalUtil.getPortletLongTitle(portlet, application, locale);
-}
 
 // Edit
 
@@ -63,8 +51,6 @@ PortletURL assignMembersURL = renderResponse.createRenderURL();
 assignMembersURL.setParameter("mvcPath", "/html/portlet/roles_admin/edit_role_assignments.jsp");
 assignMembersURL.setParameter("redirect", backURL);
 assignMembersURL.setParameter("roleId", String.valueOf(role.getRoleId()));
-
-int pos = 0;
 
 String tabs1Names = StringPool.BLANK;
 String[] tabs1URLs = new String[0];

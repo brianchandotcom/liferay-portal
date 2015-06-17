@@ -49,8 +49,7 @@ public class SolrUpdateDocumentCommandImpl
 			SearchContext searchContext, Document document, boolean deleteFirst)
 		throws SearchException {
 
-		UpdateResponse updateResponse = doUpdateDocuments(
-			searchContext, Arrays.asList(document), deleteFirst);
+		doUpdateDocuments(searchContext, Arrays.asList(document), deleteFirst);
 
 		// TODO
 

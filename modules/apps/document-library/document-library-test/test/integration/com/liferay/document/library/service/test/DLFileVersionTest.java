@@ -12,28 +12,46 @@
  * details.
  */
 
-package com.liferay.portlet.documentlibrary.service;
+package com.liferay.document.library.service.test;
 
-import com.liferay.portal.events.AddDefaultDocumentLibraryStructuresAction;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.document.library.events.AddDefaultDocumentLibraryStructuresAction;
 import com.liferay.portal.kernel.events.SimpleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
+import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.ActionKeys;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.documentlibrary.NoSuchFolderException;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryTypeConstants;
 import com.liferay.portlet.documentlibrary.model.DLFileVersion;
+import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
+import com.liferay.portlet.documentlibrary.service.DLAppServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileVersionLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
@@ -45,6 +63,8 @@ import com.liferay.portlet.expando.model.ExpandoColumnConstants;
 import com.liferay.portlet.expando.model.ExpandoTable;
 import com.liferay.portlet.expando.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.portlet.expando.service.ExpandoTableLocalServiceUtil;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
 
 import java.io.Serializable;
 
@@ -59,25 +79,33 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Preston Crary
  */
-public class DLFileVersionTest extends BaseDLAppTestCase {
+@RunWith(Arquillian.class)
+public class DLFileVersionTest {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Before
-	@Override
 	public void setUp() throws Exception {
-		super.setUp();
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
 
-		SimpleAction simpleAction =
-			new AddDefaultDocumentLibraryStructuresAction();
+		_group = GroupTestUtil.addGroup();
+
+		setUpParentFolder();
+		setUpResourcePermission();
+
+		Registry registry = RegistryUtil.getRegistry();
+
+		SimpleAction simpleAction = registry.getService(
+			AddDefaultDocumentLibraryStructuresAction.class);
 
 		String companyIdString = String.valueOf(TestPropsValues.getCompanyId());
 
@@ -86,7 +114,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 		List<DLFileEntryType> dlFileEntryTypes =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryTypes(
 				PortalUtil.getCurrentAndAncestorSiteGroupIds(
-					group.getGroupId()));
+					_group.getGroupId()));
 
 		for (DLFileEntryType dlFileEntryType : dlFileEntryTypes) {
 			String fileEntryTypeKey = dlFileEntryType.getFileEntryTypeKey();
@@ -110,7 +138,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 		_serviceContext = getServiceContext();
 
 		FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
-			group.getGroupId(), parentFolder.getFolderId(), _SOURCE_FILE_NAME,
+			_group.getGroupId(), parentFolder.getFolderId(), _SOURCE_FILE_NAME,
 			ContentTypes.APPLICATION_OCTET_STREAM, _TITLE, StringPool.BLANK,
 			StringPool.BLANK, _DATA_VERSION_1, _serviceContext);
 
@@ -119,7 +147,6 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 	}
 
 	@After
-	@Override
 	public void tearDown() throws Exception {
 		ExpandoTable expandoTable =
 			ExpandoTableLocalServiceUtil.getDefaultTable(
@@ -127,7 +154,13 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 
 		ExpandoTableLocalServiceUtil.deleteTable(expandoTable);
 
-		super.tearDown();
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
+
+		RoleTestUtil.removeResourcePermission(
+			RoleConstants.GUEST, "com.liferay.portlet.documentlibrary",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
 	}
 
 	@Test
@@ -297,7 +330,7 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 
 	protected ServiceContext getServiceContext() throws Exception {
 		ServiceContext serviceContext =
-			ServiceContextTestUtil.getServiceContext(group.getGroupId());
+			ServiceContextTestUtil.getServiceContext(_group.getGroupId());
 
 		serviceContext.setAttribute(
 			"fileEntryTypeId", _contractDLFileEntryTypeId);
@@ -341,6 +374,71 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 		}
 
 		return serviceContext;
+	}
+
+	protected void setUpParentFolder() throws Exception {
+		try {
+			DLAppServiceUtil.deleteFolder(
+				_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+				"Test Folder");
+		}
+		catch (NoSuchFolderException nsfe) {
+		}
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		parentFolder = DLAppServiceUtil.addFolder(
+			_group.getGroupId(), DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
+			"Test Folder", RandomTestUtil.randomString(), serviceContext);
+	}
+
+	protected void setUpPermissionThreadLocal() {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+				@Override
+				public boolean hasPermission(
+					long groupId, String name, String primKey,
+					String actionId) {
+
+					return true;
+				}
+
+		});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
+	protected void setUpResourcePermission() throws Exception {
+		RoleTestUtil.addResourcePermission(
+			RoleConstants.GUEST, "com.liferay.portlet.documentlibrary",
+			ResourceConstants.SCOPE_GROUP, String.valueOf(_group.getGroupId()),
+			ActionKeys.VIEW);
+	}
+
+	protected void tearDownPermissionThreadLocal() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+	}
+
+	protected void tearDownPrincipalThreadLocal() {
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	protected void updateServiceContext(
@@ -422,6 +520,13 @@ public class DLFileVersionTest extends BaseDLAppTestCase {
 
 	private long _contractDLFileEntryTypeId;
 	private DLFileVersion _fileVersion;
+
+	@DeleteAfterTestRun
+	private Group _group;
+
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 	private ServiceContext _serviceContext;
+	private Folder parentFolder;
 
 }

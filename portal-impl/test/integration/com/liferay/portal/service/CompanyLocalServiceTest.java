@@ -176,12 +176,9 @@ public class CompanyLocalServiceTest {
 		Group guestGroup = GroupLocalServiceUtil.getGroup(
 			companyId, GroupConstants.GUEST);
 
-		Group companyGroup = company.getGroup();
-
 		DLFileEntryType dlFileEntryType =
 			DLFileEntryTypeLocalServiceUtil.getFileEntryType(
-				companyGroup.getGroupId(),
-				DLFileEntryTypeConstants.NAME_CONTRACT);
+				DLFileEntryTypeConstants.FILE_ENTRY_TYPE_ID_BASIC_DOCUMENT);
 
 		ServiceContext serviceContext = getServiceContext(companyId);
 

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.document.library.verify.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.repository.model.Folder;
@@ -31,9 +32,14 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.PermissionThreadLocal;
+import com.liferay.portal.security.permission.SimplePermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
+import com.liferay.portal.verify.VerifyDocumentLibrary;
+import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
 import com.liferay.portlet.documentlibrary.model.DLFileEntryMetadata;
@@ -65,17 +71,20 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Manuel de la Peña
  * @author Eudaldo Alonso
  * @author Sergio González
  */
+@RunWith(Arquillian.class)
 @Sync
 public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
@@ -83,12 +92,21 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
+			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
 	@Before
 	public void setUp() throws Exception {
+		setUpPermissionThreadLocal();
+		setUpPrincipalThreadLocal();
+
 		_group = GroupTestUtil.addGroup();
+	}
+
+	@After
+	public void tearDown() {
+		PermissionThreadLocal.setPermissionChecker(_originalPermissionChecker);
+		PrincipalThreadLocal.setName(_originalName);
 	}
 
 	@Test
@@ -327,7 +345,7 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 
 		byte[] bytes = FileUtil.getBytes(
 			getClass(),
-			"/com/liferay/portlet/documentlibrary/service/dependencies" +
+			"/com/liferay/document/library/service/test/dependencies" +
 				"/ddmstructure.xml");
 
 		DDMForm ddmForm = DDMFormXSDDeserializerUtil.deserialize(
@@ -412,7 +430,42 @@ public class VerifyDocumentLibraryTest extends BaseVerifyProcessTestCase {
 		return new VerifyDocumentLibrary();
 	}
 
+	protected void setUpPermissionThreadLocal() {
+		_originalPermissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		PermissionThreadLocal.setPermissionChecker(
+			new SimplePermissionChecker() {
+
+				@Override
+				public boolean hasOwnerPermission(
+					long companyId, String name, String primKey, long ownerId,
+					String actionId) {
+
+					return true;
+				}
+
+				@Override
+				public boolean hasPermission(
+					long groupId, String name, String primKey,
+					String actionId) {
+
+					return true;
+				}
+
+		});
+	}
+
+	protected void setUpPrincipalThreadLocal() throws Exception {
+		_originalName = PrincipalThreadLocal.getName();
+
+		PrincipalThreadLocal.setName(TestPropsValues.getUserId());
+	}
+
 	@DeleteAfterTestRun
 	private Group _group;
+
+	private String _originalName;
+	private PermissionChecker _originalPermissionChecker;
 
 }

@@ -47,11 +47,6 @@
 		</antcall>
 
 		<antcall target="deploy-artifact">
-			<param name="artifact.id" value="portal-pacl" />
-			<param name="packaging" value="jar" />
-		</antcall>
-
-		<antcall target="deploy-artifact">
 			<param name="artifact.id" value="portal-parent" />
 			<param name="packaging" value="pom" />
 		</antcall>

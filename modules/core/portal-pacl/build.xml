@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 
-<project name="portal-pacl" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="../build-common-java.xml" />
+<project>
+	<import file="../../../tools/sdk/build-common-osgi-plugin.xml" />
 
-	<property name="deploy.dir" value="${app.server.lib.portal.dir}" />
-	<property name="jar.file" value="${ant.project.name}" />
-	<property name="manifest.bundle.name" value="Liferay Portal PACL" />
-	<property name="manifest.bundle.symbolic.name" value="portal-pacl;singleton:=true" />
+	<property name="auto.deploy.dir" value="${liferay.home}/osgi/core" />
 </project>

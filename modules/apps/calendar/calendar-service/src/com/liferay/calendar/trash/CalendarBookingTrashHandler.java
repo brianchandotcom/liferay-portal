@@ -20,11 +20,15 @@ import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.trash.BaseTrashHandler;
+import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.security.permission.PermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pier Paolo Ramon
  */
+@Component(immediate = true, service = TrashHandler.class)
 public class CalendarBookingTrashHandler extends BaseTrashHandler {
 
 	@Override

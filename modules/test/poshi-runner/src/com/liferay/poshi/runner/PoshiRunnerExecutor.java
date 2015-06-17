@@ -688,20 +688,7 @@ public class PoshiRunnerExecutor {
 		String varValue = element.attributeValue("value");
 
 		if (varValue == null) {
-			if (element.attributeValue("method") != null) {
-				String classCommandName =
-					PoshiRunnerVariablesUtil.replaceCommandVars(
-						element.attributeValue("method"));
-
-				if (classCommandName.startsWith("TestPropsUtil")) {
-					classCommandName = classCommandName.replace(
-						"TestPropsUtil", "PropsUtil");
-				}
-
-				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
-					classCommandName);
-			}
-			else if (element.attributeValue("attribute") != null) {
+			if (element.attributeValue("attribute") != null) {
 				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
 
 				String attributeName = element.attributeValue("attribute");
@@ -726,6 +713,19 @@ public class PoshiRunnerExecutor {
 
 				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
 					sb.toString());
+			}
+			else if (element.attributeValue("method") != null) {
+				String classCommandName =
+					PoshiRunnerVariablesUtil.replaceCommandVars(
+						element.attributeValue("method"));
+
+				if (classCommandName.startsWith("TestPropsUtil")) {
+					classCommandName = classCommandName.replace(
+						"TestPropsUtil", "PropsUtil");
+				}
+
+				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
+					classCommandName);
 			}
 			else {
 				varValue = element.getText();

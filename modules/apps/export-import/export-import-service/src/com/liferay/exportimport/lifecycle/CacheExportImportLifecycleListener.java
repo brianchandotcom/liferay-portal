@@ -18,10 +18,14 @@ import com.liferay.portal.security.permission.PermissionCacheUtil;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lifecycle.BaseExportImportLifecycleListener;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleListener;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Mate Thurzo
  */
+@Component(service = ExportImportLifecycleListener.class)
 public class CacheExportImportLifecycleListener
 	extends BaseExportImportLifecycleListener {
 

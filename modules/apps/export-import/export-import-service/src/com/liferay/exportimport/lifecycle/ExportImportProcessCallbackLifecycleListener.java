@@ -25,9 +25,15 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(service = ExportImportLifecycleListener.class)
 public class ExportImportProcessCallbackLifecycleListener
 	extends BaseProcessExportImportLifecycleListener {
 
@@ -66,6 +72,10 @@ public class ExportImportProcessCallbackLifecycleListener
 					"Unable to execute export import process callback", e);
 			}
 		}
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

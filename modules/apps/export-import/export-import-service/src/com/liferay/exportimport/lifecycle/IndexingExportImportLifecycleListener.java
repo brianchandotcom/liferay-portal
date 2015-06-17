@@ -39,11 +39,15 @@ import java.io.Serializable;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
  */
+@Component(service = ExportImportLifecycleListener.class)
 public class IndexingExportImportLifecycleListener
 	implements ExportImportLifecycleListener {
 
@@ -128,6 +132,10 @@ public class IndexingExportImportLifecycleListener
 				_log.debug("Unable to reindex portlet data context", se);
 			}
 		}
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

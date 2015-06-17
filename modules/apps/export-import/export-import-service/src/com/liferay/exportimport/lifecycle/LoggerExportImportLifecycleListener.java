@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lifecycle.BaseExportImportLifecycleListener;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleListener;
 import com.liferay.portlet.exportimport.model.ExportImportConfiguration;
 
 import java.io.Serializable;
@@ -31,6 +33,7 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Daniel Kocsis
  */
+@Component(service = ExportImportLifecycleListener.class)
 public class LoggerExportImportLifecycleListener
 	extends BaseExportImportLifecycleListener {
 

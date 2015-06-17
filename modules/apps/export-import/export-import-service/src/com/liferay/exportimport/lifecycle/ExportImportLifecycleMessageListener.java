@@ -19,15 +19,29 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEvent;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleListener;
 
 import java.util.Set;
 
+import javax.servlet.ServletContext;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Daniel Kocsis
  */
+@Component(
+	immediate = true,
+	property = {
+		"destination.name=liferay/export_import_lifecycle_event_async",
+		"destination.name=liferay/export_import_lifecycle_event_sync"
+	},
+	service = MessageListener.class
+)
 public class ExportImportLifecycleMessageListener extends BaseMessageListener {
 
 	@Override
@@ -71,6 +85,10 @@ public class ExportImportLifecycleMessageListener extends BaseMessageListener {
 
 		return ExportImportLifecycleEventListenerRegistryUtil.
 			getAsyncExportImportLifecycleListeners();
+	}
+
+	@Reference(target = "(original.bean=*)", unbind = "-")
+	protected void setServletContext(ServletContext servletContext) {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

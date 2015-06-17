@@ -26,6 +26,7 @@ import com.liferay.portal.security.auth.CompanyThreadLocal;
 import com.liferay.service.access.control.profile.configuration.SACPConfiguration;
 import com.liferay.service.access.control.profile.constants.SACPConstants;
 import com.liferay.service.access.control.profile.model.SACPEntry;
+import com.liferay.service.access.control.profile.service.SACPEntryLocalService;
 import com.liferay.service.access.control.profile.service.SACPEntryService;
 
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class ServiceAccessControlProfileManagerImpl
 
 		try {
 			return toServiceAccessControlProfile(
-				_sacpEntryService.getSACPEntry(
+				_sacpEntryLocalService.getSACPEntry(
 					companyId, sacpConfiguration.defaultProfileName()));
 		}
 		catch (PortalException pe) {
@@ -102,6 +103,13 @@ public class ServiceAccessControlProfileManagerImpl
 	@Override
 	public int getServiceAccessControlProfilesCount(long companyId) {
 		return _sacpEntryService.getCompanySACPEntriesCount(companyId);
+	}
+
+	@Reference(unbind = "-")
+	protected void setSACPEntryLocalService(
+		SACPEntryLocalService sacpEntryLocalService) {
+
+		_sacpEntryLocalService = sacpEntryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -145,6 +153,8 @@ public class ServiceAccessControlProfileManagerImpl
 	private static final Log _log = LogFactoryUtil.getLog(
 		ServiceAccessControlProfileManagerImpl.class);
 
+
+	private SACPEntryLocalService _sacpEntryLocalService;
 	private SACPEntryService _sacpEntryService;
 	private volatile SettingsFactory _settingsFactory;
 

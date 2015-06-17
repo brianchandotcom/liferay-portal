@@ -16,7 +16,6 @@ package com.liferay.portal.search.solr.internal.http;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 import com.liferay.portal.search.solr.http.SSLSocketFactoryBuilder;
@@ -26,11 +25,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
-import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -68,31 +68,33 @@ public class CertAuthPoolingHttpClientFactory
 	}
 
 	@Override
-	protected void configure(DefaultHttpClient defaultHttpClient) {
+	protected void configure(HttpClientBuilder httpClientBuilder) {
 	}
 
 	@Override
-	protected PoolingClientConnectionManager
-		createPoolingClientConnectionManager() throws Exception {
+	protected PoolingHttpClientConnectionManager
+		createPoolingHttpClientConnectionManager() throws Exception {
 
-		SSLSocketFactory sslSocketFactory = _sslSocketFactoryBuilder.build();
+		SSLConnectionSocketFactory sslConnectionSocketFactory =
+			_sslSocketFactoryBuilder.build();
 
-		SchemeRegistry schemeRegistry = createSchemeRegistry(sslSocketFactory);
+		Registry<ConnectionSocketFactory> schemeRegistry = createSchemeRegistry(
+			sslConnectionSocketFactory);
 
-		return new PoolingClientConnectionManager(schemeRegistry);
+		return new PoolingHttpClientConnectionManager(schemeRegistry);
 	}
 
-	protected SchemeRegistry createSchemeRegistry(
-		SSLSocketFactory sslSocketFactory) {
+	protected Registry<ConnectionSocketFactory> createSchemeRegistry(
+		SSLConnectionSocketFactory sslConnectionSocketFactory) {
 
-		SchemeRegistry schemeRegistry = new SchemeRegistry();
+		RegistryBuilder<ConnectionSocketFactory> registeryBuilder =
+			RegistryBuilder.create();
 
-		Scheme scheme = new Scheme(
-			Http.HTTPS, Http.HTTPS_PORT, sslSocketFactory);
+		registeryBuilder.register("https", sslConnectionSocketFactory);
 
-		schemeRegistry.register(scheme);
+		Registry<ConnectionSocketFactory> registry = registeryBuilder.build();
 
-		return schemeRegistry;
+		return registry;
 	}
 
 	@Deactivate

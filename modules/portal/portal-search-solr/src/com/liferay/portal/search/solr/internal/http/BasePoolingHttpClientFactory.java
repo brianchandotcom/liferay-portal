@@ -23,8 +23,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.pool.PoolStats;
 
 /**
@@ -42,18 +42,21 @@ public abstract class BasePoolingHttpClientFactory
 		}
 
 		_poolingClientConnectionManager =
-			createPoolingClientConnectionManager();
+			createPoolingHttpClientConnectionManager();
 
 		applyProperties(_poolingClientConnectionManager);
 
-		DefaultHttpClient defaultHttpClient = new DefaultHttpClient(
-			_poolingClientConnectionManager);
+		HttpClientBuilder httpClientBuilder = HttpClientBuilder.create();
 
-		applyProperties(defaultHttpClient);
+		httpClientBuilder.setConnectionManager(_poolingClientConnectionManager);
 
-		configure(defaultHttpClient);
+		applyProperties(httpClientBuilder);
 
-		return defaultHttpClient;
+		configure(httpClientBuilder);
+
+		HttpClient httpClient = httpClientBuilder.build();
+
+		return httpClient;
 	}
 
 	public void setDefaultMaxConnectionsPerRoute(
@@ -121,32 +124,32 @@ public abstract class BasePoolingHttpClientFactory
 		}
 	}
 
-	protected void applyProperties(DefaultHttpClient defaultHttpClient) {
+	protected void applyProperties(HttpClientBuilder httpClientBuilder) {
 		for (HttpRequestInterceptor httpRequestInterceptor :
 				_httpRequestInterceptors) {
 
-			defaultHttpClient.addRequestInterceptor(httpRequestInterceptor, 0);
+			httpClientBuilder.addInterceptorFirst(httpRequestInterceptor);
 		}
 	}
 
 	protected void applyProperties(
-		PoolingClientConnectionManager poolingClientConnectionManager) {
+		PoolingHttpClientConnectionManager poolingHttpClientConnectionManager) {
 
 		if (_defaultMaxConnectionsPerRoute != null) {
-			poolingClientConnectionManager.setDefaultMaxPerRoute(
+			poolingHttpClientConnectionManager.setDefaultMaxPerRoute(
 				_defaultMaxConnectionsPerRoute.intValue());
 		}
 
 		if (_maxTotalConnections != null) {
-			poolingClientConnectionManager.setMaxTotal(
+			poolingHttpClientConnectionManager.setMaxTotal(
 				_maxTotalConnections.intValue());
 		}
 	}
 
-	protected abstract void configure(DefaultHttpClient defaultHttpClient);
+	protected abstract void configure(HttpClientBuilder httpClientBuilder);
 
-	protected abstract PoolingClientConnectionManager
-		createPoolingClientConnectionManager() throws Exception;
+	protected abstract PoolingHttpClientConnectionManager
+		createPoolingHttpClientConnectionManager() throws Exception;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BasePoolingHttpClientFactory.class);
@@ -154,6 +157,6 @@ public abstract class BasePoolingHttpClientFactory
 	private Integer _defaultMaxConnectionsPerRoute;
 	private List<HttpRequestInterceptor> _httpRequestInterceptors;
 	private Integer _maxTotalConnections;
-	private PoolingClientConnectionManager _poolingClientConnectionManager;
+	private PoolingHttpClientConnectionManager _poolingClientConnectionManager;
 
 }

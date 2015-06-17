@@ -26,10 +26,14 @@ import java.security.KeyStore;
 
 import java.util.Map;
 
-import org.apache.http.conn.ssl.SSLSocketFactory;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLContext;
+
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.conn.ssl.TrustStrategy;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -47,7 +51,7 @@ import org.osgi.service.component.annotations.Reference;
 public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 
 	@Override
-	public SSLSocketFactory build() throws Exception {
+	public SSLConnectionSocketFactory build() throws Exception {
 		KeyStore keyStore = _keyStoreLoader.load(
 			_keyStoreType, _keyStorePath, _keyStorePassword);
 
@@ -57,7 +61,7 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 					"Use system defaults because there is no custom key store");
 			}
 
-			return SSLSocketFactory.getSystemSocketFactory();
+			return SSLConnectionSocketFactory.getSystemSocketFactory();
 		}
 
 		KeyStore trustKeyStore = null;
@@ -75,25 +79,28 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 							"trust store");
 				}
 
-				return SSLSocketFactory.getSystemSocketFactory();
+				return SSLConnectionSocketFactory.getSystemSocketFactory();
 			}
 		}
 		else {
 			trustStrategy = new TrustSelfSignedStrategy();
 		}
 
-		X509HostnameVerifier x509HostnameVerifier =
-			SSLSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
+		HostnameVerifier hostnameVerifier = null;
 
-		if (!_verifyServerHostname) {
-			x509HostnameVerifier = SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
+		if (_verifyServerHostname) {
+			hostnameVerifier =
+				SSLConnectionSocketFactory.getDefaultHostnameVerifier();
 		}
 
+		SSLContextBuilder sslContextBuilder = SSLContexts.custom();
+		sslContextBuilder.loadKeyMaterial(keyStore, _keyStorePassword);
+		sslContextBuilder.loadTrustMaterial(trustStrategy);
+
+		SSLContext sslContext = sslContextBuilder.build();
+
 		try {
-			return new SSLSocketFactory(
-				SSLSocketFactory.TLS, keyStore,
-				String.valueOf(_keyStorePassword), trustKeyStore, null,
-				trustStrategy, x509HostnameVerifier);
+			return new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -103,7 +110,7 @@ public class SSLSocketFactoryBuilderImpl implements SSLSocketFactoryBuilder {
 					e);
 			}
 
-			return SSLSocketFactory.getSystemSocketFactory();
+			return SSLConnectionSocketFactory.getSystemSocketFactory();
 		}
 	}
 

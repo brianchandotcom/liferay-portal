@@ -29,8 +29,9 @@ import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.PoolingClientConnectionManager;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -91,7 +92,7 @@ public class BasicAuthPoolingHttpClientFactory
 	}
 
 	@Override
-	protected void configure(DefaultHttpClient defaultHttpClient) {
+	protected void configure(HttpClientBuilder httpClientBuilder) {
 		if (Validator.isBlank(_username)) {
 			return;
 		}
@@ -105,18 +106,20 @@ public class BasicAuthPoolingHttpClientFactory
 		}
 
 		CredentialsProvider credentialsProvider =
-			defaultHttpClient.getCredentialsProvider();
+			new BasicCredentialsProvider();
 
 		credentialsProvider.setCredentials(
 			_authScope,
 			new UsernamePasswordCredentials(_username, _password));
+
+		httpClientBuilder.setDefaultCredentialsProvider(credentialsProvider);
 	}
 
 	@Override
-	protected PoolingClientConnectionManager
-		createPoolingClientConnectionManager() {
+	protected PoolingHttpClientConnectionManager
+		createPoolingHttpClientConnectionManager() {
 
-		return new PoolingClientConnectionManager();
+		return new PoolingHttpClientConnectionManager();
 	}
 
 	@Deactivate

@@ -42,6 +42,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
 		<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
 			<aui:form action="<%= discussionTaglibHelper.getFormAction() %>" method="post" name="<%= discussionTaglibHelper.getFormName() %>">
+				<input name="namespace" type="hidden" value="<%= namespace %>" />
 				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
 				<aui:input id="<%= randomNamespace + Constants.CMD %>" name="<%= Constants.CMD %>" type="hidden" />
 				<aui:input name="redirect" type="hidden" value="<%= discussionTaglibHelper.getRedirect() %>" />

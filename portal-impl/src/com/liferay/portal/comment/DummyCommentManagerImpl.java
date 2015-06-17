@@ -20,11 +20,11 @@ import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 /**
  * @author André de Oliveira

@@ -15,12 +15,12 @@
 package com.liferay.portlet.messageboards.comment;
 
 import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportClassedModelUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.StagedModel;
+import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;

@@ -2449,21 +2449,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/portal/jsqlparser.jar</file-name>
-				<version>0.8.2-SNAPSHOT</version>
-				<project-name>JSqlParser</project-name>
-				<project-url>https://github.com/wumpz/JSqlParser</project-url>
-				<licenses>
-					<license>
-						<license-name>LGPL 2.1</license-name>
-						<license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
-					</license>
-				</licenses>
-				<comments>
-					See LPS-34240.
-				</comments>
-			</library>
-			<library>
 				<file-name>lib/portal/jsr107cache.jar</file-name>
 				<version>1.0</version>
 				<project-name>JSR 107</project-name>

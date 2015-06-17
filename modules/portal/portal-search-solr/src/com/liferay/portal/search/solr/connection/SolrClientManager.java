@@ -30,7 +30,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.http.client.HttpClient;
 import org.apache.solr.client.solrj.SolrClient;
 
 import org.osgi.service.component.ComponentContext;
@@ -96,8 +95,6 @@ public class SolrClientManager {
 			throw new IllegalStateException(
 				"No HTTP client factory for " + authMode);
 		}
-
-		HttpClient readerHttpClient = httpClientFactory.createInstance();
 
 		_solrClient = solrClientFactory.getSolrClient(
 			_solrConfiguration, httpClientFactory);

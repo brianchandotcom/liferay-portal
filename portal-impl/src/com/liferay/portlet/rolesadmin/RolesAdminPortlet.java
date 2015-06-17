@@ -21,6 +21,12 @@ package com.liferay.portlet.rolesadmin;
 
 public class RolesAdminPortlet extends MVCPortlet {
 
+	public void deleteRole(ActionRequest actionRequest) throws Exception {
+		long roleId = ParamUtil.getLong(actionRequest, "roleId");
+
+		RoleServiceUtil.deleteRole(roleId);
+	}
+
 	@Override
 	public void processAction(
 			ActionMapping actionMapping, ActionForm actionForm,
@@ -103,12 +109,6 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		return actionMapping.findForward(
 			getForward(renderRequest, "portlet.roles_admin.edit_role"));
-	}
-
-	public void deleteRole(ActionRequest actionRequest) throws Exception {
-		long roleId = ParamUtil.getLong(actionRequest, "roleId");
-
-		RoleServiceUtil.deleteRole(roleId);
 	}
 
 	public Role updateRole(ActionRequest actionRequest) throws Exception {

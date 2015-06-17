@@ -32,6 +32,9 @@ import org.gradle.api.tasks.InputDirectory;
 import org.gradle.api.tasks.InputFile;
 import org.gradle.api.tasks.TaskAction;
 
+import org.zeroturnaround.exec.ProcessExecutor;
+import org.zeroturnaround.exec.stream.slf4j.Slf4jStream;
+
 /**
  * @author Andrea Di Giorgi
  */
@@ -156,12 +159,16 @@ public class StartAppServerTask extends DefaultTask implements AppServerTask {
 		commands.add(appServerStartExecutableFile.getAbsolutePath());
 		commands.addAll(getAppServerStartExecutableArgs());
 
-		ProcessBuilder processBuilder = new ProcessBuilder(commands);
+		ProcessExecutor processExecutor = new ProcessExecutor(commands);
 
-		processBuilder.directory(getAppServerBinDir());
-		processBuilder.redirectErrorStream(true);
+		processExecutor.directory(getAppServerBinDir());
 
-		processBuilder.start();
+		Slf4jStream slf4jStream = Slf4jStream.ofCaller();
+
+		processExecutor.redirectError(slf4jStream.asWarn());
+		processExecutor.redirectOutput(slf4jStream.asWarn());
+
+		processExecutor.start();
 
 		Callable<Boolean> callable = new Callable<Boolean>() {
 

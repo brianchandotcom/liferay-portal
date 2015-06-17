@@ -29,6 +29,7 @@
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.xml.formatter.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.plugins.xsd.builder.jar" />
 	<classpathentry kind="lib" path="lib/com.liferay.gradle.util.jar" />
+	<classpathentry kind="lib" path="lib/commons-io.jar" />
 	<classpathentry kind="lib" path="lib/gradle-bundle-plugin.jar" />
 	<classpathentry kind="lib" path="lib/gradle-extra-configurations-plugin.jar" />
 	<classpathentry kind="lib" path="lib/groovy-all.jar" />
@@ -42,5 +43,7 @@
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-plugins.jar" />
 	<classpathentry kind="lib" path="lib/org.gradle.gradle-reporting.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
+	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
+	<classpathentry kind="lib" path="lib/zt-exec.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

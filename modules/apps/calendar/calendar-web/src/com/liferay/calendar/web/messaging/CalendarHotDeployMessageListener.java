@@ -35,7 +35,9 @@ public class CalendarHotDeployMessageListener extends HotDeployMessageListener {
 
 	@Override
 	protected void onDeploy(Message message) throws Exception {
-		if (!CalendarWebConfigurationValues.CALENDAR_SYNC_CALEVENTS_ON_STARTUP) {
+		if (!CalendarWebConfigurationValues.
+				CALENDAR_SYNC_CALEVENTS_ON_STARTUP) {
+
 			return;
 		}
 

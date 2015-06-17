@@ -28,8 +28,6 @@
 	<classpathentry kind="lib" path="/portal-master/util-bridges/util-bridges.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
-	<classpathentry kind="lib" path="lib/json.jar" />
-	<classpathentry kind="lib" path="lib/jsonassert.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/aQute.bnd/jars/aQute.bnd-2.3.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.arquillian.junit/arquillian-junit-core/jars/arquillian-junit-core-1.1.7.Final.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.2.2.jar" />
@@ -45,5 +43,7 @@
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-4.0.0.CR1.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar" />
 	<classpathentry kind="lib" path="/portal-master/.ivy/cache/com.liferay/com.liferay.arquillian.extension.junit.bridge/jars/com.liferay.arquillian.extension.junit.bridge-1.0.0-SNAPSHOT.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.json/json/jars/json-20090211.jar" />
+	<classpathentry kind="lib" path="/portal-master/.ivy/cache/org.skyscreamer/jsonassert/jars/jsonassert-1.2.3.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

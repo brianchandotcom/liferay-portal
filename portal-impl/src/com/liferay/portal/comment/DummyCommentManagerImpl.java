@@ -19,9 +19,13 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 /**
  * @author André de Oliveira
@@ -84,6 +88,11 @@ public class DummyCommentManagerImpl implements CommentManager {
 		PermissionChecker permissionChecker) {
 
 		return _discussionPermission;
+	}
+
+	@Override
+	public DiscussionStagingHandler getDiscussionStagingHandler() {
+		return _discussionStagingHandler;
 	}
 
 	@Override
@@ -151,6 +160,26 @@ public class DummyCommentManagerImpl implements CommentManager {
 				long companyId, long groupId, String className, long classPK) {
 
 				return false;
+			}
+
+		};
+
+	private static final DiscussionStagingHandler
+		_discussionStagingHandler = new DiscussionStagingHandler() {
+
+			@Override
+			public <T extends StagedModel> void exportReferenceDiscussions(
+				PortletDataContext portletDataContext, T stagedModel) {
+			}
+
+			@Override
+			public <T extends StagedModel> void importReferenceDiscussions(
+				PortletDataContext portletDataContext, T stagedModel) {
+			}
+
+			@Override
+			public String getClassName() {
+				return StringPool.BLANK;
 			}
 
 		};

@@ -22,6 +22,8 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants.EVENT_STAGED_MODEL_IMPORT_SUCCEEDED;
 
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -47,10 +49,6 @@ import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleConstants;
 import com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleManager;
-import com.liferay.portlet.messageboards.model.MBDiscussion;
-import com.liferay.portlet.messageboards.model.MBMessage;
-import com.liferay.portlet.messageboards.service.MBDiscussionLocalServiceUtil;
-import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 import com.liferay.portlet.ratings.model.RatingsEntry;
 import com.liferay.portlet.ratings.service.RatingsEntryLocalServiceUtil;
 import com.liferay.portlet.trash.util.TrashUtil;
@@ -520,34 +518,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
-		MBDiscussion mbDiscussion =
-			MBDiscussionLocalServiceUtil.fetchDiscussion(
-				ExportImportClassedModelUtil.getClassName(stagedModel),
-				ExportImportClassedModelUtil.getClassPK(stagedModel));
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
 
-		if (mbDiscussion == null) {
-			return;
-		}
-
-		List<MBMessage> mbMessages =
-			MBMessageLocalServiceUtil.getThreadMessages(
-				mbDiscussion.getThreadId(), WorkflowConstants.STATUS_APPROVED);
-
-		if (mbMessages.isEmpty()) {
-			return;
-		}
-
-		MBMessage firstMBMessage = mbMessages.get(0);
-
-		if ((mbMessages.size() == 1) && firstMBMessage.isRoot()) {
-			return;
-		}
-
-		for (MBMessage mbMessage : mbMessages) {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, stagedModel, mbMessage,
-				PortletDataContext.REFERENCE_TYPE_WEAK);
-		}
+		discussionStagingHandler.exportReferenceDiscussions(
+			portletDataContext, stagedModel);
 	}
 
 	protected void exportRatings(
@@ -710,8 +685,11 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, stagedModel, MBMessage.class);
+		DiscussionStagingHandler discussionStagingDataHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
+		discussionStagingDataHandler.importReferenceDiscussions(
+			portletDataContext, stagedModel);
 	}
 
 	protected void importMissingGroupReference(
@@ -758,6 +736,9 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
+
 		List<Element> referenceElements = referencesElement.elements();
 
 		for (Element referenceElement : referenceElements) {
@@ -765,7 +746,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
-				className.equals(MBMessage.class.getName())) {
+				className.equals(discussionStagingHandler.getClassName())) {
 
 				continue;
 			}

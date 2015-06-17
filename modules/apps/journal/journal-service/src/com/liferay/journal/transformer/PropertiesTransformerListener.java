@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.journal.util;
+package com.liferay.journal.transformer;
 
+import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.templateparser.BaseTransformerListener;

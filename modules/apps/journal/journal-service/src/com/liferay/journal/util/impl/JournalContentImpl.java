@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.journal.util;
+package com.liferay.journal.util.impl;
 
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.permission.JournalArticlePermission;
+import com.liferay.journal.util.JournalContent;
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
 import com.liferay.portal.kernel.cache.index.IndexedCacheKey;

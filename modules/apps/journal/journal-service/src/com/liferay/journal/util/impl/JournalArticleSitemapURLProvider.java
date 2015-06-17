@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.util;
+package com.liferay.journal.util.impl;
 
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;

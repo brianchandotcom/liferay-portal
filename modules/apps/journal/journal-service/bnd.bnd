@@ -12,8 +12,9 @@ Export-Package:\
 	com.liferay.journal.service.impl,\
 	com.liferay.journal.service.permission,\
 	com.liferay.journal.social,\
+	com.liferay.journal.transformer,\
 	com.liferay.journal.trash,\
-	com.liferay.journal.util,\
+	com.liferay.journal.util.impl,\
 	com.liferay.journal.verify,\
 	com.liferay.journal.workflow
 Include-Resource:\

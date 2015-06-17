@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.journal.util;
+package com.liferay.journal.util.impl;
 
 import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.exception.FolderNameException;
+import com.liferay.journal.util.JournalValidator;
 import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;

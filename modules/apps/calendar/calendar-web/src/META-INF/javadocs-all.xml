@@ -659,7 +659,7 @@
 			<name>doExportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -677,7 +677,7 @@
 			<name>doImportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -695,7 +695,7 @@
 			<name>doRestoreStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -786,7 +786,7 @@
 			<name>doExportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -804,7 +804,7 @@
 			<name>doImportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -834,7 +834,7 @@
 			<name>doDeleteData</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -860,7 +860,7 @@
 			<name>doExportData</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -886,7 +886,7 @@
 			<name>doImportData</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -917,7 +917,7 @@
 			<name>doPrepareManifestSummary</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -935,7 +935,7 @@
 			<name>getCalendarResourceActionableDynamicQuery</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1040,7 +1040,7 @@
 			<name>countStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1056,7 +1056,7 @@
 			<name>doExportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1074,7 +1074,7 @@
 			<name>doImportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1092,7 +1092,7 @@
 			<name>getCalendarResourceNameMap</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1113,7 +1113,7 @@
 			<name>getClassPK</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1134,7 +1134,7 @@
 			<name>updateCalendars</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1238,7 +1238,7 @@
 			<name>doExportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1256,7 +1256,7 @@
 			<name>doImportStagedModel</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>
@@ -1274,7 +1274,7 @@
 			<name>getCalendarNameMap</name>
 			<param>
 				<name>portletDataContext</name>
-				<type>com.liferay.portal.kernel.lar.PortletDataContext</type>
+				<type>com.liferay.portlet.exportimport.lar.PortletDataContext</type>
 				<comment><![CDATA[]]></comment>
 			</param>
 			<param>

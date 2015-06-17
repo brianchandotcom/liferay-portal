@@ -1008,34 +1008,6 @@
 			<forward name="portlet.software_catalog.error" path="portlet.software_catalog.error" />
 		</action>
 
-		<!-- Staging Bar -->
-
-		<action path="/staging_bar/edit_layout_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutBranchAction">
-			<forward name="portlet.staging_bar.edit_layout_branch" path="portlet.staging_bar.edit_layout_branch" />
-			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
-		</action>
-
-		<action path="/staging_bar/edit_layout_revision" type="com.liferay.portlet.stagingbar.action.EditLayoutRevisionAction">
-			<forward name="portlet.export_configuration.error" path="portlet.staging_bar.view" />
-		</action>
-
-		<action path="/staging_bar/edit_layout_set_branch" type="com.liferay.portlet.stagingbar.action.EditLayoutSetBranchAction">
-			<forward name="portlet.staging_bar.edit_layout_set_branch" path="portlet.staging_bar.edit_layout_set_branch" />
-			<forward name="portlet.staging_bar.error" path="portlet.staging_bar.error" />
-		</action>
-
-		<action path="/staging_bar/merge_layout_set_branch" forward="portlet.staging_bar.merge_layout_set_branch" />
-
-		<action path="/staging_bar/view" forward="portlet.staging_bar.view" />
-
-		<action path="/staging_bar/view_layout_branches" forward="portlet.staging_bar.view_layout_branches" />
-
-		<action path="/staging_bar/view_layout_revision_details" forward="portlet.staging_bar.view_layout_revision_details" />
-
-		<action path="/staging_bar/view_layout_revisions" forward="portlet.staging_bar.view_layout_revisions" />
-
-		<action path="/staging_bar/view_layout_set_branches" forward="portlet.staging_bar.view_layout_set_branches" />
-
 		<!-- Users Admin -->
 
 		<action path="/users_admin/edit_organization" type="com.liferay.portlet.usersadmin.action.EditOrganizationAction">

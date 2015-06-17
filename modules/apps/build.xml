@@ -44,6 +44,7 @@
 		<dirset dir="site-navigation" includes="*" />
 		<dirset dir="social" includes="*" />
 		<dirset dir="social-office" includes="*" />
+		<dirset dir="staging-bar" includes="*" />
 		<dirset dir="translator" includes="*" />
 		<dirset dir="trash" includes="*" />
 		<dirset dir="unit-converter" includes="*" />

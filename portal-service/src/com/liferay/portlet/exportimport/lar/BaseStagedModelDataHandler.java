@@ -521,7 +521,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		DiscussionStagingHandler discussionStagingHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
-		discussionStagingHandler.exportModelDiscussion(
+		discussionStagingHandler.exportReferenceDiscussions(
 			portletDataContext, stagedModel);
 	}
 
@@ -688,7 +688,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 		DiscussionStagingHandler discussionStagingDataHandler =
 			CommentManagerUtil.getDiscussionStagingHandler();
 
-		discussionStagingDataHandler.importModelDiscussion(
+		discussionStagingDataHandler.importReferenceDiscussions(
 			portletDataContext, stagedModel);
 	}
 
@@ -746,7 +746,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 			if (className.equals(AssetCategory.class.getName()) ||
 				className.equals(RatingsEntry.class.getName()) ||
-				discussionStagingDataHandler.isClassNameSupported(className)) {
+				className.equals(discussionStagingHandler.getClassName())) {
 
 				continue;
 			}

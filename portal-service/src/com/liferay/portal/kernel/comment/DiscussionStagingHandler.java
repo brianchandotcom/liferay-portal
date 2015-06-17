@@ -23,14 +23,14 @@ import com.liferay.portlet.exportimport.lar.PortletDataException;
  */
 public interface DiscussionStagingHandler {
 
-	public <T extends StagedModel> void exportModelDiscussion(
+	public <T extends StagedModel> void exportReferenceDiscussions(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
 
-	public <T extends StagedModel> void importModelDiscussion(
+	public String getClassName();
+
+	public <T extends StagedModel> void importReferenceDiscussions(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException;
-
-	public boolean isClassNameSupported(String className);
 
 }

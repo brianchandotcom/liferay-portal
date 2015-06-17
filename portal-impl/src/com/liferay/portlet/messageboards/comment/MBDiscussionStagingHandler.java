@@ -34,7 +34,7 @@ import java.util.List;
 public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 
 	@Override
-	public <T extends StagedModel> void exportModelDiscussion(
+	public <T extends StagedModel> void exportReferenceDiscussions(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
@@ -69,21 +69,17 @@ public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 	}
 
 	@Override
-	public <T extends StagedModel> void importModelDiscussion(
+	public String getClassName() {
+		return MBMessage.class.getName();
+	}
+
+	@Override
+	public <T extends StagedModel> void importReferenceDiscussions(
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
 		StagedModelDataHandlerUtil.importReferenceStagedModels(
 			portletDataContext, stagedModel, MBMessage.class);
-	}
-
-	@Override
-	public boolean isClassNameSupported(String className) {
-		if (className.equals(MBMessage.class.getName())) {
-			return true;
-		}
-
-		return false;
 	}
 
 }

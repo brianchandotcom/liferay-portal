@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
 import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.util.Function;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
@@ -167,18 +168,18 @@ public class DummyCommentManagerImpl implements CommentManager {
 		_discussionStagingHandler = new DiscussionStagingHandler() {
 
 			@Override
-			public <T extends StagedModel> void exportModelDiscussion(
+			public <T extends StagedModel> void exportReferenceDiscussions(
 				PortletDataContext portletDataContext, T stagedModel) {
 			}
 
 			@Override
-			public <T extends StagedModel> void importModelDiscussion(
+			public <T extends StagedModel> void importReferenceDiscussions(
 				PortletDataContext portletDataContext, T stagedModel) {
 			}
 
 			@Override
-			public boolean isClassNameSupported(String className) {
-				return false;
+			public String getClassName() {
+				return StringPool.BLANK;
 			}
 
 		};

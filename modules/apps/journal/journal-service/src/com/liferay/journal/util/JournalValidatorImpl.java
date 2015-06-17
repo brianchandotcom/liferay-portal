@@ -14,9 +14,9 @@
 
 package com.liferay.journal.util;
 
+import com.liferay.journal.configuration.JournalServiceConfigurationValues;
 import com.liferay.journal.exception.FolderNameException;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsValues;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,7 +32,9 @@ public final class JournalValidatorImpl implements JournalValidator {
 			return false;
 		}
 
-		for (String blacklistChar : PropsValues.JOURNAL_CHAR_BLACKLIST) {
+		for (String blacklistChar :
+				JournalServiceConfigurationValues.CHAR_BLACKLIST) {
+
 			if (name.contains(blacklistChar)) {
 				return false;
 			}

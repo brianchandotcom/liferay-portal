@@ -16,6 +16,9 @@
 
 <%@ include file="/html/portlet/init.jsp" %>
 
-<%@ page import="com.liferay.portal.NoSuchBackgroundTaskException" %>
+<%@ page import="com.liferay.portal.NoSuchBackgroundTaskException" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplay" %><%@
+page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskDisplayFactoryUtil" %>
 
 <%@ include file="/html/portlet/background_task/init-ext.jsp" %>

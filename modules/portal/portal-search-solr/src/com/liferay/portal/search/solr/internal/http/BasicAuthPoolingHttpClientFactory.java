@@ -18,7 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.search.solr.configuration.SolrConfiguration;
+import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.solr.configuration.SolrConfiguration",
+	configurationPid = "com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration",
 	immediate = true, property = {"type=BASIC"},
 	service = HttpClientFactory.class
 )
@@ -66,23 +66,26 @@ public class BasicAuthPoolingHttpClientFactory
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_solrConfiguration = Configurable.createConfigurable(
-			SolrConfiguration.class, properties);
+		_solrHttpClientFactoryConfiguration = Configurable.createConfigurable(
+			SolrHttpClientFactoryConfiguration.class, properties);
 
 		int defaultMaxConnectionsPerRoute =
-			_solrConfiguration.defaultMaxConnectionsPerRoute();
+			_solrHttpClientFactoryConfiguration.defaultMaxConnectionsPerRoute();
 
 		setDefaultMaxConnectionsPerRoute(defaultMaxConnectionsPerRoute);
 
-		int maxTotalConnections = _solrConfiguration.maxTotalConnections();
+		int maxTotalConnections =
+			_solrHttpClientFactoryConfiguration.maxTotalConnections();
 
 		setMaxTotalConnections(maxTotalConnections);
 
-		String basicAuthPassword = _solrConfiguration.basicAuthPassword();
+		String basicAuthPassword =
+			_solrHttpClientFactoryConfiguration.basicAuthPassword();
 
 		setPassword(basicAuthPassword);
 
-		String basicAuthUserName = _solrConfiguration.basicAuthUserName();
+		String basicAuthUserName =
+			_solrHttpClientFactoryConfiguration.basicAuthUserName();
 
 		setUsername(basicAuthUserName);
 	}
@@ -135,7 +138,8 @@ public class BasicAuthPoolingHttpClientFactory
 
 	private AuthScope _authScope;
 	private String _password;
-	private volatile SolrConfiguration _solrConfiguration;
+	private volatile SolrHttpClientFactoryConfiguration
+		_solrHttpClientFactoryConfiguration;
 	private String _username;
 
 }

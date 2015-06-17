@@ -17,7 +17,7 @@ package com.liferay.portal.search.solr.internal.http;
 import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.search.solr.configuration.SolrConfiguration;
+import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 import com.liferay.portal.search.solr.http.SSLSocketFactoryBuilder;
 
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(
-	configurationPid = "com.liferay.portal.search.solr.configuration.SolrConfiguration",
+	configurationPid = "com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration",
 	immediate = true, property = {"type=CERT"},
 	service = HttpClientFactory.class
 )
@@ -53,15 +53,16 @@ public class CertAuthPoolingHttpClientFactory
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		_solrConfiguration = Configurable.createConfigurable(
-			SolrConfiguration.class, properties);
+		_solrHttpClientFactoryConfiguration = Configurable.createConfigurable(
+			SolrHttpClientFactoryConfiguration.class, properties);
 
 		int defaultMaxConnectionsPerRoute =
-			_solrConfiguration.defaultMaxConnectionsPerRoute();
+			_solrHttpClientFactoryConfiguration.defaultMaxConnectionsPerRoute();
 
 		setDefaultMaxConnectionsPerRoute(defaultMaxConnectionsPerRoute);
 
-		int maxTotalConnections = _solrConfiguration.maxTotalConnections();
+		int maxTotalConnections =
+			_solrHttpClientFactoryConfiguration.maxTotalConnections();
 
 		setMaxTotalConnections(maxTotalConnections);
 	}
@@ -118,7 +119,8 @@ public class CertAuthPoolingHttpClientFactory
 		_sslSocketFactoryBuilder = sslSocketFactoryBuilder;
 	}
 
-	private volatile SolrConfiguration _solrConfiguration;
+	private volatile SolrHttpClientFactoryConfiguration
+		_solrHttpClientFactoryConfiguration;
 	private SSLSocketFactoryBuilder _sslSocketFactoryBuilder;
 
 }

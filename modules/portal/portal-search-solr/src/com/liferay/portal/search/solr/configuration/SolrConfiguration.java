@@ -29,29 +29,11 @@ public interface SolrConfiguration {
 	)
 	public String authenticationMode();
 
-	@Meta.AD(deflt = "solr", required = false)
-	public String basicAuthPassword();
-
-	@Meta.AD(deflt = "solr", required = false)
-	public String basicAuthUserName();
-
 	@Meta.AD(
 		deflt = "REPLICATED", optionLabels = {"Cloud", "Replicated"},
 		optionValues = {"CLOUD", "REPLICATED"}, required = false
 	)
 	public String clientType();
-
-	@Meta.AD(deflt = "20", required = false)
-	public int defaultMaxConnectionsPerRoute();
-
-	@Meta.AD(deflt = "secret", required = false)
-	public String keyStorePassword();
-
-	@Meta.AD(deflt = "classpath:/keystore.jks", required = false)
-	public String keyStorePath();
-
-	@Meta.AD(deflt = "JKS", required = false)
-	public String keyStoreType();
 
 	@Meta.AD(
 		deflt = "true",
@@ -60,26 +42,8 @@ public interface SolrConfiguration {
 	)
 	public boolean logExceptionsOnly();
 
-	@Meta.AD(deflt = "20", required = false)
-	public int maxTotalConnections();
-
 	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
 	public String[] readURL();
-
-	@Meta.AD(deflt = "secret", required = false)
-	public String trustStorePassword();
-
-	@Meta.AD(deflt = "classpath:/truststore.jks", required = false)
-	public String trustStorePath();
-
-	@Meta.AD(deflt = "JKS", required = false)
-	public String trustStoreType();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean verifyServerCertificate();
-
-	@Meta.AD(deflt = "true", required = false)
-	public boolean verifyServerName();
 
 	@Meta.AD(deflt = "http://localhost:8080/solr", required = false)
 	public String[] writeURL();

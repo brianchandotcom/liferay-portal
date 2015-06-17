@@ -929,255 +929,231 @@
 	</command>
 
 	<command name="SearchBlogsEntryContent" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="blogsEntrySearchNoResult" value="Blogs1,Entry1,Content1,Blogs1 Entry1 Content1" />
+		<var name="blogsEntrySearchResult" value="Blogs,Entry,Content,Blogs Entry Content" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+
+			<execute macro="Search#viewSearchResultsPG">
+				<var name="searchAssetTitle1" value="Blogs Entry Title" />
+				<var name="searchAssetType1" value="Blogs Entry" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Blogs" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Entry" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Content" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Blogs1" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Entry1" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Content1" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+			<execute macro="Search#viewSearchNoPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchNoResults" value="true" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="SearchBlogsEntryContentQuotes" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="blogsEntrySearchResult">"Blogs","Entry","Content","Blogs Entry Content"</var>
+		<var name="blogsEntrySearchNoResult">"Blogs1","Entry1","Content1","Blogs1 Entry1 Content1"</var>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs Entry Content"</var>
-			<var name="entryTitle" value="${entryTitle}" />
+		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+
+			<execute macro="Search#viewSearchResultsPG">
+				<var name="searchAssetTitle1" value="Blogs Entry Title" />
+				<var name="searchAssetType1" value="Blogs Entry" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Entry"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Content"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Entry1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Content1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs Entry Content1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+			<execute macro="Search#viewSearchNoPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchNoResults" value="true" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="SearchBlogsEntryTitle" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="blogsEntrySearchNoResult" value="Blogs1,Entry1,Title1,Blogs1 Entry1 Title1" />
+		<var name="blogsEntrySearchResult" value="Blogs,Entry,Title,Blogs Entry Title" />
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="${entryTitle}" />
-			<var name="entryTitle" value="${entryTitle}" />
+		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+
+			<execute macro="Search#viewSearchResultsPG">
+				<var name="searchAssetTitle1" value="Blogs Entry Title" />
+				<var name="searchAssetType1" value="Blogs Entry" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Blogs" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Entry" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Title" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Blogs1" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Entry1" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm" value="Title1" />
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+			<execute macro="Search#viewSearchNoPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchNoResults" value="true" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="SearchBlogsEntryTitleQuotes" priority="5">
-		<var name="entryContent" value="Blogs Entry Content" />
-		<var name="entryTitle" value="Blogs Entry Title" />
+		<var name="blogsEntrySearchResult">"Blogs","Entry","Title","Blogs Entry Title"</var>
+		<var name="blogsEntrySearchNoResult">"Blogs1","Entry1","Title1","Blogs1 Entry1 Title1"</var>
+
+		<execute macro="Page#addPG">
+			<var name="pageName" value="Search Page" />
+		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Search" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Blogs Page" />
 		</execute>
 
 		<execute macro="Blogs#addEntry">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entryTitle" value="${entryTitle}" />
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="${pageName}" />
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs Entry Title"</var>
-			<var name="entryTitle" value="${entryTitle}" />
+		<for list="${blogsEntrySearchResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+
+			<execute macro="Search#viewSearchResultsPG">
+				<var name="searchAssetTitle1" value="Blogs Entry Title" />
+				<var name="searchAssetType1" value="Blogs Entry" />
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
+		</for>
+
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+		<for list="${blogsEntrySearchNoResult}" param="searchTerm" >
+			<execute macro="Search#searchPG">
+				<var name="searchTerm" value="${searchTerm}" />
+			</execute>
 
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Entry"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Title"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Entry1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Title1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
-
-		<execute macro="BlogsEntry#searchNoPG">
-			<var name="entryContent" value="${entryContent}" />
-			<var name="entrySearchTerm">"Blogs Entry Title1"</var>
-			<var name="entryTitle" value="${entryTitle}" />
-		</execute>
+			<execute macro="Search#viewSearchNoPG">
+				<var name="searchAssetTitle" value="Blogs Entry Title" />
+				<var name="searchNoResults" value="true" />
+			</execute>
+		</for>
 	</command>
 
 	<command name="SubscribeToBlogsEntryComment" priority="5">

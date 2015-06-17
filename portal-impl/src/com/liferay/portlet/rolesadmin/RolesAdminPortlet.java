@@ -358,7 +358,7 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		if (SessionErrors.contains(
 				renderRequest, RequiredRoleException.class.getName()) &&
-			roleId < 1) {
+			(roleId < 1)) {
 
 			include(
 				"/html/portlet/roles_admin/view.jsp", renderRequest,

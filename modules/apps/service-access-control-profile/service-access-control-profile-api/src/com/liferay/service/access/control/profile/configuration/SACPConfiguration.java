@@ -34,4 +34,11 @@ public interface SACPConfiguration {
 	@Meta.AD(deflt = "", required = false)
 	public String defaultProfileServiceSignatures();
 
+	@Meta.AD(
+		deflt = "true",
+		description = "When set to true the default profile is always inherited",
+		required = false
+	)
+	public boolean enableDefaultProfileAlways();
+
 }

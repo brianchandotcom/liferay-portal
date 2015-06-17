@@ -100,20 +100,20 @@ public class HttpSolrServer extends BaseHttpSolrServer {
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(&(!(auth.type=BASIC))(!(auth.type=CERT)))"
+		target = "(&(!(type=BASIC))(!(type=CERT)))"
 	)
 	protected void setHttpClientFactory(
 		HttpClientFactory httpClientFactory,
 		Map<String, Object> properties) {
 
-		String auth = MapUtil.getString(properties, "type");
+		String type = MapUtil.getString(properties, "type");
 
-		if (Validator.isNull(auth)) {
+		if (Validator.isNull(type)) {
 			throw new IllegalArgumentException(
-				"Invalid authentication type " + auth);
+				"Invalid authentication type " + type);
 		}
 
-		_httpClientFactories.put(auth, httpClientFactory);
+		_httpClientFactories.put(type, httpClientFactory);
 	}
 
 	protected void unsetBasicHttpClientFactory(

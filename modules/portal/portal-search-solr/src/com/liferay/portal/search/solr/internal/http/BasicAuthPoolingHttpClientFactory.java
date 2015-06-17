@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.configuration.SolrHttpClientFactoryConfiguration;
 import com.liferay.portal.search.solr.http.HttpClientFactory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpRequestInterceptor;
@@ -38,6 +36,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author László Csontos
@@ -127,16 +128,21 @@ public class BasicAuthPoolingHttpClientFactory
 		shutdown();
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		cardinality = ReferenceCardinality.AT_LEAST_ONE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
 	protected void setHttpRequestInterceptor(
 		HttpRequestInterceptor httpRequestInterceptor) {
 
-		List<HttpRequestInterceptor> httpRequestInterceptors =
-			new ArrayList<>();
+		addHttpRequestInterceptor(httpRequestInterceptor);
+	}
 
-		httpRequestInterceptors.add(httpRequestInterceptor);
+	protected void unsetHttpRequestInterceptor(
+		HttpRequestInterceptor httpRequestInterceptor) {
 
-		setHttpRequestInterceptors(httpRequestInterceptors);
+		removeHttpRequestInterceptor(httpRequestInterceptor);
 	}
 
 	private AuthScope _authScope;

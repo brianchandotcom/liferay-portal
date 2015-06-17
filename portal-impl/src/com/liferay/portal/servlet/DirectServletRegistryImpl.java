@@ -86,8 +86,14 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 
 		long lastModified = 1;
 
+		File file = getFile(path, servlet);
+
+		if (!file.exists()) {
+			return;
+		}
+
 		if (PropsValues.DIRECT_SERVLET_CONTEXT_RELOAD) {
-			lastModified = getFileLastModified(path, servlet);
+			lastModified = file.lastModified();
 		}
 
 		if (lastModified > 0) {
@@ -100,14 +106,18 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 		}
 	}
 
-	protected long getFileLastModified(String path, Servlet servlet) {
+	protected File getFile(String path, Servlet servlet) {
 		ServletConfig servletConfig = servlet.getServletConfig();
 
 		ServletContext servletContext = servletConfig.getServletContext();
 
 		String rootPath = servletContext.getRealPath(StringPool.BLANK);
 
-		File file = new File(rootPath, path);
+		return new File(rootPath, path);
+	}
+
+	protected long getFileLastModified(String path, Servlet servlet) {
+		File file = getFile(path, servlet);
 
 		return file.lastModified();
 	}
@@ -192,13 +202,7 @@ public class DirectServletRegistryImpl implements DirectServletRegistry {
 	}
 
 	protected void updateFileLastModified(String path, Servlet servlet) {
-		ServletConfig servletConfig = servlet.getServletConfig();
-
-		ServletContext servletContext = servletConfig.getServletContext();
-
-		String rootPath = servletContext.getRealPath(StringPool.BLANK);
-
-		File file = new File(rootPath, path);
+		File file = getFile(path, servlet);
 
 		file.setLastModified(System.currentTimeMillis());
 	}

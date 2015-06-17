@@ -24,7 +24,9 @@ import com.liferay.portlet.dynamicdatamapping.model.LocalizedValue;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**

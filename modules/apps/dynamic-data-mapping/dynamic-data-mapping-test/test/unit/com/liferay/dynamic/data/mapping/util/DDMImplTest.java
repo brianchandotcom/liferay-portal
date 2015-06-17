@@ -29,11 +29,13 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.Serializable;
+
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**

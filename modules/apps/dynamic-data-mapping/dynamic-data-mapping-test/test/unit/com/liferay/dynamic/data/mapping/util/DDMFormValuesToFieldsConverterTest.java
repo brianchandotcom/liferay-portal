@@ -35,6 +35,7 @@ import com.liferay.portlet.dynamicdatamapping.util.DDMFormValuesToFieldsConverte
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 
 import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -46,6 +47,7 @@ import java.util.logging.LogRecord;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**

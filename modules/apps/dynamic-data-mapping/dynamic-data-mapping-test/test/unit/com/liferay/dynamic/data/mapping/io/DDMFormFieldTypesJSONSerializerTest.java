@@ -14,10 +14,10 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
+import com.liferay.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portlet.dynamic.data.mapping.BaseDDMTestCase;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerImpl;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormFieldTypesJSONSerializerUtil;
 import com.liferay.portlet.dynamicdatamapping.registry.DDMFormFieldRenderer;
@@ -31,8 +31,10 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
 import org.skyscreamer.jsonassert.JSONAssert;
 
 /**

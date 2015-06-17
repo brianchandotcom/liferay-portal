@@ -14,7 +14,6 @@
 
 package com.liferay.dynamic.data.mapping.io;
 
-import com.liferay.dynamic.data.mapping.io.BaseDDMFormDeserializerTestCase;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portlet.dynamicdatamapping.io.DDMFormJSONDeserializerImpl;
@@ -24,6 +23,7 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMFormField;
 
 import org.junit.Assert;
 import org.junit.Before;
+
 import org.powermock.core.classloader.annotations.PrepareForTest;
 
 /**

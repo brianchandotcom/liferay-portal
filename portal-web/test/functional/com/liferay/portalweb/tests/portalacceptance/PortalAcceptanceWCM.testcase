@@ -559,7 +559,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplateWithStructure" priority="5">
+	<command name="AddTemplateWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

@@ -424,7 +424,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplate" priority="5">
+	<command name="AddTemplate" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplateWithStructure" priority="5">
+	<command name="AddTemplateWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -491,7 +491,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddTemplateXSL" priority="5">
+	<command name="AddTemplateXSL" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -735,7 +735,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="AddWebContentWithStructure" priority="5">
+	<command name="AddWebContentWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1214,7 +1214,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="ImportLAR" priority="5">
+	<command name="ImportLAR" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1327,7 +1327,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="ImportLARLinkToPageValidation" priority="4">
+	<command name="ImportLARLinkToPageValidation" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Test Page" />
 		</execute>

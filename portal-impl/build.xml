@@ -556,13 +556,6 @@ svn://svn.liferay.com/repos/public/alloy/trunk/sandbox/taglibs.
 				includes="org/apache/commons/logging/**"
 			/>
 
-			<!-- ecj.jar -->
-
-			<fileset
-				dir="${tstamp.value}"
-				includes="org/eclipse/jdt/**"
-			/>
-
 			<!-- hamcrest*.jar -->
 
 			<fileset

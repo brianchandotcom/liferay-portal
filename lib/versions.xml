@@ -224,18 +224,6 @@
 				</licenses>
 			</library>
 			<library>
-				<file-name>lib/development/ecj.jar</file-name>
-				<version>4.4</version>
-				<project-name>Eclipse JDT Core Batch Compiler</project-name>
-				<project-url>http://www.eclipse.org/jdt/core/index.php</project-url>
-				<licenses>
-					<license>
-						<license-name>Eclipse Public License 1.0</license-name>
-						<license-url>http://www.eclipse.org/legal/epl-v10.html</license-url>
-					</license>
-				</licenses>
-			</library>
-			<library>
 				<file-name>lib/development/error-prone-ant.jar</file-name>
 				<version>1.0.8</version>
 				<project-name>Error-Prone</project-name>

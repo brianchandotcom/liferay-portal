@@ -38,8 +38,6 @@ public interface QueryVisitor<T> {
 
 	public T visitQuery(DisMaxQuery disMaxQuery);
 
-	public T visitQuery(FuzzyLikeThisQuery fuzzyLikeThisQuery);
-
 	public T visitQuery(FuzzyQuery fuzzyQuery);
 
 	public T visitQuery(MatchAllQuery matchAllQuery);

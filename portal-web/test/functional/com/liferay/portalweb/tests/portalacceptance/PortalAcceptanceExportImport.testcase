@@ -1,0 +1,20 @@
+<definition component-name="portal-acceptance">
+	<property name="testray.main.component.name" value="Export/Import Framework" />
+
+	<set-up>
+		<execute macro="User#firstLoginPG" />
+	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Page#tearDownPG" />
+
+		<execute macro="Role#tearDownCP" />
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
+</definition>

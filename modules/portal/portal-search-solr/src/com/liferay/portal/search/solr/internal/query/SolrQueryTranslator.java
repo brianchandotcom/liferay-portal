@@ -46,8 +46,6 @@ import com.liferay.portal.search.solr.query.TermQueryTranslator;
 import com.liferay.portal.search.solr.query.TermRangeQueryTranslator;
 import com.liferay.portal.search.solr.query.WildcardQueryTranslator;
 
-import org.apache.lucene.search.MatchAllDocsQuery;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -112,14 +110,7 @@ public class SolrQueryTranslator
 	public org.apache.lucene.search.Query visitQuery(
 		MatchAllQuery matchAllQuery) {
 
-		org.apache.lucene.search.MatchAllDocsQuery matchAllDocsQuery =
-			new MatchAllDocsQuery();
-
-		if (!matchAllQuery.isDefaultBoost()) {
-			matchAllDocsQuery.setBoost(matchAllQuery.getBoost());
-		}
-
-		return matchAllDocsQuery;
+		return _matchAllQueryTranslator.translate(matchAllQuery);
 	}
 
 	@Override

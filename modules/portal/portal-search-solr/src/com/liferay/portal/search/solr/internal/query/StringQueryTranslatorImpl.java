@@ -20,13 +20,8 @@ import com.liferay.portal.search.solr.query.StringQueryTranslator;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.util.Version;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
-import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -38,7 +33,7 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 	public org.apache.lucene.search.Query translate(StringQuery stringQuery) {
 		try {
 			QueryParser queryParser = new QueryParser(
-				_version, "uuid", new KeywordAnalyzer());
+				"uuid", new KeywordAnalyzer());
 
 			return queryParser.parse(stringQuery.getQuery());
 		}
@@ -46,21 +41,5 @@ public class StringQueryTranslatorImpl implements StringQueryTranslator {
 			throw new IllegalArgumentException("Invalid query", e);
 		}
 	}
-
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY,
-		target = "(search.engine.impl=Solr)"
-	)
-	protected void setVersion(Version version) {
-		_version = version;
-	}
-
-	protected void unsetVersion(Version version) {
-		_version = null;
-	}
-
-	private volatile Version _version;
 
 }

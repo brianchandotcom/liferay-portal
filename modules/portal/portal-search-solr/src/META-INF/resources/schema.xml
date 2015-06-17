@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<schema name="liferay" version="1.1">
+<schema name="liferay" version="7.0">
 	<types>
 		<fieldType class="solr.StrField" name="string" omitNorms="true" sortMissingLast="true" />
 		<fieldType class="solr.TextField" name="string_keyword_lowercase" omitNorms="true" sortMissingLast="true">
@@ -459,7 +459,12 @@
 
 		<!-- Geo Location -->
 
+		<fieldType class="solr.PointType" dimension="2" name="point" subFieldSuffix="_d" />
 		<fieldType class="solr.LatLonType" name="location" subFieldSuffix="_coordinate" />
+		<fieldType class="solr.SpatialRecursivePrefixTreeFieldType" distanceUnits="kilometers" distErrPct="0.025" geo="true" maxDistErr="0.001" name="location_rpt" />
+		<fieldType class="solr.BBoxField" distanceUnits="kilometers" geo="true" name="bbox" numberType="_bbox_coord" />
+		<fieldType class="solr.TrieDoubleField" docValues="true" name="_bbox_coord" precisionStep="8" stored="false" />
+
 	</types>
 	<fields>
 		<field indexed="true" multiValued="true" name="ancestorOrganizationIds" stored="true" type="string" />

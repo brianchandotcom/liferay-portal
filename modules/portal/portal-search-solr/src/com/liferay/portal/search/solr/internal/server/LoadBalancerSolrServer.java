@@ -25,13 +25,13 @@ import org.apache.solr.common.util.NamedList;
 public class LoadBalancerSolrServer extends BaseDelegatedSolrServer {
 
 	@Override
-	public NamedList<Object> request(SolrRequest solrRequest)
+	public NamedList<Object> request(SolrRequest solrRequest, String collection)
 		throws SolrServerException {
 
 		SolrServerWrapper solrServerWapper = solrServerFactory.getLiveServer();
 
 		try {
-			return solrServerWapper.request(solrRequest);
+			return solrServerWapper.request(solrRequest, collection);
 		}
 		catch (SolrException se) {
 			throw se;

@@ -50,6 +50,24 @@
 				);
 			},
 
+			_createEl: function(imageSrc) {
+				var instance = this;
+
+				var editor = instance.props.editor.get('nativeEditor');
+
+				var el = CKEDITOR.dom.element.createFromHtml(
+					instance.props.imageTPL.output(
+						{
+							src: imageSrc
+						}
+					)
+				);
+
+				editor.insertElement(el);
+
+				return el;
+			},
+
 			_handleClick: function() {
 				var instance = this;
 
@@ -63,13 +81,16 @@
 				else {
 					AUI().use(
 						'liferay-item-selector-dialog',
+						'liferay-file-uploader',
 						function(A) {
 							var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 								{
-									eventName: eventName,
-									on: {
-										selectedItemChange: A.bind('_onSelectedItemChange', instance)
+									after: {
+										selectedItemChange: A.bind('_onSelectedItemChange', instance),
+										selectedItemUploadStart: A.bind('_onSelectedItemUploadStart', instance)
 									},
+									eventName: eventName,
+									plugins: [A.Plugin.LiferayFileUploader],
 									url: editor.config.filebrowserImageBrowseUrl
 								}
 							);
@@ -95,18 +116,35 @@
 					Util.getWindow(eventName).onceAfter(
 						'visibleChange',
 						function() {
-							var image = CKEDITOR.dom.element.createFromHtml(
-								instance.props.imageTPL.output(
-									{
-										src: selectedItem.value
-									}
-								)
-							);
-
-							editor.insertElement(image);
+							instance._createEl(selectedItem.value);
 						}
 					);
 				}
+			},
+
+			_onSelectedItemUploadStart: function(item) {
+				var instance = this;
+
+				var editor = instance.props.editor.get('nativeEditor');
+
+				var eventName = editor.name + 'selectDocument';
+
+				Util.getWindow(eventName).onceAfter(
+					'visibleChange',
+					function() {
+						var el = instance._createEl(item.value.base64);
+
+						editor.fire(
+							'imagedrop',
+							{
+								el: el,
+								file: item.value.file,
+								randomId: item.randomId,
+								uploader: item.uploader
+							}
+						);
+					}
+				);
 			}
 		}
 	);

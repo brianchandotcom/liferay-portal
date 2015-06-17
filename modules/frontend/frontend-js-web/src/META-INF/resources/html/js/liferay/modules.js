@@ -388,6 +388,13 @@
 							'uploader'
 						]
 					},
+					'liferay-file-uploader': {
+						path: 'file_uploader.js',
+						requires: [
+							'aui-base',
+							'uploader'
+						]
+					},
 					'liferay-form': {
 						path: 'form.js',
 						requires: [

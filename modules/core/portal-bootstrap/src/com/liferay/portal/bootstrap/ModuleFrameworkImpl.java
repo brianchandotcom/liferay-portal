@@ -493,23 +493,28 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private Map<String, String> _buildFrameworkProperties(Class<?> clazz) {
 		Map<String, String> properties = new HashMap<>();
 
+		// Release
+
 		properties.put(
 			Constants.BUNDLE_DESCRIPTION, ReleaseInfo.getReleaseInfo());
 		properties.put(Constants.BUNDLE_NAME, ReleaseInfo.getName());
 		properties.put(Constants.BUNDLE_VENDOR, ReleaseInfo.getVendor());
 		properties.put(Constants.BUNDLE_VERSION, ReleaseInfo.getVersion());
+
+		// Fileinstall. See LPS-56385
+
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_DIR,
 			_getFelixFileInstallDir());
-		properties.put(
-			FrameworkPropsKeys.FELIX_FILEINSTALL_LOG_LEVEL,
-			_getFelixFileInstallLogLevel());
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_POLL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_INTERVAL));
 		properties.put(
 			FrameworkPropsKeys.FELIX_FILEINSTALL_TMPDIR,
 			SystemProperties.get(SystemProperties.TMP_DIR));
+
+		// Framework
+
 		properties.put(
 			Constants.FRAMEWORK_BEGINNING_STARTLEVEL,
 			String.valueOf(PropsValues.MODULE_FRAMEWORK_BEGINNING_START_LEVEL));
@@ -537,6 +542,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		properties.put(
 			FrameworkPropsKeys.OSGI_INSTALL_AREA, frameworkFile.getParent());
+
+		// Overrides
 
 		Properties extraProperties = PropsUtil.getProperties(
 			PropsKeys.MODULE_FRAMEWORK_PROPERTIES, true);
@@ -578,25 +585,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 	private String _getFelixFileInstallDir() {
 		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
 			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
-	}
-
-	private String _getFelixFileInstallLogLevel() {
-		int level = 0;
-
-		if (_log.isDebugEnabled()) {
-			level = 4;
-		}
-		else if (_log.isInfoEnabled()) {
-			level = 3;
-		}
-		else if (_log.isWarnEnabled()) {
-			level = 2;
-		}
-		else if (_log.isErrorEnabled()) {
-			level = 1;
-		}
-
-		return String.valueOf(level);
 	}
 
 	private Dictionary<String, Object> _getProperties(

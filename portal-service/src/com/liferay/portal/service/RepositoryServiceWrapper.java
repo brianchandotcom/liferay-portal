@@ -83,7 +83,8 @@ public class RepositoryServiceWrapper implements RepositoryService,
 	}
 
 	/**
-	* @deprecated As of 7.0.0, replaced by {@link #getSupportedParameters(String, String)}
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getSupportedParameters(String, String)}
 	*/
 	@Deprecated
 	@Override

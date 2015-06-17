@@ -115,6 +115,15 @@ public class EmailAddressServiceSoap {
 		}
 	}
 
+	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address with the primary key, or <code>null</code> if
+	an email address with the primary key could not be found or if
+	the user did not have permission to view the email address
+	* @throws PortalException if a portal exception occurred
+	*/
 	public static com.liferay.portal.model.EmailAddressSoap fetchEmailAddress(
 		long emailAddressId) throws RemoteException {
 		try {

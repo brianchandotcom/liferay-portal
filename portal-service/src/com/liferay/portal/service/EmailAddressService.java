@@ -65,6 +65,15 @@ public interface EmailAddressService extends BaseService {
 	public void deleteEmailAddress(long emailAddressId)
 		throws PortalException;
 
+	/**
+	* Returns the email address with the primary key.
+	*
+	* @param emailAddressId the primary key of the email address
+	* @return the email address with the primary key, or <code>null</code> if
+	an email address with the primary key could not be found or if
+	the user did not have permission to view the email address
+	* @throws PortalException if a portal exception occurred
+	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.EmailAddress fetchEmailAddress(
 		long emailAddressId) throws PortalException;

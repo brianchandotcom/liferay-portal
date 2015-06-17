@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.PermissionChecker;
@@ -90,8 +90,8 @@ public class DummyCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public DiscussionStagingDataHandler getDiscussionStagingDataHandler() {
-		return _discussionStagingDataHandler;
+	public DiscussionStagingHandler getDiscussionStagingHandler() {
+		return _discussionStagingHandler;
 	}
 
 	@Override
@@ -163,8 +163,8 @@ public class DummyCommentManagerImpl implements CommentManager {
 
 		};
 
-	private static final DiscussionStagingDataHandler
-		_discussionStagingDataHandler = new DiscussionStagingDataHandler() {
+	private static final DiscussionStagingHandler
+		_discussionStagingHandler = new DiscussionStagingHandler() {
 
 			@Override
 			public <T extends StagedModel> void exportModelDiscussion(

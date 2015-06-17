@@ -23,7 +23,7 @@ import static com.liferay.portlet.exportimport.lifecycle.ExportImportLifecycleCo
 
 import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.comment.CommentManagerUtil;
-import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -518,10 +518,10 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
-		DiscussionStagingDataHandler discussionStagingDataHandler =
-			CommentManagerUtil.getDiscussionStagingDataHandler();
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
 
-		discussionStagingDataHandler.exportModelDiscussion(
+		discussionStagingHandler.exportModelDiscussion(
 			portletDataContext, stagedModel);
 	}
 
@@ -685,8 +685,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
-		DiscussionStagingDataHandler discussionStagingDataHandler =
-			CommentManagerUtil.getDiscussionStagingDataHandler();
+		DiscussionStagingHandler discussionStagingDataHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
 
 		discussionStagingDataHandler.importModelDiscussion(
 			portletDataContext, stagedModel);
@@ -736,8 +736,8 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			return;
 		}
 
-		DiscussionStagingDataHandler discussionStagingDataHandler =
-			CommentManagerUtil.getDiscussionStagingDataHandler();
+		DiscussionStagingHandler discussionStagingHandler =
+			CommentManagerUtil.getDiscussionStagingHandler();
 
 		List<Element> referenceElements = referencesElement.elements();
 

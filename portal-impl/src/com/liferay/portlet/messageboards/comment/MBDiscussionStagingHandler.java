@@ -14,7 +14,7 @@
 
 package com.liferay.portlet.messageboards.comment;
 
-import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portlet.exportimport.lar.ExportImportClassedModelUtil;
@@ -31,8 +31,7 @@ import java.util.List;
 /**
  * @author Adolfo Pérez
  */
-public class MBDiscussionStagingDataHandler
-	implements DiscussionStagingDataHandler {
+public class MBDiscussionStagingHandler implements DiscussionStagingHandler {
 
 	@Override
 	public <T extends StagedModel> void exportModelDiscussion(

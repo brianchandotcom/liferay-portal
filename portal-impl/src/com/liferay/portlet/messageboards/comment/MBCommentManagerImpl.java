@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
 import com.liferay.portal.kernel.comment.DiscussionPermission;
-import com.liferay.portal.kernel.comment.DiscussionStagingDataHandler;
+import com.liferay.portal.kernel.comment.DiscussionStagingHandler;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Function;
@@ -218,8 +218,8 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
-	public DiscussionStagingDataHandler getDiscussionStagingDataHandler() {
-		return new MBDiscussionStagingDataHandler();
+	public DiscussionStagingHandler getDiscussionStagingHandler() {
+		return new MBDiscussionStagingHandler();
 	}
 
 	@Override

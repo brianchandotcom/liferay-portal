@@ -21,7 +21,7 @@ import com.liferay.portlet.exportimport.lar.PortletDataException;
 /**
  * @author Adolfo Pérez
  */
-public interface DiscussionStagingDataHandler {
+public interface DiscussionStagingHandler {
 
 	public <T extends StagedModel> void exportModelDiscussion(
 			PortletDataContext portletDataContext, T stagedModel)

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.document.SolrDocumentFactory;
 import com.liferay.portal.search.solr.document.SolrUpdateDocumentCommand;
 import com.liferay.portal.search.solr.internal.util.LogUtil;
@@ -30,7 +31,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 
@@ -74,6 +75,8 @@ public class SolrUpdateDocumentCommandImpl
 			boolean deleteFirst)
 		throws SearchException {
 
+		SolrClient solrClient = _solrClientManager.getSolrClient();
+
 		try {
 			List<SolrInputDocument> solrInputDocuments = new ArrayList<>(
 				documents.size());
@@ -90,17 +93,17 @@ public class SolrUpdateDocumentCommandImpl
 			}
 
 			if (deleteFirst) {
-				UpdateResponse updateResponse = _solrServer.deleteById(uids);
+				UpdateResponse updateResponse = solrClient.deleteById(uids);
 
 				LogUtil.logSolrResponseBase(_log, updateResponse);
 			}
 
-			UpdateResponse updateResponse = _solrServer.add(solrInputDocuments);
+			UpdateResponse updateResponse = solrClient.add(solrInputDocuments);
 
 			if (PortalRunMode.isTestMode() ||
 				searchContext.isCommitImmediately()) {
 
-				_solrServer.commit();
+				solrClient.commit();
 			}
 
 			LogUtil.logSolrResponseBase(_log, updateResponse);
@@ -115,21 +118,21 @@ public class SolrUpdateDocumentCommandImpl
 	}
 
 	@Reference(unbind = "-")
+	protected void setSolrClientManager(SolrClientManager solrClientManager) {
+		_solrClientManager = solrClientManager;
+	}
+
+	@Reference(unbind = "-")
 	protected void setSolrDocumentFactory(
 		SolrDocumentFactory solrDocumentFactory) {
 
 		_solrDocumentFactory = solrDocumentFactory;
 	}
 
-	@Reference(unbind = "-")
-	protected void setSolrServer(SolrServer solrServer) {
-		_solrServer = solrServer;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrUpdateDocumentCommandImpl.class);
 
+	private SolrClientManager _solrClientManager;
 	private SolrDocumentFactory _solrDocumentFactory;
-	private SolrServer _solrServer;
 
 }

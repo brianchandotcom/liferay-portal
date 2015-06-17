@@ -49,7 +49,7 @@ String description = BeanParamUtil.getString(recordSet, request, "description");
 	<aui:fieldset cssClass="ddl-form-builder-basic-info">
 		<div class="ddl-form-builder-name">
 			<h2>
-				<liferay-ui:input-editor contents="<%= LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId()) %>" editorName="alloyeditor" name="nameEditor" placeholder="name" showSource="<%= false %>" />
+				<liferay-ui:input-editor contents="<%= HtmlUtil.escape(LocalizationUtil.getLocalization(name, themeDisplay.getLanguageId())) %>" editorName="alloyeditor" name="nameEditor" placeholder="name" showSource="<%= false %>" />
 			</h2>
 		</div>
 

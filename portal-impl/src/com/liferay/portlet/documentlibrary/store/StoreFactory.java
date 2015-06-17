@@ -151,10 +151,14 @@ public class StoreFactory {
 			List<MethodInterceptor> methodInterceptors = Arrays.asList(
 				transactionAdviceMethodInterceptor, tempFileMethodInterceptor);
 
-			store = (Store)ProxyUtil.newProxyInstance(
+			Store proxyStore = (Store)ProxyUtil.newProxyInstance(
 				classLoader, new Class<?>[] {Store.class},
 				new MethodInterceptorInvocationHandler(
 					store, methodInterceptors));
+
+			((DBStore)store).setStoreProxy(proxyStore);
+
+			store = proxyStore;
 		}
 
 		return store;

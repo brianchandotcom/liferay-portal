@@ -60,7 +60,7 @@ public class VerifyUUIDTest extends BaseVerifyProcessTestCase {
 				dbType = DB.TYPE_POSTGRESQL, expectedLog =
 					"Unable to process runnable: ERROR: column \"unknown\" " +
 						"does not exist_",
-				expectedType = ExpectedType.EXACT
+				expectedType = ExpectedType.PREFIX
 			)
 		},
 		level = "ERROR", loggerClass = ThrowableAwareRunnable.class

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.User;
@@ -36,6 +37,7 @@ import com.liferay.portal.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFunction;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.servlet.NamespaceServletRequest;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.WebKeys;
@@ -62,39 +64,44 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String cmd = ParamUtil.getString(request, Constants.CMD);
+		String namespace = ParamUtil.getString(request, "namespace");
+
+		HttpServletRequest namespacedRequest = new NamespaceServletRequest(
+			request, StringPool.BLANK, namespace);
+
+		String cmd = ParamUtil.getString(namespacedRequest, Constants.CMD);
 
 		try {
 			String redirect = PortalUtil.escapeRedirect(
 				ParamUtil.getString(request, "redirect"));
 
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				long commentId = updateComment(request);
+				long commentId = updateComment(namespacedRequest);
 
 				boolean ajax = ParamUtil.getBoolean(request, "ajax", true);
 
 				if (ajax) {
 					String randomNamespace = ParamUtil.getString(
-						request, "randomNamespace");
+						namespacedRequest, "randomNamespace");
 
 					JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 					jsonObject.put("commentId", commentId);
 					jsonObject.put("randomNamespace", randomNamespace);
 
-					writeJSON(request, response, jsonObject);
+					writeJSON(namespacedRequest, response, jsonObject);
 
 					return null;
 				}
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteComment(request);
+				deleteComment(namespacedRequest);
 			}
 			else if (cmd.equals(Constants.SUBSCRIBE_TO_COMMENTS)) {
-				subscribeToComments(request, true);
+				subscribeToComments(namespacedRequest, true);
 			}
 			else if (cmd.equals(Constants.UNSUBSCRIBE_FROM_COMMENTS)) {
-				subscribeToComments(request, false);
+				subscribeToComments(namespacedRequest, false);
 			}
 
 			if (Validator.isNotNull(redirect)) {
@@ -109,7 +116,7 @@ public class EditDiscussionStrutsAction extends BaseStrutsAction {
 
 			jsonObject.putException(e);
 
-			writeJSON(request, response, jsonObject);
+			writeJSON(namespacedRequest, response, jsonObject);
 		}
 
 		return null;

@@ -183,7 +183,7 @@
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskPriority" value="${taskPriority}" />
-			<var name="taskReporter" value="${adminName}" />" />
+			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOUpcomingTasks#viewUpcomingTask">
@@ -208,14 +208,14 @@
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskPriority" value="${taskPriority}" />
-			<var name="taskReporter" value="${adminName}" />" />
+			<var name="taskReporter" value="${adminName}" />
 		</execute>
 
 		<execute macro="SOUpcomingTasks#viewUpcomingTask">
 			<var name="taskAssignee" value="${adminName}" />
 			<var name="taskDescription" value="${taskDescription}" />
 			<var name="taskPriority" value="${taskPriority}" />
-			<var name="taskReporter" value="${adminName}" />" />
+			<var name="taskReporter" value="${adminName}" />
 		</execute>
 	</command>
 

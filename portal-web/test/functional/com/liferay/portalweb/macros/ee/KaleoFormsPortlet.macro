@@ -147,7 +147,7 @@
 	<command name="populateFieldLinkToPage">
 		<var name="key_fieldName" value="${fieldName}" />
 
-		<execute function="Select" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_LINK_TO_PAGE_SELECT" value1="regexp:â€“\s+${kfProcessFieldData}" />
+		<execute function="Select" locator1="PGKaleoformsSubmitnew#NEW_PROCESS_LINK_TO_PAGE_SELECT" value1="regexp:¨C\s+${kfProcessFieldData}" />
 	</command>
 
 	<command name="populateFieldRadio">
@@ -392,7 +392,7 @@
 		<var name="key_fieldName" value="${fieldName}" />
 		<var name="key_kfProcessFieldData" value="${kfProcessFieldData}" />
 
-		<execute function="AssertElementNotPresent" locator1="PGKaleoformsMycompletedrequestsProcess#CURRENT_ENTRY_FIELD" />\
+		<execute function="AssertElementNotPresent" locator1="PGKaleoformsMycompletedrequestsProcess#CURRENT_ENTRY_FIELD" />
 	</command>
 
 	<command name="viewMyCompletedRequestsProcessName">

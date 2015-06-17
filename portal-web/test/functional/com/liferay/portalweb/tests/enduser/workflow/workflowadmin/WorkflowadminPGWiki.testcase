@@ -109,7 +109,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />/>
+			<var name="workflowAssetType" value="Wiki Page" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
@@ -295,7 +295,7 @@
 
 		<execute macro="Workflow#assignToMeTaskByActions">
 			<var name="workflowAssetTitle" value="FrontPage" />
-			<var name="workflowAssetType" value="Wiki Page" />/>
+			<var name="workflowAssetType" value="Wiki Page" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 

@@ -18,15 +18,20 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PortalRunMode;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.SystemProperties;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.util.Map;
 
@@ -41,6 +46,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -80,13 +88,19 @@ public class EmbeddedElasticsearchConnection
 	}
 
 	@Override
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected void addSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.addSettingsContributor(settingsContributor);
+	}
+
+	@Override
 	protected Client createClient(ImmutableSettings.Builder builder) {
-		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
-
-		nodeBuilder.settings(builder);
-
-		_node = nodeBuilder.node();
-
 		StopWatch stopWatch = new StopWatch();
 
 		stopWatch.start();
@@ -96,6 +110,12 @@ public class EmbeddedElasticsearchConnection
 				"Starting embedded Elasticsearch cluster " +
 					elasticsearchConfiguration.clusterName());
 		}
+
+		NodeBuilder nodeBuilder = NodeBuilder.nodeBuilder();
+
+		nodeBuilder.settings(builder);
+
+		_node = nodeBuilder.node();
 
 		_node.start();
 
@@ -125,15 +145,108 @@ public class EmbeddedElasticsearchConnection
 		builder.put(
 			"bootstrap.mlockall",
 			elasticsearchConfiguration.bootstrapMlockAll());
-		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
-		builder.put(
-			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
-		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
+		configureClustering(builder);
+
+		configureHttp(builder);
+
 		builder.put("index.number_of_replicas", 0);
 		builder.put("index.number_of_shards", 1);
+
+		configureNetworking(builder);
+
 		builder.put("node.client", false);
 		builder.put("node.data", true);
 		builder.put("node.local", true);
+
+		configurePaths(builder);
+
+		if (PortalRunMode.isTestMode()) {
+			builder.put("index.refresh_interval", "1ms");
+			builder.put("index.store.type", "memory");
+			builder.put("index.translog.flush_threshold_ops", "1");
+			builder.put("index.translog.interval", "1ms");
+		}
+	}
+
+	@Override
+	protected void removeSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.removeSettingsContributor(settingsContributor);
+	}
+
+	@Reference(unbind = "-")
+	protected void setProps(Props props) {
+		_props = props;
+	}
+
+	private void configureClustering(ImmutableSettings.Builder builder) {
+		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
+		builder.put("discovery.zen.ping.multicast.enabled", false);
+	}
+
+	private void configureHttp(ImmutableSettings.Builder builder) {
+		builder.put("http.enabled", elasticsearchConfiguration.httpEnabled());
+
+		if (!elasticsearchConfiguration.httpEnabled()) {
+			return;
+		}
+
+		builder.put(
+			"http.cors.enabled", elasticsearchConfiguration.httpCORSEnabled());
+
+		if (!elasticsearchConfiguration.httpCORSEnabled()) {
+			return;
+		}
+
+		String[] httpCORSConfigurations =
+			elasticsearchConfiguration.httpCORSConfigurations();
+
+		if (ArrayUtil.isEmpty(httpCORSConfigurations)) {
+			return;
+		}
+
+		for (String httpCORSConfiguration : httpCORSConfigurations) {
+			String[] httpCORSConfigurationPair = StringUtil.split(
+				httpCORSConfiguration, StringPool.EQUAL);
+
+			if (httpCORSConfigurationPair.length < 2) {
+				continue;
+			}
+
+			builder.put(
+				httpCORSConfigurationPair[0], httpCORSConfigurationPair[1]);
+		}
+	}
+
+	private void configureNetworking(ImmutableSettings.Builder builder) {
+		String networkBindHost = elasticsearchConfiguration.networkBindHost();
+
+		if (Validator.isNotNull(networkBindHost)) {
+			builder.put("network.bind.host", networkBindHost);
+		}
+
+		String networkHost = elasticsearchConfiguration.networkHost();
+
+		if (Validator.isNotNull(networkHost)) {
+			builder.put("network.host", networkHost);
+		}
+
+		String networkPublishHost =
+			elasticsearchConfiguration.networkPublishHost();
+
+		if (Validator.isNotNull(networkPublishHost)) {
+			builder.put("network.publish.host", networkPublishHost);
+		}
+
+		String transportTcpPort = elasticsearchConfiguration.transportTcpPort();
+
+		if (Validator.isNotNull(transportTcpPort)) {
+			builder.put("transport.tcp.port", transportTcpPort);
+		}
+	}
+
+	private void configurePaths(ImmutableSettings.Builder builder) {
 		builder.put(
 			"path.data",
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/indices");
@@ -146,18 +259,6 @@ public class EmbeddedElasticsearchConnection
 			_props.get(PropsKeys.LIFERAY_HOME) + "/data/elasticsearch/repo");
 		builder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
-
-		if (PortalRunMode.isTestMode()) {
-			builder.put("index.refresh_interval", "1ms");
-			builder.put("index.store.type", "memory");
-			builder.put("index.translog.flush_threshold_ops", "1");
-			builder.put("index.translog.interval", "1ms");
-		}
-	}
-
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

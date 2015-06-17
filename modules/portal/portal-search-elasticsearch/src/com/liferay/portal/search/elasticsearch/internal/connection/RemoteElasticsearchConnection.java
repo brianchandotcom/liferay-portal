@@ -82,8 +82,8 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		String[] transportAddresses = StringUtil.split(
-			elasticsearchConfiguration.transportAddresses());
+		String[] transportAddresses =
+			elasticsearchConfiguration.transportAddresses();
 
 		setTransportAddresses(new HashSet<>(Arrays.asList(transportAddresses)));
 	}

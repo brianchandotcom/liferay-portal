@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
-
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+package com.liferay.portal.search.elasticsearch.internal.cluster;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public interface ElasticsearchConnection {
+public interface ClusterSettingsContext {
 
-	public void close();
+	public String[] getHosts();
 
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
+	public boolean isClusterEnabled();
 
 }

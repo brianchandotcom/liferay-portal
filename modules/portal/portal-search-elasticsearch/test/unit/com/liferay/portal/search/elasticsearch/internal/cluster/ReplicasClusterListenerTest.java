@@ -116,13 +116,16 @@ public class ReplicasClusterListenerTest {
 	@Test
 	public void testResilientToUpdateFailures() {
 		Mockito.doThrow(
-			Exception.class
+			ReplicasClusterListenerTestException.class
 		).when(
 			_replicasManager).updateNumberOfReplicas(
 				Mockito.anyInt(), (String[])Mockito.anyVararg()
 		);
 
 		masterTokenAcquired();
+	}
+
+	public static class ReplicasClusterListenerTestException extends Exception {
 	}
 
 	protected void assertReplicasChanged() {

@@ -12,23 +12,15 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.connection;
+package com.liferay.portal.search.elasticsearch.settings;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.Client;
+import org.elasticsearch.common.settings.ImmutableSettings;
 
 /**
- * @author Michael C. Han
+ * @author André de Oliveira
  */
-public interface ElasticsearchConnection {
+public interface SettingsContributor {
 
-	public void close();
-
-	public Client getClient();
-
-	public ClusterHealthResponse getClusterHealthResponse(
-		long timeout, int nodesCount);
-
-	public OperationMode getOperationMode();
+	public void populate(ImmutableSettings.Builder builder);
 
 }

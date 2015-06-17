@@ -14,6 +14,8 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
+import aQute.bnd.annotation.metatype.Configurable;
+
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchPaginationUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -42,6 +44,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.facet.FacetProcessor;
 import com.liferay.portal.search.elasticsearch.internal.facet.CompositeFacetProcessor;
@@ -81,7 +84,9 @@ import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -89,6 +94,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Milen Dyankov
  */
 @Component(
+	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	immediate = true, property = {"search.engine.impl=Elasticsearch"},
 	service = IndexSearcher.class
 )
@@ -138,7 +144,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				_log.warn(e, e);
 			}
 
-			if (!_swallowException) {
+			if (!_logExceptionsOnly) {
 				throw new SearchException(e.getMessage(), e);
 			}
 
@@ -170,7 +176,7 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 				_log.warn(e, e);
 			}
 
-			if (!_swallowException) {
+			if (!_logExceptionsOnly) {
 				throw new SearchException(e.getMessage(), e);
 			}
 
@@ -193,8 +199,13 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 		super.setQuerySuggester(querySuggester);
 	}
 
-	public void setSwallowException(boolean swallowException) {
-		_swallowException = swallowException;
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		_logExceptionsOnly = _elasticsearchConfiguration.logExceptionsOnly();
 	}
 
 	protected void addFacets(
@@ -629,10 +640,11 @@ public class ElasticsearchIndexSearcher extends BaseIndexSearcher {
 	private static final Log _log = LogFactoryUtil.getLog(
 		ElasticsearchIndexSearcher.class);
 
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private ElasticsearchConnectionManager _elasticsearchConnectionManager;
 	private FacetProcessor<SearchRequestBuilder> _facetProcessor;
 	private FilterTranslator<FilterBuilder> _filterTranslator;
+	private boolean _logExceptionsOnly;
 	private QueryTranslator<QueryBuilder> _queryTranslator;
-	private boolean _swallowException;
 
 }

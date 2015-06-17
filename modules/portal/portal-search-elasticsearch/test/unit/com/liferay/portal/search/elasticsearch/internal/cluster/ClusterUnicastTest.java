@@ -26,7 +26,7 @@ import org.junit.rules.TestName;
 /**
  * @author André de Oliveira
  */
-public class Cluster2InstancesTest {
+public class ClusterUnicastTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -39,36 +39,38 @@ public class Cluster2InstancesTest {
 	}
 
 	@Test
-	public void test2Nodes1PrimaryShard() throws Exception {
+	public void testSplitBrainPreventedEvenIfMasterLeaves() throws Exception {
 		ElasticsearchFixture elasticsearchFixture0 = _testCluster.getNode(0);
 		ElasticsearchFixture elasticsearchFixture1 = _testCluster.getNode(1);
-
-		createIndex(elasticsearchFixture0);
-
-		ClusterAssert.assert1PrimaryShardOnly(elasticsearchFixture0);
-
-		createIndex(elasticsearchFixture1);
-
-		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture1);
-	}
-
-	@Test
-	public void testExpandAndShrink() throws Exception {
-		ElasticsearchFixture elasticsearchFixture0 = _testCluster.getNode(0);
-		ElasticsearchFixture elasticsearchFixture1 = _testCluster.getNode(1);
+		ElasticsearchFixture elasticsearchFixture2 = _testCluster.getNode(2);
 
 		Index index0 = createIndex(elasticsearchFixture0);
 		Index index1 = createIndex(elasticsearchFixture1);
+		Index index2 = createIndex(elasticsearchFixture2);
+
+		updateNumberOfReplicas(2, index0, elasticsearchFixture0);
+
+		ClusterAssert.assert2ReplicaShards(elasticsearchFixture0);
+		ClusterAssert.assert2ReplicaShards(elasticsearchFixture1);
+		ClusterAssert.assert2ReplicaShards(elasticsearchFixture2);
+
+		_testCluster.destroyNode(0);
+
+		ClusterAssert.assert1ReplicaAnd1UnassignedShard(elasticsearchFixture1);
+		ClusterAssert.assert1ReplicaAnd1UnassignedShard(elasticsearchFixture2);
 
 		updateNumberOfReplicas(1, index1, elasticsearchFixture1);
 
-		ClusterAssert.assert1ReplicaShard(elasticsearchFixture0);
 		ClusterAssert.assert1ReplicaShard(elasticsearchFixture1);
+		ClusterAssert.assert1ReplicaShard(elasticsearchFixture2);
 
-		updateNumberOfReplicas(0, index0, elasticsearchFixture0);
+		_testCluster.destroyNode(1);
 
-		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture0);
-		ClusterAssert.assert1PrimaryShardAnd2Nodes(elasticsearchFixture1);
+		ClusterAssert.assert1PrimaryAnd1UnassignedShard(elasticsearchFixture2);
+
+		updateNumberOfReplicas(0, index2, elasticsearchFixture2);
+
+		ClusterAssert.assert1PrimaryShardOnly(elasticsearchFixture2);
 	}
 
 	@Rule
@@ -89,6 +91,6 @@ public class Cluster2InstancesTest {
 			numberOfReplicas, index.getName());
 	}
 
-	private final TestCluster _testCluster = new TestCluster(2, this);
+	private final TestCluster _testCluster = new TestCluster(3, this);
 
 }

@@ -189,6 +189,7 @@
 				plugins.deployment.type,\
 				portal.version,\
 				portlet.plugins.includes,\
+				portlet.properties.calendar-portlet,\
 				portlet.properties.knowledge-base-portlet,\
 				portlet.properties.marketplace-portlet,\
 				portlet.properties.private-messaging-portlet,\

@@ -14,8 +14,11 @@
 
 package com.liferay.portal.test.rule.callback;
 
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.log.CaptureAppender;
 import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.ExpectedLog;
@@ -169,6 +172,16 @@ public class LogAssertionTestCallback
 		ExpectedLogs expectedLogs, String renderedMessage) {
 
 		for (ExpectedLog expectedLog : expectedLogs.expectedLogs()) {
+			String dbType = expectedLog.dbType();
+
+			if (Validator.isNotNull(dbType)) {
+				DB db = DBFactoryUtil.getDB();
+
+				if (!Validator.equals(dbType, db.getType())) {
+					continue;
+				}
+			}
+
 			ExpectedType expectedType = expectedLog.expectedType();
 
 			if (expectedType == ExpectedType.EXACT) {

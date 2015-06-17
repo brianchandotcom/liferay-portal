@@ -296,7 +296,9 @@ public class PoshiRunnerExecutor {
 			}
 
 			if (locator != null) {
-				if (locator.contains("#")) {
+				Matcher matcher = _locatorKeyPattern.matcher(locator);
+
+				if (matcher.find()) {
 					String pathClassName =
 						PoshiRunnerGetterUtil.getClassNameFromClassCommandName(
 							locator);
@@ -828,6 +830,8 @@ public class PoshiRunnerExecutor {
 		}
 	}
 
+	private static final Pattern _locatorKeyPattern = Pattern.compile(
+		"\\w#\\w");
 	private static Object _returnObject;
 	private static final Pattern _variableMethodPattern = Pattern.compile(
 		"\\$\\{([\\S]*)\\?([\\S]*)\\}");

@@ -118,8 +118,8 @@ public class ElasticsearchConnectionManager {
 		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
-		OperationMode newOperationMode = OperationMode.valueOf(
-			_elasticsearchConfiguration.operationMode());
+		OperationMode newOperationMode =
+			_elasticsearchConfiguration.operationMode();
 
 		if (newOperationMode.equals(_operationMode)) {
 			return;
@@ -140,6 +140,7 @@ public class ElasticsearchConnectionManager {
 		_operationMode = newOperationMode;
 	}
 
+	private String _clusterName;
 	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 	private final Map<OperationMode, ElasticsearchConnection>
 		_elasticsearchConnections = new HashMap<>();

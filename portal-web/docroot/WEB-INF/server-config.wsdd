@@ -6679,7 +6679,6 @@
 		<parameter name="wsdlServicePort" value="Portlet_SC_SCProductVersionService" />
 		<parameter name="wsdlTargetNamespace" value="urn:http.service.softwarecatalog.portlet.liferay.com" />
 	</service>
-
 	<service name="Portlet_Social_SocialActivityService" provider="java:RPC" style="rpc" use="encoded">
 		<arrayMapping xmlns:ns="urn:http.service.social.portlet.liferay.com" xmlns:cmp-ns="http://model.social.portlet.liferay.com" qname="ns:ArrayOf_tns2_SocialActivitySoap" type="java:com.liferay.portlet.social.model.SocialActivitySoap[]" innerType="cmp-ns:SocialActivitySoap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></arrayMapping>
 		<typeMapping xmlns:ns="http://model.social.portlet.liferay.com" qname="ns:SocialActivitySoap" type="java:com.liferay.portlet.social.model.SocialActivitySoap" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"></typeMapping>

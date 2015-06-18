@@ -205,7 +205,7 @@ String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolba
 
 			var tinyMCEEditor = tinyMCE.editors['<%= name %>'];
 
-			<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#onEditorCreate" %>' />
+			<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#js#onEditorCreate" %>' />
 		},
 
 		initInstanceCallback: function() {

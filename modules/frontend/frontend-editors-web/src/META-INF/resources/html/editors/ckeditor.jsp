@@ -218,7 +218,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
 
-				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+				if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) == '<br />') {
 					data = '';
 				}
 			}
@@ -476,7 +476,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#onEditorCreate" %>' />
+		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editors.web#" + editorName + "#js#onEditorCreate" %>' />
 
 		<c:if test="<%= inlineEdit && (Validator.isNotNull(inlineEditSaveURL)) %>">
 			inlineEditor = new Liferay.CKEditorInline(

@@ -125,12 +125,9 @@ public class BaseJSONHandler extends BaseHandler {
 		else if (exception.equals(
 					"com.liferay.portal.security.auth.PrincipalException")) {
 
-			SyncFile syncFile = getLocalSyncFile();
-
-			syncFile.setState(SyncFile.STATE_ERROR);
-			syncFile.setUiEvent(SyncFile.UI_EVENT_INVALID_PERMISSIONS);
-
-			SyncFileService.update(syncFile);
+			SyncFileService.setStatuses(
+				getLocalSyncFile(), SyncFile.STATE_ERROR,
+				SyncFile.UI_EVENT_INVALID_PERMISSIONS);
 		}
 		else if (exception.equals(
 					"com.liferay.portlet.documentlibrary." +

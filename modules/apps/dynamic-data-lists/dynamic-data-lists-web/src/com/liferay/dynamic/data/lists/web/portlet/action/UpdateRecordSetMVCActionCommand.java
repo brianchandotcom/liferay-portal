@@ -28,8 +28,8 @@ import com.liferay.portal.service.ServiceContextFactory;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,14 +50,14 @@ public class UpdateRecordSetMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDLRecordSet recordSet = updateRecordSet(portletRequest);
+		DDLRecordSet recordSet = updateRecordSet(actionRequest);
 
-		updateWorkflowDefinitionLink(portletRequest, recordSet);
+		updateWorkflowDefinitionLink(actionRequest, recordSet);
 
-		updatePortletPreferences(portletRequest, recordSet);
+		updatePortletPreferences(actionRequest, recordSet);
 	}
 
 	@Reference
@@ -67,20 +67,20 @@ public class UpdateRecordSetMVCActionCommand
 		_ddlRecordSetService = ddlRecordSetService;
 	}
 
-	protected DDLRecordSet updateRecordSet(PortletRequest portletRequest)
+	protected DDLRecordSet updateRecordSet(ActionRequest actionRequest)
 		throws PortalException {
 
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		long ddmStructureId = ParamUtil.getLong(
-			portletRequest, "ddmStructureId");
+			actionRequest, "ddmStructureId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(portletRequest, "description");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecordSet.class.getName(), portletRequest);
+			DDLRecordSet.class.getName(), actionRequest);
 
 		return _ddlRecordSetService.updateRecordSet(
 			recordSetId, ddmStructureId, nameMap, descriptionMap,

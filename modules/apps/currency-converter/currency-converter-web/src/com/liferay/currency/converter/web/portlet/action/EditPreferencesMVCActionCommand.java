@@ -23,11 +23,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortalUtil;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.ValidatorException;
 
 import org.osgi.service.component.annotations.Component;
@@ -48,24 +47,24 @@ public class EditPreferencesMVCActionCommand implements MVCActionCommand {
 
 	@Override
 	public boolean processAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
-		if (!(portletResponse instanceof ActionResponse)) {
+		if (!(actionResponse instanceof ActionResponse)) {
 			return false;
 		}
 
-		String cmd = ParamUtil.getString(portletRequest, Constants.CMD);
+		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		if (!cmd.equals(Constants.UPDATE)) {
 			return false;
 		}
 
-		PortletPreferences portletPreferences = portletRequest.getPreferences();
+		PortletPreferences portletPreferences = actionRequest.getPreferences();
 
 		String[] symbols = StringUtil.split(
 			StringUtil.toUpperCase(
-				ParamUtil.getString(portletRequest, "symbols")));
+				ParamUtil.getString(actionRequest, "symbols")));
 
 		portletPreferences.setValues("symbols", symbols);
 
@@ -74,17 +73,15 @@ public class EditPreferencesMVCActionCommand implements MVCActionCommand {
 		}
 		catch (Exception e) {
 			SessionErrors.add(
-				portletRequest, ValidatorException.class.getName(), e);
+				actionRequest, ValidatorException.class.getName(), e);
 
 			return false;
 		}
 
 		SessionMessages.add(
-			portletRequest,
-			PortalUtil.getPortletId(portletRequest) +
+			actionRequest,
+			PortalUtil.getPortletId(actionRequest) +
 				SessionMessages.KEY_SUFFIX_UPDATED_PREFERENCES);
-
-		ActionResponse actionResponse = (ActionResponse)portletResponse;
 
 		actionResponse.setRenderParameter("mvcPath", "/edit.jsp");
 

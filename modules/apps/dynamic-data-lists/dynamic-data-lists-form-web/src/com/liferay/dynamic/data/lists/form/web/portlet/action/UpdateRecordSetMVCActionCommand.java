@@ -40,8 +40,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -62,20 +62,20 @@ public class UpdateRecordSetMVCActionCommand
 
 	@Override
 	protected void doTransactionalCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMStructure ddmStructure = updateDDMStructure(portletRequest);
+		DDMStructure ddmStructure = updateDDMStructure(actionRequest);
 
-		updateRecordSet(portletRequest, ddmStructure.getStructureId());
+		updateRecordSet(actionRequest, ddmStructure.getStructureId());
 	}
 
-	protected DDMForm getDDMForm(PortletRequest portletRequest)
+	protected DDMForm getDDMForm(ActionRequest actionRequest)
 		throws PortalException {
 
 		try {
 			String definition = ParamUtil.getString(
-				portletRequest, "definition");
+				actionRequest, "definition");
 
 			return _ddmFormJSONDeserializer.deserialize(definition);
 		}
@@ -84,11 +84,11 @@ public class UpdateRecordSetMVCActionCommand
 		}
 	}
 
-	protected DDMFormLayout getDDMFormLayout(PortletRequest portletRequest)
+	protected DDMFormLayout getDDMFormLayout(ActionRequest actionRequest)
 		throws PortalException {
 
 		try {
-			String layout = ParamUtil.getString(portletRequest, "layout");
+			String layout = ParamUtil.getString(actionRequest, "layout");
 
 			return _ddmFormLayoutJSONDeserializer.deserialize(layout);
 		}
@@ -133,21 +133,21 @@ public class UpdateRecordSetMVCActionCommand
 		_ddmStructureService = ddmStructureService;
 	}
 
-	protected DDMStructure updateDDMStructure(PortletRequest portletRequest)
+	protected DDMStructure updateDDMStructure(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long ddmStructureId = ParamUtil.getLong(
-			portletRequest, "ddmStructureId");
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
-		DDMForm ddmForm = getDDMForm(portletRequest);
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
+			actionRequest, "ddmStructureId");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		DDMForm ddmForm = getDDMForm(actionRequest);
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), portletRequest);
+			DDMStructure.class.getName(), actionRequest);
 
 		return _ddmStructureService.updateStructure(
 			ddmStructureId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -157,19 +157,19 @@ public class UpdateRecordSetMVCActionCommand
 	}
 
 	protected void updateRecordSet(
-			PortletRequest portletRequest, long ddmStructureId)
+			ActionRequest actionRequest, long ddmStructureId)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecordSet.class.getName(), portletRequest);
+			DDLRecordSet.class.getName(), actionRequest);
 
 		_ddlRecordSetService.updateRecordSet(
 			recordSetId, ddmStructureId,

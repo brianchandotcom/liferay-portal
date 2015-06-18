@@ -25,10 +25,10 @@ import com.liferay.portlet.journal.DuplicateArticleIdException;
 import com.liferay.portlet.journal.NoSuchArticleException;
 import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletRequestDispatcher;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletSession;
 
 import org.osgi.service.component.annotations.Component;
@@ -47,15 +47,15 @@ import org.osgi.service.component.annotations.Component;
 )
 public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 
-	protected void copyArticle(PortletRequest portletRequest) throws Exception {
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+	protected void copyArticle(ActionRequest actionRequest) throws Exception {
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String oldArticleId = ParamUtil.getString(
-			portletRequest, "oldArticleId");
+			actionRequest, "oldArticleId");
 		String newArticleId = ParamUtil.getString(
-			portletRequest, "newArticleId");
+			actionRequest, "newArticleId");
 		boolean autoArticleId = ParamUtil.getBoolean(
-			portletRequest, "autoArticleId");
-		double version = ParamUtil.getDouble(portletRequest, "version");
+			actionRequest, "autoArticleId");
+		double version = ParamUtil.getDouble(actionRequest, "version");
 
 		JournalArticleServiceUtil.copyArticle(
 			groupId, oldArticleId, newArticleId, autoArticleId, version);
@@ -63,20 +63,20 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		try {
-			copyArticle(portletRequest);
+			copyArticle(actionRequest);
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchArticleException ||
 				e instanceof PrincipalException) {
 
-				SessionErrors.add(portletRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass());
 
 				PortletSession portletSession =
-					portletRequest.getPortletSession();
+					actionRequest.getPortletSession();
 
 				PortletContext portletContext =
 					portletSession.getPortletContext();
@@ -84,13 +84,12 @@ public class CopyArticleMVCActionCommand extends BaseMVCActionCommand {
 				PortletRequestDispatcher portletRequestDispatcher =
 					portletContext.getRequestDispatcher("/error.jsp");
 
-				portletRequestDispatcher.include(
-					portletRequest, portletResponse);
+				portletRequestDispatcher.include(actionRequest, actionResponse);
 			}
 			else if (e instanceof DuplicateArticleIdException ||
 					 e instanceof ArticleIdException) {
 
-				SessionErrors.add(portletRequest, e.getClass());
+				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

@@ -31,8 +31,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,27 +53,27 @@ public class UpdateRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long recordId = ParamUtil.getLong(portletRequest, "recordId");
+		long recordId = ParamUtil.getLong(actionRequest, "recordId");
 
-		DDMFormValues ddmFormValues = getDDMFormValues(portletRequest);
+		DDMFormValues ddmFormValues = getDDMFormValues(actionRequest);
 		boolean majorVersion = ParamUtil.getBoolean(
-			portletRequest, "majorVersion");
+			actionRequest, "majorVersion");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), portletRequest);
+			DDLRecord.class.getName(), actionRequest);
 
 		_ddlRecordService.updateRecord(
 			recordId, majorVersion, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,
 			ddmFormValues, serviceContext);
 	}
 
-	protected DDMForm getDDMForm(PortletRequest portletRequest)
+	protected DDMForm getDDMForm(ActionRequest actionRequest)
 		throws PortalException {
 
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		DDLRecordSet recordSet = _ddlRecordSetService.getRecordSet(recordSetId);
 
@@ -82,13 +82,13 @@ public class UpdateRecordMVCActionCommand extends BaseMVCActionCommand {
 		return ddmStructure.getFullHierarchyDDMForm();
 	}
 
-	protected DDMFormValues getDDMFormValues(PortletRequest portletRequest)
+	protected DDMFormValues getDDMFormValues(ActionRequest actionRequest)
 		throws PortalException {
 
-		DDMForm ddmForm = getDDMForm(portletRequest);
+		DDMForm ddmForm = getDDMForm(actionRequest);
 
 		String serializedDDMFormValues = ParamUtil.getString(
-			portletRequest, "ddmFormValues");
+			actionRequest, "ddmFormValues");
 
 		return _ddmFormValuesJSONDeserializer.deserialize(
 			ddmForm, serializedDDMFormValues);

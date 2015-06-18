@@ -26,8 +26,8 @@ import com.liferay.portal.util.PortletKeys;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -47,24 +47,24 @@ public class UpdateTaskMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		long workflowTaskId = ParamUtil.getLong(
-			portletRequest, "workflowTaskId");
+			actionRequest, "workflowTaskId");
 
-		String comment = ParamUtil.getString(portletRequest, "comment");
+		String comment = ParamUtil.getString(actionRequest, "comment");
 
-		int dueDateMonth = ParamUtil.getInteger(portletRequest, "dueDateMonth");
-		int dueDateDay = ParamUtil.getInteger(portletRequest, "dueDateDay");
-		int dueDateYear = ParamUtil.getInteger(portletRequest, "dueDateYear");
-		int dueDateHour = ParamUtil.getInteger(portletRequest, "dueDateHour");
+		int dueDateMonth = ParamUtil.getInteger(actionRequest, "dueDateMonth");
+		int dueDateDay = ParamUtil.getInteger(actionRequest, "dueDateDay");
+		int dueDateYear = ParamUtil.getInteger(actionRequest, "dueDateYear");
+		int dueDateHour = ParamUtil.getInteger(actionRequest, "dueDateHour");
 		int dueDateMinute = ParamUtil.getInteger(
-			portletRequest, "dueDateMinute");
-		int dueDateAmPm = ParamUtil.getInteger(portletRequest, "dueDateAmPm");
+			actionRequest, "dueDateMinute");
+		int dueDateAmPm = ParamUtil.getInteger(actionRequest, "dueDateAmPm");
 
 		if (dueDateAmPm == Calendar.PM) {
 			dueDateHour += 12;

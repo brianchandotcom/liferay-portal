@@ -22,10 +22,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PropsUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerMap;
 
@@ -108,26 +104,12 @@ public class StoreFactory {
 
 	public Store getStoreInstance() {
 		if (_store == null) {
-			checkProperties();
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Instantiate " + PropsValues.DL_STORE_IMPL);
-			}
-
-			try {
-				_store = _getStoreInstance();
-			}
-			catch (Exception e) {
-				_log.error(e, e);
-			}
+			_store = getStoreInstance(PropsValues.DL_STORE_IMPL);
 		}
 
-		if ((_store != null) && _log.isDebugEnabled()) {
-			Class<?> clazz = _store.getClass();
-
-			_log.debug("Return " + clazz.getName());
+		if (_store == null) {
+			throw new IllegalStateException("Store is not ready.");
 		}
-
 		return _store;
 	}
 
@@ -153,98 +135,14 @@ public class StoreFactory {
 		_serviceTrackerMap.open();
 	}
 
-	private Store _getStoreInstance() throws Exception {
-		if (_store == null) {
-			Set<String> keySet = _serviceTrackerMap.keySet();
-
-			for (String key : keySet) {
-				if (key.endsWith("FileSystemStore")) {
-					_store = getStoreInstance(key);
-
-					break;
-				}
-			}
-
-			if (_store == null) {
-				return _NULL_STORE;
-			}
-		}
-
-		return _store;
-	}
-
+	private volatile Store _store = null;
 
 	private static final Log _log = LogFactoryUtil.getLog(StoreFactory.class);
 
-	private static final Store _NULL_STORE = null;
 	private static StoreFactory _instance;
-	private static Store _store;
 	private static boolean _warned;
 
 	private final ServiceTrackerMap<String, Store> _serviceTrackerMap =
-		ServiceTrackerCollections.singleValueMap(
-			Store.class, "store.type", new StoreServiceTrackerCustomizer());
-
-	private class StoreServiceTrackerCustomizer
-		implements ServiceTrackerCustomizer<Store, Store> {
-
-		@Override
-		public Store addingService(ServiceReference<Store> serviceReference) {
-			Registry registry = RegistryUtil.getRegistry();
-
-			Store store = registry.getService(serviceReference);
-
-			if (store == null) {
-				return null;
-			}
-
-			Class<? extends Store> clazz = store.getClass();
-
-			String storeType = clazz.getName();
-
-			if ((_store == null) ||
-				storeType.equals(PropsValues.DL_STORE_IMPL)) {
-
-				_store = store;
-			}
-
-			return store;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<Store> serviceReference, Store store) {
-
-			Class<? extends Store> clazz = _store.getClass();
-
-			String currentType = clazz.getName();
-
-			String type = (String)serviceReference.getProperty("store.type");
-
-			if (currentType.equals(type)) {
-				_store = store;
-			}
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<Store> serviceReference, Store service) {
-
-			String type = (String)serviceReference.getProperty("store.type");
-
-			Class<? extends Store> clazz = _store.getClass();
-
-			String currentType = clazz.getName();
-
-			if ((_store != null) && currentType.equals(type)) {
-				_store = null;
-			}
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-		}
-
-	}
+		ServiceTrackerCollections.singleValueMap(Store.class, "store.type");
 
 }

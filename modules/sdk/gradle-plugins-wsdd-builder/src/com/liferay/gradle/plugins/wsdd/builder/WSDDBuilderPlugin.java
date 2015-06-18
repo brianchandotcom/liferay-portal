@@ -24,6 +24,7 @@ import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.ConfigurationContainer;
 import org.gradle.api.file.FileCollection;
+import org.gradle.api.plugins.BasePlugin;
 import org.gradle.api.plugins.JavaPlugin;
 import org.gradle.api.tasks.TaskContainer;
 import org.gradle.api.tasks.TaskOutputs;
@@ -49,7 +50,7 @@ public class WSDDBuilderPlugin implements Plugin<Project> {
 			project, BUILD_WSDD_TASK_NAME, BuildWSDDTask.class);
 
 		buildWSDDTask.setDescription("Runs Liferay WSDD Builder.");
-		buildWSDDTask.setGroup("build");
+		buildWSDDTask.setGroup(BasePlugin.BUILD_GROUP);
 
 		buildWSDDTask.dependsOn(JavaPlugin.COMPILE_JAVA_TASK_NAME);
 

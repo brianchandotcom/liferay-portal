@@ -66,5 +66,5 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 </c:choose>
 
 <%!
-private static Log _log = LogFactoryUtil.getLog("com_liferay_item_selector_web.view.jsp");
+private static Log _log = LogFactoryUtil.getLog("com_liferay_item_selector_web.view_jsp");
 %>

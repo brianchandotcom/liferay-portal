@@ -26,14 +26,13 @@ import java.util.List;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+
 import org.springframework.context.ApplicationContext;
 
 /**
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = ShoppingServiceUpgrade.class
-)
+@Component(immediate = true, service = ShoppingServiceUpgrade.class)
 public class ShoppingServiceUpgrade {
 
 	@Reference(
@@ -60,9 +59,9 @@ public class ShoppingServiceUpgrade {
 		upgradeProcesses.add(new UpgradePortletId());
 
 		upgradeProcesses.add(new UpgradeClassNames());
-		
+
 		upgradeProcesses.add(new UpgradeShopping());
-		
+
 		upgradeProcesses.add(new UpgradeShoppingPreferences());
 
 		_releaseLocalService.updateRelease(

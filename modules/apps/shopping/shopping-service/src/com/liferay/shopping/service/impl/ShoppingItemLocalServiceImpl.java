@@ -14,12 +14,6 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -33,7 +27,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.permission.ModelPermissions;
 import com.liferay.portal.util.PrefsPropsUtil;
-
 import com.liferay.shopping.exception.DuplicateItemFieldNameException;
 import com.liferay.shopping.exception.DuplicateItemSKUException;
 import com.liferay.shopping.exception.ItemLargeImageNameException;
@@ -51,6 +44,13 @@ import com.liferay.shopping.model.ShoppingItemField;
 import com.liferay.shopping.model.ShoppingItemPrice;
 import com.liferay.shopping.model.ShoppingItemPriceConstants;
 import com.liferay.shopping.service.base.ShoppingItemLocalServiceBaseImpl;
+
+import java.io.File;
+import java.io.IOException;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan

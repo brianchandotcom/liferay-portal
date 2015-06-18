@@ -13,6 +13,7 @@
  */
 
 package com.liferay.shopping.model;
+
 /**
  * @author Eduardo Garcia
  */

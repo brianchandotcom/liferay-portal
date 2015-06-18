@@ -14,23 +14,6 @@
 
 package com.liferay.shopping.util;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
-import javax.servlet.http.HttpServletRequest;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -77,6 +60,25 @@ import com.liferay.shopping.util.comparator.ItemMinQuantityComparator;
 import com.liferay.shopping.util.comparator.ItemNameComparator;
 import com.liferay.shopping.util.comparator.ItemPriceComparator;
 import com.liferay.shopping.util.comparator.ItemSKUComparator;
+
+import java.text.NumberFormat;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Brian Wing Shun Chan
@@ -136,7 +138,7 @@ public class ShoppingUtil {
 				ShoppingCategory category = item.getCategory();
 
 				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
-						category.getGroupId());
+					category.getGroupId());
 
 				break;
 			}
@@ -333,8 +335,8 @@ public class ShoppingUtil {
 			if (shoppingGroupServiceSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = 
-					getShoppingGroupServiceSettings(category.getGroupId());
+				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
+					category.getGroupId());
 			}
 
 			ShoppingItemPrice itemPrice = _getItemPrice(item, count.intValue());
@@ -400,8 +402,8 @@ public class ShoppingUtil {
 			if (shoppingGroupServiceSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = 
-					getShoppingGroupServiceSettings(category.getGroupId());
+				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
+					category.getGroupId());
 			}
 
 			if (item.isRequiresShipping()) {
@@ -484,8 +486,8 @@ public class ShoppingUtil {
 			if (shoppingGroupServiceSettings == null) {
 				ShoppingCategory category = item.getCategory();
 
-				shoppingGroupServiceSettings = 
-					getShoppingGroupServiceSettings(category.getGroupId());
+				shoppingGroupServiceSettings = getShoppingGroupServiceSettings(
+					category.getGroupId());
 
 				break;
 			}
@@ -1121,21 +1123,21 @@ public class ShoppingUtil {
 
 		return itemPrice;
 	}
-	
-	private static ShoppingGroupServiceSettings 
-		getShoppingGroupServiceSettings(long groupId) throws SettingsException{
-		
-		ShoppingServiceComponentProvider shoppingServiceComponentProvider = 
+
+	private static ShoppingGroupServiceSettings
+		getShoppingGroupServiceSettings(long groupId) throws SettingsException {
+
+		ShoppingServiceComponentProvider shoppingServiceComponentProvider =
 			ShoppingServiceComponentProvider.
 				getShoppingServiceComponentProvider();
 
-		SettingsFactory settingsFactory = 
+		SettingsFactory settingsFactory =
 			shoppingServiceComponentProvider.getSettingsFactory();
-		
+
 		return settingsFactory.getSettings(
 					ShoppingGroupServiceSettings.class,
 					new GroupServiceSettingsLocator(
-							groupId, ShoppingConstants.SERVICE_NAME));
+						groupId, ShoppingConstants.SERVICE_NAME));
 	}
-	
+
 }

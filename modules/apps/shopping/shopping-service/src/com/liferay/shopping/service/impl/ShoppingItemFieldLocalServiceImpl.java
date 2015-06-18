@@ -14,10 +14,10 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.util.List;
-
 import com.liferay.shopping.model.ShoppingItemField;
 import com.liferay.shopping.service.base.ShoppingItemFieldLocalServiceBaseImpl;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan

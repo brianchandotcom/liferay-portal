@@ -13,6 +13,7 @@
  */
 
 package com.liferay.shopping.constants;
+
 /**
  * @author Eduardo Garcia
  */

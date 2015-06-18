@@ -40,29 +40,6 @@ import org.osgi.util.tracker.ServiceTracker;
 public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 
 	@Override
-	public void afterPropertiesSet() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_shoppingCategoryPermissionTracker = new ServiceTracker<>(
-			bundleContext, ShoppingCategoryPermission.class, null);
-
-		_shoppingCategoryPermissionTracker.open();
-
-		_shoppingItemPermissionTracker = new ServiceTracker<>(
-			bundleContext, ShoppingItemPermission.class, null);
-
-		_shoppingItemPermissionTracker.open();
-	}
-
-	@Override
-	public void destroy() {
-		_shoppingCategoryPermissionTracker.close();
-		_shoppingItemPermissionTracker.close();
-	}
-
-	@Override
 	public ShoppingItem addItem(
 			long groupId, long categoryId, String sku, String name,
 			String description, String properties, String fieldsQuantities,
@@ -86,11 +63,34 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 	}
 
 	@Override
+	public void afterPropertiesSet() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_shoppingCategoryPermissionTracker = new ServiceTracker<>(
+			bundleContext, ShoppingCategoryPermission.class, null);
+
+		_shoppingCategoryPermissionTracker.open();
+
+		_shoppingItemPermissionTracker = new ServiceTracker<>(
+			bundleContext, ShoppingItemPermission.class, null);
+
+		_shoppingItemPermissionTracker.open();
+	}
+
+	@Override
 	public void deleteItem(long itemId) throws PortalException {
 		getShoppingItemPermission().check(
 			getPermissionChecker(), itemId, ActionKeys.DELETE);
 
 		shoppingItemLocalService.deleteItem(itemId);
+	}
+
+	@Override
+	public void destroy() {
+		_shoppingCategoryPermissionTracker.close();
+		_shoppingItemPermissionTracker.close();
 	}
 
 	@Override
@@ -170,7 +170,6 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 	private ServiceTracker
 		<ShoppingCategoryPermission, ShoppingCategoryPermission>
 			_shoppingCategoryPermissionTracker;
-
 	private ServiceTracker
 		<ShoppingItemPermission, ShoppingItemPermission>
 			_shoppingItemPermissionTracker;

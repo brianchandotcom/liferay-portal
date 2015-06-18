@@ -400,24 +400,18 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
-		var filebrowserBrowseUrl = '';
-		var filebrowserFlashBrowseUrl = '';
-		var filebrowserImageBrowseLinkUrl = '';
-		var filebrowserImageBrowseUrl = '';
+		var defaultConfig = {
+			filebrowserBrowseUrl: '',
+			filebrowserFlashBrowseUrl: '',
+			filebrowserImageBrowseLinkUrl: '',
+			filebrowserImageBrowseUrl: '',
+			filebrowserUploadUrl: null,
+			toolbar: currentToolbarSet
+		};
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 
-		var config = A.merge(
-			editorConfig,
-			{
-				filebrowserBrowseUrl: filebrowserBrowseUrl,
-				filebrowserFlashBrowseUrl: filebrowserFlashBrowseUrl,
-				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
-				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
-				filebrowserUploadUrl: null,
-				toolbar: currentToolbarSet
-			}
-		);
+		var config = A.merge(defaultConfig, editorConfig);
 
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
 

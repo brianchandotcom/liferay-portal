@@ -99,6 +99,7 @@ if (organization != null) {
 				%>
 
 				<liferay-ui:icon
+					cssClass="view-organization-site-link"
 					iconCssClass="icon-cog"
 					label="<%= true %>"
 					message="manage-site"
@@ -152,6 +153,7 @@ if (organization != null) {
 									<c:choose>
 										<c:when test="<%= organization.getPublicLayoutsPageCount() > 0 %>">
 											<liferay-ui:icon
+												cssClass="open-pages-link"
 												iconCssClass="icon-search"
 												label="<%= true %>"
 												message="open-public-pages"
@@ -222,6 +224,7 @@ if (organization != null) {
 									<c:choose>
 										<c:when test="<%= organization.getPrivateLayoutsPageCount() > 0 %>">
 											<liferay-ui:icon
+												cssClass="open-pages-link"
 												iconCssClass="icon-search"
 												label="<%= true %>"
 												message="open-private-pages"

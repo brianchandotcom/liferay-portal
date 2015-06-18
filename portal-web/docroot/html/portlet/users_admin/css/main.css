@@ -114,6 +114,11 @@
 		}
 	}
 
+	.open-pages-link {
+		display: block;
+		margin-bottom: 5px;
+	}
+
 	.membership-restriction-container {
 		margin-top: 1em;
 	}
@@ -236,6 +241,11 @@
 		.user-table button {
 			float: left;
 		}
+	}
+
+	.view-organization-site-link {
+		display: block;
+		margin-bottom: 30px;
 	}
 
 	.view-all-link {

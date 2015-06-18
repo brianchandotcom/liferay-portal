@@ -43,13 +43,17 @@ import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
 import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.GroupServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLSyncEventLocalServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -79,6 +83,7 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DLFileEntryServiceAdapter dlFileEntryServiceAdapter = null;
 		DLFolderServiceAdapter dlFolderServiceAdapter = null;
+		GroupServiceAdapter groupServiceAdapter = null;
 
 		if (documentRepository instanceof LocalRepository) {
 			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
@@ -86,6 +91,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 			dlFolderServiceAdapter = new DLFolderServiceAdapter(
 				DLFolderLocalServiceUtil.getService());
+
+			groupServiceAdapter = new GroupServiceAdapter(
+				GroupLocalServiceUtil.getService());
 		}
 		else {
 			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
@@ -95,6 +103,10 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			dlFolderServiceAdapter = new DLFolderServiceAdapter(
 				DLFolderLocalServiceUtil.getService(),
 				DLFolderServiceUtil.getService());
+
+			groupServiceAdapter = new GroupServiceAdapter(
+				GroupLocalServiceUtil.getService(),
+				GroupServiceUtil.getService());
 		}
 
 		BulkOperationCapability bulkOperationCapability =
@@ -131,7 +143,9 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 			ProcessorCapability.class, _processorCapability);
 		capabilityRegistry.addSupportedCapability(
 			SyncCapability.class,
-			new LiferaySyncCapability(bulkOperationCapability));
+			new LiferaySyncCapability(
+				documentRepository, DLSyncEventLocalServiceUtil.getService(),
+				groupServiceAdapter));
 	}
 
 	@Override

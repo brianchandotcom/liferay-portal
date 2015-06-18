@@ -14,14 +14,14 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.util.List;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.service.base.ShoppingCouponServiceBaseImpl;
 import com.liferay.shopping.service.permission.ShoppingPermission;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan

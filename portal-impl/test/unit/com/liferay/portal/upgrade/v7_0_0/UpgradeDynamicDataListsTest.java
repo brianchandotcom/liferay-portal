@@ -14,6 +14,24 @@
 
 package com.liferay.portal.upgrade.v7_0_0;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PowerMockIgnore;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -33,25 +51,6 @@ import com.liferay.portal.security.xml.SecureXMLFactoryProviderImpl;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.util.LocalizationImpl;
 import com.liferay.portal.xml.SAXReaderImpl;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.mockito.Matchers;
-import org.mockito.Mock;
-
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PowerMockIgnore;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 /**
  * @author Marcellus Tavares
@@ -82,10 +81,10 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 			"_fieldsDisplay",
 			createLocalizationXML(new String[] {fieldsDisplay}));
 
-		UpgradeDynamicDataLists upgradeDynamicDataLists =
-			new UpgradeDynamicDataLists();
+		DDLRecordVersionsUpgradeProcess ddlRecordVersionsUpgradeProcess =
+			new DDLRecordVersionsUpgradeProcess();
 
-		String xml = upgradeDynamicDataLists.toXML(expandoValuesMap);
+		String xml = ddlRecordVersionsUpgradeProcess.toXML(expandoValuesMap);
 
 		Document document = SAXReaderUtil.read(xml);
 
@@ -121,10 +120,10 @@ public class UpgradeDynamicDataListsTest extends PowerMockito {
 			"_fieldsDisplay",
 			createLocalizationXML(new String[] {fieldsDisplay}));
 
-		UpgradeDynamicDataLists upgradeDynamicDataLists =
-			new UpgradeDynamicDataLists();
+		DDLRecordVersionsUpgradeProcess ddlRecordVersionsUpgradeProcess =
+			new DDLRecordVersionsUpgradeProcess();
 
-		String xml = upgradeDynamicDataLists.toXML(expandoValuesMap);
+		String xml = ddlRecordVersionsUpgradeProcess.toXML(expandoValuesMap);
 
 		Document document = SAXReaderUtil.read(xml);
 

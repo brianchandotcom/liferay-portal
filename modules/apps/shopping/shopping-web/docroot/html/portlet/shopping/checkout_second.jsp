@@ -148,7 +148,6 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 	</c:if>
 
 	<%
-	
 	boolean showAvailability = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY);
 
 	StringBundler itemIds = new StringBundler();
@@ -326,7 +325,6 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 		<aui:button href="<%= checkoutURL.toString() %>" value="back" />
 	</aui:button-row>
 </aui:form>
-
 
 <c:if test="<%= coupon != null %>">
 	<aui:script>

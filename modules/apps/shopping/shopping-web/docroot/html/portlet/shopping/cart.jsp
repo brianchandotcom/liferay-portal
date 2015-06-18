@@ -513,8 +513,6 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 	</aui:button-row>
 </aui:form>
 
-
-
 <c:if test="<%= coupon != null %>">
 	<aui:script>
 		function <portlet:namespace />viewCoupon() {
@@ -533,7 +531,6 @@ boolean minQuantityMultiple = PrefsPropsUtil.getBoolean(company.getCompanyId(), 
 		}
 	</aui:script>
 </c:if>
-
 
 <%!
 private static int _getMaxQuantity(ShoppingItemPrice[] itemPrices) {

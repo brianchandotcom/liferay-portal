@@ -14,20 +14,6 @@
 
 package com.liferay.shopping.web.action;
 
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Enumeration;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -46,6 +32,22 @@ import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
 import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
+
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
+import java.net.URL;
+import java.net.URLConnection;
+
+import java.util.Enumeration;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -154,19 +156,19 @@ public class PayPalNotificationAction extends Action {
 		String ppInvoice = ParamUtil.getString(request, "invoice");
 
 		ShoppingOrder order = ShoppingOrderLocalServiceUtil.getOrder(ppInvoice);
-	
-		ShoppingWebComponentProvider shoppingWebComponentProvider = 
-				ShoppingWebComponentProvider.getShoppingWebComponentProvider();
 
-		SettingsFactory settingsFactory = 
+		ShoppingWebComponentProvider shoppingWebComponentProvider =
+			ShoppingWebComponentProvider.getShoppingWebComponentProvider();
+
+		SettingsFactory settingsFactory =
 			shoppingWebComponentProvider.getSettingsFactory();
-			
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings = 
+
+		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
 			settingsFactory.getSettings(
 				ShoppingGroupServiceSettings.class,
 				new GroupServiceSettingsLocator(
 					order.getGroupId(), ShoppingConstants.SERVICE_NAME));
-		
+
 		// Receiver email address
 
 		String ppReceiverEmail = ParamUtil.getString(request, "receiver_email");

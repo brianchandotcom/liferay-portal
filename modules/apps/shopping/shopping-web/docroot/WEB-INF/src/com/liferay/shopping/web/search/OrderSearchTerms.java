@@ -14,9 +14,9 @@
 
 package com.liferay.shopping.web.search;
 
-import javax.portlet.PortletRequest;
-
 import com.liferay.shopping.model.ShoppingOrderConstants;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Brian Wing Shun Chan

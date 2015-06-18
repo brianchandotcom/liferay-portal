@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command name="ActivateDeactivateStagingLocalLiveDM" priority="5">
+	<command known-issues="LRQA-16325" name="ActivateDeactivateStagingLocalLiveDM" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -168,7 +168,7 @@
 		</execute>
 	</command>
 
-	<command name="ActivateRemoteStaging" priority="5">
+	<command known-issues="LRQA-16325" name="ActivateRemoteStaging" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<var name="siteID" value="${siteID}" />
@@ -212,7 +212,7 @@
 		<execute macro="Staging#activateStagingCP" />
 	</command>
 
-	<command name="AddDMDocumentStagingLocalLive" priority="5">
+	<command known-issues="LRQA-16325" name="AddDMDocumentStagingLocalLive" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -261,7 +261,7 @@
 		</execute>
 	</command>
 
-	<command name="AddEventRepeatDaily" priority="4">
+	<command known-issues="LRQA-16325" name="AddEventRepeatDaily" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -378,7 +378,7 @@
 		</execute>
 	</command>
 
-	<command name="AssertEditWebContentStaging" priority="5">
+	<command known-issues="LRQA-16325" name="AssertEditWebContentStaging" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -544,7 +544,7 @@
 		</execute>
 	</command>
 
-	<command name="BlogsOrganizationWorkflowStaging" priority="4">
+	<command known-issues="LRQA-16325" name="BlogsOrganizationWorkflowStaging" priority="4">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoCP">
@@ -906,7 +906,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateStaging" priority="5">
+	<command known-issues="LRQA-16325" name="DeactivateStaging" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />
@@ -926,7 +926,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDMDocument" priority="4">
+	<command known-issues="LRQA-16325" name="DeleteDMDocument" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -1020,7 +1020,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGDocumentsandmedia#ENTRY_ICON_DOCUMENT_THUMBNAIL" />
 	</command>
 
-	<command name="LayoutScope" priority="5">
+	<command known-issues="LRQA-16325" name="LayoutScope" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Staging Test Page" />
 			<var name="siteName" value="Site Name" />
@@ -1057,7 +1057,7 @@
 		<execute function="Pause" locator1="5000" />
 	</command>
 
-	<command name="PublishWCIncludingTextsAndImages" priority="5">
+	<command known-issues="LRQA-16325" name="PublishWCIncludingTextsAndImages" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 			<var name="siteName" value="Liferay" />
@@ -1194,7 +1194,7 @@
 		</execute>
 	</command>
 
-	<command name="PublishWCWithPagesVariationViaRemoteStaging" priority="5">
+	<command known-issues="LRQA-16325" name="PublishWCWithPagesVariationViaRemoteStaging" priority="5">
 		<property name="custom.properties" value="tunneling.servlet.shared.secret=1234567890123456${line.separator}auth.verifier.TunnelingServletAuthVerifier.hosts.allowed=" />
 
 		<execute macro="Staging#remoteStagingSetUp">
@@ -1327,7 +1327,7 @@
 		</execute>
 	</command>
 
-	<command name="StagingPublishPortlet" priority="5">
+	<command known-issues="LRQA-16325" name="StagingPublishPortlet" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Site Settings" />
 			<var name="siteName" value="Site Name" />

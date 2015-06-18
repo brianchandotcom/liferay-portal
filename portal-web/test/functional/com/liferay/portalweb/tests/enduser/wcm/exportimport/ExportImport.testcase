@@ -18,7 +18,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="DeleteExportTemplate" priority="4">
+	<command known-issues="LPS-56378" name="DeleteExportTemplate" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletCategoryName" value="Configuration" />
 			<var name="portletName" value="Export/Import" />
@@ -329,7 +329,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportDMRootFolder" priority="4">
+	<command known-issues="LRQA-16325" name="ExportImportDMRootFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportSmoke" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportSmoke" priority="5">
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -728,7 +728,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWithExportTemplate" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportWithExportTemplate" priority="5">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name = "portletCategoryName" value = "Configuration" />
 			<var name="portletName" value="Export/Import" />
@@ -781,7 +781,7 @@
 		</execute>
 	</command>
 
-	<command name="ExportImportWSRPUnitConverter" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportWSRPUnitConverter" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="WSRP" />
 		</execute>

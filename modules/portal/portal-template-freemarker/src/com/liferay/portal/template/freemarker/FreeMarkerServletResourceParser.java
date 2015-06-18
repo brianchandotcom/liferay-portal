@@ -71,7 +71,7 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 		URL url = servletContext.getResource(templateName);
 
 		if (url == null) {
-			url = PortalWebResourcesUtil.getServletContextResource(name);
+			url = PortalWebResourcesUtil.getResource(name);
 		}
 
 		if ((url == null) && templateName.endsWith("/init_custom.ftl")) {
@@ -79,11 +79,11 @@ public class FreeMarkerServletResourceParser extends URLResourceParser {
 				_log.warn("The template " + name + " should be created");
 			}
 
-			ServletContext cssServletContext =
+			ServletContext themesServletContext =
 				PortalWebResourcesUtil.getServletContext(
-					PortalWebResourceConstants.RESOURCE_TYPE_CSS);
+					PortalWebResourceConstants.RESOURCE_TYPE_THEMES);
 
-			url = cssServletContext.getResource(
+			url = themesServletContext.getResource(
 				"/html/themes/_unstyled/templates/init_custom.ftl");
 		}
 

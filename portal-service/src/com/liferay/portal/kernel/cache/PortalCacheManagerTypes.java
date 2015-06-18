@@ -23,6 +23,6 @@ public interface PortalCacheManagerTypes {
 
 	public static final String MEMORY = "memory";
 
-	public static final String TOOL = "tool";
+	public static final String TEST = "test";
 
 }

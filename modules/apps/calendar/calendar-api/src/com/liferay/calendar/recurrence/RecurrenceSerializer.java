@@ -205,10 +205,11 @@ public class RecurrenceSerializer {
 
 	private static final String _EXDATE = "EXDATE";
 
-	private static Log _log = LogFactoryUtil.getLog(RecurrenceSerializer.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		RecurrenceSerializer.class);
 
-	private static Map<Weekday, com.google.ical.values.Weekday> _weekdaysMap =
-		new HashMap<>();
+	private static final Map<Weekday, com.google.ical.values.Weekday>
+		_weekdaysMap = new HashMap<>();
 
 	static {
 		_weekdaysMap.put(Weekday.SUNDAY, com.google.ical.values.Weekday.SU);

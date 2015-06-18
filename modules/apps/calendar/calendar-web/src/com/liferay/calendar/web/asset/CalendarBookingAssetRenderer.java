@@ -210,9 +210,9 @@ public class CalendarBookingAssetRenderer
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingAssetRenderer.class);
 
-	private CalendarBooking _calendarBooking;
+	private final CalendarBooking _calendarBooking;
 
 }

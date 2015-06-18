@@ -1149,8 +1149,8 @@ public class CalendarBookingLocalServiceImpl
 				serviceContext.getUserId());
 
 			NotificationType notificationType =
-				CalendarServiceConfigurationValues
-					.CALENDAR_NOTIFICATION_DEFAULT_TYPE;
+				CalendarServiceConfigurationValues.
+					CALENDAR_NOTIFICATION_DEFAULT_TYPE;
 
 			NotificationUtil.notifyCalendarBookingRecipients(
 				calendarBooking, notificationType, notificationTemplateType,
@@ -1201,7 +1201,7 @@ public class CalendarBookingLocalServiceImpl
 	@BeanReference(type = CalendarBookingApprovalWorkflow.class)
 	protected CalendarBookingApprovalWorkflow calendarBookingApprovalWorkflow;
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingLocalServiceImpl.class);
 
 }

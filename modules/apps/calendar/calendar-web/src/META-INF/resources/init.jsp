@@ -160,7 +160,6 @@ long rssTimeInterval = GetterUtil.getLong(portletPreferences.getValue("rssTimeIn
 TimeZone userTimeZone = CalendarUtil.getCalendarBookingDisplayTimeZone(calendarBooking, TimeZone.getTimeZone(timeZoneId));
 TimeZone utcTimeZone = TimeZone.getTimeZone(StringPool.UTC);
 
-Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, userTimeZone);
 Format dateFormatLongDate = FastDateFormatFactoryUtil.getDate(FastDateFormatConstants.LONG, locale, userTimeZone);
 
 Format dateFormatTime = null;

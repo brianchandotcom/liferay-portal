@@ -241,7 +241,7 @@ public class NotificationUtil {
 	}
 
 	private static final long _CHECK_INTERVAL =
-		CalendarServiceConfigurationValues
-			.CALENDAR_NOTIFICATION_CHECK_INTERVAL * Time.MINUTE;
+		CalendarServiceConfigurationValues.
+			CALENDAR_NOTIFICATION_CHECK_INTERVAL * Time.MINUTE;
 
 }

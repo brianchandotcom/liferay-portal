@@ -243,7 +243,7 @@ for (long otherCalendarId : otherCalendarIds) {
 				</c:if>
 
 				<aui:layout cssClass="calendar-booking-invitations">
-					<aui:column columnWidth="<%= (calendarBooking != null) ? 25 : 50 %>" first="true">
+					<aui:column columnWidth="<%= (calendarBooking != null) ? 25 : 50 %>" first="<%= true %>">
 						<label class="field-label">
 							<liferay-ui:message key="pending" /> (<span id="<portlet:namespace />pendingCounter"><%= pendingCalendarsJSONArray.length() %></span>)
 						</label>
@@ -259,14 +259,14 @@ for (long otherCalendarId : otherCalendarIds) {
 					</aui:column>
 
 					<c:if test="<%= calendarBooking != null %>">
-						<aui:column columnWidth="25" last="true">
+						<aui:column columnWidth="<%= 25 %>" last="<%= true %>">
 							<label class="field-label">
 								<liferay-ui:message key="maybe" /> (<span id="<portlet:namespace />maybeCounter"><%= maybeCalendarsJSONArray.length() %></span>)
 							</label>
 
 							<div class="calendar-portlet-calendar-list" id="<portlet:namespace />calendarListMaybe"></div>
 						</aui:column>
-						<aui:column columnWidth="25" last="true">
+						<aui:column columnWidth="<%= 25 %>" last="<%= true %>">
 							<label class="field-label">
 								<liferay-ui:message key="declined" /> (<span id="<portlet:namespace />declinedCounter"><%= declinedCalendarsJSONArray.length() %></span>)
 							</label>
@@ -275,7 +275,7 @@ for (long otherCalendarId : otherCalendarIds) {
 						</aui:column>
 					</c:if>
 
-					<aui:column columnWidth="100">
+					<aui:column columnWidth="<%= 100 %>">
 						<div class="calendar-portlet-list-header toggler-header-collapsed" id="<portlet:namespace />checkAvailability">
 							<span class="calendar-portlet-list-arrow"></span>
 

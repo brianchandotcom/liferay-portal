@@ -71,7 +71,7 @@ public class CalendarNotificationTemplateImpl
 			_notificationTypeSettingsProperties.toString());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarNotificationTemplateImpl.class);
 
 	private UnicodeProperties _notificationTypeSettingsProperties;

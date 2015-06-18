@@ -129,7 +129,7 @@ public class JCalendarUtilTest {
 			Calendar.FRIDAY, jCalendar.get(Calendar.DAY_OF_WEEK));
 	}
 
-	private static TimeZone _losAngelesTimeZone = TimeZone.getTimeZone(
+	private static final TimeZone _losAngelesTimeZone = TimeZone.getTimeZone(
 		"America/Los_Angeles");
 
 }

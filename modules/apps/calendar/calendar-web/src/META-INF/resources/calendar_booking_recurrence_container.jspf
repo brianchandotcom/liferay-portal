@@ -317,7 +317,7 @@ if (recurrence != null) {
 
 		var endValue = endsRadioNodes.filter(':checked').val()[0];
 
-		if (endValue == 'never' || endValue == 'on') {
+		if ((endValue == 'never') || (endValue == 'on')) {
 			countNode.set('disabled', true);
 		}
 		else {
@@ -326,7 +326,7 @@ if (recurrence != null) {
 
 		countNode.selectText();
 
-		if (endValue == 'never' || endValue == 'after') {
+		if ((endValue == 'never') || (endValue == 'after')) {
 			untilDateDatePicker.set('disabled', true);
 		}
 		else {
@@ -381,7 +381,7 @@ if (recurrence != null) {
 
 		var positionalWeekday = null;
 
-		if (frequency == '<%= Frequency.MONTHLY %>' || frequency == '<%= Frequency.YEARLY %>') {
+		if ((frequency == '<%= Frequency.MONTHLY %>') || (frequency == '<%= Frequency.YEARLY %>')) {
 			if (positionInMonthNode.one('input:checked').val() == 'true') {
 				positionalWeekday = {
 					month: parseInt(A.one('#<portlet:namespace />startTimeMonth').val(), 10),

@@ -435,6 +435,7 @@ public class CalendarUtil {
 		return jsonObject;
 	}
 
-	private static TimeZone _utcTimeZone = TimeZone.getTimeZone(StringPool.UTC);
+	private static final TimeZone _utcTimeZone = TimeZone.getTimeZone(
+		StringPool.UTC);
 
 }

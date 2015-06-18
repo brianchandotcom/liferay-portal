@@ -36,7 +36,7 @@ public class PositionalWeekday {
 		return _weekday;
 	}
 
-	private int _position;
-	private Weekday _weekday;
+	private final int _position;
+	private final Weekday _weekday;
 
 }

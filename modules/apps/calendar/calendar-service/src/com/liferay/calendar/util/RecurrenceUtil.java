@@ -159,6 +159,6 @@ public class RecurrenceUtil {
 			jCalendar.get(Calendar.DAY_OF_MONTH));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(RecurrenceUtil.class);
+	private static final Log _log = LogFactoryUtil.getLog(RecurrenceUtil.class);
 
 }

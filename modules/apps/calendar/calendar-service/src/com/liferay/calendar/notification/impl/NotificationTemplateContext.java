@@ -32,8 +32,8 @@ public class NotificationTemplateContext implements Cloneable, Serializable {
 
 	public NotificationTemplateContext() {
 		_notificationType =
-			CalendarServiceConfigurationValues
-				.CALENDAR_NOTIFICATION_DEFAULT_TYPE;
+			CalendarServiceConfigurationValues.
+				CALENDAR_NOTIFICATION_DEFAULT_TYPE;
 	}
 
 	public NotificationTemplateContext(NotificationType notificationType) {

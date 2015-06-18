@@ -159,7 +159,7 @@ AssetEntry layoutAssetEntry = AssetEntryLocalServiceUtil.getEntry(CalendarBookin
 					formAction="<%= updateDiscussionURL %>"
 					formName="fm2"
 					paginationURL="<%= discussionPaginationURL %>"
-					ratingsEnabled="true"
+					ratingsEnabled="<%= true %>"
 					redirect="<%= currentURL %>"
 					subject="<%= calendarBooking.getTitle(locale) %>"
 					userId="<%= calendarBooking.getUserId() %>"

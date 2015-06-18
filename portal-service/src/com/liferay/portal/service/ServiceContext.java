@@ -871,10 +871,9 @@ public class ServiceContext implements Cloneable, Serializable {
 	}
 
 	/**
-	 * Merges all attributes and fields (except for the request) of the
-	 * specified service context with this service context object. Attributes
-	 * and fields that are <code>null</code> or less than <code>1</code> are not
-	 * merged.
+	 * Merges all of the specified service context's non-<code>null</code>
+	 * attributes, attributes greater than <code>0</code>, and fields (except
+	 * the request) with this service context object.
 	 *
 	 * @param serviceContext the service context object to be merged
 	 */

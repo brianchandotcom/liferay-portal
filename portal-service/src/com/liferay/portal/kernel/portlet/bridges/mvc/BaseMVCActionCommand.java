@@ -16,9 +16,9 @@ package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import com.liferay.portal.kernel.servlet.SessionErrors;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,13 +27,13 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 
 	@Override
 	public boolean processAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws PortletException {
 
 		try {
-			doProcessAction(portletRequest, portletResponse);
+			doProcessAction(actionRequest, actionResponse);
 
-			return SessionErrors.isEmpty(portletRequest);
+			return SessionErrors.isEmpty(actionRequest);
 		}
 		catch (PortletException pe) {
 			throw pe;
@@ -44,7 +44,7 @@ public abstract class BaseMVCActionCommand implements MVCActionCommand {
 	}
 
 	protected abstract void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 
 }

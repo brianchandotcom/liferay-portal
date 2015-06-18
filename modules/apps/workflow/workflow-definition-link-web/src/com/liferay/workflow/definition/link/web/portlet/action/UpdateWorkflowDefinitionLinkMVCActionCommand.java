@@ -24,8 +24,8 @@ import com.liferay.workflow.definition.link.web.portlet.constants.WorkflowDefini
 
 import java.util.Enumeration;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -46,15 +46,15 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		Enumeration<String> enu = portletRequest.getParameterNames();
+		Enumeration<String> enu = actionRequest.getParameterNames();
 
 		while (enu.hasMoreElements()) {
 			String name = enu.nextElement();
@@ -65,7 +65,7 @@ public class UpdateWorkflowDefinitionLinkMVCActionCommand
 
 			String className = name.substring(_PREFIX.length());
 			String workflowDefinition = ParamUtil.getString(
-				portletRequest, name);
+				actionRequest, name);
 
 			WorkflowDefinitionLinkLocalServiceUtil.updateWorkflowDefinitionLink(
 				themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,

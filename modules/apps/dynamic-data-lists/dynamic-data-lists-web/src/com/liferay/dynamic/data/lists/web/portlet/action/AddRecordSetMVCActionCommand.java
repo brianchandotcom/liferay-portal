@@ -37,9 +37,9 @@ import com.liferay.portlet.StrictPortletPreferencesImpl;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -57,20 +57,20 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
-	protected DDLRecordSet addRecordSet(PortletRequest portletRequest)
+	protected DDLRecordSet addRecordSet(ActionRequest actionRequest)
 		throws PortalException {
 
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		long ddmStructureId = ParamUtil.getLong(
-			portletRequest, "ddmStructureId");
+			actionRequest, "ddmStructureId");
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			portletRequest, "name");
+			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
-			LocalizationUtil.getLocalizationMap(portletRequest, "description");
-		int scope = ParamUtil.getInteger(portletRequest, "scope");
+			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecordSet.class.getName(), portletRequest);
+			DDLRecordSet.class.getName(), actionRequest);
 
 		return _ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, null, nameMap, descriptionMap,
@@ -80,14 +80,27 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDLRecordSet recordSet = addRecordSet(portletRequest);
+		DDLRecordSet recordSet = addRecordSet(actionRequest);
 
-		updateWorkflowDefinitionLink(portletRequest, recordSet);
+		updateWorkflowDefinitionLink(actionRequest, recordSet);
 
-		updatePortletPreferences(portletRequest, recordSet);
+		updatePortletPreferences(actionRequest, recordSet);
+	}
+
+	protected PortletPreferences getStrictPortletSetup(
+			ActionRequest actionRequest)
+		throws PortalException {
+
+		String portletResource = ParamUtil.getString(
+			actionRequest, "portletResource");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
 	}
 
 	protected PortletPreferences getStrictPortletSetup(
@@ -109,19 +122,6 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 		return portletPreferences;
 	}
 
-	protected PortletPreferences getStrictPortletSetup(
-			PortletRequest portletRequest)
-		throws PortalException {
-
-		String portletResource = ParamUtil.getString(
-			portletRequest, "portletResource");
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		return getStrictPortletSetup(themeDisplay.getLayout(), portletResource);
-	}
-
 	@Reference
 	protected void setDDLRecordSetService(
 		DDLRecordSetService ddlRecordSetService) {
@@ -138,11 +138,11 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void updatePortletPreferences(
-			PortletRequest portletRequest, DDLRecordSet recordSet)
+			ActionRequest actionRequest, DDLRecordSet recordSet)
 		throws Exception {
 
 		PortletPreferences portletPreferences = getStrictPortletSetup(
-			portletRequest);
+			actionRequest);
 
 		if (portletPreferences == null) {
 			return;
@@ -160,15 +160,15 @@ public class AddRecordSetMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void updateWorkflowDefinitionLink(
-			PortletRequest portletRequest, DDLRecordSet recordSet)
+			ActionRequest actionRequest, DDLRecordSet recordSet)
 		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String workflowDefinition = ParamUtil.getString(
-			portletRequest, "workflowDefinition");
+			actionRequest, "workflowDefinition");
 
 		_workflowDefinitionLinkLocalService.updateWorkflowDefinitionLink(
 			themeDisplay.getUserId(), themeDisplay.getCompanyId(), groupId,

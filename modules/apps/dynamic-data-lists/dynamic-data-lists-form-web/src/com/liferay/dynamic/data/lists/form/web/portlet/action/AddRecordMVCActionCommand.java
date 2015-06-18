@@ -31,8 +31,8 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMForm;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.storage.DDMFormValues;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -52,19 +52,19 @@ public class AddRecordMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
-		long recordSetId = ParamUtil.getLong(portletRequest, "recordSetId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
+		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
 		DDMForm ddmForm = getDDMForm(recordSetId);
 
 		DDMFormValues ddmFormValues = _ddmFormValuesFactory.create(
-			portletRequest, ddmForm);
+			actionRequest, ddmForm);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecord.class.getName(), portletRequest);
+			DDLRecord.class.getName(), actionRequest);
 
 		_ddlRecordService.addRecord(
 			groupId, recordSetId, DDLRecordConstants.DISPLAY_INDEX_DEFAULT,

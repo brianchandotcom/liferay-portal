@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateService;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -42,26 +42,26 @@ public class DeleteTemplateMVCActionCommand extends DDMBaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		long[] deleteTemplateIds = null;
 
-		long templateId = ParamUtil.getLong(portletRequest, "templateId");
+		long templateId = ParamUtil.getLong(actionRequest, "templateId");
 
 		if (templateId > 0) {
 			deleteTemplateIds = new long[] {templateId};
 		}
 		else {
 			deleteTemplateIds = StringUtil.split(
-				ParamUtil.getString(portletRequest, "deleteTemplateIds"), 0L);
+				ParamUtil.getString(actionRequest, "deleteTemplateIds"), 0L);
 		}
 
 		for (long deleteTemplateId : deleteTemplateIds) {
 			_ddmTemplateService.deleteTemplate(deleteTemplateId);
 		}
 
-		setRedirectAttribute(portletRequest);
+		setRedirectAttribute(actionRequest);
 	}
 
 	@Reference

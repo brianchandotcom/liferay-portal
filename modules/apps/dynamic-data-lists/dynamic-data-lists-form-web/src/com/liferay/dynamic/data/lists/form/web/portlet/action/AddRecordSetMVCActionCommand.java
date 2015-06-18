@@ -41,8 +41,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,23 +61,23 @@ import org.osgi.service.component.annotations.Reference;
 public class AddRecordSetMVCActionCommand
 	extends BaseTransactionalMVCActionCommand {
 
-	protected DDMStructure addDDMStructure(PortletRequest portletRequest)
+	protected DDMStructure addDDMStructure(ActionRequest actionRequest)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String structureKey = ParamUtil.getString(
-			portletRequest, "structureKey");
-		String storageType = ParamUtil.getString(portletRequest, "storageType");
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
-		DDMForm ddmForm = getDDMForm(portletRequest);
-		DDMFormLayout ddmFormLayout = getDDMFormLayout(portletRequest);
+			actionRequest, "structureKey");
+		String storageType = ParamUtil.getString(actionRequest, "storageType");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		DDMForm ddmForm = getDDMForm(actionRequest);
+		DDMFormLayout ddmFormLayout = getDDMFormLayout(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDMStructure.class.getName(), portletRequest);
+			DDMStructure.class.getName(), actionRequest);
 
 		return _ddmStructureService.addStructure(
 			groupId, DDMStructureConstants.DEFAULT_PARENT_STRUCTURE_ID,
@@ -89,21 +89,21 @@ public class AddRecordSetMVCActionCommand
 	}
 
 	protected void addRecordSet(
-			PortletRequest portletRequest, long ddmStructureId)
+			ActionRequest actionRequest, long ddmStructureId)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long groupId = ParamUtil.getLong(portletRequest, "groupId");
+		long groupId = ParamUtil.getLong(actionRequest, "groupId");
 		String recordSetKey = ParamUtil.getString(
-			portletRequest, "recordSetKey");
-		String name = ParamUtil.getString(portletRequest, "name");
-		String description = ParamUtil.getString(portletRequest, "description");
-		int scope = ParamUtil.getInteger(portletRequest, "scope");
+			actionRequest, "recordSetKey");
+		String name = ParamUtil.getString(actionRequest, "name");
+		String description = ParamUtil.getString(actionRequest, "description");
+		int scope = ParamUtil.getInteger(actionRequest, "scope");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			DDLRecordSet.class.getName(), portletRequest);
+			DDLRecordSet.class.getName(), actionRequest);
 
 		_ddlRecordSetService.addRecordSet(
 			groupId, ddmStructureId, recordSetKey,
@@ -115,20 +115,20 @@ public class AddRecordSetMVCActionCommand
 
 	@Override
 	protected void doTransactionalCommand(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		DDMStructure ddmStructure = addDDMStructure(portletRequest);
+		DDMStructure ddmStructure = addDDMStructure(actionRequest);
 
-		addRecordSet(portletRequest, ddmStructure.getStructureId());
+		addRecordSet(actionRequest, ddmStructure.getStructureId());
 	}
 
-	protected DDMForm getDDMForm(PortletRequest portletRequest)
+	protected DDMForm getDDMForm(ActionRequest actionRequest)
 		throws PortalException {
 
 		try {
 			String definition = ParamUtil.getString(
-				portletRequest, "definition");
+				actionRequest, "definition");
 
 			return _ddmFormJSONDeserializer.deserialize(definition);
 		}
@@ -137,11 +137,11 @@ public class AddRecordSetMVCActionCommand
 		}
 	}
 
-	protected DDMFormLayout getDDMFormLayout(PortletRequest portletRequest)
+	protected DDMFormLayout getDDMFormLayout(ActionRequest actionRequest)
 		throws PortalException {
 
 		try {
-			String layout = ParamUtil.getString(portletRequest, "layout");
+			String layout = ParamUtil.getString(actionRequest, "layout");
 
 			return _ddmFormLayoutJSONDeserializer.deserialize(layout);
 		}

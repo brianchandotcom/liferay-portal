@@ -1178,9 +1178,7 @@
 			<var name="weekday" value="Tuesday" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -1728,9 +1726,7 @@
 			<var name="startDateTime" value="01:00 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2016,9 +2012,7 @@
 			<var name="numberOfOccurrences" value="2" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2139,9 +2133,7 @@
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -2196,9 +2188,7 @@
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -3640,9 +3630,7 @@
 			<var name="startDateTime" value="09:00 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
@@ -4452,9 +4440,7 @@
 			<var name="startDateTime" value="11:58 PM" />
 		</execute>
 
-		<execute macro="CalendarEvent#save">
-			<var name="pageName" value="${pageName}" />
-		</execute>
+		<execute macro="CalendarEvent#save" />
 
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />

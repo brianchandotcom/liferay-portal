@@ -15,6 +15,7 @@
 package com.liferay.portal.cache.test;
 
 import com.liferay.portal.kernel.cache.AbstractPortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheManager;
 
 import java.io.Serializable;
 
@@ -28,6 +29,16 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class TestPortalCache <K extends Serializable, V>
 	extends AbstractPortalCache<K, V> {
+
+	public TestPortalCache(
+		PortalCacheManager<K, V> portalCacheManager, String portalCacheName) {
+
+		super(portalCacheManager);
+
+		_portalCacheName = portalCacheName;
+
+		_concurrentMap = new ConcurrentHashMap<>();
+	}
 
 	public TestPortalCache(String portalCacheName) {
 		super(null);

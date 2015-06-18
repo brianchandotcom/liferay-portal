@@ -47,11 +47,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author André de Oliveira
  * @author Alexander Chow
  * @author Raymond Augé
  */
+@Component(service = CommentManager.class)
 public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
@@ -241,24 +245,28 @@ public class MBCommentManagerImpl implements CommentManager {
 		return true;
 	}
 
+	@Reference(unbind = "-")
 	public void setMBDiscussionLocalService(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
+	@Reference(unbind = "-")
 	public void setMBMessageLocalService(
 		MBMessageLocalService mbMessageLocalService) {
 
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
+	@Reference(unbind = "-")
 	public void setRatingsEntryLocalService(
 		RatingsEntryLocalService ratingsEntryLocalService) {
 
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
+	@Reference(unbind = "-")
 	public void setRatingsStatsLocalService(
 		RatingsStatsLocalService ratingsStatsLocalService) {
 

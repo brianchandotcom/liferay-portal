@@ -504,7 +504,7 @@
 		<execute function="AssertElementNotPresent" locator1="PGBlogs#ENTRY_RECYCLE_BIN" value1="Move to the Recycle Bin" />
 	</command>
 
-	<command name="ExportImportSampleLARPortlet" priority="4">
+	<command name="ExportImportSampleLARPortlet" priority="5">
 		<property name="portlet.plugins.includes" value="sample-lar-portlet" />
 
 		<execute macro="Page#addPG">
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ExportImportSmoke" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportSmoke" priority="4">
 		<execute macro="User#firstLoginPG" />
 
 		<execute macro="LAR#configureExportSiteCP" />
@@ -657,7 +657,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51696" name="ExportImportValidation" priority="5">
+	<command known-issues="LPS-51696" name="ExportImportValidation" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -728,7 +728,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ExportImportWithExportTemplate" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportWithExportTemplate" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name = "portletCategoryName" value = "Configuration" />
 			<var name="portletName" value="Export/Import" />
@@ -781,7 +781,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-16325" name="ExportImportWSRPUnitConverter" priority="5">
+	<command known-issues="LRQA-16325" name="ExportImportWSRPUnitConverter" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="WSRP" />
 		</execute>

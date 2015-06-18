@@ -14,6 +14,7 @@
 
 package com.liferay.exportimport.lar;
 
+import com.liferay.exportimport.xstream.ConverterAdapter;
 import com.liferay.portal.NoSuchRoleException;
 import com.liferay.portal.NoSuchTeamException;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -90,7 +91,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerKeys;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 import com.liferay.portlet.exportimport.lar.UserIdStrategy;
-import com.liferay.portlet.exportimport.xstream.ConverterAdapter;
 import com.liferay.portlet.exportimport.xstream.XStreamAliasRegistryUtil;
 import com.liferay.portlet.exportimport.xstream.XStreamConverter;
 import com.liferay.portlet.exportimport.xstream.XStreamConverterRegistryUtil;

@@ -12,7 +12,7 @@ Import-Package: \
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.lar,\
+	com.liferay.portlet.exportimport.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
 	com.liferay.portal.kernel.plugin,\

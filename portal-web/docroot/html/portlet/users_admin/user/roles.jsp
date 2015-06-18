@@ -280,7 +280,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 							var roleId = item.attr('data-roleid');
 
 							for (var i = 0; i < <portlet:namespace />deleteGroupRolesGroupIds.length; i++) {
-								if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+								if (<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId && <portlet:namespace />deleteGroupRolesRoleIds[i] == roleId) {
 									Util.toggleDisabled(item, false);
 
 									break;
@@ -448,7 +448,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 								var roleId = item.attr('data-roleid');
 
 								for (var i = 0; i < <portlet:namespace />deleteGroupRolesGroupIds.length; i++) {
-									if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+									if (<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId && <portlet:namespace />deleteGroupRolesRoleIds[i] == roleId) {
 										Util.toggleDisabled(item, false);
 
 										break;
@@ -560,7 +560,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 
 		function <portlet:namespace />deleteGroupRole(roleId, groupId) {
 			for (var i = 0; i < <portlet:namespace />addGroupRolesRoleIds.length; i++) {
-				if ((<portlet:namespace />addGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />addGroupRolesRoleIds[i] == roleId)) {
+				if (<portlet:namespace />addGroupRolesGroupIds[i] == groupId && <portlet:namespace />addGroupRolesRoleIds[i] == roleId) {
 					<portlet:namespace />addGroupRolesGroupIds.splice(i, 1);
 					<portlet:namespace />addGroupRolesRoleIds.splice(i, 1);
 
@@ -599,7 +599,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles"
 					rowColumns.push('<a class="modify-link" data-groupId="' + groupId + '" data-rowId="' + roleId + '" href="javascript:;"><%= UnicodeFormatter.toString(removeRoleIcon) %></a>');
 
 					for (var i = 0; i < <portlet:namespace />deleteGroupRolesRoleIds.length; i++) {
-						if ((<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId) && (<portlet:namespace />deleteGroupRolesRoleIds[i] == roleId)) {
+						if (<portlet:namespace />deleteGroupRolesGroupIds[i] == groupId && <portlet:namespace />deleteGroupRolesRoleIds[i] == roleId) {
 							<portlet:namespace />deleteGroupRolesGroupIds.splice(i, 1);
 							<portlet:namespace />deleteGroupRolesRoleIds.splice(i, 1);
 

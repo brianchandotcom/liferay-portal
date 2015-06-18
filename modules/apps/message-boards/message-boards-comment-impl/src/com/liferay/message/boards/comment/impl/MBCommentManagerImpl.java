@@ -14,6 +14,7 @@
 
 package com.liferay.message.boards.comment.impl;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
@@ -154,6 +155,12 @@ public class MBCommentManagerImpl implements CommentManager {
 		throws PortalException {
 
 		_mbMessageLocalService.deleteDiscussionMessages(className, classPK);
+	}
+
+	@Override
+	public Comment fetchComment(long commentId) {
+		return new MBCommentImpl(
+			_mbMessageLocalService.fetchMBMessage(commentId));
 	}
 
 	@Override

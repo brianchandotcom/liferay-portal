@@ -170,6 +170,14 @@ public class CommentManagerImplTest extends Mockito {
 			className, classPK
 		);
 
+		_commentManagerImpl.fetchComment(commentId);
+
+		Mockito.verify(
+			commentManager
+		).fetchComment(
+			commentId
+		);
+
 		int commentsCount = RandomTestUtil.randomInt();
 
 		when(

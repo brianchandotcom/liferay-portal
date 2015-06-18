@@ -167,6 +167,19 @@ public class MBCommentManagerImplTest extends Mockito {
 	}
 
 	@Test
+	public void testFetchComment() throws Exception {
+		long commentId = RandomTestUtil.randomLong();
+
+		_mbCommentManagerImpl.fetchComment(commentId);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).fetchMBMessage(
+			commentId
+		);
+	}
+
+	@Test
 	public void testGetCommentsCount() throws Exception {
 		long classPK = RandomTestUtil.randomLong();
 		long classNameId = RandomTestUtil.randomLong();

@@ -2,6 +2,9 @@ Bundle-Name: Liferay Portal WAB Generator
 Bundle-SymbolicName: com.liferay.portal.wab.generator
 Bundle-Version: 1.0.0
 Export-Package: com.liferay.portal.wab.generator
+Import-Package:\
+	!com.liferay.util.xml,\
+	*
 Include-Resource: \
 	classes, \
 	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class

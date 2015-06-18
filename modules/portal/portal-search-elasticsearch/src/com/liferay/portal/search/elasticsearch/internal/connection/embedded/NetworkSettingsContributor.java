@@ -12,14 +12,17 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.cluster;
+package com.liferay.portal.search.elasticsearch.internal.connection.embedded;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch.internal.cluster.ClusterSettingsContext;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
+
+import java.net.InetAddress;
 
 import java.util.Map;
 
@@ -31,68 +34,73 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author André de Oliveira
+ * @author Michael C. Han
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	immediate = true, property = {"operation.mode=EMBEDDED"},
 	service = SettingsContributor.class
 )
-public class UnicastSettingsContributor extends BaseSettingsContributor {
+public class NetworkSettingsContributor extends BaseSettingsContributor {
 
-	public UnicastSettingsContributor() {
+	public NetworkSettingsContributor() {
 		super(1);
 	}
 
 	@Override
 	public void populate(ImmutableSettings.Builder builder) {
-		if (!_clusterSettingsContext.isClusterEnabled()) {
-			return;
+		String networkBindHost = _elasticsearchConfiguration.networkBindHost();
+
+		if (Validator.isNotNull(networkBindHost)) {
+			builder.put("network.bind.host", networkBindHost);
 		}
 
-		builder.putArray("discovery.zen.ping.unicast.hosts", _getHosts());
+		String networkPublishHost =
+			_elasticsearchConfiguration.networkPublishHost();
 
-		builder.put("node.local", false);
-	}
+		if (Validator.isNotNull(networkPublishHost)) {
+			builder.put("network.publish.host", networkPublishHost);
+		}
 
-	@Reference(unbind = "-")
-	public void setClusterSettingsContext(
-		ClusterSettingsContext clusterSettingsContext) {
+		String networkHost = _elasticsearchConfiguration.networkHost();
 
-		_clusterSettingsContext = clusterSettingsContext;
+		if (Validator.isNull(networkBindHost) &&
+			Validator.isNull(networkHost) &&
+			Validator.isNull(networkPublishHost)) {
+
+			InetAddress localBindInetAddress =
+				_clusterSettingsContext.getLocalBindInetAddress();
+
+			networkHost = localBindInetAddress.getHostAddress();
+		}
+
+		if (Validator.isNotNull(networkHost)) {
+			builder.put("network.host", networkHost);
+		}
+
+		String transportTcpPort =
+			_elasticsearchConfiguration.transportTcpPort();
+
+		if (Validator.isNotNull(transportTcpPort)) {
+			builder.put("transport.tcp.port", transportTcpPort);
+		}
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = Configurable.createConfigurable(
+		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 	}
 
-	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
+	@Reference(unbind = "-")
+	protected void setClusterSettingsContext(
+		ClusterSettingsContext clusterSettingsContext) {
 
-	private String[] _getHosts() {
-		String[] hosts = _clusterSettingsContext.getHosts();
-
-		String port =
-			elasticsearchConfiguration.discoveryZenPingUnicastHostsPort();
-
-		int pos = port.indexOf(CharPool.MINUS);
-
-		if (pos == -1) {
-			port = CharPool.COLON + port;
-		}
-		else {
-			port = CharPool.OPEN_BRACKET + port + CharPool.CLOSE_BRACKET;
-		}
-
-		for (int i = 0; i < hosts.length; i++) {
-			hosts[i] = hosts[i] + port;
-		}
-
-		return hosts;
+		_clusterSettingsContext = clusterSettingsContext;
 	}
 
 	private ClusterSettingsContext _clusterSettingsContext;
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 
 }

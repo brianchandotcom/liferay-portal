@@ -19,16 +19,14 @@ import aQute.bnd.annotation.metatype.Configurable;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.Props;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
 
@@ -46,6 +44,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -56,11 +57,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = ElasticsearchConnection.class
 )
 public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
-
-	@Override
-	public void close() {
-		super.close();
-	}
 
 	@Override
 	public OperationMode getOperationMode() {
@@ -86,6 +82,19 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			elasticsearchConfiguration.transportAddresses();
 
 		setTransportAddresses(new HashSet<>(Arrays.asList(transportAddresses)));
+	}
+
+	@Override
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(operation.mode=REMOTE)"
+	)
+	protected void addSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.addSettingsContributor(settingsContributor);
 	}
 
 	@Override
@@ -131,33 +140,22 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 	protected void loadRequiredDefaultConfigurations(
 		ImmutableSettings.Builder builder) {
 
-		builder.put(
-			"client.transport.ignore_cluster_name",
-			elasticsearchConfiguration.clientTransportIgnoreClusterName());
-		builder.put(
-			"client.transport.nodes_sampler_interval",
-			elasticsearchConfiguration.clientTransportNodesSamplerInterval());
-		builder.put(
-			"client.transport.sniff",
-			elasticsearchConfiguration.clientTransportSniff());
 		builder.put("cluster.name", elasticsearchConfiguration.clusterName());
 		builder.put("http.enabled", false);
 		builder.put("node.client", true);
 		builder.put("node.data", false);
-		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
-		builder.put(
-			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
 	}
 
-	@Reference(unbind = "-")
-	protected void setProps(Props props) {
-		_props = props;
+	@Override
+	protected void removeSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.removeSettingsContributor(settingsContributor);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		RemoteElasticsearchConnection.class);
 
-	private Props _props;
 	private Set<String> _transportAddresses = new HashSet<>();
 
 }

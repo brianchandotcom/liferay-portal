@@ -52,6 +52,7 @@ import java.io.Serializable;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 
 import java.util.ArrayList;
@@ -165,6 +166,16 @@ public class ClusterExecutorImpl implements ClusterExecutor {
 		}
 
 		return futureClusterResponses;
+	}
+
+	@Override
+	public InetAddress getBindInetAddress() {
+		return _clusterChannelFactory.getBindInetAddress();
+	}
+
+	@Override
+	public NetworkInterface getBindNetworkInterface() {
+		return _clusterChannelFactory.getBindNetworkInterface();
 	}
 
 	@Override

@@ -12,11 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.search.elasticsearch.internal.cluster;
+package com.liferay.portal.search.elasticsearch.internal.connection.embedded;
 
 import aQute.bnd.annotation.metatype.Configurable;
 
-import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
 import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
@@ -28,71 +30,68 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
-import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author André de Oliveira
+ * @author Michael C. Han
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
 	immediate = true, property = {"operation.mode=EMBEDDED"},
 	service = SettingsContributor.class
 )
-public class UnicastSettingsContributor extends BaseSettingsContributor {
+public class HttpSettingsContributor extends BaseSettingsContributor {
 
-	public UnicastSettingsContributor() {
+	public HttpSettingsContributor() {
 		super(1);
 	}
 
 	@Override
+	public int getPriority() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public void populate(ImmutableSettings.Builder builder) {
-		if (!_clusterSettingsContext.isClusterEnabled()) {
+		builder.put("http.enabled", _elasticsearchConfiguration.httpEnabled());
+
+		if (!_elasticsearchConfiguration.httpEnabled()) {
 			return;
 		}
 
-		builder.putArray("discovery.zen.ping.unicast.hosts", _getHosts());
+		builder.put(
+			"http.cors.enabled", _elasticsearchConfiguration.httpCORSEnabled());
 
-		builder.put("node.local", false);
-	}
+		if (!_elasticsearchConfiguration.httpCORSEnabled()) {
+			return;
+		}
 
-	@Reference(unbind = "-")
-	public void setClusterSettingsContext(
-		ClusterSettingsContext clusterSettingsContext) {
+		String[] httpCORSConfigurations =
+			_elasticsearchConfiguration.httpCORSConfigurations();
 
-		_clusterSettingsContext = clusterSettingsContext;
+		if (ArrayUtil.isEmpty(httpCORSConfigurations)) {
+			return;
+		}
+
+		for (String httpCORSConfiguration : httpCORSConfigurations) {
+			String[] httpCORSConfigurationPair = StringUtil.split(
+				httpCORSConfiguration, StringPool.EQUAL);
+
+			if (httpCORSConfigurationPair.length < 2) {
+				continue;
+			}
+
+			builder.put(
+				httpCORSConfigurationPair[0], httpCORSConfigurationPair[1]);
+		}
 	}
 
 	@Activate
 	@Modified
 	protected void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = Configurable.createConfigurable(
+		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 	}
 
-	protected volatile ElasticsearchConfiguration elasticsearchConfiguration;
-
-	private String[] _getHosts() {
-		String[] hosts = _clusterSettingsContext.getHosts();
-
-		String port =
-			elasticsearchConfiguration.discoveryZenPingUnicastHostsPort();
-
-		int pos = port.indexOf(CharPool.MINUS);
-
-		if (pos == -1) {
-			port = CharPool.COLON + port;
-		}
-		else {
-			port = CharPool.OPEN_BRACKET + port + CharPool.CLOSE_BRACKET;
-		}
-
-		for (int i = 0; i < hosts.length; i++) {
-			hosts[i] = hosts[i] + port;
-		}
-
-		return hosts;
-	}
-
-	private ClusterSettingsContext _clusterSettingsContext;
+	private volatile ElasticsearchConfiguration _elasticsearchConfiguration;
 
 }

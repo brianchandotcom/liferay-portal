@@ -205,6 +205,21 @@ public class TrashEntryServiceSoap {
 		}
 	}
 
+	public static com.liferay.portlet.trash.model.TrashEntrySoap[] getEntries(
+		long groupId, java.lang.String className) throws RemoteException {
+		try {
+			java.util.List<com.liferay.portlet.trash.model.TrashEntry> returnValue =
+				TrashEntryServiceUtil.getEntries(groupId, className);
+
+			return com.liferay.portlet.trash.model.TrashEntrySoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* Moves the trash entry with the entity class name and primary key,
 	* restoring it to a new location identified by the destination container

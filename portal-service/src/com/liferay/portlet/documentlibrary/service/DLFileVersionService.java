@@ -71,6 +71,10 @@ public interface DLFileVersionService extends BaseService {
 	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
 		long fileEntryId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portlet.documentlibrary.model.DLFileVersion getLatestFileVersion(
+		long fileEntryId, boolean excludeWorkingCopy) throws PortalException;
+
 	/**
 	* Sets the Spring bean ID for this bean.
 	*

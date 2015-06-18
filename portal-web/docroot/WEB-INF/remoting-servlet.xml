@@ -521,7 +521,7 @@
 		<property name="service" ref="com.liferay.portlet.flags.service.FlagsEntryService" />
 		<property name="serviceInterface" value="com.liferay.portlet.flags.service.FlagsEntryService" />
 	</bean>
-		<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
+	<bean name="/com_liferay_portlet_messageboards_service_spring_MBBanService-hessian" class="org.springframework.remoting.caucho.HessianServiceExporter">
 		<property name="service" ref="com.liferay.portlet.messageboards.service.MBBanService" />
 		<property name="serviceInterface" value="com.liferay.portlet.messageboards.service.MBBanService" />
 	</bean>

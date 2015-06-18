@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.servlet.NamespaceServletRequest;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +37,11 @@ public class GetCommentsStrutsAction extends BaseStrutsAction {
 	public String execute(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
+
+		String namespace = ParamUtil.getString(request, "namespace");
+
+		request = new NamespaceServletRequest(
+			request, StringPool.BLANK, namespace);
 
 		String className = ParamUtil.getString(request, "className");
 		long classPK = ParamUtil.getLong(request, "classPK");
@@ -70,6 +77,8 @@ public class GetCommentsStrutsAction extends BaseStrutsAction {
 		request.setAttribute(
 			"liferay-ui:discussion:rootIndexPage",
 			String.valueOf(rootIndexPage));
+
+		request.setAttribute("aui:form:portletNamespace", namespace);
 
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(
 			"/html/taglib/ui/discussion/page_resources.jsp");

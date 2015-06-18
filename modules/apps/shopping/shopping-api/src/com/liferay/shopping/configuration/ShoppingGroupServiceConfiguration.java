@@ -31,7 +31,7 @@ public interface ShoppingGroupServiceConfiguration {
 
 	@Meta.AD(deflt = "USD", required = false)
 	public String currencyId();
-	
+
 	@Meta.AD(
 		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
 		required = false
@@ -52,13 +52,13 @@ public interface ShoppingGroupServiceConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean emailOrderConfirmationEnabled();
-	
+
 	@Meta.AD(
 		deflt = "${resource:com/liferay/shopping/dependencies/email_order_confirmation_subject.tmpl}",
 		required = false
 	)
 	public LocalizedValuesMap emailOrderConfirmationSubject();
-	
+
 	@Meta.AD(
 		deflt = "${resource:com/liferay/shopping/dependencies/email_order_shipping_body.tmpl}",
 		required = false
@@ -67,35 +67,35 @@ public interface ShoppingGroupServiceConfiguration {
 
 	@Meta.AD(deflt = "true", required = false)
 	public boolean emailOrderShippingEnabled();
-	
+
 	@Meta.AD(
 		deflt = "${resource:com/liferay/shopping/dependencies/email_order_shipping_subject.tmpl}",
 		required = false
 	)
 	public LocalizedValuesMap emailOrderShippingSubject();
-	
+
 	@Meta.AD(deflt = " | | | | | ", required = false)
 	public String[] insurance();
-	
+
 	@Meta.AD(deflt = "flat", required = false)
 	public String insuranceFormula();
-	
+
 	@Meta.AD(deflt = "0", required = false)
 	public double minOrder();
 
 	@Meta.AD(deflt = " ", required = false)
 	public String paypalEmailAddress();
-	
+
 	@Meta.AD(deflt = " | | | | | ", required = false)
 	public String[] shipping();
-	
+
 	@Meta.AD(deflt = "flat", required = false)
 	public String shippingFormula();
-	
+
 	@Meta.AD(deflt = "0", required = false)
 	public double taxRate();
-	
+
 	@Meta.AD(deflt = "CA", required = false)
-	public String taxState();	
+	public String taxState();
 
 }

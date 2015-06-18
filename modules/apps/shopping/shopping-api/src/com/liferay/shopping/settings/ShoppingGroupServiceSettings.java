@@ -14,24 +14,9 @@
 
 package com.liferay.shopping.settings;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.FallbackKeys;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.settings.TypedSettings;
-import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.shopping.constants.ShoppingConstants;
-
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
+import com.liferay.shopping.settings.internal.ShoppingGroupServiceSettingsOverrideImpl;
 
 /**
  * @author Brian Wing Shun Chan

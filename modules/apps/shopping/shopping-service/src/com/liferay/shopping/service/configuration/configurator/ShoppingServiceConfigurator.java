@@ -14,10 +14,10 @@
 
 package com.liferay.shopping.service.configuration.configurator;
 
-import com.liferay.shopping.upgrade.ShoppingServiceUpgrade;
 import com.liferay.portal.service.configuration.ServiceComponentConfiguration;
 import com.liferay.portal.service.configuration.configurator.ServiceConfigurator;
 import com.liferay.portal.spring.extender.loader.ModuleResourceLoader;
+import com.liferay.shopping.upgrade.ShoppingServiceUpgrade;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -29,9 +29,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true, service = ShoppingServiceConfigurator.class
-)
+@Component(immediate = true, service = ShoppingServiceConfigurator.class)
 public class ShoppingServiceConfigurator {
 
 	@Activate

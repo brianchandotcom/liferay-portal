@@ -14,11 +14,11 @@
 
 package com.liferay.shopping.settings.internal;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.settings.definition.SettingsIdMapping;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
 import com.liferay.shopping.model.ShoppingConstants;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock

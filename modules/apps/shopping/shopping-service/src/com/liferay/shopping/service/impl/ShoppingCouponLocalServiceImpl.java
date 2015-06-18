@@ -14,10 +14,6 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.PwdGenerator;
@@ -41,6 +37,10 @@ import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.base.ShoppingCouponLocalServiceBaseImpl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan

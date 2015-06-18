@@ -14,20 +14,18 @@
 
 package com.liferay.shopping.util;
 
+import com.liferay.portal.kernel.settings.SettingsFactory;
+import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
-
 /**
  * @author Peter Fellwock
  */
-@Component(
-	immediate = true
-)
+@Component(immediate = true)
 public class ShoppingServiceComponentProvider {
 
 	public static ShoppingServiceComponentProvider
@@ -36,14 +34,14 @@ public class ShoppingServiceComponentProvider {
 		return _shoppingServiceComponentProvider;
 	}
 
+	public SettingsFactory getSettingsFactory() {
+		return _settingsFactory;
+	}
+
 	public ShoppingGroupServiceConfiguration
 		getShoppingGroupServiceConfiguration() {
 
 		return _shoppingGroupServiceConfiguration;
-	}
-
-	public SettingsFactory getSettingsFactory() {
-		return _settingsFactory;
 	}
 
 	@Activate
@@ -56,17 +54,16 @@ public class ShoppingServiceComponentProvider {
 		_shoppingServiceComponentProvider = null;
 	}
 
+	@Reference(unbind = "-")
+	protected void setSettingsFactory(SettingsFactory settingsFactory) {
+		_settingsFactory = settingsFactory;
+	}
+
 	@Reference
 	protected void setShoppingGroupServiceConfiguration(
 		ShoppingGroupServiceConfiguration shoppingGroupServiceConfiguration) {
 
-		_shoppingGroupServiceConfiguration =
-			shoppingGroupServiceConfiguration;
-	}
-
-	@Reference(unbind = "-")
-	protected void setSettingsFactory(SettingsFactory settingsFactory) {
-		_settingsFactory = settingsFactory;
+		_shoppingGroupServiceConfiguration = shoppingGroupServiceConfiguration;
 	}
 
 	protected void unsetShoppingGroupServiceConfiguration(
@@ -77,8 +74,8 @@ public class ShoppingServiceComponentProvider {
 
 	private static ShoppingServiceComponentProvider _shoppingServiceComponentProvider;
 
+	private SettingsFactory _settingsFactory;
 	private ShoppingGroupServiceConfiguration
 		_shoppingGroupServiceConfiguration;
-	private SettingsFactory _settingsFactory;
 
 }

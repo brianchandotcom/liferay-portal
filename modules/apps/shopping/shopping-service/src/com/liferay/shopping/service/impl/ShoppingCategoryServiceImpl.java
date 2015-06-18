@@ -35,23 +35,6 @@ public class ShoppingCategoryServiceImpl
 	extends ShoppingCategoryServiceBaseImpl {
 
 	@Override
-	public void afterPropertiesSet() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		BundleContext bundleContext = bundle.getBundleContext();
-
-		_serviceTracker = new ServiceTracker<>(
-			bundleContext, ShoppingCategoryPermission.class, null);
-
-		_serviceTracker.open();
-	}
-
-	@Override
-	public void destroy() {
-		_serviceTracker.close();
-	}
-
-	@Override
 	public ShoppingCategory addCategory(
 			long parentCategoryId, String name, String description,
 			ServiceContext serviceContext)
@@ -66,6 +49,18 @@ public class ShoppingCategoryServiceImpl
 	}
 
 	@Override
+	public void afterPropertiesSet() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_serviceTracker = new ServiceTracker<>(
+			bundleContext, ShoppingCategoryPermission.class, null);
+
+		_serviceTracker.open();
+	}
+
+	@Override
 	public void deleteCategory(long categoryId) throws PortalException {
 		ShoppingCategory category = shoppingCategoryLocalService.getCategory(
 			categoryId);
@@ -74,6 +69,11 @@ public class ShoppingCategoryServiceImpl
 			getPermissionChecker(), category, ActionKeys.DELETE);
 
 		shoppingCategoryLocalService.deleteCategory(categoryId);
+	}
+
+	@Override
+	public void destroy() {
+		_serviceTracker.close();
 	}
 
 	@Override

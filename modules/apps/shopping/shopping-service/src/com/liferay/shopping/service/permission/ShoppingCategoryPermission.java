@@ -14,8 +14,6 @@
 
 package com.liferay.shopping.service.permission;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ActionKeys;
@@ -26,13 +24,13 @@ import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingCategoryConstants;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = {
-		"model.class.name=com.liferay.shopping.model.ShoppingCategory"
-	},
+	property = {"model.class.name=com.liferay.shopping.model.ShoppingCategory"},
 	service = ShoppingCategoryPermission.class
 )
 public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
@@ -97,8 +95,8 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 			while (categoryId !=
 						ShoppingCategoryConstants.DEFAULT_PARENT_CATEGORY_ID) {
 
-				category = 
-					ShoppingCategoryLocalServiceUtil.getCategory(categoryId);
+				category = ShoppingCategoryLocalServiceUtil.getCategory(
+					categoryId);
 
 				if (!_hasPermission(permissionChecker, category, actionId)) {
 					return false;

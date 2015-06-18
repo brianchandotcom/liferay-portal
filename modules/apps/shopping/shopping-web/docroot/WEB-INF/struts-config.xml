@@ -3,7 +3,9 @@
 
 <struts-config>
 	<action-mappings>
+
 		<!-- Shopping -->
+
 		<action path="/shopping/cart" type="com.liferay.shopping.web.action.CartAction">
 			<forward name="portlet.shopping.cart" path="/portlet/shopping/cart.jsp" />
 			<forward name="portlet.shopping.error" path="/portlet/shopping/error.jsp" />

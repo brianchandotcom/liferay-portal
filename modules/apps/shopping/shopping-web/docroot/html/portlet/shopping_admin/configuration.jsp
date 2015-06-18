@@ -97,7 +97,7 @@ shoppingGroupServiceSettings = settingsFactory.getSettings(ShoppingGroupServiceS
 
 					<%
 					String[] currencyIds = shoppingGroupServiceSettings.getCurrencyIds();
-					
+
 					for (int i = 0; i < currencyIds.length; i++) {
 					%>
 

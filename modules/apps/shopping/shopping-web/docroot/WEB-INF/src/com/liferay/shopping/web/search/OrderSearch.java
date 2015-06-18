@@ -14,14 +14,14 @@
 
 package com.liferay.shopping.web.search;
 
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.shopping.model.ShoppingOrder;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-
-import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.shopping.model.ShoppingOrder;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,6 +14,12 @@
 
 package com.liferay.shopping.web.upgrade;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.upgrade.UpgradeProcess;
+import com.liferay.portal.service.ReleaseLocalService;
+import com.liferay.shopping.service.configuration.configurator.ShoppingServiceConfigurator;
+import com.liferay.shopping.web.upgrade.v1_0_0.UpgradeAdminPortlets;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,30 +27,22 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.portal.service.ReleaseLocalService;
-import com.liferay.shopping.service.configuration.configurator.ShoppingServiceConfigurator;
-import com.liferay.shopping.web.upgrade.v1_0_0.UpgradeAdminPortlets;
-
 /**
  * @author Miguel Pastor
  */
-@Component(
-	immediate = true, service = ShoppingWebUpgrade.class
-)
+@Component(immediate = true, service = ShoppingWebUpgrade.class)
 public class ShoppingWebUpgrade {
-
-	@Reference(unbind = "-")
-	protected void setShoppingServiceConfigurator(
-		ShoppingServiceConfigurator shoppingServiceConfigurator) {
-	}
 
 	@Reference(unbind = "-")
 	protected void setReleaseLocalService(
 		ReleaseLocalService releaseLocalService) {
 
 		_releaseLocalService = releaseLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setShoppingServiceConfigurator(
+		ShoppingServiceConfigurator shoppingServiceConfigurator) {
 	}
 
 	@Activate

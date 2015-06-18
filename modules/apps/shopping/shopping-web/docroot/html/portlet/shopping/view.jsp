@@ -20,7 +20,6 @@
 String tabs1 = ParamUtil.getString(request, "tabs1", "categories");
 %>
 
-
 <liferay-util:include page="/html/portlet/shopping/tabs1.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="tabs1" value="categories" />
 </liferay-util:include>

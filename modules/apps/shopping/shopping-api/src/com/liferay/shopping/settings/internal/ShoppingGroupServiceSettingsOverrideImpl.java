@@ -14,13 +14,7 @@
 
 package com.liferay.shopping.settings.internal;
 
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Set;
-import java.util.TreeSet;
-
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
-import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,12 +22,17 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.shopping.settings.ShoppingGroupServiceSettingsOverride;
 
+import java.util.Currency;
+import java.util.Locale;
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Eduardo Garcia
  * @author Peter Fellwock
  */
-public class ShoppingGroupServiceSettingsOverrideImpl 
+public class ShoppingGroupServiceSettingsOverrideImpl
 	implements ShoppingGroupServiceSettingsOverride {
 
 	public static final String CC_NONE = "none";
@@ -85,13 +84,8 @@ public class ShoppingGroupServiceSettingsOverrideImpl
 
 	public ShoppingGroupServiceSettingsOverrideImpl(
 		TypedSettings typedSettings) {
-		
+
 		_typedSettings = typedSettings;
-	}
-	
-	@Override
-	public String[] getCurrencyIds(){
-		return CURRENCY_IDS;
 	}
 
 	@Override
@@ -140,6 +134,11 @@ public class ShoppingGroupServiceSettingsOverrideImpl
 	@Override
 	public String getCurrencyId() {
 		return _typedSettings.getValue("currencyId", "USD");
+	}
+
+	@Override
+	public String[] getCurrencyIds() {
+		return CURRENCY_IDS;
 	}
 
 	@Override

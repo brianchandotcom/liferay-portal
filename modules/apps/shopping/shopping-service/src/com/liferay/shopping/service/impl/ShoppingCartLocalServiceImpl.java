@@ -14,24 +14,12 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PropsUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
 import com.liferay.shopping.exception.CartMinQuantityException;
 import com.liferay.shopping.exception.CouponActiveException;
 import com.liferay.shopping.exception.CouponEndDateException;
@@ -46,6 +34,10 @@ import com.liferay.shopping.model.impl.ShoppingCartItemImpl;
 import com.liferay.shopping.service.base.ShoppingCartLocalServiceBaseImpl;
 import com.liferay.shopping.util.ShoppingUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * @author Brian Wing Shun Chan

@@ -14,18 +14,7 @@
 
 package com.liferay.shopping.settings;
 
-import java.util.Currency;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.settings.FallbackKeys;
-import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactoryUtil;
-import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
 import com.liferay.shopping.settings.internal.ShoppingGroupServiceSettingsOverrideImpl;
 

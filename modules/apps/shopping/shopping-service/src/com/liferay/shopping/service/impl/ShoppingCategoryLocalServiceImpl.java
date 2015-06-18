@@ -14,31 +14,28 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-
 import com.liferay.shopping.exception.CategoryNameException;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingCategoryConstants;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.base.ShoppingCategoryLocalServiceBaseImpl;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author Brian Wing Shun Chan
  */
 @OSGiBeanProperties(
-		property = {
-			"model.class.name=com.liferay.shopping.model.ShoppingItem"
-		}
+		property = {"model.class.name=com.liferay.shopping.model.ShoppingItem"}
 	)
 public class ShoppingCategoryLocalServiceImpl
 	extends ShoppingCategoryLocalServiceBaseImpl {
@@ -63,7 +60,7 @@ public class ShoppingCategoryLocalServiceImpl
 			categoryId);
 
 		Date now = new Date();
-		
+
 		category.setGroupId(groupId);
 		category.setCompanyId(user.getCompanyId());
 		category.setUserId(user.getUserId());

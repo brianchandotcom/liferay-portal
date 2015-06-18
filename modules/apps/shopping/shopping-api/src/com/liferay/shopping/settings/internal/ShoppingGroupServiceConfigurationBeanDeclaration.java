@@ -14,10 +14,10 @@
 
 package com.liferay.shopping.settings.internal;
 
-import org.osgi.service.component.annotations.Component;
-
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfiguration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Peter Fellwock

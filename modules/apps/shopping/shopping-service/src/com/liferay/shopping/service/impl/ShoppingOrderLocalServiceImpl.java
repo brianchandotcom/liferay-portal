@@ -14,12 +14,6 @@
 
 package com.liferay.shopping.service.impl;
 
-import java.util.Currency;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
@@ -74,6 +68,9 @@ import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.util.comparator.OrderDateComparator;
 import com.liferay.util.CreditCard;
 
+import java.util.Currency;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan
@@ -305,7 +302,6 @@ public class ShoppingOrderLocalServiceImpl
 
 		Map<ShoppingCartItem, Integer> items = cart.getItems();
 
-		
 		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
 			getShoppingGroupServiceSettings(cart.getGroupId());
 
@@ -421,10 +417,9 @@ public class ShoppingOrderLocalServiceImpl
 			ShoppingOrder order, String emailType,
 			ServiceContext serviceContext)
 		throws PortalException {
-		
+
 		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
 			getShoppingGroupServiceSettings(order.getGroupId());
-		
 
 		if (emailType.equals("confirmation") &&
 			shoppingGroupServiceSettings.isEmailOrderConfirmationEnabled()) {
@@ -516,7 +511,7 @@ public class ShoppingOrderLocalServiceImpl
 			orderId);
 
 		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
-				getShoppingGroupServiceSettings(order.getGroupId());
+			getShoppingGroupServiceSettings(order.getGroupId());
 
 		validate(
 			shoppingGroupServiceSettings, billingFirstName, billingLastName,
@@ -767,19 +762,20 @@ public class ShoppingOrderLocalServiceImpl
 			}
 		}
 	}
-	
-	private static ShoppingGroupServiceSettings 
-		getShoppingGroupServiceSettings(long groupId) throws SettingsException{
-	
-		ShoppingServiceComponentProvider shoppingServiceComponentProvider = 
+
+	private static ShoppingGroupServiceSettings
+		getShoppingGroupServiceSettings(long groupId) throws SettingsException {
+
+		ShoppingServiceComponentProvider shoppingServiceComponentProvider =
 			ShoppingServiceComponentProvider.getShoppingServiceComponentProvider();
-	
-		SettingsFactory settingsFactory = shoppingServiceComponentProvider.getSettingsFactory();
-		
+
+		SettingsFactory settingsFactory =
+			shoppingServiceComponentProvider.getSettingsFactory();
+
 		return settingsFactory.getSettings(
 					ShoppingGroupServiceSettings.class,
 					new GroupServiceSettingsLocator(
-							groupId, ShoppingConstants.SERVICE_NAME));
+						groupId, ShoppingConstants.SERVICE_NAME));
 	}
 
 }

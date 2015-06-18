@@ -14,8 +14,6 @@
 
 package com.liferay.shopping.model.impl;
 
-import java.util.Map;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -25,6 +23,8 @@ import com.liferay.shopping.model.ShoppingCartItem;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.service.ShoppingCartLocalServiceUtil;
 import com.liferay.shopping.service.ShoppingCouponLocalServiceUtil;
+
+import java.util.Map;
 
 /**
  * @author Brian Wing Shun Chan

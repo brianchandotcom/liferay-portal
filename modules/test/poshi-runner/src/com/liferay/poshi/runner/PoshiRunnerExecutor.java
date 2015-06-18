@@ -716,6 +716,24 @@ public class PoshiRunnerExecutor {
 				varValue = PoshiRunnerGetterUtil.getVarMethodValue(
 					sb.toString());
 			}
+			else if (element.attributeValue("locator") != null) {
+				String locator = element.attributeValue("locator");
+
+				if (locator.contains("#")) {
+					locator = PoshiRunnerContext.getPathLocator(locator);
+				}
+
+				LiferaySelenium liferaySelenium = SeleniumUtil.getSelenium();
+
+				locator = PoshiRunnerVariablesUtil.replaceCommandVars(locator);
+
+				if (locator.contains("/input")) {
+					varValue = liferaySelenium.getValue(locator);
+				}
+				else {
+					varValue = liferaySelenium.getText(locator);
+				}
+			}
 			else if (element.attributeValue("method") != null) {
 				String classCommandName =
 					PoshiRunnerVariablesUtil.replaceCommandVars(

@@ -3,15 +3,6 @@
 	<property name="ignore.errors" value="IX_DC6100CC" />
 	<property name="testray.main.component.name" value="Content Targeting" />
 
-	<tear-down>
-		<execute macro="User#logoutAndLoginPG">
-			<var name="userLoginEmailAddress" value="test@liferay.com" />
-			<var name="userLoginFullName" value="Test Test" />
-		</execute>
-
-		<execute macro="Site#tearDownCP" />
-	</tear-down>
-
 	<set-up>
 		<execute macro="User#firstLoginPG" />
 
@@ -37,6 +28,15 @@
 			<var name="sitePagePrivacy" value="Public" />
 		</execute>
 	</set-up>
+
+	<tear-down>
+		<execute macro="User#logoutAndLoginPG">
+			<var name="userLoginEmailAddress" value="test@liferay.com" />
+			<var name="userLoginFullName" value="Test Test" />
+		</execute>
+
+		<execute macro="Site#tearDownCP" />
+	</tear-down>
 
 	<command name="CampaignAddMultipleWithPrioritiesViaCampaignDisplayPortlet" priority="4">
 		<execute macro="Page#gotoConfigurationCP">

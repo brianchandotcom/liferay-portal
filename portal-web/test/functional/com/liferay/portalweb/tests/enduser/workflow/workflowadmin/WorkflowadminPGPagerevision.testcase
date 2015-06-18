@@ -50,6 +50,14 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="Site#tearDownCP" />
+
+		<execute macro="Workflow#tearDownPortalWorkflow" />
+
+		<execute macro="Workflow#tearDownSiteWorkflow" />
+	</tear-down>	
+
 	<command name="ApprovePageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />
 
@@ -240,12 +248,4 @@
 			<var name="workflowStatus" value="Pending (Update)" />
 		</execute>
 	</command>
-
-	<tear-down>
-		<execute macro="Site#tearDownCP" />
-
-		<execute macro="Workflow#tearDownPortalWorkflow" />
-
-		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>
 </definition>

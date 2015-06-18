@@ -18,6 +18,10 @@
 		</execute>
 	</set-up>
 
+	<tear-down>
+		<execute macro="Page#tearDownPG" />
+	</tear-down>	
+
 	<command known-issues="LPS-52724" name="CheckLocalizationChinese" priority="4">
 		<execute function="Click" locator1="PGTestlocalization#CHINESE_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_1" value1="PASSED" />
@@ -93,8 +97,4 @@
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_14" value1="PASSED" />
 		<execute function="AssertTextNotPresent" value1="FAILED" />
 	</command>
-
-	<tear-down>
-		<execute macro="Page#tearDownPG" />
-	</tear-down>
 </definition>

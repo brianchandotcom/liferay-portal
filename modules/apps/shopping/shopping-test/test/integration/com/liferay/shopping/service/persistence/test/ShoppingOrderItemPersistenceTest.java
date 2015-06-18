@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.service.persistence.test;
+package com.liferay.shopping.service.persistence.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -32,17 +34,19 @@ import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.shopping.NoSuchOrderItemException;
-import com.liferay.portlet.shopping.model.ShoppingOrderItem;
-import com.liferay.portlet.shopping.service.ShoppingOrderItemLocalServiceUtil;
-import com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemPersistence;
-import com.liferay.portlet.shopping.service.persistence.ShoppingOrderItemUtil;
+import com.liferay.shopping.exception.NoSuchOrderItemException;
+import com.liferay.shopping.model.ShoppingOrderItem;
+import com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil;
+import com.liferay.shopping.service.persistence.ShoppingOrderItemPersistence;
+import com.liferay.shopping.service.persistence.ShoppingOrderItemUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -56,6 +60,7 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class ShoppingOrderItemPersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),

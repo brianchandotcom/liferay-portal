@@ -161,7 +161,7 @@ if (Validator.isNotNull(keywords)) {
 			viewContentURL.setParameter("redirect", currentURL);
 
 			if (entry.getRootEntry() != null) {
-				viewContentURL.setParameter("className", entry.getClassName());
+				viewContentURL.setParameter("classNameId", String.valueOf(entry.getClassNameId()));
 				viewContentURL.setParameter("classPK", String.valueOf(entry.getClassPK()));
 			}
 			else {

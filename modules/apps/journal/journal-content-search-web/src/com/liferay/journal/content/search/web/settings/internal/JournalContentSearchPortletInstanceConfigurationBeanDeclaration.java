@@ -12,16 +12,24 @@
  * details.
  */
 
-package com.liferay.journal.content.search.web.configuration;
+package com.liferay.journal.content.search.web.settings.internal;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.journal.content.search.web.configuration.JournalContentSearchPortletInstanceConfiguration;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Juergen Kappler
  */
-public class JournalContentSearchWebConfigurationValues {
+@Component
+public class
+	JournalContentSearchPortletInstanceConfigurationBeanDeclaration
+		implements ConfigurationBeanDeclaration {
 
-	public static final boolean SHOW_LISTED = GetterUtil.getBoolean(
-		JournalContentSearchWebConfigurationUtil.get("show.listed"));
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return JournalContentSearchPortletInstanceConfiguration.class;
+	}
 
 }

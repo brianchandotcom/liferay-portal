@@ -64,12 +64,12 @@ List hitLayoutIds = JournalContentSearchLocalServiceUtil.getLayoutIds(layout.get
 
 		</span>
 	</c:when>
-	<c:when test="<%= Validator.isNotNull(targetPortletId) %>">
+	<c:when test="<%= Validator.isNotNull(journalContentSearchPortletInstanceConfiguration.targetPortletId()) %>">
 		<span style="font-size: xx-small;">
 			<br />
 
 			<%
-			PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, targetPortletId, plid, PortletRequest.RENDER_PHASE);
+			PortletURL webContentPortletURL = PortletURLFactoryUtil.create(request, journalContentSearchPortletInstanceConfiguration.targetPortletId(), plid, PortletRequest.RENDER_PHASE);
 
 			webContentPortletURL.setParameter("groupId", String.valueOf(articleGroupId));
 			webContentPortletURL.setParameter("articleId", articleId);

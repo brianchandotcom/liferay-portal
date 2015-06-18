@@ -29,10 +29,10 @@
 	</div>
 
 	<aui:fieldset>
-		<aui:input label="only-show-results-for-web-content-listed-in-a-web-content-display-portlet" name="preferences--showListed--" type="checkbox" value="<%= showListed %>" />
+		<aui:input label="only-show-results-for-web-content-listed-in-a-web-content-display-portlet" name="preferences--showListed--" type="checkbox" value="<%= journalContentSearchPortletInstanceConfiguration.showListed() %>" />
 
-		<div class="<%= !showListed ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />webContentDisplay">
-			<aui:input cssClass="lfr-input-text-container" name="preferences--targetPortletId--" value="<%= targetPortletId %>" />
+		<div class="<%= !journalContentSearchPortletInstanceConfiguration.showListed() ? StringPool.BLANK : " hide" %>" id="<portlet:namespace />webContentDisplay">
+			<aui:input cssClass="lfr-input-text-container" name="preferences--targetPortletId--" value="<%= journalContentSearchPortletInstanceConfiguration.targetPortletId() %>" />
 		</div>
 	</aui:fieldset>
 

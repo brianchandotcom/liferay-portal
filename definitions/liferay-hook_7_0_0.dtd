@@ -5,9 +5,8 @@
 -->
 
 <!ELEMENT hook (portal-properties?, language-properties*, custom-jsp-dir?,
-custom-jsp-global?, dynamic-data-mapping-form-field-renderer*,
-dynamic-data-mapping-form-field-value-renderer*, indexer-post-processor*,
-service*, servlet-filter*, servlet-filter-mapping*, struts-action*)>
+custom-jsp-global?, indexer-post-processor*, service*, servlet-filter*,
+servlet-filter-mapping*, struts-action*)>
 
 <!--
 Not all portal properties can be overridden via a hook. The supported properties
@@ -209,7 +208,3 @@ before-filter)?, url-pattern+, dispatcher*)>
 <!ELEMENT struts-action-path (#PCDATA)>
 
 <!ELEMENT struts-action-impl (#PCDATA)>
-
-<!ELEMENT dynamic-data-mapping-form-field-renderer (#PCDATA)>
-
-<!ELEMENT dynamic-data-mapping-form-field-value-renderer (#PCDATA)>

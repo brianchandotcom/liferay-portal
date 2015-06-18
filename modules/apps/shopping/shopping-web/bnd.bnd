@@ -9,11 +9,9 @@ Import-Package:\
 	com.liferay.portal.kernel.servlet.*,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.kernel.settings,\
-	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.lar,\
 	com.liferay.portal.model,\
 	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.permission,\
@@ -22,6 +20,7 @@ Import-Package:\
 	com.liferay.portal.struts,\
 	com.liferay.portal.theme,\
 	com.liferay.portal.webserver,\
+	com.liferay.portlet.exportimport.lar,\
 	com.liferay.shopping.configuration,\
 	com.liferay.shopping.exception,\
 	com.liferay.shopping.lar,\

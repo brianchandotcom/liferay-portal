@@ -129,12 +129,12 @@ public class CalendarBookingIterator implements Iterator<CalendarBooking> {
 			jCalendar.get(Calendar.DAY_OF_MONTH));
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
+	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarBookingIterator.class);
 
-	private CalendarBooking _calendarBooking;
+	private final CalendarBooking _calendarBooking;
 	private DateValue _currentDateValue;
 	private int _instanceIndex;
-	private RecurrenceIterator _recurrenceIterator;
+	private final RecurrenceIterator _recurrenceIterator;
 
 }

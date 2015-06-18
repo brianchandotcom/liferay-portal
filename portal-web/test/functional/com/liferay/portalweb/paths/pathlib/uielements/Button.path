@@ -369,6 +369,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SHARE</td>
+	<td>//button[contains(.,'Share')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIGN_IN</td>
 	<td>//button[contains(.,'Sign In')]</td>
 	<td></td>

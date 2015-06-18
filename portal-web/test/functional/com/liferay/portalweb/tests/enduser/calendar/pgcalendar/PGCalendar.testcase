@@ -3644,6 +3644,10 @@
 			<var name="pageName" value="${pageName}" />
 		</execute>
 
+		<execute macro="Page#gotoPG">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
 		<execute macro="CalendarNavigator#gotoConfiguration" />
 
 		<execute macro="CalendarConfiguration#selectTimeFormat">
@@ -4449,6 +4453,10 @@
 		</execute>
 
 		<execute macro="CalendarEvent#save">
+			<var name="pageName" value="${pageName}" />
+		</execute>
+
+		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
 

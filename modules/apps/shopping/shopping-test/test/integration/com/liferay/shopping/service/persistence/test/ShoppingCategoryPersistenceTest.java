@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.service.persistence.test;
+package com.liferay.shopping.service.persistence.test;
+
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -34,17 +36,19 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 
-import com.liferay.portlet.shopping.NoSuchCategoryException;
-import com.liferay.portlet.shopping.model.ShoppingCategory;
-import com.liferay.portlet.shopping.service.ShoppingCategoryLocalServiceUtil;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCategoryPersistence;
-import com.liferay.portlet.shopping.service.persistence.ShoppingCategoryUtil;
+import com.liferay.shopping.exception.NoSuchCategoryException;
+import com.liferay.shopping.model.ShoppingCategory;
+import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;
+import com.liferay.shopping.service.persistence.ShoppingCategoryPersistence;
+import com.liferay.shopping.service.persistence.ShoppingCategoryUtil;
 
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+
+import org.junit.runner.RunWith;
 
 import java.io.Serializable;
 
@@ -58,6 +62,7 @@ import java.util.Set;
 /**
  * @generated
  */
+@RunWith(Arquillian.class)
 public class ShoppingCategoryPersistenceTest {
 	@Rule
 	public final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),

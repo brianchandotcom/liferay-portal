@@ -14,24 +14,17 @@
 
 package com.liferay.control.panel.menu.web.layout;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutTypeController;
-import com.liferay.portal.util.WebKeys;
+import com.liferay.portal.model.impl.BasePanelLayoutControllerImpl;
 import com.liferay.productivity.center.panel.PanelAppRegistry;
 import com.liferay.productivity.center.panel.PanelCategoryRegistry;
 import com.liferay.productivity.center.taglib.constants.ProductivityCenterWebKeys;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Map;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -46,84 +39,14 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"layout.type=" + LayoutConstants.TYPE_CONTROL_PANEL},
 	service = LayoutTypeController.class
 )
-public class ControlPanelLayoutController implements LayoutTypeController {
-
-	@Override
-	public String[] getConfigurationActionDelete() {
-		return StringPool.EMPTY_ARRAY;
-	}
-
-	@Override
-	public String[] getConfigurationActionUpdate() {
-		return StringPool.EMPTY_ARRAY;
-	}
+public class ControlPanelLayoutController
+	extends BasePanelLayoutControllerImpl {
 
 	@Override
 	public String getURL() {
 		return
 			"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}&" +
 				"p_v_l_s_g_id=${liferay:pvlsgid}";
-	}
-
-	@Override
-	public String includeEditContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
-		throws Exception {
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(getEditPage());
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
-
-		try {
-			setPanelEntryRegistries(request);
-
-			requestDispatcher.include(request, pipingServletResponse);
-		}
-		finally {
-			removePanelEntryRegistries(request);
-		}
-
-		return unsyncStringWriter.toString();
-	}
-
-	@Override
-	public boolean includeLayoutContent(
-			HttpServletRequest request, HttpServletResponse response,
-			Layout layout)
-		throws Exception {
-
-		RequestDispatcher requestDispatcher =
-			_servletContext.getRequestDispatcher(_VIEW_PATH);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		PipingServletResponse pipingServletResponse = new PipingServletResponse(
-			response, unsyncStringWriter);
-
-		String contentType = pipingServletResponse.getContentType();
-
-		try {
-			setPanelEntryRegistries(request);
-
-			requestDispatcher.include(request, pipingServletResponse);
-		}
-		finally {
-			removePanelEntryRegistries(request);
-		}
-
-		if (contentType != null) {
-			response.setContentType(contentType);
-		}
-
-		request.setAttribute(
-			WebKeys.LAYOUT_CONTENT, unsyncStringWriter.getStringBundler());
-
-		return false;
 	}
 
 	@Override
@@ -147,26 +70,33 @@ public class ControlPanelLayoutController implements LayoutTypeController {
 	}
 
 	@Override
-	public boolean matches(
-		HttpServletRequest request, String friendlyURL, Layout layout) {
-
-		try {
-			Map<Locale, String> friendlyURLMap = layout.getFriendlyURLMap();
-
-			Collection<String> values = friendlyURLMap.values();
-
-			return values.contains(friendlyURL);
-		}
-		catch (SystemException e) {
-			throw new RuntimeException(e);
-		}
+	protected void addAttributes(HttpServletRequest request) {
+		request.setAttribute(
+			ProductivityCenterWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
+		request.setAttribute(
+			ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY,
+			_panelCategoryRegistry);
 	}
 
+	@Override
+	protected ServletResponse createServletResponse(
+		HttpServletResponse response, UnsyncStringWriter unsyncStringWriter) {
+
+		return new PipingServletResponse(response, unsyncStringWriter);
+	}
+
+	@Override
 	protected String getEditPage() {
 		return _EDIT_PAGE;
 	}
 
-	protected void removePanelEntryRegistries(HttpServletRequest request) {
+	@Override
+	protected String getViewPage() {
+		return _VIEW_PAGE;
+	}
+
+	@Override
+	protected void removeAttributes(HttpServletRequest request) {
 		request.removeAttribute(ProductivityCenterWebKeys.PANEL_APP_REGISTRY);
 		request.removeAttribute(
 			ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY);
@@ -184,14 +114,6 @@ public class ControlPanelLayoutController implements LayoutTypeController {
 		_panelCategoryRegistry = panelCategoryRegistry;
 	}
 
-	protected void setPanelEntryRegistries(HttpServletRequest request) {
-		request.setAttribute(
-			ProductivityCenterWebKeys.PANEL_APP_REGISTRY, _panelAppRegistry);
-		request.setAttribute(
-			ProductivityCenterWebKeys.PANEL_CATEGORY_REGISTRY,
-			_panelCategoryRegistry);
-	}
-
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.control.panel.menu.web)"
 	)
@@ -201,10 +123,9 @@ public class ControlPanelLayoutController implements LayoutTypeController {
 
 	private static final String _EDIT_PAGE = "/layout/edit/control_panel.jsp";
 
-	private static final String _VIEW_PATH = "/layout/view/control_panel.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/control_panel.jsp";
 
 	private PanelAppRegistry _panelAppRegistry;
 	private PanelCategoryRegistry _panelCategoryRegistry;
-	private ServletContext _servletContext;
 
 }

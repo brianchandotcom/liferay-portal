@@ -67,7 +67,7 @@ import com.liferay.util.ant.ExpandTask;
 import com.liferay.util.ant.UpToDateTask;
 import com.liferay.util.ant.WarTask;
 import com.liferay.util.xml.DocUtil;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.XMLUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -1948,7 +1948,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			else {
 				String xml = StringUtil.read(is);
 
-				xml = XMLFormatter.fixProlog(xml);
+				xml = XMLUtil.fixProlog(xml);
 
 				return PluginPackageUtil.readPluginPackageXml(xml);
 			}

@@ -42,8 +42,8 @@ public class CheckBookingsMessageListener
 		schedulerEntry.setTimeUnit(TimeUnit.MINUTE);
 		schedulerEntry.setTriggerType(TriggerType.SIMPLE);
 		schedulerEntry.setTriggerValue(
-			CalendarServiceConfigurationValues
-				.CALENDAR_NOTIFICATION_CHECK_INTERVAL);
+			CalendarServiceConfigurationValues.
+				CALENDAR_NOTIFICATION_CHECK_INTERVAL);
 	}
 
 	@Override

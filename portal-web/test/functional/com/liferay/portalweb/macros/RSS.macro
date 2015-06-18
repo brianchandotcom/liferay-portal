@@ -18,6 +18,9 @@
 	</command>
 
 	<command name="configureFeedDisplayStyle">
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="RSS_CONFIGURATION_IFRAME" />
+
 		<execute function="Select" locator1="RSSFeed#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_OPTION" value1="${feedDisplayStyle}" />
 	</command>
 
@@ -93,7 +96,9 @@
 		<var name="key_feedRowIndexNumber" value="${feedRowIndexNumber}" />
 		<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
 
+		<execute function="SelectFrame" value1="relative=top" />
 		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
 		<execute function="AssertElementPresent" locator1="RSSFeed#FEEDS_DEFAULT" />
 		<execute function="AssertTextEquals" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
 	</command>

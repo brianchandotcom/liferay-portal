@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.repository.util;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -37,21 +38,17 @@ public class RepositoryUserUtil {
 	public static long getUserId() throws PrincipalException {
 		String name = PrincipalThreadLocal.getName();
 
-		if (name == null) {
-			throw new PrincipalException();
-		}
-
 		if (Validator.isNull(name)) {
-			throw new PrincipalException("Principal is null");
+			throw new PrincipalException.MustHaveValidPrincipalName(
+				StringPool.NULL);
 		}
 		else {
 			for (int i = 0; i < BaseServiceImpl.ANONYMOUS_NAMES.length; i++) {
 				if (StringUtil.equalsIgnoreCase(
 						name, BaseServiceImpl.ANONYMOUS_NAMES[i])) {
 
-					throw new PrincipalException(
-						"Principal cannot be " +
-							BaseServiceImpl.ANONYMOUS_NAMES[i]);
+					throw new PrincipalException.MustHaveValidPrincipalName(
+						BaseServiceImpl.ANONYMOUS_NAMES[i]);
 				}
 			}
 		}

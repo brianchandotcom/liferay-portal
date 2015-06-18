@@ -71,9 +71,9 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			}
 		}
 
-		throw new PrincipalException(
-			"User does not have permission to access portlet " +
-				portlet.getPortletId());
+		throw new PrincipalException.MustHavePermission(
+				PortalUtil.getUserId(request), portlet.getDisplayName(),
+				portlet.getPortletId(), ActionKeys.ACCESS);
 	}
 
 	@Override
@@ -192,9 +192,9 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			return;
 		}
 
-		throw new PrincipalException(
-			"User does not have permission to access Control Panel portlet " +
-				portlet.getPortletId());
+		throw new PrincipalException.MustHavePermission(
+			permissionChecker.getUserId(), portlet.getDisplayName(),
+			portlet.getPortletId(), ActionKeys.ACCESS_IN_CONTROL_PANEL);
 	}
 
 	protected boolean isAccessAllowedToLayoutPortlet(

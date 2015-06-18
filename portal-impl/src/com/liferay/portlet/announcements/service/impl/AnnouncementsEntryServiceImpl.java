@@ -68,7 +68,9 @@ public class AnnouncementsEntryServiceImpl
 			if (!PortalPermissionUtil.contains(
 					permissionChecker, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), PortletKeys.PORTAL,
+					PortletKeys.PORTAL, ActionKeys.ADD_GENERAL_ANNOUNCEMENTS);
 			}
 		}
 		else {
@@ -79,7 +81,9 @@ public class AnnouncementsEntryServiceImpl
 					permissionChecker, classPK,
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), className, classPK,
+					ActionKeys.MANAGE_ANNOUNCEMENTS);
 			}
 
 			if (className.equals(Organization.class.getName()) &&
@@ -87,7 +91,9 @@ public class AnnouncementsEntryServiceImpl
 					permissionChecker, classPK,
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), className, classPK,
+					ActionKeys.MANAGE_ANNOUNCEMENTS);
 			}
 
 			if (className.equals(Role.class.getName())) {
@@ -103,14 +109,18 @@ public class AnnouncementsEntryServiceImpl
 							permissionChecker, team.getGroupId(), classPK,
 							ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-						throw new PrincipalException();
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker.getUserId(), Team.class.getName(),
+							classPK, ActionKeys.MANAGE_ANNOUNCEMENTS);
 					}
 				}
 				else if (!RolePermissionUtil.contains(
 							permissionChecker, classPK,
 							ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-					throw new PrincipalException();
+					throw new PrincipalException.MustHavePermission(
+						permissionChecker.getUserId(), className, classPK,
+						ActionKeys.MANAGE_ANNOUNCEMENTS);
 				}
 			}
 
@@ -119,7 +129,9 @@ public class AnnouncementsEntryServiceImpl
 					permissionChecker, classPK,
 					ActionKeys.MANAGE_ANNOUNCEMENTS)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), className, classPK,
+					ActionKeys.MANAGE_ANNOUNCEMENTS);
 			}
 		}
 

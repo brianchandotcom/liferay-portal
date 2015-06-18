@@ -938,7 +938,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 				if (portlet != null) {
 					if (!strutsPath.equals(portlet.getStrutsPath())) {
-						throw new PrincipalException();
+						throw new PrincipalException.MustBePortletStrutsPath(
+							strutsPath, portletId);
 					}
 				}
 				else {
@@ -961,7 +962,10 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 							permissionChecker, layout, portlet,
 							ActionKeys.VIEW)) {
 
-						throw new PrincipalException();
+						throw new PrincipalException.MustHavePermission(
+							permissionChecker.getUserId(),
+							Portlet.class.getName(), portlet.getPortletId(),
+							ActionKeys.VIEW);
 					}
 				}
 				else if ((portlet != null) && !portlet.isActive()) {

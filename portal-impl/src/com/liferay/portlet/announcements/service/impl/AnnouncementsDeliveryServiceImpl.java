@@ -39,7 +39,9 @@ public class AnnouncementsDeliveryServiceImpl
 			!UserPermissionUtil.contains(
 				getPermissionChecker(), userId, ActionKeys.UPDATE)) {
 
-			throw new PrincipalException();
+			throw new PrincipalException.MustHavePermission(
+				getPermissionChecker().getUserId(), ActionKeys.ADD_USER,
+				ActionKeys.UPDATE);
 		}
 
 		return announcementsDeliveryLocalService.updateDelivery(

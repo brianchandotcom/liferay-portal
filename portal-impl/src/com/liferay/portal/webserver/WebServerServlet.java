@@ -67,6 +67,7 @@ import com.liferay.portal.model.impl.ImageImpl;
 import com.liferay.portal.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.auth.PrincipalThreadLocal;
+import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
@@ -908,7 +909,10 @@ public class WebServerServlet extends HttpServlet {
 			if (!PortletPermissionUtil.hasControlPanelAccessPermission(
 					permissionChecker, fileEntry.getGroupId(), portletId)) {
 
-				throw new PrincipalException();
+				throw new PrincipalException.MustHavePermission(
+					permissionChecker.getUserId(), FileEntry.class.getName(),
+					fileEntry.getFileEntryId(),
+					ActionKeys.ACCESS_IN_CONTROL_PANEL);
 			}
 		}
 

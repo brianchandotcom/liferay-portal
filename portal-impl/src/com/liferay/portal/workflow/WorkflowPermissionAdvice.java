@@ -42,7 +42,8 @@ public class WorkflowPermissionAdvice {
 				PermissionThreadLocal.getPermissionChecker();
 
 			if (permissionChecker.getUserId() != userId) {
-				throw new PrincipalException();
+				throw new PrincipalException.MustHaveValidPermissionChecker(
+					userId, permissionChecker);
 			}
 		}
 

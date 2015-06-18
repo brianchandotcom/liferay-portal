@@ -16,6 +16,7 @@ package com.liferay.portal.service.base;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.User;
@@ -82,7 +83,7 @@ public class PrincipalBean {
 			PermissionThreadLocal.getPermissionChecker();
 
 		if (permissionChecker == null) {
-			throw new PrincipalException("PermissionChecker not initialized");
+			throw new PrincipalException.MustInitializePermissionChecker();
 		}
 
 		return permissionChecker;
@@ -95,18 +96,15 @@ public class PrincipalBean {
 	public long getUserId() throws PrincipalException {
 		String name = PrincipalThreadLocal.getName();
 
-		if (name == null) {
-			throw new PrincipalException();
-		}
-
 		if (Validator.isNull(name)) {
-			throw new PrincipalException("Principal is null");
+			throw new PrincipalException.MustHaveValidPrincipalName(
+				StringPool.NULL);
 		}
 		else {
 			for (int i = 0; i < ANONYMOUS_NAMES.length; i++) {
 				if (StringUtil.equalsIgnoreCase(name, ANONYMOUS_NAMES[i])) {
-					throw new PrincipalException(
-						"Principal cannot be " + ANONYMOUS_NAMES[i]);
+					throw new PrincipalException.MustHaveValidPrincipalName(
+						ANONYMOUS_NAMES[i]);
 				}
 			}
 		}

@@ -60,6 +60,10 @@ PortletResponse portletResponse = (PortletResponse)request.getAttribute(JavaCons
 
 String namespace = AUIUtil.getNamespace(portletRequest, portletResponse);
 
+if (Validator.isNull(namespace)) {
+	namespace = AUIUtil.getNamespace(request);
+}
+
 String currentURL = null;
 
 if ((portletRequest != null) && (portletResponse != null)) {

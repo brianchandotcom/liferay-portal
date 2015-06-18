@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Message Boards Comment Tests
+Bundle-SymbolicName: com.liferay.message.boards.comment.test
+Bundle-Version: 1.0.0
+Include-Resource: classes

@@ -35,7 +35,25 @@ import org.xml.sax.XMLReader;
  * @author Brian Wing Shun Chan
  * @author Alan Zimmerman
  */
-public class XMLFormatter {
+public class Dom4jUtil {
+
+	public static String formatXML(String xml, String indent)
+		throws DocumentException, IOException {
+
+		XMLReader xmlReader = null;
+
+		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
+				!= null) {
+
+			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
+		}
+
+		SAXReader saxReader = new SAXReader(xmlReader);
+
+		Document document = saxReader.read(new UnsyncStringReader(xml));
+
+		return toString(document, indent);
+	}
 
 	public static String toString(Node node) throws IOException {
 		return toString(node, StringPool.TAB);
@@ -97,30 +115,6 @@ public class XMLFormatter {
 		}
 
 		return content;
-	}
-
-	public static String toString(String xml)
-		throws DocumentException, IOException {
-
-		return toString(xml, StringPool.TAB);
-	}
-
-	public static String toString(String xml, String indent)
-		throws DocumentException, IOException {
-
-		XMLReader xmlReader = null;
-
-		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
-				!= null) {
-
-			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
-		}
-
-		SAXReader saxReader = new SAXReader(xmlReader);
-
-		Document document = saxReader.read(new UnsyncStringReader(xml));
-
-		return toString(document, indent);
 	}
 
 }

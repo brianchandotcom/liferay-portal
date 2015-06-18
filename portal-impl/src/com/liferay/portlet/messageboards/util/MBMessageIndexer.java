@@ -241,8 +241,7 @@ public class MBMessageIndexer
 
 		document.addKeyword(Field.CATEGORY_ID, message.getCategoryId());
 		document.addText(Field.CONTENT, processContent(message));
-		document.addKeyword(
-			Field.ROOT_ENTRY_CLASS_PK, message.getRootMessageId());
+		document.addKeyword(Field.ENTRY_CLASS_PK, message.getRootMessageId());
 		document.addText(Field.TITLE, message.getSubject());
 
 		if (message.isAnonymous()) {

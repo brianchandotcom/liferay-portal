@@ -469,6 +469,12 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.portal.model.ResourcePermission> getRoleResourcePermissions(
 		long roleId, int[] scopes, int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.portal.model.Role> getRoles(
+		long companyId, java.lang.String name, int scope,
+		java.lang.String primKey, java.lang.String actionId)
+		throws PortalException;
+
 	/**
 	* Returns all the resource permissions where scope = any &#63;.
 	*
@@ -585,6 +591,12 @@ public interface ResourcePermissionLocalService extends BaseLocalService,
 		java.util.List<com.liferay.portal.model.Resource> resources,
 		long[] roleIds, java.lang.String actionId) throws PortalException;
 
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#getRolesWithResourcePermission(long, String, int, String,
+	String}
+	*/
+	@java.lang.Deprecated
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean[] hasResourcePermissions(long companyId,
 		java.lang.String name, int scope, java.lang.String primKey,

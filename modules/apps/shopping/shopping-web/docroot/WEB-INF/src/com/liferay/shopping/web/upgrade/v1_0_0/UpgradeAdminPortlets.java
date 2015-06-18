@@ -14,8 +14,8 @@
 
 package com.liferay.shopping.web.upgrade.v1_0_0;
 
-import com.liferay.shopping.constants.ShoppingPortletKeys;
 import com.liferay.portal.kernel.upgrade.BaseUpgradeAdminPortlets;
+import com.liferay.shopping.constants.ShoppingPortletKeys;
 
 /**
  * @author Miguel Pastor
@@ -25,8 +25,7 @@ public class UpgradeAdminPortlets extends BaseUpgradeAdminPortlets {
 	@Override
 	protected void doUpgrade() throws Exception {
 		updateAccessInControlPanelPermission(
-			ShoppingPortletKeys.SHOPPING,
-			ShoppingPortletKeys.SHOPPING_ADMIN);
+			ShoppingPortletKeys.SHOPPING, ShoppingPortletKeys.SHOPPING_ADMIN);
 	}
 
 }

@@ -57,6 +57,7 @@ public class MVCPortlet extends LiferayPortlet {
 		super.destroy();
 
 		_mvcActionCommandCache.close();
+		_mvcRenderCommandCache.close();
 		_mvcResourceCommandCache.close();
 	}
 
@@ -197,6 +198,10 @@ public class MVCPortlet extends LiferayPortlet {
 			MVCActionCommand.EMPTY, getInitParameter("action.package.prefix"),
 			getPortletName(), MVCActionCommand.class.getName(),
 			"ActionCommand");
+		_mvcRenderCommandCache = new MVCCommandCache(
+			MVCRenderCommand.EMPTY, getInitParameter("render.package.prefix"),
+			getPortletName(), MVCRenderCommand.class.getName(),
+			"RenderCommand");
 		_mvcResourceCommandCache = new MVCCommandCache(
 			MVCResourceCommand.EMPTY,
 			getInitParameter("resource.package.prefix"), getPortletName(),
@@ -233,6 +238,28 @@ public class MVCPortlet extends LiferayPortlet {
 		if (copyRequestParameters) {
 			PortalUtil.copyRequestParameters(actionRequest, actionResponse);
 		}
+	}
+
+	@Override
+	public void render(
+			RenderRequest renderRequest, RenderResponse renderResponse)
+		throws IOException, PortletException {
+
+		String mvcAction = ParamUtil.getString(renderRequest, "mvcAction");
+
+		MVCRenderCommand mvcRenderCommand =
+			(MVCRenderCommand)_mvcRenderCommandCache.getMVCCommand(mvcAction);
+
+		if (mvcRenderCommand != MVCRenderCommand.EMPTY) {
+			String mvcPath = mvcRenderCommand.render(
+				renderRequest, renderResponse);
+
+			if (Validator.isNotNull(mvcPath)) {
+				renderRequest.setAttribute("mvcPath", mvcPath);
+			}
+		}
+
+		super.render(renderRequest, renderResponse);
 	}
 
 	@Override
@@ -399,6 +426,10 @@ public class MVCPortlet extends LiferayPortlet {
 	protected String getPath(PortletRequest portletRequest) {
 		String mvcPath = portletRequest.getParameter("mvcPath");
 
+		if (mvcPath == null) {
+			mvcPath = (String)portletRequest.getAttribute("mvcPath");
+		}
+
 		// Check deprecated parameter
 
 		if (mvcPath == null) {
@@ -521,6 +552,7 @@ public class MVCPortlet extends LiferayPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(MVCPortlet.class);
 
 	private MVCCommandCache _mvcActionCommandCache;
+	private MVCCommandCache _mvcRenderCommandCache;
 	private MVCCommandCache _mvcResourceCommandCache;
 
 }

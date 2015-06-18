@@ -897,6 +897,13 @@
 
 		<execute function="Pause" locator1="5000" />
 
+		<if>
+			<condition function="IsElementNotPresent#isNotVisible" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_DETAILS_STATUS" />
+			<then>
+				<execute function="Click" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_DETAILS" />
+			</then>
+		</if>
+
 		<execute function="AssertTextEquals#assertPartialText" locator1="StagingPublishToLive#CURRENT_AND_PREVIOUS_DETAILS_STATUS" value1="${validateErrorMessage}" />
 
 		<execute function="SelectFrameTop" value1="relative=top" />

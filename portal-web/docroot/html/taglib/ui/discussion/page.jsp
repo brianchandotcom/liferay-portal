@@ -31,7 +31,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 %>
 
 <section>
-	<div class="hide lfr-message-response" id="<portlet:namespace />discussionStatusMessages"></div>
+	<div class="hide lfr-message-response" id="<%= namespace %>discussionStatusMessages"></div>
 
 	<c:if test="<%= discussion.isMaxCommentsLimitExceeded() %>">
 		<div class="alert alert-warning">
@@ -40,7 +40,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 	</c:if>
 
 	<c:if test="<%= commentSectionDisplayContext.isDiscussionVisible() %>">
-		<div class="taglib-discussion" id="<portlet:namespace />discussionContainer">
+		<div class="taglib-discussion" id="<%= namespace %>discussionContainer">
 			<aui:form action="<%= discussionTaglibHelper.getFormAction() %>" method="post" name="<%= discussionTaglibHelper.getFormName() %>">
 				<input name="namespace" type="hidden" value="<%= namespace %>" />
 				<aui:input name="randomNamespace" type="hidden" value="<%= randomNamespace %>" />
@@ -202,7 +202,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				form.fm('emailAddress').val(emailAddress);
 
-				<portlet:namespace />sendMessage(form, !anonymousAccount);
+				<%= namespace %>sendMessage(form, !anonymousAccount);
 			}
 
 			function <%= randomNamespace %>deleteMessage(i) {
@@ -213,7 +213,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val('<%= Constants.DELETE %>');
 				form.fm('commentId').val(commentId);
 
-				<portlet:namespace />sendMessage(form);
+				<%= namespace %>sendMessage(form);
 			}
 
 			function <%= randomNamespace %>hideEl(elId) {
@@ -228,13 +228,13 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<%= randomNamespace %>hideEl(formId);
 			}
 
-			function <portlet:namespace />onMessagePosted(response, refreshPage) {
+			function <%= namespace %>onMessagePosted(response, refreshPage) {
 				Liferay.after(
 					'<%= portletDisplay.getId() %>:portletRefreshed',
 					function(event) {
-						<portlet:namespace />showStatusMessage('success', '<%= UnicodeLanguageUtil.get(request, "your-request-processed-successfully") %>');
+						<%= namespace %>showStatusMessage('success', '<%= UnicodeLanguageUtil.get(request, "your-request-processed-successfully") %>');
 
-						location.hash = '#' + AUI.$('#<portlet:namespace />randomNamespace').val() + 'message_' + response.commentId;
+						location.hash = '#' + AUI.$('#<%= namespace %>randomNamespace').val() + 'message_' + response.commentId;
 					}
 				);
 
@@ -274,7 +274,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					);
 				}
 				else {
-					<portlet:namespace />sendMessage(form);
+					<%= namespace %>sendMessage(form);
 
 					editorInstance.dispose();
 				}
@@ -284,7 +284,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				document.getElementById('<%= randomNamespace %>messageScroll' + commentId).scrollIntoView();
 			}
 
-			function <portlet:namespace />sendMessage(form, refreshPage) {
+			function <%= namespace %>sendMessage(form, refreshPage) {
 				var Util = Liferay.Util;
 
 				form = AUI.$(form);
@@ -300,7 +300,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 							Util.toggleDisabled(commentButtonList, false);
 						},
 						error: function() {
-							<portlet:namespace />showStatusMessage('error', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+							<%= namespace %>showStatusMessage('error', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
 						},
 						success: function(response) {
 							var exception = response.exception;
@@ -309,7 +309,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 								Liferay.after(
 									'<%= portletDisplay.getId() %>:messagePosted',
 									function(event) {
-										<portlet:namespace />onMessagePosted(response, refreshPage);
+										<%= namespace %>onMessagePosted(response, refreshPage);
 									}
 								);
 
@@ -334,7 +334,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 									errorKey = '<%= UnicodeLanguageUtil.get(request, "you-cannot-delete-a-root-message-that-has-more-than-one-immediate-reply") %>';
 								}
 
-								<portlet:namespace />showStatusMessage('error', errorKey);
+								<%= namespace %>showStatusMessage('error', errorKey);
 							}
 						}
 					}
@@ -355,8 +355,8 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				<%= randomNamespace %>showEl(formId);
 			}
 
-			function <portlet:namespace />showStatusMessage(type, message) {
-				var messageContainer = AUI.$('#<portlet:namespace />discussionStatusMessages');
+			function <%= namespace %>showStatusMessage(type, message) {
+				var messageContainer = AUI.$('#<%= namespace %>discussionStatusMessages');
 
 				messageContainer.removeClass('alert-danger alert-success');
 
@@ -378,7 +378,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 
 				form.fm('<%= randomNamespace %><%= Constants.CMD %>').val(cmd);
 
-				<portlet:namespace />sendMessage(form);
+				<%= namespace %>sendMessage(form);
 			}
 
 			function <%= randomNamespace %>updateMessage(i, pending) {
@@ -396,7 +396,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 				form.fm('commentId').val(commentId);
 				form.fm('body').val(editorInstance.getHTML());
 
-				<portlet:namespace />sendMessage(form);
+				<%= namespace %>sendMessage(form);
 
 				editorInstance.dispose();
 			}
@@ -409,7 +409,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					var form = $('#<%= namespace %><%= HtmlUtil.escapeJS(discussionTaglibHelper.getFormName()) %>');
 
 					var data = Liferay.Util.ns(
-						'<portlet:namespace />',
+						'<%= namespace %>',
 						{
 							className: '<%= discussionTaglibHelper.getClassName() %>',
 							classPK: <%= discussionTaglibHelper.getClassPK() %>,
@@ -423,11 +423,11 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 					);
 
 					$.ajax(
-						'<%= discussionTaglibHelper.getPaginationURL() %>',
+						'<%= HttpUtil.addParameter(discussionTaglibHelper.getPaginationURL(), "namespace", namespace) %>',
 						{
 							data: data,
 							error: function() {
-								<portlet:namespace />showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
+								<%= namespace %>showStatusMessage('danger', '<%= UnicodeLanguageUtil.get(request, "your-request-failed-to-complete") %>');
 							},
 							success: function(data) {
 								$('#<%= namespace %>moreCommentsPage').append(data);
@@ -439,7 +439,7 @@ CommentSectionDisplayContext commentSectionDisplayContext = CommentDisplayContex
 		</aui:script>
 
 		<aui:script use="aui-popover,event-outside">
-			var discussionContainer = A.one('#<portlet:namespace />discussionContainer');
+			var discussionContainer = A.one('#<%= namespace %>discussionContainer');
 
 			var popover = new A.Popover(
 				{

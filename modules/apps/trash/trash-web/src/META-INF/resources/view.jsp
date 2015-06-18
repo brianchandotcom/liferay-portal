@@ -21,6 +21,12 @@ String tabs1 = ParamUtil.getString(request, "tabs1", "staging");
 
 String redirect = ParamUtil.getString(request, "redirect");
 
+if (Validator.isNull(redirect)) {
+	PortletURL portletURL = renderResponse.createRenderURL();
+
+	redirect = portletURL.toString();
+}
+
 String keywords = ParamUtil.getString(request, "keywords");
 
 long groupId = themeDisplay.getScopeGroupId();
@@ -158,7 +164,6 @@ if (Validator.isNotNull(keywords)) {
 			PortletURL viewContentURL = renderResponse.createRenderURL();
 
 			viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-			viewContentURL.setParameter("redirect", currentURL);
 
 			if (entry.getRootEntry() != null) {
 				viewContentURL.setParameter("classNameId", String.valueOf(entry.getClassNameId()));
@@ -203,7 +208,6 @@ if (Validator.isNotNull(keywords)) {
 					PortletURL viewContentURL = renderResponse.createRenderURL();
 
 					viewContentURL.setParameter("mvcPath", "/view_content.jsp");
-					viewContentURL.setParameter("redirect", currentURL);
 					viewContentURL.setParameter("trashEntryId", String.valueOf(rootEntry.getEntryId()));
 					viewContentURL.setParameter("type", rootTrashRenderer.getType());
 					viewContentURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));

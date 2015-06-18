@@ -129,7 +129,7 @@ TrashUtil.addContainerModelBreadcrumbEntries(request, liferayPortletResponse, co
 
 			long curContainerModelId = curContainerModel.getContainerModelId();
 
-			containerURL.setParameter("containerModelClassNameId", String.valueOf(PortalUtil.getClassNameId(curContainerModelTrashHandler.getClassName())));
+				containerURL.setParameter("containerModelClassNameId", String.valueOf(PortalUtil.getClassNameId(curContainerModelTrashHandler.getClassName())));
 			containerURL.setParameter("containerModelId", String.valueOf(curContainerModelId));
 			%>
 

@@ -22,7 +22,6 @@
 
 	<%
 	String redirect = ParamUtil.getString(request, "redirect");
-	String backURL = ParamUtil.getString(request, "backURL", redirect);
 
 	long trashEntryId = ParamUtil.getLong(request, "trashEntryId");
 
@@ -59,11 +58,29 @@
 	String trashHandlerContainerModelClassName = trashHandler.getContainerModelClassName(classPK);
 
 	containerModelURL.setParameter("mvcPath", "/view_content.jsp");
-	containerModelURL.setParameter("redirect", redirect);
 	containerModelURL.setParameter("classNameId", String.valueOf(PortalUtil.getClassNameId(trashHandlerContainerModelClassName)));
 	containerModelURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
 
 	TrashUtil.addBaseModelBreadcrumbEntries(request, liferayPortletResponse, className, classPK, containerModelURL);
+
+	if (Validator.isNull(redirect)) {
+		ContainerModel parentContainerModel = trashHandler.getParentContainerModel(classPK);
+
+		PortletURL redirectURL = renderResponse.createRenderURL();
+
+		if (parentContainerModel != null && classNameId > 0) {
+
+			long parentContainerModelId = parentContainerModel.getContainerModelId();
+
+			redirectURL.setParameter("mvcPath", "/view_content.jsp");
+			redirectURL.setParameter("classNameId", String.valueOf(classNameId));
+			redirectURL.setParameter("classPK", String.valueOf(parentContainerModelId));
+			redirectURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
+		}
+
+		redirect = redirectURL.toString();
+
+	}
 	%>
 
 	<liferay-ui:breadcrumb
@@ -74,7 +91,7 @@
 	/>
 
 	<liferay-ui:header
-		backURL="<%= backURL %>"
+		backURL="<%= redirect %>"
 		localizeTitle="<%= false %>"
 		title="<%= trashRenderer.getTitle(locale) %>"
 	/>
@@ -94,7 +111,7 @@
 
 									<aui:script>
 										<portlet:actionURL name="restoreEntries" var="restoreEntryURL">
-											<portlet:param name="redirect" value="<%= backURL %>" />
+											<portlet:param name="redirect" value="<%= redirect %>" />
 											<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 										</portlet:actionURL>
 
@@ -120,7 +137,6 @@
 
 									<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 										<portlet:param name="mvcPath" value="/view_container_model.jsp" />
-										<portlet:param name="redirect" value="<%= backURL %>" />
 										<portlet:param name="classNameId" value="<%= String.valueOf(entry.getClassNameId()) %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(entry.getClassPK()) %>" />
 										<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(trashHandlerEntryContainerModelClassName)) %>" />
@@ -141,7 +157,7 @@
 
 								<aui:script>
 									<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
-										<portlet:param name="redirect" value="<%= backURL %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="trashEntryId" value="<%= String.valueOf(entry.getEntryId()) %>" />
 									</portlet:actionURL>
 
@@ -167,7 +183,6 @@
 
 								<portlet:renderURL var="moveURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 									<portlet:param name="mvcPath" value="/view_container_model.jsp" />
-									<portlet:param name="redirect" value="<%= backURL %>" />
 									<portlet:param name="classNameId" value="<%= String.valueOf(trashRendererClassNameId) %>" />
 									<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 									<portlet:param name="containerModelClassNameId" value="<%= String.valueOf(PortalUtil.getClassNameId(containerModelClassName)) %>" />
@@ -185,7 +200,7 @@
 
 								<aui:script>
 									<portlet:actionURL name="deleteEntries" var="deleteEntryURL">
-										<portlet:param name="redirect" value="<%= backURL %>" />
+										<portlet:param name="redirect" value="<%= redirect %>" />
 										<portlet:param name="className" value="<%= trashRenderer.getClassName() %>" />
 										<portlet:param name="classPK" value="<%= String.valueOf(trashRenderer.getClassPK()) %>" />
 									</portlet:actionURL>
@@ -214,7 +229,6 @@
 			PortletURL iteratorURL = renderResponse.createRenderURL();
 
 			iteratorURL.setParameter("mvcPath", "/view_content.jsp");
-			iteratorURL.setParameter("redirect", redirect);
 			iteratorURL.setParameter("classNameId", String.valueOf(classNameId));
 			iteratorURL.setParameter("classPK", String.valueOf(classPK));
 			iteratorURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
@@ -252,8 +266,6 @@
 								PortletURL rowURL = renderResponse.createRenderURL();
 
 								rowURL.setParameter("mvcPath", "/view_content.jsp");
-								rowURL.setParameter("redirect", redirect);
-								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("classNameId", String.valueOf(curTrashHandlerClassNameId));
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
 								rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));
@@ -316,8 +328,6 @@
 								PortletURL rowURL = renderResponse.createRenderURL();
 
 								rowURL.setParameter("mvcPath", "/view_content.jsp");
-								rowURL.setParameter("redirect", redirect);
-								rowURL.setParameter("backURL", currentURL);
 								rowURL.setParameter("classNameId", String.valueOf(curTrashHandlerClassNameId));
 								rowURL.setParameter("classPK", String.valueOf(curTrashRenderer.getClassPK()));
 								rowURL.setParameter("status", String.valueOf(WorkflowConstants.STATUS_IN_TRASH));

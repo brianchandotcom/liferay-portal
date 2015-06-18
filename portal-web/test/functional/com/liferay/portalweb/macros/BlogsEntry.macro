@@ -1494,6 +1494,16 @@
 		<execute function="AssertTextEquals#assertTextWaitForInlineCKEditor" locator1="PGBlogsEntry#COMMENTS" value1="Comments" />
 	</command>
 
+	<command name="viewDisabledSocialBookmarkSites">
+		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+
+		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
+			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+			<execute function="AssertElementNotPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
+		</for>
+	</command>
+
 	<command name="viewDraft">
 		<execute function="AssertTextEquals" locator1="BlogsEntry#DRAFT_ENTRY_STATUS" value1="Draft" />
 
@@ -1549,6 +1559,16 @@
 		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_TITLE" value1="${entryTitle}" />
 		<execute function="AssertTextEquals" locator1="PGBlogs#ENTRY_CONTENT" value1="${entryContent}" />
 		<execute function="AssertElementPresent" locator1="PGBlogs#ENTRY_EDIT" />
+	</command>
+
+	<command name="viewEnabledSocialBookmarkSites">
+		<execute function="AssertClick" locator1="Button#SHARE" value1="Share" />
+
+		<for list="${socialBookmarkSites}" param="socialBookmarkSite">
+			<var name="key_socialBookmarkSite" value="${socialBookmarkSite}" />
+
+			<execute function="AssertElementPresent" locator1="SocialBookmarks#SOCIAL_BOOKMARKS_SITE_LINK" />
+		</for>
 	</command>
 
 	<command name="viewEntry">

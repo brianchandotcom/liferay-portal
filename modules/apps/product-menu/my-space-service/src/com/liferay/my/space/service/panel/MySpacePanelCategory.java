@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
 	service = PanelCategory.class
 )
-public class UserPersonalPanelCategory extends BasePanelCategory {
+public class MySpacePanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
@@ -40,7 +40,7 @@ public class UserPersonalPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.USER_PERSONAL_PANEL;
+		return PanelCategoryKeys.MY_SPACE;
 	}
 
 	@Override

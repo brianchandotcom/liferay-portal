@@ -28,10 +28,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"panel.category.key=" + PanelCategoryKeys.USER_PERSONAL_PANEL},
+	property = {"panel.category.key=" + PanelCategoryKeys.MY_SPACE},
 	service = PanelCategory.class
 )
-public class MyPanelCategory extends BasePanelCategory {
+public class ProductivityCenterPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
@@ -40,12 +40,12 @@ public class MyPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.MY;
+		return PanelCategoryKeys.PRODUCTIVITY_CENTER;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.my");
+		return LanguageUtil.get(locale, "productivity-center");
 	}
 
 }

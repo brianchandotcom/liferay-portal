@@ -14,17 +14,15 @@
 
 package com.liferay.productivity.center.panel.constants;
 
-import com.liferay.portal.util.PortletCategoryKeys;
-
 /**
  * @author Adolfo Pérez
  */
 public interface PanelCategoryKeys {
 
-	public static final String MY = PortletCategoryKeys.MY;
+	public static final String MY_SPACE = "my_space";
+
+	public static final String PRODUCTIVITY_CENTER = "productivity_center";
 
 	public static final String ROOT = "root";
-
-	public static final String USER_PERSONAL_PANEL = "user_personal_panel";
 
 }

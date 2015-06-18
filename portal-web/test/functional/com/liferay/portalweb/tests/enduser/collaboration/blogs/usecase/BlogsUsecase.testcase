@@ -755,7 +755,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-56162" name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
+	<command name="ViewBlogsEntryOnMultiplePagesWithDefaultAndPageScope" priority="4">
 		<var name="entryAuthor" value="Test Test" />
 		<var name="entryContent" value="Blogs Entry Content" />
 		<var name="entryTitle" value="Blogs Entry Title" />

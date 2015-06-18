@@ -64,7 +64,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.LayoutFriendlyURL;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.StagedGroupedModel;
@@ -77,31 +76,17 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.LayoutFriendlyURLLocalServiceUtil;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.service.LayoutServiceUtil;
-import com.liferay.portal.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portal.service.SystemEventLocalServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
-import com.liferay.portal.service.persistence.OrganizationUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PortletKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetVocabulary;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
-import com.liferay.portlet.asset.service.persistence.AssetCategoryUtil;
-import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 import com.liferay.portlet.documentlibrary.model.DLFileEntry;
-import com.liferay.portlet.documentlibrary.model.DLFileEntryType;
 import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.DLFileEntryTypeLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFileEntryTypeUtil;
 import com.liferay.portlet.documentlibrary.util.DLUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
-import com.liferay.portlet.dynamicdatamapping.service.DDMStructureLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.service.persistence.DDMStructureUtil;
 
 import java.io.File;
 import java.io.InputStream;
@@ -1534,54 +1519,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		return replaceImportLinksToLayouts(portletDataContext, content);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(
+	 *             PortletDataContext, Portlet, PortletPreferences, String,
+	 *             String)}
+	 */
+	@Deprecated
 	@Override
 	public void updateExportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext, Portlet portlet,
 			PortletPreferences portletPreferences, String key, String className)
 		throws Exception {
-
-		String[] oldValues = portletPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			String newValue = oldValue;
-
-			String[] primaryKeys = StringUtil.split(oldValue);
-
-			for (String primaryKey : primaryKeys) {
-				if (!Validator.isNumber(primaryKey)) {
-					break;
-				}
-
-				long primaryKeyLong = GetterUtil.getLong(primaryKey);
-
-				String uuid = getExportPortletPreferencesUuid(
-					portletDataContext, portlet, className, primaryKeyLong);
-
-				if (Validator.isNull(uuid)) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to get UUID for class " + className +
-								" with primary key " + primaryKeyLong);
-					}
-
-					continue;
-				}
-
-				newValue = StringUtil.replace(newValue, primaryKey, uuid);
-			}
-
-			newValues[i] = newValue;
-		}
-
-		portletPreferences.setValues(key, newValues);
 	}
 
 	/**
@@ -1601,62 +1550,18 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			portletDataContext, portlet, portletPreferences, key, className);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, see {@link
+	 *             DefaultConfigurationPortletDataHandler#updateImportPortletPreferencesClassPKs(
+	 *             PortletDataContext, PortletPreferences, String, Class, long)}
+	 */
+	@Deprecated
 	@Override
 	public void updateImportPortletPreferencesClassPKs(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key, Class<?> clazz,
 			long companyGroupId)
 		throws Exception {
-
-		String[] oldValues = portletPreferences.getValues(key, null);
-
-		if (oldValues == null) {
-			return;
-		}
-
-		Map<Long, Long> primaryKeys =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(clazz);
-
-		String[] newValues = new String[oldValues.length];
-
-		for (int i = 0; i < oldValues.length; i++) {
-			String oldValue = oldValues[i];
-
-			String newValue = oldValue;
-
-			String[] uuids = StringUtil.split(oldValue);
-
-			for (String uuid : uuids) {
-				Long newPrimaryKey = getImportPortletPreferencesNewPrimaryKey(
-					portletDataContext, clazz, companyGroupId, primaryKeys,
-					uuid);
-
-				if (Validator.isNull(newPrimaryKey)) {
-					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler(8);
-
-						sb.append("Unable to get primary key for ");
-						sb.append(clazz);
-						sb.append(" with UUID ");
-						sb.append(uuid);
-						sb.append(" in company group ");
-						sb.append(companyGroupId);
-						sb.append(" or in group ");
-						sb.append(portletDataContext.getScopeGroupId());
-
-						_log.warn(sb.toString());
-					}
-				}
-				else {
-					newValue = StringUtil.replace(
-						newValue, uuid, newPrimaryKey.toString());
-				}
-			}
-
-			newValues[i] = newValue;
-		}
-
-		portletPreferences.setValues(key, newValues);
 	}
 
 	/**
@@ -1952,81 +1857,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 				portlet.getRootPortletId());
 	}
 
-	protected String getExportPortletPreferencesUuid(
-			PortletDataContext portletDataContext, Portlet portlet,
-			String className, long primaryKeyLong)
-		throws Exception {
-
-		String uuid = null;
-
-		Element rootElement = portletDataContext.getExportDataRootElement();
-
-		if (className.equals(AssetCategory.class.getName())) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchCategory(primaryKeyLong);
-
-			if (assetCategory != null) {
-				uuid = assetCategory.getUuid();
-
-				portletDataContext.addReferenceElement(
-					portlet, rootElement, assetCategory,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-		}
-		else if (className.equals(AssetVocabulary.class.getName())) {
-			AssetVocabulary assetVocabulary =
-				AssetVocabularyLocalServiceUtil.fetchAssetVocabulary(
-					primaryKeyLong);
-
-			if (assetVocabulary != null) {
-				uuid = assetVocabulary.getUuid();
-
-				portletDataContext.addReferenceElement(
-					portlet, rootElement, assetVocabulary,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-		}
-		else if (className.equals(DDMStructure.class.getName())) {
-			DDMStructure ddmStructure =
-				DDMStructureLocalServiceUtil.fetchStructure(primaryKeyLong);
-
-			if (ddmStructure != null) {
-				uuid = ddmStructure.getUuid();
-
-				portletDataContext.addReferenceElement(
-					portlet, rootElement, ddmStructure,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-		}
-		else if (className.equals(DLFileEntryType.class.getName())) {
-			DLFileEntryType dlFileEntryType =
-				DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
-					primaryKeyLong);
-
-			if (dlFileEntryType != null) {
-				uuid = dlFileEntryType.getUuid();
-
-				portletDataContext.addReferenceElement(
-					portlet, rootElement, dlFileEntryType,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-		}
-		else if (className.equals(Organization.class.getName())) {
-			Organization organization =
-				OrganizationLocalServiceUtil.fetchOrganization(primaryKeyLong);
-
-			if (organization != null) {
-				uuid = organization.getUuid();
-
-				portletDataContext.addReferenceElement(
-					portlet, rootElement, organization,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
-			}
-		}
-
-		return uuid;
-	}
-
 	protected Map<String, Boolean> getExportPortletSetupControlsMap(
 			long companyId, String portletId,
 			Map<String, String[]> parameterMap, String type)
@@ -2212,106 +2042,6 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 			parameterMap,
 			PortletDataHandlerKeys.PORTLET_DATA + StringPool.UNDERLINE +
 				portlet.getRootPortletId());
-	}
-
-	protected Long getImportPortletPreferencesNewPrimaryKey(
-			PortletDataContext portletDataContext, Class<?> clazz,
-			long companyGroupId, Map<Long, Long> primaryKeys, String uuid)
-		throws Exception {
-
-		if (Validator.isNumber(uuid)) {
-			long oldPrimaryKey = GetterUtil.getLong(uuid);
-
-			return MapUtil.getLong(primaryKeys, oldPrimaryKey, oldPrimaryKey);
-		}
-
-		String className = clazz.getName();
-
-		if (className.equals(AssetCategory.class.getName())) {
-			AssetCategory assetCategory = AssetCategoryUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (assetCategory == null) {
-				assetCategory = AssetCategoryUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
-
-			if (assetCategory != null) {
-				return assetCategory.getCategoryId();
-			}
-		}
-		else if (className.equals(AssetVocabulary.class.getName())) {
-			AssetVocabulary assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (assetVocabulary == null) {
-				assetVocabulary = AssetVocabularyUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
-
-			if (assetVocabulary != null) {
-				return assetVocabulary.getVocabularyId();
-			}
-		}
-		else if (className.equals(DDMStructure.class.getName())) {
-			DDMStructure ddmStructure = DDMStructureUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (ddmStructure == null) {
-				ddmStructure = DDMStructureUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
-
-			if (ddmStructure != null) {
-				return ddmStructure.getStructureId();
-			}
-		}
-		else if (className.equals(DLFileEntryType.class.getName())) {
-			DLFileEntryType dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
-				uuid, portletDataContext.getScopeGroupId());
-
-			if (dlFileEntryType == null) {
-				dlFileEntryType = DLFileEntryTypeUtil.fetchByUUID_G(
-					uuid, companyGroupId);
-			}
-
-			if (dlFileEntryType == null) {
-				Element rootElement =
-					portletDataContext.getImportDataRootElement();
-
-				Element element = portletDataContext.getReferenceElement(
-					rootElement, clazz, companyGroupId, uuid,
-					PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
-
-				if (element != null) {
-					String fileEntryTypeKey = element.attributeValue(
-						"file-entry-type-key");
-
-					boolean preloaded = GetterUtil.getBoolean(
-						element.attributeValue("preloaded"));
-
-					if (preloaded) {
-						dlFileEntryType =
-							DLFileEntryTypeLocalServiceUtil.fetchFileEntryType(
-								companyGroupId, fileEntryTypeKey);
-					}
-				}
-			}
-
-			if (dlFileEntryType != null) {
-				return dlFileEntryType.getFileEntryTypeId();
-			}
-		}
-		else if (className.equals(Organization.class.getName())) {
-			Organization organization = OrganizationUtil.fetchByUuid_C_First(
-				uuid, portletDataContext.getCompanyId(), null);
-
-			if (organization != null) {
-				return organization.getOrganizationId();
-			}
-		}
-
-		return null;
 	}
 
 	protected Map<String, Boolean> getImportPortletSetupControlsMap(

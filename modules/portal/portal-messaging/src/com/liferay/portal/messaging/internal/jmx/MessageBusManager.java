@@ -147,7 +147,7 @@ public class MessageBusManager
 
 	protected synchronized void removeDestination(Destination destination) {
 		ServiceRegistration<DynamicMBean> mbeanServiceRegistration =
-			_mbeanServiceRegistrations.get(destination.getName());
+			_mbeanServiceRegistrations.remove(destination.getName());
 
 		if (mbeanServiceRegistration != null) {
 			mbeanServiceRegistration.unregister();

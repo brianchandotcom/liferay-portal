@@ -148,6 +148,9 @@ public abstract class BaseStoreTestCase {
 
 		Assert.assertTrue(
 			store.hasFile(companyId, repositoryId, fileName, "1.2"));
+		Assert.assertArrayEquals(
+			_DATA_VERSION_1,
+			store.getFileAsBytes(companyId, repositoryId, fileName, "1.2"));
 	}
 
 	@Test(expected = DuplicateFileException.class)
@@ -497,6 +500,20 @@ public abstract class BaseStoreTestCase {
 		store.deleteFile(
 			companyId, repositoryId, RandomTestUtil.randomString(),
 			Store.VERSION_DEFAULT);
+	}
+
+	@Test
+	public void testUpdateFileVersion() throws Exception {
+		String fileName = RandomTestUtil.randomString();
+
+		store.addFile(companyId, repositoryId, fileName, _DATA_VERSION_1);
+
+		store.updateFileVersion(
+			companyId, repositoryId, fileName, "1.0", "1.1");
+
+		Assert.assertArrayEquals(
+			_DATA_VERSION_1,
+			store.getFileAsBytes(companyId, repositoryId, fileName, "1.1"));
 	}
 
 	@Test(expected = DuplicateFileException.class)

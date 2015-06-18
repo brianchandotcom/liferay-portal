@@ -167,7 +167,7 @@ public abstract class BaseStore implements Store {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		InputStream is = getFileAsStream(
+		InputStream is = store.getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
 		if (is == null) {
@@ -292,7 +292,8 @@ public abstract class BaseStore implements Store {
 		byte[] bytes = null;
 
 		try {
-			InputStream is = getFileAsStream(companyId, repositoryId, fileName);
+			InputStream is = store.getFileAsStream(
+				companyId, repositoryId, fileName);
 
 			bytes = FileUtil.getBytes(is);
 		}
@@ -323,7 +324,7 @@ public abstract class BaseStore implements Store {
 		byte[] bytes = null;
 
 		try {
-			InputStream is = getFileAsStream(
+			InputStream is = store.getFileAsStream(
 				companyId, repositoryId, fileName, versionLabel);
 
 			bytes = FileUtil.getBytes(is);
@@ -578,7 +579,7 @@ public abstract class BaseStore implements Store {
 			String fromVersionLabel, String toVersionLabel)
 		throws PortalException {
 
-		InputStream is = getFileAsStream(
+		InputStream is = store.getFileAsStream(
 			companyId, repositoryId, fileName, fromVersionLabel);
 
 		if (is == null) {
@@ -620,6 +621,8 @@ public abstract class BaseStore implements Store {
 			_log.warn(sb.toString());
 		}
 	}
+
+	protected Store store = this;
 
 	private static final Log _log = LogFactoryUtil.getLog(BaseStore.class);
 

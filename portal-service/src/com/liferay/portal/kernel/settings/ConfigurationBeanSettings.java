@@ -67,9 +67,8 @@ public class ConfigurationBeanSettings extends BaseSettings
 		if (object == null) {
 			return null;
 		}
-		
+
 		return GetterUtil.getStringValues(object);
-		
 	}
 
 	private Object _getProperty(String key) {

@@ -28,7 +28,6 @@ import com.liferay.portal.service.persistence.AccountPersistence;
 import com.liferay.portal.service.persistence.BackgroundTaskPersistence;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.CompanyPersistence;
-import com.liferay.portal.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.portal.service.persistence.GroupFinder;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.LayoutFinder;
@@ -75,6 +74,7 @@ import com.liferay.portlet.asset.service.persistence.AssetTagPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyFinder;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
 import com.liferay.portlet.expando.service.persistence.ExpandoRowPersistence;
+import com.liferay.portlet.exportimport.service.persistence.ExportImportConfigurationPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivityFinder;
 import com.liferay.portlet.social.service.persistence.SocialActivityPersistence;
 import com.liferay.portlet.social.service.persistence.SocialActivitySettingPersistence;
@@ -421,63 +421,6 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setCompanyPersistence(CompanyPersistence companyPersistence) {
 		this.companyPersistence = companyPersistence;
-	}
-
-	/**
-	 * Returns the export import configuration local service.
-	 *
-	 * @return the export import configuration local service
-	 */
-	public com.liferay.portal.service.ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
-		return exportImportConfigurationLocalService;
-	}
-
-	/**
-	 * Sets the export import configuration local service.
-	 *
-	 * @param exportImportConfigurationLocalService the export import configuration local service
-	 */
-	public void setExportImportConfigurationLocalService(
-		com.liferay.portal.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
-		this.exportImportConfigurationLocalService = exportImportConfigurationLocalService;
-	}
-
-	/**
-	 * Returns the export import configuration remote service.
-	 *
-	 * @return the export import configuration remote service
-	 */
-	public com.liferay.portal.service.ExportImportConfigurationService getExportImportConfigurationService() {
-		return exportImportConfigurationService;
-	}
-
-	/**
-	 * Sets the export import configuration remote service.
-	 *
-	 * @param exportImportConfigurationService the export import configuration remote service
-	 */
-	public void setExportImportConfigurationService(
-		com.liferay.portal.service.ExportImportConfigurationService exportImportConfigurationService) {
-		this.exportImportConfigurationService = exportImportConfigurationService;
-	}
-
-	/**
-	 * Returns the export import configuration persistence.
-	 *
-	 * @return the export import configuration persistence
-	 */
-	public ExportImportConfigurationPersistence getExportImportConfigurationPersistence() {
-		return exportImportConfigurationPersistence;
-	}
-
-	/**
-	 * Sets the export import configuration persistence.
-	 *
-	 * @param exportImportConfigurationPersistence the export import configuration persistence
-	 */
-	public void setExportImportConfigurationPersistence(
-		ExportImportConfigurationPersistence exportImportConfigurationPersistence) {
-		this.exportImportConfigurationPersistence = exportImportConfigurationPersistence;
 	}
 
 	/**
@@ -854,6 +797,139 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	public void setExpandoRowPersistence(
 		ExpandoRowPersistence expandoRowPersistence) {
 		this.expandoRowPersistence = expandoRowPersistence;
+	}
+
+	/**
+	 * Returns the export import local service.
+	 *
+	 * @return the export import local service
+	 */
+	public com.liferay.portlet.exportimport.service.ExportImportLocalService getExportImportLocalService() {
+		return exportImportLocalService;
+	}
+
+	/**
+	 * Sets the export import local service.
+	 *
+	 * @param exportImportLocalService the export import local service
+	 */
+	public void setExportImportLocalService(
+		com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService) {
+		this.exportImportLocalService = exportImportLocalService;
+	}
+
+	/**
+	 * Returns the export import remote service.
+	 *
+	 * @return the export import remote service
+	 */
+	public com.liferay.portlet.exportimport.service.ExportImportService getExportImportService() {
+		return exportImportService;
+	}
+
+	/**
+	 * Sets the export import remote service.
+	 *
+	 * @param exportImportService the export import remote service
+	 */
+	public void setExportImportService(
+		com.liferay.portlet.exportimport.service.ExportImportService exportImportService) {
+		this.exportImportService = exportImportService;
+	}
+
+	/**
+	 * Returns the export import configuration local service.
+	 *
+	 * @return the export import configuration local service
+	 */
+	public com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService getExportImportConfigurationLocalService() {
+		return exportImportConfigurationLocalService;
+	}
+
+	/**
+	 * Sets the export import configuration local service.
+	 *
+	 * @param exportImportConfigurationLocalService the export import configuration local service
+	 */
+	public void setExportImportConfigurationLocalService(
+		com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService) {
+		this.exportImportConfigurationLocalService = exportImportConfigurationLocalService;
+	}
+
+	/**
+	 * Returns the export import configuration remote service.
+	 *
+	 * @return the export import configuration remote service
+	 */
+	public com.liferay.portlet.exportimport.service.ExportImportConfigurationService getExportImportConfigurationService() {
+		return exportImportConfigurationService;
+	}
+
+	/**
+	 * Sets the export import configuration remote service.
+	 *
+	 * @param exportImportConfigurationService the export import configuration remote service
+	 */
+	public void setExportImportConfigurationService(
+		com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService) {
+		this.exportImportConfigurationService = exportImportConfigurationService;
+	}
+
+	/**
+	 * Returns the export import configuration persistence.
+	 *
+	 * @return the export import configuration persistence
+	 */
+	public ExportImportConfigurationPersistence getExportImportConfigurationPersistence() {
+		return exportImportConfigurationPersistence;
+	}
+
+	/**
+	 * Sets the export import configuration persistence.
+	 *
+	 * @param exportImportConfigurationPersistence the export import configuration persistence
+	 */
+	public void setExportImportConfigurationPersistence(
+		ExportImportConfigurationPersistence exportImportConfigurationPersistence) {
+		this.exportImportConfigurationPersistence = exportImportConfigurationPersistence;
+	}
+
+	/**
+	 * Returns the staging local service.
+	 *
+	 * @return the staging local service
+	 */
+	public com.liferay.portlet.exportimport.service.StagingLocalService getStagingLocalService() {
+		return stagingLocalService;
+	}
+
+	/**
+	 * Sets the staging local service.
+	 *
+	 * @param stagingLocalService the staging local service
+	 */
+	public void setStagingLocalService(
+		com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService) {
+		this.stagingLocalService = stagingLocalService;
+	}
+
+	/**
+	 * Returns the staging remote service.
+	 *
+	 * @return the staging remote service
+	 */
+	public com.liferay.portlet.exportimport.service.StagingService getStagingService() {
+		return stagingService;
+	}
+
+	/**
+	 * Sets the staging remote service.
+	 *
+	 * @param stagingService the staging remote service
+	 */
+	public void setStagingService(
+		com.liferay.portlet.exportimport.service.StagingService stagingService) {
+		this.stagingService = stagingService;
 	}
 
 	/**
@@ -2123,44 +2199,6 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the staging local service.
-	 *
-	 * @return the staging local service
-	 */
-	public com.liferay.portal.service.StagingLocalService getStagingLocalService() {
-		return stagingLocalService;
-	}
-
-	/**
-	 * Sets the staging local service.
-	 *
-	 * @param stagingLocalService the staging local service
-	 */
-	public void setStagingLocalService(
-		com.liferay.portal.service.StagingLocalService stagingLocalService) {
-		this.stagingLocalService = stagingLocalService;
-	}
-
-	/**
-	 * Returns the staging remote service.
-	 *
-	 * @return the staging remote service
-	 */
-	public com.liferay.portal.service.StagingService getStagingService() {
-		return stagingService;
-	}
-
-	/**
-	 * Sets the staging remote service.
-	 *
-	 * @param stagingService the staging remote service
-	 */
-	public void setStagingService(
-		com.liferay.portal.service.StagingService stagingService) {
-		this.stagingService = stagingService;
-	}
-
-	/**
 	 * Returns the subscription local service.
 	 *
 	 * @return the subscription local service
@@ -2702,12 +2740,6 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.CompanyService companyService;
 	@BeanReference(type = CompanyPersistence.class)
 	protected CompanyPersistence companyPersistence;
-	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationLocalService.class)
-	protected com.liferay.portal.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
-	@BeanReference(type = com.liferay.portal.service.ExportImportConfigurationService.class)
-	protected com.liferay.portal.service.ExportImportConfigurationService exportImportConfigurationService;
-	@BeanReference(type = ExportImportConfigurationPersistence.class)
-	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService;
 	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryService.class)
@@ -2748,6 +2780,20 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portlet.expando.service.ExpandoRowLocalService expandoRowLocalService;
 	@BeanReference(type = ExpandoRowPersistence.class)
 	protected ExpandoRowPersistence expandoRowPersistence;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportLocalService.class)
+	protected com.liferay.portlet.exportimport.service.ExportImportLocalService exportImportLocalService;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportService.class)
+	protected com.liferay.portlet.exportimport.service.ExportImportService exportImportService;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService.class)
+	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationLocalService exportImportConfigurationLocalService;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.ExportImportConfigurationService.class)
+	protected com.liferay.portlet.exportimport.service.ExportImportConfigurationService exportImportConfigurationService;
+	@BeanReference(type = ExportImportConfigurationPersistence.class)
+	protected ExportImportConfigurationPersistence exportImportConfigurationPersistence;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingLocalService.class)
+	protected com.liferay.portlet.exportimport.service.StagingLocalService stagingLocalService;
+	@BeanReference(type = com.liferay.portlet.exportimport.service.StagingService.class)
+	protected com.liferay.portlet.exportimport.service.StagingService stagingService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityLocalService.class)
 	protected com.liferay.portlet.social.service.SocialActivityLocalService socialActivityLocalService;
 	@BeanReference(type = com.liferay.portlet.social.service.SocialActivityService.class)
@@ -2882,10 +2928,6 @@ public abstract class GroupServiceBaseImpl extends BaseServiceImpl
 	protected RolePersistence rolePersistence;
 	@BeanReference(type = RoleFinder.class)
 	protected RoleFinder roleFinder;
-	@BeanReference(type = com.liferay.portal.service.StagingLocalService.class)
-	protected com.liferay.portal.service.StagingLocalService stagingLocalService;
-	@BeanReference(type = com.liferay.portal.service.StagingService.class)
-	protected com.liferay.portal.service.StagingService stagingService;
 	@BeanReference(type = com.liferay.portal.service.SubscriptionLocalService.class)
 	protected com.liferay.portal.service.SubscriptionLocalService subscriptionLocalService;
 	@BeanReference(type = SubscriptionPersistence.class)

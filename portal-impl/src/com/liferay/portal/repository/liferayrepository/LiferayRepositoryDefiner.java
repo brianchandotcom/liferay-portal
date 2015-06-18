@@ -41,9 +41,15 @@ import com.liferay.portal.repository.capabilities.LiferaySyncCapability;
 import com.liferay.portal.repository.capabilities.LiferayThumbnailCapability;
 import com.liferay.portal.repository.capabilities.LiferayTrashCapability;
 import com.liferay.portal.repository.capabilities.LiferayWorkflowCapability;
+import com.liferay.portal.repository.capabilities.util.DLFileEntryServiceAdapter;
+import com.liferay.portal.repository.capabilities.util.DLFolderServiceAdapter;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryChecker;
 import com.liferay.portal.repository.capabilities.util.RepositoryEntryConverter;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFileEntryServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.service.DLFolderServiceUtil;
 
 /**
  * @author Adolfo Pérez
@@ -71,8 +77,30 @@ public class LiferayRepositoryDefiner extends BaseRepositoryDefiner {
 
 		DocumentRepository documentRepository = capabilityRegistry.getTarget();
 
+		DLFileEntryServiceAdapter dlFileEntryServiceAdapter = null;
+		DLFolderServiceAdapter dlFolderServiceAdapter = null;
+
+		if (documentRepository instanceof LocalRepository) {
+			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
+				DLFileEntryLocalServiceUtil.getService());
+
+			dlFolderServiceAdapter = new DLFolderServiceAdapter(
+				DLFolderLocalServiceUtil.getService());
+		}
+		else {
+			dlFileEntryServiceAdapter = new DLFileEntryServiceAdapter(
+				DLFileEntryLocalServiceUtil.getService(),
+				DLFileEntryServiceUtil.getService());
+
+			dlFolderServiceAdapter = new DLFolderServiceAdapter(
+				DLFolderLocalServiceUtil.getService(),
+				DLFolderServiceUtil.getService());
+		}
+
 		BulkOperationCapability bulkOperationCapability =
-			new LiferayBulkOperationCapability(documentRepository);
+			new LiferayBulkOperationCapability(
+				documentRepository, dlFileEntryServiceAdapter,
+				dlFolderServiceAdapter);
 
 		capabilityRegistry.addExportedCapability(
 			BulkOperationCapability.class, bulkOperationCapability);

@@ -34,7 +34,7 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 <liferay-ui:tabs
 	names="current,available"
 	param="tabs2"
-	url="<%= portletURL.toString() %>"
+	portletURL="<%= portletURL %>"
 />
 
 <liferay-ui:search-container
@@ -46,7 +46,6 @@ PortletURL portletURL = (PortletURL)request.getAttribute("edit_team_assignments.
 		<portlet:param name="mvcPath" value="/edit_team_assignments.jsp" />
 		<portlet:param name="tabs1" value="<%= tabs1 %>" />
 		<portlet:param name="tabs2" value="<%= tabs2 %>" />
-		<portlet:param name="redirect" value="<%= redirect %>" />
 		<portlet:param name="teamId" value="<%= String.valueOf(team.getTeamId()) %>" />
 	</portlet:renderURL>
 

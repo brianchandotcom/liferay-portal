@@ -59,7 +59,7 @@ public class MicroblogsServiceUpgrade {
 		upgradeProcesses.add(new MicroblogsServiceUpgrade_1_0_2());
 
 		_releaseLocalService.updateRelease(
-			"com.liferay.microblogs.service", upgradeProcesses, 1, 1, false);
+			"com.liferay.microblogs.service", upgradeProcesses, 102, 1, false);
 	}
 
 	private ReleaseLocalService _releaseLocalService;

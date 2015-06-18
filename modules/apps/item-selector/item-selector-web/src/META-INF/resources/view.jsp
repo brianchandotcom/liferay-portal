@@ -35,7 +35,7 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 		}
 		%>
 
-		<div class="portlet-msg-alert">
+		<div class="alert alert-info">
 			<%= LanguageUtil.get(resourceBundle, "selection-is-not-available") %>
 		</div>
 	</c:when>

@@ -12,66 +12,72 @@
  * details.
  */
 
-package com.liferay.portlet.shopping.service.permission;
+package com.liferay.journal.service.permission.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.test.rule.MainServletTestRule;
-import com.liferay.portlet.shopping.model.ShoppingCategory;
-import com.liferay.portlet.shopping.util.test.ShoppingTestUtil;
+import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.portlet.journal.service.permission.JournalFolderPermission;
+import com.liferay.portlet.journal.service.permission.JournalPermission;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 /**
  * @author Eric Chin
  * @author Shinn Lok
  */
-public class ShoppingCategoryPermissionTest extends BasePermissionTestCase {
+@RunWith(Arquillian.class)
+public class JournalFolderPermissionCheckerTest extends BasePermissionTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			ShoppingCategoryPermission.contains(
-				permissionChecker, _category, ActionKeys.VIEW));
+			JournalFolderPermission.contains(
+				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertTrue(
-			ShoppingCategoryPermission.contains(
-				permissionChecker, _subcategory, ActionKeys.VIEW));
+			JournalFolderPermission.contains(
+				permissionChecker, _subfolder, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			ShoppingCategoryPermission.contains(
-				permissionChecker, _category, ActionKeys.VIEW));
+			JournalFolderPermission.contains(
+				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertFalse(
-			ShoppingCategoryPermission.contains(
-				permissionChecker, _subcategory, ActionKeys.VIEW));
+			JournalFolderPermission.contains(
+				permissionChecker, _subfolder, ActionKeys.VIEW));
 	}
 
 	@Override
 	protected void doSetUp() throws Exception {
-		_category = ShoppingTestUtil.addCategory(group.getGroupId());
+		_folder = JournalTestUtil.addFolder(
+			group.getGroupId(), RandomTestUtil.randomString());
 
-		_subcategory = ShoppingTestUtil.addCategory(
-			group.getGroupId(), _category.getCategoryId());
+		_subfolder = JournalTestUtil.addFolder(
+			group.getGroupId(), _folder.getFolderId(),
+			RandomTestUtil.randomString());
 	}
 
 	@Override
 	protected String getResourceName() {
-		return ShoppingPermission.RESOURCE_NAME;
+		return JournalPermission.RESOURCE_NAME;
 	}
 
-	private ShoppingCategory _category;
-	private ShoppingCategory _subcategory;
+	private JournalFolder _folder;
+	private JournalFolder _subfolder;
 
 }

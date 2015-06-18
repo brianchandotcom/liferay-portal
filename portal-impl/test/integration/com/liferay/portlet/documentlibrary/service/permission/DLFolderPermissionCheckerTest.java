@@ -40,7 +40,7 @@ import org.junit.Test;
  * @author Eric Chin
  * @author Shinn Lok
  */
-public class DLFolderPermissionTest extends BasePermissionTestCase {
+public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 
 	@ClassRule
 	@Rule

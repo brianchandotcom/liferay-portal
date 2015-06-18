@@ -26,7 +26,9 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.MainServletTestRule;
 import com.liferay.portlet.messageboards.model.MBCategory;
 import com.liferay.portlet.messageboards.model.MBCategoryConstants;
+import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.service.MBCategoryLocalServiceUtil;
+import com.liferay.portlet.messageboards.service.MBMessageLocalServiceUtil;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -37,7 +39,7 @@ import org.junit.Test;
  * @author Eric Chin
  * @author Shinn Lok
  */
-public class MBCategoryPermissionTest extends BasePermissionTestCase {
+public class MBMessagePermissionCheckerTest extends BasePermissionTestCase {
 
 	@ClassRule
 	@Rule
@@ -48,20 +50,20 @@ public class MBCategoryPermissionTest extends BasePermissionTestCase {
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			MBCategoryPermission.contains(
-				permissionChecker, _category, ActionKeys.VIEW));
+			MBMessagePermission.contains(
+				permissionChecker, _message, ActionKeys.VIEW));
 		Assert.assertTrue(
-			MBCategoryPermission.contains(
-				permissionChecker, _subcategory, ActionKeys.VIEW));
+			MBMessagePermission.contains(
+				permissionChecker, _submessage, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			MBCategoryPermission.contains(
-				permissionChecker, _category, ActionKeys.VIEW));
+			MBMessagePermission.contains(
+				permissionChecker, _message, ActionKeys.VIEW));
 		Assert.assertFalse(
-			MBCategoryPermission.contains(
-				permissionChecker, _subcategory, ActionKeys.VIEW));
+			MBMessagePermission.contains(
+				permissionChecker, _submessage, ActionKeys.VIEW));
 	}
 
 	@Override
@@ -70,14 +72,22 @@ public class MBCategoryPermissionTest extends BasePermissionTestCase {
 			ServiceContextTestUtil.getServiceContext(
 				group.getGroupId(), TestPropsValues.getUserId());
 
-		_category = MBCategoryLocalServiceUtil.addCategory(
+		_message = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
+
+		MBCategory category = MBCategoryLocalServiceUtil.addCategory(
 			TestPropsValues.getUserId(),
 			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
 
-		_subcategory = MBCategoryLocalServiceUtil.addCategory(
-			TestPropsValues.getUserId(), _category.getCategoryId(),
-			RandomTestUtil.randomString(), StringPool.BLANK, serviceContext);
+		_submessage = MBMessageLocalServiceUtil.addMessage(
+			TestPropsValues.getUserId(), RandomTestUtil.randomString(),
+			group.getGroupId(), category.getCategoryId(),
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			serviceContext);
 	}
 
 	@Override
@@ -85,7 +95,7 @@ public class MBCategoryPermissionTest extends BasePermissionTestCase {
 		return MBPermission.RESOURCE_NAME;
 	}
 
-	private MBCategory _category;
-	private MBCategory _subcategory;
+	private MBMessage _message;
+	private MBMessage _submessage;
 
 }

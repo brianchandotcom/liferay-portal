@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.productivity.center.service.panel;
+package com.liferay.my.space.service.panel;
 
-import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.productivity.center.panel.BasePanelCategory;
 import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
@@ -28,24 +28,24 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"panel.category.key=" + PanelCategoryKeys.USER_PERSONAL_PANEL},
+	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
 	service = PanelCategory.class
 )
-public class MyPanelCategory extends BasePanelCategory {
+public class UserPersonalPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-user";
+		return StringPool.BLANK;
 	}
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.MY;
+		return PanelCategoryKeys.USER_PERSONAL_PANEL;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.my");
+		return StringPool.BLANK;
 	}
 
 }

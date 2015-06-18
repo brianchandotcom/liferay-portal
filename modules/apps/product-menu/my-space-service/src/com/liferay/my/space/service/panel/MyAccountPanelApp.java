@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.productivity.center.service.panel;
+package com.liferay.my.space.service.panel;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -36,15 +36,15 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.MY,
-		"service.ranking:Integer=400"
+		"service.ranking:Integer=100"
 	},
 	service = PanelApp.class
 )
-public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
+public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getKey() {
-		return MyWorkflowInstancesPanelApp.class.getName();
+		return MyAccountPanelApp.class.getName();
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_WORKFLOW_INSTANCE;
+		return PortletKeys.MY_ACCOUNT;
 	}
 
 	@Override

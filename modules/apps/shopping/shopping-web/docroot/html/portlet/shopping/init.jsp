@@ -18,32 +18,24 @@
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
-<%@ taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %>
-<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
-<%@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %>
-<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
-<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-<%@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/ddm" prefix="liferay-ddm" %><%@
+taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
+taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
+taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@
-page import="com.liferay.portal.kernel.dao.search.DisplayTerms" %><%@
+<%@ page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
-page import="com.liferay.portal.kernel.log.Log" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProvider" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletProviderUtil" %><%@
-page import="com.liferay.portal.kernel.portlet.PortletRequestModel" %><%@
 page import="com.liferay.portal.kernel.servlet.SessionErrors" %><%@
-page import="com.liferay.portal.kernel.servlet.SessionMessages" %><%@
-page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.settings.GroupServiceSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.ParameterMapSettingsLocator" %><%@
 page import="com.liferay.portal.kernel.settings.SettingsFactory" %><%@
-page import="com.liferay.portal.kernel.upload.LiferayFileItemException" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.CalendarUtil" %><%@
@@ -52,10 +44,6 @@ page import="com.liferay.portal.kernel.util.FastDateFormatFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.KeyValuePair" %><%@
-page import="com.liferay.portal.kernel.util.ListUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
-page import="com.liferay.portal.kernel.util.LocalizationUtil" %><%@
-page import="com.liferay.portal.kernel.util.MathUtil" %><%@
 page import="com.liferay.portal.kernel.util.OrderByComparator" %><%@
 page import="com.liferay.portal.kernel.util.OrderedProperties" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
@@ -65,7 +53,6 @@ page import="com.liferay.portal.kernel.util.StringBundler" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.StringUtil" %><%@
 page import="com.liferay.portal.kernel.util.TextFormatter" %><%@
-page import="com.liferay.portal.kernel.util.UnicodeFormatter" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.model.Address" %><%@
 page import="com.liferay.portal.model.Contact" %><%@
@@ -75,7 +62,6 @@ page import="com.liferay.portal.model.Region" %><%@
 page import="com.liferay.portal.security.auth.PrincipalException" %><%@
 page import="com.liferay.portal.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.service.*" %><%@
-page import="com.liferay.portal.upload.LiferayFileItem" %><%@
 page import="com.liferay.portal.util.PortalUtil" %><%@
 page import="com.liferay.portal.util.PortletKeys" %><%@
 page import="com.liferay.portal.util.PrefsPropsUtil" %><%@
@@ -84,11 +70,7 @@ page import="com.liferay.portal.util.WebKeys" %><%@
 page import="com.liferay.portal.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portlet.PortalPreferences" %><%@
 page import="com.liferay.portlet.PortletPreferencesFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLFactoryUtil" %><%@
-page import="com.liferay.portlet.PortletURLImpl" %><%@
 page import="com.liferay.portlet.PortletURLUtil" %><%@
-page import="com.liferay.portlet.trash.model.TrashEntry" %><%@
-page import="com.liferay.portlet.trash.util.TrashUtil" %><%@
 page import="com.liferay.shopping.exception.BillingCityException" %><%@
 page import="com.liferay.shopping.exception.BillingCountryException" %><%@
 page import="com.liferay.shopping.exception.BillingEmailAddressException" %><%@
@@ -98,12 +80,12 @@ page import="com.liferay.shopping.exception.BillingPhoneException" %><%@
 page import="com.liferay.shopping.exception.BillingStateException" %><%@
 page import="com.liferay.shopping.exception.BillingStreetException" %><%@
 page import="com.liferay.shopping.exception.BillingZipException" %><%@
-page import="com.liferay.shopping.exception.CartMinQuantityException" %><%@
-page import="com.liferay.shopping.exception.CategoryNameException" %><%@
 page import="com.liferay.shopping.exception.CCExpirationException" %><%@
 page import="com.liferay.shopping.exception.CCNameException" %><%@
 page import="com.liferay.shopping.exception.CCNumberException" %><%@
 page import="com.liferay.shopping.exception.CCTypeException" %><%@
+page import="com.liferay.shopping.exception.CartMinQuantityException" %><%@
+page import="com.liferay.shopping.exception.CategoryNameException" %><%@
 page import="com.liferay.shopping.exception.CouponActiveException" %><%@
 page import="com.liferay.shopping.exception.CouponCodeException" %><%@
 page import="com.liferay.shopping.exception.CouponDateException" %><%@
@@ -153,10 +135,6 @@ page import="com.liferay.shopping.model.ShoppingItemPriceConstants" %><%@
 page import="com.liferay.shopping.model.ShoppingOrder" %><%@
 page import="com.liferay.shopping.model.ShoppingOrderConstants" %><%@
 page import="com.liferay.shopping.model.ShoppingOrderItem" %><%@
-page import="com.liferay.shopping.service.permission.ShoppingCategoryPermission" %><%@
-page import="com.liferay.shopping.service.permission.ShoppingItemPermission" %><%@
-page import="com.liferay.shopping.service.permission.ShoppingOrderPermission" %><%@
-page import="com.liferay.shopping.service.permission.ShoppingPermission" %><%@
 page import="com.liferay.shopping.service.ShoppingCartLocalServiceUtil" %><%@
 page import="com.liferay.shopping.service.ShoppingCategoryServiceUtil" %><%@
 page import="com.liferay.shopping.service.ShoppingCouponLocalServiceUtil" %><%@
@@ -167,6 +145,10 @@ page import="com.liferay.shopping.service.ShoppingItemPriceLocalServiceUtil" %><
 page import="com.liferay.shopping.service.ShoppingItemServiceUtil" %><%@
 page import="com.liferay.shopping.service.ShoppingOrderItemLocalServiceUtil" %><%@
 page import="com.liferay.shopping.service.ShoppingOrderLocalServiceUtil" %><%@
+page import="com.liferay.shopping.service.permission.ShoppingCategoryPermission" %><%@
+page import="com.liferay.shopping.service.permission.ShoppingItemPermission" %><%@
+page import="com.liferay.shopping.service.permission.ShoppingOrderPermission" %><%@
+page import="com.liferay.shopping.service.permission.ShoppingPermission" %><%@
 page import="com.liferay.shopping.settings.ShoppingGroupServiceSettings" %><%@
 page import="com.liferay.shopping.util.ShoppingUtil" %><%@
 page import="com.liferay.shopping.web.search.CouponDisplayTerms" %><%@
@@ -177,41 +159,28 @@ page import="com.liferay.shopping.web.search.OrderSearchTerms" %><%@
 page import="com.liferay.shopping.web.util.ShoppingWebComponentProvider" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.util.CreditCard" %><%@
-page import="com.liferay.util.State" %><%@
 page import="com.liferay.util.StateUtil" %>
 
-<%@
-page import="java.text.Format" %><%@
+<%@ page import="java.text.Format" %><%@
 page import="java.text.NumberFormat" %>
 
-<%@
-page import="java.util.ArrayList" %><%@
+<%@ page import="java.util.ArrayList" %><%@
 page import="java.util.Calendar" %><%@
-page import="java.util.Collections" %><%@
 page import="java.util.Currency" %><%@
 page import="java.util.Date" %><%@
 page import="java.util.Enumeration" %><%@
 page import="java.util.HashMap" %><%@
-page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Locale" %><%@
 page import="java.util.Map" %><%@
-page import="java.util.Properties" %><%@
-page import="java.util.Set" %>
+page import="java.util.Properties" %>
 
-<%@
-page import="javax.portlet.ActionRequest" %><%@
-page import="javax.portlet.PortletRequest" %><%@
-page import="javax.portlet.PortletURL" %><%@
-page import="javax.portlet.ResourceURL" %><%@
+<%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>
-
 
 <liferay-theme:defineObjects />
 <portlet:defineObjects />
 
 <%
-
 WindowState windowState = liferayPortletRequest.getWindowState();
 
 PortletURL currentURLObj = PortletURLUtil.getCurrent(liferayPortletRequest, liferayPortletResponse);

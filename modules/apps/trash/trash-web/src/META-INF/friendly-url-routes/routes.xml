@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+	<route>
+		<pattern>/{classNameId:\d+}/{classPK:\d+}/{containerModelClassNameId:\d+}/{containerModelId}/{rootContainerModelMovable}/view_container_model</pattern>
+		<implicit-parameter name="mvcPath">/view_container_model.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{classNameId:\d+}/{classPK:\d+}/{containerModelClassNameId:\d+}/view_container_model</pattern>
+		<implicit-parameter name="mvcPath">/view_container_model.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{type}/{classNameId:\d+}/{classPK:\d+}/view</pattern>
+		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="showActions">false</implicit-parameter>
+		<implicit-parameter name="showEditURL">false</implicit-parameter>
+		<implicit-parameter name="status">8</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{classNameId:\d+}/{classPK:\d+}/view</pattern>
+		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="status">8</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{type}/{trashEntryId:\d+}/view</pattern>
+		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="showActions">false</implicit-parameter>
+		<implicit-parameter name="showEditURL">false</implicit-parameter>
+		<implicit-parameter name="status">8</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/{classNameId:\d+}/view</pattern>
+		<implicit-parameter name="mvcPath">/view_content.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+		<implicit-parameter name="status">8</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/restore</pattern>
+		<implicit-parameter name="mvcPath">/restore_entry.jsp</implicit-parameter>
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern>/list</pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+	<route>
+		<pattern></pattern>
+		<ignored-parameter name="mvcPath" />
+		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
+	</route>
+</routes>

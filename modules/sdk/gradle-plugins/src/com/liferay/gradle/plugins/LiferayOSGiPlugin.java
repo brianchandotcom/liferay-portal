@@ -285,6 +285,9 @@ public class LiferayOSGiPlugin extends LiferayJavaPlugin {
 							".wsdd");
 					properties.put(Constants.FRAGMENT_HOST, bundleSymbolicName);
 					properties.put(
+						Constants.IMPORT_PACKAGE,
+						"javax.servlet,javax.servlet.http");
+					properties.put(
 						Constants.INCLUDE_RESOURCE,
 						"WEB-INF/=server-config.wsdd,classes;filter:=*.wsdd");
 

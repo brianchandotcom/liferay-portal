@@ -20,10 +20,12 @@ import java.io.File;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -40,6 +42,7 @@ import org.gradle.api.artifacts.dsl.DependencyHandler;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.Convention;
+import org.gradle.api.plugins.ExtensionAware;
 import org.gradle.api.plugins.ExtensionContainer;
 import org.gradle.api.plugins.JavaPluginConvention;
 import org.gradle.api.tasks.SourceSet;
@@ -113,11 +116,11 @@ public class GradleUtil {
 	}
 
 	public static <T> T addExtension(
-		Project project, String name, Class<T> clazz) {
+		ExtensionAware extensionAware, String name, Class<T> clazz) {
 
-		ExtensionContainer extensionContainer = project.getExtensions();
+		ExtensionContainer extensionContainer = extensionAware.getExtensions();
 
-		return extensionContainer.create(name, clazz, project);
+		return extensionContainer.create(name, clazz, extensionAware);
 	}
 
 	public static SourceSet addSourceSet(Project project, String name) {
@@ -208,8 +211,10 @@ public class GradleUtil {
 		return convention.getPlugin(clazz);
 	}
 
-	public static <T> T getExtension(Project project, Class<T> clazz) {
-		ExtensionContainer extensionContainer = project.getExtensions();
+	public static <T> T getExtension(
+		ExtensionAware extensionAware, Class<T> clazz) {
+
+		ExtensionContainer extensionContainer = extensionAware.getExtensions();
 
 		return extensionContainer.getByType(clazz);
 	}
@@ -289,6 +294,32 @@ public class GradleUtil {
 				iterator.remove();
 			}
 		}
+	}
+
+	public static File toFile(Project project, Object obj) {
+		if (obj == null) {
+			return null;
+		}
+
+		return project.file(obj);
+	}
+
+	public static String toString(Object obj) {
+		if (obj == null) {
+			return null;
+		}
+
+		return obj.toString();
+	}
+
+	public static List<String> toStringList(Iterable<?> iterable) {
+		List<String> list = new ArrayList<>();
+
+		for (Object obj : iterable) {
+			list.add(obj.toString());
+		}
+
+		return list;
 	}
 
 	private static Dependency _addDependency(

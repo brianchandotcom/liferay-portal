@@ -15,28 +15,28 @@
 package com.liferay.portal.kernel.portlet.bridges.mvc;
 
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 /**
- * @author Michael C. Han
+ * @author Sergio González
  */
-public interface MVCActionCommand {
+public interface MVCResourceCommand {
 
-	public static final MVCActionCommand EMPTY = new MVCActionCommand() {
+	public static final MVCResourceCommand EMPTY = new MVCResourceCommand() {
 
 		@Override
-		public boolean processAction(
-				PortletRequest portletRequest, PortletResponse portletResponse)
-			throws PortletException {
+		public boolean serveResource(
+			ResourceRequest resourceRequest,
+			ResourceResponse resourceResponse) {
 
 			return false;
 		}
 
 	};
 
-	public boolean processAction(
-			PortletRequest portletRequest, PortletResponse portletResponse)
+	public boolean serveResource(
+			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws PortletException;
 
 }

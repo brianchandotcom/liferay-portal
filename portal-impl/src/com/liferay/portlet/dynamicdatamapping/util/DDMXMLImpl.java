@@ -40,7 +40,6 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Field;
 import com.liferay.portlet.dynamicdatamapping.storage.FieldConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.Fields;
-import com.liferay.util.xml.XMLFormatter;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -58,38 +57,6 @@ import java.util.Set;
  */
 @DoPrivileged
 public class DDMXMLImpl implements DDMXML {
-
-	@Override
-	public String formatXML(Document document) {
-		try {
-			return document.formattedString(_XML_INDENT);
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-	}
-
-	@Override
-	public String formatXML(String xml) {
-
-		// This is only supposed to format your xml, however, it will also
-		// unwantingly change &#169; and other characters like it into their
-		// respective readable versions
-
-		try {
-			xml = StringUtil.replace(xml, "&#", "[$SPECIAL_CHARACTER$]");
-			xml = XMLFormatter.toString(xml, _XML_INDENT);
-			xml = StringUtil.replace(xml, "[$SPECIAL_CHARACTER$]", "&#");
-
-			return xml;
-		}
-		catch (IOException ioe) {
-			throw new SystemException(ioe);
-		}
-		catch (org.dom4j.DocumentException de) {
-			throw new SystemException(de);
-		}
-	}
 
 	@Override
 	public Fields getFields(DDMStructure structure, String xml)
@@ -430,8 +397,6 @@ public class DDMXMLImpl implements DDMXML {
 	private static final String _DYNAMIC_ELEMENT = "dynamic-element";
 
 	private static final String _LOCALE = "locale";
-
-	private static final String _XML_INDENT = "  ";
 
 	private static final Log _log = LogFactoryUtil.getLog(DDMXMLImpl.class);
 

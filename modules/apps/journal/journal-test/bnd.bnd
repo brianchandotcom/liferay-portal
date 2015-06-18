@@ -1,7 +1,11 @@
 Bundle-Name: Liferay Journal Test
 Bundle-SymbolicName: com.liferay.journal.test
 Bundle-Version: 1.0.0
+Import-Package:\
+	!com.liferay.util.xml,\
+	*
 Include-Resource:\
 	classes,\
 	test-classes/integration/,\
-	../../../../portal-impl/test/test-portal-impl.properties
+	../../../../portal-impl/test/test-portal-impl.properties,\
+	@${app.server.lib.portal.dir}/util-java.jar!/com/liferay/util/xml/XMLUtil.class 

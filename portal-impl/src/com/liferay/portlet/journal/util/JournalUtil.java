@@ -84,7 +84,6 @@ import com.liferay.portlet.asset.service.AssetTagLocalServiceUtil;
 import com.liferay.portlet.dynamicdatamapping.model.DDMStructure;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.model.JournalArticleDisplay;
 import com.liferay.portlet.journal.model.JournalFolder;
@@ -95,6 +94,7 @@ import com.liferay.portlet.journal.service.JournalArticleServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
 import com.liferay.util.FiniteUniqueStack;
+import com.liferay.util.xml.XMLUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1125,7 +1125,7 @@ public class JournalUtil {
 				_mergeArticleContentDelete(curRootElement, newDocument);
 			}
 
-			curContent = DDMXMLUtil.formatXML(curDocument);
+			curContent = XMLUtil.formatXML(curDocument);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1174,7 +1174,7 @@ public class JournalUtil {
 					oldDocument, newRootElement,
 					LocaleUtil.toLanguageId(defaultImportLocale));
 
-				content = DDMXMLUtil.formatXML(newDocument);
+				content = XMLUtil.formatXML(newDocument);
 			}
 
 			Attribute defaultLocaleAttribute = newRootElement.attribute(
@@ -1191,7 +1191,7 @@ public class JournalUtil {
 			if (!LocaleUtil.equals(defaultContentLocale, defaultImportLocale)) {
 				defaultLocaleAttribute.setValue(defaultImportLanguageId);
 
-				content = DDMXMLUtil.formatXML(newDocument);
+				content = XMLUtil.formatXML(newDocument);
 			}
 		}
 		catch (Exception e) {
@@ -1228,7 +1228,7 @@ public class JournalUtil {
 
 			removeArticleLocale(rootElement, languageId);
 
-			content = DDMXMLUtil.formatXML(document);
+			content = XMLUtil.formatXML(document);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -1278,7 +1278,7 @@ public class JournalUtil {
 
 			_removeOldContent(path, contentRoot, xsdDoc);
 
-			content = DDMXMLUtil.formatXML(contentDoc);
+			content = XMLUtil.formatXML(contentDoc);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

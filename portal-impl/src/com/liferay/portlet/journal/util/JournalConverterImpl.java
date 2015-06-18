@@ -45,7 +45,7 @@ import com.liferay.portlet.dynamicdatamapping.storage.Fields;
 import com.liferay.portlet.dynamicdatamapping.util.DDMFieldsCounter;
 import com.liferay.portlet.dynamicdatamapping.util.DDMImpl;
 import com.liferay.portlet.dynamicdatamapping.util.DDMUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
+import com.liferay.util.xml.XMLUtil;
 
 import java.io.Serializable;
 
@@ -143,7 +143,7 @@ public class JournalConverterImpl implements JournalConverter {
 			}
 		}
 
-		return DDMXMLUtil.formatXML(document.asXML());
+		return XMLUtil.formatXML(document.asXML());
 	}
 
 	@Override
@@ -207,7 +207,7 @@ public class JournalConverterImpl implements JournalConverter {
 				dynamicElementElement, defaultLocale.toString());
 		}
 
-		return DDMXMLUtil.formatXML(document);
+		return XMLUtil.formatXML(document);
 	}
 
 	@Override
@@ -229,7 +229,7 @@ public class JournalConverterImpl implements JournalConverter {
 				dynamicElementElement, defaultLanguageId);
 		}
 
-		return DDMXMLUtil.formatXML(document);
+		return XMLUtil.formatXML(document);
 	}
 
 	protected void addDDMFields(

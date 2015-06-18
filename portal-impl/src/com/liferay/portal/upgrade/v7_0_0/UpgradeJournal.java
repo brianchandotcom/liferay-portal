@@ -42,9 +42,9 @@ import com.liferay.portlet.dynamicdatamapping.model.DDMStructureConstants;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
 import com.liferay.portlet.dynamicdatamapping.model.DDMTemplateConstants;
 import com.liferay.portlet.dynamicdatamapping.storage.StorageType;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.util.ContentUtil;
+import com.liferay.util.xml.XMLUtil;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -432,7 +432,7 @@ public class UpgradeJournal extends UpgradeBaseJournal {
 			dynamicElementElement.add(dynamicContentElement);
 		}
 
-		return DDMXMLUtil.formatXML(newDocument);
+		return XMLUtil.formatXML(newDocument);
 	}
 
 	@Override

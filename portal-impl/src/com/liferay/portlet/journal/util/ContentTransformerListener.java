@@ -26,9 +26,9 @@ import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
-import com.liferay.portlet.dynamicdatamapping.util.DDMXMLUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.util.xml.XMLUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -201,7 +201,7 @@ public class ContentTransformerListener extends BaseTransformerListener {
 
 			replace(document, tokens);
 
-			xml = DDMXMLUtil.formatXML(document);
+			xml = XMLUtil.formatXML(document);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

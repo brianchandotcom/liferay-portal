@@ -30,14 +30,6 @@ import java.util.Locale;
  */
 public class DDMXMLUtil {
 
-	public static String formatXML(Document document) {
-		return getDDMXML().formatXML(document);
-	}
-
-	public static String formatXML(String xml) {
-		return getDDMXML().formatXML(xml);
-	}
-
 	public static DDMXML getDDMXML() {
 		PortalRuntimePermission.checkGetBeanProperty(DDMXMLUtil.class);
 

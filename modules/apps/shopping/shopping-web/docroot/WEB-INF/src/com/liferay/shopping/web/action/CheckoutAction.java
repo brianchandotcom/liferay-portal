@@ -14,13 +14,6 @@
 
 package com.liferay.shopping.web.action;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletConfig;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
-
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.settings.SettingsFactory;
@@ -61,9 +54,15 @@ import com.liferay.shopping.model.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.ShoppingOrderLocalServiceUtil;
 import com.liferay.shopping.settings.ShoppingGroupServiceSettings;
-import com.liferay.shopping.util.ShoppingServiceComponentProvider;
 import com.liferay.shopping.util.ShoppingUtil;
 import com.liferay.shopping.web.util.ShoppingWebComponentProvider;
+
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionMapping;
 
 /**
  * @author Brian Wing Shun Chan
@@ -164,18 +163,18 @@ public class CheckoutAction extends CartAction {
 			WebKeys.THEME_DISPLAY);
 
 		ShoppingCart cart = ShoppingUtil.getCart(actionRequest);
-	
-		ShoppingWebComponentProvider shoppingWebComponentProvider = 
+
+		ShoppingWebComponentProvider shoppingWebComponentProvider =
 			ShoppingWebComponentProvider.getShoppingWebComponentProvider();
 
-		SettingsFactory settingsFactory = 
+		SettingsFactory settingsFactory =
 			shoppingWebComponentProvider.getSettingsFactory();
-			
-		ShoppingGroupServiceSettings shoppingGroupServiceSettings = 
+
+		ShoppingGroupServiceSettings shoppingGroupServiceSettings =
 			settingsFactory.getSettings(
 				ShoppingGroupServiceSettings.class,
 				new GroupServiceSettingsLocator(
-					themeDisplay.getScopeGroupId(), 
+					themeDisplay.getScopeGroupId(),
 					ShoppingConstants.SERVICE_NAME));
 
 		String returnURL = ShoppingUtil.getPayPalReturnURL(

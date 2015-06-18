@@ -42,11 +42,8 @@ import com.liferay.portal.security.permission.AdvancedPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.PermissionCheckerBag;
 import com.liferay.portal.security.permission.PermissionThreadLocal;
-import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.security.permission.ResourceBlockIdsBag;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ResourceBlockLocalServiceUtil;
-import com.liferay.portal.service.ResourceBlockPermissionLocalServiceUtil;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
@@ -74,6 +71,14 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 
 			String className = document.get(Field.ENTRY_CLASS_NAME);
 
+			String classPK = document.get(Field.ENTRY_CLASS_PK);
+
+			if (Validator.isNull(className) && Validator.isNull(classPK)) {
+				className = document.get(Field.ROOT_ENTRY_CLASS_NAME);
+
+				classPK = document.get(Field.ROOT_ENTRY_CLASS_PK);
+			}
+
 			boolean relatedEntry = GetterUtil.getBoolean(
 				document.get(Field.RELATED_ENTRY));
 
@@ -82,27 +87,15 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 					document.get(Field.CLASS_NAME_ID));
 
 				className = PortalUtil.getClassName(classNameId);
-			}
 
-			if (Validator.isNull(className)) {
-				return;
-			}
-
-			String classPK = document.get(Field.ROOT_ENTRY_CLASS_PK);
-
-			if (Validator.isNull(classPK)) {
-				classPK = document.get(Field.ENTRY_CLASS_PK);
-			}
-
-			if (relatedEntry) {
 				classPK = document.get(Field.CLASS_PK);
 			}
 
-			if (Validator.isNull(classPK)) {
+			if (Validator.isNull(className) || Validator.isNull(classPK)) {
 				return;
 			}
 
-			Indexer indexer = IndexerRegistryUtil.getIndexer(className);
+			Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(className);
 
 			if (!indexer.isPermissionAware()) {
 				return;
@@ -178,72 +171,26 @@ public class SearchPermissionCheckerImpl implements SearchPermissionChecker {
 			Document doc)
 		throws Exception {
 
-		Group group = null;
-
-		if (groupId > 0) {
-			group = GroupLocalServiceUtil.getGroup(groupId);
-		}
-
-		List<Role> roles = ListUtil.copy(
-			ResourceActionsUtil.getRoles(companyId, group, className, null));
-
-		if (groupId > 0) {
-			List<Role> teamRoles = RoleLocalServiceUtil.getTeamRoles(groupId);
-
-			roles.addAll(teamRoles);
-		}
-
-		long[] roleIdsArray = new long[roles.size()];
-
-		for (int i = 0; i < roleIdsArray.length; i++) {
-			Role role = roles.get(i);
-
-			roleIdsArray[i] = role.getRoleId();
-		}
-
-		boolean[] hasResourcePermissions = null;
+		List<Role> roles = null;
 
 		if (ResourceBlockLocalServiceUtil.isSupported(className)) {
-			ResourceBlockIdsBag resourceBlockIdsBag =
-				ResourceBlockLocalServiceUtil.getResourceBlockIdsBag(
-					companyId, groupId, className, roleIdsArray);
-
-			long actionId = ResourceBlockLocalServiceUtil.getActionId(
-				className, ActionKeys.VIEW);
-
-			List<Long> resourceBlockIds =
-				resourceBlockIdsBag.getResourceBlockIds(actionId);
-
-			hasResourcePermissions = new boolean[roleIdsArray.length];
-
-			for (long resourceBlockId : resourceBlockIds) {
-				for (int i = 0; i < roleIdsArray.length; i++) {
-					int count =
-						ResourceBlockPermissionLocalServiceUtil.
-							getResourceBlockPermissionsCount(
-								resourceBlockId, roleIdsArray[i]);
-
-					hasResourcePermissions[i] = (count > 0);
-				}
-			}
+			roles = ResourceBlockLocalServiceUtil.getRolesWithPermission(
+				className, Long.valueOf(classPK), ActionKeys.VIEW);
 		}
 		else {
-			hasResourcePermissions =
-				ResourcePermissionLocalServiceUtil.hasResourcePermissions(
-					companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
-					classPK, roleIdsArray, ActionKeys.VIEW);
+			roles = ResourcePermissionLocalServiceUtil.getRolesWithPermission(
+				companyId, className, ResourceConstants.SCOPE_INDIVIDUAL,
+				classPK, ActionKeys.VIEW);
+		}
+
+		if (roles.isEmpty()) {
+			return;
 		}
 
 		List<Long> roleIds = new ArrayList<>();
 		List<String> groupRoleIds = new ArrayList<>();
 
-		for (int i = 0; i < hasResourcePermissions.length; i++) {
-			if (!hasResourcePermissions[i]) {
-				continue;
-			}
-
-			Role role = roles.get(i);
-
+		for (Role role : roles) {
 			if ((role.getType() == RoleConstants.TYPE_ORGANIZATION) ||
 				(role.getType() == RoleConstants.TYPE_SITE)) {
 

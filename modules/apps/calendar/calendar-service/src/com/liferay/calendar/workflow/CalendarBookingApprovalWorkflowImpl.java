@@ -120,8 +120,8 @@ public class CalendarBookingApprovalWorkflowImpl
 		CalendarResource calendarResource =
 			calendarBooking.getCalendarResource();
 
-		if (CalendarServiceConfigurationValues
-				.CALENDAR_AUTO_APPROVE_GROUP_EVENT &&
+		if (CalendarServiceConfigurationValues.
+				CALENDAR_AUTO_APPROVE_GROUP_EVENT &&
 			calendarResource.isGroup() &&
 			CalendarPermission.contains(
 				permissionChecker, calendarBooking.getCalendar(),

@@ -71,8 +71,8 @@ public class CalendarResourceLocalServiceImpl
 			classPK = calendarResourceId;
 		}
 
-		if (CalendarServiceConfigurationValues
-				.CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE ||
+		if (CalendarServiceConfigurationValues.
+				CALENDAR_RESOURCE_FORCE_AUTOGENERATE_CODE ||
 			Validator.isNull(code)) {
 
 			code = String.valueOf(calendarResourceId);

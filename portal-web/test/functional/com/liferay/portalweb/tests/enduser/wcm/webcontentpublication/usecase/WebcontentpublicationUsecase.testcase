@@ -1482,7 +1482,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54823" name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
+	<command name="ViewAPPortletAsNewUserSiteAdministratorViaUserSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

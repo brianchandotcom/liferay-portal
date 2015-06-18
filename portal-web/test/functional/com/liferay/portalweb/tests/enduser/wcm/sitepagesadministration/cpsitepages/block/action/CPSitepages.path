@@ -66,12 +66,12 @@
 </tr>
 <tr>
 	<td>NAVIGATION_MY_PROFILE</td>
-	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'My Profile')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Profile')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MY_DASHBOARD</td>
-	<td>//li[contains(@id,'_156_tabs')]/a[contains(.,'My Dashboard')]</td>
+	<td>//li[contains(@id,'tabs')]/a[contains(.,'My Dashboard')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -254,22 +254,22 @@
 </tr>
 <tr>
 	<td>DETAILS_HTML_TITLE_FIELD</td>
-	<td>//input[@id='_156_title']</td>
+	<td>//input[contains(@id,'title')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_FRIENDLY_BASE_URL</td>
-	<td>//span[@id='_156_urlBase']</td>
+	<td>//span[contains(@id,'urlBase')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_FRIENDLY_URL_FIELD</td>
-	<td>//input[@id='_156_friendlyURL']</td>
+	<td>//input[contains(@id,'friendlyURL')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DETAILS_HIDDEN_CHECKBOX</td>
-	<td>//input[@id='_156_hidden']</td>
+	<td>//input[contains(@id,'hidden')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -284,7 +284,7 @@
 </tr>
 <tr>
 	<td>DETAILS_TYPE_SELECT</td>
-	<td>//select[@id='_156_type']</td>
+	<td>//select[contains(@id,'type')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -295,7 +295,7 @@
 <!--DETAILS_PAGE_TYPE_PANEL-->
 <tr>
 	<td>DETAILS_PAGE_TYPE_PANEL_DESCRIPTION_FIELD</td>
-	<td>//div[@id='_156_layoutTypeForm']/div/div/textarea[@id='_156_descriptionPanel']</td>
+	<td>//div[contains(@id,'layoutTypeForm')]/div/div/textarea[contains(@id,'descriptionPanel')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -352,12 +352,12 @@
 </tr>
 <tr>
 	<td>INCOMPLETE_STAGING_PAGE_VARIATION_ENABLE_BUTTON</td>
-	<td>//button[@id='_156_enableLayout']</td>
+	<td>//button[contains(@id,'enableLayout')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>INCOMPLETE_STAGING_PAGE_VARIATION_DELETE_BUTTON</td>
-	<td>//button[@id='_156_deleteLayout']</td>
+	<td>//button[contains(@id,'deleteLayout')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -368,7 +368,7 @@
 <!--LOGO-->
 <tr>
 	<td>LOGO_NAVIGATION</td>
-	<td>//a[@id='_156_logoLink']</td>
+	<td>//a[contains(@id,'logoLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -378,7 +378,7 @@
 </tr>
 <tr>
 	<td>LOGO_UPLOAD_IMAGE_IFRAME</td>
-	<td>//iframe[@id='_156_changeLogo_iframe_']</td>
+	<td>//iframe[contains(@id,'changeLogo_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -409,7 +409,7 @@
 </tr>
 <tr>
 	<td>LOOK_AND_FEEL_COLOR_SCHEMES_DARK_RADIO_BUTTON</td>
-	<td>//div[contains(@class,'theme-entry')]//input[@id='_156_regularColorSchemeId0']</td>
+	<td>//div[contains(@class,'theme-entry')]//input[contains(@id,'regularColorSchemeId0')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -419,7 +419,7 @@
 </tr>
 <tr>
 	<td>LOOK_AND_FEEL_COLOR_SCHEMES_DEFAULT_RADIO_BUTTON</td>
-	<td>//div[contains(@class,'theme-entry')]//input[@id='_156_regularColorSchemeId1']</td>
+	<td>//div[contains(@class,'theme-entry')]//input[contains(@id,'regularColorSchemeId1')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -429,7 +429,7 @@
 </tr>
 <tr>
 	<td>LOOK_AND_FEEL_COLOR_SCHEMES_LIGHT_RADIO_BUTTON</td>
-	<td>//div[contains(@class,'theme-entry')]//input[@id='_156_regularColorSchemeId2']</td>
+	<td>//div[contains(@class,'theme-entry')]//input[contains(@id,'regularColorSchemeId2')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -440,17 +440,17 @@
 <!--JAVASCRIPT-->
 <tr>
 	<td>JAVASCRIPT_NAVIGATION</td>
-	<td>//a[@id='_156_javascriptLink']</td>
+	<td>//a[contains(@id,'javascriptLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>JAVASCRIPT_TEXTAREA</td>
-	<td>//textarea[@id='_156_javascript']</td>
+	<td>//textarea[contains(@id,'javascript')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>JAVASCRIPT_LABEL</td>
-	<td>//label[@for='_156_javascript']</td>
+	<td>//label[contains(@for,'javascript')]</td>
 	<td></td>
 </tr>
 <tr>

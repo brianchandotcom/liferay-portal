@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>IMPORT_IFRAME</td>
-	<td>//iframe[@id='_156_importDialog_iframe_']</td>
+	<td>//iframe[contains(@id,'importDialog_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_156_PERMISSIONS']</td>
+	<td>//input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -102,7 +102,7 @@
 <!--PAGES-->
 <tr>
 	<td>PAGES_CHANGE_LINK</td>
-	<td>//div/a[@id='_156_pagesLink']</td>
+	<td>//div/a[contains(@id,'pagesLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,17 +117,17 @@
 </tr>
 <tr>
 	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_LAYOUT_SET_SETTINGS']</td>
+	<td>//input[contains(@id,'LAYOUT_SET_SETTINGS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_THEME_REFERENCE']</td>
+	<td>//input[contains(@id,'THEME_REFERENCE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_156_LOGO']</td>
+	<td>//input[contains(@id,'LOGO')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -148,27 +148,27 @@
 <!--APPLICATION-->
 <tr>
 	<td>APPLICATION_ALL_APPLICATIONS_RADIO</td>
-	<td>//input[@id='_156_allApplications']</td>
+	<td>//input[contains(@id,'allApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CHOOSE_APPLICATIONS_RADIO</td>
-	<td>//input[@id='_156_chooseApplications']</td>
+	<td>//input[contains(@id,'chooseApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CHANGE_LINK</td>
-	<td>//a[@id='_156_globalConfigurationLink']</td>
+	<td>//a[contains(@id,'globalConfigurationLink')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_NAME_CHECKBOX</td>
-	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_NAME</td>
-	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]</td>
+	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,12 +179,12 @@
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_ALL_CONTENT_RADIO</td>
-	<td>//input[@id='_156_allContent']</td>
+	<td>//input[contains(@id,'allContent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
-	<td>//input[@id='_156_chooseContent']</td>
+	<td>//input[contains(@id,'chooseContent')]</td>
 	<td></td>
 </tr>
 <tr>

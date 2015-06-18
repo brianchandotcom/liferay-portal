@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>CONFIGURATION_FRAME</td>
-	<td>//iframe[contains(@id,'_156_exportDialog_iframe_')]</td>
+	<td>//iframe[contains(@id,'exportDialog_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>IMPORT_FRAME</td>
-	<td>//iframe[contains(@id,'_156_importDialog_iframe_')]</td>
+	<td>//iframe[contains(@id,'importDialog_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -60,22 +60,22 @@
 </tr>
 <tr>
 	<td>IMPORT_CONTINUE</td>
-	<td>//button[@id='_156_continueButton']</td>
+	<td>//button[contains(@id,'continueButton')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IMPORT_CONTINUE_2</td>
-	<td>//button[@id='_156_continue']</td>
+	<td>//button[contains(@id,'continue')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>IMPORT</td>
-	<td>//div[@id='_156_importStrategy']/div/button[2]</td>
+	<td>//div[contains(@id,'importStrategy')]/div/button[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>EXPORT_FILE_NAME</td>
-	<td>//input[@id='_156_exportFileName']</td>
+	<td>//input[contains(@id,'exportFileName')]</td>
 	<td></td>
 </tr>
 <tr>

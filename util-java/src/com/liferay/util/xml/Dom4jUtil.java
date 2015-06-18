@@ -16,10 +16,8 @@ package com.liferay.util.xml;
 
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayOutputStream;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringReader;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.xml.SecureXMLFactoryProviderUtil;
 
 import java.io.IOException;
@@ -37,60 +35,24 @@ import org.xml.sax.XMLReader;
  * @author Brian Wing Shun Chan
  * @author Alan Zimmerman
  */
-public class XMLFormatter {
+public class Dom4jUtil {
 
-	public static String fixProlog(String xml) {
+	public static String formatXML(String xml, String indent)
+		throws DocumentException, IOException {
 
-		// LEP-1921
+		XMLReader xmlReader = null;
 
-		if (xml != null) {
-			int pos = xml.indexOf(CharPool.LESS_THAN);
+		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
+				!= null) {
 
-			if (pos > 0) {
-				xml = xml.substring(pos);
-			}
+			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
 		}
 
-		return xml;
-	}
+		SAXReader saxReader = new SAXReader(xmlReader);
 
-	public static String fromCompactSafe(String xml) {
-		return StringUtil.replace(xml, "[$NEW_LINE$]", StringPool.NEW_LINE);
-	}
+		Document document = saxReader.read(new UnsyncStringReader(xml));
 
-	public static String stripInvalidChars(String xml) {
-		if (Validator.isNull(xml)) {
-			return xml;
-		}
-
-		// Strip characters that are not valid in the 1.0 XML spec
-		// http://www.w3.org/TR/2000/REC-xml-20001006#NT-Char
-
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < xml.length(); i++) {
-			char c = xml.charAt(i);
-
-			if ((c == 0x9) || (c == 0xA) || (c == 0xD) ||
-				((c >= 0x20) && (c <= 0xD7FF)) ||
-				((c >= 0xE000) && (c <= 0xFFFD)) ||
-				((c >= 0x10000) && (c <= 0x10FFFF))) {
-
-				sb.append(c);
-			}
-		}
-
-		return sb.toString();
-	}
-
-	public static String toCompactSafe(String xml) {
-		return StringUtil.replace(
-			xml,
-			new String[] {
-				StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE,
-				StringPool.RETURN
-			},
-			new String[] {"[$NEW_LINE$]", "[$NEW_LINE$]", "[$NEW_LINE$]"});
+		return toString(document, indent);
 	}
 
 	public static String toString(Node node) throws IOException {
@@ -153,30 +115,6 @@ public class XMLFormatter {
 		}
 
 		return content;
-	}
-
-	public static String toString(String xml)
-		throws DocumentException, IOException {
-
-		return toString(xml, StringPool.TAB);
-	}
-
-	public static String toString(String xml, String indent)
-		throws DocumentException, IOException {
-
-		XMLReader xmlReader = null;
-
-		if (SecureXMLFactoryProviderUtil.getSecureXMLFactoryProvider()
-				!= null) {
-
-			xmlReader = SecureXMLFactoryProviderUtil.newXMLReader();
-		}
-
-		SAXReader saxReader = new SAXReader(xmlReader);
-
-		Document document = saxReader.read(new UnsyncStringReader(xml));
-
-		return toString(document, indent);
 	}
 
 }

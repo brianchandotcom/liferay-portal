@@ -43,7 +43,6 @@ import com.liferay.portal.model.ResourcePermission;
 import com.liferay.portal.model.Subscription;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
@@ -52,7 +51,6 @@ import com.liferay.portlet.asset.model.AssetLink;
 import com.liferay.portlet.asset.model.AssetTag;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.calendar.model.CalEvent;
-import com.liferay.portlet.calendar.service.CalEventLocalServiceUtil;
 import com.liferay.portlet.messageboards.model.MBDiscussion;
 import com.liferay.portlet.messageboards.model.MBMessage;
 import com.liferay.portlet.messageboards.model.MBMessageConstants;
@@ -150,7 +148,7 @@ public class CalendarImporterLocalServiceImpl
 	@Override
 	public void importCalEvents() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			CalEventLocalServiceUtil.getActionableDynamicQuery();
+			calEventLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setPerformActionMethod(
 			new ActionableDynamicQuery.PerformActionMethod() {
@@ -614,7 +612,7 @@ public class CalendarImporterLocalServiceImpl
 
 		serviceContext.setCompanyId(companyId);
 
-		long userId = UserLocalServiceUtil.getDefaultUserId(companyId);
+		long userId = userLocalService.getDefaultUserId(companyId);
 
 		serviceContext.setUserId(userId);
 
@@ -1134,8 +1132,9 @@ public class CalendarImporterLocalServiceImpl
 
 	private static final String _ASSET_VOCABULARY_NAME = "Calendar Event Types";
 
-	private static Map<Integer, Frequency> _frequencyMap = new HashMap<>();
-	private static Map<Integer, Weekday> _weekdayMap = new HashMap<>();
+	private static final Map<Integer, Frequency> _frequencyMap =
+		new HashMap<>();
+	private static final Map<Integer, Weekday> _weekdayMap = new HashMap<>();
 
 	static {
 		_frequencyMap.put(TZSRecurrence.DAILY, Frequency.DAILY);

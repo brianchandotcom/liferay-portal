@@ -149,8 +149,6 @@ ShoppingOrder order = ShoppingOrderLocalServiceUtil.getLatestOrder(user.getUserI
 
 	<%
 	
-	com.pfellwock.P.print("checkout-second-2");
-	
 	boolean showAvailability = PrefsPropsUtil.getBoolean(company.getCompanyId(), PropsKeys.SHOPPING_ITEM_SHOW_AVAILABILITY);
 
 	StringBundler itemIds = new StringBundler();

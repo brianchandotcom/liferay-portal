@@ -102,6 +102,7 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 		String fromAddress = user.getEmailAddress();
 		String fromName = user.getFullName();
+		String mx = themeDisplay.getCompany().getMx();
 
 		InternetAddress from = new InternetAddress(fromAddress, fromName);
 
@@ -153,6 +154,9 @@ public class ViewMVCActionCommand extends BaseMVCActionCommand {
 
 			MailMessage message = new MailMessage(
 				from, to, subject, body, true);
+
+			message.setMessageId(
+				PortalUtil.getMailId(mx, "invitation", user.getUserId()));
 
 			MailServiceUtil.sendEmail(message);
 		}

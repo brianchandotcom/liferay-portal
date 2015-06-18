@@ -17,7 +17,7 @@
 	</publications>
 
 	<dependencies defaultconf="default">
-		<dependency conf="test->default" name="com.liferay.arquillian.extension.junit.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="aopalliance" org="aopalliance" rev="1.0" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 	</dependencies>

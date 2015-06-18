@@ -86,8 +86,7 @@ public class ResourceBlockLocalServiceTest {
 				expectedType = ExpectedType.EXACT
 			),
 			@ExpectedLog(
-				dbType = DB.TYPE_MYSQL,
-				expectedLog = "Duplicate entry ",
+				dbType = DB.TYPE_MYSQL, expectedLog = "Duplicate entry ",
 				expectedType = ExpectedType.PREFIX
 			),
 			@ExpectedLog(

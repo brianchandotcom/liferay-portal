@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>STATUS</td>
-	<td>//select[@id='_174_statusId']</td>
+	<td>//select[contains(@id,'statusId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>REPLY_COMMENTS</td>
-	<td>//textarea[@id='_174_replyComments']</td>
+	<td>//textarea[contains(@id,'replyComments')]</td>
 	<td></td>
 </tr>
 <tr>

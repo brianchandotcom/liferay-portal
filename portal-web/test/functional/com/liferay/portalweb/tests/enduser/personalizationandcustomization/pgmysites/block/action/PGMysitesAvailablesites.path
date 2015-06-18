@@ -35,12 +35,12 @@
 </tr>
 <tr>
 	<td>SEARCH_FIELD</td>
-	<td>//div[@id='toggle_id_users_admin_group_searchsimple']//input</td>
+	<td>//div[@id='toggle_id_users_admin_group_searchsimple']/input[contains(@name,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SEARCH_BUTTON</td>
-	<td>//div[@id='toggle_id_users_admin_group_searchsimple']//button</td>
+	<td>//div[@id='toggle_id_users_admin_group_searchsimple']//button[contains(.,'Search')]</td>
 	<td></td>
 </tr>
 <tr>

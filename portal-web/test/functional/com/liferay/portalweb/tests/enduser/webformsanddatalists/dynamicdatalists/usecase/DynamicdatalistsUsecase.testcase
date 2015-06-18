@@ -69,14 +69,14 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsAddlist#ERROR_MESSAGE_2" value1="Please enter a valid definition." />
 	</command>
 
-	<command known-issues="LPS-54988" name="AddRecord" priority="5">
+	<command name="AddRecord" priority="5">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text Label" />
 		<var name="fieldName" value="Text_Name" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -136,7 +136,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Dynamic Data List Display" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
@@ -393,11 +393,11 @@
 		<execute function="AssertElementPresent" locator1="xpath=(//div[@data-fieldname='Text'][3]/input[@value='${ddlRecordFieldData} 2'])" />
 	</command>
 
-	<command known-issues="LPS-54988" name="AssertConfigurationMenulist" priority="3">
+	<command name="AssertConfigurationMenulist" priority="3">
 		<var name="ddlDataDefinitionName" value="To Do" />
 		<var name="ddlListName" value="List Name" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -451,15 +451,15 @@
 		<execute function="SelectFrame" locator1="PGDynamicdatalistsConfiguration#CONFIGURATION_IFRAME" />
 	</command>
 
-	<command known-issues="LPS-54988" name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
+	<command name="AssertDecimalFieldInvalidDataErrorMessage" priority="4">
 		<var name="ddlDataDefinitionName" value="Decimal Invalid Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="0.987a" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Decimal" />
 		<var name="fieldFieldLabel" value="Decimal" />
 		<var name="fieldName" value="Decimal" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -564,7 +564,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-54988" name="AssertGuestCannotEditRecord" priority="4">
+	<command name="AssertGuestCannotEditRecord" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Data Definition" />
 		<var name="ddlListDescription" value="List Description" />
@@ -580,8 +580,8 @@
 		<var name="fieldName1" value="Text" />
 		<var name="fieldName2" value="Document" />
 		<var name="localizedLanguage" value="Catalan (Spain)" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -750,15 +750,15 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsEditrecord#ERROR_MESSAGE" value1="You do not have the required permissions." />
 	</command>
 
-	<command known-issues="LPS-54988" name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
+	<command name="AssertIntegerFieldInvalidDataErrorMessage" priority="4">
 		<var name="ddlDataDefinitionName" value="Integer Invalid Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="aaaa" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Integer" />
 		<var name="fieldFieldLabel" value="Integer" />
 		<var name="fieldName" value="Integer" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -819,15 +819,15 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsAddrecord#RECORD_FIELD_ALERT" value1="Please enter only digits." />
 	</command>
 
-	<command known-issues="LPS-54988" name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
+	<command name="AssertNumberFieldInvalidDataErrorMessage" priority="4">
 		<var name="ddlDataDefinitionName" value="Number Predefined Value Data Definition Name" />
 		<var name="ddlInvalidRecordFieldData" value="555b" />
 		<var name="ddlListName" value="List Name" />
 		<var name="field" value="Number" />
 		<var name="fieldFieldLabel" value="Number" />
 		<var name="fieldName" value="Number" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />
@@ -887,7 +887,7 @@
 		<execute function="AssertTextEquals" locator1="PGDynamicdatalistsAddrecord#RECORD_FIELD_ALERT" value1="Please enter a valid number." />
 	</command>
 
-	<command known-issues="LPS-54988" name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">
+	<command name="AssertUserCannotDeleteEntryAfterPermissionRemoved" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -930,7 +930,7 @@
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Dynamic Data List Display" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
@@ -1025,15 +1025,15 @@
 		<var name="workflowAssetTitle" value="DDL List" />
 
 		<execute macro="Page#addPG">
-			<var name="pageName" value="Dynamic Data List Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Dynamic Data List Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Dynamic Data List Display" />
+			<var name="portletName" value="Dynamic Data Lists Display" />
 		</execute>
 
 		<execute macro="DDLList#addViaDDLDisplayPG">
@@ -1108,7 +1108,7 @@
 		</execute>
 
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Dynamic Data List Display Page" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
 		</execute>
 
 		<execute macro="DDLRecord#addViaDDLDisplayPG">
@@ -1195,7 +1195,7 @@
 		<var name="field" value="Text" />
 		<var name="fieldFieldLabel" value="Text Label" />
 		<var name="fieldName" value="Text_Name" />
-		<var name="pageName" value="Dynamic Data List Display Page" />
+		<var name="pageName" value="Dynamic Data Lists Display Page" />
 
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
@@ -1278,7 +1278,7 @@
 		<var name="ddlListDescription" value="Liferay Employee Profiles" />
 		<var name="ddlListName" value="Employees" />
 		<var name="pageName" value="Dynamic Data Lists Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#addPG">
 			<var name="pageName" value="${pageName}" />

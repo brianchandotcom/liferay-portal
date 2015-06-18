@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>COMMENTS_FIELD</td>
-	<td>//textarea[@id='_29_comments']</td>
+	<td>//textarea[contains(@id,'comments')]</td>
 	<td></td>
 </tr>
 <tr>

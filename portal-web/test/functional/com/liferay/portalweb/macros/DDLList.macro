@@ -24,6 +24,8 @@
 	<command name="addViaDDLDisplayPG">
 		<execute function="Click" locator1="PGDynamicdatalists#TOOLBAR_ADD_LIST" value1="Add List" />
 
+		<execute function="SelectFrame" locator1="PGDynamicdatalistsAddlist#IFRAME" />
+
 		<execute function="Type" locator1="PGDynamicdatalistsAddlist#NAME_FIELD" value1="${ddlListName}" />
 
 		<if>

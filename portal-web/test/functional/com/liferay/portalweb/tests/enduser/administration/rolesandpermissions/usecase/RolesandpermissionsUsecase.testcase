@@ -770,7 +770,7 @@
 		<var name="ddlListDescription" value="Liferay Employee Profiles" />
 		<var name="ddlListName" value="Employees" />
 		<var name="pageName" value="Dynamic Data Lists Page" />
-		<var name="portletName" value="Dynamic Data List Display" />
+		<var name="portletName" value="Dynamic Data Lists Display" />
 
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />

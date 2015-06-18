@@ -126,8 +126,8 @@
 
 	<command name="ViewDDLRecord" priority="5">
 		<execute macro="Page#gotoPG">
-			<var name="pageName" value="Dynamic Data List Display Page" />
-			<var name="siteName" value="Dynamic Data List Display Site" />
+			<var name="pageName" value="Dynamic Data Lists Display Page" />
+			<var name="siteName" value="Dynamic Data Lists Display Site" />
 			<var name="siteURL" value="true" />
 		</execute>
 

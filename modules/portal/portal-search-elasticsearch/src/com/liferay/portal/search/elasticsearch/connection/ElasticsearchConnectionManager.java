@@ -113,15 +113,31 @@ public class ElasticsearchConnectionManager {
 	}
 
 	@Activate
-	@Modified
 	protected void activate(Map<String, Object> properties) {
+		_elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+
+		_clusterName = _elasticsearchConfiguration.clusterName();
+
+		_operationMode = _elasticsearchConfiguration.operationMode();
+
+		if (!_elasticsearchConnections.containsKey(_operationMode)) {
+			throw new IllegalArgumentException(
+				"No connection available for: " + _operationMode);
+		}
+	}
+
+	@Modified
+	protected synchronized void modified(Map<String, Object> properties) {
 		_elasticsearchConfiguration = Configurable.createConfigurable(
 			ElasticsearchConfiguration.class, properties);
 
 		OperationMode newOperationMode =
 			_elasticsearchConfiguration.operationMode();
 
-		if (newOperationMode.equals(_operationMode)) {
+		if (newOperationMode.equals(_operationMode) &&
+			_elasticsearchConfiguration.clusterName().equals(_clusterName)) {
+
 			return;
 		}
 
@@ -130,14 +146,17 @@ public class ElasticsearchConnectionManager {
 				"No connection available for: " + newOperationMode);
 		}
 
-		if (_operationMode != null) {
-			ElasticsearchConnection elasticsearchConnection =
-				_elasticsearchConnections.get(_operationMode);
+		ElasticsearchConnection elasticsearchConnection =
+			_elasticsearchConnections.get(_operationMode);
 
-			elasticsearchConnection.close();
-		}
+		boolean closed = elasticsearchConnection.close();
 
+		_clusterName = _elasticsearchConfiguration.clusterName();
 		_operationMode = newOperationMode;
+
+		if (closed) {
+			getClient();
+		}
 	}
 
 	private String _clusterName;

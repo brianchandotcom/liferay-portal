@@ -577,7 +577,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="EditArticleMadeFromGlobalStructure" priority="5">
+	<command name="EditArticleMadeFromGlobalStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Global" />
@@ -653,7 +653,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55977" name="EditContentWithTitleAndAllFieldsNull" priority="5">
+	<command name="EditContentWithTitleAndAllFieldsNull" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1180,7 +1180,7 @@
 		<execute macro="WebContentStructures#addNullCP" />
 	</command>
 
-	<command known-issues="LPS-55977" name="WebContentAdministrationLocalization" priority="5">
+	<command name="WebContentAdministrationLocalization" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>

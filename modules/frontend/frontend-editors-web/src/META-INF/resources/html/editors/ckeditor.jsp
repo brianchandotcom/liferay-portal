@@ -218,7 +218,7 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 			else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
 
-				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+				if (CKEDITOR.env.gecko && CKEDITOR.tools.trim(data) == '<br />') {
 					data = '';
 				}
 			}

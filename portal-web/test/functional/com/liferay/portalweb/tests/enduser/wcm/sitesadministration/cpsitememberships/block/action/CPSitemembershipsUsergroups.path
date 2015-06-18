@@ -15,12 +15,12 @@
 </tr>
 <tr>
 	<td>SITE_ADMINISTRATOR_CHECKBOX</td>
-	<td>xpath=(//input[@name='_174_rowIds'])[1]</td>
+	<td>xpath=(//input[contains(@name,'rowIds')])[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_OWNER_CHECKBOX</td>
-	<td>xpath=(//input[@name='_174_rowIds'])[2]</td>
+	<td>xpath=(//input[contains(@name,'rowIds')])[2]</td>
 	<td></td>
 </tr>
 <tr>

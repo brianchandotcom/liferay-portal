@@ -11,7 +11,7 @@
 <!--ROLES_SEARCH-->
 <tr>
 	<td>ROLES_SEARCH_FIELD</td>
-	<td>//input[@id='_174_keywords']</td>
+	<td>//input[contains(@id,'keywords')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -27,17 +27,17 @@
 <!--ROLE_TABLE-->
 <tr>
 	<td>ROLE_TABLE_TITLE</td>
-	<td>//div[@id='_174_ocerSearchContainer']//tr[contains(.,'${key_roleName}')]/td[1]/a</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[1]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_TYPE</td>
-	<td>//div[@id='_174_ocerSearchContainer']//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[2]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_DESCRIPTION</td>
-	<td>//div[@id='_174_ocerSearchContainer']//tr[contains(.,'${key_roleName}')]/td[3]/a</td>
+	<td>//div[contains(@id,'ocerSearchContainer')]//tr[contains(.,'${key_roleName}')]/td[3]/a</td>
 	<td></td>
 </tr>
 </tbody>

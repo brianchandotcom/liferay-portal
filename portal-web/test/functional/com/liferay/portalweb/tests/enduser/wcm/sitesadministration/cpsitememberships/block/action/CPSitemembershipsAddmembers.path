@@ -78,7 +78,7 @@
 <!--ORGANIZATION_TABLE-->
 <tr>
 	<td>ORGANIZATION_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_174_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -99,7 +99,7 @@
 <!--USER_GROUP_TABLE-->
 <tr>
 	<td>USER_GROUP_TABLE_ALL_CHECKBOX</td>
-	<td>//input[@name='_174_allRowIds']</td>
+	<td>//input[contains(@name,'allRowIds')]</td>
 	<td></td>
 </tr>
 <tr>

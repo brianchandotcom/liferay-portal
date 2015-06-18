@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>IMPORT_IFRAME</td>
-	<td>//iframe[@id='_156_importDialog_iframe_']</td>
+	<td>//iframe[contains(@id,'importDialog_iframe_')]</td>
 	<td></td>
 </tr>
 <tr>

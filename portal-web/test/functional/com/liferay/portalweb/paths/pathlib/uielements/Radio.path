@@ -20,12 +20,12 @@
 </tr>
 <tr>
 	<td>CONTENT_ALL_CONTENT</td>
-	<td>//input[@id='_156_allContent']</td>
+	<td>//input[contains(@id,'allContent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT</td>
-	<td>//input[@id='_156_chooseContent']</td>
+	<td>//input[contains(@id,'chooseContent')]</td>
 	<td></td>
 </tr>
 <tr>

@@ -120,7 +120,7 @@
 <!--PAGES-->
 <tr>
 	<td>PAGES_CHANGE_LINK</td>
-	<td>//div/a[@id='_156_pagesLink']</td>
+	<td>//div/a[contains(@id,'pagesLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -140,22 +140,22 @@
 </tr>
 <tr>
 	<td>PAGES_DELETE_MISSING_PAGES_CHECKBOX</td>
-	<td>//input[@id='_156_DELETE_MISSING_LAYOUTS']</td>
+	<td>//input[contains(@id,'DELETE_MISSING_LAYOUTS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_SITE_PAGES_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_LAYOUT_SET_SETTINGS']</td>
+	<td>//input[contains(@id,'LAYOUT_SET_SETTINGS')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_THEME_SETTINGS_CHECKBOX</td>
-	<td>//input[@id='_156_THEME_REFERENCE']</td>
+	<td>//input[contains(@id,'THEME_REFERENCE')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_LOGO_CHECKBOX</td>
-	<td>//input[@id='_156_LOGO']</td>
+	<td>//input[contains(@id,'LOGO')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -176,17 +176,17 @@
 <!--APPLICATION_CONFIGURATION-->
 <tr>
 	<td>APPLICATION_CONFIGURATION_ALL_APPLICATIONS_RADIO</td>
-	<td>//input[@id='_156_allApplications']</td>
+	<td>//input[contains(@id,'allApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_RADIO</td>
-	<td>//input[@id='_156_chooseApplications']</td>
+	<td>//input[contains(@id,'chooseApplications')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>APPLICATION_CONFIGURATION_CHOOSE_APPLICATIONS_APPLICATION_CHECKBOX</td>
-	<td>//ul[@id='_156_selectApplications']//label[contains(.,'${key_applicationName}')]/input[2]</td>
+	<td>//ul[contains(@id,'selectApplications')]//label[contains(.,'${key_applicationName}')]/input[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -212,12 +212,12 @@
 <!--CONTENT-->
 <tr>
 	<td>CONTENT_ALL_CONTENT_RADIO</td>
-	<td>//input[@id='_156_allContent']</td>
+	<td>//input[contains(@id,'allContent')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_RADIO</td>
-	<td>//input[@id='_156_chooseContent']</td>
+	<td>//input[contains(@id,'chooseContent')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -232,7 +232,7 @@
 </tr>
 <tr>
 	<td>CONTENT_CHOOSE_CONTENT_EXTRA_CHANGE_LINK_DELETIONS_CHECKBOX</td>
-	<td>//input[@id='_156_DELETIONSCheckbox']</td>
+	<td>//input[contains(@id,'DELETIONSCheckbox')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -273,12 +273,12 @@
 <!--CHOOSE_CONTENT_DATE_RANGE-->
 <tr>
 	<td>CHOOSE_CONTENT_DATE_RANGE_STATUS</td>
-	<td>//span[@id='_156_selectedRange']</td>
+	<td>//span[contains(@id,'selectedRange')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CHOOSE_CONTENT_DATE_RANGE_CHANGE_LINK</td>
-	<td>//a[@id='_156_rangeLink']</td>
+	<td>//a[contains(@id,'rangeLink')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -289,7 +289,7 @@
 <!--DATE_RANGE_POPUP-->
 <tr>
 	<td>DATE_RANGE_POPUP_RANGE_RADIO</td>
-	<td>//input[@id='_156_range${key_contentDateRange}']</td>
+	<td>//input[contains(@id,'range${key_contentDateRange}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -305,12 +305,12 @@
 <!--DATE_RANGE-->
 <tr>
 	<td>DATE_RANGE_START_DATE</td>
-	<td>//input[@name='_156_startDate']</td>
+	<td>//input[contains(@name,'startDate')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATE_RANGE_END_DATE</td>
-	<td>//input[@name='_156_endDate']</td>
+	<td>//input[contains(@name,'endDate')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -321,7 +321,7 @@
 <!--PERMISSIONS-->
 <tr>
 	<td>PERMISSIONS_CHECKBOX</td>
-	<td>//input[@id='_156_PERMISSIONS']</td>
+	<td>//input[contains(@id,'PERMISSIONS')]</td>
 	<td></td>
 </tr>
 <tr>

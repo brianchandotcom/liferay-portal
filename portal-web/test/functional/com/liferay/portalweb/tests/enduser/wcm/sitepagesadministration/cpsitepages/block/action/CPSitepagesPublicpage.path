@@ -11,42 +11,42 @@
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_CATEGORIZATION</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_categorizationTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'categorizationTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SEO</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_seoTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'seoTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_LOOK_AND_FEEL</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_lookAndFeelTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'lookAndFeelTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_JAVASCRIPT</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_javascriptTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'javascriptTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_CUSTOM_FIELDS</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_customFieldsTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'customFieldsTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_ADVANCED</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_advancedTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'advancedTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_MOBILE_DEVICE_RULES</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_mobileDeviceRulesTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'mobileDeviceRulesTab')]/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_CUSTOMIZATION_SETTINGS</td>
-	<td>//ul[contains(@class,'form-navigator')]/li[@id='_156_customizationSettingsTab']/a</td>
+	<td>//ul[contains(@class,'form-navigator')]/li[contains(@id,'customizationSettingsTab')]/a</td>
 	<td></td>
 </tr>
 

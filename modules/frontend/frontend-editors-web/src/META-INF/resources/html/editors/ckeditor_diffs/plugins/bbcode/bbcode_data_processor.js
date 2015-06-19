@@ -64,17 +64,17 @@
 
 	var REGEX_LASTCHAR_NEWLINE_WHITESPACE = /(\r?\n\s*)$/;
 
+	var REGEX_LIST_CIRCLE = /circle/i;
+
 	var REGEX_LIST_LOWER_ALPHA = /lower-alpha/i;
 
 	var REGEX_LIST_LOWER_ROMAN = /lower-roman/i;
 
+	var REGEX_LIST_SQUARE = /square/i;
+
 	var REGEX_LIST_UPPER_ALPHA = /upper-alpha/i;
 
 	var REGEX_LIST_UPPER_ROMAN = /upper-roman/i;
-
-	var REGEX_LIST_CIRCLE = /circle/i;
-
-	var REGEX_LIST_SQUARE = /square/i;
 
 	var REGEX_NEWLINE = /\r?\n/g;
 

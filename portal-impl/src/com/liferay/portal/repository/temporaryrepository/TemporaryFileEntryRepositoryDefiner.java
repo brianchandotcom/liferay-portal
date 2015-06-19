@@ -87,7 +87,8 @@ public class TemporaryFileEntryRepositoryDefiner extends BaseRepositoryDefiner {
 			new TemporaryFileEntriesCapabilityImpl(documentRepository));
 
 		capabilityRegistry.addSupportedCapability(
-			WorkflowCapability.class, new MinimalWorkflowCapability());
+			WorkflowCapability.class,
+			new MinimalWorkflowCapability(dlFileEntryServiceAdapter));
 	}
 
 	@Override

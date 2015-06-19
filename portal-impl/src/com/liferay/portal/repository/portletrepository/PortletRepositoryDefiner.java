@@ -128,7 +128,8 @@ public class PortletRepositoryDefiner extends BaseRepositoryDefiner {
 			TrashCapability.class, trashCapability);
 
 		capabilityRegistry.addExportedCapability(
-			WorkflowCapability.class, new MinimalWorkflowCapability());
+			WorkflowCapability.class,
+			new MinimalWorkflowCapability(dlFileEntryServiceAdapter));
 	}
 
 	@Override

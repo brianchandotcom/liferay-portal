@@ -771,7 +771,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private final int[] _fontSizes = {10, 12, 16, 18, 24, 32, 48};
 	private final Set<String> _imageAttributes;
 	private final Pattern _imagePattern = Pattern.compile(
-		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,512}$",
+		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$",
 		Pattern.CASE_INSENSITIVE);
 	private final Map<String, String> _listStyles;
 	private final Pattern _tagPattern = Pattern.compile(
@@ -779,6 +779,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 			"right|\\*|s|size|table|tr|th|td|li|list|font|u|url)$",
 		Pattern.CASE_INSENSITIVE);
 	private final Pattern _urlPattern = Pattern.compile(
-		"^[-;/?:@&=+$,_.!~*'()%0-9a-z#]{1,512}$", Pattern.CASE_INSENSITIVE);
+		"^[-;/?:@&=+$,_.!~*'()%0-9a-z#]{1,2048}$", Pattern.CASE_INSENSITIVE);
 
 }

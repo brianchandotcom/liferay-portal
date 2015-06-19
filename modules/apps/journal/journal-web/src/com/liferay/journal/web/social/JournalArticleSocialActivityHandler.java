@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.journal.social;
+package com.liferay.journal.web.social;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;

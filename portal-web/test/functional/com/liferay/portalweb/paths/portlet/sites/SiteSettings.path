@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>APPLICATION_ADAPTER_SELECT</td>
-	<td>//select[@id='_165_customJspServletContextName']</td>
+	<td>//select[contains(@id,'customJspServletContextName')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -21,7 +21,7 @@
 <!--ACTIVE-->
 <tr>
 	<td>ACTIVE_LABEL</td>
-	<td>//label[@for='_165_active']</td>
+	<td>//label[contains(@for,'active')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -32,7 +32,7 @@
 <!--PARENT_SITE-->
 <tr>
 	<td>PARENT_SITE_SELECT</td>
-	<td>//a[@id='_165_selectParentSiteLink']/span</td>
+	<td>//a[contains(@id,'selectParentSiteLink')]/span</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,7 +43,7 @@
 <!--PARENT_SITE_TABLE-->
 <tr>
 	<td>PARENT_SITE_TABLE_NAME</td>
-	<td>//div[@id='_134_parentGroupSearchContainerSearchContainer']/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
+	<td>//div[contains(@id,'parentGroupSearchContainerSearchContainer')]/table/tbody/tr[contains(.,'${key_parentSiteName}')]/td/a</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,12 +149,12 @@
 <!--MEMBERSHIP_OPTIONS-->
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE_LABEL</td>
-	<td>//div[contains(@class,'form-group')]/label[@for='_165_type']</td>
+	<td>//div[contains(@class,'form-group')]/label[contains(@for,'type')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MEMBERSHIP_OPTIONS_MEMBERSHIP_TYPE</td>
-	<td>//div[contains(@class,'form-group')]/select[@id='_165_type']</td>
+	<td>//div[contains(@class,'form-group')]/select[contains(@id,'type')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -175,12 +175,12 @@
 </tr>
 <tr>
 	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_LABEL</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[@for='_165_publicLayoutSetPrototypeId']</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'publicLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_PUBLIC_PAGES_SITE_TEMPLATE_SELECT</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[@id='_165_publicLayoutSetPrototypeId']</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[contains(@id,'publicLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -190,12 +190,12 @@
 </tr>
 <tr>
 	<td>PAGES_PRIVATE_PAGES_SITE_TEMPLATE_LABEL</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[@for='_165_privateLayoutSetPrototypeId']</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/label[contains(@for,'privateLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGES_PRIVATE_PAGES_SITE_TEMPLATE_SELECT</td>
-	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[@id='_165_privateLayoutSetPrototypeId']</td>
+	<td>//div[(contains(@class,'control-group') or contains(@class,'form-group'))]/select[contains(@id,'privateLayoutSetPrototypeId')]</td>
 	<td></td>
 </tr>
 </tbody>

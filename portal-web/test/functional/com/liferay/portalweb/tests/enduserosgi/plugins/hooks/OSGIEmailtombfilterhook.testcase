@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="EmailToMBFilterHookSmoke" priority="5">
+	<command name="EmailToMBFilterHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="email-to-mb-filter-hook" />
 
 		<var name="appName" value="Email to Message Boards Filter" />

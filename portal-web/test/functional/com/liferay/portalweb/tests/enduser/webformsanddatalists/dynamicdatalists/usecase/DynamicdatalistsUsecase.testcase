@@ -69,7 +69,7 @@
 		<execute function="AssertTextEquals" locator1="CPDynamicdatalistsAddlist#ERROR_MESSAGE_2" value1="Please enter a valid definition." />
 	</command>
 
-	<command name="AddRecord" priority="5">
+	<command name="AddRecord" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />
@@ -179,7 +179,7 @@
 		</execute>
 	</command>
 
-	<command name="AddRecordBlankDateField" priority="5">
+	<command name="AddRecordBlankDateField" priority="4">
 		<description message="This is a use case for LPS-51513." />
 
 		<execute macro="Page#gotoContentCP">
@@ -1188,7 +1188,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteStructure" priority="5">
+	<command name="DeleteStructure" priority="4">
 		<var name="ddlDataDefinitionName" value="DDL Definition" />
 		<var name="ddlListName" value="DDL List" />
 		<var name="ddlRecordFieldData" value="Record Text" />
@@ -1271,7 +1271,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-49957" name="FormTemplate" priority="5">
+	<command known-issues="LPS-49957" name="FormTemplate" priority="4">
 		<var name="ddlDataDefinitionDescription" value="Data Definition Description" />
 		<var name="ddlDataDefinitionName" value="Employee Profile Data Definition" />
 		<var name="ddlFormTemplateName" value="Data Definition Form Template Name" />
@@ -1615,7 +1615,7 @@
 		</execute>
 	</command>
 
-	<command name="FormTemplateUniqueField" priority="5">
+	<command name="FormTemplateUniqueField" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Dynamic Data Lists" />
 		</execute>

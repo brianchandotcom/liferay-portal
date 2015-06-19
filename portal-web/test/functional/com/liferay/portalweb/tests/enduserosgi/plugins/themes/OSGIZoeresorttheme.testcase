@@ -6,7 +6,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ZoeResortThemeSmoke" priority="5">
+	<command name="ZoeResortThemeSmoke" priority="4">
 		<property name="theme.plugins.includes" value="zoe-resort-theme" />
 		<property name="web.plugins.includes" value="resources-importer-web" />
 

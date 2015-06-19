@@ -6,13 +6,13 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="PreviewCustomDefault" priority="5">
+	<command name="PreviewCustomDefault" priority="4">
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="custom" />
 		</execute>
 	</command>
 
-	<command name="PreviewCustomHeightWidth" priority="5">
+	<command name="PreviewCustomHeightWidth" priority="4">
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="custom" />
 			<var name="height" value="500" />
@@ -20,19 +20,19 @@
 		</execute>
 	</command>
 
-	<command name="PreviewDesktop" priority="5">
+	<command name="PreviewDesktop" priority="4">
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="desktop" />
 		</execute>
 	</command>
 
-	<command name="PreviewSmartphone" priority="5">
+	<command name="PreviewSmartphone" priority="4">
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="smartphone" />
 		</execute>
 	</command>
 
-	<command name="PreviewTablet" priority="5">
+	<command name="PreviewTablet" priority="4">
 		<execute macro="MobileDevice#previewPG">
 			<var name="deviceType" value="tablet" />
 		</execute>

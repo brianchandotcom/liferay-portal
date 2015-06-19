@@ -94,7 +94,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="ViewDocumentAsGuest" priority="5">
+	<command name="ViewDocumentAsGuest" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>

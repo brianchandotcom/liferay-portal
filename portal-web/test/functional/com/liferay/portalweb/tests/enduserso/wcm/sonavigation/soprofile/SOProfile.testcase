@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="GoBackToSOProfileFromControlPanel" priority="5">
+	<command name="GoBackToSOProfileFromControlPanel" priority="4">
 		<execute macro="Page#gotoMyProfile" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />

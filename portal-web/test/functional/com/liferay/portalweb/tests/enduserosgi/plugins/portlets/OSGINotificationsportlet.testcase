@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="NotificationsPortletSmoke" priority="5">
+	<command name="NotificationsPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="notifications-portlet" />
 
 		<var name="appName" value="Notifications" />

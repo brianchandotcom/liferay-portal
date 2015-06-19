@@ -20,7 +20,7 @@
 		<execute macro="Workflow#tearDownSiteWorkflow" />
 	</tear-down>
 
-	<command known-issues="LPS-51687" name="AddWebContentCP" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContentCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -67,7 +67,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="AddWebContentDraftCP" priority="5">
+	<command known-issues="LPS-51687" name="AddWebContentDraftCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -114,7 +114,7 @@
 		<execute macro="Workflow#viewDefaultMySubmissionsCP" />
 	</command>
 
-	<command name="AddWebContentNoWorkflowCP" priority="5">
+	<command name="AddWebContentNoWorkflowCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -665,7 +665,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="ApproveWebContentCP" priority="5">
+	<command known-issues="LPS-51687" name="ApproveWebContentCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 
@@ -1284,7 +1284,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="RejectWebContentCP" priority="5">
+	<command known-issues="LPS-51687" name="RejectWebContentCP" priority="4">
 		<var name="webContentContent" value="WC WebContent Content" />
 		<var name="webContentTitle" value="WC WebContent Title" />
 

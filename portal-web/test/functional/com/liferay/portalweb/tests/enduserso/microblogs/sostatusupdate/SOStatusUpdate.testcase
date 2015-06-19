@@ -56,7 +56,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStatusUpdateEntryViewableByConnections" priority="5">
+	<command name="AddStatusUpdateEntryViewableByConnections" priority="4">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
 		<var name="statusUpdateEntryContent" value="Microblogs Post" />
@@ -135,7 +135,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStatusUpdateEntryViewableByEveryone" priority="5">
+	<command name="AddStatusUpdateEntryViewableByEveryone" priority="4">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
 		<var name="statusUpdateEntryContent" value="Microblogs Post" />
@@ -184,7 +184,7 @@
 		</execute>
 	</command>
 
-	<command name="AddStatusUpdateEntryViewableByFollowers" priority="5">
+	<command name="AddStatusUpdateEntryViewableByFollowers" priority="4">
 		<var name="statusUpdateEntryAuthorName" value="${adminName}" />
 		<var name="statusUpdateEntryAuthorScreenName" value="${adminScreenName}" />
 		<var name="statusUpdateEntryContent" value="Microblogs Post" />
@@ -247,7 +247,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewStatusUpdateEntrySOUser" priority="5">
+	<command name="ViewStatusUpdateEntrySOUser" priority="4">
 		<var name="microblogsEntryAuthorName" value="Test Test" />
 		<var name="microblogsEntryAuthorScreenName" value="test" />
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />

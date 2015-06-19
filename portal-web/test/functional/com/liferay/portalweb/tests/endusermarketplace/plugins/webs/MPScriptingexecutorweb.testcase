@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="ScriptingExecutorWebSmoke" priority="5">
+	<command name="ScriptingExecutorWebSmoke" priority="4">
 		<property name="web.plugins.includes" value="scripting-executor-web" />
 
 		<var name="appName" value="Scripting Executor" />

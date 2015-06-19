@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="MongoDBHookSmoke" priority="5">
+	<command name="MongoDBHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="mongodb-hook" />
 
 		<var name="appName" value="MongoDB Expando Adapter" />

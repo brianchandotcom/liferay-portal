@@ -15,7 +15,7 @@
 		<execute macro="ServerAdministration#tearDownMailServerSettings" />
 	</tear-down>
 
-	<command name="AddReportInvalidEmail" priority="5">
+	<command name="AddReportInvalidEmail" priority="4">
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
 
 		<execute macro="Page#gotoConfigurationCP">
@@ -51,7 +51,7 @@
 		<execute function="AssertTextEquals" locator1="CPReportsadmin#ERROR_MESSAGE_2" value1="Please enter a valid email address." />
 	</command>
 
-	<command name="AddSchedule" priority="5">
+	<command name="AddSchedule" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command name="ChangeReportName" priority="5">
+	<command name="ChangeReportName" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -140,7 +140,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteReportFile" priority="5">
+	<command name="DeleteReportFile" priority="4">
 		<var name="reportsDefinitionName" value="Reports Definition Name" />
 		<var name="reportsFileName" value="reports_admin_template_source_sample_class_name.csv" />
 
@@ -193,7 +193,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13709" name="DeliverReportToEmail" priority="5">
+	<command known-issues="LRQA-13709" name="DeliverReportToEmail" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />
@@ -275,7 +275,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command name="DownloadReportCSV" priority="5">
+	<command name="DownloadReportCSV" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -313,7 +313,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportHTML" priority="5">
+	<command name="DownloadReportHTML" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -351,7 +351,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportPDF" priority="5">
+	<command name="DownloadReportPDF" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -390,7 +390,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportPDFFromNewDataSource" priority="5">
+	<command name="DownloadReportPDFFromNewDataSource" priority="4">
 		<property name="database.sharding" value="true" />
 		<property name="databases.size" value="2" />
 
@@ -443,7 +443,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportRTF" priority="5">
+	<command name="DownloadReportRTF" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -481,7 +481,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportTXT" priority="5">
+	<command name="DownloadReportTXT" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -519,7 +519,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportXLS" priority="5">
+	<command name="DownloadReportXLS" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -557,7 +557,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadReportXML" priority="5">
+	<command name="DownloadReportXML" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
 			<var name="portletName" value="Reports Admin" />
 		</execute>
@@ -595,7 +595,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewEmailNotificationDelivery" priority="5">
+	<command known-issues="LRQA-13709" name="ViewEmailNotificationDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />
@@ -674,7 +674,7 @@
 		<execute function="Open" locator1="http://localhost:8080" />
 	</command>
 
-	<command known-issues="LRQA-13709" name="ViewEmailRecipientDelivery" priority="5">
+	<command known-issues="LRQA-13709" name="ViewEmailRecipientDelivery" priority="4">
 		<property name="test.assert.javascript.errors" value="false" />
 
 		<var name="emailAddress1" property-value="email.address.1" />

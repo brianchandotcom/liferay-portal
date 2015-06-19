@@ -42,7 +42,7 @@
 		</execute>
 	</command>
 
-	<command name="AddUserSpecialCharacters" priority="5">
+	<command name="AddUserSpecialCharacters" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>
@@ -115,7 +115,7 @@
 		<execute function="AssertElementNotPresent" locator1="Home#SITE_ADMINISTRATION_CONFIGURATION_SITE_SETTINGS" value1="Site Settings" />
 	</command>
 
-	<command name="ImpersonatingAdministratorandOwner" priority="5">
+	<command name="ImpersonatingAdministratorandOwner" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Roles" />
 		</execute>
@@ -959,7 +959,7 @@
 		</execute>
 	</command>
 
-	<command name="ValidateRegExPasswordPolicyCP" priority="5">
+	<command name="ValidateRegExPasswordPolicyCP" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Users and Organizations" />
 		</execute>

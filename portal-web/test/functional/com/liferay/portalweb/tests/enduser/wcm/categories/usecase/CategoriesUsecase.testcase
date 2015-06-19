@@ -457,7 +457,7 @@
 		</execute>
 	</command>
 
-	<command name="DeletePartialCategory" priority="5">
+	<command name="DeletePartialCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1274,7 +1274,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewCannotAddDuplicateSubCategory" priority="5">
+	<command name="ViewCannotAddDuplicateSubCategory" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

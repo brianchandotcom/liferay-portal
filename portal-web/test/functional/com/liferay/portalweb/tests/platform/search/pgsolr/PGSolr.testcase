@@ -27,7 +27,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="SolrSmokeTest" priority="5">
+	<command name="SolrSmokeTest" priority="4">
 		<description message="This smoke test is to ensure that Solr is successfully deployed and running within Liferay. By default, the Lucene search engine is invoked when any search is performed in portal. This test will assert two things. First, that the Solr server is running by hitting the Solr Admin Dashboard. Second, that Liferay is using Solr by asserting the Solr logs in the console output when a search is performed in the Search portlet." />
 
 		<execute macro="Solr#viewAdminDashboard">

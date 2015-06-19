@@ -28,7 +28,7 @@
 		<execute macro="Organization#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSOSiteOpen" priority="5">
+	<command name="AddSOSiteOpen" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -158,7 +158,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOSitePrivate" priority="5">
+	<command name="AddSOSitePrivate" priority="4">
 		<var name="siteDescription" value="Private Site Description" />
 		<var name="siteName" value="Private Site Name" />
 		<var name="siteType" value="Private" />
@@ -176,7 +176,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOSitePrivateRestricted" priority="5">
+	<command name="AddSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -194,7 +194,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOSitePublicRestricted" priority="5">
+	<command name="AddSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -212,7 +212,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSOSitesOpen" priority="5">
+	<command name="AddSOSitesOpen" priority="4">
 		<var name="siteDescription1" value="Open Site1 Description" />
 		<var name="siteDescription2" value="Open Site2 Description" />
 		<var name="siteDescription3" value="Open Site3 Description" />
@@ -242,7 +242,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSOSiteOpen" priority="5">
+	<command name="DeleteSOSiteOpen" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -264,7 +264,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSOSitePrivate" priority="5">
+	<command name="DeleteSOSitePrivate" priority="4">
 		<var name="siteDescription" value="Private Site Description" />
 		<var name="siteName" value="Private Site Name" />
 		<var name="siteType" value="Private" />
@@ -286,7 +286,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSOSitePrivateRestricted" priority="5">
+	<command name="DeleteSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -308,7 +308,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSOSitePublicRestricted" priority="5">
+	<command name="DeleteSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -330,7 +330,7 @@
 		</execute>
 	</command>
 
-	<command name="FavoriteSOSite" priority="5">
+	<command name="FavoriteSOSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -381,7 +381,7 @@
 		</execute>
 	</command>
 
-	<command name="FavoriteSOSitePrivate" priority="5">
+	<command name="FavoriteSOSitePrivate" priority="4">
 		<var name="siteDescription" value="Private Site Description" />
 		<var name="siteName" value="Private Site Name" />
 		<var name="siteType" value="Private" />
@@ -446,7 +446,7 @@
 		</execute>
 	</command>
 
-	<command name="FavoriteSOSitePrivateRestricted" priority="5">
+	<command name="FavoriteSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -514,7 +514,7 @@
 		</execute>
 	</command>
 
-	<command name="FavoriteSOSitePublicRestricted" priority="5">
+	<command name="FavoriteSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -582,7 +582,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOSite" priority="5">
+	<command name="SearchSOSite" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 		<var name="siteType" value="Open" />
@@ -636,7 +636,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOSitePrivate" priority="5">
+	<command name="SearchSOSitePrivate" priority="4">
 		<var name="siteDescription" value="Private Site Description" />
 		<var name="siteName" value="Private Site Name" />
 		<var name="siteType" value="Private" />
@@ -690,7 +690,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOSitePrivateRestricted" priority="5">
+	<command name="SearchSOSitePrivateRestricted" priority="4">
 		<var name="siteDescription" value="Private Restricted Site Description" />
 		<var name="siteName" value="Private Restricted Site Name" />
 		<var name="siteType" value="Private Restricted" />
@@ -744,7 +744,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSOSitePublicRestricted" priority="5">
+	<command name="SearchSOSitePublicRestricted" priority="4">
 		<var name="siteDescription" value="Public Restricted Site Description" />
 		<var name="siteName" value="Public Restricted Site Name" />
 		<var name="siteType" value="Public Restricted" />
@@ -798,7 +798,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSOSiteNameRequiredMessage" priority="5">
+	<command name="ViewSOSiteNameRequiredMessage" priority="4">
 		<var name="siteDescription" value="Open Site Description" />
 		<var name="siteName" value="Open Site Name" />
 
@@ -817,7 +817,7 @@
 		<execute function="AssertElementNotPresent#assertNotVisible" locator1="SOUserBarAddSite#SAVE_BUTTON" />
 	</command>
 
-	<command name="ViewSOSitesDirectory" priority="5">
+	<command name="ViewSOSitesDirectory" priority="4">
 		<var name="siteDescription1" value="Open Site1 Description" />
 		<var name="siteDescription2" value="Public Restricted Site2 Description" />
 		<var name="siteDescription3" value="Private Site3 Description" />
@@ -1244,7 +1244,7 @@
 		<execute function="AssertTextNotPresent" value1="${siteName4}" />
 	</command>
 
-	<command name="ViewSOSitesPortlet" priority="5">
+	<command name="ViewSOSitesPortlet" priority="4">
 		<var name="siteDescription1" value="Open Site1 Description" />
 		<var name="siteDescription2" value="Public Restricted Site2 Description" />
 		<var name="siteDescription3" value="Private Site3 Description" />

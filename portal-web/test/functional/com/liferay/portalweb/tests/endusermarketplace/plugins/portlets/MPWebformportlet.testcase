@@ -13,7 +13,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="WebFormPortletSmoke" priority="5">
+	<command name="WebFormPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="web-form-portlet" />
 
 		<var name="appName" value="Web Form" />

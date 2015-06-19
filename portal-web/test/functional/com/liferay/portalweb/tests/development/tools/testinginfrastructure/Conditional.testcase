@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="Condition" priority="5">
+	<command name="Condition" priority="4">
 		<var name="test" value="test" />
 
 		<if>
@@ -49,7 +49,7 @@
 		</if>
 	</command>
 
-	<command name="Contains" priority="5">
+	<command name="Contains" priority="4">
 		<var name="nonSubstring" value="abc" />
 		<var name="string" value="string" />
 		<var name="substring" value="str" />
@@ -95,7 +95,7 @@
 		</if>
 	</command>
 
-	<command name="Equals" priority="5">
+	<command name="Equals" priority="4">
 		<var name="var1" value="value1" />
 		<var name="var2" value="value2" />
 		<var name="var3" value="value1" />
@@ -141,7 +141,7 @@
 		</if>
 	</command>
 
-	<command name="Isset" priority="5">
+	<command name="Isset" priority="4">
 		<var name="validVar1" value="validVarValue" />
 
 		<if>

@@ -82,7 +82,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="AddDocument" priority="5">
+	<command name="AddDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -101,7 +101,7 @@
 		</execute>
 	</command>
 
-	<command name="AddDocumentInSubfolder" priority="5">
+	<command name="AddDocumentInSubfolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -144,7 +144,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubfolder" priority="5">
+	<command name="AddSubfolder" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -158,7 +158,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckinDocument" priority="5">
+	<command name="CheckinDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -213,7 +213,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckoutDocument" priority="5">
+	<command name="CheckoutDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -252,7 +252,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDocument" priority="5">
+	<command name="DeleteDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -278,7 +278,7 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteDocumentInSubfolder" priority="5">
+	<command name="DeleteDocumentInSubfolder" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -330,7 +330,7 @@
 		<execute macro="DMDocument#viewDefaultCP" />
 	</command>
 
-	<command name="DeleteSubfolder" priority="5">
+	<command name="DeleteSubfolder" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -355,7 +355,7 @@
 		<execute macro="DMFolder#viewDefaultCP" />
 	</command>
 
-	<command name="EditDocumentFile" priority="5">
+	<command name="EditDocumentFile" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -395,7 +395,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleFileExtension" priority="5">
+	<command name="EditDocumentTitleFileExtension" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -427,7 +427,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleFileNameAndFileExtension" priority="5">
+	<command name="EditDocumentTitleFileNameAndFileExtension" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -459,7 +459,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocumentTitleRemoveFileExtension" priority="5">
+	<command name="EditDocumentTitleRemoveFileExtension" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -491,7 +491,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveCheckedoutDocumentToFolder" priority="5">
+	<command name="MoveCheckedoutDocumentToFolder" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>
@@ -581,7 +581,7 @@
 		</execute>
 	</command>
 
-	<command name="MoveDocumentToHome" priority="5">
+	<command name="MoveDocumentToHome" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -621,7 +621,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocument" priority="5">
+	<command name="SearchDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -641,7 +641,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocumentViaHome" priority="5">
+	<command name="SearchDocumentViaHome" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -664,7 +664,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewEditedCheckedoutDocument" priority="5">
+	<command name="ViewEditedCheckedoutDocument" priority="4">
 		<execute macro="DMRepository#gotoCP">
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
@@ -718,7 +718,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewRepository" priority="5">
+	<command name="ViewRepository" priority="4">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Documents and Media" />
 		</execute>

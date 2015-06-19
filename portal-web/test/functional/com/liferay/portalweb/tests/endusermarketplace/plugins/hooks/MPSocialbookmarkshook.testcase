@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="SocialBookmarksHookSmoke" priority="5">
+	<command name="SocialBookmarksHookSmoke" priority="4">
 		<property name="hook.plugins.includes" value="social-bookmarks-hook" />
 
 		<var name="appName" value="Social Bookmarks" />

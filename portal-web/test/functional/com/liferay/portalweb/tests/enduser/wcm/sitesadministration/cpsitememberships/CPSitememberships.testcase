@@ -229,7 +229,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteNoLiferaySite" priority="5">
+	<command name="DeleteNoLiferaySite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -310,7 +310,7 @@
 		</execute>
 	</command>
 
-	<command name="LimitMembershipParentSite" priority="5">
+	<command name="LimitMembershipParentSite" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -605,7 +605,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewNoManualMembershipManagement" priority="5">
+	<command name="ViewNoManualMembershipManagement" priority="4">
 		<execute macro="Site#manageMembershipOptions">
 			<var name="allowManualMembershipManagement" value="true" />
 		</execute>

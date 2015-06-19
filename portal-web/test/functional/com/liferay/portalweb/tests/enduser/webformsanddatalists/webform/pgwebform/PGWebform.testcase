@@ -97,7 +97,7 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
-	<command name="EditWebForm" priority="5">
+	<command name="EditWebForm" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -781,7 +781,7 @@
 		<execute macro="WebForm#sendPG" />
 	</command>
 
-	<command name="SendWebForm" priority="5">
+	<command name="SendWebForm" priority="4">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

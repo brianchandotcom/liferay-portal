@@ -2,11 +2,11 @@
 	<property name="testcase.url" value="http://the-internet.herokuapp.com/status_codes" />
 	<property name="testray.main.component.name" value="Tools" />
 
-	<command name="EchoStatement" priority="5">
+	<command name="EchoStatement" priority="4">
 		<echo message="echoMessage" />
 	</command>
 
-	<command name="ForLoops" priority="5">
+	<command name="ForLoops" priority="4">
 		<var name="list" value="1,2,3" />
 
 		<for list="${list}" param="param">
@@ -18,7 +18,7 @@
 		</for>
 	</command>
 
-	<command name="IfStatements" priority="5">
+	<command name="IfStatements" priority="4">
 		<if>
 			<condition function="IsElementPresent" locator1="ActionLog#PAGE_TITLE" />
 			<then>
@@ -93,7 +93,7 @@
 		</if>
 	</command>
 
-	<command name="WhileLoops" priority="5">
+	<command name="WhileLoops" priority="4">
 		<while>
 			<condition function="IsElementNotPresent" locator1="ActionLog#PAGE_TITLE" />
 			<then>

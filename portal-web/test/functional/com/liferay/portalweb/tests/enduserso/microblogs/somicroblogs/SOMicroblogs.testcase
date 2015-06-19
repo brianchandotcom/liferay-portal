@@ -26,7 +26,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddMicroblogsEntriesMentions" priority="5">
+	<command name="AddMicroblogsEntriesMentions" priority="4">
 		<var name="microblogsEntryContent1" value="Microblogs Post1" />
 		<var name="microblogsEntryContent2" value="Microblogs Post2" />
 		<var name="microblogsEntryContent3" value="Microblogs Post3" />
@@ -217,7 +217,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntriesTag" priority="5">
+	<command name="AddMicroblogsEntriesTag" priority="4">
 		<var name="microblogsEntryContent1" value="#Microblogs Post1" />
 		<var name="microblogsEntryContent2" value="#Microblogs Post2" />
 		<var name="microblogsEntryContent3" value="#Microblogs Post3" />
@@ -335,7 +335,7 @@
 		<execute function="AssertTextNotPresent" value1="${microblogsEntryContent2}" />
 	</command>
 
-	<command name="AddMicroblogsEntriesTagsByMultipleUsers" priority="5">
+	<command name="AddMicroblogsEntriesTagsByMultipleUsers" priority="4">
 		<var name="microblogsEntryContent1" value="#Microblogs1 Post1" />
 		<var name="microblogsEntryContent2" value="#Microblogs1 Post2" />
 		<var name="microblogsEntryContent3" value="#Microblogs2 Post3" />
@@ -620,7 +620,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryMention" priority="5">
+	<command name="AddMicroblogsEntryMention" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -683,7 +683,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryMentionAndTag" priority="5">
+	<command name="AddMicroblogsEntryMentionAndTag" priority="4">
 		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -762,7 +762,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryMentions" priority="5">
+	<command name="AddMicroblogsEntryMentions" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress1" value="socialoffice01@liferay.com" />
 		<var name="userEmailAddress2" value="socialoffice02@liferay.com" />
@@ -911,7 +911,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryMentionsAndTags" priority="5">
+	<command name="AddMicroblogsEntryMentionsAndTags" priority="4">
 		<var name="microblogsEntryTagContent" value="#Microblogs1 #Microblogs2 #Microblogs3" />
 		<var name="microblogsEntryTagValue1" value="Microblogs1" />
 		<var name="microblogsEntryTagValue2" value="Microblogs2" />
@@ -1108,7 +1108,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryMentionsByMultipleUsers" priority="5">
+	<command name="AddMicroblogsEntryMentionsByMultipleUsers" priority="4">
 		<var name="microblogsEntryContent1" value="Microblogs Post1" />
 		<var name="microblogsEntryContent2" value="Microblogs Post2" />
 		<var name="microblogsEntryContent3" value="Microblogs Post3" />
@@ -1322,7 +1322,7 @@
 		<execute macro="SOMicroblogs#viewMicroblogsEntryCommentLink" />
 	</command>
 
-	<command name="AddMicroblogsEntryTag" priority="5">
+	<command name="AddMicroblogsEntryTag" priority="4">
 		<var name="microblogsEntryContent" value="#Microblogs Post" />
 		<var name="microblogsEntryTagValue" value="Microblogs" />
 
@@ -1343,7 +1343,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryTags" priority="5">
+	<command name="AddMicroblogsEntryTags" priority="4">
 		<var name="microblogsEntryContent" value="#Microblogs1 #Microblogs2 #Microblogs3 Post" />
 		<var name="microblogsEntryTagValue1" value="Microblogs1" />
 		<var name="microblogsEntryTagValue2" value="Microblogs2" />
@@ -1380,7 +1380,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryViewableByConnections" priority="5">
+	<command name="AddMicroblogsEntryViewableByConnections" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -1460,7 +1460,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryViewableByConnectionsComment" priority="5">
+	<command name="AddMicroblogsEntryViewableByConnectionsComment" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -1651,7 +1651,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryViewableByEveryone" priority="5">
+	<command name="AddMicroblogsEntryViewableByEveryone" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -2012,7 +2012,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryViewableByFollowers" priority="5">
+	<command name="AddMicroblogsEntryViewableByFollowers" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -2077,7 +2077,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMicroblogsEntryViewableByFollowersComment" priority="5">
+	<command name="AddMicroblogsEntryViewableByFollowersComment" priority="4">
 		<var name="microblogsEntryCommentContent" value="Microblogs Post Comment" />
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
@@ -2177,7 +2177,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMicroblogsEntry" priority="5">
+	<command name="DeleteMicroblogsEntry" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 
 		<execute macro="Page#gotoPG">
@@ -2999,7 +2999,7 @@
 		</execute>
 	</command>
 
-	<command name="RepostMicroblogsEntry" priority="5">
+	<command name="RepostMicroblogsEntry" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -3597,7 +3597,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsEntryViewableByConnectionsNonConnectionViaProfile" priority="5">
+	<command name="ViewMicroblogsEntryViewableByConnectionsNonConnectionViaProfile" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -3646,7 +3646,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsEntryViewableByFollowersNonFollowerViaProfile" priority="5">
+	<command name="ViewMicroblogsEntryViewableByFollowersNonFollowerViaProfile" priority="4">
 		<var name="microblogsEntryContent" value="Microblogs Post" />
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
@@ -3695,7 +3695,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMicroblogsTimeline" priority="5">
+	<command name="ViewMicroblogsTimeline" priority="4">
 		<var name="microblogsEntryContent1" value="Microblogs Post1" />
 		<var name="microblogsEntryContent2" value="Microblogs Post2" />
 		<var name="microblogsEntryContent3" value="Microblogs Post3" />

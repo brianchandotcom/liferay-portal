@@ -9,7 +9,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command known-issues="sales-demo" name="IFrameDemo" priority="5">
+	<command known-issues="sales-demo" name="IFrameDemo" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="IFrame Page" />
 			<var name="pageType" value="1 Column" />
@@ -38,7 +38,7 @@
 		<execute function="SikuliAssertElementPresent" locator1="PGIFrame#SCREENSHOTS_LIFERAY_PRODUCTS_LOGO_PNG" />
 	</command>
 
-	<command known-issues="sales-demo" name="WebProxyDemo" priority="5">
+	<command known-issues="sales-demo" name="WebProxyDemo" priority="4">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Web Proxy Page" />
 			<var name="pageType" value="1 Column" />

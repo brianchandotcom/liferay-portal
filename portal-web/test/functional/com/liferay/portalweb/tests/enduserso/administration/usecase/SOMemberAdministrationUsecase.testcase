@@ -29,7 +29,7 @@
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 	</tear-down>
 
-	<command name="ConfirmMemberInviteSiteByEmailNonUserViaWorkflow" priority="5">
+	<command name="ConfirmMemberInviteSiteByEmailNonUserViaWorkflow" priority="4">
 		<var name="siteDescription" value="Workflow Site Description" />
 		<var name="siteName" value="Workflow Site Name" />
 		<var name="siteType" value="Open" />

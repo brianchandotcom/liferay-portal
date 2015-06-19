@@ -6,7 +6,7 @@
 	<var name="ticketLocation" value="https://issues.liferay.com/browse/LIFERAYQA-5866" />
 	<var name="ticketSummary" value="LIFERAYQA-5866: Enable selecting multiple choices from a dropdown" />
 
-	<command name="AddSelection" priority="5">
+	<command name="AddSelection" priority="4">
 		<echo message="Test addSelection: select multiple items" />
 
 		<execute function="SelectFrame" locator1="//iframe[@id='iframeResult']" />

@@ -21,7 +21,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="GoBackToSODashboardFromControlPanel" priority="5">
+	<command name="GoBackToSODashboardFromControlPanel" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="AssertClick#assertTextClickAtClickDockbar" locator1="Dockbar#ADMIN" value1="Admin" />
@@ -199,7 +199,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewLinkContactscenter" priority="5">
+	<command name="ViewLinkContactscenter" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
@@ -207,7 +207,7 @@
 		<execute macro="SODashboard#viewLinkContactscenter" />
 	</command>
 
-	<command name="ViewLinkHome" priority="5">
+	<command name="ViewLinkHome" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SODashboard#NAVIGATION_CONTACTS_CENTER" value1="Contacts Center" />
@@ -216,7 +216,7 @@
 		<execute macro="SODashboard#viewLinkHome" />
 	</command>
 
-	<command name="ViewLinkMicroblogs" priority="5">
+	<command name="ViewLinkMicroblogs" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SODashboard#NAVIGATION_MICROBLOGS" value1="Microblogs" />
@@ -224,7 +224,7 @@
 		<execute macro="SODashboard#viewLinkMicroblogs" />
 	</command>
 
-	<command name="ViewLinkMydocuments" priority="5">
+	<command name="ViewLinkMydocuments" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SODashboard#NAVIGATION_MY_DOCUMENTS" value1="My Documents" />
@@ -232,7 +232,7 @@
 		<execute macro="SODashboard#viewLinkMydocuments" />
 	</command>
 
-	<command name="ViewLinkPrivateMessaging" priority="5">
+	<command name="ViewLinkPrivateMessaging" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SODashboard#NAVIGATION_MESSAGES" value1="Messages" />
@@ -240,7 +240,7 @@
 		<execute macro="SODashboard#viewLinkPrivateMessaging" />
 	</command>
 
-	<command name="ViewLinkTasks" priority="5">
+	<command name="ViewLinkTasks" priority="4">
 		<execute macro="SOUserBar#gotoDashboardPG" />
 
 		<execute function="Click" locator1="SODashboard#NAVIGATION_TASKS" value1="Tasks" />

@@ -9,7 +9,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="ContainsConditionalWithUTF8Characters" priority="5">
+	<command name="ContainsConditionalWithUTF8Characters" priority="4">
 		<echo message="Test UTF8 Characters: 'contains' conditional clause values" />
 
 		<if>
@@ -20,13 +20,13 @@
 		</if>
 	</command>
 
-	<command name="EchoUTF8Characters" priority="5">
+	<command name="EchoUTF8Characters" priority="4">
 		<echo message="Test UTF8 Characters: echo message" />
 
 		<echo message="りんご" />
 	</command>
 
-	<command name="EqualsConditionalWithUTF8Characters" priority="5">
+	<command name="EqualsConditionalWithUTF8Characters" priority="4">
 		<echo message="Test UTF8 Characters: 'equals' conditional clause values" />
 
 		<if>
@@ -37,7 +37,7 @@
 		</if>
 	</command>
 
-	<command name="IssetConditionalWithUTF8Characters" priority="5">
+	<command name="IssetConditionalWithUTF8Characters" priority="4">
 		<echo message="Test UTF8 Characters: 'isset' conditional clause values" />
 
 		<if>
@@ -50,7 +50,7 @@
 		<execute macro="TestUtils#pass" />
 	</command>
 
-	<command name="TypeAndAssertInlineUTF8Characters" priority="5">
+	<command name="TypeAndAssertInlineUTF8Characters" priority="4">
 		<echo message="Test UTF8 Characters: typing and asserting inline values" />
 
 		<execute macro="Page#openURL" />
@@ -68,7 +68,7 @@
 		<execute macro="TestUtils#pass" />
 	</command>
 
-	<command name="TypeAndAssertUTF8CharactersSavedInVariable" priority="5">
+	<command name="TypeAndAssertUTF8CharactersSavedInVariable" priority="4">
 		<echo message="Test UTF8 Characters: typing and asserting a variable value" />
 
 		<var name="test" value="りんご" />

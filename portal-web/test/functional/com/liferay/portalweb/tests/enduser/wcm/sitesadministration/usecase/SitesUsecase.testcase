@@ -27,7 +27,7 @@
 		</execute>
 	</tear-down>
 
-	<command name="AddPageAndChildPageTranslations" priority="5">
+	<command name="AddPageAndChildPageTranslations" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -598,7 +598,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51156" name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="5">
+	<command known-issues="LPS-51156" name="WebContentAdministrationSitesTemplatePermissionPersistence" priority="4">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

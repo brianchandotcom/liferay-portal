@@ -26,7 +26,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="ViewAnnouncementsEntryWithDistributedScope" priority="5">
+	<command name="ViewAnnouncementsEntryWithDistributedScope" priority="4">
 		<var name="announcementType" value="General" />
 
 		<execute macro="Page#gotoPG">

@@ -24,7 +24,7 @@
 		<execute macro="WebContentStructures#tearDownCP" />
 	</tear-down>
 
-	<command name="SampleDroolsDemo" priority="5">
+	<command name="SampleDroolsDemo" priority="4">
 		<var name="structureDescription" value="WC Structure Description" />
 		<var name="structureFieldNames" value="Text,Image" />
 		<var name="structureName" value="WC Structure Name" />

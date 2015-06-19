@@ -34,7 +34,7 @@
 		</execute>
 	</set-up>
 
-	<command name="AddRSSADTViaPortletConfiguration" priority="3">
+	<command name="AddRSSADTViaPortletConfiguration" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -255,7 +255,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTBreadcrumb" priority="3">
+	<command name="ADTBreadcrumb" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="ADT Test Page" />
 			<var name="siteName" value="Test Site Name" />
@@ -286,7 +286,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTCategoriesNavigation" priority="3">
+	<command name="ADTCategoriesNavigation" priority="5">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoContentCP">
@@ -627,7 +627,7 @@
 		</execute>
 	</command>
 
-	<command name="ADTTagsNavigationPortlet" priority="3">
+	<command name="ADTTagsNavigationPortlet" priority="5">
 		<var name="siteName" value="${siteName}" />
 
 		<execute macro="Page#gotoConfigurationCP">

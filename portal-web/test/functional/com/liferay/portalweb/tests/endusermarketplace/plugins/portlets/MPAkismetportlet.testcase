@@ -5,7 +5,7 @@
 		<execute macro="User#firstLoginPG" />
 	</set-up>
 
-	<command name="AkismetPortletSmoke" priority="5">
+	<command name="AkismetPortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="akismet-portlet" />
 
 		<var name="appName" value="Akismet" />

@@ -23,7 +23,7 @@
 		<execute macro="SOUser#tearDownCP" />
 	</tear-down>
 
-	<command name="AddRssFeed" priority="5">
+	<command name="AddRssFeed" priority="4">
 		<var name="entriesPerFeed" value="3" />
 		<var name="expandedEntriesPerFeed" value="1" />
 		<var name="feedTitle" value="CNET" />

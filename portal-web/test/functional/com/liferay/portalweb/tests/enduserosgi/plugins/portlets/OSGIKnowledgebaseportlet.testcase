@@ -14,7 +14,7 @@
 		<execute macro="Page#tearDownPG" />
 	</tear-down>
 
-	<command name="KnowledgeBasePortletSmoke" priority="5">
+	<command name="KnowledgeBasePortletSmoke" priority="4">
 		<property name="portlet.plugins.includes" value="knowledge-base-portlet" />
 
 		<var name="appName" value="Knowledge Base" />

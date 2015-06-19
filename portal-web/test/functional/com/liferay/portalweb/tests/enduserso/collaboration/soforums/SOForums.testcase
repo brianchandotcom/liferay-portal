@@ -216,7 +216,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategorySubcategoryThread" priority="5">
+	<command name="AddMBCategorySubcategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryEnabled" value="true" />
@@ -281,7 +281,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThread" priority="5">
+	<command name="AddMBCategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />
@@ -352,7 +352,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadAnonymous" priority="5">
+	<command name="AddMBCategoryThreadAnonymous" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />
@@ -427,7 +427,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadAttachment" priority="5">
+	<command name="AddMBCategoryThreadAttachment" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="mbThreadAttachment" value="Document_1.doc" />
 		<var name="mbThreadAttachmentFileSize" value="22k" />
@@ -616,7 +616,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadQuickReply" priority="5">
+	<command name="AddMBCategoryThreadQuickReply" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
@@ -723,7 +723,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadReplySOUser" priority="5">
+	<command name="AddMBCategoryThreadReplySOUser" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
@@ -844,7 +844,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadReplyWithQuote" priority="5">
+	<command name="AddMBCategoryThreadReplyWithQuote" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
@@ -1043,7 +1043,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadSOUser" priority="5">
+	<command name="AddMBCategoryThreadSOUser" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />
@@ -1349,7 +1349,7 @@
 		</execute>
 	</command>
 
-	<command name="AddMBCategoryThreadUTF8" priority="5">
+	<command name="AddMBCategoryThreadUTF8" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Thrèad Mèssagè Body" />
 		<var name="threadSubject" value="MB Thrèad Mèssagè Subjèct" />
@@ -1758,7 +1758,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteMBCategory" priority="5">
+	<command name="DeleteMBCategory" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
@@ -1782,7 +1782,7 @@
 		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
-	<command name="DeleteMBCategorySubcategoryThread" priority="5">
+	<command name="DeleteMBCategorySubcategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryEnabled" value="true" />
@@ -1863,7 +1863,7 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 	</command>
 
-	<command name="DeleteMBCategoryThread" priority="5">
+	<command name="DeleteMBCategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />
@@ -1921,7 +1921,7 @@
 		<execute function="AssertTextNotPresent" value1="${threadSubject}" />
 	</command>
 
-	<command name="EditMBCategorySubcategoryThread" priority="5">
+	<command name="EditMBCategorySubcategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="subCategoryDescription" value="MB Subcategory Description" />
 		<var name="subCategoryEnabled" value="true" />
@@ -2011,7 +2011,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBCategoryThread" priority="5">
+	<command name="EditMBCategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadBodyEdit" value="MB Category Thread Message Body Edit" />
@@ -2321,7 +2321,7 @@
 		</execute>
 	</command>
 
-	<command name="LockMBCategoryThread" priority="5">
+	<command name="LockMBCategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />
@@ -2794,7 +2794,7 @@
 		</execute>
 	</command>
 
-	<command name="ReplyMBCategoryThread" priority="5">
+	<command name="ReplyMBCategoryThread" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadReplyBody" value="MB Category Thread Message Reply Body" />
@@ -3047,7 +3047,7 @@
 		</execute>
 	</command>
 
-	<command name="SubscribeToSOCategoryThreadAndViewEntryInGmail" priority="5">
+	<command name="SubscribeToSOCategoryThreadAndViewEntryInGmail" priority="4">
 		<var name="categoryName" value="MB Category Name" />
 		<var name="threadBody" value="MB Category Thread Message Body" />
 		<var name="threadSubject" value="MB Category Thread Message Subject" />

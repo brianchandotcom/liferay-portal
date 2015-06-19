@@ -18,7 +18,7 @@
 		</execute>
 	</set-up>
 
-	<command known-issues="LPS-52724" name="CheckLocalizationChinese" priority="5">
+	<command known-issues="LPS-52724" name="CheckLocalizationChinese" priority="4">
 		<execute function="Click" locator1="PGTestlocalization#CHINESE_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_1" value1="PASSED" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_2" value1="PASSED" />
@@ -37,7 +37,7 @@
 		<execute function="AssertTextNotPresent" value1="FAILED" />
 	</command>
 
-	<command name="CheckLocalizationEnglish" priority="5">
+	<command name="CheckLocalizationEnglish" priority="4">
 		<execute function="Click" locator1="PGTestlocalization#ENGLISH_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_1" value1="PASSED" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_2" value1="PASSED" />
@@ -56,7 +56,7 @@
 		<execute function="AssertTextNotPresent" value1="FAILED" />
 	</command>
 
-	<command name="CheckLocalizationFrench" priority="5">
+	<command name="CheckLocalizationFrench" priority="4">
 		<execute function="Click" locator1="PGTestlocalization#FRENCH_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_1" value1="PASSED" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_2" value1="PASSED" />
@@ -75,7 +75,7 @@
 		<execute function="AssertTextNotPresent" value1="FAILED" />
 	</command>
 
-	<command name="CheckLocalizationSpanish" priority="5">
+	<command name="CheckLocalizationSpanish" priority="4">
 		<execute function="Click" locator1="PGTestlocalization#SPANISH_LOCALIZATION" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_1" value1="PASSED" />
 		<execute function="AssertTextEquals" locator1="PGTestlocalization#LOCALIZATION_TEST_2" value1="PASSED" />

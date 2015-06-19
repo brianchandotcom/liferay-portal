@@ -17,7 +17,7 @@
 		<execute macro="Role#tearDownCP" />
 	</tear-down>
 
-	<command name="AddSOUser" priority="5">
+	<command name="AddSOUser" priority="4">
 		<var name="userEmailAddress" value="socialoffice01@liferay.com" />
 		<var name="userFirstName" value="Social01" />
 		<var name="userLastName" value="User01" />

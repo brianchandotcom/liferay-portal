@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.upgrade.v7_0_0;
+package com.liferay.dynamic.data.lists.upgrade.v7_0_0;
 
 import java.util.ArrayList;
 import java.util.HashMap;

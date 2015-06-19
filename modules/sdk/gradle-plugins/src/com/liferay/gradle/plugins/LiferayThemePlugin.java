@@ -50,17 +50,17 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 
 	public static final String COMPILE_THEME_TASK_NAME = "compileTheme";
 
-	public static final String FRONTEND_CSS_WEB_CONFIGURATION_NAME =
-		"frontendCssWeb";
+	public static final String FRONTEND_THEMES_WEB_CONFIGURATION_NAME =
+		"frontendThemesWeb";
 
-	protected Configuration addConfigurationFrontendCssWeb(
+	protected Configuration addConfigurationFrontendThemesWeb(
 		final Project project) {
 
 		Configuration configuration = GradleUtil.addConfiguration(
-			project, FRONTEND_CSS_WEB_CONFIGURATION_NAME);
+			project, FRONTEND_THEMES_WEB_CONFIGURATION_NAME);
 
 		configuration.setDescription(
-			"Configures com.liferay.frontend.css.web for compiling themes.");
+			"Configures com.liferay.frontend.themes.web for compiling themes.");
 		configuration.setVisible(false);
 
 		GradleUtil.executeIfEmpty(
@@ -69,7 +69,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 
 				@Override
 				public void execute(Configuration configuration) {
-					addDependenciesFrontendCssWeb(project);
+					addDependenciesFrontendThemesWeb(project);
 				}
 
 			});
@@ -80,13 +80,13 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 	protected void addConfigurations(Project project) {
 		super.addConfigurations(project);
 
-		addConfigurationFrontendCssWeb(project);
+		addConfigurationFrontendThemesWeb(project);
 	}
 
-	protected void addDependenciesFrontendCssWeb(Project project) {
+	protected void addDependenciesFrontendThemesWeb(Project project) {
 		GradleUtil.addDependency(
-			project, FRONTEND_CSS_WEB_CONFIGURATION_NAME, "com.liferay",
-			"com.liferay.frontend.css.web", "1.0.0-SNAPSHOT", false);
+			project, FRONTEND_THEMES_WEB_CONFIGURATION_NAME, "com.liferay",
+			"com.liferay.frontend.themes.web", "1.0.0-SNAPSHOT", false);
 	}
 
 	@Override
@@ -240,7 +240,7 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 
 		configureTaskCompileThemeDiffsDir(
 			compileThemeTask, liferayThemeExtension);
-		configureTaskCompileThemeFrontendCssWebFile(compileThemeTask);
+		configureTaskCompileThemeFrontendThemesWebFile(compileThemeTask);
 		configureTaskCompileThemeParent(
 			compileThemeTask, liferayThemeExtension);
 		configureTaskCompileThemeType(compileThemeTask, liferayThemeExtension);
@@ -273,19 +273,21 @@ public class LiferayThemePlugin extends LiferayWebAppPlugin {
 		}
 	}
 
-	protected void configureTaskCompileThemeFrontendCssWebFile(
+	protected void configureTaskCompileThemeFrontendThemesWebFile(
 		CompileThemeTask compileThemeTask) {
 
-		if ((compileThemeTask.getFrontendCssWebDir() != null) ||
-			(compileThemeTask.getFrontendCssWebFile() != null)) {
+		if ((compileThemeTask.getFrontendThemesWebDir() != null) ||
+			(compileThemeTask.getFrontendThemesWebFile() != null)) {
 
 			return;
 		}
 
 		Configuration configuration = GradleUtil.getConfiguration(
-			compileThemeTask.getProject(), FRONTEND_CSS_WEB_CONFIGURATION_NAME);
+			compileThemeTask.getProject(),
+			FRONTEND_THEMES_WEB_CONFIGURATION_NAME);
 
-		compileThemeTask.setFrontendCssWebFile(configuration.getSingleFile());
+		compileThemeTask.setFrontendThemesWebFile(
+			configuration.getSingleFile());
 	}
 
 	protected void configureTaskCompileThemeParent(

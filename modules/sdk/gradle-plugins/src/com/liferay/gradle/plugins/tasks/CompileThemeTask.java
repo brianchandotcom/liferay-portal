@@ -65,14 +65,14 @@ public class CompileThemeTask extends DefaultTask {
 
 	@InputDirectory
 	@Optional
-	public File getFrontendCssWebDir() {
-		return _frontendCssWebDir;
+	public File getFrontendThemesWebDir() {
+		return _frontendThemesWebDir;
 	}
 
 	@InputFile
 	@Optional
-	public File getFrontendCssWebFile() {
-		return _frontendCssWebFile;
+	public File getFrontendThemesWebFile() {
+		return _frontendThemesWebFile;
 	}
 
 	@OutputDirectories
@@ -135,12 +135,12 @@ public class CompileThemeTask extends DefaultTask {
 		_diffsDir = diffsDir;
 	}
 
-	public void setFrontendCssWebDir(File frontendCssWebDir) {
-		_frontendCssWebDir = frontendCssWebDir;
+	public void setFrontendThemesWebDir(File frontendThemesWebDir) {
+		_frontendThemesWebDir = frontendThemesWebDir;
 	}
 
-	public void setFrontendCssWebFile(File frontendCssWebFile) {
-		_frontendCssWebFile = frontendCssWebFile;
+	public void setFrontendThemesWebFile(File frontendThemesWebFile) {
+		_frontendThemesWebFile = frontendThemesWebFile;
 	}
 
 	public void setThemeParent(String themeParent) {
@@ -177,15 +177,15 @@ public class CompileThemeTask extends DefaultTask {
 
 		final String prefix = "html/themes/" + theme + "/";
 
-		final File frontendCssWebDir = getFrontendCssWebDir();
-		File frontendCssWebFile = getFrontendCssWebFile();
+		final File frontendThemesWebDir = getFrontendThemesWebDir();
+		File frontendThemesWebFile = getFrontendThemesWebFile();
 
-		if (frontendCssWebDir != null) {
+		if (frontendThemesWebDir != null) {
 			Closure<Void> closure = new Closure<Void>(null) {
 
 				@SuppressWarnings("unused")
 				public void doCall(CopySpec copySpec) {
-					copySpec.from(new File(frontendCssWebDir, prefix));
+					copySpec.from(new File(frontendThemesWebDir, prefix));
 
 					if (ArrayUtil.isNotEmpty(excludes)) {
 						copySpec.exclude(excludes);
@@ -199,18 +199,18 @@ public class CompileThemeTask extends DefaultTask {
 
 			_project.copy(closure);
 		}
-		else if (frontendCssWebFile != null) {
+		else if (frontendThemesWebFile != null) {
 			String jarPrefix = "META-INF/resources/" + prefix;
 
 			String[] prefixedExcludes = StringUtil.prepend(excludes, jarPrefix);
 			String prefixedInclude = jarPrefix + include;
 
 			FileUtil.unzip(
-				_project, frontendCssWebFile, getThemeRootDir(), 5,
+				_project, frontendThemesWebFile, getThemeRootDir(), 5,
 				prefixedExcludes, new String[] {prefixedInclude});
 		}
 		else {
-			throw new GradleException("Unable to find frontend css web");
+			throw new GradleException("Unable to find frontend themes web");
 		}
 	}
 
@@ -302,8 +302,8 @@ public class CompileThemeTask extends DefaultTask {
 	};
 
 	private File _diffsDir;
-	private File _frontendCssWebDir;
-	private File _frontendCssWebFile;
+	private File _frontendThemesWebDir;
+	private File _frontendThemesWebFile;
 	private final Project _project;
 	private String _themeParent;
 	private Project _themeParentProject;

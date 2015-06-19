@@ -23,6 +23,7 @@
 		<dependency name="com.liferay.gradle.plugins.service.builder" org="com.liferay" rev="1.0.3" />
 		<dependency name="com.liferay.gradle.plugins.source.formatter" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.gradle.plugins.tld.formatter" org="com.liferay" rev="1.0.0" />
+		<dependency name="com.liferay.gradle.plugins.whip" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.gradle.plugins.wsdd.builder" org="com.liferay" rev="1.0.5" />
 		<dependency name="com.liferay.gradle.plugins.wsdl.builder" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.gradle.plugins.xml.formatter" org="com.liferay" rev="1.0.1" />

@@ -61,6 +61,7 @@ sourceSets {
 
 	test {
 		compileClasspath += configurations.portalTest
+		runtimeClasspath += configurations.portalTest
 	}
 
 	testIntegration {

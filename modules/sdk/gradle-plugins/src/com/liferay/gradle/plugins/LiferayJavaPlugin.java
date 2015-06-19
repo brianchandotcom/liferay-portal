@@ -32,6 +32,8 @@ import com.liferay.gradle.plugins.tasks.SetupTestableTomcatTask;
 import com.liferay.gradle.plugins.tasks.StartAppServerTask;
 import com.liferay.gradle.plugins.tasks.StopAppServerTask;
 import com.liferay.gradle.plugins.tld.formatter.TLDFormatterPlugin;
+import com.liferay.gradle.plugins.whip.WhipPlugin;
+import com.liferay.gradle.plugins.whip.WhipTaskExtension;
 import com.liferay.gradle.plugins.wsdd.builder.BuildWSDDTask;
 import com.liferay.gradle.plugins.wsdd.builder.WSDDBuilderPlugin;
 import com.liferay.gradle.plugins.wsdl.builder.BuildWSDLTask;
@@ -153,7 +155,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		configureTaskBuildWSDD(project);
 		configureTaskBuildWSDL(project);
 		configureTaskBuildXSD(project);
-		configureTaskTest(project);
+		configureTasksTest(project);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -641,6 +643,7 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		GradleUtil.applyPlugin(project, TLDFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, WSDDBuilderPlugin.class);
 		GradleUtil.applyPlugin(project, WSDLBuilderPlugin.class);
+		GradleUtil.applyPlugin(project, WhipPlugin.class);
 		GradleUtil.applyPlugin(project, XMLFormatterPlugin.class);
 		GradleUtil.applyPlugin(project, XSDBuilderPlugin.class);
 	}
@@ -1429,19 +1432,24 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 		}
 	}
 
-	protected void configureTaskTest(Project project) {
-		Test test = (Test)GradleUtil.getTask(
-			project, JavaPlugin.TEST_TASK_NAME);
+	protected void configureTasksTest(Project project) {
+		TaskContainer taskContainer = project.getTasks();
 
-		configureTaskTest(test);
-	}
+		taskContainer.withType(
+			Test.class,
+			new Action<Test>() {
 
-	protected void configureTaskTest(Test test) {
-		configureTaskTestDefaultCharacterEncoding(test);
-		configureTaskTestForkEvery(test);
-		configureTaskTestJvmArgs(test);
-		configureTaskTestLogging(test);
-		configureTaskTestSystemProperties(test);
+				@Override
+				public void execute(Test test) {
+					configureTaskTestDefaultCharacterEncoding(test);
+					configureTaskTestForkEvery(test);
+					configureTaskTestJvmArgs(test);
+					configureTaskTestLogging(test);
+					configureTaskTestSystemProperties(test);
+					configureTaskTestWhip(test);
+				}
+
+			});
 	}
 
 	protected void configureTaskTestDefaultCharacterEncoding(Test test) {
@@ -1479,8 +1487,6 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 			test.dependsOn(START_TESTABLE_TOMCAT_TASK_NAME);
 			test.finalizedBy(STOP_TESTABLE_TOMCAT_TASK_NAME);
 		}
-
-		configureTaskTest(test);
 	}
 
 	protected void configureTaskTestJvmArgs(Test test) {
@@ -1516,6 +1522,15 @@ public class LiferayJavaPlugin implements Plugin<Project> {
 				}
 
 			});
+	}
+
+	protected void configureTaskTestWhip(Test test) {
+		WhipTaskExtension whipTaskExtension = GradleUtil.getExtension(
+			test, WhipTaskExtension.class);
+
+		whipTaskExtension.excludes(
+			".*Test", ".*Test\\$.*", ".*\\$Proxy.*", "com/liferay/whip/.*");
+		whipTaskExtension.includes("com/liferay/.*");
 	}
 
 	protected void configureTestResultsDir(Project project) {

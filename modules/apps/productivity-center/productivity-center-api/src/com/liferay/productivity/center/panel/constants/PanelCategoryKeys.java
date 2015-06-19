@@ -19,10 +19,6 @@ package com.liferay.productivity.center.panel.constants;
  */
 public interface PanelCategoryKeys {
 
-	public static final String CONFIGURATION = "configuration";
-
-	public static final String CONTENT = "content";
-
 	public static final String CONTROL_PANEL = "control_panel";
 
 	public static final String CONTROL_PANEL_APPS = "control_panel.apps";
@@ -36,14 +32,23 @@ public interface PanelCategoryKeys {
 
 	public static final String MY_SPACE = "my_space";
 
-	public static final String PAGES = "pages";
-
-	public static final String PRODUCTIVITY_CENTER = "productivity_center";
+	public static final String MY_SPACE_PRODUCTIVITY_CENTER =
+		"my_space.productivity_center";
 
 	public static final String ROOT = "root";
 
 	public static final String SITE_ADMINISTRATION = "site_administration";
 
-	public static final String USERS = "users";
+	public static final String SITE_ADMINISTRATION_CONFIGURATION =
+		"site_administration.configuration";
+
+	public static final String SITE_ADMINISTRATION_CONTENT =
+		"site_administration.content";
+
+	public static final String SITE_ADMINISTRATION_PAGES =
+		"site_administration.pages";
+
+	public static final String SITE_ADMINISTRATION_USERS =
+		"site_administration.users";
 
 }

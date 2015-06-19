@@ -80,6 +80,8 @@ public abstract class BaseEditorConfigurationProvider<T> {
 
 		populateContributor(contributors, getKey(null, null, editorName));
 
+		populateContributor(contributors, getKey(null, null, null));
+
 		return contributors;
 	}
 

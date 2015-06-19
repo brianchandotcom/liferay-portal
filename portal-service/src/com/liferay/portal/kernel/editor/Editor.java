@@ -26,6 +26,4 @@ public interface Editor {
 
 	public String getName();
 
-	public void setItemSelectorAttribute(HttpServletRequest request);
-
 }

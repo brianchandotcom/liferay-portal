@@ -160,6 +160,53 @@ public class EditorConfigContributorTest {
 	}
 
 	@Test
+	public void testEditorNameOverridesEmptySelectorConfig() throws Exception {
+		Registry registry = RegistryUtil.getRegistry();
+
+		EditorConfigContributor tablesEditorConfigContributor =
+			new TablesEditorConfigContributor();
+
+		Map<String, Object> properties = new HashMap<>();
+
+		properties.put("editor.name", _EDITOR_NAME);
+		properties.put("service.ranking", 1000);
+
+		_editorConfigContributorServiceRegistration1 = registry.registerService(
+			EditorConfigContributor.class, tablesEditorConfigContributor,
+			properties);
+
+		EditorConfigContributor textFormatEditorConfigContributor =
+			new TextFormatEditorConfigContributor();
+
+		properties = new HashMap<>();
+
+		properties.put("service.ranking", 1000);
+
+		_editorConfigContributorServiceRegistration2 = registry.registerService(
+			EditorConfigContributor.class, textFormatEditorConfigContributor,
+			properties);
+
+		EditorConfiguration editorConfiguration =
+			EditorConfigurationFactoryUtil.getEditorConfiguration(
+				_PORTLET_NAME, _CONFIG_KEY, _EDITOR_NAME,
+				new HashMap<String, Object>(), null, null);
+
+		JSONObject configJSONObject = editorConfiguration.getConfigJSONObject();
+
+		Assert.assertEquals(
+			TablesEditorConfigContributor.class.getName(),
+			configJSONObject.getString("className"));
+
+		JSONObject toolbarsJSONObject = configJSONObject.getJSONObject(
+			"toolbars");
+
+		Assert.assertEquals("link", toolbarsJSONObject.getString("button1"));
+		Assert.assertEquals("bold", toolbarsJSONObject.getString("button2"));
+		Assert.assertEquals(
+			"tablesButton", toolbarsJSONObject.getString("button3"));
+	}
+
+	@Test
 	public void testGetEditorConfigurationByEditorName() throws Exception {
 		Registry registry = RegistryUtil.getRegistry();
 

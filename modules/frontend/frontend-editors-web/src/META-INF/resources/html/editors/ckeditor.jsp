@@ -17,21 +17,16 @@
 <%@ include file="/html/editors/init.jsp" %>
 
 <%
-LiferayPortletResponse liferayPortletResponse = (LiferayPortletResponse)portletResponse;
-
 String portletId = portletDisplay.getRootPortletId();
 
-boolean allowBrowseDocuments = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:allowBrowseDocuments"));
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
 String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
-Map<String, String> fileBrowserParamsMap = (Map<String, String>)request.getAttribute("liferay-ui:input-editor:fileBrowserParams");
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
 boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
-ItemSelector itemSelector = (ItemSelector)request.getAttribute("liferay-ui:input-editor:itemSelector");
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 
 String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
@@ -405,65 +400,18 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
 
-		var filebrowserBrowseUrl = '';
-		var filebrowserFlashBrowseUrl = '';
-		var filebrowserImageBrowseLinkUrl = '';
-		var filebrowserImageBrowseUrl = '';
-
-		<c:if test="<%= allowBrowseDocuments %>">
-
-			<%
-			ItemSelectorCriterion urlItemSelectorCriterion = new URLItemSelectorCriterion();
-
-			Set<ItemSelectorReturnType> desiredItemSelectorReturnTypes = new HashSet<ItemSelectorReturnType>();
-
-			desiredItemSelectorReturnTypes.add(DefaultItemSelectorReturnType.URL);
-
-			urlItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
-
-			PortletURL urlItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", urlItemSelectorCriterion);
-			%>
-
-			filebrowserBrowseUrl = '<%= urlItemSelectorURL %>';
-
-			<%
-			String tabs1Names = null;
-
-			if (fileBrowserParamsMap != null) {
-				tabs1Names = fileBrowserParamsMap.get("tabs1Names");
-			}
-
-			ItemSelectorCriterion imageItemSelectorCriterion = null;
-
-			if (Validator.isNotNull(tabs1Names) && tabs1Names.equals("attachments")) {
-				imageItemSelectorCriterion = new WikiAttachmentItemSelectorCriterion(GetterUtil.getLong(fileBrowserParamsMap.get("wikiPageResourcePrimKey")));
-			}
-			else {
-				imageItemSelectorCriterion = new ImageItemSelectorCriterion();
-			}
-
-			imageItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
-
-			PortletURL imageItemSelectorURL = itemSelector.getItemSelectorURL(liferayPortletResponse, name + "selectItem", imageItemSelectorCriterion);
-			%>
-
-			filebrowserImageBrowseLinkUrl = '<%= imageItemSelectorURL %>';
-			filebrowserImageBrowseUrl = '<%= imageItemSelectorURL %>';
-		</c:if>
+		var defaultConfig = {
+			filebrowserBrowseUrl: '',
+			filebrowserFlashBrowseUrl: '',
+			filebrowserImageBrowseLinkUrl: '',
+			filebrowserImageBrowseUrl: '',
+			filebrowserUploadUrl: null,
+			toolbar: currentToolbarSet
+		};
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 
-		var config = A.merge(
-			editorConfig,
-			{
-				filebrowserBrowseUrl: filebrowserBrowseUrl,
-				filebrowserFlashBrowseUrl: filebrowserFlashBrowseUrl,
-				filebrowserImageBrowseLinkUrl: filebrowserImageBrowseLinkUrl,
-				filebrowserImageBrowseUrl: filebrowserImageBrowseUrl,
-				filebrowserUploadUrl: null,
-				toolbar: currentToolbarSet
-			}
-		);
+		var config = A.merge(defaultConfig, editorConfig);
 
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
 

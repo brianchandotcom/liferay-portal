@@ -78,13 +78,11 @@ portletURL.setParameter("nodeId", String.valueOf(nodeId));
 <liferay-ui:upload-progress
 	id="<%= uploadProgressId %>"
 	message="uploading"
-	redirect="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>"
 />
 
 <liferay-ui:upload-progress
 	id="<%= importProgressId %>"
 	message="importing"
-	redirect="<%= HtmlUtil.escape(PortalUtil.escapeRedirect(redirect)) %>"
 />
 
 <aui:script>

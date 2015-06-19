@@ -34,11 +34,13 @@ Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 MembershipRequest membershipRequest = (MembershipRequest)request.getAttribute(WebKeys.MEMBERSHIP_REQUEST);
 %>
 
-<portlet:actionURL name="postMembershipRequest" var="postMembershipRequestURL" />
+<portlet:actionURL name="postMembershipRequest" var="postMembershipRequestURL">
+	<portlet:param name="mvcPath" value="/post_membership_request.jsp" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= postMembershipRequestURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 
 	<c:if test="<%= !layout.isTypeControlPanel() %>">
 		<liferay-ui:header

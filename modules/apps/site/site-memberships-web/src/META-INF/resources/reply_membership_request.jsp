@@ -28,11 +28,13 @@ long membershipRequestId = ParamUtil.getLong(request, "membershipRequestId");
 MembershipRequest membershipRequest = MembershipRequestLocalServiceUtil.getMembershipRequest(membershipRequestId);
 %>
 
-<portlet:actionURL name="replyMembershipRequest" var="replyMembershipRequestURL" />
+<portlet:actionURL name="replyMembershipRequest" var="replyMembershipRequestURL">
+	<portlet:param name="mvcPath" value="/reply_membership_request.jsp" />
+	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+</portlet:actionURL>
 
 <aui:form action="<%= replyMembershipRequestURL %>" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="groupId" type="hidden" value="<%= groupId %>" />
 	<aui:input name="membershipRequestId" type="hidden" value="<%= membershipRequest.getMembershipRequestId() %>" />
 
 	<c:if test="<%= !layout.isTypeControlPanel() %>">

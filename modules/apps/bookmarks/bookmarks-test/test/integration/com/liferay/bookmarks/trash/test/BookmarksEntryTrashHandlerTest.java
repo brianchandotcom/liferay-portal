@@ -68,6 +68,11 @@ public class BookmarksEntryTrashHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -347,11 +352,6 @@ public class BookmarksEntryTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return BookmarksFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return BookmarksEntryServiceUtil.getGroupEntriesCount(groupId, 0);
 	}
 
 	@Override

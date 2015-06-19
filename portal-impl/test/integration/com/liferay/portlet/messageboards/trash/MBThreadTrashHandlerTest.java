@@ -73,6 +73,16 @@ public class MBThreadTrashHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.add(Calendar.HOUR, -1);
+
+		return MBThreadServiceUtil.getGroupThreadsCount(
+			groupId, 0, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
+	}
+
 	@Ignore
 	@Override
 	@Test
@@ -369,16 +379,6 @@ public class MBThreadTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return MBCategory.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.add(Calendar.HOUR, -1);
-
-		return MBThreadServiceUtil.getGroupThreadsCount(
-			groupId, 0, calendar.getTime(), WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

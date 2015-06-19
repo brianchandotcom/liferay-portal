@@ -82,6 +82,13 @@ public class DLFileEntryTrashHandlerTest
 			new LiferayIntegrationTestRule(), MainServletTestRule.INSTANCE,
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		return DLAppServiceUtil.getGroupFileEntriesCount(
+			groupId, 0, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
+			WorkflowConstants.STATUS_APPROVED);
+	}
+
 	@Test
 	public void testFileNameUpdateWhenUpdatingTitle() throws Exception {
 		ServiceContext serviceContext =
@@ -289,13 +296,6 @@ public class DLFileEntryTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return DLFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return DLAppServiceUtil.getGroupFileEntriesCount(
-			groupId, 0, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, null,
-			WorkflowConstants.STATUS_APPROVED);
 	}
 
 	@Override

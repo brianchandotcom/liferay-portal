@@ -86,6 +86,12 @@ public class JournalArticleTrashHandlerTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
+	@Override
+	public int getRecentBaseModelsCount(long groupId) throws Exception {
+		return JournalArticleServiceUtil.getGroupArticlesCount(
+			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
+	}
+
 	@Before
 	@Override
 	public void setUp() throws Exception {
@@ -301,12 +307,6 @@ public class JournalArticleTrashHandlerTest
 	@Override
 	protected Class<?> getParentBaseModelClass() {
 		return JournalFolder.class;
-	}
-
-	@Override
-	protected int getRecentBaseModelsCount(long groupId) throws Exception {
-		return JournalArticleServiceUtil.getGroupArticlesCount(
-			groupId, 0, JournalFolderConstants.DEFAULT_PARENT_FOLDER_ID);
 	}
 
 	@Override

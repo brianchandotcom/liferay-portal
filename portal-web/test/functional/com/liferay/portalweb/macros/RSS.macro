@@ -46,7 +46,7 @@
 
 	<command name="viewCorruptScriptConsoleError">
 		<execute function="AssertConsoleTextPresentNoError" value1="ERROR" />
-		<execute function="AssertConsoleTextPresentNoError" value1="freemarker.core.ParseException: Unexpected end of file reached._Unclosed if directive." />
+		<execute function="AssertConsoleTextPresentNoError" value1="Unexpected end of file reached." />
 	</command>
 
 	<command name="viewCustomADT">

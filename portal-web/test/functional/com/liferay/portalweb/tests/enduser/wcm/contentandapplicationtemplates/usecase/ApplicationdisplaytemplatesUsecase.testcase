@@ -71,7 +71,7 @@
 		</execute>
 
 		<execute macro="RSS#viewCustomADT">
-			<var name="feedContentTitle" value="Liferay Blogs - General NYT > Technology" />
+			<var name="feedContentTitle" value="Technology" />
 		</execute>
 	</command>
 
@@ -144,12 +144,10 @@
 			<var name="siteURL" value="true" />
 		</execute>
 
-		<for list="Liferay Blogs - General,NYT > Technology" param="feedTitle" >
-			<execute macro="RSS#viewNavigationDisplayFeedTitle">
-				<var name="feedTitle" value="${feedTitle}" />
-				<var name="navigationNullADT" value="true" />
-			</execute>
-		</for>
+		<execute macro="RSS#viewNavigationDisplayFeedTitle">
+			<var name="feedTitle" value="Technology" />
+			<var name="navigationNullADT" value="true" />
+		</execute>
 	</command>
 
 	<command name="ADTAssetPublisher" priority="3">

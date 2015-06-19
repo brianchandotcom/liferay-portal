@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment;
+package com.liferay.message.boards.comment.test;
 
+import com.liferay.message.boards.comment.impl.MBCommentManagerImpl;
 import com.liferay.portal.kernel.comment.DuplicateCommentException;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Function;
@@ -162,6 +163,19 @@ public class MBCommentManagerImplTest extends Mockito {
 			_mbMessageLocalService
 		).deleteDiscussionMessages(
 			_CLASS_NAME, classPK
+		);
+	}
+
+	@Test
+	public void testFetchComment() throws Exception {
+		long commentId = RandomTestUtil.randomLong();
+
+		_mbCommentManagerImpl.fetchComment(commentId);
+
+		Mockito.verify(
+			_mbMessageLocalService
+		).fetchMBMessage(
+			commentId
 		);
 	}
 

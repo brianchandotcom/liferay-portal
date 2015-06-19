@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.comment;
+package com.liferay.message.boards.comment.impl;
 
+import com.liferay.portal.kernel.comment.Comment;
 import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
@@ -46,11 +47,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author André de Oliveira
  * @author Alexander Chow
  * @author Raymond Augé
  */
+@Component(service = CommentManager.class)
 public class MBCommentManagerImpl implements CommentManager {
 
 	@Override
@@ -157,6 +162,12 @@ public class MBCommentManagerImpl implements CommentManager {
 	}
 
 	@Override
+	public Comment fetchComment(long commentId) {
+		return new MBCommentImpl(
+			_mbMessageLocalService.fetchMBMessage(commentId));
+	}
+
+	@Override
 	public int getCommentsCount(String className, long classPK) {
 		long classNameId = PortalUtil.getClassNameId(className);
 
@@ -234,24 +245,28 @@ public class MBCommentManagerImpl implements CommentManager {
 		return true;
 	}
 
+	@Reference(unbind = "-")
 	public void setMBDiscussionLocalService(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
+	@Reference(unbind = "-")
 	public void setMBMessageLocalService(
 		MBMessageLocalService mbMessageLocalService) {
 
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
+	@Reference(unbind = "-")
 	public void setRatingsEntryLocalService(
 		RatingsEntryLocalService ratingsEntryLocalService) {
 
 		_ratingsEntryLocalService = ratingsEntryLocalService;
 	}
 
+	@Reference(unbind = "-")
 	public void setRatingsStatsLocalService(
 		RatingsStatsLocalService ratingsStatsLocalService) {
 

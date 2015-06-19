@@ -73,6 +73,7 @@ String eventName = "_" + HtmlUtil.escapeJS(assetPublisherDisplayContext.getPortl
 
 						<c:if test="<%= !assetEntry.isVisible() %>">
 							(<aui:workflow-status
+								showIcon="<%= false %>"
 								showLabel="<%= false %>"
 								status="<%= assetRenderer.getStatus() %>"
 								statusMessage='<%= assetRenderer.getStatus() == 0 ? "not-visible" : WorkflowConstants.getStatusLabel(assetRenderer.getStatus()) %>'

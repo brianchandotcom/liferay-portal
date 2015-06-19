@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 import java.io.File;
 import java.io.IOException;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.zip.ZipFile;
 
 /**
@@ -43,9 +45,11 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isHookPlugin(File file) throws AutoDeployException {
 		String fileName = file.getName();
 
-		if (isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
+		Matcher matcher = _hookPluginPattern.matcher(fileName);
+
+		if (matcher.find() &&
+			isMatchingFile(file, "WEB-INF/liferay-hook.xml") &&
 			!isMatchingFile(file, "WEB-INF/liferay-portlet.xml") &&
-			!fileName.contains("-theme") && !fileName.contains("-web") &&
 			!isJarFile(file)) {
 
 			return true;
@@ -149,8 +153,10 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 		String fileName = file.getName();
 
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-theme")) {
+		Matcher matcher = _themePluginPattern.matcher(fileName);
+
+		if (matcher.find() &&
+			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties")) {
 
 			return true;
 		}
@@ -161,8 +167,11 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 	public boolean isWebPlugin(File file) throws AutoDeployException {
 		String fileName = file.getName();
 
-		if (isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
-			fileName.contains("-web") && !isJarFile(file)) {
+		Matcher matcher = _webPluginPattern.matcher(fileName);
+
+		if (matcher.find() &&
+			isMatchingFile(file, "WEB-INF/liferay-plugin-package.properties") &&
+			!isJarFile(file)) {
 
 			return true;
 		}
@@ -176,5 +185,14 @@ public abstract class BaseAutoDeployListener implements AutoDeployListener {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseAutoDeployListener.class);
+
+	private static final Pattern _extPluginPattern = Pattern.compile(
+		"-(ext|Ext)[-0-9.]*\\+?[.](war|zip)$");
+	private static final Pattern _hookPluginPattern = Pattern.compile(
+		"-(hook|Hook)[-0-9.]*\\+?[.](war|zip)$");
+	private static final Pattern _themePluginPattern = Pattern.compile(
+		"-(theme|Theme)[-0-9.]*\\+?[.](war|zip)$");
+	private static final Pattern _webPluginPattern = Pattern.compile(
+		"-(web|Web)[-0-9.]*\\+?[.](war|zip)$");
 
 }

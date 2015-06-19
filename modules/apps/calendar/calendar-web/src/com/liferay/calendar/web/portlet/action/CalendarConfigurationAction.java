@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.portlet.action;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -38,7 +38,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Fabio Pezzutto
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	immediate = true,
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = ConfigurationAction.class
 )
 public class CalendarConfigurationAction extends DefaultConfigurationAction {

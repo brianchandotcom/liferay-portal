@@ -1318,6 +1318,7 @@
 		<execute function="AssertClick" locator1="PGFastlogin#GUEST_LINK" value1="Guest" />
 
 		<execute function="Type" locator1="PGFastloginGuest#FIRST_NAME_FIELD" value1="${userFirstName}" />
+		<execute function="Type" locator1="PGFastloginGuest#LAST_NAME_FIELD" value1="${userLastName}" />
 		<execute function="Type" locator1="PGFastloginGuest#EMAIL_ADDRESS_FIELD" value1="${userEmailAddress}" />
 		<execute function="AssertClick" locator1="PGFastloginGuest#SAVE_BUTTON" value1="Save" />
 		<execute function="AssertTextEquals" locator1="PGFastloginGuest#SUCCESS_MESSAGE" value1="Your comment has already been posted. Would you like to create an account with the provided information?" />

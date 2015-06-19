@@ -14,8 +14,34 @@
 
 package com.liferay.portal.kernel.security.auth.session;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Tomas Polesovsky
  */
 public interface AuthenticatedSessionManager {
+
+	public long getAuthenticatedUserId(
+			HttpServletRequest request, String login, String password,
+			String authType)
+		throws PortalException;
+
+	public void login(
+			HttpServletRequest request, HttpServletResponse response,
+			String login, String password, boolean rememberMe, String authType)
+		throws Exception;
+
+	public void logout(HttpServletRequest request, HttpServletResponse response)
+		throws Exception;
+
+	public HttpSession renewSession(
+			HttpServletRequest request, HttpSession session)
+		throws Exception;
+
+	public void signOutSimultaneousLogins(long userId) throws Exception;
+
 }

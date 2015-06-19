@@ -14,10 +14,15 @@
 
 package com.liferay.portal.kernel.security.auth.session;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.pacl.permission.PortalRuntimePermission;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceTracker;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Tomas Polesovsky
@@ -29,6 +34,42 @@ public class AuthenticatedSessionManagerUtil {
 			AuthenticatedSessionManagerUtil.class);
 
 		return _instance._serviceTracker.getService();
+	}
+
+	public static long getAuthenticatedUserId(
+			HttpServletRequest request, String login, String password,
+			String authType)
+		throws PortalException {
+
+		return getAuthenticatedSessionManager().getAuthenticatedUserId(
+			request, login, password, authType);
+	}
+
+	public static void login(
+			HttpServletRequest request, HttpServletResponse response,
+			String login, String password, boolean rememberMe, String authType)
+		throws Exception {
+
+		getAuthenticatedSessionManager().login(
+			request, response, login, password, rememberMe, authType);
+	}
+
+	public static void logout(
+			HttpServletRequest request, HttpServletResponse response)
+		throws Exception {
+
+		getAuthenticatedSessionManager().logout(request, response);
+	}
+
+	public static HttpSession renewSession(
+			HttpServletRequest request, HttpSession session)
+		throws Exception {
+
+		return getAuthenticatedSessionManager().renewSession(request, session);
+	}
+
+	public static void signOutSimultaneousLogins(long userId) throws Exception {
+		getAuthenticatedSessionManager().signOutSimultaneousLogins(userId);
 	}
 
 	private AuthenticatedSessionManagerUtil() {

@@ -18,15 +18,9 @@
 	<classpathentry kind="lib" path="/portal-master/util-java/util-java.jar" />
 	<classpathentry kind="lib" path="/portal-master/util-taglib/util-taglib.jar" />
 	<classpathentry kind="lib" path="lib/aQute.bnd.jar" />
-	<classpathentry kind="lib" path="lib/aether-api.jar" />
-	<classpathentry kind="lib" path="lib/aether-connector-wagon.jar" />
-	<classpathentry kind="lib" path="lib/aether-impl.jar" />
-	<classpathentry kind="lib" path="lib/aether-spi.jar" />
-	<classpathentry kind="lib" path="lib/aether-util.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-config-api.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-config-impl-base.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-impl-base.jar" />
-	<classpathentry kind="lib" path="lib/arquillian-container-osgi.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-spi.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-test-api.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-container-test-impl-base.jar" />
@@ -36,57 +30,18 @@
 	<classpathentry kind="lib" path="lib/arquillian-core-spi.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-junit-container.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-junit-core.jar" />
-	<classpathentry kind="lib" path="lib/arquillian-protocol-jmx.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-api.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-impl-base.jar" />
 	<classpathentry kind="lib" path="lib/arquillian-test-spi.jar" />
-	<classpathentry kind="lib" path="lib/commons-io.jar" />
-	<classpathentry kind="lib" path="lib/fest-assert.jar" />
-	<classpathentry kind="lib" path="lib/fest-util.jar" />
 	<classpathentry kind="lib" path="lib/hamcrest-core.jar" />
-	<classpathentry kind="lib" path="lib/httpcore.jar" />
 	<classpathentry kind="lib" path="lib/jbosgi-metadata.jar" />
-	<classpathentry kind="lib" path="lib/jbosgi-spi.jar" />
-	<classpathentry kind="lib" path="lib/jbosgi-vfs.jar" />
-	<classpathentry kind="lib" path="lib/jbosgi-vfs30.jar" />
-	<classpathentry kind="lib" path="lib/jboss-logging.jar" />
-	<classpathentry kind="lib" path="lib/jboss-vfs.jar" />
-	<classpathentry kind="lib" path="lib/jsoup.jar" />
 	<classpathentry kind="lib" path="lib/junit.jar" />
-	<classpathentry kind="lib" path="lib/maven-aether-provider.jar" />
-	<classpathentry kind="lib" path="lib/maven-model-builder.jar" />
-	<classpathentry kind="lib" path="lib/maven-model.jar" />
-	<classpathentry kind="lib" path="lib/maven-repository-metadata.jar" />
-	<classpathentry kind="lib" path="lib/maven-settings-builder.jar" />
-	<classpathentry kind="lib" path="lib/maven-settings.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.core.jar" />
 	<classpathentry kind="lib" path="lib/org.osgi.enterprise.jar" />
-	<classpathentry kind="lib" path="lib/plexus-cipher.jar" />
-	<classpathentry kind="lib" path="lib/plexus-classworlds.jar" />
-	<classpathentry kind="lib" path="lib/plexus-compiler-api.jar" />
-	<classpathentry kind="lib" path="lib/plexus-compiler-javac.jar" />
-	<classpathentry kind="lib" path="lib/plexus-component-api.jar" />
-	<classpathentry kind="lib" path="lib/plexus-interpolation.jar" />
-	<classpathentry kind="lib" path="lib/plexus-sec-dispatcher.jar" />
-	<classpathentry kind="lib" path="lib/plexus-utils.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-api.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-descriptors-api-base.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-descriptors-spi.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-impl-base.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-api-maven-archive.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-api-maven.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-api.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-impl-maven-archive.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-impl-maven.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-spi-maven-archive.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-spi-maven.jar" />
-	<classpathentry kind="lib" path="lib/shrinkwrap-resolver-spi.jar" />
 	<classpathentry kind="lib" path="lib/shrinkwrap-spi.jar" />
-	<classpathentry kind="lib" path="lib/slf4j-api.jar" />
-	<classpathentry kind="lib" path="lib/slf4j-log4j12.jar" />
-	<classpathentry kind="lib" path="lib/wagon-file.jar" />
-	<classpathentry kind="lib" path="lib/wagon-http-lightweight.jar" />
-	<classpathentry kind="lib" path="lib/wagon-http-shared4.jar" />
-	<classpathentry kind="lib" path="lib/wagon-provider-api.jar" />
 	<classpathentry kind="output" path="bin" />
 </classpath>

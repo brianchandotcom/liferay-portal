@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.PortletItem;
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the portlet item service.

@@ -36,6 +36,7 @@ import com.liferay.portal.model.PortalPreferences;
 import com.liferay.portal.model.impl.PortalPreferencesImpl;
 import com.liferay.portal.model.impl.PortalPreferencesModelImpl;
 import com.liferay.portal.service.persistence.PortalPreferencesPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

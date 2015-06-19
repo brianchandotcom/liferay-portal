@@ -669,8 +669,7 @@ public class ResourcePermissionLocalServiceUtil {
 
 	/**
 	* @deprecated As of 7.0.0, replaced by {@link
-	#getRolesWithResourcePermission(long, String, int, String,
-	String}
+	#getRoles(long, String, int, String, String}
 	*/
 	@Deprecated
 	public static boolean[] hasResourcePermissions(long companyId,

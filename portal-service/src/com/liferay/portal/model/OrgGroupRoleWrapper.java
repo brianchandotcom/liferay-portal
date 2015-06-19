@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelWrapper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -194,7 +195,8 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
 		_orgGroupRole.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -272,7 +274,7 @@ public class OrgGroupRoleWrapper implements OrgGroupRole,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.model.OrgGroupRole> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.OrgGroupRole> toCacheModel() {
 		return _orgGroupRole.toCacheModel();
 	}
 

@@ -30,6 +30,7 @@ import com.liferay.portal.model.EmailAddress;
 import com.liferay.portal.model.EmailAddressModel;
 import com.liferay.portal.model.EmailAddressSoap;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;

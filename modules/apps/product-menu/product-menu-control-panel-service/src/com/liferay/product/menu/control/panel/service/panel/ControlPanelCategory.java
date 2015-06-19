@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.panel.service.panel;
+package com.liferay.product.menu.control.panel.service.panel;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.productivity.center.panel.BasePanelCategory;
@@ -28,27 +28,24 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL,
-		"service.ranking:Integer=400"
-	},
+	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
 	service = PanelCategory.class
 )
-public class ConfigurationPanelCategory extends BasePanelCategory {
+public class ControlPanelCategory extends BasePanelCategory {
 
 	@Override
 	public String getIconCssClass() {
-		return "icon-cog";
+		return "icon-tasks";
 	}
 
 	@Override
 	public String getKey() {
-		return PanelCategoryKeys.CONTROL_PANEL_CONFIGURATION;
+		return PanelCategoryKeys.CONTROL_PANEL;
 	}
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "category.configuration");
+		return LanguageUtil.get(locale, "control-panel");
 	}
 
 }

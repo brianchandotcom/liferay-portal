@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.my.space.service.panel;
+package com.liferay.product.menu.my.space.service.panel;
 
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortletKeys;

@@ -1,4 +1,0 @@
-Bundle-Name: Liferay My Space Service
-Bundle-SymbolicName: com.liferay.my.space.service
-Bundle-Version: 1.0.0
-Include-Resource: classes

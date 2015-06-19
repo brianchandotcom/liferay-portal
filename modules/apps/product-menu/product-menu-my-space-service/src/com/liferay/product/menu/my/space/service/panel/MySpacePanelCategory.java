@@ -12,40 +12,40 @@
  * details.
  */
 
-package com.liferay.my.space.service.panel;
+package com.liferay.product.menu.my.space.service.panel;
 
-import com.liferay.portal.service.PortletLocalService;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.productivity.center.panel.BaseControlPanelEntryPanelApp;
-import com.liferay.productivity.center.panel.PanelApp;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.productivity.center.panel.BasePanelCategory;
+import com.liferay.productivity.center.panel.PanelCategory;
 import com.liferay.productivity.center.panel.constants.PanelCategoryKeys;
 
+import java.util.Locale;
+
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Adolfo Pérez
  */
 @Component(
 	immediate = true,
-	property = {
-		"panel.category.key=" + PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER,
-		"service.ranking:Integer=400"
-	},
-	service = PanelApp.class
+	property = {"panel.category.key=" + PanelCategoryKeys.ROOT},
+	service = PanelCategory.class
 )
-public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
+public class MySpacePanelCategory extends BasePanelCategory {
 
 	@Override
-	public String getPortletId() {
-		return PortletKeys.MY_WORKFLOW_INSTANCE;
+	public String getIconCssClass() {
+		return StringPool.BLANK;
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletLocalService(
-		PortletLocalService portletLocalService) {
+	@Override
+	public String getKey() {
+		return PanelCategoryKeys.MY_SPACE;
+	}
 
-		_portletLocalService = portletLocalService;
+	@Override
+	public String getLabel(Locale locale) {
+		return StringPool.BLANK;
 	}
 
 }

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.my.space.service.panel;
+package com.liferay.product.menu.my.space.service.panel;
 
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortletKeys;
@@ -30,15 +30,15 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"panel.category.key=" + PanelCategoryKeys.MY_SPACE_PRODUCTIVITY_CENTER,
-		"service.ranking:Integer=100"
+		"service.ranking:Integer=400"
 	},
 	service = PanelApp.class
 )
-public class MyAccountPanelApp extends BaseControlPanelEntryPanelApp {
+public class MyWorkflowInstancesPanelApp extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.MY_ACCOUNT;
+		return PortletKeys.MY_WORKFLOW_INSTANCE;
 	}
 
 	@Reference(unbind = "-")

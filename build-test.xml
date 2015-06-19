@@ -3904,6 +3904,15 @@ module.framework.properties.osgi.console=11312</echo>
 		</if>
 
 		<if>
+			<isset property="osb.lcs.portlet.host.name" />
+			<then>
+				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">
+					osb.lcs.portlet.host.name=${osb.lcs.portlet.host.name}
+				</echo>
+			</then>
+		</if>
+
+		<if>
 			<isset property="liferay.portal.branch" />
 			<then>
 				<echo file="portal-web/test/test-portal-web-ext.properties" append="true">

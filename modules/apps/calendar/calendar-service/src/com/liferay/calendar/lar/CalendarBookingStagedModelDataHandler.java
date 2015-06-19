@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.lar;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.model.CalendarBookingConstants;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Component;
  * @author Daniel Kocsis
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	immediate = true, property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = StagedModelDataHandler.class
 )
 public class CalendarBookingStagedModelDataHandler

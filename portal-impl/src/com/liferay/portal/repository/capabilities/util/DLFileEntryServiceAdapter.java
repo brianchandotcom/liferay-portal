@@ -109,6 +109,20 @@ public class DLFileEntryServiceAdapter {
 		return dlFileEntries;
 	}
 
+	public boolean isKeepFileVersionLabel(
+			long fileEntryId, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (_dlFileEntryService != null) {
+			return _dlFileEntryService.isKeepFileVersionLabel(
+				fileEntryId, serviceContext);
+		}
+		else {
+			return _dlFileEntryLocalService.isKeepFileVersionLabel(
+				fileEntryId, serviceContext);
+		}
+	}
+
 	public DLFileEntry updateStatus(
 			long userId, long fileVersionId, int status,
 			ServiceContext serviceContext,

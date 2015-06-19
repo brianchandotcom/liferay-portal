@@ -793,7 +793,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteDocument" priority="4">
+	<command name="DeleteDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1000,7 +1000,7 @@
 		</execute>
 	</command>
 
-	<command name="DownloadDocumentWithSlashesInTitleViaDocumentView" priority="4">
+	<command name="DownloadDocumentWithSlashesInTitleViaDocumentView" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -1016,7 +1016,7 @@
 		</execute>
 	</command>
 
-	<command name="EditDocument" priority="4">
+	<command name="EditDocument" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

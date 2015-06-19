@@ -95,7 +95,7 @@
 		</execute>
 	</command>
 
-	<command name="AddBlogsEntryComment" priority="4">
+	<command name="AddBlogsEntryComment" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -541,7 +541,7 @@
 		</execute>
 	</command>
 
-	<command name="EditBlogsEntry" priority="4">
+	<command name="EditBlogsEntry" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

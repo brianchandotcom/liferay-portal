@@ -536,7 +536,7 @@
 		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
-	<command name="DeleteMBCategory" priority="4">
+	<command name="DeleteMBCategory" priority="5">
 		<var name="categoryName" value="MB Category Name" />
 
 		<execute macro="Page#gotoPG">
@@ -558,7 +558,7 @@
 		<execute macro="MessageboardsCategory#viewDefaultPG" />
 	</command>
 
-	<command name="DeleteMBThread" priority="4">
+	<command name="DeleteMBThread" priority="5">
 		<var name="threadBody" value="MB Thread Message Body" />
 		<var name="threadSubject" value="MB Thread Message Subject" />
 
@@ -580,7 +580,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBCategory" priority="4">
+	<command name="EditMBCategory" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>
@@ -663,7 +663,7 @@
 		</execute>
 	</command>
 
-	<command name="EditMBThreadSubjectAndBody" priority="4">
+	<command name="EditMBThreadSubjectAndBody" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="${pageName}" />
 		</execute>

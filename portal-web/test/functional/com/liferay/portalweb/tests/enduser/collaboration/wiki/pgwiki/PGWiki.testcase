@@ -40,7 +40,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWikiFrontPageChildPage" priority="4">
+	<command name="AddWikiFrontPageChildPage" priority="5">
 		<var name="wikiChildPageContent" value="Wiki FrontPage Child Page Content" />
 		<var name="wikiChildPageTitle" value="Wiki FrontPage Child Page Title" />
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
@@ -621,7 +621,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWikiFrontPage" priority="4">
+	<command name="DeleteWikiFrontPage" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageTitle" value="FrontPage" />
 
@@ -680,7 +680,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWikiFrontPage" priority="4">
+	<command name="EditWikiFrontPage" priority="5">
 		<var name="wikiPageContent" value="Wiki FrontPage Content" />
 		<var name="wikiPageContentEdit" value="Wiki FrontPage Content Edit" />
 		<var name="wikiPageRevision" value="1.2" />

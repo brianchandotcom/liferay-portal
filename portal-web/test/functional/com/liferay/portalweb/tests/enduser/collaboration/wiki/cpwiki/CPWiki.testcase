@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWikiNode" priority="4">
+	<command name="DeleteWikiNode" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>
@@ -200,7 +200,7 @@
 		</execute>
 	</command>
 
-	<command name="EditWikiNode" priority="4">
+	<command name="EditWikiNode" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Wiki" />
 		</execute>

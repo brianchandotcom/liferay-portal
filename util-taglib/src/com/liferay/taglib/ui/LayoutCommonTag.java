@@ -62,7 +62,7 @@ public class LayoutCommonTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:layout_common:includeStaticPortlets",
+			"liferay-ui:layout-common:includeStaticPortlets",
 			_includeStaticPortlets);
 
 		if (_WEB_SERVER_DISPLAY_NODE && !themeDisplay.isStatePopUp()) {
@@ -70,7 +70,7 @@ public class LayoutCommonTag extends IncludeTag {
 		}
 
 		request.setAttribute(
-			"liferay-ui:layout_common:includeWebServerDisplayNode",
+			"liferay-ui:layout-common:includeWebServerDisplayNode",
 			_includeWebServerDisplayNode);
 	}
 

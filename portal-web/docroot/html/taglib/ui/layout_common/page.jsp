@@ -17,8 +17,8 @@
 <%@ include file="/html/taglib/init.jsp" %>
 
 <%
-boolean includeStaticPortlets = GetterUtil.getBoolean(request.getAttribute("liferay-ui:layout_common:includeStaticPortlets"));
-boolean includeWebServerDisplayNode = GetterUtil.getBoolean(request.getAttribute("liferay-ui:layout_common:includeWebServerDisplayNode"));
+boolean includeStaticPortlets = GetterUtil.getBoolean(request.getAttribute("liferay-ui:layout-common:includeStaticPortlets"));
+boolean includeWebServerDisplayNode = GetterUtil.getBoolean(request.getAttribute("liferay-ui:layout-common:includeWebServerDisplayNode"));
 %>
 
 <c:if test="<%= includeStaticPortlets %>">

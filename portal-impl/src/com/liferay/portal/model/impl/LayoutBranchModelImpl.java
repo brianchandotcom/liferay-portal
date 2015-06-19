@@ -28,6 +28,7 @@ import com.liferay.portal.model.LayoutBranch;
 import com.liferay.portal.model.LayoutBranchModel;
 import com.liferay.portal.model.LayoutBranchSoap;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 

@@ -47,6 +47,9 @@ import com.liferay.portal.service.persistence.RolePersistence;
 import com.liferay.portal.service.persistence.TeamPersistence;
 import com.liferay.portal.service.persistence.UserGroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import java.io.Serializable;
 

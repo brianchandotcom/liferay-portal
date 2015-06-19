@@ -232,7 +232,6 @@
 		<reference package-path="com.liferay.portlet.journal" entity="JournalContentSearch" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalFolder" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>
@@ -523,7 +522,6 @@
 		<reference package-path="com.liferay.portlet.dynamicdatamapping" entity="DDMStructureLink" />
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.journal" entity="JournalArticle" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>

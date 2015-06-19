@@ -57,6 +57,7 @@ import com.liferay.portlet.journal.model.JournalFolderConstants;
 import com.liferay.portlet.journal.service.base.JournalFolderLocalServiceBaseImpl;
 import com.liferay.portlet.journal.util.JournalValidatorUtil;
 import com.liferay.portlet.journal.util.comparator.FolderIdComparator;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -627,9 +628,8 @@ public class JournalFolderLocalServiceImpl
 
 		extraDataJSONObject.put("title", title);
 
-		socialActivityLocalService.addActivity(
-			userId, folder.getGroupId(), JournalFolder.class.getName(),
-			folder.getFolderId(), SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, folder, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return folder;
@@ -730,10 +730,8 @@ public class JournalFolderLocalServiceImpl
 
 		extraDataJSONObject.put("title", folder.getName());
 
-		socialActivityLocalService.addActivity(
-			userId, folder.getGroupId(), JournalFolder.class.getName(),
-			folder.getFolderId(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, folder, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
 

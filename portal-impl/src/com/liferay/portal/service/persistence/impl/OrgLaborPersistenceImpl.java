@@ -35,6 +35,7 @@ import com.liferay.portal.model.OrgLabor;
 import com.liferay.portal.model.impl.OrgLaborImpl;
 import com.liferay.portal.model.impl.OrgLaborModelImpl;
 import com.liferay.portal.service.persistence.OrgLaborPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

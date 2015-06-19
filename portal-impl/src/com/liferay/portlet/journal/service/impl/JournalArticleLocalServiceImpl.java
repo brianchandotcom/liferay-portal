@@ -142,6 +142,7 @@ import com.liferay.portlet.journal.util.JournalContentUtil;
 import com.liferay.portlet.journal.util.JournalUtil;
 import com.liferay.portlet.journal.util.comparator.ArticleIDComparator;
 import com.liferay.portlet.journal.util.comparator.ArticleVersionComparator;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -3596,10 +3597,8 @@ public class JournalArticleLocalServiceImpl
 
 		extraDataJSONObject.put("title", article.getTitle());
 
-		socialActivityLocalService.addActivity(
-			userId, article.getGroupId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, article, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		if (oldStatus == WorkflowConstants.STATUS_PENDING) {
@@ -3795,10 +3794,8 @@ public class JournalArticleLocalServiceImpl
 
 		extraDataJSONObject.put("title", article.getTitle());
 
-		socialActivityLocalService.addActivity(
-			userId, article.getGroupId(), JournalArticle.class.getName(),
-			article.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, article, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return article;
@@ -5797,18 +5794,14 @@ public class JournalArticleLocalServiceImpl
 				extraDataJSONObject.put("title", article.getTitle());
 
 				if (serviceContext.isCommandUpdate()) {
-					socialActivityLocalService.addActivity(
-						user.getUserId(), article.getGroupId(),
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey(),
+					SocialActivityHandlerUtil.addActivity(
+						user.getUserId(), article,
 						JournalActivityKeys.UPDATE_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}
 				else {
-					socialActivityLocalService.addUniqueActivity(
-						user.getUserId(), article.getGroupId(),
-						JournalArticle.class.getName(),
-						article.getResourcePrimKey(),
+					SocialActivityHandlerUtil.addUniqueActivity(
+						user.getUserId(), article,
 						JournalActivityKeys.ADD_ARTICLE,
 						extraDataJSONObject.toString(), 0);
 				}

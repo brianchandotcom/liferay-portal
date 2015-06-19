@@ -32,6 +32,7 @@ import com.liferay.portal.model.LayoutSetPrototype;
 import com.liferay.portal.model.LayoutSetPrototypeModel;
 import com.liferay.portal.model.LayoutSetPrototypeSoap;
 import com.liferay.portal.model.User;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;

@@ -35,6 +35,7 @@ import com.liferay.portal.model.ResourceBlockPermission;
 import com.liferay.portal.model.impl.ResourceBlockPermissionImpl;
 import com.liferay.portal.model.impl.ResourceBlockPermissionModelImpl;
 import com.liferay.portal.service.persistence.ResourceBlockPermissionPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

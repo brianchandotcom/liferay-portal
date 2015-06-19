@@ -366,15 +366,7 @@ public class SocialActivityLocalServiceImpl
 	 */
 	@Override
 	public void deleteActivities(AssetEntry assetEntry) throws PortalException {
-		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-			socialActivitySetLocalService.decrementActivityCount(
-				assetEntry.getClassNameId(), assetEntry.getClassPK());
-		}
-
-		socialActivityPersistence.removeByC_C(
-			assetEntry.getClassNameId(), assetEntry.getClassPK());
-
-		socialActivityCounterLocalService.deleteActivityCounters(assetEntry);
+		deleteActivities(assetEntry.getClassName(), assetEntry.getClassPK());
 	}
 
 	@Override
@@ -407,12 +399,7 @@ public class SocialActivityLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
-			socialActivitySetLocalService.decrementActivityCount(
-				classNameId, classPK);
-		}
-
-		socialActivityPersistence.removeByC_C(classNameId, classPK);
+		deleteActivities(classNameId, classPK);
 	}
 
 	/**
@@ -1121,6 +1108,20 @@ public class SocialActivityLocalServiceImpl
 	@Override
 	public int getUserOrganizationsActivitiesCount(long userId) {
 		return socialActivityFinder.countByUserOrganizations(userId);
+	}
+
+	protected void deleteActivities(long classNameId, long classPK)
+		throws PortalException {
+
+		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+			socialActivitySetLocalService.decrementActivityCount(
+				classNameId, classPK);
+		}
+
+		socialActivityPersistence.removeByC_C(classNameId, classPK);
+
+		socialActivityCounterLocalService.deleteActivityCounters(
+			classNameId, classPK);
 	}
 
 	protected boolean isLogActivity(SocialActivity activity) {

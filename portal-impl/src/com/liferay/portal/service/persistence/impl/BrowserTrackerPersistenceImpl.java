@@ -35,6 +35,7 @@ import com.liferay.portal.model.MVCCModel;
 import com.liferay.portal.model.impl.BrowserTrackerImpl;
 import com.liferay.portal.model.impl.BrowserTrackerModelImpl;
 import com.liferay.portal.service.persistence.BrowserTrackerPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

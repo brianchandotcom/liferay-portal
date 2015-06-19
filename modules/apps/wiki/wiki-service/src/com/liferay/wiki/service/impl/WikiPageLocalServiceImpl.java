@@ -73,7 +73,7 @@ import com.liferay.portlet.asset.model.AssetLinkConstants;
 import com.liferay.portlet.documentlibrary.model.DLFolderConstants;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 import com.liferay.portlet.expando.util.ExpandoBridgeUtil;
-import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.handler.SocialActivityHandlerUtil;
 import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.trash.model.TrashEntry;
 import com.liferay.portlet.trash.model.TrashVersion;
@@ -296,10 +296,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+		SocialActivityHandlerUtil.addActivity(
+			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
 	}
 
@@ -329,10 +327,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_ADD_ATTACHMENT,
+		SocialActivityHandlerUtil.addActivity(
+			userId, page, SocialActivityConstants.TYPE_ADD_ATTACHMENT,
 			extraDataJSONObject.toString(), 0);
 	}
 
@@ -1577,10 +1573,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, page, SocialActivityConstants.TYPE_MOVE_ATTACHMENT_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		return fileEntry;
@@ -1730,10 +1724,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			"title", TrashUtil.getOriginalTitle(page.getTitle()));
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_MOVE_TO_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, page, SocialActivityConstants.TYPE_MOVE_TO_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		if (!pageVersions.isEmpty()) {
@@ -1833,9 +1825,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		PortletFileRepositoryUtil.restorePortletFileEntryFromTrash(
 			userId, fileEntry.getFileEntryId());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
+		SocialActivityHandlerUtil.addActivity(
+			userId, page,
 			SocialActivityConstants.TYPE_RESTORE_ATTACHMENT_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 	}
@@ -2126,9 +2117,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				socialActivityLocalService.addActivity(
-					userId, page.getGroupId(), WikiPage.class.getName(),
-					page.getResourcePrimKey(), WikiActivityKeys.ADD_PAGE,
+				SocialActivityHandlerUtil.addActivity(
+					userId, page, WikiActivityKeys.ADD_PAGE,
 					extraDataJSONObject.toString(), 0);
 			}
 
@@ -3018,10 +3008,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 		extraDataJSONObject.put("title", page.getTitle());
 		extraDataJSONObject.put("version", page.getVersion());
 
-		socialActivityLocalService.addActivity(
-			userId, page.getGroupId(), WikiPage.class.getName(),
-			page.getResourcePrimKey(),
-			SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
+		SocialActivityHandlerUtil.addActivity(
+			userId, page, SocialActivityConstants.TYPE_RESTORE_FROM_TRASH,
 			extraDataJSONObject.toString(), 0);
 
 		if (!pageVersions.isEmpty()) {
@@ -3342,17 +3330,11 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 			wikiGroupServiceSettings.pageMinorEditAddSocialActivity()) {
 
 			if (oldPage.getVersion() == newVersion) {
-				SocialActivity lastSocialActivity =
-					socialActivityLocalService.fetchFirstActivity(
-						WikiPage.class.getName(), page.getResourcePrimKey(),
-						WikiActivityKeys.UPDATE_PAGE);
+				Date createDate = new Date(now.getTime() + 1);
 
-				if (lastSocialActivity != null) {
-					lastSocialActivity.setCreateDate(now.getTime() + 1);
-					lastSocialActivity.setUserId(serviceContext.getUserId());
-
-					socialActivityPersistence.update(lastSocialActivity);
-				}
+				SocialActivityHandlerUtil.updateLastSocialActivity(
+					serviceContext.getUserId(), page,
+					WikiActivityKeys.UPDATE_PAGE, createDate);
 			}
 			else {
 				JSONObject extraDataJSONObject =
@@ -3361,9 +3343,8 @@ public class WikiPageLocalServiceImpl extends WikiPageLocalServiceBaseImpl {
 				extraDataJSONObject.put("title", page.getTitle());
 				extraDataJSONObject.put("version", page.getVersion());
 
-				socialActivityLocalService.addActivity(
-					userId, page.getGroupId(), WikiPage.class.getName(),
-					page.getResourcePrimKey(), WikiActivityKeys.UPDATE_PAGE,
+				SocialActivityHandlerUtil.addActivity(
+					userId, page, WikiActivityKeys.UPDATE_PAGE,
 					extraDataJSONObject.toString(), 0);
 			}
 		}

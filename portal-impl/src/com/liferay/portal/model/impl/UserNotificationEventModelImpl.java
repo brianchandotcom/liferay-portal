@@ -26,6 +26,7 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.User;
 import com.liferay.portal.model.UserNotificationEvent;
 import com.liferay.portal.model.UserNotificationEventModel;
+import com.liferay.portal.model.impl.BaseModelImpl;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 

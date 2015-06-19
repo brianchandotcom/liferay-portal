@@ -36,6 +36,7 @@ import com.liferay.portal.model.SystemEvent;
 import com.liferay.portal.model.impl.SystemEventImpl;
 import com.liferay.portal.model.impl.SystemEventModelImpl;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
+import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 
 import java.io.Serializable;
 

@@ -46,7 +46,6 @@
 		<reference package-path="com.liferay.portlet.expando" entity="ExpandoValue" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsEntry" />
 		<reference package-path="com.liferay.portlet.ratings" entity="RatingsStats" />
-		<reference package-path="com.liferay.portlet.social" entity="SocialActivity" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashEntry" />
 		<reference package-path="com.liferay.portlet.trash" entity="TrashVersion" />
 	</entity>

@@ -17,6 +17,7 @@ package com.liferay.portal.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ModelWrapper;
 
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
@@ -384,7 +385,8 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(BaseModel<?> baseModel) {
+	public void setExpandoBridgeAttributes(
+		com.liferay.portal.model.BaseModel<?> baseModel) {
 		_layoutFriendlyURL.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -541,7 +543,7 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	}
 
 	@Override
-	public CacheModel<com.liferay.portal.model.LayoutFriendlyURL> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.portal.model.LayoutFriendlyURL> toCacheModel() {
 		return _layoutFriendlyURL.toCacheModel();
 	}
 

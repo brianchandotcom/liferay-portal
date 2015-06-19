@@ -17,6 +17,7 @@ package com.liferay.portal.service.persistence;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.model.OrgLabor;
+import com.liferay.portal.service.persistence.BasePersistence;
 
 /**
  * The persistence interface for the org labor service.

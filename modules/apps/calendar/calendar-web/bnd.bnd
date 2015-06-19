@@ -1,8 +1,6 @@
 Bundle-Name: Liferay Calendar Web
 Bundle-SymbolicName: com.liferay.calendar.web
 Bundle-Version: 1.0.0
-Import-Package:\
-	*
 Include-Resource:\
 	classes,\
 	META-INF/=../../../../portal-impl/src/META-INF/log4j.dtd,\

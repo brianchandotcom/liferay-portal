@@ -14,7 +14,7 @@
 
 package com.liferay.calendar.web.customattributes;
 
-import com.liferay.calendar.constants.PortletKeys;
+import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.expando.model.BaseCustomAttributesDisplay;
@@ -27,7 +27,8 @@ import org.osgi.service.component.annotations.Component;
  * @author Eduardo Lundgren
  */
 @Component(
-	immediate = true, property = {"javax.portlet.name=" + PortletKeys.CALENDAR},
+	immediate = true,
+	property = {"javax.portlet.name=" + CalendarPortletKeys.CALENDAR},
 	service = CustomAttributesDisplay.class
 )
 public class CalendarCustomAttributesDisplay

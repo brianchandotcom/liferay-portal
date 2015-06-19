@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.HashSet;
@@ -101,50 +102,86 @@ public class AlloyEditorConfigContributor extends BaseEditorConfigContributor {
 		_itemSelector = itemSelector;
 	}
 
-	protected JSONObject getStyleFormatsJSONObject() {
-		String[] styleFormats = {
-			"{name: 'Normal', style: { element: 'p', type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Heading 1', style: { element: 'h1', type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Heading 2', style: { element: 'h2', type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Heading 3', style: { element: 'h3', type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Heading 4', style: { element: 'h4', type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Preformatted Text', style: { element: 'pre', type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Cited Work', style: { element: 'cite', type: " +
-				_CKEDITOR_STYLE_INLINE + "}}",
-			"{name: 'Computer Code', style: { element: 'code', type: " +
-				_CKEDITOR_STYLE_INLINE + "}}",
-			"{name: 'Info Message', style: { element: 'div', attributes: " +
-				"{'class': 'portlet-msg-info'}, type: " +
-					_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Alert Message', style: { element: 'div', attributes: " +
-				"{'class': 'portlet-msg-alert'}, type: " +
-				_CKEDITOR_STYLE_BLOCK + "}}",
-			"{name: 'Error Message', style: { element: 'div', attributes: " +
-				"{'class': 'portlet-msg-error'}, type: " +
-					_CKEDITOR_STYLE_BLOCK + "}}"
-		};
-
-		JSONArray stylesJsonArray = JSONFactoryUtil.createJSONArray();
-
-		for (String styleFormat : styleFormats) {
-			stylesJsonArray.put(toJSONObject(styleFormat));
-		}
-
-		JSONObject configJsonObject = JSONFactoryUtil.createJSONObject();
-
-		configJsonObject.put("styles", stylesJsonArray);
+	protected JSONObject getStyleFormatJSONObject(
+		String styleFormatName, String element, String cssClass, int type) {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-		jsonObject.put("name", "styles");
-		jsonObject.put("cfg", configJsonObject);
+
+		jsonObject.put("name", styleFormatName);
+		jsonObject.put("style", getStyleJSONObject(element, cssClass, type));
 
 		return jsonObject;
+	}
+
+	protected JSONObject getStyleFormatsJSONObject() {
+		JSONArray stylesJsonArray = JSONFactoryUtil.createJSONArray();
+
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Normal", "p", null, _CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Heading 1", "h1", null, _CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Heading 2", "h2", null, _CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Heading 3", "h3", null, _CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Heading 4", "h4", null, _CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Preformatted Text", "pre", null, _CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Cited Work", "cite", null, _CKEDITOR_STYLE_INLINE));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Computer Code", "code", null, _CKEDITOR_STYLE_INLINE));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Info Message", "div", "portlet-msg-info",
+				_CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Alert Message", "div", "portlet-msg-alert",
+				_CKEDITOR_STYLE_BLOCK));
+		stylesJsonArray.put(
+			getStyleFormatJSONObject(
+				"Error Message", "div", "portlet-msg-error",
+				_CKEDITOR_STYLE_BLOCK));
+
+		JSONObject stylesJSONObject = JSONFactoryUtil.createJSONObject();
+
+		stylesJSONObject.put("styles", stylesJsonArray);
+
+		JSONObject styleFormatsJSONObject = JSONFactoryUtil.createJSONObject();
+		styleFormatsJSONObject.put("name", "styles");
+		styleFormatsJSONObject.put("cfg", stylesJSONObject);
+
+		return styleFormatsJSONObject;
+	}
+
+	protected JSONObject getStyleJSONObject(
+		String element, String cssClass, int type) {
+
+		JSONObject styleJSONObject = JSONFactoryUtil.createJSONObject();
+
+		styleJSONObject.put("element", element);
+		styleJSONObject.put("type", type);
+
+		if (Validator.isNotNull(cssClass)) {
+			JSONObject attributesJSONObject =
+				JSONFactoryUtil.createJSONObject();
+
+			attributesJSONObject.put("class", cssClass);
+
+			styleJSONObject.put("attributes", attributesJSONObject);
+		}
+
+		return styleJSONObject;
 	}
 
 	protected JSONObject getToolbarsAddJSONObject() {

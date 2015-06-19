@@ -20,4 +20,5 @@
 
 <liferay-ui:error exception="<%= NoSuchCategoryException.class %>" message="the-category-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchVocabularyException.class %>" message="the-vocabulary-could-not-be-found" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
+<liferay-ui:error-principal />

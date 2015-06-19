@@ -16,4 +16,4 @@
 
 <%@ include file="/html/portlet/polls_display/init.jsp" %>
 
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+<liferay-ui:error-principal />

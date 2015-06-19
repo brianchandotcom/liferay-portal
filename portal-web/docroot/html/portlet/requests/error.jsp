@@ -19,4 +19,5 @@
 <liferay-ui:error-header />
 
 <liferay-ui:error exception="<%= NoSuchRequestException.class %>" message="the-request-could-not-be-found" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
+<liferay-ui:error-principal />

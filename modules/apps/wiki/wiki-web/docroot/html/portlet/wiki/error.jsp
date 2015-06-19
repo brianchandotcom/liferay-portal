@@ -115,4 +115,5 @@
 </c:if>
 
 <liferay-ui:error exception="<%= PageTitleException.class %>" message="please-enter-a-valid-page-title" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
+<liferay-ui:error-principal />

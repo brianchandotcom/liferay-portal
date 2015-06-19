@@ -22,4 +22,5 @@
 <liferay-ui:error exception="<%= NoSuchLicenseException.class %>" message="the-license-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchProductEntryException.class %>" message="the-product-could-not-be-found" />
 <liferay-ui:error exception="<%= NoSuchProductVersionException.class %>" message="the-product-version-could-not-be-found" />
-<liferay-ui:error exception="<%= PrincipalException.class %>" message="you-do-not-have-the-required-permissions" />
+
+<liferay-ui:error-principal />

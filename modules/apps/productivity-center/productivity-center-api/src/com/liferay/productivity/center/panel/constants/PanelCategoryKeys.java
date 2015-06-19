@@ -19,10 +19,20 @@ package com.liferay.productivity.center.panel.constants;
  */
 public interface PanelCategoryKeys {
 
+	public static final String CONFIGURATION = "configuration";
+
+	public static final String CONTENT = "content";
+
 	public static final String MY_SPACE = "my_space";
+
+	public static final String PAGES = "pages";
 
 	public static final String PRODUCTIVITY_CENTER = "productivity_center";
 
 	public static final String ROOT = "root";
+
+	public static final String SITE_ADMINISTRATION = "site_administration";
+
+	public static final String USERS = "users";
 
 }

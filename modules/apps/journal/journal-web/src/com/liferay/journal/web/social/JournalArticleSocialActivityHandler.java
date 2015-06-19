@@ -14,17 +14,18 @@
 
 package com.liferay.journal.web.social;
 
-import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.social.handler.BaseSocialActivityHandler;
 import com.liferay.portlet.social.handler.SocialActivityHandler;
 import com.liferay.portlet.social.service.SocialActivityLocalService;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Adolfo Pérez
  */
-@OSGiBeanProperties(
+@Component(
 	property = "model.className=com.liferay.portlet.journal.model.JournalArticle",
 	service = SocialActivityHandler.class
 )
@@ -38,10 +39,16 @@ public class JournalArticleSocialActivityHandler
 
 	@Override
 	protected SocialActivityLocalService getSocialActivityLocalService() {
-		return socialActivityLocalService;
+		return _socialActivityLocalService;
 	}
 
-	@BeanReference(type = SocialActivityLocalService.class)
-	protected SocialActivityLocalService socialActivityLocalService;
+	@Reference(unbind = "-")
+	protected void setSocialActivityLocalService(
+		SocialActivityLocalService socialActivityLocalService) {
+
+		_socialActivityLocalService = socialActivityLocalService;
+	}
+
+	private SocialActivityLocalService _socialActivityLocalService;
 
 }

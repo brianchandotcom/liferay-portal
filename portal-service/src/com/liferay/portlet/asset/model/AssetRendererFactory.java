@@ -40,8 +40,6 @@ public interface AssetRendererFactory {
 
 	public static final int TYPE_LATEST_APPROVED = 1;
 
-	public static final int TYPE_LATEST_NOT_VISIBLE = 2;
-
 	public AssetEntry getAssetEntry(long assetEntryId) throws PortalException;
 
 	public AssetEntry getAssetEntry(String classNameId, long classPK)

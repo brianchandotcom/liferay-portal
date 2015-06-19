@@ -986,7 +986,7 @@
 		</execute>
 	</command>
 
-	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="4">
+	<command name="AssetPublisherSiteAndGlobalScopeAccessibility" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

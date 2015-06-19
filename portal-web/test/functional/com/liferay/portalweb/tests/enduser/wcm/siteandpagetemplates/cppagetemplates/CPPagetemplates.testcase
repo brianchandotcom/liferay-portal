@@ -10,7 +10,7 @@
 		<execute macro="PageTemplate#tearDownCP" />
 	</tear-down>
 
-	<command known-issues="LPS-51156" name="AddPageTemplate" priority="4">
+	<command known-issues="LPS-51156" name="AddPageTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -21,7 +21,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePageTemplate" priority="4">
+	<command name="AddSitePageTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -60,7 +60,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51156" name="DeletePageTemplate" priority="4">
+	<command known-issues="LPS-51156" name="DeletePageTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>
@@ -87,7 +87,7 @@
 		</execute>
 	</command>
 
-	<command name="EditPageTemplate" priority="4">
+	<command name="EditPageTemplate" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Page Templates" />
 		</execute>

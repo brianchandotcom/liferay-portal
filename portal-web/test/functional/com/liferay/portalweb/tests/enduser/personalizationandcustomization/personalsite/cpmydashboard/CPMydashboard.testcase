@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="JoinSiteOpen" priority="4">
+	<command name="JoinSiteOpen" priority="5">
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />
@@ -72,7 +72,7 @@
 		</execute>
 	</command>
 
-	<command name="JoinSitePrivateNo" priority="4">
+	<command name="JoinSitePrivateNo" priority="5">
 		<var name="membershipType" value="Private" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
@@ -136,7 +136,7 @@
 		</execute>
 	</command>
 
-	<command name="JoinSiteRestricted" priority="4">
+	<command name="JoinSiteRestricted" priority="5">
 		<var name="membershipType" value="Restricted" />
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
@@ -233,7 +233,7 @@
 		</execute>
 	</command>
 
-	<command name="LeaveSite" priority="4">
+	<command name="LeaveSite" priority="5">
 		<var name="password" value="test" />
 		<var name="siteName" value="Site Name" />
 		<var name="userEmailAddress" value="userea@liferay.com" />

@@ -307,7 +307,7 @@
 		</execute>
 	</command>
 
-	<command name="EditTag" priority="4">
+	<command name="EditTag" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>
@@ -376,7 +376,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchTag" priority="4">
+	<command name="SearchTag" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Tags" />
 		</execute>

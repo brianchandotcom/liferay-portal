@@ -11,7 +11,7 @@
 		<execute macro="Site#tearDownCP" />
 	</tear-down>
 
-	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="4">
+	<command name="AvailableSiteLocalesSubsetOfAvailablePortalLocales" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Language Test Page" />
 		</execute>
@@ -502,7 +502,7 @@
 		</execute>
 	</command>
 
-	<command name="SiteTemplateLocalization" priority="4">
+	<command name="SiteTemplateLocalization" priority="5">
 		<property name="web.plugins.includes" value="kaleo-web" />
 
 		<execute macro="Page#gotoCP">
@@ -658,7 +658,7 @@
 		<execute macro="User#loginPG" />
 	</command>
 
-	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="4">
+	<command name="ViewSiteLocalizationAfterDeletingOriginalLocale" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Portal Settings" />
 		</execute>

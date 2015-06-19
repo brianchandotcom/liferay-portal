@@ -178,7 +178,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePublicChildPage" priority="4">
+	<command name="AddSitePublicChildPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -219,7 +219,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSitePublicPage" priority="4">
+	<command name="AddSitePublicPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -345,7 +345,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSitePages" priority="4">
+	<command name="DeleteSitePages" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -377,7 +377,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSitePage" priority="4">
+	<command name="EditSitePage" priority="5">
 		<execute macro="Page#gotoPagesCP" >
 			<var name="portletName" value="Site Pages" />
 		</execute>

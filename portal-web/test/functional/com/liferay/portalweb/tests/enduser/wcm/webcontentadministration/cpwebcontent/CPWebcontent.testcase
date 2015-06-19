@@ -13,7 +13,7 @@
 		<execute macro="WebContentStructures#tearDownCP" />
 	</tear-down>
 
-	<command name="AddFolder" priority="4">
+	<command name="AddFolder" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -444,7 +444,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTemplateWithStructure" priority="4">
+	<command name="AddTemplateWithStructure" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -515,7 +515,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="AddWebContent" priority="4">
+	<command known-issues="LPS-51687" name="AddWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -906,7 +906,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteWebContent" priority="4">
+	<command name="DeleteWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1074,7 +1074,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-51687" name="EditWebContent" priority="4">
+	<command known-issues="LPS-51687" name="EditWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>
@@ -1535,7 +1535,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchWebContent" priority="4">
+	<command name="SearchWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

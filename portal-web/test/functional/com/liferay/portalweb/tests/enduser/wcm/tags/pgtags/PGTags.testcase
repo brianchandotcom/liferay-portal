@@ -153,7 +153,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSelectTagViaBlogs" priority="4">
+	<command name="AddSelectTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -207,7 +207,7 @@
 		</execute>
 	</command>
 
-	<command name="AddTagViaBlogs" priority="4">
+	<command name="AddTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -342,7 +342,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55859" name="DisplayTagCloud" priority="4">
+	<command known-issues="LPS-55859" name="DisplayTagCloud" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>
@@ -779,7 +779,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveTagViaBlogs" priority="4">
+	<command name="RemoveTagViaBlogs" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -934,7 +934,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTagCloudDisplayConfiguration" priority="4">
+	<command name="ViewTagCloudDisplayConfiguration" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tag Cloud Page" />
 		</execute>
@@ -956,7 +956,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewTagCloudIncrease" priority="4">
+	<command name="ViewTagCloudIncrease" priority="5">
 		<execute macro="Page#addPG">
 			<var name="pageName" value="Tags Navigation Page" />
 		</execute>

@@ -154,7 +154,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWCWithTranslation" priority="4">
+	<command name="AddWCWithTranslation" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 			<var name="siteScopeName" value="Site Name" />

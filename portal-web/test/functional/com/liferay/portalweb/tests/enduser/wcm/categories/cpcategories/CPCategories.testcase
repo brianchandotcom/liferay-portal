@@ -73,7 +73,7 @@
 		</execute>
 	</command>
 
-	<command name="AddCategory" priority="4">
+	<command name="AddCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -313,7 +313,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSubcategory" priority="4">
+	<command name="AddSubcategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -382,7 +382,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabulary" priority="4">
+	<command name="AddVocabulary" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -710,7 +710,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteCategory" priority="4">
+	<command name="DeleteCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -839,7 +839,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSubcategoryViaArrow" priority="4">
+	<command name="DeleteSubcategoryViaArrow" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -874,7 +874,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteVocabulary" priority="4">
+	<command name="DeleteVocabulary" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -902,7 +902,7 @@
 		</execute>
 	</command>
 
-	<command name="EditCategory" priority="4">
+	<command name="EditCategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -981,7 +981,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSubcategory" priority="4">
+	<command name="EditSubcategory" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>
@@ -1017,7 +1017,7 @@
 		</execute>
 	</command>
 
-	<command name="EditVocabulary" priority="4">
+	<command name="EditVocabulary" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Categories" />
 		</execute>

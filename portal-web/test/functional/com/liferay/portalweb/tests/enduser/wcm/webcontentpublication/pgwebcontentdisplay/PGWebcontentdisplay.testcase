@@ -103,7 +103,7 @@
 		</execute>
 	</command>
 
-	<command name="AddWebContent" priority="4">
+	<command name="AddWebContent" priority="5">
 		<execute macro="Page#gotoPG">
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
@@ -441,7 +441,7 @@
 		</execute>
 	</command>
 
-	<command name="RemoveWCDPortletSite" priority="4">
+	<command name="RemoveWCDPortletSite" priority="5">
 		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="Web Content Display" />
 		</execute>
@@ -500,7 +500,7 @@
 		</execute>
 	</command>
 
-	<command name="SelectWebContent" priority="4">
+	<command name="SelectWebContent" priority="5">
 		<execute macro="Page#gotoContentCP">
 			<var name="portletName" value="Web Content" />
 		</execute>

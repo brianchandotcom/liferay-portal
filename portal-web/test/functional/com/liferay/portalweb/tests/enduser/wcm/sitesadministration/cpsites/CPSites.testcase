@@ -51,7 +51,7 @@
 		</execute>
 	</command>
 
-	<command name="AddChildSite" priority="4">
+	<command name="AddChildSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -120,7 +120,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSite" priority="4">
+	<command name="AddSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -249,7 +249,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSite" priority="4">
+	<command name="DeleteSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -267,7 +267,7 @@
 		</execute>
 	</command>
 
-	<command name="EditSite" priority="4">
+	<command name="EditSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -392,7 +392,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchSite" priority="4">
+	<command name="SearchSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

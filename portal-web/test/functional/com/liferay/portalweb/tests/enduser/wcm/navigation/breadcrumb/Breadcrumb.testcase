@@ -169,7 +169,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisableShowCurrentSite" priority="4">
+	<command known-issues="LPS-55813" name="DisableShowCurrentSite" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>
@@ -272,7 +272,7 @@
 		</execute>
 	</command>
 
-	<command known-issues="LPS-55813" name="DisableShowPage" priority="4">
+	<command known-issues="LPS-55813" name="DisableShowPage" priority="5">
 		<execute macro="Page#gotoCP">
 			<var name="portletName" value="Sites" />
 		</execute>

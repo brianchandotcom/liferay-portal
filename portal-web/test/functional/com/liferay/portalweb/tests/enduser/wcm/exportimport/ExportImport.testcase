@@ -422,7 +422,7 @@
 
 	<command known-issues="LPS-46906" name="ExportImportPortletWithADT" priority="4">
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Templates" />
+			<var name="portletName" value="Application Display Template" />
 		</execute>
 
 		<execute macro="ApplicationDisplayTemplates#addCP">

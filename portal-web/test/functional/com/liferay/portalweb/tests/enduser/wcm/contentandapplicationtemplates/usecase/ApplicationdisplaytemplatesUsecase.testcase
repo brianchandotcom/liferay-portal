@@ -830,7 +830,7 @@
 		</execute>
 
 		<execute macro="Page#gotoConfigurationCP">
-			<var name="portletName" value="Application Display Templates" />
+			<var name="portletName" value="Application Display Template" />
 			<var name="siteName" value="${siteName}" />
 			<var name="siteURL" value="true" />
 		</execute>

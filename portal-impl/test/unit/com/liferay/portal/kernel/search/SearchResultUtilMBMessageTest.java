@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.search;
 
 import com.liferay.portal.kernel.comment.Comment;
+import com.liferay.portal.kernel.comment.CommentManagerUtil;
 import com.liferay.portal.search.test.BaseSearchResultUtilTestCase;
 import com.liferay.portal.search.test.SearchTestUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -38,7 +39,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest( {
 	AssetRendererFactoryRegistryUtil.class, IndexerRegistryUtil.class,
-	ServiceTrackerCollections.class
+	ServiceTrackerCollections.class, CommentManagerUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class SearchResultUtilMBMessageTest
@@ -75,6 +76,24 @@ public class SearchResultUtilMBMessageTest
 			_mbMessage
 		);
 
+		when(
+			_mbMessage.getMessageId()
+		).thenReturn(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
+
+		stub(
+			method(CommentManagerUtil.class, "fetchComment", long.class)
+		).toReturn(
+			_comment
+		);
+
+		when(
+			_comment.getCommentId()
+		).thenReturn(
+			SearchTestUtil.ENTRY_CLASS_PK
+		);
+
 		mockStatic(
 			IndexerRegistryUtil.class,
 			new ThrowsExceptionClass(IllegalStateException.class));
@@ -97,7 +116,7 @@ public class SearchResultUtilMBMessageTest
 
 		Comment comment = relatedSearchResult.getModel();
 
-		Assert.assertSame(_mbMessage.getMessageId(), comment.getCommentId());
+		Assert.assertEquals(_mbMessage.getMessageId(), comment.getCommentId());
 		Assert.assertEquals(1, relatedSearchResults.size());
 		Assert.assertNull(searchResult.getSummary());
 
@@ -129,6 +148,9 @@ public class SearchResultUtilMBMessageTest
 
 	private static final String _MB_MESSAGE_CLASS_NAME =
 		MBMessage.class.getName();
+
+	@Mock
+	private Comment _comment;
 
 	@Mock
 	private MBMessage _mbMessage;

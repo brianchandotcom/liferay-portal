@@ -126,7 +126,7 @@ public class ServletContextUtil {
 	}
 
 	public static URI getResourceURI(URL url) throws URISyntaxException {
-		return _getResourceURI(url, url.getPath());
+		return _getResourceURI(url.getProtocol(), url.getPath());
 	}
 
 	public static String getRootPath(ServletContext servletContext)
@@ -164,7 +164,7 @@ public class ServletContextUtil {
 				path = path.substring(0, index);
 			}
 
-			rootURI = _getResourceURI(rootURL, path);
+			rootURI = _getResourceURI(rootURL.getProtocol(), path);
 
 			servletContext.setAttribute(URI_ATTRIBUTE, rootURI);
 		}
@@ -247,10 +247,10 @@ public class ServletContextUtil {
 		}
 	}
 
-	private static URI _getResourceURI(URL url, String path)
+	private static URI _getResourceURI(String protocol, String path)
 		throws URISyntaxException {
 
-		return new URI(url.getProtocol(), path, null);
+		return new URI(protocol, path, null);
 	}
 
 	private static final String _EXT_CLASS = ".class";

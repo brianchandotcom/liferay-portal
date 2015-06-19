@@ -498,8 +498,15 @@ public class AssetPublisherUtil {
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 				assetEntry.getClassPK(), AssetRendererFactory.TYPE_LATEST);
 
-			if (!assetRendererFactory.isActive(
-					permissionChecker.getCompanyId())) {
+			if (includeNonVisibleAssets && (assetRenderer == null)) {
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					assetEntry.getClassPK(),
+					AssetRendererFactory.TYPE_LATEST_NOT_VISIBLE);
+			}
+
+			if ((assetRenderer == null) ||
+				(!assetRendererFactory.isActive(
+					permissionChecker.getCompanyId()))) {
 
 				if (deleteMissingAssetEntries) {
 					missingAssetEntryUuids.add(assetEntryUuid);

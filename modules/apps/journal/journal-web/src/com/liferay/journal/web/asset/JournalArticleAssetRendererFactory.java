@@ -93,10 +93,19 @@ public class JournalArticleAssetRendererFactory
 			}
 
 			if (article == null) {
-				article = JournalArticleLocalServiceUtil.getLatestArticle(
+				article = JournalArticleLocalServiceUtil.fetchLatestArticle(
 					articleResource.getGroupId(),
 					articleResource.getArticleId(),
 					WorkflowConstants.STATUS_ANY);
+			}
+
+			if ((article == null) && type == TYPE_LATEST_NOT_VISIBLE) {
+				article = JournalArticleLocalServiceUtil.fetchLatestArticle(
+					classPK, WorkflowConstants.STATUS_ANY);
+			}
+
+			if (article == null) {
+				return null;
 			}
 		}
 

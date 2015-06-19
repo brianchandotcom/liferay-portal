@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.panel.service.panel;
+package com.liferay.product.menu.control.panel.service.panel;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.productivity.center.panel.BasePanelCategory;

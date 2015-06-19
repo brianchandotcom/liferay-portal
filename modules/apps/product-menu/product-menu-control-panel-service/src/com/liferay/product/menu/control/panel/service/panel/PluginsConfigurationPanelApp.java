@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.control.panel.service.panel;
+package com.liferay.product.menu.control.panel.service.panel;
 
 import com.liferay.portal.service.PortletLocalService;
 import com.liferay.portal.util.PortletKeys;
@@ -29,16 +29,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_USERS,
+		"panel.category.key=" + PanelCategoryKeys.CONTROL_PANEL_APPS,
 		"service.ranking:Integer=100"
 	},
 	service = PanelApp.class
 )
-public class UsersPanelApp extends BaseControlPanelEntryPanelApp {
+public class PluginsConfigurationPanelApp
+	extends BaseControlPanelEntryPanelApp {
 
 	@Override
 	public String getPortletId() {
-		return PortletKeys.USERS_ADMIN;
+		return PortletKeys.PLUGINS_ADMIN;
 	}
 
 	@Reference(unbind = "-")

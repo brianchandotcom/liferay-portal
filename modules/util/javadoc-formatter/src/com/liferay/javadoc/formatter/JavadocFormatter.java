@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.tools.ArgumentsUtil;
 import com.liferay.portal.xml.SAXReaderFactory;
 import com.liferay.util.xml.Dom4jDocUtil;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.Dom4jUtil;
 import com.liferay.util.xml.XMLSafeReader;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -896,7 +896,7 @@ public class JavadocFormatter {
 	}
 
 	private String _formattedString(Node node) throws IOException {
-		return XMLFormatter.toString(node);
+		return Dom4jUtil.toString(node);
 	}
 
 	private String _getCDATA(AbstractJavaEntity abstractJavaEntity) {

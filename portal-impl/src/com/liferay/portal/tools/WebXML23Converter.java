@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.UnsecureSAXReaderUtil;
-import com.liferay.util.xml.XMLFormatter;
+import com.liferay.util.xml.Dom4jUtil;
 
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class WebXML23Converter {
 				webXML23, new String[] {"<jsp-config>", "</jsp-config>"},
 				new String[] {"", ""});
 
-			webXML23 = XMLFormatter.toString(webXML23);
+			webXML23 = Dom4jUtil.toString(webXML23);
 
 			FileUtil.write(output, webXML23);
 		}

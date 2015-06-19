@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.ruby;
+package com.liferay.portal.scripting.ruby.internal;
 
 import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;

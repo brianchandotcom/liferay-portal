@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.scripting.ruby;
+package com.liferay.portal.scripting.ruby.internal;
 
 import org.jruby.Ruby;
 import org.jruby.javasupport.Java;

@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Configurable;
 
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration;
+import com.liferay.portal.search.elasticsearch.settings.BaseSettingsContributor;
 import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.util.Map;
@@ -26,6 +27,7 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -33,14 +35,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration",
-	immediate = true, service = SettingsContributor.class
+	immediate = true, property = {"operation.mode=EMBEDDED"},
+	service = SettingsContributor.class
 )
-public class UnicastSettingsContributor implements SettingsContributor {
+public class UnicastSettingsContributor extends BaseSettingsContributor {
 
-	@Activate
-	public void activate(Map<String, Object> properties) {
-		elasticsearchConfiguration = Configurable.createConfigurable(
-			ElasticsearchConfiguration.class, properties);
+	public UnicastSettingsContributor() {
+		super(1);
 	}
 
 	@Override
@@ -54,8 +55,15 @@ public class UnicastSettingsContributor implements SettingsContributor {
 		builder.put("node.local", false);
 	}
 
+	@Activate
+	@Modified
+	protected void activate(Map<String, Object> properties) {
+		elasticsearchConfiguration = Configurable.createConfigurable(
+			ElasticsearchConfiguration.class, properties);
+	}
+
 	@Reference(unbind = "-")
-	public void setClusterSettingsContext(
+	protected void setClusterSettingsContext(
 		ClusterSettingsContext clusterSettingsContext) {
 
 		_clusterSettingsContext = clusterSettingsContext;

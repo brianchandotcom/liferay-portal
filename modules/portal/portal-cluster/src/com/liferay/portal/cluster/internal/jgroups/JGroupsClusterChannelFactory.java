@@ -55,9 +55,19 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 			channelProperties, clusterName, clusterReceiver);
 	}
 
+	@Override
+	public InetAddress getBindInetAddress() {
+		return _bindInetAddress;
+	}
+
+	@Override
+	public NetworkInterface getBindNetworkInterface() {
+		return _bindNetworkInterface;
+	}
+
 	@Activate
 	@Modified
-	protected void activate(Map<String, Object> properties) {
+	protected synchronized void activate(Map<String, Object> properties) {
 		String channelSystemProperties = GetterUtil.getString(
 			properties.get(ClusterPropsKeys.CHANNEL_SYSTEM_PROPERTIES));
 
@@ -104,20 +114,20 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 		try {
 			SocketUtil.BindInfo bindInfo = SocketUtil.getBindInfo(host, port);
 
-			InetAddress inetAddress = bindInfo.getInetAddress();
+			_bindInetAddress = bindInfo.getInetAddress();
 
-			NetworkInterface networkInterface = bindInfo.getNetworkInterface();
+			_bindNetworkInterface = bindInfo.getNetworkInterface();
 
 			System.setProperty(
-				"jgroups.bind_addr", inetAddress.getHostAddress());
+				"jgroups.bind_addr", _bindInetAddress.getHostAddress());
 			System.setProperty(
-				"jgroups.bind_interface", networkInterface.getName());
+				"jgroups.bind_interface", _bindNetworkInterface.getName());
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
 					"Setting JGroups outgoing IP address to " +
-						inetAddress.getHostAddress() + " and interface to " +
-							networkInterface.getName());
+						_bindInetAddress.getHostAddress() +
+						" and interface to " + _bindNetworkInterface.getName());
 			}
 		}
 		catch (IOException e) {
@@ -159,6 +169,8 @@ public class JGroupsClusterChannelFactory implements ClusterChannelFactory {
 	private static final Log _log = LogFactoryUtil.getLog(
 		JGroupsClusterChannelFactory.class);
 
+	private InetAddress _bindInetAddress;
+	private NetworkInterface _bindNetworkInterface;
 	private Props _props;
 
 }

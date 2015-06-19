@@ -14,6 +14,9 @@
 
 package com.liferay.portal.cluster;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+
 /**
  * @author Tina Tian
  */
@@ -22,5 +25,9 @@ public interface ClusterChannelFactory {
 	public ClusterChannel createClusterChannel(
 		String channelProperties, String clusterName,
 		ClusterReceiver clusterReceiver);
+
+	public InetAddress getBindInetAddress();
+
+	public NetworkInterface getBindNetworkInterface();
 
 }

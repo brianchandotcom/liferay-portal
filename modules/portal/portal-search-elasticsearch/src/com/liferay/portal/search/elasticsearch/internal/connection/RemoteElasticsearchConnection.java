@@ -29,6 +29,7 @@ import com.liferay.portal.search.elasticsearch.connection.BaseElasticsearchConne
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnection;
 import com.liferay.portal.search.elasticsearch.connection.OperationMode;
 import com.liferay.portal.search.elasticsearch.index.IndexFactory;
+import com.liferay.portal.search.elasticsearch.settings.SettingsContributor;
 
 import java.net.InetAddress;
 
@@ -46,6 +47,9 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -56,11 +60,6 @@ import org.osgi.service.component.annotations.Reference;
 	service = ElasticsearchConnection.class
 )
 public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
-
-	@Override
-	public void close() {
-		super.close();
-	}
 
 	@Override
 	public OperationMode getOperationMode() {
@@ -86,6 +85,19 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 			elasticsearchConfiguration.transportAddresses();
 
 		setTransportAddresses(new HashSet<>(Arrays.asList(transportAddresses)));
+	}
+
+	@Override
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(operation.mode=REMOTE)"
+	)
+	protected void addSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.addSettingsContributor(settingsContributor);
 	}
 
 	@Override
@@ -147,6 +159,13 @@ public class RemoteElasticsearchConnection extends BaseElasticsearchConnection {
 		builder.put("path.logs", _props.get(PropsKeys.LIFERAY_HOME) + "/logs");
 		builder.put(
 			"path.work", SystemProperties.get(SystemProperties.TMP_DIR));
+	}
+
+	@Override
+	protected void removeSettingsContributor(
+		SettingsContributor settingsContributor) {
+
+		super.removeSettingsContributor(settingsContributor);
 	}
 
 	@Reference(unbind = "-")

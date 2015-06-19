@@ -20,7 +20,7 @@
 
 	<tear-down>
 		<execute macro="Page#tearDownPG" />
-	</tear-down>	
+	</tear-down>
 
 	<command known-issues="LPS-52724" name="CheckLocalizationChinese" priority="4">
 		<execute function="Click" locator1="PGTestlocalization#CHINESE_LOCALIZATION" />

@@ -56,7 +56,7 @@
 		<execute macro="Workflow#tearDownPortalWorkflow" />
 
 		<execute macro="Workflow#tearDownSiteWorkflow" />
-	</tear-down>	
+	</tear-down>
 
 	<command name="ApprovePageRevisionPG" priority="4">
 		<var name="pageName" value="Page Revision Page" />

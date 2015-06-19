@@ -195,7 +195,8 @@ public class MVCPortlet extends LiferayPortlet {
 			getInitParameter("copy-request-parameters"), true);
 
 		_mvcActionCommandCache = new MVCCommandCache(
-			MVCActionCommand.EMPTY, getInitParameter("action.package.prefix"),
+			MVCActionCommand.EMPTY,
+			getInitParameter("mvc.action.command.package.prefix"),
 			getPortletName(), MVCActionCommand.class.getName(),
 			"ActionCommand");
 		_mvcRenderCommandCache = new MVCCommandCache(
@@ -205,8 +206,9 @@ public class MVCPortlet extends LiferayPortlet {
 			"RenderCommand");
 		_mvcResourceCommandCache = new MVCCommandCache(
 			MVCResourceCommand.EMPTY,
-			getInitParameter("resource.package.prefix"), getPortletName(),
-			MVCResourceCommand.class.getName(), "ResourceCommand");
+			getInitParameter("mvc.resource.command.package.prefix"),
+			getPortletName(), MVCResourceCommand.class.getName(),
+			"ResourceCommand");
 	}
 
 	public void invokeTaglibDiscussion(
